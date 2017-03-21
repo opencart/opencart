@@ -1559,6 +1559,8 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$data['text_preferred_li_3'] = $this->language->get('text_preferred_li_3');
 		$data['text_preferred_li_4'] = $this->language->get('text_preferred_li_4');
 		$data['text_edit'] = $this->language->get('text_edit');
+		$data['text_enabled'] = $this->language->get('text_enabled');
+		$data['text_disabled'] = $this->language->get('text_disabled');
 
 		$data['connect_link'] = '';
 		$data['module_link'] = '';
@@ -1569,6 +1571,14 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			if ($this->user->hasPermission('modify', 'extension/extension/payment')) {
 				$data['connect_link'] = $this->url->link('extension/payment/pp_express/connectRedirect', 'token=' . $this->session->data['token'], true);
 			}
+		}
+
+		if ($this->config->get("pp_express_status") == 1) {
+			$data['pp_express_status'] = "enabled";
+		} elseif ($this->config->get("pp_express_status") == null) {
+			$data['pp_express_status'] = "";
+		} else {
+			$data['pp_express_status'] = "disabled";
 		}
 
 		return $this->load->view('extension/payment/pp_express_preferred', $data);

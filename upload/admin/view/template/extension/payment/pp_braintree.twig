@@ -527,10 +527,24 @@
             </div>
             <div class="tab-pane" id="tab-vault">
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-vault"><span data-toggle="tooltip" title="{{ help_vault }}">{{ entry_vault }}</span></label>
+                <label class="col-sm-2 control-label" for="input-card-vault"><span data-toggle="tooltip" title="{{ help_card_vault }}">{{ entry_card_vault }}</span></label>
                 <div class="col-sm-10">
-                  <select name="pp_braintree_vault" id="input-vault" class="form-control">
-                    {% if pp_braintree_vault %}
+                  <select name="pp_braintree_card_vault" id="input-card-vault" class="form-control">
+                    {% if pp_braintree_card_vault %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-card-check-vault"><span data-toggle="tooltip" title="{{ help_card_check_vault }}">{{ entry_card_check_vault }}</span></label>
+                <div class="col-sm-10">
+                  <select name="pp_braintree_card_check_vault" id="input-card-check-vault" class="form-control">
+                    {% if pp_braintree_card_check_vault %}
                       <option value="1" selected="selected">{{ text_enabled }}</option>
                       <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -556,6 +570,34 @@
                       <option value="0" selected="selected">{{ text_disabled }}</option>
                       <option value="cvv">{{ text_cvv }}</option>
                       <option value="3ds">{{ text_3ds }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-paypal-vault"><span data-toggle="tooltip" title="{{ help_paypal_vault }}">{{ entry_paypal_vault }}</span></label>
+                <div class="col-sm-10">
+                  <select name="pp_braintree_paypal_vault" id="input-paypal-vault" class="form-control">
+                    {% if pp_braintree_paypal_vault %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-paypal-check-vault"><span data-toggle="tooltip" title="{{ help_paypal_check_vault }}">{{ entry_paypal_check_vault }}</span></label>
+                <div class="col-sm-10">
+                  <select name="pp_braintree_paypal_check_vault" id="input-paypal-check-vault" class="form-control">
+                    {% if pp_braintree_paypal_check_vault %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
                     {% endif %}
                   </select>
                 </div>

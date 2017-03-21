@@ -2,6 +2,12 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title"><img class="pull-right" width="192" src="https://s3-us-west-1.amazonaws.com/bt-partner-assets/paypal-braintree.png" alt="PayPal powered by Braintree"></h3>
+      {% if pp_braintree_status == "enabled" %}
+        <div class="pull-right"><span class="label label-success">{{ text_enabled }}</span></div>
+      {% endif %}
+      {% if pp_braintree_status == "disabled" %}
+        <div class="pull-right"><span class="label label-danger">{{ text_disabled }}</span></div>
+      {% endif %}
     </div>
     <div class="panel-body">
       <div class="row">

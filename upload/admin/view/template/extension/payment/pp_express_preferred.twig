@@ -2,6 +2,12 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title"><img class="pull-right" width="135" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_200x51.png" alt="PayPal Logo"></h3>
+      {% if pp_express_status == "enabled" %}
+        <div class="pull-right"><span class="label label-success">{{ text_enabled }}</span></div>
+      {% endif %}
+      {% if pp_express_status == "disabled" %}
+        <div class="pull-right"><span class="label label-danger">{{ text_disabled }}</span></div>
+      {% endif %}
     </div>
     <div class="panel-body">
       <div class="row">
@@ -20,7 +26,7 @@
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3">
           {% if connect_link is not empty %}
-              <a class="btn btn-primary pull-right" href="{{ connect_link }}" target="_blank" title="{{ text_connect_paypal }}">{{ text_connect_paypal }}</a>
+              <a href="{{ connect_link }}" data-toggle="tooltip" title=""  class="btn btn-primary pull-right" target="_blank" data-original-title="{{ text_connect_paypal }}">{{ text_connect_paypal }}</a>
           {% endif %}
           {% if module_link is not empty %}
             <br /><br /><a href="{{ module_link }}" data-toggle="tooltip" title="" class="btn btn-primary pull-right" data-original-title="{{ text_edit }}"><i class="fa fa-pencil"></i></a>

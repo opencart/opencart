@@ -25,7 +25,8 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$data['entry_card'] = $this->language->get('entry_card');
 		$data['entry_expires'] = $this->language->get('entry_expires');
 		$data['entry_cvv'] = $this->language->get('entry_cvv');
-		$data['entry_remember_method'] = $this->language->get('entry_remember_method');
+		$data['entry_remember_card_method'] = $this->language->get('entry_remember_card_method');
+		$data['entry_remember_paypal_method'] = $this->language->get('entry_remember_paypal_method');
 		$data['entry_card_placeholder'] = $this->language->get('entry_card_placeholder');
 		$data['entry_month_placeholder'] = $this->language->get('entry_month_placeholder');
 		$data['entry_year_placeholder'] = $this->language->get('entry_year_placeholder');
@@ -80,16 +81,23 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 		$data['merchant_id'] = $merchant_id;
 
-		if ($this->customer->isLogged() && $this->config->get('pp_braintree_vault')) {
-			$data['pp_braintree_vault'] = 1;
+		if ($this->customer->isLogged() && ($this->config->get('pp_braintree_card_vault') || $this->config->get('pp_braintree_paypal_vault'))) {
+			$data['pp_braintree_card_vault'] = $this->config->get('pp_braintree_card_vault');
+			$data['pp_braintree_paypal_vault'] = $this->config->get('pp_braintree_paypal_vault');
+			$data['pp_braintree_card_check_vault'] = $this->config->get('pp_braintree_card_check_vault');
+			$data['pp_braintree_paypal_check_vault'] = $this->config->get('pp_braintree_paypal_check_vault');
 			$vaulted_customer_info = $this->model_extension_payment_pp_braintree->getCustomer($this->gateway, $this->customer_id_prefix . $this->customer->getId(), false);
 		} else {
-			$data['pp_braintree_vault'] = 0;
+			$data['pp_braintree_card_vault'] = 0;
+			$data['pp_braintree_paypal_vault'] = 0;
+			$data['pp_braintree_card_check_vault'] = 0;
+			$data['pp_braintree_paypal_check_vault'] = 0;
 			$vaulted_customer_info = false;
 		}
 
 		$data['client_token'] = $this->model_extension_payment_pp_braintree->generateToken($this->gateway, $create_token);
 		$data['total'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
+
 		$data['currency_code'] = $order_info['currency_code'];
 
 		// disable paypal option if currency is not in supported array
@@ -115,7 +123,12 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$vaulted_payment_count = 0;
 
 		if ($vaulted_customer_info) {
-			if ($vaulted_customer_info->creditCards && $this->config->get('pp_braintree_vault') == 1) {
+			$vaulted_card_count = 0;
+			$vaulted_paypal_count = 0;
+
+			if ($vaulted_customer_info->creditCards && $this->config->get('pp_braintree_card_vault') == 1) {
+				$vaulted_card_count = count($vaulted_customer_info->creditCards);
+
 				foreach ($vaulted_customer_info->creditCards as $credit_card) {
 					$vaulted_payment_methods['cards'][] = array(
 						'image'	  => $credit_card->imageUrl,
@@ -127,7 +140,9 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 				}
 			}
 
-			if ($vaulted_customer_info->paypalAccounts && $this->config->get('pp_braintree_vault') == 1) {
+			if ($vaulted_customer_info->paypalAccounts && $this->config->get('pp_braintree_paypal_vault') == 1) {
+				$vaulted_paypal_count = count($vaulted_customer_info->paypalAccounts);
+
 				foreach ($vaulted_customer_info->paypalAccounts as $paypal_account) {
 					$vaulted_payment_methods['paypal'][] = array(
 						'image'	  => $paypal_account->imageUrl,
@@ -138,7 +153,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 				}
 			}
 
-			$vaulted_payment_count = count($vaulted_customer_info->paymentMethods);
+			$vaulted_payment_count = $vaulted_card_count + $vaulted_paypal_count;
 		}
 
 		$data['vaulted_payment_methods'] = $vaulted_payment_methods;
@@ -160,7 +175,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 	}
 
 	public function payment() {
-		set_time_limit(120);
+		//set_time_limit(120);
 
 		$this->initialise();
 
@@ -263,7 +278,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 				);
 			}
 
-			if ($this->customer->isLogged() && $this->config->get('pp_braintree_vault')) {
+			if ($this->customer->isLogged() && ($this->config->get('pp_braintree_card_vault') || $this->config->get('pp_braintree_paypal_vault'))) {
 				$customer_id = $this->customer_id_prefix . $this->customer->getId();
 
 				$vaulted_customer_info = $this->model_extension_payment_pp_braintree->getCustomer($this->gateway, $customer_id, false);
@@ -502,15 +517,20 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			$json['error'] = $this->language->get('text_method_not_removed');
 		}
 
-		$customer_info = $this->model_extension_payment_pp_braintree->getCustomer($this->gateway, $this->customer_id_prefix . $this->customer->getId());
+		$vaulted_customer_info = $this->model_extension_payment_pp_braintree->getCustomer($this->gateway, $this->customer_id_prefix . $this->customer->getId());
 
-		$vaulted_payment_count = 0;
+		$vaulted_card_count = 0;
+		$vaulted_paypal_count = 0;
 
-		if ($customer_info && $customer_info->paymentMethods) {
-			$vaulted_payment_count = count($customer_info->paymentMethods);
+		if ($vaulted_customer_info->creditCards && $this->config->get('pp_braintree_card_vault') == 1) {
+			$vaulted_card_count = count($vaulted_customer_info->creditCards);
 		}
 
-		$json['vaulted_payment_count'] = $vaulted_payment_count;
+		if ($vaulted_customer_info->paypalAccounts && $this->config->get('pp_braintree_paypal_vault') == 1) {
+			$vaulted_paypal_count = count($vaulted_customer_info->paypalAccounts);
+		}
+
+		$json['vaulted_payment_count'] = $vaulted_card_count + $vaulted_paypal_count;
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

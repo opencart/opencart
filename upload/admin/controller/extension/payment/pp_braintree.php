@@ -80,7 +80,10 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$data['entry_environment'] = $this->language->get('entry_environment');
 		$data['entry_settlement_type'] = $this->language->get('entry_settlement_type');
 		$data['entry_integration_type'] = $this->language->get('entry_integration_type');
-		$data['entry_vault'] = $this->language->get('entry_vault');
+		$data['entry_card_vault'] = $this->language->get('entry_card_vault');
+		$data['entry_paypal_vault'] = $this->language->get('entry_paypal_vault');
+		$data['entry_card_check_vault'] = $this->language->get('entry_card_check_vault');
+		$data['entry_paypal_check_vault'] = $this->language->get('entry_paypal_check_vault');
 		$data['entry_vault_cvv_3ds'] = $this->language->get('entry_vault_cvv_3ds');
 		$data['entry_debug'] = $this->language->get('entry_debug');
 		$data['entry_total'] = $this->language->get('entry_total');
@@ -128,7 +131,10 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$data['entry_3ds_error'] = $this->language->get('entry_3ds_error');
 
 		$data['help_settlement_type'] = $this->language->get('help_settlement_type');
-		$data['help_vault'] = $this->language->get('help_vault');
+		$data['help_card_vault'] = $this->language->get('help_card_vault');
+		$data['help_paypal_vault'] = $this->language->get('help_paypal_vault');
+		$data['help_card_check_vault'] = $this->language->get('help_card_check_vault');
+		$data['help_paypal_check_vault'] = $this->language->get('help_paypal_check_vault');
 		$data['help_vault_cvv_3ds'] = $this->language->get('help_vault_cvv_3ds');
 		$data['help_debug'] = $this->language->get('help_debug');
 		$data['help_total'] = $this->language->get('help_total');
@@ -181,7 +187,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_payment'),
+			'text' => $this->language->get('text_extension'),
 			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
 		);
 
@@ -236,10 +242,28 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			$data['pp_braintree_settlement_immediate'] = $this->config->get('pp_braintree_settlement_immediate');
 		}
 
-		if (isset($this->request->post['pp_braintree_vault'])) {
-			$data['pp_braintree_vault'] = $this->request->post['pp_braintree_vault'];
+		if (isset($this->request->post['pp_braintree_card_vault'])) {
+			$data['pp_braintree_card_vault'] = $this->request->post['pp_braintree_card_vault'];
 		} else {
-			$data['pp_braintree_vault'] = $this->config->get('pp_braintree_vault');
+			$data['pp_braintree_card_vault'] = $this->config->get('pp_braintree_card_vault');
+		}
+
+		if (isset($this->request->post['pp_braintree_card_check_vault'])) {
+			$data['pp_braintree_card_check_vault'] = $this->request->post['pp_braintree_card_check_vault'];
+		} else {
+			$data['pp_braintree_card_check_vault'] = $this->config->get('pp_braintree_card_check_vault');
+		}
+
+		if (isset($this->request->post['pp_braintree_paypal_vault'])) {
+			$data['pp_braintree_paypal_vault'] = $this->request->post['pp_braintree_paypal_vault'];
+		} else {
+			$data['pp_braintree_paypal_vault'] = $this->config->get('pp_braintree_paypal_vault');
+		}
+
+		if (isset($this->request->post['pp_braintree_paypal_check_vault'])) {
+			$data['pp_braintree_paypal_check_vault'] = $this->request->post['pp_braintree_paypal_check_vault'];
+		} else {
+			$data['pp_braintree_paypal_check_vault'] = $this->config->get('pp_braintree_paypal_check_vault');
 		}
 
 		if (isset($this->request->post['pp_braintree_vault_cvv_3ds'])) {
@@ -567,7 +591,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$defaults['pp_braintree_3ds_unsupported_card'] = 1;
 		$defaults['pp_braintree_3ds_lookup_error'] = 1;
 		$defaults['pp_braintree_3ds_lookup_enrolled'] = 1;
-		$defaults['braintree_3ds_issuer_not_participating'] = 1;
+		$defaults['pp_braintree_3ds_not_participating'] = 1;
 		$defaults['pp_braintree_3ds_unavailable'] = 1;
 		$defaults['pp_braintree_3ds_signature_failed'] = 0;
 		$defaults['pp_braintree_3ds_successful'] = 1;
@@ -593,6 +617,12 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$defaults['pp_braintree_paypal_option'] = 1;
 		$defaults['pp_braintree_paypal_button_size'] = 'small';
 		$defaults['pp_braintree_paypal_button_shape'] = 'rect';
+
+		// Vault options
+		$defaults['pp_braintree_card_vault'] = 1;
+		$defaults['pp_braintree_paypal_vault'] = 1;
+		$defaults['pp_braintree_card_check_vault'] = 1;
+		$defaults['pp_braintree_paypal_check_vault'] = 1;
 
 		$this->model_setting_setting->editSetting('pp_braintree', $defaults);
 	}
@@ -1118,6 +1148,8 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$data['text_preferred_li_3'] = $this->language->get('text_preferred_li_3');
 		$data['text_preferred_li_4'] = $this->language->get('text_preferred_li_4');
 		$data['text_edit'] = $this->language->get('text_edit');
+		$data['text_enabled'] = $this->language->get('text_enabled');
+		$data['text_disabled'] = $this->language->get('text_disabled');
 
 		$data['connect_link'] = '';
 		$data['module_link'] = '';
@@ -1128,6 +1160,14 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			if ($this->user->hasPermission('modify', 'extension/extension/payment')) {
 				$data['connect_link'] = $this->url->link('extension/payment/pp_braintree/connectRedirect', 'token=' . $this->session->data['token'], true);
 			}
+		}
+
+		if ($this->config->get("pp_braintree_status") == 1) {
+			$data['pp_braintree_status'] = "enabled";
+		} elseif ($this->config->get("pp_braintree_status") == null) {
+			$data['pp_braintree_status'] = "";
+		} else {
+			$data['pp_braintree_status'] = "disabled";
 		}
 
 		return $this->load->view('extension/payment/pp_braintree_preferred', $data);

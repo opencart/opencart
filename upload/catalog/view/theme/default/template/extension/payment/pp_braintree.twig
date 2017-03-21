@@ -11,19 +11,6 @@
 </div>
 <form id="braintree-new" style="display:none;" method="post" action="{{ payment_url }}" class="form-horizontal" autocomplete="off">
   <fieldset>
-    {% if pp_braintree_vault %}
-      <div class="form-group row">
-        <label class="col-sm-2" style="text-align: right;">{{ entry_remember_method }}</label>
-        <div class="col-sm-10">
-          <div class="form-check">
-            <label class="form-check-label">
-              <input type="checkbox" id="vault-method" checked="checked" />
-            </label>
-          </div>
-        </div>
-      </div>
-      <hr />
-    {% endif %}
 
     {% if pp_braintree_paypal_option %}
       <div class="form-group">
@@ -32,6 +19,18 @@
             <script src="https://www.paypalobjects.com/api/button.js?" data-merchant="braintree" data-id="paypal-button" data-button="checkout" data-color="{{ pp_braintree_paypal_button_colour }}" data-size="{{ pp_braintree_paypal_button_size }}" data-shape="{{ pp_braintree_paypal_button_shape }}" data-button_type="submit" data-button_disabled="false"></script>
         </div>
       </div>
+      {% if pp_braintree_paypal_vault %}
+        <div class="form-group row">
+          <label class="col-sm-2" style="text-align: right;">{{ entry_remember_paypal_method }}</label>
+          <div class="col-sm-10">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" id="vault-method-paypal" {% if pp_braintree_paypal_check_vault == 1 %}checked="checked" {% endif %}/>
+              </label>
+            </div>
+          </div>
+        </div>
+      {% endif %}
       <hr />
     {% endif %}
     <div class="form-group">
@@ -65,6 +64,18 @@
         <div id="input-card-cvv" class="form-control"></div>
       </div>
     </div>
+    {% if pp_braintree_card_vault %}
+      <div class="form-group row">
+        <label class="col-sm-2" style="text-align: right;">{{ entry_remember_card_method }}</label>
+        <div class="col-sm-10">
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="checkbox" id="vault-method-card" {% if pp_braintree_card_check_vault == 1 %}checked="checked" {% endif %}/>
+            </label>
+          </div>
+        </div>
+      </div>
+    {% endif %}
     <div class="form-group">
       <div class="col-sm-12">
         <button type="submit" id="submit-new" class="btn btn-primary button-submit pull-right braintree-button">{{ button_confirm }}</button>
@@ -144,18 +155,29 @@
   var paypal_instance;
   var cvv_instance = [];
   var bank_frame = document.querySelector('#braintree-3ds-body');
-  var vault_payment = 1;
+  var vault_card_payment = {{ pp_braintree_card_check_vault }};
+  var vault_paypal_payment = {{ pp_braintree_paypal_check_vault }};
 
 
-{% if pp_braintree_vault == 1 and guest != true %}
-  $('body').on('change', '#vault-method', function (event) {
-     if ($(this).prop("checked"))  {
-         vault_payment = 1;
-     } else {
-         vault_payment = 0;
-     }
-  });
-{% endif %}
+  {% if pp_braintree_card_vault == 1 and guest != true %}
+    $('body').on('change', '#vault-method-card', function (event) {
+       if ($(this).prop("checked"))  {
+           vault_card_payment = 1;
+       } else {
+           vault_card_payment = 0;
+       }
+    });
+  {% endif %}
+
+  {% if pp_braintree_paypal_vault == 1 and guest != true %}
+    $('body').on('change', '#vault-method-paypal', function (event) {
+       if ($(this).prop("checked"))  {
+           vault_paypal_payment = 1;
+       } else {
+           vault_paypal_payment = 0;
+       }
+    });
+  {% endif %}
 
   $.getScript('https://js.braintreegateway.com/web/3.6.3/js/client.min.js', function() {
     $.getScript('https://js.braintreegateway.com/web/3.6.3/js/hosted-fields.min.js');
@@ -271,7 +293,7 @@
         $('#submit-new').prop('disabled', false).button('reset');
         return;
       } else {
-        submitOrder(payload.nonce);
+        submitOrder(payload.nonce, vault_card_payment);
       }
     });
   }
@@ -366,7 +388,7 @@
         {% if pp_braintree_3ds_status %}
           verifyNew3DSecure(payload.nonce);
         {% else %}
-          submitOrder(payload.nonce);
+          submitOrder(payload.nonce, vault_card_payment);
         {% endif %}
       });
     });
@@ -390,8 +412,8 @@
 
       var flow = "checkout";
 
-      {% if pp_braintree_vault == 1 and guest != true %}
-        if (vault_payment == 1) {
+      {% if pp_braintree_paypal_vault == 1 and guest != true %}
+        if (vault_paypal_payment == 1) {
           flow = "vault";
         }
       {% endif %}
@@ -443,7 +465,7 @@
 
           return;
         } else {
-          submitOrder(payload.nonce);
+          submitOrder(payload.nonce, vault_paypal_payment);
         }
       });
     });
@@ -606,7 +628,7 @@
     $('#braintree-vaulted').submit();
   }
 
-  function submitOrder(nonce) {
+  function submitOrder(nonce, vault_payment) {
     $('#braintree-choose').hide();
     $('#braintree-loading').show();
 

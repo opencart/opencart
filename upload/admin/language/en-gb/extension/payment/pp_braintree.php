@@ -3,11 +3,12 @@
 $_['heading_title']					 = 'PayPal (Powered by Braintree)';
 
 // Text
+$_['text_extension']		 		 = 'Extensions';
 $_['text_pp_braintree']				 = '<img src="view/image/payment/paypal.png" alt="PayPal (Powered by Braintree)" title="PayPal (Powered by Braintree)" style="border: 1px solid #EEEEEE;" />';
 $_['text_payment']					 = 'Payment';
 $_['text_success']					 = 'Success: You have modified Braintree account details!';
 $_['text_success_connect']			 = 'Success: You have connected your PayPal (Powered by Braintree) account!';
-$_['text_edit']						 = 'Edit Braintree';
+$_['text_edit']						 = 'Edit PayPal (Powered by Braintree)';
 $_['text_production']				 = 'Production';
 $_['text_sandbox']					 = 'Sandbox';
 $_['text_currency']					 = 'Currency';
@@ -42,7 +43,7 @@ $_['text_paypal_small']		 		 = 'Small';
 $_['text_paypal_medium']		 	 = 'Medium';
 $_['text_paypal_pill']		 		 = 'Pill';
 $_['text_paypal_rectangular']		 = 'Rectangular';
-$_['text_paypal_preview']		 	 = 'Button preview';
+$_['text_paypal_preview']		 	 = 'Button preview<br />Save to view changes';
 $_['text_braintree_learn']		 	 = 'To start accepting credit/debit cards and PayPal, click Connect with Braintree. <a href="https://www.braintreepayments.com/partners/learn-more" target="_blank">Learn more</a>';
 $_['text_3ds']		 	 			 = '3D Secure';
 $_['text_cvv']		 	 			 = 'CVV Number';
@@ -90,7 +91,10 @@ $_['entry_public_key']				 = 'Public Key';
 $_['entry_private_key']				 = 'Private Key';
 $_['entry_environment']				 = 'Environment';
 $_['entry_settlement_type']			 = 'Settlement Type';
-$_['entry_vault']					 = 'Enable vault';
+$_['entry_card_vault']				 = 'Enable card vault';
+$_['entry_card_check_vault']		 = 'Card vault is pre-checked';
+$_['entry_paypal_vault']			 = 'Enable PayPal vault';
+$_['entry_paypal_check_vault']		 = 'PayPal vault is pre-checked';
 $_['entry_vault_cvv_3ds']			 = 'Require CVV2 or 3D secure?';
 $_['entry_debug']					 = 'Debug Logging';
 $_['entry_total']					 = 'Total';
@@ -140,7 +144,10 @@ $_['entry_3ds_error'] 					= 'Authentication Error<br />Default: Accept';
 
 // Help
 $_['help_settlement_type']			 = 'Immediate will Submit For Settlement straight away. Deferred will set the transaction to Authorized and the merchant must Submit For Settlement manually in the OpenCart order details.';
-$_['help_vault']					 = 'Allow customer to remember their credit card or PayPal account';
+$_['help_card_vault']				 = 'Allow customer to remember their card';
+$_['help_paypal_vault']				 = 'Allow customer to remember their PayPal account';
+$_['help_card_check_vault']			 = 'The checkbox for card vault is already checked when the page loads';
+$_['help_paypal_check_vault']		 = 'The checkbox for PayPal vault is already checked when the page loads';
 $_['help_vault_cvv_3ds']			 = 'This will require customers using a vaulted card to re-enter the CVV2 number or use 3D secure. It is not possible to enable both options for a vaulted card.';
 $_['help_debug']					 = 'Enabling debug will write sensitive data to a log file. You should always disable unless instructed otherwise';
 $_['help_total']					 = 'The checkout total the order must reach before this payment method becomes active';

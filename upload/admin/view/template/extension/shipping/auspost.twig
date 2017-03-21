@@ -25,6 +25,15 @@
       </div>
       <div class="panel-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-shipping" class="form-horizontal">
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-postcode">{{ entry_api }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="shipping_auspost_api" value="{{ shipping_auspost_api }}" placeholder="{{ entry_api }}" id="input-api"class="form-control" maxlength="40" />
+              {% if error_api %}
+              <div class="text-danger">{{ error_api }}</div>
+              {% endif %}
+            </div>
+          </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-postcode">{{ entry_postcode }}</label>
             <div class="col-sm-10">
@@ -32,48 +41,6 @@
               {% if error_postcode %}
               <div class="text-danger">{{ error_postcode }}</div>
               {% endif %}
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-standard">{{ entry_standard }}</label>
-            <div class="col-sm-10">
-              <select name="shipping_auspost_standard" id="input-standard" class="form-control">
-                {% if shipping_auspost_standard %}
-                <option value="1" selected="selected">{{ text_enabled }}</option>
-                <option value="0">{{ text_disabled }}</option>
-                {% else %}
-                <option value="1">{{ text_enabled }}</option>
-                <option value="0" selected="selected">{{ text_disabled }}</option>
-                {% endif %}
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-express">{{ entry_express }}</label>
-            <div class="col-sm-10">
-              <select name="shipping_auspost_express" id="input-express" class="form-control">
-                {% if shipping_auspost_express %}
-                <option value="1" selected="selected">{{ text_enabled }}</option>
-                <option value="0">{{ text_disabled }}</option>
-                {% else %}
-                <option value="1">{{ text_enabled }}</option>
-                <option value="0" selected="selected">{{ text_disabled }}</option>
-                {% endif %}
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-display-time"><span data-toggle="tooltip" title="{{ help_display_time }}">{{ entry_display_time }}</span></label>
-            <div class="col-sm-10">
-              <select name="shipping_auspost_display_time" id="input-display-time" class="form-control">
-                {% if shipping_auspost_display_time %}
-                <option value="1" selected="selected">{{ text_enabled }}</option>
-                <option value="0">{{ text_disabled }}</option>
-                {% else %}
-                <option value="1">{{ text_enabled }}</option>
-                <option value="0" selected="selected">{{ text_disabled }}</option>
-                {% endif %}
-              </select>
             </div>
           </div>
           <div class="form-group">

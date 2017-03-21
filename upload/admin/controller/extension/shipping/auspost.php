@@ -18,24 +18,21 @@ class ControllerExtensionShippingAusPost extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_all_zones'] = $this->language->get('text_all_zones');
 		$data['text_none'] = $this->language->get('text_none');
 
+		$data['entry_api'] = $this->language->get('entry_api');
 		$data['entry_postcode'] = $this->language->get('entry_postcode');
-		$data['entry_standard'] = $this->language->get('entry_standard');
-		$data['entry_express'] = $this->language->get('entry_express');
-		$data['entry_display_time'] = $this->language->get('entry_display_time');
 		$data['entry_weight_class'] = $this->language->get('entry_weight_class');
 		$data['entry_tax_class'] = $this->language->get('entry_tax_class');
 		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
-		$data['help_display_time'] = $this->language->get('help_display_time');
 		$data['help_weight_class'] = $this->language->get('help_weight_class');
 
 		$data['button_save'] = $this->language->get('button_save');
@@ -45,6 +42,12 @@ class ControllerExtensionShippingAusPost extends Controller {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
 			$data['error_warning'] = '';
+		}
+
+		if (isset($this->error['api'])) {
+			$data['error_api'] = $this->error['api'];
+		} else {
+			$data['error_api'] = '';
 		}
 
 		if (isset($this->error['postcode'])) {
@@ -80,22 +83,10 @@ class ControllerExtensionShippingAusPost extends Controller {
 			$data['auspost_postcode'] = $this->config->get('auspost_postcode');
 		}
 
-		if (isset($this->request->post['auspost_standard'])) {
-			$data['auspost_standard'] = $this->request->post['auspost_standard'];
+		if (isset($this->request->post['auspost_api'])) {
+			$data['auspost_api'] = $this->request->post['auspost_api'];
 		} else {
-			$data['auspost_standard'] = $this->config->get('auspost_standard');
-		}
-
-		if (isset($this->request->post['auspost_express'])) {
-			$data['auspost_express'] = $this->request->post['auspost_express'];
-		} else {
-			$data['auspost_express'] = $this->config->get('auspost_express');
-		}
-
-		if (isset($this->request->post['auspost_display_time'])) {
-			$data['auspost_display_time'] = $this->request->post['auspost_display_time'];
-		} else {
-			$data['auspost_display_time'] = $this->config->get('auspost_display_time');
+			$data['auspost_api'] = $this->config->get('auspost_api');
 		}
 
 		if (isset($this->request->post['auspost_weight_class_id'])) {
@@ -150,6 +141,10 @@ class ControllerExtensionShippingAusPost extends Controller {
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'extension/shipping/auspost')) {
 			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		if (empty($this->request->post['auspost_api'])) {
+			$this->error['api'] = $this->language->get('error_api');
 		}
 
 		if (!preg_match('/^[0-9]{4}$/', $this->request->post['auspost_postcode'])) {

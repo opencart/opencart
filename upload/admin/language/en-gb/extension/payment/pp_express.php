@@ -26,6 +26,7 @@ $_['text_preferred_li_4']			 = 'Use in-context checkout so a user never has to l
 $_['text_connect_paypal']			 = 'Connect with PayPal';
 $_['text_incontext_not_supported']	 = '* Not supported with In-Context Checkout';
 $_['text_retrieve']	 				 = 'Your details have been entered from PayPal';
+$_['text_enable_button']			 = 'To enable the checkout shortcut payment button and go to the layout manager, click enable.<br />In the layout manager, choose the area(s) to add the button.';
 
 // Entry
 $_['entry_username']				 = 'API Username';
@@ -38,7 +39,7 @@ $_['entry_ipn']						 = 'IPN URL';
 $_['entry_test']					 = 'Test (Sandbox) Mode';
 $_['entry_debug']					 = 'Debug logging';
 $_['entry_currency']				 = 'Default currency';
-$_['entry_recurring_cancel']	     = 'Allow customers to cancel recurring payments';
+$_['entry_recurring_cancel']	     = 'Allow customers to cancel recurring payments from account area';
 $_['entry_transaction']		         = 'Settlement Type';
 $_['entry_total']					 = 'Total';
 $_['entry_geo_zone']				 = 'Geo Zone';

@@ -24,6 +24,8 @@ class ControllerExtensionModulePPButton extends Controller {
 		$data['text_info_li1'] = $this->language->get('text_info_li1');
 		$data['text_info_li2'] = $this->language->get('text_info_li2');
 		$data['text_info_li3'] = $this->language->get('text_info_li3');
+		$data['text_layouts'] = $this->language->get('text_layouts');
+		$data['text_layout_link'] = $this->language->get('text_layout_link');
 
 		$data['entry_status'] = $this->language->get('entry_status');
 
@@ -54,8 +56,8 @@ class ControllerExtensionModulePPButton extends Controller {
 		);
 
 		$data['action'] = $this->url->link('extension/module/pp_button', 'token=' . $this->session->data['token'], true);
-
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
+		$data['layouts'] = $this->url->link('design/layout', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['pp_button_status'])) {
 			$data['pp_button_status'] = $this->request->post['pp_button_status'];
@@ -68,6 +70,35 @@ class ControllerExtensionModulePPButton extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('extension/module/pp_button', $data));
+	}
+
+	public function install() {
+		$this->load->model('setting/setting');
+
+		$settings['pp_button_status'] = 1;
+
+		$this->model_setting_setting->editSetting('pp_button', $settings);
+	}
+
+	public function configure() {
+		$this->load->language('extension/extension/module');
+
+		if (!$this->user->hasPermission('modify', 'extension/extension/module')) {
+			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
+		} else {
+			$this->load->model('extension/extension');
+			$this->load->model('extension/module');
+			$this->load->model('user/user_group');
+
+			$this->model_extension_extension->install('module', 'pp_button');
+
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/module/pp_button');
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/module/pp_button');
+
+			$this->install();
+
+			$this->response->redirect($this->url->link('design/layout', 'token=' . $this->session->data['token'], true));
+		}
 	}
 
 	protected function validate() {

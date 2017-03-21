@@ -38,6 +38,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$data['text_show_quick_setup'] = $this->language->get('text_show_quick_setup');
 		$data['text_paypal_consent'] = $this->language->get('text_paypal_consent');
 		$data['text_incontext_not_supported'] = $this->language->get('text_incontext_not_supported');
+		$data['text_enable_button'] = $this->language->get('text_enable_button');
 
 		$data['error_consent'] = $this->language->get('error_consent');
 
@@ -81,6 +82,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_search'] = $this->language->get('button_search');
+		$data['button_enable'] = $this->language->get('button_enable');
 
 		$data['tab_api'] = $this->language->get('tab_api');
 		$data['tab_general'] = $this->language->get('tab_general');
@@ -88,6 +90,8 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$data['tab_checkout'] = $this->language->get('tab_checkout');
 
 		$data['token'] = $this->session->data['token'];
+
+		$data['button_configure'] = $this->url->link('extension/module/pp_button/configure', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];

@@ -24,13 +24,16 @@
         <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
       </div>
       <div class="panel-body">
-        <div class="alert alert-info">
-          <p><strong>{{ text_info }}</strong></p>
-          <ul>
-            <li>{{ text_info_li1 }}</li>
-            <li>{{ text_info_li2 }}</li>
-            <li>{{ text_info_li3 }}</li>
-          </ul>
+        <div class="row">
+          <div class="col-sm-12">
+            <p><strong>{{ text_info }}</strong></p>
+            <ul>
+              <li>{{ text_info_li1 }}</li>
+              <li>{{ text_info_li2 }}</li>
+              <li>{{ text_info_li3 }}</li>
+            </ul>
+            <p>{{ text_layouts }} <a href="{{ layouts }}">{{ text_layout_link }}</a></p>
+          </div>
         </div>
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-pp-layout" class="form-horizontal">
           <div class="form-group">

@@ -65,6 +65,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$data['text_accept'] = $this->language->get('text_accept');
 		$data['text_decline'] = $this->language->get('text_decline');
 		$data['text_merchant_connected'] = $this->language->get('text_merchant_connected');
+		$data['text_enable_button'] = $this->language->get('text_enable_button');
 
 		$data['column_transaction_id'] = $this->language->get('column_transaction_id');
 		$data['column_amount'] = $this->language->get('column_amount');
@@ -144,6 +145,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_filter'] = $this->language->get('button_filter');
+		$data['button_enable'] = $this->language->get('button_enable');
 
 		$data['tab_setting'] = $this->language->get('tab_setting');
 		$data['tab_currency'] = $this->language->get('tab_currency');
@@ -152,6 +154,8 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$data['tab_transaction'] = $this->language->get('tab_transaction');
 		$data['tab_vault'] = $this->language->get('tab_vault');
 		$data['tab_paypal'] = $this->language->get('tab_paypal');
+
+		$data['button_configure'] = $this->url->link('extension/module/pp_braintree_button/configure', 'token=' . $this->session->data['token'], true);
 
 		$data['token'] = $this->session->data['token'];
 

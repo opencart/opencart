@@ -306,10 +306,10 @@ class ControllerSettingSetting extends Controller {
 			$data['error_complete_status'] = '';
 		}
 
-		if (isset($this->error['error_filename'])) {
-			$data['error_error_filename'] = $this->error['error_filename'];
+		if (isset($this->error['error_log'])) {
+			$data['error_log'] = $this->error['error_log'];
 		} else {
-			$data['error_error_filename'] = '';
+			$data['error_log'] = '';
 		}
 
 		if (isset($this->error['limit_admin'])) {
@@ -1126,15 +1126,15 @@ class ControllerSettingSetting extends Controller {
 		if (!isset($this->request->post['config_complete_status'])) {
 			$this->error['complete_status'] = $this->language->get('error_complete_status');
 		}
-
+		
 		if (!$this->request->post['config_error_filename']) {
-			$this->error['error_filename'] = $this->language->get('error_error_filename');
-		} else {
-			if (preg_match('/\.\.[\/\\\]?/', $this->request->post['config_error_filename'])) {
-				$this->error['error_filename'] = $this->language->get('error_malformed_filename');
-			}
+			$this->error['error_log'] = $this->language->get('error_log_required');
+		} elseif (preg_match('/\.\.[\/\\\]?/', $this->request->post['config_error_filename'])) {
+			$this->error['error_log'] = $this->language->get('error_log_invalid');
+		} elseif (substr($this->request->post['config_error_filename'], strrpos($this->request->post['config_error_filename'], '.')) != '.log') {
+			$this->error['error_log'] = $this->language->get('error_log_extension');
 		}
-
+		
 		if ((utf8_strlen($this->request->post['config_encryption']) < 32) || (utf8_strlen($this->request->post['config_encryption']) > 1024)) {
 			$this->error['encryption'] = $this->language->get('error_encryption');
 		}

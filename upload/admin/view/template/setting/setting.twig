@@ -1330,15 +1330,15 @@
                       {% else %}
                       <input type="radio" name="config_error_log" value="0" />
                       {{ text_no }}
-                      {% endif %} </label>
+                      {% endif %}</label>
                   </div>
                 </div>
                 <div class="form-group required">
                   <label class="col-sm-2 control-label" for="input-error-filename">{{ entry_error_filename }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="config_error_filename" value="{{ config_error_filename }}" placeholder="{{ entry_error_filename }}" id="input-error-filename" class="form-control" />
-                    {% if error_error_filename %}
-                    <div class="text-danger">{{ error_error_filename }}</div>
+                    {% if error_log %}
+                    <div class="text-danger">{{ error_log }}</div>
                     {% endif %} </div>
                 </div>
               </fieldset>

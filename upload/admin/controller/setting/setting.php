@@ -306,8 +306,8 @@ class ControllerSettingSetting extends Controller {
 			$data['error_complete_status'] = '';
 		}
 
-		if (isset($this->error['error_log'])) {
-			$data['error_log'] = $this->error['error_log'];
+		if (isset($this->error['log'])) {
+			$data['error_log'] = $this->error['log'];
 		} else {
 			$data['error_log'] = '';
 		}
@@ -1128,11 +1128,11 @@ class ControllerSettingSetting extends Controller {
 		}
 		
 		if (!$this->request->post['config_error_filename']) {
-			$this->error['error_log'] = $this->language->get('error_log_required');
+			$this->error['log'] = $this->language->get('error_log_required');
 		} elseif (preg_match('/\.\.[\/\\\]?/', $this->request->post['config_error_filename'])) {
-			$this->error['error_log'] = $this->language->get('error_log_invalid');
+			$this->error['log'] = $this->language->get('error_log_invalid');
 		} elseif (substr($this->request->post['config_error_filename'], strrpos($this->request->post['config_error_filename'], '.')) != '.log') {
-			$this->error['error_log'] = $this->language->get('error_log_extension');
+			$this->error['log'] = $this->language->get('error_log_extension');
 		}
 		
 		if ((utf8_strlen($this->request->post['config_encryption']) < 32) || (utf8_strlen($this->request->post['config_encryption']) > 1024)) {

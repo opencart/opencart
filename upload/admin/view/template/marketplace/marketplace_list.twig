@@ -39,14 +39,18 @@
         </div>
         <div class="row">
           <div class="col-sm-9 col-xs-7">
+            
             <div class="btn-group">{% for license in licenses %}
               {% if license.value == filter_license %}<a href="{{ license.href }}" class="btn btn-default active">{{ license.text }}</a>{% else %}<a href="{{ license.href }}" class="btn btn-default">{{ license.text }}</a>{% endif %}
               {% endfor %}</div>
+              
+              <a href="{{ license.href }}" class="btn btn-default">My Purchases</a>
           </div>
           <div class="col-sm-3 col-xs-5">
             <div class="input-group pull-right">
               <div class="input-group-addon"><i class="fa fa-sort-amount-asc"></i></div>
               <select onchange="location = this.value;" class="form-control">
+                
                 
                 
 
@@ -56,7 +60,9 @@
 
                 
                 
+                
                 <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
+                
                 
                 
 
@@ -64,7 +70,9 @@
 
                 
                 
+                
                 <option value="{{ sorts.href }}">{{ sorts.text }}</option>
+                
                 
                 
 
@@ -73,14 +81,41 @@
 
               
               
+              
               </select>
             </div>
           </div>
         </div>
         <br />
-        
-        
-        
+        {% if promotions %}
+        <div id="extension-list">{% for row in promotions|batch(4, '') %}
+          <div class="row">{% for extension in row %}
+            {% if extension %}
+            <div class="col-sm-3">
+              <section>
+                <div class="extension-preview"><a href="{{ extension.href }}">
+                  <div class="extension-description"></div>
+                  <img src="{{ extension.image }}" alt="{{ extension.name }}" title="{{ extension.name }}" class="img-responsive" /></a></div>
+                <div class="extension-name">
+                  <h4><a href="{{ extension.href }}">{{ extension.name }}</a></h4>
+                  {{ extension.price }}</div>
+                <div class="extension-rate">
+                  <div class="row">
+                    <div class="col-xs-6">{% for i in 1..5 %}
+                      {% if extension.rating >= i %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
+                      {% endfor %}</div>
+                    <div class="col-xs-6">
+                      <div class="text-right">{{ extension.comment_total }}</div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+            {% endif %}
+            {% endfor %}</div>
+          {% endfor %}</div>
+        <br />
+        {% endif %}
         {% if extensions %}
         <div id="extension-list">{% for row in extensions|batch(4, '') %}
           <div class="row">{% for extension in row %}
@@ -111,9 +146,9 @@
           <div class="row">
             <div class="col-sm-12 text-center">{{ pagination }}</div>
           </div>
-          {% else %}
-          <div>{{ no_results }}</div>
         </div>
+        {% else %}
+        <div>{{ no_results }}</div>
         {% endif %}</div>
     </div>
   </div>

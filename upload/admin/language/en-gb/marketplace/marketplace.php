@@ -43,4 +43,5 @@ $_['tab_comment']        = 'Comment';
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify extensions!';
 $_['error_api']          = 'Warning: OpenCart extension OPENCART_USERNAME / OPENCART_SECRET has not been set in config.php!';
+$_['error_purchase']     = 'Extension could not be purchased!';
 $_['error_download']     = 'Extension could not be downloaded!';

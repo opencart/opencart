@@ -207,7 +207,7 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
 			}
 
 			if (json['success']) {
-				$('#tab-download').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('#modal-purchase').modal('hide');
 				
@@ -219,7 +219,6 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
 		}
 	});
 });
-
 // Install
 $('#tab-download').on('click', '.btn-primary', function(e) {
 	e.preventDefault();

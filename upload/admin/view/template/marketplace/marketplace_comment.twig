@@ -7,9 +7,8 @@
     <p>{{ comment.comment }}</p>
     <div class="reply">
       <div class="reply-box">
-        <div> {% if comment.reply %}
-          
-          
+        <div>
+          {% if comment.reply %}
           
           {% for reply in comment.reply %}
           <div class="media">
@@ -21,17 +20,13 @@
           </div>
           {% endfor %}
           
-          
           {% if comment.next %}
           <div class="text-center"><a href="{{ comment.next }}" class="btn btn-block">see more replies...</a></div>
           {% endif %}
           
+          {% endif %}
           
-          
-          
-          
-          
-          {% endif %}<a href="{{ comment.refresh }}" class="reply-refresh hide">refresh</a> </div>
+          <a href="{{ comment.refresh }}" class="reply-refresh hide">refresh</a></div>
       </div>
       <p class="text-right">{% if logged %}
         <button type="button" data-toggle="tooltip" data-title="Reply" class="btn btn-link btn-sm">Reply</button>

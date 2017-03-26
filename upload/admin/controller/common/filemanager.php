@@ -385,7 +385,7 @@ class ControllerCommonFileManager extends Controller {
 
 				// If path is a directory beging deleting each file and sub folder
 				} elseif (is_dir($path)) {
-					$this->delTree($path);
+					$this->deleteDirectory($path);
 				}
 			}
 
@@ -396,10 +396,10 @@ class ControllerCommonFileManager extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 	
-	private function delTree($dir) {
+	private function deleteDirectory($dir) {
 		$files = array_diff(scandir($dir), array( '.', '..' ));
 		foreach ($files as $file) {
-			(is_dir("$dir/$file")) ? $this->delTree("$dir/$file") : unlink("$dir/$file");
+			(is_dir("$dir/$file")) ? $this->deleteDirectory("$dir/$file") : unlink("$dir/$file");
 		}
 		return rmdir($dir);
 	}

@@ -29,8 +29,4 @@ $_['action_pre_action'] = array(
 $_['action_default'] = 'common/dashboard';
 
 // Action Events
-$_['action_event'] = array(
-    'view/*/before' => array(
-		'event/theme'
-	)
-);
+$_['action_event'] = array();

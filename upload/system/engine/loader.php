@@ -146,7 +146,7 @@ final class Loader {
 			$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 			
 			// Trigger the pre events
-			$result = $registry->get('event')->trigger('model/' . $route . '/before', array($route, &$args));
+			$result = $registry->get('event')->trigger('model/' . $route . '/before', array(&$route, &$args));
 			
 			if ($result) {
 				$output = $result;
@@ -172,7 +172,7 @@ final class Loader {
 			}
 			
 			// Trigger the post events
-			$result = $registry->get('event')->trigger('model/' . $route . '/after', array($route, &$args, &$output));
+			$result = $registry->get('event')->trigger('model/' . $route . '/after', array(&$route, &$args, &$output));
 			
 			if ($result) {
 				$output = $result;

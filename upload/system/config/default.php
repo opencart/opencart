@@ -45,7 +45,7 @@ $_['session_autostart']    = true;
 $_['session_name']         = 'PHPSESSID';
 
 // Template
-$_['template_engine']      = 'php';
+$_['template_engine']      = 'twig';
 
 // Error
 $_['error_display']        = true;

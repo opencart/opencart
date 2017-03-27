@@ -11,7 +11,7 @@ final class Router {
 	public function addPreAction(Action $pre_action) {
 		$this->pre_action[] = $pre_action;
 	}
-	
+		
 	public function dispatch(Action $action, Action $error) {
 		$this->error = $error;
 

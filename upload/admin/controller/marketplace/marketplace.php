@@ -540,12 +540,16 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$data['text_compatibility'] = $this->language->get('text_compatibility');
 			$data['text_date_added'] = $this->language->get('text_date_added');
 			$data['text_date_modified'] = $this->language->get('text_date_modified');
+			$data['text_comment'] = $this->language->get('text_comment');
+			$data['text_comment_add'] = $this->language->get('text_comment_add');
+			$data['text_write'] = $this->language->get('text_write');
 
 			$data['entry_pin'] = $this->language->get('entry_pin');
 
 			$data['button_buy'] = $this->language->get('button_buy');
 			$data['button_install'] = $this->language->get('button_install');
 			$data['button_cancel'] = $this->language->get('button_cancel');
+			$data['button_comment'] = $this->language->get('button_comment');
 
 			$data['tab_general'] = $this->language->get('tab_general');
 			$data['tab_documentation'] = $this->language->get('tab_documentation');
@@ -708,7 +712,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$url .= '&version=' . VERSION;
 			$url .= '&extension_id=' . $extension_id;
 			$url .= '&time=' . $time;
-			$url .= '&signature=' .  rawurlencode($signature);
+			$url .= '&signature=' . rawurlencode($signature);
 
 			//$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/purchase' . $url);
 			$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api/purchase' . $url);
@@ -775,9 +779,9 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$url .= '&version=' . VERSION;
 			$url .= '&extension_download_id=' . $extension_download_id;
 			$url .= '&time=' . $time;
-			$url .= '&signature=' .  rawurlencode($signature);
+			$url .= '&signature=' . rawurlencode($signature);
 	
-			//$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/download&extension_download_id=' . $extension_download_id);
+			//$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/download&extension_download_id=' . $extension_download_id . $url);
 			$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api/download&extension_download_id=' . $extension_download_id . $url);
 			
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
@@ -815,6 +819,81 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$this->response->setOutput(json_encode($json));		
 	}
 
+	public function addComment() {
+		$this->load->language('marketplace/marketplace');
+
+		$json = array();
+
+		if (isset($this->request->get['extension_id'])) {
+			$extension_id = $this->request->get['extension_id'];
+		} else {
+			$extension_id = 0;
+		}
+		
+		if (isset($this->request->get['parent_id'])) {
+			$parent_id = $this->request->get['parent_id'];
+		} else {
+			$parent_id = 0;
+		}
+		
+		if (!$this->user->hasPermission('modify', 'marketplace/marketplace')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+		
+		if (!defined('OPENCART_USERNAME') || !defined('OPENCART_SECRET') || !OPENCART_USERNAME || !OPENCART_SECRET) {
+			$json['error'] = $this->language->get('error_api');
+		}
+			
+		if (!$json) {	
+			$time = time() + 30;
+
+			// We create a hash from the data in a similar method to how amazon does things.
+			$string  = 'marketplace/api/addcomment' . "\n";
+			$string .= OPENCART_USERNAME . "\n";
+			$string .= $this->request->server['HTTP_HOST'] . "\n";
+			$string .= VERSION . "\n";
+			$string .= $extension_id . "\n";
+			$string .= $parent_id . "\n";
+			$string .= $time . "\n";
+
+			$signature = base64_encode(hash_hmac('sha1', $string, OPENCART_SECRET, 1));
+
+			$url  = '&username=' . OPENCART_USERNAME;
+			$url .= '&domain=' . $this->request->server['HTTP_HOST'];
+			$url .= '&version=' . VERSION;
+			$url .= '&extension_id=' . $extension_id;
+			$url .= '&parent_id=' . $parent_id;
+			$url .= '&time=' . $time;
+			$url .= '&signature=' . rawurlencode($signature);	
+
+			//$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/addcomment&extension_id=' . $extension_id);
+			$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api/addComment');
+			
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+		
+			$response = curl_exec($curl);
+		
+			curl_close($curl); 
+		
+			$response_info = json_decode($response, true);
+			
+			if (isset($response_info['success'])) {
+				$json['success'] = $response_info['success'];
+			} elseif (isset($response_info['error'])) {
+				$json['error'] = $response_info['error'];
+			} else {
+				$json['error'] = $this->language->get('error_comment');
+			}
+		}
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));	
+	}
+
 	public function comment() {
 		$this->load->language('marketplace/marketplace');
 		
@@ -830,8 +909,8 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$page = 1;
 		}
 		
-		//$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/comment&extension_id=' . $extension_id . '&signature=' .  rawurlencode($signature));
-		$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api/download&extension_download_id=' . $extension_download_id);
+		//$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/comment&extension_id=' . $extension_id);
+		$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api/comment&extension_id=' . $extension_id);
 		
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -895,93 +974,5 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$data['comment_image'] = ($this->request->server['HTTPS'] ? 'https://' : 'http://') . '//image.opencart.com/cache/' . substr($image, 0, strrpos($image, '.')) . '-resize-' . $this->config->get('config_image_member_width') . 'x' .  $this->config->get('config_image_member_height') . '.jpg';
 
 		$this->response->setOutput($this->load->view('marketplace/extension_comment', $data));
-	}
-
-	public function addComment() {
-		$this->load->language('marketplace/marketplace');
-
-		$json = array();
-
-		if (isset($this->request->get['extension_id'])) {
-			$extension_id = $this->request->get['extension_id'];
-		} else {
-			$extension_id = 0;
-		}
-		
-		if (isset($this->request->get['parent_id'])) {
-			$parent_id = $this->request->get['parent_id'];
-		} else {
-			$parent_id = 0;
-		}
-			
-		if (!defined('OPENCART_USERNAME') || !defined('OPENCART_SECRET') || !OPENCART_USERNAME || !OPENCART_SECRET) {
-			$json['error'] = $this->language->get('error_api');
-		}
-				
-		//$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/addcomment&extension_id=' . $extension_id . '&signature=' .  rawurlencode($signature));
-		$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api/download&extension_download_id=' . $extension_download_id);
-		
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
-		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
-
-		$response = curl_exec($curl);
-
-		curl_close($curl); 
-
-		$json = json_decode($response, true);
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-		
-		
-		
-		
-		
-		
-		
-		
-		$json = array();
-		
-		$this->load->model('marketplace/extension');
-
-		if (isset($this->request->get['extension_id'])) {
-			$extension_id = $this->request->get['extension_id'];
-		} else {
-			$extension_id = 0;
-		}
-		
-		if (isset($this->request->get['parent_id'])) {
-			$parent_id = $this->request->get['parent_id'];
-		} else {
-			$parent_id = 0;
-		}	
-							
-		$extension_info = $this->model_marketplace_extension->getExtension($extension_id);
-
-		if ($extension_info) {
-			if (!$this->member->isLogged()) {
-				$json['error'] = 'Warning: You must be logged into comment!';	
-			}	
-
-			if (!isset($this->request->get['member_token']) || !isset($this->session->data['member_token']) || ($this->request->get['member_token'] != $this->session->data['member_token'])) {
-				$json['error'] = 'Invalid token session. Please login again.';
-			}	
-						
-			if (!isset($this->request->post['comment']) || (utf8_strlen($this->request->post['comment']) < 2) || (utf8_strlen($this->request->post['comment']) > 1000)) {
-				$json['error'] = 'Error: Comment must be greater than 2 and less than 1000 characters!';
-			}
-			
-			if (!$json) {
-				$this->model_marketplace_extension->addExtensionComment($extension_id, $parent_id, $this->request->post['comment']);
-
-				$json['success'] = 'Thank you for your comment!';
-			}		
-		}
-		
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));	
-	}
+	}	
 }

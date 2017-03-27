@@ -10,10 +10,8 @@ final class Loader {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 		
-		$trigger = $route;
-		
 		// Trigger the pre events
-		$result = $this->registry->get('event')->trigger('controller/' . $trigger . '/before', array($route, &$data));
+		$result = $this->registry->get('event')->trigger('controller/' . $route . '/before', array($route, &$data));
 		
 		// Make sure its only the last event that returns an output if required.
 		if ($result) {
@@ -24,7 +22,7 @@ final class Loader {
 		}
 		
 		// Trigger the post events
-		$result = $this->registry->get('event')->trigger('controller/' . $trigger . '/after', array($route, &$data, &$output));
+		$result = $this->registry->get('event')->trigger('controller/' . $route . '/after', array($route, &$data, &$output));
 		
 		if ($result) {
 			$output = $result;
@@ -60,15 +58,11 @@ final class Loader {
 	}
 
 	public function view($route, $data = array()) {
-		echo $route . '<br>';
-		
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 		
-		$trigger = $route;
-		
 		// Trigger the pre events
-		$result = $this->registry->get('event')->trigger('view/' . $trigger . '/before', array(&$route, &$data));
+		$result = $this->registry->get('event')->trigger('view/' . $route . '/before', array(&$route, &$data));
 		
 		// Make sure its only the last event that returns an output if required.
 		if ($result) {
@@ -84,7 +78,7 @@ final class Loader {
 		}
 		
 		// Trigger the post events
-		$result = $this->registry->get('event')->trigger('view/' . $trigger . '/after', array(&$route, &$data, &$output));
+		$result = $this->registry->get('event')->trigger('view/' . $route . '/after', array(&$route, &$data, &$output));
 		
 		if ($result) {
 			$output = $result;
@@ -128,7 +122,7 @@ final class Loader {
 	}
 
 	public function language($route) {
-		$result = $this->registry->get('event')->trigger('language/' . $route . '/before', array($route, &$output));
+		$result = $this->registry->get('event')->trigger('language/' . $route . '/before', array($route));
 		
 		if ($result) {
 			$output = $result;
@@ -151,8 +145,6 @@ final class Loader {
 			
 			$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 			
-			$trigger = $route;
-			
 			// Trigger the pre events
 			$result = $registry->get('event')->trigger('model/' . $route . '/before', array($route, &$args));
 			
@@ -170,7 +162,7 @@ final class Loader {
 				
 				$method = substr($route, strrpos($route, '/') + 1);
 				
-				$callable = array($model[$route], $method);
+				$callable = array($model[$key], $method);
 	
 				if (is_callable($callable)) {
 					$output = call_user_func_array($callable, $args);

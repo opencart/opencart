@@ -101,7 +101,7 @@ $_['action_event'] = array(
 		'mail/affiliate',
 		'mail/affiliate/alert',
 		// Activity
-		//'event/activity/addAffiliate'
+		'event/activity/addAffiliate'
 	),	
 	'model/account/customer/editAffiliate/after' => array(
 		'event/activity/editAffiliate'

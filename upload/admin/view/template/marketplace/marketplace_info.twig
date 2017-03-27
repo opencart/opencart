@@ -82,17 +82,17 @@
               </div>
               <div id="tab-comment" class="tab-pane">
                 <fieldset>
-                  <legend>Leave your comment</legend>
+                  <legend>{{ text_comment_add }}</legend>
                   <div class="form-group">
                     <textarea name="comment" rows="5" placeholder="Write your comment here..." id="input-comment" class="form-control"></textarea>
                   </div>
                   <div class="text-right">
-                    <button type="button" id="button-comment" class="btn btn-primary">Comment</button>
+                    <button type="button" id="button-comment" class="btn btn-primary">{{ button_comment }}</button>
                   </div>
-                  <br />
                 </fieldset>
+                <br />
                 <fieldset>
-                  <legend>Comments</legend>
+                  <legend>{{ text_comment }}</legend>
                   <div class="comment"></div>
                 </fieldset>
               </div>
@@ -332,6 +332,134 @@ $('#tab-download').on('click', ' .btn-danger', function(e) {
 				
 				$(element).replaceWith('<button type="button" value="' + $(element).val() + '" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> Install</button>');
 			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+// Add comment
+$('#button-comment').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=marketplace/extension/addcomment&user_token={{ user_token }}&extension_id={{ extension_id }}',
+		type: 'post',
+		dataType: 'json',
+		data: 'comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
+		beforeSend: function() {
+			$('#button-comment').button('loading');
+		},
+		complete: function() {
+			$('#button-comment').button('reset');
+		},
+		success: function(json) {
+			$('.alert').remove();
+			
+			if (json['error']) {
+				$('#tab-comment').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+			
+			if (json['success']) {
+				$('#tab-comment').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+				$('#comment').load('index.php?route=marketplace/extension/comment&extension_id={{ extension_id }}');
+			
+				$('textarea[name=\'comment\']').val('');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+// Next replies
+$('#comment').on('click', '.btn-block', function(e) {
+	e.preventDefault();
+	
+	var element = this;
+	
+	$.ajax({
+		url: $(element).attr('href'),
+		dataType: 'html',
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(html) {
+			$(element).parent().parent().parent().append(html);
+			$(element).parent().remove();
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+// Reply
+$('#comment-box').on('click', '.btn-link', function(e) {
+	e.preventDefault();
+
+	$(this).parent().parent().find('.reply-input-box').toggle();
+});
+
+// Add reply
+$('#comment-box').on('click', '.btn-primary', function(e) {
+	e.preventDefault();
+	
+	var element = this;
+	
+	$.ajax({
+		url: $(element).attr('href'),
+		type: 'post',
+		dataType: 'json',
+		data: 'comment=' + encodeURIComponent($(element).parents('.reply-input-box').find('textarea[name=\'comment\']').val()),		
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(json) {
+			$('.alert').remove();
+			
+			if (json['error']) {
+				$(element).parents('.reply-input-box').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+			
+			if (json['success']) {
+				$(element).parents('.reply-input-box').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+				$(element).parents('.reply-input-box').parents('.media').find('.reply-refresh').last().trigger('click');
+			
+				$(element).parents('.reply-input-box').find('textarea[name=\'comment\']').val('');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+// Refresh
+$('#comment-box').on('click', '.reply-refresh', function(e) {
+	e.preventDefault();
+	
+	var element = this;
+	
+	$.ajax({
+		url: $(element).attr('href'),
+		dataType: 'html',
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(html) {
+			$(element).parent().replaceWith(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

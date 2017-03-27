@@ -165,18 +165,18 @@ if ($config->has('model_autoload')) {
 	}
 }
 
-// Front Controller
-$router = new Router($registry);
+// Route
+$route = new Router($registry);
 
 // Pre Actions
 if ($config->has('action_pre_action')) {
 	foreach ($config->get('action_pre_action') as $value) {
-		$router->addPreAction(new Action($value));
+		$route->addPreAction(new Action($value));
 	}
 }
 
 // Dispatch
-$router->dispatch(new Action($config->get('action_router')), new Action($config->get('action_error')));
+$route->dispatch(new Action($config->get('action_router')), new Action($config->get('action_error')));
 
 // Output
 $response->output();

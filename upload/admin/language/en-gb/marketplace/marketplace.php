@@ -33,6 +33,10 @@ $_['text_sales']         = 'Sales';
 $_['text_comment']       = 'Comments';
 $_['text_download']      = 'Downloading';
 $_['text_install']       = 'Installing';
+$_['text_comment']       = 'Comment';
+$_['text_comment_add']   = 'Leave your comment';
+$_['text_write']         = 'Write your comment here..';
+
 
 // Tab
 $_['tab_description']    = 'Description';

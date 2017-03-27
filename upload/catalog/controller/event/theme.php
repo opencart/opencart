@@ -1,6 +1,6 @@
 <?php
 class ControllerEventTheme extends Controller {
-	public function index(&$view, &$args, &$output) {
+	public function index(&$route, &$args) {
 		if (!$this->config->get('theme_' . $this->config->get('config_theme') . '_status')) {
 			exit('Error: A theme has not been assigned to this store!');
 		}
@@ -11,11 +11,11 @@ class ControllerEventTheme extends Controller {
 		} else {
 			$theme = $this->config->get('config_theme');
 		}		
-		 
+	
 		// If there is a theme override we should get it				
 		$this->load->model('design/theme');
 		
-		$theme_info = $this->model_design_theme->getTheme($view, $theme);
+		$theme_info = $this->model_design_theme->getTheme($route, $theme);
 		
 		if ($theme_info) {
 			// include and register Twig auto-loader
@@ -24,32 +24,26 @@ class ControllerEventTheme extends Controller {
 			Twig_Autoloader::register();	
 
 			// specify where to look for templates
-			$loader = new \Twig_Loader_Filesystem(DIR_TEMPLATE);	
+			$loader = new \Twig_Loader_Filesystem(DIR_TEMPLATE);
 			
 			// initialize Twig environment
 			$twig = new \Twig_Environment($loader, array('autoescape' => false));	
 
 			$template = $twig->createTemplate(html_entity_decode($theme_info['code'], ENT_QUOTES, 'UTF-8'));
 			
-			$output = $template->render($args);
-		} else {
-			if (is_file(DIR_TEMPLATE . $theme . '/template/' . $view . '.twig')) { 
-				$view = $theme . '/template/' . $view;
-				
-				$this->config->set('template_engine', 'twig');
-			} elseif (is_file(DIR_TEMPLATE . 'default/template/' . $view . '.twig')) {
-				$view = 'default/template/' . $view;
-				
-				$this->config->set('template_engine', 'twig');
-			} elseif (is_file(DIR_TEMPLATE . $theme . '/template/' . $view . '.tpl')) {
-				$view = $theme . '/template/' . $view;
-				
-				$this->config->set('template_engine', 'php');
-			} elseif (is_file(DIR_TEMPLATE . 'default/template/' . $view . '.tpl')) {
-				$view = 'default/template/' . $view;
-				
-				$this->config->set('template_engine', 'php');
-			}		
+			return $template->render($args);
+		} elseif (is_file(DIR_TEMPLATE . $theme . '/template/' . $route . '.twig')) { 
+			$route = $theme . '/template/' . $route;
+		} elseif (is_file(DIR_TEMPLATE . 'default/template/' . $route . '.twig')) {
+			$route = 'default/template/' . $route;
 		}
+		
+		$template = new Template($this->registry->get('config')->get('template_engine'));
+			
+		foreach ($args as $key => $value) {
+			$template->set($key, $value);
+		}
+		
+		return $template->render($route);	
 	}
 }

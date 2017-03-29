@@ -1003,7 +1003,9 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 		$response = curl_exec($curl);
 		//echo $response;
-				
+		
+		$json = json_decode($response, true);
+		
 		$data['replies'] = array();
 				
 		$reply_total = $json['reply_total'];
@@ -1022,14 +1024,14 @@ class ControllerMarketplaceMarketplace extends Controller {
 			}
 		}
 		
-		$json['refresh'] = $this->url->link('marketplace/marketplace/reply', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&parent_id=' . $parent_id . '&page=' . $page);
+		$data['refresh'] = $this->url->link('marketplace/marketplace/reply', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&parent_id=' . $parent_id . '&page=' . $page);
 		
 		if (($page * 5) < $reply_total) {
-			$json['next'] = $this->url->link('marketplace/marketplace/reply', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&parent_id=' . $parent_id . '&page=' . ($page + 1));
+			$data['next'] = $this->url->link('marketplace/marketplace/reply', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&parent_id=' . $parent_id . '&page=' . ($page + 1));
 		} else {
-			$json['next'] = '';	
+			$data['next'] = '';	
 		}		
 					
-		$this->response->setOutput($this->load->view('marketplace/extension_reply', $data));
+		$this->response->setOutput($this->load->view('marketplace/marketplace_reply', $data));
 	}
 }

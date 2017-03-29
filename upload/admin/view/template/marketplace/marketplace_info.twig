@@ -382,6 +382,31 @@ $('#button-comment').on('click', function() {
 	});
 });
 
+// Next replies
+$('#comment').on('click', '.btn-block', function(e) {
+	e.preventDefault();
+	
+	var element = this;
+	
+	$.ajax({
+		url: $(element).attr('href'),
+		dataType: 'html',
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(html) {
+			$(element).parent().parent().parent().append(html);
+			$(element).parent().remove();
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
 // Reply
 $('#comment').on('click', '.btn-link', function(e) {
 	e.preventDefault();
@@ -428,7 +453,7 @@ $('#comment').on('click', '.btn-primary', function(e) {
 });
 
 // Refresh
-$('#comment-box').on('click', '.reply-refresh', function(e) {
+$('#comment').on('click', '.reply-refresh', function(e) {
 	e.preventDefault();
 	
 	var element = this;

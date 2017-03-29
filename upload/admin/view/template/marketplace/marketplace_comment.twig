@@ -5,6 +5,7 @@
   <div class="media-body">
     <p class="media-heading">{{ comment.member }} <span>{{ comment.date_added }}</span></p>
     <p>{{ comment.comment }}</p>
+    
     <div class="reply">
       <div class="reply-box">
         <div>
@@ -28,11 +29,9 @@
           
           <a href="{{ comment.refresh }}" class="reply-refresh hide">refresh</a></div>
       </div>
-      <p class="text-right">{% if logged %}
-        <button type="button" data-toggle="tooltip" data-title="Reply" class="btn btn-link btn-sm">Reply</button>
-        {% else %}
-        <button type="button" class="btn btn-link btn-xs" disabled="disabled">Reply</button>
-        {% endif %}</p>
+      
+      <p class="text-right"><button type="button" class="btn btn-link btn-xs">{{ button_reply }}</button></p>
+      
       <div class="reply-input-box" style="display: none;">
         <div class="media">
           <div class="media-left"><img src="{{ comment_image }}" alt="{{ comment_username }}" title="{{ comment_username }}" class="media-object" /></div>
@@ -45,9 +44,10 @@
           </div>
         </div>
       </div>
+      
     </div>
   </div>
 </div>
-{% endfor %} <br />
+{% endfor %}<br />
 <div class="text-center">{{ pagination }}</div>
 {% endif %} 

@@ -14,7 +14,7 @@ final class Loader {
 		$result = $this->registry->get('event')->trigger('controller/' . $route . '/before', array($route, &$data));
 		
 		// Make sure its only the last event that returns an output if required.
-		if ($result) {
+		if ($result != null) {
 			$output = $result;
 		} else {
 			$action = new Action($route);
@@ -24,7 +24,7 @@ final class Loader {
 		// Trigger the post events
 		$result = $this->registry->get('event')->trigger('controller/' . $route . '/after', array($route, &$data, &$output));
 		
-		if ($result) {
+		if ($result != null) {
 			$output = $result;
 		}
 
@@ -65,7 +65,7 @@ final class Loader {
 		$result = $this->registry->get('event')->trigger('view/' . $route . '/before', array(&$route, &$data));
 		
 		// Make sure its only the last event that returns an output if required.
-		if ($result) {
+		if ($result != null) {
 			$output = $result;
 		} else {
 			$template = new Template($this->registry->get('config')->get('template_engine'));
@@ -80,7 +80,7 @@ final class Loader {
 		// Trigger the post events
 		$result = $this->registry->get('event')->trigger('view/' . $route . '/after', array(&$route, &$data, &$output));
 		
-		if ($result) {
+		if ($result != null) {
 			$output = $result;
 		}
 		
@@ -132,7 +132,7 @@ final class Loader {
 		
 		$result = $this->registry->get('event')->trigger('language/' . $route . '/after', array($route, &$output));
 		
-		if ($result) {
+		if ($result != null) {
 			$output = $result;
 		}
 				
@@ -148,7 +148,7 @@ final class Loader {
 			// Trigger the pre events
 			$result = $registry->get('event')->trigger('model/' . $route . '/before', array(&$route, &$args));
 			
-			if ($result) {
+			if ($result != null) {
 				$output = $result;
 			} else {
 				$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', substr($route, 0, strrpos($route, '/')));
@@ -174,7 +174,7 @@ final class Loader {
 			// Trigger the post events
 			$result = $registry->get('event')->trigger('model/' . $route . '/after', array(&$route, &$args, &$output));
 			
-			if ($result) {
+			if ($result != null) {
 				$output = $result;
 			}
 						

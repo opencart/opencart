@@ -93,7 +93,7 @@
                 <br />
                 <fieldset>
                   <legend>{{ text_comment }}</legend>
-                  <div class="comment"></div>
+                  <div id="comment"></div>
                 </fieldset>
               </div>
             </div>
@@ -339,10 +339,19 @@ $('#tab-download').on('click', ' .btn-danger', function(e) {
 	});
 });
 
+$('#comment').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
+
+	$('#comment').load(this.href);
+});
+
+// Comment
+$('#comment').load('index.php?route=marketplace/marketplace/comment&user_token={{ user_token }}&extension_id={{ extension_id }}');
+
 // Add comment
 $('#button-comment').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=marketplace/extension/addcomment&user_token={{ user_token }}&extension_id={{ extension_id }}',
+		url: 'index.php?route=marketplace/marketplace/addcomment&user_token={{ user_token }}&extension_id={{ extension_id }}',
 		type: 'post',
 		dataType: 'json',
 		data: 'comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
@@ -362,7 +371,7 @@ $('#button-comment').on('click', function() {
 			if (json['success']) {
 				$('#tab-comment').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$('#comment').load('index.php?route=marketplace/extension/comment&extension_id={{ extension_id }}');
+				$('#comment').load('index.php?route=marketplace/marketplace/comment&extension_id={{ extension_id }}');
 			
 				$('textarea[name=\'comment\']').val('');
 			}
@@ -373,33 +382,8 @@ $('#button-comment').on('click', function() {
 	});
 });
 
-// Next replies
-$('#comment').on('click', '.btn-block', function(e) {
-	e.preventDefault();
-	
-	var element = this;
-	
-	$.ajax({
-		url: $(element).attr('href'),
-		dataType: 'html',
-		beforeSend: function() {
-			$(element).button('loading');
-		},
-		complete: function() {
-			$(element).button('reset');
-		},
-		success: function(html) {
-			$(element).parent().parent().parent().append(html);
-			$(element).parent().remove();
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
-
 // Reply
-$('#comment-box').on('click', '.btn-link', function(e) {
+$('#comment').on('click', '.btn-link', function(e) {
 	e.preventDefault();
 
 	$(this).parent().parent().find('.reply-input-box').toggle();

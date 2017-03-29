@@ -843,7 +843,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		if (!defined('OPENCART_USERNAME') || !defined('OPENCART_SECRET') || !OPENCART_USERNAME || !OPENCART_SECRET) {
 			$json['error'] = $this->language->get('error_api');
 		}
-			
+					
 		if (!$json) {	
 			$time = time() + 30;
 
@@ -863,6 +863,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$url .= '&version=' . VERSION;
 			$url .= '&extension_id=' . $extension_id;
 			$url .= '&parent_id=' . $parent_id;
+			$url .= '&comment=' . $this->request->post['comment'];
 			$url .= '&time=' . $time;
 			$url .= '&signature=' . rawurlencode($signature);	
 
@@ -898,7 +899,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$this->load->language('marketplace/marketplace');
 		
 		if (isset($this->request->get['extension_id'])) {
-			$extension_id = $this->request->get['extension_id'];
+			$extension_id = (int)$this->request->get['extension_id'];
 		} else {
 			$extension_id = 0;
 		}
@@ -909,8 +910,11 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$page = 1;
 		}
 		
+		$data['button_more'] = $this->language->get('button_more');
+		$data['button_reply'] = $this->language->get('button_reply');
+		
 		//$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/comment&extension_id=' . $extension_id);
-		$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api/comment&extension_id=' . $extension_id);
+		$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api/comment&extension_id=' . $extension_id . '&page=' . $page);
 		
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -919,60 +923,115 @@ class ControllerMarketplaceMarketplace extends Controller {
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
 
 		$response = curl_exec($curl);
+		//echo $response;
 
 		curl_close($curl);
 
 		$json = json_decode($response, true);
-		
-		$this->load->model('marketplace/extension');
 
 		$data['comments'] = array();
 				
-		$comment_total = $this->model_marketplace_extension->getTotalExtensionComments($extension_id);
+		$comment_total = $json['comment_total'];
 
-		$results = $this->model_marketplace_extension->getExtensionComments($extension_id, ($page - 1) * 20, 20);
-		
-		foreach ($results as $result) {
-			if (count($result['reply_total']) > 5) {
-				$next = $this->url->link('marketplace/extension/reply', (isset($this->session->data['member_token']) ? 'member_token=' . $this->session->data['member_token'] : '') . '&extension_id=' . $extension_id . '&parent_id=' . $result['extension_comment_id'] . '&page=2');
-			} else {
-				$next = '';	
-			}
+		if ($json['comments']) {
+			$results = $json['comments'];
 			
-			$data['comments'][] = array(
-				'extension_comment_id' => $result['extension_comment_id'],
-				'member'               => $result['member'],
-				'image'                => $result['image'],
-				'comment'              => $result['comment'],
-				'date_added'           => $result['date_added'],
-				'reply'                => $result['reply'],
-				'add'                  => $this->url->link('marketplace/extension/addcomment', (isset($this->session->data['member_token']) ? 'member_token=' . $this->session->data['member_token'] : '') . '&extension_id=' . $result['extension_id'] . '&parent_id=' . $result['extension_comment_id']),
-				'refresh'              => $this->url->link('marketplace/extension/reply', (isset($this->session->data['member_token']) ? 'member_token=' . $this->session->data['member_token'] : '') . '&extension_id=' . $extension_id . '&parent_id=' . $result['extension_comment_id'] . '&page=1'),
-				'next'                 => $next
-			);
+			foreach ($results as $result) {
+				if ($result['reply_total'] > 5) {
+					$next = $this->url->link('marketplace/extension/reply', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&parent_id=' . $result['extension_comment_id'] . '&page=2');
+				} else {
+					$next = '';	
+				}
+				
+				$data['comments'][] = array(
+					'extension_comment_id' => $result['extension_comment_id'],
+					'member'               => $result['member'],
+					'image'                => $result['image'],
+					'comment'              => $result['comment'],
+					'date_added'           => $result['date_added'],
+					'reply'                => $result['reply'],
+					'add'                  => $this->url->link('marketplace/marketplace/addcomment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&parent_id=' . $result['extension_comment_id']),
+					'refresh'              => $this->url->link('marketplace/marketplace/reply', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&parent_id=' . $result['extension_comment_id'] . '&page=1'),
+					'next'                 => $next
+				);
+			}
 		}
-		
+		//'refresh' => $this->url->link('marketplace/extension/reply', (isset($this->session->data['member_token']) ? 'member_token=' . $this->session->data['member_token'] : '') . '&extension_id=' . $extension_id . '&parent_id=' . $result['extension_comment_id'] . '&page=1'),
+	
 		$pagination = new Pagination();
 		$pagination->total = $comment_total;
 		$pagination->page = $page;
 		$pagination->limit = 20;
-		$pagination->url = $this->url->link('marketplace/extension/comment', 'extension_id=' . $extension_id . '&page={page}');
+		$pagination->url = $this->url->link('marketplace/marketplace/comment', 'extension_id=' . $extension_id . '&page={page}');
 
 		$data['pagination'] = $pagination->render();
 
-		$data['refresh'] = $this->url->link('marketplace/extension/comment', 'extension_id=' . $extension_id . '&page=' . $page);
+		$data['refresh'] = $this->url->link('marketplace/marketplace/comment', 'extension_id=' . $extension_id . '&page=' . $page);
 
-		// Comment
-		$data['comment_username'] = $this->member->getUsername();
-		
-		if ($this->member->isLogged()) {
-			$image = $this->member->getImage();
+		//print_r($data);
+
+		$this->response->setOutput($this->load->view('marketplace/marketplace_comment', $data));
+	}	
+	
+	public function reply() {
+		$this->load->language('marketplace/marketplace');
+
+		if (isset($this->request->get['extension_id'])) {
+			$extension_id = $this->request->get['extension_id'];
 		} else {
-			$image = $this->config->get('config_image_member_placeholder');
+			$extension_id = 0;
 		}
 
-		$data['comment_image'] = ($this->request->server['HTTPS'] ? 'https://' : 'http://') . '//image.opencart.com/cache/' . substr($image, 0, strrpos($image, '.')) . '-resize-' . $this->config->get('config_image_member_width') . 'x' .  $this->config->get('config_image_member_height') . '.jpg';
+		if (isset($this->request->get['parent_id'])) {
+			$parent_id = $this->request->get['parent_id'];
+		} else {
+			$parent_id = 0;
+		}
+				
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+		
+		//$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/comment&extension_id=' . $extension_id);
+		$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api/reply&extension_id=' . $extension_id . '&page=' . $page);
+		
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
 
-		$this->response->setOutput($this->load->view('marketplace/extension_comment', $data));
-	}	
+		$response = curl_exec($curl);
+		//echo $response;
+				
+		$data['replies'] = array();
+				
+		$reply_total = $json['reply_total'];
+		
+		if ($json['replies']) {
+			$results = $json['replies'];
+			
+			foreach ($results as $result) {
+				$data['replies'][] = array(
+					'extension_comment_id' => $result['extension_comment_id'],
+					'member'               => $result['member'],
+					'image'                => $result['image'],
+					'comment'              => $result['comment'],
+					'date_added'           => $result['date_added']
+				);
+			}
+		}
+		
+		$json['refresh'] = $this->url->link('marketplace/marketplace/reply', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&parent_id=' . $parent_id . '&page=' . $page);
+		
+		if (($page * 5) < $reply_total) {
+			$json['next'] = $this->url->link('marketplace/marketplace/reply', 'extension_id=' . $extension_id . '&parent_id=' . $parent_id . '&page=' . ($page + 1));
+		} else {
+			$json['next'] = '';	
+		}		
+					
+		$this->response->setOutput($this->load->view('marketplace/extension_reply', $data));
+	}
 }

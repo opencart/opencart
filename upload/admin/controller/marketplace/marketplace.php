@@ -993,7 +993,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		}
 		
 		//$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/comment&extension_id=' . $extension_id);
-		$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api/reply&extension_id=' . $extension_id . '&page=' . $page);
+		$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api/reply&extension_id=' . $extension_id . '&parent_id=' . $parent_id . '&page=' . $page);
 		
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);

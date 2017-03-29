@@ -219,6 +219,7 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
 		}
 	});
 });
+
 // Install
 $('#tab-download').on('click', '.btn-primary', function(e) {
 	e.preventDefault();
@@ -371,7 +372,7 @@ $('#button-comment').on('click', function() {
 			if (json['success']) {
 				$('#tab-comment').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$('#comment').load('index.php?route=marketplace/marketplace/comment&extension_id={{ extension_id }}');
+				$('#comment').load('index.php?route=marketplace/marketplace/comment&user_token={{ user_token }}&extension_id={{ extension_id }}');
 			
 				$('textarea[name=\'comment\']').val('');
 			}
@@ -399,6 +400,7 @@ $('#comment').on('click', '.btn-block', function(e) {
 		},
 		success: function(html) {
 			$(element).parent().parent().parent().append(html);
+			
 			$(element).parent().remove();
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

@@ -1,4 +1,5 @@
-<div>{% if replies %}
+<div>
+  {% if replies %}
   {% for reply in replies %}
   <div class="media">
     <div class="media-left"><img src="{{ reply.image }}" alt="{{ reply.member }}" title="{{ reply.member }}" class="media-object" /></div>
@@ -8,8 +9,12 @@
     </div>
   </div>
   {% endfor %}
+  
   {% if next %}
   <div class="text-center"><a href="{{ next }}" class="btn btn-block">see more replies...</a></div>
-  {% endif %} 
-  {% endif %}<a href="{{ refresh }}" class="reply-refresh hide">refresh</a>
+  {% endif %}
+  
+  {% endif %}
+  
+  <a href="{{ refresh }}" class="reply-refresh hide">refresh</a>
 </div>

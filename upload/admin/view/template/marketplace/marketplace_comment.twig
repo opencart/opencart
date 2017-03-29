@@ -1,5 +1,6 @@
 {% if comments %}
 {% for comment in comments %}
+
 <div id="comment{{ comment.extension_comment_id }}" class="media">
   <div class="media-left"><img src="{{ comment.image }}" alt="{{ comment.member }}" title="{{ comment.member }}" class="media-object" /></div>
   <div class="media-body">
@@ -7,7 +8,8 @@
     <p>{{ comment.comment }}</p>
     
     <div class="reply">
-      <div class="reply-box">
+        
+        
         <div>
           {% if comment.reply %}
           
@@ -27,10 +29,21 @@
           
           {% endif %}
           
-          <a href="{{ comment.refresh }}" class="reply-refresh hide">refresh</a></div>
+          <a href="{{ comment.refresh }}" class="reply-refresh hide">refresh</a>
+          
+          
+        </div>
+        
+        
+        
+        
+      
+        
       </div>
       
+      
       <p class="text-right"><button type="button" class="btn btn-link btn-xs">{{ button_reply }}</button></p>
+      
       
       <div class="reply-input-box" style="display: none;">
         <div class="media">
@@ -47,6 +60,8 @@
     </div>
   </div>
 </div>
-{% endfor %}<br />
+
+{% endfor %}
+<br />
 <div class="text-center">{{ pagination }}</div>
 {% endif %} 

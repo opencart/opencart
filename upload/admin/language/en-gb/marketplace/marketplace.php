@@ -37,12 +37,15 @@ $_['text_comment']       = 'Comment';
 $_['text_comment_add']   = 'Leave your comment';
 $_['text_write']         = 'Write your comment here..';
 
-
 // Tab
 $_['tab_description']    = 'Description';
 $_['tab_documentation']  = 'Documentation';
 $_['tab_download']       = 'Download';
 $_['tab_comment']        = 'Comment';
+
+// Button
+$_['button_comment']     = 'Comment';
+$_['button_reply']       = 'Reply';
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify extensions!';

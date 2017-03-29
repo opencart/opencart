@@ -854,6 +854,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$string .= VERSION . "\n";
 			$string .= $extension_id . "\n";
 			$string .= $parent_id . "\n";
+			$string .= urlencode(base64_encode($this->request->post['comment'])) . "\n";
 			$string .= $time . "\n";
 
 			$signature = base64_encode(hash_hmac('sha1', $string, OPENCART_SECRET, 1));
@@ -863,19 +864,20 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$url .= '&version=' . VERSION;
 			$url .= '&extension_id=' . $extension_id;
 			$url .= '&parent_id=' . $parent_id;
-			$url .= '&comment=' . $this->request->post['comment'];
 			$url .= '&time=' . $time;
 			$url .= '&signature=' . rawurlencode($signature);	
 
 			//$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/addcomment&extension_id=' . $extension_id);
-			$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api/addComment');
+			$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api/addcomment' . $url);
 			
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
 			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
 			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
-		
+			curl_setopt($curl, CURLOPT_POST, true);
+			curl_setopt($curl, CURLOPT_POSTFIELDS, array('comment' => $this->request->post['comment']));
+					
 			$response = curl_exec($curl);
 		
 			curl_close($curl); 
@@ -923,7 +925,6 @@ class ControllerMarketplaceMarketplace extends Controller {
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
 
 		$response = curl_exec($curl);
-		//echo $response;
 
 		curl_close($curl);
 
@@ -938,7 +939,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			
 			foreach ($results as $result) {
 				if ($result['reply_total'] > 5) {
-					$next = $this->url->link('marketplace/extension/reply', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&parent_id=' . $result['extension_comment_id'] . '&page=2');
+					$next = $this->url->link('marketplace/marketplace/reply', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&parent_id=' . $result['extension_comment_id'] . '&page=2');
 				} else {
 					$next = '';	
 				}
@@ -956,19 +957,16 @@ class ControllerMarketplaceMarketplace extends Controller {
 				);
 			}
 		}
-		//'refresh' => $this->url->link('marketplace/extension/reply', (isset($this->session->data['member_token']) ? 'member_token=' . $this->session->data['member_token'] : '') . '&extension_id=' . $extension_id . '&parent_id=' . $result['extension_comment_id'] . '&page=1'),
 	
 		$pagination = new Pagination();
 		$pagination->total = $comment_total;
 		$pagination->page = $page;
 		$pagination->limit = 20;
-		$pagination->url = $this->url->link('marketplace/marketplace/comment', 'extension_id=' . $extension_id . '&page={page}');
+		$pagination->url = $this->url->link('marketplace/marketplace/comment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&page={page}');
 
 		$data['pagination'] = $pagination->render();
 
-		$data['refresh'] = $this->url->link('marketplace/marketplace/comment', 'extension_id=' . $extension_id . '&page=' . $page);
-
-		//print_r($data);
+		$data['refresh'] = $this->url->link('marketplace/marketplace/comment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&page=' . $page);
 
 		$this->response->setOutput($this->load->view('marketplace/marketplace_comment', $data));
 	}	
@@ -1027,7 +1025,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$json['refresh'] = $this->url->link('marketplace/marketplace/reply', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&parent_id=' . $parent_id . '&page=' . $page);
 		
 		if (($page * 5) < $reply_total) {
-			$json['next'] = $this->url->link('marketplace/marketplace/reply', 'extension_id=' . $extension_id . '&parent_id=' . $parent_id . '&page=' . ($page + 1));
+			$json['next'] = $this->url->link('marketplace/marketplace/reply', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&parent_id=' . $parent_id . '&page=' . ($page + 1));
 		} else {
 			$json['next'] = '';	
 		}		

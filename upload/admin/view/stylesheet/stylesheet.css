@@ -749,14 +749,6 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     font-size: 24px; }
   #marketplace-extension-info #sales strong {
     font-size: 24px; }
-  #marketplace-extension-info #comment {
-    color: #4b525d; }
-  #marketplace-extension-info #comment i {
-    color: #02afe9;
-    margin-right: 10px;
-    font-size: 22px; }
-  #marketplace-extension-info #comment strong {
-    font-size: 22px; }
   #marketplace-extension-info .well .media {
     line-height: 1.2; }
   #marketplace-extension-info .well .media .media-body {
@@ -771,7 +763,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     padding-bottom: 30px; } }
 
 
-.list-check { 
+.list-check {
   list-style: none; }
   .list-check li::before {
     font-family: 'FontAwesome';

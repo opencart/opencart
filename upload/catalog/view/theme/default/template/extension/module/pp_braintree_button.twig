@@ -1,6 +1,7 @@
 <div id="braintree-alert" class="alert alert-danger" style="display:none;"></div>
 <div class="panel panel-default">
   <div class="panel-body" style="text-align: right;">
+    <form target="_blank" method="POST" action="{{ action }}" id="braintree-express-form"></form>
     <div class="buttons">
       <div class="pull-right">
         <script src="https://www.paypalobjects.com/api/button.js?" data-merchant="braintree" data-id="paypal-button" data-button="checkout" data-color="{{ pp_braintree_paypal_button_colour }}" data-size="{{ pp_braintree_paypal_button_size }}" data-shape="{{ pp_braintree_paypal_button_shape }}" data-button_type="submit" data-button_disabled="false"></script>
@@ -48,7 +49,7 @@
             {% else %}
             intent: "authorize",
             {% endif %}
-            amount: {{ total }},
+            amount: {{ auth_total }},
             currency: '{{ currency_code }}',
             enableShippingAddress: true,
             shippingAddressEditable: true
@@ -72,7 +73,67 @@
 
               return;
             } else {
-              //submitOrder(payload.nonce);
+                // post the response data to validate and get back ok to proceed (similar as express - expressReturn method)
+
+                // data is stored on ajax call incase of page reload etc
+
+
+              $.ajax({
+                url: 'index.php?route=extension/payment/pp_braintree/expressSetup',
+                type: 'post',
+                data: payload,
+                dataType: 'json',
+                success: function(json) {
+                  if (json.success) {
+                    $('<input>').attr('type', 'hidden').attr('name', 'nonce').val(payload.nonce).appendTo('#braintree-express-form');
+                    $('#braintree-express-form').submit();
+                    $('#paypal-button').prop('disabled', false);
+                  } else {
+                    alert(json.error);
+                    console.log(json.error);
+                    $('#paypal-button').prop('disabled', false);
+                  }
+                },
+                failure: function() {
+                  console.log('Failed to setup payment');
+                  $('#paypal-button').prop('disabled', false);
+                }
+              });
+
+
+//              $('<input>').attr('type', 'hidden').attr('name', 'nonce').val(payload.nonce).appendTo('#braintree-express-form');
+//              $('<input>').attr('type', 'hidden').attr('name', 'email').val(payload.details.payerInfo.email).appendTo('#braintree-express-form');
+//              $('<input>').attr('type', 'hidden').attr('name', 'first_name').val(payload.details.payerInfo.firstName).appendTo('#braintree-express-form');
+//              $('<input>').attr('type', 'hidden').attr('name', 'last_name').val(payload.details.payerInfo.lastName).appendTo('#braintree-express-form');
+//              $('<input>').attr('type', 'hidden').attr('name', 'country_code').val((typeof(payload.details.payerInfo.countryCode) != 'undefined' ? payload.details.payerInfo.countryCode : '')).appendTo('#braintree-express-form');
+//              $('<input>').attr('type', 'hidden').attr('name', 'phone').val((typeof(payload.details.payerInfo.phone) != 'undefined' ? payload.details.payerInfo.phone : '')).appendTo('#braintree-express-form');
+//
+//              if (typeof(payerInfo.shippingAddress) != 'undefined') {
+//                var shipping = payerInfo.shippingAddress;
+//
+//                $('<input>').attr('type', 'hidden').attr('name', '[shipping]recipient_name').val(typeof(shipping.recipientName) != 'undefined' ? shipping.recipientName : '').appendTo('#braintree-express-form');
+//                $('<input>').attr('type', 'hidden').attr('name', '[shipping]address_line_1').val(typeof(shipping.line1) != 'undefined' ? shipping.line1 : '').appendTo('#braintree-express-form');
+//                $('<input>').attr('type', 'hidden').attr('name', '[shipping]address_line_2').val(typeof(shipping.line2) != 'undefined' ? shipping.line2 : '').appendTo('#braintree-express-form');
+//                $('<input>').attr('type', 'hidden').attr('name', '[shipping]city').val(typeof(shipping.city) != 'undefined' ? shipping.city : '').appendTo('#braintree-express-form');
+//                $('<input>').attr('type', 'hidden').attr('name', '[shipping]state').val(typeof(shipping.state) != 'undefined' ? shipping.state : '').appendTo('#braintree-express-form');
+//                $('<input>').attr('type', 'hidden').attr('name', '[shipping]postal_code').val(typeof(shipping.postalCode) != 'undefined' ? shipping.postalCode : '').appendTo('#braintree-express-form');
+//                $('<input>').attr('type', 'hidden').attr('name', '[shipping]country_code').val(typeof(shipping.countryCode) != 'undefined' ? shipping.countryCode : '').appendTo('#braintree-express-form');
+//              }
+//
+//              if (typeof(payerInfo.billingAddress) != 'undefined') {
+//                var billing = payerInfo.billingAddress;
+//
+//                $('<input>').attr('type', 'hidden').attr('name', '[billing]address_line_1').val(billing.line1).appendTo('#braintree-express-form');
+//                $('<input>').attr('type', 'hidden').attr('name', '[billing]address_line_2').val(billing.line2).appendTo('#braintree-express-form');
+//                $('<input>').attr('type', 'hidden').attr('name', '[billing]city').val(billing.city).appendTo('#braintree-express-form');
+//                $('<input>').attr('type', 'hidden').attr('name', '[billing]state').val(billing.state).appendTo('#braintree-express-form');
+//                $('<input>').attr('type', 'hidden').attr('name', '[billing]postal_code').val(billing.postalCode).appendTo('#braintree-express-form');
+//                $('<input>').attr('type', 'hidden').attr('name', '[billing]country_code').val(billing.countryCode).appendTo('#braintree-express-form');
+//              }
+              
+
+
+              $('#braintree-express-form').submit();
             }
           });
         });

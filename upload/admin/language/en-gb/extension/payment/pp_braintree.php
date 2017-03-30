@@ -57,6 +57,7 @@ $_['text_accept']			 	 	 = 'Accept';
 $_['text_decline']			 	 	 = 'Decline';
 $_['text_merchant_connected']		 = 'Connected Merchant ID: ';
 $_['text_enable_button']			 = 'To enable the checkout shortcut payment button and go to the layout manager, click enable.<br />In the layout manager, choose the area(s) to add the button.';
+$_['text_3ds_ssl']		 			 = '3D Secure requires the store to be using an SSL certificate';
 
 // Column
 $_['column_void']					 = 'Void';

@@ -66,6 +66,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$data['text_decline'] = $this->language->get('text_decline');
 		$data['text_merchant_connected'] = $this->language->get('text_merchant_connected');
 		$data['text_enable_button'] = $this->language->get('text_enable_button');
+		$data['text_3ds_ssl'] = $this->language->get('text_3ds_ssl');
 
 		$data['column_transaction_id'] = $this->language->get('column_transaction_id');
 		$data['column_amount'] = $this->language->get('column_amount');

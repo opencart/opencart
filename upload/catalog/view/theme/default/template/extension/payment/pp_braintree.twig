@@ -577,7 +577,7 @@
         });
       {% elseif pp_braintree_vault_cvv_3ds == '3ds' %}
         $.ajax({
-          url: 'index.php?route=extension/payment/pp_braintree/getNonceFromToken',
+          url: 'index.php?route=extension/payment/pp_braintree/nonce',
           type: 'post',
           data: { vaulted_payment_token: vaulted_payment_token },
           dataType: 'json',

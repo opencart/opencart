@@ -38,14 +38,6 @@
                 <button type="button" id="button-upload" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-upload"></i> {{ button_upload }}</button>
               </div>
             </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label">{{ entry_overwrite }}</label>
-              <div class="col-sm-10">
-                <textarea rows="10" readonly id="overwrite" class="form-control"></textarea>
-                <br />
-                <button type="button" id="button-continue" class="btn btn-danger" disabled="disabled"><i class="fa fa-check"></i> {{ button_continue }}</button>
-              </div>
-            </div>
           </fieldset>
         </form>
       </div>
@@ -98,18 +90,8 @@ $('#button-upload').on('click', function() {
 						$('#progress-text').html(json['text']);
 					}
 			
-					if (json['overwrite'].length) {
-						html = '';
-
-						for (i = 0; i < json['overwrite'].length; i++) {
-							html += json['overwrite'][i] + "\n";
-						}
-
-						$('#overwrite').html(html);
-
-						$('#button-continue').prop('disabled', false);
-					} else if (json['next']) {
-						next(json['next'], i = 2);
+					if (json['next']) {
+						next(json['next'], 1);
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {
@@ -120,26 +102,18 @@ $('#button-upload').on('click', function() {
 	}, 500);
 });
 
-$('#button-continue').on('click', function() {
-	next();
-
-	$('#button-continue').prop('disabled', true);
-});
-
-function next(url) {
-	$('#progress-bar').css('width', (100 - (step.length / total) * 100) + '%');
-	$('#progress-text').html('<span class="text-info">' + data['text'] + '</span>');
+function next(url, element, i) {
+	i = i + 1;
 
 	$.ajax({
 		url: url,
-		type: 'post',
 		dataType: 'json',
-		data: 'path=' + data.path,
 		success: function(json) {
+			$('#progress-bar').css('width', (i * 20) + '%');
+			
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
 				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-				$('#button-clear').prop('disabled', false);
 			}
 
 			if (json['success']) {
@@ -147,8 +121,8 @@ function next(url) {
 				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
 			}
 
-			if (!json['error'] && !json['success']) {
-				next();
+			if (json['next']) {
+				next(json['next'], 1);
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

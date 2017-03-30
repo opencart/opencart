@@ -73,25 +73,20 @@
 
               return;
             } else {
-                // post the response data to validate and get back ok to proceed (similar as express - expressReturn method)
-
-                // data is stored on ajax call incase of page reload etc
-
-
               $.ajax({
                 url: 'index.php?route=extension/payment/pp_braintree/expressSetup',
                 type: 'post',
                 data: payload,
                 dataType: 'json',
                 success: function(json) {
-                  if (json.success) {
-                    $('<input>').attr('type', 'hidden').attr('name', 'nonce').val(payload.nonce).appendTo('#braintree-express-form');
-                    $('#braintree-express-form').submit();
-                    $('#paypal-button').prop('disabled', false);
+                  if (json.error) {
+                      $('#paypal-button').prop('disabled', false);
+
+                      window.location.href = json.url;
                   } else {
-                    alert(json.error);
-                    console.log(json.error);
-                    $('#paypal-button').prop('disabled', false);
+                      $('#paypal-button').prop('disabled', false);
+                      $('<input>').attr('type', 'hidden').attr('name', 'nonce').val(payload.nonce).appendTo('#braintree-express-form');
+                      $('#braintree-express-form').submit();
                   }
                 },
                 failure: function() {
@@ -130,10 +125,6 @@
 //                $('<input>').attr('type', 'hidden').attr('name', '[billing]postal_code').val(billing.postalCode).appendTo('#braintree-express-form');
 //                $('<input>').attr('type', 'hidden').attr('name', '[billing]country_code').val(billing.countryCode).appendTo('#braintree-express-form');
 //              }
-              
-
-
-              $('#braintree-express-form').submit();
             }
           });
         });

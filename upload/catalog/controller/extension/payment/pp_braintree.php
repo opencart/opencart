@@ -540,34 +540,26 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 	}
 
 	public function expressSetup() {
-		$json = array('error' => false, 'url' => '');
-
-		// recheck the login, cart, status etc
-
-		// logged in or guest
-
+		// check checkout can continue due to stock checks or vouchers
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+			$json = array();
 			$json['error'] = true;
-			$json['url'] = $this->response->redirect($this->url->link('checkout/cart'));
+			$json['url'] = $this->url->link('checkout/cart');
+
+			$this->response->addHeader('Content-Type: application/json');
+			$this->response->setOutput(json_encode($json));
 		}
 
-		if (!$this->customer->isLogged()) {
+		// if user not logged in check that the guest checkout is allowed
+		if (!$this->customer->isLogged() && (!$this->config->get('config_checkout_guest') || $this->config->get('config_customer_price') || $this->cart->hasDownload() || $this->cart->hasRecurringProducts())) {
+			$json = array();
+			$json['error'] = true;
+			$json['url'] = $this->url->link('checkout/checkout');
 
-			if ($this->config->get('config_checkout_guest') && !$this->config->get('config_customer_price') && !$this->cart->hasDownload() && !$this->cart->hasRecurringProducts()) {
-				/**
-				 * If the guest checkout is allowed (config ok, no login for price and doesn't have downloads)
-				 */
-				$this->session->data['paypal_braintree']['guest'] = true;
-			} else {
-				/**
-				 * If guest checkout disabled or login is required before price or order has downloads
-				 * Send them to the normal checkout flow.
-				 */
-				unset($this->session->data['guest']);
-
-				// @todo
-				$this->response->redirect($this->url->link('checkout/checkout', '', true));
-			}
+			$this->response->addHeader('Content-Type: application/json');
+			$this->response->setOutput(json_encode($json));
+		} else {
+			unset($this->session->data['guest']);
 		}
 
 		unset($this->session->data['shipping_method']);
@@ -789,272 +781,796 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			}
 		}
 
-		// validate
-
-
-
-		// return json success or error
-
 		$this->session->data['paypal_braintree'] = $this->request->post;
-	}
 
-	public function expressReview() {
-
-
-
-		// get nonce from GET, check againsted stored info
-		// choose shipping, vouchers, credits
-		// review order
-		echo "<pre>";
-		print_r($this->request->post);
-		echo "</pre>";
-		echo "<pre>";
-		print_r($this->request->get);
-		echo "</pre>";
-		echo "<pre>";
-		print_r($this->session->data['paypal_braintree']);
-		echo "</pre>";
-
-		//unset($this->session->data['paypal_braintree']);
-		die();
-	}
-
-
-
-
-
-	public function expressReview2() {
-		$this->load->model('extension/payment/pp_express');
-		$data = array(
-			'METHOD' => 'GetExpressCheckoutDetails',
-			'TOKEN'  => $this->session->data['paypal']['token']
+		$json = array(
+			'error' => false,
+			'url' => ''
 		);
 
-		$result = $this->model_extension_payment_pp_express->call($data);
-		$this->session->data['paypal']['payerid']   = $result['PAYERID'];
-		$this->session->data['paypal']['result']    = $result;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 
-		$this->session->data['comment'] = '';
-		if (isset($result['PAYMENTREQUEST_0_NOTETEXT'])) {
-			$this->session->data['comment'] = $result['PAYMENTREQUEST_0_NOTETEXT'];
+	public function expressConfirm() {
+		if (!isset($this->session->data['paypal_braintree']) || !isset($this->session->data['paypal_braintree']['nonce'])) {
+			$this->response->redirect($this->url->link('checkout/cart', '', true));
 		}
 
-		if ($this->session->data['paypal']['guest'] == true) {
+		$this->load->language('extension/payment/pp_braintree');
+		$this->load->language('checkout/cart');
 
-			$this->session->data['guest']['customer_group_id'] = $this->config->get('config_customer_group_id');
-			$this->session->data['guest']['firstname'] = trim($result['FIRSTNAME']);
-			$this->session->data['guest']['lastname'] = trim($result['LASTNAME']);
-			$this->session->data['guest']['email'] = trim($result['EMAIL']);
+		$this->load->model('tool/image');
 
-			if (isset($result['PHONENUM'])) {
-				$this->session->data['guest']['telephone'] = $result['PHONENUM'];
-			} else {
-				$this->session->data['guest']['telephone'] = '';
+		// Coupon
+		if (isset($this->request->post['coupon']) && $this->validateCoupon()) {
+			$this->session->data['coupon'] = $this->request->post['coupon'];
+
+			$this->session->data['success'] = $this->language->get('text_coupon');
+
+			$this->response->redirect($this->url->link('extension/payment/pp_braintree/expressConfirm', '', true));
+		}
+
+		// Voucher
+		if (isset($this->request->post['voucher']) && $this->validateVoucher()) {
+			$this->session->data['voucher'] = $this->request->post['voucher'];
+
+			$this->session->data['success'] = $this->language->get('text_voucher');
+
+			$this->response->redirect($this->url->link('extension/payment/pp_braintree/expressConfirm', '', true));
+		}
+
+		// Reward
+		if (isset($this->request->post['reward']) && $this->validateReward()) {
+			$this->session->data['reward'] = abs($this->request->post['reward']);
+
+			$this->session->data['success'] = $this->language->get('text_reward');
+
+			$this->response->redirect($this->url->link('extension/payment/pp_braintree/expressConfirm', '', true));
+		}
+
+		$this->document->setTitle($this->language->get('text_express_title'));
+
+		$data['heading_title'] = $this->language->get('text_express_title');
+
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('common/home'),
+			'text' => $this->language->get('text_home')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_cart'),
+			'href' => $this->url->link('checkout/cart')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('extension/payment/pp_braintree/expressConfirm'),
+			'text' => $this->language->get('text_express_title')
+		);
+
+		$points_total = 0;
+
+		foreach ($this->cart->getProducts() as $product) {
+			if ($product['points']) {
+				$points_total += $product['points'];
 			}
+		}
 
-			$this->session->data['guest']['fax'] = '';
+		$data['column_name'] = $this->language->get('column_name');
+		$data['column_model'] = $this->language->get('column_model');
+		$data['column_quantity'] = $this->language->get('column_quantity');
+		$data['column_price'] = $this->language->get('column_price');
+		$data['column_total'] = $this->language->get('column_total');
 
-			$this->session->data['guest']['payment']['firstname'] = trim($result['FIRSTNAME']);
-			$this->session->data['guest']['payment']['lastname'] = trim($result['LASTNAME']);
+		$data['button_shipping'] = $this->language->get('button_express_shipping');
+		$data['button_confirm'] = $this->language->get('button_express_confirm');
 
-			if (isset($result['BUSINESS'])) {
-				$this->session->data['guest']['payment']['company'] = $result['BUSINESS'];
-			} else {
-				$this->session->data['guest']['payment']['company'] = '';
-			}
-
-			$this->session->data['guest']['payment']['company_id'] = '';
-			$this->session->data['guest']['payment']['tax_id'] = '';
-
-			if ($this->cart->hasShipping()) {
-				$shipping_name = explode(' ', trim($result['PAYMENTREQUEST_0_SHIPTONAME']));
-				$shipping_first_name = $shipping_name[0];
-				unset($shipping_name[0]);
-				$shipping_last_name = implode(' ', $shipping_name);
-
-				$this->session->data['guest']['payment']['address_1'] = $result['PAYMENTREQUEST_0_SHIPTOSTREET'];
-				if (isset($result['PAYMENTREQUEST_0_SHIPTOSTREET2'])) {
-					$this->session->data['guest']['payment']['address_2'] = $result['PAYMENTREQUEST_0_SHIPTOSTREET2'];
-				} else {
-					$this->session->data['guest']['payment']['address_2'] = '';
-				}
-
-				$this->session->data['guest']['payment']['postcode'] = $result['PAYMENTREQUEST_0_SHIPTOZIP'];
-				$this->session->data['guest']['payment']['city'] = $result['PAYMENTREQUEST_0_SHIPTOCITY'];
-
-				$this->session->data['guest']['shipping']['firstname'] = $shipping_first_name;
-				$this->session->data['guest']['shipping']['lastname'] = $shipping_last_name;
-				$this->session->data['guest']['shipping']['company'] = '';
-				$this->session->data['guest']['shipping']['address_1'] = $result['PAYMENTREQUEST_0_SHIPTOSTREET'];
-
-				if (isset($result['PAYMENTREQUEST_0_SHIPTOSTREET2'])) {
-					$this->session->data['guest']['shipping']['address_2'] = $result['PAYMENTREQUEST_0_SHIPTOSTREET2'];
-				} else {
-					$this->session->data['guest']['shipping']['address_2'] = '';
-				}
-
-				$this->session->data['guest']['shipping']['postcode'] = $result['PAYMENTREQUEST_0_SHIPTOZIP'];
-				$this->session->data['guest']['shipping']['city'] = $result['PAYMENTREQUEST_0_SHIPTOCITY'];
-
-				$this->session->data['shipping_postcode'] = $result['PAYMENTREQUEST_0_SHIPTOZIP'];
-
-				$country_info = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `iso_code_2` = '" . $this->db->escape($result['PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE']) . "' AND `status` = '1' LIMIT 1")->row;
-
-				if ($country_info) {
-					$this->session->data['guest']['shipping']['country_id'] = $country_info['country_id'];
-					$this->session->data['guest']['shipping']['country'] = $country_info['name'];
-					$this->session->data['guest']['shipping']['iso_code_2'] = $country_info['iso_code_2'];
-					$this->session->data['guest']['shipping']['iso_code_3'] = $country_info['iso_code_3'];
-					$this->session->data['guest']['shipping']['address_format'] = $country_info['address_format'];
-					$this->session->data['guest']['payment']['country_id'] = $country_info['country_id'];
-					$this->session->data['guest']['payment']['country'] = $country_info['name'];
-					$this->session->data['guest']['payment']['iso_code_2'] = $country_info['iso_code_2'];
-					$this->session->data['guest']['payment']['iso_code_3'] = $country_info['iso_code_3'];
-					$this->session->data['guest']['payment']['address_format'] = $country_info['address_format'];
-					$this->session->data['shipping_country_id'] = $country_info['country_id'];
-				} else {
-					$this->session->data['guest']['shipping']['country_id'] = '';
-					$this->session->data['guest']['shipping']['country'] = '';
-					$this->session->data['guest']['shipping']['iso_code_2'] = '';
-					$this->session->data['guest']['shipping']['iso_code_3'] = '';
-					$this->session->data['guest']['shipping']['address_format'] = '';
-					$this->session->data['guest']['payment']['country_id'] = '';
-					$this->session->data['guest']['payment']['country'] = '';
-					$this->session->data['guest']['payment']['iso_code_2'] = '';
-					$this->session->data['guest']['payment']['iso_code_3'] = '';
-					$this->session->data['guest']['payment']['address_format'] = '';
-					$this->session->data['shipping_country_id'] = '';
-				}
-
-				if (isset($result['PAYMENTREQUEST_0_SHIPTOSTATE'])) {
-					$returned_shipping_zone = $result['PAYMENTREQUEST_0_SHIPTOSTATE'];
-				} else {
-					$returned_shipping_zone = '';
-				}
-
-				$zone_info = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE (`name` = '" . $this->db->escape($returned_shipping_zone) . "' OR `code` = '" . $this->db->escape($returned_shipping_zone) . "') AND `status` = '1' AND `country_id` = '" . (int)$country_info['country_id'] . "' LIMIT 1")->row;
-
-				if ($zone_info) {
-					$this->session->data['guest']['shipping']['zone'] = $zone_info['name'];
-					$this->session->data['guest']['shipping']['zone_code'] = $zone_info['code'];
-					$this->session->data['guest']['shipping']['zone_id'] = $zone_info['zone_id'];
-					$this->session->data['guest']['payment']['zone'] = $zone_info['name'];
-					$this->session->data['guest']['payment']['zone_code'] = $zone_info['code'];
-					$this->session->data['guest']['payment']['zone_id'] = $zone_info['zone_id'];
-					$this->session->data['shipping_zone_id'] = $zone_info['zone_id'];
-				} else {
-					$this->session->data['guest']['shipping']['zone'] = '';
-					$this->session->data['guest']['shipping']['zone_code'] = '';
-					$this->session->data['guest']['shipping']['zone_id'] = '';
-					$this->session->data['guest']['payment']['zone'] = '';
-					$this->session->data['guest']['payment']['zone_code'] = '';
-					$this->session->data['guest']['payment']['zone_id'] = '';
-					$this->session->data['shipping_zone_id'] = '';
-				}
-
-				$this->session->data['guest']['shipping_address'] = true;
-			} else {
-				$this->session->data['guest']['payment']['address_1'] = '';
-				$this->session->data['guest']['payment']['address_2'] = '';
-				$this->session->data['guest']['payment']['postcode'] = '';
-				$this->session->data['guest']['payment']['city'] = '';
-				$this->session->data['guest']['payment']['country_id'] = '';
-				$this->session->data['guest']['payment']['country'] = '';
-				$this->session->data['guest']['payment']['iso_code_2'] = '';
-				$this->session->data['guest']['payment']['iso_code_3'] = '';
-				$this->session->data['guest']['payment']['address_format'] = '';
-				$this->session->data['guest']['payment']['zone'] = '';
-				$this->session->data['guest']['payment']['zone_code'] = '';
-				$this->session->data['guest']['payment']['zone_id'] = '';
-				$this->session->data['guest']['shipping_address'] = false;
-			}
-
-			$this->session->data['account'] = 'guest';
-
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['payment_method']);
-			unset($this->session->data['payment_methods']);
+		if (isset($this->request->post['next'])) {
+			$data['next'] = $this->request->post['next'];
 		} else {
-			unset($this->session->data['guest']);
-			/**
-			 * if the user is logged in, add the address to the account and set the ID.
-			 */
+			$data['next'] = '';
+		}
 
-			if ($this->cart->hasShipping()) {
-				$this->load->model('account/address');
+		$data['action'] = $this->url->link('extension/payment/pp_braintree/expressConfirm', '', true);
 
-				$addresses = $this->model_account_address->getAddresses();
+		$this->load->model('tool/upload');
 
-				/**
-				 * Compare all of the user addresses and see if there is a match
-				 */
-				$match = false;
-				foreach($addresses as $address) {
-					if (trim(strtolower($address['address_1'])) == trim(strtolower($result['PAYMENTREQUEST_0_SHIPTOSTREET'])) && trim(strtolower($address['postcode'])) == trim(strtolower($result['PAYMENTREQUEST_0_SHIPTOZIP']))) {
-						$match = true;
+		$products = $this->cart->getProducts();
 
-						$this->session->data['payment_address_id'] = $address['address_id'];
-						$this->session->data['payment_country_id'] = $address['country_id'];
-						$this->session->data['payment_zone_id'] = $address['zone_id'];
+		if (empty($products)) {
+			$this->response->redirect($this->url->link('checkout/cart', '', true));
+		}
 
-						$this->session->data['shipping_address_id'] = $address['address_id'];
-						$this->session->data['shipping_country_id'] = $address['country_id'];
-						$this->session->data['shipping_zone_id'] = $address['zone_id'];
-						$this->session->data['shipping_postcode'] = $address['postcode'];
+		foreach ($products as $product) {
+			$product_total = 0;
 
-						break;
+			foreach ($products as $product_2) {
+				if ($product_2['product_id'] == $product['product_id']) {
+					$product_total += $product_2['quantity'];
+				}
+			}
+
+			if ($product['minimum'] > $product_total) {
+				$data['error_warning'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
+			}
+
+			if ($product['image']) {
+				$image = $this->model_tool_image->resize($product['image'], $this->config->get($this->config->get('config_theme') . '_image_cart_width'), $this->config->get($this->config->get('config_theme') . '_image_cart_height'));
+			} else {
+				$image = '';
+			}
+
+			$option_data = array();
+
+			foreach ($product['option'] as $option) {
+				if ($option['type'] != 'file') {
+					$value = $option['value'];
+				} else {
+					$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+
+					if ($upload_info) {
+						$value = $upload_info['name'];
+					} else {
+						$value = '';
 					}
 				}
 
-				/**
-				 * If there is no address match add the address and set the info.
-				 */
-				if ($match == false) {
+				$option_data[] = array(
+					'name'  => $option['name'],
+					'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
+				);
+			}
 
-					$shipping_name = explode(' ', trim($result['PAYMENTREQUEST_0_SHIPTONAME']));
-					$shipping_first_name = $shipping_name[0];
-					unset($shipping_name[0]);
-					$shipping_last_name = implode(' ', $shipping_name);
-
-					$country_info = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `iso_code_2` = '" . $this->db->escape($result['PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE']) . "' AND `status` = '1' LIMIT 1")->row;
-					$zone_info = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE (`name` = '" . $this->db->escape($result['PAYMENTREQUEST_0_SHIPTOSTATE']) . "' OR `code` = '" . $this->db->escape($result['PAYMENTREQUEST_0_SHIPTOSTATE']) . "') AND `status` = '1' AND `country_id` = '" . (int)$country_info['country_id'] . "'")->row;
-
-					$address_data = array(
-						'firstname'  => $shipping_first_name,
-						'lastname'   => $shipping_last_name,
-						'company'    => '',
-						'company_id' => '',
-						'tax_id'     => '',
-						'address_1'  => $result['PAYMENTREQUEST_0_SHIPTOSTREET'],
-						'address_2'  => (isset($result['PAYMENTREQUEST_0_SHIPTOSTREET2']) ? $result['PAYMENTREQUEST_0_SHIPTOSTREET2'] : ''),
-						'postcode'   => $result['PAYMENTREQUEST_0_SHIPTOZIP'],
-						'city'       => $result['PAYMENTREQUEST_0_SHIPTOCITY'],
-						'zone_id'    => (isset($zone_info['zone_id']) ? $zone_info['zone_id'] : 0),
-						'country_id' => (isset($country_info['country_id']) ? $country_info['country_id'] : 0)
-					);
-
-					$address_id = $this->model_account_address->addAddress($address_data);
-
-					$this->session->data['payment_address_id'] = $address_id;
-					$this->session->data['payment_country_id'] = $address_data['country_id'];
-					$this->session->data['payment_zone_id'] = $address_data['zone_id'];
-
-					$this->session->data['shipping_address_id'] = $address_id;
-					$this->session->data['shipping_country_id'] = $address_data['country_id'];
-					$this->session->data['shipping_zone_id'] = $address_data['zone_id'];
-					$this->session->data['shipping_postcode'] = $address_data['postcode'];
-				}
+			// Display prices
+			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+				$price = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 			} else {
-				$this->session->data['payment_address_id'] = '';
-				$this->session->data['payment_country_id'] = '';
-				$this->session->data['payment_zone_id'] = '';
+				$price = false;
+			}
+
+			// Display prices
+			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+				$total = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']);
+			} else {
+				$total = false;
+			}
+
+			$data['products'][] = array(
+				'cart_id'               => $product['cart_id'],
+				'thumb'                 => $image,
+				'name'                  => $product['name'],
+				'model'                 => $product['model'],
+				'option'                => $option_data,
+				'quantity'              => $product['quantity'],
+				'stock'                 => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
+				'reward'                => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
+				'price'                 => $price,
+				'total'                 => $total,
+				'href'                  => $this->url->link('product/product', 'product_id=' . $product['product_id']),
+				'remove'                => $this->url->link('checkout/cart', 'remove=' . $product['cart_id']),
+			);
+		}
+
+		$data['vouchers'] = array();
+
+		if ($this->cart->hasShipping()) {
+			$data['has_shipping'] = true;
+			/**
+			 * Shipping services
+			 */
+			if ($this->customer->isLogged()) {
+				$this->load->model('account/address');
+				$shipping_address = $this->model_account_address->getAddress($this->session->data['shipping_address_id']);
+			} elseif (isset($this->session->data['guest'])) {
+				$shipping_address = $this->session->data['guest']['shipping'];
+			}
+
+			if (!empty($shipping_address)) {
+				// Shipping Methods
+				$quote_data = array();
+
+				$this->load->model('extension/extension');
+
+				$results = $this->model_extension_extension->getExtensions('shipping');
+
+				if (!empty($results)) {
+					foreach ($results as $result) {
+						if ($this->config->get($result['code'] . '_status')) {
+							$this->load->model('extension/shipping/' . $result['code']);
+
+							$quote = $this->{'model_extension_shipping_' . $result['code']}->getQuote($shipping_address);
+
+							if ($quote) {
+								$quote_data[$result['code']] = array(
+									'title'      => $quote['title'],
+									'quote'      => $quote['quote'],
+									'sort_order' => $quote['sort_order'],
+									'error'      => $quote['error']
+								);
+							}
+						}
+					}
+
+					if (!empty($quote_data)) {
+						$sort_order = array();
+
+						foreach ($quote_data as $key => $value) {
+							$sort_order[$key] = $value['sort_order'];
+						}
+
+						array_multisort($sort_order, SORT_ASC, $quote_data);
+
+						$this->session->data['shipping_methods'] = $quote_data;
+						$data['shipping_methods'] = $quote_data;
+
+						if (!isset($this->session->data['shipping_method'])) {
+							//default the shipping to the very first option.
+							$key1 = key($quote_data);
+							$key2 = key($quote_data[$key1]['quote']);
+							$this->session->data['shipping_method'] = $quote_data[$key1]['quote'][$key2];
+						}
+
+						$data['code'] = $this->session->data['shipping_method']['code'];
+						$data['action_shipping'] = $this->url->link('extension/payment/pp_braintree/shipping', '', true);
+					} else {
+						unset($this->session->data['shipping_methods']);
+						unset($this->session->data['shipping_method']);
+						$data['error_no_shipping'] = $this->language->get('error_no_shipping');
+					}
+				} else {
+					unset($this->session->data['shipping_methods']);
+					unset($this->session->data['shipping_method']);
+					$data['error_no_shipping'] = $this->language->get('error_no_shipping');
+				}
+			}
+		} else {
+			$data['has_shipping'] = false;
+		}
+
+		// Totals
+		$this->load->model('extension/extension');
+
+		$totals = array();
+		$taxes = $this->cart->getTaxes();
+		$total = 0;
+
+		// Because __call can not keep var references so we put them into an array.
+		$total_data = array(
+			'totals' => &$totals,
+			'taxes'  => &$taxes,
+			'total'  => &$total
+		);
+
+		// Display prices
+		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			$sort_order = array();
+
+			$results = $this->model_extension_extension->getExtensions('total');
+
+			foreach ($results as $key => $value) {
+				$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
+			}
+
+			array_multisort($sort_order, SORT_ASC, $results);
+
+			foreach ($results as $result) {
+				if ($this->config->get($result['code'] . '_status')) {
+					$this->load->model('extension/total/' . $result['code']);
+
+					// We have to put the totals in an array so that they pass by reference.
+					$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
+				}
+			}
+
+			$sort_order = array();
+
+			foreach ($totals as $key => $value) {
+				$sort_order[$key] = $value['sort_order'];
+			}
+
+			array_multisort($sort_order, SORT_ASC, $totals);
+		}
+
+		$data['totals'] = array();
+
+		foreach ($totals as $total) {
+			$data['totals'][] = array(
+				'title' => $total['title'],
+				'text'  => $this->currency->format($total['value'], $this->session->data['currency']),
+			);
+		}
+
+		/**
+		 * Payment methods
+		 */
+		if ($this->customer->isLogged() && isset($this->session->data['payment_address_id'])) {
+			$this->load->model('account/address');
+			$payment_address = $this->model_account_address->getAddress($this->session->data['payment_address_id']);
+		} elseif (isset($this->session->data['guest'])) {
+			$payment_address = $this->session->data['guest']['payment'];
+		}
+
+		$method_data = array();
+
+		$this->load->model('extension/extension');
+
+		$results = $this->model_extension_extension->getExtensions('payment');
+
+		foreach ($results as $result) {
+			if ($this->config->get($result['code'] . '_status')) {
+				$this->load->model('extension/payment/' . $result['code']);
+
+				$method = $this->{'model_extension_payment_' . $result['code']}->getMethod($payment_address, $total);
+
+				if ($method) {
+					$method_data[$result['code']] = $method;
+				}
 			}
 		}
+
+		$sort_order = array();
+
+		foreach ($method_data as $key => $value) {
+			$sort_order[$key] = $value['sort_order'];
+		}
+
+		array_multisort($sort_order, SORT_ASC, $method_data);
+
+		$this->session->data['payment_methods'] = $method_data;
+		$this->session->data['payment_method'] = $this->session->data['payment_methods']['pp_braintree'];
+
+		$data['action_confirm'] = $this->url->link('extension/payment/pp_braintree/expressComplete', '', true);
+
+		if (isset($this->session->data['error_warning'])) {
+			$data['error_warning'] = $this->session->data['error_warning'];
+			unset($this->session->data['error_warning']);
+		} else {
+			$data['error_warning'] = '';
+		}
+
+		if (isset($this->session->data['success'])) {
+			$data['success'] = $this->session->data['success'];
+			unset($this->session->data['success']);
+		} else {
+			$data['success'] = '';
+		}
+
+		if (isset($this->session->data['attention'])) {
+			$data['attention'] = $this->session->data['attention'];
+			unset($this->session->data['attention']);
+		} else {
+			$data['attention'] = '';
+		}
+
+		$data['coupon'] = $this->load->controller('extension/total/coupon');
+		$data['voucher'] = $this->load->controller('extension/total/voucher');
+		$data['reward'] = $this->load->controller('extension/total/reward');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
+
+		$this->response->setOutput($this->load->view('extension/payment/pp_braintree_confirm', $data));
 	}
 
-	public function expressSubmit() {
+	public function expressComplete() {
+		if (!isset($this->session->data['paypal_braintree']) || !isset($this->session->data['paypal_braintree']['nonce'])) {
+			$this->response->redirect($this->url->link('checkout/cart', '', true));
+		}
 
+		$this->load->language('extension/payment/pp_braintree');
+		$redirect = '';
+
+		if ($this->cart->hasShipping()) {
+			// Validate if shipping address has been set.
+			$this->load->model('account/address');
+
+			if ($this->customer->isLogged() && isset($this->session->data['shipping_address_id'])) {
+				$shipping_address = $this->model_account_address->getAddress($this->session->data['shipping_address_id']);
+			} elseif (isset($this->session->data['guest'])) {
+				$shipping_address = $this->session->data['guest']['shipping'];
+			}
+
+			if (empty($shipping_address)) {
+				$redirect = $this->url->link('checkout/checkout', '', true);
+			}
+
+			// Validate if shipping method has been set.
+			if (!isset($this->session->data['shipping_method'])) {
+				$redirect = $this->url->link('checkout/checkout', '', true);
+			}
+		} else {
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
+		}
+
+		// Validate if payment address has been set.
+		$this->load->model('account/address');
+
+		if ($this->customer->isLogged() && isset($this->session->data['payment_address_id'])) {
+			$payment_address = $this->model_account_address->getAddress($this->session->data['payment_address_id']);
+		} elseif (isset($this->session->data['guest'])) {
+			$payment_address = $this->session->data['guest']['payment'];
+		}
+
+		// Validate if payment method has been set.
+		if (!isset($this->session->data['payment_method'])) {
+			$redirect = $this->url->link('checkout/checkout', '', true);
+		}
+
+		// Validate cart has products and has stock.
+		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+			$redirect = $this->url->link('checkout/cart');
+		}
+
+		// Validate minimum quantity requirements.
+		$products = $this->cart->getProducts();
+
+		foreach ($products as $product) {
+			$product_total = 0;
+
+			foreach ($products as $product_2) {
+				if ($product_2['product_id'] == $product['product_id']) {
+					$product_total += $product_2['quantity'];
+				}
+			}
+
+			if ($product['minimum'] > $product_total) {
+				$redirect = $this->url->link('checkout/cart');
+
+				break;
+			}
+		}
+
+		if ($redirect == '') {
+			$totals = array();
+			$taxes = $this->cart->getTaxes();
+			$total = 0;
+
+			// Because __call can not keep var references so we put them into an array.
+			$total_data = array(
+				'totals' => &$totals,
+				'taxes'  => &$taxes,
+				'total'  => &$total
+			);
+
+			$this->load->model('extension/extension');
+
+			$sort_order = array();
+
+			$results = $this->model_extension_extension->getExtensions('total');
+
+			foreach ($results as $key => $value) {
+				$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
+			}
+
+			array_multisort($sort_order, SORT_ASC, $results);
+
+			foreach ($results as $result) {
+				if ($this->config->get($result['code'] . '_status')) {
+					$this->load->model('extension/total/' . $result['code']);
+
+					// We have to put the totals in an array so that they pass by reference.
+					$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
+				}
+			}
+
+			$sort_order = array();
+
+			foreach ($totals as $key => $value) {
+				$sort_order[$key] = $value['sort_order'];
+			}
+
+			array_multisort($sort_order, SORT_ASC, $totals);
+
+			$this->load->language('checkout/checkout');
+
+			$data = array();
+
+			$data['invoice_prefix'] = $this->config->get('config_invoice_prefix');
+			$data['store_id'] = $this->config->get('config_store_id');
+			$data['store_name'] = $this->config->get('config_name');
+
+			if ($data['store_id']) {
+				$data['store_url'] = $this->config->get('config_url');
+			} else {
+				$data['store_url'] = HTTP_SERVER;
+			}
+
+			if ($this->customer->isLogged() && isset($this->session->data['payment_address_id'])) {
+				$data['customer_id'] = $this->customer->getId();
+				$data['customer_group_id'] = $this->config->get('config_customer_group_id');
+				$data['firstname'] = $this->customer->getFirstName();
+				$data['lastname'] = $this->customer->getLastName();
+				$data['email'] = $this->customer->getEmail();
+				$data['telephone'] = $this->customer->getTelephone();
+				$data['fax'] = $this->customer->getFax();
+
+				$this->load->model('account/address');
+
+				$payment_address = $this->model_account_address->getAddress($this->session->data['payment_address_id']);
+			} elseif (isset($this->session->data['guest'])) {
+				$data['customer_id'] = 0;
+				$data['customer_group_id'] = $this->session->data['guest']['customer_group_id'];
+				$data['firstname'] = $this->session->data['guest']['firstname'];
+				$data['lastname'] = $this->session->data['guest']['lastname'];
+				$data['email'] = $this->session->data['guest']['email'];
+				$data['telephone'] = $this->session->data['guest']['telephone'];
+				$data['fax'] = $this->session->data['guest']['fax'];
+
+				$payment_address = $this->session->data['guest']['payment'];
+			}
+
+			$data['payment_firstname'] = isset($payment_address['firstname']) ? $payment_address['firstname'] : '';
+			$data['payment_lastname'] = isset($payment_address['lastname']) ? $payment_address['lastname'] : '';
+			$data['payment_company'] = isset($payment_address['company']) ? $payment_address['company'] : '';
+			$data['payment_company_id'] = isset($payment_address['company_id']) ? $payment_address['company_id'] : '';
+			$data['payment_tax_id'] = isset($payment_address['tax_id']) ? $payment_address['tax_id'] : '';
+			$data['payment_address_1'] = isset($payment_address['address_1']) ? $payment_address['address_1'] : '';
+			$data['payment_address_2'] = isset($payment_address['address_2']) ? $payment_address['address_2'] : '';
+			$data['payment_city'] = isset($payment_address['city']) ? $payment_address['city'] : '';
+			$data['payment_postcode'] = isset($payment_address['postcode']) ? $payment_address['postcode'] : '';
+			$data['payment_zone'] = isset($payment_address['zone']) ? $payment_address['zone'] : '';
+			$data['payment_zone_id'] = isset($payment_address['zone_id']) ? $payment_address['zone_id'] : '';
+			$data['payment_country'] = isset($payment_address['country']) ? $payment_address['country'] : '';
+			$data['payment_country_id'] = isset($payment_address['country_id']) ? $payment_address['country_id'] : '';
+			$data['payment_address_format'] = isset($payment_address['address_format']) ? $payment_address['address_format'] : '';
+
+			$data['payment_method'] = '';
+			if (isset($this->session->data['payment_method']['title'])) {
+				$data['payment_method'] = $this->session->data['payment_method']['title'];
+			}
+
+			$data['payment_code'] = '';
+			if (isset($this->session->data['payment_method']['code'])) {
+				$data['payment_code'] = $this->session->data['payment_method']['code'];
+			}
+
+			if ($this->cart->hasShipping()) {
+				if ($this->customer->isLogged()) {
+					$this->load->model('account/address');
+
+					$shipping_address = $this->model_account_address->getAddress($this->session->data['shipping_address_id']);
+				} elseif (isset($this->session->data['guest'])) {
+					$shipping_address = $this->session->data['guest']['shipping'];
+				}
+
+				$data['shipping_firstname'] = $shipping_address['firstname'];
+				$data['shipping_lastname'] = $shipping_address['lastname'];
+				$data['shipping_company'] = $shipping_address['company'];
+				$data['shipping_address_1'] = $shipping_address['address_1'];
+				$data['shipping_address_2'] = $shipping_address['address_2'];
+				$data['shipping_city'] = $shipping_address['city'];
+				$data['shipping_postcode'] = $shipping_address['postcode'];
+				$data['shipping_zone'] = $shipping_address['zone'];
+				$data['shipping_zone_id'] = $shipping_address['zone_id'];
+				$data['shipping_country'] = $shipping_address['country'];
+				$data['shipping_country_id'] = $shipping_address['country_id'];
+				$data['shipping_address_format'] = $shipping_address['address_format'];
+
+				$data['shipping_method'] = '';
+				if (isset($this->session->data['shipping_method']['title'])) {
+					$data['shipping_method'] = $this->session->data['shipping_method']['title'];
+				}
+
+				$data['shipping_code'] = '';
+				if (isset($this->session->data['shipping_method']['code'])) {
+					$data['shipping_code'] = $this->session->data['shipping_method']['code'];
+				}
+			} else {
+				$data['shipping_firstname'] = '';
+				$data['shipping_lastname'] = '';
+				$data['shipping_company'] = '';
+				$data['shipping_address_1'] = '';
+				$data['shipping_address_2'] = '';
+				$data['shipping_city'] = '';
+				$data['shipping_postcode'] = '';
+				$data['shipping_zone'] = '';
+				$data['shipping_zone_id'] = '';
+				$data['shipping_country'] = '';
+				$data['shipping_country_id'] = '';
+				$data['shipping_address_format'] = '';
+				$data['shipping_method'] = '';
+				$data['shipping_code'] = '';
+			}
+
+			$product_data = array();
+
+			foreach ($this->cart->getProducts() as $product) {
+				$option_data = array();
+
+				foreach ($product['option'] as $option) {
+					$option_data[] = array(
+						'product_option_id'       => $option['product_option_id'],
+						'product_option_value_id' => $option['product_option_value_id'],
+						'option_id'               => $option['option_id'],
+						'option_value_id'         => $option['option_value_id'],
+						'name'                    => $option['name'],
+						'value'                   => $option['value'],
+						'type'                    => $option['type']
+					);
+				}
+
+				$product_data[] = array(
+					'product_id' => $product['product_id'],
+					'name'       => $product['name'],
+					'model'      => $product['model'],
+					'option'     => $option_data,
+					'download'   => $product['download'],
+					'quantity'   => $product['quantity'],
+					'subtract'   => $product['subtract'],
+					'price'      => $product['price'],
+					'total'      => $product['total'],
+					'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),
+					'reward'     => $product['reward']
+				);
+			}
+
+			// Gift Voucher
+			$voucher_data = array();
+
+			if (!empty($this->session->data['vouchers'])) {
+				foreach ($this->session->data['vouchers'] as $voucher) {
+					$voucher_data[] = array(
+						'description'      => $voucher['description'],
+						'code'             => token(10),
+						'to_name'          => $voucher['to_name'],
+						'to_email'         => $voucher['to_email'],
+						'from_name'        => $voucher['from_name'],
+						'from_email'       => $voucher['from_email'],
+						'voucher_theme_id' => $voucher['voucher_theme_id'],
+						'message'          => $voucher['message'],
+						'amount'           => $voucher['amount']
+					);
+				}
+			}
+
+			$data['products'] = $product_data;
+			$data['vouchers'] = $voucher_data;
+			$data['totals'] = $totals;
+			$data['comment'] = $this->session->data['comment'];
+			$data['total'] = $total;
+
+			if (isset($this->request->cookie['tracking'])) {
+				$data['tracking'] = $this->request->cookie['tracking'];
+
+				$subtotal = $this->cart->getSubTotal();
+
+				// Affiliate
+				$this->load->model('affiliate/affiliate');
+
+				$affiliate_info = $this->model_affiliate_affiliate->getAffiliateByCode($this->request->cookie['tracking']);
+
+				if ($affiliate_info) {
+					$data['affiliate_id'] = $affiliate_info['affiliate_id'];
+					$data['commission'] = ($subtotal / 100) * $affiliate_info['commission'];
+				} else {
+					$data['affiliate_id'] = 0;
+					$data['commission'] = 0;
+				}
+
+				// Marketing
+				$this->load->model('checkout/marketing');
+
+				$marketing_info = $this->model_checkout_marketing->getMarketingByCode($this->request->cookie['tracking']);
+
+				if ($marketing_info) {
+					$data['marketing_id'] = $marketing_info['marketing_id'];
+				} else {
+					$data['marketing_id'] = 0;
+				}
+			} else {
+				$data['affiliate_id'] = 0;
+				$data['commission'] = 0;
+				$data['marketing_id'] = 0;
+				$data['tracking'] = '';
+			}
+
+			$data['language_id'] = $this->config->get('config_language_id');
+			$data['currency_id'] = $this->currency->getId($this->session->data['currency']);
+			$data['currency_code'] = $this->session->data['currency'];
+			$data['currency_value'] = $this->currency->getValue($this->session->data['currency']);
+			$data['ip'] = $this->request->server['REMOTE_ADDR'];
+
+			if (!empty($this->request->server['HTTP_X_FORWARDED_FOR'])) {
+				$data['forwarded_ip'] = $this->request->server['HTTP_X_FORWARDED_FOR'];
+			} elseif (!empty($this->request->server['HTTP_CLIENT_IP'])) {
+				$data['forwarded_ip'] = $this->request->server['HTTP_CLIENT_IP'];
+			} else {
+				$data['forwarded_ip'] = '';
+			}
+
+			if (isset($this->request->server['HTTP_USER_AGENT'])) {
+				$data['user_agent'] = $this->request->server['HTTP_USER_AGENT'];
+			} else {
+				$data['user_agent'] = '';
+			}
+
+			if (isset($this->request->server['HTTP_ACCEPT_LANGUAGE'])) {
+				$data['accept_language'] = $this->request->server['HTTP_ACCEPT_LANGUAGE'];
+			} else {
+				$data['accept_language'] = '';
+			}
+
+			$this->load->model('account/custom_field');
+			$this->load->model('checkout/order');
+
+			$order_id = $this->model_checkout_order->addOrder($data);
+			$this->session->data['order_id'] = $order_id;
+
+			$this->load->model('extension/payment/pp_braintree');
+
+			$this->initialise();
+
+			$create_sale = [
+				"amount" => $this->currency->format($data['total'], $data['currency_code'], $data['currency_value'], false),
+				"paymentMethodNonce" => $this->session->data['paypal_braintree']['nonce'],
+				"orderId" => $order_id,
+				'channel' => 'OpenCart_Cart_vzero',
+			];
+
+			$transaction = $this->model_extension_payment_pp_braintree->addTransaction($this->gateway, $create_sale);
+
+			//handle order status
+
+			$order_status_id = 0;
+			switch ($transaction->transaction->status) {
+				case 'authorization_expired':
+					$order_status_id = $this->config->get('pp_braintree_authorization_expired_id');
+					break;
+				case 'authorized':
+					$order_status_id = $this->config->get('pp_braintree_authorized_id');
+					break;
+				case 'authorizing':
+					$order_status_id = $this->config->get('pp_braintree_authorizing_id');
+					break;
+				case 'settlement_pending':
+					$order_status_id = $this->config->get('pp_braintree_settlement_pending_id');
+					break;
+				case 'failed':
+					$order_status_id = $this->config->get('pp_braintree_failed_id');
+					break;
+				case 'gateway_rejected':
+					$order_status_id = $this->config->get('pp_braintree_gateway_rejected_id');
+					break;
+				case 'processor_declined':
+					$order_status_id = $this->config->get('pp_braintree_processor_declined_id');
+					break;
+				case 'settled':
+					$order_status_id = $this->config->get('pp_braintree_settled_id');
+					break;
+				case 'settling':
+					$order_status_id = $this->config->get('pp_braintree_settling_id');
+					break;
+				case 'submitted_for_settlement':
+					$order_status_id = $this->config->get('pp_braintree_submitted_for_settlement_id');
+					break;
+				case 'voided':
+					$order_status_id = $this->config->get('pp_braintree_voided_id');
+					break;
+			}
+
+			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $order_status_id);
+
+			if ($transaction->success) {
+				$this->model_extension_payment_pp_braintree->log('Transaction success, details below');
+				$this->model_extension_payment_pp_braintree->log($transaction);
+
+				$this->response->redirect($this->url->link('checkout/success', '', true));
+			} else {
+				$this->model_extension_payment_pp_braintree->log('Transaction failed, details below');
+				$this->model_extension_payment_pp_braintree->log($transaction);
+
+				$this->session->data['error'] = $this->language->get('error_process_order');
+				$this->response->redirect($this->url->link('checkout/checkout', '', true));
+			}
+		} else {
+			$this->response->redirect($redirect);
+		}
 	}
 
 	private function initialise() {
@@ -1064,6 +1580,92 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			$this->gateway = $this->model_extension_payment_pp_braintree->setGateway($this->config->get('pp_braintree_access_token'));
 		} else {
 			$this->model_extension_payment_pp_braintree->setCredentials();
+		}
+	}
+
+	public function shipping() {
+		$this->shippingValidate($this->request->post['shipping_method']);
+
+		$this->response->redirect($this->url->link('extension/payment/pp_braintree/expressConfirm'));
+	}
+
+	protected function shippingValidate($code) {
+		$this->load->language('checkout/cart');
+		$this->load->language('extension/payment/pp_braintree');
+
+		if (empty($code)) {
+			$this->session->data['error_warning'] = $this->language->get('error_shipping');
+			return false;
+		} else {
+			$shipping = explode('.', $code);
+
+			if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
+				$this->session->data['error_warning'] = $this->language->get('error_shipping');
+				return false;
+			} else {
+				$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
+				$this->session->data['success'] = $this->language->get('text_shipping_updated');
+				return true;
+			}
+		}
+	}
+
+	protected function validateCoupon() {
+		$this->load->model('extension/total/coupon');
+
+		$coupon_info = $this->model_extension_total_coupon->getCoupon($this->request->post['coupon']);
+
+		if ($coupon_info) {
+			return true;
+		} else {
+			$this->session->data['error_warning'] = $this->language->get('error_coupon');
+			return false;
+		}
+	}
+
+	protected function validateVoucher() {
+		$this->load->model('extension/total/coupon');
+
+		$voucher_info = $this->model_extension_total_voucher->getVoucher($this->request->post['voucher']);
+
+		if ($voucher_info) {
+			return true;
+		} else {
+			$this->session->data['error_warning'] = $this->language->get('error_voucher');
+			return false;
+		}
+	}
+
+	protected function validateReward() {
+		$points = $this->customer->getRewardPoints();
+
+		$points_total = 0;
+
+		foreach ($this->cart->getProducts() as $product) {
+			if ($product['points']) {
+				$points_total += $product['points'];
+			}
+		}
+
+		$error = '';
+
+		if (empty($this->request->post['reward'])) {
+			$error = $this->language->get('error_reward');
+		}
+
+		if ($this->request->post['reward'] > $points) {
+			$error = sprintf($this->language->get('error_points'), $this->request->post['reward']);
+		}
+
+		if ($this->request->post['reward'] > $points_total) {
+			$error = sprintf($this->language->get('error_maximum'), $points_total);
+		}
+
+		if (!$error) {
+			return true;
+		} else {
+			$this->session->data['error_warning'] = $error;
+			return false;
 		}
 	}
 }

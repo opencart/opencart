@@ -1,6 +1,7 @@
 <?php
 // Text
 $_['text_title']						= 'Credit card - PayPal (Powered by Braintree)';
+$_['text_express_title']      			= 'Confirm order';
 $_['text_vaulted_payment_method_name']	= '%s ending in %s, expires %s';
 $_['text_remember']						= 'Save for next time?';
 $_['text_remove']						= 'Remove';
@@ -15,6 +16,8 @@ $_['text_pay_by_paypal']				= 'Pay by PayPal';
 $_['text_method_removed']				= 'Payment method has been removed';
 $_['text_method_not_removed']			= 'Unable to remove payment method';
 $_['text_authentication']				= 'Authentication';
+$_['text_cart']               			= 'Shopping Cart';
+$_['text_shipping_updated']   			= 'Shipping service updated';
 
 // Entry
 $_['entry_new']							= 'New payment method';
@@ -39,3 +42,5 @@ $_['error_alert_unknown']				= 'An unknown error occurred, if the issue continue
 
 // Button
 $_['button_confirm']					= 'Pay Now';
+$_['button_express_confirm']  			= 'Confirm';
+$_['button_express_shipping'] 			= 'Update shipping';

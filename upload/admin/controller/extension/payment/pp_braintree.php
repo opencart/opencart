@@ -67,6 +67,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$data['text_merchant_connected'] = $this->language->get('text_merchant_connected');
 		$data['text_enable_button'] = $this->language->get('text_enable_button');
 		$data['text_3ds_ssl'] = $this->language->get('text_3ds_ssl');
+		$data['text_unlink'] = $this->language->get('text_unlink');
 
 		$data['column_transaction_id'] = $this->language->get('column_transaction_id');
 		$data['column_amount'] = $this->language->get('column_amount');
@@ -1193,7 +1194,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			$check_credentials = false;
 		}
 
-		if ($check_credentials) {
+		if ($check_credentials && $this->request->post['pp_braintree_status'] == 1) {
 			$this->initialise($this->request->post['pp_braintree_access_token'], array(
 				'pp_braintree_environment' => $this->request->post['pp_braintree_environment'],
 				'pp_braintree_merchant_id' => $this->request->post['pp_braintree_merchant_id'],

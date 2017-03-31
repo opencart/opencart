@@ -80,6 +80,8 @@ $('#button-upload').on('click', function() {
 					$('#button-upload').button('reset');
 				},
 				success: function(json) {
+					console.log(json);
+					
 					if (json['error']) {
 						$('#progress-bar').addClass('progress-bar-danger');
 						$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
@@ -109,6 +111,8 @@ function next(url, i) {
 		url: url,
 		dataType: 'json',
 		success: function(json) {
+			console.log(json);
+			
 			$('#progress-bar').css('width', (i * 20) + '%');
 			
 			if (json['error']) {
@@ -120,9 +124,13 @@ function next(url, i) {
 				$('#progress-bar').addClass('progress-bar-success');
 				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
 			}
-
+			
+			if (json['text']) {
+				$('#progress-text').html(json['text']);
+			}
+			
 			if (json['next']) {
-				next(json['next'], 1);
+				next(json['next'], i);
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

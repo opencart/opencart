@@ -136,7 +136,8 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api' . $url);
+		//$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api' . $url);
+		$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api' . $url);
 
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -506,7 +507,8 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$url  = '&domain=' . $this->request->server['HTTP_HOST'];
 		$url .= '&version=' . VERSION;
 
-		$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/info&extension_id=' . $extension_id . $url);
+		//$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/info&extension_id=' . $extension_id . $url);
+		$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api/info&extension_id=' . $extension_id . $url);
 
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -646,7 +648,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 				foreach ($response_info['downloads'] as $result) {
 					$compatibility = explode(', ', $result['compatibility']);
 					
-					if (in_array(VERSION, $compatibility)) {
+					//if (in_array(VERSION, $compatibility)) {
 						$data['downloads'][] = array(
 							'extension_download_id' => $result['extension_download_id'],
 							'name'                  => $result['name'],
@@ -654,7 +656,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 							'installed'             => $this->model_setting_extension->getTotalPathsByExtensionDownloadId($result['extension_download_id']),
 							'status'                => $result['status']
 						);
-					}
+					//}
 				}
 			}
 
@@ -712,7 +714,8 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$url .= '&time=' . $time;
 			$url .= '&signature=' . rawurlencode($signature);
 
-			$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/purchase' . $url);
+			//$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/purchase' . $url);
+			$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api/purchase' . $url);
 
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -777,8 +780,9 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$url .= '&extension_download_id=' . $extension_download_id;
 			$url .= '&time=' . $time;
 			$url .= '&signature=' . rawurlencode($signature);
-	
-			$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/download&extension_download_id=' . $extension_download_id . $url);
+			
+			//$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/download&extension_download_id=' . $extension_download_id . $url);
+			$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api/download&extension_download_id=' . $extension_download_id . $url);
 			
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -863,8 +867,9 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$url .= '&time=' . $time;
 			$url .= '&signature=' . rawurlencode($signature);	
 
-			$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/addcomment&extension_id=' . $extension_id);
-			
+			//$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/addcomment&extension_id=' . $extension_id);
+			$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api/addcomment&extension_id=' . $extension_id);
+		
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
@@ -909,8 +914,9 @@ class ControllerMarketplaceMarketplace extends Controller {
 		
 		$data['button_more'] = $this->language->get('button_more');
 		$data['button_reply'] = $this->language->get('button_reply');
-		
-		$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/comment&extension_id=' . $extension_id);
+
+		//$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/comment&extension_id=' . $extension_id);
+		$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api/comment&extension_id=' . $extension_id);
 		
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -986,7 +992,8 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$page = 1;
 		}
 		
-		$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/comment&extension_id=' . $extension_id);
+		//$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/comment&extension_id=' . $extension_id . '&parent_id=' . $parent_id . '&page=' . $page);
+		$curl = curl_init('ttp://localhost/opencart-website/public_html/index.php?route=marketplace/api/comment&extension_id=' . $extension_id . '&parent_id=' . $parent_id . '&page=' . $page);
 		
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);

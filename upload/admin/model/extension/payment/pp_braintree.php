@@ -1,5 +1,21 @@
 <?php
 class ModelExtensionPaymentPPBraintree extends Model {
+	public function generateToken($gateway, $data = array()) {
+		try {
+			if ($gateway != null) {
+				$client_token = $gateway->clientToken()->generate($data);
+			} else {
+				$client_token = Braintree_ClientToken::generate($data);
+			}
+
+			return $client_token;
+		} catch (Exception $e) {
+			$this->log($e->getMessage());
+
+			return false;
+		}
+	}
+
 	public function getTransaction($gateway, $transaction_id) {
 		try {
 			if ($gateway != null) {

@@ -172,6 +172,9 @@ $_['error_private_key']				 = 'Private Key Required!';
 $_['error_connection']				 = 'There was a problem establishing a connection to the Braintree API. Please check your Merchant ID, Public Key, Private Key and Environment settings.';
 $_['error_account']					 = 'Please enter a valid Merchant Account ID as specified in your Braintree Account';
 $_['error_warning']					 = 'Warning: Please check the form carefully for errors!';
+$_['error_3ds_not_ready']			 = 'You have enabled 3D secure however your Braintree account does not have it configured, please contact Braintree support';
+$_['error_paypal_not_ready']		 = 'You have enabled PayPal however your Braintree account does not have it configured, please contact Braintree support';
+$_['error_paypal_billing_not_ready'] = 'You have enabled PayPal billing agreements however your Braintree account does not have it configured, please contact Braintree support';
 
 // Tab
 $_['tab_setting']					 = 'Settings';

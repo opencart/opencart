@@ -1216,6 +1216,23 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 						}
 					}
 				}
+
+				$merchant_config = json_decode(base64_decode($verify_credentials), true);
+
+				// verify the Braintree account is ready to accept 3DS transactions
+				if (isset($merchant_config['threeDSecureEnabled']) && ($this->request->post['pp_braintree_3ds_status'] == 1 && $merchant_config['threeDSecureEnabled'] != 1)) {
+					$this->error['warning'] = $this->language->get('error_3ds_not_ready');
+				}
+
+				// verify the Braintree account is ready to use PayPal Billing Agreements
+				if (isset($merchant_config['paypal']['billingAgreementEnabled']) && ($this->request->post['pp_braintree_billing_agreement'] == 1 && $merchant_config['paypal']['billingAgreementEnabled'] != 1)) {
+					$this->error['warning'] = $this->language->get('error_paypal_billing_not_ready');
+				}
+
+				// verify the Braintree account is ready to accept PayPal transactions
+				if (isset($merchant_config['paypalEnabled']) && ($this->request->post['pp_braintree_paypal_option'] == 1 && $merchant_config['paypalEnabled'] != 1)) {
+					$this->error['warning'] = $this->language->get('error_paypal_not_ready');
+				}
 			}
 		}
 

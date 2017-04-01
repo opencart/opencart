@@ -241,10 +241,12 @@ $('#tab-download').on('click', '.btn-primary', function(e) {
 			$(element).button('reset');
 		},
 		success: function(json) {
+			console.log(json);
+			
 			$('.alert').remove();
 			
 			if (json['error']) {
-				$('#download').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button</div>');
+				$('#tab-download').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button</div>');
 			
 				$(element).button('reset');
 			}
@@ -271,6 +273,8 @@ function next(url, element, i) {
 		url: url,
 		dataType: 'json',
 		success: function(json) {
+			console.log(json);
+			
 			$('#progress-bar').css('width', (i * 20) + '%');
 
 			if (json['error']) {

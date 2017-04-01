@@ -61,6 +61,12 @@ $('select[name="report"]').on('change', function() {
 });
 
 $('select[name="report"]').trigger('change');
+
+$('#report').on('click', '.pagination a', function(e) {
+	e.preventDefault();
+
+	$('#report').load(this.href);
+});
 //--></script>
 {% endif %}
 </div>

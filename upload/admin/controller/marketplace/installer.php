@@ -49,6 +49,17 @@ class ControllerMarketplaceInstaller extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Check if there is a install zip already there
+		$file = ini_get('upload_tmp_dir') . '/install.tmp';
+
+		if (is_file($file) && (filectime($file) < (time() - 20))) {
+			unlink($file);
+		}
+		
+		if (is_file($file)) {
+			$json['error'] = $this->language->get('error_install');
+		}
+		
 		if (isset($this->request->files['file']['name'])) {
 			if (substr($this->request->files['file']['name'], -10) != '.ocmod.zip' && substr($this->request->files['file']['name'], -10) != '.ocmod.xml') {
 				$json['error'] = $this->language->get('error_filetype');
@@ -62,8 +73,6 @@ class ControllerMarketplaceInstaller extends Controller {
 		}
 
 		if (!$json) {
-			$file = ini_get('upload_tmp_dir') . '/install.tmp';
-
 			move_uploaded_file($this->request->files['file']['tmp_name'], $file);
 
 			if (is_file($file)) {

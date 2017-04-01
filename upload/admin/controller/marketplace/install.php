@@ -19,6 +19,47 @@ class ControllerMarketplaceInstall extends Controller {
 			$json['error'] = $this->language->get('error_file');
 		}
 
+		// Check if there is a install directory already there
+		$directory = ini_get('upload_tmp_dir') . '/install/';
+		
+		if (is_dir($directory) && (filectime($directory) < (time() - 20))) {
+			// Get a list of files ready to upload
+			$files = array();
+
+			$path = array($directory);
+
+			while (count($path) != 0) {
+				$next = array_shift($path);
+
+				// We have to use scandir function because glob will not pick up dot files.
+				foreach (array_diff(scandir($next), array('.', '..')) as $file) {
+					$file = $next . '/' . $file;
+
+					if (is_dir($file)) {
+						$path[] = $file;
+					}
+
+					$files[] = $file;
+				}
+			}
+
+			rsort($files);
+
+			foreach ($files as $file) {
+				if (is_file($file)) {
+					unlink($file);
+				} elseif (is_dir($file)) {
+					rmdir($file);
+				}
+			}
+
+			unlink($directory);
+		}	
+
+		if (is_dir($directory)) {
+			$json['error'] = $this->language->get('error_install');
+		}
+		
 		if (!$json) {
 			$json['text'] = $this->language->get('text_unzip');
 

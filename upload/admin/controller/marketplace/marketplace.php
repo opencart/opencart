@@ -233,12 +233,10 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 		if (!defined('OPENCART_USERNAME') || !defined('OPENCART_SECRET') || !OPENCART_USERNAME || !OPENCART_SECRET) {
 			$data['error_warning'] = $this->language->get('error_api');
-		} elseif (is_file(ini_get('upload_tmp_dir') . '/install.tmp') || is_dir(ini_get('upload_tmp_dir') . '/install/')) {
-			$data['error_warning'] = $this->language->get('error_install');
 		} else {
 			$data['error_warning'] = '';
 		}
-				
+		
 		// Categories
 		$url = '';
 
@@ -558,8 +556,6 @@ class ControllerMarketplaceMarketplace extends Controller {
 		
 			if (!defined('OPENCART_USERNAME') || !defined('OPENCART_SECRET') || !OPENCART_USERNAME || !OPENCART_SECRET) {
 				$data['error_warning'] = $this->language->get('error_api');
-			} elseif (is_file(ini_get('upload_tmp_dir') . '/install.tmp') || is_dir(ini_get('upload_tmp_dir') . '/install/')) {
-				$data['error_warning'] = $this->language->get('error_install');
 			} else {
 				$data['error_warning'] = '';
 			}
@@ -760,7 +756,18 @@ class ControllerMarketplaceMarketplace extends Controller {
 		if (!defined('OPENCART_USERNAME') || !defined('OPENCART_SECRET') || !OPENCART_USERNAME || !OPENCART_SECRET) {
 			$json['error'] = $this->language->get('error_api');
 		}
-				
+
+		// Check if there is a install zip already there
+		$file = ini_get('upload_tmp_dir') . '/install.tmp';
+		
+		if (is_file($file) && (filemtime($file) < (time() - 20))) {
+			unlink($file);
+		}	
+
+		if (is_file($file)) {
+			$json['error'] = $this->language->get('error_install');
+		}
+		
 		if (!$json) {
 			$time = time() + 30;
 

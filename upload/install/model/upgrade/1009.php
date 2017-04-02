@@ -78,6 +78,103 @@ class ModelUpgrade1009 extends Model {
 		
 		if (!$query->num_rows) {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "event` ADD `sort_order` INT(3) NOT NULL AFTER `action`");
-		}			
+		}
+		
+		// OPENCART_SERVER
+		$upgrade = true;
+		
+		$lines = file(DIR_OPENCART . 'admin/config.php');
+
+		foreach ($lines as $line) {
+			if (strpos(strtoupper($line), 'OPENCART_SERVER') !== false) {
+				$upgrade = false;
+
+				break;
+			}
+		}
+
+		if ($upgrade) {
+			$output = '';
+
+			foreach ($lines as $line_id => $line) {
+				if (strpos($line, 'DB_PREFIX') !== false) {
+					$output .= $line;
+					$output .= "\n\n";
+					$output .= 'define(\'OPENCART_SERVER\', \'http://www.opecart.com/\');' . "\n";
+				} else {
+					$output .= $line;
+				}
+			}
+
+			$file = fopen($file, 'w');
+
+			fwrite($file, $output);
+
+			fclose($file);
+		}	
+		
+		// OPENCART_USERNAME
+		$upgrade = true;
+		
+		$lines = file(DIR_OPENCART . 'admin/config.php');
+
+		foreach ($lines as $line) {
+			if (strpos(strtoupper($line), 'OPENCART_USERNAME') !== false) {
+				$upgrade = false;
+
+				break;
+			}
+		}
+
+		if ($upgrade) {
+			$output = '';
+
+			foreach ($lines as $line_id => $line) {
+				if (strpos($line, 'OPENCART_SERVER') !== false) {
+					$output .= $line;
+					$output .= 'define(\'OPENCART_USERNAME\', \'\');' . "\n";
+				} else {
+					$output .= $line;
+				}
+			}
+
+			$file = fopen($file, 'w');
+
+			fwrite($file, $output);
+
+			fclose($file);
+		}
+		
+		// OPENCART_SECRET
+		$upgrade = true;
+		
+		$lines = file(DIR_OPENCART . 'admin/config.php');
+
+		foreach ($lines as $line) {
+			if (strpos(strtoupper($line), 'OPENCART_SECRET') !== false) {
+				$upgrade = false;
+
+				break;
+			}
+		}
+
+		if ($upgrade) {
+			$output = '';
+
+			foreach ($lines as $line_id => $line) {
+				if (strpos($line, 'OPENCART_USERNAME') !== false) {
+					$output .= $line;
+					$output .= 'define(\'OPENCART_SECRET\', \'\');' . "\n";
+				} else {
+					$output .= $line;
+				}
+			}
+
+			$file = fopen($file, 'w');
+
+			fwrite($file, $output);
+
+			fclose($file);
+		}						
 	}
 }

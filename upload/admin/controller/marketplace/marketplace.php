@@ -99,8 +99,8 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url, true)
-		);
-
+		);			
+			
 		$url  = '&domain=' . $this->request->server['HTTP_HOST'];
 		$url .= '&version=' . VERSION;
 
@@ -135,8 +135,39 @@ class ControllerMarketplaceMarketplace extends Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
+
+		$time = time() + 30;
+
+		// We create a hash from the data in a similar method to how amazon does things.
+		$string  = 'marketplace/api/list' . "\n";
+		$string .= OPENCART_USERNAME . "\n";
+		$string .= $this->request->server['HTTP_HOST'] . "\n";
+		$string .= VERSION . "\n";
+		$string .= $filter_category . "\n";
+		$string .= $time . "\n"; 
 		
-		$curl = curl_init(OPENCART_SERVER . '/index.php?route=marketplace/api' . $url);
+		$signature = base64_encode(hash_hmac('sha1', $string, OPENCART_SECRET, 1));
+		
+		$url  = '&username=' . OPENCART_USERNAME;
+		$url .= '&domain=' . $this->request->server['HTTP_HOST'];
+		$url .= '&version=' . VERSION;
+		$url .= '&time=' . $time;
+		$url .= '&signature=' . rawurlencode($signature);
+
+		$curl = curl_init(OPENCART_SERVER . 'index.php?route=marketplace/api' . $url);
+
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+
+		$response = curl_exec($curl);
+		
+		curl_close($curl);
+			
+					
+		$curl = curl_init(OPENCART_SERVER . 'index.php?route=marketplace/api' . $url);
 
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -375,6 +406,12 @@ class ControllerMarketplaceMarketplace extends Controller {
 			'value' => 'paid',
 			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_license=paid' . $url, true)
 		);
+		
+		$data['licenses'][] = array(
+			'text'  => $this->language->get('text_purchased'),
+			'value' => 'purchased',
+			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_license=purchased' . $url, true)
+		);		
 
 		// Sort
 		$url = '';

@@ -27,12 +27,14 @@ class ControllerApiLogin extends Controller {
 			if (!$json) {
 				$json['success'] = $this->language->get('text_success');
 				
-				$this->model_account_api->addApiSession($api_info['api_id'], $this->session->getId(), $this->request->server['REMOTE_ADDR']);
+				$session = new Session();
 				
-				$this->session->data['api_id'] = $api_info['api_id'];
+				$this->model_account_api->addApiSession($api_info['api_id'], $session->getId(), $this->request->server['REMOTE_ADDR']);
+				
+				$session->data['api_id'] = $api_info['api_id'];
 				
 				// Create Token
-				$json['api_token'] = $this->session->getId();
+				$json['api_token'] = $session->getId();
 			} else {
 				$json['error']['key'] = $this->language->get('error_key');
 			}

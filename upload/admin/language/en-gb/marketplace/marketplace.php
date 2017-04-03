@@ -19,6 +19,7 @@ $_['text_report']        = 'Reports';
 $_['text_other']         = 'Other';
 $_['text_free']          = 'Free';
 $_['text_paid']          = 'Paid';
+$_['text_purchased']     = 'Purchased';
 $_['text_date_modified'] = 'Date Modified';
 $_['text_date_added']    = 'Date Added';
 $_['text_name']          = 'Name';

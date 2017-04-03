@@ -14,7 +14,7 @@ final class Loader {
 		$result = $this->registry->get('event')->trigger('controller/' . $route . '/before', array($route, &$data));
 		
 		// Make sure its only the last event that returns an output if required.
-		if ($result != null) {
+		if ($result != null && !$result instanceof Exception) {
 			$output = $result;
 		} else {
 			$action = new Action($route);
@@ -24,7 +24,7 @@ final class Loader {
 		// Trigger the post events
 		$result = $this->registry->get('event')->trigger('controller/' . $route . '/after', array($route, &$data, &$output));
 		
-		if ($result != null) {
+		if ($result != null && !$result instanceof Exception) {
 			$output = $result;
 		}
 

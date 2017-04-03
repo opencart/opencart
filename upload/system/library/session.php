@@ -3,13 +3,23 @@ class Session {
 	protected $session_id;
 	public $data = array();
 
-	public function __construct($session_id) {
+	public function __construct($session_id = '') {
+		if (!$session_id) {
+			if (function_exists('random_bytes')) {
+				$session_id = substr(bin2hex(random_bytes(26)), 0, 26);
+			} elseif (function_exists('openssl_random_pseudo_bytes')) {
+				$session_id = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
+			} else {
+				$session_id = substr(bin2hex(mcrypt_create_iv(26, MCRYPT_DEV_URANDOM)), 0, 26);
+			}		
+		}
+		
 		if (preg_match('/^[a-zA-Z0-9,\-]{22,52}$/', $session_id)) {
 			$this->session_id = $session_id;
 		} else {
 			exit('Error: Invalid session ID!');
-		}
-		
+		}	
+
 		$file = session_save_path() . '/sess_' . $session_id;
 		
 		if (is_file($file)) {
@@ -65,7 +75,5 @@ class Session {
 		if (is_file($file)) {
 			unset($file);
 		}		
-		
-		setcookie(session_name(), '', time() - 42000, ini_get('session.cookie_path'), ini_get('session.cookie_domain'));
 	}
 }

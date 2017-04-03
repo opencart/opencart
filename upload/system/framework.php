@@ -94,21 +94,11 @@ if ($config->get('session_autostart')) {
 	for all sessions!
 	*/
 	
-	if (isset($_COOKIE[$config->get('session_name')]) && !preg_match('/^[a-zA-Z0-9,\-]{22,52}$/', $_COOKIE[$config->get('session_name')])) {
-		exit('Error: Invalid session ID!');
-	}
-	
 	if (isset($_COOKIE[$config->get('session_name')])) {
 		$session_id = $_COOKIE[$config->get('session_name')];
-	} elseif (function_exists('random_bytes')) {
-		$session_id = substr(bin2hex(random_bytes(26)), 0, 26);
-	} elseif (function_exists('openssl_random_pseudo_bytes')) {
-		$session_id = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
 	} else {
-		$session_id = substr(bin2hex(mcrypt_create_iv(26, MCRYPT_DEV_URANDOM)), 0, 26);
+		$session_id = '';
 	}
-			
-	setcookie($config->get('session_name'), $session_id, ini_get('session.cookie_lifetime'), ini_get('session.cookie_path'), ini_get('session.cookie_domain'));
 	
 	$class = 'Session\\' . $config->get('session_engine');
 	
@@ -118,7 +108,11 @@ if ($config->get('session_autostart')) {
 		$handler = new $class($registry);
 	}
 	
-	$registry->set('session', new Session($session_id, $handler));
+	$session = new Session($session_id);
+	
+	setcookie($config->get('session_name'), $session->getId(), ini_get('session.cookie_lifetime'), ini_get('session.cookie_path'), ini_get('session.cookie_domain'));
+
+	$registry->set('session', $session);
 }
 
 // Cache 

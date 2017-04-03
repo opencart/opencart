@@ -135,7 +135,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-
+/*
 		$time = time() + 30;
 
 		// We create a hash from the data in a similar method to how amazon does things.
@@ -165,7 +165,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$response = curl_exec($curl);
 		
 		curl_close($curl);
-			
+	*/		
 					
 		$curl = curl_init(OPENCART_SERVER . 'index.php?route=marketplace/api' . $url);
 
@@ -407,12 +407,13 @@ class ControllerMarketplaceMarketplace extends Controller {
 			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_license=paid' . $url, true)
 		);
 		
+		/*
 		$data['licenses'][] = array(
 			'text'  => $this->language->get('text_purchased'),
 			'value' => 'purchased',
 			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_license=purchased' . $url, true)
 		);		
-
+*/
 		// Sort
 		$url = '';
 

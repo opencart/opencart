@@ -22,7 +22,6 @@ class ControllerMarketplaceInstaller extends Controller {
 		$data['text_upload'] = $this->language->get('text_upload');
 		$data['text_loading'] = $this->language->get('text_loading');
 		$data['text_progress'] = $this->language->get('text_progress');
-		$data['text_no_results'] = $this->language->get('text_no_results');
 					
 		$data['entry_upload'] = $this->language->get('entry_upload');
 		$data['entry_progress'] = $this->language->get('entry_progress');
@@ -46,6 +45,9 @@ class ControllerMarketplaceInstaller extends Controller {
 
 	public function installed() {
 		$this->load->language('marketplace/installer');
+
+		$data['text_loading'] = $this->language->get('text_loading');
+		$data['text_no_results'] = $this->language->get('text_no_results');
 
 		$data['column_filename'] = $this->language->get('column_filename');
 		$data['column_date_added'] = $this->language->get('column_date_added');

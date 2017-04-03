@@ -31,8 +31,8 @@ class ModelSettingExtension extends Model {
 		return $this->db->getLastId();
 	}
 	
-	public function deleteUpload($code) {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "extension_upload` WHERE `code` = '" . $this->db->escape($code) . "'");
+	public function deleteUpload($extension_upload_id) {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "extension_upload` WHERE `extension_upload_id` = '" . $this->db->escape($extension_upload_id) . "'");
 	}
 
 	public function getUploads() {

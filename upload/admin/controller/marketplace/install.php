@@ -535,8 +535,10 @@ class ControllerMarketplaceInstall extends Controller {
 			}
 
 			// Just in case its an upload being uninstalled we should remove the db entry
-			$this->model_setting_extension->deleteUpload($code);
-
+			if (substr($code, 0, 6) == 'upload') {
+				$this->model_setting_extension->deleteUpload(substr($code, 7));
+			}
+			
 			$json['success'] = $this->language->get('text_success');
 		}
 

@@ -156,10 +156,6 @@ $('#tab-installed').on('click', '.btn-danger', function(e) {
 
 	var element = this;
 
-	$('#progress-bar').css('width', '0%');
-	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
-	$('#progress-text').html('');
-
 	$.ajax({
 		url: 'index.php?route=marketplace/install/uninstall&user_token={{ user_token }}&code=upload-' + $(this).attr('value'),
 		dataType: 'json',
@@ -170,18 +166,11 @@ $('#tab-installed').on('click', '.btn-danger', function(e) {
 			$(element).button('reset');
 		},
 		success: function(json) {
-			if (json['error']) {
-				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html(json['error']);
-			}
-
+			$('.alert').remove();
+			
 			if (json['success']) {
-				$('#progress-bar').css('width', '100%');
-				$('#progress-bar').addClass('progress-bar-success');
-				$('#progress-text').html(json['success']);
-				
-				$(element).replaceWith('<button type="button" value="' + $(element).val() + '" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> Install</button>');
-				
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
 				$('#tab-installed').load('index.php?route=marketplace/installer/installed&user_token={{ user_token }}');
 			}
 		},

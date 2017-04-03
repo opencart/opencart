@@ -16,34 +16,45 @@
         <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> {{ text_upload }}</h3>
       </div>
       <div class="panel-body">
-        <form class="form-horizontal">
-          <fieldset>
-            <legend>{{ text_upload }}</legend>
-            <div class="form-group required">
-              <label class="col-sm-2 control-label" for="button-upload"><span data-toggle="tooltip" title="{{ help_upload }}">{{ entry_upload }}</span></label>
-              <div class="col-sm-10">
-                <button type="button" id="button-upload" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-upload"></i> {{ button_upload }}</button>
-              </div>
-            </div>
-          </fieldset>
-          <br />
-          <fieldset>
-            <legend>{{ text_progress }}</legend>
-            <div class="form-group">
-              <label class="col-sm-2 control-label">{{ entry_progress }}</label>
-              <div class="col-sm-10">
-                <div class="progress">
-                  <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#tab-install" data-toggle="tab">{{ tab_install }}</a></li>
+          <li><a href="#tab-installed" data-toggle="tab">{{ tab_installed }}</a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="tab-install" class="tab-pane active">
+            <form class="form-horizontal">
+              <fieldset>
+                <legend>{{ text_upload }}</legend>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="button-upload"><span data-toggle="tooltip" title="{{ help_upload }}">{{ entry_upload }}</span></label>
+                  <div class="col-sm-10">
+                    <button type="button" id="button-upload" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-upload"></i> {{ button_upload }}</button>
+                  </div>
                 </div>
-                <div id="progress-text"></div>
-              </div>
-            </div>
-          </fieldset>
-        </form>
+              </fieldset>
+              <br />
+              <fieldset>
+                <legend>{{ text_progress }}</legend>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">{{ entry_progress }}</label>
+                  <div class="col-sm-10">
+                    <div class="progress">
+                      <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
+                    </div>
+                    <div id="progress-text"></div>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+          <div id="tab-installed" class="tab-pane"></div>
+        </div>
       </div>
     </div>
   </div>
   <script type="text/javascript"><!--
+$('#tab-installed').load('index.php?route=marketplace/installer/installed&user_token={{ user_token }}');
+  
 $('#button-upload').on('click', function() {
 	$('#form-upload').remove();
 
@@ -80,8 +91,6 @@ $('#button-upload').on('click', function() {
 					$('#button-upload').button('reset');
 				},
 				success: function(json) {
-					console.log(json);
-					
 					if (json['error']) {
 						$('#progress-bar').addClass('progress-bar-danger');
 						$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
@@ -123,6 +132,8 @@ function next(url, i) {
 			if (json['success']) {
 				$('#progress-bar').addClass('progress-bar-success');
 				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
+				
+				$('#tab-installed').load('index.php?route=marketplace/installer/installed&user_token={{ user_token }}');
 			}
 			
 			if (json['text']) {
@@ -138,5 +149,46 @@ function next(url, i) {
 		}
 	});
 }
+
+// Uninstall
+$('#tab-installed').on('click', '.btn-danger', function(e) {
+	e.preventDefault();
+
+	var element = this;
+
+	$('#progress-bar').css('width', '0%');
+	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
+	$('#progress-text').html('');
+
+	$.ajax({
+		url: 'index.php?route=marketplace/install/uninstall&user_token={{ user_token }}&code=upload-' + $(this).attr('value'),
+		dataType: 'json',
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(json) {
+			if (json['error']) {
+				$('#progress-bar').addClass('progress-bar-danger');
+				$('#progress-text').html(json['error']);
+			}
+
+			if (json['success']) {
+				$('#progress-bar').css('width', '100%');
+				$('#progress-bar').addClass('progress-bar-success');
+				$('#progress-text').html(json['success']);
+				
+				$(element).replaceWith('<button type="button" value="' + $(element).val() + '" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> Install</button>');
+				
+				$('#tab-installed').load('index.php?route=marketplace/installer/installed&user_token={{ user_token }}');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
 //--></script></div>
 {{ footer }} 

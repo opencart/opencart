@@ -135,7 +135,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-/*
+
 		$time = time() + 30;
 
 		// We create a hash from the data in a similar method to how amazon does things.
@@ -143,7 +143,6 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$string .= OPENCART_USERNAME . "\n";
 		$string .= $this->request->server['HTTP_HOST'] . "\n";
 		$string .= VERSION . "\n";
-		$string .= $filter_category . "\n";
 		$string .= $time . "\n"; 
 		
 		$signature = base64_encode(hash_hmac('sha1', $string, OPENCART_SECRET, 1));
@@ -153,20 +152,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$url .= '&version=' . VERSION;
 		$url .= '&time=' . $time;
 		$url .= '&signature=' . rawurlencode($signature);
-
-		$curl = curl_init(OPENCART_SERVER . 'index.php?route=marketplace/api' . $url);
-
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
-		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
-
-		$response = curl_exec($curl);
-		
-		curl_close($curl);
-	*/		
-					
+							
 		$curl = curl_init(OPENCART_SERVER . 'index.php?route=marketplace/api' . $url);
 
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
@@ -176,7 +162,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		curl_setopt($curl, CURLOPT_POST, 1);
 
 		$response = curl_exec($curl);
-
+		
 		$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
 		curl_close($curl);
@@ -407,13 +393,13 @@ class ControllerMarketplaceMarketplace extends Controller {
 			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_license=paid' . $url, true)
 		);
 		
-		/*
+
 		$data['licenses'][] = array(
 			'text'  => $this->language->get('text_purchased'),
 			'value' => 'purchased',
 			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_license=purchased' . $url, true)
 		);		
-*/
+
 		// Sort
 		$url = '';
 
@@ -685,7 +671,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 							'extension_download_id' => $result['extension_download_id'],
 							'name'                  => $result['name'],
 							'date_added'            => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-							'installed'             => $this->model_setting_extension->getTotalPathsByExtensionDownloadId($result['extension_download_id']),
+							'installed'             => $this->model_setting_extension->getTotalPathsByCode('marketplace-' . $result['extension_download_id']),
 							'status'                => $result['status']
 						);
 					//}
@@ -735,7 +721,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$string .= VERSION . "\n";
 			$string .= $extension_id . "\n";
 		 	$string .= $this->request->post['pin'] . "\n";
-			$string .= $time . "\n"; 
+			$string .= $time . "\n";
 			
 			$signature = base64_encode(hash_hmac('sha1', $string, OPENCART_SECRET, 1));
 			
@@ -797,7 +783,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		
 		if (is_file($file) && (filemtime($file) < (time() - 20))) {
 			unlink($file);
-		}	
+		}
 
 		if (is_file($file)) {
 			$json['error'] = $this->language->get('error_install');
@@ -848,7 +834,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 				
 				$json['text'] = $this->language->get('text_install');
 				
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/install', 'user_token=' . $this->session->data['user_token'] . '&extension_download_id=' . $extension_download_id, true));		
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/install', 'user_token=' . $this->session->data['user_token'] . '&code=marketplace-' . $extension_download_id, true));		
 			} elseif (isset($response_info['error'])) {
 				$json['error'] = $response_info['error'];
 			} else {

@@ -241,8 +241,6 @@ $('#tab-download').on('click', '.btn-primary', function(e) {
 			$(element).button('reset');
 		},
 		success: function(json) {
-			console.log(json);
-			
 			$('.alert').remove();
 			
 			if (json['error']) {
@@ -273,8 +271,6 @@ function next(url, element, i) {
 		url: url,
 		dataType: 'json',
 		success: function(json) {
-			console.log(json);
-			
 			$('#progress-bar').css('width', (i * 20) + '%');
 
 			if (json['error']) {
@@ -316,7 +312,7 @@ $('#tab-download').on('click', ' .btn-danger', function(e) {
 	$('#progress-text').html('');
 
 	$.ajax({
-		url: 'index.php?route=marketplace/install/uninstall&user_token={{ user_token }}&extension_download_id=' + $(this).attr('value'),
+		url: 'index.php?route=marketplace/install/uninstall&user_token={{ user_token }}&code=marketplace-' + $(this).attr('value'),
 		dataType: 'json',
 		beforeSend: function() {
 			$(element).button('loading');

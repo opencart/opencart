@@ -5,10 +5,10 @@ class ControllerMarketplaceInstall extends Controller {
 
 		$json = array();
 			
-		if (isset($this->request->get['extension_download_id'])) {
-			$extension_download_id = $this->request->get['extension_download_id'];
+		if (isset($this->request->get['code'])) {
+			$code = $this->request->get['code'];
 		} else {
-			$extension_download_id = 0;
+			$code = '';
 		}
 			
 		if (!$this->user->hasPermission('modify', 'marketplace/install')) {
@@ -63,7 +63,7 @@ class ControllerMarketplaceInstall extends Controller {
 		if (!$json) {
 			$json['text'] = $this->language->get('text_unzip');
 
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/unzip', 'user_token=' . $this->session->data['user_token'] . '&extension_download_id=' . $extension_download_id, true));
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/unzip', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -75,10 +75,10 @@ class ControllerMarketplaceInstall extends Controller {
 
 		$json = array();
 
-		if (isset($this->request->get['extension_download_id'])) {
-			$extension_download_id = $this->request->get['extension_download_id'];
+		if (isset($this->request->get['code'])) {
+			$code = $this->request->get['code'];
 		} else {
-			$extension_download_id = 0;
+			$code = '';
 		}
 		
 		if (!$this->user->hasPermission('modify', 'marketplace/install')) {
@@ -108,7 +108,7 @@ class ControllerMarketplaceInstall extends Controller {
 
 			$json['text'] = $this->language->get('text_move');
 
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/move', 'user_token=' . $this->session->data['user_token'] . '&extension_download_id=' . $extension_download_id, true));
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/move', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -120,10 +120,10 @@ class ControllerMarketplaceInstall extends Controller {
 
 		$json = array();
 
-		if (isset($this->request->get['extension_download_id'])) {
-			$extension_download_id = (int)$this->request->get['extension_download_id'];
+		if (isset($this->request->get['code'])) {
+			$code = $this->request->get['code'];
 		} else {
-			$extension_download_id = 0;
+			$code = '';
 		}
 
 		if (!$this->user->hasPermission('modify', 'marketplace/install')) {
@@ -259,7 +259,7 @@ class ControllerMarketplaceInstall extends Controller {
 
 					if (is_dir($file) && !is_dir($path)) {
 						if (mkdir($path, 0777)) {
-							$this->model_setting_extension->addPath($extension_download_id, $destination);
+							$this->model_setting_extension->addPath($code, $destination);
 						} else {
 							$json['error'] = sprintf($this->language->get('error_move'), $path);
 						}
@@ -267,7 +267,7 @@ class ControllerMarketplaceInstall extends Controller {
 
 					if (is_file($file)) {
 						if (rename($file, $path)) {
-							$this->model_setting_extension->addPath($extension_download_id, $destination);
+							$this->model_setting_extension->addPath($code, $destination);
 						} else {
 							$json['error'] = sprintf($this->language->get('error_move'), $file);
 						}
@@ -279,7 +279,7 @@ class ControllerMarketplaceInstall extends Controller {
 		if (!$json) {
 			$json['text'] = $this->language->get('text_xml');
 
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/xml', 'user_token=' . $this->session->data['user_token'] . '&extension_download_id=' . $extension_download_id, true));
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/xml', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -291,10 +291,10 @@ class ControllerMarketplaceInstall extends Controller {
 
 		$json = array();
 		
-		if (isset($this->request->get['extension_download_id'])) {
-			$extension_download_id = $this->request->get['extension_download_id'];
+		if (isset($this->request->get['code'])) {
+			$code = $this->request->get['code'];
 		} else {
-			$extension_download_id = 0;
+			$code = '';
 		}
 
 		if (!$this->user->hasPermission('modify', 'marketplace/install')) {
@@ -456,10 +456,10 @@ class ControllerMarketplaceInstall extends Controller {
 
 		$json = array();
 
-		if (isset($this->request->get['extension_download_id'])) {
-			$extension_download_id = $this->request->get['extension_download_id'];
+		if (isset($this->request->get['code'])) {
+			$code = $this->request->get['code'];
 		} else {
-			$extension_download_id = 0;
+			$code = '';
 		}
 
 		if (!$this->user->hasPermission('modify', 'marketplace/install')) {
@@ -469,7 +469,7 @@ class ControllerMarketplaceInstall extends Controller {
 		if (!$json) {
 			$this->load->model('setting/extension');
 
-			$results = $this->model_setting_extension->getPathsByExtensionDownloadId($extension_download_id);
+			$results = $this->model_setting_extension->getPathsByCode($code);
 
 			rsort($results);
 
@@ -534,10 +534,13 @@ class ControllerMarketplaceInstall extends Controller {
 				$this->model_setting_extension->deletePath($result['extension_install_id']);
 			}
 
+			// Just in case its an upload being uninstalled we should remove the db entry
+			$this->model_setting_extension->deleteUpload($code);
+
 			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
+	}	
 }

@@ -83,7 +83,7 @@ class ControllerMarketplaceInstaller extends Controller {
 		// Check if there is a install zip already there
 		$file = ini_get('upload_tmp_dir') . '/install.tmp';
 
-		if (is_file($file) && (filectime($file) < (time() - 20))) {
+		if (is_file($file) && (filectime($file) < (time() - 5))) {
 			unlink($file);
 		}
 		

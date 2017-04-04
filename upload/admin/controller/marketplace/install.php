@@ -22,7 +22,7 @@ class ControllerMarketplaceInstall extends Controller {
 		// Check if there is a install directory already there
 		$directory = ini_get('upload_tmp_dir') . '/install/';
 		
-		if (is_dir($directory) && (filectime($directory) < (time() - 20))) {
+		if (is_dir($directory) && (filectime($directory) < (time() - 5))) {
 			// Get a list of files ready to upload
 			$files = array();
 
@@ -53,7 +53,7 @@ class ControllerMarketplaceInstall extends Controller {
 				}
 			}
 
-			unlink($directory);
+			rmdir($directory);
 		}	
 
 		if (is_dir($directory)) {
@@ -92,7 +92,7 @@ class ControllerMarketplaceInstall extends Controller {
 		}
 
 		// Sanitize the filename
-		if (!$json) {
+		if (!$json) {			
 			// Unzip the files
 			$zip = new ZipArchive();
 
@@ -117,7 +117,7 @@ class ControllerMarketplaceInstall extends Controller {
 
 	public function move() {
 		$this->load->language('marketplace/install');
-
+		
 		$json = array();
 
 		if (isset($this->request->get['code'])) {
@@ -529,6 +529,14 @@ class ControllerMarketplaceInstall extends Controller {
 					}
 
 					unlink($source);
+						
+					if (is_file($source)) {
+						unlink($source);
+					}
+		
+					if (is_dir($source)) {
+						rmdir($source);
+					}					
 				}
 
 				$this->model_setting_extension->deletePath($result['extension_install_id']);

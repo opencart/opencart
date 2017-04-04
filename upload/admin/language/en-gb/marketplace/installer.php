@@ -6,6 +6,7 @@ $_['heading_title']     = 'Extension Installer';
 $_['text_progress']     = 'Install Progress';
 $_['text_upload']       = 'Upload your extensions';
 $_['text_success']      = 'Success: The extension has been installed!';
+$_['text_install']      = 'Installing';
 
 // Column
 $_['column_filename']   = 'Filename';

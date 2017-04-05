@@ -91,16 +91,23 @@ final class Loader {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 			
-		$file = DIR_SYSTEM . 'library/' . $route . '.php';
+        $files = array(
+            DIR_SYSTEM . 'vendor/' . $route . '.php',
+            DIR_SYSTEM . 'library/' . $route . '.php'
+        );
+
 		$class = str_replace('/', '\\', $route);
 
-		if (is_file($file)) {
-			include_once($file);
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                include_once($file);
 
-			$this->registry->set(basename($route), new $class($this->registry));
-		} else {
-			throw new \Exception('Error: Could not load library ' . $route . '!');
-		}
+                $this->registry->set(basename($route), new $class($this->registry));
+                return;
+            }
+        }
+
+        throw new \Exception('Error: Could not load library ' . $route . '!');
 	}
 	
 	public function helper($route) {

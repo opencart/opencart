@@ -66,6 +66,19 @@
         </form>
       </div>
 	</div>
+  Made with love by patrick
+  https://twitter.com/patric_mutwiri
+  https://patric.xyz
+
+  Wanna buy come coffee?
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+  <input type="hidden" name="cmd" value="_s-xclick">
+  <input type="hidden" name="hosted_button_id" value="DDNH54DSNYGAL">
+  <input type="image" src="https://patric.xyz/images/logo/logo.png" border="0" name="submit" alt="ke Developer">
+  <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=DDNH54DSNYGAL">Buy Coffee</a>
+</div>
   </div>
 </div>
 

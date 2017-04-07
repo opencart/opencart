@@ -666,7 +666,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 				foreach ($response_info['downloads'] as $result) {
 					$compatibility = explode(', ', $result['compatibility']);
 					
-					//if (in_array(VERSION, $compatibility)) {
+					if (in_array(VERSION, $compatibility)) {
 						$data['downloads'][] = array(
 							'extension_download_id' => $result['extension_download_id'],
 							'name'                  => $result['name'],
@@ -674,7 +674,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 							'installed'             => $this->model_setting_extension->getTotalPathsByCode('marketplace-' . $result['extension_download_id']),
 							'status'                => $result['status']
 						);
-					//}
+					}
 				}
 			}
 
@@ -781,7 +781,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		// Check if there is a install zip already there
 		$file = ini_get('upload_tmp_dir') . '/install.tmp';
 		
-		if (is_file($file) && (filemtime($file) < (time() - 20))) {
+		if (is_file($file) && (filemtime($file) < (time() - 5))) {
 			unlink($file);
 		}
 

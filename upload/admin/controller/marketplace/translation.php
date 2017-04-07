@@ -186,7 +186,59 @@ class ControllerMarketplaceTranslation extends Controller {
 		if (!$translation_info) {
 			$json['error'] = $this->language->get('error_code');
 		}
+
+		// Check if there is a install zip already there
+		$file = ini_get('upload_tmp_dir') . '/install.tmp';
+		
+		if (is_file($file) && (filemtime($file) < (time() - 5))) {
+			unlink($file);
+		}
+
+		if (is_file($file)) {
+			$json['error'] = $this->language->get('error_install');
+		}	
 				
+		// Check if there is a install directory already there
+		$directory = ini_get('upload_tmp_dir') . '/install/';
+		
+		if (is_dir($directory) && (filectime($directory) < (time() - 5))) {
+			// Get a list of files ready to upload
+			$files = array();
+
+			$path = array($directory);
+
+			while (count($path) != 0) {
+				$next = array_shift($path);
+
+				// We have to use scandir function because glob will not pick up dot files.
+				foreach (array_diff(scandir($next), array('.', '..')) as $file) {
+					$file = $next . '/' . $file;
+
+					if (is_dir($file)) {
+						$path[] = $file;
+					}
+
+					$files[] = $file;
+				}
+			}
+
+			rsort($files);
+
+			foreach ($files as $file) {
+				if (is_file($file)) {
+					unlink($file);
+				} elseif (is_dir($file)) {
+					rmdir($file);
+				}
+			}
+
+			rmdir($directory);
+		}	
+
+		if (is_dir($directory)) {
+			$json['error'] = $this->language->get('error_install');
+		}
+
 		if (!$json) {		
 			$json['text'] = $this->language->get('text_download');
 					
@@ -323,7 +375,7 @@ class ControllerMarketplaceTranslation extends Controller {
 		if (!$translation_info) {
 			$json['error'] = $this->language->get('error_code');
 		}
-						
+														
 		if (!$json) {
 			$curl = curl_init('https://s3.amazonaws.com/opencart-language/' . VERSION . '/' . $code . '.zip');
 			
@@ -339,7 +391,7 @@ class ControllerMarketplaceTranslation extends Controller {
 			} elseif ((substr($response, 0, 5) == '<?xml')) {
 				$json['error'] = $this->language->get('error_s3');
 			} else {
-				$file = ini_get('upload_tmp_dir') . '/lng-' . $code . '.zip';
+				$file = ini_get('upload_tmp_dir') . '/install.tmp';
 		
 				$handle = fopen($file, 'w');
 		
@@ -388,9 +440,9 @@ class ControllerMarketplaceTranslation extends Controller {
 			$json['error'] = $this->language->get('error_code');
 		}
 		
-		$file = ini_get('upload_tmp_dir') . '/lng-' . $code . '.zip';
+		$file = ini_get('upload_tmp_dir') . '/install.zip';
 		
-		if (!is_file($file) || substr(str_replace('\\', '/', realpath($file)), 0, strlen(ini_get('upload_tmp_dir'))) != str_replace('\\', '/', ini_get('upload_tmp_dir'))) {
+		if (!is_file($file)) {
 			$json['error'] = $this->language->get('error_file');
 		}
 			
@@ -399,7 +451,7 @@ class ControllerMarketplaceTranslation extends Controller {
 			$zip = new ZipArchive();
 
 			if ($zip->open($file)) {
-				$zip->extractTo(ini_get('upload_tmp_dir') . '/lng-' . $code . '/');
+				$zip->extractTo(ini_get('upload_tmp_dir') . '/install/');
 				$zip->close();
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
@@ -440,9 +492,9 @@ class ControllerMarketplaceTranslation extends Controller {
 			$json['error'] = $this->language->get('error_code');
 		}
 		
-		$directory = ini_get('upload_tmp_dir');
+		$directory = ini_get('upload_tmp_dir') . '/install/';
 
-		if (!is_dir($directory . '/lng-' . $code . '/') || substr(str_replace('\\', '/', realpath($directory . '/lng-' . $code . '/')), 0, strlen(ini_get('upload_tmp_dir'))) != str_replace('\\', '/', ini_get('upload_tmp_dir'))) {
+		if (!is_dir($directory)) {
 			$json['error'] = $this->language->get('error_directory');
 		}
 		
@@ -450,7 +502,7 @@ class ControllerMarketplaceTranslation extends Controller {
 			// Get a list of files ready to upload
 			$files = array();
 
-			$path = array($directory . '/lng-' . $code . '/*');
+			$path = array($directory . '*');
 
 			while (count($path) != 0) {
 				$next = array_shift($path);
@@ -465,7 +517,7 @@ class ControllerMarketplaceTranslation extends Controller {
 			}
 
 			foreach ($files as $file) {
-				$destination = substr($file, strlen($directory . '/lng-' . $code . '/'));
+				$destination = substr($file, strlen($directory));
 				
 				if (substr($destination, 0, 5) == 'admin') {
 					$destination = DIR_APPLICATION . substr($destination, 6);
@@ -573,9 +625,9 @@ class ControllerMarketplaceTranslation extends Controller {
 			$json['error'] = $this->language->get('error_code');
 		}
 				
-		$directory = ini_get('upload_tmp_dir');
+		$directory = ini_get('upload_tmp_dir') . '/install/';
 
-		if (!is_dir($directory . '/lng-' . $code . '/') || substr(str_replace('\\', '/', realpath($directory . '/lng-' . $code . '/')), 0, strlen($directory)) != str_replace('\\', '/', $directory)) {
+		if (!is_dir($directory)) {
 			$json['error'] = $this->language->get('error_directory');
 		}
 		
@@ -583,7 +635,7 @@ class ControllerMarketplaceTranslation extends Controller {
 			// Get a list of files ready to upload
 			$files = array();
 
-			$path = array($directory . '/lng-' . $code . '/');
+			$path = array($directory);
 
 			while (count($path) != 0) {
 				$next = array_shift($path);
@@ -610,8 +662,8 @@ class ControllerMarketplaceTranslation extends Controller {
 				}
 			}
 
-			if (is_dir($directory . '/lng-' . $code . '/')) {
-				rmdir($directory . '/lng-' . $code . '/');
+			if (is_dir($directory)) {
+				rmdir($directory);
 			}
 						
 			$json['success'] = $this->language->get('text_installed');

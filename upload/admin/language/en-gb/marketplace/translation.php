@@ -27,6 +27,7 @@ $_['entry_progress']   = 'Progress';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify language translation!';
+$_['error_install']    = 'Extension installation taking place please wait a few seconds before trying to install!';
 $_['error_code']       = 'Invalide language code!';
 $_['error_file']       = 'File could not be found!';
 $_['error_directory']  = 'Directory containing files to be uploaded could not be found!';

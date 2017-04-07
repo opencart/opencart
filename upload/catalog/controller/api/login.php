@@ -7,8 +7,20 @@ class ControllerApiLogin extends Controller {
 
 		$this->load->model('account/api');
 
+		if (isset($this->request->post['username'])) {
+			$username = $this->request->post['username'];
+		} else {
+			$username = '';
+		}
+
+		if (isset($this->request->post['key'])) {
+			$key = $this->request->post['key'];
+		} else {
+			$key = '';
+		}
+
 		// Login with API Key
-		$api_info = $this->model_account_api->login($this->request->post['username'], $this->request->post['key']);
+		$api_info = $this->model_account_api->login($username, $key);
 
 		if ($api_info) {
 			// Check if IP is allowed

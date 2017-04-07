@@ -6,7 +6,7 @@ class CatalogModelCataloManufacturerTest extends OpenCartTest {
 	 * @before
 	 */
 	public function setupTest() {
-		$this->loadModelByRoute('catalog/manufacturer');
+		$this->loadModel('catalog/manufacturer');
 	}
 	
 	public function testGetManufacturer() {

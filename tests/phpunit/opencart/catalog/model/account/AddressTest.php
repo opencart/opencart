@@ -6,14 +6,14 @@ class CatalogModelAccountAddressTest extends OpenCartTest {
 	 * @before
 	 */
 	public function setupTest() {		
-		$this->loadModelByRoute('account/address');
-		$this->customerLogout();
+		$this->loadModel('account/address');
+		$this->logout();
 		$this->emptyTables();
 		
 		$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET customer_id = 1, email = 'customer@localhost', `status` = 1, customer_group_id = 1, date_added = '1970-01-01 00:00:00', ip = '127.0.0.1'");
 		$this->db->query("INSERT INTO " . DB_PREFIX . "customer_ip SET ip = '127.0.0.1', customer_id = 1");
 		
-		$this->customerLogin('customer@localhost', '', true);
+		$this->login('customer@localhost', '', true);
 	}
 	
 	/**
@@ -21,12 +21,11 @@ class CatalogModelAccountAddressTest extends OpenCartTest {
 	 */
 	public function completeTest() {
 		$this->emptyTables();
-		$this->customerLogout();
+		$this->logout();
 	}
 	
 	private function emptyTables() {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_ban_ip");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_ip");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "address");
 	}

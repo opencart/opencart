@@ -12,6 +12,8 @@ class ControllerStartupSession extends Controller {
 				
 				// keep the session alive
 				$this->db->query("UPDATE `" . DB_PREFIX . "api_session` SET `date_modified` = NOW() WHERE `api_session_id` = '" . (int)$api_query->row['api_session_id'] . "'");
+			} else {
+				exit('Error: You do not have permission to access the API!');
 			}
 		} else {
 			// Default session

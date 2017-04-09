@@ -154,7 +154,7 @@ final class Loader {
 			// Trigger the pre events
 			$result = $registry->get('event')->trigger('model/' . $route . '/before', array(&$route, &$args));
 			
-			if ($result != null) {
+			if ($result) {
 				$output = $result;
 			} else {
 				$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', substr($route, 0, strrpos($route, '/')));
@@ -180,13 +180,11 @@ final class Loader {
 			// Trigger the post events
 			$result = $registry->get('event')->trigger('model/' . $route . '/after', array(&$route, &$args, &$output));
 			
-			if ($result != null) {
+			if ($result) {
 				$output = $result;
 			}
 						
-			if (!$result instanceof Exception) {
-				return $output;
-			}
+			return $output;
 		};
 	}	
 }

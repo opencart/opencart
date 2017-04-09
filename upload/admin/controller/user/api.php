@@ -316,7 +316,7 @@ class ControllerUserApi extends Controller {
 		} else {
 			$data['error_key'] = '';
 		}
-
+		
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -423,6 +423,10 @@ class ControllerUserApi extends Controller {
 
 		if ((utf8_strlen($this->request->post['key']) < 64) || (utf8_strlen($this->request->post['key']) > 256)) {
 			$this->error['key'] = $this->language->get('error_key');
+		}
+		
+		if (!isset($this->error['warning']) && !isset($this->request->post['api_ip'])) {
+			$this->error['warning'] = $this->language->get('error_ip');
 		}
 
 		return !$this->error;

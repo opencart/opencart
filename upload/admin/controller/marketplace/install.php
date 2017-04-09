@@ -153,12 +153,14 @@ class ControllerMarketplaceInstall extends Controller {
 			// A list of allowed directories to be written to
 			$allowed = array(
 				'admin/controller/extension/',
+				'admin/language/',
 				'admin/model/extension/',
 				'admin/view/image/',
 				'admin/view/javascript/',
 				'admin/view/stylesheet/',
 				'admin/view/template/extension/',
 				'catalog/controller/extension/',
+				'catalog/language/',
 				'catalog/model/extension/',
 				'catalog/view/javascript/',
 				'catalog/view/theme/',
@@ -166,22 +168,6 @@ class ControllerMarketplaceInstall extends Controller {
 				'system/vendor/',
 				'image/catalog/'
 			);
-
-			// Language Admin
-			$data['languages'] = array();
-
-			$folders = glob(DIR_LANGUAGE . '*', GLOB_ONLYDIR);
-
-			foreach ($folders as $folder) {
-				$allowed[] = 'admin/language/' . basename($folder) . '/extension/';
-			}
-
-			// Language Catalog
-			$folders = glob(DIR_CATALOG . 'language/*', GLOB_ONLYDIR);
-
-			foreach ($folders as $folder) {
-				$allowed[] = 'catalog/language/' . basename($folder) . '/extension/';
-			}
 
 			// First we need to do some checks
 			foreach ($files as $file) {

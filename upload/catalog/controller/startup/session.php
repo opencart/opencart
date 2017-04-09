@@ -1,7 +1,7 @@
 <?php
 class ControllerStartupSession extends Controller {
 	public function index() {
-		if (isset($this->request->get['route']) && substr($this->request->get['route'], 0, 4) == 'api/') {
+		if (isset($this->request->get['api_token']) && isset($this->request->get['route']) && substr($this->request->get['route'], 0, 4) == 'api/') {
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE TIMESTAMPADD(HOUR, 1, date_modified) < NOW()");
 					
 			// Make sure the IP is allowed
@@ -12,6 +12,8 @@ class ControllerStartupSession extends Controller {
 				
 				// keep the session alive
 				$this->db->query("UPDATE `" . DB_PREFIX . "api_session` SET `date_modified` = NOW() WHERE `api_session_id` = '" . (int)$api_query->row['api_session_id'] . "'");
+			} else {
+				return new Action('api/login');
 			}
 		} else {
 			// Default session

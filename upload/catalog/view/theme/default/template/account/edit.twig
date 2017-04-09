@@ -58,7 +58,6 @@
             </div>
           </div>
           {% for custom_field in custom_fields %}
-          {% if custom_field.location == 'account' %}
           {% if custom_field.type == 'select' %}
           <div class="form-group{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
             <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
@@ -208,7 +207,6 @@
             </div>
           </div>
           {% endif %}
-          {% endif %}
           {% endfor %}
         </fieldset>
         <div class="buttons clearfix">
@@ -243,7 +241,7 @@ $('.form-group[data-sort]').detach().each(function() {
 //--></script>
 <script type="text/javascript"><!--
 $('button[id^=\'button-custom-field\']').on('click', function() {
-	var node = this;
+	var element = this;
 
 	$('#form-upload').remove();
 
@@ -268,22 +266,22 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 				contentType: false,
 				processData: false,
 				beforeSend: function() {
-					$(node).button('loading');
+					$(element).button('loading');
 				},
 				complete: function() {
-					$(node).button('reset');
+					$(element).button('reset');
 				},
 				success: function(json) {
-					$(node).parent().find('.text-danger').remove();
+					$(element).parent().find('.text-danger').remove();
 
 					if (json['error']) {
-						$(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
+						$(element).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
 					}
 
 					if (json['success']) {
 						alert(json['success']);
 
-						$(node).parent().find('input').val(json['code']);
+						$(element).parent().find('input').val(json['code']);
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {

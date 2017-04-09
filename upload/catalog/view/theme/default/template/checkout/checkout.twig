@@ -25,20 +25,31 @@
           <div class="panel-heading">
             <h4 class="panel-title">{{ text_checkout_option }}</h4>
           </div>
-          <div class="panel-collapse collapse" id="collapse-checkout-option">
+          <div class="panel-collapse collapse" id="collapse-option">
             <div class="panel-body"></div>
           </div>
         </div>
+        
         {% if not logged and account != 'guest' %}
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h4 class="panel-title">{{ text_checkout_account }}</h4>
+            <h4 class="panel-title">{{ text_checkout_register }}</h4>
           </div>
-          <div class="panel-collapse collapse" id="collapse-payment-address">
+          <div class="panel-collapse collapse" id="collapse-account">
             <div class="panel-body"></div>
           </div>
         </div>
         {% else %}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">{{ text_checkout_guest }}</h4>
+          </div>
+          <div class="panel-collapse collapse" id="collapse-account">
+            <div class="panel-body"></div>
+          </div>
+        </div>
+        {% endif %}
+        
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title">{{ text_checkout_payment_address }}</h4>
@@ -46,8 +57,7 @@
           <div class="panel-collapse collapse" id="collapse-payment-address">
             <div class="panel-body"></div>
           </div>
-        </div>
-        {% endif %}
+        </div>      
         {% if shipping_required %}
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -78,7 +88,7 @@
           <div class="panel-heading">
             <h4 class="panel-title">{{ text_checkout_confirm }}</h4>
           </div>
-          <div class="panel-collapse collapse" id="collapse-checkout-confirm">
+          <div class="panel-collapse collapse" id="collapse-confirm">
             <div class="panel-body"></div>
           </div>
         </div>
@@ -88,17 +98,17 @@
 </div>
 <script type="text/javascript"><!--
 $(document).on('change', 'input[name=\'account\']', function() {
-	if ($('#collapse-payment-address').parent().find('.panel-heading .panel-title > *').is('a')) {
+	if ($('#collapse-account').parent().find('.panel-heading .panel-title > *').is('a')) {
 		if (this.value == 'register') {
-			$('#collapse-payment-address').parent().find('.panel-heading .panel-title').html('<a href="#collapse-payment-address" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle">{{ text_checkout_account }} <i class="fa fa-caret-down"></i></a>');
+			$('#collapse-account').parent().find('.panel-heading .panel-title').html('<a href="#collapse-account" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle">{{ text_checkout_register }} <i class="fa fa-caret-down"></i></a>');
 		} else {
-			$('#collapse-payment-address').parent().find('.panel-heading .panel-title').html('<a href="#collapse-payment-address" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle">{{ text_checkout_payment_address }} <i class="fa fa-caret-down"></i></a>');
+			$('#collapse-account').parent().find('.panel-heading .panel-title').html('<a href="#collapse-account" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle">{{ text_checkout_guest }} <i class="fa fa-caret-down"></i></a>');
 		}
 	} else {
 		if (this.value == 'register') {
-			$('#collapse-payment-address').parent().find('.panel-heading .panel-title').html('{{ text_checkout_account }}');
+			$('#collapse-account').parent().find('.panel-heading .panel-title').html('{{ text_checkout_register }}');
 		} else {
-			$('#collapse-payment-address').parent().find('.panel-heading .panel-title').html('{{ text_checkout_payment_address }}');
+			$('#collapse-account').parent().find('.panel-heading .panel-title').html('{{ text_checkout_guest }}');
 		}
 	}
 });
@@ -109,11 +119,11 @@ $(document).ready(function() {
         url: 'index.php?route=checkout/login',
         dataType: 'html',
         success: function(html) {
-           $('#collapse-checkout-option .panel-body').html(html);
+           $('#collapse-option .panel-body').html(html);
 
-			$('#collapse-checkout-option').parent().find('.panel-heading .panel-title').html('<a href="#collapse-checkout-option" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle">{{ text_checkout_option }} <i class="fa fa-caret-down"></i></a>');
+			$('#collapse-option').parent().find('.panel-heading .panel-title').html('<a href="#collapse-option" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle">{{ text_checkout_option }} <i class="fa fa-caret-down"></i></a>');
 
-			$('a[href=\'#collapse-checkout-option\']').trigger('click');
+			$('a[href=\'#collapse-option\']').trigger('click');
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -153,15 +163,15 @@ $(document).delegate('#button-account', 'click', function() {
         success: function(html) {
             $('.alert, .text-danger').remove();
 
-            $('#collapse-payment-address .panel-body').html(html);
+            $('#collapse-account .panel-body').html(html);
 
 			if ($('input[name=\'account\']:checked').val() == 'register') {
-				$('#collapse-payment-address').parent().find('.panel-heading .panel-title').html('<a href="#collapse-payment-address" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle">{{ text_checkout_account }} <i class="fa fa-caret-down"></i></a>');
+				$('#collapse-account').parent().find('.panel-heading .panel-title').html('<a href="#collapse-account" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle">{{ text_checkout_register }} <i class="fa fa-caret-down"></i></a>');
 			} else {
-				$('#collapse-payment-address').parent().find('.panel-heading .panel-title').html('<a href="#collapse-payment-address" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle">{{ text_checkout_payment_address }} <i class="fa fa-caret-down"></i></a>');
+				$('#collapse-account').parent().find('.panel-heading .panel-title').html('<a href="#collapse-account" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle">{{ text_checkout_guest }} <i class="fa fa-caret-down"></i></a>');
 			}
 
-			$('a[href=\'#collapse-payment-address\']').trigger('click');
+			$('a[href=\'#collapse-account\']').trigger('click');
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -174,7 +184,7 @@ $(document).delegate('#button-login', 'click', function() {
     $.ajax({
         url: 'index.php?route=checkout/login/save',
         type: 'post',
-        data: $('#collapse-checkout-option :input'),
+        data: $('#collapse-option :input'),
         dataType: 'json',
         beforeSend: function() {
         	$('#button-login').button('loading');
@@ -189,7 +199,7 @@ $(document).delegate('#button-login', 'click', function() {
             if (json['redirect']) {
                 location = json['redirect'];
             } else if (json['error']) {
-                $('#collapse-checkout-option .panel-body').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#collapse-option .panel-body').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
 				$('input[name=\'email\']').parent().addClass('has-error');
@@ -207,12 +217,14 @@ $(document).delegate('#button-register', 'click', function() {
     $.ajax({
         url: 'index.php?route=checkout/register/save',
         type: 'post',
-        data: $('#collapse-payment-address input[type=\'text\'], #collapse-payment-address input[type=\'date\'], #collapse-payment-address input[type=\'datetime-local\'], #collapse-payment-address input[type=\'time\'], #collapse-payment-address input[type=\'password\'], #collapse-payment-address input[type=\'hidden\'], #collapse-payment-address input[type=\'checkbox\']:checked, #collapse-payment-address input[type=\'radio\']:checked, #collapse-payment-address textarea, #collapse-payment-address select'),
+        data: $('#collapse-account input[type=\'text\'], #collapse-account input[type=\'date\'], #collapse-account input[type=\'datetime-local\'], #collapse-account input[type=\'time\'], #collapse-account input[type=\'password\'], #collapse-account input[type=\'hidden\'], #collapse-account input[type=\'checkbox\']:checked, #collapse-account input[type=\'radio\']:checked, #collapse-account textarea, #collapse-account select'),
         dataType: 'json',
         beforeSend: function() {
 			$('#button-register').button('loading');
 		},
         success: function(json) {
+			console.log(json);
+			
             $('.alert, .text-danger').remove();
             $('.form-group').removeClass('has-error');
 
@@ -222,11 +234,11 @@ $(document).delegate('#button-register', 'click', function() {
                 $('#button-register').button('reset');
 
                 if (json['error']['warning']) {
-                    $('#collapse-payment-address .panel-body').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                    $('#collapse-account .panel-body').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
 
 				for (i in json['error']) {
-					var element = $('#input-payment-' + i.replace('_', '-'));
+					var element = $('#input-register-' + i.replace('_', '-'));
 
 					if ($(element).parent().hasClass('input-group')) {
 						$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
@@ -238,6 +250,11 @@ $(document).delegate('#button-register', 'click', function() {
 				// Highlight any found errors
 				$('.text-danger').parent().addClass('has-error');
             } else {
+				
+				
+				
+				
+				
                 {% if shipping_required %}
                 var shipping_address = $('#payment-address input[name=\'shipping_address\']:checked').prop('value');
 
@@ -268,7 +285,7 @@ $(document).delegate('#button-register', 'click', function() {
 
 							$('#collapse-shipping-method').parent().find('.panel-heading .panel-title').html('{{ text_checkout_shipping_method }}');
 							$('#collapse-payment-method').parent().find('.panel-heading .panel-title').html('{{ text_checkout_payment_method }}');
-							$('#collapse-checkout-confirm').parent().find('.panel-heading .panel-title').html('{{ text_checkout_confirm }}');
+							$('#collapse-confirm').parent().find('.panel-heading .panel-title').html('{{ text_checkout_confirm }}');
                         },
                         error: function(xhr, ajaxOptions, thrownError) {
                             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -287,7 +304,7 @@ $(document).delegate('#button-register', 'click', function() {
 
 							$('#collapse-shipping-method').parent().find('.panel-heading .panel-title').html('{{ text_checkout_shipping_method }}');
 							$('#collapse-payment-method').parent().find('.panel-heading .panel-title').html('{{ text_checkout_payment_method }}');
-							$('#collapse-checkout-confirm').parent().find('.panel-heading .panel-title').html('{{ text_checkout_confirm }}');
+							$('#collapse-confirm').parent().find('.panel-heading .panel-title').html('{{ text_checkout_confirm }}');
                         },
                         error: function(xhr, ajaxOptions, thrownError) {
                             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -305,7 +322,7 @@ $(document).delegate('#button-register', 'click', function() {
 
 						$('a[href=\'#collapse-payment-method\']').trigger('click');
 
-						$('#collapse-checkout-confirm').parent().find('.panel-heading .panel-title').html('{{ text_checkout_confirm }}');
+						$('#collapse-confirm').parent().find('.panel-heading .panel-title').html('{{ text_checkout_confirm }}');
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
                         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -385,7 +402,7 @@ $(document).delegate('#button-payment-address', 'click', function() {
 
 						$('#collapse-shipping-method').parent().find('.panel-heading .panel-title').html('{{ text_checkout_shipping_method }}');
 						$('#collapse-payment-method').parent().find('.panel-heading .panel-title').html('{{ text_checkout_payment_method }}');
-						$('#collapse-checkout-confirm').parent().find('.panel-heading .panel-title').html('{{ text_checkout_confirm }}');
+						$('#collapseconfirm').parent().find('.panel-heading .panel-title').html('{{ text_checkout_confirm }}');
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
                         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -518,7 +535,7 @@ $(document).delegate('#button-guest', 'click', function() {
     $.ajax({
         url: 'index.php?route=checkout/guest/save',
         type: 'post',
-        data: $('#collapse-payment-address input[type=\'text\'], #collapse-payment-address input[type=\'date\'], #collapse-payment-address input[type=\'datetime-local\'], #collapse-payment-address input[type=\'time\'], #collapse-payment-address input[type=\'checkbox\']:checked, #collapse-payment-address input[type=\'radio\']:checked, #collapse-payment-address input[type=\'hidden\'], #collapse-payment-address textarea, #collapse-payment-address select'),
+        data: $('#collapse-account input[type=\'text\'], #collapse-account input[type=\'date\'], #collapse-account input[type=\'datetime-local\'], #collapse-account input[type=\'time\'], #collapse-account input[type=\'checkbox\']:checked, #collapse-account input[type=\'radio\']:checked, #collapse-account input[type=\'hidden\'], #collapse-account textarea, #collapse-account select'),
         dataType: 'json',
         beforeSend: function() {
        		$('#button-guest').button('loading');
@@ -532,7 +549,7 @@ $(document).delegate('#button-guest', 'click', function() {
                 $('#button-guest').button('reset');
 
                 if (json['error']['warning']) {
-                    $('#collapse-payment-address .panel-body').prepend('<div class="alert alert-warning">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                    $('#collapse-account .panel-body').prepend('<div class="alert alert-warning">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
 
 				for (i in json['error']) {

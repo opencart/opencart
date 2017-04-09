@@ -24,9 +24,9 @@ class ControllerStartupSession extends Controller {
 			$class = 'Session\\' . $this->config->get('session_engine');
 			
 			if ($this->config->get('session_engine') == 'db') {
-				$handler = new $class($registry);
+				$handler = new $class($this->registry);
 			} else {
-				$handler = new $class($registry);
+				$handler = new $class($this->registry);
 			}
 			
 			$session = new Session($session_id);

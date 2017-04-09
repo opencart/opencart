@@ -166,18 +166,20 @@ class ControllerAccountRegister extends Controller {
 		}
 
 		// Custom Fields
+		$data['custom_fields'] = array();
+		
 		$this->load->model('account/custom_field');
-
-		$data['custom_fields'] = $this->model_account_custom_field->getCustomFields('account');
-
-		if (isset($this->request->post['custom_field'])) {
-			if (isset($this->request->post['custom_field']['account'])) {
-				$account_custom_field = $this->request->post['custom_field']['account'];
-			} else {
-				$account_custom_field = array();
+		
+		$custom_fields = $this->model_account_custom_field->getCustomFields();
+		
+		foreach ($custom_fields as $custom_field) {
+			if ($custom_field['location'] == 'account') {
+				$data['custom_fields'][] = $custom_field;
 			}
-
-			$data['register_custom_field'] = $account_custom_field;
+		}
+		
+		if (isset($this->request->post['custom_field'])) {
+			$data['register_custom_field'] = $this->request->post['custom_field'];
 		} else {
 			$data['register_custom_field'] = array();
 		}

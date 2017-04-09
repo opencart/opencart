@@ -971,10 +971,10 @@ class ControllerSettingSetting extends Controller {
 			'value' => 'review'
 		);
 
-		if (isset($this->request->post['config_alert_email'])) {
-			$data['config_alert_email'] = $this->request->post['config_alert_email'];
+		if (isset($this->request->post['config_mail_alert_email'])) {
+			$data['config_mail_alert_email'] = $this->request->post['config_mail_alert_email'];
 		} else {
-			$data['config_alert_email'] = $this->config->get('config_alert_email');
+			$data['config_mail_alert_email'] = $this->config->get('config_mail_alert_email');
 		}
 		
 		if (isset($this->request->post['config_secure'])) {

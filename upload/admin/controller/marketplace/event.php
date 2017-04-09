@@ -83,8 +83,10 @@ class ControllerMarketplaceEvent extends Controller {
 
 		$this->load->model('setting/event');
 
-		if (isset($this->request->get['event_id']) && $this->validate()) {
-			$this->model_setting_event->deleteEvent($this->request->get['event_id']);
+		if (isset($this->request->post['selected']) && $this->validate()) {
+			foreach ($this->request->post['selected'] as $event_id) {
+				$this->model_setting_event->deleteEvent($event_id);
+			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

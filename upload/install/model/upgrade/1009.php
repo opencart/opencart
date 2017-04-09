@@ -73,13 +73,19 @@ class ModelUpgrade1009 extends Model {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "api` CHANGE `name` `username` VARCHAR(64) NOT NULL");
 		}
 		
-		
+		// Events
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "event' AND COLUMN_NAME = 'sort_order'");
 		
 		if (!$query->num_rows) {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "event` ADD `sort_order` INT(3) NOT NULL AFTER `action`");
 		}
+
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "event' AND COLUMN_NAME = 'date_added'");
 		
+		if ($query->num_rows) {
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "event` DROP COLUMN `date_added`");
+		}
+				
 		// OPENCART_SERVER
 		$upgrade = true;
 		
@@ -175,6 +181,6 @@ class ModelUpgrade1009 extends Model {
 			fwrite($file, $output);
 
 			fclose($file);
-		}						
+		}								
 	}
 }

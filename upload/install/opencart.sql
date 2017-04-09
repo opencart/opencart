@@ -1339,8 +1339,8 @@ CREATE TABLE `oc_event` (
 -- Dumping data for table `oc_event`
 --
 
-INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `sort_order`) VALUES
-(1, 'theme', 'catalog/view/*/before', 'event/theme', 1000);
+INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`, `sort_order`) VALUES
+(1, 'theme', 'catalog/view/*/before', 'event/theme', 1, 1000);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
 (2, 'translation', 'catalog/language/*/after', 'event/translation', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
@@ -1381,7 +1381,7 @@ INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUE
 (20, 'activity_return_add', 'catalog/model/account/return/addReturn/after', 'event/activity/addReturn', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
 (21, 'mail_affiliate_add', 'catalog/model/account/customer/addAffiliate/after', 'mail/affiliate', 1);
-INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`) VALUES
+INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
 (22, 'mail_affiliate_alert', 'catalog/model/account/customer/addAffiliate/after', 'mail/affiliate/alert', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
 (23, 'activity_affiliate_add', 'catalog/model/account/customer/addAffiliate/after', 'event/activity/addAffiliate', 1);

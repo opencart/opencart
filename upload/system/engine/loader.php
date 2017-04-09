@@ -14,7 +14,7 @@ final class Loader {
 		$result = $this->registry->get('event')->trigger('controller/' . $route . '/before', array($route, &$data));
 		
 		// Make sure its only the last event that returns an output if required.
-		if ($result != null && !$result instanceof Exception) {
+		if ($result != null && $result instanceof Exception) {
 			$output = $result;
 		} else {
 			$action = new Action($route);
@@ -24,11 +24,13 @@ final class Loader {
 		// Trigger the post events
 		$result = $this->registry->get('event')->trigger('controller/' . $route . '/after', array($route, &$data, &$output));
 		
-		if ($result != null && !$result instanceof Exception) {
+		if ($result != null) {
 			$output = $result;
 		}
 
-		return $output;
+		if (!$result instanceof Exception) {
+			return $output;
+		}
 	}
 	
 	public function model($route) {
@@ -84,7 +86,9 @@ final class Loader {
 			$output = $result;
 		}
 		
-		return $output;
+		if (!$result instanceof Exception) {
+			return $output;
+		}
 	}
 
 	public function library($route) {
@@ -136,7 +140,9 @@ final class Loader {
 			$output = $result;
 		}
 				
-		return $output;
+		if (!$result instanceof Exception) {
+			return $output;
+		}
 	}
 	
 	protected function callback($registry, $route) {
@@ -178,7 +184,9 @@ final class Loader {
 				$output = $result;
 			}
 						
-			return $output;
+			if (!$result instanceof Exception) {
+				return $output;
+			}
 		};
 	}	
 }

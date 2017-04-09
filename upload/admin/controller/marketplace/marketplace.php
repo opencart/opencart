@@ -301,6 +301,12 @@ class ControllerMarketplaceMarketplace extends Controller {
 		);
 
 		$data['categories'][] = array(
+			'text'  => $this->language->get('text_language'),
+			'value' => 'language',
+			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_category=language' . $url, true)
+		);
+		
+		$data['categories'][] = array(
 			'text'  => $this->language->get('text_payment'),
 			'value' => 'payment',
 			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_category=payment' . $url, true)

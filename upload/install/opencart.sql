@@ -1720,7 +1720,7 @@ INSERT INTO `oc_layout_module` (`layout_module_id`, `layout_id`, `code`, `positi
 (2, 4, '0', 'content_top', 0),
 (3, 4, '0', 'content_top', 1),
 (20, 5, '0', 'column_left', 2),
-(69, 10, 'affiliate', 'column_right', 1),
+(69, 10, 'account', 'column_right', 1),
 (68, 6, 'account', 'column_right', 1),
 (67, 1, 'carousel.29', 'content_top', 3),
 (66, 1, 'slideshow.27', 'content_top', 1),
@@ -1896,51 +1896,6 @@ CREATE TABLE `oc_marketing` (
   `clicks` int(5) NOT NULL DEFAULT '0',
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`marketing_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
--- ------------
--- Table structure for table `oc_menu`
---
-
-DROP TABLE IF EXISTS `oc_menu`;
-CREATE TABLE `oc_menu` (
-  `menu_id` int(11) NOT NULL AUTO_INCREMENT,
-  `store_id` int(11) NOT NULL,
-  `type` varchar(6) NOT NULL,
-  `link` varchar(255) NOT NULL,
-  `sort_order` int(3) NOT NULL,
-  `status` tinyint(1) NOT NULL,
-  PRIMARY KEY (`menu_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
------------------------------------------------------------
-
---
--- Table structure for table `oc_menu_description`
---
-
-DROP TABLE IF EXISTS `oc_menu_description`;
-CREATE TABLE `oc_menu_description` (
-  `menu_id` int(11) NOT NULL,
-  `language_id` int(11) NOT NULL,
-  `name` varchar(64) NOT NULL,
-  PRIMARY KEY (`menu_id`, `language_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
------------------------------------------------------------
-
---
--- Table structure for table `oc_menu_module`
---
-
-DROP TABLE IF EXISTS `oc_menu_module`;
-CREATE TABLE `oc_menu_module` (
-  `menu_module_id` int(11) NOT NULL,
-  `menu_id` int(11) NOT NULL,
-  `code` varchar(64) NOT NULL,
-  `sort_order` int(3) NOT NULL,
-  PRIMARY KEY (`menu_module_id`),
-  KEY `menu_id` (`menu_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -------------------------------------------------------------
@@ -3320,7 +3275,6 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'total_coupon', 'total_coupon_status', '1', 0),
 (0, 'module_category', 'module_category_status', '1', 0),
 (0, 'module_account', 'module_account_status', '1', 0),
-(0, 'module_affiliate', 'module_affiliate_status', '1', 0),
 (0, 'theme_default', 'theme_default_product_limit', '15', 0),
 (0, 'theme_default', 'theme_default_product_description_length', '100', 0),
 (0, 'theme_default', 'theme_default_image_thumb_width', '228', 0),

@@ -10,6 +10,7 @@ $_['text_category']      = 'Categories';
 $_['text_all']           = 'All';
 $_['text_theme']         = 'Themes';
 $_['text_marketplace']   = 'Marketplaces';
+$_['text_language']      = 'Languages';
 $_['text_payment']       = 'Payment';
 $_['text_shipping']      = 'Shipping';
 $_['text_module']        = 'Modules';

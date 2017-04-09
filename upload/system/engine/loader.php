@@ -14,7 +14,7 @@ final class Loader {
 		$result = $this->registry->get('event')->trigger('controller/' . $route . '/before', array($route, &$data));
 		
 		// Make sure its only the last event that returns an output if required.
-		if ($result != null && $result instanceof Exception) {
+		if ($result != null && !$result instanceof Exception) {
 			$output = $result;
 		} else {
 			$action = new Action($route);
@@ -24,13 +24,11 @@ final class Loader {
 		// Trigger the post events
 		$result = $this->registry->get('event')->trigger('controller/' . $route . '/after', array($route, &$data, &$output));
 		
-		if ($result != null) {
+		if ($result && !$result instanceof Exception) {
 			$output = $result;
 		}
 
-		if (!$result instanceof Exception) {
-			return $output;
-		}
+		return $output;
 	}
 	
 	public function model($route) {
@@ -67,7 +65,7 @@ final class Loader {
 		$result = $this->registry->get('event')->trigger('view/' . $route . '/before', array(&$route, &$data));
 		
 		// Make sure its only the last event that returns an output if required.
-		if ($result != null) {
+		if ($result && !$result instanceof Exception) {
 			$output = $result;
 		} else {
 			$template = new Template($this->registry->get('config')->get('template_engine'));
@@ -82,13 +80,11 @@ final class Loader {
 		// Trigger the post events
 		$result = $this->registry->get('event')->trigger('view/' . $route . '/after', array(&$route, &$data, &$output));
 		
-		if ($result != null) {
+		if ($result && !$result instanceof Exception) {
 			$output = $result;
 		}
 		
-		if (!$result instanceof Exception) {
-			return $output;
-		}
+		return $output;
 	}
 
 	public function library($route) {
@@ -128,7 +124,7 @@ final class Loader {
 	public function language($route) {
 		$result = $this->registry->get('event')->trigger('language/' . $route . '/before', array($route));
 		
-		if ($result) {
+		if ($result && !$result instanceof Exception) {
 			$output = $result;
 		} else {
 			$output = $this->registry->get('language')->load($route);
@@ -136,13 +132,11 @@ final class Loader {
 		
 		$result = $this->registry->get('event')->trigger('language/' . $route . '/after', array($route, &$output));
 		
-		if ($result != null) {
+		if ($result && !$result instanceof Exception) {
 			$output = $result;
 		}
 				
-		if (!$result instanceof Exception) {
-			return $output;
-		}
+		return $output;
 	}
 	
 	protected function callback($registry, $route) {
@@ -154,7 +148,7 @@ final class Loader {
 			// Trigger the pre events
 			$result = $registry->get('event')->trigger('model/' . $route . '/before', array(&$route, &$args));
 			
-			if ($result) {
+			if ($result && !$result instanceof Exception) {
 				$output = $result;
 			} else {
 				$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', substr($route, 0, strrpos($route, '/')));
@@ -180,7 +174,7 @@ final class Loader {
 			// Trigger the post events
 			$result = $registry->get('event')->trigger('model/' . $route . '/after', array(&$route, &$args, &$output));
 			
-			if ($result) {
+			if ($result && !$result instanceof Exception) {
 				$output = $result;
 			}
 						

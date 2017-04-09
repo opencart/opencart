@@ -165,7 +165,7 @@ class ControllerMarketplaceInstall extends Controller {
 				'catalog/view/javascript/',
 				'catalog/view/theme/',
 				'system/config/',
-				'system/vendor/',
+				'system/library/',
 				'image/catalog/'
 			);
 

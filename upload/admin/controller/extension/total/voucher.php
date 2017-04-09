@@ -94,6 +94,6 @@ class ControllerExtensionTotalVoucher extends Controller {
 		// delete the event triggers
 		$this->load->model('marketplace/event');
 
-		$this->model_setting_event->deleteEvent('voucher');
+		$this->model_setting_event->deleteEventByCode('voucher');
 	}
 }

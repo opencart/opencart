@@ -100,7 +100,7 @@ class ModelExtensionOpenBayAmazonus extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = 'openbay_amazonus'");
 
 		$this->load->model('setting/event');
-		$this->model_setting_event->deleteEvent('openbay_amazonus_add_order');
+		$this->model_setting_event->deleteEventByCode('openbay_amazonus_add_order');
 	}
 
 	public function patch() {

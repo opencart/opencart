@@ -339,7 +339,7 @@ class ModelExtensionPaymentLaybuy extends Model {
 
 		$this->load->model('setting/event');
 
-		$this->model_setting_event->deleteEvent('laybuy');
+		$this->model_setting_event->deleteEventByCode('laybuy');
 	}
 
 	public function updateOrderStatus($order_id, $order_status_id, $comment) {

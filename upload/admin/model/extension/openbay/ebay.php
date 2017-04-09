@@ -236,7 +236,7 @@ class ModelExtensionOpenBayEbay extends Model{
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ebay_profile`;");
 
 		$this->load->model('setting/event');
-		$this->model_setting_event->deleteEvent('openbay_ebay_add_order');
+		$this->model_setting_event->deleteEventByCode('openbay_ebay_add_order');
 	}
 
 	public function patch() {

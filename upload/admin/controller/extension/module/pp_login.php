@@ -323,6 +323,6 @@ class ControllerExtensionModulePPLogin extends Controller {
 	public function uninstall() {
 		$this->load->model('marketplace/event');
 
-		$this->model_setting_event->deleteEvent('pp_login');
+		$this->model_setting_event->deleteEventByCode('pp_login');
 	}
 }

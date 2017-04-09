@@ -388,8 +388,8 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		$this->load->model('extension/payment/amazon_login_pay');
 		$this->load->model('marketplace/event');
 		$this->model_extension_payment_amazon_login_pay->uninstall();
-		$this->model_setting_event->deleteEvent('amazon_edit_capture');
-		$this->model_setting_event->deleteEvent('amazon_history_capture');
+		$this->model_setting_event->deleteEventByCode('amazon_edit_capture');
+		$this->model_setting_event->deleteEventByCode('amazon_history_capture');
 	}
 
 	public function order() {

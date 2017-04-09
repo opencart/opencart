@@ -47,8 +47,8 @@ class ModelExtensionOpenBayFba extends Model {
         $this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = 'openbay_fba'");
 
         $this->load->model('setting/event');
-        $this->model_setting_event->deleteEvent('openbay_fba_add_order');
-        $this->model_setting_event->deleteEvent('openbay_fba_add_orderhistory');
+        $this->model_setting_event->deleteEventByCode('openbay_fba_add_order');
+        $this->model_setting_event->deleteEventByCode('openbay_fba_add_orderhistory');
     }
 
     public function patch() {

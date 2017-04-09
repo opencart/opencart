@@ -71,8 +71,8 @@ class ControllerExtensionFeedOpenbaypro extends Controller {
 		$settings['openbaypro_status'] = 0;
 		$this->model_setting_setting->editSetting('feed_openbaypro', $settings);
 
-		$this->model_setting_event->deleteEvent('openbay_product_del_after');
-		$this->model_setting_event->deleteEvent('openbay_product_edit_after');
-		$this->model_setting_event->deleteEvent('openbay_menu');
+		$this->model_setting_event->deleteEventByCode('openbay_product_del_after');
+		$this->model_setting_event->deleteEventByCode('openbay_product_edit_after');
+		$this->model_setting_event->deleteEventByCode('openbay_menu');
 	}
 }

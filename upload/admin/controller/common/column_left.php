@@ -178,14 +178,6 @@ class ControllerCommonColumnLeft extends Controller {
 					'children' => array()
 				);
 			}
-			
-			if ($this->user->hasPermission('access', 'marketplace/translation')) {
-				$marketplace[] = array(
-					'name'	   => $this->language->get('text_translation'),
-					'href'     => $this->url->link('marketplace/translation', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()		
-				);	
-			}
 								
 			if ($this->user->hasPermission('access', 'marketplace/modification')) {
 				$marketplace[] = array(

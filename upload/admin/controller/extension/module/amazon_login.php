@@ -133,7 +133,7 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 
 	public function uninstall() {
 		$this->load->model('marketplace/event');
-		$this->model_setting_event->deleteEvent('amazon_login');
+		$this->model_setting_event->deleteEventByCode('amazon_login');
 	}
 
 }

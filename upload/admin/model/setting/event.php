@@ -6,7 +6,11 @@ class ModelSettingEvent extends Model {
 		return $this->db->getLastId();
 	}
 
-	public function deleteEvent($code) {
+	public function deleteEvent($event_id) {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `event_id` = '" . (int)$event_id . "'");
+	}
+	
+	public function deleteEventByCode($code) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 

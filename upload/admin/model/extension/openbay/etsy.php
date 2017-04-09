@@ -54,7 +54,7 @@ class ModelExtensionOpenBayEtsy extends Model{
 
 	public function uninstall() {
 		$this->load->model('setting/event');
-		$this->model_setting_event->deleteEvent('openbay_etsy_add_order');
+		$this->model_setting_event->deleteEventByCode('openbay_etsy_add_order');
 	}
 
 	public function patch() {

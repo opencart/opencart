@@ -46,6 +46,7 @@ $_['session_name']         = 'OCSESSID';
 
 // Template
 $_['template_engine']      = 'twig';
+$_['template_directory']   = '';
 
 // Error
 $_['error_display']        = true;

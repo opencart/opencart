@@ -74,7 +74,7 @@ final class Loader {
 				$template->set($key, $value);
 			}
 			
-			$output = $template->render($route);		
+			$output = $template->render($this->registry->get('config')->get('template_directory') . $route);		
 		}
 		
 		// Trigger the post events

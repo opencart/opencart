@@ -33,17 +33,9 @@ class ControllerEventTheme extends Controller {
 			
 			return $template->render($args);
 		} elseif (is_file(DIR_TEMPLATE . $theme . '/template/' . $route . '.twig')) { 
-			$route = $theme . '/template/' . $route;
+			$this->config->set('template_directory', $theme . '/template/');
 		} elseif (is_file(DIR_TEMPLATE . 'default/template/' . $route . '.twig')) {
-			$route = 'default/template/' . $route;
+			$this->config->set('template_directory', 'default/template/');
 		}
-		
-		$template = new Template($this->registry->get('config')->get('template_engine'));
-			
-		foreach ($args as $key => $value) {
-			$template->set($key, $value);
-		}
-		
-		return $template->render($route);	
 	}
 }

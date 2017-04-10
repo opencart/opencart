@@ -4,17 +4,21 @@ class File {
     public function read($session_id) {
 		$file = session_save_path() . '/sess_' . basename($session_id);
 		
-		$handle = fopen($file, 'r');
-		
-		flock($handle, LOCK_SH);
-		
-		$data = fread($handle, filesize($file));
-		
-		flock($handle, LOCK_UN);
-		
-		fclose($handle);
-		
-		return unserialize($data);
+		if (is_file($file)) {
+			$handle = fopen($file, 'r');
+			
+			flock($handle, LOCK_SH);
+			
+			$data = fread($handle, filesize($file));
+			
+			flock($handle, LOCK_UN);
+			
+			fclose($handle);
+			
+			return unserialize($data);
+		} else {
+			return array();
+		}
 	}
 
     public function write($session_id, $data) {

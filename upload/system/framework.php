@@ -81,6 +81,9 @@ if ($config->get('db_autostart')) {
 }
 
 // Session
+$session = new Session($config->get('session_engine'), $registry);
+$registry->set('session', $session);
+
 if ($config->get('session_autostart')) {
 	/* 
 	We are adding the session cookie outside of the session class as I believe 
@@ -100,19 +103,9 @@ if ($config->get('session_autostart')) {
 		$session_id = '';
 	}
 	
-	$class = 'Session\\' . $config->get('session_engine');
+	$session->start($session_id);
 	
-	if ($config->get('session_engine') == 'db') {
-		$handler = new $class($registry);
-	} else {
-		$handler = new $class($registry);
-	}
-	
-	$session = new Session($session_id);
-	
-	setcookie($config->get('session_name'), $session->getId(), ini_get('session.cookie_lifetime'), ini_get('session.cookie_path'), ini_get('session.cookie_domain'));
-
-	$registry->set('session', $session);
+	setcookie($config->get('session_name'), $session->getId(), ini_get('session.cookie_lifetime'), ini_get('session.cookie_path'), ini_get('session.cookie_domain'));	
 }
 
 // Cache 

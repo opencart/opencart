@@ -797,11 +797,11 @@
                       {% for api in apis %}
                       {% if api.api_id == config_api_id %}
                       
-                      <option value="{{ api.api_id }}" selected="selected">{{ api.name }}</option>
+                      <option value="{{ api.api_id }}" selected="selected">{{ api.username }}</option>
                       
                       {% else %}
                       
-                      <option value="{{ api.api_id }}">{{ api.name }}</option>
+                      <option value="{{ api.api_id }}">{{ api.username }}</option>
                       
                       {% endif %}
                       {% endfor %}

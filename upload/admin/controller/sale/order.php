@@ -763,8 +763,10 @@ class ControllerSaleOrder extends Controller {
 		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
 
 		if ($api_info && $this->user->hasPermission('modify', 'sale/order')) {
-			$session = new Session();
+			$session = new Session($this->config->get('session_engine'), $this->registry);
 			
+			$session->start();
+					
 			$this->model_user_api->deleteApiSessionBySessonId($session->getId());
 			
 			$this->model_user_api->addApiSession($api_info['api_id'], $session->getId(), $this->request->server['REMOTE_ADDR']);

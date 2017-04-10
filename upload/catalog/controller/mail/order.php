@@ -6,30 +6,13 @@ class ControllerMailOrder extends Controller {
 		} else {
 			$order_id = 0;
 		}
-		
-		// We need to grab the old order status ID
-		$order_info = $this->model_checkout_order->getOrder($order_id);
-		
-		if ($order_info) {
-			$args['last_status_id'] = $order_info['order_status_id'];
-		} else {
-			$args['last_status_id'] = 0;
-		}
-	}
-	
-	public function after(&$route, &$args, &$output) {
-		if (isset($args[0])) {
-			$order_id = $args[0];
-		} else {
-			$order_id = 0;
-		}
-		
+
 		if (isset($args[1])) {
 			$order_status_id = $args[1];
 		} else {
 			$order_status_id = 0;
 		}	
-		
+
 		if (isset($args[2])) {
 			$comment = $args[2];
 		} else {
@@ -41,22 +24,23 @@ class ControllerMailOrder extends Controller {
 		} else {
 			$notify = '';
 		}
-					
+						
+		// We need to grab the old order status ID
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 		
 		if ($order_info) {
 			// If order status is 0 then becomes greater than 0 send main html email
-			if (!$args['last_status_id'] && $order_status_id) {
+			if (!$order_info['order_status_id'] && $order_status_id) {
 				$this->add($order_info, $order_status_id, $comment, $notify);
 			} 
 			
 			// If order status is not 0 then send update text email
 			if ($order_info['order_status_id'] && $order_status_id && $notify) {
 				$this->edit($order_info, $order_status_id, $comment, $notify);
-			}
+			}		
 		}
-	}	
-	
+	}
+		
 	public function add($order_info, $order_status_id, $comment, $notify) {
 		// Check for any downloadable products
 		$download_status = false;

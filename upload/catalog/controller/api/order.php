@@ -352,7 +352,7 @@ class ControllerApiOrder extends Controller {
 				$this->model_checkout_order->addOrderHistory($json['order_id'], $order_status_id);
 				
 				// clear cart since the order has already been successfully stored.
-				//$this->cart->clear();
+				$this->cart->clear();
 			}
 		}
 
@@ -684,7 +684,7 @@ class ControllerApiOrder extends Controller {
 					} else {
 						$order_status_id = $this->config->get('config_order_status_id');
 					}
-
+print_r($this->request->post);
 					$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
 				}
 			} else {

@@ -330,7 +330,6 @@ class ModelCheckoutOrder extends Model {
 					}
 				}
 				
-				
 				// Add commission if sale is linked to affiliate referral.
 				if ($order_info['affiliate_id'] && $this->config->get('config_affiliate_auto')) {
 					$this->load->model('account/customer');

@@ -1363,7 +1363,9 @@ class ControllerSaleOrder extends Controller {
 			$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
 
 			if ($api_info && $this->user->hasPermission('modify', 'sale/order')) {
-				$session = new Session();
+				$session = new Session($this->config->get('session_engine'), $this->registry);
+				
+				$session->start();
 				
 				$this->model_user_api->deleteApiSessionBySessonId($session->getId());
 				
@@ -1374,7 +1376,7 @@ class ControllerSaleOrder extends Controller {
 				$data['api_token'] = $session->getId();
 			} else {
 				$data['api_token'] = '';
-			}
+		  }
 
 			$data['header'] = $this->load->controller('common/header');
 			$data['column_left'] = $this->load->controller('common/column_left');

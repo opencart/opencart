@@ -333,7 +333,11 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 					'required' => true
 				);
 
-				$three_ds_info = $nonce_info->threeDSecureInfo;
+				$three_ds_info = array();
+
+				if (isset($nonce_info->threeDSecureInfo) && !empty($nonce_info->threeDSecureInfo)) {
+					$three_ds_info = $nonce_info->threeDSecureInfo;
+				}
 
 				if (!empty($three_ds_info)) {
 					$success = false;

@@ -56,7 +56,7 @@ $_['text_learn_more']			 	 = 'Learn more';
 $_['text_accept']			 	 	 = 'Accept';
 $_['text_decline']			 	 	 = 'Decline';
 $_['text_merchant_connected']		 = 'Connected Merchant ID: ';
-$_['text_enable_button']			 = 'To enable the checkout shortcut payment button and go to the layout manager, click enable.<br />In the layout manager, choose the area(s) to add the button.';
+$_['text_enable_button']			 = 'We recommend offering PayPal Express Shortcut to maximise checkout conversion, this allows customers to use their PayPal address book and <strong>checkout is as little as three taps</strong> from the basket page. Click enable to install the extension and access the layout manager, you will ned to add "PayPal (Powered by Braintree) Button" to the checkout layout';
 $_['text_3ds_ssl']		 			 = '3D Secure requires the store to be using an SSL certificate';
 $_['text_unlink']		 			 = 'Delete link';
 
@@ -146,41 +146,44 @@ $_['entry_3ds_unable_to_auth'] 			= 'Unable To Authenticate<br />Default: Accept
 $_['entry_3ds_error'] 					= 'Authentication Error<br />Default: Accept';
 
 // Help
-$_['help_settlement_type']			 = 'Immediate will Submit For Settlement straight away. Deferred will set the transaction to Authorized and the merchant must Submit For Settlement manually in the OpenCart order details.';
-$_['help_card_vault']				 = 'Allow customer to remember their card';
-$_['help_paypal_vault']				 = 'Allow customer to remember their PayPal account';
-$_['help_card_check_vault']			 = 'The checkbox for card vault is already checked when the page loads';
-$_['help_paypal_check_vault']		 = 'The checkbox for PayPal vault is already checked when the page loads';
-$_['help_vault_cvv_3ds']			 = 'This will require customers using a vaulted card to re-enter the CVV2 number or use 3D secure. It is not possible to enable both options for a vaulted card.';
-$_['help_debug']					 = 'Enabling debug will write sensitive data to a log file. You should always disable unless instructed otherwise';
-$_['help_total']					 = 'The checkout total the order must reach before this payment method becomes active';
-$_['help_paypal_option']			 = 'If you have your PayPal account linked with Braintree you can display the PayPal payment option as well';
-$_['help_paypal_billing_agreement']	 = 'You can add a billing agreement description that will be shown to users in the PayPal window when opting to vault their PayPal account';
+$_['help_settlement_type']			 	= 'Immediate will Submit For Settlement straight away. Deferred will set the transaction to Authorized and the merchant must Submit For Settlement manually in the OpenCart order details.';
+$_['help_card_vault']				 	= 'Allow customer to remember their card';
+$_['help_paypal_vault']				 	= 'Allow customer to remember their PayPal account';
+$_['help_card_check_vault']			 	= 'The checkbox for card vault is already checked when the page loads';
+$_['help_paypal_check_vault']		 	= 'The checkbox for PayPal vault is already checked when the page loads';
+$_['help_vault_cvv_3ds']			 	= 'This will require customers using a vaulted card to re-enter the CVV2 number or use 3D secure. It is not possible to enable both options for a vaulted card.';
+$_['help_debug']					 	= 'Enabling debug will write sensitive data to a log file. You should always disable unless instructed otherwise';
+$_['help_total']					 	= 'The checkout total the order must reach before this payment method becomes active';
+$_['help_paypal_option']			 	= 'If you have your PayPal account linked with Braintree you can display the PayPal payment option as well';
+$_['help_paypal_billing_agreement']	 	= 'You can add a billing agreement description that will be shown to users in the PayPal window when opting to vault their PayPal account';
 
 // Button
-$_['button_void']					 = 'Void';
-$_['button_settle']					 = 'Settle';
-$_['button_refund']					 = 'Refund';
-$_['button_filter']					 = 'Filter';
+$_['button_void']					 	= 'Void';
+$_['button_settle']					 	= 'Settle';
+$_['button_refund']					 	= 'Refund';
+$_['button_filter']					 	= 'Filter';
 
 // Error
-$_['error_permission']				 = 'Warning: You do not have permission to modify payment Braintree!';
-$_['error_php_version']				 = 'Minimum version of PHP 5.4.0 is required!';
-$_['error_merchant_id']				 = 'Merchant ID Required!';
-$_['error_public_key']				 = 'Public Key Required!';
-$_['error_private_key']				 = 'Private Key Required!';
-$_['error_connection']				 = 'There was a problem establishing a connection to the Braintree API. Please check your Merchant ID, Public Key, Private Key and Environment settings.';
-$_['error_account']					 = 'Please enter a valid Merchant Account ID as specified in your Braintree Account';
-$_['error_warning']					 = 'Warning: Please check the form carefully for errors!';
-$_['error_3ds_not_ready']			 = 'You have enabled 3D secure however your Braintree account does not have it configured, please contact Braintree support';
-$_['error_paypal_not_ready']		 = 'You have enabled PayPal however your Braintree account does not have it configured, please contact Braintree support';
-$_['error_paypal_billing_not_ready'] = 'You have enabled PayPal billing agreements however your Braintree account does not have it configured, please contact Braintree support';
+$_['error_permission']				 	= 'Warning: You do not have permission to modify payment Braintree!';
+$_['error_php_version']				 	= 'Minimum version of PHP 5.4.0 is required!';
+$_['error_merchant_id']				 	= 'Merchant ID Required!';
+$_['error_public_key']				 	= 'Public Key Required!';
+$_['error_private_key']				 	= 'Private Key Required!';
+$_['error_connection']				 	= 'There was a problem establishing a connection to the Braintree API. Please check your Merchant ID, Public Key, Private Key and Environment settings.';
+$_['error_account']					 	= 'Please enter a valid Merchant Account ID as specified in your Braintree Account';
+$_['error_warning']					 	= 'Warning: Please check the form carefully for errors!';
+$_['error_3ds_not_ready']			 	= 'You have enabled 3D secure however your Braintree account does not have it configured, please check your <a href="https://www.braintreegateway.com/login" title="Braintree login" target="_blank">Braintree Control Panel</a> or contact Braintree support';
+$_['error_paypal_not_ready']		 	= 'You have enabled PayPal however your Braintree account does not have it configured, please check your <a href="https://www.braintreegateway.com/login" title="Braintree login" target="_blank">Braintree Control Panel</a> or contact Braintree support';
+$_['error_paypal_billing_not_ready'] 	= 'You have enabled PayPal vaulting/billing agreements however your Braintree account does not have it configured, please check your <a href="https://www.braintreegateway.com/login" title="Braintree login" target="_blank">Braintree Control Panel</a> or contact Braintree support';
+$_['error_braintree_account_3ds'] 	 	= '3DS is not enabled in your Braintree account yet, however it is not available for all countries. Please check your <a href="https://www.braintreegateway.com/login" title="Braintree login" target="_blank">Braintree Control Panel</a> or contact Braintree support';
+$_['error_braintree_account_paypal'] 	= 'PayPal is not enabled in your Braintree account yet. Please check your <a href="https://www.braintreegateway.com/login" title="Braintree login" target="_blank">Braintree Control Panel</a> or contact Braintree support';
+$_['error_braintree_account_billing']	= 'Billing agreements are not enabled in your Braintree account yet. Please check your <a href="https://www.braintreegateway.com/login" title="Braintree login" target="_blank">Braintree Control Panel</a> or contact Braintree support';
 
 // Tab
-$_['tab_setting']					 = 'Settings';
-$_['tab_currency']					 = 'Currencies';
-$_['tab_order_status']				 = 'Order Statuses (New Orders)';
-$_['tab_3ds']						 = '3-D Secure';
-$_['tab_transaction']				 = 'Transaction Search';
-$_['tab_vault']				 	 	 = 'Vault';
-$_['tab_paypal']				 	 = 'PayPal';
+$_['tab_setting']					 	= 'Settings';
+$_['tab_currency']					 	= 'Currencies';
+$_['tab_order_status']				 	= 'Order Statuses (New Orders)';
+$_['tab_3ds']						 	= '3-D Secure';
+$_['tab_transaction']				 	= 'Transaction Search';
+$_['tab_vault']				 	 	 	= 'Vault';
+$_['tab_paypal']				 	 	= 'PayPal';

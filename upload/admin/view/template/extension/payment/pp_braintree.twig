@@ -357,6 +357,10 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-3ds">
+              {% if braintree_config.three_d_secure_enabled == 0 %}
+                <div class="alert alert-info">{{ error_braintree_account_3ds }}</div>
+                <input type="hidden" name="pp_braintree_3ds_status" value="0" />
+              {% else %}
 			        <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-3ds-status">{{ entry_3ds_status }}</label>
                 <div class="col-sm-10">
@@ -526,6 +530,7 @@
                   </select>
                 </div>
               </div>
+              {% endif %}
             </div>
             <div class="tab-pane" id="tab-vault">
               <div class="form-group">
@@ -576,205 +581,225 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-paypal-vault"><span data-toggle="tooltip" title="{{ help_paypal_vault }}">{{ entry_paypal_vault }}</span></label>
-                <div class="col-sm-10">
-                  <select name="pp_braintree_paypal_vault" id="input-paypal-vault" class="form-control">
-                    {% if pp_braintree_paypal_vault %}
-                      <option value="1" selected="selected">{{ text_enabled }}</option>
-                      <option value="0">{{ text_disabled }}</option>
-                    {% else %}
-                      <option value="1">{{ text_enabled }}</option>
-                      <option value="0" selected="selected">{{ text_disabled }}</option>
-                    {% endif %}
-                  </select>
+
+              {% if braintree_config.paypal_enabled == 1 %}
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-paypal-vault"><span data-toggle="tooltip" title="{{ help_paypal_vault }}">{{ entry_paypal_vault }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="pp_braintree_paypal_vault" id="input-paypal-vault" class="form-control">
+                      {% if pp_braintree_paypal_vault %}
+                        <option value="1" selected="selected">{{ text_enabled }}</option>
+                        <option value="0">{{ text_disabled }}</option>
+                      {% else %}
+                        <option value="1">{{ text_enabled }}</option>
+                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                      {% endif %}
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-paypal-check-vault"><span data-toggle="tooltip" title="{{ help_paypal_check_vault }}">{{ entry_paypal_check_vault }}</span></label>
-                <div class="col-sm-10">
-                  <select name="pp_braintree_paypal_check_vault" id="input-paypal-check-vault" class="form-control">
-                    {% if pp_braintree_paypal_check_vault %}
-                      <option value="1" selected="selected">{{ text_enabled }}</option>
-                      <option value="0">{{ text_disabled }}</option>
-                    {% else %}
-                      <option value="1">{{ text_enabled }}</option>
-                      <option value="0" selected="selected">{{ text_disabled }}</option>
-                    {% endif %}
-                  </select>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-paypal-check-vault"><span data-toggle="tooltip" title="{{ help_paypal_check_vault }}">{{ entry_paypal_check_vault }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="pp_braintree_paypal_check_vault" id="input-paypal-check-vault" class="form-control">
+                      {% if pp_braintree_paypal_check_vault %}
+                        <option value="1" selected="selected">{{ text_enabled }}</option>
+                        <option value="0">{{ text_disabled }}</option>
+                      {% else %}
+                        <option value="1">{{ text_enabled }}</option>
+                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                      {% endif %}
+                    </select>
+                  </div>
                 </div>
-              </div>
+              {% else %}
+                <input type="hidden" name="pp_braintree_paypal_vault" value="0" />
+                <input type="hidden" name="pp_braintree_paypal_check_vault" value="0" />
+              {% endif %}
             </div>
             <div class="tab-pane" id="tab-paypal">
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-paypal-option"><span data-toggle="tooltip" title="{{ help_paypal_option }}">{{ entry_paypal_option }}</span></label>
-                <div class="col-sm-10">
-                  <select name="pp_braintree_paypal_option" id="input-vault" class="form-control">
-                    {% if pp_braintree_paypal_option %}
-                      <option value="1" selected="selected">{{ text_enabled }}</option>
-                      <option value="0">{{ text_disabled }}</option>
+              {% if braintree_config.paypal_enabled == 0 %}
+                <div class="alert alert-info">{{ error_braintree_account_paypal }}</div>
+                <input type="hidden" name="pp_braintree_paypal_option" value="0" />
+              {% else %}
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-paypal-option"><span data-toggle="tooltip" title="{{ help_paypal_option }}">{{ entry_paypal_option }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="pp_braintree_paypal_option" id="input-vault" class="form-control">
+                      {% if pp_braintree_paypal_option %}
+                        <option value="1" selected="selected">{{ text_enabled }}</option>
+                        <option value="0">{{ text_disabled }}</option>
+                      {% else %}
+                        <option value="1">{{ text_enabled }}</option>
+                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                      {% endif %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-paypal-billing-agreement"><span data-toggle="tooltip" title="{{ help_paypal_billing_agreement }}">{{ entry_paypal_billing_agreement }}</span></label>
+                  <div class="col-sm-10">
+                    {% if braintree_config.paypal_billing_agreement_enabled == 1 %}
+                      <input type="text" name="pp_braintree_billing_agreement" value="{{ pp_braintree_billing_agreement }}" placeholder="{{ entry_paypal_billing_agreement }}" id="input-paypal-billing-agreement" class="form-control" />
                     {% else %}
-                      <option value="1">{{ text_enabled }}</option>
-                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                      <div class="alert alert-info">{{ error_braintree_account_billing }}</div>
+                      <input type="hidden" name="pp_braintree_billing_agreement" value="0" />
                     {% endif %}
-                  </select>
+                  </div>
                 </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-paypal-billing-agreement"><span data-toggle="tooltip" title="{{ help_paypal_billing_agreement }}">{{ entry_paypal_billing_agreement }}</span></label>
-                <div class="col-sm-10">
-                  <input type="text" name="pp_braintree_billing_agreement" value="{{ pp_braintree_billing_agreement }}" placeholder="{{ entry_paypal_billing_agreement }}" id="input-paypal-billing-agreement" class="form-control" />
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-paypal-button-colour">{{ entry_paypal_button_colour }}</label>
+                  <div class="col-sm-10">
+                    <select name="pp_braintree_paypal_button_colour" id="input-paypal-button-colour" class="form-control">
+                      <option value="gold"{% if pp_braintree_paypal_button_colour == "gold" %} selected="selected"{% endif %}>{{ text_paypal_gold }}</option>
+                      <option value="blue"{% if pp_braintree_paypal_button_colour == "blue" %} selected="selected"{% endif %}>{{ text_paypal_blue }}</option>
+                      <option value="silver"{% if pp_braintree_paypal_button_colour == "silver" %} selected="selected"{% endif %}>{{ text_paypal_silver }}</option>
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-paypal-button-colour">{{ entry_paypal_button_colour }}</label>
-                <div class="col-sm-10">
-                  <select name="pp_braintree_paypal_button_colour" id="input-paypal-button-colour" class="form-control">
-                    <option value="gold"{% if pp_braintree_paypal_button_colour == "gold" %} selected="selected"{% endif %}>{{ text_paypal_gold }}</option>
-                    <option value="blue"{% if pp_braintree_paypal_button_colour == "blue" %} selected="selected"{% endif %}>{{ text_paypal_blue }}</option>
-                    <option value="silver"{% if pp_braintree_paypal_button_colour == "silver" %} selected="selected"{% endif %}>{{ text_paypal_silver }}</option>
-                  </select>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-paypal-button-size">{{ entry_paypal_button_size }}</label>
+                  <div class="col-sm-10">
+                    <select name="pp_braintree_paypal_button_size" id="input-paypal-button-size" class="form-control">
+                      <option value="tiny"{% if pp_braintree_paypal_button_size == "tiny" %} selected="selected"{% endif %}>{{ text_paypal_tiny }}</option>
+                      <option value="small"{% if pp_braintree_paypal_button_size == "small" %} selected="selected"{% endif %}>{{ text_paypal_small }}</option>
+                      <option value="medium"{% if pp_braintree_paypal_button_size == "medium" %} selected="selected"{% endif %}>{{ text_paypal_medium }}</option>
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-paypal-button-size">{{ entry_paypal_button_size }}</label>
-                <div class="col-sm-10">
-                  <select name="pp_braintree_paypal_button_size" id="input-paypal-button-size" class="form-control">
-                    <option value="tiny"{% if pp_braintree_paypal_button_size == "tiny" %} selected="selected"{% endif %}>{{ text_paypal_tiny }}</option>
-                    <option value="small"{% if pp_braintree_paypal_button_size == "small" %} selected="selected"{% endif %}>{{ text_paypal_small }}</option>
-                    <option value="medium"{% if pp_braintree_paypal_button_size == "medium" %} selected="selected"{% endif %}>{{ text_paypal_medium }}</option>
-                  </select>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-paypal-button-shape">{{ entry_paypal_button_shape }}</label>
+                  <div class="col-sm-10">
+                    <select name="pp_braintree_paypal_button_shape" id="input-paypal-button-shape" class="form-control">
+                      <option value="pill"{% if pp_braintree_paypal_button_shape == "pill" %} selected="selected"{% endif %}>{{ text_paypal_pill }}</option>
+                      <option value="rect"{% if pp_braintree_paypal_button_shape == "rect" %} selected="selected"{% endif %}>{{ text_paypal_rectangular }}</option>
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-paypal-button-shape">{{ entry_paypal_button_shape }}</label>
-                <div class="col-sm-10">
-                  <select name="pp_braintree_paypal_button_shape" id="input-paypal-button-shape" class="form-control">
-                    <option value="pill"{% if pp_braintree_paypal_button_shape == "pill" %} selected="selected"{% endif %}>{{ text_paypal_pill }}</option>
-                    <option value="rect"{% if pp_braintree_paypal_button_shape == "rect" %} selected="selected"{% endif %}>{{ text_paypal_rectangular }}</option>
-                  </select>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">{{ text_paypal_preview }}</label>
+                  <div class="col-sm-10">
+                    <script src="https://www.paypalobjects.com/api/button.js?"
+                       data-merchant="braintree"
+                       data-id="paypal-button"
+                       data-button="checkout"
+                       data-color="{{ pp_braintree_paypal_button_colour }}"
+                       data-size="{{ pp_braintree_paypal_button_size }}"
+                       data-shape="{{ pp_braintree_paypal_button_shape }}"
+                       data-button_type="submit"
+                       data-button_disabled="true"
+                   ></script>
+                  </div>
                 </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">{{ text_paypal_preview }}</label>
-                <div class="col-sm-10">
-                  <script src="https://www.paypalobjects.com/api/button.js?"
-                     data-merchant="braintree"
-                     data-id="paypal-button"
-                     data-button="checkout"
-                     data-color="{{ pp_braintree_paypal_button_colour }}"
-                     data-size="{{ pp_braintree_paypal_button_size }}"
-                     data-shape="{{ pp_braintree_paypal_button_shape }}"
-                     data-button_type="submit"
-                     data-button_disabled="true"
-                 ></script>
+                <div class="form-group">
+                  <div class="col-sm-2"><a href="{{ button_configure }}" target="_blank" class="btn btn-primary pull-right">{{ button_enable }}</a></div>
+                  <div class="col-sm-10"><p>{{ text_enable_button }}</p></div>
                 </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-2"><a href="{{ button_configure }}" target="_blank" class="btn btn-primary pull-right">{{ button_enable }}</a></div>
-                <div class="col-sm-10"><p>{{ text_enable_button }}</p></div>
-              </div>
+              {% endif %}
             </div>
             <div class="tab-pane" id="tab-transaction">
-              {% if pp_braintree_status == 1 %}
-              <div class="well">
-                <div class="row">
-                <div class="col-sm-3">
-                  <div class="form-group">
-                  <label class="control-label" for="input-transaction-id">{{ entry_transaction_id }}</label>
-                  <input type="text" name="filter_transaction_id" value="" placeholder="Transaction ID" id="input-transaction-id" class="form-control" />
-                  </div>
-                  <div class="form-group">
-                  <label class="control-label" for="input-transaction-type">{{ entry_transaction_type }}</label>
-                  <select name="filter_transaction_type" id="input-transaction-type" class="form-control">
-                    <option value="*" selected="selected">{{ text_all }}</option>
-                    <option value="sale">{{ text_sale }}</option>
-                    <option value="credit">{{ text_credit }}</option>
-                  </select>
-                  </div>
-                  <div class="form-group">
-                  <div class="col-sm-6" style="padding-left: 0;">
-                    <label class="control-label" for="input-date-from">{{ entry_date_from }}</label>
-                    <div class="input-group date">
-                      <input type="text" name="filter_date_from" value="" placeholder="From" data-date-format="YYYY-MM-DD" id="input-date-from" class="form-control" />
-                      <span class="input-group-btn">
-                        <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
-                      </span>
-                    </div>
-                  </div>
-                  <div class="col-sm-6" style="padding-right: 0;">
-                    <label class="control-label" for="input-date-to">{{ entry_date_to }}</label>
-                    <div class="input-group date">
-                      <input type="text" name="filter_date_to" value="" placeholder="To" data-date-format="YYYY-MM-DD" id="input-date-to" class="form-control" />
-                      <span class="input-group-btn">
-                        <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
-                      </span>
-                    </div>
-                  </div>
-                  </div>
-                </div>
-                <div class="col-sm-3">
-                  <div class="form-group">
-                  <label class="control-label" for="input-payment-type">{{ entry_payment_type }}</label>
-                  <select name="filter_payment_type" id="input-payment-type" class="form-control">
-                    <option value="*" selected="selected">{{ text_all }}</option>
-                    <option value="Credit Card">{{ text_credit_card }}</option>
-                    <option value="PayPal">{{ text_paypal }}</option>
-                  </select>
-                  </div>
-                  <div class="form-group">
-                  <label class="control-label" for="input-card-type">{{ entry_card_type }}</label>
-                  <select name="filter_card_type" id="input-card-type" class="form-control">
-                    <option value="*">{{ text_all }}</option>
-                    {% for card_type in card_types %}
-                      <option value="{{ card_type }}">{{ card_type }}</option>
-                    {% endfor %}
-                  </select>
-                  </div>
-                  <div class="form-group">
-                  <div class="col-sm-6" style="padding-left: 0;">
-                    <label class="control-label" for="input-amount-from">{{ entry_amount_from }}</label>
-                    <input type="text" name="filter_amount_from" value="" placeholder="From" id="input-amount-from" class="form-control" />
-                  </div>
-                  <div class="col-sm-6" style="padding-right: 0;">
-                    <label class="control-label" for="input-amount-to">{{ entry_amount_to }}</label>
-                    <input type="text" name="filter_amount_to" value="" placeholder="To" id="input-amount-to" class="form-control" />
-                  </div>
-                  </div>
-                </div>
-                <div class="col-sm-3">
-                  <div class="form-group">
-                  <label class="control-label" for="input-card-type">{{ entry_transaction_status }}</label>
-                  <div class="well well-sm" style="height: 190px; overflow: auto; margin-bottom: 0;">
-                    {% for transaction_status in transaction_statuses %}
-                      <div class="checkbox">
-                        <label>
-                          <input class="filter-transaction-status" type="checkbox" name="filter_transaction_status[]" value="{{ transaction_status }}" checked="checked" /> {{ transaction_status }}
-                        </label>
-                      </div>
-                    {% endfor %}
-                  </div>
-                  </div>
-                </div>
-                <div class="col-sm-3">
-                  <div class="form-group">
-                  <label class="control-label" for="input-merchant-account-id">{{ entry_merchant_account_id }}</label>
-                  <select name="filter_merchant_account_id" id="input-merchant-account-id" class="form-control">
-                    <option value="*">All</option>
-                    {% for pp_braintree_account_value in pp_braintree_account %}
-                      {% if pp_braintree_account_value.merchant_account_id %}
-                        <option value="{{ pp_braintree_account_value.merchant_account_id }}">{{ pp_braintree_account_value.merchant_account_id }}</option>
-                      {% endif %}
-                    {% endfor %}
-                  </select>
-                  </div>
-                  <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> {{ button_filter }}</button>
-                </div>
-                </div>
-              </div>
-              <div id="table-action"></div>
+              {% if braintree_config.paypal_enabled == 0 %}
+                <div class="alert alert-info">{{ error_braintree_account_paypal }}</div>
               {% else %}
-                {{ text_enable_transactions }}
+                {% if pp_braintree_status == 1 %}
+                <div class="well">
+                  <div class="row">
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                    <label class="control-label" for="input-transaction-id">{{ entry_transaction_id }}</label>
+                    <input type="text" name="filter_transaction_id" value="" placeholder="Transaction ID" id="input-transaction-id" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                    <label class="control-label" for="input-transaction-type">{{ entry_transaction_type }}</label>
+                    <select name="filter_transaction_type" id="input-transaction-type" class="form-control">
+                      <option value="*" selected="selected">{{ text_all }}</option>
+                      <option value="sale">{{ text_sale }}</option>
+                      <option value="credit">{{ text_credit }}</option>
+                    </select>
+                    </div>
+                    <div class="form-group">
+                    <div class="col-sm-6" style="padding-left: 0;">
+                      <label class="control-label" for="input-date-from">{{ entry_date_from }}</label>
+                      <div class="input-group date">
+                        <input type="text" name="filter_date_from" value="" placeholder="From" data-date-format="YYYY-MM-DD" id="input-date-from" class="form-control" />
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-sm-6" style="padding-right: 0;">
+                      <label class="control-label" for="input-date-to">{{ entry_date_to }}</label>
+                      <div class="input-group date">
+                        <input type="text" name="filter_date_to" value="" placeholder="To" data-date-format="YYYY-MM-DD" id="input-date-to" class="form-control" />
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                        </span>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                    <label class="control-label" for="input-payment-type">{{ entry_payment_type }}</label>
+                    <select name="filter_payment_type" id="input-payment-type" class="form-control">
+                      <option value="*" selected="selected">{{ text_all }}</option>
+                      <option value="Credit Card">{{ text_credit_card }}</option>
+                      <option value="PayPal">{{ text_paypal }}</option>
+                    </select>
+                    </div>
+                    <div class="form-group">
+                    <label class="control-label" for="input-card-type">{{ entry_card_type }}</label>
+                    <select name="filter_card_type" id="input-card-type" class="form-control">
+                      <option value="*">{{ text_all }}</option>
+                      {% for card_type in card_types %}
+                        <option value="{{ card_type }}">{{ card_type }}</option>
+                      {% endfor %}
+                    </select>
+                    </div>
+                    <div class="form-group">
+                    <div class="col-sm-6" style="padding-left: 0;">
+                      <label class="control-label" for="input-amount-from">{{ entry_amount_from }}</label>
+                      <input type="text" name="filter_amount_from" value="" placeholder="From" id="input-amount-from" class="form-control" />
+                    </div>
+                    <div class="col-sm-6" style="padding-right: 0;">
+                      <label class="control-label" for="input-amount-to">{{ entry_amount_to }}</label>
+                      <input type="text" name="filter_amount_to" value="" placeholder="To" id="input-amount-to" class="form-control" />
+                    </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                    <label class="control-label" for="input-card-type">{{ entry_transaction_status }}</label>
+                    <div class="well well-sm" style="height: 190px; overflow: auto; margin-bottom: 0;">
+                      {% for transaction_status in transaction_statuses %}
+                        <div class="checkbox">
+                          <label>
+                            <input class="filter-transaction-status" type="checkbox" name="filter_transaction_status[]" value="{{ transaction_status }}" checked="checked" /> {{ transaction_status }}
+                          </label>
+                        </div>
+                      {% endfor %}
+                    </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                    <label class="control-label" for="input-merchant-account-id">{{ entry_merchant_account_id }}</label>
+                    <select name="filter_merchant_account_id" id="input-merchant-account-id" class="form-control">
+                      <option value="*">All</option>
+                      {% for pp_braintree_account_value in pp_braintree_account %}
+                        {% if pp_braintree_account_value.merchant_account_id %}
+                          <option value="{{ pp_braintree_account_value.merchant_account_id }}">{{ pp_braintree_account_value.merchant_account_id }}</option>
+                        {% endif %}
+                      {% endfor %}
+                    </select>
+                    </div>
+                    <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> {{ button_filter }}</button>
+                  </div>
+                  </div>
+                </div>
+                <div id="table-action"></div>
+                {% else %}
+                  {{ text_enable_transactions }}
+                {% endif %}
               {% endif %}
             </div>
           </div>

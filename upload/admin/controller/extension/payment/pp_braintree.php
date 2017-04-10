@@ -581,6 +581,45 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			}
 		}
 
+		$data['braintree_config'] = array();
+		$data['braintree_config']['three_d_secure_enabled'] = 0;
+		$data['braintree_config']['paypal_enabled'] = 0;
+		$data['braintree_config']['paypal_billing_agreement_enabled'] = 0;
+
+		$data['error_braintree_account_3ds'] = $this->language->get('error_braintree_account_3ds');
+		$data['error_braintree_account_paypal'] = $this->language->get('error_braintree_account_paypal');
+		$data['error_braintree_account_billing'] = $this->language->get('error_braintree_account_billing');
+
+		// load the account info from braintree if the config has been added yet.
+		if (!empty($data['pp_braintree_access_token']) || (!empty($data['pp_braintree_environment']) && !empty($data['pp_braintree_merchant_id']) && !empty($data['pp_braintree_public_key']) && !empty($data['pp_braintree_private_key']))) {
+			$this->initialise($data['pp_braintree_access_token'], array(
+				'pp_braintree_environment' => $data['pp_braintree_environment'],
+				'pp_braintree_merchant_id' => $data['pp_braintree_merchant_id'],
+				'pp_braintree_public_key'	=> $data['pp_braintree_public_key'],
+				'pp_braintree_private_key' => $data['pp_braintree_private_key'],
+			));
+
+			$verify_credentials = $this->model_extension_payment_pp_braintree->verifyCredentials($this->gateway);
+
+			if (!$verify_credentials) {
+				$this->error['warning'] = $this->language->get('error_connection');
+			} else {
+				$merchant_config = json_decode(base64_decode($verify_credentials), true);
+
+				if (isset($merchant_config['threeDSecureEnabled']) && $merchant_config['threeDSecureEnabled'] == 1) {
+					$data['braintree_config']['three_d_secure_enabled'] = 0;
+				}
+
+				if (isset($merchant_config['paypalEnabled']) && $merchant_config['paypalEnabled'] == 1) {
+					$data['braintree_config']['paypal_enabled'] = 0;
+				}
+
+				if (isset($merchant_config['paypal']['billingAgreementEnabled']) && $merchant_config['paypal']['billingAgreementEnabled'] == 1) {
+					$data['braintree_config']['paypal_billing_agreement_enabled'] = 1;
+				}
+			}
+		}
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -603,7 +642,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$defaults['pp_braintree_3ds_successful'] = 1;
 		$defaults['pp_braintree_3ds_attempt_successful'] = 1;
 		$defaults['pp_braintree_3ds_failed'] = 0;
-		$defaults['pp_braintree_3ds_unable_to_authenticate'] = 1;
+		$defaults['pp_braintree_3ds_unable_to_auth'] = 1;
 		$defaults['pp_braintree_3ds_error'] = 1;
 
 		// Order Status defaults

@@ -28,7 +28,9 @@ final class Loader {
 			$output = $result;
 		}
 
-		return $output;
+		if (!$output instanceof Exception) {
+			return $output;
+		}
 	}
 	
 	public function model($route) {

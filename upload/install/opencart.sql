@@ -1372,7 +1372,7 @@ INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUE
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
 (16, 'mail_order_add', 'catalog/model/checkout/order/addOrderHistory/before', 'mail/order/before', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
-(17, 'mail_order_alert', 'catalog/model/checkout/order/addOrderHistory/after', 'mail/order/alert', 1);
+(17, 'mail_order_alert', 'catalog/model/checkout/order/addOrderHistory/before', 'mail/order/alert', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
 (18, 'activity_order_add', 'catalog/model/checkout/order/addOrderHistory/after', 'event/activity/addOrderHistory', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES

@@ -38,7 +38,9 @@ class ControllerInstallStep2 extends Controller {
 		$data['text_db'] = $this->language->get('text_db');
 		$data['text_gd'] = $this->language->get('text_gd');
 		$data['text_curl'] = $this->language->get('text_curl');
+        $data['text_dom'] = $this->language->get('text_dom');
 		$data['text_mcrypt'] = $this->language->get('text_mcrypt');
+        $data['text_xml'] = $this->language->get('text_xml');
 		$data['text_zlib'] = $this->language->get('text_zlib');
 		$data['text_zip'] = $this->language->get('text_zip');
 		$data['text_mbstring'] = $this->language->get('text_mbstring');
@@ -75,7 +77,9 @@ class ControllerInstallStep2 extends Controller {
 
 		$data['gd'] = extension_loaded('gd');
 		$data['curl'] = extension_loaded('curl');
+        $data['dom'] = extension_loaded('dom');
 		$data['mcrypt_encrypt'] = function_exists('mcrypt_encrypt');
+        $data['xml'] = extension_loaded('xml');
 		$data['zlib'] = extension_loaded('zlib');
 		$data['zip'] = extension_loaded('zip');
 		
@@ -135,11 +139,19 @@ class ControllerInstallStep2 extends Controller {
 			$this->error['warning'] = $this->language->get('error_curl');
 		}
 
+        if (!extension_loaded('dom')) {
+            $this->error['warning'] = $this->language->get('error_dom');
+        }
+
 		if (!function_exists('mcrypt_encrypt')) {
 			$this->error['warning'] = $this->language->get('error_mcrypt');
 		}
 
-		if (!extension_loaded('zlib')) {
+        if (!extension_loaded('xml')) {
+            $this->error['warning'] = $this->language->get('error_xml');
+        }
+
+        if (!extension_loaded('zlib')) {
 			$this->error['warning'] = $this->language->get('error_zlib');
 		}
 

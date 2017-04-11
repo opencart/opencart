@@ -165,9 +165,17 @@ function check_requirements() {
 		$error = 'Warning: CURL extension needs to be loaded for OpenCart to work!';
 	}
 
+    if (!extension_loaded('dom')) {
+        $error = 'Warning: DOM extension needs to be loaded for OpenCart to work!';
+    }
+
 	if (!function_exists('mcrypt_encrypt')) {
 		$error = 'Warning: mCrypt extension needs to be loaded for OpenCart to work!';
 	}
+
+    if (!extension_loaded('xml')) {
+        $error = 'Warning: XML extension needs to be loaded for OpenCart to work!';
+    }
 
 	if (!extension_loaded('zlib')) {
 		$error = 'Warning: ZLIB extension needs to be loaded for OpenCart to work!';

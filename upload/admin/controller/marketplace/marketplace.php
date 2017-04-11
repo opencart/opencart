@@ -667,7 +667,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$this->load->model('setting/extension');
 
 			$data['downloads'] = array();
-
+			
 			if ($response_info['downloads']) {
 				foreach ($response_info['downloads'] as $result) {
 					$compatibility = explode(', ', $result['compatibility']);

@@ -378,7 +378,7 @@ class ControllerCommonFileManager extends Controller {
 			// Loop through each path
 			foreach ($paths as $path) {
 				$path = rtrim(DIR_IMAGE . $path, '/');
-
+				
 				// If path is just a file delete it
 				if (is_file($path)) {
 					unlink($path);
@@ -388,7 +388,7 @@ class ControllerCommonFileManager extends Controller {
 					$files = array();
 
 					// Make path into an array
-					$path = array($path . '*');
+					$path = array($path);
 
 					// While the path array is still populated keep looping through
 					while (count($path) != 0) {

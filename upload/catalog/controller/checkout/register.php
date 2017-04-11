@@ -233,6 +233,14 @@ class ControllerCheckoutRegister extends Controller {
 		if (!$json) {
 			$customer_id = $this->model_account_customer->addCustomer($this->request->post);
 
+			// Default Payment Address
+			$this->load->model('account/address');
+				
+			$address_id = $this->model_account_customer->addAddress($customer_id, $this->request->post);
+			
+			// Set the address as default
+			$this->model_account_customer->editAddressId($customer_id, $address_id);
+			
 			// Clear any previous login attempts for unregistered accounts.
 			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
 
@@ -244,9 +252,6 @@ class ControllerCheckoutRegister extends Controller {
 
 			if ($customer_group_info && !$customer_group_info['approval']) {
 				$this->customer->login($this->request->post['email'], $this->request->post['password']);
-
-				// Default Payment Address
-				$this->load->model('account/address');
 
 				$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 

@@ -54,7 +54,7 @@ class ModelInstallInstall extends Model {
 			$db->query("INSERT INTO `" . $data['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_api_id', value = '" . (int)$api_id . "'");
 			
 			// set the current years prefix
-			$db->query("UPDATE `" . $data['db_prefix'] . "setting` SET value = 'INV-" . date('Y') . "-00' WHERE `key` = config_invoice_prefix");
+			$db->query("UPDATE `" . $data['db_prefix'] . "setting` SET `value` = 'INV-" . date('Y') . "-00' WHERE `key` = 'config_invoice_prefix'");
 		}
 	}
 }

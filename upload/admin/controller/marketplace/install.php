@@ -5,65 +5,27 @@ class ControllerMarketplaceInstall extends Controller {
 
 		$json = array();
 			
-		if (isset($this->request->get['code'])) {
-			$code = $this->request->get['code'];
+		if (isset($this->request->get['extension_install_id'])) {
+			$extension_install_id = $this->request->get['extension_install_id'];
 		} else {
-			$code = '';
+			$extension_install_id = 0;
 		}
 			
 		if (!$this->user->hasPermission('modify', 'marketplace/install')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		if (!is_file(ini_get('upload_tmp_dir') . '/install.tmp')) {
+		// Make sure the file name is stored in the session.
+		if (!isset($this->session->data['install'])) {
+			$json['error'] = $this->language->get('error_file');
+		} elseif (!is_file(DIR_UPLOAD . $this->session->data['install'] . '.tmp')) {
 			$json['error'] = $this->language->get('error_file');
 		}
 
-		// Check if there is a install directory already there
-		$directory = ini_get('upload_tmp_dir') . '/install/';
-		
-		if (is_dir($directory) && (filectime($directory) < (time() - 5))) {
-			// Get a list of files ready to upload
-			$files = array();
-
-			$path = array($directory);
-
-			while (count($path) != 0) {
-				$next = array_shift($path);
-
-				// We have to use scandir function because glob will not pick up dot files.
-				foreach (array_diff(scandir($next), array('.', '..')) as $file) {
-					$file = $next . '/' . $file;
-
-					if (is_dir($file)) {
-						$path[] = $file;
-					}
-
-					$files[] = $file;
-				}
-			}
-
-			rsort($files);
-
-			foreach ($files as $file) {
-				if (is_file($file)) {
-					unlink($file);
-				} elseif (is_dir($file)) {
-					rmdir($file);
-				}
-			}
-
-			rmdir($directory);
-		}	
-
-		if (is_dir($directory)) {
-			$json['error'] = $this->language->get('error_install');
-		}
-		
 		if (!$json) {
 			$json['text'] = $this->language->get('text_unzip');
 
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/unzip', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true));
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/unzip', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $extension_install_id, true));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -75,29 +37,31 @@ class ControllerMarketplaceInstall extends Controller {
 
 		$json = array();
 
-		if (isset($this->request->get['code'])) {
-			$code = $this->request->get['code'];
+		if (isset($this->request->get['extension_install_id'])) {
+			$extension_install_id = $this->request->get['extension_install_id'];
 		} else {
-			$code = '';
+			$extension_install_id = 0;
 		}
 		
 		if (!$this->user->hasPermission('modify', 'marketplace/install')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
-		
-		$file = ini_get('upload_tmp_dir') . '/install.tmp';
-		
-		if (!is_file($file)) {
+
+		if (!isset($this->session->data['install'])) {
+			$json['error'] = $this->language->get('error_file');
+		} elseif (!is_file(DIR_UPLOAD . $this->session->data['install'] . '.tmp')) {
 			$json['error'] = $this->language->get('error_file');
 		}
-
+		
 		// Sanitize the filename
-		if (!$json) {			
+		if (!$json) {
+			$file = DIR_UPLOAD . $this->session->data['install'] . '.tmp';
+					
 			// Unzip the files
 			$zip = new ZipArchive();
 
 			if ($zip->open($file)) {
-				$zip->extractTo(ini_get('upload_tmp_dir') . '/install');
+				$zip->extractTo(DIR_UPLOAD . 'tmp-' . $this->session->data['install']);
 				$zip->close();
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
@@ -108,7 +72,7 @@ class ControllerMarketplaceInstall extends Controller {
 
 			$json['text'] = $this->language->get('text_move');
 
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/move', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true));
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/move', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $extension_install_id, true));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -120,142 +84,146 @@ class ControllerMarketplaceInstall extends Controller {
 		
 		$json = array();
 
-		if (isset($this->request->get['code'])) {
-			$code = $this->request->get['code'];
+		if (isset($this->request->get['extension_install_id'])) {
+			$extension_install_id = $this->request->get['extension_install_id'];
 		} else {
-			$code = '';
+			$extension_install_id = 0;
 		}
 
 		if (!$this->user->hasPermission('modify', 'marketplace/install')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$directory = ini_get('upload_tmp_dir') . '/install/';
+		if (!isset($this->session->data['install'])) {
+			$json['error'] = $this->language->get('error_directory');
+		} elseif (!is_dir(DIR_UPLOAD . 'tmp-' . $this->session->data['install'] . '/')) {
+			$json['error'] = $this->language->get('error_directory');
+		}
 
-		if (is_dir($directory . 'upload/')) {
-			$files = array();
-
-			// Get a list of files ready to upload
-			$path = array($directory . 'upload/*');
-
-			while (count($path) != 0) {
-				$next = array_shift($path);
-
-				foreach ((array)glob($next) as $file) {
-					if (is_dir($file)) {
-						$path[] = $file . '/*';
+		if (!$json) {
+			$directory = DIR_UPLOAD . 'tmp-' . $this->session->data['install'] . '/';
+		
+			if (is_dir($directory . 'upload/')) {
+				$files = array();
+	
+				// Get a list of files ready to upload
+				$path = array($directory . 'upload/*');
+	
+				while (count($path) != 0) {
+					$next = array_shift($path);
+	
+					foreach ((array)glob($next) as $file) {
+						if (is_dir($file)) {
+							$path[] = $file . '/*';
+						}
+	
+						$files[] = $file;
 					}
-
-					$files[] = $file;
 				}
-			}
-
-			// A list of allowed directories to be written to
-			$allowed = array(
-				'admin/controller/extension/',
-				'admin/language/',
-				'admin/model/extension/',
-				'admin/view/image/',
-				'admin/view/javascript/',
-				'admin/view/stylesheet/',
-				'admin/view/template/extension/',
-				'catalog/controller/extension/',
-				'catalog/language/',
-				'catalog/model/extension/',
-				'catalog/view/javascript/',
-				'catalog/view/theme/',
-				'system/config/',
-				'system/library/',
-				'image/catalog/'
-			);
-
-			// First we need to do some checks
-			foreach ($files as $file) {
-				$destination = str_replace('\\', '/', substr($file, strlen($directory . 'upload/')));
-
-				$safe = false;
-
-				foreach ($allowed as $value) {
-					if (strlen($destination) < strlen($value) && substr($value, 0, strlen($destination)) == $destination) {
-						$safe = true;
-
-						break;
+	
+				// A list of allowed directories to be written to
+				$allowed = array(
+					'admin/controller/extension/',
+					'admin/language/',
+					'admin/model/extension/',
+					'admin/view/image/',
+					'admin/view/javascript/',
+					'admin/view/stylesheet/',
+					'admin/view/template/extension/',
+					'catalog/controller/extension/',
+					'catalog/language/',
+					'catalog/model/extension/',
+					'catalog/view/javascript/',
+					'catalog/view/theme/',
+					'system/config/',
+					'system/library/',
+					'image/catalog/'
+				);
+	
+				// First we need to do some checks
+				foreach ($files as $file) {
+					$destination = str_replace('\\', '/', substr($file, strlen($directory . 'upload/')));
+	
+					$safe = false;
+	
+					foreach ($allowed as $value) {
+						if (strlen($destination) < strlen($value) && substr($value, 0, strlen($destination)) == $destination) {
+							$safe = true;
+	
+							break;
+						}
+	
+						if (strlen($destination) > strlen($value) && substr($destination, 0, strlen($value)) == $value) {
+							$safe = true;
+	
+							break;
+						}
 					}
-
-					if (strlen($destination) > strlen($value) && substr($destination, 0, strlen($value)) == $value) {
-						$safe = true;
-
+					
+					if ($safe) {
+						// Check if the copy location exists or not
+						if (substr($destination, 0, 5) == 'admin') {
+							$destination = DIR_APPLICATION . substr($destination, 6);
+						}
+	
+						if (substr($destination, 0, 7) == 'catalog') {
+							$destination = DIR_CATALOG . substr($destination, 8);
+						}
+	
+						if (substr($destination, 0, 5) == 'image') {
+							$destination = DIR_IMAGE . substr($destination, 6);
+						}
+	
+						if (substr($destination, 0, 6) == 'system') {
+							$destination = DIR_SYSTEM . substr($destination, 7);
+						}
+	
+						if (is_file($destination)) {
+							$json['error'] = sprintf($this->language->get('error_exists'), $destination);
+	
+							break;
+						}
+					} else {
+						$json['error'] = sprintf($this->language->get('error_allowed'), $destination);
+	
 						break;
 					}
 				}
 				
-				if ($safe) {
-					// Check if the copy location exists or not
-					if (substr($destination, 0, 5) == 'admin') {
-						$destination = DIR_APPLICATION . substr($destination, 6);
-					}
-
-					if (substr($destination, 0, 7) == 'catalog') {
-						$destination = DIR_CATALOG . substr($destination, 8);
-					}
-
-					if (substr($destination, 0, 5) == 'image') {
-						$destination = DIR_IMAGE . substr($destination, 6);
-					}
-
-					if (substr($destination, 0, 6) == 'system') {
-						$destination = DIR_SYSTEM . substr($destination, 7);
-					}
-
-					if (is_file($destination)) {
-						$json['error'] = sprintf($this->language->get('error_exists'), $destination);
-
-						break;
-					}
-				} else {
-					$json['error'] = sprintf($this->language->get('error_allowed'), $destination);
-
-					break;
-				}
-			}
-
-			if (!$json) {
-				$this->load->model('setting/extension');
-
-				foreach ($files as $file) {
-					$destination = str_replace('\\', '/', substr($file, strlen($directory . 'upload/')));
-
-					$path = '';
-
-					if (substr($destination, 0, 5) == 'admin') {
-						$path = DIR_APPLICATION . substr($destination, 6);
-					}
-
-					if (substr($destination, 0, 7) == 'catalog') {
-						$path = DIR_CATALOG . substr($destination, 8);
-					}
-
-					if (substr($destination, 0, 5) == 'image') {
-						$path = DIR_IMAGE . substr($destination, 6);
-					}
-
-					if (substr($destination, 0, 6) == 'system') {
-						$path = DIR_SYSTEM . substr($destination, 7);
-					}
-
-					if (is_dir($file) && !is_dir($path)) {
-						if (mkdir($path, 0777)) {
-							$this->model_setting_extension->addPath($code, $destination);
-						} else {
-							$json['error'] = sprintf($this->language->get('error_move'), $path);
+				if (!$json) {
+					$this->load->model('setting/extension');
+	
+					foreach ($files as $file) {
+						$destination = str_replace('\\', '/', substr($file, strlen($directory . 'upload/')));
+	
+						$path = '';
+	
+						if (substr($destination, 0, 5) == 'admin') {
+							$path = DIR_APPLICATION . substr($destination, 6);
 						}
-					}
-
-					if (is_file($file)) {
-						if (rename($file, $path)) {
-							$this->model_setting_extension->addPath($code, $destination);
-						} else {
-							$json['error'] = sprintf($this->language->get('error_move'), $file);
+	
+						if (substr($destination, 0, 7) == 'catalog') {
+							$path = DIR_CATALOG . substr($destination, 8);
+						}
+	
+						if (substr($destination, 0, 5) == 'image') {
+							$path = DIR_IMAGE . substr($destination, 6);
+						}
+	
+						if (substr($destination, 0, 6) == 'system') {
+							$path = DIR_SYSTEM . substr($destination, 7);
+						}
+	
+						if (is_dir($file) && !is_dir($path)) {
+							if (mkdir($path, 0777)) {
+								$this->model_setting_extension->addExtensionPath($extension_install_id, $destination);
+							}
+						}
+	
+						if (is_file($file)) {
+							if (rename($file, $path)) {
+								$this->model_setting_extension->addExtensionPath($extension_install_id, $destination);
+							}
 						}
 					}
 				}
@@ -265,7 +233,7 @@ class ControllerMarketplaceInstall extends Controller {
 		if (!$json) {
 			$json['text'] = $this->language->get('text_xml');
 
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/xml', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true));
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/xml', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $extension_install_id, true));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -277,91 +245,99 @@ class ControllerMarketplaceInstall extends Controller {
 
 		$json = array();
 		
-		if (isset($this->request->get['code'])) {
-			$code = $this->request->get['code'];
+		if (isset($this->request->get['extension_install_id'])) {
+			$extension_install_id = $this->request->get['extension_install_id'];
 		} else {
-			$code = '';
+			$extension_install_id = 0;
 		}
 
 		if (!$this->user->hasPermission('modify', 'marketplace/install')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$file = ini_get('upload_tmp_dir') . '/install/install.xml';
+		if (!isset($this->session->data['install'])) {
+			$json['error'] = $this->language->get('error_directory');
+		} elseif (!is_dir(DIR_UPLOAD . 'tmp-' . $this->session->data['install'] . '/')) {
+			$json['error'] = $this->language->get('error_directory');
+		}
 
-		if (is_file($file)) {
-			// If xml file just put it straight into the DB
-			$xml = file_get_contents($file);
+		if (!$json) {
+			$file = DIR_UPLOAD . 'tmp-' . $this->session->data['install'] . '/install.xml';
 
-			if ($xml) {
-				try {
-					$dom = new DOMDocument('1.0', 'UTF-8');
-					$dom->loadXml($xml);
-
-					$name = $dom->getElementsByTagName('name')->item(0);
-
-					if ($name) {
-						$name = $name->nodeValue;
-					} else {
-						$name = '';
-					}
-
-					$code = $dom->getElementsByTagName('code')->item(0);
-
-					if ($code) {
-						$code = $code->nodeValue;
-
-						// Check to see if the modification is already installed or not.
-						$modification_info = $this->model_setting_modification->getModificationByCode($code);
-
-						if ($modification_info) {
-							$json['error'] = sprintf($this->language->get('error_xml'), $modification_info['name']);
+			if (is_file($file)) {
+				// If xml file just put it straight into the DB
+				$xml = file_get_contents($file);
+	
+				if ($xml) {
+					try {
+						$dom = new DOMDocument('1.0', 'UTF-8');
+						$dom->loadXml($xml);
+	
+						$name = $dom->getElementsByTagName('name')->item(0);
+	
+						if ($name) {
+							$name = $name->nodeValue;
+						} else {
+							$name = '';
 						}
-					} else {
-						$json['error'] = $this->language->get('error_code');
+	
+						$code = $dom->getElementsByTagName('code')->item(0);
+	
+						if ($code) {
+							$code = $code->nodeValue;
+	
+							// Check to see if the modification is already installed or not.
+							$modification_info = $this->model_setting_modification->getModificationByCode($code);
+	
+							if ($modification_info) {
+								$json['error'] = sprintf($this->language->get('error_xml'), $modification_info['name']);
+							}
+						} else {
+							$json['error'] = $this->language->get('error_code');
+						}
+	
+						$author = $dom->getElementsByTagName('author')->item(0);
+	
+						if ($author) {
+							$author = $author->nodeValue;
+						} else {
+							$author = '';
+						}
+	
+						$version = $dom->getElementsByTagName('version')->item(0);
+	
+						if ($version) {
+							$version = $version->nodeValue;
+						} else {
+							$version = '';
+						}
+	
+						$link = $dom->getElementsByTagName('link')->item(0);
+	
+						if ($link) {
+							$link = $link->nodeValue;
+						} else {
+							$link = '';
+						}
+	
+						if (!$json) {
+							$modification_data = array(
+								'extension_install_id' => $extension_install_id,
+								'name'                 => $name,
+								'code'                 => $code,
+								'author'               => $author,
+								'version'              => $version,
+								'link'                 => $link,
+								'xml'                  => $xml
+							);
+	
+							$this->load->model('setting/modification');
+	
+							$this->model_setting_modification->addModification($modification_data);
+						}
+					} catch(Exception $exception) {
+						$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 					}
-
-					$author = $dom->getElementsByTagName('author')->item(0);
-
-					if ($author) {
-						$author = $author->nodeValue;
-					} else {
-						$author = '';
-					}
-
-					$version = $dom->getElementsByTagName('version')->item(0);
-
-					if ($version) {
-						$version = $version->nodeValue;
-					} else {
-						$version = '';
-					}
-
-					$link = $dom->getElementsByTagName('link')->item(0);
-
-					if ($link) {
-						$link = $link->nodeValue;
-					} else {
-						$link = '';
-					}
-
-					if (!$json) {
-						$modification_data = array(
-							'extension_download_id' => $extension_download_id,
-							'name'                  => $name,
-							'code'                  => $code,
-							'author'                => $author,
-							'version'               => $version,
-							'link'                  => $link,
-							'xml'                   => $xml
-						);
-
-						$this->load->model('setting/modification');
-
-						$this->model_setting_modification->addModification($modification_data);
-					}
-				} catch(Exception $exception) {
-					$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 				}
 			}
 		}
@@ -385,54 +361,58 @@ class ControllerMarketplaceInstall extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$directory = ini_get('upload_tmp_dir') . '/install/';
-
-		if (!is_dir($directory)) {
+		if (!isset($this->session->data['install'])) {
 			$json['error'] = $this->language->get('error_directory');
 		}
 
 		if (!$json) {
-			// Get a list of files ready to upload
-			$files = array();
-
-			$path = array($directory);
-
-			while (count($path) != 0) {
-				$next = array_shift($path);
-
-				// We have to use scandir function because glob will not pick up dot files.
-				foreach (array_diff(scandir($next), array('.', '..')) as $file) {
-					$file = $next . '/' . $file;
-
-					if (is_dir($file)) {
-						$path[] = $file;
+			$directory = DIR_UPLOAD . 'tmp-' . $this->session->data['install'] . '/';
+			
+			if (!is_dir(DIR_UPLOAD . 'tmp-' . $this->session->data['install'] . '/')) {
+				// Get a list of files ready to upload
+				$files = array();
+	
+				$path = array($directory);
+	
+				while (count($path) != 0) {
+					$next = array_shift($path);
+	
+					// We have to use scandir function because glob will not pick up dot files.
+					foreach (array_diff(scandir($next), array('.', '..')) as $file) {
+						$file = $next . '/' . $file;
+	
+						if (is_dir($file)) {
+							$path[] = $file;
+						}
+	
+						$files[] = $file;
 					}
-
-					$files[] = $file;
+				}
+	
+				rsort($files);
+	
+				foreach ($files as $file) {
+					if (is_file($file)) {
+						unlink($file);
+					} elseif (is_dir($file)) {
+						rmdir($file);
+					}
+				}
+	
+				if (is_dir($directory)) {
+					rmdir($directory);
 				}
 			}
-
-			rsort($files);
-
-			foreach ($files as $file) {
-				if (is_file($file)) {
-					unlink($file);
-				} elseif (is_dir($file)) {
-					rmdir($file);
-				}
+			
+			$file = DIR_UPLOAD . $this->session->data['install'] . '.tmp';
+			
+			if (is_file($file)) {
+				unlink($file);
 			}
-
-			if (is_file(ini_get('upload_tmp_dir') . '/install.tmp')) {
-				unlink(ini_get('upload_tmp_dir') . '/install.tmp');
-			}
-
-			if (is_dir($directory)) {
-				rmdir($directory);
-			}
-
+							
 			$json['success'] = $this->language->get('text_success');
 		}
-
+		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
@@ -442,10 +422,10 @@ class ControllerMarketplaceInstall extends Controller {
 
 		$json = array();
 
-		if (isset($this->request->get['code'])) {
-			$code = $this->request->get['code'];
+		if (isset($this->request->get['extension_install_id'])) {
+			$extension_install_id = $this->request->get['extension_install_id'];
 		} else {
-			$code = '';
+			$extension_install_id = 0;
 		}
 
 		if (!$this->user->hasPermission('modify', 'marketplace/install')) {
@@ -455,7 +435,7 @@ class ControllerMarketplaceInstall extends Controller {
 		if (!$json) {
 			$this->load->model('setting/extension');
 
-			$results = $this->model_setting_extension->getPathsByCode($code);
+			$results = $this->model_setting_extension->getExtensionPathsByExtensionInstallId($extension_install_id);
 
 			rsort($results);
 
@@ -475,7 +455,7 @@ class ControllerMarketplaceInstall extends Controller {
 					$source = DIR_IMAGE . substr($result['path'], 6);
 				}
 
-				if (substr($result['path'], 0, 13) == 'system/vendor') {
+				if (substr($result['path'], 0, 13) == 'system/library') {
 					$source = DIR_SYSTEM . substr($result['path'], 14);
 				}
 
@@ -514,8 +494,6 @@ class ControllerMarketplaceInstall extends Controller {
 						}
 					}
 
-					unlink($source);
-						
 					if (is_file($source)) {
 						unlink($source);
 					}
@@ -525,13 +503,10 @@ class ControllerMarketplaceInstall extends Controller {
 					}					
 				}
 
-				$this->model_setting_extension->deletePath($result['extension_install_id']);
+				$this->model_setting_extension->deleteExtensionPath($result['extension_path_id']);
 			}
 
-			// Just in case its an upload being uninstalled we should remove the db entry
-			if (substr($code, 0, 6) == 'upload') {
-				$this->model_setting_extension->deleteUpload(substr($code, 7));
-			}
+			$this->model_setting_extension->deleteExtensionInstall($extension_install_id);
 			
 			$json['success'] = $this->language->get('text_success');
 		}

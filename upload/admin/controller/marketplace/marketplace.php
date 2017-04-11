@@ -677,7 +677,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 							'extension_download_id' => $result['extension_download_id'],
 							'name'                  => $result['name'],
 							'date_added'            => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-							'installed'             => $this->model_setting_extension->getTotalPathsByCode('marketplace-' . $result['extension_download_id']),
+							'installed'             => $this->model_setting_extension->getTotalExtensionInstallsByExtensionDownloadId($result['extension_download_id']),
 							'status'                => $result['status']
 						);
 					}
@@ -779,20 +779,65 @@ class ControllerMarketplaceMarketplace extends Controller {
 		if (!$this->user->hasPermission('modify', 'marketplace/marketplace')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
-		
-		if (!defined('OPENCART_USERNAME') || !defined('OPENCART_SECRET') || !OPENCART_USERNAME || !OPENCART_SECRET) {
-			$json['error'] = $this->language->get('error_api');
-		}
 
 		// Check if there is a install zip already there
-		$file = ini_get('upload_tmp_dir') . '/install.tmp';
-		
-		if (is_file($file) && (filemtime($file) < (time() - 5))) {
-			unlink($file);
+		$files = glob(DIR_UPLOAD . '*.tmp');
+
+		foreach ($files as $file) {
+			if (is_file($file) && (filectime($file) < (time() - 5))) {
+				unlink($file);
+			}
+			
+			if (is_file($file)) {
+				$json['error'] = $this->language->get('error_install');
+				
+				break;
+			}
 		}
 
-		if (is_file($file)) {
-			$json['error'] = $this->language->get('error_install');
+		// Check for any install directories
+		$directories = glob(DIR_UPLOAD . 'tmp-*');
+		
+		foreach ($directories as $directory) {
+			if (is_dir($directory) && (filectime($directory) < (time() - 5))) {
+				// Get a list of files ready to upload
+				$files = array();
+	
+				$path = array($directory);
+	
+				while (count($path) != 0) {
+					$next = array_shift($path);
+	
+					// We have to use scandir function because glob will not pick up dot files.
+					foreach (array_diff(scandir($next), array('.', '..')) as $file) {
+						$file = $next . '/' . $file;
+	
+						if (is_dir($file)) {
+							$path[] = $file;
+						}
+	
+						$files[] = $file;
+					}
+				}
+	
+				rsort($files);
+	
+				foreach ($files as $file) {
+					if (is_file($file)) {
+						unlink($file);
+					} elseif (is_dir($file)) {
+						rmdir($file);
+					}
+				}
+	
+				rmdir($directory);
+			}
+			
+			if (is_dir($directory)) {
+				$json['error'] = $this->language->get('error_install');
+				
+				break;
+			}		
 		}
 		
 		if (!$json) {
@@ -830,17 +875,23 @@ class ControllerMarketplaceMarketplace extends Controller {
 			curl_close($curl);
 			
 			if (isset($response_info['download'])) {
+				$this->session->data['install'] = token(10);
+				
 				$download = file_get_contents($response_info['download']);
 				
-				$handle = fopen(ini_get('upload_tmp_dir') . '/install.tmp', 'w');
+				$handle = fopen(DIR_UPLOAD . $this->session->data['install'] . '.tmp', 'w');
 				
 				fwrite($handle, $download);
 		
 				fclose($handle);
+
+				$this->load->model('setting/extension');
+				
+				$extension_install_id = $this->model_setting_extension->addExtensionInstall(basename($response_info['download']), $extension_download_id);
 				
 				$json['text'] = $this->language->get('text_install');
 				
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/install', 'user_token=' . $this->session->data['user_token'] . '&code=marketplace-' . $extension_download_id, true));		
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $extension_install_id, true));		
 			} elseif (isset($response_info['error'])) {
 				$json['error'] = $response_info['error'];
 			} else {

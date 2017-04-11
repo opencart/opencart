@@ -1445,8 +1445,8 @@ INSERT INTO `oc_extension` (`extension_id`, `type`, `code`) VALUES
 DROP TABLE IF EXISTS `oc_extension_install`;
 CREATE TABLE `oc_extension_install` (
   `extension_install_id` int(11) NOT NULL AUTO_INCREMENT,
-  `code` varchar(50) NOT NULL,
-  `path` varchar(255) NOT NULL,
+  `extension_download_id` int(11) NOT NULL,
+  `filename` varchar(255) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`extension_install_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -1454,15 +1454,16 @@ CREATE TABLE `oc_extension_install` (
 -----------------------------------------------------------
 
 --
--- Table structure for table `oc_extension_upload`
+-- Table structure for table `oc_extension_path`
 --
 
-DROP TABLE IF EXISTS `oc_extension_upload`;
-CREATE TABLE `oc_extension_upload` (
-  `extension_upload_id` int(11) NOT NULL AUTO_INCREMENT,
-  `filename` varchar(255) NOT NULL,
+DROP TABLE IF EXISTS `oc_extension_path`;
+CREATE TABLE `oc_extension_path` (
+  `extension_path_id` int(11) NOT NULL AUTO_INCREMENT,
+  `extension_install_id` int(11) NOT NULL,
+  `path` varchar(255) NOT NULL,
   `date_added` datetime NOT NULL,
-  PRIMARY KEY (`extension_upload_id`)
+  PRIMARY KEY (`extension_path_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -----------------------------------------------------------

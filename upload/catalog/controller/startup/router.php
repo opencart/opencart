@@ -31,6 +31,10 @@ class ControllerStartupRouter extends Controller {
 			return $result;
 		}
 		
-		return $output;
+		if (!is_null($output)) {
+            return new \Exception('Error!');
+        } else {
+            return $output;
+        }
 	}
 }

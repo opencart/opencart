@@ -10,8 +10,11 @@ final class Loader {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 		
+		// Keep the original trigger
+		$trigger = $route;
+		
 		// Trigger the pre events
-		$result = $this->registry->get('event')->trigger('controller/' . $route . '/before', array($route, &$data));
+		$result = $this->registry->get('event')->trigger('controller/' . $trigger . '/before', array($route, &$data));
 		
 		// Make sure its only the last event that returns an output if required.
 		if ($result != null && !$result instanceof Exception) {
@@ -22,7 +25,7 @@ final class Loader {
 		}
 		
 		// Trigger the post events
-		$result = $this->registry->get('event')->trigger('controller/' . $route . '/after', array($route, &$data, &$output));
+		$result = $this->registry->get('event')->trigger('controller/' . $trigger . '/after', array($route, &$data, &$output));
 		
 		if ($result && !$result instanceof Exception) {
 			$output = $result;
@@ -63,8 +66,11 @@ final class Loader {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 		
+		// Keep the original trigger
+		$trigger = $route;
+		
 		// Trigger the pre events
-		$result = $this->registry->get('event')->trigger('view/' . $route . '/before', array(&$route, &$data));
+		$result = $this->registry->get('event')->trigger('view/' . $trigger . '/before', array(&$route, &$data));
 		
 		// Make sure its only the last event that returns an output if required.
 		if ($result && !$result instanceof Exception) {
@@ -80,7 +86,7 @@ final class Loader {
 		}
 		
 		// Trigger the post events
-		$result = $this->registry->get('event')->trigger('view/' . $route . '/after', array(&$route, &$data, &$output));
+		$result = $this->registry->get('event')->trigger('view/' . $trigger . '/after', array(&$route, &$data, &$output));
 		
 		if ($result && !$result instanceof Exception) {
 			$output = $result;
@@ -92,6 +98,9 @@ final class Loader {
 	public function library($route) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
+		
+		// Keep the original trigger
+		$trigger = $route;
 			
 		$file = DIR_SYSTEM . 'library/' . $route . '.php';
 		$class = str_replace('/', '\\', $route);
@@ -146,9 +155,12 @@ final class Loader {
 			static $model;
 			
 			$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
-			
+
+			// Keep the original trigger
+			$trigger = $route;
+					
 			// Trigger the pre events
-			$result = $registry->get('event')->trigger('model/' . $route . '/before', array(&$route, &$args));
+			$result = $registry->get('event')->trigger('model/' . $trigger . '/before', array(&$route, &$args));
 			
 			if ($result && !$result instanceof Exception) {
 				$output = $result;
@@ -174,7 +186,7 @@ final class Loader {
 			}
 			
 			// Trigger the post events
-			$result = $registry->get('event')->trigger('model/' . $route . '/after', array(&$route, &$args, &$output));
+			$result = $registry->get('event')->trigger('model/' . $trigger . '/after', array(&$route, &$args, &$output));
 			
 			if ($result && !$result instanceof Exception) {
 				$output = $result;

@@ -121,8 +121,6 @@ function next(url, i) {
 		url: url,
 		dataType: 'json',
 		success: function(json) {
-			console.log(json);
-			
 			$('#progress-bar').css('width', (i * 20) + '%');
 			
 			if (json['error']) {

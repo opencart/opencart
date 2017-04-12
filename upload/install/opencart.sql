@@ -1906,6 +1906,7 @@ CREATE TABLE `oc_marketing` (
 DROP TABLE IF EXISTS `oc_modification`;
 CREATE TABLE `oc_modification` (
   `modification_id` int(11) NOT NULL AUTO_INCREMENT,
+  `extension_install_id` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,
   `code` varchar(64) NOT NULL,
   `author` varchar(64) NOT NULL,

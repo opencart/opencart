@@ -32,56 +32,6 @@ class ControllerSaleOrder extends Controller {
 		$this->getForm();
 	}
 	
-	public function delete() {
-		$this->load->language('sale/order');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('sale/order');
-
-		if (isset($this->request->post['selected']) && $this->validate()) {
-			foreach ($this->request->post['selected'] as $order_id) {
-				$this->model_sale_order->deleteOrder($order_id);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['filter_order_id'])) {
-				$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
-			}
-	
-			if (isset($this->request->get['filter_customer'])) {
-				$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-			}
-	
-			if (isset($this->request->get['filter_order_status'])) {
-				$url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
-			}
-			
-			if (isset($this->request->get['filter_order_status_id'])) {
-				$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
-			}
-				
-			if (isset($this->request->get['filter_total'])) {
-				$url .= '&filter_total=' . $this->request->get['filter_total'];
-			}
-	
-			if (isset($this->request->get['filter_date_added'])) {
-				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-			}
-	
-			if (isset($this->request->get['filter_date_modified'])) {
-				$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
-			}
-
-			$this->response->redirect($this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . $url, true));
-		}
-
-		$this->getList();
-	}
-	
 	protected function getList() {
 		if (isset($this->request->get['filter_order_id'])) {
 			$filter_order_id = $this->request->get['filter_order_id'];
@@ -200,7 +150,6 @@ class ControllerSaleOrder extends Controller {
 		$data['invoice'] = $this->url->link('sale/order/invoice', 'user_token=' . $this->session->data['user_token'], true);
 		$data['shipping'] = $this->url->link('sale/order/shipping', 'user_token=' . $this->session->data['user_token'], true);
 		$data['add'] = $this->url->link('sale/order/add', 'user_token=' . $this->session->data['user_token'], true);
-		$data['delete'] = $this->url->link('sale/order/delete', 'user_token=' . $this->session->data['user_token'], true);
 
 		$data['orders'] = array();
 
@@ -398,7 +347,31 @@ class ControllerSaleOrder extends Controller {
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+
+		// API login
+		$data['catalog'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
 		
+		// API login
+		$this->load->model('user/api');
+
+		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
+
+		if ($api_info && $this->user->hasPermission('modify', 'sale/order')) {
+			$session = new Session($this->config->get('session_engine'), $this->registry);
+			
+			$session->start();
+					
+			$this->model_user_api->deleteApiSessionBySessonId($session->getId());
+			
+			$this->model_user_api->addApiSession($api_info['api_id'], $session->getId(), $this->request->server['REMOTE_ADDR']);
+			
+			$session->data['api_id'] = $api_info['api_id'];
+
+			$data['api_token'] = $session->getId();
+		} else {
+			$data['api_token'] = '';
+		}
+				
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -1376,7 +1349,7 @@ class ControllerSaleOrder extends Controller {
 				$data['api_token'] = $session->getId();
 			} else {
 				$data['api_token'] = '';
-		  }
+			}
 
 			$data['header'] = $this->load->controller('common/header');
 			$data['column_left'] = $this->load->controller('common/column_left');

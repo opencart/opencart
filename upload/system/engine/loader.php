@@ -14,7 +14,7 @@ final class Loader {
 		$trigger = $route;
 		
 		// Trigger the pre events
-		$result = $this->registry->get('event')->trigger('controller/' . $trigger . '/before', array($route, &$data));
+		$result = $this->registry->get('event')->trigger('controller/' . $trigger . '/before', array(&$route, &$data));
 		
 		// Make sure its only the last event that returns an output if required.
 		if ($result != null && !$result instanceof Exception) {
@@ -25,7 +25,7 @@ final class Loader {
 		}
 		
 		// Trigger the post events
-		$result = $this->registry->get('event')->trigger('controller/' . $trigger . '/after', array($route, &$data, &$output));
+		$result = $this->registry->get('event')->trigger('controller/' . $trigger . '/after', array(&$route, &$data, &$output));
 		
 		if ($result && !$result instanceof Exception) {
 			$output = $result;
@@ -98,9 +98,6 @@ final class Loader {
 	public function library($route) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
-		
-		// Keep the original trigger
-		$trigger = $route;
 			
 		$file = DIR_SYSTEM . 'library/' . $route . '.php';
 		$class = str_replace('/', '\\', $route);
@@ -133,7 +130,13 @@ final class Loader {
 	}
 
 	public function language($route) {
-		$result = $this->registry->get('event')->trigger('language/' . $route . '/before', array($route));
+		// Sanitize the call
+		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);		
+		
+		// Keep the original trigger
+		$trigger = $route;
+				
+		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/before', array(&$route));
 		
 		if ($result && !$result instanceof Exception) {
 			$output = $result;
@@ -141,7 +144,7 @@ final class Loader {
 			$output = $this->registry->get('language')->load($route);
 		}
 		
-		$result = $this->registry->get('event')->trigger('language/' . $route . '/after', array($route, &$output));
+		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/after', array(&$route, &$output));
 		
 		if ($result && !$result instanceof Exception) {
 			$output = $result;

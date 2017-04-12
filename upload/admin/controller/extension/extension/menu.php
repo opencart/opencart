@@ -87,8 +87,6 @@ class ControllerExtensionExtensionMenu extends Controller {
 				$this->model_setting_extension->uninstall('menu', $value);
 
 				unset($extensions[$key]);
-				
-				$this->model_extension_menu->deletemenusByCode($value);
 			}
 		}
 

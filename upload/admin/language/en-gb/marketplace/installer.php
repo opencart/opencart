@@ -18,6 +18,9 @@ $_['column_action']     = 'Action';
 $_['entry_upload']      = 'Upload File';
 $_['entry_progress']    = 'Progress';
 
+// Help
+$_['help_upload']       = 'Requires a modification file with extension \'.ocmod.zip\'.';
+
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify extensions!';
 $_['error_install']     = 'Extension installation taking place please wait a few seconds before trying to install!';

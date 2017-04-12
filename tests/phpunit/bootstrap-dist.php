@@ -28,6 +28,10 @@ define('PP_EXPRESS_PASSWORD', '');
 // Settings for SagePay Direct's selenium tests
 define('SAGEPAY_DIRECT_VENDOR', '');
 
+// Settings for eWAY's selenium tests
+define('EWAY_API_KEY', '');
+define('EWAY_API_PASSWORD', '');
+
 // Settings for OpenBay Pro
 define('OPENBAY_EBAY_TOKEN', '');
 define('OPENBAY_EBAY_ENC1', '');

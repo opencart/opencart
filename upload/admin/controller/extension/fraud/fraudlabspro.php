@@ -166,19 +166,25 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 
 		$this->load->model('extension/fraud/fraudlabspro');
 
-		// Action of the Approve/Reject button click
+		// Action of the Approve/Reject/Blacklist button click
 		if (isset($_POST['flp_id'])){
 			$flp_status = $_POST['new_status'];
-			$data['flp_status'] = $flp_status;
+			$feedback_note = $_POST['feedback_note'];
+			$note = urlencode($feedback_note);
 
 			//Feedback FLP status to server
 			$fraudlabspro_key = $this->config->get('fraudlabspro_key');
 
 			for($i=0; $i<3; $i++){
-				$result = @file_get_contents('https://api.fraudlabspro.com/v1/order/feedback?key=' . $fraudlabspro_key . '&format=json&id=' . $_POST['flp_id'] . '&action=' . $flp_status);
+				$result = @file_get_contents('https://api.fraudlabspro.com/v1/order/feedback?key=' . $fraudlabspro_key . '&format=json&id=' . $_POST['flp_id'] . '&action=' . $flp_status . '&note=' . $note);
 
 				if($result) break;
 			}
+
+			if (strtolower($flp_status) == 'reject_blacklist'){
+				$flp_status = "REJECT";
+			}
+			$data['flp_status'] = $flp_status;
 
 			// Update fraud status into table
 			$this->db->query("UPDATE `" . DB_PREFIX . "fraudlabspro` SET fraudlabspro_status = '" . $this->db->escape($flp_status) . "' WHERE order_id = " . $this->db->escape($this->request->get['order_id']));

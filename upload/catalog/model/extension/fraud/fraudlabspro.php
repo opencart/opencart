@@ -59,6 +59,8 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 		$request['payment_mode'] = $data['payment_code'];
 		$request['user_order_id'] = $data['order_id'];
 		$request['flp_checksum'] = (isset($_COOKIE['flp_checksum'])) ? $_COOKIE['flp_checksum'] : '';
+		$request['bin_no'] = (isset($_SESSION['flp_cc_bin'])) ? $_SESSION['flp_cc_bin'] : '';
+		$request['card_hash'] = (isset($_SESSION['flp_cc_hash'])) ? $_SESSION['flp_cc_hash'] : '';
 		$request['format'] = 'json';
 		$request['source'] = 'opencart';
 		$request['source_version'] = '2.1.0.2';
@@ -150,6 +152,9 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 		if ($json->fraudlabspro_status == 'REJECT') {
 			return $this->config->get('fraudlabspro_reject_status_id');
 		}
+
+		unset($_SESSION['flp_cc_bin']);
+		unset($_SESSION['flp_cc_hash']);
 	}
 
 	private function hashIt($s) {

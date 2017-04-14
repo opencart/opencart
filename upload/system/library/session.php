@@ -12,8 +12,6 @@ class Session {
 		} else {
 			$this->adaptor = new $class();
 		}
-		
-		register_shutdown_function(array($this, 'close'));
 	}
 	
 	public function getId() {
@@ -51,6 +49,6 @@ class Session {
 	}
 		
 	public function __destory() {
-		//$this->adaptor->destory($this->session_id);
+		$this->adaptor->destory($this->session_id);
 	}
 }

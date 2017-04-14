@@ -39,8 +39,6 @@ class ControllerCheckoutShippingMethod extends Controller {
 			$this->session->data['shipping_methods'] = $method_data;
 		}
 		
-		print_r($this->session->data);
-
 		$data['text_shipping_method'] = $this->language->get('text_shipping_method');
 		$data['text_comments'] = $this->language->get('text_comments');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -113,8 +111,6 @@ class ControllerCheckoutShippingMethod extends Controller {
 				break;
 			}
 		}
-
-		//print_r($this->session->data);
 
 		if (!isset($this->request->post['shipping_method'])) {
 			$json['error']['warning'] = $this->language->get('error_shipping');

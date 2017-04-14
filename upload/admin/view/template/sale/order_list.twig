@@ -143,7 +143,7 @@
                   <td class="text-right">{{ order.total }}</td>
                   <td class="text-left">{{ order.date_added }}</td>
                   <td class="text-left">{{ order.date_modified }}</td>
-                  <td class="text-right"><a href="{{ order.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa fa-eye"></i></a> <a href="{{ order.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <button type="button" value="{{ order.order_id }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa fa-trash-o"></i></button></td>
+                  <td class="text-right"><a href="{{ order.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa fa-eye"></i></a> <a href="{{ order.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <button type="button" value="{{ order.order_id }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa fa-trash-o"></i></button></td>
                 </tr>
                 {% endfor %}
                 {% else %}
@@ -254,13 +254,34 @@ $('#button-shipping, #button-invoice').on('click', function(e) {
 	$('#form-order').attr('action', this.getAttribute('formAction'));
 });
 
-$('#button-delete').on('click', function(e) {
-	$('#form-order').attr('action', this.getAttribute('formAction'));
+$('#form-order .btn-danger').on('click', function(e) {
+	var element = this;
 	
 	if (confirm('{{ text_confirm }}')) {
-		$('#form-order').submit();
-	} else {
-		return false;
+		$.ajax({
+			url: '{{ catalog }}index.php?route=api/order/delete&api_token={{ api_token }}&store_id={{ store_id }}&order_id=' + $(element).val(),
+			dataType: 'json',
+			beforeSend: function() {
+				$(element).button('loading');
+			},
+			complete: function() {
+				$(element).button('reset');
+			},
+			success: function(json) {
+				$('.alert').remove();
+	
+				if (json['error']) {
+					$('#history').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+	
+				if (json['success']) {
+					$('#history').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
 	}
 });
 //--></script> 

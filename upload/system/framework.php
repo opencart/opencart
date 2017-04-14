@@ -105,7 +105,7 @@ if ($config->get('session_autostart')) {
 	
 	$session->start($session_id);
 	
-	setcookie($config->get('session_name'), $session->getId(), ini_get('session.cookie_lifetime'), ini_get('session.cookie_path'), ini_get('session.cookie_domain'));	
+	setcookie($config->get('session_name'), $session->getId(), ini_get('session.cookie_lifetime'), ini_get('session.cookie_path'), ini_get('session.cookie_domain'));
 }
 
 // Cache 

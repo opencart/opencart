@@ -169,7 +169,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
 				}
 
 				if (!$json) {
-					$address_id = $this->model_account_address->addAddress($this->request->post);
+					$address_id = $this->model_account_address->addAddress($this->customer->getId(), $this->request->post);
 
 					$this->session->data['payment_address'] = $this->model_account_address->getAddress($address_id);
 
@@ -177,7 +177,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
 					if (!$this->customer->getAddressId()) {
 						$this->load->model('account/customer');
 						
-						$this->model_account_customer->editAddressId($address_id);
+						$this->model_account_customer->editAddressId($this->customer->getId(), $address_id);
 					}
 
 					unset($this->session->data['payment_method']);

@@ -25,7 +25,7 @@ class ModelAccountCustomer extends Model {
 	}
 
 	public function editAddressId($customer_id, $address_id) {
-		$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$this->customer->getId() . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$customer_id . "'");
 	}
 		
 	public function editCode($email, $code) {

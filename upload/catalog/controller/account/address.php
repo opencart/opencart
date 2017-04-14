@@ -36,7 +36,7 @@ class ControllerAccountAddress extends Controller {
 		$this->load->model('account/address');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_account_address->addAddress($this->request->post);
+			$this->model_account_address->addAddress($this->customer->getId(), $this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_add');
 

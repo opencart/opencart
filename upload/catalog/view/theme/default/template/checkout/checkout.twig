@@ -478,7 +478,7 @@ $(document).delegate('#button-shipping-address', 'click', function() {
 
 						$('#collapse-payment-method').parent().find('.panel-heading .panel-title').html('{{ text_checkout_payment_method }}');
 						$('#collapse-checkout-confirm').parent().find('.panel-heading .panel-title').html('{{ text_checkout_confirm }}');
-
+						/*
                         $.ajax({
                             url: 'index.php?route=checkout/shipping_address',
                             dataType: 'html',
@@ -489,6 +489,7 @@ $(document).delegate('#button-shipping-address', 'click', function() {
                                 alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                             }
                         });
+						*/
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
                         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -744,6 +745,8 @@ $(document).delegate('#button-shipping-method', 'click', function() {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
+						console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

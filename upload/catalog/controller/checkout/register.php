@@ -236,7 +236,7 @@ class ControllerCheckoutRegister extends Controller {
 			// Default Payment Address
 			$this->load->model('account/address');
 				
-			$address_id = $this->model_account_customer->addAddress($customer_id, $this->request->post);
+			$address_id = $this->model_account_address->addAddress($customer_id, $this->request->post);
 			
 			// Set the address as default
 			$this->model_account_customer->editAddressId($customer_id, $address_id);

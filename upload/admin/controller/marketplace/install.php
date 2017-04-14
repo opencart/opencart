@@ -270,6 +270,8 @@ class ControllerMarketplaceInstall extends Controller {
 	
 				if ($xml) {
 					try {
+						$this->load->model('setting/modification');
+
 						$dom = new DOMDocument('1.0', 'UTF-8');
 						$dom->loadXml($xml);
 	
@@ -330,8 +332,6 @@ class ControllerMarketplaceInstall extends Controller {
 								'link'                 => $link,
 								'xml'                  => $xml
 							);
-	
-							$this->load->model('setting/modification');
 	
 							$this->model_setting_modification->addModification($modification_data);
 						}

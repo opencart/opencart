@@ -265,6 +265,8 @@ class ControllerMarketplaceInstall extends Controller {
 			$file = DIR_UPLOAD . 'tmp-' . $this->session->data['install'] . '/install.xml';
 
 			if (is_file($file)) {
+				$this->load->model('setting/modification');
+				
 				// If xml file just put it straight into the DB
 				$xml = file_get_contents($file);
 	
@@ -328,10 +330,9 @@ class ControllerMarketplaceInstall extends Controller {
 								'author'               => $author,
 								'version'              => $version,
 								'link'                 => $link,
-								'xml'                  => $xml
+								'xml'                  => $xml,
+								'status'               => 1
 							);
-	
-							$this->load->model('setting/modification');
 	
 							$this->model_setting_modification->addModification($modification_data);
 						}

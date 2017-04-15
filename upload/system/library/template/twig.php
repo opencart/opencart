@@ -6,7 +6,7 @@ final class Twig {
 	
 	public function __construct() {
 		// include and register Twig auto-loader
-		include_once DIR_SYSTEM . 'library/template/Twig/Autoloader.php';
+		include_once(DIR_SYSTEM . 'library/template/Twig/Autoloader.php');
 		
 		\Twig_Autoloader::register();	
 		

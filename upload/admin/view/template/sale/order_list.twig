@@ -164,7 +164,7 @@
   </div>
   <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-	url = 'index.php?route=sale/order&user_token={{ user_token }}';
+	url = 'index.php?route=sale/order/list&user_token={{ user_token }}';
 
 	var filter_order_id = $('input[name=\'filter_order_id\']').val();
 
@@ -275,9 +275,7 @@ $('#form-order .btn-danger').on('click', function(e) {
 				}
 	
 				if (json['success']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				
-					$('#form-order').load('index.php?route=sale/order/delete&user_token={{ user_token }}');
+					location = '{{ delete }}';
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {

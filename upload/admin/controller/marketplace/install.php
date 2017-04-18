@@ -369,7 +369,7 @@ class ControllerMarketplaceInstall extends Controller {
 		if (!$json) {
 			$directory = DIR_UPLOAD . 'tmp-' . $this->session->data['install'] . '/';
 			
-			if (!is_dir(DIR_UPLOAD . 'tmp-' . $this->session->data['install'] . '/')) {
+			if (!is_dir($directory)) {
 				// Get a list of files ready to upload
 				$files = array();
 	

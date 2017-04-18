@@ -456,8 +456,8 @@ class ControllerMarketplaceInstall extends Controller {
 					$source = DIR_IMAGE . substr($result['path'], 6);
 				}
 
-				if (substr($result['path'], 0, 13) == 'system/library') {
-					$source = DIR_SYSTEM . substr($result['path'], 14);
+				if (substr($result['path'], 0, 14) == 'system/library') {
+					$source = DIR_SYSTEM . substr($result['path'], 15);
 				}
 
 				if (is_file($source)) {

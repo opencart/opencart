@@ -150,7 +150,11 @@ class ModelCatalogProduct extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_attribute WHERE product_id = '" . (int)$product_id . "'");
 
 		if (!empty($data['product_attribute'])) {
+			$product_attributes = array();
 			foreach ($data['product_attribute'] as $product_attribute) {
+				$product_attributes[$product_attribute['attribute_id']] = $product_attribute;
+			}
+			foreach ($product_attributes as $product_attribute) {
 				if ($product_attribute['attribute_id']) {
 					// Removes duplicates
 					$this->db->query("DELETE FROM " . DB_PREFIX . "product_attribute WHERE product_id = '" . (int)$product_id . "' AND attribute_id = '" . (int)$product_attribute['attribute_id'] . "'");

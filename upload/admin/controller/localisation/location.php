@@ -272,6 +272,7 @@ class ControllerLocalisationLocation extends Controller {
 		$data['entry_address'] = $this->language->get('entry_address');
 		$data['entry_geocode'] = $this->language->get('entry_geocode');
 		$data['entry_telephone'] = $this->language->get('entry_telephone');
+		$data['entry_fax'] = $this->language->get('entry_fax');
 		$data['entry_image'] = $this->language->get('entry_image');
 		$data['entry_open'] = $this->language->get('entry_open');
 		$data['entry_comment'] = $this->language->get('entry_comment');
@@ -380,7 +381,15 @@ class ControllerLocalisationLocation extends Controller {
 		} else {
 			$data['telephone'] = '';
 		}
-
+		
+		if (isset($this->request->post['fax'])) {
+			$data['fax'] = $this->request->post['fax'];
+		} elseif (!empty($location_info)) {
+			$data['fax'] = $location_info['fax'];
+		} else {
+			$data['fax'] = '';
+		}
+		
 		if (isset($this->request->post['image'])) {
 			$data['image'] = $this->request->post['image'];
 		} elseif (!empty($location_info)) {

@@ -18,8 +18,6 @@ class ControllerReportStatistics extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('report/statistics');		
-$this->load->model('sale/order');
-echo $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', array_merge($this->config->get('config_complete_status'), $this->config->get('config_processing_status')))));
 
 		if ($this->validate()) {
 			$this->load->model('sale/order');
@@ -28,10 +26,10 @@ echo $this->model_sale_order->getTotalOrders(array('filter_order_status' => impl
 		
 			$this->session->data['success'] = $this->language->get('text_success');
 			
-			$this->response->redirect($this->url->link('report/statistics', 'user_token=' . $this->session->data['user_token'], true));
+			//$this->response->redirect($this->url->link('report/statistics', 'user_token=' . $this->session->data['user_token'], true));
 		}
 		
-	//	$this->getList();	
+		$this->getList();	
 	}
 		
 	public function processing() {

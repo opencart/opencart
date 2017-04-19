@@ -56,7 +56,7 @@ class ControllerEventActivity extends Controller {
 	}
 
 		
-	// model/account/customer/deleteLoginAttempts
+	// model/account/customer/deleteLoginAttempts/after
 	public function login(&$route, &$args, &$output) {
 		if (isset($this->request->get['route']) && ($this->request->get['route'] == 'account/login' || $this->request->get['route'] == 'checkout/login/save') && $this->config->get('config_customer_activity')) {
 			$customer_info = $this->model_account_customer->getCustomerByEmail($args[0]);
@@ -74,7 +74,7 @@ class ControllerEventActivity extends Controller {
 		}	
 	}
 	
-	// model/account/customer/editCode
+	// model/account/customer/editCode/after
 	public function forgotten(&$route, &$args, &$output) {
 		if (isset($this->request->get['route']) && $this->request->get['route'] == 'account/forgotten' && $this->config->get('config_customer_activity')) {
 			$this->load->model('account/customer');
@@ -94,7 +94,7 @@ class ControllerEventActivity extends Controller {
 		}	
 	}
 	
-	// model/account/customer/addTransaction/after'
+	// model/account/customer/addTransaction/after
 	public function addTransaction(&$route, &$args, &$output) {
 		if ($this->config->get('config_customer_activity')) {
 			$this->load->model('account/customer');
@@ -211,32 +211,30 @@ class ControllerEventActivity extends Controller {
 	
 	// model/checkout/order/addOrderHistory/after
 	public function addOrderHistory(&$route, &$args, &$output) {	
-		if ($this->config->get('config_customer_activity') && isset($args['last_status_id'])) {
-			// If last order status idf is 0 and new order status is not then record as new order
-			if (!$args['last_status_id'] && $args[1]) {
-				$this->load->model('checkout/order');
-				
-				$order_info = $this->model_checkout_order->getOrder($args[0]);
+		if ($this->config->get('config_customer_activity')) {
+			// If last order status id is 0 and new order status is not then record as new order
+			$this->load->model('checkout/order');
+			
+			$order_info = $this->model_checkout_order->getOrder($args[0]);
 
-				if ($order_info) {
-					$this->load->model('account/activity');
-		
-					if ($order_info['customer_id']) {
-						$activity_data = array(
-							'customer_id' => $order_info['customer_id'],
-							'name'        => $order_info['firstname'] . ' ' . $order_info['lastname'],
-							'order_id'    => $args[0]
-						);
-		
-						$this->model_account_activity->addActivity('order_account', $activity_data);
-					} else {
-						$activity_data = array(
-							'name'     => $order_info['firstname'] . ' ' . $order_info['lastname'],
-							'order_id' => $args[0]
-						);
-		
-						$this->model_account_activity->addActivity('order_guest', $activity_data);
-					}
+			if ($order_info && !$order_info['order_status_id'] && $args[2]) {
+				$this->load->model('account/activity');
+	
+				if ($order_info['customer_id']) {
+					$activity_data = array(
+						'customer_id' => $order_info['customer_id'],
+						'name'        => $order_info['firstname'] . ' ' . $order_info['lastname'],
+						'order_id'    => $args[0]
+					);
+	
+					$this->model_account_activity->addActivity('order_account', $activity_data);
+				} else {
+					$activity_data = array(
+						'name'     => $order_info['firstname'] . ' ' . $order_info['lastname'],
+						'order_id' => $args[0]
+					);
+	
+					$this->model_account_activity->addActivity('order_guest', $activity_data);
 				}
 			}
 		}

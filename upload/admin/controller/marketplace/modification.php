@@ -579,7 +579,11 @@ class ControllerMarketplaceModification extends Controller {
 
 	public function clearlog() {
 		$this->load->language('marketplace/modification');
+		
+		$this->document->setTitle($this->language->get('heading_title'));
 
+		$this->load->model('setting/modification');
+		
 		if ($this->validate()) {
 			$handle = fopen(DIR_LOGS . 'ocmod.log', 'w+');
 

@@ -187,6 +187,15 @@ class Cart {
 					$price = $product_special_query->row['price'];
 				}
 
+				// Use Lower Price of Specials and Discounts
+				if ($product_special_query->num_rows && $product_discount_query->num_rows) {
+				    if ($product_special_query->row['price'] < $product_discount_query->row['price']) {
+					   $price = $product_special_query->row['price'];
+				    } else {
+				       $price = $product_discount_query->row['price'];
+				    }
+				}
+
 				// Reward Points
 				$product_reward_query = $this->db->query("SELECT points FROM " . DB_PREFIX . "product_reward WHERE product_id = '" . (int)$cart['product_id'] . "' AND customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "'");
 

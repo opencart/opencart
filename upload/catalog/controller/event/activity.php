@@ -217,7 +217,7 @@ class ControllerEventActivity extends Controller {
 			
 			$order_info = $this->model_checkout_order->getOrder($args[0]);
 
-			if ($order_info && !$order_info['order_status_id'] && $args[2]) {
+			if ($order_info && !$order_info['order_status_id'] && $args[1]) {
 				$this->load->model('account/activity');
 	
 				if ($order_info['customer_id']) {

@@ -94,7 +94,7 @@ class ControllerExtensionDashboardSale extends Controller {
 		}
 
 		return !$this->error;
-	}	
+	}
 	
 	public function dashboard() {
 		$this->load->language('extension/dashboard/sale');

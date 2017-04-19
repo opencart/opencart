@@ -624,12 +624,30 @@ class ControllerCommonColumnLeft extends Controller {
 				);
 			}
 			
+			$report = array();
+			
+			if ($this->user->hasPermission('access', 'report/statistics')) {
+				$report[] = array(
+					'name'	   => $this->language->get('text_statistics'),
+					'href'     => $this->url->link('report/statistics', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}	
+						
+			if ($this->user->hasPermission('access', 'report/report')) {
+				$report[] = array(
+					'name'	   => $this->language->get('text_reports'),
+					'href'     => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}
+			
 			$data['menus'][] = array(
 				'id'       => 'menu-report',
 				'icon'	   => 'fa-bar-chart-o', 
 				'name'	   => $this->language->get('text_reports'),
-				'href'     => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'], true),
-				'children' => array()
+				'href'     => '',
+				'children' => $report
 			);	
 			
 			// Stats
@@ -640,16 +658,18 @@ class ControllerCommonColumnLeft extends Controller {
 			$this->load->model('sale/order');
 	
 			$order_total = $this->model_sale_order->getTotalOrders();
-	
-			$complete_total = $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $this->config->get('config_complete_status'))));
+			
+			$this->load->model('report/statistics');
+			
+			$complete_total = $this->model_report_statistics->getValue('order_complete');
 			
 			if ($complete_total) {
 				$data['complete_status'] = round(($complete_total / $order_total) * 100);
 			} else {
 				$data['complete_status'] = 0;
 			}
-	
-			$processing_total = $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $this->config->get('config_processing_status'))));
+
+			$processing_total = $this->model_report_statistics->getValue('order_processing');
 	
 			if ($processing_total) {
 				$data['processing_status'] = round(($processing_total / $order_total) * 100);
@@ -657,19 +677,7 @@ class ControllerCommonColumnLeft extends Controller {
 				$data['processing_status'] = 0;
 			}
 	
-			$this->load->model('localisation/order_status');
-	
-			$order_status_data = array();
-	
-			$results = $this->model_localisation_order_status->getOrderStatuses();
-	
-			foreach ($results as $result) {
-				if (!in_array($result['order_status_id'], array_merge($this->config->get('config_complete_status'), $this->config->get('config_processing_status')))) {
-					$order_status_data[] = $result['order_status_id'];
-				}
-			}
-	
-			$other_total = $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $order_status_data)));
+			$other_total = $this->model_report_statistics->getValue('order_other');
 	
 			if ($other_total) {
 				$data['other_status'] = round(($other_total / $order_total) * 100);

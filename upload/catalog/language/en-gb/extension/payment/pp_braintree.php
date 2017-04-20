@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_title']						= 'Credit card - PayPal (Powered by Braintree)';
+$_['text_title']						= 'Cards or PayPal';
 $_['text_express_title']      			= 'Confirm order';
 $_['text_vaulted_payment_method_name']	= '%s ending in %s, expires %s';
 $_['text_remember']						= 'Save for next time?';

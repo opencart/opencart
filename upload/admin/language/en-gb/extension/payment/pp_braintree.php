@@ -178,6 +178,7 @@ $_['error_paypal_billing_not_ready'] 	= 'You have enabled PayPal vaulting/billin
 $_['error_braintree_account_3ds'] 	 	= '3DS is not enabled in your Braintree account yet, however it is not available for all countries. Please check your <a href="https://www.braintreegateway.com/login" title="Braintree login" target="_blank">Braintree Control Panel</a> or contact Braintree support';
 $_['error_braintree_account_paypal'] 	= 'PayPal is not enabled in your Braintree account yet. Please check your <a href="https://www.braintreegateway.com/login" title="Braintree login" target="_blank">Braintree Control Panel</a> or contact Braintree support';
 $_['error_braintree_account_billing']	= 'Billing agreements are not enabled in your Braintree account yet. Please check your <a href="https://www.braintreegateway.com/login" title="Braintree login" target="_blank">Braintree Control Panel</a> or contact Braintree support';
+$_['error_environment']					= 'You cannot set your environment to %s when your credentials are for the %s environment in Braintree';
 
 // Tab
 $_['tab_setting']					 	= 'Settings';

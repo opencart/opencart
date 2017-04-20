@@ -607,11 +607,11 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 				$merchant_config = json_decode(base64_decode($verify_credentials), true);
 
 				if (isset($merchant_config['threeDSecureEnabled']) && $merchant_config['threeDSecureEnabled'] == 1) {
-					$data['braintree_config']['three_d_secure_enabled'] = 0;
+					$data['braintree_config']['three_d_secure_enabled'] = 1;
 				}
 
 				if (isset($merchant_config['paypalEnabled']) && $merchant_config['paypalEnabled'] == 1) {
-					$data['braintree_config']['paypal_enabled'] = 0;
+					$data['braintree_config']['paypal_enabled'] = 1;
 				}
 
 				if (isset($merchant_config['paypal']['billingAgreementEnabled']) && $merchant_config['paypal']['billingAgreementEnabled'] == 1) {
@@ -1272,6 +1272,11 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 				if (isset($merchant_config['paypalEnabled']) && ($this->request->post['pp_braintree_paypal_option'] == 1 && $merchant_config['paypalEnabled'] != 1)) {
 					$this->error['warning'] = $this->language->get('error_paypal_not_ready');
 				}
+
+				// verify the environment matches with the token the system is using
+//				if (isset($merchant_config['environment']) && ($this->request->post['pp_braintree_environment'] != $merchant_config['environment'])) {
+//					$this->error['warning'] = sprintf($this->language->get('error_environment'), $this->request->post['pp_braintree_environment'], $merchant_config['environment']);
+//				}
 			}
 		}
 

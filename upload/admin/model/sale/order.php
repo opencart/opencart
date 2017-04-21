@@ -255,7 +255,7 @@ class ModelSaleOrder extends Model {
 
 		return $query->rows;
 	}
-
+	
 	public function getTotalOrders($data = array()) {
 		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order`";
 
@@ -361,7 +361,53 @@ class ModelSaleOrder extends Model {
 
 		return $query->row['total'];
 	}
+	
+	public function getTotalSales($data = array()) {
+		$sql = "SELECT SUM(total) AS total FROM `" . DB_PREFIX . "order`";
 
+		if (!empty($data['filter_order_status'])) {
+			$implode = array();
+
+			$order_statuses = explode(',', $data['filter_order_status']);
+
+			foreach ($order_statuses as $order_status_id) {
+				$implode[] = "order_status_id = '" . (int)$order_status_id . "'";
+			}
+
+			if ($implode) {
+				$sql .= " WHERE (" . implode(" OR ", $implode) . ")";
+			}
+		} elseif (isset($data['filter_order_status_id']) && $data['filter_order_status_id'] !== '') {
+			$sql .= " WHERE order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
+		} else {
+			$sql .= " WHERE order_status_id > '0'";
+		}
+
+		if (!empty($data['filter_order_id'])) {
+			$sql .= " AND order_id = '" . (int)$data['filter_order_id'] . "'";
+		}
+
+		if (!empty($data['filter_customer'])) {
+			$sql .= " AND CONCAT(firstname, ' ', o.lastname) LIKE '%" . $this->db->escape($data['filter_customer']) . "%'";
+		}
+
+		if (!empty($data['filter_date_added'])) {
+			$sql .= " AND DATE(date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
+		}
+
+		if (!empty($data['filter_date_modified'])) {
+			$sql .= " AND DATE(date_modified) = DATE('" . $this->db->escape($data['filter_date_modified']) . "')";
+		}
+
+		if (!empty($data['filter_total'])) {
+			$sql .= " AND total = '" . (float)$data['filter_total'] . "'";
+		}
+
+		$query = $this->db->query($sql);
+
+		return $query->row['total'];
+	}
+	
 	public function createInvoiceNo($order_id) {
 		$order_info = $this->getOrder($order_id);
 
@@ -405,7 +451,7 @@ class ModelSaleOrder extends Model {
 
 		return $query->row['total'];
 	}
-
+	
 	public function getEmailsByProductsOrdered($products, $start, $end) {
 		$implode = array();
 

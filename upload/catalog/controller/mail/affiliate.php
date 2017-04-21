@@ -11,7 +11,13 @@ class ControllerMailAffiliate extends Controller {
 
 		$this->load->model('account/customer_group');
 		
-		$customer_group_info = $this->model_account_customer_group->getCustomerGroup($args[0]['customer_group_id']);
+		if ($this->customer->isLogged()) {
+			$customer_group_id = $this->customer->getGroupId();
+		} else {
+			$customer_group_id = $args[1]['customer_group_id'];
+		}
+		
+		$customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
 		
 		if ($customer_group_info) {
 			$data['approval'] = ($this->config->get('config_affiliate_approval') || $customer_group_info['approval']);
@@ -31,7 +37,12 @@ class ControllerMailAffiliate extends Controller {
 		$mail->smtp_port = $this->config->get('config_mail_smtp_port');
 		$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 
-		$mail->setTo($args[0]['email']);
+		if ($this->customer->isLogged()) {
+			$mail->setTo($this->customer->getEmail());
+		} else {
+			$mail->setTo($args[1]['email']);
+		}
+		
 		$mail->setFrom($this->config->get('config_email'));
 		$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 		$mail->setSubject(sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')));
@@ -52,13 +63,28 @@ class ControllerMailAffiliate extends Controller {
 			$data['text_email'] = $this->language->get('text_email');
 			$data['text_telephone'] = $this->language->get('text_telephone');
 			
-			$data['website'] = html_entity_decode($args[0]['website'], ENT_QUOTES, 'UTF-8');
-			$data['firstname'] = $args[0]['firstname'];
-			$data['lastname'] = $args[0]['lastname'];			
+			if ($this->customer->isLogged()) {
+				$customer_group_id = $this->customer->getGroupId();
 			
+				$data['firstname'] = $this->customer->getFirstName();
+				$data['lastname'] = $this->customer->getLastName();
+				$data['email'] = $this->customer->getEmail();
+				$data['telephone'] = $this->customer->getTelephone();
+			} else {	
+				$customer_group_id = $args[1]['customer_group_id'];
+				
+				$data['firstname'] = $args[1]['firstname'];
+				$data['lastname'] = $args[1]['lastname'];	
+				$data['email'] = $args[1]['email'];
+				$data['telephone'] = $args[1]['telephone'];		
+			}
+			
+			$data['website'] = html_entity_decode($args[1]['website'], ENT_QUOTES, 'UTF-8');
+			$data['company'] = $args[1]['company'];
+							
 			$this->load->model('account/customer_group');
-			
-			$customer_group_info = $this->model_account_customer_group->getCustomerGroup($args[0]['customer_group_id']);
+
+			$customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
 			
 			if ($customer_group_info) {
 				$data['customer_group'] = $customer_group_info['name'];
@@ -66,10 +92,6 @@ class ControllerMailAffiliate extends Controller {
 				$data['customer_group'] = '';
 			}
 			
-			$data['company'] = $args[0]['company'];
-			$data['email'] = $args[0]['email'];
-			$data['telephone'] = $args[0]['telephone'];
-
 			$mail = new Mail();
 			$mail->protocol = $this->config->get('config_mail_protocol');
 			$mail->parameter = $this->config->get('config_mail_parameter');

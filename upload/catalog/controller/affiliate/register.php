@@ -18,7 +18,9 @@ class ControllerAffiliateRegister extends Controller {
 		$this->load->model('account/customer');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$customer_id = $this->model_account_customer->addAffiliate($this->request->post);
+			$customer_id = $this->model_account_customer->addCustomer($this->request->post);
+
+			$this->model_account_customer->addAffiliate($customer_id, $this->request->post);
 
 			// Clear any previous login attempts in not registered.
 			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
@@ -52,7 +54,6 @@ class ControllerAffiliateRegister extends Controller {
 		$data['text_account_already'] = sprintf($this->language->get('text_account_already'), $this->url->link('affiliate/login', '', true));
 		$data['text_signup'] = $this->language->get('text_signup');
 		$data['text_your_details'] = $this->language->get('text_your_details');
-		$data['text_your_address'] = $this->language->get('text_your_address');
 		$data['text_your_affiliate'] = $this->language->get('text_your_affiliate');
 		$data['text_your_password'] = $this->language->get('text_your_password');
 		$data['text_cheque'] = $this->language->get('text_cheque');
@@ -65,12 +66,6 @@ class ControllerAffiliateRegister extends Controller {
 		$data['entry_email'] = $this->language->get('entry_email');
 		$data['entry_telephone'] = $this->language->get('entry_telephone');
 		$data['entry_company'] = $this->language->get('entry_company');
-		$data['entry_address_1'] = $this->language->get('entry_address_1');
-		$data['entry_address_2'] = $this->language->get('entry_address_2');
-		$data['entry_postcode'] = $this->language->get('entry_postcode');
-		$data['entry_city'] = $this->language->get('entry_city');
-		$data['entry_country'] = $this->language->get('entry_country');
-		$data['entry_zone'] = $this->language->get('entry_zone');
 		$data['entry_website'] = $this->language->get('entry_website');
 		$data['entry_tax'] = $this->language->get('entry_tax');
 		$data['entry_payment'] = $this->language->get('entry_payment');
@@ -126,36 +121,6 @@ class ControllerAffiliateRegister extends Controller {
 			$data['error_confirm'] = $this->error['confirm'];
 		} else {
 			$data['error_confirm'] = '';
-		}
-
-		if (isset($this->error['address_1'])) {
-			$data['error_address_1'] = $this->error['address_1'];
-		} else {
-			$data['error_address_1'] = '';
-		}
-
-		if (isset($this->error['city'])) {
-			$data['error_city'] = $this->error['city'];
-		} else {
-			$data['error_city'] = '';
-		}
-
-		if (isset($this->error['postcode'])) {
-			$data['error_postcode'] = $this->error['postcode'];
-		} else {
-			$data['error_postcode'] = '';
-		}
-
-		if (isset($this->error['country'])) {
-			$data['error_country'] = $this->error['country'];
-		} else {
-			$data['error_country'] = '';
-		}
-
-		if (isset($this->error['zone'])) {
-			$data['error_zone'] = $this->error['zone'];
-		} else {
-			$data['error_zone'] = '';
 		}
 		
 		if (isset($this->error['custom_field'])) {
@@ -240,46 +205,6 @@ class ControllerAffiliateRegister extends Controller {
 			$data['company'] = '';
 		}
 
-		if (isset($this->request->post['address_1'])) {
-			$data['address_1'] = $this->request->post['address_1'];
-		} else {
-			$data['address_1'] = '';
-		}
-
-		if (isset($this->request->post['address_2'])) {
-			$data['address_2'] = $this->request->post['address_2'];
-		} else {
-			$data['address_2'] = '';
-		}
-
-		if (isset($this->request->post['postcode'])) {
-			$data['postcode'] = $this->request->post['postcode'];
-		} else {
-			$data['postcode'] = '';
-		}
-
-		if (isset($this->request->post['city'])) {
-			$data['city'] = $this->request->post['city'];
-		} else {
-			$data['city'] = '';
-		}
-
-		if (isset($this->request->post['country_id'])) {
-			$data['country_id'] = $this->request->post['country_id'];
-		} else {
-			$data['country_id'] = $this->config->get('config_country_id');
-		}
-
-		if (isset($this->request->post['zone_id'])) {
-			$data['zone_id'] = (int)$this->request->post['zone_id'];
-		} else {
-			$data['zone_id'] = '';
-		}
-
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
-
 		// Custom Fields
 		$this->load->model('account/custom_field');
 
@@ -291,12 +216,6 @@ class ControllerAffiliateRegister extends Controller {
 			} else {
 				$account_custom_field = array();
 			}
-
-			if (isset($this->request->post['custom_field']['address'])) {
-				$address_custom_field = $this->request->post['custom_field']['address'];
-			} else {
-				$address_custom_field = array();
-			}
 			
 			if (isset($this->request->post['custom_field']['affiliate'])) {
 				$affiliate_custom_field = $this->request->post['custom_field']['affiliate'];
@@ -304,7 +223,7 @@ class ControllerAffiliateRegister extends Controller {
 				$affiliate_custom_field = array();
 			}
 			
-			$data['register_custom_field'] = $account_custom_field + $address_custom_field + $affiliate_custom_field;
+			$data['register_custom_field'] = $account_custom_field + $affiliate_custom_field;
 		} else {
 			$data['register_custom_field'] = array();
 		}
@@ -437,30 +356,6 @@ class ControllerAffiliateRegister extends Controller {
 
 		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
 			$this->error['telephone'] = $this->language->get('error_telephone');
-		}
-
-		if ((utf8_strlen(trim($this->request->post['address_1'])) < 3) || (utf8_strlen(trim($this->request->post['address_1'])) > 128)) {
-			$this->error['address_1'] = $this->language->get('error_address_1');
-		}
-
-		if ((utf8_strlen(trim($this->request->post['city'])) < 2) || (utf8_strlen(trim($this->request->post['city'])) > 128)) {
-			$this->error['city'] = $this->language->get('error_city');
-		}
-
-		$this->load->model('localisation/country');
-
-		$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
-
-		if ($country_info && $country_info['postcode_required'] && (utf8_strlen(trim($this->request->post['postcode'])) < 2 || utf8_strlen(trim($this->request->post['postcode'])) > 10)) {
-			$this->error['postcode'] = $this->language->get('error_postcode');
-		}
-
-		if ($this->request->post['country_id'] == '') {
-			$this->error['country'] = $this->language->get('error_country');
-		}
-
-		if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '' || !is_numeric($this->request->post['zone_id'])) {
-			$this->error['zone'] = $this->language->get('error_zone');
 		}
 
 		// Customer Group

@@ -5,7 +5,7 @@ $_['heading_title']          = 'OpenCart';
 // Text
 $_['text_order']             = 'Orders';
 $_['text_processing_status'] = 'Processing';
-$_['text_complete_status']   = 'Completed';
+$_['text_complete_status']   = 'Complete';
 $_['text_customer']          = 'Customers';
 $_['text_online']            = 'Customers Online';
 $_['text_approval']          = 'Pending approval';

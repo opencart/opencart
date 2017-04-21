@@ -1382,11 +1382,21 @@ INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUE
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
 (21, 'mail_affiliate_alert', 'catalog/model/account/customer/addAffiliate/after', 'mail/affiliate/alert', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
-(22, 'activity_affiliate_add', 'catalog/model/account/customer/addAffiliate/after', 'event/activity/addAffiliate', 1);
+(22, 'mail_voucher', 'catalog/model/checkout/order/addOrderHistory/after', 'extension/total/voucher/send', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
-(23, 'activity_affiliate_edit', 'catalog/model/account/customer/editAffiliate/after', 'event/activity/editAffiliate', 1);
+(23, 'activity_affiliate_add', 'catalog/model/account/customer/addAffiliate/after', 'event/activity/addAffiliate', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
-(24, 'voucher', 'catalog/model/checkout/order/addOrderHistory/after', 'extension/total/voucher/send', 1);
+(24, 'activity_affiliate_edit', 'catalog/model/account/customer/editAffiliate/after', 'event/activity/editAffiliate', 1);
+INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
+(25, 'statistics_customer_add', 'catalog/model/account/customer/addCustomer/after', 'event/statistics/addCustomer', 1);
+INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
+(26, 'statistics_affiliate_add', 'catalog/model/account/customer/addAffiliate/after', 'event/statistics/addAffiliate', 1);
+INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
+(27, 'statistics_review_add', 'catalog/model/catalog/review/addReview/after', 'event/statistics/addReview', 1);
+INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
+(28, 'statistics_review_add', 'catalog/model/account/return/addReturn/after', 'event/statistics/addReturn', 1);
+INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
+(29, 'statistics_order_history', 'catalog/model/checkout/order/addOrderHistory/after', 'event/statistics/addOrderHistory', 1);
 
 -----------------------------------------------------------
 
@@ -3121,7 +3131,7 @@ DROP TABLE IF EXISTS `oc_statistics`;
 CREATE TABLE `oc_statistics` (
   `statistics_id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(64) NOT NULL,
-  `value` text NOT NULL,
+  `value` decimal(15,4) NOT NULL,
   PRIMARY KEY (`statistics_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 

@@ -2,20 +2,21 @@
 namespace Template;
 final class Twig {
 	private $twig;
+	
 	private $data = array();
 	
-	public function __construct() {
+	public function __construct($directory) {
 		// include and register Twig auto-loader
 		include_once(DIR_SYSTEM . 'library/template/Twig/Autoloader.php');
 		
 		\Twig_Autoloader::register();	
 		
 		// specify where to look for templates
-		$loader = new \Twig_Loader_Filesystem(DIR_TEMPLATE);	
+		$loader = new \Twig_Loader_Filesystem($directory);	
 		
 		// initialize Twig environment
 		$this->twig = new \Twig_Environment($loader, array('autoescape' => false));			
-	}	
+	}
 	
 	public function set($key, $value) {
 		$this->data[$key] = $value;

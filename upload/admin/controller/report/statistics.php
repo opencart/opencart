@@ -22,17 +22,17 @@ class ControllerReportStatistics extends Controller {
 		if ($this->validate()) {
 			$this->load->model('sale/order');
 			
-			$this->model_report_statistics->editValue('order_sale', $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', array_merge($this->config->get('config_complete_status'), $this->config->get('config_processing_status'))))));		
+			$this->model_report_statistics->editValue('order_sale', $this->model_sale_order->getTotalSales(array('filter_order_status' => implode(',', array_merge($this->config->get('config_complete_status'), $this->config->get('config_processing_status'))))));		
 		
 			$this->session->data['success'] = $this->language->get('text_success');
 			
-			//$this->response->redirect($this->url->link('report/statistics', 'user_token=' . $this->session->data['user_token'], true));
+			$this->response->redirect($this->url->link('report/statistics', 'user_token=' . $this->session->data['user_token'], true));
 		}
 		
 		$this->getList();	
 	}
 		
-	public function processing() {
+	public function orderprocessing() {
 		$this->load->language('report/statistics');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -52,7 +52,7 @@ class ControllerReportStatistics extends Controller {
 		$this->getList();	
 	}
 	
-	public function complete() {
+	public function ordercomplete() {
 		$this->load->language('report/statistics');
 
 		$this->document->setTitle($this->language->get('heading_title'));		
@@ -72,7 +72,7 @@ class ControllerReportStatistics extends Controller {
 		$this->getList();	
 	}
 	
-	public function other() {
+	public function orderother() {
 		$this->load->language('report/statistics');
 
 		$this->document->setTitle($this->language->get('heading_title'));	

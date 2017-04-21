@@ -667,17 +667,25 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$this->load->model('setting/extension');
 
 			$data['downloads'] = array();
-			
+						
 			if ($response_info['downloads']) {
 				foreach ($response_info['downloads'] as $result) {
+					$extension_install_info = $this->model_setting_extension->getExtensionInstallByExtensionDownloadId($result['extension_download_id']);
+					
+					if ($extension_install_info) {
+						$extension_install_id = $extension_install_info['extension_install_id'];
+					} else {
+						$extension_install_id = 0;
+					}
+					
 					$compatibility = explode(', ', $result['compatibility']);
 					
 					if (in_array(VERSION, $compatibility)) {
 						$data['downloads'][] = array(
 							'extension_download_id' => $result['extension_download_id'],
+							'extension_install_id'  => $extension_install_id,
 							'name'                  => $result['name'],
 							'date_added'            => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-							'installed'             => $this->model_setting_extension->getTotalExtensionInstallsByExtensionDownloadId($result['extension_download_id']),
 							'status'                => $result['status']
 						);
 					}

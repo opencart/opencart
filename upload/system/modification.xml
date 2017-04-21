@@ -15,4 +15,17 @@
       </add>
     </operation>
   </file>
+  
+  
+    <file path="system/template/}*.php">
+	<operation>
+      <search regex="true">
+        <![CDATA[~(require|include)(_once)?\(([^)]+)~]]>
+      </search>
+      <add position="replace">
+        <![CDATA[$1$2(modification($3)]]>
+      </add>
+    </operation>
+  </file>
+  
 </modification>

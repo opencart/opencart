@@ -28,10 +28,10 @@ class ControllerCommonHeader extends Controller {
 		$data['text_customer'] = $this->language->get('text_customer');
 		$data['text_online'] = $this->language->get('text_online');
 		$data['text_approval'] = $this->language->get('text_approval');
+		$data['text_affiliate'] = $this->language->get('text_affiliate');
 		$data['text_product'] = $this->language->get('text_product');
 		$data['text_stock'] = $this->language->get('text_stock');
 		$data['text_review'] = $this->language->get('text_review');
-		$data['text_affiliate'] = $this->language->get('text_affiliate');
 		$data['text_store'] = $this->language->get('text_store');
 		$data['text_front'] = $this->language->get('text_front');
 		$data['text_help'] = $this->language->get('text_help');
@@ -54,50 +54,53 @@ class ControllerCommonHeader extends Controller {
 			$this->load->model('report/statistics');
 			
 			// Processing Orders
-			$data['processing_total'] = $this->model_report_statistics->getValue('order_processing');
+			$data['processing_total'] = (int)$this->model_report_statistics->getValue('order_processing');
 			$data['processing_status'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . '&filter_order_status=' . implode(',', $this->config->get('config_processing_status')), true);
 
 			// Complete Orders
-			$data['complete_total'] = $this->model_report_statistics->getValue('order_complete');
+			$complete_total = $this->model_report_statistics->getValue('order_complete');
+			
+			
+			$data['complete_total'] = (int)$complete_total;
 			$data['complete_status'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . '&filter_order_status=' . implode(',', $this->config->get('config_complete_status')), true);
 
 			// Customers
 			$this->load->model('extension/report/customer');
 
-			$data['online_total'] = $this->model_extension_report_customer->getTotalCustomersOnline();
+			$data['online_total'] = (int)$this->model_extension_report_customer->getTotalCustomersOnline();
 
-			$data['online'] = $this->url->link('report/customer_online', 'user_token=' . $this->session->data['user_token'], true);
+			$data['online'] = $this->url->link('extension/report/customer_online', 'user_token=' . $this->session->data['user_token'], true);
 			
 			// Returns
 			$return_total = $this->model_report_statistics->getValue('return');
 			 
-			$data['return_total'] = $return_total;
+			$data['return_total'] = (int)$return_total;
 			$data['return'] = $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'], true);
 
- 			$customer_total = $this->model_report_statistics->getValue('customer');
+ 			$customer_total = (int)$this->model_report_statistics->getValue('customer');
  
 			$data['customer_total'] = $customer_total;
 			$data['customer'] = $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . '&filter_approved=0', true);
 
-			// Products
-			$product_total = $this->model_report_statistics->getValue('product');
-			 
-			$data['product_total'] = $product_total;
-			$data['product'] = $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . '&filter_quantity=0', true);
-
-			// Reviews
-			$review_total = $this->model_report_statistics->getValue('review');
-			
-			$data['review_total'] = $review_total;
-			$data['review'] = $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . '&filter_status=0', true);
-
 			// Affliate
-			$affiliate_total = $this->model_report_statistics->getValue('affiliate');
+			$affiliate_total = (int)$this->model_report_statistics->getValue('affiliate');
 			
 			$data['affiliate_total'] = $affiliate_total;
 			$data['affiliate'] = $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . '&filter_affiliate=1', true);
 
-			$data['alerts'] = $customer_total + $product_total + $review_total + $affiliate_total + $return_total;
+			// Products
+			$product_total = (int)$this->model_report_statistics->getValue('product');
+			 
+			$data['product_total'] = (int)$product_total;
+			$data['product'] = $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . '&filter_quantity=0', true);
+
+			// Reviews
+			$review_total = (int)$this->model_report_statistics->getValue('review');
+			
+			$data['review_total'] = $review_total;
+			$data['review'] = $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . '&filter_status=0', true);
+
+			$data['alerts'] =(int) $customer_total + (int)$product_total + (int)$review_total + (int)$affiliate_total + (int)$return_total;
 			
 			// Online Stores
 			$data['stores'] = array();

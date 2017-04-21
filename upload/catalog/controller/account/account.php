@@ -89,12 +89,16 @@ class ControllerAccountAccount extends Controller {
 		$data['newsletter'] = $this->url->link('account/newsletter', '', true);
 		$data['recurring'] = $this->url->link('account/recurring', '', true);
 		
-		$data['affiliate'] = $this->url->link('account/affiliate', '', true);
-		
 		$this->load->model('account/customer');
-
+		
 		$affiliate_info = $this->model_account_customer->getAffiliate($this->customer->getId());
-			
+		
+		if (!$affiliate_info) {	
+			$data['affiliate'] = $this->url->link('account/affiliate/add', '', true);
+		} else {
+			$data['affiliate'] = $this->url->link('account/affiliate/edit', '', true);
+		}
+		
 		if ($affiliate_info) {		
 			$data['tracking'] = $this->url->link('account/tracking', '', true);
 		} else {

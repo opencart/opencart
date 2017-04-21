@@ -122,7 +122,7 @@ class ControllerEventActivity extends Controller {
 
 			$activity_data = array(
 				'customer_id' => $output,
-				'name'        => $args[0]['firstname'] . ' ' . $args[0]['lastname']
+				'name'        => $args[1]['firstname'] . ' ' . $args[1]['lastname']
 			);
 
 			$this->model_account_activity->addActivity('affiliate_add', $activity_data);

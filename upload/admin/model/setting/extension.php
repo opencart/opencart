@@ -48,15 +48,15 @@ class ModelSettingExtension extends Model {
 	
 		return $query->rows;
 	}
-	
+
+	public function getExtensionInstallByExtensionDownloadId($extension_download_id) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install` WHERE `extension_download_id` = '" . (int)$extension_download_id . "'");
+
+		return $query->row;
+	}
+		
 	public function getTotalExtensionInstalls() {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "extension_install`");
-
-		return $query->row['total'];
-	}
-
-	public function getTotalExtensionInstallsByExtensionDownloadId($extension_download_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "extension_install` WHERE `extension_download_id` = '" . (int)$extension_download_id . "'");
 
 		return $query->row['total'];
 	}

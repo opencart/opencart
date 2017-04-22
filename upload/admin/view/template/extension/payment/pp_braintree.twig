@@ -83,20 +83,26 @@
                 </div>
               {% endif %}
 
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-environment">{{ entry_environment }}</label>
-                <div class="col-sm-10">
-                  <select name="pp_braintree_environment" id="input-environment" class="form-control">
-                    {% if pp_braintree_environment == 'production' %}
-                      <option value="sandbox">{{ text_sandbox }}</option>
-                      <option value="production" selected="selected">{{ text_production }}</option>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-environment">{{ entry_environment }}</label>
+                  <div class="col-sm-10">
+                    {% if pp_braintree_access_token is not empty and pp_braintree_environment is not empty %}
+                      <label class="control-label">{{ pp_braintree_environment }}</label>
+                      <input type="hidden" name="pp_braintree_environment" value="{{ pp_braintree_environment }}" />
                     {% else %}
-                      <option value="sandbox" selected="selected">{{ text_sandbox }}</option>
-                      <option value="production">{{ text_production }}</option>
+                      <select name="pp_braintree_environment" id="input-environment" class="form-control">
+                        {% if pp_braintree_environment == 'production' %}
+                          <option value="sandbox">{{ text_sandbox }}</option>
+                          <option value="production" selected="selected">{{ text_production }}</option>
+                        {% else %}
+                          <option value="sandbox" selected="selected">{{ text_sandbox }}</option>
+                          <option value="production">{{ text_production }}</option>
+                        {% endif %}
+                      </select>
                     {% endif %}
-                  </select>
+                  </div>
                 </div>
-              </div>
+
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-settlement-immediate"><span data-toggle="tooltip" title="{{ help_settlement_type }}">{{ entry_settlement_type }}</span></label>
                 <div class="col-sm-10">
@@ -419,6 +425,20 @@
                 </div>
               </div>
               <div class="form-group three-ds-status">
+                <label class="col-sm-2 control-label" for="input-3ds-lookup-not-enrolled">{{ entry_3ds_lookup_not_enrolled }}</label>
+                <div class="col-sm-10">
+                  <select name="pp_braintree_3ds_lookup_not_enrolled" id="input-3ds-lookup-not-enrolled" class="form-control">
+                    {% if pp_braintree_3ds_lookup_not_enrolled == 1 %}
+                      <option value="1" selected="selected">{{ text_accept }}</option>
+                      <option value="0">{{ text_decline }}</option>
+                    {% else %}
+                      <option value="1">{{ text_accept }}</option>
+                      <option value="0" selected="selected">{{ text_decline }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group three-ds-status">
                 <label class="col-sm-2 control-label" for="input-3ds-not-participating">{{ entry_3ds_not_participating }}</label>
                 <div class="col-sm-10">
                   <select name="pp_braintree_3ds_not_participating" id="input-3ds-not-participating" class="form-control">
@@ -582,7 +602,7 @@
                 </div>
               </div>
 
-              {% if braintree_config.paypal_enabled == 1 %}
+              {% if braintree_config.paypal_enabled == 1 and braintree_config.paypal_billing_agreement_enabled == 1 %}
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-paypal-vault"><span data-toggle="tooltip" title="{{ help_paypal_vault }}">{{ entry_paypal_vault }}</span></label>
                   <div class="col-sm-10">

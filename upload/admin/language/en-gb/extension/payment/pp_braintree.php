@@ -136,6 +136,7 @@ $_['entry_3ds_status']				 = 'Enable 3-D Secure';
 $_['entry_3ds_unsupported_card'] 		= 'Unsupported Card<br />Default: Accept';
 $_['entry_3ds_lookup_error'] 			= 'Lookup Error<br />Default: Accept';
 $_['entry_3ds_lookup_enrolled'] 		= 'Lookup Enrolled<br />Default: Accept';
+$_['entry_3ds_lookup_not_enrolled'] 	= 'Lookup Not Enrolled<br />Default: Accept';
 $_['entry_3ds_not_participating'] 		= 'Auth Success, Issuer Not Participating<br />Default: Accept';
 $_['entry_3ds_unavailable'] 			= 'Auth Unavailable<br />Default: Accept';
 $_['entry_3ds_signature_failed'] 		= 'Auth Signature Verification Failed<br />Default: Decline';

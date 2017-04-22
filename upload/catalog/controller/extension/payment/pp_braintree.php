@@ -323,7 +323,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		}
 
 		// If the $payment_method_token is not empty it indicates the vaulted payment used CVV or was set to none
-		if ($success && (($this->config->get('pp_braintree_3ds_status') && $payment_method_token == '') || ($this->config->get('pp_braintree_vault_cvv_3ds') == '3ds' && $payment_method_token != ''))) {
+		if ($success && (($this->config->get('pp_braintree_3ds_status') == 1 && $payment_method_token == '') || ($this->config->get('pp_braintree_vault_cvv_3ds') == '3ds' && $payment_method_token != ''))) {
 			$nonce_info = $this->model_extension_payment_pp_braintree->getPaymentMethodNonce($this->gateway, $payment_method_nonce);
 
 			$this->model_extension_payment_pp_braintree->log($nonce_info);
@@ -355,6 +355,9 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 							break;
 						case 'lookup_enrolled':
 							$success = $this->config->get('pp_braintree_3ds_lookup_enrolled');
+							break;
+						case 'lookup_not_enrolled':
+							$success = $this->config->get('pp_braintree_3ds_lookup_not_enrolled');
 							break;
 						case 'authenticate_successful_issuer_not_participating':
 							$success = $this->config->get('pp_braintree_3ds_not_participating');
@@ -388,13 +391,10 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 				}
 			}
 		}
+		$this->model_extension_payment_pp_braintree->log("Success:" . (int)$success);
 
 		//Create transaction
 		if ($success) {
-			$this->model_extension_payment_pp_braintree->log('Transaction info before send:');
-			$this->model_extension_payment_pp_braintree->log($create_sale);
-			$this->model_extension_payment_pp_braintree->log($this->request->post);
-			$this->model_extension_payment_pp_braintree->log($this->request->get);
 			$transaction = $this->model_extension_payment_pp_braintree->addTransaction($this->gateway, $create_sale);
 
 			$order_status_id = 0;

@@ -124,6 +124,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$data['entry_3ds_unsupported_card'] = $this->language->get('entry_3ds_unsupported_card');
 		$data['entry_3ds_lookup_error'] = $this->language->get('entry_3ds_lookup_error');
 		$data['entry_3ds_lookup_enrolled'] = $this->language->get('entry_3ds_lookup_enrolled');
+		$data['entry_3ds_lookup_not_enrolled'] = $this->language->get('entry_3ds_lookup_not_enrolled');
 		$data['entry_3ds_not_participating'] = $this->language->get('entry_3ds_not_participating');
 		$data['entry_3ds_unavailable'] = $this->language->get('entry_3ds_unavailable');
 		$data['entry_3ds_signature_failed'] = $this->language->get('entry_3ds_signature_failed');
@@ -404,6 +405,12 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			$data['pp_braintree_3ds_lookup_enrolled'] = $this->config->get('pp_braintree_3ds_lookup_enrolled');
 		}
 
+		if (isset($this->request->post['pp_braintree_3ds_lookup_not_enrolled'])) {
+			$data['pp_braintree_3ds_lookup_not_enrolled'] = $this->request->post['pp_braintree_3ds_lookup_not_enrolled'];
+		} else {
+			$data['pp_braintree_3ds_lookup_not_enrolled'] = $this->config->get('pp_braintree_3ds_lookup_not_enrolled');
+		}
+
 		if (isset($this->request->post['pp_braintree_3ds_not_participating'])) {
 			$data['pp_braintree_3ds_not_participating'] = $this->request->post['pp_braintree_3ds_not_participating'];
 		} else {
@@ -532,6 +539,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 				$braintree_settings['pp_braintree_merchant_id'] = $config_response['merchant_id'];
 				$braintree_settings['pp_braintree_access_token'] = $config_response['access_token'];
 				$braintree_settings['pp_braintree_refresh_token'] = $config_response['refresh_token'];
+				$braintree_settings['pp_braintree_environment'] = $config_response['environment'];
 				$braintree_settings['pp_braintree_public_key'] = '';
 				$braintree_settings['pp_braintree_private_key'] = '';
 
@@ -540,6 +548,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 				$data['pp_braintree_merchant_id'] = $config_response['merchant_id'];
 				$data['pp_braintree_access_token'] = $config_response['access_token'];
 				$data['pp_braintree_refresh_token'] = $config_response['refresh_token'];
+				$data['pp_braintree_environment'] = $config_response['environment'];
 				$data['pp_braintree_public_key'] = '';
 				$data['pp_braintree_private_key'] = '';
 
@@ -606,6 +615,10 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			} else {
 				$merchant_config = json_decode(base64_decode($verify_credentials), true);
 
+				echo "<pre>";
+				print_r($merchant_config);
+				echo "</pre>";
+
 				if (isset($merchant_config['threeDSecureEnabled']) && $merchant_config['threeDSecureEnabled'] == 1) {
 					$data['braintree_config']['three_d_secure_enabled'] = 1;
 				}
@@ -636,6 +649,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$defaults['pp_braintree_3ds_unsupported_card'] = 1;
 		$defaults['pp_braintree_3ds_lookup_error'] = 1;
 		$defaults['pp_braintree_3ds_lookup_enrolled'] = 1;
+		$defaults['pp_braintree_3ds_lookup_not_enrolled'] = 1;
 		$defaults['pp_braintree_3ds_not_participating'] = 1;
 		$defaults['pp_braintree_3ds_unavailable'] = 1;
 		$defaults['pp_braintree_3ds_signature_failed'] = 0;
@@ -1274,9 +1288,9 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 				}
 
 				// verify the environment matches with the token the system is using
-//				if (isset($merchant_config['environment']) && ($this->request->post['pp_braintree_environment'] != $merchant_config['environment'])) {
-//					$this->error['warning'] = sprintf($this->language->get('error_environment'), $this->request->post['pp_braintree_environment'], $merchant_config['environment']);
-//				}
+				if (isset($merchant_config['environment']) && ($this->request->post['pp_braintree_environment'] != $merchant_config['environment'])) {
+					$this->error['warning'] = sprintf($this->language->get('error_environment'), $this->request->post['pp_braintree_environment'], $merchant_config['environment']);
+				}
 			}
 		}
 

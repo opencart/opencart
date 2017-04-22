@@ -655,17 +655,10 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-paypal-billing-agreement"><span data-toggle="tooltip" title="{{ help_paypal_billing_agreement }}">{{ entry_paypal_billing_agreement }}</span></label>
-                  <div class="col-sm-10">
-                    {% if braintree_config.paypal_billing_agreement_enabled == 1 %}
-                      <input type="text" name="pp_braintree_billing_agreement" value="{{ pp_braintree_billing_agreement }}" placeholder="{{ entry_paypal_billing_agreement }}" id="input-paypal-billing-agreement" class="form-control" />
-                    {% else %}
-                      <div class="alert alert-info">{{ error_braintree_account_billing }}</div>
-                      <input type="hidden" name="pp_braintree_billing_agreement" value="0" />
-                    {% endif %}
-                  </div>
-                </div>
+
+                <!-- required at a later date but must be empty -->
+                <input type="hidden" name="pp_braintree_billing_agreement" value="" />
+
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-paypal-button-colour">{{ entry_paypal_button_colour }}</label>
                   <div class="col-sm-10">

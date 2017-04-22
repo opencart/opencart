@@ -627,7 +627,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 					$data['braintree_config']['paypal_enabled'] = 1;
 				}
 
-				if (isset($merchant_config['paypal']['billingAgreementEnabled']) && $merchant_config['paypal']['billingAgreementEnabled'] == 1) {
+				if (isset($merchant_config['paypal']['billingAgreementsEnabled']) && $merchant_config['paypal']['billingAgreementsEnabled'] == 1) {
 					$data['braintree_config']['paypal_billing_agreement_enabled'] = 1;
 				}
 			}

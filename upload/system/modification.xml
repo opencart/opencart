@@ -5,7 +5,7 @@
   <version>1.0</version>
   <author>OpenCart Ltd</author>
   <link>http://www.opencart.com</link>
-  <file path="system/{engine,library}/{action,loader,config,language,template/}*.php">
+  <file path="system/{engine,library}/{action,loader,config,language}*.php|system/library/template/php.php">
 	<operation>
       <search regex="true">
         <![CDATA[~(require|include)(_once)?\(([^)]+)~]]>
@@ -15,17 +15,23 @@
       </add>
     </operation>
   </file>
-  
-  
-    <file path="system/template/}*.php">
+  <file path="system/library/template/twig.php">
 	<operation>
-      <search regex="true">
-        <![CDATA[~(require|include)(_once)?\(([^)]+)~]]>
+      <search>
+        <![CDATA[$loader = new \Twig_Loader_Filesystem(DIR_TEMPLATE);]]>
       </search>
       <add position="replace">
-        <![CDATA[$1$2(modification($3)]]>
+        <![CDATA[		
+		$loader = new \Twig_Loader_Filesystem();
+		
+		if (defined('DIR_CATALOG') && is_dir(DIR_MODIFICATION . 'admin/view/')) {	
+			$loader->addPath(DIR_MODIFICATION . 'admin/view/');
+		} elseif (is_dir(DIR_MODIFICATION . 'catalog/view/theme/')) {
+			$loader->addPath(DIR_MODIFICATION . 'catalog/view/theme/');
+		}
+		
+		$loader->addPath(DIR_TEMPLATE);]]>
       </add>
     </operation>
-  </file>
-  
+  </file> 
 </modification>

@@ -2,10 +2,6 @@
 class ControllerEventStatistics extends Controller {
 	// model/account/customer/addCustomer/after
 	public function addCustomer(&$route, &$args, &$output) {
-		$this->load->model('account/customer_group');
-
-		$customer_group_info = $this->model_account_customer_group->getCustomerGroup($this->config->get('config_customer_group_id'));
-				
 		if ($customer_group_info && !$customer_group_info['approval']) {
 			$this->load->model('setting/statistics');
 	

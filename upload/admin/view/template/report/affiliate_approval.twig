@@ -36,6 +36,8 @@
                 <label class="control-label" for="input-name">{{ entry_name }}</label>
                 <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
               </div>
+            </div>
+            <div class="col-sm-3">
               <div class="form-group">
                 <label class="control-label" for="input-email">{{ entry_email }}</label>
                 <input type="text" name="filter_email" value="{{ filter_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
@@ -55,39 +57,8 @@
                   {% endfor %}
                 </select>
               </div>
-              <div class="form-group">
-                <label class="control-label" for="input-status">{{ entry_status }}</label>
-                <select name="filter_status" id="input-status" class="form-control">
-                  <option value=""></option>
-                  {% if filter_status == '1' %}
-                  <option value="1" selected="selected">{{ text_enabled }}</option>
-                  {% else %}
-                  <option value="1">{{ text_enabled }}</option>
-                  {% endif %}
-                  {% if filter_status == '0' %}
-                  <option value="0" selected="selected">{{ text_disabled }}</option>
-                  {% else %}
-                  <option value="0">{{ text_disabled }}</option>
-                  {% endif %}
-                </select>
-              </div>
-            </div>
-            <div class="col-sm-3">
-              <div class="form-group">
-                <label class="control-label" for="input-ip">{{ entry_ip }}</label>
-                <input type="text" name="filter_ip" value="{{ filter_ip }}" placeholder="{{ entry_ip }}" id="input-ip" class="form-control" />
-              </div>
-            </div>
-            <div class="col-sm-3">
-              <div class="form-group">
-                <label class="control-label" for="input-date-added">{{ entry_date_added }}</label>
-                <div class="input-group date">
-                  <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
-                  <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span></div>
-              </div>
               <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+              
             </div>
           </div>
         </div>
@@ -112,16 +83,6 @@
                     {% else %}
                     <a href="{{ sort_customer_group }}">{{ column_customer_group }}</a>
                     {% endif %}</td>
-                  <td class="text-left">{% if sort == 'c.status' %}
-                    <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
-                    {% else %}
-                    <a href="{{ sort_status }}">{{ column_status }}</a>
-                    {% endif %}</td>
-                  <td class="text-left">{% if sort == 'c.ip' %}
-                    <a href="{{ sort_ip }}" class="{{ order|lower }}">{{ column_ip }}</a>
-                    {% else %}
-                    <a href="{{ sort_ip }}">{{ column_ip }}</a>
-                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'c.date_added' %}
                     <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
                     {% else %}
@@ -131,40 +92,33 @@
                 </tr>
               </thead>
               <tbody>
-                {% if customers %}
-                {% for customer in customers %}
+                {% if affiliates %}
+                {% for affiliate in affiliates %}
                 <tr>
-                  <td class="text-center">{% if customer.customer_id in selected %}
-                    <input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" checked="checked" />
+                  <td class="text-center">{% if affiliate.customer_id in selected %}
+                    <input type="checkbox" name="selected[]" value="{{ affiliate.customer_id }}" checked="checked" />
                     {% else %}
-                    <input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" />
+                    <input type="checkbox" name="selected[]" value="{{ affiliate.customer_id }}" />
                     {% endif %}</td>
-                  <td class="text-left">{{ customer.name }}</td>
-                  <td class="text-left">{{ customer.email }}</td>
-                  <td class="text-left">{{ customer.customer_group }}</td>
-                  <td class="text-left">{{ customer.status }}</td>
-                  <td class="text-left">{{ customer.ip }}</td>
-                  <td class="text-left">{{ customer.date_added }}</td>
-                  <td class="text-right"><div class="btn-group" data-toggle="tooltip" title="{{ button_login }}">
-                      <button type="button" data-toggle="dropdown" class="btn btn-info dropdown-toggle"><i class="fa fa-lock"></i></button>
-                      <ul class="dropdown-menu pull-right">
-                        <li><a href="index.php?route=customer/customer/login&user_token={{ user_token }}&customer_id={{ customer.customer_id }}&store_id=0" target="_blank">{{ text_default }}</a></li>
-                        {% for store in stores %}
-                        <li><a href="index.php?route=customer/customer/login&user_token={{ user_token }}&customer_id={{ customer.customer_id }}&store_id={{ store.store_id }}" target="_blank">{{ store.name }}</a></li>
-                        {% endfor %}
-                      </ul>
-                    </div>
-                    {% if customer.unlock %}
-                    <a href="{{ customer.unlock }}" data-toggle="tooltip" title="{{ button_unlock }}" class="btn btn-warning"><i class="fa fa-unlock"></i></a>
+                  <td class="text-left">{{ affiliate.name }}</td>
+                  <td class="text-left">{{ affiliate.email }}</td>
+                  <td class="text-left">{{ affiliate.customer_group }}</td>
+                  <td class="text-left">{{ affiliate.date_added }}</td>
+                  <td class="text-right">
+                  
+                    {% if affiliate.approve %}
+                    <a href="{{ customer.approve }}" data-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fa fa-thumbs-o-up"></i></a>
                     {% else %}
-                    <button type="button" class="btn btn-warning" disabled><i class="fa fa-unlock"></i></button>
+                    
+                    <button type="button" class="btn btn-success" disabled><i class="fa fa-thumbs-o-up"></i></button>
                     {% endif %}
+                    
                     <a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
                 {% endfor %}
                 {% else %}
                 <tr>
-                  <td class="text-center" colspan="8">{{ text_no_results }}</td>
+                  <td class="text-center" colspan="6">{{ text_no_results }}</td>
                 </tr>
                 {% endif %}
               </tbody>
@@ -199,18 +153,6 @@ $('#button-filter').on('click', function() {
 	if (filter_customer_group_id !== '') {
 		url += '&filter_customer_group_id=' + encodeURIComponent(filter_customer_group_id);
 	}	
-	
-	var filter_status = $('select[name=\'filter_status\']').val();
-	
-	if (filter_status !== '') {
-		url += '&filter_status=' + encodeURIComponent(filter_status); 
-	}	
-	
-	var filter_ip = $('input[name=\'filter_ip\']').val();
-	
-	if (filter_ip) {
-		url += '&filter_ip=' + encodeURIComponent(filter_ip);
-	}
 		
 	var filter_date_added = $('input[name=\'filter_date_added\']').val();
 	

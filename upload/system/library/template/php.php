@@ -13,7 +13,7 @@ final class PHP {
 	}
 	
 	public function render($template) {
-		$file = $this->directory . $template . '.tpl';
+		$file = DIR_TEMPLATE . $template . '.tpl';
 
 		if (is_file($file)) {
 			extract($this->data);

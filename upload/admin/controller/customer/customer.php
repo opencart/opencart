@@ -42,10 +42,6 @@ class ControllerCustomerCustomer extends Controller {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
 			}
 
-			if (isset($this->request->get['filter_approved'])) {
-				$url .= '&filter_approved=' . $this->request->get['filter_approved'];
-			}
-
 			if (isset($this->request->get['filter_ip'])) {
 				$url .= '&filter_ip=' . $this->request->get['filter_ip'];
 			}
@@ -100,10 +96,6 @@ class ControllerCustomerCustomer extends Controller {
 
 			if (isset($this->request->get['filter_status'])) {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
-			}
-
-			if (isset($this->request->get['filter_approved'])) {
-				$url .= '&filter_approved=' . $this->request->get['filter_approved'];
 			}
 
 			if (isset($this->request->get['filter_ip'])) {
@@ -164,78 +156,6 @@ class ControllerCustomerCustomer extends Controller {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
 			}
 
-			if (isset($this->request->get['filter_approved'])) {
-				$url .= '&filter_approved=' . $this->request->get['filter_approved'];
-			}
-
-			if (isset($this->request->get['filter_ip'])) {
-				$url .= '&filter_ip=' . $this->request->get['filter_ip'];
-			}
-
-			if (isset($this->request->get['filter_date_added'])) {
-				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . $url, true));
-		}
-
-		$this->getList();
-	}
-
-	public function approve() {
-		$this->load->language('customer/customer');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('customer/customer');
-
-		$customers = array();
-
-		if (isset($this->request->post['selected'])) {
-			$customers = $this->request->post['selected'];
-		} elseif (isset($this->request->get['customer_id'])) {
-			$customers[] = $this->request->get['customer_id'];
-		}
-
-		if ($customers && $this->validateApprove()) {
-			$this->model_customer_customer->approve($this->request->get['customer_id']);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['filter_name'])) {
-				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_email'])) {
-				$url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_customer_group_id'])) {
-				$url .= '&filter_customer_group_id=' . $this->request->get['filter_customer_group_id'];
-			}
-
-			if (isset($this->request->get['filter_status'])) {
-				$url .= '&filter_status=' . $this->request->get['filter_status'];
-			}
-
-			if (isset($this->request->get['filter_approved'])) {
-				$url .= '&filter_approved=' . $this->request->get['filter_approved'];
-			}
-
 			if (isset($this->request->get['filter_ip'])) {
 				$url .= '&filter_ip=' . $this->request->get['filter_ip'];
 			}
@@ -292,10 +212,6 @@ class ControllerCustomerCustomer extends Controller {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
 			}
 
-			if (isset($this->request->get['filter_approved'])) {
-				$url .= '&filter_approved=' . $this->request->get['filter_approved'];
-			}
-
 			if (isset($this->request->get['filter_ip'])) {
 				$url .= '&filter_ip=' . $this->request->get['filter_ip'];
 			}
@@ -347,12 +263,6 @@ class ControllerCustomerCustomer extends Controller {
 			$filter_status = '';
 		}
 
-		if (isset($this->request->get['filter_approved'])) {
-			$filter_approved = $this->request->get['filter_approved'];
-		} else {
-			$filter_approved = '';
-		}
-
 		if (isset($this->request->get['filter_ip'])) {
 			$filter_ip = $this->request->get['filter_ip'];
 		} else {
@@ -401,10 +311,6 @@ class ControllerCustomerCustomer extends Controller {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
 
-		if (isset($this->request->get['filter_approved'])) {
-			$url .= '&filter_approved=' . $this->request->get['filter_approved'];
-		}
-
 		if (isset($this->request->get['filter_ip'])) {
 			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
 		}
@@ -447,7 +353,6 @@ class ControllerCustomerCustomer extends Controller {
 			'filter_email'             => $filter_email,
 			'filter_customer_group_id' => $filter_customer_group_id,
 			'filter_status'            => $filter_status,
-			'filter_approved'          => $filter_approved,
 			'filter_date_added'        => $filter_date_added,
 			'filter_ip'                => $filter_ip,
 			'sort'                     => $sort,
@@ -461,12 +366,6 @@ class ControllerCustomerCustomer extends Controller {
 		$results = $this->model_customer_customer->getCustomers($filter_data);
 
 		foreach ($results as $result) {
-			if (!$result['approved']) {
-				$approve = $this->url->link('customer/customer/approve', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . $url, true);
-			} else {
-				$approve = '';
-			}
-
 			$login_info = $this->model_customer_customer->getTotalLoginAttempts($result['email']);
 
 			if ($login_info && $login_info['total'] >= $this->config->get('config_login_attempts')) {
@@ -483,7 +382,6 @@ class ControllerCustomerCustomer extends Controller {
 				'status'         => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'ip'             => $result['ip'],
 				'date_added'     => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'approve'        => $approve,
 				'unlock'         => $unlock,
 				'edit'           => $this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . $url, true)
 			);
@@ -504,7 +402,6 @@ class ControllerCustomerCustomer extends Controller {
 		$data['column_email'] = $this->language->get('column_email');
 		$data['column_customer_group'] = $this->language->get('column_customer_group');
 		$data['column_status'] = $this->language->get('column_status');
-		$data['column_approved'] = $this->language->get('column_approved');
 		$data['column_ip'] = $this->language->get('column_ip');
 		$data['column_date_added'] = $this->language->get('column_date_added');
 		$data['column_action'] = $this->language->get('column_action');
@@ -513,11 +410,9 @@ class ControllerCustomerCustomer extends Controller {
 		$data['entry_email'] = $this->language->get('entry_email');
 		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_approved'] = $this->language->get('entry_approved');
 		$data['entry_ip'] = $this->language->get('entry_ip');
 		$data['entry_date_added'] = $this->language->get('entry_date_added');
 
-		$data['button_approve'] = $this->language->get('button_approve');
 		$data['button_add'] = $this->language->get('button_add');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
@@ -565,10 +460,6 @@ class ControllerCustomerCustomer extends Controller {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
 
-		if (isset($this->request->get['filter_approved'])) {
-			$url .= '&filter_approved=' . $this->request->get['filter_approved'];
-		}
-
 		if (isset($this->request->get['filter_ip'])) {
 			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
 		}
@@ -612,10 +503,6 @@ class ControllerCustomerCustomer extends Controller {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
 
-		if (isset($this->request->get['filter_approved'])) {
-			$url .= '&filter_approved=' . $this->request->get['filter_approved'];
-		}
-
 		if (isset($this->request->get['filter_ip'])) {
 			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
 		}
@@ -646,7 +533,6 @@ class ControllerCustomerCustomer extends Controller {
 		$data['filter_email'] = $filter_email;
 		$data['filter_customer_group_id'] = $filter_customer_group_id;
 		$data['filter_status'] = $filter_status;
-		$data['filter_approved'] = $filter_approved;
 		$data['filter_ip'] = $filter_ip;
 		$data['filter_date_added'] = $filter_date_added;
 
@@ -704,7 +590,6 @@ class ControllerCustomerCustomer extends Controller {
 		$data['entry_confirm'] = $this->language->get('entry_confirm');
 		$data['entry_newsletter'] = $this->language->get('entry_newsletter');
 		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_approved'] = $this->language->get('entry_approved');
 		$data['entry_safe'] = $this->language->get('entry_safe');
 		$data['entry_company'] = $this->language->get('entry_company');
 		$data['entry_address_1'] = $this->language->get('entry_address_1');
@@ -858,10 +743,6 @@ class ControllerCustomerCustomer extends Controller {
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
-
-		if (isset($this->request->get['filter_approved'])) {
-			$url .= '&filter_approved=' . $this->request->get['filter_approved'];
-		}
 		
 		if (isset($this->request->get['filter_ip'])) {
 			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
@@ -997,14 +878,6 @@ class ControllerCustomerCustomer extends Controller {
 			$data['status'] = $customer_info['status'];
 		} else {
 			$data['status'] = true;
-		}
-
-		if (isset($this->request->post['approved'])) {
-			$data['approved'] = $this->request->post['approved'];
-		} elseif (!empty($customer_info)) {
-			$data['approved'] = $customer_info['approved'];
-		} else {
-			$data['approved'] = true;
 		}
 
 		if (isset($this->request->post['safe'])) {
@@ -1331,14 +1204,6 @@ class ControllerCustomerCustomer extends Controller {
 	}
 
 	protected function validateDelete() {
-		if (!$this->user->hasPermission('modify', 'customer/customer')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		return !$this->error;
-	}
-
-	protected function validateApprove() {
 		if (!$this->user->hasPermission('modify', 'customer/customer')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

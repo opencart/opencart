@@ -2,11 +2,11 @@
 class Template {
 	private $adaptor;
 
-  	public function __construct($adaptor, $directory) {
+  	public function __construct($adaptor) {
 	    $class = 'Template\\' . $adaptor;
 
 		if (class_exists($class)) {
-			$this->adaptor = new $class($directory);
+			$this->adaptor = new $class();
 		} else {
 			throw new \Exception('Error: Could not load template adaptor ' . $adaptor . '!');
 		}

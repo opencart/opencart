@@ -76,7 +76,7 @@ final class Loader {
 		if ($result && !$result instanceof Exception) {
 			$output = $result;
 		} else {
-			$template = new Template($this->registry->get('config')->get('template_engine'), DIR_TEMPLATE);
+			$template = new Template($this->registry->get('config')->get('template_engine'));
 				
 			foreach ($data as $key => $value) {
 				$template->set($key, $value);

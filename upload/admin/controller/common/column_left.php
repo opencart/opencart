@@ -625,15 +625,7 @@ class ControllerCommonColumnLeft extends Controller {
 			}
 			
 			$report = array();
-			
-			if ($this->user->hasPermission('access', 'report/statistics')) {
-				$report[] = array(
-					'name'	   => $this->language->get('text_statistics'),
-					'href'     => $this->url->link('report/statistics', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()		
-				);
-			}	
-						
+							
 			if ($this->user->hasPermission('access', 'report/report')) {
 				$report[] = array(
 					'name'	   => $this->language->get('text_reports'),
@@ -641,6 +633,38 @@ class ControllerCommonColumnLeft extends Controller {
 					'children' => array()		
 				);
 			}
+					
+			if ($this->user->hasPermission('access', 'report/customer_online')) {
+				$report[] = array(
+					'name'	   => $this->language->get('text_customer_online'),
+					'href'     => $this->url->link('report/customer_online', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}
+				
+			if ($this->user->hasPermission('access', 'report/customer_approval')) {
+				$report[] = array(
+					'name'	   => $this->language->get('text_customer_approval'),
+					'href'     => $this->url->link('report/customer_approval', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}
+			
+			if ($this->user->hasPermission('access', 'report/affiliate_approval')) {
+				$report[] = array(
+					'name'	   => $this->language->get('text_affiliate_approval'),
+					'href'     => $this->url->link('report/affiliate_approval', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}
+											
+			if ($this->user->hasPermission('access', 'report/statistics')) {
+				$report[] = array(
+					'name'	   => $this->language->get('text_statistics'),
+					'href'     => $this->url->link('report/statistics', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}	
 			
 			$data['menus'][] = array(
 				'id'       => 'menu-report',

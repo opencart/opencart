@@ -34,7 +34,9 @@
             <li><a href="#tab-ip" data-toggle="tab">{{ tab_ip }}</a></li>
             {% endif %}
           </ul>
+          
           <div class="tab-content">
+         
           <div class="tab-pane active" id="tab-general">
           <div class="row">
           <div class="col-sm-2">
@@ -58,6 +60,9 @@
               <div class="col-sm-10">
                 <select name="customer_group_id" id="input-customer-group" class="form-control">
                   
+                  
+                  
+                  
                             
                             
                             
@@ -73,7 +78,13 @@
                             
                             
                             
+                  
+                  
+                  
                   <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                  
+                  
+                  
                   
                             
                             
@@ -89,7 +100,13 @@
                             
                             
                             
+                  
+                  
+                  
                   <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+                  
+                  
+                  
                   
                             
                             
@@ -106,6 +123,9 @@
                           
                           
                           
+                
+                
+                
                 </select>
               </div>
             </div>
@@ -150,6 +170,9 @@
                 <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control">
                   <option value="">{{ text_select }}</option>
                   
+                  
+                  
+                  
                             
                             
                             
@@ -165,7 +188,13 @@
                             
                             
                             
+                  
+                  
+                  
                   <option value="{{ custom_field_value.custom_field_value_id }}" selected="selected">{{ custom_field_value.name }}</option>
+                  
+                  
+                  
                   
                             
                             
@@ -181,7 +210,13 @@
                             
                             
                             
+                  
+                  
+                  
                   <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
+                  
+                  
+                  
                   
                             
                             
@@ -198,6 +233,9 @@
                           
                           
                           
+                
+                
+                
                 </select>
                 {% if error_custom_field[custom_field.custom_field_id] %}
                 <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
@@ -346,6 +384,9 @@
             <div class="col-sm-10">
               <select name="newsletter" id="input-newsletter" class="form-control">
                 
+                
+                
+                
                             
                             
                             
@@ -360,8 +401,14 @@
                             
                             
                             
+                
+                
+                
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
+                
+                
+                
                 
                             
                             
@@ -377,8 +424,14 @@
                             
                             
                             
+                
+                
+                
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
+                
+                
+                
                 
                             
                             
@@ -394,6 +447,9 @@
                           
                           
                           
+              
+              
+              
               </select>
             </div>
           </div>
@@ -401,6 +457,9 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="status" id="input-status" class="form-control">
+                
+                
+                
                 
                             
                             
@@ -416,8 +475,14 @@
                             
                             
                             
+                
+                
+                
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
+                
+                
+                
                 
                             
                             
@@ -433,8 +498,14 @@
                             
                             
                             
+                
+                
+                
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
+                
+                
+                
                 
                             
                             
@@ -450,6 +521,9 @@
                           
                           
                           
+              
+              
+              
               </select>
             </div>
           </div>
@@ -457,6 +531,9 @@
             <label class="col-sm-2 control-label" for="input-safe">{{ entry_safe }}</label>
             <div class="col-sm-10">
               <select name="safe" id="input-safe" class="form-control">
+                
+                
+                
                 
                             
                             
@@ -472,8 +549,14 @@
                             
                             
                             
+                
+                
+                
                 <option value="1" selected="selected">{{ text_yes }}</option>
                 <option value="0">{{ text_no }}</option>
+                
+                
+                
                 
                             
                             
@@ -489,8 +572,14 @@
                             
                             
                             
+                
+                
+                
                 <option value="1">{{ text_yes }}</option>
                 <option value="0" selected="selected">{{ text_no }}</option>
+                
+                
+                
                 
                             
                             
@@ -506,6 +595,9 @@
                           
                           
                           
+              
+              
+              
               </select>
             </div>
           </div>
@@ -572,6 +664,9 @@
                 <select name="address[{{ address_row }}][country_id]" id="input-country{{ address_row }}" onchange="country(this, '{{ address_row }}', '{{ address.zone_id }}');" class="form-control">
                   <option value="">{{ text_select }}</option>
                   
+                  
+                  
+                  
                             
                             
                             
@@ -587,7 +682,13 @@
                             
                             
                             
+                  
+                  
+                  
                   <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
+                  
+                  
+                  
                   
                             
                             
@@ -603,7 +704,13 @@
                             
                             
                             
+                  
+                  
+                  
                   <option value="{{ country.country_id }}">{{ country.name }}</option>
+                  
+                  
+                  
                   
                             
                             
@@ -620,6 +727,9 @@
                           
                           
                           
+                
+                
+                
                 </select>
                 {% if error_address[address_row].country %}
                 <div class="text-danger">{{ error_address[address_row].country }}</div>
@@ -632,7 +742,7 @@
                 </select>
                 {% if error_address[address_row].zone %}
                 <div class="text-danger">{{ error_address[address_row].zone }}</div>
-                {% endif %} </div>
+                {% endif %}</div>
             </div>
             {% for custom_field in custom_fields %}
             {% if custom_field.location == 'address' %}
@@ -642,6 +752,9 @@
               <div class="col-sm-10">
                 <select name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" id="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control">
                   <option value="">{{ text_select }}</option>
+                  
+                  
+                  
                   
                             
                             
@@ -658,7 +771,13 @@
                             
                             
                             
+                  
+                  
+                  
                   <option value="{{ custom_field_value.custom_field_value_id }}" selected="selected">{{ custom_field_value.name }}</option>
+                  
+                  
+                  
                   
                             
                             
@@ -674,7 +793,13 @@
                             
                             
                             
+                  
+                  
+                  
                   <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
+                  
+                  
+                  
                   
                             
                             
@@ -691,6 +816,9 @@
                           
                           
                           
+                
+                
+                
                 </select>
                 {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
                 <div class="text-danger">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
@@ -804,7 +932,7 @@
                   <input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" id="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                   <span class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span></div>
+                  </span> </div>
                 {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
                 <div class="text-danger">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
                 {% endif %} </div>
@@ -819,38 +947,17 @@
                   <input type="radio" name="address[{{ address_row }}][default]" value="{{ address_row }}" checked="checked" />
                   {% else %}
                   <input type="radio" name="address[{{ address_row }}][default]" value="{{ address_row }}" />
-                  {% endif %} </label>
+                  {% endif %}</label>
               </div>
             </div>
-          </div>
-          {% set address_row = address_row + 1 %}
-          {% endfor %}
-          </div>
+            {% set address_row = address_row + 1 %}
+            {% endfor %} </div>
           </div>
           </div>
           </div>
           <div class="tab-pane" id="tab-affiliate">
             <fieldset>
               <legend>{{ text_affiliate }}</legend>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-affiliate"><span data-toggle="tooltip" title="{{ help_affiliate }}">{{ entry_affiliate }}</span></label>
-                <div class="col-sm-10">
-                  <label class="radio-inline">{% if affiliate %}
-                    <input type="radio" name="affiliate" value="1" checked="checked" />
-                    {{ text_yes }}
-                    {% else %}
-                    <input type="radio" name="affiliate" value="1" />
-                    {{ text_yes }}
-                    {% endif %}</label>
-                  <label class="radio-inline"> {% if not affiliate %}
-                    <input type="radio" name="affiliate" value="0" checked="checked" />
-                    {{ text_no }}
-                    {% else %}
-                    <input type="radio" name="affiliate" value="0" />
-                    {{ text_no }}
-                    {% endif %}</label>
-                </div>
-              </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-company">{{ entry_company }}</label>
                 <div class="col-sm-10">
@@ -875,101 +982,7 @@
                   <input type="text" name="commission" value="{{ commission }}" placeholder="{{ entry_commission }}" id="input-commission" class="form-control" />
                 </div>
               </div>
-            </fieldset>
-            <fieldset>
-              <legend>{{ text_payment }}</legend>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-tax">{{ entry_tax }}</label>
-                <div class="col-sm-10">
-                  <input type="text" name="tax" value="{{ tax }}" placeholder="{{ entry_tax }}" id="input-tax" class="form-control" />
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_payment }}</label>
-                <div class="col-sm-10">
-                  <div class="radio">
-                    <label>{% if payment == 'cheque' %}
-                      <input type="radio" name="payment" value="cheque" checked="checked" />
-                      {% else %}
-                      <input type="radio" name="payment" value="cheque" />
-                      {% endif %}
-                      {{ text_cheque }}</label>
-                  </div>
-                  <div class="radio">
-                    <label> {% if payment == 'paypal' %}
-                      <input type="radio" name="payment" value="paypal" checked="checked" />
-                      {% else %}
-                      <input type="radio" name="payment" value="paypal" />
-                      {% endif %}
-                      {{ text_paypal }}</label>
-                  </div>
-                  <div class="radio">
-                    <label> {% if payment == 'bank' %}
-                      <input type="radio" name="payment" value="bank" checked="checked" />
-                      {% else %}
-                      <input type="radio" name="payment" value="bank" />
-                      {% endif %}
-                      {{ text_bank }}</label>
-                  </div>
-                </div>
-              </div>
-              <div id="payment-cheque" class="payment">
-                <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-cheque">{{ entry_cheque }}</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="cheque" value="{{ cheque }}" placeholder="{{ entry_cheque }}" id="input-cheque" class="form-control" />
-                    {% if error_cheque %}
-                    <div class="text-danger">{{ error_cheque }}</div>
-                    {% endif %}</div>
-                </div>
-              </div>
-              <div id="payment-paypal" class="payment">
-                <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-paypal">{{ entry_paypal }}</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="paypal" value="{{ paypal }}" placeholder="{{ entry_paypal }}" id="input-paypal" class="form-control" />
-                    {% if error_paypal %}
-                    <div class="text-danger">{{ error_paypal }}</div>
-                    {% endif %}</div>
-                </div>
-              </div>
-              <div id="payment-bank" class="payment">
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-bank-name">{{ entry_bank_name }}</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="bank_name" value="{{ bank_name }}" placeholder="{{ entry_bank_name }}" id="input-bank-name" class="form-control" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-bank-branch-number">{{ entry_bank_branch_number }}</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="bank_branch_number" value="{{ bank_branch_number }}" placeholder="{{ entry_bank_branch_number }}" id="input-bank-branch-number" class="form-control" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-bank-swift-code">{{ entry_bank_swift_code }}</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="bank_swift_code" value="{{ bank_swift_code }}" placeholder="{{ entry_bank_swift_code }}" id="input-bank-swift-code" class="form-control" />
-                  </div>
-                </div>
-                <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-bank-account-name">{{ entry_bank_account_name }}</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="bank_account_name" value="{{ bank_account_name }}" placeholder="{{ entry_bank_account_name }}" id="input-bank-account-name" class="form-control" />
-                    {% if error_bank_account_name %}
-                    <div class="text-danger">{{ error_bank_account_name }}</div>
-                    {% endif %}</div>
-                </div>
-                <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-bank-account-number">{{ entry_bank_account_number }}</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="bank_account_number" value="{{ bank_account_number }}" placeholder="{{ entry_bank_account_number }}" id="input-bank-account-number" class="form-control" />
-                    {% if error_bank_account_number %}
-                    <div class="text-danger">{{ error_bank_account_number }}</div>
-                    {% endif %}</div>
-                </div>
-              </div>
-              {% for custom_field in custom_fields %}
+               {% for custom_field in custom_fields %}
               {% if custom_field.location == 'affiliate' %}
               {% if custom_field.type == 'select' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
@@ -977,6 +990,9 @@
                 <div class="col-sm-10">
                   <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control">
                     <option value="">{{ text_select }}</option>
+                    
+                    
+                    
                     
                       
                             
@@ -993,7 +1009,13 @@
                             
                             
                       
+                    
+                    
+                    
                     <option value="{{ custom_field_value.custom_field_value_id }}" selected="selected">{{ custom_field_value.name }}</option>
+                    
+                    
+                    
                     
                       
                             
@@ -1009,7 +1031,13 @@
                             
                             
                       
+                    
+                    
+                    
                     <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
+                    
+                    
+                    
                     
                       
                             
@@ -1026,6 +1054,9 @@
                           
                           
                     
+                  
+                  
+                  
                   </select>
                   {% if error_custom_field[custom_field.custom_field_id] %}
                   <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
@@ -1147,6 +1178,177 @@
               {% endif %}
               {% endif %}
               {% endfor %}
+             
+            </fieldset>
+            <fieldset>
+              <legend>{{ text_payment }}</legend>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-tax">{{ entry_tax }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="tax" value="{{ tax }}" placeholder="{{ entry_tax }}" id="input-tax" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_payment }}</label>
+                <div class="col-sm-10">
+                  <div class="radio">
+                    <label>{% if payment == 'cheque' %}
+                      <input type="radio" name="payment" value="cheque" checked="checked" />
+                      {% else %}
+                      <input type="radio" name="payment" value="cheque" />
+                      {% endif %}
+                      {{ text_cheque }}</label>
+                  </div>
+                  <div class="radio">
+                    <label> {% if payment == 'paypal' %}
+                      <input type="radio" name="payment" value="paypal" checked="checked" />
+                      {% else %}
+                      <input type="radio" name="payment" value="paypal" />
+                      {% endif %}
+                      {{ text_paypal }}</label>
+                  </div>
+                  <div class="radio">
+                    <label> {% if payment == 'bank' %}
+                      <input type="radio" name="payment" value="bank" checked="checked" />
+                      {% else %}
+                      <input type="radio" name="payment" value="bank" />
+                      {% endif %}
+                      {{ text_bank }}</label>
+                  </div>
+                </div>
+              </div>
+              <div id="payment-cheque" class="payment">
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-cheque">{{ entry_cheque }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="cheque" value="{{ cheque }}" placeholder="{{ entry_cheque }}" id="input-cheque" class="form-control" />
+                    {% if error_cheque %}
+                    <div class="text-danger">{{ error_cheque }}</div>
+                    {% endif %}</div>
+                </div>
+              </div>
+              <div id="payment-paypal" class="payment">
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-paypal">{{ entry_paypal }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="paypal" value="{{ paypal }}" placeholder="{{ entry_paypal }}" id="input-paypal" class="form-control" />
+                    {% if error_paypal %}
+                    <div class="text-danger">{{ error_paypal }}</div>
+                    {% endif %}</div>
+                </div>
+              </div>
+              <div id="payment-bank" class="payment">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-bank-name">{{ entry_bank_name }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="bank_name" value="{{ bank_name }}" placeholder="{{ entry_bank_name }}" id="input-bank-name" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-bank-branch-number">{{ entry_bank_branch_number }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="bank_branch_number" value="{{ bank_branch_number }}" placeholder="{{ entry_bank_branch_number }}" id="input-bank-branch-number" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-bank-swift-code">{{ entry_bank_swift_code }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="bank_swift_code" value="{{ bank_swift_code }}" placeholder="{{ entry_bank_swift_code }}" id="input-bank-swift-code" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-bank-account-name">{{ entry_bank_account_name }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="bank_account_name" value="{{ bank_account_name }}" placeholder="{{ entry_bank_account_name }}" id="input-bank-account-name" class="form-control" />
+                    {% if error_bank_account_name %}
+                    <div class="text-danger">{{ error_bank_account_name }}</div>
+                    {% endif %}</div>
+                </div>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-bank-account-number">{{ entry_bank_account_number }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="bank_account_number" value="{{ bank_account_number }}" placeholder="{{ entry_bank_account_number }}" id="input-bank-account-number" class="form-control" />
+                    {% if error_bank_account_number %}
+                    <div class="text-danger">{{ error_bank_account_number }}</div>
+                    {% endif %}</div>
+                </div>
+
+              </div>
+              
+                            <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-affiliate">{{ entry_status }}</label>
+                  <div class="col-sm-10">
+                    <select name="affiliate" id="input-affiliate" class="form-control">
+                      
+                      
+                
+                
+                            
+                            
+                            
+                            
+                            
+                            
+                            {% if affiliate %}
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                
+                
+                      
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                      
+                      
+                
+                
+                            
+                            
+                            
+                            
+                            
+                            
+                            {% else %}
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                
+                
+                      
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                      
+                      
+                
+                
+                            
+                            
+                            
+                            
+                            
+                            
+                            {% endif %}
+                          
+                          
+                          
+                          
+                          
+                          
+                          
+              
+              
+                    
+                    </select>
+                  </div>
+                </div>  
             </fieldset>
           </div>
           {% if customer_id %}
@@ -1225,7 +1427,6 @@
               <legend>{{ text_ip }}</legend>
               <div id="ip"></div>
             </fieldset>
-          </div>
           </div>
         </form>
       </div>

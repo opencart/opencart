@@ -332,7 +332,15 @@ class ControllerCommonColumnLeft extends Controller {
 					'children' => array()		
 				);
 			}
-			
+				
+			if ($this->user->hasPermission('access', 'customer/customer_approval')) {
+				$customer[] = array(
+					'name'	   => $this->language->get('text_customer_approval'),
+					'href'     => $this->url->link('customer/customer_approval', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}
+						
 			if ($this->user->hasPermission('access', 'customer/custom_field')) {		
 				$customer[] = array(
 					'name'	   => $this->language->get('text_custom_field'),
@@ -634,26 +642,10 @@ class ControllerCommonColumnLeft extends Controller {
 				);
 			}
 					
-			if ($this->user->hasPermission('access', 'report/customer_online')) {
+			if ($this->user->hasPermission('access', 'report/online')) {
 				$report[] = array(
-					'name'	   => $this->language->get('text_customer_online'),
-					'href'     => $this->url->link('report/customer_online', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()		
-				);
-			}
-				
-			if ($this->user->hasPermission('access', 'report/customer_approval')) {
-				$report[] = array(
-					'name'	   => $this->language->get('text_customer_approval'),
-					'href'     => $this->url->link('report/customer_approval', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()		
-				);
-			}
-			
-			if ($this->user->hasPermission('access', 'report/affiliate_approval')) {
-				$report[] = array(
-					'name'	   => $this->language->get('text_affiliate_approval'),
-					'href'     => $this->url->link('report/affiliate_approval', 'user_token=' . $this->session->data['user_token'], true),
+					'name'	   => $this->language->get('text_online'),
+					'href'     => $this->url->link('report/online', 'user_token=' . $this->session->data['user_token'], true),
 					'children' => array()		
 				);
 			}

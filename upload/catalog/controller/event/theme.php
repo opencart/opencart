@@ -32,7 +32,7 @@ class ControllerEventTheme extends Controller {
 			$template = $twig->createTemplate(html_entity_decode($theme_info['code'], ENT_QUOTES, 'UTF-8'));
 			
 			return $template->render($args);
-		} elseif (is_file(DIR_TEMPLATE . $theme . '/template/' . $route . '.twig')) { 
+		} elseif (is_file(DIR_TEMPLATE . $theme . '/template/' . $route . '.twig')) {
 			$this->config->set('template_directory', $theme . '/template/');
 		} elseif (is_file(DIR_TEMPLATE . 'default/template/' . $route . '.twig')) {
 			$this->config->set('template_directory', 'default/template/');

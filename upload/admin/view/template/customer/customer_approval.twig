@@ -2,7 +2,9 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+      <div class="pull-right">
+        <button type="button" data-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fa fa-thumbs-o-up"></i></button>
+        <button type="button" data-toggle="tooltip" title="{{ button_deny }}" class="btn btn-danger"><i class="fa fa-thumbs-o-down"></i></button>
         <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-customer').submit() : false;"><i class="fa fa-trash-o"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
@@ -13,8 +15,7 @@
       </ul>
     </div>
   </div>
-  <div class="container-fluid">
-    {% if error_warning %}
+  <div class="container-fluid"> {% if error_warning %}
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
@@ -48,17 +49,64 @@
                 <label class="control-label" for="input-customer-group">{{ entry_customer_group }}</label>
                 <select name="filter_customer_group_id" id="input-customer-group" class="form-control">
                   <option value=""></option>
+                  
                   {% for customer_group in customer_groups %}
                   {% if customer_group.customer_group_id == filter_customer_group_id %}
+                  
                   <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                  
                   {% else %}
+                  
                   <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+                  
                   {% endif %}
                   {% endfor %}
+                
                 </select>
               </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label" for="input-type">{{ entry_type }}</label>
+                <select name="filter_type" id="input-type" class="form-control">
+                  <option value=""></option>
+                  
+                  {% if filter_type == 'customer' %}
+                  
+                  <option value="customer" selected="selected">{{ text_customer }}</option>
+                  
+                  {% else %}
+                  
+                  <option value="customer">{{ text_customer }}</option>
+                  
+                  {% endif %}              
+                  {% if filter_type == 'affiliate' %}
+                  
+                  <option value="affiliate" selected="selected">{{ text_affiliate }}</option>
+                  
+                  {% else %}
+                  
+                  <option value="affiliate">{{ text_affiliate }}</option>
+                  
+                  {% endif %}
+                
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label" for="input-date-added">{{ entry_date_added }}</label>
+                <div class="input-group date">
+                  <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
+                  <span class="input-group-btn">
+                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                  </span></div>
+              </div>
+            </div>
+            <div class="col-sm-4">
               <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
-              
             </div>
           </div>
         </div>
@@ -71,41 +119,36 @@
                   <td class="text-left">{{ column_name }}</td>
                   <td class="text-left">{{ column_email }}</td>
                   <td class="text-left">{{ column_customer_group }}</td>
+                  <td class="text-left">{{ column_type }}</td>
                   <td class="text-left">{{ column_date_added }}</td>
                   <td class="text-right">{{ column_action }}</td>
                 </tr>
               </thead>
               <tbody>
-                {% if customers %}
-                {% for customer in customers %}
-                <tr>
-                  <td class="text-center">{% if customer.customer_id in selected %}
-                    <input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" checked="checked" />
-                    {% else %}
-                    <input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" />
-                    {% endif %}</td>
-                  <td class="text-left">{{ customer.name }}</td>
-                  <td class="text-left">{{ customer.email }}</td>
-                  <td class="text-left">{{ customer.customer_group }}</td>
-                  <td class="text-left">{{ customer.date_added }}</td>
-                  <td class="text-right">
-                  
-                    {% if customer.approve %}
-                    <a href="{{ customer.approve }}" data-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fa fa-thumbs-o-up"></i></a>
-                    {% else %}
-                    
-                    <button type="button" class="btn btn-success" disabled><i class="fa fa-thumbs-o-up"></i></button>
-                    {% endif %}
-                    
-                    <a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
-                </tr>
-                {% endfor %}
-                {% else %}
-                <tr>
-                  <td class="text-center" colspan="6">{{ text_no_results }}</td>
-                </tr>
-                {% endif %}
-              </tbody>
+              
+              {% if customer_approvals %}
+              {% for customer_approval in customer_approvals %}
+              <tr>
+                <td class="text-center">{% if customer_approval.customer_approval_id in selected %}
+                  <input type="checkbox" name="selected[]" value="{{ customer.customer_approval_id }}" checked="checked" />
+                  {% else %}
+                  <input type="checkbox" name="selected[]" value="{{ customer.customer_approval_id }}" />
+                  {% endif %}</td>
+                <td class="text-left">{{ customer_approval.name }}</td>
+                <td class="text-left">{{ customer_approval.email }}</td>
+                <td class="text-left">{{ customer_approval.customer_group }}</td>
+                <td class="text-left">{{ customer_approval.type }}</td>
+                <td class="text-left">{{ customer_approval.date_added }}</td>
+                <td class="text-right"><a href="{{ customer_approval.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+              </tr>
+              {% endfor %}
+              {% else %}
+              <tr>
+                <td class="text-center" colspan="7">{{ text_no_results }}</td>
+              </tr>
+              {% endif %}
+                </tbody>
+              
             </table>
           </div>
         </form>
@@ -118,7 +161,7 @@
   </div>
   <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-	url = 'index.php?route=customer/customer&user_token={{ user_token }}';
+	url = 'index.php?route=customer/customer_approval&user_token={{ user_token }}';
 	
 	var filter_name = $('input[name=\'filter_name\']').val();
 	
@@ -130,14 +173,20 @@ $('#button-filter').on('click', function() {
 	
 	if (filter_email) {
 		url += '&filter_email=' + encodeURIComponent(filter_email);
-	}
-	
+	}	
+		
 	var filter_customer_group_id = $('select[name=\'filter_customer_group_id\']').val();
 	
 	if (filter_customer_group_id !== '') {
 		url += '&filter_customer_group_id=' + encodeURIComponent(filter_customer_group_id);
 	}	
-		
+	
+	var filter_type = $('select[name=\'filter_type\']').val();
+	
+	if (filter_type !== '') {
+		url += '&filter_type=' + filter_type;
+	}
+			
 	var filter_date_added = $('input[name=\'filter_date_added\']').val();
 	
 	if (filter_date_added) {
@@ -193,4 +242,4 @@ $('.date').datetimepicker({
 	pickTime: false
 });
 //--></script></div>
-{{ footer }} 
+{{ footer }}

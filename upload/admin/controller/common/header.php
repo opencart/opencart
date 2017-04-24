@@ -60,16 +60,14 @@ class ControllerCommonHeader extends Controller {
 			// Complete Orders
 			$complete_total = $this->model_report_statistics->getValue('order_complete');
 			
-			
 			$data['complete_total'] = (int)$complete_total;
 			$data['complete_status'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . '&filter_order_status=' . implode(',', $this->config->get('config_complete_status')), true);
 
 			// Customers
-			$this->load->model('extension/report/customer');
+			//$this->load->model('report/online');
 
-			$data['online_total'] = (int)$this->model_extension_report_customer->getTotalCustomersOnline();
-
-			$data['online'] = $this->url->link('extension/report/customer_online', 'user_token=' . $this->session->data['user_token'], true);
+			//$data['online_total'] = (int)$this->model_extension_report_online->getTotalOnline();
+			//$data['online'] = $this->url->link('report/online', 'user_token=' . $this->session->data['user_token'], true);
 			
 			// Returns
 			$return_total = $this->model_report_statistics->getValue('return');
@@ -77,16 +75,18 @@ class ControllerCommonHeader extends Controller {
 			$data['return_total'] = (int)$return_total;
 			$data['return'] = $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'], true);
 
- 			$customer_total = (int)$this->model_report_statistics->getValue('customer');
+			$this->load->model('customer/customer_approval');
+			
+ 			$customer_total = $this->model_customer_customer_approval->getTotalCustomerApprovals(array('filter_type' => 'customer'));
  
 			$data['customer_total'] = $customer_total;
-			$data['customer'] = $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . '&filter_approved=0', true);
+			$data['customer'] = $this->url->link('customer/customer_approval', 'user_token=' . $this->session->data['user_token'] . '&filter_type=customer', true);
 
 			// Affliate
-			$affiliate_total = (int)$this->model_report_statistics->getValue('affiliate');
+			$affiliate_total = $this->model_customer_customer_approval->getTotalCustomerApprovals(array('filter_type' => 'affiliate'));
 			
 			$data['affiliate_total'] = $affiliate_total;
-			$data['affiliate'] = $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . '&filter_affiliate=1', true);
+			$data['affiliate'] = $this->url->link('customer/customer_approval', 'user_token=' . $this->session->data['user_token'] . '&filter_type=affiliate', true);
 
 			// Products
 			$product_total = (int)$this->model_report_statistics->getValue('product');
@@ -100,7 +100,7 @@ class ControllerCommonHeader extends Controller {
 			$data['review_total'] = $review_total;
 			$data['review'] = $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . '&filter_status=0', true);
 
-			$data['alerts'] =(int) $customer_total + (int)$product_total + (int)$review_total + (int)$affiliate_total + (int)$return_total;
+			$data['alerts'] = (int)$customer_total + (int)$product_total + (int)$review_total + (int)$affiliate_total + (int)$return_total;
 			
 			// Online Stores
 			$data['stores'] = array();

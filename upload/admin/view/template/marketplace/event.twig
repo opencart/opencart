@@ -37,40 +37,39 @@
               <thead>
                 <tr>
                   <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-                  <td class="text-left">{% if sort == 'code' %}<a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a> {% else %}<a href="{{ sort_code }}">{{ column_code }}</a>{% endif %}</td>
-                  <td class="text-left">{{ column_event }}</td>
-                  <td class="text-left">{% if sort == 'status' %} <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a> {% else %} <a href="{{ sort_status }}">{{ column_status }}</a> {% endif %}</td>
-                  <td class="text-right">{% if sort == 'sort_order' %} <a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a> {% else %} <a href="{{ sort_sort_order }}">{{ column_sort_order }}</a> {% endif %}</td>
+                  <td class="text-left">{% if sort == 'code' %}<a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>{% else %}<a href="{{ sort_code }}">{{ column_code }}</a>{% endif %}</td>
+                  <td class="text-left">{% if sort == 'status' %}<a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>{% else %}<a href="{{ sort_status }}">{{ column_status }}</a>{% endif %}</td>
+                  <td class="text-right">{% if sort == 'sort_order' %} <a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a> {% else %} <a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>{% endif %}</td>
                   <td class="text-right">{{ column_action }}</td>
                 </tr>
               </thead>
               <tbody>
-              
               {% if events %}
               {% for event in events %}
               <tr>
-                <td class="text-center" rowspan="2">{% if event.event_id in selected %}
+                <td class="text-center">{% if event.event_id in selected %}
                   <input type="checkbox" name="selected[]" value="{{ event.event_id }}" checked="checked" />
                   {% else %}
                   <input type="checkbox" name="selected[]" value="{{ event.event_id }}" />
                   {% endif %}</td>
-                <td class="text-left" rowspan="2">{{ event.code }}</td>
-                <td class="text-left">{{ event.trigger }}</td>
-                <td class="text-left" rowspan="2">{{ event.status }}</td>
-                <td class="text-right" rowspan="2">{{ event.sort_order }}</td>
-                <td class="text-right" rowspan="2">{% if not event.enabled %} <a href="{{ event.enable }}" data-toggle="tooltip" title="{{ button_enable }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a> {% else %} <a href="{{ event.disable }}" data-toggle="tooltip" title="{{ button_disable }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a> {% endif %}</td>
-              </tr>
-              <tr>
-                <td>{{ event.action }}</td>
+                <td class="text-left">{{ event.code }}</td>
+                <td class="text-left">{{ event.status }}</td>
+                <td class="text-right">{{ event.sort_order }}</td>
+                <td class="text-right"><button type="button"  class="btn btn-info"><i class="fa fa-info-circle"></i></button> {% if not event.enabled %}<a href="{{ event.enable }}" data-toggle="tooltip" title="{{ button_enable }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>{% else %}<a href="{{ event.disable }}" data-toggle="tooltip" title="{{ button_disable }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>{% endif %}
+                <div style="display: none;">
+                  <p>{{ text_trigger }}</p>
+                  <p>{{ event.trigger }}</p>
+                  <p>{{ text_action }}</p>
+                  <p>{{ event.action }}</p>                  
+                </div></td>
               </tr>
               {% endfor %}
               {% else %}
               <tr>
-                <td class="text-center" colspan="6">{{ text_no_results }}</td>
+                <td class="text-center" colspan="5">{{ text_no_results }}</td>
               </tr>
               {% endif %}
-                </tbody>
-              
+              </tbody>
             </table>
           </div>
         </form>
@@ -81,5 +80,49 @@
       </div>
     </div>
   </div>
+    <script type="text/javascript"><!--
+$(document).ready(function() {	
+	$('#form-event .btn-info').popover({
+		template: function() {
+			html  = '<div class="popover" role="tooltip">';
+			html += '  <div class="arrow"></div>';
+			html += '  <h3 class="popover-title">{{ text_event }}</h3>';
+			html += '  <div class="popover-content"></div>';
+			html += '</div>'
+			
+			return html;
+		}
+	});	
+});	
+/*	' + $(this).parent().find('div').html() + '
+data-toggle="tooltip" title="{{ button_info }}"
+$('#form-event .btn-info').on('click', function(e) {
+	e.preventDefault();
+
+	$('#modal-info').remove();
+
+	html  = '<div id="modal-info" class="modal">';
+	html += '  <div class="modal-dialog">';
+	html += '    <div class="modal-content">';
+	html += '      <div class="modal-header">';
+	html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
+	html += '        <h4 class="modal-title">{{ text_event }}</h4>';
+	html += '      </div>';
+	html += '      <div class="modal-body">';
+	html += '        <p>{{ text_trigger }}</p>';
+	html += '        <p>' + $('#form-event input[name=\'trigger\']').val() + '</p>';
+	html += '        <p>{{ text_action }}</p>';
+	html += '        <p>' + $('#form-event input[name=\'action\']').val() + '</p>';
+	html += '      </div>';
+	html += '    </div>';
+	html += '  </div>';
+	html += '</div>';
+
+	$('body').append(html);
+
+	$('#modal-info').modal('show');
+});
+*/
+//--></script> 
 </div>
 {{ footer }} 

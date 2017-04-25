@@ -79,7 +79,7 @@ class ControllerExtensionExtensionFraud extends Controller {
 		$extensions = $this->model_extension_extension->getInstalled('fraud');
 
 		foreach ($extensions as $key => $value) {
-			if (!is_file(DIR_APPLICATION . 'controller/extension/fraud/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/fraud/' . $value . '.php')) {
+			if (!is_file(DIR_APPLICATION . 'controller/extension/fraud/' . $value . '.php')) {
 				$this->model_extension_extension->uninstall('fraud', $value);
 
 				unset($extensions[$key]);
@@ -89,7 +89,7 @@ class ControllerExtensionExtensionFraud extends Controller {
 		$data['extensions'] = array();
 
 		// Compatibility code for old extension folders
-		$files = glob(DIR_APPLICATION . 'controller/{extension/fraud,fraud}/*.php', GLOB_BRACE);
+		$files = glob(DIR_APPLICATION . 'controller/extension/fraud/*.php', GLOB_BRACE);
 
 		if ($files) {
 			foreach ($files as $file) {

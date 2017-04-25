@@ -16,72 +16,100 @@
         <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> <?php echo $text_list; ?></h3>
       </div>
       <div class="panel-body">
-
         <div class="well">
           <div class="input-group">
-            <input type="text" name="search" value="" placeholder="Search for extensions" class="form-control" />
+            <input type="text" name="search" value="" placeholder="<?php echo $text_search; ?>" class="form-control" />
             <div class="input-group-btn">
-
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">License (All) <span class="caret"></span></button>
-              
+              <?php foreach ($categories as $category) { ?>
+              <?php if ($category['value'] == $filter_category) { ?>
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+              <?php $text_category; ?>
+              (
+              <?php $category['text']; ?>
+              ) <span class="caret"></span></button>
+              <?php } ?>
+              <?php } ?>
               <ul class="dropdown-menu">
-                <li class="dropdown-header">License</li>
-                <li><a href="">License</a></li>
-                <li><a href="free"><?php echo $text_free; ?></a></li>
-                <li><a href="paid"><?php echo $text_paid; ?></a></li>
+                <?php foreach ($categories as $category) { ?>
+                <li><a href="<?php echo $category['href']; ?>"><?php echo $category['text']; ?></a></li>
+                <?php } ?>
               </ul>
-
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories (Themes) <span class="caret"></span></button>
-              
-              <ul class="dropdown-menu">
-                <li><a href="">All Categories</a></li>
-                <li><a href="theme"><?php echo $text_theme; ?></a></li>
-                <li><a href="payment"><?php echo $text_payment; ?></a></li>
-                <li><a href="shipping"><?php echo $text_shipping; ?></a></li>
-                <li><a href="module"><?php echo $text_module; ?></a></li>
-                <li><a href="total"><?php echo $text_total; ?></a></li>
-                <li><a href="feed"><?php echo $text_feed; ?></a></li>
-                <li><a href="report"><?php echo $text_report; ?></a></li>
-                <li><a href="other"><?php echo $text_other; ?></a></li>
-              </ul>
-              
               <button type="button" id="button-filter" class="btn btn-primary"><i class="fa fa-filter"></i></button>
-
             </div>
           </div>
         </div>
-       </fieldset>
-        <div id="store">
-        
-        
-        
+        </fieldset>
+        <div class="row">
+          <div class="col-sm-9 col-xs-7">
+            <div class="btn-group">
+              <?php foreach ($licenses as $license) { ?>
+              <?php if ($license['value'] == $filter_license) { ?>
+              <a href="<?php echo $license['href']; ?>" class="btn btn-default active"><?php echo $license['text']; ?></a>
+              <?php } else { ?>
+              <a href="<?php echo $license['href']; ?>" class="btn btn-default"><?php echo $license['text']; ?></a>
+              <?php } ?>
+              <?php } ?>
+            </div>
+          </div>
+          <div class="col-sm-3 col-xs-5">
+            <div class="input-group pull-right">
+              <div class="input-group-addon"><i class="fa fa-sort-amount-asc"></i></div>
+              <select onchange="location = this.value;" class="form-control">
+                <?php foreach ($sorts as $sorts) { ?>
+                <?php if ($sorts['value'] == $sort) { ?>
+                <option value="<?php echo $sorts['href']; ?>" selected="selected"><?php echo $sorts['text']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $sorts['href']; ?>"><?php echo $sorts['text']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select>
+            </div>
+          </div>
         </div>
+        <br />
+        <?php if ($extensions) { ?>
+        <?php foreach (array_chunk($extensions, 3) as $row) { ?>
+        <div class="row">
+          <?php foreach ($row as $extension) { ?>
+          <div class="col-md-4">
+            <section>
+              <div class="extension-preview"> <a href="<?php echo $extension['href']; ?>">
+                <div class="extension-description"><?php echo $extension['description']; ?></div>
+                <img src="<?php echo $extension['image']; ?>" alt="<?php echo $extension['name']; ?>" title="<?php echo $extension['name']; ?>" class="img-responsive" /> </a> </div>
+              <div class="extension-name">
+                <h4><a href="<?php echo $extension['href']; ?>"><?php echo $extension['name']; ?></a></h4>
+                <?php echo $extension['price']; ?> </div>
+              <div>
+                <div class="row">
+                  <div class="col-xs-6">
+                    <div>
+                      <?php for ($i = 1; $i < 5; $i++) { ?>
+                      <?php if ($i < $extension['rating']) { ?>
+                      <i class="fa fa-star"></i>
+                      <?php } else { ?>
+                      <i class="fa fa-star-o"></i>
+                      <?php } ?>
+                      <?php } ?>
+                    </div>
+                  </div>
+                  <div class="col-xs-6">
+                    <div class="text-right"><span><?php echo $extension['review_total']; ?> reviews</span></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+          <?php } ?>
+        </div>
+        <?php } ?>
+        <div class="row">
+          <div class="col-sm-12 text-center"><?php echo $pagination; ?></div>
+        </div>
+        <?php } else { ?>
+        <div><?php echo $text_no_results; ?></div>
+        <?php } ?>
       </div>
     </div>
   </div>
-  <script type="text/javascript"><!--
-$('#button-filter').bind('click', function(e) {
-	var node = this;
-
-	$.ajax({
-		url: 'index.php?route=extension/store/store&token=<?php echo $token; ?>',
-		dataType: 'html',
-		beforeSend: function() {
-			$(node).prop('disabled', true);
-		},
-		complete: function() {
-			$(node).prop('disabled', false);
-		},
-		success: function(html) {
-			$('#store').html(html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
-
-$('#button-filter').trigger('click');
-//--></script>
 </div>
-<?php echo $footer; ?>
+<?php echo $footer; ?> 

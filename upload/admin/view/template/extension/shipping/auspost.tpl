@@ -26,54 +26,21 @@
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-auspost" class="form-horizontal">
           <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-api"><?php echo $entry_api; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="auspost_api" value="<?php echo $auspost_api; ?>" placeholder="<?php echo $entry_api; ?>" id="input-api" class="form-control" maxlength="40" />
+              <?php if ($error_api) { ?>
+              <div class="text-danger"><?php echo $error_api; ?></div>
+              <?php } ?>
+            </div>
+          </div>
+          <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-postcode"><?php echo $entry_postcode; ?></label>
             <div class="col-sm-10">
               <input type="text" name="auspost_postcode" value="<?php echo $auspost_postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" class="form-control" maxlength="4" />
               <?php if ($error_postcode) { ?>
               <div class="text-danger"><?php echo $error_postcode; ?></div>
               <?php } ?>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-standard"><?php echo $entry_standard; ?></label>
-            <div class="col-sm-10">
-              <select name="auspost_standard" id="input-standard" class="form-control">
-                <?php if ($auspost_standard) { ?>
-                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                <option value="0"><?php echo $text_disabled; ?></option>
-                <?php } else { ?>
-                <option value="1"><?php echo $text_enabled; ?></option>
-                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                <?php } ?>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-express"><?php echo $entry_express; ?></label>
-            <div class="col-sm-10">
-              <select name="auspost_express" id="input-express" class="form-control">
-                <?php if ($auspost_express) { ?>
-                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                <option value="0"><?php echo $text_disabled; ?></option>
-                <?php } else { ?>
-                <option value="1"><?php echo $text_enabled; ?></option>
-                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                <?php } ?>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-display-time"><span data-toggle="tooltip" title="<?php echo $help_display_time; ?>"><?php echo $entry_display_time; ?></span></label>
-            <div class="col-sm-10">
-              <select name="auspost_display_time" id="input-display-time" class="form-control">
-                <?php if ($auspost_display_time) { ?>
-                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                <option value="0"><?php echo $text_disabled; ?></option>
-                <?php } else { ?>
-                <option value="1"><?php echo $text_enabled; ?></option>
-                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                <?php } ?>
-              </select>
             </div>
           </div>
           <div class="form-group">

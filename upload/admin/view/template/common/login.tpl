@@ -23,7 +23,7 @@
               <div class="form-group">
                 <label for="input-username"><?php echo $entry_username; ?></label>
                 <div class="input-group"><span class="input-group-addon"><i class="fa fa-user"></i></span>
-                  <input type="text" name="username" value="<?php echo $username; ?>" placeholder="<?php echo $entry_username; ?>" id="input-username" class="form-control" />
+                  <input type="text" name="username" value="<?php echo $username; ?>" placeholder="<?php echo $entry_username; ?>" id="input-username" class="form-control" autofocus="autofocus" />
                 </div>
               </div>
               <div class="form-group">

@@ -173,6 +173,7 @@ class ModelCheckoutOrder extends Model {
 				'store_name'              => $order_query->row['store_name'],
 				'store_url'               => $order_query->row['store_url'],
 				'customer_id'             => $order_query->row['customer_id'],
+				'customer_group_id'       => $order_query->row['customer_group_id'],
 				'firstname'               => $order_query->row['firstname'],
 				'lastname'                => $order_query->row['lastname'],
 				'email'                   => $order_query->row['email'],
@@ -264,7 +265,7 @@ class ModelCheckoutOrder extends Model {
 					if ($this->config->get($extension['code'] . '_status')) {
 						$this->load->model('extension/fraud/' . $extension['code']);
 
-						$fraud_status_id = $this->{'model_fraud_' . $extension['code']}->check($order_info);
+						$fraud_status_id = $this->{'model_extension_fraud_' . $extension['code']}->check($order_info);
 
 						if ($fraud_status_id) {
 							$order_status_id = $fraud_status_id;

@@ -175,7 +175,7 @@ class ControllerDesignMenu extends Controller {
 			$data['menus'][] = array(
 				'menu_id'    => $result['menu_id'],
 				'name'       => $result['name'],
-				'store'      => $result['store'],
+				'store'      => $result['store_id'],
 				'type'       => $result['type'],
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'sort_order' => $result['sort_order'],

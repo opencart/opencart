@@ -2,7 +2,7 @@
 Order Deny,Allow
 Deny from all
 </Files>
-<Files ~ "\.(js|css)$">
+<Files ~ "\.(js|css|gif|png|jpg|woff)$">
 Order Allow,Deny
 Allow from all
 </Files>

@@ -929,22 +929,7 @@ class ControllerSaleReturn extends Controller {
 	public function history() {
 		$this->load->language('sale/return');
 
-		$data['error'] = '';
-		$data['success'] = '';
-
 		$this->load->model('sale/return');
-
-		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
-			if (!$this->user->hasPermission('modify', 'sale/return')) {
-				$data['error'] = $this->language->get('error_permission');
-			}
-
-			if (!$data['error']) {
-				$this->model_sale_return->addReturnHistory($this->request->get['return_id'], $this->request->post);
-
-				$data['success'] = $this->language->get('text_success');
-			}
-		}
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
 
@@ -986,4 +971,23 @@ class ControllerSaleReturn extends Controller {
 
 		$this->response->setOutput($this->load->view('sale/return_history', $data));
 	}
+	
+	public function addHistory() {
+		$this->load->language('sale/return');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'sale/return')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('sale/return');
+
+			$this->model_sale_return->addReturnHistory($this->request->get['return_id'], $this->request->post['return_status_id'], $this->request->post['comment'], $this->request->post['notify']);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}	
 }

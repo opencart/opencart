@@ -272,12 +272,6 @@ class ModelCustomerCustomer extends Model {
 		return $query->row['total'];
 	}
 
-	public function getTotalCustomersAwaitingApproval() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer WHERE status = '0' OR approved = '0'");
-
-		return $query->row['total'];
-	}
-
 	public function getTotalAddressesByCustomerId($customer_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "address WHERE customer_id = '" . (int)$customer_id . "'");
 

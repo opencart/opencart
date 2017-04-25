@@ -20,11 +20,11 @@ class ControllerCustomerCustomerApproval extends Controller {
 		if (isset($this->request->post['selected']) && $this->validate()) {
 			$this->load->model('customer/customer');
 			
-			foreach ($this->request->post['selected'] as $customer_id) {
+			foreach ($this->request->post['selected'] as $customer_approval_id) {
 				if ($this->request->get['type'] == 'customer') {
-					$this->model_customer_customer->approveCustomer($customer_id);
+					$this->model_customer_customer_approval->approveCustomer($customer_approval_id);
 				} elseif ($this->request->get['type'] == 'affiliate') {
-					$this->model_customer_customer->approveAffiliate($customer_id);
+					$this->model_customer_customer_approval->approveAffiliate($customer_approval_id);
 				}
 			}
 			
@@ -70,11 +70,11 @@ class ControllerCustomerCustomerApproval extends Controller {
 		$this->load->model('customer/customer_approval');
 				
 		if (isset($this->request->post['selected']) && $this->validate()) {
-			foreach ($this->request->post['selected'] as $customer_id) {
+			foreach ($this->request->post['selected'] as $customer_approval_id) {
 				if ($this->request->get['type'] == 'customer') {
-					$this->model_customer_customer->denyCustomer($customer_id);
+					$this->model_customer_customer_approval->denyCustomer($customer_approval_id);
 				} elseif ($this->request->get['type'] == 'affiliate') {
-					$this->model_customer_customer->denyAffiliate($customer_id);
+					$this->model_customer_customer_approval->denyAffiliate($customer_approval_id);
 				}
 			}
 						
@@ -120,12 +120,10 @@ class ControllerCustomerCustomerApproval extends Controller {
 		$this->load->model('customer/customer_approval');
 		
 		if (isset($this->request->post['selected']) && $this->validate()) {
+			$this->load->model('customer/customer');
+			
 			foreach ($this->request->post['selected'] as $customer_id) {
-				if ($this->request->get['type'] == 'customer') {
-					$this->model_customer_customer_approval->denyCustomer($customer_id);
-				} elseif ($this->request->get['type'] == 'affiliate') {
-					$this->model_customer_customer_approval->denyAffiliate($customer_id);
-				}
+				$this->model_customer_customer->deleteCustomer($customer_id);
 			}
 						
 			$url = '';

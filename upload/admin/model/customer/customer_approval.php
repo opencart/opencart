@@ -41,129 +41,13 @@ class ModelCustomerCustomerApproval extends Model {
 
 		return $query->rows;
 	}
-
-	public function approveCustomer($customer_id) {
-		$this->db->query("UPDATE " . DB_PREFIX . "customer SET status = '1' WHERE customer_id = '" . (int)$customer_id . "'");
-		
-		$customer_info = $this->getCustomer($customer_id);
-
-		if ($customer_info) {
-			$this->load->model('setting/store');
-
-			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);
-
-			if ($store_info) {
-				$store_name = $store_info['name'];
-				$store_url = $store_info['url'] . 'index.php?route=account/login';
-			} else {
-				$store_name = $this->config->get('config_name');
-				$store_url = HTTP_CATALOG . 'index.php?route=account/login';
-			}
-
-			$this->load->model('localisation/language');
-			
-			$language_info = $this->model_localisation_language->getLanguage($customer_info['language_id']);
-
-			if ($language_info) {
-				$language_code = $language_info['code'];
-			} else {
-				$language_code = $this->config->get('config_language');
-			}
-
-			$language = new Language($language_code);
-			$language->load($language_code);
-			$language->load('mail/customer');
-				
-			$message  = sprintf($language->get('text_approve_welcome'), html_entity_decode($store_name, ENT_QUOTES, 'UTF-8')) . "\n\n";
-			$message .= $language->get('text_approve_login') . "\n";
-			$message .= $store_url . "\n\n";
-			$message .= $language->get('text_approve_services') . "\n\n";
-			$message .= $language->get('text_approve_thanks') . "\n";
-			$message .= html_entity_decode($store_name, ENT_QUOTES, 'UTF-8');
-
-			$mail = new Mail();
-			$mail->protocol = $this->config->get('config_mail_protocol');
-			$mail->parameter = $this->config->get('config_mail_parameter');
-			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-
-			$mail->setTo($customer_info['email']);
-			$mail->setFrom($this->config->get('config_email'));
-			$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject(sprintf($language->get('text_approve_subject'), html_entity_decode($store_name, ENT_QUOTES, 'UTF-8')));
-			$mail->setText($message);
-			$mail->send();
-		}
-	}
-
-	public function denyCustomer($customer_id) {
-		$this->db->query("UPDATE " . DB_PREFIX . "customer SET status = '0' WHERE customer_id = '" . (int)$customer_id . "'");
-		
-		$customer_info = $this->getCustomer($customer_id);
-
-		if ($customer_info) {
-			$this->load->model('setting/store');
-
-			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);
-
-			if ($store_info) {
-				$store_name = $store_info['name'];
-				$store_url = $store_info['url'] . 'index.php?route=account/login';
-			} else {
-				$store_name = $this->config->get('config_name');
-				$store_url = HTTP_CATALOG . 'index.php?route=account/login';
-			}
-
-			$this->load->model('localisation/language');
-			
-			$language_info = $this->model_localisation_language->getLanguage($customer_info['language_id']);
-
-			if ($language_info) {
-				$language_code = $language_info['code'];
-			} else {
-				$language_code = $this->config->get('config_language');
-			}
-
-			$language = new Language($language_code);
-			$language->load($language_code);
-			$language->load('mail/customer');
-				
-			$message  = sprintf($language->get('text_approve_welcome'), html_entity_decode($store_name, ENT_QUOTES, 'UTF-8')) . "\n\n";
-			$message .= $language->get('text_approve_login') . "\n";
-			$message .= $store_url . "\n\n";
-			$message .= $language->get('text_approve_services') . "\n\n";
-			$message .= $language->get('text_approve_thanks') . "\n";
-			$message .= html_entity_decode($store_name, ENT_QUOTES, 'UTF-8');
-
-			$mail = new Mail();
-			$mail->protocol = $this->config->get('config_mail_protocol');
-			$mail->parameter = $this->config->get('config_mail_parameter');
-			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-
-			$mail->setTo($customer_info['email']);
-			$mail->setFrom($this->config->get('config_email'));
-			$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject(sprintf($language->get('text_approve_subject'), html_entity_decode($store_name, ENT_QUOTES, 'UTF-8')));
-			$mail->setText($message);
-			$mail->send();
-		}
-	}
-
-	public function approveAffiliate($customer_id) {
 	
+	public function getCustomerApproval($customer_approval_id) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_approval` WHERE `customer_approval_id` = '" . (int)$customer_approval_id . "'");
+		
+		return $query->row;
 	}
 	
-	public function denyAffiliate($customer_id) {
-	
-	}
-		
 	public function getTotalCustomerApprovals($data = array()) {
 		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_approval` ca LEFT JOIN `" . DB_PREFIX . "customer` c ON (ca.`customer_id` = c.`customer_id`)";
 
@@ -197,4 +81,30 @@ class ModelCustomerCustomerApproval extends Model {
 
 		return $query->row['total'];
 	}
+	
+	public function approveCustomer($customer_approval_id) {
+		$customer_approval_info = $this->getCustomerApproval($customer_approval_id);
+
+		if ($customer_approval_info) {
+			$this->db->query("UPDATE " . DB_PREFIX . "customer SET status = '1' WHERE customer_id = '" . (int)$customer_approval_info['customer_id'] . "'");
+			$this->db->query("DELETE FROM  " . DB_PREFIX . "customer_approval WHERE customer_approval_id = '" . (int)$customer_approval_id . "'");
+		}
+	}
+
+	public function denyCustomer($customer_approval_id) {
+		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_approval WHERE customer_approval_id = '" . (int)$customer_approval_id . "'");
+	}
+
+	public function approveAffiliate($customer_approval_id) {
+		$customer_approval_info = $this->getCustomerApproval($customer_approval_id);
+
+		if ($customer_approval_info) {
+			$this->db->query("UPDATE " . DB_PREFIX . "affiliate SET status = '1' WHERE customer_id = '" . (int)$customer_approval_info['customer_id'] . "'");
+			$this->db->query("DELETE FROM  " . DB_PREFIX . "customer_approval WHERE customer_approval_id = '" . (int)$customer_approval_id . "'");
+		}
+	}
+	
+	public function denyAffiliate($customer_approval_id) {
+		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_approval WHERE customer_approval_id = '" . (int)$customer_approval_id . "'");
+	}	
 }

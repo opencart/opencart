@@ -35,8 +35,9 @@
             {% endif %}
           </ul>
           
+          
+          
           <div class="tab-content">
-         
           <div class="tab-pane active" id="tab-general">
           <div class="row">
           <div class="col-sm-2">
@@ -50,6 +51,8 @@
               <li id="address-add"><a onclick="addAddress();"><i class="fa fa-plus-circle"></i> {{ button_address_add }}</a></li>
             </ul>
           </div>
+          
+          
           <div class="col-sm-10">
           <div class="tab-content">
           <div class="tab-pane active" id="tab-customer">
@@ -59,6 +62,7 @@
               <label class="col-sm-2 control-label" for="input-customer-group">{{ entry_customer_group }}</label>
               <div class="col-sm-10">
                 <select name="customer_group_id" id="input-customer-group" class="form-control">
+                  
                   
                   
                   
@@ -81,7 +85,9 @@
                   
                   
                   
+                  
                   <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                  
                   
                   
                   
@@ -103,7 +109,9 @@
                   
                   
                   
+                  
                   <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+                  
                   
                   
                   
@@ -123,6 +131,7 @@
                           
                           
                           
+                
                 
                 
                 
@@ -173,6 +182,7 @@
                   
                   
                   
+                  
                             
                             
                             
@@ -191,7 +201,9 @@
                   
                   
                   
+                  
                   <option value="{{ custom_field_value.custom_field_value_id }}" selected="selected">{{ custom_field_value.name }}</option>
+                  
                   
                   
                   
@@ -213,7 +225,9 @@
                   
                   
                   
+                  
                   <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
+                  
                   
                   
                   
@@ -233,6 +247,7 @@
                           
                           
                           
+                
                 
                 
                 
@@ -358,6 +373,9 @@
             {% endif %}
             {% endfor %}
           </fieldset>
+          
+          
+          
           <fieldset>
             <legend>{{ text_password }}</legend>
             <div class="form-group required">
@@ -377,12 +395,16 @@
                 {% endif %} </div>
             </div>
           </fieldset>
+          
+          
+          
           <fieldset>
           <legend>{{ text_other }}</legend>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-newsletter">{{ entry_newsletter }}</label>
             <div class="col-sm-10">
               <select name="newsletter" id="input-newsletter" class="form-control">
+                
                 
                 
                 
@@ -404,8 +426,10 @@
                 
                 
                 
+                
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
+                
                 
                 
                 
@@ -427,8 +451,10 @@
                 
                 
                 
+                
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
+                
                 
                 
                 
@@ -450,6 +476,7 @@
               
               
               
+              
               </select>
             </div>
           </div>
@@ -457,6 +484,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="status" id="input-status" class="form-control">
+                
                 
                 
                 
@@ -478,8 +506,10 @@
                 
                 
                 
+                
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
+                
                 
                 
                 
@@ -501,8 +531,10 @@
                 
                 
                 
+                
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
+                
                 
                 
                 
@@ -524,6 +556,7 @@
               
               
               
+              
               </select>
             </div>
           </div>
@@ -531,6 +564,7 @@
             <label class="col-sm-2 control-label" for="input-safe">{{ entry_safe }}</label>
             <div class="col-sm-10">
               <select name="safe" id="input-safe" class="form-control">
+                
                 
                 
                 
@@ -552,8 +586,10 @@
                 
                 
                 
+                
                 <option value="1" selected="selected">{{ text_yes }}</option>
                 <option value="0">{{ text_no }}</option>
+                
                 
                 
                 
@@ -575,8 +611,10 @@
                 
                 
                 
+                
                 <option value="1">{{ text_yes }}</option>
                 <option value="0" selected="selected">{{ text_no }}</option>
+                
                 
                 
                 
@@ -595,6 +633,7 @@
                           
                           
                           
+              
               
               
               
@@ -667,6 +706,7 @@
                   
                   
                   
+                  
                             
                             
                             
@@ -685,7 +725,9 @@
                   
                   
                   
+                  
                   <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
+                  
                   
                   
                   
@@ -707,7 +749,9 @@
                   
                   
                   
+                  
                   <option value="{{ country.country_id }}">{{ country.name }}</option>
+                  
                   
                   
                   
@@ -727,6 +771,7 @@
                           
                           
                           
+                
                 
                 
                 
@@ -756,6 +801,7 @@
                   
                   
                   
+                  
                             
                             
                             
@@ -774,7 +820,9 @@
                   
                   
                   
+                  
                   <option value="{{ custom_field_value.custom_field_value_id }}" selected="selected">{{ custom_field_value.name }}</option>
+                  
                   
                   
                   
@@ -796,7 +844,9 @@
                   
                   
                   
+                  
                   <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
+                  
                   
                   
                   
@@ -816,6 +866,7 @@
                           
                           
                           
+                
                 
                 
                 
@@ -982,7 +1033,7 @@
                   <input type="text" name="commission" value="{{ commission }}" placeholder="{{ entry_commission }}" id="input-commission" class="form-control" />
                 </div>
               </div>
-               {% for custom_field in custom_fields %}
+              {% for custom_field in custom_fields %}
               {% if custom_field.location == 'affiliate' %}
               {% if custom_field.type == 'select' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
@@ -990,6 +1041,7 @@
                 <div class="col-sm-10">
                   <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control">
                     <option value="">{{ text_select }}</option>
+                    
                     
                     
                     
@@ -1012,7 +1064,9 @@
                     
                     
                     
+                    
                     <option value="{{ custom_field_value.custom_field_value_id }}" selected="selected">{{ custom_field_value.name }}</option>
+                    
                     
                     
                     
@@ -1034,7 +1088,9 @@
                     
                     
                     
+                    
                     <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
+                    
                     
                     
                     
@@ -1054,6 +1110,7 @@
                           
                           
                     
+                  
                   
                   
                   
@@ -1178,7 +1235,6 @@
               {% endif %}
               {% endif %}
               {% endfor %}
-             
             </fieldset>
             <fieldset>
               <legend>{{ text_payment }}</legend>
@@ -1272,13 +1328,12 @@
                     <div class="text-danger">{{ error_bank_account_number }}</div>
                     {% endif %}</div>
                 </div>
-
               </div>
-              
-                            <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-affiliate">{{ entry_status }}</label>
-                  <div class="col-sm-10">
-                    <select name="affiliate" id="input-affiliate" class="form-control">
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-affiliate">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="affiliate" id="input-affiliate" class="form-control">
+                    
                       
                       
                 
@@ -1300,8 +1355,10 @@
                 
                 
                       
-                      <option value="1" selected="selected">{{ text_enabled }}</option>
-                      <option value="0">{{ text_disabled }}</option>
+                      
+                    <option value="1" selected="selected">{{ text_enabled }}</option>
+                    <option value="0">{{ text_disabled }}</option>
+                    
                       
                       
                 
@@ -1323,8 +1380,10 @@
                 
                 
                       
-                      <option value="1">{{ text_enabled }}</option>
-                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                      
+                    <option value="1">{{ text_enabled }}</option>
+                    <option value="0" selected="selected">{{ text_disabled }}</option>
+                    
                       
                       
                 
@@ -1346,9 +1405,10 @@
               
               
                     
-                    </select>
-                  </div>
-                </div>  
+                    
+                  </select>
+                </div>
+              </div>
             </fieldset>
           </div>
           {% if customer_id %}

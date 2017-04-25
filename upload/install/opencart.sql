@@ -3156,10 +3156,8 @@ INSERT INTO `oc_statistics` (`statistics_id`, `code`, `value`) VALUES
 (3, 'order_complete', 0),
 (4, 'order_other', 0),
 (5, 'return', 0),
-(6, 'customer', 0),
-(7, 'affiliate', 0),
-(8, 'product', 0),
-(9, 'review', 0);
+(6, 'product', 0),
+(7, 'review', 0);
 
 -----------------------------------------------------------
 

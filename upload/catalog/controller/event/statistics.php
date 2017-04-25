@@ -1,32 +1,6 @@
 <?php
 class ControllerEventStatistics extends Controller {
-	// model/account/customer/addCustomer/after
-	public function addCustomer(&$route, &$args, &$output) {
-		$this->load->model('account/customer');
-		
-		$customer_info = $this->model_account_customer->getCustomer($output);
-		
-		if ($customer_info && !$customer_info['approved']) {
-			$this->load->model('report/statistics');
-	
-			$this->model_report_statistics->addValue('customer', 1);
-		}
-	}
-	
-	// model/account/customer/addAffiliate/after
-	public function addAffiliate(&$route, &$args, &$output) {
-		$this->load->model('account/customer');
-		
-		$affiliate_info = $this->model_account_customer->getAffiliate($output);		
-		
-		if ($affiliate_info && !$affiliate_info['status']) {
-			$this->load->model('report/statistics');
-
-			$this->model_report_statistics->addValue('affiliate', 1);
-		}
-	}
-	
-	// model/account/review/addReview/after
+	// model/catalog/review/addReview/after
 	public function addReview(&$route, &$args, &$output) {
 		$this->load->model('report/statistics');
 
@@ -38,7 +12,7 @@ class ControllerEventStatistics extends Controller {
 		$this->load->model('report/statistics');
 
 		$this->model_report_statistics->addValue('return', 1);	
-	}	
+	}
 	
 	// model/checkout/order/addOrderHistory/before
 	public function addOrderHistory(&$route, &$args, &$output) {

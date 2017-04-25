@@ -64,10 +64,10 @@ class ControllerCommonHeader extends Controller {
 			$data['complete_status'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . '&filter_order_status=' . implode(',', $this->config->get('config_complete_status')), true);
 
 			// Customers
-			//$this->load->model('report/online');
+			$this->load->model('report/online');
 
-			//$data['online_total'] = (int)$this->model_extension_report_online->getTotalOnline();
-			//$data['online'] = $this->url->link('report/online', 'user_token=' . $this->session->data['user_token'], true);
+			$data['online_total'] = (int)$this->model_report_online->getTotalOnline();
+			$data['online'] = $this->url->link('report/online', 'user_token=' . $this->session->data['user_token'], true);
 			
 			// Returns
 			$return_total = $this->model_report_statistics->getValue('return');

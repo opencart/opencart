@@ -100,11 +100,11 @@ class ModelCustomerCustomerApproval extends Model {
 	}
 
 	public function denyCustomer($customer_id) {
+		$this->db->query("UPDATE " . DB_PREFIX . "customer SET status = '0' WHERE customer_id = '" . (int)$customer_id . "'");
+		
 		$customer_info = $this->getCustomer($customer_id);
 
 		if ($customer_info) {
-			$this->db->query("UPDATE " . DB_PREFIX . "customer SET status = '0' WHERE customer_id = '" . (int)$customer_id . "'");
-
 			$this->load->model('setting/store');
 
 			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);

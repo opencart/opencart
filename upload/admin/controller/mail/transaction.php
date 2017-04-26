@@ -40,8 +40,8 @@ class ControllerMailTransaction extends Controller {
 				$store_name = $this->config->get('config_name');
 			}
 
-			$message  = sprintf($this->language->get('text_transaction_received'), $this->currency->format($amount, $this->config->get('config_currency'))) . "\n\n";
-			$message .= sprintf($this->language->get('text_transaction_total'), $this->currency->format($this->getTransactionTotal($customer_id), $this->session->data['currency']));
+			$data['text_received'] = sprintf($this->language->get('text_received'), $this->currency->format($amount, $this->config->get('config_currency')));
+			$data['text_total'] = sprintf($this->language->get('text_total'), $this->currency->format($this->getTransactionTotal($customer_id), $this->session->data['currency']));
 
 			$mail = new Mail();
 			$mail->protocol = $this->config->get('config_mail_protocol');
@@ -55,7 +55,7 @@ class ControllerMailTransaction extends Controller {
 			$mail->setTo($customer_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject(sprintf($this->language->get('text_transaction_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')));
+			$mail->setSubject(sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')));
 			$mail->setText($message);
 			$mail->send();
 		}

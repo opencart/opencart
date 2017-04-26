@@ -352,8 +352,6 @@ class ControllerMailOrder extends Controller {
 			$data['order_id'] = $order_info['order_id'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
 			
-			
-			
 			$data['order_status'] = $order_info['order_status'];
 			
 			$this->load->model('tool/upload');

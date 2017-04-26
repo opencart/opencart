@@ -40,8 +40,6 @@ class ControllerMailCustomer extends Controller {
 	}
 	
 	public function deny($customer_id) {
-		$this->db->query("UPDATE " . DB_PREFIX . "customer SET status = '0' WHERE customer_id = '" . (int)$customer_id . "'");
-		
 		$customer_info = $this->getCustomer($customer_id);
 
 		if ($customer_info) {

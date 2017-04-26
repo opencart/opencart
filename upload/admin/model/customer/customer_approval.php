@@ -82,29 +82,21 @@ class ModelCustomerCustomerApproval extends Model {
 		return $query->row['total'];
 	}
 	
-	public function approveCustomer($customer_approval_id) {
-		$customer_approval_info = $this->getCustomerApproval($customer_approval_id);
-
-		if ($customer_approval_info) {
-			$this->db->query("UPDATE " . DB_PREFIX . "customer SET status = '1' WHERE customer_id = '" . (int)$customer_approval_info['customer_id'] . "'");
-			$this->db->query("DELETE FROM  " . DB_PREFIX . "customer_approval WHERE customer_approval_id = '" . (int)$customer_approval_id . "'");
-		}
+	public function approveCustomer($customer_id) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET status = '1' WHERE customer_id = '" . (int)$customer_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_approval` WHERE customer_id = '" . (int)$customer_id . "' AND `type` = 'customer'");
 	}
 
-	public function denyCustomer($customer_approval_id) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_approval WHERE customer_approval_id = '" . (int)$customer_approval_id . "'");
+	public function denyCustomer($customer_id) {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_approval` WHERE customer_id = '" . (int)$customer_id . "' AND `type` = 'customer");
 	}
 
-	public function approveAffiliate($customer_approval_id) {
-		$customer_approval_info = $this->getCustomerApproval($customer_approval_id);
-
-		if ($customer_approval_info) {
-			$this->db->query("UPDATE " . DB_PREFIX . "affiliate SET status = '1' WHERE customer_id = '" . (int)$customer_approval_info['customer_id'] . "'");
-			$this->db->query("DELETE FROM  " . DB_PREFIX . "customer_approval WHERE customer_approval_id = '" . (int)$customer_approval_id . "'");
-		}
+	public function approveAffiliate($customer_id) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "affiliate` SET status = '1' WHERE customer_id = '" . (int)$customer_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_approval` WHERE customer_id = '" . (int)$customer_id . "' AND `type` = 'affiliate'");
 	}
 	
-	public function denyAffiliate($customer_approval_id) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_approval WHERE customer_approval_id = '" . (int)$customer_approval_id . "'");
+	public function denyAffiliate($customer_id) {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_approval` WHERE customer_id = '" . (int)$customer_id . "' AND `type` = 'affiliate'");
 	}	
 }

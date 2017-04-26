@@ -324,9 +324,9 @@ $('#button-history').on('click', function(e) {
 			}
 
 			if (json['success']) {
-				$('#tab-history').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-
 				$('#history').load('index.php?route=sale/return/history&user_token={{ user_token }}&return_id={{ return_id }}');
+				
+				$('#tab-history').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('#tab-history textarea[name=\'comment\']').val('');
 			}

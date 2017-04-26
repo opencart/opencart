@@ -20,11 +20,11 @@ class ControllerCustomerCustomerApproval extends Controller {
 		if (isset($this->request->post['selected']) && $this->validate()) {
 			$this->load->model('customer/customer');
 			
-			foreach ($this->request->post['selected'] as $customer_approval_id) {
+			foreach ($this->request->post['selected'] as $customer_id) {
 				if ($this->request->get['type'] == 'customer') {
-					$this->model_customer_customer_approval->approveCustomer($customer_approval_id);
+					$this->model_customer_customer_approval->approveCustomer($customer_id);
 				} elseif ($this->request->get['type'] == 'affiliate') {
-					$this->model_customer_customer_approval->approveAffiliate($customer_approval_id);
+					$this->model_customer_customer_approval->approveAffiliate($customer_id);
 				}
 			}
 			
@@ -70,11 +70,11 @@ class ControllerCustomerCustomerApproval extends Controller {
 		$this->load->model('customer/customer_approval');
 				
 		if (isset($this->request->post['selected']) && $this->validate()) {
-			foreach ($this->request->post['selected'] as $customer_approval_id) {
+			foreach ($this->request->post['selected'] as $customer_id) {
 				if ($this->request->get['type'] == 'customer') {
-					$this->model_customer_customer_approval->denyCustomer($customer_approval_id);
+					$this->model_customer_customer_approval->denyCustomer($customer_id);
 				} elseif ($this->request->get['type'] == 'affiliate') {
-					$this->model_customer_customer_approval->denyAffiliate($customer_approval_id);
+					$this->model_customer_customer_approval->denyAffiliate($customer_id);
 				}
 			}
 						
@@ -110,54 +110,6 @@ class ControllerCustomerCustomerApproval extends Controller {
 		}
 		
 		$this->getList();
-	}
-	
-	public function delete() {
-		$this->load->language('customer/customer_approval');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('customer/customer_approval');
-		
-		if (isset($this->request->post['selected']) && $this->validate()) {
-			$this->load->model('customer/customer');
-			
-			foreach ($this->request->post['selected'] as $customer_id) {
-				$this->model_customer_customer->deleteCustomer($customer_id);
-			}
-						
-			$url = '';
-			
-			if (isset($this->request->get['filter_name'])) {
-				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_email'])) {
-				$url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
-			}
-			
-			if (isset($this->request->get['filter_customer_group_id'])) {
-				$url .= '&filter_customer_group_id=' . $this->request->get['filter_customer_group_id'];
-			}
-			
-			if (isset($this->request->get['filter_type'])) {
-				$url .= '&filter_type=' . $this->request->get['filter_type'];
-			}
-			
-			if (isset($this->request->get['filter_date_added'])) {
-				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-			}
-									
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-					
-			$this->session->data['success'] = $this->language->get('text_success');
-			
-			$this->response->redirect($this->url->link('customer/customer_approval', 'user_token=' . $this->session->data['user_token'], true));
-		}
-		
-		$this->getList();	
 	}
 			
 	public function getList() {
@@ -237,7 +189,6 @@ class ControllerCustomerCustomerApproval extends Controller {
 
 		$data['approve'] = $this->url->link('customer/customer_approval/approve', 'user_token=' . $this->session->data['user_token'] . $url, true);
 		$data['deny'] = $this->url->link('customer/customer_approval/deny', 'user_token=' . $this->session->data['user_token'] . $url, true);
-		$data['delete'] = $this->url->link('customer/customer_approval/delete', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
 		$data['customer_approvals'] = array();
 
@@ -257,13 +208,13 @@ class ControllerCustomerCustomerApproval extends Controller {
 
 		foreach ($results as $result) {
 			$data['customer_approvals'][] = array(
-				'customer_approval_id' => $result['customer_approval_id'],
-				'name'                 => $result['name'],
-				'email'                => $result['email'],
-				'customer_group'       => $result['customer_group'],
-				'type'                 => $this->language->get('text_' . $result['type']),
-				'date_added'           => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'                 => $this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . $url, true)
+				'customer_id'    => $result['customer_id'],
+				'name'           => $result['name'],
+				'email'          => $result['email'],
+				'customer_group' => $result['customer_group'],
+				'type'           => $this->language->get('text_' . $result['type']),
+				'date_added'     => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'edit'           => $this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . $url, true)
 			);
 		}
 

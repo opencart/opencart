@@ -362,7 +362,7 @@ class ControllerSaleReturn extends Controller {
 				'customer'      => $result['customer'],
 				'product'       => $result['product'],
 				'model'         => $result['model'],
-				'status'        => $result['status'],
+				'return_status' => $result['return_status'],
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
 				'edit'          => $this->url->link('sale/return/edit', 'user_token=' . $this->session->data['user_token'] . '&return_id=' . $result['return_id'] . $url, true)

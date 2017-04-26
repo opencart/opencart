@@ -1,7 +1,33 @@
 <?php
 class ControllerMailReward extends Controller {
 	public function index($route, $args, $output) {
-		$customer_info = $this->getCustomer($customer_id);
+		if (isset($args[0])) {
+			$customer_id = $args[0];
+		} else {
+			$customer_id = '';
+		}
+		
+		if (isset($args[1])) {
+			$description = $args[1];
+		} else {
+			$description = '';
+		}		
+		
+		if (isset($args[2])) {
+			$points = $args[2];
+		} else {
+			$points = '';
+		}
+		
+		if (isset($args[3])) {
+			$order_id = $args[3];
+		} else {
+			$order_id = 0;
+		}
+		
+		$this->load->model('customer/customer');
+		
+		$customer_info = $this->model_customer_customer->getCustomer($customer_id);
 
 		if ($customer_info) {
 			$this->load->language('mail/customer');
@@ -16,8 +42,8 @@ class ControllerMailReward extends Controller {
 				$store_name = $this->config->get('config_name');
 			}
 
-			$message  = sprintf($this->language->get('text_reward_received'), $points) . "\n\n";
-			$message .= sprintf($this->language->get('text_reward_total'), $this->getRewardTotal($customer_id));
+			$data['text_received'] = sprintf($this->language->get('text_received'), $points);
+			$data['text_total'] = sprintf($this->language->get('text_total'), $this->getRewardTotal($customer_id));
 
 			$mail = new Mail();
 			$mail->protocol = $this->config->get('config_mail_protocol');
@@ -32,7 +58,7 @@ class ControllerMailReward extends Controller {
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
 			$mail->setSubject(sprintf($this->language->get('text_reward_subject'), html_entity_decode($store_name, ENT_QUOTES, 'UTF-8')));
-			$mail->setText($message);
+			$mail->setText($this->load->view('mail/reward', $data));
 			$mail->send();
 		}
 	}

@@ -5,7 +5,6 @@
       <div class="pull-right">
         <button type="button" data-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fa fa-thumbs-o-up"></i></button>
         <button type="button" data-toggle="tooltip" title="{{ button_deny }}" class="btn btn-danger"><i class="fa fa-thumbs-o-down"></i></button>
-        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-customer').submit() : false;"><i class="fa fa-trash-o"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
@@ -50,17 +49,23 @@
                 <select name="filter_customer_group_id" id="input-customer-group" class="form-control">
                   <option value=""></option>
                   
+                  
                   {% for customer_group in customer_groups %}
                   {% if customer_group.customer_group_id == filter_customer_group_id %}
                   
+                  
                   <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                  
                   
                   {% else %}
                   
+                  
                   <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+                  
                   
                   {% endif %}
                   {% endfor %}
+                
                 
                 </select>
               </div>
@@ -73,24 +78,34 @@
                 <select name="filter_type" id="input-type" class="form-control">
                   <option value=""></option>
                   
+                  
                   {% if filter_type == 'customer' %}
+                  
                   
                   <option value="customer" selected="selected">{{ text_customer }}</option>
                   
+                  
                   {% else %}
                   
+                  
                   <option value="customer">{{ text_customer }}</option>
+                  
                   
                   {% endif %}              
                   {% if filter_type == 'affiliate' %}
                   
+                  
                   <option value="affiliate" selected="selected">{{ text_affiliate }}</option>
+                  
                   
                   {% else %}
                   
+                  
                   <option value="affiliate">{{ text_affiliate }}</option>
                   
+                  
                   {% endif %}
+                
                 
                 </select>
               </div>
@@ -129,10 +144,10 @@
               {% if customer_approvals %}
               {% for customer_approval in customer_approvals %}
               <tr>
-                <td class="text-center">{% if customer_approval.customer_approval_id in selected %}
-                  <input type="checkbox" name="selected[]" value="{{ customer.customer_approval_id }}" checked="checked" />
+                <td class="text-center">{% if customer_approval.customer_id in selected %}
+                  <input type="checkbox" name="selected[]" value="{{ customer_approval.customer_id }}" checked="checked" />
                   {% else %}
-                  <input type="checkbox" name="selected[]" value="{{ customer.customer_approval_id }}" />
+                  <input type="checkbox" name="selected[]" value="{{ customer_approval.customer_id }}" />
                   {% endif %}</td>
                 <td class="text-left">{{ customer_approval.name }}</td>
                 <td class="text-left">{{ customer_approval.email }}</td>

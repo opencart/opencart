@@ -41,7 +41,6 @@ class ControllerMailAffiliate extends Controller {
 			$data['text_thanks'] = $language->get('text_thanks');
 						
 			$data['login'] = $store_url . 'index.php?route=account/login';
-			$data['store'] = $store_name;
 	
 			$mail = new Mail();
 			$mail->protocol = $this->config->get('config_mail_protocol');
@@ -95,12 +94,11 @@ class ControllerMailAffiliate extends Controller {
 				
 			$subject = sprintf($language->get('text_subject'), $store_name);	
 				
-			$message  = sprintf($language->get('text_approve_welcome'), html_entity_decode($store_name, ENT_QUOTES, 'UTF-8')) . "\n\n";
-			$message .= $language->get('text_approve_login') . "\n";
-			$message .= $store_url . "\n\n";
-			$message .= $language->get('text_approve_services') . "\n\n";
-			$message .= $language->get('text_approve_thanks') . "\n";
-			$message .= html_entity_decode($store_name, ENT_QUOTES, 'UTF-8');
+			$data['text_welcome'] = sprintf($language->get('text_welcome'), $store_name);
+			$data['text_login'] = $language->get('text_login');
+			$data['text_approval'] = $language->get('text_approval');
+			$data['text_service'] = $language->get('text_service');
+			$data['text_thanks'] = $language->get('text_thanks');
 
 			$mail = new Mail();
 			$mail->protocol = $this->config->get('config_mail_protocol');

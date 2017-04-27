@@ -3,8 +3,6 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="button" type="submit" form="form-customer" formaction="{{ approve }}" data-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fa fa-thumbs-o-up"></i></button>
-        <button type="button" type="submit" form="form-customer" formaction="{{ deny }}" data-toggle="tooltip" title="{{ button_deny }}" class="btn btn-danger"><i class="fa fa-thumbs-o-down"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
@@ -125,58 +123,54 @@
             </div>
           </div>
         </div>
-        <form action="" method="post" enctype="multipart/form-data" id="form-customer">
-          <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-              <thead>
-                <tr>
-                  <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-                  <td class="text-left">{{ column_name }}</td>
-                  <td class="text-left">{{ column_email }}</td>
-                  <td class="text-left">{{ column_customer_group }}</td>
-                  <td class="text-left">{{ column_type }}</td>
-                  <td class="text-left">{{ column_date_added }}</td>
-                  <td class="text-right">{{ column_action }}</td>
-                </tr>
-              </thead>
-              <tbody>
-              
-              {% if customer_approvals %}
-              {% for customer_approval in customer_approvals %}
-              <tr>
-                <td class="text-center">{% if customer_approval.customer_id in selected %}
-                  <input type="checkbox" name="selected[]" value="{{ customer_approval.customer_id }}" checked="checked" />
-                  {% else %}
-                  <input type="checkbox" name="selected[]" value="{{ customer_approval.customer_id }}" />
-                  {% endif %}</td>
-                <td class="text-left">{{ customer_approval.name }}</td>
-                <td class="text-left">{{ customer_approval.email }}</td>
-                <td class="text-left">{{ customer_approval.customer_group }}</td>
-                <td class="text-left">{{ customer_approval.type }}</td>
-                <td class="text-left">{{ customer_approval.date_added }}</td>
-                <td class="text-right"><a href="{{ customer_approval.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
-              </tr>
-              {% endfor %}
-              {% else %}
-              <tr>
-                <td class="text-center" colspan="7">{{ text_no_results }}</td>
-              </tr>
-              {% endif %}
-                </tbody>
-              
-            </table>
-          </div>
-        </form>
-        <div class="row">
-          <div class="col-sm-6 text-left">{{ pagination }}</div>
-          <div class="col-sm-6 text-right">{{ results }}</div>
-        </div>
+        <div id="customer-approval"></div>
       </div>
     </div>
   </div>
   <script type="text/javascript"><!--
+$('#customer-approval').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
+
+	$('#customer-approval').load(this.href);
+});
+  
+$('#customer-approval').load('index.php?route=customer/customer_approval/list&user_token={{ user_token }}');
+
+$('#customer-approval').on('click', '.btn-success, .btn-danger', function(e) {
+	e.preventDefault();
+	
+	var element = this;
+	
+	$.ajax({
+		url: $(element).attr('href'),
+		dataType: 'json',
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(json) {
+			$('.alert').remove();
+
+			if (json['error']) {
+				$('#customer-approval').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+
+			if (json['success']) {
+				$('#customer-approval').load('index.php?route=customer/customer_approval/list&user_token={{ user_token }}');
+
+				$('#customer-approval').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
 $('#button-filter').on('click', function() {
-	url = 'index.php?route=customer/customer_approval&user_token={{ user_token }}';
+	url = '';
 	
 	var filter_name = $('input[name=\'filter_name\']').val();
 	
@@ -208,7 +202,7 @@ $('#button-filter').on('click', function() {
 		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
 	}
 	
-	location = url;
+	$('#customer-approval').load('index.php?route=customer/customer_approval/list&user_token={{ user_token }}' + url);
 });
 //--></script> 
   <script type="text/javascript"><!--

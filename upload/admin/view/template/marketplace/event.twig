@@ -55,7 +55,7 @@
                 <td class="text-left">{{ event.code }}</td>
                 <td class="text-left">{{ event.status }}</td>
                 <td class="text-right">{{ event.sort_order }}</td>
-                <td class="text-right"><button type="button" class="btn btn-info"><i class="fa fa-info-circle"></i></button> {% if not event.enabled %}<a href="{{ event.enable }}" data-toggle="tooltip" title="{{ button_enable }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>{% else %}<a href="{{ event.disable }}" data-toggle="tooltip" title="{{ button_disable }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>{% endif %}
+                <td class="text-right"><button type="button" data-toggle="popover"data-trigger="click" title="Dismissible popover" data-container="body"   data-placement="left" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." class="btn btn-info"><i class="fa fa-info-circle"></i></button> {% if not event.enabled %}<a href="{{ event.enable }}" data-toggle="tooltip" title="{{ button_enable }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>{% else %}<a href="{{ event.disable }}" data-toggle="tooltip" title="{{ button_disable }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>{% endif %}
                 <div style="display: none;">
                   <p>{{ text_trigger }}</p>
                   <p>{{ event.trigger }}</p>
@@ -82,7 +82,10 @@
   </div>
     <script type="text/javascript"><!--
 $(document).ready(function() {	
-	$('#form-event .btn-info').popover({
+
+});	
+
+	$('data-toggle="popover"').popover({
 		template: function() {
 			html  = '<div class="popover" role="tooltip">';
 			html += '  <div class="arrow"></div>';
@@ -93,7 +96,6 @@ $(document).ready(function() {
 			return html;
 		}
 	});	
-});	
 /*	' + $(this).parent().find('div').html() + '
 data-toggle="tooltip" title="{{ button_info }}"
 $('#form-event .btn-info').on('click', function(e) {

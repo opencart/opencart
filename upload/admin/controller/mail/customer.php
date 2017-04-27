@@ -36,11 +36,11 @@ class ControllerMailCustomer extends Controller {
 								
 			$data['text_welcome'] = sprintf($this->language->get('text_welcome'), $store_name);
 			$data['text_login'] = $this->language->get('text_login');
-			$data['text_approval'] = $this->language->get('text_approval');
 			$data['text_service'] = $this->language->get('text_service');
 			$data['text_thanks'] = $this->language->get('text_thanks');
 				
 			$data['login'] = $store_url . 'index.php?route=account/login';	
+			$data['store'] = $store_name;
 	
 			$mail = new Mail();
 			$mail->protocol = $this->config->get('config_mail_protocol');
@@ -90,12 +90,14 @@ class ControllerMailCustomer extends Controller {
 			$language->load($language_code);
 			$language->load('mail/customer');
 				
-			$message  = sprintf($language->get('text_approve_welcome'), html_entity_decode($store_name, ENT_QUOTES, 'UTF-8')) . "\n\n";
-			$message .= $language->get('text_approve_login') . "\n";
-			$message .= $store_url . "\n\n";
-			$message .= $language->get('text_approve_services') . "\n\n";
-			$message .= $language->get('text_approve_thanks') . "\n";
-			$message .= html_entity_decode($store_name, ENT_QUOTES, 'UTF-8');
+			$subject = sprintf($language->get('text_subject'), html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
+				
+			$data['text_welcome'] = sprintf($this->language->get('text_welcome'), $store_name);
+			$data['text_denied'] = $language->get('text_denied');
+			$data['text_thanks'] = $this->language->get('text_thanks');
+				
+			$data['contact'] = $store_url . 'index.php?route=information/contact';	
+			$data['store'] = $store_name;
 
 			$mail = new Mail();
 			$mail->protocol = $this->config->get('config_mail_protocol');
@@ -109,8 +111,8 @@ class ControllerMailCustomer extends Controller {
 			$mail->setTo($customer_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject(sprintf($language->get('text_approve_subject'), html_entity_decode($store_name, ENT_QUOTES, 'UTF-8')));
-			$mail->setText($message);
+			$mail->setSubject($subject);
+			$mail->setText($this->load->view('mail/customer_deny', $data));
 			$mail->send();
 		}
 	}

@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="button" data-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fa fa-thumbs-o-up"></i></button>
-        <button type="button" data-toggle="tooltip" title="{{ button_deny }}" class="btn btn-danger"><i class="fa fa-thumbs-o-down"></i></button>
+        <button type="button" type="submit" form="form-customer" formaction="{{ approve }}" data-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fa fa-thumbs-o-up"></i></button>
+        <button type="button" type="submit" form="form-customer" formaction="{{ deny }}" data-toggle="tooltip" title="{{ button_deny }}" class="btn btn-danger"><i class="fa fa-thumbs-o-down"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
@@ -125,7 +125,7 @@
             </div>
           </div>
         </div>
-        <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-customer">
+        <form action="" method="post" enctype="multipart/form-data" id="form-customer">
           <div class="table-responsive">
             <table class="table table-bordered table-hover">
               <thead>

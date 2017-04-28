@@ -602,7 +602,7 @@
                 </div>
               </div>
 
-              {% if braintree_config.paypal_enabled == 1 and braintree_config.paypal_billing_agreement_enabled == 1 %}
+              {% if braintree_config.paypal_enabled == 1 %}
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-paypal-vault"><span data-toggle="tooltip" title="{{ help_paypal_vault }}">{{ entry_paypal_vault }}</span></label>
                   <div class="col-sm-10">

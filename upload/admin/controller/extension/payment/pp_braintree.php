@@ -593,11 +593,9 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$data['braintree_config'] = array();
 		$data['braintree_config']['three_d_secure_enabled'] = 0;
 		$data['braintree_config']['paypal_enabled'] = 0;
-		$data['braintree_config']['paypal_billing_agreement_enabled'] = 0;
 
 		$data['error_braintree_account_3ds'] = $this->language->get('error_braintree_account_3ds');
 		$data['error_braintree_account_paypal'] = $this->language->get('error_braintree_account_paypal');
-		$data['error_braintree_account_billing'] = $this->language->get('error_braintree_account_billing');
 
 		// load the account info from braintree if the config has been added yet.
 		if (!empty($data['pp_braintree_access_token']) || (!empty($data['pp_braintree_environment']) && !empty($data['pp_braintree_merchant_id']) && !empty($data['pp_braintree_public_key']) && !empty($data['pp_braintree_private_key']))) {
@@ -615,20 +613,12 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			} else {
 				$merchant_config = json_decode(base64_decode($verify_credentials), true);
 
-				echo "<pre>";
-				print_r($merchant_config);
-				echo "</pre>";
-
 				if (isset($merchant_config['threeDSecureEnabled']) && $merchant_config['threeDSecureEnabled'] == 1) {
 					$data['braintree_config']['three_d_secure_enabled'] = 1;
 				}
 
 				if (isset($merchant_config['paypalEnabled']) && $merchant_config['paypalEnabled'] == 1) {
 					$data['braintree_config']['paypal_enabled'] = 1;
-				}
-
-				if (isset($merchant_config['paypal']['billingAgreementsEnabled']) && $merchant_config['paypal']['billingAgreementsEnabled'] == 1) {
-					$data['braintree_config']['paypal_billing_agreement_enabled'] = 1;
 				}
 			}
 		}

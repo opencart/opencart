@@ -12,7 +12,15 @@
   </tr>
   <tr>
     <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_status; ?>"><?php echo $text_status; ?></span></td>
-    <td id="flp_status"><span style="font-weight:bold; color:<?php if (strtolower($flp_status) == 'approve') echo '#5cb85c'; else if (strtolower($flp_status) == 'review') echo '#f0ad4e'; else echo '#d9534f'; ?>"><?php echo $flp_status; ?></span></td>
+	<?php
+		$flp_display_status = $flp_status;
+		
+		if (strtolower($flp_display_status) == 'approve')
+			$flp_display_status = 'APPROVED';
+		else if(strtolower($flp_status) == 'reject')
+			$flp_display_status = 'REJECTED';
+	?>
+    <td id="flp_status"><span style="font-weight:bold; color:<?php if (strtolower($flp_status) == 'approve') echo '#5cb85c'; else if (strtolower($flp_status) == 'review') echo '#f0ad4e'; else echo '#d9534f'; ?>"><?php echo $flp_display_status; ?></span></td>
   </tr>
   <tr>
     <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_ip_address; ?>"><?php echo $text_ip_address; ?></span></td>
@@ -97,11 +105,13 @@
     <td id="flp_action" colspan="2">
       <form id="review-action" method="post">
 	<div align="center">
-	  <button type="button" id="button-flp-approve" class="btn btn-primary"><i class="fa fa-check"></i> Approve</button>
+	  <button type="button" id="button-flp-approve" class="btn btn-success"><i class="fa fa-check"></i> Approve</button>
 	  <button type="button" id="button-flp-reject" class="btn btn-danger"><i class="fa fa-remove"></i> Reject</button>
+	  <button type="button" id="button-flp-reject-blacklist" class="btn btn-default" title="Upon clicking the blacklist button, this order will be rejected and the records will be blacklisted."><i class="fa fa-exclamation-circle"></i> Blacklist</button>
 	</div>
 	<input type="hidden" id="flp_id" name="flp_id" value="<?php echo $flp_id; ?>" />
 	<input type="hidden" id="new_status" name="new_status" value="" />
+	<input type="hidden" id="feedback_note" name="feedback_note" value="" />
       </form>
       
       <script>
@@ -116,6 +126,17 @@
 		$("#button-flp-reject").click(function(){
 			$("#new_status").val("REJECT");
 			$("#review-action").submit();
+		});
+	});
+	
+	$(document).ready(function(){
+		$("#button-flp-reject-blacklist").click(function(){
+			var note = prompt("Please enter the reason(s) for blacklisting this order. (Optional)");
+			if(note !== null){
+				$("#feedback_note").val(note);
+				$("#new_status").val("REJECT_BLACKLIST");
+				$("#review-action").submit();
+			}
 		});
 	});
       </script>

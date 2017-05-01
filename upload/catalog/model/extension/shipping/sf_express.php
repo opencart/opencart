@@ -97,27 +97,18 @@ class ModelExtensionShippingSFExpress extends Model {
 			);			
 			
 			$parcels[] = array(
-				'box_type'    =>,
-				'dimension'   =>,
+				'box_type'    => "",
+				'dimension'   => "",
 				'items'       => array of item,
-				'description' =>,
+				'description' => "",
 				'weight'      => $weight
 			);
-
-				Item
-
 			
-			
-
-
 			$request = array(
 				'ship_from' => $address_from,
 				'ship_to'   => $address_to,
 				'parcels'   => $parcel
 			);
-
-
-
 
 			$xml  = '<?xml version="1.0"?>';
 			$xml .= '<AccessRequest xml:lang="en-US">';

@@ -669,9 +669,9 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 		// Vault options
 		$defaults['pp_braintree_card_vault'] = 1;
-		$defaults['pp_braintree_paypal_vault'] = 1;
+		$defaults['pp_braintree_paypal_vault'] = 0;
 		$defaults['pp_braintree_card_check_vault'] = 1;
-		$defaults['pp_braintree_paypal_check_vault'] = 1;
+		$defaults['pp_braintree_paypal_check_vault'] = 0;
 
 		$this->model_setting_setting->editSetting('pp_braintree', $defaults);
 	}

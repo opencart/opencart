@@ -428,7 +428,7 @@
         useraction: "commit",
         amount: {{ total }},
         currency: "{{ currency_code }}",
-        {% if pp_braintree_vault == 1 and pp_braintree_billing_agreement is not empty %}
+        {% if pp_braintree_paypal_vault == 1 and pp_braintree_billing_agreement is not empty %}
         billingAgreementDescription: "{{ pp_braintree_billing_agreement }}",
         {% endif %}
         {% if customer_shipping_address is not empty %}
@@ -638,7 +638,7 @@
     var payment_method_nonce = $('<input>').attr('type', 'hidden').attr('name', 'payment_method_nonce').val(nonce);
     $('#braintree-new').append($(payment_method_nonce));
 
-    {% if pp_braintree_vault == 1 and guest != true %}
+    {% if pp_braintree_paypal_vault == 1 and guest != true %}
       var vault_method;
 
       if (vault_payment == 1) {

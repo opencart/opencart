@@ -1,7 +1,7 @@
 <div id="braintree-alert" class="alert alert-danger" style="display:none;"></div>
 
 <div class="buttons clearfix">
-  <form target="_blank" method="POST" action="{{ action }}" id="braintree-express-form"></form>
+  <form method="POST" action="{{ action }}" id="braintree-express-form"></form>
   <div class="pull-right">
     <script src="https://www.paypalobjects.com/api/button.js?" data-merchant="braintree" data-id="paypal-button-module" data-button="checkout" data-color="{{ pp_braintree_paypal_button_colour }}" data-size="{{ pp_braintree_paypal_button_size }}" data-shape="{{ pp_braintree_paypal_button_shape }}" data-button_type="submit" data-button_disabled="false"></script>
   </div>

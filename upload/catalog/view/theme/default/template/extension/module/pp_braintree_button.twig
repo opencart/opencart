@@ -3,7 +3,7 @@
 <div class="buttons clearfix">
   <form target="_blank" method="POST" action="{{ action }}" id="braintree-express-form"></form>
   <div class="pull-right">
-    <script src="https://www.paypalobjects.com/api/button.js?" data-merchant="braintree" data-id="paypal-button" data-button="checkout" data-color="{{ pp_braintree_paypal_button_colour }}" data-size="{{ pp_braintree_paypal_button_size }}" data-shape="{{ pp_braintree_paypal_button_shape }}" data-button_type="submit" data-button_disabled="false"></script>
+    <script src="https://www.paypalobjects.com/api/button.js?" data-merchant="braintree" data-id="paypal-button-module" data-button="checkout" data-color="{{ pp_braintree_paypal_button_colour }}" data-size="{{ pp_braintree_paypal_button_size }}" data-shape="{{ pp_braintree_paypal_button_shape }}" data-button_type="submit" data-button_disabled="false"></script>
   </div>
 </div>
 <script type="text/javascript">
@@ -32,12 +32,12 @@
           return;
         }
 
-        $('#paypal-button').prop('disabled', false);
+        $('#paypal-button-module').prop('disabled', false);
 
-        $('body').on('click', '#paypal-button', function (event) {
+        $('body').on('click', '#paypal-button-module', function (event) {
           event.preventDefault();
 
-          $('#paypal-button').attr('disabled', true);
+          $('#paypal-button-module').attr('disabled', true);
 
           instance.tokenize({
             flow: "checkout",
@@ -52,7 +52,7 @@
             shippingAddressEditable: true
           }, function (tokenize_error, payload) {
             if (tokenize_error) {
-              $('#paypal-button').prop('disabled', false);
+              $('#paypal-button-module').prop('disabled', false);
 
               switch (tokenize_error.code) {
                 case 'PAYPAL_POPUP_CLOSED':
@@ -77,18 +77,18 @@
                 dataType: 'json',
                 success: function(json) {
                   if (json.error) {
-                      $('#paypal-button').prop('disabled', false);
+                      $('#paypal-button-module').prop('disabled', false);
 
                       window.location.href = json.url;
                   } else {
-                      $('#paypal-button').prop('disabled', false);
+                      $('#paypal-button-module').prop('disabled', false);
                       $('<input>').attr('type', 'hidden').attr('name', 'nonce').val(payload.nonce).appendTo('#braintree-express-form');
                       $('#braintree-express-form').submit();
                   }
                 },
                 failure: function() {
                   console.log('Failed to setup payment');
-                  $('#paypal-button').prop('disabled', false);
+                  $('#paypal-button-module').prop('disabled', false);
                 }
               });
 

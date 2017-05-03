@@ -16,7 +16,7 @@
 
     braintree.client.create({
       authorization: '{{ client_token }}'
-    }, function (client_error, braintree_client) {
+    }, function (client_error, braintree_client_button) {
       console.log("Create Client");
 
       if (client_error) {
@@ -25,7 +25,7 @@
       }
 
       braintree.paypal.create({
-        client: braintree_client
+        client: braintree_client_button
       }, function (error, instance) {
         if (error) {
           console.error(error);

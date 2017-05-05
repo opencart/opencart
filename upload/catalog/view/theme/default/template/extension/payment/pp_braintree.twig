@@ -158,7 +158,6 @@
   var vault_card_payment = {{ pp_braintree_card_check_vault }};
   var vault_paypal_payment = {{ pp_braintree_paypal_check_vault }};
 
-
   {% if pp_braintree_card_vault == 1 and guest != true %}
     $('body').on('change', '#vault-method-card', function (event) {
        if ($(this).prop("checked"))  {
@@ -638,7 +637,7 @@
     var payment_method_nonce = $('<input>').attr('type', 'hidden').attr('name', 'payment_method_nonce').val(nonce);
     $('#braintree-new').append($(payment_method_nonce));
 
-    {% if pp_braintree_paypal_vault == 1 and guest != true %}
+    {% if (pp_braintree_paypal_vault == 1 or pp_braintree_card_vault == 1) and guest != true %}
       var vault_method;
 
       if (vault_payment == 1) {

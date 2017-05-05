@@ -3,10 +3,6 @@ namespace Template;
 final class PHP {
 	private $directory;
 	private $data = array();
-	
-	public function __construct($directory) {
-		$this->directory = $directory;
-	}
 		
 	public function set($key, $value) {
 		$this->data[$key] = $value;

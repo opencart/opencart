@@ -108,11 +108,11 @@
                 <div class="col-sm-10">
                   <select name="pp_braintree_settlement_immediate" id="input-settlement-immediate" class="form-control">
                     {% if pp_braintree_settlement_immediate == 1 %}
-					            <option value="1">{{ text_immediate }}</option>
-                      <option value="0" selected="selected">{{ text_deferred }}</option>
-                    {% else %}
 					            <option value="1" selected="selected">{{ text_immediate }}</option>
                       <option value="0">{{ text_deferred }}</option>
+                    {% else %}
+					            <option value="1">{{ text_immediate }}</option>
+                      <option value="0" selected="selected">{{ text_deferred }}</option>
                     {% endif %}
                   </select>
                 </div>

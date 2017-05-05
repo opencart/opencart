@@ -60,7 +60,7 @@ class ControllerCheckoutLogin extends Controller {
 			// Check if customer has been approved.
 			$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
 
-			if ($customer_info && !$customer_info['approved']) {
+			if ($customer_info && !$customer_info['status']) {
 				$json['error']['warning'] = $this->language->get('error_approved');
 			}
 

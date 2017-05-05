@@ -14,11 +14,7 @@ class ControllerAccountForgotten extends Controller {
 		$this->load->model('account/customer');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->load->language('mail/forgotten');
-
-			$code = token(40);
-
-			$this->model_account_customer->editCode($this->request->post['email'], $code);
+			$this->model_account_customer->editCode($this->request->post['email'], token(40));
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

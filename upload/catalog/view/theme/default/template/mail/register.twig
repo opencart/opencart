@@ -2,12 +2,18 @@
 
 {% if not approval %}
 {{ text_login }}
-{{ login }}
-{% else %}
-{{ text_approval }}
-{% endif %}
 
-{{ text_services }}
+{{ login }}
+
+{{ text_service }}
 
 {{ text_thanks }}
 {{ store }}
+{% else %}
+{{ text_approval }}
+
+{{ login }}
+
+{{ text_thanks }}
+{{ store }}
+{% endif %}

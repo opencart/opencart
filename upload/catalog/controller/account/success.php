@@ -24,7 +24,7 @@ class ControllerAccountSuccess extends Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
-		if (!$this->customer->isLogged()) {
+		if ($this->customer->isLogged()) {
 			$data['text_message'] = sprintf($this->language->get('text_message'), $this->url->link('information/contact'));
 		} else {
 			$data['text_message'] = sprintf($this->language->get('text_approval'), $this->config->get('config_name'), $this->url->link('information/contact'));

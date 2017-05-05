@@ -23,6 +23,7 @@ $_['entry_lastname']            = 'Last Name';
 $_['entry_email']               = 'E-Mail';
 $_['entry_telephone']           = 'Telephone';
 $_['entry_company']             = 'Company';
+$_['entry_website']             = 'Web Site';
 $_['entry_tax']                 = 'Tax ID';
 $_['entry_payment']             = 'Payment Method';
 $_['entry_cheque']              = 'Cheque Payee Name';

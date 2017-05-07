@@ -2,10 +2,10 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title"><img class="pull-right" width="135" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_200x51.png" alt="PayPal Logo"></h3>
-      {% if pp_express_status == "enabled" %}
+      {% if payment_pp_express_status == "enabled" %}
         <div class="pull-right"><span class="label label-success">{{ text_enabled }}</span></div>
       {% endif %}
-      {% if pp_express_status == "disabled" %}
+      {% if payment_pp_express_status == "disabled" %}
         <div class="pull-right"><span class="label label-danger">{{ text_disabled }}</span></div>
       {% endif %}
     </div>

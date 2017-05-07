@@ -5,12 +5,12 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['text_loading'] = $this->language->get('text_loading');
-		$data['pp_express_incontext_disable'] = $this->config->get('pp_express_incontext_disable');
+		$data['payment_pp_express_incontext_disable'] = $this->config->get('payment_pp_express_incontext_disable');
 
-		if ($this->config->get('pp_express_test') == 1) {
-			$data['username'] = $this->config->get('pp_express_sandbox_username');
+		if ($this->config->get('payment_pp_express_test') == 1) {
+			$data['username'] = $this->config->get('payment_pp_express_sandbox_username');
 		} else {
-			$data['username'] = $this->config->get('pp_express_username');
+			$data['username'] = $this->config->get('payment_pp_express_username');
 		}
 
 		$data['continue'] = $this->url->link('extension/payment/pp_express/checkout', '', true);
@@ -707,13 +707,13 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 		array_multisort($sort_order, SORT_ASC, $method_data);
 
-		if (!isset($method_data['pp_express'])) {
+		if (!isset($method_data['payment_pp_express'])) {
 			$this->session->data['error_warning'] = $this->language->get('error_unavailable');
 			$this->response->redirect($this->url->link('checkout/checkout', '', true));
 		}
 
 		$this->session->data['payment_methods'] = $method_data;
-		$this->session->data['payment_method'] = $this->session->data['payment_methods']['pp_express'];
+		$this->session->data['payment_method'] = $this->session->data['payment_methods']['payment_pp_express'];
 
 		$data['action_confirm'] = $this->url->link('extension/payment/pp_express/expressComplete', '', true);
 

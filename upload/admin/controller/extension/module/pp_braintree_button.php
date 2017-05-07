@@ -8,11 +8,11 @@ class ControllerExtensionModulePPBraintreeButton extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('pp_braintree_button', $this->request->post);
+			$this->model_setting_setting->editSetting('module_pp_braintree_button', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -42,27 +42,27 @@ class ControllerExtensionModulePPBraintreeButton extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/module/pp_braintree_button', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/module/pp_braintree_button', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/module/pp_braintree_button', 'token=' . $this->session->data['token'], true);
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
-		$data['layouts'] = $this->url->link('design/layout', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/module/pp_braintree_button', 'user_token=' . $this->session->data['user_token'], true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true);
+		$data['layouts'] = $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'], true);
 
-		if (isset($this->request->post['pp_braintree_button_status'])) {
-			$data['pp_braintree_button_status'] = $this->request->post['pp_braintree_button_status'];
+		if (isset($this->request->post['module_pp_braintree_button_status'])) {
+			$data['module_pp_braintree_button_status'] = $this->request->post['module_pp_braintree_button_status'];
 		} else {
-			$data['pp_braintree_button_status'] = $this->config->get('pp_braintree_button_status');
+			$data['module_pp_braintree_button_status'] = $this->config->get('module_pp_braintree_button_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -75,29 +75,29 @@ class ControllerExtensionModulePPBraintreeButton extends Controller {
 	public function install() {
 		$this->load->model('setting/setting');
 
-		$settings['pp_braintree_button_status'] = 1;
+		$settings['module_pp_braintree_button_status'] = 1;
 
-		$this->model_setting_setting->editSetting('pp_braintree_button', $settings);
+		$this->model_setting_setting->editSetting('module_pp_braintree_button', $settings);
 	}
 
 	public function configure() {
 		$this->load->language('extension/extension/module');
 
 		if (!$this->user->hasPermission('modify', 'extension/extension/module')) {
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'], true));
 		} else {
-			$this->load->model('extension/extension');
+			$this->load->model('setting/extension');
 			$this->load->model('extension/module');
 			$this->load->model('user/user_group');
 
-			$this->model_extension_extension->install('module', 'pp_braintree_button');
+			$this->model_setting_extension->install('module', 'module_pp_braintree_button');
 
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/module/pp_braintree_button');
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/module/pp_braintree_button');
 
 			$this->install();
 
-			$this->response->redirect($this->url->link('design/layout', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'], true));
 		}
 	}
 

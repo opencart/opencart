@@ -975,9 +975,9 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 				// Shipping Methods
 				$quote_data = array();
 
-				$this->load->model('extension/extension');
+				$this->load->model('setting/extension');
 
-				$results = $this->model_extension_extension->getExtensions('shipping');
+				$results = $this->model_setting_extension->getExtensions('shipping');
 
 				if (!empty($results)) {
 					foreach ($results as $result) {
@@ -1034,7 +1034,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		}
 
 		// Totals
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		$totals = array();
 		$taxes = $this->cart->getTaxes();
@@ -1051,7 +1051,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 			$sort_order = array();
 
-			$results = $this->model_extension_extension->getExtensions('total');
+			$results = $this->model_setting_extension->getExtensions('total');
 
 			foreach ($results as $key => $value) {
 				$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
@@ -1098,9 +1098,9 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 		$method_data = array();
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
-		$results = $this->model_extension_extension->getExtensions('payment');
+		$results = $this->model_setting_extension->getExtensions('payment');
 
 		foreach ($results as $result) {
 			if ($this->config->get($result['code'] . '_status')) {
@@ -1242,11 +1242,11 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 				'total'  => &$total
 			);
 
-			$this->load->model('extension/extension');
+			$this->load->model('setting/extension');
 
 			$sort_order = array();
 
-			$results = $this->model_extension_extension->getExtensions('total');
+			$results = $this->model_setting_extension->getExtensions('total');
 
 			foreach ($results as $key => $value) {
 				$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');

@@ -837,7 +837,7 @@ $('.date').datetimepicker({
 $('#button-filter').on('click', function(event) {
 	event.preventDefault();
 
-	var url = 'index.php?route=extension/payment/pp_braintree/search&token={{ token }}';
+	var url = 'index.php?route=extension/payment/pp_braintree/search&user_token={{ user_token }}';
 
 	var filter_transaction_id = $('input[name=\'filter_transaction_id\']').val();
 

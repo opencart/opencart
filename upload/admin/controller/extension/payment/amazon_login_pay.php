@@ -235,17 +235,20 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			$data['payment_amazon_login_pay_language'] = 'de-DE';
 			$data['sp_id'] = 'AGGDPRPDPL7SL';
 			$data['locale'] = 'EUR';
-			$ld = 'SPEXDEAPA-OpencartPL';
+			//$ld = 'SPEXDEAPA-OpencartPL'; // needs to be changed
+			$ld = '';
 		} elseif ($data['payment_amazon_login_pay_payment_region'] == 'GBP') {
 			$data['payment_amazon_login_pay_language'] = 'en-GB';
 			$data['sp_id'] = 'A1P8WV11EWOP9H';
 			$data['locale'] = 'GBP';
-			$ld = 'SPEXUKAPA-OpencartPL';
+			//$ld = 'SPEXUKAPA-OpencartPL'; // needs to be changed
+			$ld = '';
 		} else {
 			$data['payment_amazon_login_pay_language'] = 'en-US';
 			$data['sp_id'] = 'A3GK1RS09H3A7D';
 			$data['locale'] = 'US';
-			$ld = 'SPEXUSAPA-OpencartPL';
+			//$ld = 'SPEXUSAPA-OpencartPL'; // needs to be changed
+			$ld = '';
 		}
 
 		if (isset($this->request->post['payment_amazon_login_pay_language'])) {

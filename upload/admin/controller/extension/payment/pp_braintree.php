@@ -13,13 +13,13 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			foreach ($this->request->post['pp_braintree_account'] as $currency => $account) {
+			foreach ($this->request->post['payment_pp_braintree_account'] as $currency => $account) {
 				if (!isset($account['status'])) {
-					$this->request->post['pp_braintree_account'][$currency]['status'] = 0;
+					$this->request->post['payment_pp_braintree_account'][$currency]['status'] = 0;
 				}
 			}
 
-			$this->model_setting_setting->editSetting('pp_braintree', $this->request->post);
+			$this->model_setting_setting->editSetting('payment_pp_braintree', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -207,286 +207,286 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
 
-		if (isset($this->request->post['pp_braintree_merchant_id'])) {
-			$data['pp_braintree_merchant_id'] = $this->request->post['pp_braintree_merchant_id'];
+		if (isset($this->request->post['payment_pp_braintree_merchant_id'])) {
+			$data['payment_pp_braintree_merchant_id'] = $this->request->post['payment_pp_braintree_merchant_id'];
 		} else {
-			$data['pp_braintree_merchant_id'] = $this->config->get('pp_braintree_merchant_id');
+			$data['payment_pp_braintree_merchant_id'] = $this->config->get('payment_pp_braintree_merchant_id');
 		}
 
-		if (isset($this->request->post['pp_braintree_public_key'])) {
-			$data['pp_braintree_public_key'] = $this->request->post['pp_braintree_public_key'];
+		if (isset($this->request->post['payment_pp_braintree_public_key'])) {
+			$data['payment_pp_braintree_public_key'] = $this->request->post['payment_pp_braintree_public_key'];
 		} else {
-			$data['pp_braintree_public_key'] = $this->config->get('pp_braintree_public_key');
+			$data['payment_pp_braintree_public_key'] = $this->config->get('payment_pp_braintree_public_key');
 		}
 
-		if (isset($this->request->post['pp_braintree_private_key'])) {
-			$data['pp_braintree_private_key'] = $this->request->post['pp_braintree_private_key'];
+		if (isset($this->request->post['payment_pp_braintree_private_key'])) {
+			$data['payment_pp_braintree_private_key'] = $this->request->post['payment_pp_braintree_private_key'];
 		} else {
-			$data['pp_braintree_private_key'] = $this->config->get('pp_braintree_private_key');
+			$data['payment_pp_braintree_private_key'] = $this->config->get('payment_pp_braintree_private_key');
 		}
 
-		if (isset($this->request->post['pp_braintree_access_token'])) {
-			$data['pp_braintree_access_token'] = $this->request->post['pp_braintree_access_token'];
+		if (isset($this->request->post['payment_pp_braintree_access_token'])) {
+			$data['payment_pp_braintree_access_token'] = $this->request->post['payment_pp_braintree_access_token'];
 		} else {
-			$data['pp_braintree_access_token'] = $this->config->get('pp_braintree_access_token');
+			$data['payment_pp_braintree_access_token'] = $this->config->get('payment_pp_braintree_access_token');
 		}
 
-		if (isset($this->request->post['pp_braintree_refresh_token'])) {
-			$data['pp_braintree_refresh_token'] = $this->request->post['pp_braintree_refresh_token'];
+		if (isset($this->request->post['payment_pp_braintree_refresh_token'])) {
+			$data['payment_pp_braintree_refresh_token'] = $this->request->post['payment_pp_braintree_refresh_token'];
 		} else {
-			$data['pp_braintree_refresh_token'] = $this->config->get('pp_braintree_refresh_token');
+			$data['payment_pp_braintree_refresh_token'] = $this->config->get('payment_pp_braintree_refresh_token');
 		}
 
-		if (isset($this->request->post['pp_braintree_environment'])) {
-			$data['pp_braintree_environment'] = $this->request->post['pp_braintree_environment'];
+		if (isset($this->request->post['payment_pp_braintree_environment'])) {
+			$data['payment_pp_braintree_environment'] = $this->request->post['payment_pp_braintree_environment'];
 		} else {
-			$data['pp_braintree_environment'] = $this->config->get('pp_braintree_environment');
+			$data['payment_pp_braintree_environment'] = $this->config->get('payment_pp_braintree_environment');
 		}
 
-		if (isset($this->request->post['pp_braintree_settlement_immediate'])) {
-			$data['pp_braintree_settlement_immediate'] = $this->request->post['pp_braintree_settlement_immediate'];
+		if (isset($this->request->post['payment_pp_braintree_settlement_immediate'])) {
+			$data['payment_pp_braintree_settlement_immediate'] = $this->request->post['payment_pp_braintree_settlement_immediate'];
 		} else {
-			$data['pp_braintree_settlement_immediate'] = $this->config->get('pp_braintree_settlement_immediate');
+			$data['payment_pp_braintree_settlement_immediate'] = $this->config->get('payment_pp_braintree_settlement_immediate');
 		}
 
-		if (isset($this->request->post['pp_braintree_card_vault'])) {
-			$data['pp_braintree_card_vault'] = $this->request->post['pp_braintree_card_vault'];
+		if (isset($this->request->post['payment_pp_braintree_card_vault'])) {
+			$data['payment_pp_braintree_card_vault'] = $this->request->post['payment_pp_braintree_card_vault'];
 		} else {
-			$data['pp_braintree_card_vault'] = $this->config->get('pp_braintree_card_vault');
+			$data['payment_pp_braintree_card_vault'] = $this->config->get('payment_pp_braintree_card_vault');
 		}
 
-		if (isset($this->request->post['pp_braintree_card_check_vault'])) {
-			$data['pp_braintree_card_check_vault'] = $this->request->post['pp_braintree_card_check_vault'];
+		if (isset($this->request->post['payment_pp_braintree_card_check_vault'])) {
+			$data['payment_pp_braintree_card_check_vault'] = $this->request->post['payment_pp_braintree_card_check_vault'];
 		} else {
-			$data['pp_braintree_card_check_vault'] = $this->config->get('pp_braintree_card_check_vault');
+			$data['payment_pp_braintree_card_check_vault'] = $this->config->get('payment_pp_braintree_card_check_vault');
 		}
 
-		if (isset($this->request->post['pp_braintree_paypal_vault'])) {
-			$data['pp_braintree_paypal_vault'] = $this->request->post['pp_braintree_paypal_vault'];
+		if (isset($this->request->post['payment_pp_braintree_paypal_vault'])) {
+			$data['payment_pp_braintree_paypal_vault'] = $this->request->post['payment_pp_braintree_paypal_vault'];
 		} else {
-			$data['pp_braintree_paypal_vault'] = $this->config->get('pp_braintree_paypal_vault');
+			$data['payment_pp_braintree_paypal_vault'] = $this->config->get('payment_pp_braintree_paypal_vault');
 		}
 
-		if (isset($this->request->post['pp_braintree_paypal_check_vault'])) {
-			$data['pp_braintree_paypal_check_vault'] = $this->request->post['pp_braintree_paypal_check_vault'];
+		if (isset($this->request->post['payment_pp_braintree_paypal_check_vault'])) {
+			$data['payment_pp_braintree_paypal_check_vault'] = $this->request->post['payment_pp_braintree_paypal_check_vault'];
 		} else {
-			$data['pp_braintree_paypal_check_vault'] = $this->config->get('pp_braintree_paypal_check_vault');
+			$data['payment_pp_braintree_paypal_check_vault'] = $this->config->get('payment_pp_braintree_paypal_check_vault');
 		}
 
-		if (isset($this->request->post['pp_braintree_vault_cvv_3ds'])) {
-			$data['pp_braintree_vault_cvv_3ds'] = $this->request->post['pp_braintree_vault_cvv_3ds'];
+		if (isset($this->request->post['payment_pp_braintree_vault_cvv_3ds'])) {
+			$data['payment_pp_braintree_vault_cvv_3ds'] = $this->request->post['payment_pp_braintree_vault_cvv_3ds'];
 		} else {
-			$data['pp_braintree_vault_cvv_3ds'] = $this->config->get('pp_braintree_vault_cvv_3ds');
+			$data['payment_pp_braintree_vault_cvv_3ds'] = $this->config->get('payment_pp_braintree_vault_cvv_3ds');
 		}
 
-		if (isset($this->request->post['pp_braintree_debug'])) {
-			$data['pp_braintree_debug'] = $this->request->post['pp_braintree_debug'];
+		if (isset($this->request->post['payment_pp_braintree_debug'])) {
+			$data['payment_pp_braintree_debug'] = $this->request->post['payment_pp_braintree_debug'];
 		} else {
-			$data['pp_braintree_debug'] = $this->config->get('pp_braintree_debug');
+			$data['payment_pp_braintree_debug'] = $this->config->get('payment_pp_braintree_debug');
 		}
 
-		if (isset($this->request->post['pp_braintree_total'])) {
-			$data['pp_braintree_total'] = $this->request->post['pp_braintree_total'];
+		if (isset($this->request->post['payment_pp_braintree_total'])) {
+			$data['payment_pp_braintree_total'] = $this->request->post['payment_pp_braintree_total'];
 		} else {
-			$data['pp_braintree_total'] = $this->config->get('pp_braintree_total');
+			$data['payment_pp_braintree_total'] = $this->config->get('payment_pp_braintree_total');
 		}
 
-		if (isset($this->request->post['pp_braintree_geo_zone_id'])) {
-			$data['pp_braintree_geo_zone_id'] = $this->request->post['pp_braintree_geo_zone_id'];
+		if (isset($this->request->post['payment_pp_braintree_geo_zone_id'])) {
+			$data['payment_pp_braintree_geo_zone_id'] = $this->request->post['payment_pp_braintree_geo_zone_id'];
 		} else {
-			$data['pp_braintree_geo_zone_id'] = $this->config->get('pp_braintree_geo_zone_id');
+			$data['payment_pp_braintree_geo_zone_id'] = $this->config->get('payment_pp_braintree_geo_zone_id');
 		}
 
-		if (isset($this->request->post['pp_braintree_status'])) {
-			$data['pp_braintree_status'] = $this->request->post['pp_braintree_status'];
+		if (isset($this->request->post['payment_pp_braintree_status'])) {
+			$data['payment_pp_braintree_status'] = $this->request->post['payment_pp_braintree_status'];
 		} else {
-			$data['pp_braintree_status'] = $this->config->get('pp_braintree_status');
+			$data['payment_pp_braintree_status'] = $this->config->get('payment_pp_braintree_status');
 		}
 
-		if (isset($this->request->post['pp_braintree_sort_order'])) {
-			$data['pp_braintree_sort_order'] = $this->request->post['pp_braintree_sort_order'];
+		if (isset($this->request->post['payment_pp_braintree_sort_order'])) {
+			$data['payment_pp_braintree_sort_order'] = $this->request->post['payment_pp_braintree_sort_order'];
 		} else {
-			$data['pp_braintree_sort_order'] = $this->config->get('pp_braintree_sort_order');
+			$data['payment_pp_braintree_sort_order'] = $this->config->get('payment_pp_braintree_sort_order');
 		}
 
-		if (isset($this->request->post['pp_braintree_account'])) {
-			$data['pp_braintree_account'] = $this->request->post['pp_braintree_account'];
+		if (isset($this->request->post['payment_pp_braintree_account'])) {
+			$data['payment_pp_braintree_account'] = $this->request->post['payment_pp_braintree_account'];
 		} else {
-			$data['pp_braintree_account'] = $this->config->get('pp_braintree_account');
+			$data['payment_pp_braintree_account'] = $this->config->get('payment_pp_braintree_account');
 		}
 
-		if (isset($this->request->post['pp_braintree_authorization_expired_id'])) {
-			$data['pp_braintree_authorization_expired_id'] = $this->request->post['pp_braintree_authorization_expired_id'];
+		if (isset($this->request->post['payment_pp_braintree_authorization_expired_id'])) {
+			$data['payment_pp_braintree_authorization_expired_id'] = $this->request->post['payment_pp_braintree_authorization_expired_id'];
 		} else {
-			$data['pp_braintree_authorization_expired_id'] = $this->config->get('pp_braintree_authorization_expired_id');
+			$data['payment_pp_braintree_authorization_expired_id'] = $this->config->get('payment_pp_braintree_authorization_expired_id');
 		}
 
-		if (isset($this->request->post['pp_braintree_authorized_id'])) {
-			$data['pp_braintree_authorized_id'] = $this->request->post['pp_braintree_authorized_id'];
+		if (isset($this->request->post['payment_pp_braintree_authorized_id'])) {
+			$data['payment_pp_braintree_authorized_id'] = $this->request->post['payment_pp_braintree_authorized_id'];
 		} else {
-			$data['pp_braintree_authorized_id'] = $this->config->get('pp_braintree_authorized_id');
+			$data['payment_pp_braintree_authorized_id'] = $this->config->get('payment_pp_braintree_authorized_id');
 		}
 
-		if (isset($this->request->post['pp_braintree_authorizing_id'])) {
-			$data['pp_braintree_authorizing_id'] = $this->request->post['pp_braintree_authorizing_id'];
+		if (isset($this->request->post['payment_pp_braintree_authorizing_id'])) {
+			$data['payment_pp_braintree_authorizing_id'] = $this->request->post['payment_pp_braintree_authorizing_id'];
 		} else {
-			$data['pp_braintree_authorizing_id'] = $this->config->get('pp_braintree_authorizing_id');
+			$data['payment_pp_braintree_authorizing_id'] = $this->config->get('payment_pp_braintree_authorizing_id');
 		}
 
-		if (isset($this->request->post['pp_braintree_settlement_pending_id'])) {
-			$data['pp_braintree_settlement_pending_id'] = $this->request->post['pp_braintree_settlement_pending_id'];
+		if (isset($this->request->post['payment_pp_braintree_settlement_pending_id'])) {
+			$data['payment_pp_braintree_settlement_pending_id'] = $this->request->post['payment_pp_braintree_settlement_pending_id'];
 		} else {
-			$data['pp_braintree_settlement_pending_id'] = $this->config->get('pp_braintree_settlement_pending_id');
+			$data['payment_pp_braintree_settlement_pending_id'] = $this->config->get('payment_pp_braintree_settlement_pending_id');
 		}
 
-		if (isset($this->request->post['pp_braintree_failed_id'])) {
-			$data['pp_braintree_failed_id'] = $this->request->post['pp_braintree_failed_id'];
+		if (isset($this->request->post['payment_pp_braintree_failed_id'])) {
+			$data['payment_pp_braintree_failed_id'] = $this->request->post['payment_pp_braintree_failed_id'];
 		} else {
-			$data['pp_braintree_failed_id'] = $this->config->get('pp_braintree_failed_id');
+			$data['payment_pp_braintree_failed_id'] = $this->config->get('payment_pp_braintree_failed_id');
 		}
 
-		if (isset($this->request->post['pp_braintree_gateway_rejected_id'])) {
-			$data['pp_braintree_gateway_rejected_id'] = $this->request->post['pp_braintree_gateway_rejected_id'];
+		if (isset($this->request->post['payment_pp_braintree_gateway_rejected_id'])) {
+			$data['payment_pp_braintree_gateway_rejected_id'] = $this->request->post['payment_pp_braintree_gateway_rejected_id'];
 		} else {
-			$data['pp_braintree_gateway_rejected_id'] = $this->config->get('pp_braintree_gateway_rejected_id');
+			$data['payment_pp_braintree_gateway_rejected_id'] = $this->config->get('payment_pp_braintree_gateway_rejected_id');
 		}
 
-		if (isset($this->request->post['pp_braintree_processor_declined_id'])) {
-			$data['pp_braintree_processor_declined_id'] = $this->request->post['pp_braintree_processor_declined_id'];
+		if (isset($this->request->post['payment_pp_braintree_processor_declined_id'])) {
+			$data['payment_pp_braintree_processor_declined_id'] = $this->request->post['payment_pp_braintree_processor_declined_id'];
 		} else {
-			$data['pp_braintree_processor_declined_id'] = $this->config->get('pp_braintree_processor_declined_id');
+			$data['payment_pp_braintree_processor_declined_id'] = $this->config->get('payment_pp_braintree_processor_declined_id');
 		}
 
-		if (isset($this->request->post['pp_braintree_settled_id'])) {
-			$data['pp_braintree_settled_id'] = $this->request->post['pp_braintree_settled_id'];
+		if (isset($this->request->post['payment_pp_braintree_settled_id'])) {
+			$data['payment_pp_braintree_settled_id'] = $this->request->post['payment_pp_braintree_settled_id'];
 		} else {
-			$data['pp_braintree_settled_id'] = $this->config->get('pp_braintree_settled_id');
+			$data['payment_pp_braintree_settled_id'] = $this->config->get('payment_pp_braintree_settled_id');
 		}
 
-		if (isset($this->request->post['pp_braintree_settling_id'])) {
-			$data['pp_braintree_settling_id'] = $this->request->post['pp_braintree_settling_id'];
+		if (isset($this->request->post['payment_pp_braintree_settling_id'])) {
+			$data['payment_pp_braintree_settling_id'] = $this->request->post['payment_pp_braintree_settling_id'];
 		} else {
-			$data['pp_braintree_settling_id'] = $this->config->get('pp_braintree_settling_id');
+			$data['payment_pp_braintree_settling_id'] = $this->config->get('payment_pp_braintree_settling_id');
 		}
 
-		if (isset($this->request->post['pp_braintree_submitted_for_settlement_id'])) {
-			$data['pp_braintree_submitted_for_settlement_id'] = $this->request->post['pp_braintree_submitted_for_settlement_id'];
+		if (isset($this->request->post['payment_pp_braintree_submitted_for_settlement_id'])) {
+			$data['payment_pp_braintree_submitted_for_settlement_id'] = $this->request->post['payment_pp_braintree_submitted_for_settlement_id'];
 		} else {
-			$data['pp_braintree_submitted_for_settlement_id'] = $this->config->get('pp_braintree_submitted_for_settlement_id');
+			$data['payment_pp_braintree_submitted_for_settlement_id'] = $this->config->get('payment_pp_braintree_submitted_for_settlement_id');
 		}
 
-		if (isset($this->request->post['pp_braintree_voided_id'])) {
-			$data['pp_braintree_voided_id'] = $this->request->post['pp_braintree_voided_id'];
+		if (isset($this->request->post['payment_pp_braintree_voided_id'])) {
+			$data['payment_pp_braintree_voided_id'] = $this->request->post['payment_pp_braintree_voided_id'];
 		} else {
-			$data['pp_braintree_voided_id'] = $this->config->get('pp_braintree_voided_id');
+			$data['payment_pp_braintree_voided_id'] = $this->config->get('payment_pp_braintree_voided_id');
 		}
 
-		if (isset($this->request->post['pp_braintree_3ds_status'])) {
-			$data['pp_braintree_3ds_status'] = $this->request->post['pp_braintree_3ds_status'];
+		if (isset($this->request->post['payment_pp_braintree_3ds_status'])) {
+			$data['payment_pp_braintree_3ds_status'] = $this->request->post['payment_pp_braintree_3ds_status'];
 		} else {
-			$data['pp_braintree_3ds_status'] = $this->config->get('pp_braintree_3ds_status');
+			$data['payment_pp_braintree_3ds_status'] = $this->config->get('payment_pp_braintree_3ds_status');
 		}
 
-		if (isset($this->request->post['pp_braintree_3ds_unsupported_card'])) {
-			$data['pp_braintree_3ds_unsupported_card'] = $this->request->post['pp_braintree_3ds_unsupported_card'];
+		if (isset($this->request->post['payment_pp_braintree_3ds_unsupported_card'])) {
+			$data['payment_pp_braintree_3ds_unsupported_card'] = $this->request->post['payment_pp_braintree_3ds_unsupported_card'];
 		} else {
-			$data['pp_braintree_3ds_unsupported_card'] = $this->config->get('pp_braintree_3ds_unsupported_card');
+			$data['payment_pp_braintree_3ds_unsupported_card'] = $this->config->get('payment_pp_braintree_3ds_unsupported_card');
 		}
 
-		if (isset($this->request->post['pp_braintree_3ds_lookup_error'])) {
-			$data['pp_braintree_3ds_lookup_error'] = $this->request->post['pp_braintree_3ds_lookup_error'];
+		if (isset($this->request->post['payment_pp_braintree_3ds_lookup_error'])) {
+			$data['payment_pp_braintree_3ds_lookup_error'] = $this->request->post['payment_pp_braintree_3ds_lookup_error'];
 		} else {
-			$data['pp_braintree_3ds_lookup_error'] = $this->config->get('pp_braintree_3ds_lookup_error');
+			$data['payment_pp_braintree_3ds_lookup_error'] = $this->config->get('payment_pp_braintree_3ds_lookup_error');
 		}
 
-		if (isset($this->request->post['pp_braintree_3ds_lookup_enrolled'])) {
-			$data['pp_braintree_3ds_lookup_enrolled'] = $this->request->post['pp_braintree_3ds_lookup_enrolled'];
+		if (isset($this->request->post['payment_pp_braintree_3ds_lookup_enrolled'])) {
+			$data['payment_pp_braintree_3ds_lookup_enrolled'] = $this->request->post['payment_pp_braintree_3ds_lookup_enrolled'];
 		} else {
-			$data['pp_braintree_3ds_lookup_enrolled'] = $this->config->get('pp_braintree_3ds_lookup_enrolled');
+			$data['payment_pp_braintree_3ds_lookup_enrolled'] = $this->config->get('payment_pp_braintree_3ds_lookup_enrolled');
 		}
 
-		if (isset($this->request->post['pp_braintree_3ds_lookup_not_enrolled'])) {
-			$data['pp_braintree_3ds_lookup_not_enrolled'] = $this->request->post['pp_braintree_3ds_lookup_not_enrolled'];
+		if (isset($this->request->post['payment_pp_braintree_3ds_lookup_not_enrolled'])) {
+			$data['payment_pp_braintree_3ds_lookup_not_enrolled'] = $this->request->post['payment_pp_braintree_3ds_lookup_not_enrolled'];
 		} else {
-			$data['pp_braintree_3ds_lookup_not_enrolled'] = $this->config->get('pp_braintree_3ds_lookup_not_enrolled');
+			$data['payment_pp_braintree_3ds_lookup_not_enrolled'] = $this->config->get('payment_pp_braintree_3ds_lookup_not_enrolled');
 		}
 
-		if (isset($this->request->post['pp_braintree_3ds_not_participating'])) {
-			$data['pp_braintree_3ds_not_participating'] = $this->request->post['pp_braintree_3ds_not_participating'];
+		if (isset($this->request->post['payment_pp_braintree_3ds_not_participating'])) {
+			$data['payment_pp_braintree_3ds_not_participating'] = $this->request->post['payment_pp_braintree_3ds_not_participating'];
 		} else {
-			$data['pp_braintree_3ds_not_participating'] = $this->config->get('pp_braintree_3ds_not_participating');
+			$data['payment_pp_braintree_3ds_not_participating'] = $this->config->get('payment_pp_braintree_3ds_not_participating');
 		}
 
-		if (isset($this->request->post['pp_braintree_3ds_unavailable'])) {
-			$data['pp_braintree_3ds_unavailable'] = $this->request->post['pp_braintree_3ds_unavailable'];
+		if (isset($this->request->post['payment_pp_braintree_3ds_unavailable'])) {
+			$data['payment_pp_braintree_3ds_unavailable'] = $this->request->post['payment_pp_braintree_3ds_unavailable'];
 		} else {
-			$data['pp_braintree_3ds_unavailable'] = $this->config->get('pp_braintree_3ds_unavailable');
+			$data['payment_pp_braintree_3ds_unavailable'] = $this->config->get('payment_pp_braintree_3ds_unavailable');
 		}
 
-		if (isset($this->request->post['pp_braintree_3ds_signature_failed'])) {
-			$data['pp_braintree_3ds_signature_failed'] = $this->request->post['pp_braintree_3ds_signature_failed'];
+		if (isset($this->request->post['payment_pp_braintree_3ds_signature_failed'])) {
+			$data['payment_pp_braintree_3ds_signature_failed'] = $this->request->post['payment_pp_braintree_3ds_signature_failed'];
 		} else {
-			$data['pp_braintree_3ds_signature_failed'] = $this->config->get('pp_braintree_3ds_signature_failed');
+			$data['payment_pp_braintree_3ds_signature_failed'] = $this->config->get('payment_pp_braintree_3ds_signature_failed');
 		}
 
-		if (isset($this->request->post['pp_braintree_3ds_successful'])) {
-			$data['pp_braintree_3ds_successful'] = $this->request->post['pp_braintree_3ds_successful'];
+		if (isset($this->request->post['payment_pp_braintree_3ds_successful'])) {
+			$data['payment_pp_braintree_3ds_successful'] = $this->request->post['payment_pp_braintree_3ds_successful'];
 		} else {
-			$data['pp_braintree_3ds_successful'] = $this->config->get('pp_braintree_3ds_successful');
+			$data['payment_pp_braintree_3ds_successful'] = $this->config->get('payment_pp_braintree_3ds_successful');
 		}
 
-		if (isset($this->request->post['pp_braintree_3ds_attempt_successful'])) {
-			$data['pp_braintree_3ds_attempt_successful'] = $this->request->post['pp_braintree_3ds_attempt_successful'];
+		if (isset($this->request->post['payment_pp_braintree_3ds_attempt_successful'])) {
+			$data['payment_pp_braintree_3ds_attempt_successful'] = $this->request->post['payment_pp_braintree_3ds_attempt_successful'];
 		} else {
-			$data['pp_braintree_3ds_attempt_successful'] = $this->config->get('pp_braintree_3ds_attempt_successful');
+			$data['payment_pp_braintree_3ds_attempt_successful'] = $this->config->get('payment_pp_braintree_3ds_attempt_successful');
 		}
 
-		if (isset($this->request->post['pp_braintree_3ds_failed'])) {
-			$data['pp_braintree_3ds_failed'] = $this->request->post['pp_braintree_3ds_failed'];
+		if (isset($this->request->post['payment_pp_braintree_3ds_failed'])) {
+			$data['payment_pp_braintree_3ds_failed'] = $this->request->post['payment_pp_braintree_3ds_failed'];
 		} else {
-			$data['pp_braintree_3ds_failed'] = $this->config->get('pp_braintree_3ds_failed');
+			$data['payment_pp_braintree_3ds_failed'] = $this->config->get('payment_pp_braintree_3ds_failed');
 		}
 
-		if (isset($this->request->post['pp_braintree_3ds_unable_to_auth'])) {
-			$data['pp_braintree_3ds_unable_to_auth'] = $this->request->post['pp_braintree_3ds_unable_to_auth'];
+		if (isset($this->request->post['payment_pp_braintree_3ds_unable_to_auth'])) {
+			$data['payment_pp_braintree_3ds_unable_to_auth'] = $this->request->post['payment_pp_braintree_3ds_unable_to_auth'];
 		} else {
-			$data['pp_braintree_3ds_unable_to_auth'] = $this->config->get('pp_braintree_3ds_unable_to_auth');
+			$data['payment_pp_braintree_3ds_unable_to_auth'] = $this->config->get('payment_pp_braintree_3ds_unable_to_auth');
 		}
 
-		if (isset($this->request->post['pp_braintree_3ds_error'])) {
-			$data['pp_braintree_3ds_error'] = $this->request->post['pp_braintree_3ds_error'];
+		if (isset($this->request->post['payment_pp_braintree_3ds_error'])) {
+			$data['payment_pp_braintree_3ds_error'] = $this->request->post['payment_pp_braintree_3ds_error'];
 		} else {
-			$data['pp_braintree_3ds_error'] = $this->config->get('pp_braintree_3ds_error');
+			$data['payment_pp_braintree_3ds_error'] = $this->config->get('payment_pp_braintree_3ds_error');
 		}
 
-		if (isset($this->request->post['pp_braintree_paypal_option'])) {
-			$data['pp_braintree_paypal_option'] = $this->request->post['pp_braintree_paypal_option'];
+		if (isset($this->request->post['payment_pp_braintree_paypal_option'])) {
+			$data['payment_pp_braintree_paypal_option'] = $this->request->post['payment_pp_braintree_paypal_option'];
 		} else {
-			$data['pp_braintree_paypal_option'] = $this->config->get('pp_braintree_paypal_option');
+			$data['payment_pp_braintree_paypal_option'] = $this->config->get('payment_pp_braintree_paypal_option');
 		}
 
-		if (isset($this->request->post['pp_braintree_paypal_button_colour'])) {
-			$data['pp_braintree_paypal_button_colour'] = $this->request->post['pp_braintree_paypal_button_colour'];
+		if (isset($this->request->post['payment_pp_braintree_paypal_button_colour'])) {
+			$data['payment_pp_braintree_paypal_button_colour'] = $this->request->post['payment_pp_braintree_paypal_button_colour'];
 		} else {
-			$data['pp_braintree_paypal_button_colour'] = $this->config->get('pp_braintree_paypal_button_colour');
+			$data['payment_pp_braintree_paypal_button_colour'] = $this->config->get('payment_pp_braintree_paypal_button_colour');
 		}
 
-		if (isset($this->request->post['pp_braintree_paypal_button_size'])) {
-			$data['pp_braintree_paypal_button_size'] = $this->request->post['pp_braintree_paypal_button_size'];
+		if (isset($this->request->post['payment_pp_braintree_paypal_button_size'])) {
+			$data['payment_pp_braintree_paypal_button_size'] = $this->request->post['payment_pp_braintree_paypal_button_size'];
 		} else {
-			$data['pp_braintree_paypal_button_size'] = $this->config->get('pp_braintree_paypal_button_size');
+			$data['payment_pp_braintree_paypal_button_size'] = $this->config->get('payment_pp_braintree_paypal_button_size');
 		}
 
-		if (isset($this->request->post['pp_braintree_paypal_button_shape'])) {
-			$data['pp_braintree_paypal_button_shape'] = $this->request->post['pp_braintree_paypal_button_shape'];
+		if (isset($this->request->post['payment_pp_braintree_paypal_button_shape'])) {
+			$data['payment_pp_braintree_paypal_button_shape'] = $this->request->post['payment_pp_braintree_paypal_button_shape'];
 		} else {
-			$data['pp_braintree_paypal_button_shape'] = $this->config->get('pp_braintree_paypal_button_shape');
+			$data['payment_pp_braintree_paypal_button_shape'] = $this->config->get('payment_pp_braintree_paypal_button_shape');
 		}
 
-		if (isset($this->request->post['pp_braintree_billing_agreement'])) {
-			$data['pp_braintree_billing_agreement'] = $this->request->post['pp_braintree_billing_agreement'];
+		if (isset($this->request->post['payment_pp_braintree_billing_agreement'])) {
+			$data['payment_pp_braintree_billing_agreement'] = $this->request->post['payment_pp_braintree_billing_agreement'];
 		} else {
-			$data['pp_braintree_billing_agreement'] = $this->config->get('pp_braintree_billing_agreement');
+			$data['payment_pp_braintree_billing_agreement'] = $this->config->get('payment_pp_braintree_billing_agreement');
 		}
 
 		$data['transaction_statuses'] = array(
@@ -535,22 +535,22 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			curl_close($curl);
 
 			if (isset($config_response['merchant_id']) && isset($config_response['access_token']) && isset($config_response['refresh_token'])) {
-				$braintree_settings = $this->model_setting_setting->getSetting('pp_braintree');
-				$braintree_settings['pp_braintree_merchant_id'] = $config_response['merchant_id'];
-				$braintree_settings['pp_braintree_access_token'] = $config_response['access_token'];
-				$braintree_settings['pp_braintree_refresh_token'] = $config_response['refresh_token'];
-				$braintree_settings['pp_braintree_environment'] = $config_response['environment'];
-				$braintree_settings['pp_braintree_public_key'] = '';
-				$braintree_settings['pp_braintree_private_key'] = '';
+				$braintree_settings = $this->model_setting_setting->getSetting('payment_pp_braintree');
+				$braintree_settings['payment_pp_braintree_merchant_id'] = $config_response['merchant_id'];
+				$braintree_settings['payment_pp_braintree_access_token'] = $config_response['access_token'];
+				$braintree_settings['payment_pp_braintree_refresh_token'] = $config_response['refresh_token'];
+				$braintree_settings['payment_pp_braintree_environment'] = $config_response['environment'];
+				$braintree_settings['payment_pp_braintree_public_key'] = '';
+				$braintree_settings['payment_pp_braintree_private_key'] = '';
 
-				$this->model_setting_setting->editSetting('pp_braintree', $braintree_settings);
+				$this->model_setting_setting->editSetting('payment_pp_braintree', $braintree_settings);
 
-				$data['pp_braintree_merchant_id'] = $config_response['merchant_id'];
-				$data['pp_braintree_access_token'] = $config_response['access_token'];
-				$data['pp_braintree_refresh_token'] = $config_response['refresh_token'];
-				$data['pp_braintree_environment'] = $config_response['environment'];
-				$data['pp_braintree_public_key'] = '';
-				$data['pp_braintree_private_key'] = '';
+				$data['payment_pp_braintree_merchant_id'] = $config_response['merchant_id'];
+				$data['payment_pp_braintree_access_token'] = $config_response['access_token'];
+				$data['payment_pp_braintree_refresh_token'] = $config_response['refresh_token'];
+				$data['payment_pp_braintree_environment'] = $config_response['environment'];
+				$data['payment_pp_braintree_public_key'] = '';
+				$data['payment_pp_braintree_private_key'] = '';
 
 				$data['success'] = $this->language->get('text_success_connect');
 			}
@@ -559,7 +559,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$data['auth_connect_url'] = '';
 
 		// If Braintree is not setup yet, request auth token for merchant on-boarding flow
-		if ($data['pp_braintree_merchant_id'] == '') {
+		if ($data['payment_pp_braintree_merchant_id'] == '') {
 			$curl = curl_init($this->opencart_connect_url);
 
 			$this->load->model('localisation/country');
@@ -598,12 +598,12 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$data['error_braintree_account_paypal'] = $this->language->get('error_braintree_account_paypal');
 
 		// load the account info from braintree if the config has been added yet.
-		if (!empty($data['pp_braintree_access_token']) || (!empty($data['pp_braintree_environment']) && !empty($data['pp_braintree_merchant_id']) && !empty($data['pp_braintree_public_key']) && !empty($data['pp_braintree_private_key']))) {
-			$this->initialise($data['pp_braintree_access_token'], array(
-				'pp_braintree_environment' => $data['pp_braintree_environment'],
-				'pp_braintree_merchant_id' => $data['pp_braintree_merchant_id'],
-				'pp_braintree_public_key'	=> $data['pp_braintree_public_key'],
-				'pp_braintree_private_key' => $data['pp_braintree_private_key'],
+		if (!empty($data['payment_pp_braintree_access_token']) || (!empty($data['payment_pp_braintree_environment']) && !empty($data['payment_pp_braintree_merchant_id']) && !empty($data['payment_pp_braintree_public_key']) && !empty($data['payment_pp_braintree_private_key']))) {
+			$this->initialise($data['payment_pp_braintree_access_token'], array(
+				'payment_pp_braintree_environment' => $data['payment_pp_braintree_environment'],
+				'payment_pp_braintree_merchant_id' => $data['payment_pp_braintree_merchant_id'],
+				'payment_pp_braintree_public_key'	=> $data['payment_pp_braintree_public_key'],
+				'payment_pp_braintree_private_key' => $data['payment_pp_braintree_private_key'],
 			));
 
 			$verify_credentials = $this->model_extension_payment_pp_braintree->verifyCredentials($this->gateway);
@@ -636,44 +636,44 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$defaults = array();
 
 		// 3D secure defaults
-		$defaults['pp_braintree_3ds_unsupported_card'] = 1;
-		$defaults['pp_braintree_3ds_lookup_error'] = 1;
-		$defaults['pp_braintree_3ds_lookup_enrolled'] = 1;
-		$defaults['pp_braintree_3ds_lookup_not_enrolled'] = 1;
-		$defaults['pp_braintree_3ds_not_participating'] = 1;
-		$defaults['pp_braintree_3ds_unavailable'] = 1;
-		$defaults['pp_braintree_3ds_signature_failed'] = 0;
-		$defaults['pp_braintree_3ds_successful'] = 1;
-		$defaults['pp_braintree_3ds_attempt_successful'] = 1;
-		$defaults['pp_braintree_3ds_failed'] = 0;
-		$defaults['pp_braintree_3ds_unable_to_auth'] = 1;
-		$defaults['pp_braintree_3ds_error'] = 1;
+		$defaults['payment_pp_braintree_3ds_unsupported_card'] = 1;
+		$defaults['payment_pp_braintree_3ds_lookup_error'] = 1;
+		$defaults['payment_pp_braintree_3ds_lookup_enrolled'] = 1;
+		$defaults['payment_pp_braintree_3ds_lookup_not_enrolled'] = 1;
+		$defaults['payment_pp_braintree_3ds_not_participating'] = 1;
+		$defaults['payment_pp_braintree_3ds_unavailable'] = 1;
+		$defaults['payment_pp_braintree_3ds_signature_failed'] = 0;
+		$defaults['payment_pp_braintree_3ds_successful'] = 1;
+		$defaults['payment_pp_braintree_3ds_attempt_successful'] = 1;
+		$defaults['payment_pp_braintree_3ds_failed'] = 0;
+		$defaults['payment_pp_braintree_3ds_unable_to_auth'] = 1;
+		$defaults['payment_pp_braintree_3ds_error'] = 1;
 
 		// Order Status defaults
-		$defaults['pp_braintree_authorization_expired_id'] = 14;
-		$defaults['pp_braintree_authorized_id'] = 2;
-		$defaults['pp_braintree_authorizing_id'] = 1;
-		$defaults['pp_braintree_failed_id'] = 10;
-		$defaults['pp_braintree_gateway_rejected_id'] = 8;
-		$defaults['pp_braintree_processor_declined_id'] = 8;
-		$defaults['pp_braintree_settled_id'] = 2;
-		$defaults['pp_braintree_settling_id'] = 2;
-		$defaults['pp_braintree_settlement_pending_id'] = 2;
-		$defaults['pp_braintree_submitted_for_settlement_id'] = 2;
-		$defaults['pp_braintree_voided_id'] = 16;
+		$defaults['payment_pp_braintree_authorization_expired_id'] = 14;
+		$defaults['payment_pp_braintree_authorized_id'] = 2;
+		$defaults['payment_pp_braintree_authorizing_id'] = 1;
+		$defaults['payment_pp_braintree_failed_id'] = 10;
+		$defaults['payment_pp_braintree_gateway_rejected_id'] = 8;
+		$defaults['payment_pp_braintree_processor_declined_id'] = 8;
+		$defaults['payment_pp_braintree_settled_id'] = 2;
+		$defaults['payment_pp_braintree_settling_id'] = 2;
+		$defaults['payment_pp_braintree_settlement_pending_id'] = 2;
+		$defaults['payment_pp_braintree_submitted_for_settlement_id'] = 2;
+		$defaults['payment_pp_braintree_voided_id'] = 16;
 
 		// PayPal options
-		$defaults['pp_braintree_paypal_option'] = 1;
-		$defaults['pp_braintree_paypal_button_size'] = 'small';
-		$defaults['pp_braintree_paypal_button_shape'] = 'rect';
+		$defaults['payment_pp_braintree_paypal_option'] = 1;
+		$defaults['payment_pp_braintree_paypal_button_size'] = 'small';
+		$defaults['payment_pp_braintree_paypal_button_shape'] = 'rect';
 
 		// Vault options
-		$defaults['pp_braintree_card_vault'] = 1;
-		$defaults['pp_braintree_paypal_vault'] = 0;
-		$defaults['pp_braintree_card_check_vault'] = 1;
-		$defaults['pp_braintree_paypal_check_vault'] = 0;
+		$defaults['payment_pp_braintree_card_vault'] = 1;
+		$defaults['payment_pp_braintree_paypal_vault'] = 0;
+		$defaults['payment_pp_braintree_card_check_vault'] = 1;
+		$defaults['payment_pp_braintree_paypal_check_vault'] = 0;
 
-		$this->model_setting_setting->editSetting('pp_braintree', $defaults);
+		$this->model_setting_setting->editSetting('payment_pp_braintree', $defaults);
 	}
 
 	public function order() {
@@ -692,15 +692,15 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$this->load->model('extension/payment/pp_braintree');
 		$this->load->model('sale/order');
 
-		if (!$this->config->get('pp_braintree_status') || (!isset($this->request->get['order_id']) && !isset($this->request->get['transaction_id']))) {
+		if (!$this->config->get('payment_pp_braintree_status') || (!isset($this->request->get['order_id']) && !isset($this->request->get['transaction_id']))) {
 			return;
 		}
 
-		$this->initialise($this->config->get('pp_braintree_access_token'), array(
-			'pp_braintree_environment' => $this->config->get('pp_braintree_environment'),
-			'pp_braintree_merchant_id' => $this->config->get('pp_braintree_merchant_id'),
-			'pp_braintree_public_key'	=> $this->config->get('pp_braintree_public_key'),
-			'pp_braintree_private_key' => $this->config->get('pp_braintree_private_key')
+		$this->initialise($this->config->get('payment_pp_braintree_access_token'), array(
+			'payment_pp_braintree_environment' => $this->config->get('payment_pp_braintree_environment'),
+			'payment_pp_braintree_merchant_id' => $this->config->get('payment_pp_braintree_merchant_id'),
+			'payment_pp_braintree_public_key'	=> $this->config->get('payment_pp_braintree_public_key'),
+			'payment_pp_braintree_private_key' => $this->config->get('payment_pp_braintree_private_key')
 		));
 
 		if (isset($this->request->get['order_id'])) {
@@ -887,11 +887,11 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 		$this->load->model('extension/payment/pp_braintree');
 
-		$this->initialise($this->config->get('pp_braintree_access_token'), array(
-			'pp_braintree_environment' => $this->config->get('pp_braintree_environment'),
-			'pp_braintree_merchant_id' => $this->config->get('pp_braintree_merchant_id'),
-			'pp_braintree_public_key'	=> $this->config->get('pp_braintree_public_key'),
-			'pp_braintree_private_key' => $this->config->get('pp_braintree_private_key')
+		$this->initialise($this->config->get('payment_pp_braintree_access_token'), array(
+			'payment_pp_braintree_environment' => $this->config->get('payment_pp_braintree_environment'),
+			'payment_pp_braintree_merchant_id' => $this->config->get('payment_pp_braintree_merchant_id'),
+			'payment_pp_braintree_public_key'	=> $this->config->get('payment_pp_braintree_public_key'),
+			'payment_pp_braintree_private_key' => $this->config->get('payment_pp_braintree_private_key')
 		));
 
 		$json = array();
@@ -930,11 +930,11 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$this->load->model('customer/customer');
 		$this->load->model('sale/order');
 
-		$this->initialise($this->config->get('pp_braintree_access_token'), array(
-			'pp_braintree_environment' => $this->config->get('pp_braintree_environment'),
-			'pp_braintree_merchant_id' => $this->config->get('pp_braintree_merchant_id'),
-			'pp_braintree_public_key'	=> $this->config->get('pp_braintree_public_key'),
-			'pp_braintree_private_key' => $this->config->get('pp_braintree_private_key')
+		$this->initialise($this->config->get('payment_pp_braintree_access_token'), array(
+			'payment_pp_braintree_environment' => $this->config->get('payment_pp_braintree_environment'),
+			'payment_pp_braintree_merchant_id' => $this->config->get('payment_pp_braintree_merchant_id'),
+			'payment_pp_braintree_public_key'	=> $this->config->get('payment_pp_braintree_public_key'),
+			'payment_pp_braintree_private_key' => $this->config->get('payment_pp_braintree_private_key')
 		));
 
 		$json = array();
@@ -1146,7 +1146,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			// Install the module before doing the redirect
 			$this->load->model('setting/extension');
 
-			$this->model_setting_extension->install('payment', 'pp_braintree');
+			$this->model_setting_extension->install('payment', 'payment_pp_braintree');
 
 			$this->install();
 
@@ -1203,7 +1203,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$data['connect_link'] = '';
 		$data['module_link'] = '';
 
-		if ($this->config->get('pp_braintree_status') != 0 || !empty($this->config->get('pp_braintree_merchant_id')) || !empty($this->config->get('pp_braintree_access_token'))) {
+		if ($this->config->get('payment_pp_braintree_status') != 0 || !empty($this->config->get('payment_pp_braintree_merchant_id')) || !empty($this->config->get('payment_pp_braintree_access_token'))) {
 			$data['module_link'] = $this->url->link('extension/payment/pp_braintree', 'user_token=' . $this->session->data['user_token'], true);
 		} else {
 			if ($this->user->hasPermission('modify', 'extension/extension/payment')) {
@@ -1211,12 +1211,12 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			}
 		}
 
-		if ($this->config->get("pp_braintree_status") == 1) {
-			$data['pp_braintree_status'] = "enabled";
-		} elseif ($this->config->get("pp_braintree_status") == null) {
-			$data['pp_braintree_status'] = "";
+		if ($this->config->get("payment_pp_braintree_status") == 1) {
+			$data['payment_pp_braintree_status'] = "enabled";
+		} elseif ($this->config->get("payment_pp_braintree_status") == null) {
+			$data['payment_pp_braintree_status'] = "";
 		} else {
-			$data['pp_braintree_status'] = "disabled";
+			$data['payment_pp_braintree_status'] = "disabled";
 		}
 
 		return $this->load->view('extension/payment/pp_braintree_preferred', $data);
@@ -1237,12 +1237,12 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			$check_credentials = false;
 		}
 
-		if ($check_credentials && $this->request->post['pp_braintree_status'] == 1) {
-			$this->initialise($this->request->post['pp_braintree_access_token'], array(
-				'pp_braintree_environment' => $this->request->post['pp_braintree_environment'],
-				'pp_braintree_merchant_id' => $this->request->post['pp_braintree_merchant_id'],
-				'pp_braintree_public_key'	=> $this->request->post['pp_braintree_public_key'],
-				'pp_braintree_private_key' => $this->request->post['pp_braintree_private_key'],
+		if ($check_credentials && $this->request->post['payment_pp_braintree_status'] == 1) {
+			$this->initialise($this->request->post['payment_pp_braintree_access_token'], array(
+				'payment_pp_braintree_environment' => $this->request->post['payment_pp_braintree_environment'],
+				'payment_pp_braintree_merchant_id' => $this->request->post['payment_pp_braintree_merchant_id'],
+				'payment_pp_braintree_public_key'	=> $this->request->post['payment_pp_braintree_public_key'],
+				'payment_pp_braintree_private_key' => $this->request->post['payment_pp_braintree_private_key'],
 			));
 
 			$verify_credentials = $this->model_extension_payment_pp_braintree->verifyCredentials($this->gateway);
@@ -1250,7 +1250,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			if (!$verify_credentials) {
 				$this->error['warning'] = $this->language->get('error_connection');
 			} else {
-				foreach ($this->request->post['pp_braintree_account'] as $currency => $pp_braintree_account) {
+				foreach ($this->request->post['payment_pp_braintree_account'] as $currency => $pp_braintree_account) {
 					if (!empty($pp_braintree_account['merchant_account_id'])) {
 						$verify_merchant_account_id = $this->model_extension_payment_pp_braintree->verifyMerchantAccount($this->gateway, $pp_braintree_account['merchant_account_id']);
 
@@ -1263,23 +1263,23 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 				$merchant_config = json_decode(base64_decode($verify_credentials), true);
 
 				// verify the Braintree account is ready to accept 3DS transactions
-				if (isset($merchant_config['threeDSecureEnabled']) && ($this->request->post['pp_braintree_3ds_status'] == 1 && $merchant_config['threeDSecureEnabled'] != 1)) {
+				if (isset($merchant_config['threeDSecureEnabled']) && ($this->request->post['payment_pp_braintree_3ds_status'] == 1 && $merchant_config['threeDSecureEnabled'] != 1)) {
 					$this->error['warning'] = $this->language->get('error_3ds_not_ready');
 				}
 
 				// verify the Braintree account is ready to use PayPal Billing Agreements
-				if (isset($merchant_config['paypal']['billingAgreementEnabled']) && ($this->request->post['pp_braintree_billing_agreement'] == 1 && $merchant_config['paypal']['billingAgreementEnabled'] != 1)) {
+				if (isset($merchant_config['paypal']['billingAgreementEnabled']) && ($this->request->post['payment_pp_braintree_billing_agreement'] == 1 && $merchant_config['paypal']['billingAgreementEnabled'] != 1)) {
 					$this->error['warning'] = $this->language->get('error_paypal_billing_not_ready');
 				}
 
 				// verify the Braintree account is ready to accept PayPal transactions
-				if (isset($merchant_config['paypalEnabled']) && ($this->request->post['pp_braintree_paypal_option'] == 1 && $merchant_config['paypalEnabled'] != 1)) {
+				if (isset($merchant_config['paypalEnabled']) && ($this->request->post['payment_pp_braintree_paypal_option'] == 1 && $merchant_config['paypalEnabled'] != 1)) {
 					$this->error['warning'] = $this->language->get('error_paypal_not_ready');
 				}
 
 				// verify the environment matches with the token the system is using
-				if (isset($merchant_config['environment']) && ($this->request->post['pp_braintree_environment'] != $merchant_config['environment'])) {
-					$this->error['warning'] = sprintf($this->language->get('error_environment'), $this->request->post['pp_braintree_environment'], $merchant_config['environment']);
+				if (isset($merchant_config['environment']) && ($this->request->post['payment_pp_braintree_environment'] != $merchant_config['environment'])) {
+					$this->error['warning'] = sprintf($this->language->get('error_environment'), $this->request->post['payment_pp_braintree_environment'], $merchant_config['environment']);
 				}
 			}
 		}
@@ -1297,10 +1297,10 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		if ($access_token != '') {
 			$this->gateway = $this->model_extension_payment_pp_braintree->setGateway($access_token);
 		} else {
-			Braintree_Configuration::environment(isset($credentials['pp_braintree_environment']) ? $credentials['pp_braintree_environment'] : '');
-			Braintree_Configuration::merchantId(isset($credentials['pp_braintree_merchant_id']) ? $credentials['pp_braintree_merchant_id'] : '');
-			Braintree_Configuration::publicKey(isset($credentials['pp_braintree_public_key']) ? $credentials['pp_braintree_public_key'] : '');
-			Braintree_Configuration::privateKey(isset($credentials['pp_braintree_private_key']) ? $credentials['pp_braintree_private_key'] : '');
+			Braintree_Configuration::environment(isset($credentials['payment_pp_braintree_environment']) ? $credentials['payment_pp_braintree_environment'] : '');
+			Braintree_Configuration::merchantId(isset($credentials['payment_pp_braintree_merchant_id']) ? $credentials['payment_pp_braintree_merchant_id'] : '');
+			Braintree_Configuration::publicKey(isset($credentials['payment_pp_braintree_public_key']) ? $credentials['payment_pp_braintree_public_key'] : '');
+			Braintree_Configuration::privateKey(isset($credentials['payment_pp_braintree_private_key']) ? $credentials['payment_pp_braintree_private_key'] : '');
 		}
 	}
 }

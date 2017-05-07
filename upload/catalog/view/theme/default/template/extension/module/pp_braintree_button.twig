@@ -3,7 +3,7 @@
 <div class="buttons clearfix">
   <form method="POST" action="{{ action }}" id="braintree-express-form"></form>
   <div class="pull-right">
-    <script src="https://www.paypalobjects.com/api/button.js?" data-merchant="braintree" data-id="paypal-button-module" data-button="checkout" data-color="{{ pp_braintree_paypal_button_colour }}" data-size="{{ pp_braintree_paypal_button_size }}" data-shape="{{ pp_braintree_paypal_button_shape }}" data-button_type="submit" data-button_disabled="false"></script>
+    <script src="https://www.paypalobjects.com/api/button.js?" data-merchant="braintree" data-id="paypal-button-module" data-button="checkout" data-color="{{ payment_pp_braintree_paypal_button_colour }}" data-size="{{ payment_pp_braintree_paypal_button_size }}" data-shape="{{ payment_pp_braintree_paypal_button_shape }}" data-button_type="submit" data-button_disabled="false"></script>
   </div>
 </div>
 <script type="text/javascript">
@@ -41,7 +41,7 @@
 
           instance.tokenize({
             flow: "checkout",
-            {% if pp_braintree_settlement_immediate == 1 %}
+            {% if payment_pp_braintree_settlement_immediate == 1 %}
             intent: "sale",
             {% else %}
             intent: "authorize",

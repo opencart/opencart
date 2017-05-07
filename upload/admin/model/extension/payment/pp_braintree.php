@@ -159,7 +159,7 @@ class ModelExtensionPaymentPPBraintree extends Model {
 	}
 
 	public function log($data) {
-		if ($this->config->get('pp_braintree_debug')) {
+		if ($this->config->get('payment_pp_braintree_debug')) {
 			$backtrace = debug_backtrace();
 			$log = new Log('braintree.log');
 			$log->write('(' . $backtrace[1]['class'] . '::' . $backtrace[1]['function'] . ') - ' . print_r($data, true));

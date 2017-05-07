@@ -75,6 +75,7 @@ $_['button_rule_add']               = 'Add Rule';
 $_['button_module_add']             = 'Add Module';
 $_['button_link_add']               = 'Add Link';
 $_['button_approve']                = 'Approve';
+$_['button_deny']                   = 'Deny';
 $_['button_reset']                  = 'Reset';
 $_['button_generate']               = 'Generate';
 $_['button_voucher_add']            = 'Add Voucher';
@@ -102,6 +103,7 @@ $_['button_order_recurring']        = 'View Recurring Order';
 $_['button_buy']                    = 'Buy';
 
 // Tab
+$_['tab_affiliate']                 = 'Affiliate';
 $_['tab_address']                   = 'Address';
 $_['tab_additional']                = 'Additional';
 $_['tab_admin']                     = 'Admin';

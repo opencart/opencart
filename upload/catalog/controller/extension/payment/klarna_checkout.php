@@ -298,7 +298,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		foreach ($this->cart->getProducts() as $product) {
 			if ($product['image']) {
-				$image = $this->model_tool_image->resize($product['image'], $this->config->get($this->config->get('config_theme') . '_image_cart_width'), $this->config->get($this->config->get('config_theme') . '_image_cart_height'));
+				$image = $this->model_tool_image->resize($product['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_height'));
 			} else {
 				$image = '';
 			}
@@ -377,14 +377,14 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			'total'  => &$total
 		);
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		$sort_order = array();
 
-		$results = $this->model_extension_extension->getExtensions('total');
+		$results = $this->model_setting_extension->getExtensions('total');
 
 		foreach ($results as $key => $value) {
-			$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
+			$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
 		}
 
 		array_multisort($sort_order, SORT_ASC, $results);
@@ -485,7 +485,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		}
 
 		// Totals
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		$totals = array();
 		$taxes = $this->cart->getTaxes();
@@ -502,10 +502,10 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
 			$sort_order = array();
 
-			$results = $this->model_extension_extension->getExtensions('total');
+			$results = $this->model_setting_extension->getExtensions('total');
 
 			foreach ($results as $key => $value) {
-				$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
+				$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
 			}
 
 			array_multisort($sort_order, SORT_ASC, $results);
@@ -689,12 +689,12 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 					$method_data = array();
 
-					$this->load->model('extension/extension');
+					$this->load->model('setting/extension');
 
-					$results = $this->model_extension_extension->getExtensions('shipping');
+					$results = $this->model_setting_extension->getExtensions('shipping');
 
 					foreach ($results as $result) {
-						if ($this->config->get($result['code'] . '_status')) {
+						if ($this->config->get('shipping_' . $result['code'] . '_status')) {
 							$this->load->model('extension/shipping/' . $result['code']);
 
 							$quote = $this->{'model_extension_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);
@@ -1094,28 +1094,6 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		if (isset($this->session->data['order_id'])) {
 			$this->cart->clear();
 
-			// Add to activity log
-			if ($this->config->get('config_customer_activity')) {
-				$this->load->model('account/activity');
-
-				if ($this->customer->isLogged()) {
-					$activity_data = array(
-						'customer_id' => $this->customer->getId(),
-						'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName(),
-						'order_id'    => $this->session->data['order_id']
-					);
-
-					$this->model_account_activity->addActivity('order_account', $activity_data);
-				} else {
-					$activity_data = array(
-						'name'     => $this->session->data['guest']['firstname'] . ' ' . $this->session->data['guest']['lastname'],
-						'order_id' => $this->session->data['order_id']
-					);
-
-					$this->model_account_activity->addActivity('order_guest', $activity_data);
-				}
-			}
-
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);
@@ -1405,12 +1383,12 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			// Shipping Methods
 			$method_data = array();
 
-			$this->load->model('extension/extension');
+			$this->load->model('setting/extension');
 
-			$results = $this->model_extension_extension->getExtensions('shipping');
+			$results = $this->model_setting_extension->getExtensions('shipping');
 
 			foreach ($results as $result) {
-				if ($this->config->get($result['code'] . '_status')) {
+				if ($this->config->get('shipping_' . $result['code'] . '_status')) {
 					$this->load->model('extension/shipping/' . $result['code']);
 
 					$quote = $this->{'model_extension_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);
@@ -1484,7 +1462,6 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			$order_data['lastname'] = $customer_info['lastname'];
 			$order_data['email'] = $customer_info['email'];
 			$order_data['telephone'] = $customer_info['telephone'];
-			$order_data['fax'] = $customer_info['fax'];
 			$order_data['custom_field'] = json_decode($customer_info['custom_field'], true);
 		} elseif (isset($this->session->data['guest'])) {
 			$order_data['customer_id'] = 0;
@@ -1493,7 +1470,6 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			$order_data['lastname'] = $this->session->data['guest']['lastname'];
 			$order_data['email'] = $this->session->data['guest']['email'];
 			$order_data['telephone'] = $this->session->data['guest']['telephone'];
-			$order_data['fax'] = $this->session->data['guest']['fax'];
 			$order_data['custom_field'] = $this->session->data['guest']['custom_field'];
 		}
 

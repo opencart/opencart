@@ -43,8 +43,8 @@ class ControllerExtensionPaymentSagepayUS extends Controller {
 
 		$url = 'https://www.sagepayments.net/cgi-bin/eftbankcard.dll?transaction';
 
-		$data  = 'm_id=' . $this->config->get('sagepay_us_merchant_id');
-		$data .= '&m_key=' . $this->config->get('sagepay_us_merchant_key');
+		$data  = 'm_id=' . $this->config->get('payment_sagepay_us_merchant_id');
+		$data .= '&m_key=' . $this->config->get('payment_sagepay_us_merchant_key');
 		$data .= '&T_amt=' . urlencode($this->currency->format($order_info['total'], $order_info['currency_code'], 1.00000, false));
 		$data .= '&T_ordernum=' . $this->session->data['order_id'];
 		$data .= '&C_name=' . urlencode($this->request->post['cc_owner']);
@@ -82,7 +82,7 @@ class ControllerExtensionPaymentSagepayUS extends Controller {
 			$message .= 'Reference: ' . substr($response, 46, 10) . "\n";
 			$message .= 'Order Number: ' . substr($response, strpos($response, chr(28)) + 1, strrpos($response, chr(28) - 1)) . "\n";
 
-			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('sagepay_us_order_status_id'), $message, false);
+			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_sagepay_us_order_status_id'), $message, false);
 
 			$json['redirect'] = $this->url->link('checkout/success');
 		} else {

@@ -9,6 +9,7 @@ $_['text_add']            = 'Add Coupon';
 $_['text_edit']           = 'Edit Coupon';
 $_['text_percent']        = 'Percentage';
 $_['text_amount']         = 'Fixed Amount';
+$_['text_coupon']         = 'Coupon Usage History';
 
 // Column
 $_['column_name']         = 'Coupon Name';

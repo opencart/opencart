@@ -6,7 +6,6 @@
         <button type="submit" id="button-shipping" form="form-order" formaction="{{ shipping }}" formtarget="_blank" data-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info"><i class="fa fa-truck"></i></button>
         <button type="submit" id="button-invoice" form="form-order" formaction="{{ invoice }}" formtarget="_blank" data-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info"><i class="fa fa-print"></i></button>
         <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
-        <button type="button" id="button-delete" form="form-order" formaction="{{ delete }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
@@ -47,15 +46,15 @@
             <div class="col-sm-4">
               <div class="form-group">
                 <label class="control-label" for="input-order-status">{{ entry_order_status }}</label>
-                <select name="filter_order_status" id="input-order-status" class="form-control">
-                  <option value="*"></option>
-                  {% if filter_order_status == '0' %}
+                <select name="filter_order_status_id" id="input-order-status" class="form-control">
+                  <option value=""></option>
+                  {% if filter_order_status_id == '0' %}
                   <option value="0" selected="selected">{{ text_missing }}</option>
                   {% else %}
                   <option value="0">{{ text_missing }}</option>
                   {% endif %}
                   {% for order_status in order_statuses %}
-                  {% if order_status.order_status_id == filter_order_status %}
+                  {% if order_status.order_status_id == filter_order_status_id %}
                   <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                   {% else %}
                   <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -144,7 +143,7 @@
                   <td class="text-right">{{ order.total }}</td>
                   <td class="text-left">{{ order.date_added }}</td>
                   <td class="text-left">{{ order.date_modified }}</td>
-                  <td class="text-right"><a href="{{ order.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa fa-eye"></i></a> <a href="{{ order.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                  <td class="text-right"><a href="{{ order.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa fa-eye"></i></a> <a href="{{ order.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <button type="button" value="{{ order.order_id }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa fa-trash-o"></i></button></td>
                 </tr>
                 {% endfor %}
                 {% else %}
@@ -165,7 +164,7 @@
   </div>
   <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-	url = 'index.php?route=sale/order&token={{ token }}';
+	url = 'index.php?route=sale/order&user_token={{ user_token }}';
 
 	var filter_order_id = $('input[name=\'filter_order_id\']').val();
 
@@ -179,10 +178,10 @@ $('#button-filter').on('click', function() {
 		url += '&filter_customer=' + encodeURIComponent(filter_customer);
 	}
 
-	var filter_order_status = $('select[name=\'filter_order_status\']').val();
+	var filter_order_status_id = $('select[name=\'filter_order_status_id\']').val();
 
-	if (filter_order_status != '*') {
-		url += '&filter_order_status=' + encodeURIComponent(filter_order_status);
+	if (filter_order_status_id !== '') {
+		url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
 	}
 
 	var filter_total = $('input[name=\'filter_total\']').val();
@@ -210,7 +209,7 @@ $('#button-filter').on('click', function() {
 $('input[name=\'filter_customer\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=customer/customer/autocomplete&token={{ token }}&filter_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
@@ -255,13 +254,34 @@ $('#button-shipping, #button-invoice').on('click', function(e) {
 	$('#form-order').attr('action', this.getAttribute('formAction'));
 });
 
-$('#button-delete').on('click', function(e) {
-	$('#form-order').attr('action', this.getAttribute('formAction'));
+$('#form-order .btn-danger').on('click', function(e) {
+	var element = this;
 	
 	if (confirm('{{ text_confirm }}')) {
-		$('#form-order').submit();
-	} else {
-		return false;
+		$.ajax({
+			url: '{{ catalog }}index.php?route=api/order/delete&api_token={{ api_token }}&store_id={{ store_id }}&order_id=' + $(element).val(),
+			dataType: 'json',
+			beforeSend: function() {
+				$(element).button('loading');
+			},
+			complete: function() {
+				$(element).button('reset');
+			},
+			success: function(json) {
+				$('.alert').remove();
+	
+				if (json['error']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+	
+				if (json['success']) {
+					location = '{{ delete }}';
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
 	}
 });
 //--></script> 

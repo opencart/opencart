@@ -23,7 +23,7 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 
 		$data['worldpay_script'] = 'https://cdn.worldpay.com/v1/worldpay.js';
 
-		$data['worldpay_client_key'] = $this->config->get('worldpay_client_key');
+		$data['worldpay_client_key'] = $this->config->get('payment_worldpay_client_key');
 
 		$data['form_submit'] = $this->url->link('extension/payment/worldpay/send', '', true);
 

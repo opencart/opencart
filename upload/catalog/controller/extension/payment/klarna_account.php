@@ -68,14 +68,14 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 				'total'  => &$total
 			);
 
-			$this->load->model('extension/extension');
+			$this->load->model('setting/extension');
 
 			$sort_order = array();
 
-			$results = $this->model_extension_extension->getExtensions('total');
+			$results = $this->model_setting_extension->getExtensions('total');
 
 			foreach ($results as $key => $value) {
-				$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
+				$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
 			}
 
 			array_multisort($sort_order, SORT_ASC, $results);
@@ -83,7 +83,7 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 			$klarna_tax = array();
 
 			foreach ($results as $result) {
-				if ($this->config->get($result['code'] . '_status')) {
+				if ($this->config->get('total_' . $result['code'] . '_status')) {
 					$this->load->model('extension/total/' . $result['code']);
 
 					$taxes = array();
@@ -124,7 +124,7 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 				$data['error_warning'] = '';
 			}
 
-			$klarna_account = $this->config->get('klarna_account');
+			$klarna_account = $this->config->get('payment_klarna_account');
 
 			$data['merchant'] = $klarna_account[$order_info['payment_iso_code_3']]['merchant'];
 			$data['phone_number'] = $order_info['telephone'];
@@ -304,7 +304,7 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 			}
 
 			if (!$json) {
-				$klarna_account = $this->config->get('klarna_account');
+				$klarna_account = $this->config->get('payment_klarna_account');
 
 				if ($klarna_account[$order_info['payment_iso_code_3']]['server'] == 'live') {
 					$url = 'https://payment.klarna.com/';
@@ -441,7 +441,7 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 				$digest = '';
 
 				foreach ($goods_list as $goods) {
-					$digest .= utf8_decode(htmlspecialchars(html_entity_decode($goods['goods']['title'], ENT_COMPAT, "UTF-8"))) . ':';
+					$digest .= utf8_decode(htmlspecialchars(html_entity_decode($goods['goods']['title'], ENT_COMPAT, 'UTF-8'))) . ':';
 				}
 
 				$digest = base64_encode(pack('H*', hash('sha256', $digest . $klarna_account[$order_info['payment_iso_code_3']]['secret'])));

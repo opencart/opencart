@@ -55,9 +55,17 @@ class ControllerCheckoutShippingAddress extends Controller {
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
 		// Custom Fields
+		$data['custom_fields'] = array();
+		
 		$this->load->model('account/custom_field');
 
-		$data['custom_fields'] = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
+		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
+
+		foreach ($custom_fields as $custom_field) {
+			if ($custom_field['location'] == 'address') {
+				$data['custom_fields'][] = $custom_field;
+			}
+		}
 
 		if (isset($this->session->data['shipping_address']['custom_field'])) {
 			$data['shipping_address_custom_field'] = $this->session->data['shipping_address']['custom_field'];
@@ -70,7 +78,7 @@ class ControllerCheckoutShippingAddress extends Controller {
 
 	public function save() {
 		$this->load->language('checkout/checkout');
-
+		
 		$json = array();
 
 		// Validate if customer is logged in.
@@ -108,9 +116,9 @@ class ControllerCheckoutShippingAddress extends Controller {
 		}
 
 		if (!$json) {
+			$this->load->model('account/address');
+			
 			if (isset($this->request->post['shipping_address']) && $this->request->post['shipping_address'] == 'existing') {
-				$this->load->model('account/address');
-
 				if (empty($this->request->post['address_id'])) {
 					$json['error']['warning'] = $this->language->get('error_address');
 				} elseif (!in_array($this->request->post['address_id'], array_keys($this->model_account_address->getAddresses()))) {
@@ -118,9 +126,6 @@ class ControllerCheckoutShippingAddress extends Controller {
 				}
 
 				if (!$json) {
-					// Default Shipping Address
-					$this->load->model('account/address');
-
 					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->request->post['address_id']);
 
 					unset($this->session->data['shipping_method']);
@@ -165,34 +170,29 @@ class ControllerCheckoutShippingAddress extends Controller {
 				$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
 
 				foreach ($custom_fields as $custom_field) {
-					if (($custom_field['location'] == 'address') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
-						$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-					} elseif (($custom_field['location'] == 'address') && ($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($this->request->post['custom_field'][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $custom_field['validation'])))) {
-                        $json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-                    }
+					if ($custom_field['location'] == 'address') {
+						if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+							$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+						} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($this->request->post['custom_field'][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $custom_field['validation'])))) {
+							$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+						}
+					}
 				}
 
 				if (!$json) {
-					// Default Shipping Address
-					$this->load->model('account/address');
-
-					$address_id = $this->model_account_address->addAddress($this->request->post);
+					$address_id = $this->model_account_address->addAddress($this->customer->getId(), $this->request->post);
 
 					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($address_id);
 
+					// If no default address ID set we use the last address
+					if (!$this->customer->getAddressId()) {
+						$this->load->model('account/customer');
+						
+						$this->model_account_customer->editAddressId($this->customer->getId(), $address_id);
+					}
+					
 					unset($this->session->data['shipping_method']);
 					unset($this->session->data['shipping_methods']);
-
-					if ($this->config->get('config_customer_activity')) {
-						$this->load->model('account/activity');
-
-						$activity_data = array(
-							'customer_id' => $this->customer->getId(),
-							'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-						);
-
-						$this->model_account_activity->addActivity('address_add', $activity_data);
-					}
 				}
 			}
 		}

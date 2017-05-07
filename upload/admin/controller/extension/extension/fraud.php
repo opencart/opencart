@@ -5,7 +5,7 @@ class ControllerExtensionExtensionFraud extends Controller {
 	public function index() {
 		$this->load->language('extension/extension/fraud');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		$this->getList();
 	}
@@ -13,10 +13,10 @@ class ControllerExtensionExtensionFraud extends Controller {
 	public function install() {
 		$this->load->language('extension/extension/fraud');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->install('fraud', $this->request->get['extension']);
+			$this->model_setting_extension->install('fraud', $this->request->get['extension']);
 
 			$this->load->model('user/user_group');
 
@@ -35,10 +35,10 @@ class ControllerExtensionExtensionFraud extends Controller {
 	public function uninstall() {
 		$this->load->language('extension/extension/fraud');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->uninstall('fraud', $this->request->get['extension']);
+			$this->model_setting_extension->uninstall('fraud', $this->request->get['extension']);
 
 			// Call uninstall method if it exsits
 			$this->load->controller('extension/fraud/' . $this->request->get['extension'] . '/uninstall');
@@ -76,11 +76,11 @@ class ControllerExtensionExtensionFraud extends Controller {
 			$data['success'] = '';
 		}
 
-		$extensions = $this->model_extension_extension->getInstalled('fraud');
+		$extensions = $this->model_setting_extension->getInstalled('fraud');
 
 		foreach ($extensions as $key => $value) {
 			if (!is_file(DIR_APPLICATION . 'controller/extension/fraud/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/fraud/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('fraud', $value);
+				$this->model_setting_extension->uninstall('fraud', $value);
 
 				unset($extensions[$key]);
 			}
@@ -89,7 +89,7 @@ class ControllerExtensionExtensionFraud extends Controller {
 		$data['extensions'] = array();
 
 		// Compatibility code for old extension folders
-		$files = glob(DIR_APPLICATION . 'controller/{extension/fraud,fraud}/*.php', GLOB_BRACE);
+		$files = glob(DIR_APPLICATION . 'controller/extension/fraud/*.php');
 
 		if ($files) {
 			foreach ($files as $file) {
@@ -99,11 +99,11 @@ class ControllerExtensionExtensionFraud extends Controller {
 
 				$data['extensions'][] = array(
 					'name'      => $this->language->get('heading_title'),
-					'status'    => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'install'   => $this->url->link('extension/extension/fraud/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/extension/fraud/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'status'    => $this->config->get('fraud_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+					'install'   => $this->url->link('extension/extension/fraud/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
+					'uninstall' => $this->url->link('extension/extension/fraud/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('extension/fraud/' . $extension, 'token=' . $this->session->data['token'], true)
+					'edit'      => $this->url->link('extension/fraud/' . $extension, 'user_token=' . $this->session->data['user_token'], true)
 				);
 			}
 		}

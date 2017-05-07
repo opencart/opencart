@@ -60,7 +60,7 @@ class ControllerCheckoutLogin extends Controller {
 			// Check if customer has been approved.
 			$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
 
-			if ($customer_info && !$customer_info['approved']) {
+			if ($customer_info && !$customer_info['status']) {
 				$json['error']['warning'] = $this->language->get('error_approved');
 			}
 
@@ -99,18 +99,6 @@ class ControllerCheckoutLogin extends Controller {
 
 					unset($this->session->data['wishlist'][$key]);
 				}
-			}
-
-			// Add to activity log
-			if ($this->config->get('config_customer_activity')) {
-				$this->load->model('account/activity');
-
-				$activity_data = array(
-					'customer_id' => $this->customer->getId(),
-					'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-				);
-
-				$this->model_account_activity->addActivity('login', $activity_data);
 			}
 
 			$json['redirect'] = $this->url->link('checkout/checkout', '', true);

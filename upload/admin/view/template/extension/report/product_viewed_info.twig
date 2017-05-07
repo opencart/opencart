@@ -1,0 +1,75 @@
+<fieldset>
+  <legend>{{ heading_title }}</legend>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <td class="text-left">{{ column_name }}</td>
+          <td class="text-left">{{ column_model }}</td>
+          <td class="text-right">{{ column_viewed }}</td>
+          <td class="text-right">{{ column_percent }}</td>
+        </tr>
+      </thead>
+      <tbody>
+      
+      {% if products %}
+      {% for product in products %}
+      <tr>
+        <td class="text-left">{{ product.name }}</td>
+        <td class="text-left">{{ product.model }}</td>
+        <td class="text-right">{{ product.viewed }}</td>
+        <td class="text-right">{{ product.percent }}</td>
+      </tr>
+      {% endfor %}
+      {% else %}
+      <tr>
+        <td class="text-center" colspan="4">{{ text_no_results }}</td>
+      </tr>
+      {% endif %}
+      </tbody>
+      
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-left">{{ pagination }}</div>
+    <div class="col-sm-6 text-right">{{ results }}</div>
+  </div>
+  <br />
+  <div class="text-center"><button type="button" id="button-reset" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-refresh"></i> {{ button_reset }}</button></div>
+
+
+<script type="text/javascript"><!--
+$('#button-reset').on('click', function() {
+	if (confirm('{{ text_confirm }}')) {
+		$.ajax({
+			url: 'index.php?route=extension/report/product_viewed/reset&user_token={{ user_token }}',
+			dataType: 'json',
+			beforeSend: function() {
+				$('#button-reset').button('loading');
+			},
+			complete: function() {
+				$('#button-reset').button('reset');
+			},			
+			success: function(json) {
+				console.log(json);
+				
+				if (json['error']) {
+					 $('#report').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+				
+				if (json['success']) {
+					$('#report').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert"><i class="fa fa-circle-o-notch fa-spin"></i> </button></div>');
+					
+					setTimeout(function() {
+						$('#report').load('index.php?route=extension/report/product_viewed/report&user_token={{ user_token }}');
+					}, 3000);
+				}	
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	}
+});
+//--></script>
+</fieldset>

@@ -57,8 +57,8 @@ class ControllerExtensionPaymentPerpetualPayments extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$payment_data = array(
-			'auth_id'       => $this->config->get('perpetual_payments_auth_id'),
-			'auth_pass'     => $this->config->get('perpetual_payments_auth_pass'),
+			'auth_id'       => $this->config->get('payment_perpetual_payments_auth_id'),
+			'auth_pass'     => $this->config->get('payment_perpetual_payments_auth_pass'),
 			'card_num'      => str_replace(' ', '', $this->request->post['cc_number']),
 			'card_cvv'      => $this->request->post['cc_cvv2'],
 			'card_start'    => $this->request->post['cc_start_date_month'] . substr($this->request->post['cc_start_date_year'], 2),
@@ -73,7 +73,7 @@ class ControllerExtensionPaymentPerpetualPayments extends Controller {
 			'tran_ref'      => $order_info['order_id'],
 			'tran_amount'   => $this->currency->format($order_info['total'], $order_info['currency_code'], 1.00000, false),
 			'tran_currency' => $order_info['currency_code'],
-			'tran_testmode' => $this->config->get('perpetual_payments_test'),
+			'tran_testmode' => $this->config->get('payment_perpetual_payments_test'),
 			'tran_type'     => 'Sale',
 			'tran_class'    => 'MoTo',
 		);
@@ -115,7 +115,7 @@ class ControllerExtensionPaymentPerpetualPayments extends Controller {
 					$message .= $this->language->get('text_authorisation') . ' ' . $data[3] . "\n";
 				}
 
-				$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('perpetual_payments_order_status_id'), $message, false);
+				$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_perpetual_payments_order_status_id'), $message, false);
 
 				$json['redirect'] = $this->url->link('checkout/success');
 			} else {

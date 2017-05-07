@@ -1,5 +1,5 @@
 <h2>{{ text_payment_info }}</h2>
-<div class="alert alert-success" id="bluepay_hosted_transaction_msg" style="display:none;"></div>
+<div class="alert alert-success" id="payment_bluepay_hosted_transaction_msg" style="display:none;"></div>
 <table class="table table-striped table-bordered">
   <tr>
     <td>{{ text_order_ref }}</td>
@@ -78,7 +78,7 @@
 				type: 'POST',
 				dataType: 'json',
 				data: {'order_id': {{ order_id }}},
-				url: 'index.php?route=extension/payment/bluepay_hosted/void&token={{ token }}',
+				url: 'index.php?route=extension/payment/bluepay_hosted/void&user_token={{ user_token }}',
 				beforeSend: function() {
 					$('#button-void').hide();
 					$('#img_loading_void').show();
@@ -121,7 +121,7 @@
 				type: 'POST',
 				dataType: 'json',
 				data: {'order_id': {{ order_id }}, 'amount': $('#release_amount').val()},
-				url: 'index.php?route=extension/payment/bluepay_hosted/release&token={{ token }}',
+				url: 'index.php?route=extension/payment/bluepay_hosted/release&user_token={{ user_token }}',
 				beforeSend: function() {
 					$('#button-release').hide();
 					$('#release_amount').hide();
@@ -174,7 +174,7 @@
 				type: 'POST',
 				dataType: 'json',
 				data: {'order_id': {{ order_id }}, 'amount': $('#rebate_amount').val()},
-				url: 'index.php?route=extension/payment/bluepay_hosted/rebate&token={{ token }}',
+				url: 'index.php?route=extension/payment/bluepay_hosted/rebate&user_token={{ user_token }}',
 				beforeSend: function() {
 					$('#button-rebate').hide();
 					$('#rebate_amount').hide();

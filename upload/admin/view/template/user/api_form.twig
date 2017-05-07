@@ -13,8 +13,7 @@
       </ul>
     </div>
   </div>
-  <div class="container-fluid">
-    {% if error_warning %}
+  <div class="container-fluid">{% if error_warning %}
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
@@ -33,13 +32,12 @@
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
+                <label class="col-sm-2 control-label" for="input-username">{{ entry_username }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
-                  {% if error_name %}
-                  <div class="text-danger">{{ error_name }}</div>
-                  {% endif %}
-                </div>
+                  <input type="text" name="username" value="{{ username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control" />
+                  {% if error_username %}
+                  <div class="text-danger">{{ error_username }}</div>
+                  {% endif %} </div>
               </div>
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-key">{{ entry_key }}</label>
@@ -49,20 +47,25 @@
                   <button type="button" id="button-generate" class="btn btn-primary"><i class="fa fa-refresh"></i> {{ button_generate }}</button>
                   {% if error_key %}
                   <div class="text-danger">{{ error_key }}</div>
-                  {% endif %}
-                </div>
+                  {% endif %} </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="status" id="input-status" class="form-control">
+                    
                     {% if status %}
+                    
                     <option value="0">{{ text_disabled }}</option>
                     <option value="1" selected="selected">{{ text_enabled }}</option>
+                    
                     {% else %}
+                    
                     <option value="0" selected="selected">{{ text_disabled }}</option>
                     <option value="1">{{ text_enabled }}</option>
+                    
                     {% endif %}
+                  
                   </select>
                 </div>
               </div>
@@ -80,15 +83,17 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {% set ip_row = 0 %}
-                    {% for api_ip in api_ips %}
-                    <tr id="ip-row{{ ip_row }}">
-                      <td class="text-left"><input type="text" name="api_ip[]" value="{{ api_ip.ip }}" placeholder="{{ entry_ip }}" class="form-control" /></td>
-                      <td class="text-left"><button type="button" onclick="$('#ip-row{{ ip_row }}').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
-                    </tr>
-                    {% set ip_row = ip_row + 1 %}
-                    {% endfor %}
-                  </tbody>
+                  
+                  {% set ip_row = 0 %}
+                  {% for api_ip in api_ips %}
+                  <tr id="ip-row{{ ip_row }}">
+                    <td class="text-left"><input type="text" name="api_ip[]" value="{{ api_ip.ip }}" placeholder="{{ entry_ip }}" class="form-control" /></td>
+                    <td class="text-left"><button type="button" onclick="$('#ip-row{{ ip_row }}').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                  </tr>
+                  {% set ip_row = ip_row + 1 %}
+                  {% endfor %}
+                    </tbody>
+                  
                   <tfoot>
                     <tr>
                       <td></td>
@@ -98,22 +103,24 @@
                 </table>
               </div>
             </div>
-            <div class="tab-pane table-responsive" id="tab-session">
-              <table id="session" class="table table-striped table-bordered table-hover">
-                <thead>
-                  <tr>
-                    <td class="text-left">{{ column_token }}</td>
-                    <td class="text-left">{{ column_ip }}</td>
-                    <td class="text-left">{{ column_date_added }}</td>
-                    <td class="text-left">{{ column_date_modified }}</td>
-                    <td class="text-right">{{ column_action }}</td>
-                  </tr>
-                </thead>
-                <tbody>
+            <div class="tab-pane" id="tab-session">
+              <div class="table-responsive">
+                <table id="session" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-left">{{ column_token }}</td>
+                      <td class="text-left">{{ column_ip }}</td>
+                      <td class="text-left">{{ column_date_added }}</td>
+                      <td class="text-left">{{ column_date_modified }}</td>
+                      <td class="text-right">{{ column_action }}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  
                   {% if api_sessions %}
                   {% for api_session in api_sessions %}
                   <tr>
-                    <td class="text-left">{{ api_session.token }}</td>
+                    <td class="text-left">{{ api_session.session_id }}</td>
                     <td class="text-left">{{ api_session.ip }}</td>
                     <td class="text-left">{{ api_session.date_added }}</td>
                     <td class="text-left">{{ api_session.date_modified }}</td>
@@ -125,8 +132,10 @@
                     <td class="text-center" colspan="5">{{ text_no_results }}</td>
                   </tr>
                   {% endif %}
-                </tbody>
-              </table>
+                    </tbody>
+                  
+                </table>
+              </div>
             </div>
           </div>
         </form>
@@ -145,7 +154,7 @@ $('#button-generate').on('click', function() {
 
 	$('#input-key').val(rand);
 });
-//--></script>
+//--></script> 
   <script type="text/javascript"><!--
 var ip_row = {{ ip_row }};
 
@@ -159,7 +168,7 @@ function addIp() {
 
 	ip_row++;
 }
-//--></script>
+//--></script> 
   <script type="text/javascript"><!--
 $('#session button').on('click', function(e) {
 	e.preventDefault();
@@ -168,7 +177,7 @@ $('#session button').on('click', function(e) {
 		var node = this;
 
 		$.ajax({
-			url: 'index.php?route=user/api/deletesession&token={{ token }}&api_session_id=' + $(node).val(),
+			url: 'index.php?route=user/api/deletesession&user_token={{ user_token }}&api_session_id=' + $(node).val(),
 			type: 'post',
 			dataType: 'json',
 			beforeSend: function() {
@@ -198,4 +207,4 @@ $('#session button').on('click', function(e) {
 });
 //--></script>
 </div>
-{{ footer }}
+{{ footer }} 

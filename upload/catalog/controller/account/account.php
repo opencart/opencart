@@ -35,6 +35,7 @@ class ControllerAccountAccount extends Controller {
 
 		$data['text_my_account'] = $this->language->get('text_my_account');
 		$data['text_my_orders'] = $this->language->get('text_my_orders');
+		$data['text_my_affiliate'] = $this->language->get('text_my_affiliate');
 		$data['text_my_newsletter'] = $this->language->get('text_my_newsletter');
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_password'] = $this->language->get('text_password');
@@ -48,6 +49,9 @@ class ControllerAccountAccount extends Controller {
 		$data['text_transaction'] = $this->language->get('text_transaction');
 		$data['text_newsletter'] = $this->language->get('text_newsletter');
 		$data['text_recurring'] = $this->language->get('text_recurring');
+		$data['text_affiliate_add'] = $this->language->get('text_affiliate_add');
+		$data['text_affiliate_edit'] = $this->language->get('text_affiliate_edit');
+		$data['text_tracking'] = $this->language->get('text_tracking');
 
 		$data['edit'] = $this->url->link('account/edit', '', true);
 		$data['password'] = $this->url->link('account/password', '', true);
@@ -60,7 +64,7 @@ class ControllerAccountAccount extends Controller {
 		foreach ($files as $file) {
 			$code = basename($file, '.php');
 			
-			if ($this->config->get($code . '_status') && $this->config->get($code . '_card')) {
+			if ($this->config->get('payment_' . $code . '_status') && $this->config->get($code . '_card')) {
 				$this->load->language('extension/credit_card/' . $code);
 
 				$data['credit_cards'][] = array(
@@ -74,7 +78,7 @@ class ControllerAccountAccount extends Controller {
 		$data['order'] = $this->url->link('account/order', '', true);
 		$data['download'] = $this->url->link('account/download', '', true);
 		
-		if ($this->config->get('reward_status')) {
+		if ($this->config->get('total_reward_status')) {
 			$data['reward'] = $this->url->link('account/reward', '', true);
 		} else {
 			$data['reward'] = '';
@@ -84,6 +88,22 @@ class ControllerAccountAccount extends Controller {
 		$data['transaction'] = $this->url->link('account/transaction', '', true);
 		$data['newsletter'] = $this->url->link('account/newsletter', '', true);
 		$data['recurring'] = $this->url->link('account/recurring', '', true);
+		
+		$this->load->model('account/customer');
+		
+		$affiliate_info = $this->model_account_customer->getAffiliate($this->customer->getId());
+		
+		if (!$affiliate_info) {	
+			$data['affiliate'] = $this->url->link('account/affiliate/add', '', true);
+		} else {
+			$data['affiliate'] = $this->url->link('account/affiliate/edit', '', true);
+		}
+		
+		if ($affiliate_info) {		
+			$data['tracking'] = $this->url->link('account/tracking', '', true);
+		} else {
+			$data['tracking'] = '';
+		}
 		
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

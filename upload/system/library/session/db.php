@@ -20,18 +20,6 @@ final class DB {
 		$this->expire = ini_get('session.gc_maxlifetime');
 	}
 	
-	public function open() {
-		if ($this->db){
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	public function close() {
-		return true;
-	}
-	
 	public function read($session_id) {
 		$query = $this->db->query("SELECT `data` FROM `" . DB_PREFIX . "session` WHERE session_id = '" . $this->db->escape($session_id) . "' AND expire > " . (int)time());
 		

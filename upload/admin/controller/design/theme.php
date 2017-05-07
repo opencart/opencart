@@ -9,12 +9,12 @@ class ControllerDesignTheme extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('design/theme', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('design/theme', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -31,7 +31,7 @@ class ControllerDesignTheme extends Controller {
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_reset'] = $this->language->get('button_reset');
 		
-		$data['token'] = $this->session->data['token'];
+		$data['user_token'] = $this->session->data['user_token'];
 		
 		$data['stores'] = array();
 		
@@ -98,8 +98,8 @@ class ControllerDesignTheme extends Controller {
 				'route'      => $result['route'],
 				'theme'      => $result['theme'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'       => $this->url->link('design/theme/template', 'token=' . $this->session->data['token'], true),
-				'delete'     => $this->url->link('design/theme/delete', 'token=' . $this->session->data['token'] . '&theme_id=' . $result['theme_id'], true)
+				'edit'       => $this->url->link('design/theme/template', 'user_token=' . $this->session->data['user_token'], true),
+				'delete'     => $this->url->link('design/theme/delete', 'user_token=' . $this->session->data['user_token'] . '&theme_id=' . $result['theme_id'], true)
 			);			
 		}
 
@@ -107,7 +107,7 @@ class ControllerDesignTheme extends Controller {
 		$pagination->total = $history_total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->link('design/theme/history', 'token=' . $this->session->data['token'] . '&page={page}', true);
+		$pagination->url = $this->url->link('design/theme/history', 'user_token=' . $this->session->data['user_token'] . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 

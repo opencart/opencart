@@ -10,38 +10,37 @@ final class Loader {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 		
-		$output = null;
+		// Keep the original trigger
+		$trigger = $route;
 		
 		// Trigger the pre events
-		$result = $this->registry->get('event')->trigger('controller/' . $route . '/before', array(&$route, &$data, &$output));
+		$result = $this->registry->get('event')->trigger('controller/' . $trigger . '/before', array(&$route, &$data));
 		
-		if ($result) {
-			return $result;
-		}
-		
-		if (!$output) {
+		// Make sure its only the last event that returns an output if required.
+		if ($result != null && !$result instanceof Exception) {
+			$output = $result;
+		} else {
 			$action = new Action($route);
-			$output = $action->execute($this->registry, array(&$data));
+			$output = $action->execute($this->registry, array(&$data));			
 		}
-			
-		// Trigger the post events
-		$result = $this->registry->get('event')->trigger('controller/' . $route . '/after', array(&$route, &$data, &$output));
 		
-		if ($output instanceof Exception) {
-			return false;
+		// Trigger the post events
+		$result = $this->registry->get('event')->trigger('controller/' . $trigger . '/after', array(&$route, &$data, &$output));
+		
+		if ($result && !$result instanceof Exception) {
+			$output = $result;
 		}
 
-		return $output;
+		if (!$output instanceof Exception) {
+			return $output;
+		}
 	}
 	
 	public function model($route) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 		
-		// Trigger the pre events
-		$this->registry->get('event')->trigger('model/' . $route . '/before', array(&$route));
-		
-		if (!$this->registry->has('model_' . str_replace(array('/', '-', '.'), array('_', '', ''), $route))) {
+		if (!$this->registry->has('model_' . str_replace('/', '_', $route))) {
 			$file  = DIR_APPLICATION . 'model/' . $route . '.php';
 			$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $route);
 			
@@ -50,48 +49,47 @@ final class Loader {
 	
 				$proxy = new Proxy();
 				
+				// Overriding models is a little harder so we have to use PHP's magic methods
+				// In future version we can use runkit
 				foreach (get_class_methods($class) as $method) {
 					$proxy->{$method} = $this->callback($this->registry, $route . '/' . $method);
 				}
 				
-				$this->registry->set('model_' . str_replace(array('/', '-', '.'), array('_', '', ''), (string)$route), $proxy);
+				$this->registry->set('model_' . str_replace('/', '_', (string)$route), $proxy);
 			} else {
 				throw new \Exception('Error: Could not load model ' . $route . '!');
 			}
 		}
-		
-		// Trigger the post events
-		$this->registry->get('event')->trigger('model/' . $route . '/after', array(&$route));
 	}
 
 	public function view($route, $data = array()) {
-		$output = null;
-		
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 		
+		// Keep the original trigger
+		$trigger = $route;
+		
 		// Trigger the pre events
-		$result = $this->registry->get('event')->trigger('view/' . $route . '/before', array(&$route, &$data, &$output));
+		$result = $this->registry->get('event')->trigger('view/' . $trigger . '/before', array(&$route, &$data));
 		
-		if ($result) {
-			return $result;
-		}
-		
-		if (!$output) {
+		// Make sure its only the last event that returns an output if required.
+		if ($result && !$result instanceof Exception) {
+			$output = $result;
+		} else {
 			$template = new Template($this->registry->get('config')->get('template_engine'));
-			
+				
 			foreach ($data as $key => $value) {
 				$template->set($key, $value);
 			}
-		
-			$output = $template->render($route);
+			
+			$output = $template->render($this->registry->get('config')->get('template_directory') . $route);		
 		}
 		
 		// Trigger the post events
-		$result = $this->registry->get('event')->trigger('view/' . $route . '/after', array(&$route, &$data, &$output));
+		$result = $this->registry->get('event')->trigger('view/' . $trigger . '/after', array(&$route, &$data, &$output));
 		
-		if ($result) {
-			return $result;
+		if ($result && !$result instanceof Exception) {
+			$output = $result;
 		}
 		
 		return $output;
@@ -132,59 +130,69 @@ final class Loader {
 	}
 
 	public function language($route) {
-		$output = null;
+		// Sanitize the call
+		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);		
 		
-		$this->registry->get('event')->trigger('language/' . $route . '/before', array(&$route, &$output));
+		// Keep the original trigger
+		$trigger = $route;
+				
+		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/before', array(&$route));
 		
-		$output = $this->registry->get('language')->load($route);
+		if ($result && !$result instanceof Exception) {
+			$output = $result;
+		} else {
+			$output = $this->registry->get('language')->load($route);
+		}
 		
-		$this->registry->get('event')->trigger('language/' . $route . '/after', array(&$route, &$output));
+		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/after', array(&$route, &$output));
 		
+		if ($result && !$result instanceof Exception) {
+			$output = $result;
+		}
+				
 		return $output;
 	}
 	
 	protected function callback($registry, $route) {
-		return function($args) use($registry, &$route) {
-			static $model = array(); 			
+		return function($args) use($registry, $route) {
+			static $model;
 			
-			$output = null;
-			
+			$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
+
+			// Keep the original trigger
+			$trigger = $route;
+					
 			// Trigger the pre events
-			$result = $registry->get('event')->trigger('model/' . $route . '/before', array(&$route, &$args, &$output));
+			$result = $registry->get('event')->trigger('model/' . $trigger . '/before', array(&$route, &$args));
 			
-			if ($result) {
-				return $result;
-			}
-			
-			// Store the model object
-			if (!isset($model[$route])) {
-				$file = DIR_APPLICATION . 'model/' .  substr($route, 0, strrpos($route, '/')) . '.php';
-				$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', substr($route, 0, strrpos($route, '/')));
-
-				if (is_file($file)) {
-					include_once($file);
-				
-					$model[$route] = new $class($registry);
-				} else {
-					throw new \Exception('Error: Could not load model ' . substr($route, 0, strrpos($route, '/')) . '!');
-				}
-			}
-
-			$method = substr($route, strrpos($route, '/') + 1);
-			
-			$callable = array($model[$route], $method);
-
-			if (is_callable($callable)) {
-				$output = call_user_func_array($callable, $args);
+			if ($result && !$result instanceof Exception) {
+				$output = $result;
 			} else {
-				throw new \Exception('Error: Could not call model/' . $route . '!');
+				$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', substr($route, 0, strrpos($route, '/')));
+				
+				// Store the model object
+				$key = substr($route, 0, strrpos($route, '/'));
+				
+				if (!isset($model[$key])) {
+					$model[$key] = new $class($registry);
+				}
+				
+				$method = substr($route, strrpos($route, '/') + 1);
+				
+				$callable = array($model[$key], $method);
+	
+				if (is_callable($callable)) {
+					$output = call_user_func_array($callable, $args);
+				} else {
+					throw new \Exception('Error: Could not call model/' . $route . '!');
+				}					
 			}
 			
 			// Trigger the post events
-			$result = $registry->get('event')->trigger('model/' . $route . '/after', array(&$route, &$args, &$output));
+			$result = $registry->get('event')->trigger('model/' . $trigger . '/after', array(&$route, &$args, &$output));
 			
-			if ($result) {
-				return $result;
+			if ($result && !$result instanceof Exception) {
+				$output = $result;
 			}
 						
 			return $output;

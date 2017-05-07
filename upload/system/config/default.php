@@ -1,6 +1,6 @@
 <?php
 // Site
-$_['site_base']            = '';
+$_['site_url']             = '';
 $_['site_ssl']             = false;
 
 // Url
@@ -9,6 +9,9 @@ $_['url_autostart']        = true;
 // Language
 $_['language_default']     = 'en-gb';
 $_['language_autoload']    = array('en-gb');
+
+// Date
+$_['date_timezone']        = 'UTC';
 
 // Database
 $_['db_engine']            = 'mysqli'; // mpdo, mssql, mysql, mysqli or postgre
@@ -37,12 +40,13 @@ $_['cache_engine']         = 'file'; // apc, file or mem
 $_['cache_expire']         = 3600;
 
 // Session
-$_['session_engine']       = 'php';
+$_['session_engine']       = 'file';
 $_['session_autostart']    = true;
-$_['session_name']         = 'PHPSESSID';
+$_['session_name']         = 'OCSESSID';
 
 // Template
-$_['template_engine']      = 'php';
+$_['template_engine']      = 'twig';
+$_['template_directory']   = '';
 
 // Error
 $_['error_display']        = true;

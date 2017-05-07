@@ -5,7 +5,7 @@
 <script type="text/javascript"><!--
 function getTransaction() {
 	$.ajax({
-		url: 'index.php?route=extension/payment/klarna_checkout/getTransaction&token={{ token }}',
+		url: 'index.php?route=extension/payment/klarna_checkout/getTransaction&user_token={{ user_token }}',
 		dataType: 'html',
 		data: {
 			order_id: '{{ order_id }}'

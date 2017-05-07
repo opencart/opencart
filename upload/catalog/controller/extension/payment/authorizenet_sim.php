@@ -9,7 +9,7 @@ class ControllerExtensionPaymentAuthorizeNetSim extends Controller {
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		$data['x_login'] = $this->config->get('authorizenet_sim_merchant');
+		$data['x_login'] = $this->config->get('payment_authorizenet_sim_merchant');
 		$data['x_fp_sequence'] = $this->session->data['order_id'];
 		$data['x_fp_timestamp'] = time();
 		$data['x_amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
@@ -71,7 +71,7 @@ class ControllerExtensionPaymentAuthorizeNetSim extends Controller {
 					$message .= 'Receipt: ' . $this->request->post['exact_ctr'];
 				}
 
-				$this->model_checkout_order->addOrderHistory($details['x_invoice_num'], $this->config->get('authorizenet_sim_order_status_id'), $message, true);
+				$this->model_checkout_order->addOrderHistory($details['x_invoice_num'], $this->config->get('payment_authorizenet_sim_order_status_id'), $message, true);
 
 				$this->response->redirect($this->url->link('checkout/success'));
 			} else {

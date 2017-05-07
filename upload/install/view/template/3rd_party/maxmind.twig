@@ -19,7 +19,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-key">{{ entry_key }}</label>
             <div class="col-sm-10">
-              <input type="text" name="maxmind_key" value="{{ maxmind_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control" />
+              <input type="text" name="fraud_maxmind_key" value="{{ fraud_maxmind_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control" />
               {% if error_key %}
               <div class="text-danger">{{ error_key }}</div>
               {% endif %} </div>
@@ -27,7 +27,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-score">{{ entry_score }}</label>
             <div class="col-sm-10">
-              <input type="text" name="maxmind_score" value="{{ maxmind_score }}" placeholder="{{ entry_score }}" id="input-score" class="form-control" />
+              <input type="text" name="fraud_maxmind_score" value="{{ fraud_maxmind_score }}" placeholder="{{ entry_score }}" id="input-score" class="form-control" />
               <div class="help">{{ help_score }}</div>
               {% if error_score %}
               <div class="text-danger">{{ error_score }}</div>

@@ -11,12 +11,12 @@ class ControllerCommonDashboard extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		// Check install directory exists
@@ -29,10 +29,10 @@ class ControllerCommonDashboard extends Controller {
 		// Dashboard Extensions
 		$dashboards = array();
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		// Get a list of installed modules
-		$extensions = $this->model_extension_extension->getInstalled('dashboard');
+		$extensions = $this->model_setting_extension->getInstalled('dashboard');
 		
 		// Add all the modules which have multiple settings for each module
 		foreach ($extensions as $code) {

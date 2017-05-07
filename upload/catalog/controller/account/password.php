@@ -20,18 +20,6 @@ class ControllerAccountPassword extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			// Add to activity log
-			if ($this->config->get('config_customer_activity')) {
-				$this->load->model('account/activity');
-
-				$activity_data = array(
-					'customer_id' => $this->customer->getId(),
-					'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-				);
-
-				$this->model_account_activity->addActivity('password', $activity_data);
-			}
-
 			$this->response->redirect($this->url->link('account/account', '', true));
 		}
 
@@ -101,7 +89,7 @@ class ControllerAccountPassword extends Controller {
 	}
 
 	protected function validate() {
-		if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, "UTF-8")) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, "UTF-8")) > 20)) {
+		if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 20)) {
 			$this->error['password'] = $this->language->get('error_password');
 		}
 

@@ -10,11 +10,11 @@ class ControllerExtensionPaymentCardinity extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('cardinity', $this->request->post);
+			$this->model_setting_setting->editSetting('payment_cardinity', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -63,77 +63,77 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/cardinity', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/cardinity', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/payment/cardinity', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/cardinity', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
 
-		if (isset($this->request->post['cardinity_key'])) {
-			$data['cardinity_key'] = $this->request->post['cardinity_key'];
+		if (isset($this->request->post['payment_cardinity_key'])) {
+			$data['payment_cardinity_key'] = $this->request->post['payment_cardinity_key'];
 		} else {
-			$data['cardinity_key'] = $this->config->get('cardinity_key');
+			$data['payment_cardinity_key'] = $this->config->get('payment_cardinity_key');
 		}
 
-		if (isset($this->request->post['cardinity_secret'])) {
-			$data['cardinity_secret'] = $this->request->post['cardinity_secret'];
+		if (isset($this->request->post['payment_cardinity_secret'])) {
+			$data['payment_cardinity_secret'] = $this->request->post['payment_cardinity_secret'];
 		} else {
-			$data['cardinity_secret'] = $this->config->get('cardinity_secret');
+			$data['payment_cardinity_secret'] = $this->config->get('payment_cardinity_secret');
 		}
 
-		if (isset($this->request->post['cardinity_debug'])) {
-			$data['cardinity_debug'] = $this->request->post['cardinity_debug'];
+		if (isset($this->request->post['payment_cardinity_debug'])) {
+			$data['payment_cardinity_debug'] = $this->request->post['payment_cardinity_debug'];
 		} else {
-			$data['cardinity_debug'] = $this->config->get('cardinity_debug');
+			$data['payment_cardinity_debug'] = $this->config->get('payment_cardinity_debug');
 		}
 
-		if (isset($this->request->post['cardinity_total'])) {
-			$data['cardinity_total'] = $this->request->post['cardinity_total'];
+		if (isset($this->request->post['payment_cardinity_total'])) {
+			$data['payment_cardinity_total'] = $this->request->post['payment_cardinity_total'];
 		} else {
-			$data['cardinity_total'] = $this->config->get('cardinity_total');
+			$data['payment_cardinity_total'] = $this->config->get('payment_cardinity_total');
 		}
 
-		if (isset($this->request->post['cardinity_order_status_id'])) {
-			$data['cardinity_order_status_id'] = $this->request->post['cardinity_order_status_id'];
+		if (isset($this->request->post['payment_cardinity_order_status_id'])) {
+			$data['payment_cardinity_order_status_id'] = $this->request->post['payment_cardinity_order_status_id'];
 		} else {
-			$data['cardinity_order_status_id'] = $this->config->get('cardinity_order_status_id');
+			$data['payment_cardinity_order_status_id'] = $this->config->get('payment_cardinity_order_status_id');
 		}
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['cardinity_geo_zone_id'])) {
-			$data['cardinity_geo_zone_id'] = $this->request->post['cardinity_geo_zone_id'];
+		if (isset($this->request->post['payment_cardinity_geo_zone_id'])) {
+			$data['payment_cardinity_geo_zone_id'] = $this->request->post['payment_cardinity_geo_zone_id'];
 		} else {
-			$data['cardinity_geo_zone_id'] = $this->config->get('cardinity_geo_zone_id');
+			$data['payment_cardinity_geo_zone_id'] = $this->config->get('payment_cardinity_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['cardinity_status'])) {
-			$data['cardinity_status'] = $this->request->post['cardinity_status'];
+		if (isset($this->request->post['payment_cardinity_status'])) {
+			$data['payment_cardinity_status'] = $this->request->post['payment_cardinity_status'];
 		} else {
-			$data['cardinity_status'] = $this->config->get('cardinity_status');
+			$data['payment_cardinity_status'] = $this->config->get('payment_cardinity_status');
 		}
 
-		if (isset($this->request->post['cardinity_sort_order'])) {
-			$data['cardinity_sort_order'] = $this->request->post['cardinity_sort_order'];
+		if (isset($this->request->post['payment_cardinity_sort_order'])) {
+			$data['payment_cardinity_sort_order'] = $this->request->post['payment_cardinity_sort_order'];
 		} else {
-			$data['cardinity_sort_order'] = $this->config->get('cardinity_sort_order');
+			$data['payment_cardinity_sort_order'] = $this->config->get('payment_cardinity_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -147,7 +147,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 		$this->load->language('extension/payment/cardinity');
 
 		$data['text_payment_info'] = $this->language->get('text_payment_info');
-		$data['token'] = $this->session->data['token'];
+		$data['user_token'] = $this->session->data['user_token'];
 		$data['order_id'] = $this->request->get['order_id'];
 
 		return $this->load->view('extension/payment/cardinity_order', $data);
@@ -172,11 +172,11 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
 		$data['button_refund'] = $this->language->get('button_refund');
 
-		$data['token'] = $this->session->data['token'];
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$client = $this->model_extension_payment_cardinity->createClient(array(
-			'key'    => $this->config->get('cardinity_key'),
-			'secret' => $this->config->get('cardinity_secret')
+			'key'    => $this->config->get('payment_cardinity_key'),
+			'secret' => $this->config->get('payment_cardinity_secret')
 		));
 
 		$order = $this->model_extension_payment_cardinity->getOrder($this->request->get['order_id']);
@@ -247,8 +247,8 @@ class ControllerExtensionPaymentCardinity extends Controller {
 		$success = $error = '';
 
 		$client = $this->model_extension_payment_cardinity->createClient(array(
-			'key'    => $this->config->get('cardinity_key'),
-			'secret' => $this->config->get('cardinity_secret')
+			'key'    => $this->config->get('payment_cardinity_key'),
+			'secret' => $this->config->get('payment_cardinity_secret')
 		));
 
 		$refund = $this->model_extension_payment_cardinity->refundPayment($client, $this->request->post['payment_id'], (float)number_format($this->request->post['amount'], 2), $this->request->post['description']);
@@ -281,13 +281,13 @@ class ControllerExtensionPaymentCardinity extends Controller {
 			$check_credentials = false;
 		}
 
-		if (!$this->request->post['cardinity_key']) {
+		if (!$this->request->post['payment_cardinity_key']) {
 			$this->error['key'] = $this->language->get('error_key');
 
 			$check_credentials = false;
 		}
 
-		if (!$this->request->post['cardinity_secret']) {
+		if (!$this->request->post['payment_cardinity_secret']) {
 			$this->error['secret'] = $this->language->get('error_secret');
 
 			$check_credentials = false;
@@ -301,8 +301,8 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
 		if ($check_credentials) {
 			$client = $this->model_extension_payment_cardinity->createClient(array(
-				'key'    => $this->request->post['cardinity_key'],
-				'secret' => $this->request->post['cardinity_secret']
+				'key'    => $this->request->post['payment_cardinity_key'],
+				'secret' => $this->request->post['payment_cardinity_secret']
 			));
 
 			$verify_credentials = $this->model_extension_payment_cardinity->verifyCredentials($client);

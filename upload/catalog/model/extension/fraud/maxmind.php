@@ -23,7 +23,7 @@ class ModelExtensionFraudMaxMind extends Model {
 			$request .= '&country=' . urlencode($order_info['payment_country']);
 			$request .= '&domain=' . urlencode(utf8_substr(strrchr($order_info['email'], '@'), 1));
 			$request .= '&custPhone=' . urlencode($order_info['telephone']);
-			$request .= '&license_key=' . urlencode($this->config->get('maxmind_key'));
+			$request .= '&license_key=' . urlencode($this->config->get('fraud_maxmind_key'));
 
 			if ($order_info['shipping_method']) {
 				$request .= '&shipAddr=' . urlencode($order_info['shipping_address_1']);
@@ -373,7 +373,7 @@ class ModelExtensionFraudMaxMind extends Model {
 			}
 		}
 
-		if ($risk_score > $this->config->get('maxmind_score') && $this->config->get('maxmind_key')) {
+		if ($risk_score > $this->config->get('fraud_maxmind_score') && $this->config->get('fraud_maxmind_key')) {
 			return $this->config->get('maxmind_order_status_id');
 		}
 	}

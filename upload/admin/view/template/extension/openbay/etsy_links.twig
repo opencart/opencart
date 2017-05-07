@@ -102,7 +102,7 @@
     }
 
     $.ajax({
-      url: 'index.php?route=extension/openbay/etsy_product/addLink&token={{ token }}',
+      url: 'index.php?route=extension/openbay/etsy_product/addLink&user_token={{ user_token }}',
       dataType: 'json',
       method: 'POST',
       data: { 'product_id' : product_id, 'etsy_id' : etsy_id },
@@ -131,7 +131,7 @@
 
   function deleteLink(etsy_link_id) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/etsy_product/deleteLink&token={{ token }}',
+      url: 'index.php?route=extension/openbay/etsy_product/deleteLink&user_token={{ user_token }}',
       dataType: 'json',
       method: 'POST',
       data: { 'etsy_link_id' : etsy_link_id },
@@ -155,7 +155,7 @@
   $('input[name=\'add_link_product\']').autocomplete({
     'source': function(request, response) {
       $.ajax({
-        url: 'index.php?route=catalog/product/autocomplete&token={{ token }}&filter_name=' +  encodeURIComponent(request),
+        url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
         dataType: 'json',
         success: function(json) {
           response($.map(json, function(item) {

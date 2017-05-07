@@ -110,7 +110,7 @@
     e.preventDefault();
 
     $.ajax({
-      url: 'index.php?route=extension/openbay/patch&token={{ token }}',
+      url: 'index.php?route=extension/openbay/patch&user_token={{ user_token }}',
       type: 'post',
       dataType: 'json',
       beforeSend: function() {
@@ -132,7 +132,7 @@
     e.preventDefault();
 
     $.ajax({
-      url: 'index.php?route=extension/openbay/faqclear&token={{ token }}',
+      url: 'index.php?route=extension/openbay/faqclear&user_token={{ user_token }}',
       beforeSend: function() {
         $('#button-clear-faq').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>');
         $("#button-clear-faq").attr('disabled','disabled');
@@ -157,7 +157,7 @@
 
     if (pass != '') {
       $.ajax({
-        url: 'index.php?route=extension/openbay/purge&token={{ token }}',
+        url: 'index.php?route=extension/openbay/purge&user_token={{ user_token }}',
         type: 'post',
         dataType: 'json',
         data: 'pass=' + pass,
@@ -200,7 +200,7 @@
 
   function updateCheckServer(beta) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/updatev2&stage=check_server&token={{ token }}&beta=' + beta,
+      url: 'index.php?route=extension/openbay/updatev2&stage=check_server&user_token={{ user_token }}&beta=' + beta,
       type: 'post',
       dataType: 'json',
       beforeSend: function() { },
@@ -223,7 +223,7 @@
 
   function updateCheckVersion(beta) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/updatev2&stage=check_version&token={{ token }}&beta=' + beta,
+      url: 'index.php?route=extension/openbay/updatev2&stage=check_version&user_token={{ user_token }}&beta=' + beta,
       type: 'post',
       dataType: 'json',
       beforeSend: function() { },
@@ -248,7 +248,7 @@
 
   function updateDownload(beta) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/updatev2&stage=download&token={{ token }}&beta=' + beta,
+      url: 'index.php?route=extension/openbay/updatev2&stage=download&user_token={{ user_token }}&beta=' + beta,
       type: 'post',
       dataType: 'json',
       beforeSend: function() { },
@@ -271,7 +271,7 @@
 
   function updateExtract(beta) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/updatev2&stage=extract&token={{ token }}&beta=' + beta,
+      url: 'index.php?route=extension/openbay/updatev2&stage=extract&user_token={{ user_token }}&beta=' + beta,
       type: 'post',
       dataType: 'json',
       beforeSend: function() { },
@@ -294,7 +294,7 @@
 
   function updateRemove(beta) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/updatev2&stage=remove&token={{ token }}&beta=' + beta,
+      url: 'index.php?route=extension/openbay/updatev2&stage=remove&user_token={{ user_token }}&beta=' + beta,
       type: 'post',
       dataType: 'json',
       beforeSend: function() { },
@@ -317,7 +317,7 @@
 
   function updatePatch(beta) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/updatev2&stage=run_patch&token={{ token }}&beta=' + beta,
+      url: 'index.php?route=extension/openbay/updatev2&stage=run_patch&user_token={{ user_token }}&beta=' + beta,
       type: 'post',
       dataType: 'json',
       beforeSend: function() { },
@@ -340,7 +340,7 @@
 
   function updateVersion(beta) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/updatev2&stage=update_version&token={{ token }}&beta=' + beta,
+      url: 'index.php?route=extension/openbay/updatev2&stage=update_version&user_token={{ user_token }}&beta=' + beta,
       type: 'post',
       dataType: 'json',
       beforeSend: function() { },

@@ -4,7 +4,6 @@ $_['heading_title']                            = 'EC-Ship';
 
 // Text
 $_['text_extension']                           = 'Extension';
-$_['text_shipping']                            = 'Shipping';
 $_['text_success']                             = 'Success: You have modified EC-Ship shipping!';
 $_['text_edit']                                = 'Edit EC-Ship Shipping';
 $_['text_air_registered_mail']                 = 'Air Registered Mail';
@@ -17,7 +16,8 @@ $_['text_e_express_service_one']               = 'e-Express service (including G
 $_['text_e_express_service_two']               = 'e-Express service (including Australia, New Zealand, Korea, Singapore and Vietnam)(Package maxiumn weight 2KG)';
 $_['text_speed_post']                          = 'SpeedPost (Standard Service)(Package maxiumn weight 30KG)';
 $_['text_smart_post']                          = 'Smart Post(Package maxiumn weight 2KG)';
-$_['text_local_courier_post']                  = 'Local Courier Post (Counter Collection)(Package maxiumn weight 20KG)';
+$_['text_local_courier_post']                  = 'Local Courier Post (Counter Collection)(Package maxiumn weight 2KG)';
+$_['text_local_parcel']                        = 'Local Parcel (Package maxiumn weight 20KG)';
 
 // Entry
 $_['entry_api_key']                            = 'API Key';

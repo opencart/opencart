@@ -15,11 +15,11 @@ class ControllerExtensionPaymentNochex extends Controller {
 
 		// Nochex minimum requirements
 		// The merchant ID is usually your Nochex registered email address but can be altered for "Merchant" accounts see below
-		if ($this->config->get('nochex_email') != $this->config->get('nochex_merchant')) {
+		if ($this->config->get('payment_nochex_email') != $this->config->get('payment_nochex_merchant')) {
 			// This MUST be changed on your Nochex account!!!!
-			$data['merchant_id'] = $this->config->get('nochex_merchant');
+			$data['merchant_id'] = $this->config->get('payment_nochex_merchant');
 		} else {
-			$data['merchant_id'] = $this->config->get('nochex_email');
+			$data['merchant_id'] = $this->config->get('payment_nochex_email');
 		}
 
 		$data['amount'] = $this->currency->format($order_info['total'], 'GBP', false, false);
@@ -60,7 +60,7 @@ class ControllerExtensionPaymentNochex extends Controller {
 
 		$data['email_address'] = $order_info['email'];
 		$data['customer_phone_number']= $order_info['telephone'];
-		$data['test'] = $this->config->get('nochex_test');
+		$data['test'] = $this->config->get('payment_nochex_test');
 		$data['success_url'] = $this->url->link('checkout/success', '', true);
 		$data['cancel_url'] = $this->url->link('checkout/payment', '', true);
 		$data['declined_url'] = $this->url->link('extension/payment/nochex/callback', 'method=decline', true);
@@ -115,7 +115,7 @@ class ControllerExtensionPaymentNochex extends Controller {
 		curl_close($curl);
 
 		if (strcmp($response, 'AUTHORISED') == 0) {
-			$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('nochex_order_status_id'));
+			$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_nochex_order_status_id'));
 		} else {
 			$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('config_order_status_id'), 'Auto-Verification step failed. Manually check the transaction.');
 		}

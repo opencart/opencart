@@ -64,7 +64,7 @@
   <script type="text/javascript"><!--
 $('select[name="store_id"]').on('change', function(e) {
 	$.ajax({
-		url: 'index.php?route=design/theme/path&token={{ token }}&store_id=' + $('select[name="store_id"]').val(),
+		url: 'index.php?route=design/theme/path&user_token={{ user_token }}&store_id=' + $('select[name="store_id"]').val(),
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name="store_id"]').prop('disabled', true);
@@ -105,7 +105,7 @@ $('#path').on('click', 'a.directory', function(e) {
 	var node = this;
 	
 	$.ajax({
-		url: 'index.php?route=design/theme/path&token={{ token }}&store_id=' + $('select[name="store_id"]').val() + '&path=' + $(node).attr('href'),
+		url: 'index.php?route=design/theme/path&user_token={{ user_token }}&store_id=' + $('select[name="store_id"]').val() + '&path=' + $(node).attr('href'),
 		dataType: 'json',
 		beforeSend: function() {
 			$(node).find('i').removeClass('fa-arrow-right');
@@ -158,7 +158,7 @@ $('#path').on('click', 'a.file', function(e) {
 	
 	if (!$('#tab-' + tab_id).length) {
 		$.ajax({
-			url: 'index.php?route=design/theme/template&token={{ token }}&store_id=' + $('select[name="store_id"]').val() + '&path=' + $(node).attr('href'),
+			url: 'index.php?route=design/theme/template&user_token={{ user_token }}&store_id=' + $('select[name="store_id"]').val() + '&path=' + $(node).attr('href'),
 			dataType: 'json',
 			beforeSend: function() {
 				$(node).find('i').removeClass('fa-arrow-right');
@@ -240,7 +240,7 @@ $('.tab-content').on('click', '.btn-primary', function(e) {
 	var editor = $('.tab-content .active .CodeMirror')[0].CodeMirror;
 				
 	$.ajax({
-		url: 'index.php?route=design/theme/save&token={{ token }}&store_id=' + $('.tab-content .active input[name="store_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
+		url: 'index.php?route=design/theme/save&user_token={{ user_token }}&store_id=' + $('.tab-content .active input[name="store_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
 		type: 'post',
 		data: 'code=' + encodeURIComponent(editor.getValue()),
 		dataType: 'json',
@@ -260,7 +260,7 @@ $('.tab-content').on('click', '.btn-primary', function(e) {
 			if (json['success']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			
-				$('#history').load('index.php?route=design/theme/history&token={{ token }}');
+				$('#history').load('index.php?route=design/theme/history&user_token={{ user_token }}');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -274,7 +274,7 @@ $('.tab-content').on('click', '.btn-danger', function(e) {
 		var node = this;
 
 		$.ajax({
-			url: 'index.php?route=design/theme/reset&token={{ token }}&store_id=' + $('.tab-content .active input[name="store_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
+			url: 'index.php?route=design/theme/reset&user_token={{ user_token }}&store_id=' + $('.tab-content .active input[name="store_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
 			dataType: 'json',
 			beforeSend: function() {
 				$(node).button('loading');
@@ -310,7 +310,7 @@ $('#history').delegate('.pagination a', 'click', function(e) {
 	$('#history').load(this.href);
 });
 
-$('#history').load('index.php?route=design/theme/history&token={{ token }}');
+$('#history').load('index.php?route=design/theme/history&user_token={{ user_token }}');
 
 $('#history').on('click', '.btn-primary', function(e) {
 	e.preventDefault();
@@ -322,7 +322,7 @@ $('#history').on('click', '.btn-primary', function(e) {
 
 	if (!$('#tab-' + tab_id).length) {
 		$.ajax({
-			url: 'index.php?route=design/theme/template&token={{ token }}&store_id=' + $(node).parent().parent().find('input[name="store_id"]').val() + '&path=' + $(node).parent().parent().find('input[name="path"]').val(),
+			url: 'index.php?route=design/theme/template&user_token={{ user_token }}&store_id=' + $(node).parent().parent().find('input[name="store_id"]').val() + '&path=' + $(node).parent().parent().find('input[name="path"]').val(),
 			dataType: 'json',
 			beforeSend: function() {
 				$(node).button('loading');
@@ -398,7 +398,7 @@ $('#history').on('click', '.btn-danger', function(e) {
 				if (json['success']) {
 					$('#history').before('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
-					$('#history').load('index.php?route=design/theme/history&token={{ token }}');
+					$('#history').load('index.php?route=design/theme/history&user_token={{ user_token }}');
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {

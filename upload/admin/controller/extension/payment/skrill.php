@@ -10,11 +10,11 @@ class ControllerExtensionPaymentSkrill extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('skrill', $this->request->post);
+			$this->model_setting_setting->editSetting('payment_skrill', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -59,107 +59,107 @@ class ControllerExtensionPaymentSkrill extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/skrill', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/skrill', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/payment/skrill', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/skrill', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
 
-		if (isset($this->request->post['skrill_email'])) {
-			$data['skrill_email'] = $this->request->post['skrill_email'];
+		if (isset($this->request->post['payment_skrill_email'])) {
+			$data['payment_skrill_email'] = $this->request->post['payment_skrill_email'];
 		} else {
-			$data['skrill_email'] = $this->config->get('skrill_email');
+			$data['payment_skrill_email'] = $this->config->get('payment_skrill_email');
 		}
 
-		if (isset($this->request->post['skrill_secret'])) {
-			$data['skrill_secret'] = $this->request->post['skrill_secret'];
+		if (isset($this->request->post['payment_skrill_secret'])) {
+			$data['payment_skrill_secret'] = $this->request->post['payment_skrill_secret'];
 		} else {
-			$data['skrill_secret'] = $this->config->get('skrill_secret');
+			$data['payment_skrill_secret'] = $this->config->get('payment_skrill_secret');
 		}
 
-		if (isset($this->request->post['skrill_total'])) {
-			$data['skrill_total'] = $this->request->post['skrill_total'];
+		if (isset($this->request->post['payment_skrill_total'])) {
+			$data['payment_skrill_total'] = $this->request->post['payment_skrill_total'];
 		} else {
-			$data['skrill_total'] = $this->config->get('skrill_total');
+			$data['payment_skrill_total'] = $this->config->get('payment_skrill_total');
 		}
 
-		if (isset($this->request->post['skrill_order_status_id'])) {
-			$data['skrill_order_status_id'] = $this->request->post['skrill_order_status_id'];
+		if (isset($this->request->post['payment_skrill_order_status_id'])) {
+			$data['payment_skrill_order_status_id'] = $this->request->post['payment_skrill_order_status_id'];
 		} else {
-			$data['skrill_order_status_id'] = $this->config->get('skrill_order_status_id');
+			$data['payment_skrill_order_status_id'] = $this->config->get('payment_skrill_order_status_id');
 		}
 
-		if (isset($this->request->post['skrill_pending_status_id'])) {
-			$data['skrill_pending_status_id'] = $this->request->post['skrill_pending_status_id'];
+		if (isset($this->request->post['payment_skrill_pending_status_id'])) {
+			$data['payment_skrill_pending_status_id'] = $this->request->post['payment_skrill_pending_status_id'];
 		} else {
-			$data['skrill_pending_status_id'] = $this->config->get('skrill_pending_status_id');
+			$data['payment_skrill_pending_status_id'] = $this->config->get('payment_skrill_pending_status_id');
 		}
 
-		if (isset($this->request->post['skrill_canceled_status_id'])) {
-			$data['skrill_canceled_status_id'] = $this->request->post['skrill_canceled_status_id'];
+		if (isset($this->request->post['payment_skrill_canceled_status_id'])) {
+			$data['payment_skrill_canceled_status_id'] = $this->request->post['payment_skrill_canceled_status_id'];
 		} else {
-			$data['skrill_canceled_status_id'] = $this->config->get('skrill_canceled_status_id');
+			$data['payment_skrill_canceled_status_id'] = $this->config->get('payment_skrill_canceled_status_id');
 		}
 
-		if (isset($this->request->post['skrill_failed_status_id'])) {
-			$data['skrill_failed_status_id'] = $this->request->post['skrill_failed_status_id'];
+		if (isset($this->request->post['payment_skrill_failed_status_id'])) {
+			$data['payment_skrill_failed_status_id'] = $this->request->post['payment_skrill_failed_status_id'];
 		} else {
-			$data['skrill_failed_status_id'] = $this->config->get('skrill_failed_status_id');
+			$data['payment_skrill_failed_status_id'] = $this->config->get('payment_skrill_failed_status_id');
 		}
 
-		if (isset($this->request->post['skrill_chargeback_status_id'])) {
-			$data['skrill_chargeback_status_id'] = $this->request->post['skrill_chargeback_status_id'];
+		if (isset($this->request->post['payment_skrill_chargeback_status_id'])) {
+			$data['payment_skrill_chargeback_status_id'] = $this->request->post['payment_skrill_chargeback_status_id'];
 		} else {
-			$data['skrill_chargeback_status_id'] = $this->config->get('skrill_chargeback_status_id');
+			$data['payment_skrill_chargeback_status_id'] = $this->config->get('payment_skrill_chargeback_status_id');
 		}
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['skrill_geo_zone_id'])) {
-			$data['skrill_geo_zone_id'] = $this->request->post['skrill_geo_zone_id'];
+		if (isset($this->request->post['payment_skrill_geo_zone_id'])) {
+			$data['payment_skrill_geo_zone_id'] = $this->request->post['payment_skrill_geo_zone_id'];
 		} else {
-			$data['skrill_geo_zone_id'] = $this->config->get('skrill_geo_zone_id');
+			$data['payment_skrill_geo_zone_id'] = $this->config->get('payment_skrill_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['skrill_status'])) {
-			$data['skrill_status'] = $this->request->post['skrill_status'];
+		if (isset($this->request->post['payment_skrill_status'])) {
+			$data['payment_skrill_status'] = $this->request->post['payment_skrill_status'];
 		} else {
-			$data['skrill_status'] = $this->config->get('skrill_status');
+			$data['payment_skrill_status'] = $this->config->get('payment_skrill_status');
 		}
 
-		if (isset($this->request->post['skrill_sort_order'])) {
-			$data['skrill_sort_order'] = $this->request->post['skrill_sort_order'];
+		if (isset($this->request->post['payment_skrill_sort_order'])) {
+			$data['payment_skrill_sort_order'] = $this->request->post['payment_skrill_sort_order'];
 		} else {
-			$data['skrill_sort_order'] = $this->config->get('skrill_sort_order');
+			$data['payment_skrill_sort_order'] = $this->config->get('payment_skrill_sort_order');
 		}
 
-		if (isset($this->request->post['skrill_rid'])) {
-			$data['skrill_rid'] = $this->request->post['skrill_rid'];
+		if (isset($this->request->post['payment_skrill_rid'])) {
+			$data['payment_skrill_rid'] = $this->request->post['payment_skrill_rid'];
 		} else {
-			$data['skrill_rid'] = $this->config->get('skrill_rid');
+			$data['payment_skrill_rid'] = $this->config->get('payment_skrill_rid');
 		}
 
-		if (isset($this->request->post['skrill_custnote'])) {
-			$data['skrill_custnote'] = $this->request->post['skrill_custnote'];
+		if (isset($this->request->post['payment_skrill_custnote'])) {
+			$data['payment_skrill_custnote'] = $this->request->post['payment_skrill_custnote'];
 		} else {
-			$data['skrill_custnote'] = $this->config->get('skrill_custnote');
+			$data['payment_skrill_custnote'] = $this->config->get('payment_skrill_custnote');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -174,7 +174,7 @@ class ControllerExtensionPaymentSkrill extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['skrill_email']) {
+		if (!$this->request->post['payment_skrill_email']) {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 

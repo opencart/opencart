@@ -157,7 +157,6 @@ class ModelExtensionOpenBayEtsyOrder extends Model {
 		   `lastname`				  = '" . $this->db->escape((string)$customer_name['surname']) . "',
 		   `email`				  	  = '" . $this->db->escape((string)$order->buyer_email) . "',
 		   `telephone`				  = '',
-		   `fax`				  	  = '',
 		   `payment_firstname`		  = '" . $this->db->escape((string)$customer_name['firstname']) . "',
 		   `payment_lastname`		  = '" . $this->db->escape((string)$customer_name['surname']) . "',
 		   `payment_company`		  = '',

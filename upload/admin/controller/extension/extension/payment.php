@@ -5,7 +5,7 @@ class ControllerExtensionExtensionPayment extends Controller {
 	public function index() {
 		$this->load->language('extension/extension/payment');
 		
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		$this->getList();
 	}
@@ -13,10 +13,10 @@ class ControllerExtensionExtensionPayment extends Controller {
 	public function install() {
 		$this->load->language('extension/extension/payment');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->install('payment', $this->request->get['extension']);
+			$this->model_setting_extension->install('payment', $this->request->get['extension']);
 
 			$this->load->model('user/user_group');
 
@@ -35,10 +35,10 @@ class ControllerExtensionExtensionPayment extends Controller {
 	public function uninstall() {
 		$this->load->language('extension/extension/payment');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->uninstall('payment', $this->request->get['extension']);
+			$this->model_setting_extension->uninstall('payment', $this->request->get['extension']);
 
 			// Call uninstall method if it exsits
 			$this->load->controller('extension/payment/' . $this->request->get['extension'] . '/uninstall');
@@ -77,13 +77,13 @@ class ControllerExtensionExtensionPayment extends Controller {
 			$data['success'] = '';
 		}
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
-		$extensions = $this->model_extension_extension->getInstalled('payment');
+		$extensions = $this->model_setting_extension->getInstalled('payment');
 
 		foreach ($extensions as $key => $value) {
 			if (!is_file(DIR_APPLICATION . 'controller/extension/payment/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/payment/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('payment', $value);
+				$this->model_setting_extension->uninstall('payment', $value);
 
 				unset($extensions[$key]);
 			}
@@ -92,7 +92,7 @@ class ControllerExtensionExtensionPayment extends Controller {
 		$data['extensions'] = array();
 
 		// Compatibility code for old extension folders
-		$files = glob(DIR_APPLICATION . 'controller/{extension/payment,payment}/*.php', GLOB_BRACE);
+		$files = glob(DIR_APPLICATION . 'controller/extension/payment/*.php');
 
 		if ($files) {
 			foreach ($files as $file) {
@@ -111,12 +111,12 @@ class ControllerExtensionExtensionPayment extends Controller {
 				$data['extensions'][] = array(
 					'name'       => $this->language->get('heading_title'),
 					'link'       => $link,
-					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'sort_order' => $this->config->get($extension . '_sort_order'),
-					'install'   => $this->url->link('extension/extension/payment/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/extension/payment/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'status'     => $this->config->get('payment_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+					'sort_order' => $this->config->get('payment_' . $extension . '_sort_order'),
+					'install'   => $this->url->link('extension/extension/payment/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
+					'uninstall' => $this->url->link('extension/extension/payment/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('extension/payment/' . $extension, 'token=' . $this->session->data['token'], true)
+					'edit'      => $this->url->link('extension/payment/' . $extension, 'user_token=' . $this->session->data['user_token'], true)
 				);
 			}
 		}

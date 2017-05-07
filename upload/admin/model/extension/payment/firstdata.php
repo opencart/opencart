@@ -55,8 +55,8 @@ class ModelExtensionPaymentFirstdata extends Model {
 
 		if (!empty($firstdata_order)) {
 			$timestamp = strftime("%Y%m%d%H%M%S");
-			$merchant_id = $this->config->get('firstdata_merchant_id');
-			$secret = $this->config->get('firstdata_secret');
+			$merchant_id = $this->config->get('payment_firstdata_merchant_id');
+			$secret = $this->config->get('payment_firstdata_secret');
 
 			$this->logger('Void hash construct: ' . $timestamp . ' . ' . $merchant_id . ' . ' . $firstdata_order['order_ref'] . ' . . . ');
 
@@ -102,8 +102,8 @@ class ModelExtensionPaymentFirstdata extends Model {
 
 		if (!empty($firstdata_order) && $firstdata_order['capture_status'] == 0) {
 			$timestamp = strftime("%Y%m%d%H%M%S");
-			$merchant_id = $this->config->get('firstdata_merchant_id');
-			$secret = $this->config->get('firstdata_secret');
+			$merchant_id = $this->config->get('payment_firstdata_merchant_id');
+			$secret = $this->config->get('payment_firstdata_secret');
 
 			if ($firstdata_order['settle_type'] == 2) {
 				$this->logger('Capture hash construct: ' . $timestamp . ' . ' . $merchant_id . ' . ' . $firstdata_order['order_ref'] . ' . ' . (int)round($amount*100) . ' . ' . (string)$firstdata_order['currency_code'] . ' . ');
@@ -194,7 +194,7 @@ class ModelExtensionPaymentFirstdata extends Model {
 	}
 
 	public function logger($message) {
-		if ($this->config->get('firstdata_debug') == 1) {
+		if ($this->config->get('payment_firstdata_debug') == 1) {
 			$log = new Log('firstdata.log');
 			$log->write($message);
 		}

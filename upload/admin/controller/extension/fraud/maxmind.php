@@ -10,11 +10,11 @@ class ControllerExtensionFraudMaxMind extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('maxmind', $this->request->post);
+			$this->model_setting_setting->editSetting('fraud_maxmind', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=fraud', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=fraud', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -53,49 +53,49 @@ class ControllerExtensionFraudMaxMind extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=fraud', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=fraud', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/fraud/maxmind', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/fraud/maxmind', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/fraud/maxmind', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/fraud/maxmind', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=fraud', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=fraud', true);
 
-		if (isset($this->request->post['maxmind_key'])) {
-			$data['maxmind_key'] = $this->request->post['maxmind_key'];
+		if (isset($this->request->post['fraud_maxmind_key'])) {
+			$data['fraud_maxmind_key'] = $this->request->post['fraud_maxmind_key'];
 		} else {
-			$data['maxmind_key'] = $this->config->get('maxmind_key');
+			$data['fraud_maxmind_key'] = $this->config->get('fraud_maxmind_key');
 		}
 
-		if (isset($this->request->post['maxmind_score'])) {
-			$data['maxmind_score'] = $this->request->post['maxmind_score'];
+		if (isset($this->request->post['fraud_maxmind_score'])) {
+			$data['fraud_maxmind_score'] = $this->request->post['fraud_maxmind_score'];
 		} else {
-			$data['maxmind_score'] = $this->config->get('maxmind_score');
+			$data['fraud_maxmind_score'] = $this->config->get('fraud_maxmind_score');
 		}
 
-		if (isset($this->request->post['maxmind_order_status_id'])) {
-			$data['maxmind_order_status_id'] = $this->request->post['maxmind_order_status_id'];
+		if (isset($this->request->post['fraud_maxmind_order_status_id'])) {
+			$data['fraud_maxmind_order_status_id'] = $this->request->post['fraud_maxmind_order_status_id'];
 		} else {
-			$data['maxmind_order_status_id'] = $this->config->get('maxmind_order_status_id');
+			$data['fraud_maxmind_order_status_id'] = $this->config->get('fraud_maxmind_order_status_id');
 		}
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['maxmind_status'])) {
-			$data['maxmind_status'] = $this->request->post['maxmind_status'];
+		if (isset($this->request->post['fraud_maxmind_status'])) {
+			$data['fraud_maxmind_status'] = $this->request->post['fraud_maxmind_status'];
 		} else {
-			$data['maxmind_status'] = $this->config->get('maxmind_status');
+			$data['fraud_maxmind_status'] = $this->config->get('fraud_maxmind_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -122,7 +122,7 @@ class ControllerExtensionFraudMaxMind extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['maxmind_key']) {
+		if (!$this->request->post['fraud_maxmind_key']) {
 			$this->error['key'] = $this->language->get('error_key');
 		}
 

@@ -85,7 +85,7 @@ class ControllerExtensionPaymentPPPro extends Controller {
 	}
 
 	public function send() {
-		if (!$this->config->get('pp_pro_transaction')) {
+		if (!$this->config->get('payment_pp_pro_transaction')) {
 			$payment_type = 'Authorization';
 		} else {
 			$payment_type = 'Sale';
@@ -97,9 +97,9 @@ class ControllerExtensionPaymentPPPro extends Controller {
 
 		$request  = 'METHOD=DoDirectPayment';
 		$request .= '&VERSION=51.0';
-		$request .= '&USER=' . urlencode($this->config->get('pp_pro_username'));
-		$request .= '&PWD=' . urlencode($this->config->get('pp_pro_password'));
-		$request .= '&SIGNATURE=' . urlencode($this->config->get('pp_pro_signature'));
+		$request .= '&USER=' . urlencode($this->config->get('payment_pp_pro_username'));
+		$request .= '&PWD=' . urlencode($this->config->get('payment_pp_pro_password'));
+		$request .= '&SIGNATURE=' . urlencode($this->config->get('payment_pp_pro_signature'));
 		$request .= '&CUSTREF=' . (int)$order_info['order_id'];
 		$request .= '&PAYMENTACTION=' . $payment_type;
 		$request .= '&AMT=' . $this->currency->format($order_info['total'], $order_info['currency_code'], false, false);
@@ -142,7 +142,7 @@ class ControllerExtensionPaymentPPPro extends Controller {
 			$request .= '&SHIPTOZIP=' . urlencode($order_info['payment_postcode']);
 		}
 
-		if (!$this->config->get('pp_pro_test')) {
+		if (!$this->config->get('payment_pp_pro_test')) {
 			$curl = curl_init('https://api-3t.paypal.com/nvp');
 		} else {
 			$curl = curl_init('https://api-3t.sandbox.paypal.com/nvp');
@@ -186,7 +186,7 @@ class ControllerExtensionPaymentPPPro extends Controller {
 				$message .= 'TRANSACTIONID: ' . $response_info['TRANSACTIONID'] . "\n";
 			}
 
-			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('pp_pro_order_status_id'), $message, false);
+			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_pp_pro_order_status_id'), $message, false);
 
 			$json['success'] = $this->url->link('checkout/success');
 		} else {

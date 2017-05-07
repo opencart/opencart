@@ -1,18 +1,21 @@
 <?php
 class ModelUpgrade1003 extends Model {
 	public function upgrade() {
-
 		// affiliate_activity
-		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_activity' AND COLUMN_NAME = 'activity_id'");
-
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_activity'");
+		
 		if ($query->num_rows) {
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_activity' AND COLUMN_NAME = 'affiliate_activity_id'");
-
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_activity' AND COLUMN_NAME = 'activity_id'");
+	
 			if ($query->num_rows) {
-				$this->db->query("UPDATE `" . DB_PREFIX . "affiliate_activity` SET `affiliate_activity_id` = `activity_id` WHERE `affiliate_activity_id` IS NULL or `affiliate_activity_id` = ''");
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "affiliate_activity` DROP `activity_id`");
-			} else {
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "affiliate_activity` CHANGE `activity_id` `affiliate_activity_id` INT(11) NOT NULL AUTO_INCREMENT");
+				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_activity' AND COLUMN_NAME = 'affiliate_activity_id'");
+	
+				if ($query->num_rows) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "affiliate_activity` SET `affiliate_activity_id` = `activity_id` WHERE `affiliate_activity_id` IS NULL or `affiliate_activity_id` = ''");
+					$this->db->query("ALTER TABLE `" . DB_PREFIX . "affiliate_activity` DROP `activity_id`");
+				} else {
+					$this->db->query("ALTER TABLE `" . DB_PREFIX . "affiliate_activity` CHANGE `activity_id` `affiliate_activity_id` INT(11) NOT NULL AUTO_INCREMENT");
+				}
 			}
 		}
 
@@ -66,7 +69,7 @@ class ModelUpgrade1003 extends Model {
 		}
 
 		// order
-		$query = $this->db->query("SELECT order_id,custom_field,payment_custom_field,shipping_custom_field FROM `" . DB_PREFIX . "order` WHERE custom_field LIKE 'a:%' OR payment_custom_field LIKE 'a:%' OR shipping_custom_field LIKE 'a:%'");
+		$query = $this->db->query("SELECT order_id, custom_field, payment_custom_field, shipping_custom_field FROM `" . DB_PREFIX . "order` WHERE custom_field LIKE 'a:%' OR payment_custom_field LIKE 'a:%' OR shipping_custom_field LIKE 'a:%'");
 
 		foreach ($query->rows as $result) {
 			if (preg_match('/^(a:)/', $result['custom_field'])) {
@@ -92,14 +95,18 @@ class ModelUpgrade1003 extends Model {
 		}
 
 		// affiliate_activity
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "affiliate_activity` WHERE data LIKE 'a:%'");
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_activity'");
 
-		foreach ($query->rows as $result) {
-			if (preg_match('/^(a:)/', $result['data'])) {
-				$this->db->query("UPDATE `" . DB_PREFIX . "affiliate_activity` SET `data` = '" . $this->db->escape(json_encode(unserialize($result['data']))) . "' WHERE `affiliate_activity_id` = '" . (int)$result['affiliate_activity_id'] . "'");
+		if ($query->num_rows) {
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "affiliate_activity` WHERE data LIKE 'a:%'");
+	
+			foreach ($query->rows as $result) {
+				if (preg_match('/^(a:)/', $result['data'])) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "affiliate_activity` SET `data` = '" . $this->db->escape(json_encode(unserialize($result['data']))) . "' WHERE `affiliate_activity_id` = '" . (int)$result['affiliate_activity_id'] . "'");
+				}
 			}
 		}
-
+		
 		// customer_activity
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_activity` WHERE data LIKE 'a:%'");
 

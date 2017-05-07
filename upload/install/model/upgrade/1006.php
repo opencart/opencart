@@ -47,7 +47,7 @@ class ModelUpgrade1006 extends Model {
 					fclose($file);
 				}
 			}
-		}
+		}			
 
 		// Update the config.php to add /storage/ to paths
 		if (is_file(DIR_OPENCART . 'config.php')) {
@@ -79,7 +79,6 @@ class ModelUpgrade1006 extends Model {
 				fwrite($file, $output);
 
 				fclose($file);
-
 			}
 		}
 

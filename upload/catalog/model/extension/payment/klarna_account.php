@@ -5,7 +5,7 @@ class ModelExtensionPaymentKlarnaAccount extends Model {
 
 		$status = true;
 
-		$klarna_account = $this->config->get('klarna_account');
+		$klarna_account = $this->config->get('payment_klarna_account');
 
 		if (!isset($klarna_account[$address['iso_code_3']])) {
 			$status = false;

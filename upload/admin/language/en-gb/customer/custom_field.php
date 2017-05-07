@@ -20,7 +20,9 @@ $_['text_datetime']        = 'Date &amp; Time';
 $_['text_time']            = 'Time';
 $_['text_account']         = 'Account';
 $_['text_address']         = 'Address';
+$_['text_affiliate']       = 'Affiliate';
 $_['text_regex']           = 'Regex';
+$_['text_value']           = 'Custom Field Values';
 
 // Column
 $_['column_name']          = 'Custom Field Name';

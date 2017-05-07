@@ -3,9 +3,9 @@ class ControllerExtensionModuleLaybuyLayout extends Controller {
 	public function index() {
 		$this->load->model('extension/module/laybuy_layout');
 
-		$status = $this->config->get('laybuy_layout_status');
+		$status = $this->config->get('module_laybuy_layout_status');
 
-		if ($status && $this->config->get('laybuy_status')) {
+		if ($status && $this->config->get('payment_laybuy_status')) {
 			if ($this->customer->isLogged()) {
 				if (isset($this->request->get['order_id'])) {
 					$order_id = $this->request->get['order_id'];

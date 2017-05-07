@@ -6,7 +6,7 @@ final class Twig {
 	
 	public function __construct() {
 		// include and register Twig auto-loader
-		include_once DIR_SYSTEM . 'library/template/Twig/Autoloader.php';
+		include_once(DIR_SYSTEM . 'library/template/Twig/Autoloader.php');
 		
 		\Twig_Autoloader::register();	
 		
@@ -15,7 +15,7 @@ final class Twig {
 		
 		// initialize Twig environment
 		$this->twig = new \Twig_Environment($loader, array('autoescape' => false));			
-	}	
+	}
 	
 	public function set($key, $value) {
 		$this->data[$key] = $value;

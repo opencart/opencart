@@ -3,34 +3,22 @@ class ControllerAffiliateLogin extends Controller {
 	private $error = array();
 
 	public function index() {
-		if ($this->affiliate->isLogged()) {
-			$this->response->redirect($this->url->link('affiliate/account', '', true));
+		if ($this->customer->isLogged()) {
+			$this->response->redirect($this->url->link('account/account', '', true));
 		}
 
 		$this->load->language('affiliate/login');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('affiliate/affiliate');
+		$this->load->model('account/customer');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && isset($this->request->post['email']) && isset($this->request->post['password']) && $this->validate()) {
-			// Add to activity log
-			if ($this->config->get('config_customer_activity')) {
-				$this->load->model('affiliate/activity');
-
-				$activity_data = array(
-					'affiliate_id' => $this->affiliate->getId(),
-					'name'         => $this->affiliate->getFirstName() . ' ' . $this->affiliate->getLastName()
-				);
-
-				$this->model_affiliate_activity->addActivity('login', $activity_data);
-			}
-
 			// Added strpos check to pass McAfee PCI compliance test (http://forum.opencart.com/viewtopic.php?f=10&t=12043&p=151494#p151295)
 			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], $this->config->get('config_url')) !== false || strpos($this->request->post['redirect'], $this->config->get('config_ssl')) !== false)) {
 				$this->response->redirect(str_replace('&amp;', '&', $this->request->post['redirect']));
 			} else {
-				$this->response->redirect($this->url->link('affiliate/account', '', true));
+				$this->response->redirect($this->url->link('account/account', '', true));
 			}
 		}
 
@@ -43,7 +31,7 @@ class ControllerAffiliateLogin extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('affiliate/account', '', true)
+			'href' => $this->url->link('account/account', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -74,7 +62,7 @@ class ControllerAffiliateLogin extends Controller {
 
 		$data['action'] = $this->url->link('affiliate/login', '', true);
 		$data['register'] = $this->url->link('affiliate/register', '', true);
-		$data['forgotten'] = $this->url->link('affiliate/forgotten', '', true);
+		$data['forgotten'] = $this->url->link('account/forgotten', '', true);
 
 		if (isset($this->request->post['redirect'])) {
 			$data['redirect'] = $this->request->post['redirect'];
@@ -118,26 +106,26 @@ class ControllerAffiliateLogin extends Controller {
 
 	protected function validate() {
 		// Check how many login attempts have been made.
-		$login_info = $this->model_affiliate_affiliate->getLoginAttempts($this->request->post['email']);
-				
+		$login_info = $this->model_account_customer->getLoginAttempts($this->request->post['email']);
+
 		if ($login_info && ($login_info['total'] >= $this->config->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
 			$this->error['warning'] = $this->language->get('error_attempts');
-		}		
-		
-		// Check if affiliate has been approved.
-		$affiliate_info = $this->model_affiliate_affiliate->getAffiliateByEmail($this->request->post['email']);
+		}
 
-		if ($affiliate_info && !$affiliate_info['approved']) {
+		// Check if customer has been approved.
+		$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
+
+		if ($customer_info && !$customer_info['approved']) {
 			$this->error['warning'] = $this->language->get('error_approved');
 		}
-		
+
 		if (!$this->error) {
-			if (!$this->affiliate->login($this->request->post['email'], $this->request->post['password'])) {
+			if (!$this->customer->login($this->request->post['email'], $this->request->post['password'])) {
 				$this->error['warning'] = $this->language->get('error_login');
-			
-				$this->model_affiliate_affiliate->addLoginAttempt($this->request->post['email']);
+
+				$this->model_account_customer->addLoginAttempt($this->request->post['email']);
 			} else {
-				$this->model_affiliate_affiliate->deleteLoginAttempts($this->request->post['email']);
+				$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
 			}
 		}
 		

@@ -11,11 +11,11 @@ class ControllerExtensionPaymentDivido extends Controller {
 		$this->load->model('extension/payment/divido');
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST' && $this->validate()) {
-			$this->model_setting_setting->editSetting('divido', $this->request->post);
+			$this->model_setting_setting->editSetting('payment_divido', $this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 			
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -74,100 +74,100 @@ class ControllerExtensionPaymentDivido extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/divido', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/divido', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/payment/divido', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->link('extension/payment/divido', 'user_token=' . $this->session->data['user_token'], 'SSL');
 		
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', 'SSL');
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', 'SSL');
 
-		if (isset($this->request->post['divido_api_key'])) {
-			$data['divido_api_key'] = $this->request->post['divido_api_key'];
+		if (isset($this->request->post['payment_divido_api_key'])) {
+			$data['payment_divido_api_key'] = $this->request->post['payment_divido_api_key'];
 		} else {
-			$data['divido_api_key'] = $this->config->get('divido_api_key');
+			$data['payment_divido_api_key'] = $this->config->get('payment_divido_api_key');
 		}
 
-		if (isset($this->request->post['divido_order_status_id'])) {
-			$data['divido_order_status_id'] = $this->request->post['divido_order_status_id'];
-		} elseif ($this->config->get('divido_order_status_id')) {
-			$data['divido_order_status_id'] = $this->config->get('divido_order_status_id');
+		if (isset($this->request->post['payment_divido_order_status_id'])) {
+			$data['payment_divido_order_status_id'] = $this->request->post['payment_divido_order_status_id'];
+		} elseif ($this->config->get('payment_divido_order_status_id')) {
+			$data['payment_divido_order_status_id'] = $this->config->get('payment_divido_order_status_id');
 		} else {
-			$data['divido_order_status_id'] = 2;
+			$data['payment_divido_order_status_id'] = 2;
 		}
 
-		if (isset($this->request->post['divido_status'])) {
-			$data['divido_status'] = $this->request->post['divido_status'];
+		if (isset($this->request->post['payment_divido_status'])) {
+			$data['payment_divido_status'] = $this->request->post['payment_divido_status'];
 		} else {
-			$data['divido_status'] = $this->config->get('divido_status');
+			$data['payment_divido_status'] = $this->config->get('payment_divido_status');
 		}
 
-		if (isset($this->request->post['divido_sort_order'])) {
-			$data['divido_sort_order'] = $this->request->post['divido_sort_order'];
+		if (isset($this->request->post['payment_divido_sort_order'])) {
+			$data['payment_divido_sort_order'] = $this->request->post['payment_divido_sort_order'];
 		} else {
-			$data['divido_sort_order'] = $this->config->get('divido_sort_order');
+			$data['payment_divido_sort_order'] = $this->config->get('payment_divido_sort_order');
 		}
 
-		if (isset($this->request->post['divido_title'])) {
-			$data['divido_title'] = $this->request->post['divido_title'];
+		if (isset($this->request->post['payment_divido_title'])) {
+			$data['payment_divido_title'] = $this->request->post['payment_divido_title'];
 		} else {
-			$data['divido_title'] = $this->config->get('divido_title');
+			$data['payment_divido_title'] = $this->config->get('payment_divido_title');
 		}
 
-		if (isset($this->request->post['divido_productselection'])) {
-			$data['divido_productselection'] = $this->request->post['divido_productselection'];
+		if (isset($this->request->post['payment_divido_productselection'])) {
+			$data['payment_divido_productselection'] = $this->request->post['payment_divido_productselection'];
 		} else {
-			$data['divido_productselection'] = $this->config->get('divido_productselection');
+			$data['payment_divido_productselection'] = $this->config->get('payment_divido_productselection');
 		}
 
-		if (isset($this->request->post['divido_price_threshold'])) {
-			$data['divido_price_threshold'] = $this->request->post['divido_price_threshold'];
+		if (isset($this->request->post['payment_divido_price_threshold'])) {
+			$data['payment_divido_price_threshold'] = $this->request->post['payment_divido_price_threshold'];
 		} else {
-			$data['divido_price_threshold'] = $this->config->get('divido_price_threshold');
+			$data['payment_divido_price_threshold'] = $this->config->get('payment_divido_price_threshold');
 		}
 
-		if (isset($this->request->post['divido_cart_threshold'])) {
-			$data['divido_cart_threshold'] = $this->request->post['divido_cart_threshold'];
+		if (isset($this->request->post['payment_divido_cart_threshold'])) {
+			$data['payment_divido_cart_threshold'] = $this->request->post['payment_divido_cart_threshold'];
 		} else {
-			$data['divido_cart_threshold'] = $this->config->get('divido_cart_threshold');
+			$data['payment_divido_cart_threshold'] = $this->config->get('payment_divido_cart_threshold');
 		}
 
-		if (isset($this->request->post['divido_planselection'])) {
-			$data['divido_planselection'] = $this->request->post['divido_planselection'];
+		if (isset($this->request->post['payment_divido_planselection'])) {
+			$data['payment_divido_planselection'] = $this->request->post['payment_divido_planselection'];
 		} else {
-			$data['divido_planselection'] = $this->config->get('divido_planselection');
+			$data['payment_divido_planselection'] = $this->config->get('payment_divido_planselection');
 		}
 
-		if (isset($this->request->post['divido_plans_selected'])) {
-			$data['divido_plans_selected'] = $this->request->post['divido_plans_selected'];
-		} elseif ($this->config->get('divido_plans_selected')) {
-			$data['divido_plans_selected'] = $this->config->get('divido_plans_selected');
+		if (isset($this->request->post['payment_divido_plans_selected'])) {
+			$data['payment_divido_plans_selected'] = $this->request->post['payment_divido_plans_selected'];
+		} elseif ($this->config->get('payment_divido_plans_selected')) {
+			$data['payment_divido_plans_selected'] = $this->config->get('payment_divido_plans_selected');
 		} else {
-			$data['divido_plans_selected'] = array();
+			$data['payment_divido_plans_selected'] = array();
 		}
 
-		if (isset($this->request->post['divido_categories'])) {
-			$data['divido_categories'] = $this->request->post['divido_categories'];
-		} elseif ($this->config->get('divido_categories')) {
-			$data['divido_categories'] = $this->config->get('divido_categories');
+		if (isset($this->request->post['payment_divido_categories'])) {
+			$data['payment_divido_categories'] = $this->request->post['payment_divido_categories'];
+		} elseif ($this->config->get('payment_divido_categories')) {
+			$data['payment_divido_categories'] = $this->config->get('payment_divido_categories');
 		} else {
-			$data['divido_categories'] = array();
+			$data['payment_divido_categories'] = array();
 		}
 
 		$data['categories'] = array();
 
 		$this->load->model('catalog/category');
 
-		foreach ($data['divido_categories'] as $category_id) {
+		foreach ($data['payment_divido_categories'] as $category_id) {
 			$category_info = $this->model_catalog_category->getCategory($category_id);
 
 			if ($category_info) {
@@ -185,7 +185,7 @@ class ControllerExtensionPaymentDivido extends Controller {
 			$data['divido_plans'] = array();
 		}
 
-		$data['token'] = $this->session->data['token'];
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -196,7 +196,7 @@ class ControllerExtensionPaymentDivido extends Controller {
 
 
 	public function order() {
-		if (!$this->config->get('divido_status')) {
+		if (!$this->config->get('payment_divido_status')) {
 			return null;
 		}
 

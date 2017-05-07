@@ -5,7 +5,7 @@ class ControllerExtensionExtensionShipping extends Controller {
 	public function index() {
 		$this->load->language('extension/extension/shipping');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		$this->getList();
 	}
@@ -13,10 +13,10 @@ class ControllerExtensionExtensionShipping extends Controller {
 	public function install() {
 		$this->load->language('extension/extension/shipping');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->install('shipping', $this->request->get['extension']);
+			$this->model_setting_extension->install('shipping', $this->request->get['extension']);
 
 			$this->load->model('user/user_group');
 
@@ -35,10 +35,10 @@ class ControllerExtensionExtensionShipping extends Controller {
 	public function uninstall() {
 		$this->load->language('extension/extension/shipping');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->uninstall('shipping', $this->request->get['extension']);
+			$this->model_setting_extension->uninstall('shipping', $this->request->get['extension']);
 
 			// Call uninstall method if it exsits
 			$this->load->controller('extension/shipping/' . $this->request->get['extension'] . '/uninstall');
@@ -77,13 +77,13 @@ class ControllerExtensionExtensionShipping extends Controller {
 			$data['success'] = '';
 		}
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
-		$extensions = $this->model_extension_extension->getInstalled('shipping');
+		$extensions = $this->model_setting_extension->getInstalled('shipping');
 
 		foreach ($extensions as $key => $value) {
 			if (!is_file(DIR_APPLICATION . 'controller/extension/shipping/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/shipping/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('shipping', $value);
+				$this->model_setting_extension->uninstall('shipping', $value);
 
 				unset($extensions[$key]);
 			}
@@ -92,7 +92,7 @@ class ControllerExtensionExtensionShipping extends Controller {
 		$data['extensions'] = array();
 
 		// Compatibility code for old extension folders
-		$files = glob(DIR_APPLICATION . 'controller/{extension/shipping,shipping}/*.php', GLOB_BRACE);
+		$files = glob(DIR_APPLICATION . 'controller/extension/shipping/*.php');
 
 		if ($files) {
 			foreach ($files as $file) {
@@ -102,12 +102,12 @@ class ControllerExtensionExtensionShipping extends Controller {
 
 				$data['extensions'][] = array(
 					'name'       => $this->language->get('heading_title'),
-					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'sort_order' => $this->config->get($extension . '_sort_order'),
-					'install'    => $this->url->link('extension/extension/shipping/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall'  => $this->url->link('extension/extension/shipping/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'status'     => $this->config->get('shipping_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+					'sort_order' => $this->config->get('shipping_' . $extension . '_sort_order'),
+					'install'    => $this->url->link('extension/extension/shipping/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
+					'uninstall'  => $this->url->link('extension/extension/shipping/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
 					'installed'  => in_array($extension, $extensions),
-					'edit'       => $this->url->link('extension/shipping/' . $extension, 'token=' . $this->session->data['token'], true)
+					'edit'       => $this->url->link('extension/shipping/' . $extension, 'user_token=' . $this->session->data['user_token'], true)
 				);
 			}
 		}

@@ -13,13 +13,13 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		if ($this->config->get('globalpay_live_demo') == 1) {
-			$data['action'] = $this->config->get('globalpay_live_url');
+		if ($this->config->get('payment_globalpay_live_demo') == 1) {
+			$data['action'] = $this->config->get('payment_globalpay_live_url');
 		} else {
-			$data['action'] = $this->config->get('globalpay_demo_url');
+			$data['action'] = $this->config->get('payment_globalpay_demo_url');
 		}
 
-		if ($this->config->get('globalpay_card_select') == 1) {
+		if ($this->config->get('payment_globalpay_card_select') == 1) {
 			$card_types = array(
 				'visa' => $this->language->get('text_card_visa'),
 				'mc' => $this->language->get('text_card_mc'),
@@ -31,13 +31,13 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 
 			$data['cards'] = array();
 
-			$accounts = $this->config->get('globalpay_account');
+			$accounts = $this->config->get('payment_globalpay_account');
 
 			foreach ($accounts as $card => $account) {
 				if (isset($account['enabled']) && $account['enabled'] == 1) {
 					$data['cards'][] = array(
 						'type' => $card_types[$card],
-						'account' => (isset($account['default']) && $account['default'] == 1 ? $this->config->get('globalpay_merchant_id') : $account['merchant_id']),
+						'account' => (isset($account['default']) && $account['default'] == 1 ? $this->config->get('payment_globalpay_merchant_id') : $account['merchant_id']),
 					);
 				}
 			}
@@ -47,16 +47,16 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 			$data['card_select'] = false;
 		}
 
-		if ($this->config->get('globalpay_auto_settle') == 0) {
+		if ($this->config->get('payment_globalpay_auto_settle') == 0) {
 			$data['settle'] = 0;
-		} elseif ($this->config->get('globalpay_auto_settle') == 1) {
+		} elseif ($this->config->get('payment_globalpay_auto_settle') == 1) {
 			$data['settle'] = 1;
-		} elseif ($this->config->get('globalpay_auto_settle') == 2) {
+		} elseif ($this->config->get('payment_globalpay_auto_settle') == 2) {
 			$data['settle'] = 'MULTI';
 		}
 
-		$data['tss'] = (int)$this->config->get('globalpay_tss_check');
-		$data['merchant_id'] = $this->config->get('globalpay_merchant_id');
+		$data['tss'] = (int)$this->config->get('payment_globalpay_tss_check');
+		$data['merchant_id'] = $this->config->get('payment_globalpay_merchant_id');
 
 		$data['timestamp'] = strftime("%Y%m%d%H%M%S");
 		$data['order_id'] = $this->session->data['order_id'] . 'T' . $data['timestamp'] . mt_rand(1, 999);
@@ -66,7 +66,7 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 
 		$tmp = $data['timestamp'] . '.' . $data['merchant_id'] . '.' . $data['order_id'] . '.' . $data['amount'] . '.' . $data['currency'];
 		$hash = sha1($tmp);
-		$tmp = $hash . '.' . $this->config->get('globalpay_secret');
+		$tmp = $hash . '.' . $this->config->get('payment_globalpay_secret');
 		$data['hash'] = sha1($tmp);
 
 		$data['billing_code'] = filter_var(str_replace('-', '', $order_info['payment_postcode']), FILTER_SANITIZE_NUMBER_INT) . '|' . filter_var(str_replace('-', '', $order_info['payment_address_1']), FILTER_SANITIZE_NUMBER_INT);
@@ -92,8 +92,8 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 
 		$this->load->language('extension/payment/globalpay');
 
-		$hash = sha1($this->request->post['TIMESTAMP'] . '.' . $this->config->get('globalpay_merchant_id') . '.' . $this->request->post['ORDER_ID'] . '.' . $this->request->post['RESULT'] . '.' . $this->request->post['MESSAGE'] . '.' . $this->request->post['PASREF'] . '.' . $this->request->post['AUTHCODE']);
-		$tmp = $hash . '.' . $this->config->get('globalpay_secret');
+		$hash = sha1($this->request->post['TIMESTAMP'] . '.' . $this->config->get('payment_globalpay_merchant_id') . '.' . $this->request->post['ORDER_ID'] . '.' . $this->request->post['RESULT'] . '.' . $this->request->post['MESSAGE'] . '.' . $this->request->post['PASREF'] . '.' . $this->request->post['AUTHCODE']);
+		$tmp = $hash . '.' . $this->config->get('payment_globalpay_secret');
 		$hash = sha1($tmp);
 
 		//Check to see if hashes match or not
@@ -108,8 +108,8 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 
 			$order_info = $this->model_checkout_order->getOrder($order_id);
 
-			$auto_settle = (int)$this->config->get('globalpay_auto_settle');
-			$tss = (int)$this->config->get('globalpay_tss_check');
+			$auto_settle = (int)$this->config->get('payment_globalpay_auto_settle');
+			$tss = (int)$this->config->get('payment_globalpay_tss_check');
 
 			$message = '<strong>' . $this->language->get('text_result') . ':</strong> ' . $this->request->post['RESULT'];
 			$message .= '<br /><strong>' . $this->language->get('text_message') . ':</strong> ' . $this->request->post['MESSAGE'];
@@ -210,44 +210,44 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('globalpay_order_status_success_settled_id'), $message, false);
 				} else {
 					$this->model_extension_payment_globalpay->addTransaction($globalpay_order_id, 'auth', 0.00);
-					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('globalpay_order_status_success_unsettled_id'), $message, false);
+					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_globalpay_order_status_success_unsettled_id'), $message, false);
 				}
 
 				$data['text_response'] = $this->language->get('text_success');
 				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/success', '', true));
 			} elseif ($this->request->post['RESULT'] == "101") {
 				// Decline
-				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_id'), $message);
+				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('payment_globalpay_order_status_decline_id'), $message);
 				$data['text_response'] = $this->language->get('text_decline');
 				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
 			} elseif ($this->request->post['RESULT'] == "102") {
 				// Referal B
-				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_pending_id'), $message);
+				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('payment_globalpay_order_status_decline_pending_id'), $message);
 				$data['text_response'] = $this->language->get('text_decline');
 				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
 			} elseif ($this->request->post['RESULT'] == "103") {
 				// Referal A
-				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_stolen_id'), $message);
+				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('payment_globalpay_order_status_decline_stolen_id'), $message);
 				$data['text_response'] = $this->language->get('text_decline');
 				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
 			} elseif ($this->request->post['RESULT'] == "200") {
 				// Error Connecting to Bank
-				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_bank_id'), $message);
+				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('payment_globalpay_order_status_decline_bank_id'), $message);
 				$data['text_response'] = $this->language->get('text_bank_error');
 				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
 			} elseif ($this->request->post['RESULT'] == "204") {
 				// Error Connecting to Bank
-				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_bank_id'), $message);
+				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('payment_globalpay_order_status_decline_bank_id'), $message);
 				$data['text_response'] = $this->language->get('text_bank_error');
 				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
 			} elseif ($this->request->post['RESULT'] == "205") {
 				// Comms Error
-				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_bank_id'), $message);
+				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('payment_globalpay_order_status_decline_bank_id'), $message);
 				$data['text_response'] = $this->language->get('text_bank_error');
 				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
 			} else {
 				// Other error
-				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_id'), $message);
+				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('payment_globalpay_order_status_decline_id'), $message);
 				$data['text_response'] = $this->language->get('text_generic_error');
 				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
 			}

@@ -20,7 +20,7 @@ class ControllerSettingSetting extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('setting/store', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -111,6 +111,7 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_stock_warning'] = $this->language->get('entry_stock_warning');
 		$data['entry_stock_checkout'] = $this->language->get('entry_stock_checkout');
 		$data['entry_affiliate_approval'] = $this->language->get('entry_affiliate_approval');
+		$data['entry_affiliate_group'] = $this->language->get('entry_affiliate_group');
 		$data['entry_affiliate_auto'] = $this->language->get('entry_affiliate_auto');
 		$data['entry_affiliate_commission'] = $this->language->get('entry_affiliate_commission');
 		$data['entry_affiliate'] = $this->language->get('entry_affiliate');
@@ -179,8 +180,7 @@ class ControllerSettingSetting extends Controller {
 		$data['help_stock_display'] = $this->language->get('help_stock_display');
 		$data['help_stock_warning'] = $this->language->get('help_stock_warning');
 		$data['help_stock_checkout'] = $this->language->get('help_stock_checkout');
-		$data['help_affiliate_approval'] = $this->language->get('help_affiliate_approval');
-		$data['help_affiliate_auto'] = $this->language->get('help_affiliate_auto');
+		$data['help_affiliate_approval'] = $this->language->get('help_affiliate_approval');		$data['help_affiliate_auto'] = $this->language->get('help_affiliate_auto');
 		$data['help_affiliate_commission'] = $this->language->get('help_affiliate_commission');
 		$data['help_affiliate'] = $this->language->get('help_affiliate');
 		$data['help_commission'] = $this->language->get('help_commission');
@@ -307,10 +307,10 @@ class ControllerSettingSetting extends Controller {
 			$data['error_complete_status'] = '';
 		}
 
-		if (isset($this->error['error_filename'])) {
-			$data['error_error_filename'] = $this->error['error_filename'];
+		if (isset($this->error['log'])) {
+			$data['error_log'] = $this->error['log'];
 		} else {
-			$data['error_error_filename'] = '';
+			$data['error_log'] = '';
 		}
 
 		if (isset($this->error['limit_admin'])) {
@@ -329,17 +329,17 @@ class ControllerSettingSetting extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_stores'),
-			'href' => $this->url->link('setting/store', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('setting/setting', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		if (isset($this->session->data['success'])) {
@@ -350,11 +350,11 @@ class ControllerSettingSetting extends Controller {
 			$data['success'] = '';
 		}
 
-		$data['action'] = $this->url->link('setting/setting', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['cancel'] = $this->url->link('setting/store', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['token'] = $this->session->data['token'];
+		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->request->post['config_meta_title'])) {
 			$data['config_meta_title'] = $this->request->post['config_meta_title'];
@@ -388,9 +388,9 @@ class ControllerSettingSetting extends Controller {
 
 		$data['themes'] = array();
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
-		$extensions = $this->model_extension_extension->getInstalled('theme');
+		$extensions = $this->model_setting_extension->getInstalled('theme');
 
 		foreach ($extensions as $code) {
 			$this->load->language('extension/theme/' . $code);
@@ -446,13 +446,13 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['config_telephone'] = $this->config->get('config_telephone');
 		}
-
+		
 		if (isset($this->request->post['config_fax'])) {
 			$data['config_fax'] = $this->request->post['config_fax'];
 		} else {
 			$data['config_fax'] = $this->config->get('config_fax');
 		}
-
+		
 		if (isset($this->request->post['config_image'])) {
 			$data['config_image'] = $this->request->post['config_image'];
 		} else {
@@ -763,6 +763,12 @@ class ControllerSettingSetting extends Controller {
 			$data['config_stock_checkout'] = $this->config->get('config_stock_checkout');
 		}
 
+		if (isset($this->request->post['config_affiliate_group_id'])) {
+			$data['config_affiliate_group_id'] = $this->request->post['config_affiliate_group_id'];
+		} else {
+			$data['config_affiliate_group_id'] = $this->config->get('config_affiliate_group_id');
+		}
+
 		if (isset($this->request->post['config_affiliate_approval'])) {
 			$data['config_affiliate_approval'] = $this->request->post['config_affiliate_approval'];
 		} elseif ($this->config->has('config_affiliate_approval')) {
@@ -815,17 +821,17 @@ class ControllerSettingSetting extends Controller {
 			$data['config_captcha'] = $this->config->get('config_captcha');
 		}
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		$data['captchas'] = array();
 
 		// Get a list of installed captchas
-		$extensions = $this->model_extension_extension->getInstalled('captcha');
+		$extensions = $this->model_setting_extension->getInstalled('captcha');
 
 		foreach ($extensions as $code) {
 			$this->load->language('extension/captcha/' . $code);
 
-			if ($this->config->get($code . '_status')) {
+			if ($this->config->get('captcha_' . $code . '_status')) {
 				$data['captchas'][] = array(
 					'text'  => $this->language->get('heading_title'),
 					'value' => $code
@@ -972,12 +978,12 @@ class ControllerSettingSetting extends Controller {
 			'value' => 'review'
 		);
 
-		if (isset($this->request->post['config_alert_email'])) {
-			$data['config_alert_email'] = $this->request->post['config_alert_email'];
+		if (isset($this->request->post['config_mail_alert_email'])) {
+			$data['config_mail_alert_email'] = $this->request->post['config_mail_alert_email'];
 		} else {
-			$data['config_alert_email'] = $this->config->get('config_alert_email');
+			$data['config_mail_alert_email'] = $this->config->get('config_mail_alert_email');
 		}
-
+		
 		if (isset($this->request->post['config_secure'])) {
 			$data['config_secure'] = $this->request->post['config_secure'];
 		} else {
@@ -1127,15 +1133,15 @@ class ControllerSettingSetting extends Controller {
 		if (!isset($this->request->post['config_complete_status'])) {
 			$this->error['complete_status'] = $this->language->get('error_complete_status');
 		}
-
+		
 		if (!$this->request->post['config_error_filename']) {
-			$this->error['error_filename'] = $this->language->get('error_error_filename');
-		} else {
-			if (preg_match('/\.\.[\/\\\]?/', $this->request->post['config_error_filename'])) {
-				$this->error['error_filename'] = $this->language->get('error_malformed_filename');
-			}
+			$this->error['log'] = $this->language->get('error_log_required');
+		} elseif (preg_match('/\.\.[\/\\\]?/', $this->request->post['config_error_filename'])) {
+			$this->error['log'] = $this->language->get('error_log_invalid');
+		} elseif (substr($this->request->post['config_error_filename'], strrpos($this->request->post['config_error_filename'], '.')) != '.log') {
+			$this->error['log'] = $this->language->get('error_log_extension');
 		}
-
+		
 		if ((utf8_strlen($this->request->post['config_encryption']) < 32) || (utf8_strlen($this->request->post['config_encryption']) > 1024)) {
 			$this->error['encryption'] = $this->language->get('error_encryption');
 		}

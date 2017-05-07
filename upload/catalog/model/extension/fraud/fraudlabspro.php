@@ -2,7 +2,7 @@
 class ModelExtensionFraudFraudLabsPro extends Model {
 	public function check($data) {
 		// Do not perform fraud check if FraudLabs Pro is disabled or API key is not provided.
-		if (!$this->config->get('fraudlabspro_status') ||!$this->config->get('fraudlabspro_key')) {
+		if (!$this->config->get('fraud_fraudlabspro_status') ||!$this->config->get('fraud_fraudlabspro_key')) {
 			return;
 		}
 
@@ -28,11 +28,11 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 		}
 
 		// Overwrite client IP if simulate IP is provided.
-		if (filter_var($this->config->get('fraudlabspro_simulate_ip'), FILTER_VALIDATE_IP)) {
-			$ip = $this->config->get('fraudlabspro_simulate_ip');
+		if (filter_var($this->config->get('fraud_fraudlabspro_simulate_ip'), FILTER_VALIDATE_IP)) {
+			$ip = $this->config->get('fraud_fraudlabspro_simulate_ip');
 		}
 
-		$request['key'] = $this->config->get('fraudlabspro_key');
+		$request['key'] = $this->config->get('fraud_fraudlabspro_key');
 		$request['ip'] = $ip;
 		$request['first_name'] = $data['firstname'];
 		$request['last_name'] = $data['lastname'];
@@ -123,7 +123,7 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 				fraudlabspro_error = '" . $this->db->escape($json->fraudlabspro_error_code) . "',
 				fraudlabspro_message = '" . $this->db->escape($json->fraudlabspro_message) . "',
 				fraudlabspro_credits = '" .  $this->db->escape($json->fraudlabspro_credits) . "',
-				api_key = '" .  $this->config->get('fraudlabspro_key') . "',
+				api_key = '" .  $this->config->get('fraud_fraudlabspro_key') . "',
 				ip_address = '" .  $ip . "'"
 			);
 
@@ -135,16 +135,16 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 			return;
 		}
 
-		if ($risk_score > $this->config->get('fraudlabspro_score')) {
-			return $this->config->get('fraudlabspro_order_status_id');
+		if ($risk_score > $this->config->get('fraud_fraudlabspro_score')) {
+			return $this->config->get('fraud_fraudlabspro_order_status_id');
 		}
 
 		if ($json->fraudlabspro_status == 'REVIEW') {
-			return $this->config->get('fraudlabspro_review_status_id');
+			return $this->config->get('fraud_fraudlabspro_review_status_id');
 		}
 
 		if ($json->fraudlabspro_status == 'APPROVE') {
-			return $this->config->get('fraudlabspro_approve_status_id');
+			return $this->config->get('fraud_fraudlabspro_approve_status_id');
 		}
 
 		if ($json->fraudlabspro_status == 'REJECT') {

@@ -80,7 +80,7 @@ $('#button-void').bind('click', function () {
 			type:'post',
 			dataType: 'json',
 			data: 'order_id={{ order_id }}',
-			url: 'index.php?route=extension/payment/firstdata_remote/void&token={{ token }}',
+			url: 'index.php?route=extension/payment/firstdata_remote/void&user_token={{ user_token }}',
 			beforeSend: function() {
 				$('#button-void').hide();
 				$('#img_loading_void').show();
@@ -124,7 +124,7 @@ $('#button-capture').bind('click', function () {
 		type:'POST',
 		dataType: 'json',
 		data: {'order_id': {{ order_id }} },
-		url: 'index.php?route=extension/payment/firstdata_remote/capture&token={{ token }}',
+		url: 'index.php?route=extension/payment/firstdata_remote/capture&user_token={{ user_token }}',
 		beforeSend: function() {
 		$('#button-capture').hide();
 		$('#img_loading_capture').show();
@@ -171,7 +171,7 @@ $('#button-refund').bind('click', function () {
 		type:'POST',
 		dataType: 'json',
 		data: {'order_id': {{ order_id }} },
-		url: 'index.php?route=extension/payment/firstdata_remote/refund&token={{ token }}',
+		url: 'index.php?route=extension/payment/firstdata_remote/refund&user_token={{ user_token }}',
 		beforeSend: function() {
 		$('#button-refund').hide();
 		$('#img_loading_refund').show();

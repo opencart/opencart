@@ -3,11 +3,11 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('extension/payment/securetrading_ws');
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('securetrading_ws_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('payment_securetrading_ws_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
-		if ($this->config->get('securetrading_ws_total') > $total) {
+		if ($this->config->get('payment_securetrading_ws_total') > $total) {
 			$status = false;
-		} elseif (!$this->config->get('securetrading_ws_geo_zone_id')) {
+		} elseif (!$this->config->get('payment_securetrading_ws_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {
 			$status = true;
@@ -22,7 +22,7 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 				'code'       => 'securetrading_ws',
 				'title'      => $this->language->get('text_title'),
 				'terms'      => '',
-				'sort_order' => $this->config->get('securetrading_ws_sort_order')
+				'sort_order' => $this->config->get('payment_securetrading_ws_sort_order')
 			);
 		}
 
@@ -44,7 +44,7 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 			CURLOPT_HTTPHEADER => array(
 				'User-Agent: OpenCart - Secure Trading WS',
 				'Content-Length: ' . strlen($data),
-				'Authorization: Basic ' . base64_encode($this->config->get('securetrading_ws_username') . ':' . $this->config->get('securetrading_ws_password')),
+				'Authorization: Basic ' . base64_encode($this->config->get('payment_securetrading_ws_username') . ':' . $this->config->get('payment_securetrading_ws_password')),
 			),
 			CURLOPT_POSTFIELDS => $data,
 		);
@@ -124,7 +124,7 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 
 		$amount = $this->currency->format($order_info['total'], $order_info['currency_code'], false, false);
 
-		switch($this->config->get('securetrading_ws_settle_status')){
+		switch($this->config->get('payment_securetrading_ws_settle_status')){
 			case 0:
 				$trans_type = 'auth';
 				break;
@@ -141,7 +141,7 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 				$trans_type = '';
 		}
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "securetrading_ws_order` SET `settle_type` = '" . $this->config->get('securetrading_ws_settle_status') . "', `modified` = now(), `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $amount . "' WHERE order_id = " . (int)$order_info['order_id']);
+		$this->db->query("UPDATE `" . DB_PREFIX . "securetrading_ws_order` SET `settle_type` = '" . $this->config->get('payment_securetrading_ws_settle_status') . "', `modified` = now(), `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $amount . "' WHERE order_id = " . (int)$order_info['order_id']);
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "securetrading_ws_order_transaction` SET `securetrading_ws_order_id` = '" . (int)$securetrading_ws_order['securetrading_ws_order_id'] . "', `amount` = '" . $amount . "', type = '" . $trans_type . "',  `created` = now()");
 	}

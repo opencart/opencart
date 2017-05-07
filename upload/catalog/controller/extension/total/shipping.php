@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionTotalShipping extends Controller {
 	public function index() {
-		if ($this->config->get('shipping_status') && $this->config->get('shipping_estimator') && $this->cart->hasShipping()) {
+		if ($this->config->get('total_shipping_status') && $this->config->get('total_shipping_estimator') && $this->cart->hasShipping()) {
 			$this->load->language('extension/total/shipping');
 
 			$data['heading_title'] = $this->language->get('heading_title');
@@ -128,12 +128,12 @@ class ControllerExtensionTotalShipping extends Controller {
 
 			$quote_data = array();
 
-			$this->load->model('extension/extension');
+			$this->load->model('setting/extension');
 
-			$results = $this->model_extension_extension->getExtensions('shipping');
+			$results = $this->model_setting_extension->getExtensions('shipping');
 
 			foreach ($results as $result) {
-				if ($this->config->get($result['code'] . '_status')) {
+				if ($this->config->get('shipping_' . $result['code'] . '_status')) {
 					$this->load->model('extension/shipping/' . $result['code']);
 
 					$quote = $this->{'model_extension_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);

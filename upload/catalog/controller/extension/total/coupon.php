@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionTotalCoupon extends Controller {
 	public function index() {
-		if ($this->config->get('coupon_status')) {
+		if ($this->config->get('total_coupon_status')) {
 			$this->load->language('extension/total/coupon');
 
 			$data['heading_title'] = $this->language->get('heading_title');

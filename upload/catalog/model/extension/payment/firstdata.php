@@ -3,11 +3,11 @@ class ModelExtensionPaymentFirstdata extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('extension/payment/firstdata');
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('firstdata_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('payment_firstdata_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
-		if ($this->config->get('firstdata_total') > 0 && $this->config->get('firstdata_total') > $total) {
+		if ($this->config->get('payment_firstdata_total') > 0 && $this->config->get('payment_firstdata_total') > $total) {
 			$status = false;
-		} elseif (!$this->config->get('firstdata_geo_zone_id')) {
+		} elseif (!$this->config->get('payment_firstdata_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {
 			$status = true;
@@ -22,7 +22,7 @@ class ModelExtensionPaymentFirstdata extends Model {
 				'code'       => 'firstdata',
 				'title'      => $this->language->get('text_title'),
 				'terms'      => '',
-				'sort_order' => $this->config->get('firstdata_sort_order')
+				'sort_order' => $this->config->get('payment_firstdata_sort_order')
 			);
 		}
 
@@ -30,7 +30,7 @@ class ModelExtensionPaymentFirstdata extends Model {
 	}
 
 	public function addOrder($order_info, $order_ref, $transaction_date) {
-		if ($this->config->get('firstdata_auto_settle') == 1) {
+		if ($this->config->get('payment_firstdata_auto_settle') == 1) {
 			$settle_status = 1;
 		} else {
 			$settle_status = 0;
@@ -62,7 +62,7 @@ class ModelExtensionPaymentFirstdata extends Model {
 	}
 
 	public function logger($message) {
-		if ($this->config->get('firstdata_debug') == 1) {
+		if ($this->config->get('payment_firstdata_debug') == 1) {
 			$log = new Log('firstdata.log');
 			$log->write($message);
 		}
@@ -101,7 +101,7 @@ class ModelExtensionPaymentFirstdata extends Model {
 	}
 
 	public function responseHash($total, $currency, $txn_date, $approval_code) {
-		$tmp = $total . $this->config->get('firstdata_secret') . $currency . $txn_date . $this->config->get('firstdata_merchant_id') . $approval_code;
+		$tmp = $total . $this->config->get('payment_firstdata_secret') . $currency . $txn_date . $this->config->get('payment_firstdata_merchant_id') . $approval_code;
 
 		$ascii = bin2hex($tmp);
 

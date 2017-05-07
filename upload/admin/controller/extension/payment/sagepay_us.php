@@ -10,11 +10,11 @@ class ControllerExtensionPaymentSagepayUS extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('sagepay_us', $this->request->post);
+			$this->model_setting_setting->editSetting('payment_sagepay_us', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -59,71 +59,71 @@ class ControllerExtensionPaymentSagepayUS extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/sagepay_us', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/sagepay_us', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/payment/sagepay_us', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/sagepay_us', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
 
-		if (isset($this->request->post['sagepay_us_merchant_id'])) {
-			$data['sagepay_us_merchant_id'] = $this->request->post['sagepay_us_merchant_id'];
+		if (isset($this->request->post['payment_sagepay_us_merchant_id'])) {
+			$data['payment_sagepay_us_merchant_id'] = $this->request->post['payment_sagepay_us_merchant_id'];
 		} else {
-			$data['sagepay_us_merchant_id'] = $this->config->get('sagepay_us_merchant_id');
+			$data['payment_sagepay_us_merchant_id'] = $this->config->get('payment_sagepay_us_merchant_id');
 		}
 
-		if (isset($this->request->post['sagepay_us_merchant_key'])) {
-			$data['sagepay_us_merchant_key'] = $this->request->post['sagepay_us_merchant_key'];
+		if (isset($this->request->post['payment_sagepay_us_merchant_key'])) {
+			$data['payment_sagepay_us_merchant_key'] = $this->request->post['payment_sagepay_us_merchant_key'];
 		} else {
-			$data['sagepay_us_merchant_key'] = $this->config->get('sagepay_us_merchant_key');
+			$data['payment_sagepay_us_merchant_key'] = $this->config->get('payment_sagepay_us_merchant_key');
 		}
 
-		if (isset($this->request->post['sagepay_us_total'])) {
-			$data['sagepay_us_total'] = $this->request->post['sagepay_us_total'];
+		if (isset($this->request->post['payment_sagepay_us_total'])) {
+			$data['payment_sagepay_us_total'] = $this->request->post['payment_sagepay_us_total'];
 		} else {
-			$data['sagepay_us_total'] = $this->config->get('sagepay_us_total');
+			$data['payment_sagepay_us_total'] = $this->config->get('payment_sagepay_us_total');
 		}
 
-		if (isset($this->request->post['sagepay_us_order_status_id'])) {
-			$data['sagepay_us_order_status_id'] = $this->request->post['sagepay_us_order_status_id'];
+		if (isset($this->request->post['payment_sagepay_us_order_status_id'])) {
+			$data['payment_sagepay_us_order_status_id'] = $this->request->post['payment_sagepay_us_order_status_id'];
 		} else {
-			$data['sagepay_us_order_status_id'] = $this->config->get('sagepay_us_order_status_id');
+			$data['payment_sagepay_us_order_status_id'] = $this->config->get('payment_sagepay_us_order_status_id');
 		}
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['sagepay_us_geo_zone_id'])) {
-			$data['sagepay_us_geo_zone_id'] = $this->request->post['sagepay_us_geo_zone_id'];
+		if (isset($this->request->post['payment_sagepay_us_geo_zone_id'])) {
+			$data['payment_sagepay_us_geo_zone_id'] = $this->request->post['payment_sagepay_us_geo_zone_id'];
 		} else {
-			$data['sagepay_us_geo_zone_id'] = $this->config->get('sagepay_us_geo_zone_id');
+			$data['payment_sagepay_us_geo_zone_id'] = $this->config->get('payment_sagepay_us_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['sagepay_us_status'])) {
-			$data['sagepay_us_status'] = $this->request->post['sagepay_us_status'];
+		if (isset($this->request->post['payment_sagepay_us_status'])) {
+			$data['payment_sagepay_us_status'] = $this->request->post['payment_sagepay_us_status'];
 		} else {
-			$data['sagepay_us_status'] = $this->config->get('sagepay_us_status');
+			$data['payment_sagepay_us_status'] = $this->config->get('payment_sagepay_us_status');
 		}
 
-		if (isset($this->request->post['sagepay_us_sort_order'])) {
-			$data['sagepay_us_sort_order'] = $this->request->post['sagepay_us_sort_order'];
+		if (isset($this->request->post['payment_sagepay_us_sort_order'])) {
+			$data['payment_sagepay_us_sort_order'] = $this->request->post['payment_sagepay_us_sort_order'];
 		} else {
-			$data['sagepay_us_sort_order'] = $this->config->get('sagepay_us_sort_order');
+			$data['payment_sagepay_us_sort_order'] = $this->config->get('payment_sagepay_us_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -138,11 +138,11 @@ class ControllerExtensionPaymentSagepayUS extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['sagepay_us_merchant_id']) {
+		if (!$this->request->post['payment_sagepay_us_merchant_id']) {
 			$this->error['merchant_id'] = $this->language->get('error_merchant_id');
 		}
 
-		if (!$this->request->post['sagepay_us_merchant_key']) {
+		if (!$this->request->post['payment_sagepay_us_merchant_key']) {
 			$this->error['merchant_key'] = $this->language->get('error_merchant_key');
 		}
 

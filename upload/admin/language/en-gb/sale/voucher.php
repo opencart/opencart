@@ -37,7 +37,6 @@ $_['entry_status']      = 'Status';
 $_['help_code']         = 'The code the customer enters to activate the voucher.';
 
 // Error
-$_['error_selection']   = 'Warning: No vouchers selected!';
 $_['error_permission']  = 'Warning: You do not have permission to modify vouchers!';
 $_['error_exists']      = 'Warning: Voucher code is already in use!';
 $_['error_code']        = 'Code must be between 3 and 10 characters!';

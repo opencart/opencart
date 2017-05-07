@@ -32,13 +32,14 @@
                 <td><button data-toggle="tooltip" title="{{ text_payment_method }}" class="btn btn-info btn-xs"><i class="fa fa-credit-card fa-fw"></i></button></td>
                 <td>{{ payment_method }}</td>
               </tr>
-              {% if shipping_method %}
-              <tr>
-                <td><button data-toggle="tooltip" title="{{ text_shipping_method }}" class="btn btn-info btn-xs"><i class="fa fa-truck fa-fw"></i></button></td>
-                <td>{{ shipping_method }}</td>
-              </tr>
-              {% endif %}
-            </tbody>
+            {% if shipping_method %}
+            <tr>
+              <td><button data-toggle="tooltip" title="{{ text_shipping_method }}" class="btn btn-info btn-xs"><i class="fa fa-truck fa-fw"></i></button></td>
+              <td>{{ shipping_method }}</td>
+            </tr>
+            {% endif %}
+              </tbody>
+            
           </table>
         </div>
       </div>
@@ -50,9 +51,7 @@
           <table class="table">
             <tr>
               <td style="width: 1%;"><button data-toggle="tooltip" title="{{ text_customer }}" class="btn btn-info btn-xs"><i class="fa fa-user fa-fw"></i></button></td>
-              <td>{% if customer %}
-                <a href="{{ customer }}" target="_blank">{{ firstname }} {{ lastname }}</a>
-                {% else %}
+              <td>{% if customer %} <a href="{{ customer }}" target="_blank">{{ firstname }} {{ lastname }}</a> {% else %}
                 {{ firstname }} {{ lastname }}
                 {% endif %}</td>
             </tr>
@@ -132,16 +131,14 @@
               <td style="width: 50%;" class="text-left">{{ text_payment_address }}</td>
               {% if shipping_method %}
               <td style="width: 50%;" class="text-left">{{ text_shipping_address }}</td>
-              {% endif %}
-            </tr>
+              {% endif %} </tr>
           </thead>
           <tbody>
             <tr>
               <td class="text-left">{{ payment_address }}</td>
               {% if shipping_method %}
               <td class="text-left">{{ shipping_address }}</td>
-              {% endif %}
-            </tr>
+              {% endif %} </tr>
           </tbody>
         </table>
         <table class="table table-bordered">
@@ -155,39 +152,37 @@
             </tr>
           </thead>
           <tbody>
-            {% for product in products %}
-            <tr>
-              <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a>
-                {% for option in product.option %}
-                <br />
-                {% if option.type != 'file' %}
-                &nbsp;<small> - {{ option.name }}: {{ option.value }}</small>
-                {% else %}
-                &nbsp;<small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>
-                {% endif %}
-                {% endfor %}</td>
-              <td class="text-left">{{ product.model }}</td>
-              <td class="text-right">{{ product.quantity }}</td>
-              <td class="text-right">{{ product.price }}</td>
-              <td class="text-right">{{ product.total }}</td>
-            </tr>
-            {% endfor %}
-            {% for voucher in vouchers %}
-            <tr>
-              <td class="text-left"><a href="{{ voucher.href }}">{{ voucher.description }}</a></td>
-              <td class="text-left"></td>
-              <td class="text-right">1</td>
-              <td class="text-right">{{ voucher.amount }}</td>
-              <td class="text-right">{{ voucher.amount }}</td>
-            </tr>
-            {% endfor %}
-            {% for total in totals %}
-            <tr>
-              <td colspan="4" class="text-right">{{ total.title }}</td>
-              <td class="text-right">{{ total.text }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
+          
+          {% for product in products %}
+          <tr>
+            <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a> {% for option in product.option %} <br />
+              {% if option.type != 'file' %}
+              &nbsp;<small> - {{ option.name }}: {{ option.value }}</small> {% else %}
+              &nbsp;<small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small> {% endif %}
+              {% endfor %}</td>
+            <td class="text-left">{{ product.model }}</td>
+            <td class="text-right">{{ product.quantity }}</td>
+            <td class="text-right">{{ product.price }}</td>
+            <td class="text-right">{{ product.total }}</td>
+          </tr>
+          {% endfor %}
+          {% for voucher in vouchers %}
+          <tr>
+            <td class="text-left"><a href="{{ voucher.href }}">{{ voucher.description }}</a></td>
+            <td class="text-left"></td>
+            <td class="text-right">1</td>
+            <td class="text-right">{{ voucher.amount }}</td>
+            <td class="text-right">{{ voucher.amount }}</td>
+          </tr>
+          {% endfor %}
+          {% for total in totals %}
+          <tr>
+            <td colspan="4" class="text-right">{{ total.title }}</td>
+            <td class="text-right">{{ total.text }}</td>
+          </tr>
+          {% endfor %}
+            </tbody>
+          
         </table>
         {% if comment %}
         <table class="table table-bordered">
@@ -202,8 +197,7 @@
             </tr>
           </tbody>
         </table>
-        {% endif %}
-      </div>
+        {% endif %} </div>
     </div>
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -228,13 +222,19 @@
                   <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
                   <div class="col-sm-10">
                     <select name="order_status_id" id="input-order-status" class="form-control">
+                      
                       {% for order_statuses in order_statuses %}
                       {% if order_statuses.order_status_id == order_status_id %}
+                      
                       <option value="{{ order_statuses.order_status_id }}" selected="selected">{{ order_statuses.name }}</option>
+                      
                       {% else %}
+                      
                       <option value="{{ order_statuses.order_status_id }}">{{ order_statuses.name }}</option>
+                      
                       {% endif %}
                       {% endfor %}
+                    
                     </select>
                   </div>
                 </div>
@@ -262,8 +262,7 @@
               <button id="button-history" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> {{ button_history_add }}</button>
             </div>
           </div>
-          <div class="tab-pane" id="tab-additional">
-            {% if account_custom_fields %}
+          <div class="tab-pane" id="tab-additional"> {% if account_custom_fields %}
             <div class="table-responsive">
               <table class="table table-bordered">
                 <thead>
@@ -272,13 +271,15 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% for custom_field in account_custom_fields %}
-                  <tr>
-                    <td>{{ custom_field.name }}</td>
-                    <td>{{ custom_field.value }}</td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
+                
+                {% for custom_field in account_custom_fields %}
+                <tr>
+                  <td>{{ custom_field.name }}</td>
+                  <td>{{ custom_field.value }}</td>
+                </tr>
+                {% endfor %}
+                  </tbody>
+                
               </table>
             </div>
             {% endif %}
@@ -291,13 +292,15 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% for custom_field in payment_custom_fields %}
-                  <tr>
-                    <td>{{ custom_field.name }}</td>
-                    <td>{{ custom_field.value }}</td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
+                
+                {% for custom_field in payment_custom_fields %}
+                <tr>
+                  <td>{{ custom_field.name }}</td>
+                  <td>{{ custom_field.value }}</td>
+                </tr>
+                {% endfor %}
+                  </tbody>
+                
               </table>
             </div>
             {% endif %}
@@ -310,13 +313,15 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% for custom_field in shipping_custom_fields %}
-                  <tr>
-                    <td>{{ custom_field.name }}</td>
-                    <td>{{ custom_field.value }}</td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
+                
+                {% for custom_field in shipping_custom_fields %}
+                <tr>
+                  <td>{{ custom_field.name }}</td>
+                  <td>{{ custom_field.value }}</td>
+                </tr>
+                {% endfor %}
+                  </tbody>
+                
               </table>
             </div>
             {% endif %}
@@ -332,64 +337,35 @@
                     <td>{{ text_ip }}</td>
                     <td>{{ ip }}</td>
                   </tr>
-                  {% if forwarded_ip %}
-                  <tr>
-                    <td>{{ text_forwarded_ip }}</td>
-                    <td>{{ forwarded_ip }}</td>
-                  </tr>
-                  {% endif %}
-                  <tr>
-                    <td>{{ text_user_agent }}</td>
-                    <td>{{ user_agent }}</td>
-                  </tr>
-                  <tr>
-                    <td>{{ text_accept_language }}</td>
-                    <td>{{ accept_language }}</td>
-                  </tr>
-                </tbody>
+                {% if forwarded_ip %}
+                <tr>
+                  <td>{{ text_forwarded_ip }}</td>
+                  <td>{{ forwarded_ip }}</td>
+                </tr>
+                {% endif %}
+                <tr>
+                  <td>{{ text_user_agent }}</td>
+                  <td>{{ user_agent }}</td>
+                </tr>
+                <tr>
+                  <td>{{ text_accept_language }}</td>
+                  <td>{{ accept_language }}</td>
+                </tr>
+                  </tbody>
+                
               </table>
             </div>
           </div>
           {% for tab in tabs %}
           <div class="tab-pane" id="tab-{{ tab.code }}">{{ tab.content }}</div>
-          {% endfor %}
-        </div>
+          {% endfor %} </div>
       </div>
     </div>
   </div>
   <script type="text/javascript"><!--
-$(document).delegate('#button-ip-add', 'click', function() {
-	$.ajax({
-		url: 'index.php?route=user/api/addip&token={{ token }}&api_id={{ api_id }}',
-		type: 'post',
-		data: 'ip={{ api_ip }}',
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-ip-add').button('loading');
-		},
-		complete: function() {
-			$('#button-ip-add').button('reset');
-		},
-		success: function(json) {
-			$('.alert').remove();
-
-			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
-
-			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
-
 $(document).delegate('#button-invoice', 'click', function() {
 	$.ajax({
-		url: 'index.php?route=sale/order/createinvoiceno&token={{ token }}&order_id={{ order_id }}',
+		url: 'index.php?route=sale/order/createinvoiceno&user_token={{ user_token }}&order_id={{ order_id }}',
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-invoice').button('loading');
@@ -418,7 +394,7 @@ $(document).delegate('#button-invoice', 'click', function() {
 
 $(document).delegate('#button-reward-add', 'click', function() {
 	$.ajax({
-		url: 'index.php?route=sale/order/addreward&token={{ token }}&order_id={{ order_id }}',
+		url: 'index.php?route=sale/order/addreward&user_token={{ user_token }}&order_id={{ order_id }}',
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
@@ -448,7 +424,7 @@ $(document).delegate('#button-reward-add', 'click', function() {
 
 $(document).delegate('#button-reward-remove', 'click', function() {
 	$.ajax({
-		url: 'index.php?route=sale/order/removereward&token={{ token }}&order_id={{ order_id }}',
+		url: 'index.php?route=sale/order/removereward&user_token={{ user_token }}&order_id={{ order_id }}',
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
@@ -478,7 +454,7 @@ $(document).delegate('#button-reward-remove', 'click', function() {
 
 $(document).delegate('#button-commission-add', 'click', function() {
 	$.ajax({
-		url: 'index.php?route=sale/order/addcommission&token={{ token }}&order_id={{ order_id }}',
+		url: 'index.php?route=sale/order/addcommission&user_token={{ user_token }}&order_id={{ order_id }}',
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
@@ -508,7 +484,7 @@ $(document).delegate('#button-commission-add', 'click', function() {
 
 $(document).delegate('#button-commission-remove', 'click', function() {
 	$.ajax({
-		url: 'index.php?route=sale/order/removecommission&token={{ token }}&order_id={{ order_id }}',
+		url: 'index.php?route=sale/order/removecommission&user_token={{ user_token }}&order_id={{ order_id }}',
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
@@ -536,59 +512,17 @@ $(document).delegate('#button-commission-remove', 'click', function() {
 	});
 });
 
-var token = '';
-
-// Login to the API
-$.ajax({
-	url: '{{ catalog }}index.php?route=api/login',
-	type: 'post',
-	dataType: 'json',
-	data: 'key={{ api_key }}',
-	crossDomain: true,
-	success: function(json) {
-		$('.alert').remove();
-
-        if (json['error']) {
-    		if (json['error']['key']) {
-    			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['key'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-    		}
-
-            if (json['error']['ip']) {
-    			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['ip'] + ' <button type="button" id="button-ip-add" data-loading-text="{{ text_loading }}" class="btn btn-danger btn-xs pull-right"><i class="fa fa-plus"></i> {{ button_ip_add }}</button></div>');
-    		}
-        }
-
-        if (json['token']) {
-			token = json['token'];
-		}
-	},
-	error: function(xhr, ajaxOptions, thrownError) {
-		alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-	}
-});
-
 $('#history').delegate('.pagination a', 'click', function(e) {
 	e.preventDefault();
 
 	$('#history').load(this.href);
 });
 
-$('#history').load('index.php?route=sale/order/history&token={{ token }}&order_id={{ order_id }}');
+$('#history').load('index.php?route=sale/order/history&user_token={{ user_token }}&order_id={{ order_id }}');
 
 $('#button-history').on('click', function() {
-	/*
-	if (typeof verifyStatusChange == 'function'){
-		if (verifyStatusChange() == false){
-			return false;
-		} else{
-			addOrderInfo();
-		}
-	} else{
-		addOrderInfo();
-	}*/
-
 	$.ajax({
-		url: '{{ catalog }}index.php?route=api/order/history&token=' + token + '&store_id={{ store_id }}&order_id={{ order_id }}',
+		url: '{{ catalog }}index.php?route=api/order/history&api_token={{ api_token }}&store_id={{ store_id }}&order_id={{ order_id }}',
 		type: 'post',
 		dataType: 'json',
 		data: 'order_status_id=' + encodeURIComponent($('select[name=\'order_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&override=' + ($('input[name=\'override\']').prop('checked') ? 1 : 0) + '&append=' + ($('input[name=\'append\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
@@ -606,7 +540,7 @@ $('#button-history').on('click', function() {
 			}
 
 			if (json['success']) {
-				$('#history').load('index.php?route=sale/order/history&token={{ token }}&order_id={{ order_id }}');
+				$('#history').load('index.php?route=sale/order/history&user_token={{ user_token }}&order_id={{ order_id }}');
 
 				$('#history').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
@@ -617,39 +551,6 @@ $('#button-history').on('click', function() {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
-});
-
-function changeStatus(){
-	var status_id = $('select[name="order_status_id"]').val();
-
-	$('#openbay-info').remove();
-
-	$.ajax({
-		url: 'index.php?route=extension/openbay/getorderinfo&token={{ token }}&order_id={{ order_id }}&status_id=' + status_id,
-		dataType: 'html',
-		success: function(html) {
-			$('#history').after(html);
-		}
-	});
-}
-
-function addOrderInfo(){
-	var status_id = $('select[name="order_status_id"]').val();
-
-	$.ajax({
-		url: 'index.php?route=extension/openbay/addorderinfo&token={{ token }}&order_id={{ order_id }}&status_id=' + status_id,
-		type: 'post',
-		dataType: 'html',
-		data: $(".openbay-data").serialize()
-	});
-}
-
-$(document).ready(function() {
-	changeStatus();
-});
-
-$('select[name="order_status_id"]').change(function(){
-	changeStatus();
 });
 //--></script> 
 </div>

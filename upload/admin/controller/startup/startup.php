@@ -26,9 +26,6 @@ class ControllerStartupStartup extends Controller {
 		
 		// Customer
 		$this->registry->set('customer', new Cart\Customer($this->registry));
-		
-		// Affiliate
-		$this->registry->set('affiliate', new Cart\Affiliate($this->registry));
 
 		// Currency
 		$this->registry->set('currency', new Cart\Currency($this->registry));

@@ -11,11 +11,11 @@ class ControllerExtensionModuleKlarnaCheckoutModule extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('klarna_checkout_module', $this->request->post);
+			$this->model_setting_setting->editSetting('module_klarna_checkout_module', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -40,27 +40,27 @@ class ControllerExtensionModuleKlarnaCheckoutModule extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/module/klarna_checkout_module', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/module/klarna_checkout_module', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/module/klarna_checkout_module', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/module/klarna_checkout_module', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true);
 
-		if (isset($this->request->post['klarna_checkout_module_status'])) {
-			$data['klarna_checkout_module_status'] = $this->request->post['klarna_checkout_module_status'];
+		if (isset($this->request->post['module_klarna_checkout_status'])) {
+			$data['module_klarna_checkout_status'] = $this->request->post['module_klarna_checkout_status'];
 		} else {
-			$data['klarna_checkout_module_status'] = $this->config->get('klarna_checkout_module_status');
+			$data['module_klarna_checkout_status'] = $this->config->get('module_klarna_checkout_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

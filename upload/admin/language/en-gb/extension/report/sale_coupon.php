@@ -3,7 +3,10 @@
 $_['heading_title']    = 'Coupons Report';
 
 // Text
-$_['text_list']        = 'Coupon List';
+$_['text_extension']   = 'Extensions';
+$_['text_success']     = 'Success: You have modified coupon report!';
+$_['text_edit']        = 'Edit Coupons Report';
+$_['text_filter']      = 'Coupons Filter';
 
 // Column
 $_['column_name']      = 'Coupon Name';
@@ -15,3 +18,8 @@ $_['column_action']    = 'Action';
 // Entry
 $_['entry_date_start'] = 'Date Start';
 $_['entry_date_end']   = 'Date End';
+$_['entry_status']     = 'Status';
+$_['entry_sort_order'] = 'Sort Order';
+
+// Error
+$_['error_permission']  = 'Warning: You do not have permission to modify coupon report!';

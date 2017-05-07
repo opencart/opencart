@@ -1,38 +1,38 @@
 {{ header }}{{ column_left }}
 <div id="content">
-  <div class="page-header">
-    <div class="container-fluid">
-      <div class="pull-right">
-        <button type="submit" form="form-return" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
-      <h1>{{ heading_title }}</h1>
-      <ul class="breadcrumb">
-        {% for breadcrumb in breadcrumbs %}
-        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-        {% endfor %}
-      </ul>
-    </div>
-  </div>
+<div class="page-header">
   <div class="container-fluid">
-    {% if error_warning %}
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="pull-right">
+      <button type="submit" form="form-return" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+      <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
+    <h1>{{ heading_title }}</h1>
+    <ul class="breadcrumb">
+      {% for breadcrumb in breadcrumbs %}
+      <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+<div class="container-fluid">
+  {% if error_warning %}
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  {% endif %}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
     </div>
-    {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
-      </div>
-      <div class="panel-body">
-        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-return" class="form-horizontal">
-          <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
-            {% if return_id %}
-            <li><a href="#tab-history" data-toggle="tab">{{ tab_history }}</a></li>
-            {% endif %}
-          </ul>
-          <div class="tab-content">
-          <div class="tab-pane active" id="tab-general">
+    <div class="panel-body">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
+        {% if return_id %}
+        <li><a href="#tab-history" data-toggle="tab">{{ tab_history }}</a></li>
+        {% endif %}
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab-general">
+          <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-return" class="form-horizontal">
             <fieldset>
               <legend>{{ text_order }}</legend>
               <div class="form-group required">
@@ -51,7 +51,8 @@
                     <input type="text" name="date_ordered" value="{{ date_ordered }}" placeholder="{{ entry_date_ordered }}" data-date-format="YYYY-MM-DD" id="input-date-ordered" class="form-control" />
                     <span class="input-group-btn">
                     <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                    </span></div>
+                    </span>
+                  </div>
                 </div>
               </div>
               <div class="form-group">
@@ -116,8 +117,7 @@
                   <input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control" />
                   {% if error_model %}
                   <div class="text-danger">{{ error_model }}</div>
-                  {% endif %}
-                </div>
+                  {% endif %} </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-quantity">{{ entry_quantity }}</label>
@@ -130,7 +130,7 @@
                 <div class="col-sm-10">
                   <select name="return_reason_id" id="input-return-reason" class="form-control">
                     {% for return_reason in return_reasons %}
-                    {% if return_reason.return_reason_id == return_reason_id %}
+                    {% if return_reason.return_reason_id == return_reason_id %}                    
                     <option value="{{ return_reason.return_reason_id }}" selected="selected">{{ return_reason.name }}</option>
                     {% else %}
                     <option value="{{ return_reason.return_reason_id }}">{{ return_reason.name }}</option>
@@ -191,13 +191,18 @@
               </div>
               {% endif %}
             </fieldset>
-          </div>
-          {% if return_id %}
-          <div class="tab-pane" id="tab-history">
+          </form>
+        </div>
+        {% if return_id %}
+        <div class="tab-pane" id="tab-history">
+          <fieldset>
+            <legend>{{ text_history }}</legend>
             <div id="history"></div>
-            <br />
-            <fieldset>
-              <legend>{{ text_history }}</legend>
+          </fieldset>
+          <br />
+          <fieldset>
+            <legend>{{ text_history_add }}</legend>
+            <form class="form-horizontal">
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-return-status">{{ entry_return_status }}</label>
                 <div class="col-sm-10">
@@ -221,16 +226,16 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-history-comment">{{ entry_comment }}</label>
                 <div class="col-sm-10">
-                  <textarea name="history_comment" rows="8" id="input-history-comment" class="form-control"></textarea>
+                  <textarea name="comment" rows="8" id="input-history-comment" class="form-control"></textarea>
                 </div>
               </div>
               <div class="text-right">
                 <button id="button-history" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> {{ button_history_add }}</button>
               </div>
-            </fieldset>
-          </div>
-          {% endif %}
-        </form>
+            </form>
+          </fieldset>
+        </div>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -238,7 +243,7 @@
 $('input[name=\'customer\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=customer/customer/autocomplete&token={{ token }}&filter_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
 				response($.map(json, function(item) {
@@ -269,7 +274,7 @@ $('input[name=\'customer\']').autocomplete({
 $('input[name=\'product\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&token={{ token }}&filter_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
 				response($.map(json, function(item) {
@@ -295,28 +300,36 @@ $('#history').delegate('.pagination a', 'click', function(e) {
 	$('#history').load(this.href);
 });			
 
-$('#history').load('index.php?route=sale/return/history&token={{ token }}&return_id={{ return_id }}');
+$('#history').load('index.php?route=sale/return/history&user_token={{ user_token }}&return_id={{ return_id }}');
 
 $('#button-history').on('click', function(e) {
-  e.preventDefault();
+	e.preventDefault();
 
 	$.ajax({
-		url: 'index.php?route=sale/return/history&token={{ token }}&return_id={{ return_id }}',
+		url: 'index.php?route=sale/return/addhistory&user_token={{ user_token }}&return_id={{ return_id }}',
 		type: 'post',
-		dataType: 'html',
-		data: 'return_status_id=' + encodeURIComponent($('select[name=\'return_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'history_comment\']').val()),
+		dataType: 'json',
+		data: 'return_status_id=' + encodeURIComponent($('#tab-history select[name=\'return_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('#tab-history textarea[name=\'comment\']').val()),
 		beforeSend: function() {
 			$('#button-history').button('loading');	
 		},
 		complete: function() {
 			$('#button-history').button('reset');	
 		},
-		success: function(html) {
+		success: function(json) {
 			$('.alert').remove();
-			
-			$('#history').html(html);
-			
-			$('textarea[name=\'history_comment\']').val('');
+	
+			if (json['error']) {
+				 $('#tab-history').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+
+			if (json['success']) {
+				$('#history').load('index.php?route=sale/return/history&user_token={{ user_token }}&return_id={{ return_id }}');
+				
+				$('#tab-history').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+				$('#tab-history textarea[name=\'comment\']').val('');
+			}
 		}
 	});
 });
@@ -326,4 +339,4 @@ $('.date').datetimepicker({
 	pickTime: false
 });
 //--></script></div>
-{{ footer }}
+{{ footer }} 

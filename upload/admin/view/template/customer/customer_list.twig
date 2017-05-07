@@ -45,7 +45,7 @@
               <div class="form-group">
                 <label class="control-label" for="input-customer-group">{{ entry_customer_group }}</label>
                 <select name="filter_customer_group_id" id="input-customer-group" class="form-control">
-                  <option value="*"></option>
+                  <option value=""></option>
                   {% for customer_group in customer_groups %}
                   {% if customer_group.customer_group_id == filter_customer_group_id %}
                   <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
@@ -58,13 +58,13 @@
               <div class="form-group">
                 <label class="control-label" for="input-status">{{ entry_status }}</label>
                 <select name="filter_status" id="input-status" class="form-control">
-                  <option value="*"></option>
-                  {% if filter_status %}
+                  <option value=""></option>
+                  {% if filter_status == '1' %}
                   <option value="1" selected="selected">{{ text_enabled }}</option>
                   {% else %}
                   <option value="1">{{ text_enabled }}</option>
                   {% endif %}
-                  {% if not filter_status %}
+                  {% if filter_status == '0' %}
                   <option value="0" selected="selected">{{ text_disabled }}</option>
                   {% else %}
                   <option value="0">{{ text_disabled }}</option>
@@ -73,22 +73,6 @@
               </div>
             </div>
             <div class="col-sm-3">
-              <div class="form-group">
-                <label class="control-label" for="input-approved">{{ entry_approved }}</label>
-                <select name="filter_approved" id="input-approved" class="form-control">
-                  <option value="*"></option>
-                  {% if filter_approved %}
-                  <option value="1" selected="selected">{{ text_yes }}</option>
-                  {% else %}
-                  <option value="1">{{ text_yes }}</option>
-                  {% endif %}
-                  {% if not filter_approved %}
-                  <option value="0" selected="selected">{{ text_no }}</option>
-                  {% else %}
-                  <option value="0">{{ text_no }}</option>
-                  {% endif %}
-                </select>
-              </div>
               <div class="form-group">
                 <label class="control-label" for="input-ip">{{ entry_ip }}</label>
                 <input type="text" name="filter_ip" value="{{ filter_ip }}" placeholder="{{ entry_ip }}" id="input-ip" class="form-control" />
@@ -161,17 +145,12 @@
                   <td class="text-left">{{ customer.status }}</td>
                   <td class="text-left">{{ customer.ip }}</td>
                   <td class="text-left">{{ customer.date_added }}</td>
-                  <td class="text-right">{% if customer.approve %}
-                    <a href="{{ customer.approve }}" data-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fa fa-thumbs-o-up"></i></a>
-                    {% else %}
-                    <button type="button" class="btn btn-success" disabled><i class="fa fa-thumbs-o-up"></i></button>
-                    {% endif %}
-                    <div class="btn-group" data-toggle="tooltip" title="{{ button_login }}">
+                  <td class="text-right"><div class="btn-group" data-toggle="tooltip" title="{{ button_login }}">
                       <button type="button" data-toggle="dropdown" class="btn btn-info dropdown-toggle"><i class="fa fa-lock"></i></button>
                       <ul class="dropdown-menu pull-right">
-                        <li><a href="index.php?route=customer/customer/login&token={{ token }}&customer_id={{ customer.customer_id }}&store_id=0" target="_blank">{{ text_default }}</a></li>
+                        <li><a href="index.php?route=customer/customer/login&user_token={{ user_token }}&customer_id={{ customer.customer_id }}&store_id=0" target="_blank">{{ text_default }}</a></li>
                         {% for store in stores %}
-                        <li><a href="index.php?route=customer/customer/login&token={{ token }}&customer_id={{ customer.customer_id }}&store_id={{ store.store_id }}" target="_blank">{{ store.name }}</a></li>
+                        <li><a href="index.php?route=customer/customer/login&user_token={{ user_token }}&customer_id={{ customer.customer_id }}&store_id={{ store.store_id }}" target="_blank">{{ store.name }}</a></li>
                         {% endfor %}
                       </ul>
                     </div>
@@ -201,7 +180,7 @@
   </div>
   <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-	url = 'index.php?route=customer/customer&token={{ token }}';
+	url = 'index.php?route=customer/customer&user_token={{ user_token }}';
 	
 	var filter_name = $('input[name=\'filter_name\']').val();
 	
@@ -217,20 +196,14 @@ $('#button-filter').on('click', function() {
 	
 	var filter_customer_group_id = $('select[name=\'filter_customer_group_id\']').val();
 	
-	if (filter_customer_group_id != '*') {
+	if (filter_customer_group_id !== '') {
 		url += '&filter_customer_group_id=' + encodeURIComponent(filter_customer_group_id);
 	}	
 	
 	var filter_status = $('select[name=\'filter_status\']').val();
 	
-	if (filter_status != '*') {
+	if (filter_status !== '') {
 		url += '&filter_status=' + encodeURIComponent(filter_status); 
-	}	
-	
-	var filter_approved = $('select[name=\'filter_approved\']').val();
-	
-	if (filter_approved != '*') {
-		url += '&filter_approved=' + encodeURIComponent(filter_approved);
 	}	
 	
 	var filter_ip = $('input[name=\'filter_ip\']').val();
@@ -252,7 +225,7 @@ $('#button-filter').on('click', function() {
 $('input[name=\'filter_name\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=customer/customer/autocomplete&token={{ token }}&filter_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
 				response($.map(json, function(item) {
@@ -272,7 +245,7 @@ $('input[name=\'filter_name\']').autocomplete({
 $('input[name=\'filter_email\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=customer/customer/autocomplete&token={{ token }}&filter_email=' +  encodeURIComponent(request),
+			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token }}&filter_email=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
 				response($.map(json, function(item) {

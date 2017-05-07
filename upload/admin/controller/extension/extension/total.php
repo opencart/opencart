@@ -5,7 +5,7 @@ class ControllerExtensionExtensionTotal extends Controller {
 	public function index() {
 		$this->load->language('extension/extension/total');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		$this->getList();
 	}
@@ -13,10 +13,10 @@ class ControllerExtensionExtensionTotal extends Controller {
 	public function install() {
 		$this->load->language('extension/extension/total');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->install('total', $this->request->get['extension']);
+			$this->model_setting_extension->install('total', $this->request->get['extension']);
 
 			$this->load->model('user/user_group');
 
@@ -34,10 +34,10 @@ class ControllerExtensionExtensionTotal extends Controller {
 	public function uninstall() {
 		$this->load->language('extension/extension/total');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->uninstall('total', $this->request->get['extension']);
+			$this->model_setting_extension->uninstall('total', $this->request->get['extension']);
 
 			$this->load->controller('extension/total/' . $this->request->get['extension'] . '/uninstall');
 
@@ -75,13 +75,13 @@ class ControllerExtensionExtensionTotal extends Controller {
 			$data['success'] = '';
 		}
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
-		$extensions = $this->model_extension_extension->getInstalled('total');
+		$extensions = $this->model_setting_extension->getInstalled('total');
 
 		foreach ($extensions as $key => $value) {
 			if (!is_file(DIR_APPLICATION . 'controller/extension/total/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/total/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('total', $value);
+				$this->model_setting_extension->uninstall('total', $value);
 
 				unset($extensions[$key]);
 			}
@@ -90,7 +90,7 @@ class ControllerExtensionExtensionTotal extends Controller {
 		$data['extensions'] = array();
 
 		// Compatibility code for old extension folders
-		$files = glob(DIR_APPLICATION . 'controller/{extension/total,total}/*.php', GLOB_BRACE);
+		$files = glob(DIR_APPLICATION . 'controller/extension/total/*.php');
 
 		if ($files) {
 			foreach ($files as $file) {
@@ -100,12 +100,12 @@ class ControllerExtensionExtensionTotal extends Controller {
 
 				$data['extensions'][] = array(
 					'name'       => $this->language->get('heading_title'),
-					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'sort_order' => $this->config->get($extension . '_sort_order'),
-					'install'   => $this->url->link('extension/extension/total/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/extension/total/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'status'     => $this->config->get('total_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+					'sort_order' => $this->config->get('total_' . $extension . '_sort_order'),
+					'install'   => $this->url->link('extension/extension/total/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
+					'uninstall' => $this->url->link('extension/extension/total/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('extension/total/' . $extension, 'token=' . $this->session->data['token'], true)
+					'edit'      => $this->url->link('extension/total/' . $extension, 'user_token=' . $this->session->data['user_token'], true)
 				);
 			}
 		}

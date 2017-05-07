@@ -10,11 +10,11 @@ class ControllerExtensionPaymentCod extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('cod', $this->request->post);
+			$this->model_setting_setting->editSetting('payment_cod', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -45,59 +45,59 @@ class ControllerExtensionPaymentCod extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/cod', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/cod', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/payment/cod', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/cod', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
 
-		if (isset($this->request->post['cod_total'])) {
-			$data['cod_total'] = $this->request->post['cod_total'];
+		if (isset($this->request->post['payment_cod_total'])) {
+			$data['payment_cod_total'] = $this->request->post['payment_cod_total'];
 		} else {
-			$data['cod_total'] = $this->config->get('cod_total');
+			$data['payment_cod_total'] = $this->config->get('payment_cod_total');
 		}
 
-		if (isset($this->request->post['cod_order_status_id'])) {
-			$data['cod_order_status_id'] = $this->request->post['cod_order_status_id'];
+		if (isset($this->request->post['payment_cod_order_status_id'])) {
+			$data['payment_cod_order_status_id'] = $this->request->post['payment_cod_order_status_id'];
 		} else {
-			$data['cod_order_status_id'] = $this->config->get('cod_order_status_id');
+			$data['payment_cod_order_status_id'] = $this->config->get('payment_cod_order_status_id');
 		}
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['cod_geo_zone_id'])) {
-			$data['cod_geo_zone_id'] = $this->request->post['cod_geo_zone_id'];
+		if (isset($this->request->post['payment_cod_geo_zone_id'])) {
+			$data['payment_cod_geo_zone_id'] = $this->request->post['payment_cod_geo_zone_id'];
 		} else {
-			$data['cod_geo_zone_id'] = $this->config->get('cod_geo_zone_id');
+			$data['payment_cod_geo_zone_id'] = $this->config->get('payment_cod_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['cod_status'])) {
-			$data['cod_status'] = $this->request->post['cod_status'];
+		if (isset($this->request->post['payment_cod_status'])) {
+			$data['payment_cod_status'] = $this->request->post['payment_cod_status'];
 		} else {
-			$data['cod_status'] = $this->config->get('cod_status');
+			$data['payment_cod_status'] = $this->config->get('payment_cod_status');
 		}
 
-		if (isset($this->request->post['cod_sort_order'])) {
-			$data['cod_sort_order'] = $this->request->post['cod_sort_order'];
+		if (isset($this->request->post['payment_cod_sort_order'])) {
+			$data['payment_cod_sort_order'] = $this->request->post['payment_cod_sort_order'];
 		} else {
-			$data['cod_sort_order'] = $this->config->get('cod_sort_order');
+			$data['payment_cod_sort_order'] = $this->config->get('payment_cod_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

@@ -38,8 +38,8 @@ class ModelExtensionPaymentRealexRemote extends Model {
 
 		if (!empty($realex_order)) {
 			$timestamp = strftime("%Y%m%d%H%M%S");
-			$merchant_id = $this->config->get('realex_remote_merchant_id');
-			$secret = $this->config->get('realex_remote_secret');
+			$merchant_id = $this->config->get('payment_realex_remote_merchant_id');
+			$secret = $this->config->get('payment_realex_remote_secret');
 
 			$this->logger('Void hash construct: ' . $timestamp . '.' . $merchant_id . '.' . $realex_order['order_ref'] . '...');
 
@@ -85,8 +85,8 @@ class ModelExtensionPaymentRealexRemote extends Model {
 
 		if (!empty($realex_order) && $realex_order['capture_status'] == 0) {
 			$timestamp = strftime("%Y%m%d%H%M%S");
-			$merchant_id = $this->config->get('realex_remote_merchant_id');
-			$secret = $this->config->get('realex_remote_secret');
+			$merchant_id = $this->config->get('payment_realex_remote_merchant_id');
+			$secret = $this->config->get('payment_realex_remote_secret');
 
 			if ($realex_order['settle_type'] == 2) {
 				$this->logger('Capture hash construct: ' . $timestamp . '.' . $merchant_id . '.' . $realex_order['order_ref'] . '.' . (int)round($amount*100) . '.' . (string)$realex_order['currency_code'] . '.');
@@ -153,8 +153,8 @@ class ModelExtensionPaymentRealexRemote extends Model {
 
 		if (!empty($realex_order) && $realex_order['rebate_status'] != 1) {
 			$timestamp = strftime("%Y%m%d%H%M%S");
-			$merchant_id = $this->config->get('realex_remote_merchant_id');
-			$secret = $this->config->get('realex_remote_secret');
+			$merchant_id = $this->config->get('payment_realex_remote_merchant_id');
+			$secret = $this->config->get('payment_realex_remote_secret');
 
 			if ($realex_order['settle_type'] == 2) {
 				$order_ref = '_multisettle_' . $realex_order['order_ref'];
@@ -176,7 +176,7 @@ class ModelExtensionPaymentRealexRemote extends Model {
 			$tmp = $hash . '.' . $secret;
 			$hash = sha1($tmp);
 
-			$rebatehash = sha1($this->config->get('realex_remote_rebate_password'));
+			$rebatehash = sha1($this->config->get('payment_realex_remote_rebate_password'));
 
 			$xml = '';
 			$xml .= '<request type="rebate" timestamp="' . $timestamp . '">';
@@ -240,7 +240,7 @@ class ModelExtensionPaymentRealexRemote extends Model {
 	}
 
 	public function logger($message) {
-		if ($this->config->get('realex_remote_debug') == 1) {
+		if ($this->config->get('payment_realex_remote_debug') == 1) {
 			$log = new Log('realex_remote.log');
 			$log->write($message);
 		}

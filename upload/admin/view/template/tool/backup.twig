@@ -72,7 +72,7 @@ $('#button-import').on('click', function() {
 			clearInterval(timer);		
 			
 			$.ajax({
-				url: 'index.php?route=tool/backup/import&token={{ token }}',
+				url: 'index.php?route=tool/backup/import&user_token={{ user_token }}',
 				type: 'post',		
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),

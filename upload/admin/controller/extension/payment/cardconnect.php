@@ -12,28 +12,28 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('cardconnect', $this->request->post);
+			$this->model_setting_setting->editSetting('payment_cardconnect', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
 
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/cardconnect', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/cardconnect', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['heading_title']                 = $this->language->get('heading_title');
@@ -87,14 +87,14 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 		$data['button_save']                   = $this->language->get('button_save');
 		$data['button_cancel']                 = $this->language->get('button_cancel');
 
-		$data['action'] = $this->url->link('extension/payment/cardconnect', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/cardconnect', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
 
-		if (isset($this->request->post['cardconnect_merchant_id'])) {
-			$data['cardconnect_merchant_id'] = $this->request->post['cardconnect_merchant_id'];
+		if (isset($this->request->post['payment_cardconnect_merchant_id'])) {
+			$data['payment_cardconnect_merchant_id'] = $this->request->post['payment_cardconnect_merchant_id'];
 		} else {
-			$data['cardconnect_merchant_id'] = $this->config->get('cardconnect_merchant_id');
+			$data['payment_cardconnect_merchant_id'] = $this->config->get('payment_cardconnect_merchant_id');
 		}
 
 		if (isset($this->request->post['cardconnect_api_username'])) {
@@ -217,10 +217,10 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 			$data['success'] = '';
 		}
 
-		if (isset($this->error['cardconnect_merchant_id'])) {
-			$data['error_cardconnect_merchant_id'] = $this->error['cardconnect_merchant_id'];
+		if (isset($this->error['payment_cardconnect_merchant_id'])) {
+			$data['error_payment_cardconnect_merchant_id'] = $this->error['payment_cardconnect_merchant_id'];
 		} else {
-			$data['error_cardconnect_merchant_id'] = '';
+			$data['error_payment_cardconnect_merchant_id'] = '';
 		}
 
 		if (isset($this->error['cardconnect_api_username'])) {
@@ -255,7 +255,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		$data['token'] = $this->session->data['token'];
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -265,7 +265,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 	}
 
 	public function install() {
-		if ($this->user->hasPermission('modify', 'extension/extension')) {
+		if ($this->user->hasPermission('modify', 'marketplace/extension')) {
 			$this->load->model('extension/payment/cardconnect');
 
 			$this->model_extension_payment_cardconnect->install();
@@ -273,7 +273,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 	}
 
 	public function uninstall() {
-		if ($this->user->hasPermission('modify', 'extension/extension')) {
+		if ($this->user->hasPermission('modify', 'marketplace/extension')) {
 			$this->load->model('extension/payment/cardconnect');
 
 			$this->model_extension_payment_cardconnect->uninstall();
@@ -368,7 +368,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 
 				$data['order_id'] = $this->request->get['order_id'];
 
-				$data['token'] = $this->request->get['token'];
+				$data['user_token'] = $this->request->get['user_token'];
 
 				return $this->load->view('extension/payment/cardconnect_order', $data);
 			}
@@ -557,8 +557,8 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['cardconnect_merchant_id']) {
-			$this->error['cardconnect_merchant_id'] = $this->language->get('error_merchant_id');
+		if (!$this->request->post['payment_cardconnect_merchant_id']) {
+			$this->error['payment_cardconnect_merchant_id'] = $this->language->get('error_merchant_id');
 		}
 
 		if (!$this->request->post['cardconnect_api_username']) {

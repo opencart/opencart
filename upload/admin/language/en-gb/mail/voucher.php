@@ -1,5 +1,6 @@
 <?php
 // Text
+$_['text_success']  = 'Success: You have modified vouchers!';
 $_['text_subject']  = 'You have been sent a gift certificate from %s';
 $_['text_greeting'] = 'Congratulations, You have received a Gift Certificate worth %s';
 $_['text_from']     = 'This Gift Certificate has been sent to you by %s';

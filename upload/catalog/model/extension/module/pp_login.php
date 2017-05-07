@@ -1,7 +1,7 @@
 <?php
 class ModelExtensionModulePPLogin extends Model {
 	public function getTokens($code) {
-		if ($this->config->get('pp_login_sandbox')) {
+		if ($this->config->get('module_pp_login_sandbox')) {
 			$endpoint = 'https://api.sandbox.paypal.com/v1/identity/openidconnect/tokenservice';
 		} else {
 			$endpoint = 'https://api.paypal.com/v1/identity/openidconnect/tokenservice';
@@ -13,7 +13,7 @@ class ModelExtensionModulePPLogin extends Model {
 		$request .= '&redirect_uri=' . urlencode($this->url->link('extension/module/pp_login/login', '', true));
 
 		$additional_opts = array(
-			CURLOPT_USERPWD    => $this->config->get('pp_login_client_id') . ':' . $this->config->get('pp_login_secret'),
+			CURLOPT_USERPWD    => $this->config->get('module_pp_login_client_id') . ':' . $this->config->get('module_pp_login_secret'),
 			CURLOPT_POST       => true,
 			CURLOPT_POSTFIELDS => $request
 		);
@@ -26,7 +26,7 @@ class ModelExtensionModulePPLogin extends Model {
 	}
 
 	public function getUserInfo($access_token) {
-		if ($this->config->get('pp_login_sandbox')) {
+		if ($this->config->get('module_pp_login_sandbox')) {
 			$endpoint = 'https://api.sandbox.paypal.com/v1/identity/openidconnect/userinfo/?schema=openid';
 		} else {
 			$endpoint = 'https://api.paypal.com/v1/identity/openidconnect/userinfo/?schema=openid';
@@ -72,7 +72,7 @@ class ModelExtensionModulePPLogin extends Model {
 	}
 
 	public function log($data, $class_step = 6) {
-		if ($this->config->get('pp_login_debug')) {
+		if ($this->config->get('module_pp_login_debug')) {
 			$backtrace = debug_backtrace();
 			$this->log->write('Log In with PayPal debug (' . $backtrace[$class_step]['class'] . '::' . $backtrace[6]['function'] . ') - ' . $data);
 		}

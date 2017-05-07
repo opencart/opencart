@@ -330,7 +330,7 @@
     count = parseInt(count);
 
     $.ajax({
-      url: 'index.php?route=extension/openbay/ebay/getShippingService&token={{ token }}&loc=' + loc + '&type=' + type,
+      url: 'index.php?route=extension/openbay/ebay/getShippingService&user_token={{ user_token }}&loc=' + loc + '&type=' + type,
       beforeSend: function(){
         $('#add-' + id + '-' + type).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },

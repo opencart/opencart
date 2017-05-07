@@ -5,9 +5,7 @@ class ControllerExtensionExtensionMenu extends Controller {
 	public function index() {
 		$this->load->language('extension/extension/menu');
 
-		$this->load->model('extension/extension');
-
-		$this->load->model('extension/menu');
+		$this->load->model('setting/extension');
 
 		$this->getList();
 	}
@@ -15,12 +13,10 @@ class ControllerExtensionExtensionMenu extends Controller {
 	public function install() {
 		$this->load->language('extension/extension/menu');
 
-		$this->load->model('extension/extension');
-
-		$this->load->model('extension/menu');
+		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->install('menu', $this->request->get['extension']);
+			$this->model_setting_extension->install('menu', $this->request->get['extension']);
 
 			$this->load->model('user/user_group');
 
@@ -39,51 +35,13 @@ class ControllerExtensionExtensionMenu extends Controller {
 	public function uninstall() {
 		$this->load->language('extension/extension/menu');
 
-		$this->load->model('extension/extension');
-
-		$this->load->model('extension/menu');
+		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->uninstall('menu', $this->request->get['extension']);
-
-			$this->model_extension_menu->deleteMenusByCode($this->request->get['extension']);
+			$this->model_setting_extension->uninstall('menu', $this->request->get['extension']);
 
 			// Call uninstall method if it exsits
 			$this->load->controller('extension/menu/' . $this->request->get['extension'] . '/uninstall');
-
-			$this->session->data['success'] = $this->language->get('text_success');
-		}
-
-		$this->getList();
-	}
-	
-	public function add() {
-		$this->load->language('extension/extension/menu');
-
-		$this->load->model('extension/extension');
-
-		$this->load->model('extension/menu');
-
-		if ($this->validate()) {
-			$this->load->language('menu' . '/' . $this->request->get['extension']);
-			
-			$this->model_extension_menu->addMenu($this->request->get['extension'], $this->language->get('heading_title'));
-
-			$this->session->data['success'] = $this->language->get('text_success');
-		}
-
-		$this->getList();
-	}
-
-	public function delete() {
-		$this->load->language('extension/extension/menu');
-
-		$this->load->model('extension/extension');
-
-		$this->load->model('extension/menu');
-
-		if (isset($this->request->get['menu_id']) && $this->validate()) {
-			$this->model_extension_menu->deletemenu($this->request->get['menu_id']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -94,11 +52,12 @@ class ControllerExtensionExtensionMenu extends Controller {
 	protected function getList() {
 		$data['heading_title'] = $this->language->get('heading_title');
 
-		$data['text_layout'] = sprintf($this->language->get('text_layout'), $this->url->link('design/layout', 'token=' . $this->session->data['token'], true));
+		$data['text_layout'] = sprintf($this->language->get('text_layout'), $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'], true));
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
 		$data['column_name'] = $this->language->get('column_name');
+		$data['column_status'] = $this->language->get('column_status');
 		$data['column_action'] = $this->language->get('column_action');
 
 		$data['button_add'] = $this->language->get('button_add');
@@ -121,22 +80,20 @@ class ControllerExtensionExtensionMenu extends Controller {
 			$data['success'] = '';
 		}
 
-		$extensions = $this->model_extension_extension->getInstalled('menu');
+		$extensions = $this->model_setting_extension->getInstalled('menu');
 
 		foreach ($extensions as $key => $value) {
 			if (!is_file(DIR_APPLICATION . 'controller/extension/menu/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/menu/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('menu', $value);
+				$this->model_setting_extension->uninstall('menu', $value);
 
 				unset($extensions[$key]);
-				
-				$this->model_extension_menu->deletemenusByCode($value);
 			}
 		}
 
 		$data['extensions'] = array();
 
 		// Compatibility code for old extension folders
-		$files = glob(DIR_APPLICATION . 'controller/{extension/menu,menu}/*.php', GLOB_BRACE);
+		$files = glob(DIR_APPLICATION . 'controller/extension/menu/*.php');
 
 		if ($files) {
 			foreach ($files as $file) {
@@ -144,26 +101,13 @@ class ControllerExtensionExtensionMenu extends Controller {
 
 				$this->load->language('extension/menu/' . $extension);
 
-				$menu_data = array();
-
-				$menus = $this->model_extension_menu->getmenusByCode($extension);
-
-				foreach ($menus as $menu) {
-					$menu_data[] = array(
-						'menu_id' => $menu['menu_id'],
-						'name'      => $menu['name'],
-						'edit'      => $this->url->link('extension/extension/menu/' . $extension, 'token=' . $this->session->data['token'] . '&menu_id=' . $menu['menu_id'], true),
-						'delete'    => $this->url->link('extension/extension/menu/delete', 'token=' . $this->session->data['token'] . '&menu_id=' . $menu['menu_id'], true)
-					);
-				}
-
 				$data['extensions'][] = array(
 					'name'      => $this->language->get('heading_title'),
-					'menu'    => $menu_data,
-					'install'   => $this->url->link('extension/extension/menu/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/extension/menu/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'status'    => $this->config->get('menu_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+					'install'   => $this->url->link('extension/extension/menu/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
+					'uninstall' => $this->url->link('extension/extension/menu/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('extension/menu/' . $extension, 'token=' . $this->session->data['token'], true)
+					'edit'      => $this->url->link('extension/menu/' . $extension, 'user_token=' . $this->session->data['user_token'], true)
 				);
 			}
 		}

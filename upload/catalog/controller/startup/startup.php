@@ -126,9 +126,6 @@ class ControllerStartupStartup extends Controller {
 			$this->db->query("UPDATE `" . DB_PREFIX . "marketing` SET clicks = (clicks + 1) WHERE code = '" . $this->db->escape($this->request->get['tracking']) . "'");
 		}		
 		
-		// Affiliate
-		$this->registry->set('affiliate', new Cart\Affiliate($this->registry));
-		
 		// Currency
 		$code = '';
 		

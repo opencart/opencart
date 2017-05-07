@@ -24,8 +24,8 @@ class ModelExtensionOpenBayEbayTemplate extends Model {
 
 		if ($qry->num_rows) {
 			$row = $qry->row;
-			$row['link_edit'] = $this->url->link('extension/openbay/ebay_template/edit&token=' . $this->session->data['token'] . '&template_id=' . $row['template_id'], true);
-			$row['link_delete'] = $this->url->link('extension/openbay/ebay_template/delete&token=' . $this->session->data['token'] . '&template_id=' . $row['template_id'], true);
+			$row['link_edit'] = $this->url->link('extension/openbay/ebay_template/edit&token=' . $this->session->data['user_token'] . '&template_id=' . $row['template_id'], true);
+			$row['link_delete'] = $this->url->link('extension/openbay/ebay_template/delete&token=' . $this->session->data['user_token'] . '&template_id=' . $row['template_id'], true);
 
 			return $row;
 		}else{
@@ -40,8 +40,8 @@ class ModelExtensionOpenBayEbayTemplate extends Model {
 
 		if($qry->num_rows) {
 			foreach($qry->rows as $row) {
-				$row['link_edit'] = $this->url->link('extension/openbay/ebay_template/edit&token=' . $this->session->data['token'] . '&template_id=' . $row['template_id'], true);
-				$row['link_delete'] = $this->url->link('extension/openbay/ebay_template/delete&token=' . $this->session->data['token'] . '&template_id=' . $row['template_id'], true);
+				$row['link_edit'] = $this->url->link('extension/openbay/ebay_template/edit&token=' . $this->session->data['user_token'] . '&template_id=' . $row['template_id'], true);
+				$row['link_delete'] = $this->url->link('extension/openbay/ebay_template/delete&token=' . $this->session->data['user_token'] . '&template_id=' . $row['template_id'], true);
 				$templates[] = $row;
 			}
 		}

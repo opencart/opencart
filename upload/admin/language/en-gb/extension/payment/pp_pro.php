@@ -3,11 +3,12 @@
 $_['heading_title']		 = 'PayPal Pro';
 
 // Text
+$_['text_extension']     = 'Extensions';
 $_['text_success']		 = 'Success: You have modified PayPal Website Payment Pro Checkout account details!';
 $_['text_edit']          = 'Edit PayPal Pro';
 $_['text_pp_pro']		 = '<a target="_BLANK" href="https://www.paypal.com/uk/mrb/pal=V4T754QB63XXL"><img src="view/image/payment/paypal.png" alt="PayPal Website Payment Pro" title="PayPal Website Payment Pro iFrame" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_authorization'] = 'Authorization';
-$_['text_sale']						= 'Sale';
+$_['text_sale']			 = 'Sale';
 
 // Entry
 $_['entry_username']	 = 'API Username';

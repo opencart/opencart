@@ -1,0 +1,130 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-event').submit() : false;"><i class="fa fa-trash-o"></i></button>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid"> {% if error_warning %}
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    {% if success %}
+    <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_event }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-event">
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                  <td class="text-left">{% if sort == 'code' %}<a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>{% else %}<a href="{{ sort_code }}">{{ column_code }}</a>{% endif %}</td>
+                  <td class="text-left">{% if sort == 'status' %}<a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>{% else %}<a href="{{ sort_status }}">{{ column_status }}</a>{% endif %}</td>
+                  <td class="text-right">{% if sort == 'sort_order' %} <a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a> {% else %} <a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>{% endif %}</td>
+                  <td class="text-right">{{ column_action }}</td>
+                </tr>
+              </thead>
+              <tbody>
+              {% if events %}
+              {% for event in events %}
+              <tr>
+                <td class="text-center">{% if event.event_id in selected %}
+                  <input type="checkbox" name="selected[]" value="{{ event.event_id }}" checked="checked" />
+                  {% else %}
+                  <input type="checkbox" name="selected[]" value="{{ event.event_id }}" />
+                  {% endif %}</td>
+                <td class="text-left">{{ event.code }}</td>
+                <td class="text-left">{{ event.status }}</td>
+                <td class="text-right">{{ event.sort_order }}</td>
+                <td class="text-right"><button type="button" data-toggle="popover"data-trigger="click" title="Dismissible popover" data-container="body"   data-placement="left" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." class="btn btn-info"><i class="fa fa-info-circle"></i></button> {% if not event.enabled %}<a href="{{ event.enable }}" data-toggle="tooltip" title="{{ button_enable }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>{% else %}<a href="{{ event.disable }}" data-toggle="tooltip" title="{{ button_disable }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>{% endif %}
+                <div style="display: none;">
+                  <p>{{ text_trigger }}</p>
+                  <p>{{ event.trigger }}</p>
+                  <p>{{ text_action }}</p>
+                  <p>{{ event.action }}</p>                  
+                </div></td>
+              </tr>
+              {% endfor %}
+              {% else %}
+              <tr>
+                <td class="text-center" colspan="5">{{ text_no_results }}</td>
+              </tr>
+              {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </form>
+        <div class="row">
+          <div class="col-sm-6 text-left">{{ pagination }}</div>
+          <div class="col-sm-6 text-right">{{ results }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <script type="text/javascript"><!--
+$(document).ready(function() {	
+
+});	
+
+	$('data-toggle="popover"').popover({
+		template: function() {
+			html  = '<div class="popover" role="tooltip">';
+			html += '  <div class="arrow"></div>';
+			html += '  <h3 class="popover-title">{{ text_event }}</h3>';
+			html += '  <div class="popover-content">dfdff</div>';
+			html += '</div>'
+			
+			return html;
+		}
+	});	
+/*	' + $(this).parent().find('div').html() + '
+data-toggle="tooltip" title="{{ button_info }}"
+$('#form-event .btn-info').on('click', function(e) {
+	e.preventDefault();
+
+	$('#modal-info').remove();
+
+	html  = '<div id="modal-info" class="modal">';
+	html += '  <div class="modal-dialog">';
+	html += '    <div class="modal-content">';
+	html += '      <div class="modal-header">';
+	html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
+	html += '        <h4 class="modal-title">{{ text_event }}</h4>';
+	html += '      </div>';
+	html += '      <div class="modal-body">';
+	html += '        <p>{{ text_trigger }}</p>';
+	html += '        <p>' + $('#form-event input[name=\'trigger\']').val() + '</p>';
+	html += '        <p>{{ text_action }}</p>';
+	html += '        <p>' + $('#form-event input[name=\'action\']').val() + '</p>';
+	html += '      </div>';
+	html += '    </div>';
+	html += '  </div>';
+	html += '</div>';
+
+	$('body').append(html);
+
+	$('#modal-info').modal('show');
+});
+*/
+//--></script> 
+</div>
+{{ footer }} 

@@ -53,7 +53,7 @@ class ControllerExtensionCreditCardSagepayDirect extends Controller {
 		$data['button_delete'] = $this->language->get('button_delete');
 		$data['button_back'] = $this->language->get('button_back');
 
-		if ($this->config->get('sagepay_direct_card')) {
+		if ($this->config->get('payment_sagepay_direct_card')) {
 			$data['cards'] = $this->model_extension_payment_sagepay_direct->getCards($this->customer->getId());
 			$data['delete'] = $this->url->link('extension/credit_card/sagepay_direct/delete', 'card_id=', true);
 
@@ -225,13 +225,13 @@ class ControllerExtensionCreditCardSagepayDirect extends Controller {
 		$card = $this->model_extension_payment_sagepay_direct->getCard($this->request->get['card_id'], false);
 
 		if (!empty($card['token'])) {
-			if ($this->config->get('sagepay_direct_test') == 'live') {
+			if ($this->config->get('payment_sagepay_direct_test') == 'live') {
 				$url = 'https://live.sagepay.com/gateway/service/removetoken.vsp';
 			} else {
 				$url = 'https://test.sagepay.com/gateway/service/removetoken.vsp';
 			}
 			$payment_data['VPSProtocol'] = '3.00';
-			$payment_data['Vendor'] = $this->config->get('sagepay_direct_vendor');
+			$payment_data['Vendor'] = $this->config->get('payment_sagepay_direct_vendor');
 			$payment_data['TxType'] = 'REMOVETOKEN';
 			$payment_data['Token'] = $card['token'];
 
@@ -255,7 +255,7 @@ class ControllerExtensionCreditCardSagepayDirect extends Controller {
 
 		$payment_data = array();
 
-		if ($this->config->get('sagepay_direct_test') == 'live') {
+		if ($this->config->get('payment_sagepay_direct_test') == 'live') {
 			$url = 'https://live.sagepay.com/gateway/service/directtoken.vsp';
 		} else {
 			$url = 'https://test.sagepay.com/gateway/service/directtoken.vsp';
@@ -264,7 +264,7 @@ class ControllerExtensionCreditCardSagepayDirect extends Controller {
 
 		$payment_data['ReferrerID'] = 'E511AF91-E4A0-42DE-80B0-09C981A3FB61';
 		$payment_data['TxType'] = 'TOKEN';
-		$payment_data['Vendor'] = $this->config->get('sagepay_direct_vendor');
+		$payment_data['Vendor'] = $this->config->get('payment_sagepay_direct_vendor');
 		$payment_data['Currency'] = $this->session->data['currency'];
 		$payment_data['CardHolder'] = $this->request->post['cc_owner'];
 		$payment_data['CardNumber'] = $this->request->post['cc_number'];

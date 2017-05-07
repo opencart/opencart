@@ -54,7 +54,7 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 		$data['button_delete'] = $this->language->get('button_delete');
 		$data['button_back'] = $this->language->get('button_back');
 
-		if ($this->config->get('sagepay_server_card')) {
+		if ($this->config->get('payment_sagepay_server_card')) {
 			$data['cards'] = $this->model_extension_payment_sagepay_server->getCards($this->customer->getId());
 			$data['delete'] = $this->url->link('extension/credit_card/sagepay_server/delete', 'card_id=', true);
 
@@ -102,14 +102,14 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 		$card = $this->model_extension_payment_sagepay_server->getCard($this->request->get['card_id'], '');
 
 		if (!empty($card['token'])) {
-			if ($this->config->get('sagepay_server_test') == 'live') {
+			if ($this->config->get('payment_sagepay_server_test') == 'live') {
 				$url = 'https://live.sagepay.com/gateway/service/removetoken.vsp';
 			} else {
 				$url = 'https://test.sagepay.com/gateway/service/removetoken.vsp';
 			}
 			
 			$payment_data['VPSProtocol'] = '3.00';
-			$payment_data['Vendor'] = $this->config->get('sagepay_server_vendor');
+			$payment_data['Vendor'] = $this->config->get('payment_sagepay_server_vendor');
 			$payment_data['TxType'] = 'REMOVETOKEN';
 			$payment_data['Token'] = $card['token'];
 
@@ -135,7 +135,7 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 
 		$payment_data = array();
 
-		if ($this->config->get('sagepay_server_test') == 'live') {
+		if ($this->config->get('payment_sagepay_server_test') == 'live') {
 			$url = 'https://live.sagepay.com/gateway/service/token.vsp';
 		} else {
 			$url = 'https://test.sagepay.com/gateway/service/token.vsp';
@@ -144,7 +144,7 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 
 		$payment_data['ReferrerID'] = 'E511AF91-E4A0-42DE-80B0-09C981A3FB61';
 		$payment_data['TxType'] = 'TOKEN';
-		$payment_data['Vendor'] = $this->config->get('sagepay_server_vendor');
+		$payment_data['Vendor'] = $this->config->get('payment_sagepay_server_vendor');
 		$payment_data['VendorTxCode'] = 'server_card_' . strftime("%Y%m%d%H%M%S") . mt_rand(1, 999);
 		$payment_data['NotificationURL'] = $this->url->link('extension/credit_card/sagepay_server/callback', '', true);
 		$payment_data['Currency'] = $this->session->data['currency'];
@@ -230,11 +230,11 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 		$this->model_extension_payment_sagepay_server->logger('$str_vps_tx_id', $str_vps_tx_id);
 		$this->model_extension_payment_sagepay_server->logger('$vendor_tx_code', $vendor_tx_code);
 		$this->model_extension_payment_sagepay_server->logger('$str_status', $str_status);
-		$this->model_extension_payment_sagepay_server->logger('sagepay_server_vendor', $this->config->get('sagepay_server_vendor'));
+		$this->model_extension_payment_sagepay_server->logger('payment_sagepay_server_vendor', $this->config->get('payment_sagepay_server_vendor'));
 		$this->model_extension_payment_sagepay_server->logger('$str_token', $str_token);
 		$this->model_extension_payment_sagepay_server->logger('$str_security_key', $str_security_key);
 
-		$str_message = $str_vps_tx_id . $vendor_tx_code . $str_status . strtolower($this->config->get('sagepay_server_vendor')) . $str_token . $str_security_key;
+		$str_message = $str_vps_tx_id . $vendor_tx_code . $str_status . strtolower($this->config->get('payment_sagepay_server_vendor')) . $str_token . $str_security_key;
 
 		$str_my_signature = strtoupper(md5($str_message));
 

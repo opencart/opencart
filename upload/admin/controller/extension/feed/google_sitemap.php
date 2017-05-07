@@ -10,11 +10,11 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('google_sitemap', $this->request->post);
+			$this->model_setting_setting->editSetting('feed_google_sitemap', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=feed', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=feed', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -41,27 +41,27 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=feed', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=feed', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/feed/google_sitemap', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/feed/google_sitemap', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/feed/google_sitemap', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/feed/google_sitemap', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=feed', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=feed', true);
 
-		if (isset($this->request->post['google_sitemap_status'])) {
-			$data['google_sitemap_status'] = $this->request->post['google_sitemap_status'];
+		if (isset($this->request->post['feed_google_sitemap_status'])) {
+			$data['feed_google_sitemap_status'] = $this->request->post['feed_google_sitemap_status'];
 		} else {
-			$data['google_sitemap_status'] = $this->config->get('google_sitemap_status');
+			$data['feed_google_sitemap_status'] = $this->config->get('feed_google_sitemap_status');
 		}
 
 		$data['data_feed'] = HTTP_CATALOG . 'index.php?route=extension/feed/google_sitemap';

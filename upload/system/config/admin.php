@@ -1,6 +1,6 @@
 <?php
 // Site
-$_['site_base']         = HTTP_SERVER;
+$_['site_url']          = HTTP_SERVER;
 $_['site_ssl']          = HTTPS_SERVER;
 
 // Database
@@ -29,6 +29,4 @@ $_['action_pre_action'] = array(
 $_['action_default'] = 'common/dashboard';
 
 // Action Events
-$_['action_event'] = array(
-    'view/*/before' => 'event/theme'
-);
+$_['action_event'] = array();

@@ -156,14 +156,14 @@
                   {% endif %}</td>
               </tr>
               <tr>
-                <td>{{ text_mcrypt }}</td>
-                <td>{% if mcrypt_encrypt %}
+                <td>{{ text_openssl }}</td>
+                <td>{% if openssl %}
                   {{ text_on }}
                   {% else %}
                   {{ text_off }}
                   {% endif %}</td>
                 <td>{{ text_on }}</td>
-                <td class="text-center">{% if mcrypt_encrypt %}
+                <td class="text-center">{% if openssl %}
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   {% else %}
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>

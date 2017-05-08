@@ -1,5 +1,5 @@
 <fieldset>
-  <legend>{{ heading_title }}</legend>
+  <legend>{{ text_recommended }}</legend>
   {% if error_warning %}
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -10,6 +10,15 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   {% endif %}
+  <div class="container-fluid">
+    {% if promoted_solution_1 is not empty and promoted_solution_2 is not empty %}
+      <div class="row">
+        {{ promoted_solution_1 }}
+        {{ promoted_solution_2 }}
+      </div>
+    {% endif %}
+  </div>
+  <legend>{{ heading_title }}</legend>
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead>

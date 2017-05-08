@@ -1,6 +1,8 @@
 <?php
 class ControllerExtensionPaymentPPExpress extends Controller {
 	private $error = array();
+	private $opencart_connect_url = 'https://www.opencart.com/index.php?route=external/paypal_auth/connect';
+	private $opencart_retrieve_url = 'https://www.opencart.com/index.php?route=external/paypal_auth/retrieve';
 
 	public function index() {
 		$this->load->language('extension/payment/pp_express');
@@ -29,6 +31,16 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$data['text_no'] = $this->language->get('text_no');
 		$data['text_authorization'] = $this->language->get('text_authorization');
 		$data['text_sale'] = $this->language->get('text_sale');
+		$data['text_configure_live'] = $this->language->get('text_configure_live');
+		$data['text_configure_sandbox'] = $this->language->get('text_configure_sandbox');
+		$data['text_show_advanced'] = $this->language->get('text_show_advanced');
+		$data['text_quick_setup'] = $this->language->get('text_quick_setup');
+		$data['text_show_quick_setup'] = $this->language->get('text_show_quick_setup');
+		$data['text_paypal_consent'] = $this->language->get('text_paypal_consent');
+		$data['text_incontext_not_supported'] = $this->language->get('text_incontext_not_supported');
+		$data['text_enable_button'] = $this->language->get('text_enable_button');
+
+		$data['error_consent'] = $this->language->get('error_consent');
 
 		$data['entry_username'] = $this->language->get('entry_username');
 		$data['entry_password'] = $this->language->get('entry_password');
@@ -59,6 +71,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$data['entry_allow_notes'] = $this->language->get('entry_allow_notes');
 		$data['entry_logo'] = $this->language->get('entry_logo');
 		$data['entry_colour'] = $this->language->get('entry_colour');
+		$data['entry_incontext'] = $this->language->get('entry_incontext');
 
 		$data['help_total'] = $this->language->get('help_total');
 		$data['help_ipn'] = $this->language->get('help_ipn');
@@ -69,6 +82,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_search'] = $this->language->get('button_search');
+		$data['button_enable'] = $this->language->get('button_enable');
 
 		$data['tab_api'] = $this->language->get('tab_api');
 		$data['tab_general'] = $this->language->get('tab_general');
@@ -76,6 +90,8 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$data['tab_checkout'] = $this->language->get('tab_checkout');
 
 		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['button_configure'] = $this->url->link('extension/module/pp_button/configure', 'user_token=' . $this->session->data['user_token'], true);
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -142,13 +158,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		
 		$data['search'] = $this->url->link('extension/payment/pp_express/search', 'user_token=' . $this->session->data['user_token'], true);
 
-		$this->load->model('localisation/country');
-
-		$country_info = $this->model_localisation_country->getCountry($this->config->get('config_country_id'));
-
-		$data['signup'] = 'https://www.paypal.com/webapps/merchantboarding/webflow/externalpartnerflow?countryCode=' . $country_info['iso_code_2'] . '&integrationType=F&merchantId=David111&displayMode=minibrowser&partnerId=9PDNYE4RZBVFJ&productIntentID=addipmt&receiveCredentials=TRUE&returnToPartnerUrl=' . base64_encode(html_entity_decode($this->url->link('extension/payment/pp_express/live', 'user_token=' . $this->session->data['user_token'], true))) . '&subIntegrationType=S';
-		$data['sandbox'] = 'https://www.sandbox.paypal.com/webapps/merchantboarding/webflow/externalpartnerflow?countryCode=' . $country_info['iso_code_2'] . '&integrationType=F&merchantId=David111&displayMode=minibrowser&partnerId=T4E8WSXT43QPJ&productIntentID=addipmt&receiveCredentials=TRUE&returnToPartnerUrl=' . base64_encode(html_entity_decode($this->url->link('extension/payment/pp_express/sandbox', 'user_token=' . $this->session->data['user_token'], true))) . '&subIntegrationType=S';
-
 		if (isset($this->request->post['payment_pp_express_username'])) {
 			$data['payment_pp_express_username'] = $this->request->post['payment_pp_express_username'];
 		} else {
@@ -197,6 +206,12 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			$data['payment_pp_express_debug'] = $this->request->post['payment_pp_express_debug'];
 		} else {
 			$data['payment_pp_express_debug'] = $this->config->get('payment_pp_express_debug');
+		}
+
+		if (isset($this->request->post['payment_pp_express_incontext_disable'])) {
+			$data['payment_pp_express_incontext_disable'] = $this->request->post['payment_pp_express_incontext_disable'];
+		} else {
+			$data['payment_pp_express_incontext_disable'] = $this->config->get('payment_pp_express_incontext_disable');
 		}
 
 		if (isset($this->request->post['payment_pp_express_currency'])) {
@@ -342,6 +357,112 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		}
 
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 750, 90);
+
+		if (isset($this->request->get['retrieve_code']) && isset($this->request->get['merchant_id'])) {
+			$curl = curl_init($this->opencart_retrieve_url);
+
+			$post_data = array(
+				'merchant_id' => $this->request->get['merchant_id'],
+				'retrieve_code' => $this->request->get['retrieve_code'],
+			);
+
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+			curl_setopt($curl, CURLOPT_POST, true);
+			curl_setopt($curl, CURLOPT_POSTFIELDS, $post_data);
+
+			$curl_response = curl_exec($curl);
+			$config_response = json_decode($curl_response, true);
+			curl_close($curl);
+
+			if (isset($config_response['api_user_name']) && isset($config_response['api_password']) && isset($config_response['signature'])) {
+				$pp_express_settings = $this->model_setting_setting->getSetting('payment_pp_express');
+
+				if ($config_response['environment'] == 'sandbox') {
+					$pp_express_settings['payment_pp_express_sandbox_username'] = $config_response['api_user_name'];
+					$pp_express_settings['payment_pp_express_sandbox_password'] = $config_response['api_password'];
+					$pp_express_settings['payment_pp_express_sandbox_signature'] = $config_response['signature'];
+					$pp_express_settings['payment_pp_express_test'] = 1;
+
+					$data['payment_pp_express_sandbox_username'] = $config_response['api_user_name'];
+					$data['payment_pp_express_sandbox_password'] = $config_response['api_password'];
+					$data['payment_pp_express_sandbox_signature'] = $config_response['signature'];
+					$data['payment_pp_express_test'] = 1;
+				} else {
+					$pp_express_settings['payment_pp_express_username'] = $config_response['api_user_name'];
+					$pp_express_settings['payment_pp_express_password'] = $config_response['api_password'];
+					$pp_express_settings['payment_pp_express_signature'] = $config_response['signature'];
+					$pp_express_settings['payment_pp_express_test'] = 0;
+
+					$data['payment_pp_express_username'] = $config_response['api_user_name'];
+					$data['payment_pp_express_password'] = $config_response['api_password'];
+					$data['payment_pp_express_signature'] = $config_response['signature'];
+					$data['payment_pp_express_test'] = 0;
+				}
+
+				$data['retrieve_success'] = 1;
+				$data['text_retrieve'] = $this->language->get('text_retrieve');
+
+				$this->model_setting_setting->editSetting('payment_pp_express', $pp_express_settings);
+			}
+		}
+
+		$this->load->model('localisation/country');
+
+		$country = $this->model_localisation_country->getCountry($this->config->get('config_country_id'));
+
+		$post_data = array(
+			'return_url' => $this->url->link('extension/payment/pp_express', 'user_token=' . $this->session->data['user_token'], true),
+			'store_url' => HTTPS_CATALOG,
+			'store_version' => VERSION,
+			'store_country' => (isset($country['iso_code_3']) ? $country['iso_code_3'] : ''),
+		);
+
+		// Create sandbox link
+		$curl = curl_init($this->opencart_connect_url);
+
+		$post_data['environment'] = 'sandbox';
+
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+		curl_setopt($curl, CURLOPT_POST, true);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($post_data));
+
+		$curl_response = curl_exec($curl);
+		$curl_response = json_decode($curl_response, true);
+
+		curl_close($curl);
+
+		$data['auth_connect_url_sandbox'] = '';
+		if (isset($curl_response['url']) && !empty($curl_response['url'])) {
+			$data['auth_connect_url_sandbox'] = $curl_response['url'];
+		}
+
+		// Create Live link
+		$curl = curl_init($this->opencart_connect_url);
+
+		$post_data['environment'] = 'live';
+
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+		curl_setopt($curl, CURLOPT_POST, true);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($post_data));
+
+		$curl_response = curl_exec($curl);
+		$curl_response = json_decode($curl_response, true);
+
+		curl_close($curl);
+
+		$data['auth_connect_url_live'] = '';
+		if (isset($curl_response['url']) && !empty($curl_response['url'])) {
+			$data['auth_connect_url_live'] = $curl_response['url'];
+		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -911,7 +1032,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 			$result = $this->model_extension_payment_pp_express->call($call_data);
 
-			if ($response_info) {
+			if ($result) {
 
 				$parent_transaction = $this->model_extension_payment_pp_express->getLocalTransaction($transaction['parent_id']);
 
@@ -960,7 +1081,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-
 
 	public function search() {
 		$this->load->language('extension/payment/pp_express_search');
@@ -1313,9 +1433,9 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			}
 
 			if (isset($user_info->api_user_name)) {
-				$this->model_setting_setting->editSettingValue('pp_express', 'payment_pp_express_username', $user_info->api_user_name);
-				$this->model_setting_setting->editSettingValue('pp_express', 'payment_pp_express_password', $user_info->api_password);
-				$this->model_setting_setting->editSettingValue('pp_express', 'payment_pp_express_signature', $user_info->signature);
+				$this->model_setting_setting->editSettingValue('payment_pp_express', 'payment_pp_express_username', $user_info->api_user_name);
+				$this->model_setting_setting->editSettingValue('payment_pp_express', 'payment_pp_express_password', $user_info->api_password);
+				$this->model_setting_setting->editSettingValue('payment_pp_express', 'payment_pp_express_signature', $user_info->signature);
 			} else {
 				$this->session->data['error_api'] = $this->language->get('error_api');
 			}
@@ -1340,9 +1460,9 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			}
 
 			if (isset($user_info->api_user_name)) {
-				$this->model_setting_setting->editSettingValue('pp_express', 'payment_pp_express_sandbox_username', $user_info->api_user_name);
-				$this->model_setting_setting->editSettingValue('pp_express', 'payment_pp_express_sandbox_password', $user_info->api_password);
-				$this->model_setting_setting->editSettingValue('pp_express', 'payment_pp_express_sandbox_signature', $user_info->signature);
+				$this->model_setting_setting->editSettingValue('payment_pp_express', 'payment_pp_express_sandbox_username', $user_info->api_user_name);
+				$this->model_setting_setting->editSettingValue('payment_pp_express', 'payment_pp_express_sandbox_password', $user_info->api_password);
+				$this->model_setting_setting->editSettingValue('payment_pp_express', 'payment_pp_express_sandbox_signature', $user_info->signature);
 			} else {
 				$this->session->data['error_api'] = $this->language->get('error_api_sandbox');
 			}
@@ -1382,5 +1502,89 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		}
 
 		return $this->load->view('sale/recurring_button', $data);
+	}
+
+	public function connectRedirect() {
+		if ($this->user->hasPermission('modify', 'extension/extension/payment') && $this->user->hasPermission('modify', 'extension/payment/pp_express')) {
+			// Install the module before doing the redirect
+			$this->load->model('setting/extension');
+
+			$this->model_setting_extension->install('payment', 'payment_pp_express');
+
+			$this->install();
+
+			$this->load->model('localisation/country');
+
+			$country = $this->model_localisation_country->getCountry($this->config->get('config_country_id'));
+
+			$post_data = array(
+				'return_url' => $this->url->link('extension/payment/pp_express', 'user_token=' . $this->session->data['user_token'], true),
+				'store_url' => HTTPS_CATALOG,
+				'store_version' => VERSION,
+				'store_country' => (isset($country['iso_code_3']) ? $country['iso_code_3'] : ''),
+			);
+
+			// Create Live link
+			$curl = curl_init($this->opencart_connect_url);
+
+			$post_data['environment'] = 'live';
+
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+			curl_setopt($curl, CURLOPT_POST, true);
+			curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($post_data));
+
+			$curl_response = curl_exec($curl);
+			$curl_response = json_decode($curl_response, true);
+
+			curl_close($curl);
+
+			if (isset($curl_response['url']) && !empty($curl_response['url'])) {
+				$this->response->redirect($curl_response['url']);
+			} else {
+				$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'], true));
+			}
+		} else {
+			$this->response->redirect($this->url->link('error/permission', 'user_token=' . $this->session->data['user_token'], true));
+		}
+	}
+
+	public function preferredSolution() {
+		$this->load->language('extension/payment/pp_express');
+
+		$data = [];
+		$data['heading_title'] = $this->language->get('heading_title');
+		$data['text_preferred_main'] = $this->language->get('text_preferred_main');
+		$data['text_connect_paypal'] = $this->language->get('text_connect_paypal');
+		$data['text_preferred_li_1'] = $this->language->get('text_preferred_li_1');
+		$data['text_preferred_li_2'] = $this->language->get('text_preferred_li_2');
+		$data['text_preferred_li_3'] = $this->language->get('text_preferred_li_3');
+		$data['text_preferred_li_4'] = $this->language->get('text_preferred_li_4');
+		$data['text_edit'] = $this->language->get('text_edit');
+		$data['text_enabled'] = $this->language->get('text_enabled');
+		$data['text_disabled'] = $this->language->get('text_disabled');
+
+		$data['connect_link'] = '';
+		$data['module_link'] = '';
+
+		if ($this->config->get('payment_pp_express_username') != 0 || !empty($this->config->get('payment_pp_express_username')) || !empty($this->config->get('payment_pp_express_sandbox_username'))) {
+			$data['module_link'] = $this->url->link('extension/payment/pp_express', 'user_token=' . $this->session->data['user_token'], true);
+		} else {
+			if ($this->user->hasPermission('modify', 'extension/extension/payment')) {
+				$data['connect_link'] = $this->url->link('extension/payment/pp_express/connectRedirect', 'user_token=' . $this->session->data['user_token'], true);
+			}
+		}
+
+		if ($this->config->get("payment_pp_express_status") == 1) {
+			$data['payment_pp_express_status'] = "enabled";
+		} elseif ($this->config->get("payment_pp_express_status") == null) {
+			$data['payment_pp_express_status'] = "";
+		} else {
+			$data['payment_pp_express_status'] = "disabled";
+		}
+
+		return $this->load->view('extension/payment/pp_express_preferred', $data);
 	}
 }

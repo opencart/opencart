@@ -35,6 +35,27 @@ class ModelExtensionPaymentPPExpress extends Model {
 			  PRIMARY KEY (`paypal_order_transaction_id`)
 			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci
 		");
+
+		$this->load->model('setting/setting');
+
+		$defaults = array();
+
+		// Order Status defaults
+		$defaults['payment_pp_express_canceled_reversal_status_id'] = 9;
+		$defaults['payment_pp_express_completed_status_id'] = 5;
+		$defaults['payment_pp_express_denied_status_id'] = 8;
+		$defaults['payment_pp_express_expired_status_id'] = 14;
+		$defaults['payment_pp_express_failed_status_id'] = 10;
+		$defaults['payment_pp_express_pending_status_id'] = 1;
+		$defaults['payment_pp_express_processed_status_id'] = 15;
+		$defaults['payment_pp_express_refunded_status_id'] = 11;
+		$defaults['payment_pp_express_reversed_status_id'] = 12;
+		$defaults['payment_pp_express_voided_status_id'] = 16;
+
+		$defaults['payment_pp_express_incontext_disable'] = 0;
+		$defaults['payment_pp_express_status'] = 0;
+
+		$this->model_setting_setting->editSetting('payment_pp_express', $defaults);
 	}
 
 	public function uninstall() {
@@ -197,7 +218,6 @@ class ModelExtensionPaymentPPExpress extends Model {
 
 		return $query->rows;
 	}
-
 
 	public function getTokens($test) {
 		if ($test == 'sandbox') {

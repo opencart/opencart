@@ -7,11 +7,16 @@ class Session {
 	public function __construct($adaptor, $registry = '') {
 		$class = 'Session\\' . $adaptor;
 		
-		if ($registry) {
-			$this->adaptor = new $class($registry);
+		if (class_exists($class)) {
+			if ($registry) {
+				$this->adaptor = new $class($registry);
+			} else {
+				$this->adaptor = new $class();
+			}	
 		} else {
-			$this->adaptor = new $class();
-		}
+			trigger_error('Error: Could not load cache adaptor ' . $adaptor . ' session!');
+			exit();
+		}	
 	}
 	
 	public function getId() {

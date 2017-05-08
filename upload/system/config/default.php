@@ -7,7 +7,7 @@ $_['site_ssl']             = false;
 $_['url_autostart']        = true;
 
 // Language
-$_['language_default']     = 'en-gb';
+$_['language_directory']   = 'en-gb';
 $_['language_autoload']    = array('en-gb');
 
 // Date
@@ -23,6 +23,7 @@ $_['db_port']              = 3306;
 $_['db_autostart']         = false;
 
 // Mail
+$_['mail_engine']          = 'mail';
 $_['mail_protocol']        = 'mail'; // mail or smtp
 $_['mail_from']            = ''; // Your E-Mail
 $_['mail_sender']          = ''; // Your name or company name

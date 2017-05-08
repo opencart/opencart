@@ -1,6 +1,6 @@
 <?php
 class ControllerMailOrder extends Controller {
-	public function before(&$route, &$args) {
+	public function index(&$route, &$args) {
 		if (isset($args[0])) {
 			$order_id = $args[0];
 		} else {

@@ -246,7 +246,6 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 					'firstName' => $order_info['firstname'],
 					'lastName'  => $order_info['lastname'],
 					'phone'		=> $order_info['telephone'],
-					'fax'		=> $order_info['fax'],
 					'email'		=> $order_info['email']
 				),
 				'billing'			=> array(
@@ -584,8 +583,6 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			} else {
 				$this->session->data['guest']['telephone'] = '';
 			}
-
-			$this->session->data['guest']['fax'] = '';
 
 			$this->session->data['guest']['payment']['company'] = '';
 
@@ -1123,7 +1120,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		array_multisort($sort_order, SORT_ASC, $method_data);
 
 		$this->session->data['payment_methods'] = $method_data;
-		$this->session->data['payment_method'] = $this->session->data['payment_methods']['payment_pp_braintree'];
+		$this->session->data['payment_method'] = $this->session->data['payment_methods']['pp_braintree'];
 
 		$data['action_confirm'] = $this->url->link('extension/payment/pp_braintree/expressComplete', '', true);
 
@@ -1292,7 +1289,6 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 				$data['lastname'] = $this->customer->getLastName();
 				$data['email'] = $this->customer->getEmail();
 				$data['telephone'] = $this->customer->getTelephone();
-				$data['fax'] = $this->customer->getFax();
 
 				$this->load->model('account/address');
 
@@ -1304,7 +1300,6 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 				$data['lastname'] = $this->session->data['guest']['lastname'];
 				$data['email'] = $this->session->data['guest']['email'];
 				$data['telephone'] = $this->session->data['guest']['telephone'];
-				$data['fax'] = $this->session->data['guest']['fax'];
 
 				$payment_address = $this->session->data['guest']['payment'];
 			}

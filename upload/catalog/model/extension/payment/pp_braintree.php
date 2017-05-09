@@ -160,7 +160,7 @@ class ModelExtensionPaymentPPBraintree extends Model {
 
 		if ($status) {
 			$method_data = array(
-				'code'		 => 'payment_pp_braintree',
+				'code'		 => 'pp_braintree',
 				'title'		 => $this->language->get('text_title'),
 				'terms'		 => '',
 				'sort_order' => $this->config->get('payment_pp_braintree_sort_order')

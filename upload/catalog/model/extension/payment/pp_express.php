@@ -19,7 +19,7 @@ class ModelExtensionPaymentPPExpress extends Model {
 
 		if ($status) {
 			$method_data = array(
-				'code'       => 'payment_pp_express',
+				'code'       => 'pp_express',
 				'title'      => $this->language->get('text_title'),
 				'terms'      => '',
 				'sort_order' => $this->config->get('payment_pp_express_sort_order')

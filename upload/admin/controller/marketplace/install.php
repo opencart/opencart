@@ -177,12 +177,6 @@ class ControllerMarketplaceInstall extends Controller {
 						if (substr($destination, 0, 6) == 'system') {
 							$destination = DIR_SYSTEM . substr($destination, 7);
 						}
-	
-						if (is_file($destination)) {
-							$json['error'] = sprintf($this->language->get('error_exists'), $destination);
-	
-							break;
-						}
 					} else {
 						$json['error'] = sprintf($this->language->get('error_allowed'), $destination);
 	
@@ -292,7 +286,7 @@ class ControllerMarketplaceInstall extends Controller {
 							$modification_info = $this->model_setting_modification->getModificationByCode($code);
 	
 							if ($modification_info) {
-								$json['error'] = sprintf($this->language->get('error_xml'), $modification_info['name']);
+								$this->model_setting_modification->deleteModification($modification_info['modification_id']);
 							}
 						} else {
 							$json['error'] = $this->language->get('error_code');

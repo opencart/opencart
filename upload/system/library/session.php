@@ -7,11 +7,16 @@ class Session {
 	public function __construct($adaptor, $registry = '') {
 		$class = 'Session\\' . $adaptor;
 		
-		if ($registry) {
-			$this->adaptor = new $class($registry);
+		if (class_exists($class)) {
+			if ($registry) {
+				$this->adaptor = new $class($registry);
+			} else {
+				$this->adaptor = new $class();
+			}	
 		} else {
-			$this->adaptor = new $class();
-		}
+			trigger_error('Error: Could not load cache adaptor ' . $adaptor . ' session!');
+			exit();
+		}	
 	}
 	
 	public function getId() {
@@ -22,10 +27,8 @@ class Session {
 		if (!$session_id) {
 			if (function_exists('random_bytes')) {
 				$session_id = substr(bin2hex(random_bytes(26)), 0, 26);
-			} elseif (function_exists('openssl_random_pseudo_bytes')) {
-				$session_id = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
 			} else {
-				$session_id = substr(bin2hex(mcrypt_create_iv(26, MCRYPT_DEV_URANDOM)), 0, 26);
+				$session_id = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
 			}
 		}
 

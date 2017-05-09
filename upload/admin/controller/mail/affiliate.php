@@ -42,8 +42,7 @@ class ControllerMailAffiliate extends Controller {
 			$data['login'] = $store_url . 'index.php?route=account/login';
 			$data['store'] = $store_name;
 	
-			$mail = new Mail();
-			$mail->protocol = $this->config->get('config_mail_protocol');
+			$mail = new Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -101,8 +100,7 @@ class ControllerMailAffiliate extends Controller {
 			$data['contact'] = $store_url . 'index.php?route=information/contact';	
 			$data['store'] = $store_name;
 			
-			$mail = new Mail();
-			$mail->protocol = $this->config->get('config_mail_protocol');
+			$mail = new Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 			$mail->smtp_username = $this->config->get('config_mail_smtp_username');

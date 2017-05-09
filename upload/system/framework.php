@@ -117,8 +117,7 @@ if ($config->get('url_autostart')) {
 }
 
 // Language
-$language = new Language($config->get('language_default'));
-$language->load($config->get('language_default'));
+$language = new Language($config->get('language_directory'));
 $registry->set('language', $language);
 
 // Document

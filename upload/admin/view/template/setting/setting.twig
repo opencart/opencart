@@ -1067,11 +1067,11 @@
               <fieldset>
                 <legend>{{ text_general }}</legend>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-mail-protocol"><span data-toggle="tooltip" title="{{ help_mail_protocol }}">{{ entry_mail_protocol }}</span></label>
+                  <label class="col-sm-2 control-label" for="input-mail-protocol"><span data-toggle="tooltip" title="{{ help_mail_engine }}">{{ entry_mail_engine }}</span></label>
                   <div class="col-sm-10">
-                    <select name="config_mail_protocol" id="input-mail-protocol" class="form-control">
+                    <select name="config_mail_engine" id="input-mail-protocol" class="form-control">
                       
-                      {% if config_mail_protocol == 'mail' %}
+                      {% if config_mail_engine == 'mail' %}
                       
                       <option value="mail" selected="selected">{{ text_mail }}</option>
                       
@@ -1080,7 +1080,7 @@
                       <option value="mail">{{ text_mail }}</option>
                       
                       {% endif %}
-                      {% if config_mail_protocol == 'smtp' %}
+                      {% if config_mail_engine == 'smtp' %}
                       
                       <option value="smtp" selected="selected">{{ text_smtp }}</option>
                       

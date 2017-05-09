@@ -44,8 +44,7 @@ class ControllerMailReturn extends Controller {
 				$data['return_status'] = $return_info['return_status'];
 				$data['comment'] = strip_tags(html_entity_decode($comment, ENT_QUOTES, 'UTF-8'));
 
-				$mail = new Mail();
-				$mail->protocol = $this->config->get('config_mail_protocol');
+				$mail = new Mail($this->config->get('config_mail_engine'));
 				$mail->parameter = $this->config->get('config_mail_parameter');
 				$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 				$mail->smtp_username = $this->config->get('config_mail_smtp_username');

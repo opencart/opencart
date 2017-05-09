@@ -1,6 +1,6 @@
 <?php
 class ControllerMailOrder extends Controller {
-	public function before(&$route, &$args) {
+	public function index(&$route, &$args) {
 		if (isset($args[0])) {
 			$order_id = $args[0];
 		} else {
@@ -244,8 +244,7 @@ class ControllerMailOrder extends Controller {
 			);
 		}
 
-		$mail = new Mail();
-		$mail->protocol = $this->config->get('config_mail_protocol');
+		$mail = new Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -292,8 +291,7 @@ class ControllerMailOrder extends Controller {
 
 		$data['comment'] = strip_tags($comment);
 
-		$mail = new Mail();
-		$mail->protocol = $this->config->get('config_mail_protocol');
+		$mail = new Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -417,8 +415,7 @@ class ControllerMailOrder extends Controller {
 
 			$data['comment'] = strip_tags($order_info['comment']);
 
-			$mail = new Mail();
-			$mail->protocol = $this->config->get('config_mail_protocol');
+			$mail = new Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 			$mail->smtp_username = $this->config->get('config_mail_smtp_username');

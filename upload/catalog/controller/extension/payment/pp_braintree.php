@@ -1123,7 +1123,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		array_multisort($sort_order, SORT_ASC, $method_data);
 
 		$this->session->data['payment_methods'] = $method_data;
-		$this->session->data['payment_method'] = $this->session->data['payment_methods']['payment_pp_braintree'];
+		$this->session->data['payment_method'] = $this->session->data['payment_methods']['pp_braintree'];
 
 		$data['action_confirm'] = $this->url->link('extension/payment/pp_braintree/expressComplete', '', true);
 

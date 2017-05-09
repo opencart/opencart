@@ -662,6 +662,8 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$defaults['payment_pp_braintree_submitted_for_settlement_id'] = 2;
 		$defaults['payment_pp_braintree_voided_id'] = 16;
 
+		$defaults['payment_pp_braintree_settlement_immediate'] = 1;
+
 		// PayPal options
 		$defaults['payment_pp_braintree_paypal_option'] = 1;
 		$defaults['payment_pp_braintree_paypal_button_size'] = 'small';
@@ -1146,7 +1148,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			// Install the module before doing the redirect
 			$this->load->model('setting/extension');
 
-			$this->model_setting_extension->install('payment', 'payment_pp_braintree');
+			$this->model_setting_extension->install('payment', 'pp_braintree');
 
 			$this->install();
 

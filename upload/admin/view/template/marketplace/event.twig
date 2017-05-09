@@ -39,11 +39,12 @@
                   <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
                   <td class="text-left">{% if sort == 'code' %}<a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>{% else %}<a href="{{ sort_code }}">{{ column_code }}</a>{% endif %}</td>
                   <td class="text-left">{% if sort == 'status' %}<a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>{% else %}<a href="{{ sort_status }}">{{ column_status }}</a>{% endif %}</td>
-                  <td class="text-right">{% if sort == 'sort_order' %} <a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a> {% else %} <a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>{% endif %}</td>
+                  <td class="text-right">{% if sort == 'sort_order' %}<a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a>{% else %}<a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>{% endif %}</td>
                   <td class="text-right">{{ column_action }}</td>
                 </tr>
               </thead>
               <tbody>
+              
               {% if events %}
               {% for event in events %}
               <tr>
@@ -55,13 +56,24 @@
                 <td class="text-left">{{ event.code }}</td>
                 <td class="text-left">{{ event.status }}</td>
                 <td class="text-right">{{ event.sort_order }}</td>
-                <td class="text-right"><button type="button" data-toggle="popover"data-trigger="click" title="Dismissible popover" data-container="body"   data-placement="left" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." class="btn btn-info"><i class="fa fa-info-circle"></i></button> {% if not event.enabled %}<a href="{{ event.enable }}" data-toggle="tooltip" title="{{ button_enable }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>{% else %}<a href="{{ event.disable }}" data-toggle="tooltip" title="{{ button_disable }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>{% endif %}
-                <div style="display: none;">
-                  <p>{{ text_trigger }}</p>
-                  <p>{{ event.trigger }}</p>
-                  <p>{{ text_action }}</p>
-                  <p>{{ event.action }}</p>                  
-                </div></td>
+                <td class="text-right"><button type="button" data-toggle="modal" data-target="#modal-event{{ event.event_id }}" class="btn btn-info"><i class="fa fa-info-circle"></i></button>
+                  {% if not event.enabled %}<a href="{{ event.enable }}" data-toggle="tooltip" title="{{ button_enable }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>{% else %}<a href="{{ event.disable }}" data-toggle="tooltip" title="{{ button_disable }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>{% endif %}
+                  <div id="modal-event{{ event.event_id }}" class="modal text-left">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title">{{ text_info }}</h4>
+                        </div>
+                        <div class="modal-body">
+                          <p><strong>{{ text_trigger }}</strong></p>
+                          <p>{{ event.trigger }}</p>
+                          <p><strong>{{ text_action }}</strong></p>
+                          <p>{{ event.action }}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div></td>
               </tr>
               {% endfor %}
               {% else %}
@@ -80,51 +92,5 @@
       </div>
     </div>
   </div>
-    <script type="text/javascript"><!--
-$(document).ready(function() {	
-
-});	
-
-	$('data-toggle="popover"').popover({
-		template: function() {
-			html  = '<div class="popover" role="tooltip">';
-			html += '  <div class="arrow"></div>';
-			html += '  <h3 class="popover-title">{{ text_event }}</h3>';
-			html += '  <div class="popover-content">dfdff</div>';
-			html += '</div>'
-			
-			return html;
-		}
-	});	
-/*	' + $(this).parent().find('div').html() + '
-data-toggle="tooltip" title="{{ button_info }}"
-$('#form-event .btn-info').on('click', function(e) {
-	e.preventDefault();
-
-	$('#modal-info').remove();
-
-	html  = '<div id="modal-info" class="modal">';
-	html += '  <div class="modal-dialog">';
-	html += '    <div class="modal-content">';
-	html += '      <div class="modal-header">';
-	html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
-	html += '        <h4 class="modal-title">{{ text_event }}</h4>';
-	html += '      </div>';
-	html += '      <div class="modal-body">';
-	html += '        <p>{{ text_trigger }}</p>';
-	html += '        <p>' + $('#form-event input[name=\'trigger\']').val() + '</p>';
-	html += '        <p>{{ text_action }}</p>';
-	html += '        <p>' + $('#form-event input[name=\'action\']').val() + '</p>';
-	html += '      </div>';
-	html += '    </div>';
-	html += '  </div>';
-	html += '</div>';
-
-	$('body').append(html);
-
-	$('#modal-info').modal('show');
-});
-*/
-//--></script> 
 </div>
 {{ footer }} 

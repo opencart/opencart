@@ -190,6 +190,7 @@ class ControllerMarketplaceEvent extends Controller {
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		$data['text_event'] = $this->language->get('text_event');
+		$data['text_info'] = $this->language->get('text_info');
 		$data['text_trigger'] = $this->language->get('text_trigger');
 		$data['text_action'] = $this->language->get('text_action');
 

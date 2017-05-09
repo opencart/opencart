@@ -121,7 +121,7 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_captcha_page'] = $this->language->get('entry_captcha_page');
 		$data['entry_logo'] = $this->language->get('entry_logo');
 		$data['entry_icon'] = $this->language->get('entry_icon');
-		$data['entry_mail_protocol'] = $this->language->get('entry_mail_protocol');
+		$data['entry_mail_engine'] = $this->language->get('entry_mail_engine');
 		$data['entry_mail_parameter'] = $this->language->get('entry_mail_parameter');
 		$data['entry_mail_smtp_hostname'] = $this->language->get('entry_mail_smtp_hostname');
 		$data['entry_mail_smtp_username'] = $this->language->get('entry_mail_smtp_username');
@@ -188,7 +188,7 @@ class ControllerSettingSetting extends Controller {
 		$data['help_return_status'] = $this->language->get('help_return_status');
 		$data['help_captcha'] = $this->language->get('help_captcha');
 		$data['help_icon'] = $this->language->get('help_icon');
-		$data['help_mail_protocol'] = $this->language->get('help_mail_protocol');
+		$data['help_mail_engine'] = $this->language->get('help_mail_engine');
 		$data['help_mail_parameter'] = $this->language->get('help_mail_parameter');
 		$data['help_mail_smtp_hostname'] = $this->language->get('help_mail_smtp_hostname');
 		$data['help_mail_smtp_password'] = $this->language->get('help_mail_smtp_password');
@@ -902,10 +902,10 @@ class ControllerSettingSetting extends Controller {
 			$data['icon'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		}
 
-		if (isset($this->request->post['config_mail_protocol'])) {
-			$data['config_mail_protocol'] = $this->request->post['config_mail_protocol'];
+		if (isset($this->request->post['config_mail_engine'])) {
+			$data['config_mail_engine'] = $this->request->post['config_mail_engine'];
 		} else {
-			$data['config_mail_protocol'] = $this->config->get('config_mail_protocol');
+			$data['config_mail_engine'] = $this->config->get('config_mail_engine');
 		}
 
 		if (isset($this->request->post['config_mail_parameter'])) {

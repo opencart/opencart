@@ -235,8 +235,7 @@ class ControllerMarketingContact extends Controller {
 
 					foreach ($emails as $email) {
 						if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-							$mail = new Mail();
-							$mail->protocol = $this->config->get('config_mail_protocol');
+							$mail = new Mail($this->config->get('config_mail_engine'));
 							$mail->parameter = $this->config->get('config_mail_parameter');
 							$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 							$mail->smtp_username = $this->config->get('config_mail_smtp_username');

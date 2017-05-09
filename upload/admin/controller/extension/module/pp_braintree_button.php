@@ -87,7 +87,6 @@ class ControllerExtensionModulePPBraintreeButton extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'], true));
 		} else {
 			$this->load->model('setting/extension');
-			$this->load->model('extension/module');
 			$this->load->model('user/user_group');
 
 			$this->model_setting_extension->install('module', 'module_pp_braintree_button');

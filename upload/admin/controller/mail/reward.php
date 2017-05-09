@@ -6,27 +6,27 @@ class ControllerMailReward extends Controller {
 		} else {
 			$customer_id = '';
 		}
-		
+
 		if (isset($args[1])) {
 			$description = $args[1];
 		} else {
 			$description = '';
-		}		
-		
+		}
+
 		if (isset($args[2])) {
 			$points = $args[2];
 		} else {
 			$points = '';
 		}
-		
+
 		if (isset($args[3])) {
 			$order_id = $args[3];
 		} else {
 			$order_id = 0;
 		}
-		
+
 		$this->load->model('customer/customer');
-		
+
 		$customer_info = $this->model_customer_customer->getCustomer($customer_id);
 
 		if ($customer_info) {
@@ -45,7 +45,7 @@ class ControllerMailReward extends Controller {
 			$data['text_received'] = sprintf($this->language->get('text_received'), $points);
 			$data['text_total'] = sprintf($this->language->get('text_total'), $this->getRewardTotal($customer_id));
 
-			$mail = new Mail();
+			$mail = new Mail($this->config->get('config_mail_engine'));
 			$mail->protocol = $this->config->get('config_mail_protocol');
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
@@ -62,4 +62,4 @@ class ControllerMailReward extends Controller {
 			$mail->send();
 		}
 	}
-}	
+}

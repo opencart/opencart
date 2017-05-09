@@ -213,7 +213,7 @@ class ModelExtensionOpenBayEbayOrder extends Model{
 				$message .= "\n\n";
 				$message .= 'eBay and Amazon order management - http://www.openbaypro.com/';
 
-				$mail = new Mail();
+				$mail = new Mail($this->config->get('config_mail_engine'));
 				$mail->protocol = $this->config->get('config_mail_protocol');
 				$mail->parameter = $this->config->get('config_mail_parameter');
 				$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
@@ -262,7 +262,7 @@ class ModelExtensionOpenBayEbayOrder extends Model{
 				} else {
 					$language_code = $order_info['language_directory'];
 				}
-				
+
 				$language = new Language($language_code);
 				$language->load($language_code);
 				$language->load('mail/order');

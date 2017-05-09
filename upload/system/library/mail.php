@@ -8,6 +8,7 @@ class Mail {
 	protected $text;
 	protected $html;
 	protected $attachments = array();
+	public $parameter;
 
 	public function __construct($adaptor = 'mail') {
 		$class = 'Mail\\' . $adaptor;

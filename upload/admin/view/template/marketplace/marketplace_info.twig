@@ -2,7 +2,9 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <div class="pull-right">
+        <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-primary"><i class="fa fa-opencart"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -52,11 +54,12 @@
                   <legend>Available Installs</legend>
                   <table class="table table-bordered">
                     <thead>
-                      <th>Download Name</th>
+                    <th>Download Name</th>
                       <th>Date Added</th>
                       <th class="text-right">Action</th>
-                    </thead>
+                        </thead>
                     <tbody>
+                    
                     {% if downloads %}
                     {% for download in downloads %}
                     <tr>
@@ -76,7 +79,8 @@
                       <td colspan="3" class="text-center">{{ text_no_results }}</td>
                     </tr>
                     {% endif %}
-                    </tbody>
+                      </tbody>
+                    
                   </table>
                 </fieldset>
               </div>
@@ -99,11 +103,10 @@
             </div>
           </div>
           <div class="col-sm-4">
-            <div id="buy" class="well">
-              {% if license == '1' and not purchased %}
+            <div id="buy" class="well"> {% if license == '1' and not purchased %}
               <button id="button-buy" class="btn btn-success btn-lg btn-block">Buy</button>
               {% endif %}
-               <div id="price" class="row">
+              <div id="price" class="row">
                 <div class="col-xs-5"><strong>{{ text_price }}</strong></div>
                 <div class="col-xs-7 text-right">{% if license %}
                   {{ price }}
@@ -151,6 +154,30 @@
     </div>
   </div>
   <script type="text/javascript"><!--
+$('#button-opencart').on('click', function(e) {
+	$('#modal-opencart').remove();
+	
+	$.ajax({
+		url: 'index.php?route=marketplace/api&user_token={{ user_token }}',
+		dataType: 'html',
+		beforeSend: function() {
+			$('#button-opencart').button('loading');
+		},
+		complete: function() {
+			$('#button-opencart').button('reset');
+		},
+		success: function(html) {
+			$('body').append('<div id="modal-opencart" class="modal">' + html + '</div>');
+			
+			$('#modal-opencart').modal('show');
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+//--></script> 
+  <script type="text/javascript"><!--
 $('#button-buy').on('click', function(e) {
 	e.preventDefault();
 
@@ -161,17 +188,17 @@ $('#button-buy').on('click', function(e) {
 	html += '    <div class="modal-content">';
 	html += '      <div class="modal-header">';
 	html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
-	html += '        <h4 class="modal-title">Please confirm who you are!</h4>';
+	html += '        <h4 class="modal-title">{{ text_purchase }}</h4>';
 	html += '      </div>';
 	html += '      <div class="modal-body">';
-	html += '        <p>Please enter your 4 digit PIN number. This PIN number is to protect your account. When ever you logon from a new device you will be asked for this PIN.</p>';
-	html += '        <p>Do not give your PIN to any one including developers. If you require an extension seller to install an extension for you then you should email them the required extension.</p>';
+	html += '        <p>{{ text_pin }}</p>';
+	html += '        <p>{{ text_secure }}</p>';
 	html += '        <div class="form-group">';
-	html += '          <label for="input-pin">PIN</label>';
-	html += '          <input type="password" name="pin" value="" placeholder="PIN" id="input-pin" class="form-control" />';
+	html += '          <label for="input-pin">{{ entry_pin }}</label>';
+	html += '          <input type="password" name="pin" value="" placeholder="{{ entry_pin }}" id="input-pin" class="form-control" />';
 	html += '        </div>';
 	html += '        <div class="form-group text-right">';
-	html += '          <button type="button" id="button-purchase" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg">Purchase</button>';
+	html += '          <button type="button" id="button-purchase" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg">{{ button_purchase }}</button>';
 	html += '        </div>';
 	html += '      </div>';
 	html += '    </div>';

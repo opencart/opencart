@@ -156,6 +156,7 @@ $(document).ready(function() {
 				},
 				complete: function() {
 					$button.prop('disabled', false);
+					
 					if ($icon.length) {
 						$icon.attr('class', 'fa fa-pencil');
 					}

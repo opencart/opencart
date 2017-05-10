@@ -23,8 +23,7 @@ $_['db_port']              = 3306;
 $_['db_autostart']         = false;
 
 // Mail
-$_['mail_engine']          = 'mail';
-$_['mail_protocol']        = 'mail'; // mail or smtp
+$_['mail_engine']          = 'mail'; // mail or smtp
 $_['mail_from']            = ''; // Your E-Mail
 $_['mail_sender']          = ''; // Your name or company name
 $_['mail_reply_to']        = ''; // Reply to E-Mail

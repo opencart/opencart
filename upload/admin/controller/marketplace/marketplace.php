@@ -140,14 +140,14 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 		// We create a hash from the data in a similar method to how amazon does things.
 		$string  = 'marketplace/api/list' . "\n";
-		$string .= OPENCART_USERNAME . "\n";
+		$string .= $this->config->get('opencart_username') . "\n";
 		$string .= $this->request->server['HTTP_HOST'] . "\n";
 		$string .= VERSION . "\n";
 		$string .= $time . "\n"; 
 		
-		$signature = base64_encode(hash_hmac('sha1', $string, OPENCART_SECRET, 1));
+		$signature = base64_encode(hash_hmac('sha1', $string, $this->config->get('opencart_secret'), 1));
 		
-		$url  = '&username=' . OPENCART_USERNAME;
+		$url  = '&username=' . $this->config->get('opencart_username');
 		$url .= '&domain=' . $this->request->server['HTTP_HOST'];
 		$url .= '&version=' . VERSION;
 		$url .= '&time=' . $time;
@@ -245,13 +245,16 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$data['text_search'] = $this->language->get('text_search');
 		$data['text_category'] = $this->language->get('text_category');
 		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		if (!defined('OPENCART_USERNAME') || !defined('OPENCART_SECRET') || !OPENCART_USERNAME || !OPENCART_SECRET) {
-			$data['error_warning'] = $this->language->get('error_api');
+		
+		$data['button_opencart'] = $this->language->get('button_opencart');
+		
+		if (!$this->config->get('opencart_username') || !$this->config->get('opencart_secret')) {
+			$data['error_warning'] = $this->language->get('error_opencart');
 		} else {
 			$data['error_warning'] = '';
 		}
+		
+		$data['user_token'] = $this->session->data['user_token'];
 		
 		// Categories
 		$url = '';
@@ -569,10 +572,15 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$data['text_comment'] = $this->language->get('text_comment');
 			$data['text_comment_add'] = $this->language->get('text_comment_add');
 			$data['text_write'] = $this->language->get('text_write');
+			$data['text_purchase'] = $this->language->get('text_purchase');
+			$data['text_pin'] = $this->language->get('text_pin');
+			$data['text_secure'] = $this->language->get('text_secure');
 
 			$data['entry_pin'] = $this->language->get('entry_pin');
-
+			
+			$data['button_opencart'] = $this->language->get('button_opencart');
 			$data['button_buy'] = $this->language->get('button_buy');
+			$data['button_purchase'] = $this->language->get('button_purchase');
 			$data['button_install'] = $this->language->get('button_install');
 			$data['button_cancel'] = $this->language->get('button_cancel');
 			$data['button_comment'] = $this->language->get('button_comment');
@@ -582,7 +590,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$data['tab_download'] = $this->language->get('tab_download');
 			$data['tab_comment'] = $this->language->get('tab_comment');
 		
-			if (!defined('OPENCART_USERNAME') || !defined('OPENCART_SECRET') || !OPENCART_USERNAME || !OPENCART_SECRET) {
+			if (!$this->config->get('opencart_username') || !$this->config->get('opencart_secret')) {
 				$data['error_warning'] = $this->language->get('error_api');
 			} else {
 				$data['error_warning'] = '';
@@ -717,8 +725,8 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		if (!defined('OPENCART_USERNAME') || !defined('OPENCART_SECRET') || !OPENCART_USERNAME || !OPENCART_SECRET) {
-			$json['error'] = $this->language->get('error_api');
+		if (!$this->config->get('opencart_username') || !$this->config->get('opencart_secret')) {
+			$json['error'] = $this->language->get('error_opencart');
 		}
 		
 		if (!$this->request->post['pin']) {
@@ -730,16 +738,16 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 			// We create a hash from the data in a similar method to how amazon does things.
 			$string  = 'marketplace/api/purchase' . "\n";
-			$string .= OPENCART_USERNAME . "\n";
+			$string .= $this->config->get('opencart_username') . "\n";
 			$string .= $this->request->server['HTTP_HOST'] . "\n";
 			$string .= VERSION . "\n";
 			$string .= $extension_id . "\n";
 		 	$string .= $this->request->post['pin'] . "\n";
 			$string .= $time . "\n";
 			
-			$signature = base64_encode(hash_hmac('sha1', $string, OPENCART_SECRET, 1));
+			$signature = base64_encode(hash_hmac('sha1', $string, $this->config->get('opencart_secret'), 1));
 			
-			$url  = '&username=' . OPENCART_USERNAME;
+			$url  = '&username=' . $this->config->get('opencart_username');
 			$url .= '&domain=' . $this->request->server['HTTP_HOST'];
 			$url .= '&version=' . VERSION;
 			$url .= '&extension_id=' . $extension_id;
@@ -853,15 +861,15 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 			// We create a hash from the data in a similar method to how amazon does things.
 			$string  = 'marketplace/api/download' . "\n";
-			$string .= OPENCART_USERNAME . "\n";
+			$string .= $this->config->get('opencart_username') . "\n";
 			$string .= $this->request->server['HTTP_HOST'] . "\n";
 			$string .= VERSION . "\n";
 			$string .= $extension_download_id . "\n";
 			$string .= $time . "\n";
 
-			$signature = base64_encode(hash_hmac('sha1', $string, OPENCART_SECRET, 1));
+			$signature = base64_encode(hash_hmac('sha1', $string, $this->config->get('opencart_secret'), 1));
 
-			$url  = '&username=' . OPENCART_USERNAME;
+			$url  = '&username=' . $this->config->get('opencart_username');
 			$url .= '&domain=' . $this->request->server['HTTP_HOST'];
 			$url .= '&version=' . VERSION;
 			$url .= '&extension_download_id=' . $extension_download_id;
@@ -932,7 +940,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 		
-		if (!defined('OPENCART_USERNAME') || !defined('OPENCART_SECRET') || !OPENCART_USERNAME || !OPENCART_SECRET) {
+		if (!$this->config->get('opencart_username') || !$this->config->get('opencart_secret')) {
 			$json['error'] = $this->language->get('error_api');
 		}
 					
@@ -941,7 +949,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 			// We create a hash from the data in a similar method to how amazon does things.
 			$string  = 'marketplace/api/addcomment' . "\n";
-			$string .= OPENCART_USERNAME . "\n";
+			$string .= $this->config->get('opencart_username') . "\n";
 			$string .= $this->request->server['HTTP_HOST'] . "\n";
 			$string .= VERSION . "\n";
 			$string .= $extension_id . "\n";
@@ -949,9 +957,9 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$string .= urlencode(base64_encode($this->request->post['comment'])) . "\n";
 			$string .= $time . "\n";
 
-			$signature = base64_encode(hash_hmac('sha1', $string, OPENCART_SECRET, 1));
+			$signature = base64_encode(hash_hmac('sha1', $string, $this->config->get('opencart_secret'), 1));
 
-			$url  = '&username=' . OPENCART_USERNAME;
+			$url  = '&username=' . $this->config->get('opencart_username');
 			$url .= '&domain=' . $this->request->server['HTTP_HOST'];
 			$url .= '&version=' . VERSION;
 			$url .= '&extension_id=' . $extension_id;

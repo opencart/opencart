@@ -38,6 +38,12 @@ $_['text_install']       = 'Installing';
 $_['text_comment']       = 'Comment';
 $_['text_comment_add']   = 'Leave your comment';
 $_['text_write']         = 'Write your comment here..';
+$_['text_purchase']      = 'Please confirm who you are!';
+$_['text_pin']           = 'Please enter your 4 digit PIN number. This PIN number is to protect your account.';
+$_['text_secure']        = 'Do not give your PIN to any one including developers. If you require an extension seller to install an extension for you then you should email them the required extension.';
+
+// Entry
+$_['entry_pin']          = 'PIN';
 
 // Tab
 $_['tab_description']    = 'Description';
@@ -46,12 +52,13 @@ $_['tab_download']       = 'Download';
 $_['tab_comment']        = 'Comment';
 
 // Button
+$_['button_opencart']    = 'Marketplace API';
+$_['button_purchase']    = 'Purchase';
 $_['button_comment']     = 'Comment';
 $_['button_reply']       = 'Reply';
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify extensions!';
-$_['error_api']          = 'Warning: OpenCart extension OPENCART_USERNAME / OPENCART_SECRET has not been set in config.php!';
 $_['error_install']      = 'Extension installation taking place please wait a few seconds before trying to install!';
 $_['error_purchase']     = 'Extension could not be purchased!';
 $_['error_download']     = 'Extension could not be downloaded!';

@@ -248,12 +248,6 @@ class ControllerMarketplaceMarketplace extends Controller {
 		
 		$data['button_opencart'] = $this->language->get('button_opencart');
 		
-		if (!$this->config->get('opencart_username') || !$this->config->get('opencart_secret')) {
-			$data['error_warning'] = $this->language->get('error_opencart');
-		} else {
-			$data['error_warning'] = '';
-		}
-		
 		$data['user_token'] = $this->session->data['user_token'];
 		
 		// Categories
@@ -590,8 +584,8 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$data['tab_download'] = $this->language->get('tab_download');
 			$data['tab_comment'] = $this->language->get('tab_comment');
 		
-			if (!$this->config->get('opencart_username') || !$this->config->get('opencart_secret')) {
-				$data['error_warning'] = $this->language->get('error_api');
+			if ($response_info['license'] && (!$this->config->get('opencart_username') || !$this->config->get('opencart_secret'))) {
+				$data['error_warning'] = $this->language->get('error_opencart');
 			} else {
 				$data['error_warning'] = '';
 			}
@@ -941,7 +935,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		}
 		
 		if (!$this->config->get('opencart_username') || !$this->config->get('opencart_secret')) {
-			$json['error'] = $this->language->get('error_api');
+			$json['error'] = $this->language->get('error_opencart');
 		}
 					
 		if (!$json) {	

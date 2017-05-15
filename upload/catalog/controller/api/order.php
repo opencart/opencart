@@ -23,7 +23,7 @@ class ControllerApiOrder extends Controller {
 					'customer'      => $result['customer'],
 					'order_status'  => $result['order_status'] ? $result['order_status'] : $this->language->get('text_missing'),
 					'currency_code' => $result['currency_code'],
-					'total'         => $result['currency_value'],
+					'total'         => $result['total'] * $result['currency_value'],
 					'date_added'    => date("Y-m-d H:i:s", strtotime($result['date_added'])),
 					'date_modified' => date("Y-m-d H:i:s", strtotime($result['date_modified'])),
 					'shipping_code' => $result['shipping_code']
@@ -885,6 +885,75 @@ class ControllerApiOrder extends Controller {
 
 			if ($order_info) {
 				$json['order'] = $order_info;
+
+				$json['success'] = $this->language->get('text_success');
+			} else {
+				$json['error'] = $this->language->get('error_not_found');
+			}
+		}
+
+		if (isset($this->request->server['HTTP_ORIGIN'])) {
+			$this->response->addHeader('Access-Control-Allow-Origin: ' . $this->request->server['HTTP_ORIGIN']);
+			$this->response->addHeader('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+			$this->response->addHeader('Access-Control-Max-Age: 1000');
+			$this->response->addHeader('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function getOrderProducts() {
+		$this->load->language('api/order');
+
+		$json = array();
+
+		if (!isset($this->session->data['api_id'])) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('checkout/order');
+
+			$json['products'] = array();
+
+			if (isset($this->request->get['order_id'])) {
+				$order_id = $this->request->get['order_id'];
+			} else {
+				$order_id = 0;
+			}
+
+			$order_info = $this->model_checkout_order->getOrder($order_id);
+
+			if ($order_info) {
+				$this->load->model('sale/order');
+
+				$products = $this->model_sale_order->getOrderProducts($order_id);
+
+				foreach ($products as $product) {
+					$option_data = array();
+					$options = $this->model_sale_order->getOrderOptions($order_id, $product['order_product_id']);
+
+					foreach ($options as $option) {
+						if ($option['type'] != 'file') {
+							$option_data[] = array(
+								'name'  => $option['name'],
+								'value' => $option['value'],
+								'type'  => $option['type']
+							);
+						}
+					}
+
+					$json['products'][] = array(
+						'order_product_id' => $product['order_product_id'],
+						'product_id'       => $product['product_id'],
+						'name'             => $product['name'],
+						'model'            => $product['model'],
+						'option'           => $option_data,
+						'quantity'         => $product['quantity'],
+						'currency_code'    => $order_info['currency_code'],
+						'price'            => ($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0)) * $order_info['currency_value'],
+						'total'            => ($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0)) * $order_info['currency_value'],
+					);
+				}
 
 				$json['success'] = $this->language->get('text_success');
 			} else {

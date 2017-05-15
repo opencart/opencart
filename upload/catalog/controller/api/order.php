@@ -1,5 +1,120 @@
 <?php
 class ControllerApiOrder extends Controller {
+	public function index() {
+		$this->load->language('api/order');
+
+		$json = array();
+
+		if (!isset($this->session->data['api_id'])) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('sale/order');
+
+			$json['orders'] = array();
+			$filter_data = $this->getListFilters();
+
+			$order_total = $this->model_sale_order->getTotalOrders($filter_data);
+
+			$results = $this->model_sale_order->getOrders($filter_data);
+
+			foreach ($results as $result) {
+				$json['orders'][] = array(
+					'order_id'      => $result['order_id'],
+					'customer'      => $result['customer'],
+					'order_status'  => $result['order_status'] ? $result['order_status'] : $this->language->get('text_missing'),
+					'currency_code' => $result['currency_code'],
+					'total'         => $result['currency_value'],
+					'date_added'    => date("Y-m-d H:i:s", strtotime($result['date_added'])),
+					'date_modified' => date("Y-m-d H:i:s", strtotime($result['date_modified'])),
+					'shipping_code' => $result['shipping_code']
+				);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		if (isset($this->request->server['HTTP_ORIGIN'])) {
+			$this->response->addHeader('Access-Control-Allow-Origin: ' . $this->request->server['HTTP_ORIGIN']);
+			$this->response->addHeader('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+			$this->response->addHeader('Access-Control-Max-Age: 1000');
+			$this->response->addHeader('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	protected function getListFilters() {
+		if (isset($this->request->get['filter_order_id'])) {
+			$filter_order_id = $this->request->get['filter_order_id'];
+		} else {
+			$filter_order_id = null;
+		}
+
+		if (isset($this->request->get['filter_customer'])) {
+			$filter_customer = $this->request->get['filter_customer'];
+		} else {
+			$filter_customer = null;
+		}
+
+		if (isset($this->request->get['filter_order_status'])) {
+			$filter_order_status = $this->request->get['filter_order_status'];
+		} else {
+			$filter_order_status = null;
+		}
+
+		if (isset($this->request->get['filter_total'])) {
+			$filter_total = $this->request->get['filter_total'];
+		} else {
+			$filter_total = null;
+		}
+
+		if (isset($this->request->get['filter_date_added'])) {
+			$filter_date_added = $this->request->get['filter_date_added'];
+		} else {
+			$filter_date_added = null;
+		}
+
+		if (isset($this->request->get['filter_date_modified'])) {
+			$filter_date_modified = $this->request->get['filter_date_modified'];
+		} else {
+			$filter_date_modified = null;
+		}
+
+		if (isset($this->request->get['sort'])) {
+			$sort = $this->request->get['sort'];
+		} else {
+			$sort = 'o.order_id';
+		}
+
+		if (isset($this->request->get['order'])) {
+			$order = $this->request->get['order'];
+		} else {
+			$order = 'DESC';
+		}
+
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		$filter_data = array(
+			'filter_order_id'      => $filter_order_id,
+			'filter_customer'      => $filter_customer,
+			'filter_order_status'  => $filter_order_status,
+			'filter_total'         => $filter_total,
+			'filter_date_added'    => $filter_date_added,
+			'filter_date_modified' => $filter_date_modified,
+			'sort'                 => $sort,
+			'order'                => $order,
+			'start'                => ($page - 1) * $this->config->get('config_limit_admin'),
+			'limit'                => $this->config->get('config_limit_admin')
+		);
+
+		return $filter_data;
+	}
+
 	public function add() {
 		$this->load->language('api/order');
 
@@ -95,7 +210,7 @@ class ControllerApiOrder extends Controller {
 
 			if (!$json) {
 				$json['success'] = $this->language->get('text_success');
-				
+
 				$order_data = array();
 
 				// Store Details
@@ -251,7 +366,7 @@ class ControllerApiOrder extends Controller {
 					'taxes'  => &$taxes,
 					'total'  => &$total
 				);
-			
+
 				$sort_order = array();
 
 				$results = $this->model_extension_extension->getExtensions('total');
@@ -265,7 +380,7 @@ class ControllerApiOrder extends Controller {
 				foreach ($results as $result) {
 					if ($this->config->get($result['code'] . '_status')) {
 						$this->load->model('extension/total/' . $result['code']);
-						
+
 						// We have to put the totals in an array so that they pass by reference.
 						$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
 					}
@@ -351,7 +466,7 @@ class ControllerApiOrder extends Controller {
 				}
 
 				$this->model_checkout_order->addOrderHistory($json['order_id'], $order_status_id);
-				
+
 				// clear cart since the order has already been successfully stored.
 				//$this->cart->clear();
 			}
@@ -473,7 +588,7 @@ class ControllerApiOrder extends Controller {
 
 				if (!$json) {
 					$json['success'] = $this->language->get('text_success');
-					
+
 					$order_data = array();
 
 					// Store Details
@@ -622,14 +737,14 @@ class ControllerApiOrder extends Controller {
 					$totals = array();
 					$taxes = $this->cart->getTaxes();
 					$total = 0;
-					
-					// Because __call can not keep var references so we put them into an array. 
+
+					// Because __call can not keep var references so we put them into an array.
 					$total_data = array(
 						'totals' => &$totals,
 						'taxes'  => &$taxes,
 						'total'  => &$total
 					);
-			
+
 					$sort_order = array();
 
 					$results = $this->model_extension_extension->getExtensions('total');
@@ -643,7 +758,7 @@ class ControllerApiOrder extends Controller {
 					foreach ($results as $result) {
 						if ($this->config->get($result['code'] . '_status')) {
 							$this->load->model('extension/total/' . $result['code']);
-							
+
 							// We have to put the totals in an array so that they pass by reference.
 							$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
 						}

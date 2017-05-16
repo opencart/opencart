@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="bootstrap.php">
+    <testsuites>
+        <testsuite name="catalog-tests">
+            <directory>./opencart/catalog</directory>
+        </testsuite>
+        <testsuite name="admin-tests">
+            <directory>./opencart/admin</directory>
+        </testsuite>
+        <testsuite name="system-tests">
+            <directory>./opencart/system</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <env name="OC_ROOT" value="../../upload" />
+    </php>
+</phpunit>

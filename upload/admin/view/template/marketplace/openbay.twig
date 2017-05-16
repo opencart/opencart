@@ -38,7 +38,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                  
+
                   {% for extension in extensions %}
                   <tr>
                     <td class="text-left">{{ extension.name }}</td>
@@ -47,7 +47,7 @@
                   </tr>
                   {% endfor %}
                     </tbody>
-                  
+
                 </table>
               </div>
             </div>
@@ -109,7 +109,7 @@
     setTimeout(function () {
       $.ajax({
         type: 'GET',
-        url: 'index.php?route=extension/openbay/version&user_token={{ user_token }}',
+        url: 'index.php?route=marketplace/openbay/version&user_token={{ user_token }}',
         dataType: 'json',
         success: function (json) {
           $('#openbay-version-loading').hide();

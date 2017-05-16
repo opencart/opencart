@@ -20,7 +20,7 @@ function faq(){
     var token = $.getUrlVar('user_token');
 
     $.ajax({
-        url: 'index.php?route=extension/openbay/faq&token='+token+'&qry_route='+route,
+        url: 'index.php?route=marketplace/openbay/faq&token='+token+'&qry_route='+route,
         type: 'GET',
         dataType: 'json',
         success: function(data) {
@@ -55,7 +55,7 @@ function faqclose() {
     $('#faq').slideUp();
 
     $.ajax({
-        url: 'index.php?route=extension/openbay/faqdismiss&token='+token+'&qry_route='+route,
+        url: 'index.php?route=marketplace/openbay/faqdismiss&token='+token+'&qry_route='+route,
         type: 'GET',
         dataType: 'json',
         success: function(data) {}

@@ -21,7 +21,7 @@ class ControllerExtensionOpenbayAmazonProduct extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay', 'user_token=' . $this->session->data['user_token'], true),
+			'href' => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true),
 			'text' => $this->language->get('text_openbay'),
 		);
 
@@ -374,7 +374,7 @@ class ControllerExtensionOpenbayAmazonProduct extends Controller {
 
 	public function parseTemplateAjax() {
 		$this->load->model('tool/image');
-		
+
 		$log = new Log('amazon_product.log');
 
 		$json = array();
@@ -492,7 +492,7 @@ class ControllerExtensionOpenbayAmazonProduct extends Controller {
 			$option_stocks = $this->model_setting_module_openstock->getVariants($product_id);
 
 			$option = '';
-			
+
 			foreach ($option_stocks as $option_iterator) {
 				if ($option_iterator['sku'] === $var) {
 					$option = $option_iterator;

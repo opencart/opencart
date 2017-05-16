@@ -132,7 +132,7 @@
     e.preventDefault();
 
     $.ajax({
-      url: 'index.php?route=extension/openbay/faqclear&user_token={{ user_token }}',
+      url: 'index.php?route=marketplace/openbay/faqclear&user_token={{ user_token }}',
       beforeSend: function() {
         $('#button-clear-faq').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>');
         $("#button-clear-faq").attr('disabled','disabled');

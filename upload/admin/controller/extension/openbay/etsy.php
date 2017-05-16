@@ -43,7 +43,7 @@ class ControllerExtensionOpenbayEtsy extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay', 'user_token=' . $this->session->data['user_token'], true),
+			'href' => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true),
 			'text' => $this->language->get('text_openbay'),
 		);
 
@@ -115,7 +115,7 @@ class ControllerExtensionOpenbayEtsy extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay', 'user_token=' . $this->session->data['user_token'], true),
+			'href' => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true),
 			'text' => $this->language->get('text_openbay'),
 		);
 

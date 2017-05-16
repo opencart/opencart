@@ -47,10 +47,10 @@ class ControllerExtensionFeedOpenbaypro extends Controller {
 
 	public function install() {
 		$this->load->model('setting/setting');
-		$this->load->model('marketplace/event');
+		$this->load->model('setting/event');
 
-		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/openbay');
-		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/openbay');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'marketplace/openbay');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'marketplace/openbay');
 
 		$settings = $this->model_setting_setting->getSetting('openbaypro');
 		$settings['openbaypro_status'] = 1;
@@ -65,7 +65,7 @@ class ControllerExtensionFeedOpenbaypro extends Controller {
 
 	public function uninstall() {
 		$this->load->model('setting/setting');
-		$this->load->model('marketplace/event');
+		$this->load->model('setting/event');
 
 		$settings = $this->model_setting_setting->getSetting('openbaypro');
 		$settings['openbaypro_status'] = 0;

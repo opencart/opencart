@@ -42,7 +42,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 			'text'      => $this->language->get('text_home'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => $this->url->link('extension/openbay', 'user_token=' . $this->session->data['user_token'], true),
+			'href'      => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true),
 			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
@@ -88,7 +88,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 			'text'      => $this->language->get('text_home'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => $this->url->link('extension/openbay', 'user_token=' . $this->session->data['user_token'], true),
+			'href'      => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true),
 			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
@@ -133,16 +133,16 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 					'date_updated' 	 => (string)$update_node->date_updated,
 					'status' 		 => (string)$update_node->status,
 				);
-				
+
 				$data_items = array();
-				
+
 				foreach($update_node->data->product as $product_node) {
 					$data_items[] = array(
 						'sku' 	=> (string)$product_node->sku,
 						'stock' => (int)$product_node->stock
 					);
 				}
-				
+
 				$row['data'] = $data_items;
 				$table_data[(int)$update_node->ref] = $row;
 			}
@@ -176,7 +176,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 			'text'      => $this->language->get('text_home'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => $this->url->link('extension/openbay', 'user_token=' . $this->session->data['user_token'], true),
+			'href'      => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true),
 			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
@@ -283,7 +283,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 			'text'      => $this->language->get('text_home'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => $this->url->link('extension/openbay', 'user_token=' . $this->session->data['user_token'], true),
+			'href'      => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true),
 			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
@@ -387,7 +387,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 			'text'      => $this->language->get('text_home'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => $this->url->link('extension/openbay', 'user_token=' . $this->session->data['user_token'], true),
+			'href'      => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true),
 			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
@@ -433,7 +433,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 			'text'      => $this->language->get('text_home'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => $this->url->link('extension/openbay', 'user_token=' . $this->session->data['user_token'], true),
+			'href'      => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true),
 			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
@@ -732,7 +732,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 			'text'      => $this->language->get('text_home'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => $this->url->link('extension/openbay', 'user_token=' . $this->session->data['user_token'], true),
+			'href'      => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true),
 			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
@@ -886,7 +886,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 			'text'      => $this->language->get('text_home'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => $this->url->link('extension/openbay', 'user_token=' . $this->session->data['user_token'], true),
+			'href'      => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true),
 			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(

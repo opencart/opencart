@@ -12,5 +12,8 @@
         "divido/divido-php": ">=1.1.1",
         "klarna/kco_rest": "^2.2",
         "php": ">=5.4.0"
+    },
+    "suggest": {
+        "predis/predis": "Allows use of the Redis cache driver"
     }
 }

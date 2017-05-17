@@ -86,6 +86,12 @@
                       <textarea name="category_description[<?php echo $language['language_id']; ?>][description]" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $language['language_id']; ?>" class="form-control summernote"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['description'] : ''; ?></textarea>
                     </div>
                   </div>
+				  <div class="form-group">
+                    <label class="col-sm-2 control-label" for="input-description_bottom<?php echo $language['language_id']; ?>"><?php echo $entry_description_bottom; ?></label>
+                    <div class="col-sm-10">
+                      <textarea name="category_description[<?php echo $language['language_id']; ?>][description_bottom]" placeholder="<?php echo $entry_description_bottom; ?>" id="input-description_bottom<?php echo $language['language_id']; ?>" class="form-control summernote"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['description_bottom'] : ''; ?></textarea>
+                   </div>
+                  </div>
                 </div>
                 <?php } ?>
               </div>

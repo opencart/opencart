@@ -142,6 +142,7 @@ class ControllerProductManufacturer extends Controller {
 			$this->document->setDescription($manufacturer_info['meta_description']);
 			$this->document->setKeywords($manufacturer_info['meta_keyword']);
 			$data['description'] = html_entity_decode($manufacturer_info['description'], ENT_QUOTES, 'UTF-8');
+			$data['description_bottom'] = html_entity_decode($manufacturer_info['description_bottom'], ENT_QUOTES, 'UTF-8');
 			
 			if ($manufacturer_info['image']) {
 				$data['thumb'] = $this->model_tool_image->resize($manufacturer_info['image'], $this->config->get($this->config->get('config_theme') . '_image_category_width'), $this->config->get($this->config->get('config_theme') . '_image_category_height'));

@@ -23,6 +23,8 @@ $_['column_action']     = 'Action';
 
 // Entry
 $_['entry_name']        = 'Manufacturer Name';
+$_['entry_description'] = 'Description Top:';
+$_['entry_description_bottom']  = 'Description Bottom:';
 $_['entry_store']       = 'Stores';
 $_['entry_keyword']     = 'SEO URL';
 $_['entry_image']       = 'Image';

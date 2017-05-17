@@ -444,6 +444,7 @@ CREATE TABLE `oc_category_description` (
   `language_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
+  `description_bottom` text NOT NULL,
   `meta_title` varchar(255) NOT NULL,
   `meta_description` varchar(255) NOT NULL,
   `meta_keyword` varchar(255) NOT NULL,
@@ -456,7 +457,7 @@ CREATE TABLE `oc_category_description` (
 -- Dumping data for table `oc_category_description`
 --
 
-INSERT INTO `oc_category_description` (`category_id`, `language_id`, `name`, `description`, `meta_title`, `meta_description`, `meta_keyword`, `meta_h1`) VALUES
+INSERT INTO `oc_category_description` (`category_id`, `language_id`, `name`, `description`, `description_bottom`, `meta_title`, `meta_description`, `meta_keyword`, `meta_h1`) VALUES
 (28, 1, 'Monitors', '', 'Monitors', '', '', ''),
 (33, 1, 'Cameras', '', 'Cameras', '', '', ''),
 (32, 1, 'Web Cameras', '', 'Web Cameras', '', '', ''),
@@ -1941,6 +1942,7 @@ CREATE TABLE `oc_manufacturer_description` (
   `manufacturer_id` int(11) NOT NULL DEFAULT '0',
   `language_id` int(11) NOT NULL DEFAULT '0',
   `description` text NOT NULL,
+  `description_bottom` text NOT NULL,
   `meta_description` varchar(255) NOT NULL,
   `meta_keyword` varchar(255) NOT NULL,
   `meta_title` varchar(255) NOT NULL,
@@ -1952,7 +1954,7 @@ CREATE TABLE `oc_manufacturer_description` (
 -- Dumping data for table `oc_manufacturer_description`
 --
 
-INSERT INTO `oc_manufacturer_description` (`manufacturer_id`, `language_id`, `description`, `meta_description`, `meta_keyword`, `meta_title`, `meta_h1`) VALUES
+INSERT INTO `oc_manufacturer_description` (`manufacturer_id`, `language_id`, `description`, `description_bottom`, `meta_description`, `meta_keyword`, `meta_title`, `meta_h1`) VALUES
 (8, 2, '&lt;p&gt;описание en&lt;br&gt;&lt;/p&gt;', 'desc en', 'keyw en', 'title en', 'h1 en'),
 (8, 1, '&lt;p&gt;описание ru&lt;br&gt;&lt;/p&gt;', 'desc ru', 'keyw ru', 'длиннный тайтл длиннный тайтлдлиннный тайтлдлиннный тайтлдлиннный тайтл длиннный тайтл длиннный тайтлдлиннный тайтлдлиннный тайтлдлиннный тайтл', 'h1 ru'),
 (9, 1, '', '', '', '', ''),

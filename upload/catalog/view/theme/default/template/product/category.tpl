@@ -122,7 +122,11 @@
         <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a></div>
       </div>
       <?php } ?>
-      <?php echo $content_bottom; ?></div>
+      <?php echo $content_bottom; ?>
+        <?php if ($description_bottom) { ?>
+        <div class="col-sm-10"><?php echo $description_bottom; ?></div>
+        <?php } ?>
+	  </div>
     <?php echo $column_right; ?></div>
 </div>
 <?php echo $footer; ?>

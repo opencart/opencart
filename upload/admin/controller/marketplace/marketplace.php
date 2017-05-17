@@ -168,7 +168,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		curl_close($curl);
 
 		$response_info = json_decode($response, true);
-
+		
 		$extension_total = $response_info['total'];
 
 		$url  = '';
@@ -433,18 +433,6 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$data['sorts'] = array();
 
 		$data['sorts'][] = array(
-			'text'  => 'Popularity',
-			'value' => 'popularity',
-			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=popularity')
-		);
-
-		$data['sorts'][] = array(
-			'text'  => 'Rating',
-			'value' => 'rating',
-			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=rating')
-		);
-
-		$data['sorts'][] = array(
 			'text'  => 'Date Modified',
 			'value' => 'date_modified',
 			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=date_modified')
@@ -455,6 +443,13 @@ class ControllerMarketplaceMarketplace extends Controller {
 			'value' => 'date_added',
 			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=date_added')
 		);
+
+		$data['sorts'][] = array(
+			'text'  => 'Rating',
+			'value' => 'rating',
+			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=rating')
+		);
+
 
 		$data['sorts'][] = array(
 			'text'  => 'Name',

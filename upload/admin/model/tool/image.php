@@ -19,7 +19,7 @@ class ModelToolImage extends Model {
 			list($width_orig, $height_orig, $image_type) = getimagesize(DIR_IMAGE . $image_old);
 				 
 			if (!in_array($image_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF))) { 
-				return DIR_IMAGE . $image_old;
+				return;
 			}
  
 			$path = '';

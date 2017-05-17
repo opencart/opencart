@@ -17,6 +17,7 @@ $_['text_affiliate']    = 'Affiliates';
 $_['text_special']      = 'Specials';
 $_['text_latest']       = 'Latest';
 $_['text_bestseller']   = 'Bestseller';
+$_['text_mostviewed']   = 'Mostviewed';
 $_['text_account']      = 'My Account';
 $_['text_order']        = 'Order History';
 $_['text_wishlist']     = 'Wish List';

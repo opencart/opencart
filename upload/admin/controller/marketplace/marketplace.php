@@ -216,7 +216,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 					'license'      => $result['license'],
 					'price'        => $result['price'],
 					'rating'       => $result['rating'],
-					'review_total' => $result['review_total'],
+					'rating_total' => $result['rating_total'],
 					'href'         => $this->url->link('marketplace/marketplace/info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id'] . $url, true)
 				);
 			}
@@ -233,7 +233,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 					'license'      => $result['license'],
 					'price'        => $result['price'],
 					'rating'       => $result['rating'],
-					'review_total' => $result['review_total'],
+					'rating_total' => $result['rating_total'],
 					'href'         => $this->url->link('marketplace/marketplace/info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id'] . $url, true)
 				);
 			}

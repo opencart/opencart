@@ -14,6 +14,10 @@ class ModelLocalisationZone extends Model {
 
 			$zone_data = $query->rows;
 
+			if( count($zone_data) < 1){
+				$zone_data = array(array('zone_id' => '0000', 'country_id' => $country_id, 'name' => 'No zone', 'code' => 'XX', 'status' => '1'));
+			}
+			
 			$this->cache->set('zone.' . (int)$country_id, $zone_data);
 		}
 

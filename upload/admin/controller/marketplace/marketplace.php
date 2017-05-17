@@ -1,7 +1,5 @@
 <?php
 class ControllerMarketplaceMarketplace extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('marketplace/marketplace');
 
@@ -99,42 +97,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url, true)
-		);			
-			
-		$url  = '&domain=' . $this->request->server['HTTP_HOST'];
-		$url .= '&version=' . VERSION;
-
-		if (isset($this->request->get['filter_search'])) {
-			$url .= '&filter_search=' . $this->request->get['filter_search'];
-		}
-
-		if (isset($this->request->get['filter_category'])) {
-			$url .= '&filter_category=' . $this->request->get['filter_category'];
-		}
-
-		if (isset($this->request->get['filter_license'])) {
-			$url .= '&filter_license=' . $this->request->get['filter_license'];
-		}
-
-		if (isset($this->request->get['filter_rating'])) {
-			$url .= '&filter_rating=' . $this->request->get['filter_rating'];
-		}
-
-		if (isset($this->request->get['filter_member_type'])) {
-			$url .= '&filter_member_type=' . $this->request->get['filter_member_type'];
-		}
-
-		if (isset($this->request->get['filter_member'])) {
-			$url .= '&filter_member=' . $this->request->get['filter_member'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		);
 
 		$time = time() + 30;
 
@@ -147,7 +110,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		
 		$signature = base64_encode(hash_hmac('sha1', $string, $this->config->get('opencart_secret'), 1));
 		
-		$url  = '&username=' . $this->config->get('opencart_username');
+		$url .= '&username=' . $this->config->get('opencart_username');
 		$url .= '&domain=' . $this->request->server['HTTP_HOST'];
 		$url .= '&version=' . VERSION;
 		$url .= '&time=' . $time;

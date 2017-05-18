@@ -651,6 +651,9 @@ class ControllerMarketplaceMarketplace extends Controller {
 					}
 				}
 			}
+			
+			$this->document->addStyle('view/javascript/jquery/magnific/magnific-popup.css');
+			$this->document->addScript('view/javascript/jquery/magnific/jquery.magnific-popup.min.js');
 
 			$data['header'] = $this->load->controller('common/header');
 			$data['column_left'] = $this->load->controller('common/column_left');

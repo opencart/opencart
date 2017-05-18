@@ -13,6 +13,7 @@ $_['text_success_clear'] = 'SEO URL cache successfully reset!';
 $_['text_default']       = 'Default';
 $_['text_module']	     = 'Modules';
 $_['button_clear_cache'] = 'Reset cache';
+$_['button_insert']	= 'Add New';
 
 // Column
 $_['column_query']       = 'URL';

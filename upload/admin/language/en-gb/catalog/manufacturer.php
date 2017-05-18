@@ -19,6 +19,7 @@ $_['text_amount']       = 'Fixed Amount';
 // Column
 $_['column_name']       = 'Manufacturer Name';
 $_['column_sort_order'] = 'Sort Order';
+$_['column_noindex']    = 'Index';
 $_['column_action']     = 'Action';
 
 // Entry
@@ -39,6 +40,7 @@ $_['entry_related_article']  = 'Featured Articles:';
 
 // Help
 $_['help_keyword']      = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';
+$_['help_noindex']      = 'Indexing in the search engines Google, Yandex, Bing and others';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify manufacturers!';

@@ -17,10 +17,12 @@ $_['text_default']           = 'Default';
 // Column
 $_['column_title']           = 'Information Title';
 $_['column_sort_order']	     = 'Sort Order';
+$_['column_noindex']    	 = 'Index';
 $_['column_action']          = 'Action';
 
 // Entry
 $_['entry_title']            = 'Information Title';
+$_['entry_meta_h1'] 	     = 'HTML Tag H1';
 $_['entry_description']      = 'Description';
 $_['entry_store']            = 'Stores';
 $_['entry_meta_title'] 	     = 'Meta Tag Title';
@@ -31,10 +33,12 @@ $_['entry_bottom']           = 'Bottom';
 $_['entry_status']           = 'Status';
 $_['entry_sort_order']       = 'Sort Order';
 $_['entry_layout']           = 'Layout Override';
+$_['entry_noindex']          = 'Index';
 
 // Help
 $_['help_keyword']           = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';
 $_['help_bottom']            = 'Display in the bottom footer.';
+$_['help_noindex']           = 'Indexing in the search engines Google, Yandex, Bing and others';
 
 // Error
 $_['error_warning']          = 'Warning: Please check the form carefully for errors!';

@@ -53,7 +53,7 @@
                   <div class="col-sm-10">
                     <select name="state" id="input-state" class="form-control">
                       {% for state in setting.state %}
-                      <option value="{{ value }}"<?php echo ($listing['state'] == $value) ? ' selected' : ''; ?>>{{ value }}</option>
+                      <option value="{{ state }}" {% if listing.state == state %} selected{% endif %}>{{ state }}</option>
                       {% endfor %}
                     </select>
                   </div>

@@ -14,7 +14,7 @@ class ControllerExtensionOpenbayEtsyProduct extends Controller {
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$data['action']   = $this->url->link('extension/openbay/etsy_product/create', 'user_token=' . $this->session->data['user_token'], true);
-		$data['cancel']   = $this->url->link('extension/openbay/items', 'user_token=' . $this->session->data['user_token'], true);
+		$data['cancel']   = $this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token'], true);
 		$data['user_token']    = $this->session->data['user_token'];
 
 		$data['breadcrumbs'] = array();
@@ -209,7 +209,7 @@ class ControllerExtensionOpenbayEtsyProduct extends Controller {
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$data['action']   = $this->url->link('extension/openbay/etsy_product/editSubmit', 'user_token=' . $this->session->data['user_token'], true);
-		$data['cancel']   = $this->url->link('extension/openbay/items', 'user_token=' . $this->session->data['user_token'], true);
+		$data['cancel']   = $this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token'], true);
 		$data['user_token']    = $this->session->data['user_token'];
 
 		$data['breadcrumbs'] = array();
@@ -473,7 +473,7 @@ class ControllerExtensionOpenbayEtsyProduct extends Controller {
 
 		$data = $this->language->all();
 
-		$data['cancel'] = $this->url->link('extension/openbay/items', 'user_token=' . $this->session->data['user_token'], true);
+		$data['cancel'] = $this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token'], true);
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');

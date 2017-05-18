@@ -79,7 +79,7 @@
               <div class="col-sm-10">
                 <select name="openbay_language" id="input-language" class="form-control">
                   {% for key, language in languages %}
-                    <option value="{{ key }}" <?php if ($key == $openbay_language) { echo'selected="selected"'; } ?>>{{ language }}</option>
+                    <option value="{{ key }}" {% if key == openbay_language %} selected{% endif %}>{{ language }}</option>
                   {% endfor %}
                 </select>
               </div>
@@ -110,7 +110,7 @@
     e.preventDefault();
 
     $.ajax({
-      url: 'index.php?route=extension/openbay/patch&user_token={{ user_token }}',
+      url: 'index.php?route=marketplace/openbay/patch&user_token={{ user_token }}',
       type: 'post',
       dataType: 'json',
       beforeSend: function() {
@@ -157,7 +157,7 @@
 
     if (pass != '') {
       $.ajax({
-        url: 'index.php?route=extension/openbay/purge&user_token={{ user_token }}',
+        url: 'index.php?route=marketplace/openbay/purge&user_token={{ user_token }}',
         type: 'post',
         dataType: 'json',
         data: 'pass=' + pass,
@@ -200,7 +200,7 @@
 
   function updateCheckServer(beta) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/updatev2&stage=check_server&user_token={{ user_token }}&beta=' + beta,
+      url: 'index.php?route=marketplace/openbay/updatev2&stage=check_server&user_token={{ user_token }}&beta=' + beta,
       type: 'post',
       dataType: 'json',
       beforeSend: function() { },
@@ -223,7 +223,7 @@
 
   function updateCheckVersion(beta) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/updatev2&stage=check_version&user_token={{ user_token }}&beta=' + beta,
+      url: 'index.php?route=marketplace/openbay/updatev2&stage=check_version&user_token={{ user_token }}&beta=' + beta,
       type: 'post',
       dataType: 'json',
       beforeSend: function() { },
@@ -248,7 +248,7 @@
 
   function updateDownload(beta) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/updatev2&stage=download&user_token={{ user_token }}&beta=' + beta,
+      url: 'index.php?route=marketplace/openbay/updatev2&stage=download&user_token={{ user_token }}&beta=' + beta,
       type: 'post',
       dataType: 'json',
       beforeSend: function() { },
@@ -271,7 +271,7 @@
 
   function updateExtract(beta) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/updatev2&stage=extract&user_token={{ user_token }}&beta=' + beta,
+      url: 'index.php?route=marketplace/openbay/updatev2&stage=extract&user_token={{ user_token }}&beta=' + beta,
       type: 'post',
       dataType: 'json',
       beforeSend: function() { },
@@ -294,7 +294,7 @@
 
   function updateRemove(beta) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/updatev2&stage=remove&user_token={{ user_token }}&beta=' + beta,
+      url: 'index.php?route=marketplace/openbay/updatev2&stage=remove&user_token={{ user_token }}&beta=' + beta,
       type: 'post',
       dataType: 'json',
       beforeSend: function() { },
@@ -317,7 +317,7 @@
 
   function updatePatch(beta) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/updatev2&stage=run_patch&user_token={{ user_token }}&beta=' + beta,
+      url: 'index.php?route=marketplace/openbay/updatev2&stage=run_patch&user_token={{ user_token }}&beta=' + beta,
       type: 'post',
       dataType: 'json',
       beforeSend: function() { },
@@ -340,7 +340,7 @@
 
   function updateVersion(beta) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/updatev2&stage=update_version&user_token={{ user_token }}&beta=' + beta,
+      url: 'index.php?route=marketplace/openbay/updatev2&stage=update_version&user_token={{ user_token }}&beta=' + beta,
       type: 'post',
       dataType: 'json',
       beforeSend: function() { },

@@ -3,38 +3,7 @@ class ControllerExtensionFeedOpenbaypro extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('extension/feed/openbaypro');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true),
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_module'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'], true),
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/feed/openbay', 'user_token=' . $this->session->data['user_token'], true),
-		);
-
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=feed', true);
-
-		$data['heading_title'] = $this->language->get('heading_title');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['text_installed'] = $this->language->get('text_installed');
-
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
-
-		$this->response->setOutput($this->load->view('extension/feed/openbaypro', $data));
+        $this->response->redirect($this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true));
 	}
 
 	protected function validate() {
@@ -56,11 +25,11 @@ class ControllerExtensionFeedOpenbaypro extends Controller {
 		$settings['openbaypro_status'] = 1;
 		$this->model_setting_setting->editSetting('feed_openbaypro', $settings);
 
-		$this->model_setting_event->addEvent('openbay_product_del_after', 'admin/model/catalog/product/deleteProduct/after', 'extension/openbay/eventDeleteProduct');
+		$this->model_setting_event->addEvent('openbay_product_del_after', 'admin/model/catalog/product/deleteProduct/after', 'marketplace/openbay/eventDeleteProduct');
 
-		$this->model_setting_event->addEvent('openbay_product_edit_after', 'admin/model/catalog/product/editProduct/after', 'extension/openbay/eventEditProduct');
+		$this->model_setting_event->addEvent('openbay_product_edit_after', 'admin/model/catalog/product/editProduct/after', 'marketplace/openbay/eventEditProduct');
 
-		$this->model_setting_event->addEvent('openbay_menu', 'admin/view/common/column_left/before', 'extension/openbay/eventMenu');
+		$this->model_setting_event->addEvent('openbay_menu', 'admin/view/common/column_left/before', 'marketplace/openbay/eventMenu');
 	}
 
 	public function uninstall() {

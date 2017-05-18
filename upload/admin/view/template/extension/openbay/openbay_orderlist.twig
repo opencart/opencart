@@ -43,28 +43,28 @@
                 <label class="control-label" for="input-order-status">{{ entry_order_status }}</label>
                 <select name="filter_order_status_id" id="input-order-status" class="form-control">
                   <option value="*"></option>
-                  
+
                   {% if filter_order_status_id == '0' %}
-                  
+
                   <option value="0" selected="selected">{{ text_missing }}</option>
-                  
+
                   {% else %}
-                  
+
                   <option value="0">{{ text_missing }}</option>
-                  
+
                   {% endif %}
                   {% for order_status in order_statuses %}
                   {% if order_status.order_status_id == filter_order_status_id %}
-                  
+
                   <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
-                  
+
                   {% else %}
-                  
+
                   <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                  
+
                   {% endif %}
                   {% endfor %}
-                
+
                 </select>
               </div>
             </div>
@@ -73,19 +73,19 @@
                 <label class="control-label" for="input-channel">{{ entry_order_channel }}</label>
                 <select name="filter_channel" id="input-channel" class="form-control">
                   <option value=""></option>
-                  
+
                   {% for channel in channels %}
                   {% if channel.module == filter_channel %}
-                  
+
                   <option value="{{ channel.module }}" selected="selected">{{ channel.title }}</option>
-                  
+
                   {% else %}
-                  
+
                   <option value="{{ channel.module }}">{{ channel.title }}</option>
-                  
+
                   {% endif %}
                   {% endfor %}
-                
+
                 </select>
               </div>
             </div>
@@ -111,13 +111,13 @@
                 <div class="form-group">
                   <div class="input-group">
                     <select name="change_order_status_id" class="form-control">
-                      
+
                     {% for order_status in order_statuses %}
-                      
+
                       <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                      
+
                     {% endfor %}
-                  
+
                     </select>
                     <a data-toggle="tooltip" title="{{ button_filter }}" class="btn btn-primary input-group-addon" onclick="$('#order-update-form').submit();"><i class="fa fa-plus-circle"></i> {{ button_status }}</a> </div>
                 </div>
@@ -138,7 +138,7 @@
                 </tr>
               </thead>
               <tbody>
-              
+
               {% if orders %}
               {% for order in orders %}
               <tr>
@@ -161,7 +161,7 @@
               </tr>
               {% endif %}
                 </tbody>
-              
+
             </table>
           </div>
         </form>
@@ -175,7 +175,7 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-  url = 'index.php?route=extension/openbay/orderList&user_token={{ user_token }}';
+  url = 'index.php?route=marketplace/openbay/orderlist&user_token={{ user_token }}';
 
   var filter_order_id = $('input[name=\'filter_order_id\']').val();
 
@@ -209,7 +209,7 @@ $('#button-filter').on('click', function() {
 
 	location = url;
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
   $('input[name=\'filter_customer\']').autocomplete({
     'source': function(request, response) {
@@ -230,12 +230,12 @@ $('#button-filter').on('click', function() {
       $('input[name=\'filter_customer\']').val(item['label']);
     }
   });
-//--></script> 
+//--></script>
 <script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 <link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
 <script type="text/javascript"><!--
   $('.date').datetimepicker({
     pickTime: false
   });
-//--></script> 
+//--></script>
 {{ footer }}

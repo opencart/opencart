@@ -63,7 +63,7 @@
             <td class="text-left">{{ product.amazon_sku }}</td>
             <td class="text-center">{{ product.amazon_quantity }}</td>
             <td class="text-right">{{ product.amazon_price }}</td>
-            <td class="text-left"><a href="{{ product.href_product }}" target="_blank">{{ product.name }}</a><?php echo (!empty($product['combination']) ? '<br />' . $product['combination'] : ''); ?></td>
+            <td class="text-left"><a href="{{ product.href_product }}" target="_blank">{{ product.name }}</a>{% if product.combination is not empty %}<br />{{ product.combination }}{% endif %}</td>
             <td class="text-left">{{ product.sku }}</td>
             <td class="text-center">{{ product.quantity }}</td>
             <input type="hidden" name="link[{{ row }}][amazon_sku]" value="{{ product.amazon_sku }}"/>

@@ -90,9 +90,9 @@ class ControllerMarketplaceOpenbay extends Controller {
 			'href' => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true),
 		);
 
-		$data['manage_link'] = $this->url->link('extension/openbay/manage', 'user_token=' . $this->session->data['user_token'], true);
-		$data['product_link'] = $this->url->link('extension/openbay/items', 'user_token=' . $this->session->data['user_token'], true);
-		$data['order_link'] = $this->url->link('extension/openbay/orderlist', 'user_token=' . $this->session->data['user_token'], true);
+		$data['manage_link'] = $this->url->link('marketplace/openbay/manage', 'user_token=' . $this->session->data['user_token'], true);
+		$data['product_link'] = $this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token'], true);
+		$data['order_link'] = $this->url->link('marketplace/openbay/orderlist', 'user_token=' . $this->session->data['user_token'], true);
 
 		$data['success'] = '';
 		if (isset($this->session->data['success'])) {
@@ -129,8 +129,8 @@ class ControllerMarketplaceOpenbay extends Controller {
 				'name' => $this->language->get('heading_title'),
 				'edit' => $this->url->link('extension/openbay/' . $extension . '', 'user_token=' . $this->session->data['user_token'], true),
 				'status' => ($this->config->get('openbay_' . $extension . '_status') || $this->config->get($extension . '_status')) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-				'install' => $this->url->link('extension/openbay/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
-				'uninstall' => $this->url->link('extension/openbay/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
+				'install' => $this->url->link('marketplace/openbay/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
+				'uninstall' => $this->url->link('marketplace/openbay/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
 				'installed' => in_array($extension, $extensions),
 				'code' => $extension
 			);
@@ -177,7 +177,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay/manage', 'user_token=' . $this->session->data['user_token'], true),
+			'href' => $this->url->link('marketplace/openbay/manage', 'user_token=' . $this->session->data['user_token'], true),
 			'text' => $this->language->get('text_manage'),
 		);
 
@@ -270,7 +270,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 		$data['text_version'] = $this->config->get('openbay_version');
 		$data['openbay_menu'] = $this->config->get('openbay_menu');
 
-		$data['action'] = $this->url->link('extension/openbay/manage', 'user_token=' . $this->session->data['user_token'], true);
+		$data['action'] = $this->url->link('marketplace/openbay/manage', 'user_token=' . $this->session->data['user_token'], true);
 		$data['cancel'] = $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true);
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -676,7 +676,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay/manage', 'user_token=' . $this->session->data['user_token'], true),
+			'href' => $this->url->link('marketplace/openbay/manage', 'user_token=' . $this->session->data['user_token'], true),
 			'text' => $data['heading_title'],
 		);
 
@@ -805,12 +805,12 @@ class ControllerMarketplaceOpenbay extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_order'] = $this->url->link('extension/openbay/orderList', 'user_token=' . $this->session->data['user_token'] . '&sort=o.order_id' . $url, true);
-		$data['sort_customer'] = $this->url->link('extension/openbay/orderList', 'user_token=' . $this->session->data['user_token'] . '&sort=customer' . $url, true);
-		$data['sort_status'] = $this->url->link('extension/openbay/orderList', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url, true);
-		$data['sort_date_added'] = $this->url->link('extension/openbay/orderList', 'user_token=' . $this->session->data['user_token'] . '&sort=o.date_added' . $url, true);
-		$data['sort_channel'] = $this->url->link('extension/openbay/orderList', 'user_token=' . $this->session->data['user_token'] . '&sort=channel' . $url, true);
-		$data['link_update'] = $this->url->link('extension/openbay/orderListUpdate', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['sort_order'] = $this->url->link('marketplace/openbay/orderlist', 'user_token=' . $this->session->data['user_token'] . '&sort=o.order_id' . $url, true);
+		$data['sort_customer'] = $this->url->link('marketplace/openbay/orderlist', 'user_token=' . $this->session->data['user_token'] . '&sort=customer' . $url, true);
+		$data['sort_status'] = $this->url->link('marketplace/openbay/orderlist', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url, true);
+		$data['sort_date_added'] = $this->url->link('marketplace/openbay/orderlist', 'user_token=' . $this->session->data['user_token'] . '&sort=o.date_added' . $url, true);
+		$data['sort_channel'] = $this->url->link('marketplace/openbay/orderlist', 'user_token=' . $this->session->data['user_token'] . '&sort=channel' . $url, true);
+		$data['link_update'] = $this->url->link('marketplace/openbay/orderlistupdate', 'user_token=' . $this->session->data['user_token'] . $url, true);
 		$data['cancel'] = $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true);
 
 		$url = '';
@@ -848,7 +848,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->link('extension/openbay/orderList', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('marketplace/openbay/orderlist', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -883,7 +883,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 
 		if (!isset($this->request->post['selected']) || empty($this->request->post['selected'])) {
 			$this->session->data['error'] = $data['text_no_orders'];
-			$this->response->redirect($this->url->link('extension/openbay/orderList', 'user_token=' . $this->session->data['user_token'], true));
+			$this->response->redirect($this->url->link('marketplace/openbay/orderlist', 'user_token=' . $this->session->data['user_token'], true));
 		} else {
 			$this->load->model('extension/openbay/order');
 			$this->load->language('sale/order');
@@ -894,7 +894,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 			$data['column_date_added'] = $this->language->get('column_date_added');
 			$data['heading_title'] = $this->language->get('heading_title');
 
-			$data['link_complete'] = $this->url->link('extension/openbay/orderListComplete', 'user_token=' . $this->session->data['user_token'], true);
+			$data['link_complete'] = $this->url->link('marketplace/openbay/orderlistcomplete', 'user_token=' . $this->session->data['user_token'], true);
 
 			$data['market_options'] = array();
 
@@ -932,7 +932,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 
 			if (empty($orders)) {
 				$this->session->data['error'] = $data['text_no_orders'];
-				$this->response->redirect($this->url->link('extension/openbay/orderList', 'user_token=' . $this->session->data['user_token'], true));
+				$this->response->redirect($this->url->link('marketplace/openbay/orderlist', 'user_token=' . $this->session->data['user_token'], true));
 			} else {
 				$data['orders'] = $orders;
 			}
@@ -950,7 +950,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 			);
 
 			$data['breadcrumbs'][] = array(
-				'href' => $this->url->link('extension/openbay/manage', 'user_token=' . $this->session->data['user_token'], true),
+				'href' => $this->url->link('marketplace/openbay/manage', 'user_token=' . $this->session->data['user_token'], true),
 				'text' => $data['heading_title'],
 			);
 
@@ -997,7 +997,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$data['cancel'] = $this->url->link('extension/openbay/orderList', 'user_token=' . $this->session->data['user_token'] . $url, true);
+			$data['cancel'] = $this->url->link('marketplace/openbay/orderlist', 'user_token=' . $this->session->data['user_token'] . $url, true);
 			$data['button_cancel'] = $this->language->get('button_cancel');
 
 			$this->response->setOutput($this->load->view('extension/openbay/openbay_orderlist_confirm', $data));
@@ -1145,7 +1145,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 
 		$this->session->data['success'] = sprintf($this->language->get('text_confirmed'), $i, $status_mapped[$this->request->post['order_status_id']]);
 
-		$this->response->redirect($this->url->link('extension/openbay/orderList', 'user_token=' . $this->session->data['user_token'], true));
+		$this->response->redirect($this->url->link('marketplace/openbay/orderlist', 'user_token=' . $this->session->data['user_token'], true));
 	}
 
 	public function items() {
@@ -1341,7 +1341,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('extension/openbay/items', 'user_token=' . $this->session->data['user_token'] . $url, true),
+			'href'      => $this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token'] . $url, true),
 		);
 
 		if ($this->config->get('openbay_amazon_status')) {
@@ -1428,22 +1428,22 @@ class ControllerMarketplaceOpenbay extends Controller {
 		);
 
 		if ($this->config->get('ebay_status') != '1' && $filter['filter_market_name'] == 'ebay') {
-			$this->response->redirect($this->url->link('extension/openbay/items', 'user_token=' . $this->session->data['user_token'], true));
+			$this->response->redirect($this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token'], true));
 			return;
 		}
 
 		if ($this->config->get('openbay_amazon_status') != '1' && $filter['filter_market_name'] == 'amazon') {
-			$this->response->redirect($this->url->link('extension/openbay/items', 'user_token=' . $this->session->data['user_token'], true));
+			$this->response->redirect($this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token'], true));
 			return;
 		}
 
 		if ($this->config->get('openbay_amazonus_status') != '1' && $filter['filter_market_name'] == 'amazonus') {
-			$this->response->redirect($this->url->link('extension/openbay/items', 'user_token=' . $this->session->data['user_token'], true));
+			$this->response->redirect($this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token'], true));
 			return;
 		}
 
 		if ($this->config->get('etsy_status') != '1' && $filter['filter_market_name'] == 'etsy') {
-			$this->response->redirect($this->url->link('extension/openbay/items', 'user_token=' . $this->session->data['user_token'], true));
+			$this->response->redirect($this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token'], true));
 			return;
 		}
 
@@ -1706,12 +1706,12 @@ class ControllerMarketplaceOpenbay extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('extension/openbay/items', 'user_token=' . $this->session->data['user_token'] . '&sort=pd.name' . $url, true);
-		$data['sort_model'] = $this->url->link('extension/openbay/items', 'user_token=' . $this->session->data['user_token'] . '&sort=p.model' . $url, true);
-		$data['sort_price'] = $this->url->link('extension/openbay/items', 'user_token=' . $this->session->data['user_token'] . '&sort=p.price' . $url, true);
-		$data['sort_quantity'] = $this->url->link('extension/openbay/items', 'user_token=' . $this->session->data['user_token'] . '&sort=p.quantity' . $url, true);
-		$data['sort_status'] = $this->url->link('extension/openbay/items', 'user_token=' . $this->session->data['user_token'] . '&sort=p.status' . $url, true);
-		$data['sort_order'] = $this->url->link('extension/openbay/items', 'user_token=' . $this->session->data['user_token'] . '&sort=p.sort_order' . $url, true);
+		$data['sort_name'] = $this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token'] . '&sort=pd.name' . $url, true);
+		$data['sort_model'] = $this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token'] . '&sort=p.model' . $url, true);
+		$data['sort_price'] = $this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token'] . '&sort=p.price' . $url, true);
+		$data['sort_quantity'] = $this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token'] . '&sort=p.quantity' . $url, true);
+		$data['sort_status'] = $this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token'] . '&sort=p.status' . $url, true);
+		$data['sort_order'] = $this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token'] . '&sort=p.sort_order' . $url, true);
 
 		$url = '';
 
@@ -1776,7 +1776,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->link('extension/openbay/items', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -1809,7 +1809,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 	}
 
 	public function itemlist() {
-		$this->response->redirect($this->url->link('extension/openbay/items', 'user_token=' . $this->session->data['user_token'], true));
+		$this->response->redirect($this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token'], true));
 	}
 
 	public function eventDeleteProduct($route, $data) {
@@ -1863,13 +1863,13 @@ class ControllerMarketplaceOpenbay extends Controller {
 
 			$openbay_menu[] = array(
 				'name'	   => $this->language->get('text_openbay_orders'),
-				'href'     => $this->url->link('extension/openbay/orderlist', 'user_token=' . $this->session->data['user_token'], true),
+				'href'     => $this->url->link('marketplace/openbay/orderlist', 'user_token=' . $this->session->data['user_token'], true),
 				'children' => array()
 			);
 
 			$openbay_menu[] = array(
 				'name'	   => $this->language->get('text_openbay_items'),
-				'href'     => $this->url->link('extension/openbay/items', 'user_token=' . $this->session->data['user_token'], true),
+				'href'     => $this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token'], true),
 				'children' => array()
 			);
 

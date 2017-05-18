@@ -25,10 +25,10 @@
       <div class="panel-body">
         <div class="row">
           <div class="col-sm-8">{% if banner %}
-            <div id="banner" class="well well-sm text-center"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></div>
+            <div id="banner" class="well text-center"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></div>
             {% endif %}
-            <div class="row">
-              <div class="col-xs-4 col-sm-2">{% for image in images %}<a href="{{ image.popup }}" class="colorbox thumbnail" rel="colorbox"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="image" /></a>{% endfor %}</div>
+            <div class="row thumbnails">
+              {% for image in images %}<div class="col-xs-4 col-sm-2"><a href="{{ image.popup }}" class="thumbnail"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="img-responsive" /></a></div>{% endfor %}
             </div>
             <ul class="nav nav-tabs">
               <li class="active"><a href="#tab-description" data-toggle="tab">{{ tab_general }}</a></li>
@@ -177,7 +177,7 @@ $('#button-opencart').on('click', function(e) {
 	});
 });
 //--></script> 
-  <script type="text/javascript"><!--
+<script type="text/javascript"><!--
 $('#button-buy').on('click', function(e) {
 	e.preventDefault();
 
@@ -505,5 +505,16 @@ $('#comment').on('click', '.reply-refresh', function(e) {
 	});
 });
 //--></script> 
+<script type="text/javascript"><!--
+$(document).ready(function() {
+	$('.thumbnails').magnificPopup({
+		type:'image',
+		delegate: 'a',
+		gallery: {
+			enabled:true
+		}
+	});
+});
+//--></script>
 </div>
 {{ footer }} 

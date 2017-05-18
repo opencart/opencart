@@ -21,6 +21,15 @@ $_['text_sort_name']    = 'name';
 $_['text_sort_rated']   = 'rated';
 $_['text_sort_viewed']  = 'viewed';
 $_['text_views'] 	    = 'Views:';
+$_['text_date_asc']     = 'Date (Lowest)';
+$_['text_date_desc']    = 'Date (Highest)';
+$_['text_viewed_asc'] 	= 'Viewed (Lowest)';
+$_['text_viewed_desc'] 	= 'Viewed (Highest)';
+$_['text_rating_asc'] 	= 'Rating (Lowest)';
+$_['text_rating_desc'] 	= 'Rating (Highest)';
+$_['text_name_asc'] 	= 'Name (A - Z)';
+$_['text_name_desc'] 	= 'Name (Z - A)';
+$_['text_default']   	= 'Default';
 
 $_['button_more']       = 'more';
 ?>

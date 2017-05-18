@@ -1217,22 +1217,29 @@
                     </label>
                   </div>
                 </div>
-				 <div class="form-group">
-                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_seo_url_include_path; ?>"><?php echo $entry_seo_url_include_path; ?></span></label>
-                <div class="col-sm-10">
-					<?php if ($config_seo_url_include_path) { ?>
-						<input class="radio-inline" type="radio" name="config_seo_url_include_path" value="1" checked="checked" />
-							<?php echo $text_yes; ?>
-						<input class="radio-inline" type="radio" name="config_seo_url_include_path" value="0" />
-							<?php echo $text_no; ?>
-								<?php } else { ?>
-						<input class="radio-inline" type="radio" name="config_seo_url_include_path" value="1" />
-							<?php echo $text_yes; ?>
-						<input class="radio-inline" type="radio" name="config_seo_url_include_path" value="0" checked="checked" />
-							<?php echo $text_no; ?>
-						<?php } ?>
-				</div>
-              </div>
+				<div class="form-group">
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_seo_url_include_path; ?>"><?php echo $entry_seo_url_include_path; ?></span></label>
+                  <div class="col-sm-10">
+                    <label class="radio-inline">
+                      <?php if ($config_seo_url_include_path) { ?>
+                      <input type="radio" name="config_seo_url_include_path" value="1" checked="checked" />
+                      <?php echo $text_yes; ?>
+                      <?php } else { ?>
+                      <input type="radio" name="config_seo_url_include_path" value="1" />
+                      <?php echo $text_yes; ?>
+                      <?php } ?>
+                    </label>
+                    <label class="radio-inline">
+                      <?php if (!$config_seo_url_include_path) { ?>
+                      <input type="radio" name="config_seo_url_include_path" value="0" checked="checked" />
+                      <?php echo $text_no; ?>
+                      <?php } else { ?>
+                      <input type="radio" name="config_seo_url_include_path" value="0" />
+                      <?php echo $text_no; ?>
+                      <?php } ?>
+                    </label>
+                  </div>
+                </div>
 			   <div class="form-group">
                 <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_seo_url_postfix; ?>"><?php echo $entry_seo_url_postfix; ?></span></label>
 				<div class="col-sm-10">

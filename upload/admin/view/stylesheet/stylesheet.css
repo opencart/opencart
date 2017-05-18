@@ -716,6 +716,25 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 #extension-list span {
 	font-weight: 600;
 }
+#marketplace-extension-info .extension-info {
+	margin-right: auto;
+	margin-left: auto;
+}
+@media (min-width: 768px) {
+#marketplace-extension-info .extension-info {
+	width: 750px; 
+}
+}
+@media (min-width: 992px) {
+#marketplace-extension-info .extension-info {
+	width: 970px;
+}
+}
+@media (min-width: 1200px) {
+#marketplace-extension-info .extension-info {
+	width: 1170px;
+}
+}
 #marketplace-extension-info #banner img {
 	margin-left: auto;
 	margin-right: auto;

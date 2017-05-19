@@ -9,7 +9,7 @@
         {% if link_amazon_us_bulk %}
           <a class="btn btn-primary" href="{{ link_amazon_us_bulk }}"><i class="fa fa-cloud-upload fa-lg"></i> {{ button_amazon_us_bulk }}</a>
         {% endif %}
-        {% if $link_ebay_bulk %}
+        {% if link_ebay_bulk %}
           <a class="btn btn-primary" id="button-ebay-bulk"><i class="fa fa-cloud-upload fa-lg"></i> {{ button_ebay_bulk }}</a>
         {% endif %}
       </div>
@@ -273,7 +273,7 @@
 </div>
 <script type="text/javascript"><!--
   function filter() {
-      url = 'index.php?route=extension/openbay/items&user_token={{ user_token }}';
+      url = 'index.php?route=marketplace/openbay/items&user_token={{ user_token }}';
 
       var filter_name = $('input[name=\'filter_name\']').val();
 

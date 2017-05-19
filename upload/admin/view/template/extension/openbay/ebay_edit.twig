@@ -366,7 +366,7 @@
         },
         success: function () {
           alert('{{ text_alert_removed }}');
-          window.location = 'index.php?route=extension/openbay/items&user_token={{ user_token }}';
+          window.location = 'index.php?route=marketplace/openbay/items&user_token={{ user_token }}';
         },
         error: function (xhr, ajaxOptions, thrownError) {
           if (xhr.status != 0) {
@@ -396,7 +396,7 @@
               alert(data.msg);
             } else {
               alert('{{ text_alert_ended }}');
-              window.location = 'index.php?route=extension/openbay/items&user_token={{ user_token }}';
+              window.location = 'index.php?route=marketplace/openbay/items&user_token={{ user_token }}';
             }
           },
           error: function (xhr, ajaxOptions, thrownError) {

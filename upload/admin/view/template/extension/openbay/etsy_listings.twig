@@ -27,7 +27,7 @@
             <div class="col-sm-6">
               <div class="form-group">
                 <label class="control-label" for="input-keywords">{{ entry_keywords }}</label>
-                <input type="text" name="keywords" value="<?php echo isset($filter['keywords']) ? $filter['keywords'] : ''; ?>" placeholder="{{ entry_keywords }}" id="input-keywords" class="form-control" />
+                <input type="text" name="keywords" value="{{ filter.keywords }}" placeholder="{{ entry_keywords }}" id="input-keywords" class="form-control" />
                 <span class="help-block">{{ help_keywords }}</span>
               </div>
             </div>
@@ -35,10 +35,10 @@
               <div class="form-group">
                 <label class="control-label" for="input-status">{{ entry_status }}</label>
                 <select name="status" id="input-status" class="form-control">
-                  <option value="active"<?php if ($filter['status'] == 'active') { echo ' selected'; } ?>>Active</option>
-                  <option value="inactive"<?php if ($filter['status'] == 'inactive') { echo ' selected'; } ?>>Inactive</option>
-                  <option value="draft"<?php if ($filter['status'] == 'draft') { echo ' selected'; } ?>>Draft</option>
-                  <option value="expired"<?php if ($filter['status'] == 'expired') { echo ' selected'; } ?>>Expired</option>
+                  <option value="active"{% if filter.status == "active" %} selected{% endif %}>{{ text_active }}</option>
+                  <option value="inactive"{% if filter.status == "inactive" %} selected{% endif %}>{{ text_inactive }}</option>
+                  <option value="draft"{% if filter.status == "draft" %} selected{% endif %}>{{ text_draft }}</option>
+                  <option value="expired"{% if filter.status == "expired" %} selected{% endif %}>{{ text_expired }}</option>
                 </select>
               </div>
               <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
@@ -80,38 +80,33 @@
               {% if listings %}
               {% for listing in listings %}
               <tr>
-                <td class="text-left"><?php echo $listing['listing']['listing_id']; ?></td>
-                <td class="text-left"><?php echo $listing['listing']['title']; ?></td>
-                <td class="text-center"><?php echo $listing['listing']['quantity']; ?></td>
-                <?php if (!empty($listing['link'])) { ?>
-                <td class="text-center"><?php echo $listing['link']['quantity']; ?></td>
-                <td class="text-center"><i class="fa fa-check" style="color: green;"></i></td>
-                <td class="text-center"><?php
-                        if ($listing['link']['quantity'] != $listing['listing']['quantity']) {
-                          echo $text_status_stock;
-                        } else {
-                          echo $text_status_ok;
-                        }
-                       ?></td>
+                <td class="text-left">{{ listing.listing.listing_id }}</td>
+                <td class="text-left">{{ listing.listing.title }}</td>
+                <td class="text-center">{{ listing.listing.quantity }}</td>
+                {% if listing.link is not empty %}
+                  <td class="text-center">{{ listing.link.quantity }}</td>
+                  <td class="text-center"><i class="fa fa-check" style="color: green;"></i></td>
+                  <td class="text-center">{% if listing.link.quantity != listing.listing.quantity %}{{ text_status_stock }}{% else %}{{ text_status_ok }}{% endif %}</td>
                 {% else %}
-                <td class="text-center"><i class="fa fa-minus"></i></td>
-                <td class="text-center"><i class="fa fa-times" style="color: red;"></i></td>
-                <td class="text-center">{{ text_status_nolink }}</td>
+                  <td class="text-center"><i class="fa fa-minus"></i></td>
+                  <td class="text-center"><i class="fa fa-times" style="color: red;"></i></td>
+                  <td class="text-center">{{ text_status_nolink }}</td>
                 {% endif %}
-                  </td>
-                <td class="text-right"><?php if (in_array('activate_item', $listing['actions'])) { ?>
-                  <button data-toggle="tooltip" title="{{ text_activate }}" class="btn btn-primary" onclick="activateListing('<?php echo $listing['listing']['listing_id']; ?>');" id="btn-activate-<?php echo $listing['listing']['listing_id']; ?>"><i class="fa fa-plus"></i></button>
+                <td class="text-right">
+                  {% if "activate_item" in listing.actions %}
+                    <button data-toggle="tooltip" title="{{ text_activate }}" class="btn btn-primary" onclick="activateListing('{{ listing.listing.listing_id }}');" id="btn-activate-{{ listing.listing.listing_id }}"><i class="fa fa-plus"></i></button>
                   {% endif %}
-                  <?php if (in_array('add_link', $listing['actions'])) { ?>
-                  <button data-toggle="tooltip" title="{{ text_add_link }}" class="btn btn-primary" onclick="showLinkOption('<?php echo $listing['listing']['listing_id']; ?>');"><i class="fa fa-link"></i></button>
+                  {% if "add_link" in listing.actions %}
+                    <button data-toggle="tooltip" title="{{ text_add_link }}" class="btn btn-primary" onclick="showLinkOption('{{ listing.listing.listing_id }}');"><i class="fa fa-link"></i></button>
                   {% endif %}
-                  <?php if (in_array('delete_link', $listing['actions'])) { ?>
-                  <button data-toggle="tooltip" title="{{ text_delete_link }}" class="btn btn-danger" id="btn-delete-<?php echo $listing['link']['etsy_listing_id']; ?>" onclick="deleteLink('<?php echo $listing['link']['etsy_listing_id']; ?>');"><i class="fa fa-unlink"></i></button>
+                  {% if "delete_link" in listing.actions %}
+                    <button data-toggle="tooltip" title="{{ text_delete_link }}" class="btn btn-danger" id="btn-delete-{{ listing.link.etsy_listing_id }}" onclick="deleteLink('{{ listing.link.etsy_listing_id }}');"><i class="fa fa-unlink"></i></button>
                   {% endif %}
-                  <?php if (in_array('end_item', $listing['actions'])) { ?>
-                  <button data-toggle="tooltip" title="{{ text_delete }}" class="btn btn-danger" onclick="endListing('<?php echo $listing['listing']['listing_id']; ?>');" id="btn-end-<?php echo $listing['link']['etsy_listing_id']; ?>"><i class="fa fa-times"></i></button>
-                  <button data-toggle="tooltip" title="{{ text_deactivate }}" class="btn btn-danger" onclick="deactivateListing('<?php echo $listing['listing']['listing_id']; ?>');" id="btn-deactivate-<?php echo $listing['listing']['listing_id']; ?>"><i class="fa fa-ban"></i></button>
-                  {% endif %}</td>
+                  {% if "end_item" in listing.actions %}
+                    <button data-toggle="tooltip" title="{{ text_delete }}" class="btn btn-danger" onclick="endListing('{{ listing.listing.listing_id }}');" id="btn-end-{{ listing.link.etsy_listing_id }}"><i class="fa fa-times"></i></button>
+                    <button data-toggle="tooltip" title="{{ text_deactivate }}" class="btn btn-danger" onclick="deactivateListing('{{ listing.listing.listing_id }}');" id="btn-deactivate-{{ listing.listing.listing_id }}"><i class="fa fa-ban"></i></button>
+                  {% endif %}
+                </td>
               </tr>
               {% endfor %}
               {% else %}
@@ -131,7 +126,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-var url = 'index.php?route=extension/openbay/etsy_product/listings&user_token={{ user_token }}&page=<?php echo $filter["page"]; ?>';
+var url = 'index.php?route=extension/openbay/etsy_product/listings&user_token={{ user_token }}&page={{ filter.page }}';
 
 var filter_keywords = $('input[name=\'keywords\']').val();
 

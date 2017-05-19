@@ -80,13 +80,13 @@
             <label class="col-sm-2 control-label"><span data-toggle="tooltip" data-container="#tab-product" title="{{ help_entry_marketplace_default }}">{{ entry_marketplace_default }}</span></label>
             <div class="col-sm-10">
               {% for marketplace in marketplaces %}
-              {% if marketplace.code == openbay_amazon_default_listing_marketplace %}
-              <?php echo '<input id="p_code_'.$marketplace['code'].'" type="radio" name="openbay_amazon_default_listing_marketplace" value="'.$marketplace['code'].'" checked="checked" />'; ?>
-              {% else %}
-              <?php echo '<input id="p_code_'.$marketplace['code'].'" type="radio" name="openbay_amazon_default_listing_marketplace" value="'.$marketplace['code'].'" />'; ?>
-              {% endif %}
-              <label for="p_code_{{ marketplace.code }}">{{ marketplace.name }}</label>
-              <br />
+                {% if marketplace.code == openbay_amazon_default_listing_marketplace %}
+                  <input id="p_code_{{ marketplace.code }}" type="radio" name="openbay_amazon_default_listing_marketplace" value="{{ marketplace.code }}" checked="checked" />
+                {% else %}
+                  <input id="p_code_{{ marketplace.code }}" type="radio" name="openbay_amazon_default_listing_marketplace" value="{{ marketplace.code }}" />
+                {% endif %}
+                  <label for="p_code_{{ marketplace.code }}">{{ marketplace.name }}</label>
+                <br />
               {% endfor %}
             </div>
           </div>
@@ -109,17 +109,17 @@
         <div class="tab-pane" id="tab-orders">
           <fieldset>
             <legend>{{ text_order_statuses }}</legend>
-            {% for key => $amazon_order_status in amazon_order_statuses %}
+            {% for key,amazon_order_status in amazon_order_statuses %}
             <div class="form-group">
               <label class="col-sm-2 control-label">{{ amazon_order_status.name }}</label>
               <div class="col-sm-10">
                 <select name="openbay_amazon_order_status_{{ key }}" class="form-control">
                   {% for order_status in order_statuses %}
-                  <?php if ($amazon_order_status['order_status_id'] == $order_status['order_status_id']) { ?>
-                  <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
-                  {% else %}
-                  <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                  {% endif %}
+                    {% if amazon_order_status.order_status_id == order_status.order_status_id %}
+                      <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                      <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                    {% endif %}
                   {% endfor %}
                 </select>
               </div>
@@ -133,9 +133,9 @@
               <label class="col-sm-2 control-label" for="code-{{ marketplace.code }}">{{ marketplace.name }}</label>
               <div class="col-sm-10">
                 {% if marketplace.id in marketplace_ids %}
-                <?php echo '<input id="code-'.$marketplace['code'].'" type="checkbox" name="openbay_amazon_orders_marketplace_ids[]" value="'.$marketplace['id'].'" checked="checked" />'; ?>
+                  <input id="code-{{ marketplace.code }}" type="checkbox" name="openbay_amazon_orders_marketplace_ids[]" value="{{ marketplace.code }}" checked="checked" />
                 {% else %}
-                <?php echo '<input id="code-'.$marketplace['code'].'" type="checkbox" name="openbay_amazon_orders_marketplace_ids[]" value="'.$marketplace['id'].'" />'; ?>
+                  <input id="code-{{ marketplace.code }}" type="checkbox" name="openbay_amazon_orders_marketplace_ids[]" value="{{ marketplace.code }}" />
                 {% endif %}
               </div>
             </div>
@@ -156,11 +156,11 @@
               <div class="col-sm-10">
                 <select name="openbay_amazon_order_customer_group" id="entry-customer-group" class="form-control">
                   {% for customer_group in customer_groups %}
-                  <?php if ($openbay_amazon_order_customer_group == $customer_group['customer_group_id']) { ?>
-                  <?php echo '<option value="'.$customer_group['customer_group_id'].'" selected="selected">'.$customer_group['name'].'</option>'; ?>
-                  {% else %}
-                  <?php echo '<option value="'.$customer_group['customer_group_id'].'">'.$customer_group['name'].'</option>'; ?>
-                  {% endif %}
+                    {% if openbay_amazon_order_customer_group == customer_group.customer_group_id %}
+                      <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                    {% else %}
+                      <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+                    {% endif %}
                   {% endfor %}
                 </select>
               </div>
@@ -184,7 +184,7 @@
               <div class="col-sm-10">
                 <select name="openbay_amazon_default_carrier" id="entry-default-shipping" class="form-control">
                   {% for carrier in carriers %}
-                  <?php echo '<option'.($carrier == $openbay_amazon_default_carrier ? ' selected' : '').'>'.$carrier.'</option>'; ?>
+                    <option{% if carrier == openbay_amazon_default_carrier %} selected{% endif %}>{{ carrier }}</option>
                   {% endfor %}
                 </select>
               </div>

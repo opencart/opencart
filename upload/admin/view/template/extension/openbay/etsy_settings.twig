@@ -13,15 +13,16 @@
       </ul>
     </div>
   </div>
-  <div class="container-fluid"> {% if error_warning %}
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
     {% endif %}
-    <?php if ($account_info != false) { ?>
-    <?php if ($account_info['header_code'] == 200) { ?>
-    <div class="alert alert-success"><i class="fa fa-check"></i> {{ text_account_ok }}</div>
-    {% else %}
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_account_info }} ({{ account_info.header_code }})</div>
-    {% endif %}
+    {% if account_info is not empty %}
+      {% if account_info.header_code == 200 %}
+        <div class="alert alert-success"><i class="fa fa-check"></i> {{ text_account_ok }}</div>
+      {% else %}
+        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_account_info }} ({{ account_info.header_code }})</div>
+      {% endif %}
     {% endif %}
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -38,19 +39,13 @@
                 <label class="col-sm-2 control-label" for="etsy_status">{{ text_status }}</label>
                 <div class="col-sm-10">
                   <select name="etsy_status" id="etsy_status" class="form-control ftpsetting">
-                    
-                {% if etsy_status %}
-                
-                    <option value="1" selected="selected">{{ text_enabled }}</option>
-                    <option value="0">{{ text_disabled }}</option>
-                    
-                {% else %}
-                
-                    <option value="1">{{ text_enabled }}</option>
-                    <option value="0" selected="selected">{{ text_disabled }}</option>
-                    
-                {% endif %}
-              
+                    {% if etsy_status == 1 %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -82,16 +77,12 @@
                 <label class="col-sm-2 control-label" for="etsy_logging">{{ entry_debug }}</label>
                 <div class="col-sm-10">
                   <select name="etsy_logging" id="etsy_logging" class="form-control">
-                    
-                {% if etsy_logging %}
-                
-                    <option value="1" selected="selected">{{ text_yes }}</option>
-                    <option value="0">{{ text_no }}</option>
-                    
-                {% else %}
-                
-                    <option value="1">{{ text_yes }}</option>
-                    <option value="0" selected="selected">{{ text_no }}</option>
+                    {% if etsy_logging == 1 %}
+                      <option value="1" selected="selected">{{ text_yes }}</option>
+                      <option value="0">{{ text_no }}</option>
+                    {% else %}
+                      <option value="1">{{ text_yes }}</option>
+                      <option value="0" selected="selected">{{ text_no }}</option>
                     {% endif %}
                   </select>
                 </div>
@@ -106,12 +97,10 @@
                 <label class="col-sm-2 control-label" for="etsy_order_status_new">{{ entry_import_def_id }}</label>
                 <div class="col-sm-10">
                   <select name="etsy_order_status_new" id="etsy_order_status_new" class="form-control">
-                    <?php if (empty($etsy_order_status_new)) { $etsy_order_status_new = 1; } ?>
-                    
-                {% for status in order_statuses %}
-                <?php echo'<option value="'.$status['order_status_id'].'"'.($etsy_order_status_new == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
-                {% endfor %}
-              
+                    {% if etsy_order_status_new is empty %}{% set etsy_order_status_new = 1 %}{% endif %}
+                    {% for status in order_statuses %}
+                      <option value="{{ status.order_status_id }}"{% if etsy_order_status_new == status.order_status_id %} selected=selected{% endif %}>{{ status.name }}</option>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -119,12 +108,10 @@
                 <label class="col-sm-2 control-label" for="etsy_order_status_paid">{{ entry_import_paid_id }}</label>
                 <div class="col-sm-10">
                   <select name="etsy_order_status_paid" id="etsy_order_status_paid" class="form-control">
-                    <?php if (empty($etsy_order_status_paid)) { $etsy_order_status_paid = 2; } ?>
-                    
-                {% for status in order_statuses %}
-                <?php echo'<option value="'.$status['order_status_id'].'"'.($etsy_order_status_paid == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
-                {% endfor %}
-              
+                    {% if etsy_order_status_paid is empty %}{% set etsy_order_status_paid = 2 %}{% endif %}
+                    {% for status in order_statuses %}
+                      <option value="{{ status.order_status_id }}"{% if etsy_order_status_paid == status.order_status_id %} selected=selected{% endif %}>{{ status.name }}</option>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -132,25 +119,24 @@
                 <label class="col-sm-2 control-label" for="etsy_order_status_shipped">{{ entry_import_shipped_id }}</label>
                 <div class="col-sm-10">
                   <select name="etsy_order_status_shipped" id="etsy_order_status_shipped" class="form-control">
-                    <?php if (empty($etsy_order_status_shipped)) { $etsy_order_status_shipped = 3; } ?>
-                    
-                {% for status in order_statuses %}
-                <?php echo'<option value="'.$status['order_status_id'].'"'.($etsy_order_status_shipped == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
-                {% endfor %}
-              
+                    {% if etsy_order_status_shipped is empty %}{% set etsy_order_status_shipped = 3 %}{% endif %}
+                    {% for status in order_statuses %}
+                      <option value="{{ status.order_status_id }}"{% if etsy_order_status_shipped == status.order_status_id %} selected=selected{% endif %}>{{ status.name }}</option>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
-              <?php if (isset($account_info['header_code']) && $account_info['header_code'] == 200) { ?>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="button-import"><span data-toggle="tooltip" data-container="#tab-general" title="{{ help_pull_orders }}">{{ text_pull_orders }}</span></label>
-                <div class="col-sm-10"> <a class="btn btn-primary" id="button-import"><i class="fa fa-refresh"></i></a> </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="button-settings"><span data-toggle="tooltip" data-container="#tab-general" title="{{ help_sync_settings }}">{{ text_sync_settings }}</span></label>
-                <div class="col-sm-10"> <a class="btn btn-primary" id="button-settings"><i class="fa fa-refresh"></i></a> </div>
-              </div>
-              {% endif %} </div>
+              {% if account_info.header_code == 200 %}
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="button-import"><span data-toggle="tooltip" data-container="#tab-general" title="{{ help_pull_orders }}">{{ text_pull_orders }}</span></label>
+                  <div class="col-sm-10"> <a class="btn btn-primary" id="button-import"><i class="fa fa-refresh"></i></a> </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="button-settings"><span data-toggle="tooltip" data-container="#tab-general" title="{{ help_sync_settings }}">{{ text_sync_settings }}</span></label>
+                  <div class="col-sm-10"> <a class="btn btn-primary" id="button-settings"><i class="fa fa-refresh"></i></a> </div>
+                </div>
+              {% endif %}
+            </div>
           </div>
         </form>
       </div>
@@ -207,5 +193,5 @@
       }
     });
   });
-//--></script> 
+//--></script>
 {{ footer }}

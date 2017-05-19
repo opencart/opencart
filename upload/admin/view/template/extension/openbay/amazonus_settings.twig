@@ -57,12 +57,12 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">{{ text_api_status }}</label>
             <div class="col-sm-10">
-              {% if not API_status %}
-              <h4><span class="label label-danger"><i class="fa fa-minus-square"></i> {{ text_api_error }}</span></h4>
-              <?php } else if (!$API_auth) { ?>
-              <h4><span class="label label-danger"><i class="fa fa-minus-square"></i> {{ text_api_auth_error }}</span></h4>
+              {% if API_status == false %}
+                <h4><span class="label label-danger"><i class="fa fa-minus-square"></i> {{ text_api_error }}</span></h4>
+              {% elseif API_auth == false %}
+                <h4><span class="label label-danger"><i class="fa fa-minus-square"></i> {{ text_api_auth_error }}</span></h4>
               {% else %}
-              <h4><span class="label label-success"><i class="fa fa-check-square-o"></i> {{ text_api_ok }}</span></h4>
+                <h4><span class="label label-success"><i class="fa fa-check-square-o"></i> {{ text_api_ok }}</span></h4>
               {% endif %}
             </div>
           </div>
@@ -100,11 +100,11 @@
             <div class="col-sm-10">
               <select name="openbay_amazonus_order_status_{{ key }}" class="form-control">
                 {% for order_status in order_statuses %}
-                <?php if ($amazonus_order_status['order_status_id'] == $order_status['order_status_id']) { ?>
-                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
-                {% else %}
-                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                {% endif %}
+                  {% if amazonus_order_status.order_status_id == order_status.order_status_id %}
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                  {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                  {% endif %}
                 {% endfor %}
               </select>
             </div>
@@ -124,11 +124,11 @@
             <div class="col-sm-10">
               <select name="openbay_amazonus_order_customer_group" id="entry-customer-group" class="form-control">
                 {% for customer_group in customer_groups %}
-                <?php if ($openbay_amazonus_order_customer_group == $customer_group['customer_group_id']) { ?>
-                <?php echo '<option value="'.$customer_group['customer_group_id'].'" selected="selected">'.$customer_group['name'].'</option>'; ?>
-                {% else %}
-                <?php echo '<option value="'.$customer_group['customer_group_id'].'">'.$customer_group['name'].'</option>'; ?>
-                {% endif %}
+                  {% if openbay_amazonus_order_customer_group == customer_group.customer_group_id %}
+                    <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                  {% else %}
+                    <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+                  {% endif %}
                 {% endfor %}
               </select>
             </div>
@@ -151,9 +151,9 @@
             <label class="col-sm-2 control-label" for="entry-default-shipping"><span data-toggle="tooltip" data-container="#tab-orders" title="{{ help_default_shipping }}">{{ entry_default_shipping }}</span></label>
             <div class="col-sm-10">
               <select name="openbay_amazonus_default_carrier" id="entry-default-shipping" class="form-control">
-                {% for carrier in carriers %}
-                <?php echo '<option'.($carrier == $openbay_amazonus_default_carrier ? ' selected' : '').'>'.$carrier.'</option>'; ?>
-                {% endfor %}
+                  {% for carrier in carriers %}
+                    <option{% if carrier == openbay_amazonus_default_carrier %} selected{% endif %}>{{ carrier }}</option>
+                  {% endfor %}
               </select>
             </div>
           </div>

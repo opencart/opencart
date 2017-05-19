@@ -48,8 +48,8 @@
                 <label class="control-label" for="filter_manufacturer">{{ entry_manufacturer }}</label>
                 <select name="filter_manufacturer" id="filter_manufacturer" class="form-control">
                   <option value=""></option>
-                  {% for man in manufacturer_list %}
-                  <option value="{{ man.manufacturer_id }}"<?php echo ($filter_manufacturer == $man["manufacturer_id"] ? " selected" : ""); ?>>{{ man.name }}</option>
+                  {% for manufacturer in manufacturer_list %}
+                    <option value="{{ manufacturer.manufacturer_id }}"{% if filter_manufacturer == manufacturer.manufacturer_id %} selected{% endif %}>{{ manufacturer.name }}</option>
                   {% endfor %}
                 </select>
               </div>
@@ -58,28 +58,28 @@
               <div class="form-group">
                 <label class="control-label" for="filter_marketplace">{{ entry_status_marketplace }}</label>
                 <select name="filter_marketplace" id="filter_marketplace" class="form-control">
-                  <option value="all" <?php echo (!isset($filter_marketplace) || $filter_marketplace == 'all' ? ' selected' : ''); ?>>{{ text_status_all }}</option>
+                  <option value="all"{% if filter_marketplace is empty or filter_marketplace == "all" %} selected{% endif %}>{{ text_status_all }}</option>
                   {% if marketplace_statuses.ebay %}
-                  <option value="ebay_active" <?php echo ($filter_marketplace == 'ebay_active' ? ' selected' : ''); ?>>{{ text_status_ebay_active }}</option>
-                  <option value="ebay_inactive" <?php echo ($filter_marketplace == 'ebay_inactive' ? ' selected' : ''); ?>>{{ text_status_ebay_inactive }}</option>
+                    <option value="ebay_active"{% if filter_marketplace == "ebay_active" %} selected{% endif %}>{{ text_status_ebay_active }}</option>
+                    <option value="ebay_inactive"{% if filter_marketplace == "ebay_inactive" %} selected{% endif %}>{{ text_status_ebay_inactive }}</option>
                   {% endif %}
                   {% if marketplace_statuses.amazon %}
-                  <option value="amazon_saved" <?php echo ($filter_marketplace == 'amazon_saved' ? ' selected' : ''); ?>>{{ text_status_amazoneu_saved }}</option>
-                  <option value="amazon_uploaded" <?php echo ($filter_marketplace == 'amazon_uploaded' ? ' selected' : ''); ?>>{{ text_status_amazoneu_processing }}</option>
-                  <option value="amazon_ok" <?php echo ($filter_marketplace == 'amazon_ok' ? ' selected' : ''); ?>>{{ text_status_amazoneu_active }}</option>
-                  <option value="amazon_unlisted" <?php echo ($filter_marketplace == 'amazon_unlisted' ? ' selected' : ''); ?>>{{ text_status_amazoneu_notlisted }}</option>
-                  <option value="amazon_error" <?php echo ($filter_marketplace == 'amazon_error' ? ' selected' : ''); ?>>{{ text_status_amazoneu_failed }}</option>
-                  <option value="amazon_linked" <?php echo ($filter_marketplace == 'amazon_linked' ? ' selected' : ''); ?>>{{ text_status_amazoneu_linked }}</option>
-                  <option value="amazon_not_linked" <?php echo ($filter_marketplace == 'amazon_not_linked' ? ' selected' : ''); ?>>{{ text_status_amazoneu_notlinked }}</option>
+                    <option value="amazon_saved"{% if filter_marketplace == "amazon_saved" %} selected{% endif %}>{{ text_status_amazoneu_saved }}</option>
+                    <option value="amazon_uploaded"{% if filter_marketplace == "amazon_uploaded" %} selected{% endif %}>{{ text_status_amazoneu_processing }}</option>
+                    <option value="amazon_ok"{% if filter_marketplace == "amazon_ok" %} selected{% endif %}>{{ text_status_amazoneu_active }}</option>
+                    <option value="amazon_unlisted"{% if filter_marketplace == "amazon_unlisted" %} selected{% endif %}>{{ text_status_amazoneu_notlisted }}</option>
+                    <option value="amazon_error"{% if filter_marketplace == "amazon_error" %} selected{% endif %}>{{ text_status_amazoneu_failed }}</option>
+                    <option value="amazon_linked"{% if filter_marketplace == "amazon_linked" %} selected{% endif %}>{{ text_status_amazoneu_linked }}</option>
+                    <option value="amazon_not_linked"{% if filter_marketplace == "amazon_not_linked" %} selected{% endif %}>{{ text_status_amazoneu_notlinked }}</option>
                   {% endif %}
                   {% if marketplace_statuses.amazonus %}
-                  <option value="amazonus_saved" <?php echo ($filter_marketplace == 'amazonus_saved' ? ' selected' : ''); ?>>{{ text_status_amazonus_saved }}</option>
-                  <option value="amazonus_uploaded" <?php echo ($filter_marketplace == 'amazonus_uploaded' ? ' selected' : ''); ?>>{{ text_status_amazonus_processing }}</option>
-                  <option value="amazonus_ok" <?php echo ($filter_marketplace == 'amazonus_ok' ? ' selected' : ''); ?>>{{ text_status_amazonus_active }}</option>
-                  <option value="amazonus_unlisted" <?php echo ($filter_marketplace == 'amazonus_unlisted' ? ' selected' : ''); ?>>{{ text_status_amazonus_notlisted }}</option>
-                  <option value="amazonus_error" <?php echo ($filter_marketplace == 'amazonus_error' ? ' selected' : ''); ?>>{{ text_status_amazonus_failed }}</option>
-                  <option value="amazonus_linked" <?php echo ($filter_marketplace == 'amazonus_linked' ? ' selected' : ''); ?>>{{ text_status_amazonus_linked }}</option>
-                  <option value="amazonus_not_linked" <?php echo ($filter_marketplace == 'amazonus_not_linked' ? ' selected' : ''); ?>>{{ text_status_amazonus_notlinked }}</option>
+                    <option value="amazonus_saved"{% if filter_marketplace == "amazonus_saved" %} selected{% endif %}>{{ text_status_amazonus_saved }}</option>
+                    <option value="amazonus_uploaded"{% if filter_marketplace == "amazonus_uploaded" %} selected{% endif %}>{{ text_status_amazonus_processing }}</option>
+                    <option value="amazonus_ok"{% if filter_marketplace == "amazonus_ok" %} selected{% endif %}>{{ text_status_amazonus_active }}</option>
+                    <option value="amazonus_unlisted"{% if filter_marketplace == "amazonus_unlisted" %} selected{% endif %}>{{ text_status_amazonus_notlisted }}</option>
+                    <option value="amazonus_error"{% if filter_marketplace == "amazonus_error" %} selected{% endif %}>{{ text_status_amazonus_failed }}</option>
+                    <option value="amazonus_linked"{% if filter_marketplace == "amazonus_linked" %} selected{% endif %}>{{ text_status_amazonus_linked }}</option>
+                    <option value="amazonus_not_linked"{% if filter_marketplace == "amazonus_not_linked" %} selected{% endif %}>{{ text_status_amazonus_notlinked }}</option>
                   {% endif %}
                 </select>
               </div>
@@ -88,14 +88,14 @@
                 <select name="filter_status" class="form-control">
                   <option value=""></option>
                   {% if filter_status == '1' %}
-                  <option value="1" selected="selected">{{ text_enabled }}</option>
+                    <option value="1" selected="selected">{{ text_enabled }}</option>
                   {% else %}
-                  <option value="1">{{ text_enabled }}</option>
+                    <option value="1">{{ text_enabled }}</option>
                   {% endif %}
                   {% if filter_status == '0' %}
-                  <option value="0" selected="selected">{{ text_disabled }}</option>
+                    <option value="0" selected="selected">{{ text_disabled }}</option>
                   {% else %}
-                  <option value="0">{{ text_disabled }}</option>
+                    <option value="0">{{ text_disabled }}</option>
                   {% endif %}
                 </select>
               </div>
@@ -104,8 +104,8 @@
                 <select name="filter_category" id="filter_category" class="form-control">
                   <option value=""></option>
                   <option value="none">{{ text_category_missing }}</option>
-                  {% for cat in category_list %}
-                  <option value="{{ cat.category_id }}"<?php echo ($filter_category == $cat["category_id"] ? " selected" : ""); ?>>{{ cat.name }}</option>
+                  {% for category in category_list %}
+                    <option value="{{ category.category_id }}"{% if filter_category == category.category_id %} selected{% endif %}>{{ category.name }}</option>
                   {% endfor %}
                 </select>
               </div>
@@ -137,13 +137,13 @@
                     <label class="control-label">{{ entry_sku }}</label>
                   </div>
                   <div class="col-sm-3">
-                    <input type="checkbox" name="filter_sku" id="filter_sku" value="1" <?php if ($filter_sku == 1) { echo 'checked="checked" ';} ?>/>
+                    <input type="checkbox" name="filter_sku" id="filter_sku" value="1"{% if filter_sku == 1 %} checked="checked"{% endif %} />
                   </div>
                   <div class="col-sm-3">
                     <label class="control-label">{{ entry_description }}</label>
                   </div>
                   <div class="col-sm-3">
-                    <input type="checkbox" name="filter_desc" id="filter_desc" value="1" <?php if ($filter_desc == 1) { echo 'checked="checked" ';} ?>/>
+                    <input type="checkbox" name="filter_desc" id="filter_desc" value="1"{% if filter_desc == 1 %} checked="checked"{% endif %}/>
                   </div>
                 </div>
               </div>
@@ -158,32 +158,42 @@
             <tr>
               <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
               <td class="text-center">{{ column_image }}</td>
-              <td class="text-left">{% if sort == 'pd.name' %}
+              <td class="text-left">
+                {% if sort == 'pd.name' %}
                 <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
                 {% else %}
                 <a href="{{ sort_name }}">{{ column_name }}</a>
-                {% endif %}</td>
-              <td class="text-left">{% if sort == 'p.model' %}
+                {% endif %}
+              </td>
+              <td class="text-left">
+                {% if sort == 'p.model' %}
                 <a href="{{ sort_model }}" class="{{ order|lower }}">{{ column_model }}</a>
                 {% else %}
                 <a href="{{ sort_model }}">{{ column_model }}</a>
-                {% endif %}</td>
-              <td class="text-left">{% if sort == 'p.price' %}
+                {% endif %}
+              </td>
+              <td class="text-left">
+                {% if sort == 'p.price' %}
                 <a href="{{ sort_price }}" class="{{ order|lower }}">{{ column_price }}</a>
                 {% else %}
                 <a href="{{ sort_price }}">{{ column_price }}</a>
-                {% endif %}</td>
-              <td class="text-right">{% if sort == 'p.quantity' %}
+                {% endif %}
+              </td>
+              <td class="text-right">
+                {% if sort == 'p.quantity' %}
                 <a href="{{ sort_quantity }}" class="{{ order|lower }}">{{ column_quantity }}</a>
                 {% else %}
                 <a href="{{ sort_quantity }}">{{ column_quantity }}</a>
-                {% endif %}</td>
-              <td class="text-left">{% if sort == 'p.status' %}
+                {% endif %}
+              </td>
+              <td class="text-left">
+                {% if sort == 'p.status' %}
                 <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
                 {% else %}
                 <a href="{{ sort_status }}">{{ column_status }}</a>
-                {% endif %}</td>
-                <td width="230">{{ text_markets }}</td>
+                {% endif %}
+              </td>
+              <td width="230">{{ text_markets }}</td>
             </tr>
           </thead>
           <tbody>
@@ -229,10 +239,10 @@
                     {% for markets in product.markets %}
                       {% if market.status == 1 %}
                         <a href="{{ market.href }}" data-toggle="tooltip" title="{{ market.text }}" class="btn btn-block btn-sm btn-success">{{ market.name }}</a>
-                      <?php } elseif ($market['status'] == 2) { ?>
+                      {% elseif market.status == 2 %}
                         <a href="{{ market.href }}" data-toggle="tooltip" title="{{ market.text }}" class="btn btn-block btn-sm btn-danger">{{ market.name }}</a>
-                      <?php } elseif ($market['status'] == 3) { ?>
-                        <?php if ($market['href'] != '') { ?>
+                      {% elseif market.status == 3 %}
+                        {% if market.href is not empty %}
                           <a href="{{ market.href }}" data-toggle="tooltip" title="{{ market.text }}" class="btn btn-block btn-sm btn-info">{{ market.name }}</a>
                         {% else %}
                           <a disable="disable" data-toggle="tooltip" title="{{ market.text }}" class="btn btn-info btn-block btn-sm">{{ market.name }}</a>

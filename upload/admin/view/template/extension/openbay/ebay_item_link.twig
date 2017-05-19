@@ -113,11 +113,11 @@
               <input type="hidden" name="reserve_qty_{{ id }}" value="{{ item.reserve }}" id="reserve-qty-{{ id }}" />
               <input type="hidden" name="item_id[]" id="item-id-{{ id }}" value="{{ id }}" class="item-id"  />
               <input type="hidden" name="product_id[]" id="product-id-{{ id }}" value="{{ item.product_id }}" />
-              <input type="hidden" name="options" id="options-{{ id }}" value="<?php echo (int)$item['options']; ?>" />
+              <input type="hidden" name="options" id="options-{{ id }}" value={{ item.options }}" />
               <tr id="row-{{ id }}">
                 <td class="text-left"><a href="{{ item.link_edit }}" target="_BLANK">{{ item.name }}</a></td>
                 <td class="text-center"><a href="{{ item.link_ebay }}" target="_BLANK">{{ id }}</a></td>
-                {%if item.options == 0 %}
+                {% if item.options == 0 %}
                   <td class="text-center">{{ item.allocated }}</td>
                   <td class="text-center">{{ item.qty }}</td>
                   <td class="text-center">{{ item.reserve }}</td>
@@ -125,7 +125,7 @@
                   <td class="text-center"><span class="label label-danger">{{ text_no }}</span></td>
                 {% else %}
                   <td class="text-center">-</td>
-                  <td class="text-center"><?php foreach ($item['options'] as $option) { echo $option['stock'] .' x ' . $option['combination'] . '<br />'; } ?></td>
+                  <td class="text-center">{% for option in item.options %}{{ option.stock }} x {{ option.combination }}<br />{% endfor %}</td>
                   <td></td>
                   <td id="text-qty-{{ id }}" class="text-center"></td>
                   <td class="text-center" align="center"><span class="label label-success">{{ text_yes }}</span></td>

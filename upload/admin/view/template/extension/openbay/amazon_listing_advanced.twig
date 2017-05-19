@@ -38,18 +38,16 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">{{ entry_product }}</label>
             <div class="col-sm-10">
-              <p> <a href="{{ listing_url }}">{{ listing_name }}
-                <?php if (!empty($options)) { echo " : "; } ?>
-                </a>
+              <p><a href="{{ listing_url }}">{{ listing_name }}{% if options is not empty %} : {% endif %}</a>
                 {% if options %}
                 <select id="openstock_selector" name="optionVar" class="form-control">
-                  <?php $option_selected = false; ?>
+                  {% set option_selected = false %}
                   {% for option in options %}
-                    <?php if (!empty($option['sku'])) { ?>
-                      <option <?php if ($variation == $option['sku']) { echo "selected='selected'"; $option_selected = true; } ?> value="<?php echo  $option['sku']?>"><?php echo $option['combination']?></option>
+                    {% if option.sku is not empty %}
+                      <option value="{{ option.sku }}"{% if variation == option.sku %} selected{% set option_selected = true %}{% endif %}>{{ option.combination }}</option>
                     {% endif %}
                   {% endfor %}
-                  <?php if ($option_selected == false) { ?>
+                  {% if option_selected == false %}
                     <option selected="selected"></option>
                   {% endif %}
                 </select>
@@ -61,13 +59,13 @@
             <label class="col-sm-2 control-label">{{ entry_marketplace }}</label>
             <div class="col-sm-10" id="marketplaces">
               {% for mp in marketplaces %}
-              <label class="radio-inline">
-                <?php if ($saved_marketplaces === false) { ?>
-                <input class="marketplace_ids" id="adv_marketplace_{{ mp.code }}" {% if mp.id in default_marketplaces %} checked="checked" {% endif %} type="radio" name="marketplace_ids[]" value="{{ mp.id }}">
-                {% else %}
-                <input class="marketplace_ids" id="adv_marketplace_{{ mp.code }}" {% if mp.id in saved_marketplaces %} checked="checked" {% endif %} type="radio" name="marketplace_ids[]" value="{{ mp.id }}">
-                {% endif %}
-                {{ mp.name }} </label>
+                <label class="radio-inline">
+                  {% if saved_marketplaces === false %}
+                    <input class="marketplace_ids" id="adv_marketplace_{{ mp.code }}" {% if mp.id in default_marketplaces %} checked="checked" {% endif %} type="radio" name="marketplace_ids[]" value="{{ mp.id }}">
+                  {% else %}
+                    <input class="marketplace_ids" id="adv_marketplace_{{ mp.code }}" {% if mp.id in saved_marketplaces %} checked="checked" {% endif %} type="radio" name="marketplace_ids[]" value="{{ mp.id }}">
+                  {% endif %}
+                {{ mp.name }}</label>
               {% endfor %}
             </div>
           </div>
@@ -77,7 +75,7 @@
               <select name="category_selector" id="category_selector" class="form-control">
                 <option value=""></option>
                 {% for category in amazon_categories %}
-                <option <?php if ($edit_product_category == $category["name"]) echo 'selected="selected"'; ?> value="{{ category.template }}">{{ category.friendly_name }}</option>
+                <option value="{{ category.template }}"{% if edit_product_category == category.name %} selected{% endif %}>{{ category.friendly_name }}</option>
                 {% endfor %}
               </select>
             </div>
@@ -184,7 +182,7 @@ function show_form(xml, formType) {
     $('.dynamic-tab').remove();
     $('.dynamic-page').remove();
 
-    var parserURL = '<?php echo html_entity_decode($template_parser_url); ?>';
+    var parserURL = '{{ template_parser_url }}';
     var reqUrl = parserURL + '&xml=' + xml;
 
     if ($('#openstock_selector').val() !== undefined) {

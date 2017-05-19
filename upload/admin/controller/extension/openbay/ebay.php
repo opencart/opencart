@@ -643,6 +643,8 @@ class ControllerExtensionOpenbayEbay extends Controller {
 		$data['user_token'] = $this->session->data['user_token'];
 		$data['maintenance'] = $this->config->get('config_maintenance');
 		$data['image_import'] = $this->model_extension_openbay_ebay_product->countImportImages();
+		$data['ini_setting_post_max_size'] = ini_get('post_max_size');
+		$data['ini_setting_memory_limit'] = ini_get('memory_limit');
 		$data['image_import_link'] = $this->url->link('extension/openbay/ebay/getImportImages', 'user_token=' . $this->session->data['user_token'], true);
 
 		$data['header'] = $this->load->controller('common/header');
@@ -1350,6 +1352,9 @@ class ControllerExtensionOpenbayEbay extends Controller {
 					$this->load->model('extension/module/openstock');
 					$data['addon']['openstock'] = true;
 					$product_info['options'] = $this->model_setting_module_openstock->getVariants($this->request->get['product_id']);
+
+					$product_info['options_array'] = base64_encode(serialize($product_info['options'][0]['option_values']));
+
 					$product_info['option_groups'] = $this->model_extension_openbay_ebay_product->getProductOptions($this->request->get['product_id']);
 
 					$option_group_array = array();

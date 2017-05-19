@@ -38,7 +38,7 @@
           </ul>
           <div class="tab-content">
             <div id="tab-listing-general" class="tab-pane active">
-              <?php if ($product['store_cats'] != false) { ?>
+              {% if product.store_cats is not empty %}
               <div class="form-group">
                 <label class="col-sm-2 control-label"> <span title="" data-toggle="tooltip" data-original-title="{{ help_shop_category }}">{{ entry_shop_category }}</span> </label>
                 <div class="col-sm-10">
@@ -57,17 +57,13 @@
                 </div>
               </div>
               {% endif %}
-              <?php if (!empty($product['popular_cats'])) { ?>
+              {% if product.popular_cats is not empty %}
               <div class="form-group" id="category-popular-row">
                 <label class="col-sm-2 control-label"> <span title="" data-toggle="tooltip" data-original-title="{{ help_category_popular }}">{{ entry_category_popular }}</span> </label>
                 <div class="col-sm-10">
-                  <p>
-                    <input type="radio" name="popular" value="" id="popular_default" checked />
-                    <strong>{{ text_none }}</strong></p>
+                  <p><input type="radio" name="popular" value="" id="popular_default" checked /><strong>{{ text_none }}</strong></p>
                   {% for cat in product.popular_cats %}
-                  <p>
-                    <input type="radio" name="popular" value="{{ cat.CategoryID }}" class="popular-category" />
-                    {{ cat.breadcrumb }}</p>
+                    <p><input type="radio" name="popular" value="{{ cat.CategoryID }}" class="popular-category" />{{ cat.breadcrumb }}</p>
                   {% endfor %}
                 </div>
               </div>
@@ -240,10 +236,12 @@
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_catalog }}</label>
-                <div class="col-sm-10"> <span class="help-block">
-                  <input type="hidden" value="0" name="catalog_image">
-                  <input id="catalog-image" type="checkbox" value="1" name="catalog_image">
-                  - {{ text_catalog_help }} </span> </div>
+                <div class="col-sm-10">
+                  <span class="help-block">
+                    <input type="hidden" value="0" name="catalog_image">
+                    <input id="catalog-image" type="checkbox" value="1" name="catalog_image"> - {{ text_catalog_help }}
+                  </span>
+                </div>
               </div>
               <div class="row" id="product-catalog-container"></div>
             </div>
@@ -275,11 +273,9 @@
                     <div class="input-group"> <span class="input-group-addon" id="profile-theme-icon"><i class="fa fa-lg fa-file-text"></i></span>
                       <select name="profile_theme" id="profile-theme-input" class="form-control">
                         <option value="def">{{ text_select }}</option>
-                        <?php if (is_array($product['profiles_theme'])) { ?>
                         {% for profiles_theme in product.profiles_theme %}
-                        <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
+                          <option value="{{ profile.ebay_profile_id }}">{{ profile.name }}</option>
                         {% endfor %}
-                        {% endif %}
                       </select>
                     </div>
                   </div>
@@ -290,10 +286,10 @@
                 <div class="col-sm-10">
                   <select name="template" id="template_id" class="form-control">
                     <option value="None">None</option>
-                    <?php if (is_array($product['templates']) && !empty($product['templates'])) { ?>
-                    {% for templates in product.templates %}
-                    <?php echo '<option value="'.$template['template_id'].'">'.$template['name'].'</option>'; ?>
-                    {% endfor %}
+                    {% if product.templates is not empty %}
+                      {% for templates in product.templates %}
+                        <option value="{{ template.template_id }}">{{ template.name }}</option>
+                      {% endfor %}
                     {% endif %}
                   </select>
                 </div>
@@ -304,13 +300,13 @@
                   <div class="row">
                     <div class="col-sm-3">
                       <div class="input-group"> <span class="input-group-addon">{{ text_height }}</span>
-                        <input type="text" name="gallery_height" value="<?php echo $product['defaults']['gallery_height']; ?>" maxlength="4" class="form-control" id="gallery_height" />
-                        <span class="input-group-addon">{{ text_px }}</span> </div>
+                      <input type="text" name="gallery_height" value="{{ product.defaults.gallery_height }}" maxlength="4" class="form-control" id="gallery_height" />
+                      <span class="input-group-addon">{{ text_px }}</span> </div>
                     </div>
                     <div class="col-sm-3">
                       <div class="input-group"> <span class="input-group-addon">{{ text_width }}</span>
-                        <input type="text" name="gallery_width" value="<?php echo $product['defaults']['gallery_width']; ?>" maxlength="4" class="form-control" id="gallery_width" />
-                        <span class="input-group-addon">{{ text_px }}</span> </div>
+                      <input type="text" name="gallery_width" value="{{ product.defaults.gallery_width }}" maxlength="4" class="form-control" id="gallery_width" />
+                      <span class="input-group-addon">{{ text_px }}</span> </div>
                     </div>
                   </div>
                 </div>
@@ -321,12 +317,12 @@
                   <div class="row">
                     <div class="col-sm-3">
                       <div class="input-group"> <span class="input-group-addon">{{ text_height }}</span>
-                        <input type="text" name="thumb_height" value="<?php echo $product['defaults']['thumb_height']; ?>" maxlength="4" class="form-control" id="thumb_height" />
+                        <input type="text" name="thumb_height" value="{{ product.defaults.thumb_height }}" maxlength="4" class="form-control" id="thumb_height" />
                         <span class="input-group-addon">{{ text_px }}</span> </div>
                     </div>
                     <div class="col-sm-3">
                       <div class="input-group"> <span class="input-group-addon">{{ text_width }}</span>
-                        <input type="text" name="thumb_width" value="<?php echo $product['defaults']['thumb_width']; ?>" maxlength="4" class="form-control" id="thumb_width" />
+                        <input type="text" name="thumb_width" value="{{ product.defaults.thumb_width }}" maxlength="4" class="form-control" id="thumb_width" />
                         <span class="input-group-addon">{{ text_px }}</span> </div>
                     </div>
                   </div>
@@ -351,7 +347,7 @@
                 <p>* {{ text_images_text_2 }}</p>
               </div>
               <div class="row">
-                <?php if (!empty($product['product_images'])) { ?>
+                {% if product.product_images is not empty %}
                 <div class="table-responsive">
                   <table id="images" class="table table-striped table-bordered table-hover">
                     <thead>
@@ -366,28 +362,34 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <?php $i = 0; $i_valid = null; ?>
+                      {% set i = 0 %}
+                      {% set i_valid = null %}
                       {% for product_images in product.product_images %}
                       <tr>
                         <td class="text-center"><img src="{{ img.preview }}" class="img-thumbnail" /></td>
-                        <td class="text-center"><?php if ($img['width'] < 500 && $img['height'] < 500) { ?>
-                          <span class="label label-danger" data-toggle="tooltip" data-original-title="{{ error_ebay_imagesize }}">{{ img.width }} x {{ img.height }}</span>
+                        <td class="text-center">
+                          {% if img.width < 500 and img.height < 500 %}
+                            <span class="label label-danger" data-toggle="tooltip" data-original-title="{{ error_ebay_imagesize }}">{{ img.width }} x {{ img.height }}</span>
                           {% else %}
-                          <?php if ($i_valid === null) { $i_valid = $i; } ?>
-                          <span class="label label-success" data-toggle="tooltip" data-original-title="{{ text_ebay_imagesize_ok }}">{{ img.width }} x {{ img.height }}</span>
-                          {% endif %}</td>
+                            {% if i_valid === null %}{% set i_valid = i %}{% endif %}
+                            <span class="label label-success" data-toggle="tooltip" data-original-title="{{ text_ebay_imagesize_ok }}">{{ img.width }} x {{ img.height }}</span>
+                          {% endif %}
+                        </td>
                         <td class="text-center"><input type="checkbox" id="imgUrl{{ i }}" name="img_tpl[{{ i }}]" value="{{ img.image }}" class="check-template-image" /></td>
                         <td class="text-center"><input type="hidden" name="img[{{ i }}]" value="null" />
-                          <?php if ($img['width'] >= 500 || $img['height'] >= 500) { ?>
-                          <input type="checkbox" class="checkbox-ebay-image" onchange="toggleRad({{ i }});" id="image-checkbox-{{ i }}" name="img[{{ i }}]" value="{{ img.image }}" <?php echo ( ($i == 0) ? 'checked="checked" ' : ''); ?> />
+                          {% if img.width >= 500 and img.height >= 500 %}
+                            <input type="checkbox" class="checkbox-ebay-image" onchange="toggleRad({{ i }});" id="image-checkbox-{{ i }}" name="img[{{ i }}]" value="{{ img.image }}" {% if i == 0 %}checked="checked"{% endif %} />
                           {% else %}
-                          -
-                          {% endif %}</td>
-                        <td class="text-center"><?php if ($img['width'] >= 500 || $img['height'] >= 500) { ?>
-                          <input type="radio" name="main_image"<?php echo (($i_valid !== null) && ($i == $i_valid) ? ' checked' : ''); ?> value="{{ i }}" id="image-radio-{{ i }}" <?php echo ( ($i == 0) ? '' : 'disabled="disabled"'); ?> />
+                            -
+                          {% endif %}
+                        </td>
+                        <td class="text-center">
+                          {% if img.width >= 500 or img.height >= 500 %}
+                            <input type="radio" name="main_image"{% if i_valid !== null and i == i_valid %} checked{% endif %} value="{{ i }}" id="image-radio-{{ i }}" {% if i != 0 %}disabled="disabled"{% endif %} />
                           {% else %}
-                          -
-                          {% endif %}</td>
+                            -
+                          {% endif %}
+                        </td>
                       </tr>
                       {% set i = i + 1 %}
                       {% endfor %}
@@ -398,7 +400,7 @@
                 <div class="alert alert-danger">{{ text_images_none }}</div>
                 {% endif %}
               </div>
-              <?php if (!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])) { ?>
+              {% if addon.openstock is not empty and addon.openstock == true and product.options is not empty %}
               <h2>{{ text_option_images }}</h2>
               <p>{{ text_option_description }}</p>
               <div class="form-group">
@@ -406,7 +408,9 @@
                 <div class="col-sm-10">
                   <select name="option_image_group" id="option_image_group" class="form-control">
                     <option value="def">{{ text_select }}</option>
-                    <?php foreach ($product['option_groups'] as $option_group) { echo '<option value="'.$option_group['option_id'].'">'.$option_group['name'].'</option>'; } ?>
+                    {% for option_group in product.option_groups %}
+                      <option value="{{ option_group.option_id }}">{{ option_group.name }}</option>
+                    {% endfor %}
                   </select>
                   <input type="hidden" id="option-image-group-name" name="option_image_group_name" value=""/>
                 </div>
@@ -423,13 +427,16 @@
                           <td>{{ option_group_choice.name }}</td>
                           <td><input type="hidden" name="option_image[{{ option_group.option_id }}][{{ option_group_choice.product_option_value_id }}][name]" value="{{ option_group_choice.name }}"/>
                             <a onclick="addVariationImage({{ option_group.option_id }}, {{ option_group_choice.product_option_value_id }});" class="btn btn-primary"><span>{{ text_add }}</span></a></td>
-                          <td><table class="table table-striped table-bordered table-hover" id="option_images_{{ option_group_choice.product_option_value_id }}">
-                              <?php $x = 0; if (!empty($option_group_choice['image_thumb']) && ($option_group_choice['image'] != 'no_image.jpg')) { $x++; ?>
-                              <tr>
-                                <td id="option_image_{{ option_group.option_id }}_{{ option_group_choice.product_option_value_id }}_{{ x }}"><img src="{{ option_group_choice.image_thumb }}"/>
-                                  <input type="hidden" name="option_image[{{ option_group.option_id }}][{{ option_group_choice.product_option_value_id }}][images][]" value="{{ option_group_choice.image }}"/></td>
-                                <td><button type="button" onclick="removeVariationImage({{ option_group.option_id }}, {{ option_group_choice.product_option_value_id }}, {{ x }});" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
-                              </tr>
+                          <td>
+                            <table class="table table-striped table-bordered table-hover" id="option_images_{{ option_group_choice.product_option_value_id }}">
+                              {% set x = 0 %}
+                              {% if option_group_choice.image_thumb is not empty and option_group_choice.image != "no_image.jpg" %}
+                                {% set x = x + 1 %}
+                                <tr>
+                                  <td id="option_image_{{ option_group.option_id }}_{{ option_group_choice.product_option_value_id }}_{{ x }}"><img src="{{ option_group_choice.image_thumb }}"/>
+                                    <input type="hidden" name="option_image[{{ option_group.option_id }}][{{ option_group_choice.product_option_value_id }}][images][]" value="{{ option_group_choice.image }}"/></td>
+                                  <td><button type="button" onclick="removeVariationImage({{ option_group.option_id }}, {{ option_group_choice.product_option_value_id }}, {{ x }});" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                                </tr>
                               {% endif %}
                               <input type="hidden" name="option_image_count_{{ option_group.option_id }}" id="option_image_count_{{ option_group.option_id }}" value="{{ x }}"/>
                             </table></td>
@@ -452,17 +459,15 @@
                     <div class="input-group"> <span class="input-group-addon" id="profile-generic-icon"><i class="fa fa-lg fa-file-text"></i></span>
                       <select name="profile_generic" id="profile-generic-input" class="form-control">
                         <option value="def">{{ text_select }}</option>
-                        <?php if (is_array($product['profiles_generic'])) { 
-						 foreach ($product['profiles_generic'] as $profile) { ?>
-                        <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
+						{% for profile in product.profiles_generic %}
+                          <option value="{{ profile.ebay_profile_id }}">{{ profile.name }}</option>
                         {% endfor %}
-                        {% endif %}
                       </select>
                     </div>
                   </div>
                 </div>
               </div>
-              <?php if (!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])) { ?>
+              {% if addon.openstock is not empty and addon.openstock == true and product.options is not empty %}
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ text_stock_matrix }}</label>
                 <div class="col-sm-10">
@@ -479,40 +484,37 @@
                       </tr>
                     </thead>
                     <tbody>
-                    <input type="hidden" name="optGroupArray" value="{{ product.option_group_array }}" />
-                    <input type="hidden" name="optGroupRelArray" value="{{ product.option_group_relation_array }}" />
-                    <?php
-                        $option_count = 0;
-                        foreach ($product['options'] as $option) {
-                          if ($option_count == 0) {
-                            echo '<input type="hidden" name="optArray" value="'.  base64_encode(serialize($option['option_values'])) . '" />';
-                          }
+                      <input type="hidden" name="optGroupArray" value="{{ product.option_group_array }}" />
+                      <input type="hidden" name="optGroupRelArray" value="{{ product.option_group_relation_array }}" />
+                      <input type="hidden" name="optArray" value="{{ product.options_array }}" />
+                      {% set option_count = 0 %}
 
-                          $keys = array();
-                          foreach ($option['variant_values'] as $variant_value) {
-                            $keys[] = $variant_value['product_option_value_id'];
-                          }
+                      {% for option in product.options %}
+                        {% set keys = [] %}
 
-                          echo '<input type="hidden" name="opt[' . $option_count . '][key]" value="' . implode(':', $keys) . '" />';
-                          echo '<input type="hidden" name="opt[' . $option_count . '][sku]" value="' . $option['sku'] . '" />';
-                          echo '<input type="hidden" name="opt[' . $option_count . '][active]" value="' . ($option['active'] == 1 ? 1 : 0) . '" />';
-                          echo '<input type="hidden" name="varPriceExCount" class="varPriceExCount" value="' . $option_count . '" />';
+                        {% for variant_value in option.variant_values %}
+                            {% set keys = keys|merge([variant_value.product_option_value_id]) %}
+                        {% endfor %}
 
-                          echo (empty($option['sku']) || $option['stock'] < 1 ? '<tr class="warning">' : '<tr class="success">');
-                            echo '<td>' . (empty($option['sku']) ? '<span class="label label-danger">' . $error_no_sku . '</span>' : $option['sku']) . '</td>';
-                            echo '<td>' . ($option['stock'] <= 1 ? '<span class="label label-danger">' . $option['stock'] . '</span>' : '<span class="label label-success">' . $option['stock'] . '</span>') . '</td>';
-                            echo '<td><input class="form-control" id="qty_' . $option_count . '" type="text" name="opt[' . $option_count . '][qty]" value="' . $option['stock'] . '" onkeyup="updateReserveMessage(' . $option_count . ', ' . $option['stock'] . ');" /></td>';
-                            echo '<td id="qty_reserve_' . $option_count . '">0</td>';
-                            echo '<td>' . $option['combination'] . '</td>';
-                            echo '<td><input class="form-control" id="varPriceEx_' . $option_count . '" onkeyup="updateVarPriceFromEx(' . $option_count . ');" type="text" name="opt[' . $option_count . '][priceex]" value="' . number_format(($option['price'] == 0 ? $product['price'] : $option['price']), 2, '.', '').'" /></td>';
-                            echo '<td><input class="form-control varPriceInc" id="varPriceInc_' . $option_count . '" onkeyup="updateVarPriceFromInc(' . $option_count . ');"  type="text" name="opt[' . $option_count . '][price]" value="0" /></td>';
-                          echo '</tr>';
+                        <input type="hidden" name="opt[{{ option_count }}][key]" value="{{ keys|join(':') }}" />
+                        <input type="hidden" name="opt[{{ option_count }}][sku]" value="{{ option.sku }}" />
+                        <input type="hidden" name="opt[{{ option_count }}][active]" value="{{ option.active }}" />
+                        <input type="hidden" name="varPriceExCount" class="varPriceExCount" value="{{ option_count }}" />
 
-                          //echo '<tr><td colspan="7" id="option-specifics-' . $option_count . '"></td></tr>';
-                          $option_count++;
-                        } ?>
-                      </tbody>
-                    
+                        {% if option.sku is empty or option.stock < 1 %}<tr class="warning">{% else %}<tr class="success">{% endif %}
+                          <td>{% if option.sku is empty %}<span class="label label-danger">{{ error_no_sku }}</span>{% else %}{{ option.sku }}{% endif %}</td>
+                          <td>{% if option.stock < 1 %}<span class="label label-danger">{{ option.stock }}</span>{% else %}<span class="label label-success">{{ option.stock }}</span>{% endif %}</td>
+                          <td><input class="form-control" id="qty_{{ option_count }}" type="text" name="opt[{{ option_count }}][qty]" value="{{ option.stock }}" onkeyup="updateReserveMessage({{ option_count }}, {{ option.stock }});" /></td>
+                          <td id="qty_reserve_{{ option_count }}">0</td>
+                          <td>{{ option.combination }}</td>
+                            {% if option.price == 0 %}{% set option_row_price = product.price %}{% else %}{% set option_row_price = option.price %}{% endif %}
+                          <td><input class="form-control" id="varPriceEx_{{ option_count }}" onkeyup="updateVarPriceFromEx({{ option_count }});" type="text" name="opt[{{ option_count }}][priceex]" value="{{ option_row_price|number_format(2, '.', '') }}" /></td>';
+                          <td><input class="form-control varPriceInc" id="varPriceInc_{{ option_count }}" onkeyup="updateVarPriceFromInc({{ option_count }});"  type="text" name="opt[{{ option_count }}][price]" value="0" /></td>
+                        </tr>
+
+                        {% set option_count = option_count + 1 %}
+                      {% endfor %}
+                    </tbody>
                   </table>
                 </div>
               </div>
@@ -520,7 +522,7 @@
                 <label class="col-sm-2 control-label">{{ entry_tax_inc }}</label>
                 <div class="col-sm-10">
                   <div class="input-group col-xs-2">
-                    <input type="text" name="tax" value="<?php echo $product['defaults']['tax']; ?>" id="taxRate" class="form-control text-right" onkeyup="updateVarPrice();" />
+                    <input type="text" name="tax" value="{{ product.defaults.tax }}" id="taxRate" class="form-control text-right" onkeyup="updateVarPrice();" />
                     <span class="input-group-addon">%</span> </div>
                 </div>
               </div>
@@ -536,11 +538,11 @@
                 <label class="col-sm-2 control-label">{{ entry_price }}</label>
                 <div class="col-sm-10">
                   <div class="input-group col-xs-4">
-                    <input type="text" name="price_no_tax[0]" id="taxEx" value="<?php echo number_format($product['price'], 2, '.', ''); ?>" class="form-control" onkeyup="updatePriceFromEx();" />
+                    <input type="text" name="price_no_tax[0]" id="taxEx" value="{{ product.price|number_format(2, '.', '') }}" class="form-control" onkeyup="updatePriceFromEx();" />
                     <span class="input-group-addon">{{ text_price_ex_tax }}</span> </div>
                   <span class="help-block">{{ help_price_ex_tax }}</span>
                   <div class="input-group col-xs-4">
-                    <input type="text" name="price[0]" id="taxInc" value="<?php echo number_format($product['price'], 2, '.', ''); ?>" class="form-control" onkeyup="updatePriceFromInc();" />
+                    <input type="text" name="price[0]" id="taxInc" value="{{ product.price|number_format(2, '.', '') }}" class="form-control" onkeyup="updatePriceFromInc();" />
                     <span class="input-group-addon">{{ text_price_inc_tax }}</span> </div>
                   <span class="help-block">{{ help_price_inc_tax }}</span> </div>
               </div>
@@ -548,19 +550,19 @@
                 <label class="col-sm-2 control-label">{{ entry_tax_inc }}</label>
                 <div class="col-sm-10">
                   <div class="input-group col-xs-2">
-                    <input type="text" name="tax" value="<?php echo $product['defaults']['tax']; ?>" id="taxRate" class="form-control text-right" onkeyup="updatePriceFromEx();" />
+                    <input type="text" name="tax" value="{{ product.defaults.tax }}" id="taxRate" class="form-control text-right" onkeyup="updatePriceFromEx();" />
                     <span class="input-group-addon">%</span> </div>
                 </div>
               </div>
               {% endif %}
-              <?php if (empty($product['options'])) { ?>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_offers }}</label>
-                <div class="col-sm-10">
-                  <input type="hidden" name="bestoffer" value="0" />
-                  <input type="checkbox" name="bestoffer" value="1" id="bestoffer" />
+              {% if product.options is empty %}
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">{{ entry_offers }}</label>
+                  <div class="col-sm-10">
+                    <input type="hidden" name="bestoffer" value="0" />
+                    <input type="checkbox" name="bestoffer" value="1" id="bestoffer" />
+                  </div>
                 </div>
-              </div>
               {% endif %}
               <div class="form-group">
                 <label class="col-sm-2 control-label"> <span title="" data-toggle="tooltip" data-original-title="{{ help_private }}">{{ entry_private }}</span> </label>
@@ -575,33 +577,29 @@
                 <label class="col-sm-2 control-label">{{ entry_imediate_payment }}</label>
                 <div class="col-sm-10">
                   <input type="hidden" name="ebay_payment_immediate" value="0" />
-                  <input type="checkbox" name="ebay_payment_immediate" value="1" id="ebay_payment_immediate" <?php if ($product['defaults']['ebay_payment_immediate'] == 1) { echo 'checked '; } ?> />
+                  <input type="checkbox" name="ebay_payment_immediate" value="1" id="ebay_payment_immediate"{% if product.defaults.ebay_payment_immediate == 1 %} checked{% endif %} />
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_payment }}</label>
                 <div class="col-sm-10">
-                  <?php $paypal = false; ?>
+                  {% set paypal = false %}
                   {% for payments in product.payments %}
-                  {% if payment.ebay_name == 'PayPal' %}
-                  <?php $paypal = true; ?>
-                  {% else %}
-                  <p>
-                    <input type="checkbox" name="payments[{{ payment.ebay_name }}]" value="1"
-                        <?php echo ($product['defaults']['ebay_payment_types'][$payment['ebay_name']] == 1 ? 'checked="checked" ' : ''); ?>/>
-                    - {{ payment.local_name }}</p>
-                  {% endif %}
+                    {% if payment.ebay_name == 'PayPal' %}
+                      {% set paypal = true %}
+                    {% else %}
+                      <p><input type="checkbox" name="payments[{{ payment.ebay_name }}]" value="1"{% if product.defaults.ebay_payment_types[payment.ebay_name] == 1 %} checked="checked"{% endif %} /> - {{ payment.local_name }}</p>
+                    {% endif %}
                   {% endfor %}
                 </div>
               </div>
-              <?php if ($paypal == true) { ?>
+              {% if paypal == true %}
               <div class="form-group">
                 <label class="col-sm-2 control-label">PayPal</label>
                 <div class="col-sm-10">
-                  <div class="input-group"> <span class="input-group-addon">
-                    <input type="checkbox" name="payments[PayPal]" value="1" <?php echo ($product['defaults']['ebay_payment_types']['PayPal'] == 1 ? 'checked="checked" ' : ''); ?> />
-                    </span>
-                    <input type="text" class="form-control" name="paypal_email" value="<?php echo $product['defaults']['paypal_address']; ?>" placeholder="{{ text_paypal }}"/>
+                  <div class="input-group">
+                    <span class="input-group-addon"><input type="checkbox" name="payments[PayPal]" value="1" {% if product.defaults.ebay_payment_types["PayPal"] == 1 %} checked="checked"{% endif %} /></span>
+                    <input type="text" class="form-control" name="paypal_email" value="{{ product.defaults.paypal_address }}" placeholder="{{ text_paypal }}"/>
                   </div>
                 </div>
               </div>
@@ -609,7 +607,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_payment_instruction }}</label>
                 <div class="col-sm-10">
-                  <textarea name="payment_instruction" class="form-control" rows="3" id="payment_instruction"><?php echo $product['defaults']['payment_instruction']; ?></textarea>
+                  <textarea name="payment_instruction" class="form-control" rows="3" id="payment_instruction">{{ product.defaults.payment_instruction }}</textarea>
                 </div>
               </div>
             </div>
@@ -622,11 +620,9 @@
                     <div class="input-group"> <span class="input-group-addon" id="profile-shipping-icon"><i class="fa fa-lg fa-file-text"></i></span>
                       <select name="profile_shipping" id="profile-shipping-input" class="form-control">
                         <option value="def">{{ text_select }}</option>
-                        <?php if (is_array($product['profiles_shipping'])) { 
-						foreach ($product['profiles_shipping'] as $profile) { ?>
-                        <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
+                        {% for profile in product.profiles_shipping %}
+                        <option value="{{ profile.ebay_profile_id }}">{{ profile.name }}</option>
                         {% endfor %}
-                        {% endif %}
                       </select>
                     </div>
                   </div>
@@ -649,7 +645,7 @@
                 <div class="col-sm-10">
                   <select name="country" id="country" class="form-control">
                     {% for countries in setting.countries %}
-                    <option value="<?php echo country.code;?>"><?php echo $country['name'];?></option>
+                      <option value="{{ country.code }}">{{ country.name }}</option>
                     {% endfor %}
                   </select>
                   <span class="help-block">{{ text_despatch_country_help }}</span> </div>
@@ -658,8 +654,8 @@
                 <label class="col-sm-2 control-label">{{ entry_despatch_time }}</label>
                 <div class="col-sm-10">
                   <select name="dispatch_time" id="dispatch_time" class="form-control">
-                    {% for dispatch_times in setting.dispatch_times %}
-                    <option value="<?php echo $dis['DispatchTimeMax'];?>"><?php echo $dis['Description'];?></option>
+                    {% for dispatch_time in setting.dispatch_times %}
+                    <option value="{{ dispatch_time.DispatchTimeMax }}">{{ dispatch_time.Description }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -671,7 +667,7 @@
                   <input type="checkbox" name="get_it_fast" value="1" id="get_it_fast" />
                 </div>
               </div>
-              <?php if ($setting['listing_restrictions']['eligible_for_pickup_dropoff'] == 1) { ?>
+              {% if setting.listing_restrictions.eligible_for_pickup_dropoff == 1 %}
               <div class="form-group" id="eligible_for_pickup_dropoff_container">
                 <label class="col-sm-2 control-label">{{ entry_shipping_pickupdropoff }}</label>
                 <div class="col-sm-10">
@@ -680,7 +676,7 @@
                 </div>
               </div>
               {% endif %}
-              <?php if ($setting['listing_restrictions']['eligible_for_pickup_instore'] == 1) { ?>
+              {% if setting.listing_restrictions.eligible_for_pickup_instore == 1 %}
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_shipping_pickupinstore }}</label>
                 <div class="col-sm-10">
@@ -689,7 +685,7 @@
                 </div>
               </div>
               {% endif %}
-              <?php if ($setting['listing_restrictions']['global_shipping'] == 1) { ?>
+              {% if setting.listing_restrictions.global_shipping == 1 %}
               <div class="form-group" id="global_shipping_container">
                 <label class="col-sm-2 control-label">{{ entry_shipping_global_shipping }}</label>
                 <div class="col-sm-10">
@@ -698,20 +694,22 @@
                 </div>
               </div>
               {% endif %}
-              <?php if ($product['defaults']['cod_surcharge'] == 1) { ?>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_shipping_cod }}</label>
-                <div class="col-sm-10">
-                  <input type="text" name="cod_fee" id="cod_fee" class="form-control" />
+              {% if product.defaults.cod_surcharge == 1 %}
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">{{ entry_shipping_cod }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="cod_fee" id="cod_fee" class="form-control" />
+                  </div>
                 </div>
-              </div>
               {% endif %}
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_shipping_type_nat }}</label>
                 <div class="col-sm-10">
                   <select name="data[national][shipping_type]" class="form-control" id="shipping-type-national">
-                    <?php echo $setting['shipping_types']['flat'] == 1 ? '<option value="flat"'.(isset($data['national']['shipping_type']) && $data['national']['shipping_type'] == 'flat' ? ' selected' : '').'>'.$text_shipping_flat.'</option>' : ''; ?> <?php echo $setting['shipping_types']['calculated'] == 1 ? '<option value="calculated"'.(isset($data['national']['shipping_type']) && $data['national']['shipping_type'] == 'calculated' ? ' selected' : '').'>'.$text_shipping_calculated.'</option>' : ''; ?> <?php echo $setting['shipping_types']['freight'] == 1 ? '<option value="freight"'.(isset($data['national']['shipping_type']) && $data['national']['shipping_type'] == 'freight' ? ' selected' : '').'>'.$text_shipping_freight.'</option>' : ''; ?>
-                  </select>
+                    {% if setting.shipping_types.flat == 1 %}<option value="flat"{% if data.national.shipping_type == "flat" %} selected{% endif %}>{{ text_shipping_flat }}</option>{% endif %}
+                    {% if setting.shipping_types.calculated == 1 %}<option value="calculated"{% if data.national.shipping_type == "calculated" %} selected{% endif %}>{{ text_shipping_calculated }}</option>{% endif %}
+                    {% if setting.shipping_types.freight == 1 %}<option value="freight"{% if data.national.shipping_type == "freight" %} selected{% endif %}>{{ text_shipping_freight }}</option>{% endif %}
+                   </select>
                 </div>
               </div>
               <div class="form-group">
@@ -786,7 +784,8 @@
                 <label class="col-sm-2 control-label">{{ entry_shipping_type_int }}</label>
                 <div class="col-sm-10">
                   <select name="data[international][shipping_type]" class="form-control" id="shipping-type-international">
-                    <?php echo $setting['shipping_types']['flat'] == 1 ? '<option value="flat"'.(isset($data['international']['shipping_type']) && $data['international']['shipping_type'] == 'flat' ? ' selected' : '').'>'.$text_shipping_flat.'</option>' : ''; ?> <?php echo $setting['shipping_types']['calculated'] == 1 ? '<option value="calculated"'.(isset($data['international']['shipping_type']) && $data['international']['shipping_type'] == 'calculated' ? ' selected' : '').'>'.$text_shipping_calculated.'</option>' : ''; ?>
+                    {% if setting.shipping_types.flat == 1 %}<option value="flat"{% if data.international.shipping_type == "flat" %} selected{% endif %}>{{ text_shipping_flat }}</option>{% endif %}
+                    {% if setting.shipping_types.calculated == 1 %}<option value="calculated"{% if data.international.shipping_type == "calculated" %} selected{% endif %}>{{ text_shipping_calculated }}</option>{% endif %}
                   </select>
                 </div>
               </div>
@@ -855,7 +854,7 @@
                     <label class="control-label">{{ text_unit }}</label>
                     <select name="package[unit]" class="form-control" id="measure-unit">
                       {% for measurement_types in setting.measurement_types %}
-                      <?php echo '<option value="' . $measurement_key . '"'.($product['defaults']['ebay_measurement'] == $measurement_key ? ' selected="selected"' : '').'>' . $measurement_value . '</option>'; ?>
+                        <option value="{{ measurement_key }}"{% if product.defaults.ebay_measurement == measurement_key %} selected{% endif %}>{{ measurement_value }}</option>
                       {% endfor %}
                     </select>
                   </div>
@@ -875,15 +874,15 @@
                       </div>
                     </div>
                   </div>
-                  <?php if (!empty($setting['package_type'])) { ?>
-                  <div class="col-sm-3">
-                    <label class="control-label">{{ text_package }}</label>
-                    <select name="package[package]" class="form-control">
-                      {% for package_type in setting.package_type %}
-                      <?php echo '<option value="' . $package['code'] . '"'.($package['default'] == 1 ? ' selected="selected"' : '').'>' . $package['description'] . '</option>'; ?>
-                      {% endfor %}
-                    </select>
-                  </div>
+                  {% if setting.package_type is not empty %}
+                    <div class="col-sm-3">
+                      <label class="control-label">{{ text_package }}</label>
+                      <select name="package[package]" class="form-control">
+                        {% for package_type in setting.package_type %}
+                        <option value="{{ package_type.code }}"{% if package_type.default == 1 %} selected{% endif %}>{{ package_type.description }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
                   {% endif %}
                 </div>
                 <div class="row form-group">
@@ -891,19 +890,22 @@
                     <label class="control-label">{{ text_depth }}</label>
                     <div class="input-group col-xs-12">
                       <input type="text" name="package[depth]" class="form-control" value="{{ product.height }}">
-                      <span class="input-group-addon size-unit-text"></span> </div>
+                      <span class="input-group-addon size-unit-text"></span>
+                    </div>
                   </div>
                   <div class="col-sm-3">
                     <label class="control-label">{{ text_length }}</label>
                     <div class="input-group col-xs-12">
                       <input type="text" name="package[length]" class="form-control" value="{{ product.length }}">
-                      <span class="input-group-addon size-unit-text"></span> </div>
+                      <span class="input-group-addon size-unit-text"></span>
+                    </div>
                   </div>
                   <div class="col-sm-3">
                     <label class="control-label">{{ text_width }}</label>
                     <div class="input-group col-xs-12">
                       <input type="text" name="package[width]" class="form-control" value="{{ product.width }}">
-                      <span class="input-group-addon size-unit-text"></span> </div>
+                      <span class="input-group-addon size-unit-text"></span>
+                    </div>
                   </div>
                   <div class="col-sm-3">
                     <label class="control-label">{{ text_shape }}</label>
@@ -919,68 +921,69 @@
               <div class="well well-lg">
                 <div class="row">
                   <label class="col-sm-2 control-label">{{ entry_profile_load }}<br />
-                    <span id="profile-returns-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
+                  <span id="profile-returns-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span>
+                  </label>
                   <div class="col-sm-10">
                     <div class="input-group"> <span class="input-group-addon" id="profile-return-icon"><i class="fa fa-lg fa-file-text"></i></span>
                       <select name="profile_return" id="profile-return-input" class="form-control">
                         <option value="def">{{ text_select }}</option>
-                        <?php if (is_array($product['profiles_returns'])) { foreach ($product['profiles_returns'] as $profile) { ?>
-                        <option value="{{ profile.ebay_profile_id }}">{{ profile.name }}</option>
-                        {% endif %}
+                        {% for profile in product.profiles_returns %}
+                          <option value="{{ profile.ebay_profile_id }}">{{ profile.name }}</option>
+                        {% endfor %}
                       </select>
                     </div>
                   </div>
                 </div>
               </div>
-              <?php if (!empty($setting['returns']['accepted'])) { ?>
+              {% if setting.returns.accepted is not empty %}
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ text_return_accepted }}</label>
                 <div class="col-sm-10">
                   <select name="returns_accepted" id="returns_accepted" class="form-control">
-                    {% for v in setting.returns']['accepted %}
-                    <option value="{{ v.ReturnsAcceptedOption }}">{{ v.Description }}</option>
+                    {% for returns_option in setting.returns.accepted %}
+                      <option value="{{ returns_option.ReturnsAcceptedOption }}">{{ returns_option.Description }}</option>
                     {% endfor %}
                   </select>
                 </div>
               </div>
               {% endif %}
-              <?php if (!empty($setting['returns']['within'])) { ?>
+              {% if setting.returns.within is not empty %}
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ text_return_days }}</label>
                 <div class="col-sm-10">
                   <select name="returns_within" id="returns_within" class="form-control">
-                    {% for v in setting.returns']['within %}
-                    <option value="{{ v.ReturnsWithinOption }}">{{ v.Description }}</option>
+                    {% for returns_option in setting.returns.within %}
+                      <option value="{{ returns_option.ReturnsWithinOption }}">{{ returns_option.Description }}</option>
                     {% endfor %}
                   </select>
                 </div>
               </div>
               {% endif %}
-              <?php if (!empty($setting['returns']['paidby'])) { ?>
+              {% if setting.returns.paidby is not empty %}
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ text_return_scosts }}</label>
                 <div class="col-sm-10">
                   <select name="returns_shipping" id="returns_shipping" class="form-control">
-                    {% for v in setting.returns.paidby %}
-                    <option value="{{ v.ShippingCostPaidByOption }}">{{ v.Description }}</option>
+                    {% for returns_option in setting.returns.paidby %}
+                      <option value="{{ returns_option.ShippingCostPaidByOption }}">{{ returns_option.Description }}</option>
                     {% endfor %}
                   </select>
                 </div>
               </div>
               {% endif %}
-              <?php if (!empty($setting['returns']['refund'])) { ?>
+              {% if setting.returns.refund is not empty %}
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ text_return_type }}</label>
                 <div class="col-sm-10">
                   <select name="returns_option" id="returns_option" class="form-control">
-                    {% for v in setting.returns.refund %}
-                    <option value="{{ v.RefundOption }}">{{ v.Description }}</option>
+                    {% for returns_option in setting.returns.refund %}
+                      <option value="{{ returns_option.RefundOption }}">{{ returns_option.Description }}</option>
                     {% endfor %}
                   </select>
                 </div>
               </div>
               {% endif %}
-              <?php if ($setting['returns']['description'] == true) { ?>
+              {% if setting.returns.description == true %}
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ text_return_policy }}</label>
                 <div class="col-sm-10">
@@ -988,13 +991,13 @@
                 </div>
               </div>
               {% endif %}
-              <?php if (!empty($setting['returns']['restocking_fee'])) { ?>
+              {% if setting.returns.restocking_fee is not empty %}
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ text_return_restock }}</label>
                 <div class="col-sm-10">
                   <select name="returns_restocking_fee" id="returns_restocking_fee" class="form-control">
-                    {% for v in setting.returns.restocking_fee %}
-                    <option value="{{ v.RestockingFeeValueOption }}">{{ v.Description }}</option>
+                    {% for returns_option in setting.returns.restocking_fee %}
+                      <option value="{{ returns_option.RestockingFeeValueOption }}">{{ returns_option.Description }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -1044,7 +1047,7 @@
 </div>
 <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
 <link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
-<script type="text/javascript" src="view/javascript/summernote/opencart.js"></script> 
+<script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>
 <script type="text/javascript"><!--
   function updateReserveMessage(elementId, total) {
       var reserve = total - $('#qty_'+elementId).val();
@@ -1436,7 +1439,7 @@
   }
 
   $('#identifier_not_required').on("click", function() {
-    var not_required_text = "<?php echo $setting['product_details']['product_identifier_unavailable_text']; ?>";
+    var not_required_text = "{{ setting.product_details.product_identifier_unavailable_text }}";
 
     if ($('#identifier_not_required:checked').length == 1) {
       if ($('#identifier_ean_required').val() == 1) {
@@ -1594,7 +1597,7 @@
 
   function listingDuration(data) {
     var lang              = new Array();
-    var default_duration  = "<?php echo $product['defaults']['listing_duration']; ?>";
+    var default_duration  = "{{ product.defaults.listing_duration }}";
     var html_inj          = '';
 
     lang["Days_1"]      = '{{ text_listing_1day }}';
@@ -1619,7 +1622,7 @@
 
   function itemFeatures(category_id) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/ebay/getEbayCategorySpecifics&user_token={{ user_token }}&category_id=' + category_id + '&product_id=<?php echo $product["product_id"]; ?>',
+      url: 'index.php?route=extension/openbay/ebay/getEbayCategorySpecifics&user_token={{ user_token }}&category_id=' + category_id + '&product_id={{ product.product_id }}',
       type: 'GET',
       dataType: 'json',
       beforeSend: function() {
@@ -1984,7 +1987,7 @@
         alert('{{ error_listing_duration }}');
     }
 
-    <?php if (!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])) { ?>
+    {% if addon.openstock is not empty and addon.openstock == true and product.options is not empty %}
         var hasOptions = "yes";
     {% else %}
         var hasOptions = "no";
@@ -2056,7 +2059,7 @@
     });
 
   $('#button-save').bind('click', function() {
-      var hasOptions = "<?php if (!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])) { echo 'yes'; } else { echo 'no'; }?>";
+      var hasOptions = "{% if addon.openstock == true and product.options is not empty %}yes{% else %}no{% endif %}";
 
       $.ajax({
         type:'POST',
@@ -2442,5 +2445,5 @@
       $('#weight-minor-text').text('Grams');
     }
   }
-//--></script> 
+//--></script>
 {{ footer }}

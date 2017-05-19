@@ -105,15 +105,15 @@
                 <label class="col-sm-2 control-label" for="openbay_fba_order_prefix"><span data-toggle="tooltip" data-container="#tab-content" title="{{ help_order_id_prefix }}">{{ entry_order_id_prefix }}</span></label>
                 <div class="col-sm-10">
                   <p class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> {{ text_prefix_warning }}</p>
-                  <input <?php echo ($prefix_can_edit === false ? 'disabled' : ''); ?> type="text" name="openbay_fba_order_prefix" value="{{ openbay_fba_order_prefix }}" placeholder="{{ entry_order_id_prefix }}" id="openbay_fba_order_prefix" class="form-control" />
+                  <input{% if prefix_can_edit === false %} disabled{% endif %} type="text" name="openbay_fba_order_prefix" value="{{ openbay_fba_order_prefix }}" placeholder="{{ entry_order_id_prefix }}" id="openbay_fba_order_prefix" class="form-control" />
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="openbay_fba_fulfill_policy"><span data-toggle="tooltip" data-container="#tab-content" title="{{ help_fulfill_policy }}">{{ entry_fulfill_policy }}</span></label>
                 <div class="col-sm-10">
                   <select name="openbay_fba_fulfill_policy" id="openbay_fba_fulfill_policy" class="form-control ftpsetting">
-                    {% for code => $fulfillment_policy_option in fulfillment_policy %}
-                    <option value="{{ code }}" <?php echo ($openbay_fba_fulfill_policy == $code ? 'selected="selected"' : '') ?>>{{ fulfillment_policy_option }}</option>
+                    {% for code,text in fulfillment_policy %}
+                      <option value="{{ code }}" {% if openbay_fba_fulfill_policy == code %} selected{% endif %}>{{ text }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -122,8 +122,8 @@
                 <label class="col-sm-2 control-label" for="openbay_fba_shipping_speed"><span data-toggle="tooltip" data-container="#tab-content" title="{{ help_shipping_speed }}">{{ entry_shipping_speed }}</span></label>
                 <div class="col-sm-10">
                   <select name="openbay_fba_shipping_speed" id="openbay_fba_shipping_speed" class="form-control ftpsetting">
-                    {% for code => $shipping_speed_option in shipping_speed %}
-                      <option value="{{ code }}" <?php echo ($openbay_fba_shipping_speed == $code ? 'selected="selected"' : '') ?>>{{ shipping_speed_option }}</option>
+                    {% for code,text in shipping_speed %}
+                      <option value="{{ code }}" {% if openbay_fba_shipping_speed == code %} selected{% endif %}>{{ text }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -133,7 +133,7 @@
                 <div class="col-sm-10">
                   <select name="openbay_fba_order_trigger_status" id="openbay_fba_order_trigger_status" class="form-control">
                     {% for status in order_statuses %}
-                    <option value="{{ status.order_status_id }}" <?php echo ($openbay_fba_order_trigger_status == $status['order_status_id'] ? ' selected=selected' :''); ?>>{{ status.name }}</option>
+                      <option value="{{ status.order_status_id }}" {% if openbay_fba_order_trigger_status == status.order_status_id %} selected{% endif %}>{{ status.name }}</option>
                     {% endfor %}
                   </select>
                 </div>

@@ -36,31 +36,30 @@
                 <label class="col-sm-2 control-label">{{ text_profile_default }}</label>
                 <div class="col-sm-10">
                   <input type="hidden" name="default" value="0" />
-                  <input type="checkbox" name="default" value="1" <?php if ($default == 1){ echo 'checked="checked"'; } ?> />
+                  <input type="checkbox" name="default" value="1"{% if default == 1 %} checked="checked"{% endif %} />
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="name">{{ text_profile_name }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="name" value="<?php if (isset($name)){ echo $name; } ?>" placeholder="{{ text_profile_name }}" id="name" class="form-control" />
+                  <input type="text" name="name" value="{{ name }}" placeholder="{{ text_profile_name }}" id="name" class="form-control" />
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="description">{{ text_profile_desc }}</label>
                 <div class="col-sm-10">
-                  <textarea name="description" class="form-control" rows="3" id="description"><?php if (isset($description)){ echo $description; } ?></textarea>
+                  <textarea name="description" class="form-control" rows="3" id="description">{{ description }}</textarea>
                 </div>
               </div>
             </div>
             <div class="tab-pane" id="tab-returns">
-              <?php if (!empty($setting['returns']['accepted'])) { ?>
+              {% if setting.returns.accepted is not empty %}
                 <div class="form-group">
                   <label class="col-sm-2 control-label">{{ text_returns_accept }}</label>
                   <div class="col-sm-10">
-                    <?php if (!isset($data['returns_accepted'])){ $data['returns_accepted'] = ''; } ?>
                     <select name="data[returns_accepted]" class="form-control">
-                      <?php foreach($setting['returns']['accepted'] as $v) { ?>
-                        <option value="{{ v.ReturnsAcceptedOption }}" <?php if ($data['returns_accepted'] == $v['ReturnsAcceptedOption']){ echo'selected'; } ?>>{{ v.Description }}</option>
+                      {% for return_accepted in setting.returns.accepted %}
+                        <option value="{{ return_accepted.ReturnsAcceptedOption }}"{% if data.returns_accepted == return_accepted.ReturnsAcceptedOption %} selected{% endif %}>{{ return_accepted.Description }}</option>
                       {% endfor %}
                     </select>
                   </div>
@@ -68,76 +67,76 @@
               {% else %}
                 <input type="hidden" name="data[returns_accepted]" value="" />
               {% endif %}
-              <?php if (!empty($setting['returns']['within'])) { ?>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">{{ text_returns_days }}</label>
-                <div class="col-sm-10">
-                  <?php if (!isset($data['returns_within'])){ $data['returns_within'] = ''; } ?>
-                  <select name="data[returns_within]" class="form-control">
-                    <?php foreach($setting['returns']['within'] as $v) { ?>
-                    <option value="{{ v.ReturnsWithinOption }}" <?php if ($data['returns_within'] == $v['ReturnsWithinOption']){ echo'selected'; } ?>>{{ v.Description }}</option>
-                    {% endfor %}
-                  </select>
+
+              {% if setting.returns.within is not empty %}
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">{{ text_returns_days }}</label>
+                  <div class="col-sm-10">
+                    <select name="data[returns_within]" class="form-control">
+                      {% for return_within in setting.returns.within %}
+                        <option value="{{ return_within.ReturnsWithinOption }}"{% if data.returns_accepted == return_within.ReturnsWithinOption %} selected{% endif %}>{{ return_within.Description }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
                 </div>
-              </div>
               {% else %}
-              <input type="hidden" name="data[returns_within]" value="" />
+                <input type="hidden" name="data[returns_within]" value="" />
               {% endif %}
-              <?php if (!empty($setting['returns']['paidby'])) { ?>
+
+              {% if setting.returns.paidby is not empty %}
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ text_returns_costs }}</label>
                 <div class="col-sm-10">
-                  <?php if (!isset($data['returns_shipping'])){ $data['returns_shipping'] = ''; } ?>
                   <select name="data[returns_shipping]" class="form-control">
-                    <?php foreach($setting['returns']['paidby'] as $v) { ?>
-                    <option value="{{ v.ShippingCostPaidByOption }}" <?php if ($data['returns_shipping'] == $v['ShippingCostPaidByOption']){ echo'selected'; } ?>>{{ v.Description }}</option>
+                    {% for return_paidby in setting.returns.paidby %}
+                      <option value="{{ return_paidby.ShippingCostPaidByOption }}"{% if data.returns_shipping == return_paidby.ShippingCostPaidByOption %} selected{% endif %}>{{ return_paidby.Description }}</option>
                     {% endfor %}
                   </select>
                 </div>
               </div>
               {% else %}
-              <input type="hidden" name="data[returns_shipping]" value="" />
+                <input type="hidden" name="data[returns_shipping]" value="" />
               {% endif %}
-              <?php if (!empty($setting['returns']['refund'])) { ?>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">{{ text_returns_type }}</label>
-                <div class="col-sm-10">
-                  <?php if (!isset($data['returns_option'])){ $data['returns_option'] = ''; } ?>
-                  <select name="data[returns_option]" class="form-control">
-                    <?php foreach($setting['returns']['refund'] as $v) { ?>
-                    <option value="{{ v.RefundOption }}" <?php if ($data['returns_option'] == $v['RefundOption']){ echo'selected'; } ?>>{{ v.Description }}</option>
-                    {% endfor %}
-                  </select>
+
+              {% if setting.returns.refund is not empty %}
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">{{ text_returns_type }}</label>
+                  <div class="col-sm-10">
+                    <select name="data[returns_option]" class="form-control">
+                      {% for return_refund in setting.returns.refund %}
+                        <option value="{{ return_refund.RefundOption }}"{% if data.returns_option == return_refund.RefundOption %} selected{% endif %}>{{ return_refund.Description }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
                 </div>
-              </div>
               {% else %}
-              <input type="hidden" name="data[returns_option]" value="" />
+                <input type="hidden" name="data[returns_option]" value="" />
               {% endif %}
-              <?php if ($setting['returns']['description'] == true) { ?>
-                <?php if (!isset($data['returns_policy'])){ $data['returns_policy'] = ''; } ?>
+
+              {% if setting.returns.description == true %}
                 <div class="form-group">
                   <label class="col-sm-2 control-label">{{ text_returns_inst }}</label>
                   <div class="col-sm-10">
-                    <textarea name="data[returns_policy]" class="form-control" rows="3" maxlength="5000"><?php echo $data['returns_policy'];?></textarea>
+                    <textarea name="data[returns_policy]" class="form-control" rows="3" maxlength="5000">{{ data.returns_policy }}</textarea>
                   </div>
                 </div>
               {% else %}
                 <input type="hidden" name="data[returns_policy]" value="" />
               {% endif %}
-              <?php if (!empty($setting['returns']['restocking_fee'])) { ?>
+
+              {% if setting.returns.restocking_fee is not empty %}
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ text_returns_restock }}</label>
                 <div class="col-sm-10">
-                  <?php if (!isset($data['returns_restocking_fee'])){ $data['returns_restocking_fee'] = ''; } ?>
                   <select name="data[returns_restocking_fee]" class="form-control">
-                    <?php foreach($setting['returns']['restocking_fee'] as $v) { ?>
-                    <option value="{{ v.RestockingFeeValueOption }}" <?php if ($data['returns_restocking_fee'] == $v['RestockingFeeValueOption']){ echo'selected'; } ?>>{{ v.Description }}</option>
+                    {% for return_restocking_fee in setting.returns.restocking_fee %}
+                      <option value="{{ return_restocking_fee.RestockingFeeValueOption }}"{% if data.returns_restocking_fee == return_restocking_fee.RestockingFeeValueOption %} selected{% endif %}>{{ return_restocking_fee.Description }}</option>
                     {% endfor %}
                   </select>
                 </div>
               </div>
               {% else %}
-              <input type="hidden" name="data[returns_restocking_fee]" value="" />
+                <input type="hidden" name="data[returns_restocking_fee]" value="" />
               {% endif %}
             </div>
           </div>

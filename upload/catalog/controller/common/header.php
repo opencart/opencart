@@ -19,6 +19,12 @@ class ControllerCommonHeader extends Controller {
 		} else {
 			$server = $this->config->get('config_url');
 		}
+		//fixed error add to cart acction(and all ajax Action) between www and non www 
+		$server_url_info = parse_url($server);
+		
+		if(strtolower($server_url_info['host']) != strtolower($_SERVER["SERVER_NAME"]) &&  strtolower('www.'.$server_url_info['host']) == strtolower($_SERVER["SERVER_NAME"])){
+			$server = $server_url_info['scheme'].'://www.'.$server_url_info['host'].'/';
+		}
 
 		if (is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
 			$this->document->addLink($server . 'image/' . $this->config->get('config_icon'), 'icon');

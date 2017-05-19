@@ -208,6 +208,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$data['text_search'] = $this->language->get('text_search');
 		$data['text_category'] = $this->language->get('text_category');
 		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_reviews'] = $this->language->get('text_reviews');
 		
 		$data['button_opencart'] = $this->language->get('button_opencart');
 		
@@ -603,6 +604,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$data['license_period'] = $response_info['license_period'];
 			$data['purchased'] = $response_info['purchased'];
 			$data['rating'] = $response_info['rating'];
+			$data['rating_total'] = $response_info['rating_total'];
 			$data['downloaded'] = $response_info['downloaded'];
 			$data['sales'] = $response_info['sales'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($response_info['date_added']));

@@ -116,6 +116,19 @@ class ControllerExtensionExtensionShipping extends Controller {
 				);
 			}
 		}
+		
+		$sort_order = array();
+
+		foreach ($data['extensions'] as $key => $value) {
+			if($value['installed']){
+				$add = '0';
+			}else{
+				$add = '1';
+			}
+				$sort_order[$key] = $add.$value['name'];
+		}
+
+		array_multisort($sort_order, SORT_ASC, $data['extensions']);
 
 		$this->response->setOutput($this->load->view('extension/extension/shipping', $data));
 	}

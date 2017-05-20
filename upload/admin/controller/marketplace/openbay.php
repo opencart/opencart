@@ -204,53 +204,6 @@ class ControllerMarketplaceOpenbay extends Controller {
 			}
 		}
 
-		if (isset($this->request->post['openbay_ftp_username'])) {
-			$data['openbay_ftp_username'] = $this->request->post['openbay_ftp_username'];
-		} else {
-			$data['openbay_ftp_username'] = $this->config->get('openbay_ftp_username');
-		}
-
-		if (isset($this->request->post['openbay_ftp_pw'])) {
-			$data['openbay_ftp_pw'] = $this->request->post['openbay_ftp_pw'];
-		} else {
-			$data['openbay_ftp_pw'] = $this->config->get('openbay_ftp_pw');
-		}
-
-		if (isset($this->request->post['openbay_ftp_rootpath'])) {
-			$data['openbay_ftp_rootpath'] = $this->request->post['openbay_ftp_rootpath'];
-		} else {
-			$data['openbay_ftp_rootpath'] = $this->config->get('openbay_ftp_rootpath');
-		}
-
-		if (isset($this->request->post['openbay_ftp_pasv'])) {
-			$data['openbay_ftp_pasv'] = $this->request->post['openbay_ftp_pasv'];
-		} else {
-			$data['openbay_ftp_pasv'] = $this->config->get('openbay_ftp_pasv');
-		}
-
-		if (isset($this->request->post['openbay_ftp_beta'])) {
-			$data['openbay_ftp_beta'] = $this->request->post['openbay_ftp_beta'];
-		} else {
-			$data['openbay_ftp_beta'] = $this->config->get('openbay_ftp_beta');
-		}
-
-		$data['openbay_ftp_server'] = $_SERVER["SERVER_ADDR"];
-		if (isset($this->request->post['openbay_ftp_server'])) {
-			$data['openbay_ftp_server'] = $this->request->post['openbay_ftp_server'];
-		} else {
-			$data['openbay_ftp_server'] = $this->config->get('openbay_ftp_server');
-		}
-
-		if (isset($this->request->post['openbay_admin_directory'])) {
-			$data['openbay_admin_directory'] = $this->request->post['openbay_admin_directory'];
-		} else {
-			if (!$this->config->get('openbay_admin_directory')) {
-				$data['openbay_admin_directory'] = 'admin';
-			} else {
-				$data['openbay_admin_directory'] = $this->config->get('openbay_admin_directory');
-			}
-		}
-
 		if (isset($this->request->post['openbay_language'])) {
 			$data['openbay_language'] = $this->request->post['openbay_language'];
 		} else {
@@ -280,24 +233,6 @@ class ControllerMarketplaceOpenbay extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('extension/openbay/openbay_manage', $data));
-	}
-
-	public function updateTest() {
-		$this->load->model('extension/openbay/openbay');
-
-		$json = $this->model_extension_openbay_openbay->updateTest();
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function update() {
-		$this->load->model('extension/openbay/openbay');
-
-		$json = $this->model_extension_openbay_openbay->update();
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 	public function updateV2() {

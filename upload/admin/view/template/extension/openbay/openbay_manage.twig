@@ -7,6 +7,11 @@
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
       </div>
       <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
     </div>
   </div>
   <div class="container-fluid">
@@ -18,55 +23,46 @@
       </ul>
       <div class="tab-content">
         <div class="tab-pane active" id="tab-update">
-          <div class="alert alert-info text-left">
-            {{ text_version_installed }}<span id="text-version">{{ text_version }}</span>
-          </div>
-
+          <div class="alert alert-info text-left">{{ text_version_installed }}<span id="text-version">{{ openbay_version }}</span></div>
           <input type="hidden" name="openbay_version" value="{{ openbay_version }}" />
           <input type="hidden" name="openbay_menu" value="{{ openbay_menu }}" />
 
-          <ul id="update-tabs" class="nav nav-tabs">
-            <li class="active"><a href="#tab-update-tool" data-toggle="tab">{{ tab_update_v1 }}</a></li>
-            <li><a href="#tab-update-patch" data-toggle="tab">{{ tab_patch }}</a></li>
-          </ul>
-          <div class="tab-content">
-            <div class="tab-pane active" id="tab-update-tool">
-              <p>{{ text_update_description }}</p>
-              <div class="well">
-                <div class="alert alert-danger" id="update-error" style="display:none;"></div>
-                <div id="update-v2-box">
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label" for="update-v2-beta"><span data-toggle="tooltip" title="{{ help_beta }}">{{ entry_beta }}</span></label>
-                    <div class="col-sm-8">
-                      <select id="update-v2-beta" class="form-control">
-                        <option value="1">{{ text_yes }}</option>
-                        <option value="0" selected="selected">{{ text_no }}</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label" for="update-v2"><span data-toggle="tooltip" title="{{ help_easy_update }}">{{ entry_update }}</span></label>
-                    <div class="col-sm-8">
-                      <button class="btn btn-primary" id="update-v2">{{ button_update }}</button>
-                    </div>
+          <div class="container-fluid">
+            <h4>{{ text_software_update }}</h4>
+            <p>{{ text_update_description }}</p>
+            <div class="well">
+              <div class="alert alert-danger" id="update-error" style="display:none;"></div>
+              <div id="update-v2-box">
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="update-v2-beta"><span data-toggle="tooltip" title="{{ help_beta }}">{{ entry_beta }}</span></label>
+                  <div class="col-sm-8">
+                    <select id="update-v2-beta" class="form-control">
+                      <option value="1">{{ text_yes }}</option>
+                      <option value="0" selected="selected">{{ text_no }}</option>
+                    </select>
                   </div>
                 </div>
-                <div id="update-v2-progress" style="display:none;">
-                  <div class="progress" style="height:50px;">
-                    <div class="progress-bar progress-bar-striped active progress-bar-info" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 0%;" id="loading-bar"></div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="update-v2"><span data-toggle="tooltip" title="{{ help_easy_update }}">{{ entry_update }}</span></label>
+                  <div class="col-sm-8">
+                    <button class="btn btn-primary" id="update-v2">{{ button_update }}</button>
                   </div>
-                  <h4 class="text-center" id="update-text"></h4>
                 </div>
               </div>
+              <div id="update-v2-progress" style="display:none;">
+                <div class="progress" style="height:50px;">
+                  <div class="progress-bar progress-bar-striped active progress-bar-info" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 0%;" id="loading-bar"></div>
+                </div>
+                <h4 class="text-center" id="update-text"></h4>
+              </div>
             </div>
-            <div class="tab-pane" id="tab-update-patch">
-              <p>{{ text_patch_description }}</p>
-              <div class="well">
-                <div class="form-group">
-                  <label class="col-sm-3 control-label" for="button-patch"><span data-toggle="tooltip" title="{{ help_patch }}">{{ entry_patch }}</span></label>
-                  <div class="col-sm-8">
-                    <button class="btn btn-primary" id="button-patch">{{ button_patch }}</button>
-                  </div>
+            <h4>{{ text_patch_option }}</h4>
+            <p>{{ text_patch_description }}</p>
+            <div class="well">
+              <div class="form-group">
+                <label class="col-sm-3 control-label" for="button-patch"><span data-toggle="tooltip" title="{{ help_patch }}">{{ entry_patch }}</span></label>
+                <div class="col-sm-8">
+                  <button class="btn btn-primary" id="button-patch">{{ button_patch }}</button>
                 </div>
               </div>
             </div>

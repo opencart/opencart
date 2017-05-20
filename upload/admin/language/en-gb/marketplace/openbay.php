@@ -11,8 +11,6 @@ $_['button_faq']						= 'View FAQ topic';
 // Tab
 $_['tab_setting']						= 'Settings';
 $_['tab_update']						= 'Software updates';
-$_['tab_update_v1']						= 'Easy updater';
-$_['tab_patch']							= 'Patch';
 $_['tab_developer']						= 'Developer';
 
 // Text
@@ -54,6 +52,8 @@ $_['text_check_server']					= 'Checking server requirements';
 $_['text_version_ok']					= 'Software is already up to date, installed version is ';
 $_['text_remove_files']					= 'Removing files no longer required';
 $_['text_confirm_backup']				= 'Ensure that you have a full backup before continuing';
+$_['text_software_update']				= 'OpenBay Pro software update';
+$_['text_patch_option']				    = 'Manual patching';
 
 // Column
 $_['column_name']          				= 'Plugin name';

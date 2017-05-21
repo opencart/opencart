@@ -3,20 +3,17 @@ namespace openbay;
 
 final class Ebay {
 	private $token;
-	private $enc1;
-	private $enc2;
 	private $url = 'https://uk.openbaypro.com/';
 	private $registry;
 	private $no_log = array('notification/getPublicNotifications/', 'setup/getEbayCategories/', 'item/getItemAllList/', 'account/validate/', 'item/getItemListLimited/');
 	private $logger;
 	private $max_log_size = 50; //max log size in Mb
+    private $encryption_key;
 
 	public function __construct($registry) {
 		$this->registry = $registry;
 		$this->token = $this->config->get('ebay_token');
 		$this->secret = $this->config->get('ebay_secret');
-		$this->enc1 = $this->config->get('ebay_string1');
-		$this->enc2 = $this->config->get('ebay_string2');
 		$this->logging = $this->config->get('ebay_logging');
 		$this->tax = $this->config->get('ebay_tax');
 		$this->server = 1;
@@ -26,11 +23,21 @@ final class Ebay {
 		if ($this->logging == 1) {
 			$this->setLogger();
 		}
+
+		$this->setEncryptionKey($this->config->get('ebay_encryption_key'));
 	}
 
 	public function __get($name) {
 		return $this->registry->get($name);
 	}
+
+	public function setEncryptionKey($key) {
+	    $this->encryption_key = $key;
+    }
+
+	public function getEncryptionKey() {
+	    return $this->encryption_key;
+    }
 
 	public function call($call, array $post = null, array $options = array(), $content_type = 'json', $status_override = false) {
 		if ($this->config->get('ebay_status') == 1 || $status_override == true) {
@@ -163,20 +170,6 @@ final class Ebay {
 				$this->logger->write($data);
 			}
 		}
-	}
-
-	public function decryptArgs($crypt, $is_base_64 = true) {
-		if ($is_base_64) {
-			$crypt = base64_decode($crypt, true);
-			if (!$crypt) {
-				return false;
-			}
-		}
-
-		$token = $this->openbay->pbkdf2($this->enc1, $this->enc2, 1000, 32);
-		$data = $this->openbay->decrypt($crypt, $token);
-
-		return $data;
 	}
 
 	public function getServer() {
@@ -919,7 +912,7 @@ final class Ebay {
 	}
 
 	public function validate() {
-		if ($this->config->get('ebay_status') != 0 && $this->config->get('ebay_token') != '' && $this->config->get('ebay_secret') != '' && $this->config->get('ebay_string1') != '' && $this->config->get('ebay_string2') != '') {
+		if ($this->config->get('ebay_status') != 0 && $this->config->get('ebay_token') != '' && $this->config->get('ebay_secret') != '' && $this->config->get('ebay_encryption_key') != '') {
 			return true;
 		} else {
 			return false;

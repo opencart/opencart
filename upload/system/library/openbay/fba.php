@@ -4,6 +4,7 @@ namespace openbay;
 class fba {
 	private $api_key;
 	private $api_account_id;
+    private $encryption_key;
 	private $url = 'https://api.openbaypro.io/';
 	private $registry;
 
@@ -34,12 +35,22 @@ class fba {
 		$this->api_account_id = $this->config->get('openbay_fba_api_account_id');
 		$this->logging = $this->config->get('openbay_fba_debug_log');
 
+		$this->setEncryptionKey($this->config->get('openbay_fba_encryption_key'));
+
 		$this->setLogger();
 	}
 
 	public function __get($name) {
 		return $this->registry->get($name);
 	}
+
+	public function setEncryptionKey($key) {
+	    $this->encryption_key = $key;
+    }
+
+	public function getEncryptionKey() {
+	    return $this->encryption_key;
+    }
 
 	public function setApiKey($api_key) {
 		$this->api_key = $api_key;

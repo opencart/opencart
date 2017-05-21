@@ -59,18 +59,12 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="ebay-string1">{{ entry_string1 }}</label>
+              <label class="col-sm-2 control-label" for="ebay-encryption-key">{{ entry_encryption_key }}</label>
               <div class="col-sm-10">
-                <input type="text" name="ebay_string1" value="{{ ebay_string1 }}" placeholder="{{ entry_string1 }}" id="ebay-string1" class="form-control credentials" />
+                <input type="text" name="ebay_encryption_key" value="{{ ebay_encryption_key }}" placeholder="{{ entry_encryption_key }}" id="ebay-encryption-key" class="form-control credentials" />
               </div>
             </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="ebay-string2">{{ entry_string2 }}</label>
-              <div class="col-sm-10">
-                <input type="text" name="ebay_string2" value="{{ ebay_string2 }}" placeholder="{{ entry_string2 }}" id="ebay-string2" class="form-control credentials" />
-              </div>
-            </div>
-            <div class="form-group">
+            <div class="form-group" id="api-status-container" style="display: none;">
               <label class="col-sm-2 control-label">{{ text_api_status }}</label>
               <div class="col-sm-10">
                 <h4><span id="api-status" class="label" style="display:none;"></span></h4>
@@ -302,9 +296,9 @@
                 <label class="col-sm-2 control-label" for="ebay_status_import_id">{{ entry_import_def_id }}</label>
                 <div class="col-sm-10">
                   <select name="ebay_status_import_id" id="ebay_status_import_id" class="form-control">
-                    {% if ebay_status_import_id is empty %}{% set ebay_status_import_id = 1 %}{% endif %}
+                    {% if ebay_status_import_id is empty %} {% set ebay_status_import_id = 1 %} {% endif %}
                     {% for status in order_statuses %}
-                      <option value="{{ status.order_status_id }}"{% if ebay_status_import_id = status.order_status_id %} selected{% endif %}>{{ status.name }}</option>
+                      <option value="{{ status.order_status_id }}"{% if ebay_status_import_id == status.order_status_id %} selected{% endif %}>{{ status.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -315,7 +309,7 @@
                   <select name="ebay_status_paid_id" id="ebay_status_paid_id" class="form-control">
                     {% if ebay_status_paid_id is empty %}{% set ebay_status_paid_id = 2 %}{% endif %}
                     {% for status in order_statuses %}
-                      <option value="{{ status.order_status_id }}"{% if ebay_status_paid_id = status.order_status_id %} selected{% endif %}>{{ status.name }}</option>
+                      <option value="{{ status.order_status_id }}"{% if ebay_status_paid_id == status.order_status_id %} selected{% endif %}>{{ status.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -326,7 +320,7 @@
                   <select name="ebay_status_shipped_id" id="ebay_status_shipped_id" class="form-control">
                     {% if ebay_status_shipped_id is empty %}{% set ebay_status_shipped_id = 3 %}{% endif %}
                     {% for status in order_statuses %}
-                      <option value="{{ status.order_status_id }}"{% if ebay_status_shipped_id = status.order_status_id %} selected{% endif %}>{{ status.name }}</option>
+                      <option value="{{ status.order_status_id }}"{% if ebay_status_shipped_id == status.order_status_id %} selected{% endif %}>{{ status.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -337,7 +331,7 @@
                   <select name="ebay_status_cancelled_id" id="ebay_status_cancelled_id" class="form-control">
                     {% if ebay_status_cancelled_id is empty %}{% set ebay_status_cancelled_id = 7 %}{% endif %}
                     {% for status in order_statuses %}
-                      <option value="{{ status.order_status_id }}"{% if ebay_status_cancelled_id = status.order_status_id %} selected{% endif %}>{{ status.name }}</option>
+                      <option value="{{ status.order_status_id }}"{% if ebay_status_cancelled_id == status.order_status_id %} selected{% endif %}>{{ status.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -348,7 +342,7 @@
                   <select name="ebay_status_partial_refund_id" id="ebay_status_partial_refund_id" class="form-control">
                     {% if ebay_status_partial_refund_id is empty %}{% set ebay_status_partial_refund_id = 2 %}{% endif %}
                     {% for status in order_statuses %}
-                      <option value="{{ status.order_status_id }}"{% if ebay_status_partial_refund_id = status.order_status_id %} selected{% endif %}>{{ status.name }}</option>
+                      <option value="{{ status.order_status_id }}"{% if ebay_status_partial_refund_id == status.order_status_id %} selected{% endif %}>{{ status.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -359,7 +353,7 @@
                   <select name="ebay_status_refunded_id" id="ebay_status_refunded_id" class="form-control">
                     {% if ebay_status_refunded_id is empty %}{% set ebay_status_refunded_id = 11 %}{% endif %}
                     {% for status in order_statuses %}
-                      <option value="{{ status.order_status_id }}"{% if ebay_status_refunded_id = status.order_status_id %} selected{% endif %}>{{ status.name }}</option>
+                      <option value="{{ status.order_status_id }}"{% if ebay_status_refunded_id == status.order_status_id %} selected{% endif %}>{{ status.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -520,28 +514,35 @@
     }
 
     function checkCredentials() {
-        $.ajax({
-            url: 'index.php?route=extension/openbay/ebay/verifycredentials&user_token={{ user_token }}',
-            type: 'POST',
-            dataType: 'json',
-            data: {token: $('#ebay-token').val(), secret: $('#ebay-secret').val(), string1: $('#ebay-string1').val(), string2: $('#ebay-string2').val()},
-            beforeSend: function() {
-              $('#api-status').removeClass('label-success').removeClass('label-danger').addClass('label-primary').html('<i class="fa fa-cog fa-lg fa-spin"></i> Checking details').show();
-            },
-            success: function(data) {
-                if (data.error == false) {
-                    $('#api-status').removeClass('label-primary').addClass('label-success').html('<i class="fa fa-check-square-o"></i> {{ text_api_ok }}: ' + data.data.expire);
-                } else {
-                    $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> ' + data.msg);
-                }
-            },
-            failure: function() {
-              $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> {{ error_api_connect }}');
-            },
-            error: function() {
-              $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> {{ error_api_connect }}');
-            }
-        });
+        var token = $('#ebay-token').val();
+        var secret = $('#ebay-secret').val();
+        var encryption_key = $('#ebay-encryption-key').val();
+
+        if (token.length > 25 && secret.length > 1 && encryption_key.length > 25) {
+          $.ajax({
+              url: 'index.php?route=extension/openbay/ebay/verifycredentials&user_token={{ user_token }}',
+              type: 'POST',
+              dataType: 'json',
+              data: {token: token, secret: secret, encryption_key: encryption_key},
+              beforeSend: function() {
+                $('#api-status-container').show();
+                $('#api-status').removeClass('label-success').removeClass('label-danger').addClass('label-primary').html('<i class="fa fa-cog fa-lg fa-spin"></i> {{ text_checking_details }}').show();
+              },
+              success: function(data) {
+                  if (data.error == false) {
+                      $('#api-status').removeClass('label-primary').addClass('label-success').html('<i class="fa fa-check-square-o"></i> {{ text_api_ok }}: ' + data.data.expire);
+                  } else {
+                      $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> ' + data.msg);
+                  }
+              },
+              failure: function() {
+                $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> {{ error_api_connect }}');
+              },
+              error: function() {
+                $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> {{ error_api_connect }}');
+              }
+          });
+        }
     }
 
     function changeTaxHandler(){

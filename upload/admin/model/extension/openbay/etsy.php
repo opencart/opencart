@@ -8,8 +8,7 @@ class ModelExtensionOpenBayEtsy extends Model{
 		$settings                 = array();
 		$settings["etsy_token"]   = '';
 		$settings["etsy_secret"]  = '';
-		$settings["etsy_string1"] = '';
-		$settings["etsy_string2"] = '';
+		$settings["etsy_encryption_key"] = '';
 		$settings["etsy_logging"]    = '1';
 
 		$this->model_setting_setting->editSetting('etsy', $settings);

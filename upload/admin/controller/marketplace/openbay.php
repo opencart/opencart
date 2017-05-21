@@ -235,7 +235,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 		$this->response->setOutput($this->load->view('extension/openbay/openbay_manage', $data));
 	}
 
-	public function updateV2() {
+	public function update() {
 		$this->load->model('extension/openbay/openbay');
 		$this->load->language('marketplace/openbay');
 
@@ -253,35 +253,35 @@ class ControllerMarketplaceOpenbay extends Controller {
 
 		switch ($stage) {
 			case 'check_server': // step 1
-				$response = $this->model_extension_openbay_openbay->updateV2Test();
+				$response = $this->model_extension_openbay_openbay->updateTest();
 
 				sleep(1);
 				$this->response->addHeader('Content-Type: application/json');
 				$this->response->setOutput(json_encode($response));
 				break;
 			case 'check_version': // step 2
-				$response = $this->model_extension_openbay_openbay->updateV2CheckVersion($beta);
+				$response = $this->model_extension_openbay_openbay->updateCheckVersion($beta);
 
 				sleep(1);
 				$this->response->addHeader('Content-Type: application/json');
 				$this->response->setOutput(json_encode($response));
 				break;
 			case 'download': // step 3
-				$response = $this->model_extension_openbay_openbay->updateV2Download($beta);
+				$response = $this->model_extension_openbay_openbay->updateDownload($beta);
 
 				sleep(1);
 				$this->response->addHeader('Content-Type: application/json');
 				$this->response->setOutput(json_encode($response));
 				break;
 			case 'extract': // step 4
-				$response = $this->model_extension_openbay_openbay->updateV2Extract();
+				$response = $this->model_extension_openbay_openbay->updateExtract();
 
 				sleep(1);
 				$this->response->addHeader('Content-Type: application/json');
 				$this->response->setOutput(json_encode($response));
 				break;
 			case 'remove': // step 5 - remove any files no longer needed
-				$response = $this->model_extension_openbay_openbay->updateV2Remove();
+				$response = $this->model_extension_openbay_openbay->updateRemove();
 
 				$this->response->addHeader('Content-Type: application/json');
 				$this->response->setOutput(json_encode($response));
@@ -309,7 +309,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 			case 'update_version': // step 7 - update the version number
 				$this->load->model('setting/setting');
 
-				$response = $this->model_extension_openbay_openbay->updateV2UpdateVersion($beta);
+				$response = $this->model_extension_openbay_openbay->updateUpdateVersion($beta);
 
 				$this->response->addHeader('Content-Type: application/json');
 				$this->response->setOutput(json_encode($response));

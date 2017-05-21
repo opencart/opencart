@@ -44,13 +44,13 @@ $_['text_create_date_1']            = 'When created on eBay';
 $_['text_obp_detail_update']        = 'Update your store URL &amp; contact email';
 $_['text_success']					= 'Your settings have been saved';
 $_['text_edit']						= 'Edit eBay settings';
+$_['text_checking_details'] 		= 'Checking details';
 
 // Entry
 $_['entry_status']				  = 'Status';
-$_['entry_token']				  = 'Token';
+$_['entry_token']				  = 'API token';
 $_['entry_secret']				  = 'Secret';
-$_['entry_string1']				  = 'Encryption string 1';
-$_['entry_string2']				  = 'Encryption string 2';
+$_['entry_encryption_key']        = 'Encryption key';
 $_['entry_end_items']			  = 'End items?';
 $_['entry_relist_items']		  = 'Relist when back in stock?';
 $_['entry_disable_soldout']		  = 'Disable product when no stock?';

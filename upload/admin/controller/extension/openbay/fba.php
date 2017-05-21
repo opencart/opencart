@@ -132,6 +132,12 @@ class ControllerExtensionOpenbayFba extends Controller {
             $data['openbay_fba_api_key'] = trim($this->config->get('openbay_fba_api_key'));
         }
 
+        if (isset($this->request->post['openbay_fba_encryption_key'])) {
+            $data['openbay_fba_encryption_key'] = trim($this->request->post['openbay_fba_encryption_key']);
+        } else {
+            $data['openbay_fba_encryption_key'] = trim($this->config->get('openbay_fba_encryption_key'));
+        }
+
         if (isset($this->request->post['openbay_fba_api_account_id'])) {
             $data['openbay_fba_api_account_id'] = trim($this->request->post['openbay_fba_api_account_id']);
         } else {
@@ -215,17 +221,22 @@ class ControllerExtensionOpenbayFba extends Controller {
 
         $errors = array();
 
-        if (!$this->request->post['openbay_fba_api_key']) {
+        if (!isset($this->request->post['openbay_fba_api_key']) || empty($this->request->post['openbay_fba_api_key'])) {
             $errors[] = array('message' => $this->language->get('error_api_key'));
         }
 
-        if (!$this->request->post['openbay_fba_api_account_id']) {
+        if (!isset($this->request->post['openbay_fba_api_account_id']) || empty($this->request->post['openbay_fba_api_account_id'])) {
             $errors[] = array('message' => $this->language->get('error_api_account_id'));
+        }
+
+        if (!isset($this->request->post['openbay_fba_encryption_key']) || empty($this->request->post['openbay_fba_encryption_key'])) {
+            $errors[] = array('message' => $this->language->get('error_encryption_key'));
         }
 
         if (!$errors) {
             $this->openbay->fba->setApiKey($this->request->post['openbay_fba_api_key']);
             $this->openbay->fba->setAccountId($this->request->post['openbay_fba_api_account_id']);
+            $this->openbay->fba->setEncryptionKey($this->request->post['openbay_fba_encryption_key']);
 
             $response = $this->openbay->fba->call("v1/fba/status/", array(), 'GET');
         } else {

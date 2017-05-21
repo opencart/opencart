@@ -5,11 +5,10 @@ class ModelExtensionOpenBayEbay extends Model{
 
 		$this->model_setting_event->addEvent('openbay_ebay_add_order', 'catalog/model/checkout/order/addOrderHistory/after', 'extension/openbay/ebay/eventAddOrderHistory');
 
-		$value                                  = array();
+		$value                            = array();
 		$value["ebay_token"]              = '';
 		$value["ebay_secret"]             = '';
-		$value["ebay_string1"]            = '';
-		$value["ebay_string2"]            = '';
+		$value["ebay_encryption_key"]    = '';
 		$value["ebay_enditems"]           = '0';
 		$value["ebay_logging"]            = '1';
 		$value["ebay_payment_instruction"]     = '';
@@ -26,7 +25,6 @@ class ModelExtensionOpenBayEbay extends Model{
 		$value["ebay_status_cancelled_id"]         = '7';
 		$value["ebay_status_refunded_id"]          = '11';
 		$value["ebay_def_currency"]       = 'GBP';
-		$value["openbay_admin_directory"] = 'admin';
 		$value["ebay_stock_allocate"]     = '0';
 		$value["ebay_update_notify"]      = '1';
 		$value["ebay_confirm_notify"]     = '1';
@@ -700,18 +698,13 @@ class ModelExtensionOpenBayEbay extends Model{
 
 		$data = $this->openbay->ebay->call('account/validate/', $this->request->post, array(), 'json', 1);
 
-		if ($this->openbay->ebay->lasterror == true) {
-			return array(
-				'error'     => $this->openbay->ebay->lasterror,
-				'msg'       => $this->openbay->ebay->lastmsg
-			);
-		} else {
-			return array(
-				'error'     => $this->openbay->ebay->lasterror,
-				'msg'       => $this->openbay->ebay->lastmsg,
-				'data'      => $data
-			);
+		$return = array('error' => $this->openbay->ebay->lasterror, 'msg' => $this->openbay->ebay->lastmsg);
+
+		if ($this->openbay->ebay->lasterror != true) {
+            $return['data'] = $data;
 		}
+
+		return $return;
 	}
 
 	public function editSave($data) {

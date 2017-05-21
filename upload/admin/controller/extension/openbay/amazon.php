@@ -265,8 +265,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 			$this->model_setting_setting->editSetting('openbay_amazon', $settings);
 
 			$this->config->set('openbay_amazon_token', $this->request->post['openbay_amazon_token']);
-			$this->config->set('openbay_amazon_enc_string1', $this->request->post['openbay_amazon_enc_string1']);
-			$this->config->set('openbay_amazon_enc_string2', $this->request->post['openbay_amazon_enc_string2']);
+			$this->config->set('openbay_amazon_encryption_key', $this->request->post['openbay_amazon_encryption_key']);
 
 			$this->model_extension_openbay_amazon->scheduleOrders($settings);
 
@@ -322,8 +321,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 
 		$data['openbay_amazon_status'] = isset($settings['openbay_amazon_status']) ? $settings['openbay_amazon_status'] : '';
 		$data['openbay_amazon_token'] = isset($settings['openbay_amazon_token']) ? $settings['openbay_amazon_token'] : '';
-		$data['openbay_amazon_enc_string1'] = isset($settings['openbay_amazon_enc_string1']) ? $settings['openbay_amazon_enc_string1'] : '';
-		$data['openbay_amazon_enc_string2'] = isset($settings['openbay_amazon_enc_string2']) ? $settings['openbay_amazon_enc_string2'] : '';
+		$data['openbay_amazon_encryption_key'] = isset($settings['openbay_amazon_encryption_key']) ? $settings['openbay_amazon_encryption_key'] : '';
 		$data['openbay_amazon_listing_tax_added'] = isset($settings['openbay_amazon_listing_tax_added']) ? $settings['openbay_amazon_listing_tax_added'] : '0.00';
 		$data['openbay_amazon_order_tax'] = isset($settings['openbay_amazon_order_tax']) ? $settings['openbay_amazon_order_tax'] : '00';
 		$data['openbay_amazon_default_listing_marketplace'] = isset($settings['openbay_amazon_default_listing_marketplace']) ? $settings['openbay_amazon_default_listing_marketplace'] : '';
@@ -353,17 +351,24 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 		$data['itemLinks_url'] = $this->url->link('extension/openbay/amazon_product/linkItems', 'user_token=' . $this->session->data['user_token'], true);
 		$data['openbay_amazon_notify_admin'] = isset($settings['openbay_amazon_notify_admin']) ? $settings['openbay_amazon_notify_admin'] : '';
 
-		$ping_info = simplexml_load_string($this->openbay->amazon->call('ping/info'));
+        $api_checked = false;
+        $api_status = false;
+        $api_auth = false;
 
-		$api_status = false;
-		$api_auth = false;
-		if ($ping_info) {
-			$api_status = ((string)$ping_info->Api_status == 'ok') ? true : false;
-			$api_auth = ((string)$ping_info->Auth == 'true') ? true : false;
-		}
+		if (!empty($data['openbay_amazon_encryption_key'])) {
+            $ping_info = simplexml_load_string($this->openbay->amazon->call('ping/info'));
 
-		$data['API_status'] = $api_status;
-		$data['API_auth'] = $api_auth;
+            $api_checked = true;
+
+            if ($ping_info) {
+                $api_status = ((string)$ping_info->Api_status == 'ok') ? true : false;
+                $api_auth = ((string)$ping_info->Auth == 'true') ? true : false;
+            }
+        }
+
+		$data['api_status'] = $api_status;
+		$data['api_auth'] = $api_auth;
+		$data['api_checked'] = $api_checked;
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

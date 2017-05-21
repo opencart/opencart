@@ -60,7 +60,7 @@
             <div class="col-sm-10" id="marketplaces">
               {% for mp in marketplaces %}
                 <label class="radio-inline">
-                  {% if saved_marketplaces === false %}
+                  {% if saved_marketplaces == false %}
                     <input class="marketplace_ids" id="adv_marketplace_{{ mp.code }}" {% if mp.id in default_marketplaces %} checked="checked" {% endif %} type="radio" name="marketplace_ids[]" value="{{ mp.id }}">
                   {% else %}
                     <input class="marketplace_ids" id="adv_marketplace_{{ mp.code }}" {% if mp.id in saved_marketplaces %} checked="checked" {% endif %} type="radio" name="marketplace_ids[]" value="{{ mp.id }}">

@@ -81,12 +81,6 @@ class OpenbaySetupTest extends OpenCartSeleniumTest {
 			$this->clickOnElement('ebay-secret');
 			$this->keys(OPENBAY_EBAY_SECRET);
 
-			$this->clickOnElement('ebay-string1');
-			$this->keys(OPENBAY_EBAY_ENC1);
-
-			$this->clickOnElement('ebay-string2');
-			$this->keys(OPENBAY_EBAY_ENC2);
-
 			$this->byCssSelector('button[type="submit"]')->click();
 		}
 	}

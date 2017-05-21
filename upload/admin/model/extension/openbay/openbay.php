@@ -7,7 +7,7 @@ class ModelExtensionOpenBayOpenbay extends Model {
 
 	}
 
-	public function updateV2Test() {
+	public function updateTest() {
 		$this->error = array();
 
 		$this->openbay->log('Starting update test');
@@ -19,11 +19,6 @@ class ModelExtensionOpenBayOpenbay extends Model {
 		}
 
 		set_error_handler('exception_error_handler');
-
-		// check for mkdir enabled
-		if (!function_exists('mkdir')) {
-			$this->error[] = $this->language->get('error_mkdir');
-		}
 
 		// create a tmp folder
 		if (!is_dir(DIR_DOWNLOAD . '/tmp')) {
@@ -83,7 +78,7 @@ class ModelExtensionOpenBayOpenbay extends Model {
 		}
 	}
 
-	public function updateV2CheckVersion($beta = 0) {
+	public function updateCheckVersion($beta = 0) {
 		$current_version = $this->config->get('openbay_version');
 
 		$this->openbay->log('Start check version, beta: ' . $beta . ', current: ' . $current_version);
@@ -107,7 +102,7 @@ class ModelExtensionOpenBayOpenbay extends Model {
 		}
 	}
 
-	public function updateV2Download($beta = 0) {
+	public function updateDownload($beta = 0) {
 		$this->openbay->log('Downloading');
 
 		$local_file = DIR_DOWNLOAD . '/openbaypro_update.zip';
@@ -143,7 +138,7 @@ class ModelExtensionOpenBayOpenbay extends Model {
 		return array('error' => 0, 'response' => $curl_error, 'percent_complete' => 60, 'status_message' => $this->language->get('text_extracting'));
 	}
 
-	public function updateV2Extract() {
+	public function updateExtract() {
 		$this->error = array();
 
 		$web_root = preg_replace('/system\/$/', '', DIR_SYSTEM);
@@ -182,7 +177,7 @@ class ModelExtensionOpenBayOpenbay extends Model {
 		}
 	}
 
-	public function updateV2Remove($beta = 0) {
+	public function updateRemove($beta = 0) {
 		$this->error = array();
 
 		$web_root = preg_replace('/system\/$/', '', DIR_SYSTEM);
@@ -235,7 +230,7 @@ class ModelExtensionOpenBayOpenbay extends Model {
 		}
 	}
 
-	public function updateV2UpdateVersion($beta = 0) {
+	public function updateUpdateVersion($beta = 0) {
 		$post = array('version' => 4, 'beta' => $beta);
 
 		$data = $this->call('update/version/', $post);
@@ -316,26 +311,41 @@ class ModelExtensionOpenBayOpenbay extends Model {
 	public function requirementTest() {
 		$error = array();
 
-		if (!function_exists('mcrypt_encrypt')) {
-			$error[] = $this->language->get('error_mcrypt');
+		// check for mkdir enabled
+		if (!function_exists('mkdir')) {
+			$error[] = $this->language->get('error_mkdir');
+		}
+
+		if (!function_exists('openssl_encrypt')) {
+			$error[] = $this->language->get('error_openssl_encrypt');
+		}
+
+		if (!function_exists('openssl_decrypt')) {
+			$error[] = $this->language->get('error_openssl_decrypt');
+		}
+
+		if (!function_exists('fopen')) {
+			$error[] = $this->language->get('error_fopen');
+		}
+
+		if (!function_exists('set_time_limit')) {
+			$error[] = $this->language->get('error_fopen');
+		}
+
+        if (!ini_get('allow_url_fopen')) {
+            $error[] = $this->language->get('error_url_fopen');
+        }
+
+        if (!extension_loaded('curl')) {
+			$error[] = $this->language->get('error_curl');
+		}
+
+		if (!extension_loaded('zip')) {
+			$error[] = $this->language->get('error_zip');
 		}
 
 		if (!function_exists('mb_detect_encoding')) {
 			$error[] = $this->language->get('error_mbstring');
-		}
-
-		if (!function_exists('ftp_connect')) {
-			$error[] = $this->language->get('error_ftpconnect');
-		}
-
-		if (!ini_get('allow_url_fopen')) {
-			$error[] = $this->language->get('error_fopen');
-		}
-
-		$root_directory = preg_replace('/catalog\/$/', '', DIR_CATALOG);
-
-		if (file_exists($root_directory . '/vqmod/xml/ebay.xml') || file_exists($root_directory . '/vqmod/xml/amazon.xml') || file_exists($root_directory . '/vqmod/xml/amazonus.xml') || file_exists($root_directory . '/vqmod/xml/play.xml') || file_exists($root_directory . '/vqmod/xml/openbay.xml')) {
-			$error[] = $this->language->get('lang_error_vqmod');
 		}
 
 		return $error;

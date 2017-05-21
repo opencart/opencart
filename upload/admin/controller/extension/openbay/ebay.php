@@ -154,16 +154,10 @@ class ControllerExtensionOpenbayEbay extends Controller {
 			$data['ebay_secret'] = trim($this->config->get('ebay_secret'));
 		}
 
-		if (isset($this->request->post['ebay_string1'])) {
-			$data['ebay_string1'] = trim($this->request->post['ebay_string1']);
+		if (isset($this->request->post['ebay_encryption_key'])) {
+			$data['ebay_encryption_key'] = trim($this->request->post['ebay_encryption_key']);
 		} else {
-			$data['ebay_string1'] = trim($this->config->get('ebay_string1'));
-		}
-
-		if (isset($this->request->post['ebay_string2'])) {
-			$data['ebay_string2'] = trim($this->request->post['ebay_string2']);
-		} else {
-			$data['ebay_string2'] = trim($this->config->get('ebay_string2'));
+			$data['ebay_encryption_key'] = trim($this->config->get('ebay_encryption_key'));
 		}
 
 		if (isset($this->request->post['ebay_enditems'])) {

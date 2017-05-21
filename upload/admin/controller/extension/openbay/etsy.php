@@ -90,7 +90,7 @@ class ControllerExtensionOpenbayEtsy extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
 			$this->model_setting_setting->editSetting('etsy', $this->request->post);
 
-			$this->openbay->etsy->resetConfig($this->request->post['etsy_token'], $this->request->post['etsy_enc1'], $this->request->post['etsy_enc2']);
+			$this->openbay->etsy->resetConfig($this->request->post['etsy_token'], $this->request->post['etsy_encryption_key']);
 
 			$account_info = $this->model_extension_openbay_etsy->verifyAccount();
 
@@ -152,16 +152,10 @@ class ControllerExtensionOpenbayEtsy extends Controller {
 			$data['etsy_token'] = $this->config->get('etsy_token');
 		}
 
-		if (isset($this->request->post['etsy_enc1'])) {
-			$data['etsy_enc1'] = $this->request->post['etsy_enc1'];
+		if (isset($this->request->post['etsy_encryption_key'])) {
+			$data['etsy_encryption_key'] = $this->request->post['etsy_encryption_key'];
 		} else {
-			$data['etsy_enc1'] = $this->config->get('etsy_enc1');
-		}
-
-		if (isset($this->request->post['etsy_enc2'])) {
-			$data['etsy_enc2'] = $this->request->post['etsy_enc2'];
-		} else {
-			$data['etsy_enc2'] = $this->config->get('etsy_enc2');
+			$data['etsy_encryption_key'] = $this->config->get('etsy_encryption_key');
 		}
 
 		if (isset($this->request->post['etsy_address_format'])) {

@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="container-fluid">
-      {% if validation === true %}
+      {% if validation == true %}
       {% if image_import > 0 %}
       <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ image_import }} {{ text_import_images_msg1 }} <a href="{{ image_import_link }}" target="_blank">{{ text_import_images_msg2 }}</a> {{ text_import_images_msg3 }}</div>
       {% endif %}

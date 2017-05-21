@@ -21,7 +21,7 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 			return;
 		}
 
-		$decrypted = $this->openbay->amazonus->decryptArgs($this->request->post['data']);
+        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazonus->getEncryptionKey());
 
 		if (!$decrypted) {
 			$logger->write('amazonus/order Failed to decrypt data');
@@ -301,7 +301,7 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 		if ($this->config->get('openbay_amazonus_notify_admin') == 1){
 			$this->openbay->newOrderAdminNotify($order_id, $order_status);
 		}
-		
+
 		$this->event->trigger('model/checkout/order/addOrderHistory/after', array('model/checkout/order/addOrderHistory/after', array($order_id, $order_status)));
 
 		$logger->write("Ok");
@@ -326,7 +326,7 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 			return;
 		}
 
-		$decrypted = $this->openbay->amazonus->decryptArgs($this->request->post['data']);
+        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazonus->getEncryptionKey());
 
 		if (!$decrypted) {
 			$logger->write('amazonus/order Failed to decrypt data');
@@ -366,7 +366,7 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 			return;
 		}
 
-		$decrypted = $this->openbay->amazonus->decryptArgs($this->request->post['data']);
+        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazonus->getEncryptionKey());
 
 		if (!$decrypted) {
 			$logger->write('amazonus/listing_reports - Failed to decrypt data');
@@ -419,15 +419,16 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 			return;
 		}
 
-		$data = $this->openbay->amazonus->decryptArgs($this->request->post['data']);
-		if(!$data) {
+        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazonus->getEncryptionKey());
+
+		if(!$decrypted) {
 			$logger->write("Error - Failed to decrypt received data.");
 			ob_get_clean();
 			$this->response->setOutput("failed to decrypt");
 			return;
 		}
 
-		$decoded_data = (array)json_decode($data);
+		$decoded_data = (array)json_decode($decrypted);
 		$logger->write("Received data: " . print_r($decoded_data, true));
 		$status = $decoded_data['status'];
 
@@ -489,7 +490,7 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 			return;
 		}
 
-		$decrypted = $this->openbay->amazonus->decryptArgs($this->request->post['data']);
+        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazonus->getEncryptionKey());
 
 		if (!$decrypted) {
 			$logger->write('amazonus/search Failed to decrypt data');
@@ -516,13 +517,14 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 			return;
 		}
 
-		$data = $this->openbay->amazonus->decryptArgs($this->request->post['data']);
-		if (!$data) {
+        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazonus->getEncryptionKey());
+
+		if (!$decrypted) {
 			$this->response->setOutput("error 003");
 			return;
 		}
 
-		$data_xml = simplexml_load_string($data);
+		$data_xml = simplexml_load_string($decrypted);
 
 		if(!isset($data_xml->action)) {
 			$this->response->setOutput("error 004");
@@ -550,7 +552,7 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 				}
 
 				$this->response->setOutput(print_r($response, true));
-				
+
 				return;
 			} else {
 				$response = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazonus_product` WHERE `product_id` = '" . (int)$product_id . "'")->rows;
@@ -567,10 +569,10 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 	public function eventAddOrderHistory($route, $data) {
 		$logger = new \Log('amazonus.log');
 		$logger->write('eventAddOrderHistory Event fired: ' . $route);
-		
+
 		if (isset($data[0]) && !empty($data[0])) {
 			$this->load->model('extension/openbay/amazonus_order');
-			
+
 			$logger->write('Order ID: ' . (int)$data[0]);
 
 			$this->model_extension_openbay_amazonus_order->addOrderHistory((int)$data[0]);

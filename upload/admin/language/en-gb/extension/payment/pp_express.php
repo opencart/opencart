@@ -19,6 +19,7 @@ $_['text_quick_setup']             	 = 'Quick setup - Link an existing or create
 $_['text_paypal_consent']		 	 = 'By using the quick setup tool you allow PayPal to receive information about your store';
 $_['text_success_connect']			 = 'Success: You have connected your PayPal account!';
 $_['text_preferred_main']		 	 = 'Express Checkout allows merchants and developers to minimize the number of steps customers must complete when they checkout using PayPal.';
+$_['text_learn_more']			 	 = 'Learn more';
 $_['text_preferred_li_1']			 = 'Accept PayPal with one click';
 $_['text_preferred_li_2']			 = 'Accept payments from around the world';
 $_['text_preferred_li_3']			 = 'Easily accept PayPal on multiple devices';

@@ -12,7 +12,7 @@
     <div class="panel-body">
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12">
-          <p>{{ text_preferred_main }}</p>
+          <p>{{ text_preferred_main }} <a href="https://www.paypal.com/uk/webapps/mpp/express-checkout" target="_blank">{{ text_learn_more }}</a></p>
         </div>
       </div>
       <div class="row">
@@ -25,11 +25,13 @@
           </ul>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3">
+          <p><img class="pull-right" src="view/image/payment/paypal-express-gold-pill.png" alt="PayPal Express" width="130" style="margin-bottom:10px;" /></p>
+
           {% if connect_link is not empty %}
-              <a href="{{ connect_link }}" data-toggle="tooltip" title=""  class="btn btn-primary pull-right" target="_blank" data-original-title="{{ text_connect_paypal }}">{{ text_connect_paypal }}</a>
+              <p><a href="{{ connect_link }}" data-toggle="tooltip" title="" class="btn btn-primary pull-right" target="_blank" data-original-title="{{ text_connect_paypal }}">{{ text_connect_paypal }}</a></p>
           {% endif %}
           {% if module_link is not empty %}
-            <br /><br /><a href="{{ module_link }}" data-toggle="tooltip" title="" class="btn btn-primary pull-right" data-original-title="{{ text_edit }}"><i class="fa fa-pencil"></i></a>
+              <p><a href="{{ module_link }}" data-toggle="tooltip" title="" class="btn btn-primary pull-right" data-original-title="{{ text_edit }}"><i class="fa fa-pencil"></i></a></p>
           {% endif %}
         </div>
       </div>

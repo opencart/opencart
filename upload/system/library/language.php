@@ -35,6 +35,10 @@ class Language {
 			require($file);
 		}
 
+		if(!isset($data)){
+			$data = array();
+		}
+
 		$this->data = array_merge($this->data, $_);
 
 		$data = array_merge($data, $this->data);

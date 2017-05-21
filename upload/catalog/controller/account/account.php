@@ -6,9 +6,7 @@ class ControllerAccountAccount extends Controller {
 
 			$this->response->redirect($this->url->link('account/login', '', true));
 		}
-
-		$this->load->language('account/account');
-		$this->data = array_merge($this->data, $this->language->getData());
+		$this->language->load('account/account', $data);
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -31,7 +29,7 @@ class ControllerAccountAccount extends Controller {
 		} else {
 			$data['success'] = '';
 		}
-		
+
 		$data['edit'] = $this->url->link('account/edit', '', true);
 		$data['password'] = $this->url->link('account/password', '', true);
 		$data['address'] = $this->url->link('account/address', '', true);

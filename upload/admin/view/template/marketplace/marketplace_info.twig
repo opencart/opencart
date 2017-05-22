@@ -124,7 +124,7 @@
               <div class="row">
                 <div class="col-xs-5"><strong>{{ text_rating }}</strong></div>
                 <div class="col-xs-7 text-right">{% for i in 1..5 %}
-                  {% if rating >= i %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
+                  {% if rating >= i %}<i class="fa fa-star"></i>{% if rating >= (i - 0.5) %}<i class="fa fa-star-half-o"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
                   {% endfor %} ({{ rating_total }})</div>
               </div>
               <hr>

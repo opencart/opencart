@@ -138,8 +138,8 @@
                 <div class="col-xs-7 text-right">{{ date_added }}</div>
               </div>
             </div>
-            <div id="sales" class="well"><i class="opencart-icon-cart-mini"></i> <strong>{{ sales }}</strong> {{ text_sales }} </div>
-            <div id="sales" class="well"><i class="opencart-icon-cart-mini"></i> <strong>{{ downloaded }}</strong> {{ text_downloaded }} </div>
+            {% if license == '1' %}<div id="sales" class="well"><i class="opencart-icon-cart-mini"></i> <strong>{{ sales }}</strong> {{ text_sales }} </div>{% else %}
+            <div id="sales" class="well"><i class="opencart-icon-cart-mini"></i> <strong>{{ downloaded }}</strong> {{ text_downloaded }} </div>{% endif %}
             <div class="well">
               <div class="media">
                 <div class="media-left media-middle"><img src="{{ member_image }}" alt="{{ member_username }}" title="{{ member_username }}" class="media-object img-circle"></div>

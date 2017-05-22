@@ -615,18 +615,18 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .tile {
 	margin-bottom: 15px;
 	border-radius: 3px;
-	background-color: #7c9fde;
+	background-color: #00a8ff;
 	color: #FFFFFF;
 	transition: all 1s;
 }
 .tile-customer {
-	background-color: #e18a55;
+	background-color: #edbe00;
 }
 .tile-sale {
-	background-color: #f98383;
+	background-color: #e13030;
 }
 .tile-online {
-	background-color: #84bb00;
+	background-color: #0db300;
 }
 .tile:hover {
 	opacity: 0.95;

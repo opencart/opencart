@@ -278,7 +278,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 				$this->response->setOutput(json_encode($response));
 				break;
 			case 'remove': // step 5 - remove any files no longer needed
-				$response = $this->model_extension_openbay_openbay->updateRemove();
+				$response = $this->model_extension_openbay_openbay->updateRemove($beta);
 
 				$this->response->addHeader('Content-Type: application/json');
 				$this->response->setOutput(json_encode($response));

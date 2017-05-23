@@ -3,6 +3,7 @@ final class Openbay {
 	private $registry;
 	private $installed_modules = array();
 	public $installed_markets = array();
+	private $logging = 1;
 
 	public function __construct($registry) {
 		$this->registry = $registry;

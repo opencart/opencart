@@ -79,7 +79,7 @@ class ModelExtensionOpenBayOpenbay extends Model {
 	}
 
 	public function updateCheckVersion($beta = 0) {
-		$current_version = $this->config->get('openbay_version');
+		$current_version = $this->config->get('feed_openbaypro_version');
 
 		$this->openbay->log('Start check version, beta: ' . $beta . ', current: ' . $current_version);
 
@@ -231,18 +231,25 @@ class ModelExtensionOpenBayOpenbay extends Model {
 	}
 
 	public function updateUpdateVersion($beta = 0) {
+        $this->openbay->log('Updating the version in settings');
+
 		$post = array('version' => 6, 'beta' => $beta);
 
 		$data = $this->call('update/version/', $post);
 
 		if ($this->lasterror == true) {
-			$this->openbay->log('Update version: ' . $this->lastmsg);
+			$this->openbay->log('Update version error: ' . $this->lastmsg);
 
 			return array('error' => 1, 'response' => $this->lastmsg . ' (' . VERSION . ')');
 		} else {
+            $this->load->model('setting/setting');
+
 			$settings = $this->model_setting_setting->getSetting('feed_openbaypro');
-			$settings['openbay_version'] = $data['version'];
+
+			$settings['feed_openbaypro_version'] = $data['version'];
+
 			$this->model_setting_setting->editSetting('feed_openbaypro', $settings);
+
 			return array('error' => 0, 'response' => $data['version'], 'percent_complete' => 100, 'status_message' => $this->language->get('text_updated_ok') . $data['version']);
 		}
 	}
@@ -356,7 +363,7 @@ class ModelExtensionOpenBayOpenbay extends Model {
 			'language' => $this->config->get('openbay_language'),
 			'server' => 1,
 			'domain' => HTTP_CATALOG,
-			'openbay_version' => (int)$this->config->get('openbay_version'),
+			'openbay_version' => (int)$this->config->get('feed_openbaypro_version'),
 			'data' => $post,
 			'content_type' => $content_type,
 			'ocversion' => VERSION

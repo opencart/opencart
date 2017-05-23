@@ -132,7 +132,7 @@ class ControllerExtensionOpenbayEbay extends Controller {
 
 			$this->openbay->ebay->editSetting('ebay', $settings);
 
-			$this->response->setOutput(json_encode(array('msg' => 'ok', 'reason' => 'Auto setup has completed','version' => (int)$this->config->get('openbay_version'))));
+			$this->response->setOutput(json_encode(array('msg' => 'ok', 'reason' => 'Auto setup has completed','version' => (int)$this->config->get('feed_openbaypro_version'))));
 		}
 	}
 

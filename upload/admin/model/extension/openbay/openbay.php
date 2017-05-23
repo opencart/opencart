@@ -240,9 +240,9 @@ class ModelExtensionOpenBayOpenbay extends Model {
 
 			return array('error' => 1, 'response' => $this->lastmsg . ' (' . VERSION . ')');
 		} else {
-			$settings = $this->model_setting_setting->getSetting('openbay');
+			$settings = $this->model_setting_setting->getSetting('feed_openbaypro');
 			$settings['openbay_version'] = $data['version'];
-			$this->model_setting_setting->editSetting('feed_openbay', $settings);
+			$this->model_setting_setting->editSetting('feed_openbaypro', $settings);
 			return array('error' => 0, 'response' => $data['version'], 'percent_complete' => 100, 'status_message' => $this->language->get('text_updated_ok') . $data['version']);
 		}
 	}

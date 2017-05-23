@@ -134,14 +134,14 @@ class ControllerMarketplaceOpenbay extends Controller {
 			);
 		}
 
-		$settings = $this->model_setting_setting->getSetting('openbay');
+		$settings = $this->model_setting_setting->getSetting('feed_openbaypro');
 
 		if (isset($settings['openbay_version'])) {
 			$data['openbay_version'] = $settings['openbay_version'];
 		} else {
 			$data['openbay_version'] = $this->model_extension_openbay_version->version();
 			$settings['openbay_version'] = $this->model_extension_openbay_version->version();
-			$this->model_setting_setting->editSetting('feed_openbay', $settings);
+			$this->model_setting_setting->editSetting('feed_openbaypro', $settings);
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -178,7 +178,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 		);
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
-			$this->model_setting_setting->editSetting('feed_openbay', $this->request->post);
+			$this->model_setting_setting->editSetting('feed_openbaypro', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -188,7 +188,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 		if (isset($this->request->post['openbay_version'])) {
 			$data['openbay_version'] = $this->request->post['openbay_version'];
 		} else {
-			$settings = $this->model_setting_setting->getSetting('openbay');
+			$settings = $this->model_setting_setting->getSetting('feed_openbaypro');
 
 			if (isset($settings['openbay_version'])) {
 				$data['openbay_version'] = $settings['openbay_version'];
@@ -196,7 +196,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 				$this->load->model('extension/openbay/version');
 				$settings['openbay_version'] = $this->model_extension_openbay_version->version();
 				$data['openbay_version'] = $this->model_extension_openbay_version->version();
-				$this->model_setting_setting->editSetting('feed_openbay', $settings);
+				$this->model_setting_setting->editSetting('feed_openbaypro', $settings);
 			}
 		}
 
@@ -332,15 +332,15 @@ class ControllerMarketplaceOpenbay extends Controller {
 		$this->model_extension_openbay_amazonus->patch();
 		$this->model_extension_openbay_etsy->patch();
 
-		$openbay = $this->model_setting_setting->getSetting('openbay');
+		$openbay = $this->model_setting_setting->getSetting('feed_openbaypro');
 		$openbay['openbay_version'] = (int)$this->model_extension_openbay_version->version();
 		$openbay['openbay_menu'] = 1;
-		$this->model_setting_setting->editSetting('feed_openbay', $openbay);
+		$this->model_setting_setting->editSetting('feed_openbaypro', $openbay);
 
-		$installed_modules = $this->model_setting_extension->getInstalled('module');
+		$installed_modules = $this->model_setting_extension->getInstalled('feed');
 
 		if (!in_array('openbay', $installed_modules)) {
-			$this->model_setting_extension->install('feed', 'openbay');
+			$this->model_setting_extension->install('feed', 'openbaypro');
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'marketplace/openbay');
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'marketplace/openbay');
 		}

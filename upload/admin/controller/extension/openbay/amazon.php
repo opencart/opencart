@@ -29,9 +29,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 		$this->load->model('localisation/order_status');
 		$this->load->model('extension/openbay/amazon');
 
-		$this->load->language('extension/openbay/amazon');
-
-		$data = $this->language->all();
+		$data = $this->load->language('extension/openbay/amazon');
 
 		$this->document->setTitle($this->language->get('text_dashboard'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -75,9 +73,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 	}
 
 	public function stockUpdates() {
-		$this->load->language('extension/openbay/amazon_stockupdates');
-
-		$data = $this->language->all();
+		$data = $this->load->language('extension/openbay/amazon_stockupdates');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -163,9 +159,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 	}
 
 	public function subscription() {
-		$this->load->language('extension/openbay/amazon_subscription');
-
-		$data = $this->language->all();
+		$data = $this->load->language('extension/openbay/amazon_subscription');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -239,9 +233,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 	}
 
 	public function settings() {
-		$this->load->language('extension/openbay/amazon_settings');
-
-		$data = $this->language->all();
+		$data = $this->load->language('extension/openbay/amazon_settings');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -378,9 +370,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 	}
 
 	public function itemLinks() {
-		$this->load->language('extension/openbay/amazon_links');
-
-		$data = $this->language->all();
+		$data = $this->load->language('extension/openbay/amazon_links');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -423,9 +413,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 	}
 
 	public function savedListings() {
-		$this->load->language('extension/openbay/amazon_listingsaved');
-
-		$data = $this->language->all();
+		$data = $this->load->language('extension/openbay/amazon_listingsaved');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -724,9 +712,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
 
-		$this->load->language('extension/openbay/amazon_bulk_listing');
-
-		$data = $this->language->all();
+		$data = $this->load->language('extension/openbay/amazon_bulk_listing');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -878,9 +864,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 	public function bulkLinking() {
 		$this->load->model('extension/openbay/amazon');
 
-		$this->load->language('extension/openbay/amazon_bulk_linking');
-
-		$data = $this->language->all();
+		$data = $this->load->language('extension/openbay/amazon_bulk_linking');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');

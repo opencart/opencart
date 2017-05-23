@@ -231,7 +231,7 @@ class ModelExtensionOpenBayOpenbay extends Model {
 	}
 
 	public function updateUpdateVersion($beta = 0) {
-		$post = array('version' => 4, 'beta' => $beta);
+		$post = array('version' => 6, 'beta' => $beta);
 
 		$data = $this->call('update/version/', $post);
 

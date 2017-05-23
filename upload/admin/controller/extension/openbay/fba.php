@@ -59,6 +59,7 @@ class ControllerExtensionOpenbayFba extends Controller {
         $data['link_account'] = 'https://account.openbaypro.com/fba/index/';
         $data['link_fulfillments'] = $this->url->link('extension/openbay/fba/fulfillmentlist', 'user_token=' . $this->session->data['user_token'], true);
         $data['link_orders'] = $this->url->link('extension/openbay/fba/orderlist', 'user_token=' . $this->session->data['user_token'], true);
+		$data['link_signup'] = 'https://account.openbaypro.com/fba/apiRegister/?utm_source=signup_link&utm_medium=opencart_module&utm_campaign=fba';
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');

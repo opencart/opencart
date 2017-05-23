@@ -122,9 +122,7 @@ final class Etsy {
 				$data = $process_id . ' - ' . print_r($data, true);
 			}
 
-			if ($write == true) {
-				$this->logger->write($data);
-			}
+            $this->logger->write($data);
 		}
 	}
 

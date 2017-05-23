@@ -37,7 +37,9 @@ class fba {
 
 		$this->setEncryptionKey($this->config->get('openbay_fba_encryption_key'));
 
-		$this->setLogger();
+		if ($this->logging == 1) {
+			$this->setLogger();
+		}
 	}
 
 	public function __get($name) {
@@ -165,12 +167,12 @@ class fba {
 	}
 
 	public function log($data) {
-		if (function_exists('getmypid')) {
-			$process_id = getmypid();
-			$data = $process_id . ' - ' . $data;
-		}
-
 		if ($this->logging == 1) {
+            if (function_exists('getmypid')) {
+                $process_id = getmypid();
+                $data = $process_id . ' - ' . $data;
+            }
+
 			$this->logger->write($data);
 		}
 	}

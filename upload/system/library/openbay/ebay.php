@@ -3,12 +3,12 @@ namespace openbay;
 
 final class Ebay {
 	private $token;
+    private $encryption_key;
 	private $url = 'https://uk.openbaypro.com/';
 	private $registry;
 	private $no_log = array('notification/getPublicNotifications/', 'setup/getEbayCategories/', 'item/getItemAllList/', 'account/validate/', 'item/getItemListLimited/');
 	private $logger;
 	private $max_log_size = 50; //max log size in Mb
-    private $encryption_key;
 
 	public function __construct($registry) {
 		$this->registry = $registry;
@@ -172,9 +172,7 @@ final class Ebay {
 				$data = $process_id . ' - ' . print_r($data, true);
 			}
 
-			if ($write == true) {
-				$this->logger->write($data);
-			}
+            $this->logger->write($data);
 		}
 	}
 

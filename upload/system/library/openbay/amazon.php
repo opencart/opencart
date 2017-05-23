@@ -33,11 +33,14 @@ class Amazon {
 			$string = $data;
 		}
 
+        $headers = array();
+        $headers[] = 'X-Endpoint-Version: 2';
+
         $encrypted = $this->openbay->encrypt($string, $this->getEncryptionKey());
 
 		$defaults = array(
+            CURLOPT_HEADER          => $headers,
 			CURLOPT_POST            => 1,
-			CURLOPT_HEADER          => 0,
 			CURLOPT_URL             => $this->url . $method,
 			CURLOPT_USERAGENT       => 'OpenBay Pro for Amazon/Opencart',
 			CURLOPT_FRESH_CONNECT   => 1,
@@ -66,11 +69,14 @@ class Amazon {
 			$string = $data;
 		}
 
+        $headers = array();
+        $headers[] = 'X-Endpoint-Version: 2';
+
         $encrypted = $this->openbay->encrypt($string, $this->getEncryptionKey());
 
 		$defaults = array(
+            CURLOPT_HEADER => $headers,
 			CURLOPT_POST => 1,
-			CURLOPT_HEADER => 0,
 			CURLOPT_URL => $this->url . $method,
 			CURLOPT_USERAGENT => 'OpenBay Pro for Amazon/Opencart',
 			CURLOPT_FRESH_CONNECT => 1,

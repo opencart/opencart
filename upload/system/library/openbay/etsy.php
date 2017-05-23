@@ -42,6 +42,7 @@ final class Etsy {
 		if($this->config->get('etsy_status') == 1) {
 			$headers = array ();
 			$headers[] = 'X-Auth-Token: ' . $this->token;
+			$headers[] = 'X-Endpoint-Version: 2';
 			$headers[] = 'Content-Type: application/json';
 			//$headers[] = 'Content-Length: '.strlen(json_encode($data));
 

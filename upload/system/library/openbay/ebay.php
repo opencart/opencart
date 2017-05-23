@@ -54,11 +54,14 @@ final class Ebay {
 				$domain = $this->config->get('config_url');
 			}
 
+            $headers = array();
+            $headers[] = 'X-Endpoint-Version: 2';
+
 			$data = array('token' => $this->token, 'secret' => $this->secret, 'server' => $this->server, 'domain' => $domain, 'openbay_version' => (int)$this->config->get('openbay_version'), 'opencart_version' => VERSION, 'data' => $post, 'content_type' => $content_type, 'language' => $this->config->get('openbay_language'));
 
 			$defaults = array(
+                CURLOPT_HEADER          => $headers,
 				CURLOPT_POST            => 1,
-				CURLOPT_HEADER          => 0,
 				CURLOPT_URL             => $this->url . $call,
 				CURLOPT_USERAGENT       => "OpenBay Pro for eBay",
 				CURLOPT_FRESH_CONNECT   => 1,
@@ -123,11 +126,14 @@ final class Ebay {
 				$domain = $this->config->get('config_url');
 			}
 
+            $headers = array();
+            $headers[] = 'X-Endpoint-Version: 2';
+
 			$data = array('token' => $this->token, 'secret' => $this->secret, 'server' => $this->server, 'domain' => $domain, 'openbay_version' => (int)$this->config->get('openbay_version'), 'opencart_version' => VERSION, 'data' => $post, 'content_type' => $content_type, 'language' => $this->config->get('openbay_language'));
 
 			$defaults = array(
+                CURLOPT_HEADER          => $headers,
 				CURLOPT_POST            => 1,
-				CURLOPT_HEADER          => 0,
 				CURLOPT_URL             => $this->url . $call,
 				CURLOPT_USERAGENT       => "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.1) Gecko/20061204 Firefox/2.0.0.1",
 				CURLOPT_FRESH_CONNECT   => 1,

@@ -261,6 +261,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 				sleep(1);
 				$this->response->addHeader('Content-Type: application/json');
 				$this->response->setOutput(json_encode($response));
+
 				break;
 			case 'download': // step 3
 				$response = $this->model_extension_openbay_openbay->updateDownload($beta);

@@ -65,8 +65,9 @@ class fba {
 
 		$headers = array();
 		$headers[] = 'X-Auth-Token: ' . $this->api_key;
-		$headers[] = 'Content-Type: application/json';
 		$headers[] = 'X-Account-ID: ' . $this->api_account_id;
+        $headers[] = 'X-Endpoint-Version: 2';
+        $headers[] = 'Content-Type: application/json';
 
 		$defaults = array(
 			CURLOPT_HTTPHEADER      => $headers,

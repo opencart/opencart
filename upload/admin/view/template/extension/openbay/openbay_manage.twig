@@ -25,7 +25,6 @@
         <div class="tab-pane active" id="tab-update">
           <div class="alert alert-info text-left">{{ text_version_installed }}<span id="text-version">{{ feed_openbaypro_version }}</span></div>
           <input type="hidden" name="feed_openbaypro_version" value="{{ feed_openbaypro_version }}" />
-          <input type="hidden" name="feed_openbaypro_menu" value="{{ feed_openbaypro_menu }}" />
 
           <div class="container-fluid">
             <h4>{{ text_software_update }}</h4>
@@ -73,9 +72,9 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-language">{{ text_language }}</label>
               <div class="col-sm-10">
-                <select name="openbay_language" id="input-language" class="form-control">
-                  {% for key, language in languages %}
-                    <option value="{{ key }}" {% if key == openbay_language %} selected{% endif %}>{{ language }}</option>
+                <select name="feed_openbaypro_language" id="input-language" class="form-control">
+                  {% for language_iso, language_text in api_languages %}
+                    <option value="{{ language_iso }}" {% if language_iso == feed_openbaypro_language %} selected="selected"{% endif %}>{{ language_text }}</option>
                   {% endfor %}
                 </select>
               </div>

@@ -74,10 +74,6 @@ class ControllerExtensionOpenbayEbay extends Controller {
 				if($data['action'] == 'outputLog') {
 					$this->model_openbay_ebay_openbay->outputLog();
 				}
-
-				if($data['action'] == 'updateLog') {
-					$this->model_openbay_ebay_openbay->updateLog();
-				}
 			} else {
 				$this->openbay->ebay->log('Secret incorrect or module not active.');
 

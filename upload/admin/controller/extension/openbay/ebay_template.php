@@ -100,7 +100,8 @@ class ControllerExtensionOpenbayEbayTemplate extends Controller {
 
 		$data = $this->load->language('extension/openbay/ebay_template');
 
-		$data['page_title']   = $data['text_title_list_edit'];
+		$this->document->setTitle($data['heading_title']);
+
 		$data['btn_save']     = $this->url->link('extension/openbay/ebay_template/edit', 'user_token=' . $this->session->data['user_token'], true);
 		$data['cancel']       = $this->url->link('extension/openbay/ebay_template/listAll', 'user_token=' . $this->session->data['user_token'], true);
 
@@ -134,9 +135,14 @@ class ControllerExtensionOpenbayEbayTemplate extends Controller {
 			$data['text_manage'] = $this->language->get('text_add');
 		}
 
-		$this->document->setTitle($data['page_title']);
-		$this->document->addStyle('view/javascript/openbay/css/codemirror.css');
-		$this->document->addScript('view/javascript/openbay/js/codemirror.js');
+		$this->document->setTitle($data['heading_title']);
+
+        $this->document->addStyle('view/javascript/codemirror/lib/codemirror.css');
+        $this->document->addStyle('view/javascript/codemirror/theme/monokai.css');
+        $this->document->addScript('view/javascript/codemirror/lib/codemirror.js');
+        $this->document->addScript('view/javascript/codemirror/lib/formatting.js');
+        $this->document->addScript('view/javascript/codemirror/lib/xml.js');
+
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$data['breadcrumbs'] = array();

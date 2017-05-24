@@ -94,7 +94,7 @@ class ModelExtensionOpenBayEbayOpenbay extends Model{
 				if ($this->config->get('ebay_stock_allocate') == 1) {
 					$this->openbay->ebay->log('Stock allocation is set to allocate stock when an order is paid');
 					$this->model_extension_openbay_ebay_order->addOrderLines($order, $order_id);
-				
+
 					$this->event->trigger('model/checkout/order/addOrderHistory/after', array('model/checkout/order/addOrderHistory/after', array($order_id, $this->default_paid_id)));
 				}
 
@@ -103,7 +103,7 @@ class ModelExtensionOpenBayEbayOpenbay extends Model{
 				$this->model_extension_openbay_ebay_order->update($order_id, $this->default_refunded_id);
 				$this->model_extension_openbay_ebay_order->cancel($order_id);
 				$this->openbay->ebay->log('Order ID: ' . $order_id . ' -> Refunded');
-				
+
 				$this->event->trigger('model/checkout/order/addOrderHistory/after', array('model/checkout/order/addOrderHistory/after', array($order_id, $this->default_refunded_id)));
 			} elseif ($order->payment->status == 'Part-Refunded' && ($order_loaded['order_status_id'] != $this->default_part_refunded_id) && in_array($this->default_paid_id, $order_history)) {
 				$this->model_extension_openbay_ebay_order->update($order_id, $this->default_part_refunded_id);
@@ -597,20 +597,6 @@ class ModelExtensionOpenBayEbayOpenbay extends Model{
 		header('Content-Transfer-Encoding: binary');
 		header('Connection: close');
 		readfile(DIR_LOGS . "ebaylog.log");
-		exit();
-	}
-
-	public function updateLog() {
-		header('Pragma: public');
-		header('Expires: 0');
-		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		header('Cache-Control: private', false);
-		header('Content-Type: application/force-download');
-		header('Content-Length: ' . filesize(DIR_LOGS . "update.log"));
-		header('Content-Disposition: attachment; filename="update.log"');
-		header('Content-Transfer-Encoding: binary');
-		header('Connection: close');
-		readfile(DIR_LOGS . "update.log");
 		exit();
 	}
 }

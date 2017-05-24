@@ -281,6 +281,7 @@ class ModelExtensionOpenBayOpenbay extends Model {
 	public function faqGet($route) {
 		if ($this->faqIsDismissed($route) != true) {
 			$data = $this->call('faq/get/', array('route' => $route));
+
 			return $data;
 		} else {
 			return false;
@@ -418,16 +419,6 @@ class ModelExtensionOpenBayOpenbay extends Model {
 				return false;
 			}
 		}
-	}
-
-	public function writeUpdateLog($data) {
-		$file = DIR_LOGS . 'openbay_update_' . date('Y_m_d_G_i_s') . ' . log';
-
-		$handle = fopen($file, 'w+');
-		fwrite($handle, "** Update started: " . date('Y-m-d G:i:s') . " **" . "\n");
-
-		fwrite($handle, $data);
-		fclose($handle);
 	}
 
 	public function getTotalProducts($data = array()) {

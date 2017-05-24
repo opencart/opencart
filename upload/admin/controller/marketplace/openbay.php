@@ -200,13 +200,13 @@ class ControllerMarketplaceOpenbay extends Controller {
 			}
 		}
 
-		if (isset($this->request->post['openbay_language'])) {
-			$data['openbay_language'] = $this->request->post['openbay_language'];
+		if (isset($this->request->post['feed_openbaypro_language'])) {
+			$data['feed_openbaypro_language'] = $this->request->post['feed_openbaypro_language'];
 		} else {
-			$data['openbay_language'] = $this->config->get('openbay_language');
+			$data['feed_openbaypro_language'] = $this->config->get('feed_openbaypro_language');
 		}
 
-		$data['languages'] = array(
+		$data['api_languages'] = array(
 			'en_GB' => 'English',
 			'de_DE' => 'German',
 			'es_ES' => 'Spanish',
@@ -217,7 +217,6 @@ class ControllerMarketplaceOpenbay extends Controller {
 		);
 
 		$data['text_version'] = $this->config->get('feed_openbaypro_version');
-		$data['feed_openbaypro_menu'] = $this->config->get('feed_openbaypro_menu');
 
 		$data['action'] = $this->url->link('marketplace/openbay/manage', 'user_token=' . $this->session->data['user_token'], true);
 		$data['cancel'] = $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true);
@@ -334,7 +333,6 @@ class ControllerMarketplaceOpenbay extends Controller {
 
 		$openbay = $this->model_setting_setting->getSetting('feed_openbaypro');
 		$openbay['feed_openbaypro_version'] = (int)$this->model_extension_openbay_version->version();
-		$openbay['feed_openbaypro_menu'] = 1;
 		$this->model_setting_setting->editSetting('feed_openbaypro', $openbay);
 
 		$installed_modules = $this->model_setting_extension->getInstalled('feed');
@@ -377,6 +375,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 		$this->load->language('marketplace/openbay');
 
 		$data = $this->model_extension_openbay_openbay->faqGet($this->request->get['qry_route']);
+
 		$data['button_faq'] = $this->language->get('button_faq');
 		$data['button_close'] = $this->language->get('button_close');
 
@@ -387,7 +386,9 @@ class ControllerMarketplaceOpenbay extends Controller {
 	public function faqDismiss() {
 		$this->load->model('extension/openbay/openbay');
 
-		$json = $this->model_extension_openbay_openbay->faqDismiss($this->request->get['qry_route']);
+		$this->model_extension_openbay_openbay->faqDismiss($this->request->get['qry_route']);
+
+		$json = array();
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

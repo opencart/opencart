@@ -23,6 +23,7 @@ class ControllerExtensionFeedOpenbaypro extends Controller {
 
 		$settings = $this->model_setting_setting->getSetting('feed_openbaypro');
 		$settings['feed_openbaypro_status'] = 1;
+		$settings['feed_openbaypro_language'] = "en_GB";
 		$this->model_setting_setting->editSetting('feed_openbaypro', $settings);
 
 		$this->model_setting_event->addEvent('openbay_product_del_after', 'admin/model/catalog/product/deleteProduct/after', 'marketplace/openbay/eventDeleteProduct');

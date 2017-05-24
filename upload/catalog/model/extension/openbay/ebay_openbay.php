@@ -335,10 +335,20 @@ class ModelExtensionOpenBayEbayOpenbay extends Model{
 			$txn->item->sku             = stripslashes($txn->item->sku);
 			$txn->item->variantsku      = stripslashes($txn->item->variantsku);
 
+			if (isset($txn->item->varianttitle) && !empty($txn->item->varianttitle)) {
+				$order_product_name = $txn->item->varianttitle;
+			} else {
+				if ($txn->item->sku != '') {
+					$order_product_name = $txn->item->name . ' [' . $txn->item->sku . ']';
+				} else {
+					$order_product_name = $txn->item->name;
+				}
+			}
+
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "order_product` SET
 					`order_id`            = '" . (int)$order_id . "',
 					`product_id`          = '" . (int)$product_id . "',
-					`name`                = '" . $this->db->escape((isset($txn->item->varianttitle) && !empty($txn->item->varianttitle)) ? $txn->item->varianttitle : $txn->item->name) . "',
+					`name`                = '" . $this->db->escape($order_product_name) . "',
 					`model`               = '" . $this->db->escape($model_number) . "',
 					`quantity`            = '" . (int)$qty . "',
 					`price`               = '" . (double)$price_net . "',

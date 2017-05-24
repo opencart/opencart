@@ -47,17 +47,25 @@ class ModelExtensionOpenBayEtsyOrder extends Model {
 
 					$order_id = $this->create($order);
 
+					$order_status_id = $this->config->get('etsy_order_status_new');
+
 					// is paid?
 					if ($order->paid == 1) {
+						$order_status_id = $this->config->get('etsy_order_status_paid');
 						$this->openbay->etsy->log("Order is paid");
 
 						$this->updatePaid($order_id, $order->paid);
 
 						// is shipped?
 						if ($order->shipped == 1) {
+							$order_status_id = $this->config->get('etsy_order_status_shipped');
 							$this->openbay->etsy->log("Order is shipped");
 							$this->updateShipped($order_id, $order->shipped);
 						}
+					}
+
+                    if($this->config->get('openbay_amazon_notify_admin') == 1){
+						$this->openbay->newOrderAdminNotify($order_id, $order_status_id);
 					}
 
 					$this->openbay->etsy->log('Created Order ID: ' . $order_id);
@@ -285,7 +293,7 @@ class ModelExtensionOpenBayEtsyOrder extends Model {
 		}
 
 		$this->openbay->etsy->log("Setting order to new order status ID: " . $this->config->get('etsy_order_status_new'));
-		
+
 		$this->updateOrderStatus($order_id, $this->config->get('etsy_order_status_new'));
 
 		$this->event->trigger('model/checkout/order/addOrderHistory/after', array('model/checkout/order/addOrderHistory/after', array($order_id, $this->config->get('etsy_order_status_new'))));

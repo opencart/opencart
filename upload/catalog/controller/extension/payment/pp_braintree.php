@@ -741,7 +741,6 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 				 * If there is no address match add the address and set the info.
 				 */
 				if ($match == false) {
-
 					$shipping_name = explode(' ', trim($this->request->post['details']['shippingAddress']['recipientName']));
 					$shipping_first_name = $shipping_name[0];
 					unset($shipping_name[0]);
@@ -764,7 +763,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 						'country_id' => (isset($country_info['country_id']) ? $country_info['country_id'] : 0)
 					);
 
-					$address_id = $this->model_account_address->addAddress($address_data);
+					$address_id = $this->model_account_address->addAddress($this->customer->getId(), $address_data);
 
 					$this->session->data['payment_address_id'] = $address_id;
 					$this->session->data['payment_country_id'] = $address_data['country_id'];

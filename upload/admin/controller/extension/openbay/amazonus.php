@@ -63,7 +63,7 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 		$data['link_saved_listings'] = $this->url->link('extension/openbay/amazonus/savedListings', 'user_token=' . $this->session->data['user_token'], true);
 		$data['link_bulk_listing'] = $this->url->link('extension/openbay/amazonus/bulkListProducts', 'user_token=' . $this->session->data['user_token'], true);
 		$data['link_bulk_linking'] = $this->url->link('extension/openbay/amazonus/bulkLinking', 'user_token=' . $this->session->data['user_token'], true);
-		$data['link_signup'] = 'https://account.openbaypro.com/amazonus/apiRegister/?utm_source=signup_link&utm_medium=opencart_module&utm_campaign=amazonus';
+		$data['link_signup'] = 'https://account.openbaypro.com/amazonus/apiRegister/?utm_source=opencart_install&utm_medium=dashboard&utm_campaign=amazonus';
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

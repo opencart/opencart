@@ -68,7 +68,7 @@ class ControllerExtensionOpenbayEtsy extends Controller {
 		$data['links_settings'] = $this->url->link('extension/openbay/etsy/settings', 'user_token=' . $this->session->data['user_token'], true);
 		$data['links_products'] = $this->url->link('extension/openbay/etsy_product/links', 'user_token=' . $this->session->data['user_token'], true);
 		$data['links_listings'] = $this->url->link('extension/openbay/etsy_product/listings', 'user_token=' . $this->session->data['user_token'], true);
-		$data['link_signup']    = 'https://account.openbaypro.com/etsy/apiRegister/?utm_source=signup_link&utm_medium=opencart_module&utm_campaign=etsy';
+		$data['link_signup']    = 'https://account.openbaypro.com/etsy/apiRegister/?utm_source=opencart_install&utm_medium=dashboard&utm_campaign=etsy';
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

@@ -68,7 +68,7 @@ class ControllerExtensionOpenbayEbay extends Controller {
 		$data['links_summary']            = $this->url->link('extension/openbay/ebay/summary', 'user_token=' . $this->session->data['user_token'], true);
 		$data['links_profile']            = $this->url->link('extension/openbay/ebay_profile/profileAll', 'user_token=' . $this->session->data['user_token'], true);
 		$data['links_template']           = $this->url->link('extension/openbay/ebay_template/listAll', 'user_token=' . $this->session->data['user_token'], true);
-		$data['link_signup']              = 'https://account.openbaypro.com/ebay/apiRegister/?utm_source=signup_link&utm_medium=opencart_module&utm_campaign=ebay';
+		$data['link_signup']              = 'https://account.openbaypro.com/ebay/apiRegister/?utm_source=opencart_install&utm_medium=dashboard&utm_campaign=ebay';
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

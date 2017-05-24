@@ -1443,7 +1443,7 @@ final class Ebay {
 							  `CategoryID` char(100) NOT NULL,
 							  `CategoryName` char(100) NOT NULL,
 							  PRIMARY KEY (`ebay_store_category_id`)
-							) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
+							) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
 
 				if (!empty($store['settings']['categories'])) {
 					foreach ($store['settings']['categories'] as $cat1) {

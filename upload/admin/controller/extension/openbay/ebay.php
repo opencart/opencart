@@ -1670,6 +1670,7 @@ class ControllerExtensionOpenbayEbay extends Controller {
 	}
 
 	public function verify() {
+		$this->load->model('extension/openbay/openbay');
 		$this->load->model('extension/openbay/ebay');
 		$this->load->model('extension/openbay/ebay_template');
 		$this->load->model('catalog/product');
@@ -1702,8 +1703,8 @@ class ControllerExtensionOpenbayEbay extends Controller {
 						$this->load->model('tool/image');
 
 						foreach ($data['img_tpl'] as $k => $v) {
-							$tmp_gallery_array[$k] = $this->model_tool_image->resize($v, $data['gallery_width'], $data['gallery_height']);
-							$tmp_thumbnail_array[$k] = $this->model_tool_image->resize($v, $data['thumb_width'], $data['thumb_height']);
+							$tmp_gallery_array[$k] = $this->model_extension_openbay_openbay->storeImage($v, $data['gallery_width'], $data['gallery_height'], 'ebay');
+							$tmp_thumbnail_array[$k] = $this->model_extension_openbay_openbay->storeImage($v, $data['thumb_width'], $data['thumb_height'], 'ebay');
 						}
 
 						$data['img_tpl'] = $tmp_gallery_array;
@@ -1749,6 +1750,7 @@ class ControllerExtensionOpenbayEbay extends Controller {
 	}
 
 	public function verifyBulk() {
+		$this->load->model('extension/openbay/openbay');
 		$this->load->model('extension/openbay/ebay_profile');
 		$this->load->model('extension/openbay/ebay');
 		$this->load->model('extension/openbay/ebay_template');
@@ -1935,15 +1937,15 @@ class ControllerExtensionOpenbayEbay extends Controller {
 					//if the user has not set the exclude default image, add it to the array for theme images.
 					$key_offset = 0;
 					if (!isset($profile_template['data']['default_img_exclude']) || $profile_template['data']['default_img_exclude'] != 1) {
-						$tmp_gallery_array[0] = $this->model_tool_image->resize($product_info['image'], $profile_template['data']['ebay_gallery_width'], $profile_template['data']['ebay_gallery_height']);
-						$tmp_thumbnail_array[0] = $this->model_tool_image->resize($product_info['image'], $profile_template['data']['ebay_thumb_width'], $profile_template['data']['ebay_thumb_height']);
+						$tmp_gallery_array[0] = $this->model_extension_openbay_openbay->storeImage($product_info['image'], $profile_template['data']['ebay_gallery_width'], $profile_template['data']['ebay_gallery_height'], 'ebay');
+						$tmp_thumbnail_array[0] = $this->model_extension_openbay_openbay->storeImage($product_info['image'], $profile_template['data']['ebay_thumb_width'], $profile_template['data']['ebay_thumb_height'], 'ebay');
 						$key_offset = 1;
 					}
 
 					//loop through the product images and add them.
 					foreach ($product_images as $k => $v) {
-						$tmp_gallery_array[$k+$key_offset] = $this->model_tool_image->resize($v['image'], $profile_template['data']['ebay_gallery_width'], $profile_template['data']['ebay_gallery_height']);
-						$tmp_thumbnail_array[$k+$key_offset] = $this->model_tool_image->resize($v['image'], $profile_template['data']['ebay_thumb_width'], $profile_template['data']['ebay_thumb_height']);
+						$tmp_gallery_array[$k+$key_offset] = $this->model_extension_openbay_openbay->storeImage($v['image'], $profile_template['data']['ebay_gallery_width'], $profile_template['data']['ebay_gallery_height'], 'ebay');
+						$tmp_thumbnail_array[$k+$key_offset] = $this->model_extension_openbay_openbay->storeImage($v['image'], $profile_template['data']['ebay_thumb_width'], $profile_template['data']['ebay_thumb_height'], 'ebay');
 					}
 
 					$data['img_tpl']        = $tmp_gallery_array;
@@ -1991,6 +1993,7 @@ class ControllerExtensionOpenbayEbay extends Controller {
 	}
 
 	public function listItem() {
+		$this->load->model('extension/openbay/openbay');
 		$this->load->model('extension/openbay/ebay');
 		$this->load->model('extension/openbay/ebay_template');
 		$this->load->model('catalog/product');
@@ -2017,8 +2020,8 @@ class ControllerExtensionOpenbayEbay extends Controller {
 				$this->load->model('tool/image');
 
 				foreach ($data['img_tpl'] as $k => $v) {
-					$tmp_gallery_array[$k] = $this->model_tool_image->resize($v, $data['gallery_width'], $data['gallery_height']);
-					$tmp_thumbnail_array[$k] = $this->model_tool_image->resize($v, $data['thumb_width'], $data['thumb_height']);
+					$tmp_gallery_array[$k] = $this->model_extension_openbay_openbay->storeImage($v, $data['gallery_width'], $data['gallery_height'], 'ebay');
+					$tmp_thumbnail_array[$k] = $this->model_extension_openbay_openbay->storeImage($v, $data['thumb_width'], $data['thumb_height'], 'ebay');
 				}
 
 				$data['img_tpl'] = $tmp_gallery_array;
@@ -2059,6 +2062,7 @@ class ControllerExtensionOpenbayEbay extends Controller {
 	}
 
 	public function listItemBulk() {
+        $this->load->model('extension/openbay/openbay');
 		$this->load->model('extension/openbay/ebay_profile');
 		$this->load->model('extension/openbay/ebay');
 		$this->load->model('extension/openbay/ebay_template');
@@ -2243,15 +2247,15 @@ class ControllerExtensionOpenbayEbay extends Controller {
 					//if the user has not set the exclude default image, add it to the array for theme images.
 					$key_offset = 0;
 					if (!isset($profile_template['data']['default_img_exclude']) || $profile_template['data']['default_img_exclude'] != 1) {
-						$tmp_gallery_array[0] = $this->model_tool_image->resize($product_info['image'], $profile_template['data']['ebay_gallery_width'], $profile_template['data']['ebay_gallery_height']);
-						$tmp_thumbnail_array[0] = $this->model_tool_image->resize($product_info['image'], $profile_template['data']['ebay_thumb_width'], $profile_template['data']['ebay_thumb_height']);
+						$tmp_gallery_array[0] = $this->model_extension_openbay_openbay->storeImage($product_info['image'], $profile_template['data']['ebay_gallery_width'], $profile_template['data']['ebay_gallery_height'], 'ebay');
+						$tmp_thumbnail_array[0] = $this->model_extension_openbay_openbay->storeImage($product_info['image'], $profile_template['data']['ebay_thumb_width'], $profile_template['data']['ebay_thumb_height'], 'ebay');
 						$key_offset = 1;
 					}
 
 					//loop through the product images and add them.
 					foreach ($product_images as $k => $v) {
-						$tmp_gallery_array[$k+$key_offset] = $this->model_tool_image->resize($v['image'], $profile_template['data']['ebay_gallery_width'], $profile_template['data']['ebay_gallery_height']);
-						$tmp_thumbnail_array[$k+$key_offset] = $this->model_tool_image->resize($v['image'], $profile_template['data']['ebay_thumb_width'], $profile_template['data']['ebay_thumb_height']);
+						$tmp_gallery_array[$k+$key_offset] = $this->model_extension_openbay_openbay->storeImage($v['image'], $profile_template['data']['ebay_gallery_width'], $profile_template['data']['ebay_gallery_height'], 'ebay');
+						$tmp_thumbnail_array[$k+$key_offset] = $this->model_extension_openbay_openbay->storeImage($v['image'], $profile_template['data']['ebay_thumb_width'], $profile_template['data']['ebay_thumb_height'], 'ebay');
 					}
 
 					$data['img_tpl']        = $tmp_gallery_array;

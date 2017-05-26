@@ -1,19 +1,21 @@
 <?php
 class ControllerExtensionOpenbayEbay extends Controller {
     public function inbound() {
-		$encrypted      = $this->request->post;
+		$post_data      = $this->request->post;
 		$secret         = $this->config->get('ebay_secret');
 		$active         = $this->config->get('ebay_status');
 
 		$this->load->model('extension/openbay/ebay_product');
 		$this->load->model('extension/openbay/ebay_order');
 
-		if(empty($encrypted)) {
+		if(empty($post_data)) {
+            http_response_code(400);
 			$this->response->addHeader('Content-Type: application/json');
-				http_response_code(400);
 			$this->response->setOutput(json_encode(array('error' => 'Bad request')));
+			$this->response->output();
+			exit();
 		} else {
-            $data = $this->openbay->decrypt($encrypted['data'], $this->openbay->ebay->getEncryptionKey());
+            $data = $this->openbay->decrypt($post_data['data'], $this->openbay->ebay->getEncryptionKey());
 
 			if($secret == $data['secret'] && $active == 1) {
 				if($data['action'] == 'ItemUnsold') {
@@ -95,9 +97,11 @@ class ControllerExtensionOpenbayEbay extends Controller {
 			} else {
 				$this->openbay->ebay->log('Secret incorrect or module not active.');
 
-				http_response_code(401);
-				$this->response->addHeader('Content-Type: application/json');
-				$this->response->setOutput(json_encode(array('error' => 'Authorisation failed or module inactive')));
+                http_response_code(401);
+                $this->response->addHeader('Content-Type: application/json');
+                $this->response->setOutput(json_encode(array('error' => 'Authorisation failed or module inactive')));
+                $this->response->output();
+                exit();
 			}
 		}
 	}

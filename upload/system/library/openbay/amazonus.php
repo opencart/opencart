@@ -51,13 +51,13 @@ class Amazonus {
 			CURLOPT_SSL_VERIFYHOST  => 0,
 			CURLOPT_POSTFIELDS      => 'token=' . $this->token . '&data=' . rawurlencode($encrypted) . '&opencart_version=' . VERSION,
 		);
-		$ch = curl_init();
+		$curl = curl_init();
 
-		curl_setopt_array($ch, $defaults);
+		curl_setopt_array($curl, $defaults);
 
-		$response = curl_exec($ch);
+		$response = curl_exec($curl);
 
-		curl_close($ch);
+		curl_close($curl);
 
 		return $response;
 	}
@@ -87,13 +87,13 @@ class Amazonus {
 			CURLOPT_SSL_VERIFYHOST => 0,
 			CURLOPT_POSTFIELDS => 'token=' . $this->token . '&data=' . rawurlencode($encrypted) . '&opencart_version=' . VERSION,
 		);
-		$ch = curl_init();
+		$curl = curl_init();
 
-		curl_setopt_array($ch, $defaults);
+		curl_setopt_array($curl, $defaults);
 
-		curl_exec($ch);
+		curl_exec($curl);
 
-		curl_close($ch);
+		curl_close($curl);
 	}
 
 	public function getServer() {

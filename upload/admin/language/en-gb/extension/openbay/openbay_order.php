@@ -16,7 +16,7 @@ $_['column_comments']      	   = 'Comments';
 $_['column_notify']        	   = 'Notify';
 
 // Text
-$_['text_confirmed']           = '%s orders have been marked %t';
+$_['text_confirmed']           = '%s orders have been updated';
 $_['text_no_orders']           = 'No orders selected for update';
 $_['text_confirm_change_text'] = 'Changing order status to';
 $_['text_other']               = 'Other';

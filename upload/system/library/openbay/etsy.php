@@ -66,13 +66,13 @@ final class Etsy {
 				$defaults[CURLOPT_POSTFIELDS] = json_encode($data);
 			}
 
-			$ch = curl_init();
-			curl_setopt_array($ch, $defaults);
+			$curl = curl_init();
+			curl_setopt_array($curl, $defaults);
 
 			$response = array();
 
-			if (! $result = curl_exec($ch)) {
-				$this->log('call() - Curl Failed ' . curl_error($ch) . ' ' . curl_errno($ch));
+			if (! $result = curl_exec($curl)) {
+				$this->log('call() - Curl Failed ' . curl_error($curl) . ' ' . curl_errno($curl));
 
 				return false;
 			} else {
@@ -86,7 +86,7 @@ final class Etsy {
 
 				$result = json_decode($result, 1);
 
-				$response['header_code'] = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+				$response['header_code'] = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
 				if(!empty($result)) {
 					$response['data'] = $result;
@@ -95,7 +95,7 @@ final class Etsy {
 				}
 			}
 
-			curl_close($ch);
+			curl_close($curl);
 
 			return $response;
 		} else {

@@ -73,12 +73,12 @@ final class Ebay {
 				CURLOPT_POSTFIELDS      => http_build_query($data, '', "&")
 			);
 
-			$ch = curl_init();
-			curl_setopt_array($ch, ($options + $defaults));
-			if (! $result = curl_exec($ch)) {
-				$this->log('call() - Curl Failed ' . curl_error($ch) . ' ' . curl_errno($ch));
+			$curl = curl_init();
+			curl_setopt_array($curl, ($options + $defaults));
+			if (! $result = curl_exec($curl)) {
+				$this->log('call() - Curl Failed ' . curl_error($curl) . ' ' . curl_errno($curl));
 			}
-			curl_close($ch);
+			curl_close($curl);
 
 			if (!in_array($call, $this->no_log)) {
 				$this->log('call() - Result of : "' . $result . '"');
@@ -145,11 +145,11 @@ final class Ebay {
 				CURLOPT_POSTFIELDS      => http_build_query($data, '', "&")
 			);
 
-			$ch = curl_init();
-			curl_setopt_array($ch, ($options + $defaults));
-			curl_exec($ch);
-			$this->log(curl_error($ch));
-			curl_close($ch);
+			$curl = curl_init();
+			curl_setopt_array($curl, ($options + $defaults));
+			curl_exec($curl);
+			$this->log(curl_error($curl));
+			curl_close($curl);
 		} else {
 			$this->log('openbay_noresponse_call() - OpenBay Pro not active . ');
 		}
@@ -968,18 +968,18 @@ final class Ebay {
 	}
 
 	private function getImageInfo($url) {
-		$ch = curl_init($url);
-		curl_setopt($ch, CURLOPT_NOBODY, true);
+		$curl = curl_init($url);
+		curl_setopt($curl, CURLOPT_NOBODY, true);
 
-		if(curl_exec($ch) === false) {
-			$this->log('Curl Error: ' . curl_error($ch));
+		if(curl_exec($curl) === false) {
+			$this->log('Curl Error: ' . curl_error($curl));
 		}
 
-		$header_response = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		$header_response = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
 		$this->log($header_response);
 
-		curl_close($ch);
+		curl_close($curl);
 
 		return $header_response;
 	}

@@ -509,6 +509,8 @@ class ControllerMarketplaceOpenbay extends Controller {
 		$data = $this->load->language('extension/openbay/openbay_order', $data);
 
 		$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->addScript('view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
+        $this->document->addStyle('view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
 		if (isset($this->request->get['filter_order_id'])) {
 			$filter_order_id = $this->request->get['filter_order_id'];
@@ -688,10 +690,25 @@ class ControllerMarketplaceOpenbay extends Controller {
 		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->session->data['error'])) {
+			if (!is_array($this->session->data['error'])) {
+				$this->session->data['error'] = array($this->session->data['error']);
+			}
+
 			$data['error_warning'] = $this->session->data['error'];
 			unset($this->session->data['error']);
 		} else {
 			$data['error_warning'] = '';
+		}
+
+		if (isset($this->session->data['error_orders'])) {
+			if (!is_array($this->session->data['error_orders'])) {
+				$this->session->data['error_orders'] = array($this->session->data['error']);
+			}
+
+			$data['error_orders'] = $this->session->data['error_orders'];
+			unset($this->session->data['error_orders']);
+		} else {
+			$data['error_orders'] = '';
 		}
 
 		if (isset($this->session->data['success'])) {
@@ -938,139 +955,158 @@ class ControllerMarketplaceOpenbay extends Controller {
 
 		$data = $this->load->language('extension/openbay/openbay_order');
 
-		$order_statuses = $this->model_localisation_order_status->getOrderStatuses();
-		$status_mapped = array();
+		// API login
+		$this->load->model('user/api');
 
-		foreach($order_statuses as $status) {
-			$status_mapped[$status['order_status_id']] = $status['name'];
+		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
+
+		$api_key = '';
+		if ($api_info) {
+			$api_key = $api_info['key'];
 		}
 
-		//Amazon EU
-		if ($this->config->get('openbay_amazon_status') == 1) {
-			$this->load->model('extension/openbay/amazon');
+		$api_login = $this->model_extension_openbay_openbay->apiLogin($api_key);
 
-			$orders = array();
+		if (isset($api_info['error']) || isset($api_login['error'])) {
+			$this->session->data['error'] = isset($api_info['error']) ? $api_info['error'] : $api_login['error'];
+			$this->response->redirect($this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'], true));
+		} else {
+			//Amazon EU
+			if ($this->config->get('openbay_amazon_status') == 1) {
+				$this->load->model('extension/openbay/amazon');
 
-			foreach ($this->request->post['order_id'] as $order_id) {
-				if ($this->request->post['channel'][$order_id] == 'Amazon EU') {
-					if ($this->config->get('openbay_amazon_order_status_shipped') == $this->request->post['order_status_id']) {
-						$carrier = '';
+				$orders = array();
 
-						if (isset($this->request->post['carrier_other'][$order_id]) && !empty($this->request->post['carrier_other'][$order_id])) {
-							$carrier_from_list = false;
-							$carrier = $this->request->post['carrier_other'][$order_id];
-						} else {
-							$carrier_from_list = true;
-							$carrier = $this->request->post['carrier'][$order_id];
+				foreach ($this->request->post['order_id'] as $order_id) {
+					if ($this->request->post['channel'][$order_id] == 'Amazon EU') {
+						if ($this->config->get('openbay_amazon_order_status_shipped') == $this->request->post['order_status_id']) {
+							$carrier = '';
+
+							if (isset($this->request->post['carrier_other'][$order_id]) && !empty($this->request->post['carrier_other'][$order_id])) {
+								$carrier_from_list = false;
+								$carrier = $this->request->post['carrier_other'][$order_id];
+							} else {
+								$carrier_from_list = true;
+								$carrier = $this->request->post['carrier'][$order_id];
+							}
+
+							$orders[] = array(
+								'order_id' => $order_id,
+								'status' => 'shipped',
+								'carrier' => $carrier,
+								'carrier_from_list' => $carrier_from_list,
+								'tracking' => $this->request->post['tracking'][$order_id],
+							);
+
+							$this->model_extension_openbay_amazon->updateAmazonOrderTracking($order_id, $carrier, $carrier_from_list, !empty($carrier) ? $this->request->post['tracking'][$order_id] : '');
 						}
 
-						$orders[] = array(
-							'order_id' => $order_id,
-							'status' => 'shipped',
-							'carrier' => $carrier,
-							'carrier_from_list' => $carrier_from_list,
-							'tracking' => $this->request->post['tracking'][$order_id],
-						);
-
-						$this->model_extension_openbay_amazon->updateAmazonOrderTracking($order_id, $carrier, $carrier_from_list, !empty($carrier) ? $this->request->post['tracking'][$order_id] : '');
+						if ($this->config->get('openbay_amazon_order_status_canceled') == $this->request->post['order_status_id']) {
+							$orders[] = array(
+								'order_id' => $order_id,
+								'status' => 'canceled',
+							);
+						}
 					}
+				}
 
-					if ($this->config->get('openbay_amazon_order_status_canceled') == $this->request->post['order_status_id']) {
-						$orders[] = array(
-							'order_id' => $order_id,
-							'status' => 'canceled',
-						);
-					}
+				if ($orders) {
+					$this->openbay->amazon->bulkUpdateOrders($orders);
 				}
 			}
 
-			if ($orders) {
-				$this->openbay->amazon->bulkUpdateOrders($orders);
-			}
-		}
+			//Amazon US
+			if ($this->config->get('openbay_amazonus_status') == 1) {
+				$this->load->model('extension/openbay/amazonus');
 
-		//Amazon US
-		if ($this->config->get('openbay_amazonus_status') == 1) {
-			$this->load->model('extension/openbay/amazonus');
+				$orders = array();
 
-			$orders = array();
+				foreach ($this->request->post['order_id'] as $order_id) {
+					if ($this->request->post['channel'][$order_id] == 'Amazon US') {
+						if ($this->config->get('openbay_amazonus_order_status_shipped') == $this->request->post['order_status_id']) {
+							$carrier = '';
 
-			foreach ($this->request->post['order_id'] as $order_id) {
-				if ($this->request->post['channel'][$order_id] == 'Amazon US') {
-					if ($this->config->get('openbay_amazonus_order_status_shipped') == $this->request->post['order_status_id']) {
-						$carrier = '';
+							if (isset($this->request->post['carrier_other'][$order_id]) && !empty($this->request->post['carrier_other'][$order_id])) {
+								$carrier_from_list = false;
+								$carrier = $this->request->post['carrier_other'][$order_id];
+							} else {
+								$carrier_from_list = true;
+								$carrier = $this->request->post['carrier'][$order_id];
+							}
 
-						if (isset($this->request->post['carrier_other'][$order_id]) && !empty($this->request->post['carrier_other'][$order_id])) {
-							$carrier_from_list = false;
-							$carrier = $this->request->post['carrier_other'][$order_id];
-						} else {
-							$carrier_from_list = true;
-							$carrier = $this->request->post['carrier'][$order_id];
+							$orders[] = array(
+								'order_id' => $order_id,
+								'status' => 'shipped',
+								'carrier' => $carrier,
+								'carrier_from_list' => $carrier_from_list,
+								'tracking' => $this->request->post['tracking'][$order_id],
+							);
+
+							$this->model_extension_openbay_amazonus->updateAmazonusOrderTracking($order_id, $carrier, $carrier_from_list, !empty($carrier) ? $this->request->post['tracking'][$order_id] : '');
 						}
 
-						$orders[] = array(
-							'order_id' => $order_id,
-							'status' => 'shipped',
-							'carrier' => $carrier,
-							'carrier_from_list' => $carrier_from_list,
-							'tracking' => $this->request->post['tracking'][$order_id],
-						);
-
-						$this->model_extension_openbay_amazonus->updateAmazonusOrderTracking($order_id, $carrier, $carrier_from_list, !empty($carrier) ? $this->request->post['tracking'][$order_id] : '');
+						if ($this->config->get('openbay_amazonus_order_status_canceled') == $this->request->post['order_status_id']) {
+							$orders[] = array(
+								'order_id' => $order_id,
+								'status' => 'canceled',
+							);
+						}
 					}
+				}
 
-					if ($this->config->get('openbay_amazonus_order_status_canceled') == $this->request->post['order_status_id']) {
-						$orders[] = array(
-							'order_id' => $order_id,
-							'status' => 'canceled',
-						);
-					}
+				if ($orders) {
+					$this->openbay->amazonus->bulkUpdateOrders($orders);
 				}
 			}
 
-			if ($orders) {
-				$this->openbay->amazonus->bulkUpdateOrders($orders);
+			$i = 0;
+
+			foreach ($this->request->post['order_id'] as $order_id) {
+				if ($this->config->get('ebay_status') == 1 && $this->request->post['channel'][$order_id] == 'eBay') {
+					if ($this->config->get('ebay_status_shipped_id') == $this->request->post['order_status_id']) {
+						$this->openbay->ebay->orderStatusListen($order_id, $this->request->post['order_status_id'], array('tracking_no' => $this->request->post['tracking'][$order_id], 'carrier_id' => $this->request->post['carrier'][$order_id]));
+					} else {
+						$this->openbay->ebay->orderStatusListen($order_id, $this->request->post['order_status_id']);
+					}
+				}
+
+				if ($this->config->get('etsy_status') == 1 && $this->request->post['channel'][$order_id] == 'Etsy') {
+					$linked_order = $this->openbay->etsy->orderFind($order_id);
+
+					if ($linked_order != false) {
+						if ($this->config->get('etsy_order_status_paid') == $this->request->post['order_status_id']) {
+							$response = $this->openbay->etsy->orderUpdatePaid($linked_order['receipt_id'], "true");
+						}
+
+						if ($this->config->get('etsy_order_status_shipped') == $this->request->post['order_status_id']) {
+							$response = $this->openbay->etsy->orderUpdateShipped($linked_order['receipt_id'], "true");
+						}
+					}
+				}
+
+				$data = array(
+					'append' => 0,
+					'notify' => $this->request->post['notify'][$order_id],
+					'order_status_id' => $this->request->post['order_status_id'],
+					'comment' => $this->request->post['comments'][$order_id],
+				);
+
+				$add_history = $this->model_extension_openbay_openbay->addOrderHistory($order_id, $data, $api_login);
+
+				if (isset($add_history['error'])) {
+					$this->session->data['error_orders'][] = array(
+						'order_id' => $order_id,
+						'error' => $add_history['error']
+					);
+				}
+
+				$i++;
 			}
+
+			$this->session->data['success'] = sprintf($this->language->get('text_confirmed'), $i);
 		}
 
-		$i = 0;
-		foreach($this->request->post['order_id'] as $order_id) {
-			if ($this->config->get('ebay_status') == 1 && $this->request->post['channel'][$order_id] == 'eBay') {
-				if ($this->config->get('ebay_status_shipped_id') == $this->request->post['order_status_id']) {
-					$this->openbay->ebay->orderStatusListen($order_id, $this->request->post['order_status_id'], array('tracking_no' => $this->request->post['tracking'][$order_id], 'carrier_id' => $this->request->post['carrier'][$order_id]));
-				} else {
-					$this->openbay->ebay->orderStatusListen($order_id, $this->request->post['order_status_id']);
-				}
-			}
-
-			if ($this->config->get('etsy_status') == 1 && $this->request->post['channel'][$order_id] == 'Etsy') {
-				$linked_order = $this->openbay->etsy->orderFind($order_id);
-
-				if ($linked_order != false) {
-					if ($this->config->get('etsy_order_status_paid') == $this->request->post['order_status_id']) {
-						$response = $this->openbay->etsy->orderUpdatePaid($linked_order['receipt_id'], "true");
-					}
-
-					if ($this->config->get('etsy_order_status_shipped') == $this->request->post['order_status_id']) {
-						$response = $this->openbay->etsy->orderUpdateShipped($linked_order['receipt_id'], "true");
-					}
-				}
-			}
-
-			$data = array(
-				'append' => 0,
-				'notify' => $this->request->post['notify'][$order_id],
-				'order_status_id' => $this->request->post['order_status_id'],
-				'comment' => $this->request->post['comments'][$order_id],
-			);
-
-			$this->model_extension_openbay_openbay->addOrderHistory($order_id, $data);
-			$i++;
-		}
-
-		$this->session->data['success'] = sprintf($this->language->get('text_confirmed'), $i, $status_mapped[$this->request->post['order_status_id']]);
-
-		$this->response->redirect($this->url->link('marketplace/openbay/orderlist', 'user_token=' . $this->session->data['user_token'], true));
+		$this->response->redirect($this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'], true));
 	}
 
 	public function items() {

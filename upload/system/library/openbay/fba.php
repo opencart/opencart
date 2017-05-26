@@ -97,18 +97,18 @@ class fba {
 			$defaults[CURLOPT_CUSTOMREQUEST] = "GET";
 		}
 
-		$ch = curl_init();
+		$curl = curl_init();
 
-		curl_setopt_array($ch, $defaults);
+		curl_setopt_array($curl, $defaults);
 
-		$result = curl_exec($ch);
+		$result = curl_exec($curl);
 
 		if (!$result) {
-			$this->log('call() - Curl Failed ' . curl_error($ch) . ' ' . curl_errno($ch));
+			$this->log('call() - Curl Failed ' . curl_error($curl) . ' ' . curl_errno($curl));
 
-			$response = array('error' => true, 'error_messages' => array(curl_error($ch) . ' ' . curl_errno($ch)), 'body' => null, 'response_http' => 0);
+			$response = array('error' => true, 'error_messages' => array(curl_error($curl) . ' ' . curl_errno($curl)), 'body' => null, 'response_http' => 0);
 		} else {
-			$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+			$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
 			$this->log("Response: " . $http_code . " : " . strlen($result) . " bytes");
 
@@ -139,7 +139,7 @@ class fba {
 			}
 		}
 
-		curl_close($ch);
+		curl_close($curl);
 
 		return $response;
 	}

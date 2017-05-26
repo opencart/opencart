@@ -15,6 +15,16 @@ class Language {
 	public function set($key, $value) {
 		$this->data[$key] = $value;
 	}
+
+	// Please dont use the below function i'm thinking getting rid of it.
+	public function all() {
+		return $this->data;
+	}
+	
+	// Please dont use the below function i'm thinking getting rid of it.
+	public function merge(&$data) {
+		array_merge($this->data, $data);
+	}
 			
 	public function load($filename, &$data = array()) {
 		$_ = array();

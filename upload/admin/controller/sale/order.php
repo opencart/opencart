@@ -133,43 +133,7 @@ class ControllerSaleOrder extends Controller {
 			$page = 1;
 		}
 
-		$url = '';
-
-		if (isset($this->request->get['filter_order_id'])) {
-			$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
-		}
-
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_order_status'])) {
-			$url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
-		}
-
-		if (isset($this->request->get['filter_total'])) {
-			$url .= '&filter_total=' . $this->request->get['filter_total'];
-		}
-
-		if (isset($this->request->get['filter_date_added'])) {
-			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-		}
-
-		if (isset($this->request->get['filter_date_modified'])) {
-			$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$url = $this->getRedirectToListAppend();		
 
 		$data['breadcrumbs'] = array();
 
@@ -275,82 +239,12 @@ class ControllerSaleOrder extends Controller {
 			$data['selected'] = array();
 		}
 
-		$url = '';
-
-		if (isset($this->request->get['filter_order_id'])) {
-			$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
-		}
-
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_order_status'])) {
-			$url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
-		}
-
-		if (isset($this->request->get['filter_total'])) {
-			$url .= '&filter_total=' . $this->request->get['filter_total'];
-		}
-
-		if (isset($this->request->get['filter_date_added'])) {
-			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-		}
-
-		if (isset($this->request->get['filter_date_modified'])) {
-			$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
-		}
-
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
 		$data['sort_order'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=o.order_id' . $url, true);
 		$data['sort_customer'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=customer' . $url, true);
 		$data['sort_status'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=order_status' . $url, true);
 		$data['sort_total'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=o.total' . $url, true);
 		$data['sort_date_added'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=o.date_added' . $url, true);
 		$data['sort_date_modified'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=o.date_modified' . $url, true);
-
-		$url = '';
-
-		if (isset($this->request->get['filter_order_id'])) {
-			$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
-		}
-
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_order_status'])) {
-			$url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
-		}
-
-		if (isset($this->request->get['filter_total'])) {
-			$url .= '&filter_total=' . $this->request->get['filter_total'];
-		}
-
-		if (isset($this->request->get['filter_date_added'])) {
-			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-		}
-
-		if (isset($this->request->get['filter_date_modified'])) {
-			$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
 
 		$pagination = new Pagination();
 		$pagination->total = $order_total;
@@ -461,39 +355,7 @@ class ControllerSaleOrder extends Controller {
 		$data['tab_voucher'] = $this->language->get('tab_voucher');
 		$data['tab_total'] = $this->language->get('tab_total');
 
-		$url = '';
-
-		if (isset($this->request->get['filter_order_id'])) {
-			$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
-		}
-
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_order_status'])) {
-			$url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
-		}
-
-		if (isset($this->request->get['filter_total'])) {
-			$url .= '&filter_total=' . $this->request->get['filter_total'];
-		}
-
-		if (isset($this->request->get['filter_date_added'])) {
-			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-		}
-
-		if (isset($this->request->get['filter_date_modified'])) {
-			$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
+		$url = $this->getRedirectToListAppend();
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
@@ -1998,5 +1860,53 @@ class ControllerSaleOrder extends Controller {
 		}
 
 		$this->response->setOutput($this->load->view('sale/order_shipping', $data));
+	}
+
+	/**
+	 * Gets the Filter URL arguments to append to a list redirect.
+	 *
+	 * @param   String  $url  URL in which needs to append.
+	 *
+	 * @return  String        The arguments to append to the redirect URL.
+	 */
+	protected function getRedirectToListAppend($url = null) {
+
+		if (isset($this->request->get['filter_order_id'])) {
+			$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
+		}
+
+		if (isset($this->request->get['filter_customer'])) {
+			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_order_status'])) {
+			$url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
+		}
+
+		if (isset($this->request->get['filter_total'])) {
+			$url .= '&filter_total=' . $this->request->get['filter_total'];
+		}
+
+		if (isset($this->request->get['filter_date_added'])) {
+			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+		}
+
+		if (isset($this->request->get['filter_date_modified'])) {
+			$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
+		}
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+
+		return $url;
 	}
 }

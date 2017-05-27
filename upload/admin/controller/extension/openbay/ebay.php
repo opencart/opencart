@@ -68,7 +68,7 @@ class ControllerExtensionOpenbayEbay extends Controller {
 		$data['links_summary']            = $this->url->link('extension/openbay/ebay/summary', 'user_token=' . $this->session->data['user_token'], true);
 		$data['links_profile']            = $this->url->link('extension/openbay/ebay_profile/profileAll', 'user_token=' . $this->session->data['user_token'], true);
 		$data['links_template']           = $this->url->link('extension/openbay/ebay_template/listAll', 'user_token=' . $this->session->data['user_token'], true);
-		$data['link_signup']              = 'https://account.openbaypro.com/ebay/apiRegister/?utm_source=opencart_install&utm_medium=dashboard&utm_campaign=ebay';
+		$data['link_signup']              = 'https://account.openbaypro.com/ebay/apiRegister/?endpoint=2&utm_source=opencart_install&utm_medium=dashboard&utm_campaign=ebay';
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -117,6 +117,9 @@ class ControllerExtensionOpenbayEbay extends Controller {
 
 		$data['action'] = $this->url->link('extension/openbay/ebay/settings', 'user_token=' . $this->session->data['user_token'], true);
 		$data['cancel'] = $this->url->link('extension/openbay/ebay', 'user_token=' . $this->session->data['user_token'], true);
+		$data['link_signup'] = 'https://account.openbaypro.com/ebay/apiRegister/?endpoint=2&utm_source=opencart_install&utm_medium=settings&utm_campaign=ebay';
+		$data['link_token_renew'] = 'https://account.openbaypro.com/ebay/apiRenew/?utm_source=opencart_install&utm_medium=settings&utm_campaign=ebaytoken';
+		$data['link_update'] = 'https://account.openbaypro.com/ebay/apiUpdate/?utm_source=opencart_install&utm_medium=settings&utm_campaign=ebayupdate';
 
 		if (isset($this->request->post['ebay_def_currency'])) {
 			$data['ebay_def_currency'] = $this->request->post['ebay_def_currency'];

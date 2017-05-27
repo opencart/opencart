@@ -63,7 +63,7 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 		$data['link_saved_listings'] = $this->url->link('extension/openbay/amazonus/savedListings', 'user_token=' . $this->session->data['user_token'], true);
 		$data['link_bulk_listing'] = $this->url->link('extension/openbay/amazonus/bulkListProducts', 'user_token=' . $this->session->data['user_token'], true);
 		$data['link_bulk_linking'] = $this->url->link('extension/openbay/amazonus/bulkLinking', 'user_token=' . $this->session->data['user_token'], true);
-		$data['link_signup'] = 'https://account.openbaypro.com/amazonus/apiRegister/?utm_source=opencart_install&utm_medium=dashboard&utm_campaign=amazonus';
+		$data['link_signup'] = 'https://account.openbaypro.com/amazonus/apiRegister/?endpoint=2&utm_source=opencart_install&utm_medium=dashboard&utm_campaign=amazonus';
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -221,7 +221,7 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 		$data['user_plan'] = $plan;
 		$data['link_change_plan'] = $this->openbay->amazonus->getServer() . 'account/changePlan/?token=' . $this->config->get('openbay_amazonus_token');
 		$data['link_change_seller'] = $this->openbay->amazonus->getServer() . 'account/changeSellerId/?token=' . $this->config->get('openbay_amazonus_token');
-		$data['link_register'] = 'https://account.openbaypro.com/amazonus/apiRegister/?endpoint=2&utm_source=opencart_install&utm_medium=setings&utm_campaign=amazonus';
+		$data['link_register'] = 'https://account.openbaypro.com/amazonus/apiRegister/?endpoint=2&utm_source=opencart_install&utm_medium=subscription&utm_campaign=amazonus';
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -345,7 +345,7 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 		$data['subscription_url'] = $this->url->link('extension/openbay/amazonus/subscription', 'user_token=' . $this->session->data['user_token'], true);
 		$data['itemLinks_url'] = $this->url->link('extension/openbay/amazonus_product/linkItems', 'user_token=' . $this->session->data['user_token'], true);
 		$data['openbay_amazonus_notify_admin'] = isset($settings['openbay_amazonus_notify_admin']) ? $settings['openbay_amazonus_notify_admin'] : '';
-		$data['link_signup'] = 'https://account.openbaypro.com/amazonus/apiRegister/?endpoint=2&utm_source=opencart_install&utm_medium=setings&utm_campaign=amazonus';
+		$data['link_signup'] = 'https://account.openbaypro.com/amazonus/apiRegister/?endpoint=2&utm_source=opencart_install&utm_medium=settings&utm_campaign=amazonus';
 
         $api_checked = false;
         $api_status = false;

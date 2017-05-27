@@ -34,7 +34,7 @@ $_['text_collectible_very_good'] 	 = 'Collectible - Very Good';
 $_['text_collectible_good'] 		 = 'Collectible - Good';
 $_['text_collectible_acceptable'] 	 = 'Collectible - Acceptable';
 $_['text_refurbished'] 				 = 'Refurbished';
-$_['text_token_register'] 		     = 'Click button to register';
+$_['text_register_banner']           = 'Click here if you need to register for an account';
 
 // Error
 $_['error_permission']         		 = 'You do not have access to this module';

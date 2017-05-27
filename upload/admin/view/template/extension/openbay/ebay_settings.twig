@@ -20,17 +20,20 @@
     {% endif %}
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_edit }}</h3>
+        <h3 class="panel-title"><i class="fa fa-opencart"></i> {{ text_edit }}</h3>
       </div>
       <div class="panel-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-ebay-settings" class="form-horizontal">
-        <input type="hidden" name="ebay_itm_link" value="{{ ebay_itm_link }}" />
-        <ul class="nav nav-tabs">
-          <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_api_info }}</a></li>
-          <li><a href="#tab-setup" data-toggle="tab">{{ tab_setup }}</a></li>
-          <li><a href="#tab-defaults" data-toggle="tab">{{ tab_defaults }}</a></li>
-        </ul>
-        <div class="tab-content">
+          <input type="hidden" name="ebay_itm_link" value="{{ ebay_itm_link }}" />
+          {% if ebay_token is empty %}
+          <a href="{{ link_signup }}" target="_blank"><div class="alert alert-info"><h5 style="font-size: 14px;"><i class="fa fa-user-plus fa-2x"></i>&nbsp;&nbsp;{{ text_register_banner }}</h5></div></a>
+          {% endif %}
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_api_info }}</a></li>
+            <li><a href="#tab-setup" data-toggle="tab">{{ tab_setup }}</a></li>
+            <li><a href="#tab-defaults" data-toggle="tab">{{ tab_defaults }}</a></li>
+          </ul>
+          <div class="tab-content">
           <div class="tab-pane active" id="tab-general">
             <div class="form-group">
               <label class="col-sm-2 control-label" for="ebay-status">{{ entry_status }}</label>
@@ -79,9 +82,8 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">{{ text_api_other }}</label>
               <div class="col-sm-10">
-                <p><a href="https://account.openbaypro.com/ebay/apiRegister/" target="_BLANK"><i class="fa fa-link"></i> {{ text_token_register }}</a></p>
-                <p><a href="https://account.openbaypro.com/ebay/apiRenew/" target="_BLANK"><i class="fa fa-link"></i> {{ text_token_renew }}</a></p>
-                <p><a href="http://account.openbaypro.com/ebay/apiUpdate/" target="_BLANK"><i class="fa fa-link"></i> {{ text_obp_detail_update }}</a></p>
+                <a href="{{ link_token_renew }}" target="_BLANK" class="btn btn-default"><i class="fa fa-link"></i> {{ text_token_renew }}</a> &nbsp;
+                <a href="{{ link_update }}" target="_BLANK" class="btn btn-default"><i class="fa fa-link"></i> {{ text_obp_detail_update }}</a>
               </div>
             </div>
           </div>
@@ -467,7 +469,7 @@
             </fieldset>
           </div>
         </div>
-      </form>
+        </form>
       </div>
     </div>
   </div>

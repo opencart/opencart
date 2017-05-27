@@ -68,7 +68,7 @@ class ControllerExtensionOpenbayEtsy extends Controller {
 		$data['links_settings'] = $this->url->link('extension/openbay/etsy/settings', 'user_token=' . $this->session->data['user_token'], true);
 		$data['links_products'] = $this->url->link('extension/openbay/etsy_product/links', 'user_token=' . $this->session->data['user_token'], true);
 		$data['links_listings'] = $this->url->link('extension/openbay/etsy_product/listings', 'user_token=' . $this->session->data['user_token'], true);
-		$data['link_signup']    = 'https://account.openbaypro.com/etsy/apiRegister/?utm_source=opencart_install&utm_medium=dashboard&utm_campaign=etsy';
+		$data['link_signup']    = 'https://account.openbaypro.com/etsy/apiRegister/?endpoint=2&utm_source=opencart_install&utm_medium=dashboard&utm_campaign=etsy';
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -155,6 +155,12 @@ class ControllerExtensionOpenbayEtsy extends Controller {
 			$data['etsy_encryption_key'] = $this->config->get('etsy_encryption_key');
 		}
 
+		if (isset($this->request->post['etsy_encryption_iv'])) {
+			$data['etsy_encryption_iv'] = $this->request->post['etsy_encryption_iv'];
+		} else {
+			$data['etsy_encryption_iv'] = $this->config->get('etsy_encryption_iv');
+		}
+
 		if (isset($this->request->post['etsy_address_format'])) {
 			$data['etsy_address_format'] = $this->request->post['etsy_address_format'];
 		} else {
@@ -188,6 +194,7 @@ class ControllerExtensionOpenbayEtsy extends Controller {
 		$data['api_server'] = $this->openbay->etsy->getServer();
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 		$data['account_info'] = $this->model_extension_openbay_etsy->verifyAccount();
+		$data['link_signup'] = 'https://account.openbaypro.com/etsy/apiRegister/?endpoint=2&utm_source=opencart_install&utm_medium=settings&utm_campaign=etsy';
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

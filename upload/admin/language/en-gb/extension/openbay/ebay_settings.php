@@ -11,7 +11,6 @@ $_['text_default_import']			= 'Default import settings';
 $_['text_payments']					= 'Payments';
 $_['text_notify_settings']			= 'Notification settings';
 $_['text_listing']					= 'Listing defaults';
-$_['text_token_register']			= 'Register for your eBay token';
 $_['text_token_renew']				= 'Renew your eBay token';
 $_['text_application_settings']		= 'Your application settings allow you to configure the way OpenBay Pro works and integrates with your system.';
 $_['text_import_description']		= 'Customise the status of an order during different stages. You cannot use a status on an eBay order that does not exist in this list.';
@@ -45,6 +44,7 @@ $_['text_obp_detail_update']        = 'Update your store URL &amp; contact email
 $_['text_success']					= 'Your settings have been saved';
 $_['text_edit']						= 'Edit eBay settings';
 $_['text_checking_details'] 		= 'Checking details';
+$_['text_register_banner']          = 'Click here if you need to register for an account';
 
 // Entry
 $_['entry_status']				  = 'Status';

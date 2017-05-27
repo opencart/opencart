@@ -5,6 +5,7 @@ class fba {
 	private $api_key;
 	private $api_account_id;
     private $encryption_key;
+    private $encryption_iv;
 	private $url = 'https://api.openbaypro.io/';
 	private $registry;
 
@@ -36,6 +37,7 @@ class fba {
 		$this->logging = $this->config->get('openbay_fba_debug_log');
 
 		$this->setEncryptionKey($this->config->get('openbay_fba_encryption_key'));
+		$this->setEncryptionIv($this->config->get('openbay_fba_encryption_iv'));
 
 		if ($this->logging == 1) {
 			$this->setLogger();
@@ -46,12 +48,20 @@ class fba {
 		return $this->registry->get($name);
 	}
 
+    public function getEncryptionKey() {
+        return $this->encryption_key;
+    }
+
 	public function setEncryptionKey($key) {
 	    $this->encryption_key = $key;
     }
 
-	public function getEncryptionKey() {
-	    return $this->encryption_key;
+    public function getEncryptionIv() {
+        return $this->encryption_iv;
+    }
+
+    public function setEncryptionIv($encryption_iv) {
+        $this->encryption_iv = $encryption_iv;
     }
 
 	public function setApiKey($api_key) {
@@ -150,7 +160,7 @@ class fba {
 	}
 
 	public function validate() {
-		if ($this->config->get('openbay_fba_api_key') && $this->config->get('openbay_fba_api_account_id')) {
+		if ($this->config->get('openbay_fba_api_account_id') && $this->config->get('openbay_fba_api_key') && $this->config->get('openbay_fba_encryption_key') && $this->config->get('openbay_fba_encryption_iv')) {
 			return true;
 		} else {
 			return false;

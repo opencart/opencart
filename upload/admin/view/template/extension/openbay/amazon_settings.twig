@@ -17,10 +17,13 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_edit }}</h3>
+        <h3 class="panel-title"><i class="fa fa-amazon"></i> {{ text_edit }}</h3>
       </div>
       <div class="panel-body">
         <form action="" method="post" enctype="multipart/form-data" id="settings-form" class="form-horizontal">
+          {% if openbay_amazon_token is empty %}
+          <a href="{{ link_signup }}" target="_blank"><div class="alert alert-info"><h5 style="font-size: 14px;"><i class="fa fa-user-plus fa-2x"></i>&nbsp;&nbsp;{{ text_register_banner }}</h5></div></a>
+          {% endif %}
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-settings" data-toggle="tab">{{ tab_settings }}</a></li>
             <li><a href="#tab-product" data-toggle="tab">{{ tab_listing }}</a></li>
@@ -28,14 +31,6 @@
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-settings">
-              {% if openbay_amazon_token is empty %}
-                <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ text_token_register }}</label>
-                  <div class="col-sm-10">
-                    <p><a href="{{ link_signup }}" target="_BLANK" class="btn btn-primary"><i class="fa fa-link"></i> {{ button_continue }}</a></p>
-                  </div>
-                </div>
-              {% endif %}
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="amazon-status">{{ entry_status }}</label>
                 <div class="col-sm-10">

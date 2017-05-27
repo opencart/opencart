@@ -59,7 +59,7 @@ class ControllerExtensionOpenbayFba extends Controller {
         $data['link_account'] = 'https://account.openbaypro.com/fba/index/';
         $data['link_fulfillments'] = $this->url->link('extension/openbay/fba/fulfillmentlist', 'user_token=' . $this->session->data['user_token'], true);
         $data['link_orders'] = $this->url->link('extension/openbay/fba/orderlist', 'user_token=' . $this->session->data['user_token'], true);
-		$data['link_signup'] = 'https://account.openbaypro.com/fba/apiRegister/?utm_source=opencart_install&utm_medium=dashboard&utm_campaign=fba';
+		$data['link_signup'] = 'https://account.openbaypro.com/fba/apiRegister/?endpoint=2&utm_source=opencart_install&utm_medium=dashboard&utm_campaign=fba';
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
@@ -108,6 +108,7 @@ class ControllerExtensionOpenbayFba extends Controller {
 
         $data['action'] = $this->url->link('extension/openbay/fba/settings', 'user_token=' . $this->session->data['user_token'], true);
         $data['cancel'] = $this->url->link('extension/openbay/fba', 'user_token=' . $this->session->data['user_token'], true);
+        $data['link_signup'] = 'https://account.openbaypro.com/fba/apiRegister/?endpoint=2&utm_source=opencart_install&utm_medium=settings&utm_campaign=fba';
 
         $data['user_token'] = $this->session->data['user_token'];
 
@@ -133,6 +134,12 @@ class ControllerExtensionOpenbayFba extends Controller {
             $data['openbay_fba_encryption_key'] = trim($this->request->post['openbay_fba_encryption_key']);
         } else {
             $data['openbay_fba_encryption_key'] = trim($this->config->get('openbay_fba_encryption_key'));
+        }
+
+        if (isset($this->request->post['openbay_fba_encryption_iv'])) {
+            $data['openbay_fba_encryption_iv'] = trim($this->request->post['openbay_fba_encryption_iv']);
+        } else {
+            $data['openbay_fba_encryption_iv'] = trim($this->config->get('openbay_fba_encryption_iv'));
         }
 
         if (isset($this->request->post['openbay_fba_api_account_id'])) {
@@ -230,10 +237,15 @@ class ControllerExtensionOpenbayFba extends Controller {
             $errors[] = array('message' => $this->language->get('error_encryption_key'));
         }
 
+        if (!isset($this->request->post['openbay_fba_encryption_iv']) || empty($this->request->post['openbay_fba_encryption_iv'])) {
+            $errors[] = array('message' => $this->language->get('error_encryption_iv'));
+        }
+
         if (!$errors) {
             $this->openbay->fba->setApiKey($this->request->post['openbay_fba_api_key']);
             $this->openbay->fba->setAccountId($this->request->post['openbay_fba_api_account_id']);
             $this->openbay->fba->setEncryptionKey($this->request->post['openbay_fba_encryption_key']);
+            $this->openbay->fba->setEncryptionIv($this->request->post['openbay_fba_encryption_iv']);
 
             $response = $this->openbay->fba->call("v1/fba/status/", array(), 'GET');
         } else {

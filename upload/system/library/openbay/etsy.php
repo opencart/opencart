@@ -4,6 +4,7 @@ namespace openbay;
 final class Etsy {
 	private $token;
     private $encryption_key;
+    private $encryption_iv;
 	private $url = 'https://api.openbaypro.io/';
 	private $registry;
 	private $logger;
@@ -19,18 +20,27 @@ final class Etsy {
 		}
 
 		$this->setEncryptionKey($this->config->get('etsy_encryption_key'));
+		$this->getEncryptionIv($this->config->get('etsy_encryption_iv'));
 	}
 
 	public function __get($name) {
 		return $this->registry->get($name);
 	}
 
+    public function getEncryptionKey() {
+        return $this->encryption_key;
+    }
+
 	public function setEncryptionKey($key) {
 	    $this->encryption_key = $key;
     }
 
-	public function getEncryptionKey() {
-	    return $this->encryption_key;
+    public function getEncryptionIv() {
+        return $this->encryption_iv;
+    }
+
+    public function setEncryptionIv($encryption_iv) {
+        $this->encryption_iv = $encryption_iv;
     }
 
 	public function resetConfig($token, $encryption_key) {
@@ -139,7 +149,7 @@ final class Etsy {
 			foreach ($response['data'] as $key => $options) {
 				$this->db->query("DELETE FROM `" . DB_PREFIX . "etsy_setting_option` WHERE  `key` = '" . $this->db->escape($key) . "' LIMIT 1");
 
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "etsy_setting_option` SET `data` = '" . $this->db->escape(serialize($options)) . "', `key` = '" . $this->db->escape($key) . "', `last_updated`  = now()");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "etsy_setting_option` SET `data` = '" . $this->db->escape(json_encode($options)) . "', `key` = '" . $this->db->escape($key) . "', `last_updated`  = now()");
 
 				$this->log("settingsUpdate() - updated option: " . $key);
 			}
@@ -158,7 +168,7 @@ final class Etsy {
 		if($qry->num_rows > 0) {
 			$this->log("getSetting() - Found setting");
 
-			return unserialize($qry->row['data']);
+			return json_decode($qry->row['data']);
 		} else {
 			return false;
 		}
@@ -436,7 +446,7 @@ final class Etsy {
 	}
 
 	public function validate() {
-		if ($this->config->get('etsy_token') && $this->config->get('etsy_encryption_key')) {
+		if ($this->config->get('etsy_token') && $this->config->get('etsy_encryption_key') && $this->config->get('etsy_encryption_iv')) {
 			$this->log("Etsy details valid");
 
 			return true;

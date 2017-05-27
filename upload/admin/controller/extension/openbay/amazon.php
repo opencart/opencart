@@ -224,7 +224,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 		$data['user_plan'] = $plan;
 		$data['link_change_plan'] = $this->openbay->amazon->getServer() . 'account/changePlan/?token=' . $this->config->get('openbay_amazon_token');
 		$data['link_change_seller'] = $this->openbay->amazon->getServer() . 'account/changeSellerId/?token=' . $this->config->get('openbay_amazon_token');
-		$data['link_register'] = 'https://account.openbaypro.com/amazon/apiRegister/?endpoint=2&utm_source=opencart_install&utm_medium=setings&utm_campaign=amazon';
+		$data['link_register'] = 'https://account.openbaypro.com/amazon/apiRegister/?endpoint=2&utm_source=opencart_install&utm_medium=subscription&utm_campaign=amazon';
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -347,7 +347,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 		$data['subscription_url'] = $this->url->link('extension/openbay/amazon/subscription', 'user_token=' . $this->session->data['user_token'], true);
 		$data['itemLinks_url'] = $this->url->link('extension/openbay/amazon_product/linkItems', 'user_token=' . $this->session->data['user_token'], true);
 		$data['openbay_amazon_notify_admin'] = isset($settings['openbay_amazon_notify_admin']) ? $settings['openbay_amazon_notify_admin'] : '';
-		$data['link_signup'] = 'https://account.openbaypro.com/amazon/apiRegister/?endpoint=2&utm_source=opencart_install&utm_medium=setings&utm_campaign=amazon';
+		$data['link_signup'] = 'https://account.openbaypro.com/amazon/apiRegister/?endpoint=2&utm_source=opencart_install&utm_medium=settings&utm_campaign=amazon';
 
         $api_checked = false;
         $api_status = false;

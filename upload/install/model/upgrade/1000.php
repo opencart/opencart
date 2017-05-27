@@ -269,9 +269,11 @@ class ModelUpgrade1000 extends Model {
 				$last_key_name = '';
 				if ($query->num_rows) {
 					foreach ($query->rows as $result) {
-						if ($result['Key_name'] != 'PRIMARY' && $result['Key_name'] != $last_key_name) {
+						if ($result['Key_name'] != 'PRIMARY') {
+							if ($result['Key_name'] != $last_key_name) {
+								$this->db->query("ALTER TABLE `" . $table['name'] . "` DROP INDEX `" . $result['Key_name'] . "`");
+							}
 							$last_key_name = $result['Key_name'];
-							$this->db->query("ALTER TABLE `" . $table['name'] . "` DROP INDEX `" . $result['Key_name'] . "`");
 						} else {
 							$status = true;
 						}

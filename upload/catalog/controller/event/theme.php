@@ -13,7 +13,7 @@ class ControllerEventTheme extends Controller {
 		if ($this->config->get('config_theme') == 'theme_default') {
 			$theme = $this->config->get('theme_default_directory');
 		} else {
-			$theme = $this->config->get('config_theme');
+			$theme = $this->config->get($this->config->get('config_theme') . '_directory');
 		}
 		
 		if (is_file(DIR_TEMPLATE . $theme . '/template/' . $view . '.tpl')) {

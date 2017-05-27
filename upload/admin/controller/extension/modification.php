@@ -399,16 +399,11 @@ class ControllerExtensionModification extends Controller {
 			foreach ($modification as $key => $value) {
 				// Only create a file if there are changes
 				if ($original[$key] != $value) {
-					$path = '';
 
-					$directories = explode('/', dirname($key));
+					$directory = DIR_MODIFICATION . dirname($key);
 
-					foreach ($directories as $directory) {
-						$path = $path . '/' . $directory;
-
-						if (!is_dir(DIR_MODIFICATION . $path)) {
-							@mkdir(DIR_MODIFICATION . $path, 0777);
-						}
+					if (!is_dir($directory)) {
+						@mkdir($directory, 0777, true);
 					}
 
 					$handle = fopen(DIR_MODIFICATION . $key, 'w');

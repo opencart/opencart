@@ -143,6 +143,11 @@ class ControllerExtensionExtensionModule extends Controller {
 		if ($files) {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
+				$path = 'extension/module/';
+				if  (preg_match('@controller/(.*/)[^/]*$@', $file, $matches))
+				{
+					$path = $matches[1];
+				}
 
 				$this->load->language('extension/module/' . $extension);
 
@@ -154,7 +159,7 @@ class ControllerExtensionExtensionModule extends Controller {
 					$module_data[] = array(
 						'module_id' => $module['module_id'],
 						'name'      => $module['name'],
-						'edit'      => $this->url->link('extension/module/' . $extension, 'token=' . $this->session->data['token'] . '&module_id=' . $module['module_id'], true),
+						'edit'      => $this->url->link($path . $extension, 'token=' . $this->session->data['token'] . '&module_id=' . $module['module_id'], true),
 						'delete'    => $this->url->link('extension/extension/module/delete', 'token=' . $this->session->data['token'] . '&module_id=' . $module['module_id'], true)
 					);
 				}
@@ -165,7 +170,7 @@ class ControllerExtensionExtensionModule extends Controller {
 					'install'   => $this->url->link('extension/extension/module/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'uninstall' => $this->url->link('extension/extension/module/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('extension/module/' . $extension, 'token=' . $this->session->data['token'], true)
+					'edit'      => $this->url->link($path . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
 		}

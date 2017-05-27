@@ -139,15 +139,18 @@ class ControllerExtensionOpenbayEbay extends Controller {
 			(isset($settings['ebay_token']) && !empty($settings['ebay_token'])) ||
 			(isset($settings['ebay_secret']) && !empty($settings['ebay_secret'])) ||
 			(isset($settings['ebay_encryption_key']) && !empty($settings['ebay_encryption_key'])) ||
+			(isset($settings['ebay_encryption_iv']) && !empty($settings['ebay_encryption_iv'])) ||
 			!isset($this->request->post['token']) ||
 			!isset($this->request->post['secret']) ||
-			!isset($this->request->post['encryption_key'])
+			!isset($this->request->post['encryption_key']) ||
+			!isset($this->request->post['encryption_iv'])
 		) {
 			$this->response->setOutput(json_encode(array('msg' => 'fail', 'reason' => 'Tokens are already setup or data missing')));
 		} else {
 			$settings['ebay_token']   = $this->request->post['token'];
 			$settings['ebay_secret']  = $this->request->post['secret'];
 			$settings['ebay_encryption_key'] = $this->request->post['encryption_key'];
+			$settings['ebay_encryption_iv'] = $this->request->post['encryption_iv'];
 
 			$this->openbay->ebay->editSetting('ebay', $settings);
 

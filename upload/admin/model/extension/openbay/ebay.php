@@ -9,6 +9,7 @@ class ModelExtensionOpenBayEbay extends Model{
 		$settings["ebay_token"] = '';
 		$settings["ebay_secret"] = '';
 		$settings["ebay_encryption_key"] = '';
+		$settings["ebay_encryption_iv"] = '';
 		$settings["ebay_enditems"] = '0';
 		$settings["ebay_logging"] = '1';
 		$settings["ebay_payment_instruction"] = '';

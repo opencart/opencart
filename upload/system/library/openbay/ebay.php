@@ -4,6 +4,7 @@ namespace openbay;
 final class Ebay {
 	private $token;
     private $encryption_key;
+    private $encryption_iv;
 	private $url = 'https://uk.openbaypro.com/';
 	private $registry;
 	private $no_log = array('notification/getPublicNotifications/', 'setup/getEbayCategories/', 'item/getItemAllList/', 'account/validate/', 'item/getItemListLimited/');
@@ -25,18 +26,27 @@ final class Ebay {
 		}
 
 		$this->setEncryptionKey($this->config->get('ebay_encryption_key'));
+		$this->getEncryptionIv($this->config->get('ebay_encryption_iv'));
 	}
 
 	public function __get($name) {
 		return $this->registry->get($name);
 	}
 
+    public function getEncryptionKey() {
+        return $this->encryption_key;
+    }
+
 	public function setEncryptionKey($key) {
 	    $this->encryption_key = $key;
     }
 
-	public function getEncryptionKey() {
-	    return $this->encryption_key;
+    public function getEncryptionIv() {
+        return $this->encryption_iv;
+    }
+
+    public function setEncryptionIv($encryption_iv) {
+        $this->encryption_iv = $encryption_iv;
     }
 
 	public function call($call, array $post = null, array $options = array(), $content_type = 'json', $status_override = false) {
@@ -917,7 +927,7 @@ final class Ebay {
 	}
 
 	public function validate() {
-		if ($this->config->get('ebay_status') != 0 && $this->config->get('ebay_token') != '' && $this->config->get('ebay_secret') != '' && $this->config->get('ebay_encryption_key') != '') {
+		if ($this->config->get('ebay_status') != 0 && $this->config->get('ebay_token') != '' && $this->config->get('ebay_secret') != '' && $this->config->get('ebay_encryption_key') != '' && $this->config->get('ebay_encryption_iv') != '') {
 			return true;
 		} else {
 			return false;

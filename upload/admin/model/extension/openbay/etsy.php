@@ -9,6 +9,7 @@ class ModelExtensionOpenBayEtsy extends Model{
 		$settings["etsy_token"] = '';
 		$settings["etsy_secret"] = '';
 		$settings["etsy_encryption_key"] = '';
+		$settings["etsy_encryption_iv"] = '';
 		$settings["etsy_logging"] = '1';
 
 		$this->model_setting_setting->editSetting('etsy', $settings);

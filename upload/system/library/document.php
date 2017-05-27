@@ -50,12 +50,48 @@ class Document {
 		);
 	}
 
+	public function addStyleVersioned($href, $rel = 'stylesheet', $media = 'screen'){
+		$hash = md5(date('dmY'));
+
+		if (file_exists(ltrim($href, '/'))) {
+			$hash = md5_file(ltrim($href, '/'));
+		}
+
+		$hash = substr($hash, 0, 10);
+
+		if (strpos($href, '?') == false) {
+			$href .= "?v=" . $hash;
+		} else {
+			$href .= "&v=" . $hash;
+		}
+
+		$this->addStyle($href, $rel, $media);
+	}
+
 	public function getStyles() {
 		return $this->styles;
 	}
 
 	public function addScript($href, $position = 'header') {
 		$this->scripts[$position][$href] = $href;
+	}
+
+	public function addScriptVersioned($href, $position = 'header'){
+		$hash = md5(date('dmY'));
+
+		if (file_exists(ltrim($href, '/'))) {
+			$hash = md5_file(ltrim($href, '/'));
+		}
+
+		$hash = substr($hash, 0, 10);
+
+		if (strpos($href, '?') == false) {
+			$href .= "?v=" . $hash;
+		} else {
+			$href .= "&v=" . $hash;
+		}
+
+		$this->addScript($href, $position);
 	}
 
 	public function getScripts($position = 'header') {

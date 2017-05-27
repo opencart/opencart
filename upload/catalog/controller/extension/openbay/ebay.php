@@ -15,7 +15,7 @@ class ControllerExtensionOpenbayEbay extends Controller {
 			$this->response->output();
 			exit();
 		} else {
-            $data = $this->openbay->decrypt($post_data['data'], $this->openbay->ebay->getEncryptionKey());
+            $data = $this->openbay->decrypt($post_data['data'], $this->openbay->ebay->getEncryptionKey(), $this->openbay->ebay->getEncryptionIv());
 
 			if($secret == $data['secret'] && $active == 1) {
 				if($data['action'] == 'ItemUnsold') {

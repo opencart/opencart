@@ -221,7 +221,7 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 		$data['user_plan'] = $plan;
 		$data['link_change_plan'] = $this->openbay->amazonus->getServer() . 'account/changePlan/?token=' . $this->config->get('openbay_amazonus_token');
 		$data['link_change_seller'] = $this->openbay->amazonus->getServer() . 'account/changeSellerId/?token=' . $this->config->get('openbay_amazonus_token');
-		$data['link_register'] = 'https://account.openbaypro.com/amazonus/apiRegister/';
+		$data['link_register'] = 'https://account.openbaypro.com/amazonus/apiRegister/?endpoint=2&utm_source=opencart_install&utm_medium=setings&utm_campaign=amazonus';
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -257,8 +257,11 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 
 			$this->config->set('openbay_amazonus_token', $this->request->post['openbay_amazonus_token']);
 			$this->config->set('openbay_amazonus_encryption_key', $this->request->post['openbay_amazonus_encryption_key']);
+			$this->config->set('openbay_amazonus_encryption_iv', $this->request->post['openbay_amazonus_encryption_iv']);
 
-			$this->model_extension_openbay_amazonus->scheduleOrders($settings);
+			if (!empty($this->request->post['openbay_amazonus_token']) && !empty($this->request->post['openbay_amazonus_encryption_key']) && !empty($this->request->post['openbay_amazonus_encryption_iv'])) {
+                $this->model_extension_openbay_amazonus->verifyConfig($settings);
+            }
 
 			$this->session->data['success'] = $this->language->get('text_settings_updated');
 			$this->response->redirect($this->url->link('extension/openbay/amazonus', 'user_token=' . $this->session->data['user_token'], true));
@@ -313,6 +316,7 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 		$data['openbay_amazonus_status'] = isset($settings['openbay_amazonus_status']) ? $settings['openbay_amazonus_status'] : '';
 		$data['openbay_amazonus_token'] = isset($settings['openbay_amazonus_token']) ? $settings['openbay_amazonus_token'] : '';
 		$data['openbay_amazonus_encryption_key'] = isset($settings['openbay_amazonus_encryption_key']) ? $settings['openbay_amazonus_encryption_key'] : '';
+		$data['openbay_amazonus_encryption_iv'] = isset($settings['openbay_amazonus_encryption_iv']) ? $settings['openbay_amazonus_encryption_iv'] : '';
 		$data['openbay_amazonus_listing_tax_added'] = isset($settings['openbay_amazonus_listing_tax_added']) ? $settings['openbay_amazonus_listing_tax_added'] : '0.00';
 		$data['openbay_amazonus_order_tax'] = isset($settings['openbay_amazonus_order_tax']) ? $settings['openbay_amazonus_order_tax'] : '00';
 		$data['openbay_amazonus_default_listing_marketplace'] = isset($settings['openbay_amazonus_default_listing_marketplace']) ? $settings['openbay_amazonus_default_listing_marketplace'] : '';
@@ -340,15 +344,19 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 
 		$data['subscription_url'] = $this->url->link('extension/openbay/amazonus/subscription', 'user_token=' . $this->session->data['user_token'], true);
 		$data['itemLinks_url'] = $this->url->link('extension/openbay/amazonus_product/linkItems', 'user_token=' . $this->session->data['user_token'], true);
-
 		$data['openbay_amazonus_notify_admin'] = isset($settings['openbay_amazonus_notify_admin']) ? $settings['openbay_amazonus_notify_admin'] : '';
+		$data['link_signup'] = 'https://account.openbaypro.com/amazonus/apiRegister/?endpoint=2&utm_source=opencart_install&utm_medium=setings&utm_campaign=amazonus';
 
         $api_checked = false;
         $api_status = false;
         $api_auth = false;
 
-		if (!empty($data['openbay_amazonus_encryption_key'])) {
-            $ping_info = simplexml_load_string($this->openbay->amazonus->call('ping/info'));
+		if (!empty($data['openbay_amazonus_token']) && !empty($data['openbay_amazonus_encryption_key']) && !empty($data['openbay_amazonus_encryption_iv'])) {
+		    $response = $this->openbay->amazonus->call('ping/info');
+
+		    if (!empty($response)) {
+                $ping_info = simplexml_load_string($response);
+            }
 
             $api_checked = true;
 

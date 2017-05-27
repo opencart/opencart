@@ -157,6 +157,12 @@ class ControllerExtensionOpenbayEbay extends Controller {
 			$data['ebay_encryption_key'] = trim($this->config->get('ebay_encryption_key'));
 		}
 
+		if (isset($this->request->post['ebay_encryption_iv'])) {
+			$data['ebay_encryption_iv'] = trim($this->request->post['ebay_encryption_iv']);
+		} else {
+			$data['ebay_encryption_iv'] = trim($this->config->get('ebay_encryption_iv'));
+		}
+
 		if (isset($this->request->post['ebay_enditems'])) {
 			$data['ebay_enditems'] = $this->request->post['ebay_enditems'];
 		} else {

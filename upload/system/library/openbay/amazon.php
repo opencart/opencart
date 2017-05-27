@@ -4,6 +4,7 @@ namespace openbay;
 class Amazon {
 	private $token;
     private $encryption_key;
+    private $encryption_iv;
 	private $url = 'https://uk-amazon.openbaypro.com/';
 	private $registry;
 
@@ -12,34 +13,48 @@ class Amazon {
 		$this->token = $this->config->get('openbay_amazon_token');
 
 		$this->setEncryptionKey($this->config->get('openbay_amazon_encryption_key'));
+		$this->setEncryptionIv($this->config->get('openbay_amazon_encryption_iv'));
 	}
 
 	public function __get($name) {
 		return $this->registry->get($name);
 	}
 
+    public function getEncryptionKey() {
+        return $this->encryption_key;
+    }
+
 	public function setEncryptionKey($key) {
 	    $this->encryption_key = $key;
     }
 
-	public function getEncryptionKey() {
-	    return $this->encryption_key;
+    public function getEncryptionIv() {
+        return $this->encryption_iv;
+    }
+
+    public function setEncryptionIv($encryption_iv) {
+        $this->encryption_iv = $encryption_iv;
     }
 
 	public function call($method, $data = array(), $is_json = true) {
-		if ($is_json) {
-			$string = json_encode($data);
-		} else {
-			$string = $data;
-		}
+        if (!empty($data)) {
+            if ($is_json) {
+                $string = json_encode($data);
+            } else {
+                $string = $data;
+            }
+
+            $encrypted = $this->openbay->encrypt($string, $this->getEncryptionKey(), $this->getEncryptionIv());
+        } else {
+            $encrypted = '';
+        }
 
         $headers = array();
         $headers[] = 'X-Endpoint-Version: 2';
 
-        $encrypted = $this->openbay->encrypt($string, $this->getEncryptionKey());
-
 		$defaults = array(
-            CURLOPT_HEADER          => $headers,
+            CURLOPT_HEADER      	=> 0,
+            CURLOPT_HTTPHEADER      => $headers,
 			CURLOPT_POST            => 1,
 			CURLOPT_URL             => $this->url . $method,
 			CURLOPT_USERAGENT       => 'OpenBay Pro for Amazon/Opencart',
@@ -51,6 +66,7 @@ class Amazon {
 			CURLOPT_SSL_VERIFYHOST  => 0,
 			CURLOPT_POSTFIELDS      => 'token=' . $this->token . '&data=' . rawurlencode($encrypted) . '&opencart_version=' . VERSION,
 		);
+
 		$curl = curl_init();
 
 		curl_setopt_array($curl, $defaults);
@@ -63,29 +79,34 @@ class Amazon {
 	}
 
 	public function callNoResponse($method, $data = array(), $is_json = true) {
-		if ($is_json) {
-			$string = json_encode($data);
-		} else {
-			$string = $data;
-		}
+        if (!empty($data)) {
+            if ($is_json) {
+                $string = json_encode($data);
+            } else {
+                $string = $data;
+            }
+
+            $encrypted = $this->openbay->encrypt($string, $this->getEncryptionKey(), $this->getEncryptionIv());
+        } else {
+            $encrypted = '';
+        }
 
         $headers = array();
         $headers[] = 'X-Endpoint-Version: 2';
 
-        $encrypted = $this->openbay->encrypt($string, $this->getEncryptionKey());
-
 		$defaults = array(
-            CURLOPT_HEADER => $headers,
-			CURLOPT_POST => 1,
-			CURLOPT_URL => $this->url . $method,
-			CURLOPT_USERAGENT => 'OpenBay Pro for Amazon/Opencart',
-			CURLOPT_FRESH_CONNECT => 1,
-			CURLOPT_RETURNTRANSFER => 1,
-			CURLOPT_FORBID_REUSE => 1,
-			CURLOPT_TIMEOUT => 2,
-			CURLOPT_SSL_VERIFYPEER => 0,
-			CURLOPT_SSL_VERIFYHOST => 0,
-			CURLOPT_POSTFIELDS => 'token=' . $this->token . '&data=' . rawurlencode($encrypted) . '&opencart_version=' . VERSION,
+            CURLOPT_HEADER      	=> 0,
+            CURLOPT_HTTPHEADER      => $headers,
+			CURLOPT_POST            => 1,
+			CURLOPT_URL             => $this->url . $method,
+			CURLOPT_USERAGENT       => 'OpenBay Pro for Amazon/Opencart',
+			CURLOPT_FRESH_CONNECT   => 1,
+			CURLOPT_RETURNTRANSFER  => 1,
+			CURLOPT_FORBID_REUSE    => 1,
+			CURLOPT_TIMEOUT         => 2,
+			CURLOPT_SSL_VERIFYPEER  => 0,
+			CURLOPT_SSL_VERIFYHOST  => 0,
+			CURLOPT_POSTFIELDS      => 'token=' . $this->token . '&data=' . rawurlencode($encrypted) . '&opencart_version=' . VERSION,
 		);
 		$curl = curl_init();
 
@@ -340,7 +361,8 @@ class Amazon {
 	public function validate() {
 		if($this->config->get('openbay_amazon_status') != 0 &&
 			$this->config->get('openbay_amazon_token') != '' &&
-			$this->config->get('openbay_amazon_encryption_key') != ''){
+			$this->config->get('openbay_amazon_encryption_key') != '' &&
+			$this->config->get('openbay_amazon_encryption_iv') != ''){
 			return true;
 		} else {
 			return false;

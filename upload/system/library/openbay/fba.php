@@ -72,7 +72,8 @@ class fba {
         $headers[] = 'Content-Type: application/json';
 
 		$defaults = array(
-			CURLOPT_HTTPHEADER      => $headers,
+            CURLOPT_HEADER      	=> 0,
+            CURLOPT_HTTPHEADER      => $headers,
 			CURLOPT_URL             => $this->url . $uri,
 			CURLOPT_USERAGENT       => 'OpenBay Pro for Fulfillment by Amazon',
 			CURLOPT_FRESH_CONNECT   => 1,

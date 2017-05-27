@@ -28,6 +28,7 @@ $_['text_collectible_very_good']  = 'Collectible - Very Good';
 $_['text_collectible_good'] 	  = 'Collectible - Good';
 $_['text_collectible_acceptable'] = 'Collectible - Acceptable';
 $_['text_refurbished'] 			  = 'Refurbished';
+$_['text_token_register'] 		  = 'Click button to register';
 
 // Error
 $_['error_permission']         	  = 'You do not have access to this module';
@@ -35,7 +36,8 @@ $_['error_permission']         	  = 'You do not have access to this module';
 // Entry
 $_['entry_status']                = 'Status';
 $_['entry_token']				  = 'API token';
-$_['entry_encryption_key']        = 'Encryption key';
+$_['entry_encryption_key']        = 'Encryption key 1';
+$_['entry_encryption_iv']         = 'Encryption key 2';
 $_['entry_import_tax']            = 'Tax for imported items';
 $_['entry_customer_group']        = 'Customer Group';
 $_['entry_tax_percentage']        = 'Percentage added to default product\'s price';

@@ -24,7 +24,8 @@ $_['text_register_banner']     = 'Click here if you need to register for an acco
 
 // Entry
 $_['entry_api_key']            = 'API token';
-$_['entry_encryption_key']     = 'Encryption key';
+$_['entry_encryption_key']     = 'Encryption key 1';
+$_['entry_encryption_iv']      = 'Encryption key 2';
 $_['entry_account_id']         = 'Account ID';
 $_['entry_send_orders']        = 'Send orders automatically';
 $_['entry_fulfill_policy']     = 'Fulfillment policy';

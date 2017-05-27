@@ -28,6 +28,14 @@
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-settings">
+              {% if openbay_amazonus_token is empty %}
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">{{ text_token_register }}</label>
+                  <div class="col-sm-10">
+                    <p><a href="{{ link_signup }}" target="_BLANK" class="btn btn-primary"><i class="fa fa-link"></i> {{ button_continue }}</a></p>
+                  </div>
+                </div>
+              {% endif %}
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="amazonus-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
@@ -52,6 +60,12 @@
                 <label class="col-sm-2 control-label" for="entry-encryption-key">{{ entry_encryption_key }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="openbay_amazonus_encryption_key" value="{{ openbay_amazonus_encryption_key }}" placeholder="{{ entry_encryption_key }}" id="entry-encryption-key" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="entry-encryption-iv">{{ entry_encryption_iv }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="openbay_amazonus_encryption_iv" value="{{ openbay_amazonus_encryption_iv }}" placeholder="{{ entry_encryption_iv }}" id="entry-encryption-iv" class="form-control" />
                 </div>
               </div>
                 {% if api_checked == true %}

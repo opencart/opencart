@@ -19,7 +19,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 			return;
 		}
 
-        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazon->getEncryptionKey());
+        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazon->getEncryptionKey(), $this->openbay->amazon->getEncryptionIv());
 
 		if (!$decrypted) {
 			$logger->write('amazon/order Failed to decrypt data');
@@ -333,7 +333,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 			return;
 		}
 
-        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazon->getEncryptionKey());
+        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazon->getEncryptionKey(), $this->openbay->amazon->getEncryptionIv());
 
 		if (!$decrypted) {
 			$logger->write('amazon/order Failed to decrypt data');
@@ -373,7 +373,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 			return;
 		}
 
-        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazon->getEncryptionKey());
+        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazon->getEncryptionKey(), $this->openbay->amazon->getEncryptionIv());
 
 		if (!$decrypted) {
 			$logger->write('amazon/listing_reports - Failed to decrypt data');
@@ -428,7 +428,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 			return;
 		}
 
-        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazon->getEncryptionKey());
+        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazon->getEncryptionKey(), $this->openbay->amazon->getEncryptionIv());
 
 		if(!$decrypted) {
 			$logger->write("Error - Failed to decrypt received data.");
@@ -499,7 +499,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 			return;
 		}
 
-        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazon->getEncryptionKey());
+        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazon->getEncryptionKey(), $this->openbay->amazon->getEncryptionIv());
 
 		if (!$decrypted) {
 			$logger->write('amazon/search Failed to decrypt data');
@@ -526,7 +526,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 			return;
 		}
 
-        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazon->getEncryptionKey());
+        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazon->getEncryptionKey(), $this->openbay->amazon->getEncryptionIv());
 
 		if (!$decrypted) {
 			$this->response->setOutput("error 003");

@@ -26,7 +26,7 @@ class ControllerExtensionOpenbayEtsy extends Controller {
 		$data = array();
 
 		if (isset($body['data']) && !empty($body['data'])) {
-            $decrypted = $this->openbay->decrypt($body['data'], $this->openbay->etsy->getEncryptionKey());
+            $decrypted = $this->openbay->decrypt($body['data'], $this->openbay->etsy->getEncryptionKey(), $this->openbay->etsy->getEncryptionIv());
 
 			if (!$decrypted) {
 				$this->openbay->etsy->log('etsy/inbound Failed to decrypt data');

@@ -36,12 +36,12 @@ final class Openbay {
 		}
 	}
 
-	public function encrypt($value, $key) {
-		return strtr(base64_encode(openssl_encrypt($value, 'aes-128-cbc', hash('sha256', $key, true))), '+/=', '-_,');
+	public function encrypt($value, $key, $iv) {
+		return strtr(base64_encode(openssl_encrypt($value, 'aes-128-cbc', hash('sha256', hex2bin($key), true), 0, hex2bin($iv))), '+/=', '-_,');
 	}
 
-	public function decrypt($value, $key) {
-		return trim(openssl_decrypt(base64_decode(strtr($value, '-_,', '+/=')), 'aes-128-cbc', hash('sha256', $key, true)));
+	public function decrypt($value, $key, $iv) {
+		return trim(openssl_decrypt(base64_decode(strtr($value, '-_,', '+/=')), 'aes-128-cbc', hash('sha256', hex2bin($key), true), 0, hex2bin($iv)));
 	}
 
 	private function getInstalled() {

@@ -64,7 +64,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 		$data['link_saved_listings'] = $this->url->link('extension/openbay/amazon/savedListings', 'user_token=' . $this->session->data['user_token'], true);
 		$data['link_bulk_listing'] = $this->url->link('extension/openbay/amazon/bulkListProducts', 'user_token=' . $this->session->data['user_token'], true);
 		$data['link_bulk_linking'] = $this->url->link('extension/openbay/amazon/bulklinking', 'user_token=' . $this->session->data['user_token'], true);
-		$data['link_signup'] = 'https://account.openbaypro.com/amazon/apiRegister/?utm_source=opencart_install&utm_medium=dashboard&utm_campaign=amazon';
+		$data['link_signup'] = 'https://account.openbaypro.com/amazon/apiRegister/?endpoint=2&utm_source=opencart_install&utm_medium=dashboard&utm_campaign=amazon';
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -224,7 +224,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 		$data['user_plan'] = $plan;
 		$data['link_change_plan'] = $this->openbay->amazon->getServer() . 'account/changePlan/?token=' . $this->config->get('openbay_amazon_token');
 		$data['link_change_seller'] = $this->openbay->amazon->getServer() . 'account/changeSellerId/?token=' . $this->config->get('openbay_amazon_token');
-		$data['link_register'] = 'https://account.openbaypro.com/amazon/apiRegister/';
+		$data['link_register'] = 'https://account.openbaypro.com/amazon/apiRegister/?endpoint=2&utm_source=opencart_install&utm_medium=setings&utm_campaign=amazon';
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -259,8 +259,11 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 
 			$this->config->set('openbay_amazon_token', $this->request->post['openbay_amazon_token']);
 			$this->config->set('openbay_amazon_encryption_key', $this->request->post['openbay_amazon_encryption_key']);
+			$this->config->set('openbay_amazon_encryption_iv', $this->request->post['openbay_amazon_encryption_iv']);
 
-			$this->model_extension_openbay_amazon->scheduleOrders($settings);
+			if (!empty($this->request->post['openbay_amazon_token']) && !empty($this->request->post['openbay_amazon_encryption_key']) && !empty($this->request->post['openbay_amazon_encryption_iv'])) {
+                $this->model_extension_openbay_amazon->verifyConfig($settings);
+            }
 
 			$this->session->data['success'] = $this->language->get('text_settings_updated');
 			$this->response->redirect($this->url->link('extension/openbay/amazon', 'user_token=' . $this->session->data['user_token'], true));
@@ -315,6 +318,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 		$data['openbay_amazon_status'] = isset($settings['openbay_amazon_status']) ? $settings['openbay_amazon_status'] : '';
 		$data['openbay_amazon_token'] = isset($settings['openbay_amazon_token']) ? $settings['openbay_amazon_token'] : '';
 		$data['openbay_amazon_encryption_key'] = isset($settings['openbay_amazon_encryption_key']) ? $settings['openbay_amazon_encryption_key'] : '';
+		$data['openbay_amazon_encryption_iv'] = isset($settings['openbay_amazon_encryption_iv']) ? $settings['openbay_amazon_encryption_iv'] : '';
 		$data['openbay_amazon_listing_tax_added'] = isset($settings['openbay_amazon_listing_tax_added']) ? $settings['openbay_amazon_listing_tax_added'] : '0.00';
 		$data['openbay_amazon_order_tax'] = isset($settings['openbay_amazon_order_tax']) ? $settings['openbay_amazon_order_tax'] : '00';
 		$data['openbay_amazon_default_listing_marketplace'] = isset($settings['openbay_amazon_default_listing_marketplace']) ? $settings['openbay_amazon_default_listing_marketplace'] : '';
@@ -343,13 +347,18 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 		$data['subscription_url'] = $this->url->link('extension/openbay/amazon/subscription', 'user_token=' . $this->session->data['user_token'], true);
 		$data['itemLinks_url'] = $this->url->link('extension/openbay/amazon_product/linkItems', 'user_token=' . $this->session->data['user_token'], true);
 		$data['openbay_amazon_notify_admin'] = isset($settings['openbay_amazon_notify_admin']) ? $settings['openbay_amazon_notify_admin'] : '';
+		$data['link_signup'] = 'https://account.openbaypro.com/amazon/apiRegister/?endpoint=2&utm_source=opencart_install&utm_medium=setings&utm_campaign=amazon';
 
         $api_checked = false;
         $api_status = false;
         $api_auth = false;
 
-		if (!empty($data['openbay_amazon_encryption_key'])) {
-            $ping_info = simplexml_load_string($this->openbay->amazon->call('ping/info'));
+		if (!empty($data['openbay_amazon_token']) && !empty($data['openbay_amazon_encryption_key']) && !empty($data['openbay_amazon_encryption_iv'])) {
+		    $response = $this->openbay->amazon->call('ping/info');
+
+		    if (!empty($response)) {
+                $ping_info = simplexml_load_string($response);
+            }
 
             $api_checked = true;
 

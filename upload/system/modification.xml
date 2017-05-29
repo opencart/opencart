@@ -15,4 +15,19 @@
       </add>
     </operation>
   </file>
+  <file path="system/engine/loader.php">
+    <operation>
+      <search trim="true"><![CDATA[$model = str_replace('../', '', (string)$model);]]></search>
+      <add position="after"><![CDATA[
+        $mod_file = DIR_MODIFICATION . ((defined('HTTP_CATALOG')) ? 'admin' : 'catalog') . '/model/' . $model . '.php';]]></add>
+    </operation>
+    <operation>
+      <search trim="true"><![CDATA[$this->registry->set('model_' . str_replace('/', '_', $model), new $class($this->registry));]]></search>
+      <add position="after"><![CDATA[
+        } elseif (file_exists($mod_file)) {
+            include_once($mod_file);
+
+            $this->registry->set('model_' . str_replace('/', '_', $model), new $class($this->registry));]]></add>
+    </operation>
+  </file>
 </modification>

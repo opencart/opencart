@@ -94,6 +94,17 @@ class ControllerExtensionOpenbayEbay extends Controller {
                         $this->response->setOutput(json_encode(array('error' => 'Log file not found')));
                     }
 				}
+
+				if($data['action'] == 'config') {
+					$this->openbay->ebay->log('Action: config / Check store php limits for import options');
+
+                    $post_size   = ini_get('post_max_size');
+                    $post_size   = (int)str_replace(array('M','m','Mb','MB'), '', $post_size);
+                    $version     = (int)$this->config->get('feed_openbaypro_version');
+
+					$this->response->addHeader('Content-Type: application/json');
+					$this->response->setOutput(json_encode(array('msg' => 'ok', 'max_post' => $post_size, 'version' => $version)));
+				}
 			} else {
 				$this->openbay->ebay->log('Secret incorrect or module not active.');
 

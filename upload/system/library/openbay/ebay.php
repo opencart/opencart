@@ -26,7 +26,7 @@ final class Ebay {
 		}
 
 		$this->setEncryptionKey($this->config->get('ebay_encryption_key'));
-		$this->getEncryptionIv($this->config->get('ebay_encryption_iv'));
+		$this->setEncryptionIv($this->config->get('ebay_encryption_iv'));
 	}
 
 	public function __get($name) {

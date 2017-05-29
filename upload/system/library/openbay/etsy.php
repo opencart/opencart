@@ -20,7 +20,7 @@ final class Etsy {
 		}
 
 		$this->setEncryptionKey($this->config->get('etsy_encryption_key'));
-		$this->getEncryptionIv($this->config->get('etsy_encryption_iv'));
+		$this->setEncryptionIv($this->config->get('etsy_encryption_iv'));
 	}
 
 	public function __get($name) {

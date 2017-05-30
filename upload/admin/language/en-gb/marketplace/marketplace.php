@@ -25,6 +25,7 @@ $_['text_date_modified'] = 'Date Modified';
 $_['text_date_added']    = 'Date Added';
 $_['text_name']          = 'Name';
 $_['text_rating']        = 'Rating';
+$_['text_reviews']       = 'reviews';
 $_['text_compatibility'] = 'Compatibility';
 $_['text_downloaded']    = 'Downloaded';
 $_['text_price']         = 'Price';

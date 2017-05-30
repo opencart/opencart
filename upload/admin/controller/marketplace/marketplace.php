@@ -240,10 +240,15 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$data['text_search'] = $this->language->get('text_search');
 		$data['text_category'] = $this->language->get('text_category');
 		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_reviews'] = $this->language->get('text_reviews');
 		
 		$data['button_opencart'] = $this->language->get('button_opencart');
 		
 		$data['user_token'] = $this->session->data['user_token'];
+		
+		if (isset($response_info['error'])) {
+			$data['error_warning'] = $response_info['error'];
+		}
 		
 		// Categories
 		$url = '';
@@ -653,6 +658,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$data['license_period'] = $response_info['license_period'];
 			$data['purchased'] = $response_info['purchased'];
 			$data['rating'] = $response_info['rating'];
+			$data['rating_total'] = $response_info['rating_total'];
 			$data['downloaded'] = $response_info['downloaded'];
 			$data['sales'] = $response_info['sales'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($response_info['date_added']));
@@ -701,6 +707,9 @@ class ControllerMarketplaceMarketplace extends Controller {
 					}
 				}
 			}
+			
+			$this->document->addStyle('view/javascript/jquery/magnific/magnific-popup.css');
+			$this->document->addScript('view/javascript/jquery/magnific/jquery.magnific-popup.min.js');
 
 			$data['header'] = $this->load->controller('common/header');
 			$data['column_left'] = $this->load->controller('common/column_left');
@@ -1024,7 +1033,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$data['button_more'] = $this->language->get('button_more');
 		$data['button_reply'] = $this->language->get('button_reply');
 
-		$curl = curl_init(OPENCART_SERVER . 'index.php?route=marketplace/api/comment&extension_id=' . $extension_id);
+		$curl = curl_init(OPENCART_SERVER . 'index.php?route=marketplace/api/comment&extension_id=' . $extension_id . '&page=' . $page);
 		
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);

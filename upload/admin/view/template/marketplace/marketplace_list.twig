@@ -88,6 +88,7 @@
         </div>
         <br />
         {% if promotions %}
+        <h3>Featured</h3>
         <div id="extension-list">{% for row in promotions|batch(4, '') %}
           <div class="row">{% for extension in row %}
             {% if extension %}
@@ -105,7 +106,7 @@
                       {% if extension.rating >= i %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
                       {% endfor %}</div>
                     <div class="col-xs-6">
-                      <div class="text-right">{{ text_rating }} {{ extension.rating_total }}</div>
+                      <div class="text-right">{{ text_reviews }} {{ extension.rating_total }}</div>
                     </div>
                   </div>
                 </div>
@@ -115,6 +116,7 @@
             {% endfor %}</div>
           {% endfor %}</div>
         <br />
+        <h2 />
         {% endif %}
         {% if extensions %}
         <div id="extension-list">{% for row in extensions|batch(4, '') %}
@@ -134,7 +136,7 @@
                       {% if extension.rating >= i %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
                       {% endfor %}</div>
                     <div class="col-xs-6">
-                      <div class="text-right">{{ text_rating }} {{ extension.rating_total }}</div>
+                      <div class="text-right">{{ text_reviews }} {{ extension.rating_total }}</div>
                     </div>
                   </div>
                 </div>

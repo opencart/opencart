@@ -895,7 +895,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
 					
 			$response = curl_exec($curl);
-			echo $response;
+			
 			$response_info = json_decode($response, true);
 			
 			curl_close($curl);

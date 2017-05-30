@@ -281,6 +281,10 @@ $('#tab-download').on('click', '.btn-primary', function(e) {
 				$('#progress-text').html(json['text']);
 			}
 			
+			if (json['extension_install_id']) {
+				$(element).attr('data-uninstall', json['extension_install_id']);
+			}
+			
 			if (json['next']) {
 				next(json['next'], element, 1);
 			}
@@ -312,7 +316,7 @@ function next(url, element, i) {
 				$('#progress-bar').addClass('progress-bar-success');
 				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
 				
-				$(element).replaceWith('<button type="button" data-install="' + $(element).attr('data-install') + '" data-uninstall="' + json['extension_install_id'] + '" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>');
+				$(element).replaceWith('<button type="button" data-install="' + $(element).attr('data-install') + '" data-uninstall="' + $(element).attr('data-uninstall') + '" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>');
 			}
 			
 			if (json['text']) {

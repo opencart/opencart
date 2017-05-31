@@ -599,12 +599,14 @@ class ControllerMarketplaceMarketplace extends Controller {
 		
 			if ($response_info['license'] && (!$this->config->get('opencart_username') || !$this->config->get('opencart_secret'))) {
 				$data['error_warning'] = $this->language->get('error_opencart');
+			} elseif (isset($response_info['error'])) {
+				$data['error_warning'] = $response_info['error'];
 			} else {
 				$data['error_warning'] = '';
 			}
 				
 			$data['user_token'] = $this->session->data['user_token'];
-
+		
 			$url = '';
 
 			if (isset($this->request->get['filter_search'])) {
@@ -692,6 +694,12 @@ class ControllerMarketplaceMarketplace extends Controller {
 						$extension_install_id = $extension_install_info['extension_install_id'];
 					} else {
 						$extension_install_id = 0;
+					}
+					
+					if (substr($result['mask'], -10) == '.ocmod.zip') {
+						
+					} else {
+						
 					}
 					
 					$compatibility = explode(', ', $result['compatibility']);

@@ -54,12 +54,11 @@
                   <legend>Available Installs</legend>
                   <table class="table table-bordered">
                     <thead>
-                    <th>Download Name</th>
+                      <th>Download Name</th>
                       <th>Date Added</th>
                       <th class="text-right">Action</th>
-                        </thead>
+                    </thead>
                     <tbody>
-                    
                     {% if downloads %}
                     {% for download in downloads %}
                     <tr>
@@ -79,8 +78,7 @@
                       <td colspan="3" class="text-center">{{ text_no_results }}</td>
                     </tr>
                     {% endif %}
-                      </tbody>
-                    
+                    </tbody>
                   </table>
                 </fieldset>
               </div>
@@ -103,7 +101,7 @@
             </div>
           </div>
           <div class="col-sm-4">
-            <div id="buy" class="well"> {% if license == '1' and not purchased %}
+            <div id="buy" class="well">{% if license == '1' and not purchased %}
               <button id="button-buy" class="btn btn-success btn-lg btn-block">Buy</button>
               {% endif %}
               <div id="price" class="row">
@@ -138,8 +136,8 @@
                 <div class="col-xs-7 text-right">{{ date_added }}</div>
               </div>
             </div>
-            <div id="sales" class="well"><i class="opencart-icon-cart-mini"></i> <strong>{{ sales }}</strong> {{ text_sales }} </div>
-            <div id="sales" class="well"><i class="opencart-icon-cart-mini"></i> <strong>{{ downloaded }}</strong> {{ text_downloaded }} </div>
+            <div id="sales" class="well"><i class="opencart-icon-cart-mini"></i> <strong>{{ sales }}</strong> {{ text_sales }}</div>
+            <div id="sales" class="well"><i class="opencart-icon-cart-mini"></i> <strong>{{ downloaded }}</strong> {{ text_downloaded }}</div>
             <div class="well">
               <div class="media">
                 <div class="media-left media-middle"><img src="{{ member_image }}" alt="{{ member_username }}" title="{{ member_username }}" class="media-object img-circle"></div>

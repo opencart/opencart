@@ -1556,6 +1556,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 		$data = [];
 		$data['heading_title'] = $this->language->get('heading_title');
+		$data['text_learn_more'] = $this->language->get('text_learn_more');
 		$data['text_preferred_main'] = $this->language->get('text_preferred_main');
 		$data['text_connect_paypal'] = $this->language->get('text_connect_paypal');
 		$data['text_preferred_li_1'] = $this->language->get('text_preferred_li_1');

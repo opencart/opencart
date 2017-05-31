@@ -89,7 +89,7 @@ class ControllerExtensionModulePPBraintreeButton extends Controller {
 			$this->load->model('setting/extension');
 			$this->load->model('user/user_group');
 
-			$this->model_setting_extension->install('module', 'module_pp_braintree_button');
+			$this->model_setting_extension->install('module', 'pp_braintree_button');
 
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/module/pp_braintree_button');
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/module/pp_braintree_button');

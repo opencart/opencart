@@ -39,6 +39,8 @@ $_['error_alert_fields_invalid']		= 'Some fields are invalid, please check your 
 $_['error_alert_failed_token']			= 'Our payment provider did not recognise the card. Is the card valid?';
 $_['error_alert_failed_network']		= 'A network error occurred, please try again';
 $_['error_alert_unknown']				= 'An unknown error occurred, if the issue continued please contact support';
+$_['error_unavailable'] 	  			= 'Please use the full checkout with this order';
+$_['error_no_shipping']    				= 'Warning: No Shipping options are available.';
 
 // Button
 $_['button_confirm']					= 'Pay Now';

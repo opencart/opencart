@@ -48,7 +48,19 @@ class File {
     }
 
     public function __destruct() {
-		if ((rand() % ini_get('session.gc_divisor')) < ini_get('session.gc_probability')) {
+		if (ini_get('session.gc_divisor')) {
+			$gc_divisor =ini_get('session.gc_divisor');
+		} else {
+			$gc_divisor = 1; 
+		}
+		
+		if (ini_get('session.gc_probability')) {
+			$gc_probability =ini_get('session.gc_probability');
+		} else {
+			$gc_probability = 1; 
+		}
+		 
+		if ((rand() % $gc_divisor) < $gc_probability) {
 			$expire = time() - ini_get('session.gc_maxlifetime');
 			
 			$files = glob(session_save_path() . '/sess_');

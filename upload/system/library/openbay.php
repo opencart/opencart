@@ -41,7 +41,7 @@ final class Openbay {
 	}
 
 	public function decrypt($value, $key, $iv) {
-		return trim(json_decode(openssl_decrypt(base64_decode(strtr($value, '-_,', '+/=')), 'aes-128-cbc', hash('sha256', hex2bin($key), true), 0, hex2bin($iv))));
+		return json_decode(trim(openssl_decrypt(base64_decode(strtr($value, '-_,', '+/=')), 'aes-128-cbc', hash('sha256', hex2bin($key), true), 0, hex2bin($iv))), true);
 	}
 
 	private function getInstalled() {

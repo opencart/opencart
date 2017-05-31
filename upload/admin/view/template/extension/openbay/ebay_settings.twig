@@ -525,13 +525,14 @@
         var token = $('#ebay-token').val();
         var secret = $('#ebay-secret').val();
         var encryption_key = $('#ebay-encryption-key').val();
+        var encryption_iv = $('#ebay-encryption-iv').val();
 
-        if (token.length > 25 && secret.length > 1 && encryption_key.length > 25) {
+        if (token.length > 25 && secret.length > 1 && encryption_key.length > 25 && encryption_iv.length > 25) {
           $.ajax({
               url: 'index.php?route=extension/openbay/ebay/verifycredentials&user_token={{ user_token }}',
               type: 'POST',
               dataType: 'json',
-              data: {token: token, secret: secret, encryption_key: encryption_key},
+              data: {token: token, secret: secret, encryption_key: encryption_key, encryption_iv: encryption_iv},
               beforeSend: function() {
                 $('#api-status-container').show();
                 $('#api-status').removeClass('label-success').removeClass('label-danger').addClass('label-primary').html('<i class="fa fa-cog fa-lg fa-spin"></i> {{ text_checking_details }}').show();

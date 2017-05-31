@@ -1,7 +1,7 @@
 <?php
 namespace openbay;
 
-class Amazonus {
+final class Amazonus {
 	private $token;
     private $encryption_key;
     private $encryption_iv;

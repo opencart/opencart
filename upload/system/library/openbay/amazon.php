@@ -1,7 +1,7 @@
 <?php
 namespace openbay;
 
-class Amazon {
+final class Amazon {
 	private $token;
     private $encryption_key;
     private $encryption_iv;

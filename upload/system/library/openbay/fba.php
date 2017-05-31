@@ -1,7 +1,7 @@
 <?php
 namespace openbay;
 
-class fba {
+final class fba {
 	private $api_key;
 	private $api_account_id;
     private $encryption_key;

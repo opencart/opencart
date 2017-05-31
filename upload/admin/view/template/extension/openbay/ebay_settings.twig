@@ -20,17 +20,20 @@
     {% endif %}
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_edit }}</h3>
+        <h3 class="panel-title"><i class="fa fa-opencart"></i> {{ text_edit }}</h3>
       </div>
       <div class="panel-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-ebay-settings" class="form-horizontal">
-        <input type="hidden" name="ebay_itm_link" value="{{ ebay_itm_link }}" />
-        <ul class="nav nav-tabs">
-          <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_api_info }}</a></li>
-          <li><a href="#tab-setup" data-toggle="tab">{{ tab_setup }}</a></li>
-          <li><a href="#tab-defaults" data-toggle="tab">{{ tab_defaults }}</a></li>
-        </ul>
-        <div class="tab-content">
+          <input type="hidden" name="ebay_itm_link" value="{{ ebay_itm_link }}" />
+          {% if ebay_token is empty %}
+          <a href="{{ link_signup }}" target="_blank"><div class="alert alert-info"><h5 style="font-size: 14px;"><i class="fa fa-user-plus fa-2x"></i>&nbsp;&nbsp;{{ text_register_banner }}</h5></div></a>
+          {% endif %}
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_api_info }}</a></li>
+            <li><a href="#tab-setup" data-toggle="tab">{{ tab_setup }}</a></li>
+            <li><a href="#tab-defaults" data-toggle="tab">{{ tab_defaults }}</a></li>
+          </ul>
+          <div class="tab-content">
           <div class="tab-pane active" id="tab-general">
             <div class="form-group">
               <label class="col-sm-2 control-label" for="ebay-status">{{ entry_status }}</label>
@@ -59,18 +62,18 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="ebay-string1">{{ entry_string1 }}</label>
+              <label class="col-sm-2 control-label" for="ebay-encryption-key">{{ entry_encryption_key }}</label>
               <div class="col-sm-10">
-                <input type="text" name="ebay_string1" value="{{ ebay_string1 }}" placeholder="{{ entry_string1 }}" id="ebay-string1" class="form-control credentials" />
+                <input type="text" name="ebay_encryption_key" value="{{ ebay_encryption_key }}" placeholder="{{ entry_encryption_key }}" id="ebay-encryption-key" class="form-control credentials" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="ebay-string2">{{ entry_string2 }}</label>
+              <label class="col-sm-2 control-label" for="ebay-encryption-iv">{{ entry_encryption_iv }}</label>
               <div class="col-sm-10">
-                <input type="text" name="ebay_string2" value="{{ ebay_string2 }}" placeholder="{{ entry_string2 }}" id="ebay-string2" class="form-control credentials" />
+                <input type="text" name="ebay_encryption_iv" value="{{ ebay_encryption_iv }}" placeholder="{{ entry_encryption_iv }}" id="ebay-encryption-iv" class="form-control credentials" />
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="api-status-container" style="display: none;">
               <label class="col-sm-2 control-label">{{ text_api_status }}</label>
               <div class="col-sm-10">
                 <h4><span id="api-status" class="label" style="display:none;"></span></h4>
@@ -79,9 +82,8 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">{{ text_api_other }}</label>
               <div class="col-sm-10">
-                <p><a href="https://account.openbaypro.com/ebay/apiRegister/" target="_BLANK"><i class="fa fa-link"></i> {{ text_token_register }}</a></p>
-                <p><a href="https://account.openbaypro.com/ebay/apiRenew/" target="_BLANK"><i class="fa fa-link"></i> {{ text_token_renew }}</a></p>
-                <p><a href="http://account.openbaypro.com/ebay/apiUpdate/" target="_BLANK"><i class="fa fa-link"></i> {{ text_obp_detail_update }}</a></p>
+                <a href="{{ link_token_renew }}" target="_BLANK" class="btn btn-default"><i class="fa fa-link"></i> {{ text_token_renew }}</a> &nbsp;
+                <a href="{{ link_update }}" target="_BLANK" class="btn btn-default"><i class="fa fa-link"></i> {{ text_obp_detail_update }}</a>
               </div>
             </div>
           </div>
@@ -93,12 +95,12 @@
                 <label class="col-sm-2 control-label" for="ebay-enditems"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_end_items }}">{{ entry_end_items }}</span></label>
                 <div class="col-sm-10">
                   <select name="ebay_enditems" id="ebay-enditems" class="form-control">
-                    {% if ebay_enditems %}
-                    <option value="1" selected="selected">{{ text_yes }}</option>
-                    <option value="0">{{ text_no }}</option>
+                    {% if ebay_enditems == 1 %}
+                      <option value="1" selected="selected">{{ text_yes }}</option>
+                      <option value="0">{{ text_no }}</option>
                     {% else %}
-                    <option value="1">{{ text_yes }}</option>
-                    <option value="0" selected="selected">{{ text_no }}</option>
+                      <option value="1">{{ text_yes }}</option>
+                      <option value="0" selected="selected">{{ text_no }}</option>
                     {% endif %}
                   </select>
                 </div>
@@ -107,12 +109,12 @@
                 <label class="col-sm-2 control-label" for="entry-relistitems"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_relist_items }}">{{ entry_relist_items }}</span></label>
                 <div class="col-sm-10">
                   <select name="ebay_relistitems" id="entry-relistitems" class="form-control">
-                    {% if ebay_relistitems %}
-                    <option value="1" selected="selected">{{ text_yes }}</option>
-                    <option value="0">{{ text_no }}</option>
+                    {% if ebay_relistitems == 1 %}
+                      <option value="1" selected="selected">{{ text_yes }}</option>
+                      <option value="0">{{ text_no }}</option>
                     {% else %}
-                    <option value="1">{{ text_yes }}</option>
-                    <option value="0" selected="selected">{{ text_no }}</option>
+                      <option value="1">{{ text_yes }}</option>
+                      <option value="0" selected="selected">{{ text_no }}</option>
                     {% endif %}
                   </select>
                 </div>
@@ -121,12 +123,12 @@
                 <label class="col-sm-2 control-label" for="entry-disable-nostock"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_disable_soldout }}">{{ entry_disable_soldout }}</span></label>
                 <div class="col-sm-10">
                   <select name="ebay_disable_nostock" id="entry-disable-nostock" class="form-control">
-                    {% if ebay_disable_nostock %}
-                    <option value="1" selected="selected">{{ text_yes }}</option>
-                    <option value="0">{{ text_no }}</option>
+                    {% if ebay_disable_nostock == 1 %}
+                      <option value="1" selected="selected">{{ text_yes }}</option>
+                      <option value="0">{{ text_no }}</option>
                     {% else %}
-                    <option value="1">{{ text_yes }}</option>
-                    <option value="0" selected="selected">{{ text_no }}</option>
+                      <option value="1">{{ text_yes }}</option>
+                      <option value="0" selected="selected">{{ text_no }}</option>
                     {% endif %}
                   </select>
                 </div>
@@ -135,12 +137,12 @@
                 <label class="col-sm-2 control-label" for="ebay_logging">{{ entry_debug }}</label>
                 <div class="col-sm-10">
                   <select name="ebay_logging" id="ebay_logging" class="form-control">
-                    {% if ebay_logging %}
-                    <option value="1" selected="selected">{{ text_yes }}</option>
-                    <option value="0">{{ text_no }}</option>
+                    {% if ebay_logging == 1 %}
+                      <option value="1" selected="selected">{{ text_yes }}</option>
+                      <option value="0">{{ text_no }}</option>
                     {% else %}
-                    <option value="1">{{ text_yes }}</option>
-                    <option value="0" selected="selected">{{ text_no }}</option>
+                      <option value="1">{{ text_yes }}</option>
+                      <option value="0" selected="selected">{{ text_no }}</option>
                     {% endif %}
                   </select>
                 </div>
@@ -150,7 +152,7 @@
                 <div class="col-sm-10">
                   <select name="ebay_def_currency" id="entry-default-currency" class="form-control">
                     {% for currency in currency_list %}
-                    <?php echo '<option value="'.$currency['code'].'"'.($ebay_def_currency == $currency['code'] ? ' selected="selected"' : '').'>'.$currency['title'].'</option>'; ?>
+                      <option value="{{ currency.code }}"{% if ebay_def_currency == currency.code %} selected{% endif %}>{{ currency.title }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -160,11 +162,11 @@
                 <div class="col-sm-10">
                   <select name="ebay_stock_allocate" id="entry-stock-allocate" class="form-control">
                     {% if ebay_stock_allocate %}
-                    <option value="1" selected="selected">{{ text_allocate_2 }}</option>
-                    <option value="0">{{ text_allocate_1 }}</option>
+                      <option value="1" selected="selected">{{ text_allocate_2 }}</option>
+                      <option value="0">{{ text_allocate_1 }}</option>
                     {% else %}
-                    <option value="1">{{ text_allocate_2 }}</option>
-                    <option value="0" selected="selected">{{ text_allocate_1 }}</option>
+                      <option value="1">{{ text_allocate_2 }}</option>
+                      <option value="0" selected="selected">{{ text_allocate_1 }}</option>
                     {% endif %}
                   </select>
                 </div>
@@ -179,12 +181,12 @@
                 <label class="col-sm-2 control-label" for="entry-create-date"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_create_date }}">{{ entry_create_date }}</span></label>
                 <div class="col-sm-10">
                   <select name="ebay_create_date" id="entry-create-date" class="form-control">
-                    {% if ebay_create_date %}
-                    <option value="1" selected="selected">{{ text_create_date_1 }}</option>
-                    <option value="0">{{ text_create_date_0 }}</option>
+                    {% if ebay_create_date == 1 %}
+                      <option value="1" selected="selected">{{ text_create_date_1 }}</option>
+                      <option value="0">{{ text_create_date_0 }}</option>
                     {% else %}
-                    <option value="1">{{ text_create_date_1 }}</option>
-                    <option value="0" selected="selected">{{ text_create_date_0 }}</option>
+                      <option value="1">{{ text_create_date_1 }}</option>
+                      <option value="0" selected="selected">{{ text_create_date_0 }}</option>
                     {% endif %}
                   </select>
                 </div>
@@ -193,31 +195,31 @@
                 <label class="col-sm-2 control-label" for="entry-time-offset"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_timezone_offset }}">{{ entry_timezone_offset }}</span></label>
                 <div class="col-sm-10">
                   <select name="ebay_time_offset" id="entry-time-offset" class="form-control">
-                    <option value="-12"<?php if ($ebay_time_offset == '-12'){ echo ' selected';} ?>>-12</option>
-                    <option value="-11"<?php if ($ebay_time_offset == '-11'){ echo ' selected';} ?>>-11</option>
-                    <option value="-10"<?php if ($ebay_time_offset == '-10'){ echo ' selected';} ?>>-10</option>
-                    <option value="-9"<?php if ($ebay_time_offset == '-9'){ echo ' selected';} ?>>-9</option>
-                    <option value="-8"<?php if ($ebay_time_offset == '-8'){ echo ' selected';} ?>>-8</option>
-                    <option value="-7"<?php if ($ebay_time_offset == '-7'){ echo ' selected';} ?>>-7</option>
-                    <option value="-6"<?php if ($ebay_time_offset == '-6'){ echo ' selected';} ?>>-6</option>
-                    <option value="-5"<?php if ($ebay_time_offset == '-5'){ echo ' selected';} ?>>-5</option>
-                    <option value="-4"<?php if ($ebay_time_offset == '-4'){ echo ' selected';} ?>>-4</option>
-                    <option value="-3"<?php if ($ebay_time_offset == '-3'){ echo ' selected';} ?>>-3</option>
-                    <option value="-2"<?php if ($ebay_time_offset == '-2'){ echo ' selected';} ?>>-2</option>
-                    <option value="-1"<?php if ($ebay_time_offset == '-1'){ echo ' selected';} ?>>-1</option>
-                    <option value="0"<?php if ($ebay_time_offset == '0'){ echo ' selected';} ?>>0</option>
-                    <option value="+1"<?php if ($ebay_time_offset == '+1'){ echo ' selected';} ?>>+1</option>
-                    <option value="+2"<?php if ($ebay_time_offset == '+2'){ echo ' selected';} ?>>+2</option>
-                    <option value="+3"<?php if ($ebay_time_offset == '+3'){ echo ' selected';} ?>>+3</option>
-                    <option value="+4"<?php if ($ebay_time_offset == '+4'){ echo ' selected';} ?>>+4</option>
-                    <option value="+5"<?php if ($ebay_time_offset == '+5'){ echo ' selected';} ?>>+5</option>
-                    <option value="+6"<?php if ($ebay_time_offset == '+6'){ echo ' selected';} ?>>+6</option>
-                    <option value="+7"<?php if ($ebay_time_offset == '+7'){ echo ' selected';} ?>>+7</option>
-                    <option value="+8"<?php if ($ebay_time_offset == '+8'){ echo ' selected';} ?>>+8</option>
-                    <option value="+9"<?php if ($ebay_time_offset == '+9'){ echo ' selected';} ?>>+9</option>
-                    <option value="+10"<?php if ($ebay_time_offset == '+10'){ echo ' selected';} ?>>+10</option>
-                    <option value="+11"<?php if ($ebay_time_offset == '+11'){ echo ' selected';} ?>>+11</option>
-                    <option value="+12"<?php if ($ebay_time_offset == '+12'){ echo ' selected';} ?>>+12</option>
+                    <option value="-12"{% if ebay_time_offset == "-12" %} selected{% endif %}>-12</option>
+                    <option value="-11"{% if ebay_time_offset == "-11" %} selected{% endif %}>-11</option>
+                    <option value="-10"{% if ebay_time_offset == "-10" %} selected{% endif %}>-10</option>
+                    <option value="-9"{% if ebay_time_offset == "-9" %} selected{% endif %}>-9</option>
+                    <option value="-8"{% if ebay_time_offset == "-8" %} selected{% endif %}>-8</option>
+                    <option value="-7"{% if ebay_time_offset == "-7" %} selected{% endif %}>-7</option>
+                    <option value="-6"{% if ebay_time_offset == "-6" %} selected{% endif %}>-6</option>
+                    <option value="-5"{% if ebay_time_offset == "-5" %} selected{% endif %}>-5</option>
+                    <option value="-4"{% if ebay_time_offset == "-4" %} selected{% endif %}>-4</option>
+                    <option value="-3"{% if ebay_time_offset == "-3" %} selected{% endif %}>-3</option>
+                    <option value="-2"{% if ebay_time_offset == "-2" %} selected{% endif %}>-2</option>
+                    <option value="-1"{% if ebay_time_offset == "-1" %} selected{% endif %}>-1</option>
+                    <option value="0"{% if ebay_time_offset == "0" %} selected{% endif %}>0</option>
+                    <option value="+1"{% if ebay_time_offset == "+1" %} selected{% endif %}>+1</option>
+                    <option value="+2"{% if ebay_time_offset == "+2" %} selected{% endif %}>+2</option>
+                    <option value="+3"{% if ebay_time_offset == "+3" %} selected{% endif %}>+3</option>
+                    <option value="+4"{% if ebay_time_offset == "+4" %} selected{% endif %}>+4</option>
+                    <option value="+5"{% if ebay_time_offset == "+5" %} selected{% endif %}>+5</option>
+                    <option value="+6"{% if ebay_time_offset == "+6" %} selected{% endif %}>+6</option>
+                    <option value="+7"{% if ebay_time_offset == "+7" %} selected{% endif %}>+7</option>
+                    <option value="+8"{% if ebay_time_offset == "+8" %} selected{% endif %}>+8</option>
+                    <option value="+9"{% if ebay_time_offset == "+9" %} selected{% endif %}>+9</option>
+                    <option value="+10"{% if ebay_time_offset == "+10" %} selected{% endif %}>+10</option>
+                    <option value="+11"{% if ebay_time_offset == "+11" %} selected{% endif %}>+11</option>
+                    <option value="+12"{% if ebay_time_offset == "+12" %} selected{% endif %}>+12</option>
                   </select>
                 </div>
               </div>
@@ -235,12 +237,12 @@
                 <label class="col-sm-2 control-label" for="entry-update-notify"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_notify_order_update }}">{{ entry_notify_order_update }}</span></label>
                 <div class="col-sm-10">
                   <select name="ebay_update_notify" id="entry-update-notify" class="form-control">
-                    {% if ebay_update_notify %}
-                    <option value="1" selected="selected">{{ text_yes }}</option>
-                    <option value="0">{{ text_no }}</option>
+                    {% if ebay_update_notify == 1 %}
+                      <option value="1" selected="selected">{{ text_yes }}</option>
+                      <option value="0">{{ text_no }}</option>
                     {% else %}
-                    <option value="1">{{ text_yes }}</option>
-                    <option value="0" selected="selected">{{ text_no }}</option>
+                      <option value="1">{{ text_yes }}</option>
+                      <option value="0" selected="selected">{{ text_no }}</option>
                     {% endif %}
                   </select>
                 </div>
@@ -249,12 +251,12 @@
                 <label class="col-sm-2 control-label" for="entry-confirm-notify"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_notify_buyer }}">{{ entry_notify_buyer }}</span></label>
                 <div class="col-sm-10">
                   <select name="ebay_confirm_notify" id="entry-confirm-notify" class="form-control">
-                    {% if ebay_confirm_notify %}
-                    <option value="1" selected="selected">{{ text_yes }}</option>
-                    <option value="0">{{ text_no }}</option>
+                    {% if ebay_confirm_notify == 1 %}
+                      <option value="1" selected="selected">{{ text_yes }}</option>
+                      <option value="0">{{ text_no }}</option>
                     {% else %}
-                    <option value="1">{{ text_yes }}</option>
-                    <option value="0" selected="selected">{{ text_no }}</option>
+                      <option value="1">{{ text_yes }}</option>
+                      <option value="0" selected="selected">{{ text_no }}</option>
                     {% endif %}
                   </select>
                 </div>
@@ -263,12 +265,12 @@
                 <label class="col-sm-2 control-label" for="entry-confirm-admin-notify"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_notify_admin }}">{{ entry_notify_admin }}</span></label>
                 <div class="col-sm-10">
                   <select name="ebay_confirmadmin_notify" id="entry-confirm-admin-notify" class="form-control">
-                    {% if ebay_confirmadmin_notify %}
-                    <option value="1" selected="selected">{{ text_yes }}</option>
-                    <option value="0">{{ text_no }}</option>
+                    {% if ebay_confirmadmin_notify == 1 %}
+                      <option value="1" selected="selected">{{ text_yes }}</option>
+                      <option value="0">{{ text_no }}</option>
                     {% else %}
-                    <option value="1">{{ text_yes }}</option>
-                    <option value="0" selected="selected">{{ text_no }}</option>
+                      <option value="1">{{ text_yes }}</option>
+                      <option value="0" selected="selected">{{ text_no }}</option>
                     {% endif %}
                   </select>
                 </div>
@@ -277,12 +279,12 @@
                 <label class="col-sm-2 control-label" for="ebay_email_brand_disable">{{ entry_brand_disable }}</label>
                 <div class="col-sm-10">
                   <select name="ebay_email_brand_disable" id="ebay_email_brand_disable" class="form-control">
-                    {% if ebay_email_brand_disable %}
-                    <option value="1" selected="selected">{{ text_yes }}</option>
-                    <option value="0">{{ text_no }}</option>
+                    {% if ebay_email_brand_disable == 1 %}
+                      <option value="1" selected="selected">{{ text_yes }}</option>
+                      <option value="0">{{ text_no }}</option>
                     {% else %}
-                    <option value="1">{{ text_yes }}</option>
-                    <option value="0" selected="selected">{{ text_no }}</option>
+                      <option value="1">{{ text_yes }}</option>
+                      <option value="0" selected="selected">{{ text_no }}</option>
                     {% endif %}
                   </select>
                 </div>
@@ -295,16 +297,16 @@
                 <label class="col-sm-2 control-label">{{ entry_import_pending }}</label>
                 <div class="col-sm-10">
                   <input type="hidden" name="ebay_import_unpaid" value="0" />
-                  <input type="checkbox" name="ebay_import_unpaid" value="1" <?php if ($ebay_import_unpaid == 1){ echo 'checked="checked"'; } ?> />
+                  <input type="checkbox" name="ebay_import_unpaid" value="1"{% if ebay_import_unpaid == 1 %} checked="checked"{% endif %} />
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="ebay_status_import_id">{{ entry_import_def_id }}</label>
                 <div class="col-sm-10">
                   <select name="ebay_status_import_id" id="ebay_status_import_id" class="form-control">
-                    <?php if (empty($ebay_status_import_id)) { $ebay_status_import_id = 1; } ?>
+                    {% if ebay_status_import_id is empty %} {% set ebay_status_import_id = 1 %} {% endif %}
                     {% for status in order_statuses %}
-                    <?php echo'<option value="'.$status['order_status_id'].'"'.($ebay_status_import_id == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
+                      <option value="{{ status.order_status_id }}"{% if ebay_status_import_id == status.order_status_id %} selected{% endif %}>{{ status.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -313,9 +315,9 @@
                 <label class="col-sm-2 control-label" for="ebay_status_paid_id">{{ entry_import_paid_id }}</label>
                 <div class="col-sm-10">
                   <select name="ebay_status_paid_id" id="ebay_status_paid_id" class="form-control">
-                    <?php if (empty($ebay_status_paid_id)) { $ebay_status_paid_id = 2; } ?>
+                    {% if ebay_status_paid_id is empty %}{% set ebay_status_paid_id = 2 %}{% endif %}
                     {% for status in order_statuses %}
-                    <?php echo'<option value="'.$status['order_status_id'].'"'.($ebay_status_paid_id == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
+                      <option value="{{ status.order_status_id }}"{% if ebay_status_paid_id == status.order_status_id %} selected{% endif %}>{{ status.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -324,9 +326,9 @@
                 <label class="col-sm-2 control-label" for="ebay_status_shipped_id">{{ entry_import_shipped_id }}</label>
                 <div class="col-sm-10">
                   <select name="ebay_status_shipped_id" id="ebay_status_shipped_id" class="form-control">
-                    <?php if (empty($ebay_status_shipped_id)) { $ebay_status_shipped_id = 3; } ?>
+                    {% if ebay_status_shipped_id is empty %}{% set ebay_status_shipped_id = 3 %}{% endif %}
                     {% for status in order_statuses %}
-                    <?php echo'<option value="'.$status['order_status_id'].'"'.($ebay_status_shipped_id == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
+                      <option value="{{ status.order_status_id }}"{% if ebay_status_shipped_id == status.order_status_id %} selected{% endif %}>{{ status.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -335,9 +337,9 @@
                 <label class="col-sm-2 control-label" for="ebay_status_cancelled_id">{{ entry_import_cancelled_id }}</label>
                 <div class="col-sm-10">
                   <select name="ebay_status_cancelled_id" id="ebay_status_cancelled_id" class="form-control">
-                    <?php if (empty($ebay_status_cancelled_id)) { $ebay_status_cancelled_id = 7; } ?>
+                    {% if ebay_status_cancelled_id is empty %}{% set ebay_status_cancelled_id = 7 %}{% endif %}
                     {% for status in order_statuses %}
-                    <?php echo'<option value="'.$status['order_status_id'].'"'.($ebay_status_cancelled_id == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
+                      <option value="{{ status.order_status_id }}"{% if ebay_status_cancelled_id == status.order_status_id %} selected{% endif %}>{{ status.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -346,9 +348,9 @@
                 <label class="col-sm-2 control-label" for="ebay_status_partial_refund_id">{{ entry_import_part_refund_id }}</label>
                 <div class="col-sm-10">
                   <select name="ebay_status_partial_refund_id" id="ebay_status_partial_refund_id" class="form-control">
-                    <?php if (empty($ebay_status_partial_refund_id)) { $ebay_status_partial_refund_id = 2; } ?>
+                    {% if ebay_status_partial_refund_id is empty %}{% set ebay_status_partial_refund_id = 2 %}{% endif %}
                     {% for status in order_statuses %}
-                    <?php echo'<option value="'.$status['order_status_id'].'"'.($ebay_status_partial_refund_id == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
+                      <option value="{{ status.order_status_id }}"{% if ebay_status_partial_refund_id == status.order_status_id %} selected{% endif %}>{{ status.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -357,9 +359,9 @@
                 <label class="col-sm-2 control-label" for="ebay_status_refunded_id">{{ entry_import_refund_id }}</label>
                 <div class="col-sm-10">
                   <select name="ebay_status_refunded_id" id="ebay_status_refunded_id" class="form-control">
-                    <?php if (empty($ebay_status_refunded_id)) { $ebay_status_refunded_id = 11; } ?>
+                    {% if ebay_status_refunded_id is empty %}{% set ebay_status_refunded_id = 11 %}{% endif %}
                     {% for status in order_statuses %}
-                    <?php echo'<option value="'.$status['order_status_id'].'"'.($ebay_status_refunded_id == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
+                      <option value="{{ status.order_status_id }}"{% if ebay_status_refunded_id == status.order_status_id %} selected{% endif %}>{{ status.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -385,11 +387,9 @@
                 <label class="col-sm-2 control-label" for="entry-duration"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_duration }}">{{ entry_duration }}</span></label>
                 <div class="col-sm-10">
                   <select name="ebay_duration" id="entry-duration" class="form-control">
-                    {% if durations %}
-                      {% for key => $duration in durations %}
-                        <?php echo'<option value="'.$key.'"'.($key == $ebay_duration ? ' selected=selected' : '').'>'.$duration.'</option>'; ?>
-                      {% endfor %}
-                    {% endif %}
+                    {% for key,duration in durations %}
+                      <option value="{{ key }}"{% if key == ebay_duration %} selected{% endif %}>{{ duration }}</option>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -397,11 +397,9 @@
                 <label class="col-sm-2 control-label" for="entry-measurement"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_measurement }}">{{ entry_measurement }}</span></label>
                 <div class="col-sm-10">
                   <select name="ebay_measurement" id="entry-measurement" class="form-control">
-                    {% if measurement_types %}
-                      {% for key => $type in measurement_types %}
-                        <?php echo'<option value="'.$key.'"'.($key == $ebay_measurement ? ' selected=selected' : '').'>'.$type.'</option>'; ?>
-                      {% endfor %}
-                    {% endif %}
+                    {% for key,type in measurement_types %}
+                      <option value="{{ key }}"{% if key == ebay_measurement %} selected{% endif %}>{{ type }}</option>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -428,8 +426,9 @@
                   <div class="checkbox">
                     <label>
                       <input type="hidden" name="ebay_payment_types[{{ payment.ebay_name }}]" value="0" />
-                      <input type="checkbox" name="ebay_payment_types[{{ payment.ebay_name }}]" value="1" <?php echo (isset($ebay_payment_types[(string)$payment['ebay_name']]) && $ebay_payment_types[(string)$payment['ebay_name']] == 1 ? 'checked="checked"' : ''); ?> />
-                      {{ payment.local_name }} </label>
+                      <input type="checkbox" name="ebay_payment_types[{{ payment.ebay_name }}]" value="1"{% if ebay_payment_types[payment.ebay_name] == 1 %} checked="checked"{% endif %} />
+                      {{ payment.local_name }}
+                    </label>
                   </div>
                   {% endfor %}
                 </div>
@@ -438,12 +437,12 @@
                 <label class="col-sm-2 control-label" for="entry-payment-immediate"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_payment_immediate }}">{{ entry_payment_immediate }}</span></label>
                 <div class="col-sm-10">
                   <select name="ebay_payment_immediate" id="entry-payment-immediate" class="form-control">
-                    {% if ebay_payment_immediate %}
-                    <option value="1" selected="selected">{{ text_yes }}</option>
-                    <option value="0">{{ text_no }}</option>
+                    {% if ebay_payment_immediate == 1 %}
+                      <option value="1" selected="selected">{{ text_yes }}</option>
+                      <option value="0">{{ text_no }}</option>
                     {% else %}
-                    <option value="1">{{ text_yes }}</option>
-                    <option value="0" selected="selected">{{ text_no }}</option>
+                      <option value="1">{{ text_yes }}</option>
+                      <option value="0" selected="selected">{{ text_no }}</option>
                     {% endif %}
                   </select>
                 </div>
@@ -452,9 +451,9 @@
                 <label class="col-sm-2 control-label" for="entry-tax-listing"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_listing_tax }}">{{ entry_tax_listing }}</span></label>
                 <div class="col-sm-10">
                   <select name="ebay_tax_listing" id="entry-tax-listing" class="form-control">
-                    <option value="0" <?php echo ($ebay_tax_listing == 0 ? 'selected' : '' ); ?>>{{ text_tax_use_value }}</option>
-                    <option value="1" <?php echo ($ebay_tax_listing == 1 ? 'selected' : '' ); ?>>{{ text_tax_use_listing }}</option>
-                    <option value="2" <?php echo ($ebay_tax_listing == 2 ? 'selected' : '' ); ?>>{{ text_tax_use_product }}</option>
+                    <option value="0"{% if ebay_tax_listing == 0 %} selected{% endif %}>{{ text_tax_use_value }}</option>
+                    <option value="1"{% if ebay_tax_listing == 1 %} selected{% endif %}>{{ text_tax_use_listing }}</option>
+                    <option value="2"{% if ebay_tax_listing == 2 %} selected{% endif %}>{{ text_tax_use_product }}</option>
                   </select>
                 </div>
               </div>
@@ -463,13 +462,14 @@
                 <div class="col-sm-10">
                   <div class="input-group col-xs-2">
                     <input type="text" name="ebay_tax" value="{{ ebay_tax }}" id="entry-tax" class="form-control" />
-                    <span class="input-group-addon">%</span> </div>
+                    <span class="input-group-addon">%</span>
+                  </div>
                 </div>
               </div>
             </fieldset>
           </div>
         </div>
-      </form>
+        </form>
       </div>
     </div>
   </div>
@@ -522,28 +522,36 @@
     }
 
     function checkCredentials() {
-        $.ajax({
-            url: 'index.php?route=extension/openbay/ebay/verifycredentials&user_token={{ user_token }}',
-            type: 'POST',
-            dataType: 'json',
-            data: {token: $('#ebay-token').val(), secret: $('#ebay-secret').val(), string1: $('#ebay-string1').val(), string2: $('#ebay-string2').val()},
-            beforeSend: function() {
-              $('#api-status').removeClass('label-success').removeClass('label-danger').addClass('label-primary').html('<i class="fa fa-cog fa-lg fa-spin"></i> Checking details').show();
-            },
-            success: function(data) {
-                if (data.error == false) {
-                    $('#api-status').removeClass('label-primary').addClass('label-success').html('<i class="fa fa-check-square-o"></i> {{ text_api_ok }}: ' + data.data.expire);
-                } else {
-                    $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> ' + data.msg);
-                }
-            },
-            failure: function() {
-              $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> {{ error_api_connect }}');
-            },
-            error: function() {
-              $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> {{ error_api_connect }}');
-            }
-        });
+        var token = $('#ebay-token').val();
+        var secret = $('#ebay-secret').val();
+        var encryption_key = $('#ebay-encryption-key').val();
+        var encryption_iv = $('#ebay-encryption-iv').val();
+
+        if (token.length > 25 && secret.length > 1 && encryption_key.length > 25 && encryption_iv.length > 25) {
+          $.ajax({
+              url: 'index.php?route=extension/openbay/ebay/verifycredentials&user_token={{ user_token }}',
+              type: 'POST',
+              dataType: 'json',
+              data: {token: token, secret: secret, encryption_key: encryption_key, encryption_iv: encryption_iv},
+              beforeSend: function() {
+                $('#api-status-container').show();
+                $('#api-status').removeClass('label-success').removeClass('label-danger').addClass('label-primary').html('<i class="fa fa-cog fa-lg fa-spin"></i> {{ text_checking_details }}').show();
+              },
+              success: function(data) {
+                  if (data.error == false) {
+                      $('#api-status').removeClass('label-primary').addClass('label-success').html('<i class="fa fa-check-square-o"></i> {{ text_api_ok }}: ' + data.data.expire);
+                  } else {
+                      $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> ' + data.msg);
+                  }
+              },
+              failure: function() {
+                $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> {{ error_api_connect }}');
+              },
+              error: function() {
+                $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> {{ error_api_connect }}');
+              }
+          });
+        }
     }
 
     function changeTaxHandler(){

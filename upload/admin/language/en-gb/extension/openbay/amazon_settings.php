@@ -3,6 +3,7 @@
 $_['heading_title']        			 = 'Marketplace settings';
 $_['text_openbay']					 = 'OpenBay Pro';
 $_['text_amazon']					 = 'Amazon EU';
+$_['text_edit']				         = 'Edit Amazon EU settings';
 
 // Text
 $_['text_api_status']                = 'API connection status';
@@ -33,15 +34,16 @@ $_['text_collectible_very_good'] 	 = 'Collectible - Very Good';
 $_['text_collectible_good'] 		 = 'Collectible - Good';
 $_['text_collectible_acceptable'] 	 = 'Collectible - Acceptable';
 $_['text_refurbished'] 				 = 'Refurbished';
+$_['text_register_banner']           = 'Click here if you need to register for an account';
 
 // Error
 $_['error_permission']         		 = 'You do not have access to this module';
 
 // Entry
 $_['entry_status']                 	 = 'Status';
-$_['entry_token']                    = 'Token';
-$_['entry_string1']              	 = 'Encryption String 1';
-$_['entry_string2']              	 = 'Encryption String 2';
+$_['entry_token']                    = 'API token';
+$_['entry_encryption_key']           = 'Encryption key 1';
+$_['entry_encryption_iv']            = 'Encryption key 2';
 $_['entry_import_tax']               = 'Tax for imported items';
 $_['entry_customer_group']           = 'Customer Group';
 $_['entry_tax_percentage']           = 'Modify price';

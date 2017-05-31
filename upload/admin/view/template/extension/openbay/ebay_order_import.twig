@@ -17,7 +17,7 @@
       <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_pull }}</h3>
     </div>
     <div class="panel-body">
-      <?php if ($validation === true) { ?>
+        {% if validation == true %}
         <form id="form-ebay-import" class="form-horizontal">
           <p>{{ text_sync_pull_notice }}</p>
           <div class="form-group">

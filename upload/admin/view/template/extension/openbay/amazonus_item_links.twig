@@ -82,7 +82,7 @@ $(document).ready(function () {
 
 function loadLinks() {
   $.ajax({
-    url: '<?php echo html_entity_decode($link_get_items); ?>',
+    url: '{{ link_get_items }}',
     type: 'get',
     dataType: 'json',
     data: 'product_id=' + encodeURIComponent($('#new-product-id').val()) + '&amazon_sku=' + encodeURIComponent($('#new-amazon-sku').val()),
@@ -120,7 +120,7 @@ $('#button-load').bind('click', function(e) {
   e.preventDefault();
 
   $.ajax({
-    url: '<?php echo html_entity_decode($link_get_unlinked_items); ?>',
+    url: '{{ link_get_unlinked_items }}',
     type: 'get',
     dataType: 'json',
     beforeSend: function () {
@@ -180,7 +180,7 @@ $('#button-load').bind('click', function(e) {
 
 function addLink(button, product_id, amazon_sku, variation) {
   $.ajax({
-    url: '<?php echo html_entity_decode($link_add_item); ?>',
+    url: '{{ link_add_item }}',
     type: 'get',
     dataType: 'json',
     async: 'false',
@@ -202,7 +202,7 @@ function addLink(button, product_id, amazon_sku, variation) {
 
 function removeLink(button, amazon_sku) {
   $.ajax({
-    url: '<?php echo html_entity_decode($link_remove_item); ?>',
+    url: '{{ link_remove_item }}',
     type: 'get',
     dataType: 'json',
     data: 'amazon_sku=' + encodeURIComponent(amazon_sku),
@@ -318,7 +318,7 @@ $('#new-product').autocomplete({
 
 function openstockCheck(product_id) {
   $.ajax({
-    url: '<?php echo html_entity_decode($link_get_variants); ?>',
+    url: '{{ link_get_variants }}',
     dataType: 'json',
     type: 'get',
     data: 'product_id=' + product_id,

@@ -85,14 +85,14 @@ class ControllerExtensionTotalVoucher extends Controller {
 
 	public function install() {
 		// Register the event triggers
-		$this->load->model('marketplace/event');
+		$this->load->model('setting/event');
 
 		$this->model_setting_event->addEvent('voucher', 'catalog/model/checkout/order/addOrderHistory/after', 'extension/total/voucher/send');
 	}
 
 	public function uninstall() {
 		// delete the event triggers
-		$this->load->model('marketplace/event');
+		$this->load->model('setting/event');
 
 		$this->model_setting_event->deleteEventByCode('voucher');
 	}

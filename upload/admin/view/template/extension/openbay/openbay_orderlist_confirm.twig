@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="container-fluid">
-    <div class="alert alert-warning">{{ text_confirm_change_text }}: <strong><?php echo $status_mapped[$change_order_status_id]; ?></strong></div>
+    <div class="alert alert-warning">{{ text_confirm_change_text }}: <strong>{{ status_mapped.change_order_status_id }}</strong></div>
     <form action="{{ link_complete }}" method="post" enctype="multipart/form-data" id="form" class="form">
       <table class="table table-bordered table-hover">
         <thead>
@@ -24,8 +24,7 @@
             <td class="text-left">{{ column_date_added }}</td>
             <td class="text-left">{{ column_additional }}</td>
             <td class="text-left">{{ column_comments }}</td>
-            <td class="text-center">{{ column_notify }}&nbsp;
-              <input type="checkbox" name="notify_all" id="notify_all" value="1" onchange="notifyAll();" /></td>
+            <td class="text-center">{{ column_notify }}<input type="checkbox" name="notify_all" id="notify_all" value="1" onchange="notifyAll();" /></td>
           </tr>
         </thead>
         <tbody>
@@ -48,8 +47,8 @@
                     <div class="form-group">
                       <label class="control-label">{{ entry_carrier }}</label>
                       <select name="carrier[{{ order.order_id }}]" class="form-control">
-                        <?php foreach($market_options['ebay']['carriers'] as $carrier) { ?>
-                          <option <?php echo ($carrier['description'] == $order['shipping_method'] ? ' selected' : ''); ?>>{{ carrier.description }}</option>
+                        {% for carrier in market_options.ebay.carriers %}
+                          <option{% if carrier.description == order.shipping_method %} selected{% endif %}>{{ carrier.description }}</option>
                         {% endfor %}
                       </select>
                     </div>
@@ -64,8 +63,8 @@
                     <div class="form-group">
                       <label class="control-label">{{ entry_carrier }}</label>
                       <select name="carrier[{{ order.order_id }}]" class="form-control amazon_carrier" id="amazon_carrier_{{ order.order_id }}">
-                        <?php foreach($market_options['amazon']['carriers'] as $courier) { ?>
-                        <?php echo '<option'.($courier == $market_options['amazon']['default_carrier'] ? ' selected' : '').'>'.$courier.'</option>'; ?>
+                        {% for carrier in market_options.amazon.carriers %}
+                          <option{% if carrier == market_options.amazon.default_carrier %} selected{% endif %}>{{ carrier }}</option>
                         {% endfor %}
                         <option value="other">{{ text_other }}</option>
                       </select>
@@ -85,8 +84,8 @@
                   <div class="form-group">
                     <label class="control-label">{{ entry_carrier }}</label>
                     <select name="carrier[{{ order.order_id }}]" class="form-control amazonus_carrier" id="amazonus_carrier_{{ order.order_id }}">
-                      <?php foreach($market_options['amazonus']['carriers'] as $courier) { ?>
-                        <?php echo '<option'.($courier == $market_options['amazonus']['default_carrier'] ? ' selected' : '').'>'.$courier.'</option>'; ?>
+                      {% for carrier in market_options.amazonus.carriers %}
+                        <option{% if carrier == market_options.amazonus.default_carrier %} selected{% endif %}>{{ carrier }}</option>
                       {% endfor %}
                       <option value="other">{{ text_other }}</option>
                     </select>

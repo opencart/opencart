@@ -225,7 +225,7 @@
                       <input type="hidden" name="image" value="{{ product.image_url }}" id="input-image" />
                     </div>
                   </div>
-                  <?php if (!empty($product['product_images'])) { ?>
+                  {% if product.product_images is not empty %}
                   <div class="table-responsive">
                     <table id="images" class="table table-striped table-bordered table-hover">
                       <thead>

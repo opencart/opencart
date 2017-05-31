@@ -105,13 +105,13 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 				if ($this->config->get('payment_pp_pro_iframe_debug')) {
 					$log = new Log('pp_pro_iframe.log');
 					$log->write('pp_pro_iframe :: CURL failed ' . curl_error($curl) . '(' . curl_errno($curl) . ')');
-				}				
+				}
 			} else {
 				if ($this->config->get('payment_pp_pro_iframe_debug')) {
 					$log = new Log('pp_pro_iframe.log');
 					$log->write('pp_pro_iframe :: IPN REQUEST: ' . $request);
 					$log->write('pp_pro_iframe :: IPN RESPONSE: ' . $response);
-				}				
+				}
 
 				if ((strcmp($response, 'VERIFIED') == 0 || strcmp($response, 'UNVERIFIED') == 0) && isset($this->request->post['payment_status'])) {
 					$order_status_id = $this->config->get('payment_pp_pro_iframe_canceled_reversal_status_id');
@@ -197,7 +197,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 		$s_data['BUTTONCODE'] = 'TOKEN';
 
 		$s_data['BUTTONLANGUAGE'] = 'en';
-		$s_data['BUTTONSOURCE'] = 'OpenCart_2.0_HSS';
+		$s_data['BUTTONSOURCE'] = 'OpenCart_Cart_HSScloud';
 
 		$s_data['USER'] = $this->config->get('payment_pp_pro_iframe_user');
 		$s_data['SIGNATURE'] = $this->config->get('payment_pp_pro_iframe_sig');
@@ -285,12 +285,12 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 		$response_data = array();
 
 		parse_str($response, $response_data);
-		
+
 		if ($this->config->get('payment_pp_pro_iframe_debug')) {
 			$log = new Log('pp_pro_iframe.log');
 			$log->write(print_r(json_encode($response_data), 1));
 		}
-		
+
 		curl_close($curl);
 
 		if (!$response || !isset($response_data['HOSTEDBUTTONID'])) {

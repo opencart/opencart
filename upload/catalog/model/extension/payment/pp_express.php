@@ -278,7 +278,7 @@ class ModelExtensionPaymentPPExpress extends Model {
 			'PWD'          => $api_password,
 			'SIGNATURE'    => $api_signature,
 			'VERSION'      => '109.0',
-			'BUTTONSOURCE' => 'OpenCart_2.0_EC'
+			'BUTTONSOURCE' => 'OpenCart_ECcloud'
 		);
 
 		$this->log($data, 'Call data');

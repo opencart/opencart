@@ -2,6 +2,7 @@
 class ModelExtensionOpenBayOpenbay extends Model {
 	private $url = 'https://account.openbaypro.com/';
 	private $error;
+	private $branch_version = 6;
 
 	public function patch() {
 
@@ -83,7 +84,7 @@ class ModelExtensionOpenBayOpenbay extends Model {
 
 		$this->openbay->log('Start check version, beta: ' . $beta . ', current: ' . $current_version);
 
-		$post = array('version' => 6, 'beta' => $beta);
+		$post = array('version' => $this->branch_version, 'beta' => $beta);
 
 		$data = $this->call('update/version/', $post);
 
@@ -108,7 +109,7 @@ class ModelExtensionOpenBayOpenbay extends Model {
 		$local_file = DIR_DOWNLOAD . '/openbaypro_update.zip';
 		$handle = fopen($local_file, "w+");
 
-		$post = array('version' => 6, 'beta' => $beta);
+		$post = array('version' => $this->branch_version, 'beta' => $beta);
 
 		$defaults = array(
 			CURLOPT_POST => 1,
@@ -233,7 +234,7 @@ class ModelExtensionOpenBayOpenbay extends Model {
 	public function updateUpdateVersion($beta = 0) {
         $this->openbay->log('Updating the version in settings');
 
-		$post = array('version' => 6, 'beta' => $beta);
+		$post = array('version' => $this->branch_version, 'beta' => $beta);
 
 		$data = $this->call('update/version/', $post);
 

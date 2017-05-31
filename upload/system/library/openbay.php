@@ -6,6 +6,7 @@ final class Openbay {
 	private $logging = 1;
 
 	public function __construct($registry) {
+		// OpenBay Pro main class.
 		$this->registry = $registry;
 
 		$this->getInstalled();

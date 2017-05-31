@@ -83,7 +83,7 @@ class ModelExtensionOpenBayOpenbay extends Model {
 
 		$this->openbay->log('Start check version, beta: ' . $beta . ', current: ' . $current_version);
 
-		$post = array('version' => 4, 'beta' => $beta);
+		$post = array('version' => 6, 'beta' => $beta);
 
 		$data = $this->call('update/version/', $post);
 
@@ -108,7 +108,7 @@ class ModelExtensionOpenBayOpenbay extends Model {
 		$local_file = DIR_DOWNLOAD . '/openbaypro_update.zip';
 		$handle = fopen($local_file, "w+");
 
-		$post = array('version' => 4, 'beta' => $beta);
+		$post = array('version' => 6, 'beta' => $beta);
 
 		$defaults = array(
 			CURLOPT_POST => 1,

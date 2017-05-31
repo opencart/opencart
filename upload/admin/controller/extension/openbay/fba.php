@@ -27,9 +27,7 @@ class ControllerExtensionOpenbayFba extends Controller {
         $this->load->model('localisation/order_status');
         $this->load->model('extension/openbay/fba');
 
-        $this->load->language('extension/openbay/fba');
-
-        $data = $this->language->all();
+        $data = $this->load->language('extension/openbay/fba');
 
         $this->document->setTitle($this->language->get('text_dashboard'));
         $this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -40,7 +38,7 @@ class ControllerExtensionOpenbayFba extends Controller {
             'text'      => $this->language->get('text_home'),
         );
         $data['breadcrumbs'][] = array(
-            'href'      => $this->url->link('extension/openbay', 'user_token=' . $this->session->data['user_token'], true),
+            'href'      => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true),
             'text'      => $this->language->get('text_openbay'),
         );
         $data['breadcrumbs'][] = array(
@@ -61,6 +59,7 @@ class ControllerExtensionOpenbayFba extends Controller {
         $data['link_account'] = 'https://account.openbaypro.com/fba/index/';
         $data['link_fulfillments'] = $this->url->link('extension/openbay/fba/fulfillmentlist', 'user_token=' . $this->session->data['user_token'], true);
         $data['link_orders'] = $this->url->link('extension/openbay/fba/orderlist', 'user_token=' . $this->session->data['user_token'], true);
+		$data['link_signup'] = 'https://account.openbaypro.com/fba/apiRegister/?endpoint=2&utm_source=opencart_install&utm_medium=dashboard&utm_campaign=fba';
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
@@ -70,9 +69,7 @@ class ControllerExtensionOpenbayFba extends Controller {
     }
 
     public function settings() {
-        $this->load->language('extension/openbay/fba_settings');
-
-        $data = $this->language->all();
+        $data = $this->load->language('extension/openbay/fba_settings');
 
         $this->document->setTitle($this->language->get('heading_title'));
         $this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -95,7 +92,7 @@ class ControllerExtensionOpenbayFba extends Controller {
         );
 
         $data['breadcrumbs'][] = array(
-            'href' => $this->url->link('extension/openbay', 'user_token=' . $this->session->data['user_token'], true),
+            'href' => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true),
             'text' => $this->language->get('text_openbay'),
         );
 
@@ -111,6 +108,7 @@ class ControllerExtensionOpenbayFba extends Controller {
 
         $data['action'] = $this->url->link('extension/openbay/fba/settings', 'user_token=' . $this->session->data['user_token'], true);
         $data['cancel'] = $this->url->link('extension/openbay/fba', 'user_token=' . $this->session->data['user_token'], true);
+        $data['link_signup'] = 'https://account.openbaypro.com/fba/apiRegister/?endpoint=2&utm_source=opencart_install&utm_medium=settings&utm_campaign=fba';
 
         $data['user_token'] = $this->session->data['user_token'];
 
@@ -130,6 +128,18 @@ class ControllerExtensionOpenbayFba extends Controller {
             $data['openbay_fba_api_key'] = trim($this->request->post['openbay_fba_api_key']);
         } else {
             $data['openbay_fba_api_key'] = trim($this->config->get('openbay_fba_api_key'));
+        }
+
+        if (isset($this->request->post['openbay_fba_encryption_key'])) {
+            $data['openbay_fba_encryption_key'] = trim($this->request->post['openbay_fba_encryption_key']);
+        } else {
+            $data['openbay_fba_encryption_key'] = trim($this->config->get('openbay_fba_encryption_key'));
+        }
+
+        if (isset($this->request->post['openbay_fba_encryption_iv'])) {
+            $data['openbay_fba_encryption_iv'] = trim($this->request->post['openbay_fba_encryption_iv']);
+        } else {
+            $data['openbay_fba_encryption_iv'] = trim($this->config->get('openbay_fba_encryption_iv'));
         }
 
         if (isset($this->request->post['openbay_fba_api_account_id'])) {
@@ -215,17 +225,27 @@ class ControllerExtensionOpenbayFba extends Controller {
 
         $errors = array();
 
-        if (!$this->request->post['openbay_fba_api_key']) {
+        if (!isset($this->request->post['openbay_fba_api_key']) || empty($this->request->post['openbay_fba_api_key'])) {
             $errors[] = array('message' => $this->language->get('error_api_key'));
         }
 
-        if (!$this->request->post['openbay_fba_api_account_id']) {
+        if (!isset($this->request->post['openbay_fba_api_account_id']) || empty($this->request->post['openbay_fba_api_account_id'])) {
             $errors[] = array('message' => $this->language->get('error_api_account_id'));
+        }
+
+        if (!isset($this->request->post['openbay_fba_encryption_key']) || empty($this->request->post['openbay_fba_encryption_key'])) {
+            $errors[] = array('message' => $this->language->get('error_encryption_key'));
+        }
+
+        if (!isset($this->request->post['openbay_fba_encryption_iv']) || empty($this->request->post['openbay_fba_encryption_iv'])) {
+            $errors[] = array('message' => $this->language->get('error_encryption_iv'));
         }
 
         if (!$errors) {
             $this->openbay->fba->setApiKey($this->request->post['openbay_fba_api_key']);
             $this->openbay->fba->setAccountId($this->request->post['openbay_fba_api_account_id']);
+            $this->openbay->fba->setEncryptionKey($this->request->post['openbay_fba_encryption_key']);
+            $this->openbay->fba->setEncryptionIv($this->request->post['openbay_fba_encryption_iv']);
 
             $response = $this->openbay->fba->call("v1/fba/status/", array(), 'GET');
         } else {
@@ -257,9 +277,7 @@ class ControllerExtensionOpenbayFba extends Controller {
     }
 
     public function fulfillment() {
-        $this->load->language('extension/openbay/fba_fulfillment');
-
-        $data = $this->language->all();
+        $data = $this->load->language('extension/openbay/fba_fulfillment');
 
         $this->document->setTitle($this->language->get('heading_title'));
         $this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -276,7 +294,7 @@ class ControllerExtensionOpenbayFba extends Controller {
         );
 
         $data['breadcrumbs'][] = array(
-            'href' => $this->url->link('extension/openbay', 'user_token=' . $this->session->data['user_token'], true),
+            'href' => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true),
             'text' => $this->language->get('text_openbay'),
         );
 
@@ -324,9 +342,7 @@ class ControllerExtensionOpenbayFba extends Controller {
     }
 
     public function fulfillmentList() {
-        $this->load->language('extension/openbay/fba_fulfillment_list');
-
-        $data = $this->language->all();
+        $data = $this->load->language('extension/openbay/fba_fulfillment_list');
 
         $this->document->setTitle($this->language->get('heading_title'));
         $this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -339,7 +355,7 @@ class ControllerExtensionOpenbayFba extends Controller {
         );
 
         $data['breadcrumbs'][] = array(
-            'href' => $this->url->link('extension/openbay', 'user_token=' . $this->session->data['user_token'], true),
+            'href' => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true),
             'text' => $this->language->get('text_openbay'),
         );
 
@@ -598,9 +614,7 @@ class ControllerExtensionOpenbayFba extends Controller {
     }
 
     public function orderList() {
-        $this->load->language('extension/openbay/fba_order');
-
-        $data = $this->language->all();
+        $data = $this->load->language('extension/openbay/fba_order');
 
         $this->document->setTitle($this->language->get('heading_title'));
         $this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -613,7 +627,7 @@ class ControllerExtensionOpenbayFba extends Controller {
         );
 
         $data['breadcrumbs'][] = array(
-            'href' => $this->url->link('extension/openbay', 'user_token=' . $this->session->data['user_token'], true),
+            'href' => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true),
             'text' => $this->language->get('text_openbay'),
         );
 
@@ -708,9 +722,7 @@ class ControllerExtensionOpenbayFba extends Controller {
     }
 
     public function order() {
-        $this->load->language('extension/openbay/fba_order');
-
-        $data = $this->language->all();
+        $data = $this->load->language('extension/openbay/fba_order');
 
         $this->document->setTitle($this->language->get('heading_title'));
         $this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -751,7 +763,7 @@ class ControllerExtensionOpenbayFba extends Controller {
         );
 
         $data['breadcrumbs'][] = array(
-            'href' => $this->url->link('extension/openbay', 'user_token=' . $this->session->data['user_token'], true),
+            'href' => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true),
             'text' => $this->language->get('text_openbay'),
         );
 
@@ -783,7 +795,9 @@ class ControllerExtensionOpenbayFba extends Controller {
                     'fba_order_fulfillment_id' => $fulfillment['fba_order_fulfillment_id'],
                     'created' => $fulfillment['created'],
                     'request_body' => json_decode($fulfillment['request_body']),
+                    'request_body_output' => print_r(json_decode($fulfillment['request_body']), true),
                     'response_body' => json_decode($fulfillment['response_body']),
+                    'response_body_output' => print_r(json_decode($fulfillment['response_body']), true),
                     'response_header_code' => $fulfillment['response_header_code'],
                     'errors' => $fulfillment_errors,
                     'type' => $fulfillment['type'],

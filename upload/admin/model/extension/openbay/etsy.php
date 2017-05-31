@@ -5,12 +5,12 @@ class ModelExtensionOpenBayEtsy extends Model{
 
 		$this->model_setting_event->addEvent('openbay_etsy_add_order', 'catalog/model/checkout/order/addOrderHistory/after', 'extension/openbay/etsy/eventAddOrderHistory');
 
-		$settings                 = array();
-		$settings["etsy_token"]   = '';
-		$settings["etsy_secret"]  = '';
-		$settings["etsy_string1"] = '';
-		$settings["etsy_string2"] = '';
-		$settings["etsy_logging"]    = '1';
+		$settings = array();
+		$settings["etsy_token"] = '';
+		$settings["etsy_secret"] = '';
+		$settings["etsy_encryption_key"] = '';
+		$settings["etsy_encryption_iv"] = '';
+		$settings["etsy_logging"] = '1';
 
 		$this->model_setting_setting->editSetting('etsy', $settings);
 
@@ -21,7 +21,7 @@ class ModelExtensionOpenBayEtsy extends Model{
 					`last_updated` DATETIME NOT NULL,
 					`data` TEXT NOT NULL,
 					PRIMARY KEY (`etsy_setting_option_id`)
-				) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
+				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
 
 		$this->db->query("
 				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "etsy_listing` (
@@ -32,7 +32,7 @@ class ModelExtensionOpenBayEtsy extends Model{
 				  `created` DATETIME NOT NULL,
 				  PRIMARY KEY (`etsy_listing_id`),
   				  KEY `product_id` (`product_id`)
-				) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
+				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
 
 		$this->db->query("
 				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "etsy_order` (
@@ -43,13 +43,13 @@ class ModelExtensionOpenBayEtsy extends Model{
 				  `shipped` int(1) NOT NULL,
 				  PRIMARY KEY (`etsy_order_id`),
   				  KEY `order_id` (`order_id`)
-				) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
+				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
 
 		$this->db->query("
 				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "etsy_order_lock` (
 				  `order_id` int(11) NOT NULL,
 				  PRIMARY KEY (`order_id`)
-				) ENGINE=MyISAM  DEFAULT CHARSET=utf8;");
+				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
 	}
 
 	public function uninstall() {

@@ -11,9 +11,9 @@ $registry->set('config', $config);
 // Log
 $log = new Log($config->get('error_filename'));
 $registry->set('log', $log);
-		
+
 date_default_timezone_set($config->get('date_timezone'));
-		
+
 set_error_handler(function($code, $message, $file, $line) use($log, $config) {
 	// error suppressed with @
 	if (error_reporting() === 0) {
@@ -47,7 +47,7 @@ set_error_handler(function($code, $message, $file, $line) use($log, $config) {
 	}
 
 	return true;
-});	
+});
 
 // Event
 $event = new Event($registry);
@@ -85,30 +85,30 @@ $session = new Session($config->get('session_engine'), $registry);
 $registry->set('session', $session);
 
 if ($config->get('session_autostart')) {
-	/* 
-	We are adding the session cookie outside of the session class as I believe 
-	PHP messed up in a big way handling sessions. Why in the hell is it so hard to 
+	/*
+	We are adding the session cookie outside of the session class as I believe
+	PHP messed up in a big way handling sessions. Why in the hell is it so hard to
 	have more than one concurrent session using cookies!
-	
-	Is it not better to have multiple cookies when accessing parts of the system 
+
+	Is it not better to have multiple cookies when accessing parts of the system
 	that requires different cookie sessions for security reasons.
-	
-	Also cookies can be accessed via the URL parameters. So why force only one cookie 
+
+	Also cookies can be accessed via the URL parameters. So why force only one cookie
 	for all sessions!
 	*/
-	
+
 	if (isset($_COOKIE[$config->get('session_name')])) {
 		$session_id = $_COOKIE[$config->get('session_name')];
 	} else {
 		$session_id = '';
 	}
-	
+
 	$session->start($session_id);
-	
+
 	setcookie($config->get('session_name'), $session->getId(), ini_get('session.cookie_lifetime'), ini_get('session.cookie_path'), ini_get('session.cookie_domain'));
 }
 
-// Cache 
+// Cache
 $registry->set('cache', new Cache($config->get('cache_engine'), $config->get('cache_expire')));
 
 // Url
@@ -119,6 +119,9 @@ if ($config->get('url_autostart')) {
 // Language
 $language = new Language($config->get('language_directory'));
 $registry->set('language', $language);
+
+// OpenBay Pro
+$registry->set('openbay', new Openbay($registry));
 
 // Document
 $registry->set('document', new Document());

@@ -3,7 +3,7 @@ class ControllerStartupPermission extends Controller {
 	public function index() {
 		if (isset($this->request->get['route'])) {
 			$route = '';
-			
+
 			$part = explode('/', $this->request->get['route']);
 
 			if (isset($part[0])) {
@@ -27,14 +27,15 @@ class ControllerStartupPermission extends Controller {
 				'extension/shipping',
 				'extension/theme',
 				'extension/total',
-				'extension/report'
+				'extension/report',
+                'extension/openbay'
 			);
 
 			if (isset($part[2]) && in_array($route, $extension)) {
 				$route .= '/' . $part[2];
 			}
-			
-			// We want to ingore some pages from having its permission checked. 
+
+			// We want to ingore some pages from having its permission checked.
 			$ignore = array(
 				'common/dashboard',
 				'common/login',

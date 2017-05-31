@@ -14,7 +14,7 @@ class ModelExtensionOpenBayFba extends Model {
 					`status` CHAR(10) NOT NULL,
 				    `created` DATETIME NOT NULL,
   				    KEY `fba_order_id` (`order_id`)
-				) ENGINE=InnoDB  DEFAULT CHARSET=latin1;");
+				) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
 
         $this->db->query("
 				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "fba_order_fulfillment` (
@@ -27,7 +27,7 @@ class ModelExtensionOpenBayFba extends Model {
 					`type` INT(3) NOT NULL,
 					PRIMARY KEY (`fba_order_fulfillment_id`),
   				    KEY `order_id` (`order_id`)
-				) ENGINE=InnoDB  DEFAULT CHARSET=latin1;");
+				) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
 
         // Default settings
         $setting = array();

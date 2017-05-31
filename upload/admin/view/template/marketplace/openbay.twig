@@ -38,7 +38,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                  
+
                   {% for extension in extensions %}
                   <tr>
                     <td class="text-left">{{ extension.name }}</td>
@@ -47,7 +47,7 @@
                   </tr>
                   {% endfor %}
                     </tbody>
-                  
+
                 </table>
               </div>
             </div>
@@ -102,14 +102,14 @@
   </div>
   <script type="text/javascript"><!--
   function version() {
-    var version = '{{ openbay_version }}';
+    var version = '{{ feed_openbaypro_version }}';
 
     $('#openbay-version').empty().html('<div id="openbay-version-loading"><i class="fa fa-cog fa-lg fa-spin"></i> {{ text_version_check }}</div>');
 
     setTimeout(function () {
       $.ajax({
         type: 'GET',
-        url: 'index.php?route=extension/openbay/version&user_token={{ user_token }}',
+        url: 'index.php?route=marketplace/openbay/version&user_token={{ user_token }}',
         dataType: 'json',
         success: function (json) {
           $('#openbay-version-loading').hide();
@@ -142,7 +142,7 @@
     setTimeout(function () {
       $.ajax({
         type: 'GET',
-        url: 'index.php?route=extension/openbay/notifications&user_token={{ user_token }}',
+        url: 'index.php?route=marketplace/openbay/notifications&user_token={{ user_token }}',
         dataType: 'json',
         success: function (json) {
           html = '<h4><i class="fa fa-info-circle"></i>  {{ text_title_messages }}</h4>';

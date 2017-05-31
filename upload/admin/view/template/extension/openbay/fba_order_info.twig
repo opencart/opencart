@@ -2,13 +2,18 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"> <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
-        <?php if ($fba_order_status == 1) { ?>
-        <a href="{{ resend_link }}" id="button-resend" data-toggle="tooltip" title="{{ button_resend }}" class="btn btn-info" value=""><i class="fa fa-refresh"></i></a> {% endif %}
-        <?php if ($fba_order_status == 2) { ?>
-        <a href="{{ ship_link }}" id="button-ship" data-toggle="tooltip" title="{{ button_ship }}" class="btn btn-info" value=""><i class="fa fa-truck"></i></a> {% endif %}
-        <?php if ($fba_order_status == 0 || $fba_order_status == 2) { ?>
-        <a onclick="confirm('{{ text_confirm }}') ? location.href='{{ cancel_link }}' : false;" id="button-cancel" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-danger" value=""><i class="fa fa-times-circle"></i></a> {% endif %} </div>
+      <div class="pull-right">
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+        {% if fba_order_status == 1 %}
+          <a href="{{ resend_link }}" id="button-resend" data-toggle="tooltip" title="{{ button_resend }}" class="btn btn-info" value=""><i class="fa fa-refresh"></i></a>
+        {% endif %}
+        {% if fba_order_status == 2 %}
+          <a href="{{ ship_link }}" id="button-ship" data-toggle="tooltip" title="{{ button_ship }}" class="btn btn-info" value=""><i class="fa fa-truck"></i></a>
+        {% endif %}
+        {% if fba_order_status == 0 or fba_order_status == 2 %}
+          <a onclick="confirm('{{ text_confirm }}') ? location.href='{{ cancel_link }}' : false;" id="button-cancel" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-danger" value=""><i class="fa fa-times-circle"></i></a>
+        {% endif %}
+      </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -63,23 +68,25 @@
                   </tr>
                   <tr>
                     <td style="width: 1%;"><button data-toggle="tooltip" title="{{ text_status }}" class="btn btn-info btn-xs"><i class="fa fa-cog fa-fw"></i></button></td>
-                    <td><?php if ($fba_order_status == 0) { ?>
-                      <label class="label label-info"><?php echo $status_options[$fba_order_status]; ?></label>
-                      <?php } elseif ($fba_order_status == 1)  { ?>
-                      <label class="label label-danger"><?php echo $status_options[$fba_order_status]; ?></label>
-                      <?php } elseif ($fba_order_status == 2)  { ?>
-                      <label class="label label-warning"><?php echo $status_options[$fba_order_status]; ?></label>
-                      <?php } elseif ($fba_order_status == 3)  { ?>
-                      <label class="label label-success"><?php echo $status_options[$fba_order_status]; ?></label>
-                      <?php } elseif ($fba_order_status == 4)  { ?>
-                      <label class="label label-danger"><?php echo $status_options[$fba_order_status]; ?></label>
-                      {% endif %}</td>
+                    <td>
+                      {% if fba_order_status == 0 %}
+                        <label class="label label-info">{{ status_options.fba_order_status }}</label>
+                      {% elseif fba_order_status == 1 %}
+                        <label class="label label-danger">{{ status_options.fba_order_status }}</label>
+                      {% elseif fba_order_status == 2 %}
+                        <label class="label label-warning">{{ status_options.fba_order_status }}</label>
+                      {% elseif fba_order_status == 3 %}
+                        <label class="label label-success">{{ status_options.fba_order_status }}</label>
+                      {% elseif fba_order_status == 4 %}
+                        <label class="label label-danger">{{ status_options.fba_order_status }}</label>
+                      {% endif %}
+                    </td>
                   </tr>
                   {% if fulfillment_id %}
-                  <tr>
-                    <td style="width: 1%;"><button data-toggle="tooltip" title="{{ text_fulfillment_id }}" class="btn btn-info btn-xs"><i class="fa fa-truck fa-fw"></i></button></td>
-                    <td><a href="{{ fulfillment_link }}">{{ fulfillment_id }}</a></td>
-                  </tr>
+                    <tr>
+                      <td style="width: 1%;"><button data-toggle="tooltip" title="{{ text_fulfillment_id }}" class="btn btn-info btn-xs"><i class="fa fa-truck fa-fw"></i></button></td>
+                      <td><a href="{{ fulfillment_link }}">{{ fulfillment_id }}</a></td>
+                    </tr>
                   {% endif %}
                 </table>
               </div>
@@ -106,9 +113,13 @@
                     {% if option.type != 'file' %}
                     &nbsp;<small> - {{ option.name }}: {{ option.value }}</small> {% endif %}>
                     {% endfor %}</td>
-                  <td class="text-left"><?php if (!empty($product['sku'])) { ?>
-                    {{ product.sku }}
-                    {% else %} <span class="label label-danger">{{ text_no_sku }}</span> {% endif %} </td>
+                  <td class="text-left">
+                    {% if product.sku is not empty %}
+                      {{ product.sku }}
+                    {% else %}
+                      <span class="label label-danger">{{ text_no_sku }}</span>
+                    {% endif %}
+                  </td>
                   <td class="text-right">{{ product.quantity }}</td>
                   <td class="text-right"> {% if product.fba == 1 %} <span class="btn btn-success btn-sm"><i class="fa fa-check fa-fw"></i></span> {% else %} <span class="btn btn-danger btn-sm"><i class="fa fa-minus fa-fw"></i></span> {% endif %} </td>
                 </tr>
@@ -135,44 +146,47 @@
                   </tr>
                 </thead>
                 <tbody>
-                
-                {% if fulfillments %}
-                {% for fulfillment in fulfillments %}
-                <tr>
-                  <td class="text-left">{{ fulfillment.fba_order_fulfillment_id }}</td>
-                  <td class="text-left">{{ fulfillment.created }}</td>
-                  <td class="text-left">{{ type_options[fulfillment.type] }}</td>
-                  <td class="text-right"><label class="label <?php echo ($fulfillment['response_header_code'] == 200 || $fulfillment['response_header_code'] == 201) ? 'label-success' : 'label-danger'; ?>">{{ fulfillment.response_header_code }}</label></td>
-                  <td class="text-right"><?php if (!empty($fulfillment['request_body'])) { ?>
-                    <button data-toggle="tooltip" title="{{ text_show_request }}" class="btn btn-info btn-sm" onclick="$('#request-row-{{ fulfillment.fba_order_fulfillment_id }}').toggle();"><i class="fa fa-mail-forward fa-fw"></i></button>
-                    {% endif %}
-                    <?php if (!empty($fulfillment['response_body'])) { ?>
-                    <button data-toggle="tooltip" title="{{ text_show_response }}" class="btn btn-info btn-sm" onclick="$('#response-row-{{ fulfillment.fba_order_fulfillment_id }}').toggle();"><i class="fa fa-mail-reply fa-fw"></i></button>
-                    {% endif %}
-                    <?php if (!empty($fulfillment['errors'])) { ?>
-                    <button data-toggle="tooltip" title="{{ text_show_errors }}" class="btn btn-danger btn-sm" onclick="$('#error-row-{{ fulfillment.fba_order_fulfillment_id }}').toggle();"><i class="fa fa-exclamation fa-fw"></i></button>
-                    {% endif %}</td>
-                </tr>
-                <tr id="error-row-{{ fulfillment.fba_order_fulfillment_id }}" style="display:none;">
-                  <td class="text-left" colspan="4"><?php if (empty($fulfillment['errors'])) { ?>
-                    <div class="alert alert-info" style="width:100%;">{{ text_no_errors }}</div>
-                    {% endif %}
-                    {% for fulfillment_error in fulfillment.errors %}
-                    <div class="alert alert-warning" style="width:100%;">({{ fulfillment_error.code }}) <?php echo str_replace(array("\r\n", "\r", "\n"), '', $fulfillment_error['message']); ?></div>
-                    {% endfor %}</td>
-                </tr>
-                <tr id="request-row-{{ fulfillment.fba_order_fulfillment_id }}" style="display:none;">
-                  <td class="text-left" colspan="4"><pre><?php print_r($fulfillment['request_body']); ?></pre></td>
-                </tr>
-                <tr id="response-row-{{ fulfillment.fba_order_fulfillment_id }}" style="display:none;">
-                  <td class="text-left" colspan="4"><pre><?php print_r($fulfillment['response_body']); ?></pre></td>
-                </tr>
-                {% endfor %}
-                {% else %}
-                <tr>
-                  <td class="text-center" colspan="5">{{ text_no_requests }}</td>
-                </tr>
-                {% endif %}
+                  {% if fulfillments %}
+                    {% for fulfillment in fulfillments %}
+                      <tr>
+                        <td class="text-left">{{ fulfillment.fba_order_fulfillment_id }}</td>
+                        <td class="text-left">{{ fulfillment.created }}</td>
+                        <td class="text-left">{{ type_options[fulfillment.type] }}</td>
+                        <td class="text-right"><label class="label{% if fulfillment.response_header_code == 200 or fulfillment.response_header_code == 201 %}label-success{% else %}label-danger{% endif %}">{{ fulfillment.response_header_code }}</label></td>
+                        <td class="text-right">
+                          {% if fulfillment.request_body is not empty %}
+                            <button data-toggle="tooltip" title="{{ text_show_request }}" class="btn btn-info btn-sm" onclick="$('#request-row-{{ fulfillment.fba_order_fulfillment_id }}').toggle();"><i class="fa fa-mail-forward fa-fw"></i></button>
+                          {% endif %}
+                          {% if fulfillment.response_body is not empty %}
+                            <button data-toggle="tooltip" title="{{ text_show_response }}" class="btn btn-info btn-sm" onclick="$('#response-row-{{ fulfillment.fba_order_fulfillment_id }}').toggle();"><i class="fa fa-mail-reply fa-fw"></i></button>
+                          {% endif %}
+                          {% if fulfillment.errors is not empty %}
+                            <button data-toggle="tooltip" title="{{ text_show_errors }}" class="btn btn-danger btn-sm" onclick="$('#error-row-{{ fulfillment.fba_order_fulfillment_id }}').toggle();"><i class="fa fa-exclamation fa-fw"></i></button>
+                          {% endif %}
+                        </td>
+                      </tr>
+                      <tr id="error-row-{{ fulfillment.fba_order_fulfillment_id }}" style="display:none;">
+                        <td class="text-left" colspan="4">
+                          {% if fulfillment.errors is empty %}
+                            <div class="alert alert-info" style="width:100%;">{{ text_no_errors }}</div>
+                          {% endif %}
+                          {% for fulfillment_error in fulfillment.errors %}
+                          <div class="alert alert-warning" style="width:100%;">({{ fulfillment_error.code }}) {{ fulfillment_error.message|replace({'\r' : '', '\n' : ''}) }}</div>
+                          {% endfor %}
+                        </td>
+                      </tr>
+                      <tr id="request-row-{{ fulfillment.fba_order_fulfillment_id }}" style="display:none;">
+                        <td class="text-left" colspan="4"><pre>{{ fulfillment.request_body_output }}</pre></td>
+                      </tr>
+                      <tr id="response-row-{{ fulfillment.fba_order_fulfillment_id }}" style="display:none;">
+                        <td class="text-left" colspan="4"><pre>{{ fulfillment.response_body_output }}</pre></td>
+                      </tr>
+                    {% endfor %}
+                  {% else %}
+                    <tr>
+                      <td class="text-center" colspan="5">{{ text_no_requests }}</td>
+                    </tr>
+                  {% endif %}
                 </tbody>
               </table>
             </div>
@@ -196,5 +210,5 @@ $('#button-cancel').click(function() {
   $('#button-cancel').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
 });
 
-//--></script> 
-{{ footer }} 
+//--></script>
+{{ footer }}

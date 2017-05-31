@@ -57,9 +57,9 @@
               <div class="form-group">
                 <label class="control-label" for="input-status">{{ entry_status }}</label>
                 <select name="filter_status" id="input-status" class="form-control">
-                  <option value=""<?php echo (is_null($filter_status) ? ' selected' : '') ?>>{{ text_option_all }}</option>
-                  {% for option_key => $option in status_options %}
-                    <option value="{{ option_key }}"<?php echo (!is_null($filter_status) && ($filter_status == $option_key) ? ' selected' : '') ?>>{{ option }}</option>
+                  <option value="" {% if filter_status == null %} selected{% endif %}>{{ text_option_all }}</option>
+                  {% for option_key,option in status_options %}
+                    <option value="{{ option_key }}"{% if filter_status != null and filter_status == option_key %} selected{% endif %}>{{ option }}</option>
                   {% endfor %}
                 </select>
               </div>

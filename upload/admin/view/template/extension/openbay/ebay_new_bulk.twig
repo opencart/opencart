@@ -5,9 +5,10 @@
     <div class="pull-right">
       <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
     </div>
-    <h1>{{ heading_title }}</h1>      <ul class="breadcrumb">
+    <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
-        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
         {% endfor %}
       </ul>
   </div>
@@ -22,7 +23,7 @@
     </div>
     <div class="panel-body" id="page-listing">
       {% set i = 0 %}
-      <?php if (!isset($error_fail)) { ?>
+      {% if error_fail is empty %}
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
           <div class="well">
             <div class="row">
@@ -35,10 +36,12 @@
           </div>
           {% if products %}
             {% for product in products %}
+              {% set price_original = product.price * ((default.defaults.tax / 100) + 1) %}
+
               <div class="well listingBox" id="p_row_{{ i }}">
                 <input type="hidden" class="product_id openbay_data_{{ i }}" name="product_id" value="{{ i }}" />
                 <input type="hidden" class="openbay_data_{{ i }}" name="product_id" value="{{ product.product_id }}" id="product-id-{{ i }}" />
-                <input type="hidden" name="price_original" id="price_original_{{ i }}" value="<?php echo number_format($product['price']*(($default['defaults']['tax']/100) + 1), 2, '.', ''); ?>" />
+                <input type="hidden" name="price_original" id="price_original_{{ i }}" value="{{ price_original|number_format(2, '.', '') }}" />
                 <input type="hidden" class="openbay_data_{{ i }}" name="catalog_epid" id="catalog_epid_{{ i }}" value="0" />
                 <div class="row">
                   <div class="col-sm-7">
@@ -255,7 +258,9 @@
                                         <label class="col-sm-2 control-label">{{ text_profile_theme }}</label>
                                         <div class="col-sm-10">
                                           <select name="theme_profile" class="openbay_data_{{ i }} form-control">
-                                            <?php foreach($default['profiles_theme'] as $s) { echo '<option value="'.$s['ebay_profile_id'].'"'.($default['profiles_theme_def'] == $s['ebay_profile_id'] ? ' selected' : '').'>'.$s['name'].'</option>'; } ?>
+                                            {% for profile in default.profiles_theme %}
+                                              <option value="{{ profile.ebay_profile_id }}"{% if default.profiles_theme_def == profile.ebay_profile_id %} selected{% endif %}>{{ profile.name }}</option>
+                                            {% endfor %}
                                           </select>
                                         </div>
                                       </div>
@@ -263,7 +268,9 @@
                                         <label class="col-sm-2 control-label">{{ text_profile_shipping }}</label>
                                         <div class="col-sm-10">
                                           <select name="shipping_profile" class="openbay_data_{{ i }} form-control">
-                                            <?php foreach($default['profiles_shipping'] as $s) { echo '<option value="'.$s['ebay_profile_id'].'"'.($default['profiles_shipping_def'] == $s['ebay_profile_id'] ? ' selected' : '').'>'.$s['name'].'</option>'; } ?>
+                                            {% for profile in default.profiles_shipping %}
+                                              <option value="{{ profile.ebay_profile_id }}"{% if default.profiles_shipping_def == profile.ebay_profile_id %} selected{% endif %}>{{ profile.name }}</option>
+                                            {% endfor %}
                                           </select>
                                         </div>
                                       </div>
@@ -271,7 +278,9 @@
                                         <label class="col-sm-2 control-label">{{ text_profile_generic }}</label>
                                         <div class="col-sm-10">
                                           <select name="generic_profile" id="generic_profile_{{ i }}" class="openbay_data_{{ i }} form-control" onchange="genericProfileChange({{ i }});">
-                                            <?php foreach($default['profiles_generic'] as $s) { echo '<option value="'.$s['ebay_profile_id'].'"'.($default['profiles_generic_def'] == $s['ebay_profile_id'] ? ' selected' : '').'>'.$s['name'].'</option>'; } ?>
+                                            {% for profile in default.profiles_generic %}
+                                              <option value="{{ profile.ebay_profile_id }}"{% if default.profiles_generic_def == profile.ebay_profile_id %} selected{% endif %}>{{ profile.name }}</option>
+                                            {% endfor %}
                                           </select>
                                         </div>
                                       </div>
@@ -279,7 +288,9 @@
                                         <label class="col-sm-2 control-label">{{ text_profile_returns }}</label>
                                         <div class="col-sm-10">
                                           <select name="return_profile" class="openbay_data_{{ i }} form-control">
-                                            <?php foreach($default['profiles_returns'] as $s) { echo '<option value="'.$s['ebay_profile_id'].'"'.($default['profiles_returns_def'] == $s['ebay_profile_id'] ? ' selected' : '').'>'.$s['name'].'</option>'; } ?>
+                                            {% for profile in default.profiles_returns %}
+                                              <option value="{{ profile.ebay_profile_id }}"{% if default.profiles_returns_def == profile.ebay_profile_id %} selected{% endif %}>{{ profile.name }}</option>
+                                            {% endfor %}
                                           </select>
                                         </div>
                                       </div>
@@ -302,25 +313,22 @@
                         <div class="form-group">
                           <label class="col-sm-2 control-label">{{ text_price }}</label>
                           <div class="col-sm-10">
-                            <input id="price_{{ i }}" type="text" name="price" class="openbay_data_{{ i }} form-control" value="<?php echo number_format($product['price']*(($default['defaults']['tax']/100) + 1), 2, '.', ''); ?>" />
+                            {% set price_new = product.price * ((default.defaults.tax / 100) + 1) %}
+                            <input id="price_{{ i }}" type="text" name="price" class="openbay_data_{{ i }} form-control" value="{{ price_new|number_format(2, '.', '') }}" />
                           </div>
                         </div>
                         <div class="alert alert-info" id="conditionLoading_{{ i }}"><i class="fa fa-cog fa-lg fa-spin"></i> {{ text_loading_condition }}</div>
                         <div class="form-group" id="conditionContainer_{{ i }}" style="display:none;">
                           <label class="col-sm-2 control-label">{{ entry_condition }}</label>
                           <div class="col-sm-10">
-                            <select name="condition" class="openbay_data_{{ i }} form-control" id="conditionRow_{{ i }}">
-                              <?php foreach($default['profiles_returns'] as $s) { echo '<option value="'.$s['ebay_profile_id'].'"'.($default['profiles_returns_def'] == $s['ebay_profile_id'] ? ' selected' : '').'>'.$s['name'].'</option>'; } ?>
-                            </select>
+                            <select name="condition" class="openbay_data_{{ i }} form-control" id="conditionRow_{{ i }}"></select>
                           </div>
                         </div>
                         <div class="alert alert-info" id="durationLoading_{{ i }}"><i class="fa fa-cog fa-lg fa-spin"></i> {{ text_loading_duration }}</div>
                         <div class="form-group" id="durationContainer_{{ i }}" style="display:none;">
                           <label class="col-sm-2 control-label">{{ text_duration }}</label>
                           <div class="col-sm-10">
-                            <select name="duration" class="openbay_data_{{ i }} form-control" id="durationRow_{{ i }}">
-                              <?php foreach($default['profiles_returns'] as $s) { echo '<option value="'.$s['ebay_profile_id'].'"'.($default['profiles_returns_def'] == $s['ebay_profile_id'] ? ' selected' : '').'>'.$s['name'].'</option>'; } ?>
-                            </select>
+                            <select name="duration" class="openbay_data_{{ i }} form-control" id="durationRow_{{ i }}"></select>
                           </div>
                         </div>
                       </div>
@@ -328,7 +336,7 @@
                   </div>
                 </div>
               </div>
-              <?php $i++;?>
+              {% set i = i + 1 %}
               {% endfor %}
           {% else %}
             <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ text_no_results }}</div>
@@ -363,10 +371,11 @@
   $(document).ready(function() {
     overlay('overlay-loading');
 
-    <?php $j = 0; while($j < $i) { ?>
-        getSuggestedCategories('<?php echo (int)$j; ?>');
-        modifyPrices('<?php echo (int)$j; ?>');
-    <?php $j++; } ?>
+    {# This will run productCount times #}
+    {% for j in 0..i %}
+      getSuggestedCategories('{{ j }}');
+      modifyPrices('{{ j }}');
+    {% endfor %}
 
     $('#activeItems').text($('#total-items').val());
   });
@@ -438,7 +447,7 @@
       modifier = 100 / total;
       current = parseFloat(modifier * count1);
 
-      $('#loading-bar').css('width', current + '%');
+      $('#loading-bar').css('width', current+"%");
 
       if (count == 0) {
           overlayHide();
@@ -455,7 +464,7 @@
       $('#total-items').val($('#total-items').val()-1);
 
       if ($('.listingBox').length == 1) {
-          window.location = "index.php?route=extension/openbay/items&user_token={{ user_token }}";
+          window.location = "index.php?route=marketplace/openbay/items&user_token={{ user_token }}";
       } else {
           $('#activeItems').text($('#total-items').val());
       }
@@ -857,7 +866,7 @@
 
   function listingDuration(data, id) {
     var lang            = new Array();
-    var listingDefault  = '<?php echo (isset($default["defaults"]["listing_duration"]) ? $default["defaults"]["listing_duration"] : ""); ?>';
+    var listingDefault  = '{{ default.defaults.listing_duration }}';
 
     lang["Days_1"]      = '1 Day';
     lang["Days_3"]      = '3 Days';
@@ -1035,7 +1044,7 @@
   });
 
   function identifierNotRequired(id) {
-    var not_required_text = "<?php echo (isset($setting) ? $setting['product_details']['product_identifier_unavailable_text'] : ''); ?>";
+    var not_required_text = "{{ setting.product_details.product_identifier_unavailable_text }}";
 
     if ($('#identifier_not_required_' + id + ':checked').length == 1) {
       if ($('#identifier_ean_required_' + id).val() == 1) {

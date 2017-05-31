@@ -11,8 +11,6 @@ $_['button_faq']						= 'View FAQ topic';
 // Tab
 $_['tab_setting']						= 'Settings';
 $_['tab_update']						= 'Software updates';
-$_['tab_update_v1']						= 'Easy updater';
-$_['tab_patch']							= 'Patch';
 $_['tab_developer']						= 'Developer';
 
 // Text
@@ -33,7 +31,6 @@ $_['text_language']             		= 'API response language';
 $_['text_getting_messages']     		= 'Getting OpenBay Pro messages';
 $_['text_complete']     				= 'Complete';
 $_['text_patch_complete']           	= 'Patch has been applied';
-$_['text_connection_ok']				= 'Connected to server OK. OpenCart folders found';
 $_['text_updated']						= 'Module has been updated (v.%s)';
 $_['text_update_description']			= 'The update tool will make changes to your shop file system. Make sure you have a complete file and database backup before updating.';
 $_['text_patch_description']			= 'If you uploaded the update files manually, you need to run the patch to complete the update';
@@ -54,6 +51,8 @@ $_['text_check_server']					= 'Checking server requirements';
 $_['text_version_ok']					= 'Software is already up to date, installed version is ';
 $_['text_remove_files']					= 'Removing files no longer required';
 $_['text_confirm_backup']				= 'Ensure that you have a full backup before continuing';
+$_['text_software_update']				= 'OpenBay Pro software update';
+$_['text_patch_option']				    = 'Manual patching';
 
 // Column
 $_['column_name']          				= 'Plugin name';
@@ -72,20 +71,21 @@ $_['entry_beta']						= 'Use beta version';
 
 // Error
 $_['error_admin']             			= 'Admin directory expected';
-$_['error_no_admin']					= 'Connection OK but your OpenCart admin directory was not found';
-$_['error_no_files']					= 'Connection OK but OpenCart folders were not found! Is your root path correct?';
 $_['error_failed']						= 'Failed to load, retry?';
 $_['error_tracking_id_format']			= 'Your tracking ID cannot contain the characters > or <';
 $_['error_tracking_courier']			= 'You must select a courier if you want to add a tracking ID';
 $_['error_tracking_custom']				= 'Please leave courier field empty if you want to use custom courier';
 $_['error_permission']					= 'You do not have permission to modify the OpenBay Pro extension';
-$_['error_mkdir']						= 'PHP mkdir function is disabled, contact your host';
 $_['error_file_delete']					= 'Unable to remove these files, you should delete them manually';
-$_['error_mcrypt']            			= 'PHP function "mcrypt_encrypt" is not enabled. Contact your hosting provider.';
+$_['error_mkdir']						= 'PHP function "mkdir" is disabled, contact your host';
+$_['error_openssl_encrypt']            	= 'PHP function "openssl_encrypt" is not enabled. Contact your hosting provider.';
+$_['error_openssl_decrypt']            	= 'PHP function "openssl_decrypt" is not enabled. Contact your hosting provider.';
+$_['error_fopen']             			= 'PHP function "fopen" is not enabled. Contact your hosting provider.';
+$_['error_url_fopen']             		= '"allow_url_fopen" directive is disabled by your host - you will be unable to import images when importing products from eBay';
+$_['error_curl']                        = 'PHP library "CURL" is not enabled. Contact your hosting provider.';
+$_['error_zip']                         = 'ZIP extension needs to be loaded. Contact your hosting provider.';
 $_['error_mbstring']               		= 'PHP library "mb strings" is not enabled. Contact your hosting provider.';
 $_['error_oc_version']             		= 'Your version of OpenCart is not tested to work with this module. You may experience problems.';
-$_['error_fopen']             			= 'PHP function "fopen" is disabled by your host - you will be unable to import images when importing products';
-$_['lang_error_vqmod']             		= 'Your vqmod folder contains older OpenBay Pro files - these need to be removed!';
 
 // Help
 $_['help_clear_faq']					= 'Show all of the help notifications again';

@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="container-fluid">
-      {% if validation === true %}
+      {% if validation == true %}
       {% if image_import > 0 %}
       <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ image_import }} {{ text_import_images_msg1 }} <a href="{{ image_import_link }}" target="_blank">{{ text_import_images_msg2 }}</a> {{ text_import_images_msg3 }}</div>
       {% endif %}
@@ -26,8 +26,8 @@
         <div class="panel-body">
           <p>{{ text_sync_import_line1 }}</p>
           <p>{{ text_sync_import_line3 }}</p>
-          <div class="attention">{{ text_sync_server_size }} <strong><?php echo ini_get('post_max_size'); ?></strong> </div>
-          <div class="attention">{{ text_sync_memory_size }} <strong><?php echo ini_get('memory_limit'); ?></strong> </div>
+          <div class="attention">{{ text_sync_server_size }} <strong>{{ ini_setting_post_max_size }}</strong> </div>
+          <div class="attention">{{ text_sync_memory_size }} <strong>{{ ini_setting_memory_limit }}</strong> </div>
           <form id="form-ebay-import" class="form-horizontal">
             <div class="form-group">
               <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_import_categories }}">{{ entry_import_categories }}</span></label>

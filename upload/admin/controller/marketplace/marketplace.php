@@ -110,14 +110,14 @@ class ControllerMarketplaceMarketplace extends Controller {
 		
 		$signature = base64_encode(hash_hmac('sha1', $string, $this->config->get('opencart_secret'), 1));
 		
-		$url .= '&username=' . $this->config->get('opencart_username');
+		$url .= '&username=' . urlencode($this->config->get('opencart_username'));
 		$url .= '&domain=' . $this->request->server['HTTP_HOST'];
-		$url .= '&version=' . VERSION;
+		$url .= '&version=' . urlencode(VERSION);
 		$url .= '&time=' . $time;
 		$url .= '&signature=' . rawurlencode($signature);
 		
 		if (isset($this->request->get['filter_search'])) {
-			$url .= '&filter_search=' . $this->request->get['filter_search'];
+			$url .= '&filter_search=' . urlencode($this->request->get['filter_search']);
 		}
 
 		if (isset($this->request->get['filter_category'])) {
@@ -535,13 +535,13 @@ class ControllerMarketplaceMarketplace extends Controller {
 		
 		$signature = base64_encode(hash_hmac('sha1', $string, $this->config->get('opencart_secret'), 1));
 		
-		$url  = '&username=' . $this->config->get('opencart_username');
+		$url  = '&username=' . urlencode($this->config->get('opencart_username'));
 		$url .= '&domain=' . $this->request->server['HTTP_HOST'];
-		$url .= '&version=' . VERSION;
+		$url .= '&version=' . urlencode(VERSION);
 		$url .= '&extension_id=' . $extension_id;
 		$url .= '&time=' . $time;
 		$url .= '&signature=' . rawurlencode($signature);
-							
+					
 		$curl = curl_init(OPENCART_SERVER . 'index.php?route=marketplace/api/info' . $url);
 
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
@@ -701,18 +701,14 @@ class ControllerMarketplaceMarketplace extends Controller {
 					} else {
 						
 					}
-					
-					$compatibility = explode(', ', $result['compatibility']);
-					
-					if (in_array(VERSION, $compatibility)) {
-						$data['downloads'][] = array(
-							'extension_download_id' => $result['extension_download_id'],
-							'extension_install_id'  => $extension_install_id,
-							'name'                  => $result['name'],
-							'date_added'            => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-							'status'                => $result['status']
-						);
-					}
+
+					$data['downloads'][] = array(
+						'extension_download_id' => $result['extension_download_id'],
+						'extension_install_id'  => $extension_install_id,
+						'name'                  => $result['name'],
+						'date_added'            => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+						'status'                => $result['status']
+					);
 				}
 			}
 			
@@ -766,9 +762,9 @@ class ControllerMarketplaceMarketplace extends Controller {
 			
 			$signature = base64_encode(hash_hmac('sha1', $string, $this->config->get('opencart_secret'), 1));
 			
-			$url  = '&username=' . $this->config->get('opencart_username');
+			$url  = '&username=' . urlencode($this->config->get('opencart_username'));
 			$url .= '&domain=' . $this->request->server['HTTP_HOST'];
-			$url .= '&version=' . VERSION;
+			$url .= '&version=' . urlencode(VERSION);
 			$url .= '&extension_id=' . $extension_id;
 			$url .= '&time=' . $time;
 			$url .= '&signature=' . rawurlencode($signature);
@@ -895,9 +891,9 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 			$signature = base64_encode(hash_hmac('sha1', $string, $this->config->get('opencart_secret'), 1));
 
-			$url  = '&username=' . $this->config->get('opencart_username');
+			$url  = '&username=' . urlencode($this->config->get('opencart_username'));
 			$url .= '&domain=' . $this->request->server['HTTP_HOST'];
-			$url .= '&version=' . VERSION;
+			$url .= '&version=' . urlencode(VERSION);
 			$url .= '&extension_id=' . $extension_id;
 			$url .= '&extension_download_id=' . $extension_download_id;
 			$url .= '&time=' . $time;
@@ -976,9 +972,9 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 			// We create a hash from the data in a similar method to how amazon does things.
 			$string  = 'marketplace/api/addcomment' . "\n";
-			$string .= $this->config->get('opencart_username') . "\n";
+			$string .= urlencode($this->config->get('opencart_username')) . "\n";
 			$string .= $this->request->server['HTTP_HOST'] . "\n";
-			$string .= VERSION . "\n";
+			$string .= urlencode(VERSION) . "\n";
 			$string .= $extension_id . "\n";
 			$string .= $parent_id . "\n";
 			$string .= urlencode(base64_encode($this->request->post['comment'])) . "\n";

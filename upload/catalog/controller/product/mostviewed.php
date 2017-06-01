@@ -86,6 +86,7 @@ class ControllerProductMostviewed extends Controller {
 		$data['text_compare'] = sprintf($this->language->get('text_compare'), (isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0));
 		$data['text_sort'] = $this->language->get('text_sort');
 		$data['text_limit'] = $this->language->get('text_limit');
+		$data['text_benefits'] = $this->language->get('text_benefits');
 
 		$data['button_cart'] = $this->language->get('button_cart');
 		$data['button_wishlist'] = $this->language->get('button_wishlist');
@@ -153,6 +154,33 @@ class ControllerProductMostviewed extends Controller {
 			} else {
 				$description = utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '..';
 			}
+			
+			$productbenefits = $this->model_catalog_product->getProductBenefitsbyProductId($result['product_id']);
+				
+				$benefits = array();
+				
+				foreach ($productbenefits as $benefit) {
+					if ($benefit['image'] && file_exists(DIR_IMAGE . $benefit['image'])) {
+						$bimage = $benefit['image'];
+						if ($benefit['type']) {
+							$bimage = $this->model_tool_image->resize($bimage, 25, 25);
+						} else {
+							$bimage = $this->model_tool_image->resize($bimage, 120, 60);
+						}
+					} else {
+						$bimage = 'no_image.jpg';
+					}
+					$benefits[] = array(
+						'benefit_id'      	=> $benefit['benefit_id'],
+						'name'      		=> $benefit['name'],
+						'description'      	=> strip_tags(html_entity_decode($benefit['description'])),
+						'thumb'      		=> $bimage,
+						'link'      		=> $benefit['link'],
+						'type'      		=> $benefit['type']
+					);
+				}
+				
+				$stickers = $this->getStickers($result['product_id']) ;
 
 			$data['products'][] = array(
 				'product_id'  => $result['product_id'],
@@ -162,6 +190,8 @@ class ControllerProductMostviewed extends Controller {
 				'price'       => $price,
 				'special'     => $special,
 				'tax'         => $tax,
+				'sticker'     => $stickers,
+				'benefits'    => $benefits,
 				'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
 				'rating'      => $result['rating'],
 				'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'] . $url)
@@ -308,5 +338,26 @@ class ControllerProductMostviewed extends Controller {
 
 		$this->response->setOutput($this->load->view('product/special', $data));
 	}
+	
+	private function getStickers($product_id) {
+	
+ 	$stickers = $this->model_catalog_product->getProductStickerbyProductId($product_id) ;	
 
+		
+		if (!$stickers) {
+			return;
+		}
+		
+		$data['stickers'] = array();
+		
+		foreach ($stickers as $sticker) {
+			$data['stickers'][] = array(
+				'position' => $sticker['position'],
+				'image'    => HTTP_SERVER . 'image/' . $sticker['image']
+			);		
+		}
+				
+		return $this->load->view('product/stickers', $data);
+	
+	}
 }

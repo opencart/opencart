@@ -33,6 +33,7 @@ $_['text_rating_desc']  = 'Рейтинг (начиная с высокого)';
 $_['text_model_asc']    = 'Код Товара (А - Я)';
 $_['text_model_desc']   = 'Код Товара (Я - А)';
 $_['text_limit']        = 'Показать:';
+$_['text_benefits']     = 'Преимущества:';
 
 // Entry
 $_['entry_search']      = 'Поиск';

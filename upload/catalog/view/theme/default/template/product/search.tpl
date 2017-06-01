@@ -113,11 +113,47 @@
         <?php foreach ($products as $product) { ?>
         <div class="product-layout product-list col-xs-12">
           <div class="product-thumb">
-            <div class="image"><a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" class="img-responsive" /></a></div>
+            <div class="image"><?php echo $product['sticker']; ?><a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" class="img-responsive" /></a></div>
             <div>
               <div class="caption">
                 <h4><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></h4>
                 <p><?php echo $product['description']; ?></p>
+				
+				<?php if ($product['benefits']) { ?>
+				<div class="benefits col-sm-12 hidden-sm hidden-xs">
+				<div class="benefit-text"><?php echo $text_benefits; ?></div>
+					<ul class="benefit">
+					<?php foreach ($product['benefits'] as $benefit) { ?>	
+						<?php if ($benefit['type'] == 1) { ?>
+							<li class="col-sm-1">
+								<?php if (!$benefit['link']) { ?>
+								   <span class="thumb"><img src="<?php echo $benefit['thumb']; ?>" alt="<?php echo $benefit['name']; ?>" /></span>
+								<?php } else { ?> 
+								   <a href="<?php echo $benefit['link']; ?>" target="_blank" title="<?php echo $benefit['name']; ?>"><span class="thumb"><img src="<?php echo $benefit['thumb']; ?>" alt="<?php echo $benefit['name']; ?>" /></span></a>
+								<?php } ?>
+								<?php if ($benefit['description']) { ?>
+								<div class="benefit_description"><?php echo $benefit['description']; ?></div>
+								<?php } ?>
+							</li>
+						<?php } ?> 
+					<?php } ?>
+					</ul>
+					</div>
+					<div class="present hidden-sm hidden-xs">
+						<?php foreach ($product['benefits'] as $benefit) { ?>	
+							<?php if ($benefit['type'] == 0) { ?>
+								<div>
+									<?php if (!$benefit['link']) { ?>
+										<span class="thumb"><img src="<?php echo $benefit['thumb']; ?>" alt="<?php echo $benefit['name']; ?>" /></span>
+									<?php } else { ?> 
+										<a href="<?php echo $benefit['link']; ?>" target="_blank" title="<?php echo $benefit['name']; ?>"><span class="thumb"><img src="<?php echo $benefit['thumb']; ?>" alt="<?php echo $benefit['name']; ?>" /></span></a>
+									<?php } ?>
+								</div>
+							<?php } ?> 
+						<?php } ?>
+					</div>
+				<?php } ?>
+				
                 <?php if ($product['price']) { ?>
                 <p class="price">
                   <?php if (!$product['special']) { ?>

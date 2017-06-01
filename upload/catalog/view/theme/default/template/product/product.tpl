@@ -24,7 +24,7 @@
           <?php if ($thumb || $images) { ?>
           <ul class="thumbnails">
             <?php if ($thumb) { ?>
-            <li><a class="thumbnail" href="<?php echo $popup; ?>" title="<?php echo $heading_title; ?>"><img src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" /></a></li>
+            <li><div class="image"><?php echo $sticker; ?><a class="thumbnail" href="<?php echo $popup; ?>" title="<?php echo $heading_title; ?>"><img src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" /></a></div></li>
             <?php } ?>
             <?php if ($images) { ?>
             <?php foreach ($images as $image) { ?>
@@ -305,6 +305,45 @@
             <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_minimum; ?></div>
             <?php } ?>
           </div>
+		  
+		  <?php if ($benefits) { ?>
+		<div class="present">
+			<?php foreach ($benefits as $benefit) { ?>	
+				<?php if ($benefit['type'] == 0) { ?>
+					<div>
+						<?php if (!$benefit['link']) { ?>
+						   <span class="thumb"><img src="<?php echo $benefit['thumb']; ?>" alt="<?php echo $benefit['name']; ?>" /></span>
+						<?php } else { ?> 
+						   <a href="<?php echo $benefit['link']; ?>" target="_blank" title="<?php echo $benefit['name']; ?>"><span class="thumb"><img src="<?php echo $benefit['thumb']; ?>" alt="<?php echo $benefit['name']; ?>" /></span></a>
+						<?php } ?>
+					</div>
+				<?php } ?> 
+			<?php } ?>
+		</div>
+		<?php } ?>
+		
+		<?php if ($benefits) { ?>
+		<div class="benefits col-sm-12">
+		<div class="col-sm-4"><?php echo $text_benefits; ?></div>
+		<ul class="benefit">
+		<?php foreach ($benefits as $benefit) { ?>	
+			<?php if ($benefit['type'] == 1) { ?>
+				<li class="col-sm-2">
+					<?php if (!$benefit['link']) { ?>
+					   <span class="thumb"><img src="<?php echo $benefit['thumb']; ?>" alt="<?php echo $benefit['name']; ?>" /></span>
+					<?php } else { ?> 
+					   <a href="<?php echo $benefit['link']; ?>" target="_blank" title="<?php echo $benefit['name']; ?>"><span class="thumb"><img src="<?php echo $benefit['thumb']; ?>" alt="<?php echo $benefit['name']; ?>" /></span></a>
+					<?php } ?>
+					<?php if ($benefit['description']) { ?>
+						<div class="benefit_description"><?php echo $benefit['description']; ?></div>
+					<?php } ?>
+				</li>
+			<?php } ?> 
+		<?php } ?>
+		</ul>
+		</div>
+		<?php } ?>
+		  
           <?php if ($review_status) { ?>
           <div class="rating">
             <p>

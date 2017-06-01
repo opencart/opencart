@@ -36,4 +36,3 @@ $_['text_date_asc']     = 'Date (Ascending)';
 $_['text_date_desc']    = 'Date (Descending)';
 $_['text_limit']        = 'Show:';
 $_['text_benefits']     = 'Benefits:';
-?>

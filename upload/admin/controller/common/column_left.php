@@ -308,6 +308,22 @@ class ControllerCommonColumnLeft extends Controller {
 				);
 			}
 			
+			if ($this->user->hasPermission('access', 'design/sticker')) {
+				$design[] = array(
+					'name'	   => $this->language->get('text_sticker'),
+					'href'     => $this->url->link('design/sticker', 'token=' . $this->session->data['token'], true),
+					'children' => array()		
+				);
+			}
+			
+			if ($this->user->hasPermission('access', 'design/benefit')) {
+				$design[] = array(
+					'name'	   => $this->language->get('text_benefit'),
+					'href'     => $this->url->link('design/benefit', 'token=' . $this->session->data['token'], true),
+					'children' => array()		
+				);
+			}
+			
 			if ($design) {
 				$data['menus'][] = array(
 					'id'       => 'menu-design',

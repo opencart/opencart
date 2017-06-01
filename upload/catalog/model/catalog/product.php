@@ -218,6 +218,32 @@ class ModelCatalogProduct extends Model {
 
 		return $product_data;
 	}
+	
+	public function getProductSticker($product_id) {
+		$product_sticker_data = array();
+
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_to_sticker WHERE product_id = '" . (int)$product_id . "'");
+
+		foreach ($query->rows as $result) {
+			$product_sticker_data[] = $result['sticker_id'];
+		}
+
+		return $product_sticker_data;
+	}	
+
+	public function getProductBenefitsbyProductId($product_id) {
+
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_to_benefit p2b LEFT JOIN " . DB_PREFIX . "benefit b ON (p2b.benefit_id = b.benefit_id) LEFT JOIN " . DB_PREFIX . "benefit_description bd ON (p2b.benefit_id = bd.benefit_id) WHERE product_id = '" . (int)$product_id . "' AND bd.language_id = '" . (int)$this->config->get('config_language_id')."'");
+
+		return $query->rows;
+	}
+	
+	public function getProductStickerbyProductId($product_id) {
+
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_to_sticker p2s LEFT JOIN " . DB_PREFIX . "sticker ps ON (p2s.sticker_id = ps.sticker_id) WHERE product_id = '" . (int)$product_id . "'");
+
+		return $query->rows;
+	}
 
 	public function getProductSpecials($data = array()) {
 		$sql = "SELECT DISTINCT ps.product_id, (SELECT AVG(rating) FROM " . DB_PREFIX . "review r1 WHERE r1.product_id = ps.product_id AND r1.status = '1' GROUP BY r1.product_id) AS rating FROM " . DB_PREFIX . "product_special ps LEFT JOIN " . DB_PREFIX . "product p ON (ps.product_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' AND ps.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW())) GROUP BY ps.product_id";

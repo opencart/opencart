@@ -524,7 +524,7 @@ footer h5 {
 .product-thumb {
 	border: 1px solid #ddd;
 	margin-bottom: 20px;
-	overflow: auto;
+	overflow: visible;
 }
 .product-thumb .image {
 	text-align: center;
@@ -750,4 +750,116 @@ h2.price {
 /*img category*/
 .imgcategory .product-thumb.transition > h4 {
 	padding-left: 10px;
+}
+
+/*sticker*/
+.image {
+    position: relative;
+}
+.image .corner_0,
+.image .corner_1,
+.image .corner_2,
+.image .corner_3 {
+    height: 57px;
+	width: 58px;
+    position: absolute;
+	z-index: 998;
+}
+.image .corner_0 {
+	left: 0px;
+    top: 0px;
+}
+.image .corner_1 {
+	right: 0px;
+    top: 0px;
+}
+.image .corner_2 {
+	left: 0px;
+    bottom: 0px;
+}
+.image .corner_3 {
+	right: 0px;
+    bottom: 0px;
+}
+.box-product .image .corner_0 img,
+.box-product .image .corner_1 img,
+.box-product .image .corner_2 img,
+.box-product .image .corner_3 img {
+	border: none;
+    padding: 0px;
+}
+.box .box-product .image .corner_0 img,
+.box .box-product .image .corner_1 img,
+.box .box-product .image .corner_2 img,
+.box .box-product .image .corner_3 img {
+	width: 60%;
+}
+/*benefits*/
+.product-grid .benefit-text,
+.product-grid .benefit,
+.product-grid .benefits,
+.product-grid .present {
+	display: none;
+}
+.benefits {
+	margin-left: -15px;
+}
+.benefit {
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+}
+.product-list .benefit-text {
+	float: left;
+	line-height: 40px;
+	margin-right: 5px;
+}
+.benefit li span {
+	display: table-cell;
+	vertical-align: middle;
+}
+.benefit_description {
+	display: none;
+	position: absolute;
+	top: 41px;
+	z-index: 2;
+	border: 1px solid #38b0e3;
+	padding: 15px;
+	left: -75px;
+	border-radius: 4px;
+	background: white;
+	box-shadow: 0 0 8px grey;
+	width: 150px;
+	line-height: 13px;
+	font-size: 11px;
+}
+.benefit_description:after {
+	position: absolute;
+	width: 0px;
+	height: 0px;
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+	border-bottom: 8px solid #fff;
+	top: -7px;
+	content: '';
+	left: 82px;
+}	
+.benefit_description:before {
+	position: absolute;
+	width: 0px;
+	height: 0px;
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+	border-bottom: 8px solid #38b0e3;
+	top: -8px;
+	content: '';
+	left: 82px;
+}
+.benefit li:hover .benefit_description {
+	display: block;
+}	
+.product-info .present {
+	border-top: 1px solid #E7E7E7;
+	padding: 15px 5px 10px 5px;
+	margin-top: 10px;
 }

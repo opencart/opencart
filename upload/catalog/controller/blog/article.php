@@ -267,6 +267,8 @@ class ControllerBlogArticle extends Controller {
 				}
 				
 				$data['text_tax'] = $this->language->get('text_tax');
+				
+				$stickers = $this->getStickers($result['product_id']) ;
 							
 				$data['products'][] = array(
 					'product_id' => $result['product_id'],
@@ -277,6 +279,7 @@ class ControllerBlogArticle extends Controller {
 					'special' 	 => $special,
 					'rating'     => $rating,
 					'tax'        => $tax,
+					'sticker'     => $stickers,
 					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
 					'reviews'    => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
 					'href'    	 => $this->url->link('product/product', 'product_id=' . $result['product_id']),
@@ -515,6 +518,28 @@ class ControllerBlogArticle extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+	
+	private function getStickers($product_id) {
+	
+ 	$stickers = $this->model_catalog_product->getProductStickerbyProductId($product_id) ;	
+
+		
+		if (!$stickers) {
+			return;
+		}
+		
+		$data['stickers'] = array();
+		
+		foreach ($stickers as $sticker) {
+			$data['stickers'][] = array(
+				'position' => $sticker['position'],
+				'image'    => HTTP_SERVER . 'image/' . $sticker['image']
+			);		
+		}
+				
+		return $this->load->view('product/stickers', $data);
+	
 	}
 	
 }

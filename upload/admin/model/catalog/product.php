@@ -134,6 +134,20 @@ class ModelCatalogProduct extends Model {
 				}
 			}
 		}
+		
+		if (isset($data['product_benefits'])) {
+			foreach ($data['product_benefits'] as $benefit_id) {
+					$this->db->query("INSERT INTO " . DB_PREFIX . "product_to_benefit SET product_id = '" . (int)$product_id . "', benefit_id = '" . (int)$benefit_id . "'");
+			}
+		}
+		
+		if (isset($data['product_stickers'])) {
+			foreach ($data['product_stickers'] as $key => $sticker_id) {
+				if ($sticker_id) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "product_to_sticker SET product_id = '" . (int)$product_id . "', position = '" . (int)$key . "', sticker_id = '" . (int)$sticker_id . "'");
+				}
+			}
+		}
 
 		if (isset($data['product_layout'])) {
 			foreach ($data['product_layout'] as $store_id => $layout_id) {
@@ -324,6 +338,24 @@ class ModelCatalogProduct extends Model {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "product_to_layout SET product_id = '" . (int)$product_id . "', store_id = '" . (int)$store_id . "', layout_id = '" . (int)$layout_id . "'");
 			}
 		}
+		
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_benefit WHERE product_id = '" . (int)$product_id . "'");
+		if (isset($data['product_benefits'])) {
+			foreach ($data['product_benefits'] as $benefit_id) {
+					$this->db->query("INSERT INTO " . DB_PREFIX . "product_to_benefit SET product_id = '" . (int)$product_id . "', benefit_id = '" . (int)$benefit_id . "'");
+			}
+		}
+		
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_sticker WHERE product_id = '" . (int)$product_id . "'");
+		
+		if (isset($data['product_stickers'])) {
+			foreach ($data['product_stickers'] as $key => $sticker_id) {
+				if ($sticker_id) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "product_to_sticker SET product_id = '" . (int)$product_id . "', position = '" . (int)$key . "', sticker_id = '" . (int)$sticker_id . "'");
+				}
+			}
+		
+		}
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'product_id=" . (int)$product_id . "'");
 		
@@ -381,6 +413,7 @@ class ModelCatalogProduct extends Model {
 			$data['product_layout'] = $this->getProductLayouts($product_id);
 			$data['product_store'] = $this->getProductStores($product_id);
 			$data['product_recurrings'] = $this->getRecurrings($product_id);
+			$data['product_benefits'] = $this->getBenefits($product_id);
 
 			$this->addProduct($data);
 		}
@@ -410,6 +443,7 @@ class ModelCatalogProduct extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_product WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_tab WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_tab_desc WHERE product_id = '" . (int)$product_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_benefit WHERE product_id = '" . (int)$product_id . "'");
 
 		$this->cache->delete('product');
 	}
@@ -788,6 +822,19 @@ class ModelCatalogProduct extends Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_recurring` WHERE product_id = '" . (int)$product_id . "'");
 
 		return $query->rows;
+	}
+	
+	public function getBenefits($product_id) {
+		
+		$benefits = array();
+	
+		$query  =  $this->db->query("SELECT benefit_id FROM `" . DB_PREFIX . "product_to_benefit` WHERE product_id = " . (int)$product_id);
+	
+		foreach ($query->rows as $result) {
+			$benefits[] = $result['benefit_id'];
+		}
+		
+		return $benefits;
 	}
 
 	public function getTotalProducts($data = array()) {

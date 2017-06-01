@@ -91,6 +91,8 @@ class ControllerExtensionModuleFeaturedProduct extends Controller {
 					} else {
 						$rating = false;
 					}
+					
+					$stickers = $this->getStickers($product['product_id']) ;
 
 					$data['products'][] = array(
 						'product_id'  => $product['product_id'],
@@ -100,6 +102,7 @@ class ControllerExtensionModuleFeaturedProduct extends Controller {
 						'price'       => $price,
 						'special'     => $special,
 						'tax'         => $tax,
+						'sticker'     => $stickers,
 						'rating'      => $rating,
 						'href'        => $this->url->link('product/product', 'product_id=' . $product['product_id'])
 					);
@@ -109,5 +112,27 @@ class ControllerExtensionModuleFeaturedProduct extends Controller {
 		
 		return $this->load->view('extension/module/featured_product', $data);
 
+	}
+	
+	private function getStickers($product_id) {
+	
+ 	$stickers = $this->model_catalog_product->getProductStickerbyProductId($product_id) ;	
+
+		
+		if (!$stickers) {
+			return;
+		}
+		
+		$data['stickers'] = array();
+		
+		foreach ($stickers as $sticker) {
+			$data['stickers'][] = array(
+				'position' => $sticker['position'],
+				'image'    => HTTP_SERVER . 'image/' . $sticker['image']
+			);		
+		}
+				
+		return $this->load->view('product/stickers', $data);
+	
 	}
 }

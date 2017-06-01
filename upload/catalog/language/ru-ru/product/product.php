@@ -35,6 +35,7 @@ $_['text_week']                = 'Неделя';
 $_['text_semi_month']          = 'Полмесяца';
 $_['text_month']               = 'Месяц';
 $_['text_year']                = 'Год';
+$_['text_benefits']     = 'Преимущества:';
 
 // Entry
 $_['entry_qty']                = 'Кол-во';

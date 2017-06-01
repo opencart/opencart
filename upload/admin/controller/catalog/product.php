@@ -1012,6 +1012,12 @@ class ControllerCatalogProduct extends Controller {
 		$data['tab_openbay'] = $this->language->get('tab_openbay');
 		$data['tab_extra_tab'] = $this->language->get('tab_extra_tab');
 		$data['tab_module'] = $this->language->get('tab_module');
+		$data['text_corner0'] = $this->language->get('text_corner0');
+		$data['text_corner1'] = $this->language->get('text_corner1');
+		$data['text_corner2'] = $this->language->get('text_corner2');
+		$data['text_corner3'] = $this->language->get('text_corner3');
+		$data['entry_sticker'] = $this->language->get('entry_sticker');
+		$data['text_benefits'] = $this->language->get('text_benefits');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -1769,6 +1775,46 @@ class ControllerCatalogProduct extends Controller {
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
+		
+		$this->load->model('design/sticker');
+		$data['stickers'] = $this->model_design_sticker->getStickersProduct();
+		
+		
+		$this->load->model('design/benefit');
+		$productbenefits = $this->model_design_benefit->getBenefits();
+		
+		$data['benefits'] = array();
+		
+		foreach ($productbenefits as $benefit) {
+			if ($benefit['image'] && file_exists(DIR_IMAGE . $benefit['image'])) {
+				$image = $benefit['image'];
+			} else {
+				$image = 'no_image.jpg';
+			}
+			$data['benefits'][] = array(
+				'benefit_id'      	=> $benefit['benefit_id'],
+				'name'      		=> $benefit['name'],
+				'thumb'      		=> $this->model_tool_image->resize($image, 16, 16)
+			);
+		}
+		
+		
+		if (isset($this->request->post['product_benefits'])) {
+			$data['product_benefits'] = $this->request->post['product_benefits'];
+		} elseif (isset($this->request->get['product_id'])) {
+			$data['product_benefits'] = $this->model_catalog_product->getBenefits($this->request->get['product_id']);
+		} else {
+			$data['product_benefits'] = array();
+		}
+		
+	
+		if (isset($this->request->post['product_stickers'])) {
+			$data['product_stickers'] = $this->request->post['product_stickers'];
+		} elseif (isset($this->request->get['product_id'])) {
+			$data['product_stickers'] = $this->model_design_sticker->getProductSticker($this->request->get['product_id']);
+		} else {
+			$data['product_stickers'] = array();
+		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

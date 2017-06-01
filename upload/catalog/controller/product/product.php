@@ -261,6 +261,7 @@ class ControllerProductProduct extends Controller {
 			$data['text_related'] = $this->language->get('text_related');
 			$data['text_payment_recurring'] = $this->language->get('text_payment_recurring');
 			$data['text_loading'] = $this->language->get('text_loading');
+			$data['text_benefits'] = $this->language->get('text_benefits');
 
 			$data['entry_qty'] = $this->language->get('entry_qty');
 			$data['entry_name'] = $this->language->get('entry_name');
@@ -288,6 +289,7 @@ class ControllerProductProduct extends Controller {
 			$data['reward'] = $product_info['reward'];
 			$data['points'] = $product_info['points'];
 			$data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');
+			$data['sticker'] = $this->getStickers($product_info['product_id']);
 
 			if ($product_info['quantity'] <= 0) {
 				$data['stock'] = $product_info['stock_status'];
@@ -348,6 +350,32 @@ class ControllerProductProduct extends Controller {
 				$data['discounts'][] = array(
 					'quantity' => $discount['quantity'],
 					'price'    => $this->currency->format($this->tax->calculate($discount['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])
+				);
+			}
+			
+			$productbenefits = $this->model_catalog_product->getProductBenefitsbyProductId($product_info['product_id']);
+			
+			$data['benefits'] = array();
+				
+			foreach ($productbenefits as $benefit) {
+				if ($benefit['image'] && file_exists(DIR_IMAGE . $benefit['image'])) {
+					$bimage = $benefit['image'];
+					if ($benefit['type']) {
+						$bimage = $this->model_tool_image->resize($bimage, 25, 25);
+					} else {
+						$bimage = $this->model_tool_image->resize($bimage, 350, 140);
+					}
+				} else {
+					$bimage = 'no_image.jpg';
+				}
+				$data['benefits'][] = array(
+					'benefit_id'      	=> $benefit['benefit_id'],
+					'name'      		=> $benefit['name'],
+					'description'      	=> strip_tags(html_entity_decode($benefit['description'])),
+					'thumb'      		=> $bimage,
+					'link'      		=> $benefit['link'],
+					'type'      		=> $benefit['type']
+					//'sort_order' => $benefit['sort_order']
 				);
 			}
 
@@ -454,6 +482,33 @@ class ControllerProductProduct extends Controller {
 				} else {
 					$rating = false;
 				}
+				
+				$productbenefits = $this->model_catalog_product->getProductBenefitsbyProductId($result['product_id']);
+				
+				$benefits = array();
+				
+				foreach ($productbenefits as $benefit) {
+					if ($benefit['image'] && file_exists(DIR_IMAGE . $benefit['image'])) {
+						$bimage = $benefit['image'];
+						if ($benefit['type']) {
+							$bimage = $this->model_tool_image->resize($bimage, 25, 25);
+						} else {
+							$bimage = $this->model_tool_image->resize($bimage, 120, 60);
+						}
+					} else {
+						$bimage = 'no_image.jpg';
+					}
+					$benefits[] = array(
+						'benefit_id'      	=> $benefit['benefit_id'],
+						'name'      		=> $benefit['name'],
+						'description'      	=> strip_tags(html_entity_decode($benefit['description'])),
+						'thumb'      		=> $bimage,
+						'link'      		=> $benefit['link'],
+						'type'      		=> $benefit['type']
+					);
+				}
+				
+				$stickers = $this->getStickers($result['product_id']) ;
 
 				$data['products'][] = array(
 					'product_id'  => $result['product_id'],
@@ -463,6 +518,8 @@ class ControllerProductProduct extends Controller {
 					'price'       => $price,
 					'special'     => $special,
 					'tax'         => $tax,
+					'sticker'     => $stickers,
+					'benefits'    => $benefits,
 					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
 					'rating'      => $rating,
 					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
@@ -724,5 +781,26 @@ class ControllerProductProduct extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+	
+	private function getStickers($product_id) {
+	
+ 	$stickers = $this->model_catalog_product->getProductStickerbyProductId($product_id) ;	
+		
+		if (!$stickers) {
+			return;
+		}
+		
+		$data['stickers'] = array();
+		
+		foreach ($stickers as $sticker) {
+			$data['stickers'][] = array(
+				'position' => $sticker['position'],
+				'image'    => HTTP_SERVER . 'image/' . $sticker['image']
+			);		
+		}
+		
+		return $this->load->view('product/stickers', $data);
+	
 	}
 }

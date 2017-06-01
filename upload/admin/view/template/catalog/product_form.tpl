@@ -111,6 +111,75 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-data">
+			
+			<div class="form-group">
+			  <label class="col-sm-2 control-label" for="input-sticker"><?php echo $entry_sticker; ?></label>
+			  <div class="col-sm-10">
+			   <?php for ($i = 0; $i <= 3; $i++) { ?>
+			   <div class="sticker_block">
+			   <div class="corner_name">	   
+			   <?php echo ${'text_corner' . $i}; ?> <span class="square  <?php echo 'corner_' . $i; ?>"></span>
+			   </div>
+			   <div class="sticker-select">
+			   <select name="product_stickers[<?php echo $i; ?>]" id="input-stickers" class="form-control">
+                <option value="0" selected="selected"><?php echo $text_none; ?></option>
+                <?php foreach ($stickers as $sticker) { ?>
+                <?php if (!empty($product_stickers[$i]) && $product_stickers[$i] == $sticker['sticker_id']) { ?>
+                <option value="<?php echo $sticker['sticker_id']; ?>" selected="selected"><?php echo $sticker['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $sticker['sticker_id']; ?>"><?php echo $sticker['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select>
+			  </div>
+			  </div>
+			  <?php } ?>
+			  </div>
+              </div>
+			  
+			  <?php if ($benefits) { ?>
+			 <div class="form-group">
+			  <label class="col-sm-2 control-label" for="input-benefits"><?php echo $text_benefits; ?></label>
+			  <div class="col-sm-10">
+			  <ul class="benefit">
+			  <?php foreach ($benefits as $benefit) { ?>
+					<?php if (in_array($benefit['benefit_id'], $product_benefits)) { ?>
+						<li class="checked">
+						<span class="thumb"><img src="<?php echo $benefit['thumb']; ?>" alt="" /></span>
+						<span><?php echo $benefit['name']; ?></span>
+						<span style="display:none;"><input type="checkbox" name="product_benefits[]" value="<?php echo $benefit['benefit_id']; ?>" checked="checked"></span>
+						</li>
+					<?php } else { ?> 
+						<li>
+						<span class="thumb"><img src="<?php echo $benefit['thumb']; ?>" alt="" /></span>
+						<span><?php echo $benefit['name']; ?></span>
+						<span style="display:none;"><input type="checkbox" name="product_benefits[]" value="<?php echo 	$benefit['benefit_id']; ?>"></span>
+						</li>
+					<?php } ?>
+			  <?php } ?>
+			  </ul>
+			   </div>
+              </div>
+		<?php } ?>
+	<style>
+	.benefit {list-style: none; padding: 0; margin: 0}
+	.benefit li {display: inline-block; border: 1px solid #aaa; padding: 4px 6px; margin: 2px; cursor: pointer; line-height: 8px;}
+	.benefit li.checked {border: 1px solid #0381CB; background: rgba(85, 190, 253, 0.2);}
+	.benefit li:hover {background: rgba(85, 190, 253, 0.1);}
+	.benefit li span {display: table-cell;vertical-align: middle;}
+	.thumb {padding-right: 5px;}
+	</style>
+	<script>
+	$('.benefit').on('click', 'li', function(){
+	if (!$(this).hasClass('checked'))		{
+		$(this).find('input').first().attr('checked', true) ;
+		} else {
+		$(this).find('input').first().attr('checked', false) ;
+		}
+	$(this).toggleClass('checked');
+	})
+	</script> 
+			
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-model"><?php echo $entry_model; ?></label>
                 <div class="col-sm-10">

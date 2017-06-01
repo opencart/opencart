@@ -29,6 +29,17 @@
         <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_list; ?></h3>
       </div>
       <div class="panel-body">
+		<div class="well">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
+                <input type="text" name="filter_name2" value="<?php echo $filter_name2; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
+              </div>
+              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
+            </div>
+          </div>
+        </div>
         <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-category">
           <div class="table-responsive">
             <table class="table table-bordered table-hover">
@@ -78,5 +89,18 @@
       </div>
     </div>
   </div>
+  <script type="text/javascript"><!--
+$('#button-filter').on('click', function() {
+	var url = 'index.php?route=catalog/category&token=<?php echo $token; ?>';
+
+	var filter_name2 = $('input[name=\'filter_name2\']').val();
+
+	if (filter_name2) {
+		url += '&filter_name2=' + encodeURIComponent(filter_name2);
+	}
+
+	location = url;
+});
+//--></script>
 </div>
 <?php echo $footer; ?>

@@ -54,12 +54,11 @@
                   <legend>Available Installs</legend>
                   <table class="table table-bordered">
                     <thead>
-                    <th>Download Name</th>
+                      <th>Download Name</th>
                       <th>Date Added</th>
                       <th class="text-right">Action</th>
-                        </thead>
+                    </thead>
                     <tbody>
-                    
                     {% if downloads %}
                     {% for download in downloads %}
                     <tr>
@@ -67,10 +66,10 @@
                       <td>{{ download.date_added }}</td>
                       <td class="text-right">{% if download.extension_install_id %}
                         <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="{{ download.extension_install_id }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>
-                        {% elseif download.status %}
-                        <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> Install</button>
+                        {% elseif download.filename|slice(-10) == '.ocmod.zip' %}
+                        <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"{% if not download.status %} disabled{% endif %}><i class="fa fa-download"></i> Install</button>
                         {% else %}
-                        <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary" disabled><i class="fa fa-download"></i> Install</button>
+                        <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"{% if not download.status %} disabled{% endif %}><i class="fa fa-download"></i> Download</button>
                         {% endif %}</td>
                     </tr>
                     {% endfor %}
@@ -79,8 +78,7 @@
                       <td colspan="3" class="text-center">{{ text_no_results }}</td>
                     </tr>
                     {% endif %}
-                      </tbody>
-                    
+                    </tbody>
                   </table>
                 </fieldset>
               </div>
@@ -103,7 +101,7 @@
             </div>
           </div>
           <div class="col-sm-4">
-            <div id="buy" class="well"> {% if license == '1' and not purchased %}
+            <div id="buy" class="well">{% if license == '1' and not purchased %}
               <button id="button-buy" class="btn btn-success btn-lg btn-block">Buy</button>
               {% endif %}
               <div id="price" class="row">
@@ -138,8 +136,8 @@
                 <div class="col-xs-7 text-right">{{ date_added }}</div>
               </div>
             </div>
-            <div id="sales" class="well"><i class="opencart-icon-cart-mini"></i> <strong>{{ sales }}</strong> {{ text_sales }} </div>
-            <div id="sales" class="well"><i class="opencart-icon-cart-mini"></i> <strong>{{ downloaded }}</strong> {{ text_downloaded }} </div>
+            <div id="sales" class="well"><i class="opencart-icon-cart-mini"></i> <strong>{{ sales }}</strong> {{ text_sales }}</div>
+            <div id="sales" class="well"><i class="opencart-icon-cart-mini"></i> <strong>{{ downloaded }}</strong> {{ text_downloaded }}</div>
             <div class="well">
               <div class="media">
                 <div class="media-left media-middle"><img src="{{ member_image }}" alt="{{ member_username }}" title="{{ member_username }}" class="media-object img-circle"></div>
@@ -280,18 +278,21 @@ $('#tab-download').on('click', '.btn-primary', function(e) {
 				$('#progress-bar').css('width', '20%');
 				$('#progress-text').html(json['text']);
 			}
-			
+
+			if (json['redirect']) {
+				location = json['redirect'];
+			}
+						
 			if (json['extension_install_id']) {
 				$(element).attr('data-uninstall', json['extension_install_id']);
 			}
-			
+						
 			if (json['next']) {
 				next(json['next'], element, 1);
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
 });

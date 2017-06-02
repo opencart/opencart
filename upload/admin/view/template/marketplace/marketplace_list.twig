@@ -24,8 +24,8 @@
       </div>
       <div class="panel-body">
         <div class="well">
-          <div class="input-group">
-            <input type="text" name="search" value="" placeholder="{{ text_search }}" class="form-control" />
+          <div class="input-group" id="extension-filter">
+            <input type="text" name="filter_search" value="{{ filter_search }}" placeholder="{{ text_search }}" class="form-control" />
             <div class="input-group-btn">{% for category in categories %}
               {% if category.value == filter_category %}
               <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">{{ text_category }} ({{ category.text }}) <span class="caret"></span></button>
@@ -36,6 +36,12 @@
                 <li><a href="{{ category.href }}">{{ category.text }}</a></li>
                 {% endfor %}
               </ul>
+              <input type="hidden" name="filter_category_id" value="{{ filter_category_id }}" class="form-control" />
+              <input type="hidden" name="filter_download_id" value="{{ filter_download_id }}" class="form-control" />
+              <input type="hidden" name="filter_rating" value="{{ filter_rating }}" class="form-control" />
+              <input type="hidden" name="filter_license" value="{{ filter_license }}" class="form-control" />
+              <input type="hidden" name="filter_partner" value="{{ filter_partner }}" class="form-control" />
+              <input type="hidden" name="sort" value="{{ sort }}" class="form-control" />              
               <button type="button" id="button-filter" class="btn btn-primary"><i class="fa fa-filter"></i></button>
             </div>
           </div>
@@ -106,7 +112,7 @@
                       {% if extension.rating >= i %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
                       {% endfor %}</div>
                     <div class="col-xs-6">
-                      <div class="text-right">{{ text_reviews }} {{ extension.rating_total }}</div>
+                      <div class="text-right">{{ extension.rating_total }} {{ text_reviews }}</div>
                     </div>
                   </div>
                 </div>
@@ -136,7 +142,7 @@
                       {% if extension.rating >= i %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
                       {% endfor %}</div>
                     <div class="col-xs-6">
-                      <div class="text-right">{{ text_reviews }} {{ extension.rating_total }}</div>
+                      <div class="text-right">{{ extension.rating_total }} {{ text_reviews }}</div>
                     </div>
                   </div>
                 </div>
@@ -150,7 +156,7 @@
           </div>
         </div>
         {% else %}
-        <div>{{ no_results }}</div>
+        <div>{{ text_no_results }}</div>
         {% endif %}</div>
     </div>
   </div>  
@@ -179,4 +185,27 @@ $('#button-opencart').on('click', function(e) {
 	});
 });
 //--></script>
+<script type="text/javascript"><!--
+$('#button-filter').on('click', function(e) {
+	var url = 'index.php?route=marketplace/marketplace&user_token={{ user_token }}';
+
+	var input = $('#extension-filter :input');
+
+	for (i = 0; i < input.length; i++) {
+		if ($(input[i]).val() != '' && $(input[i]).val() != null) {
+			url += '&' + $(input[i]).attr('name') + '=' + $(input[i]).val()
+		}
+	}
+
+	location = url;
+});
+
+$('input[name="filter_search"]').keydown(function(e) {
+	if (e.keyCode == 13) {
+		e.preventDefault();
+
+		$('#button-filter').trigger('click');
+	}
+});
+//--></script> 
 {{ footer }} 

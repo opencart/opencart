@@ -157,19 +157,6 @@ class ControllerMarketplaceMarketplace extends Controller {
 		curl_setopt($curl, CURLOPT_POST, 1);
 
 		$response = curl_exec($curl);
-		/*
-		echo 'Time<br /><br />';
-		echo date('T') . '<br/>';
-		echo time() . '<br />';
-		echo date('Y-m-d H:i:s', time()) . '<br /><br />';
-		
-		echo 'Date object<br />';
-		$date = new DateTime('Asia/Hong_Kong');
-		echo $date->format('U') . '<br />';
-		echo $date->format('Y-m-d H:i:s') . '<br />';
-		
-		echo $response . '<br />';
-		*/
 		
 		$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
@@ -602,6 +589,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$data['button_buy'] = $this->language->get('button_buy');
 			$data['button_purchase'] = $this->language->get('button_purchase');
 			$data['button_install'] = $this->language->get('button_install');
+			$data['button_download'] = $this->language->get('button_download');
 			$data['button_cancel'] = $this->language->get('button_cancel');
 			$data['button_comment'] = $this->language->get('button_comment');
 
@@ -708,17 +696,12 @@ class ControllerMarketplaceMarketplace extends Controller {
 					} else {
 						$extension_install_id = 0;
 					}
-					
-					if (substr($result['mask'], -10) == '.ocmod.zip') {
-						
-					} else {
-						
-					}
 
 					$data['downloads'][] = array(
 						'extension_download_id' => $result['extension_download_id'],
 						'extension_install_id'  => $extension_install_id,
 						'name'                  => $result['name'],
+						'filename'              => $result['filename'],
 						'date_added'            => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 						'status'                => $result['status']
 					);
@@ -927,23 +910,27 @@ class ControllerMarketplaceMarketplace extends Controller {
 			curl_close($curl);
 			
 			if (isset($response_info['download'])) {
-				$this->session->data['install'] = token(10);
-				
-				$download = file_get_contents($response_info['download']);
-				
-				$handle = fopen(DIR_UPLOAD . $this->session->data['install'] . '.tmp', 'w');
-				
-				fwrite($handle, $download);
-		
-				fclose($handle);
-
-				$this->load->model('setting/extension');
-				
-				$json['extension_install_id'] = $this->model_setting_extension->addExtensionInstall($response_info['extension'], $extension_download_id);
-				
-				$json['text'] = $this->language->get('text_install');
-				
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $json['extension_install_id'], true));		
+				if (substr($response_info['filename'], -10) == '.ocmod.zip') {
+					$this->session->data['install'] = token(10);
+					
+					$download = file_get_contents($response_info['download']);
+					
+					$handle = fopen(DIR_UPLOAD . $this->session->data['install'] . '.tmp', 'w');
+					
+					fwrite($handle, $download);
+			
+					fclose($handle);
+	
+					$this->load->model('setting/extension');
+					
+					$json['extension_install_id'] = $this->model_setting_extension->addExtensionInstall($response_info['extension'], $extension_download_id);
+					
+					$json['text'] = $this->language->get('text_install');
+					
+					$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $json['extension_install_id'], true));		
+				} else {
+					$json['redirect'] = $response_info['download'];
+				}			
 			} elseif (isset($response_info['error'])) {
 				$json['error'] = $response_info['error'];
 			} else {

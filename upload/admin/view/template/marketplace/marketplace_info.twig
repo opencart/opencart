@@ -66,10 +66,10 @@
                       <td>{{ download.date_added }}</td>
                       <td class="text-right">{% if download.extension_install_id %}
                         <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="{{ download.extension_install_id }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>
-                        {% elseif download.status %}
-                        <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> Install</button>
+                        {% elseif download.filename|slice(-10) == '.ocmod.zip' %}
+                        <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"{% if not download.status %} disabled{% endif %}><i class="fa fa-download"></i> Install</button>
                         {% else %}
-                        <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary" disabled><i class="fa fa-download"></i> Install</button>
+                        <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"{% if not download.status %} disabled{% endif %}><i class="fa fa-download"></i> Download</button>
                         {% endif %}</td>
                     </tr>
                     {% endfor %}
@@ -278,18 +278,21 @@ $('#tab-download').on('click', '.btn-primary', function(e) {
 				$('#progress-bar').css('width', '20%');
 				$('#progress-text').html(json['text']);
 			}
-			
+
+			if (json['redirect']) {
+				location = json['redirect'];
+			}
+						
 			if (json['extension_install_id']) {
 				$(element).attr('data-uninstall', json['extension_install_id']);
 			}
-			
+						
 			if (json['next']) {
 				next(json['next'], element, 1);
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
 });

@@ -98,9 +98,9 @@ class ControllerMarketplaceMarketplace extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url, true)
 		);
-
-		$time = time() + 30;
-
+		
+		$time = time() + 60;
+		
 		// We create a hash from the data in a similar method to how amazon does things.
 		$string  = 'marketplace/api/list' . "\n";
 		$string .= $this->config->get('opencart_username') . "\n";
@@ -110,7 +110,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		
 		$signature = base64_encode(hash_hmac('sha1', $string, $this->config->get('opencart_secret'), 1));
 		
-		$url .= '&username=' . urlencode($this->config->get('opencart_username'));
+		$url  = '&username=' . urlencode($this->config->get('opencart_username'));
 		$url .= '&domain=' . $this->request->server['HTTP_HOST'];
 		$url .= '&version=' . urlencode(VERSION);
 		$url .= '&time=' . $time;
@@ -157,6 +157,19 @@ class ControllerMarketplaceMarketplace extends Controller {
 		curl_setopt($curl, CURLOPT_POST, 1);
 
 		$response = curl_exec($curl);
+		/*
+		echo 'Time<br /><br />';
+		echo date('T') . '<br/>';
+		echo time() . '<br />';
+		echo date('Y-m-d H:i:s', time()) . '<br /><br />';
+		
+		echo 'Date object<br />';
+		$date = new DateTime('Asia/Hong_Kong');
+		echo $date->format('U') . '<br />';
+		echo $date->format('Y-m-d H:i:s') . '<br />';
+		
+		echo $response . '<br />';
+		*/
 		
 		$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
@@ -523,7 +536,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$extension_id = 0;
 		}
 
-		$time = time() + 30;
+		$time = time() + 60;
 
 		// We create a hash from the data in a similar method to how amazon does things.
 		$string  = 'marketplace/api/info' . "\n";
@@ -749,7 +762,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		}
 
 		if (!$json) {
-			$time = time() + 30;
+			$time = time() + 60;
 
 			// We create a hash from the data in a similar method to how amazon does things.
 			$string  = 'marketplace/api/purchase' . "\n";
@@ -878,7 +891,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		}
 		
 		if (!$json) {
-			$time = time() + 30;
+			$time = time() + 60;
 
 			// We create a hash from the data in a similar method to how amazon does things.
 			$string  = 'marketplace/api/download' . "\n";
@@ -968,7 +981,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		}
 					
 		if (!$json) {	
-			$time = time() + 30;
+			$time = time() + 60;
 
 			// We create a hash from the data in a similar method to how amazon does things.
 			$string  = 'marketplace/api/addcomment' . "\n";

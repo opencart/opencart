@@ -9,12 +9,14 @@ final class Openbay {
 		// OpenBay Pro main class.
 		$this->registry = $registry;
 
-		$this->getInstalled();
+		if ($this->db != null) {
+			$this->getInstalled();
 
-		foreach ($this->installed_markets as $market) {
-			$class = '\openbay\\'. ucfirst($market);
+			foreach ($this->installed_markets as $market) {
+				$class = '\openbay\\'. ucfirst($market);
 
-			$this->{$market} = new $class($registry);
+				$this->{$market} = new $class($registry);
+			}			
 		}
 
 		$this->logger = new \Log('openbay.log');

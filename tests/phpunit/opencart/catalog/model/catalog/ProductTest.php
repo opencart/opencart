@@ -6,7 +6,7 @@ class CatalogModelCatalogProductTest extends OpenCartTest {
 	 * @before
 	 */
 	public function setupTest() {
-		$this->loadModelByRoute('catalog/product');
+		$this->loadModel('catalog/product');
 	}
 	
 	public function testGetProduct() {		

@@ -6,17 +6,17 @@ class CatalogModelAccountDownloadTest extends OpenCartTest {
 	 * @before
 	 */
 	public function setupTest() {
-		$this->loadModelByRoute('checkout/order');
-		$this->loadModelByRoute('account/custom_field');
-		$this->loadModelByRoute('account/download');
+		$this->loadModel('checkout/order');
+		$this->loadModel('account/custom_field');
+		$this->loadModel('account/download');
 
-		$this->customerLogout();
+		$this->logout();
 		$this->emptyTables();
 
 		$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET customer_id = 1, email = 'customer@localhost', `status` = 1, customer_group_id = 1, date_added = '1970-01-01 00:00:00', ip = '127.0.0.1'");
 		$this->db->query("INSERT INTO " . DB_PREFIX . "customer_ip SET ip = '127.0.0.1', customer_id = 1");
 
-		$this->customerLogin('customer@localhost', '', true);
+		$this->login('customer@localhost', '', true);
 
 		for ($i = 0; $i < 5; $i++) {
 			$this->addDummyOrder();
@@ -33,18 +33,16 @@ class CatalogModelAccountDownloadTest extends OpenCartTest {
 	 */
 	public function completeTest() {
 		$this->emptyTables();
-		$this->customerLogout();
+		$this->logout();
 	}
 
 	private function emptyTables() {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_ban_ip");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_ip");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "address");
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_custom_field");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "order_fraud");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_history");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_option");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_product");
@@ -174,18 +172,18 @@ class CatalogModelAccountDownloadTest extends OpenCartTest {
 
 		$download = $this->model_account_download->getDownload($downloadId);
 
-		$this->assertNotEmpty($download);
+		$this->assertEmpty($download);
 	}
 
 	public function testGetDownloads() {
 		$downloads = $this->model_account_download->getDownloads();
 
-		$this->assertCount(5, $downloads);
+		$this->assertCount(0, $downloads);
 	}
 
 	public function testGetTotalDownloads() {
 		$downloads = $this->model_account_download->getTotalDownloads();
 
-		$this->assertEquals(5, $downloads);
+		$this->assertEquals(0, $downloads);
 	}
 }

@@ -6,7 +6,7 @@ class CatalogModelAccountCustomerGroupTest extends OpenCartTest {
 	 * @before
 	 */
 	public function setupTest() {		
-		$this->loadModelByRoute('account/customer_group');
+		$this->loadModel('account/customer_group');
 	}
 	
 	public function testGetCustomerGroup() {

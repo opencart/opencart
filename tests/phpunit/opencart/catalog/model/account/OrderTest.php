@@ -6,38 +6,36 @@ class CatalogModelAccountOrderTest extends OpenCartTest {
 	 * @before
 	 */
 	public function setupTest() {		
-		$this->loadModelByRoute('account/order');
-		$this->loadModelByRoute('account/custom_field');
-		$this->loadModelByRoute('checkout/order');
-		
-		$this->customerLogout();
+		$this->loadModel('account/order');
+		$this->loadModel('account/custom_field');
+		$this->loadModel('checkout/order');
+
+		$this->logout();
 		$this->emptyTables();
-		
+
 		$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET customer_id = 1, email = 'customer@localhost', `status` = 1, customer_group_id = 1, date_added = '1970-01-01 00:00:00', ip = '127.0.0.1'");
 		$this->db->query("INSERT INTO " . DB_PREFIX . "customer_ip SET ip = '127.0.0.1', customer_id = 1");
-		
-		$this->customerLogin('customer@localhost', '', true);
-		
+
+		$this->login('customer@localhost', '', true);
+
 		$this->addDummyOrder();
 	}
-	
+
 	/**
 	 * @after
 	 */
 	public function completeTest() {
 		$this->emptyTables();
-		$this->customerLogout();
+		$this->logout();
 	}
-	
+
 	private function emptyTables() {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_ban_ip");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_ip");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "address");
 		
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_custom_field");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "order_fraud");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_history");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_option");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_product");

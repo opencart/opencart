@@ -1,11 +1,5 @@
 {
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/openbaypro/opencart-test-suite.git"
-        }
-    ],
-    "require": {
-        "openbaypro/opencart-test-suite": "dev-master"
+    "require-dev": {
+        "beyondit/opencart-test-suite": "^2.3"
     }
 }

@@ -7587,7 +7587,6 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (3840, 239, 'Matabeleland South', 'MS', 1),
 (3841, 239, 'Midlands', 'MD', 1),
 (3861, 105, 'Campobasso', 'CB', 1),
-(3862, 105, 'Carbonia-Iglesias', 'CI', 1),
 (3863, 105, 'Caserta', 'CE', 1),
 (3864, 105, 'Catania', 'CT', 1),
 (3865, 105, 'Catanzaro', 'CZ', 1),
@@ -7620,15 +7619,12 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (3892, 105, 'Mantova', 'MN', 1),
 (3893, 105, 'Massa-Carrara', 'MS', 1),
 (3894, 105, 'Matera', 'MT', 1),
-(3895, 105, 'Medio Campidano', 'VS', 1),
 (3896, 105, 'Messina', 'ME', 1),
 (3897, 105, 'Milano', 'MI', 1),
 (3898, 105, 'Modena', 'MO', 1),
 (3899, 105, 'Napoli', 'NA', 1),
 (3900, 105, 'Novara', 'NO', 1),
 (3901, 105, 'Nuoro', 'NU', 1),
-(3902, 105, 'Ogliastra', 'OG', 1),
-(3903, 105, 'Olbia-Tempio', 'OT', 1),
 (3904, 105, 'Oristano', 'OR', 1),
 (3905, 105, 'Padova', 'PD', 1),
 (3906, 105, 'Palermo', 'PA', 1),
@@ -7955,7 +7951,10 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (4232, 44, 'Qinghai', 'QH', 1),
 (4233, 100, 'Papua Barat', 'PB', 1),
 (4234, 100, 'Sulawesi Barat', 'SR', 1),
-(4235, 100, 'Kepulauan Riau', 'KR', 1);
+(4235, 100, 'Kepulauan Riau', 'KR', 1),
+(4236, 105, 'Barletta-Andria-Trani', 'BT', 1),
+(4237, 105, 'Fermo', 'FM', 1),
+(4238, 105, 'Monza Brianza', 'MB', 1);
 
 -----------------------------------------------------------
 

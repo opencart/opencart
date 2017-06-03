@@ -14,7 +14,7 @@
     {% set class = 'col-sm-12' %}
     {% endif %}
     <div id="content" class="{{ class }}">{{ content_top }}
-      <h2>{{ text_edit_address }}</h2>
+      <h2>{{ text_address }}</h2>
       <form action="{{ action }}" method="post" enctype="multipart/form-data" class="form-horizontal">
         <fieldset>
           <div class="form-group required">
@@ -373,10 +373,10 @@ $('select[name=\'country_id\']').on('change', function() {
 		url: 'index.php?route=account/account/country&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+			$('select[name=\'country_id\']').prop('disabled', true);
 		},
 		complete: function() {
-			$('.fa-spin').remove();
+			$('select[name=\'country_id\']').prop('disabled', false);
 		},
 		success: function(json) {
 			if (json['postcode_required'] == '1') {

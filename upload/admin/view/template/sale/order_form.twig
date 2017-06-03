@@ -955,10 +955,10 @@ $('select[name=\'currency\']').on('change', function() {
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {
-			$('select[name=\'currency\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+			$('select[name=\'currency\']').prop('disabled', true);
 		},
 		complete: function() {
-			$('.fa-spin').remove();
+			$('select[name=\'currency\']').prop('disabled', false);
 		},
 		success: function(json) {
 			$('.alert, .text-danger').remove();

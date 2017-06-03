@@ -270,21 +270,19 @@ $('#tab-download').on('click', '.btn-primary', function(e) {
 			
 			if (json['error']) {
 				$('#tab-download').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button</div>');
-			
-				$(element).button('reset');
-			}
-			
-			if (json['text']) {
-				$('#progress-bar').css('width', '20%');
-				$('#progress-text').html(json['text']);
 			}
 
 			if (json['redirect']) {
 				location = json['redirect'];
 			}
 						
+			if (json['text']) {
+				$('#progress-bar').css('width', '20%');
+				$('#progress-text').html(json['text']);
+			}
+						
 			if (json['extension_install_id']) {
-				$(element).attr('data-uninstall', json['extension_install_id']);
+				$(element).replaceWith('<button type="button" data-install="' + $(element).attr('data-install') + '" data-uninstall="' + json['extension_install_id'] + '" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>');
 			}
 						
 			if (json['next']) {
@@ -309,15 +307,11 @@ function next(url, element, i) {
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
 				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-
-				$(element).button('reset');
 			}
 			
 			if (json['success']) {
 				$('#progress-bar').addClass('progress-bar-success');
 				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
-				
-				$(element).replaceWith('<button type="button" data-install="' + $(element).attr('data-install') + '" data-uninstall="' + $(element).attr('data-uninstall') + '" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>');
 			}
 			
 			if (json['text']) {

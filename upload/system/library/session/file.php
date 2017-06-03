@@ -1,8 +1,20 @@
 <?php
 namespace Session;
 class File {
-    public function read($session_id) {
-		$file = session_save_path() . '/sess_' . basename($session_id);
+	private $directory;
+	
+	public function __construct() {
+		$pos = strrpos(';', session_save_path());
+		
+		if ($pos == false) {
+			$this->directory = session_save_path();
+		} else {
+			$this->directory = substr($pos, session_save_path());
+		}
+	}
+	
+	public function read($session_id) {
+		$file = $this->directory . '/sess_' . basename($session_id);
 		
 		if (is_file($file)) {
 			$handle = fopen($file, 'r');
@@ -22,7 +34,7 @@ class File {
 	}
 
     public function write($session_id, $data) {
-		$file = session_save_path() . '/sess_' . basename($session_id);
+		$file = $this->directory . '/sess_' . basename($session_id);
 		
 		$handle = fopen($file, 'w');
 		
@@ -40,7 +52,7 @@ class File {
 	}
 	
     public function destroy($session_id) {
-		$file = session_save_path() . '/sess_' . basename($session_id);
+		$file = $this->directory . '/sess_' . basename($session_id);
 		
 		if (is_file($file)) {
 			unset($file);
@@ -49,13 +61,13 @@ class File {
 
     public function __destruct() {
 		if (ini_get('session.gc_divisor')) {
-			$gc_divisor =ini_get('session.gc_divisor');
+			$gc_divisor = ini_get('session.gc_divisor');
 		} else {
 			$gc_divisor = 1; 
 		}
 		
 		if (ini_get('session.gc_probability')) {
-			$gc_probability =ini_get('session.gc_probability');
+			$gc_probability = ini_get('session.gc_probability');
 		} else {
 			$gc_probability = 1; 
 		}
@@ -63,7 +75,7 @@ class File {
 		if ((rand() % $gc_divisor) < $gc_probability) {
 			$expire = time() - ini_get('session.gc_maxlifetime');
 			
-			$files = glob(session_save_path() . '/sess_');
+			$files = glob($this->directory . '/sess_*');
 				
 			foreach ($files as $file) {
 				if (filemtime($file) < $expire) {

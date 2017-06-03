@@ -9,7 +9,7 @@ class File {
 		if ($pos == false) {
 			$this->directory = session_save_path();
 		} else {
-			$this->directory = substr($pos, session_save_path());
+			$this->directory = substr(session_save_path(), $pos);
 		}
 	}
 	

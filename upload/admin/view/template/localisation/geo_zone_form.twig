@@ -116,10 +116,10 @@ function country(element, index, zone_id) {
 		url: 'index.php?route=localisation/country/country&user_token={{ user_token }}&country_id=' + element.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'zone_to_geo_zone[' + index + '][country_id]\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+			$('select[name=\'zone_to_geo_zone[' + index + '][country_id]\']').prop('disabled', true);
 		},
 		complete: function() {
-			$('.fa-spin').remove();
+			$('select[name=\'zone_to_geo_zone[' + index + '][country_id]\']').prop('disabled', false);
 		},
 		success: function(json) {
 			html = '<option value="0">{{ text_all_zones }}</option>';

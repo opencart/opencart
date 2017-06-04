@@ -701,6 +701,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 }
 #extension-list .extension-name h4 a, #extension-list .extension-name p a {
 	color: #000;
+	font-weight: 600;
 }
 #extension-list .extension-name + div > .row {
 	margin-top: 0;

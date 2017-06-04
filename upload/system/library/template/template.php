@@ -1,7 +1,6 @@
 <?php
 namespace Template;
-final class PHP {
-	private $directory;
+final class Template {
 	private $data = array();
 		
 	public function set($key, $value) {

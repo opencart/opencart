@@ -106,7 +106,7 @@ class ModelLocalisationCurrency extends Model {
 	}
 
 	public function refresh($force = false) {
-		$data = array();
+		$currency_data = array();
 
 		if ($force) {
 			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency WHERE code != '" . $this->db->escape($this->config->get('config_currency')) . "'");
@@ -115,27 +115,32 @@ class ModelLocalisationCurrency extends Model {
 		}
 
 		foreach ($query->rows as $result) {
-			$data[] = $this->config->get('config_currency') . $result['code'] . '=X';
+			$currency_data[] = $this->config->get('config_currency') . $result['code'] . '=X';
+			$currency_data[] = $result['code'] . $this->config->get('config_currency') . '=X';
 		}
 
 		$curl = curl_init();
 
-		curl_setopt($curl, CURLOPT_URL, 'http://download.finance.yahoo.com/d/quotes.csv?s=' . implode(',', $data) . '&f=sl1&e=.csv');
+		curl_setopt($curl, CURLOPT_URL, 'http://download.finance.yahoo.com/d/quotes.csv?s=' . implode(',', $currency_data) . '&f=sl1&e=.json');
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($curl, CURLOPT_HEADER, false);
 		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
 		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 
 		$content = curl_exec($curl);
-
+		
 		curl_close($curl);
 
-		$lines = explode("\n", trim($content));
+		$line = explode("\n", trim($content));
 
-		foreach ($lines as $line) {
-			$currency = utf8_substr($line, 4, 3);
-			$value = utf8_substr($line, 11, 6);
-
+		for ($i = 0; $i < count($line); $i = $i + 2) {
+			$currency = utf8_substr($line[$i], 4, 3);
+			$value = utf8_substr($line[$i], 11, 6);
+			
+			if ((float)$value < 1 && isset($line[$i + 1])) {
+				$value = (1 / utf8_substr($line[$i + 1], 11, 6));
+			}	
+						
 			if ((float)$value) {
 				$this->db->query("UPDATE " . DB_PREFIX . "currency SET value = '" . (float)$value . "', date_modified = '" .  $this->db->escape(date('Y-m-d H:i:s')) . "' WHERE code = '" . $this->db->escape($currency) . "'");
 			}

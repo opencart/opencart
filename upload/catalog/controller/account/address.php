@@ -258,7 +258,7 @@ class ControllerAccountAddress extends Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
-		$data['text_edit_address'] = $this->language->get('text_edit_address');
+		$data['text_address'] = !isset($this->request->get['address_id']) ? $this->language->get('text_address_add') : $this->language->get('text_address_edit');
 		$data['text_yes'] = $this->language->get('text_yes');
 		$data['text_no'] = $this->language->get('text_no');
 		$data['text_select'] = $this->language->get('text_select');

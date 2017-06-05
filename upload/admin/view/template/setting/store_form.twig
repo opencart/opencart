@@ -571,10 +571,10 @@ $('select[name=\'config_theme\']').on('change', function() {
 		url: 'index.php?route=setting/setting/theme&user_token={{ user_token }}&theme=' + this.value,
 		dataType: 'html',
 		beforeSend: function() {
-			$('select[name=\'config_theme\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+			$('select[name=\'config_theme\']').prop('disabled', true);
 		},
 		complete: function() {
-			$('.fa-spin').remove();
+			$('select[name=\'config_theme\']').prop('disabled', false);
 		},
 		success: function(html) {
 			$('#theme').attr('src', html);
@@ -592,10 +592,10 @@ $('select[name=\'config_country_id\']').on('change', function() {
 		url: 'index.php?route=localisation/country/country&user_token={{ user_token }}&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'config_country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+			$('select[name=\'config_country_id\']').prop('disabled', true);
 		},
 		complete: function() {
-			$('.fa-spin').remove();
+			$('select[name=\'config_country_id\']').prop('disabled', false);
 		},
 		success: function(json) {
 			html = '<option value="">{{ text_select }}</option>';

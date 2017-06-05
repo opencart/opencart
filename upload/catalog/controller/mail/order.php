@@ -308,7 +308,7 @@ class ControllerMailOrder extends Controller {
 	}
 	
 	// Admin Alert Mail
-	public function alert(&$route, &$args, $output) {
+	public function alert(&$route, &$args) {
 		if (isset($args[0])) {
 			$order_id = $args[0];
 		} else {
@@ -332,6 +332,7 @@ class ControllerMailOrder extends Controller {
 		} else {
 			$notify = '';
 		}
+		
 
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 		

@@ -8,7 +8,7 @@ class ControllerInstallStep3 extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->load->model('install/install');
 
-			$this->model_install_install->database($this->request->post);
+			$this->model_install_install->database(array_map('htmlspecialchars_decode', $this->request->post));
 
 			$output  = '<?php' . "\n";
 			$output .= '// HTTP' . "\n";

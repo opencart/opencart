@@ -92,7 +92,7 @@ class Mail {
 		}
 
 		$header .= 'Date: ' . date('D, d M Y H:i:s O') . PHP_EOL;
-		$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . PHP_EOL;
+		$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->smtp_username . '>' . PHP_EOL;
 		
 		if (!$this->reply_to) {
 			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . PHP_EOL;
@@ -304,9 +304,9 @@ class Mail {
 				}
 
 				if ($this->verp) {
-					fputs($handle, 'MAIL FROM: <' . $this->from . '>XVERP' . "\r\n");
+					fputs($handle, 'MAIL FROM: <' . $this->smtp_username . '>XVERP' . "\r\n");
 				} else {
-					fputs($handle, 'MAIL FROM: <' . $this->from . '>' . "\r\n");
+					fputs($handle, 'MAIL FROM: <' . $this->smtp_username . '>' . "\r\n");
 				}
 
 				$reply = '';

@@ -62,6 +62,12 @@ class ControllerAccountPassword extends Controller {
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['button_back'] = $this->language->get('button_back');
 
+		if (isset($this->error['csrf_token'])) {
+			$data['error_csrf_token'] = $this->error['csrf_token'];
+		} else {
+			$data['error_csrf_token'] = '';
+		}
+
 		if (isset($this->error['password'])) {
 			$data['error_password'] = $this->error['password'];
 		} else {
@@ -96,11 +102,16 @@ class ControllerAccountPassword extends Controller {
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
+		$data['csrf_token'] = $this->session->data['csrf_token'];
 
 		$this->response->setOutput($this->load->view('account/password', $data));
 	}
 
 	protected function validate() {
+		if ($this->request->post['csrf_token'] != $this->session->data['csrf_token']) {
+			$this->error['csrf_token'] = $this->language->get('error_csrf_token');
+		}
+
 		if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, "UTF-8")) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, "UTF-8")) > 20)) {
 			$this->error['password'] = $this->language->get('error_password');
 		}

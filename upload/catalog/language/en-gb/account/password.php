@@ -14,3 +14,4 @@ $_['entry_confirm']  = 'Password Confirm';
 // Error
 $_['error_password'] = 'Password must be between 4 and 20 characters!';
 $_['error_confirm']  = 'Password confirmation does not match password!';
+$_['error_csrf_token']    = 'Invalid token session.';

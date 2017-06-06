@@ -3,9 +3,16 @@ namespace DB;
 final class Postgre {
 	private $link;
 
-	public function __construct($hostname, $username, $password, $database, $port = '5432') {
-		if (!$this->link = pg_connect('host=' . $hostname . ' port=' . $port .  ' user=' . $username . ' password='	. $password . ' dbname=' . $database)) {
-			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname);
+	public function __construct($hostname, $username, $password, $database, $port = '5432', $pconnect = true) {
+		if($pconnect)
+		{
+			if (!$this->link = pg_pconnect('host=' . $hostname . ' port=' . $port .  ' user=' . $username . ' password='	. $password . ' dbname=' . $database)) {
+				throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname);
+			}
+		} else {
+			if (!$this->link = pg_connect('host=' . $hostname . ' port=' . $port .  ' user=' . $username . ' password='	. $password . ' dbname=' . $database)) {
+				throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname);
+			}
 		}
 
 		if (!pg_ping($this->link)) {

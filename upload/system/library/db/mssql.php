@@ -3,9 +3,16 @@ namespace DB;
 final class MSSQL {
 	private $connection;
 
-	public function __construct($hostname, $username, $password, $database, $port = '1433') {
-		if (!$this->connection = mssql_connect($hostname. ':' . $port, $username, $password)) {
-			throw new \Exception('Error: Could not make a database connection using ' . $username . '@' . $hostname);
+	public function __construct($hostname, $username, $password, $database, $port = '1433', $persistent = false) {
+		if($persistent)
+		{
+			if (!$this->connection = mssql_pconnect($hostname. ':' . $port, $username, $password)) {
+				throw new \Exception('Error: Could not make a database connection using ' . $username . '@' . $hostname);
+			}
+		}  else {
+			if (!$this->connection = mssql_connect($hostname. ':' . $port, $username, $password)) {
+				throw new \Exception('Error: Could not make a database connection using ' . $username . '@' . $hostname);
+			}
 		}
 
 		if (!mssql_select_db($database, $this->link)) {

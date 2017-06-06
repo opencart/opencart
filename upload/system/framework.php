@@ -73,7 +73,7 @@ $registry->set('response', $response);
 // Database
 if ($config->get('db_autostart')) {
 	try {
-		$registry->set('db', new DB($config->get('db_type'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port')));
+		$registry->set('db', new DB($config->get('db_type'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port'), $config->get('db_persistent')));
 	} catch(Exception $e) {
 		$response->redirect($config->get('site_base') . 'maintenance.html');
 	}

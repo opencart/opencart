@@ -14,6 +14,9 @@ $_['db_username']      = DB_USERNAME;
 $_['db_password']      = DB_PASSWORD;
 $_['db_database']      = DB_DATABASE;
 $_['db_port']          = DB_PORT;
+if(defined(DB_PERSISTENT)) {
+        $_['db_persistent']    = DB_PERSISTENT;
+}
 
 // Session
 $_['session_autostart'] = false;

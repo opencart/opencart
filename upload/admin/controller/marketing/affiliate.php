@@ -451,6 +451,7 @@ class ControllerMarketingAffiliate extends Controller {
 		$data['button_unlock'] = $this->language->get('button_unlock');
 		
 		$data['token'] = $this->session->data['token'];
+		$data['language_locale'] = $this->config->get('config_admin_language');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];

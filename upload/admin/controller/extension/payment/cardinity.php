@@ -41,6 +41,8 @@ class ControllerExtensionPaymentCardinity extends Controller {
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
+		$data['language_locale'] = $this->config->get('config_admin_language');
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {

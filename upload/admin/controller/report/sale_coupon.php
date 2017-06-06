@@ -93,6 +93,7 @@ class ControllerReportSaleCoupon extends Controller {
 		$data['button_filter'] = $this->language->get('button_filter');
 
 		$data['token'] = $this->session->data['token'];
+		$data['language_locale'] = $this->config->get('config_admin_language');
 
 		$url = '';
 

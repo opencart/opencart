@@ -469,16 +469,19 @@ $('#button-cart').on('click', function() {
 //--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	pickTime: false
+	pickTime: false,
+	language: '<?php echo $language_locale; ?>'
 });
 
 $('.datetime').datetimepicker({
 	pickDate: true,
-	pickTime: true
+	pickTime: true,
+	language: '<?php echo $language_locale; ?>'
 });
 
 $('.time').datetimepicker({
-	pickDate: false
+	pickDate: false,
+	language: '<?php echo $language_locale; ?>'
 });
 
 $('button[id^=\'button-upload\']').on('click', function() {

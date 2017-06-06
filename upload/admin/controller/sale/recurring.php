@@ -182,6 +182,7 @@ class ControllerSaleRecurring extends Controller {
 		$data['button_order'] = $this->language->get('button_order');
 
 		$data['token'] = $this->session->data['token'];
+		$data['language_locale'] = $this->config->get('config_admin_language');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];

@@ -280,7 +280,8 @@ $('#history').load('index.php?route=marketing/coupon/history&token=<?php echo $t
   <?php } ?>
   <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	pickTime: false
+	pickTime: false,
+	language: '<?php echo $language_locale; ?>'
 });
 //--></script></div>
 <?php echo $footer; ?>

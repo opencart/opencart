@@ -385,39 +385,7 @@ class ControllerCommonFileManager extends Controller {
 
 				// If path is a directory beging deleting each file and sub folder
 				} elseif (is_dir($path)) {
-					$files = array();
-
-					// Make path into an array
-					$path = array($path . '*');
-
-					// While the path array is still populated keep looping through
-					while (count($path) != 0) {
-						$next = array_shift($path);
-
-						foreach (glob($next) as $file) {
-							// If directory add to path array
-							if (is_dir($file)) {
-								$path[] = $file . '/*';
-							}
-
-							// Add the file to the files to be deleted array
-							$files[] = $file;
-						}
-					}
-
-					// Reverse sort the file array
-					rsort($files);
-
-					foreach ($files as $file) {
-						// If file just delete
-						if (is_file($file)) {
-							unlink($file);
-
-						// If directory use the remove directory function
-						} elseif (is_dir($file)) {
-							rmdir($file);
-						}
-					}
+					$this->deleteDirectory($path);
 				}
 			}
 
@@ -426,5 +394,13 @@ class ControllerCommonFileManager extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+	
+	private function deleteDirectory($dir) {
+		$files = array_diff(scandir($dir), array( '.', '..' ));
+		foreach ($files as $file) {
+			(is_dir("$dir/$file")) ? $this->deleteDirectory("$dir/$file") : unlink("$dir/$file");
+		}
+		return rmdir($dir);
 	}
 }

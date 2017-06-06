@@ -25,7 +25,7 @@ class ModelExtensionTotalVoucher extends Model {
 
 				$order_query = $this->db->query("SELECT order_id FROM `" . DB_PREFIX . "order` WHERE order_id = '" . (int)$voucher_query->row['order_id'] . "' AND order_status_id IN(" . implode(",", $implode) . ")");
 
-				if (!$order_query->num_rows) {
+				if ($order_query->num_rows) {
 					$status = false;
 				}
 

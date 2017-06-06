@@ -17,6 +17,14 @@ $(document).ready(function() {
 				['insert', ['link', 'image', 'video']],
 				['view', ['fullscreen', 'codeview', 'help']]
 			],
+			popover: {
+           	image: [
+					['custom', ['imageAttributes']],
+					['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+					['float', ['floatLeft', 'floatRight', 'floatNone']],
+					['remove', ['removeMedia']]
+				],
+			},			
 			buttons: {
     			image: function() {
 					var ui = $.summernote.ui;

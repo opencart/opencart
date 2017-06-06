@@ -20,16 +20,16 @@ $(document).ready(function() {
 			buttons: {
     			image: function() {
 					var ui = $.summernote.ui;
-
+							
 					// create button
 					var button = ui.button({
 						contents: '<i class="note-icon-picture" />',
 						tooltip: $.summernote.lang[$.summernote.options.lang].image.image,
 						click: function () {
 							$('#modal-image').remove();
-						
+							
 							$.ajax({
-								url: 'index.php?route=common/filemanager&token=' + getURLVar('user_token'),
+								url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token'),
 								dataType: 'html',
 								beforeSend: function() {
 									$('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');

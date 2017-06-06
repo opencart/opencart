@@ -175,7 +175,7 @@ class ModelUpgrade1006 extends Model {
 	private function recursive_move($src, $dest){
 
 	    // If source is not a directory stop processing
-	    if(!is_dir($src)) return false;
+	    if (!is_dir($src)) return false;
 
 	    // If the destination directory does not exist create it
 	    if(!is_dir($dest)) {

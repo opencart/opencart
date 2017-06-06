@@ -119,7 +119,7 @@ $(document).ready(function() {
 		var $popover = $element.data('bs.popover'); // element has bs popover?
 		
 		e.preventDefault();
-
+		
 		// destroy all image popovers
 		$('a[data-toggle="image"]').popover('destroy');
 

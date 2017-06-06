@@ -90,16 +90,19 @@ $(document).ready(function() {
 });
 
 $('.date').datetimepicker({
-  pickTime: false
+	language: '{{ locale }}',
+	pickTime: false
 });
 
 $('.datetime').datetimepicker({
-  pickDate: true,
-  pickTime: true
+	language: '{{ locale }}',
+	pickDate: true,
+	pickTime: true
 });
 
 $('.time').datetimepicker({
-  pickDate: false
+	language: '{{ locale }}',
+	pickDate: false
 });
 //--></script>
 {{ footer }}

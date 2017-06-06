@@ -274,14 +274,17 @@ $('#collapse-shipping-address button[id^=\'button-shipping-custom-field\']').on(
 //--></script> 
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
+	language: '{{ locale }}',
 	pickTime: false
 });
 
 $('.time').datetimepicker({
+	language: '{{ locale }}',
 	pickDate: false
 });
 
 $('.datetime').datetimepicker({
+	language: '{{ locale }}',
 	pickDate: true,
 	pickTime: true
 });

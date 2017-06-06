@@ -355,15 +355,18 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 //--></script> 
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
+	language: '{{ locale }}',
 	pickTime: false
 });
 
 $('.datetime').datetimepicker({
+	language: '{{ locale }}',
 	pickDate: true,
 	pickTime: true
 });
 
 $('.time').datetimepicker({
+	language: '{{ locale }}',
 	pickDate: false
 });
 //--></script> 

@@ -422,14 +422,17 @@ $('select[name=\'type\']').on('change', function() {
 	}
 
 	$('.date').datetimepicker({
+		language: '{{ locale }}',
 		pickTime: false
 	});
 
 	$('.time').datetimepicker({
+		language: '{{ locale }}',
 		pickDate: false
 	});
 
 	$('.datetime').datetimepicker({
+		language: '{{ locale }}',
 		pickDate: true,
 		pickTime: true
 	});

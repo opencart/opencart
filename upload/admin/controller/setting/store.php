@@ -109,7 +109,7 @@ class ControllerSettingStore extends Controller {
 		$data['stores'][] = array(
 			'store_id' => 0,
 			'name'     => $this->config->get('config_name') . $this->language->get('text_default'),
-			'url'      => HTTP_CATALOG,
+			'url'      => ($this->config->get('config_secure') == 1) ? HTTPS_CATALOG : HTTP_CATALOG,
 			'edit'     => $this->url->link('setting/setting', 'token=' . $this->session->data['token'], true)
 		);
 

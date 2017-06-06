@@ -14,7 +14,8 @@ class ModelExtensionShippingSFExpress extends Model {
 		}
 
 		$method_data = array();
-
+		
+		/*
 		if ($status) {
 			$weight = $this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->config->get('sf_express_weight_class_id'));
 			$weight_code = strtolower($this->weight->getUnit($this->config->get('sf_express_weight_class_id')));
@@ -258,7 +259,8 @@ class ModelExtensionShippingSFExpress extends Model {
 				}
 			}
 		}
-
+		*/
+		
 		return $method_data;
 	}
 }

@@ -29,7 +29,7 @@
 			<input type="hidden" value="<?php echo $login_redirect_url; ?>" name="loginRedirectURLs[]">
 		<?php } ?>
 		<input type="hidden" value="<?php echo $store_name; ?>" name="storeDescription">
-		<input type="hidden" value="<?php echo $amazon_login_pay_language; ?>" name="language">
+		<input type="hidden" value="<?php echo $simple_path_language; ?>" name="language">
 		<input type="hidden" value="<?php echo $ipn_url; ?>" name="sandboxMerchantIPNURL">
 		<input type="hidden" value="<?php echo $ipn_url; ?>" name="productionMerchantIPNURL">
 		<input type="hidden" value="POST" name="returnMethod">
@@ -354,7 +354,9 @@
       //</script>
   <script type="text/javascript">
       $('#amazon-login-pay-language').on('change', function () {
-        $('input[name="language"]').val($(this).val());
+        var language = $(this).val();
+        mod_lang = language.replace("-", "_");
+        $('input[name="language"]').val(mod_lang);
       });
       //</script>
   <script type="text/javascript">

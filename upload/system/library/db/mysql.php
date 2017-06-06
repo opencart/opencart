@@ -3,10 +3,17 @@ namespace DB;
 final class MySQL {
 	private $connection;
 
-	public function __construct($hostname, $username, $password, $database, $port = '3306') {
-		if (!$this->connection = mysql_connect($hostname . ':' . $port, $username, $password)) {
-			trigger_error('Error: Could not make a database link using ' . $username . '@' . $hostname);
-			exit();
+	public function __construct($hostname, $username, $password, $database, $port = '3306',$persistent = false) {
+		if($persistent)
+			if (!$this->connection = mysql_pconnect($hostname . ':' . $port, $username, $password)) {
+				trigger_error('Error: Could not make a database link using ' . $username . '@' . $hostname);
+				exit();
+			}
+		} else {
+			if (!$this->connection = mysql_connect($hostname . ':' . $port, $username, $password)) {
+				trigger_error('Error: Could not make a database link using ' . $username . '@' . $hostname);
+				exit();
+			}
 		}
 
 		if (!mysql_select_db($database, $this->connection)) {

@@ -1044,7 +1044,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$data['button_edit'] = $this->language->get('button_edit');
 
 		$data['token'] = $this->session->data['token'];
-		$data['language_locale'] = $this->config->get('config_admin_language');
 
 		$data['breadcrumbs'] = array();
 

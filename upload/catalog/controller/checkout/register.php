@@ -32,8 +32,6 @@ class ControllerCheckoutRegister extends Controller {
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['button_upload'] = $this->language->get('button_upload');
 
-		$data['language_locale'] = $this->session->data['language'];
-
 		$data['customer_groups'] = array();
 
 		if (is_array($this->config->get('config_customer_group_display'))) {

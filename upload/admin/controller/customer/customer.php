@@ -526,7 +526,6 @@ class ControllerCustomerCustomer extends Controller {
 		$data['button_unlock'] = $this->language->get('button_unlock');
 
 		$data['token'] = $this->session->data['token'];
-		$data['language_locale'] = $this->config->get('config_admin_language');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -728,7 +727,6 @@ class ControllerCustomerCustomer extends Controller {
 		$data['tab_ip'] = $this->language->get('tab_ip');
 
 		$data['token'] = $this->session->data['token'];
-		$data['language_locale'] = $this->config->get('config_admin_language');
 
 		if (isset($this->request->get['customer_id'])) {
 			$data['customer_id'] = $this->request->get['customer_id'];

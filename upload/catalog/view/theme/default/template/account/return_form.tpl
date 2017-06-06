@@ -178,8 +178,7 @@
 </div>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	pickTime: false,
-	language: '<?php echo $language_locale; ?>'
+	pickTime: false
 });
 //--></script>
 <?php echo $footer; ?>

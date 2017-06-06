@@ -134,8 +134,7 @@ $('#button-filter').on('click', function() {
 //--></script> 
   <script type="text/javascript"><!--
 $('.date').datetimepicker({
-  pickTime: false,
-	language: '<?php echo $language_locale; ?>'
+  pickTime: false
 });
 //--></script>
   <script type="text/javascript"><!--

@@ -250,7 +250,12 @@ class ControllerCommonFileManager extends Controller {
 					if ((utf8_strlen($filename) < 3) || (utf8_strlen($filename) > 255)) {
 						$json['error'] = $this->language->get('error_filename');
 					}
-
+					
+					// Validate the file max size
+					if ($file['size'] > $this->config->get('config_file_max_size')) {
+						$json['error'] = sprintf($this->language->get('error_filesize'), $this->config->get('config_file_max_size'));
+					}
+					
 					// Allowed file extension types
 					$allowed = array(
 						'jpg',

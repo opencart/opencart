@@ -28,4 +28,28 @@ class Request {
 
 		return $data;
 	}
+
+	public function post($key, $default = null) {
+		return isset($this->post[$key]) ? $this->post[$key] : $default;
+	}
+
+	public function get($key, $default = null) {
+		return isset($this->get[$key]) ? $this->get[$key] : $default;
+	}
+
+	public function request($key, $default = null) {
+		return isset($this->request[$key]) ? $this->request[$key] : $default;
+	}
+
+	public function cookie($key, $default = null) {
+		return isset($this->cookie[$key]) ? $this->cookie[$key] : $default;
+	}
+
+	public function files($key, $default = null) {
+		return isset($this->files[$key]) ? $this->files[$key] : $default;
+	}
+
+	public function server($key, $default = null) {
+		return isset($this->server[$key]) ? $this->server[$key] : $default;
+	}
 }

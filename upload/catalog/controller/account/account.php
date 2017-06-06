@@ -11,7 +11,7 @@ class ControllerAccountAccount extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
+		/*$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -21,7 +21,12 @@ class ControllerAccountAccount extends Controller {
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
 			'href' => $this->url->link('account/account', '', true)
-		);
+		);*/
+		
+		// I think that shortly
+		$bread_crumbs = new Breadcrumbs( $this );
+		$bread_crumbs->push( 'text_account', 'account/account' );
+		$data['breadcrumbs_html'] = $bread_crumbs->render();
 
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];

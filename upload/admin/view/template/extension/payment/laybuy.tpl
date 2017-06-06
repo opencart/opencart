@@ -538,8 +538,7 @@ $('#button-filter').on('click', function() {
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	pickTime: false,
-	format: 'YYYY-MM-DD',
-	language: '<?php echo $language_locale; ?>'
+	format: 'YYYY-MM-DD'
 });
 //--></script>
 

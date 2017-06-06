@@ -431,19 +431,16 @@ $('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('c
 //--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	pickTime: false,
-	language: '<?php echo $language_locale; ?>'
+	pickTime: false
 });
 
 $('.time').datetimepicker({
-	pickDate: false,
-	language: '<?php echo $language_locale; ?>'
+	pickDate: false
 });
 
 $('.datetime').datetimepicker({
 	pickDate: true,
-	pickTime: true,
-	language: '<?php echo $language_locale; ?>'
+	pickTime: true
 });
 //--></script>
 <script type="text/javascript"><!--

@@ -341,19 +341,16 @@
 </script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
-  pickTime: false,
-  language: '<?php echo $language_locale; ?>'
+  pickTime: false
 });
 
 $('.datetime').datetimepicker({
   pickDate: true,
-  pickTime: true,
-  language: '<?php echo $language_locale; ?>'
+  pickTime: true
 });
 
 $('.time').datetimepicker({
-  pickDate: false,
-  language: '<?php echo $language_locale; ?>'
+  pickDate: false
 });
 //--></script>
 <?php echo $footer; ?>

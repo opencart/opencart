@@ -248,19 +248,16 @@ $('select[name=\'type\']').on('change', function() {
 	}
 	
 	$('.date').datetimepicker({
-		pickTime: false,
-		language: '<?php echo $language_locale; ?>'
+		pickTime: false
 	});
 	
 	$('.time').datetimepicker({
-		pickDate: false,
-		language: '<?php echo $language_locale; ?>'
+		pickDate: false
 	});	
 		
 	$('.datetime').datetimepicker({
 		pickDate: true,
-		pickTime: true,
-		language: '<?php echo $language_locale; ?>'
+		pickTime: true
 	});
 });
 

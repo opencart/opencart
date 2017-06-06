@@ -182,7 +182,6 @@ class ControllerExtensionOpenbayAmazonusListing extends Controller{
 		$data['default_condition'] = $this->config->get('openbay_amazonus_listing_default_condition');
 
 		$data['token'] = $this->session->data['token'];
-		$data['language_locale'] = $this->config->get('config_admin_language');
 
 		$data['breadcrumbs'] = array();
 

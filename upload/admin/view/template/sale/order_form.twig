@@ -1054,9 +1054,6 @@ $('input[name=\'customer\']').autocomplete({
 
 		$('select[name=\'payment_address\']').html(html);
 		$('select[name=\'shipping_address\']').html(html);
-
-		$('select[name=\'payment_address\']').trigger('change');
-		$('select[name=\'shipping_address\']').trigger('change');
 	}
 });
 
@@ -1565,10 +1562,10 @@ $('select[name=\'payment_address\']').on('change', function() {
 		url: 'index.php?route=customer/customer/address&user_token={{ user_token }}&address_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'payment_address\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+			$('select[name=\'payment_address\']').prop('disabled', true);
 		},
 		complete: function() {
-			$('#tab-payment .fa-spin').remove();
+			$('select[name=\'payment_address\']').prop('disabled', false);
 		},
 		success: function(json) {
 			// Reset all fields
@@ -1749,10 +1746,10 @@ $('select[name=\'shipping_address\']').on('change', function() {
 		url: 'index.php?route=customer/customer/address&user_token={{ user_token }}&address_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'shipping_address\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+			$('select[name=\'shipping_address\']').prop('disabled', true);
 		},
 		complete: function() {
-			$('#tab-shipping .fa-spin').remove();
+			$('select[name=\'shipping_address\']').prop('disabled', false);
 		},
 		success: function(json) {
 			// Reset all fields

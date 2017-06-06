@@ -11,7 +11,7 @@ class ControllerCommonFileManager extends Controller {
 		}
 
 		if (isset($this->request->get['filter_name'])) {
-			$filter_name = rtrim(str_replace(array('*', '/'), '', $this->request->get['filter_name']), '/');
+			$filter_name = rtrim(str_replace(array('*', '/', '\\'), '', $this->request->get['filter_name']), '/');
 		} else {
 			$filter_name = '';
 		}
@@ -378,7 +378,7 @@ class ControllerCommonFileManager extends Controller {
 			// Loop through each path
 			foreach ($paths as $path) {
 				$path = rtrim(DIR_IMAGE . $path, '/');
-				
+
 				// If path is just a file delete it
 				if (is_file($path)) {
 					unlink($path);

@@ -199,7 +199,9 @@ class ControllerProductCategory extends Controller {
 				}
 
 				if ($this->config->get('config_tax')) {
-					$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price'], $this->session->data['currency']);
+					if((float)$result['special'] && $result['special'] != $special) $tax = $this->currency->format($result['special'], $this->session->data['currency']);
+						elseif((float)$result['price'] && $result['price'] != $price) $tax = $this->currency->format($result['price'], $this->session->data['currency']);
+							else $tax = false;
 				} else {
 					$tax = false;
 				}

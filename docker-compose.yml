@@ -1,0 +1,15 @@
+web:
+    image: nginx:latest
+    ports:
+        - "8080:80"
+    volumes:
+        - ./upload:/application
+        - ./devops/nginx/opencart.conf:/etc/nginx/conf.d/opencart.conf
+    links:
+        - php
+php:
+    build: ./devops/php-fpm
+    volumes:
+      - ./devops/php-fpm/php-fpm.conf:/usr/local/etc/php-fpm.conf
+      - ./upload/php.ini:/usr/local/etc/php/php.ini
+      - ./upload:/application

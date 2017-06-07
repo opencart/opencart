@@ -302,6 +302,8 @@ class ControllerCatalogReview extends Controller {
 		$data['button_filter'] = $this->language->get('button_filter');
 
 		$data['user_token'] = $this->session->data['user_token'];
+		
+		$data['locale'] = $this->config->get('config_language');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -513,6 +515,8 @@ class ControllerCatalogReview extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
+		$data['locale'] = $this->config->get('config_language');
+		
 		$this->load->model('catalog/product');
 
 		if (isset($this->request->post['product_id'])) {

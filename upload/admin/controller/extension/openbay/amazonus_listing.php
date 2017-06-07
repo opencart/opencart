@@ -183,6 +183,8 @@ class ControllerExtensionOpenbayAmazonusListing extends Controller{
 
 		$data['user_token'] = $this->session->data['user_token'];
 
+		$data['locale'] = $this->config->get('config_language');
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(

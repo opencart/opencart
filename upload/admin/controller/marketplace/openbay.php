@@ -689,6 +689,8 @@ class ControllerMarketplaceOpenbay extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
+		$data['locale'] = $this->config->get('config_language');
+
 		if (isset($this->session->data['error'])) {
 			if (!is_array($this->session->data['error'])) {
 				$this->session->data['error'] = array($this->session->data['error']);

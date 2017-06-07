@@ -1358,14 +1358,17 @@ $('input[name=\'option\']').autocomplete({
 		});
 
 		$('.date').datetimepicker({
+			language: '{{ locale }}',
 			pickTime: false
 		});
 
 		$('.time').datetimepicker({
+			language: '{{ locale }}',
 			pickDate: false
 		});
 
 		$('.datetime').datetimepicker({
+			language: '{{ locale }}',
 			pickDate: true,
 			pickTime: true
 		});
@@ -1458,6 +1461,7 @@ function addSpecial() {
 	$('#special tbody').append(html);
 
 	$('.date').datetimepicker({
+		language: '{{ locale }}',
 		pickTime: false
 	});
 

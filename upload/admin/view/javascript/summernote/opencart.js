@@ -7,10 +7,18 @@ $(document).ready(function() {
 			disableDragAndDrop: true,
 			height: 300,
 			emptyPara: '',
+			codemirror: { // codemirror options
+				mode: 'text/html',
+				htmlMode: true,
+				lineNumbers: true,
+				theme: 'monokai'
+			},			
+			fontsize: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '24', '30', '36', '48' , '64'],
 			toolbar: [
 				['style', ['style']],
 				['font', ['bold', 'underline', 'clear']],
 				['fontname', ['fontname']],
+				['fontsize', ['fontsize']],
 				['color', ['color']],
 				['para', ['ul', 'ol', 'paragraph']],
 				['table', ['table']],
@@ -18,7 +26,7 @@ $(document).ready(function() {
 				['view', ['fullscreen', 'codeview', 'help']]
 			],
 			popover: {
-           	image: [
+           		image: [
 					['custom', ['imageAttributes']],
 					['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
 					['float', ['floatLeft', 'floatRight', 'floatNone']],

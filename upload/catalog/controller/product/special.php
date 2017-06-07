@@ -39,7 +39,27 @@ class ControllerProductSpecial extends Controller {
 			$limit = $this->config->get($this->config->get('config_theme') . '_product_limit');
 		}
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		if ($this->config->get('seomanager_meta_title_special')) {
+			$this->document->setTitle($this->config->get('seomanager_meta_title_special'));
+		} else {
+			$this->document->setTitle($this->language->get('heading_title'));
+		}
+		
+		if ($this->config->get('seomanager_html_h1_special')) {
+			$data['heading_title'] = $this->config->get('seomanager_html_h1_special');
+		} else {
+			$data['heading_title'] = $this->language->get('heading_title');
+		}
+		
+		if ($this->config->get('seomanager_meta_description_special')) {
+			$this->document->setDescription($this->config->get('seomanager_meta_description_special'));
+		}		
+		
+		if ($this->config->get('seomanager_meta_keyword_special')) {
+			$this->document->setKeywords($this->config->get('seomanager_meta_keyword_special'));
+		}
+		
+		$data['description'] = html_entity_decode(($this->config->get('seomanager_description_special')), ENT_QUOTES, 'UTF-8');
 
 		$data['breadcrumbs'] = array();
 
@@ -70,8 +90,6 @@ class ControllerProductSpecial extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('product/special', $url)
 		);
-
-		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_empty'] = $this->language->get('text_empty');
 		$data['text_quantity'] = $this->language->get('text_quantity');

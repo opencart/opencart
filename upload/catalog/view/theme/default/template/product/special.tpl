@@ -14,7 +14,11 @@
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
     <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
-      <h2><?php echo $heading_title; ?></h2>
+      <h1><?php echo $heading_title; ?></h1>
+	  <?php if ($description) { ?>
+        <div class="row"><div class="col-sm-10"><?php echo $description; ?></div></div>
+		 <hr>
+      <?php } ?>
       <?php if ($products) { ?>
       <div class="row">
         <div class="col-md-2 col-sm-6 hidden-xs">

@@ -183,8 +183,6 @@ class ControllerExtensionOpenbayAmazonusListing extends Controller{
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		$data['locale'] = $this->config->get('config_language');
-
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -206,6 +204,8 @@ class ControllerExtensionOpenbayAmazonusListing extends Controller{
 			'href' => $this->url->link('extension/openbay/amazonus_listing/create', 'user_token=' . $this->session->data['user_token'] . $url, true),
 			'text' => $this->language->get('heading_title'),
 		);
+
+		$data['locale'] = $this->config->get('config_language');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

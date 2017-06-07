@@ -188,8 +188,6 @@ class ControllerExtensionReportCustomerSearch extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		$data['locale'] = $this->config->get('config_language');
-
 		$url = '';
 
 		if (isset($this->request->get['filter_date_start'])) {
@@ -231,6 +229,8 @@ class ControllerExtensionReportCustomerSearch extends Controller {
 		$data['filter_keyword'] = $filter_keyword;
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_ip'] = $filter_ip;
+
+		$data['locale'] = $this->config->get('config_language');
 
 		$this->response->setOutput($this->load->view('extension/report/customer_search_info', $data));
 	}

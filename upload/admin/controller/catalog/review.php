@@ -302,8 +302,6 @@ class ControllerCatalogReview extends Controller {
 		$data['button_filter'] = $this->language->get('button_filter');
 
 		$data['user_token'] = $this->session->data['user_token'];
-		
-		$data['locale'] = $this->config->get('config_language');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -403,6 +401,8 @@ class ControllerCatalogReview extends Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
+		$data['locale'] = $this->config->get('config_language');
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -514,8 +514,6 @@ class ControllerCatalogReview extends Controller {
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
-
-		$data['locale'] = $this->config->get('config_language');
 		
 		$this->load->model('catalog/product');
 
@@ -575,6 +573,8 @@ class ControllerCatalogReview extends Controller {
 			$data['status'] = '';
 		}
 
+		$data['locale'] = $this->config->get('config_language');
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

@@ -397,8 +397,6 @@ class ControllerExtensionOpenbayFba extends Controller {
         $data['cancel'] = $this->url->link('extension/openbay/fba/index', 'user_token=' . $this->session->data['user_token'], true);
         $data['user_token'] = $this->session->data['user_token'];
 
-		$data['locale'] = $this->config->get('config_language');
-
         if (isset($this->session->data['error'])) {
             $data['error_warning'] = $this->session->data['error'];
             unset($this->session->data['error']);
@@ -413,6 +411,8 @@ class ControllerExtensionOpenbayFba extends Controller {
         } else {
             $data['success'] = '';
         }
+
+		$data['locale'] = $this->config->get('config_language');
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
@@ -694,8 +694,6 @@ class ControllerExtensionOpenbayFba extends Controller {
         $data['cancel'] = $this->url->link('extension/openbay/fba/index', 'user_token=' . $this->session->data['user_token'], true);
         $data['user_token'] = $this->session->data['user_token'];
 
-		$data['locale'] = $this->config->get('config_language');
-
         $data['status_options'] = array(
             0 => $this->language->get('text_option_new'),
             1 => $this->language->get('text_option_error'),
@@ -717,6 +715,8 @@ class ControllerExtensionOpenbayFba extends Controller {
         } else {
             $data['success'] = '';
         }
+		
+		$data['locale'] = $this->config->get('config_language');
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');

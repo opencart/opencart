@@ -164,8 +164,6 @@ class ControllerExtensionReportSaleShipping extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		$data['locale'] = $this->config->get('config_language');
-
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
@@ -224,6 +222,8 @@ class ControllerExtensionReportSaleShipping extends Controller {
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_group'] = $filter_group;
 		$data['filter_order_status_id'] = $filter_order_status_id;
+		
+		$data['locale'] = $this->config->get('config_language');
 
 		$this->response->setOutput($this->load->view('extension/report/sale_shipping_info', $data));
 	}

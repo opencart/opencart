@@ -402,8 +402,6 @@ class ControllerSaleReturn extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		$data['locale'] = $this->config->get('config_language');
-
 		if (isset($this->session->data['error'])) {
 			$data['error_warning'] = $this->session->data['error'];
 
@@ -549,6 +547,8 @@ class ControllerSaleReturn extends Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
+		$data['locale'] = $this->config->get('config_language');
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -596,8 +596,6 @@ class ControllerSaleReturn extends Controller {
 		$data['tab_history'] = $this->language->get('tab_history');
 
 		$data['user_token'] = $this->session->data['user_token'];
-
-		$data['locale'] = $this->config->get('config_language');
 
 		if (isset($this->request->get['return_id'])) {
 			$data['return_id'] = $this->request->get['return_id'];
@@ -870,6 +868,8 @@ class ControllerSaleReturn extends Controller {
 		$this->load->model('localisation/return_status');
 
 		$data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();
+
+		$data['locale'] = $this->config->get('config_language');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

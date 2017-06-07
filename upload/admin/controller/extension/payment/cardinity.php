@@ -80,8 +80,6 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
 
-		$data['locale'] = $this->config->get('config_language');
-
 		if (isset($this->request->post['payment_cardinity_key'])) {
 			$data['payment_cardinity_key'] = $this->request->post['payment_cardinity_key'];
 		} else {
@@ -137,6 +135,8 @@ class ControllerExtensionPaymentCardinity extends Controller {
 		} else {
 			$data['payment_cardinity_sort_order'] = $this->config->get('payment_cardinity_sort_order');
 		}
+		
+		$data['locale'] = $this->config->get('config_language');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

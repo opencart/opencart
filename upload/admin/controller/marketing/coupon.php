@@ -390,8 +390,6 @@ class ControllerMarketingCoupon extends Controller {
 			$coupon_info = $this->model_marketing_coupon->getCoupon($this->request->get['coupon_id']);
 		}
 
-		$data['locale'] = $this->config->get('config_language');
-
 		if (isset($this->request->post['name'])) {
 			$data['name'] = $this->request->post['name'];
 		} elseif (!empty($coupon_info)) {
@@ -533,6 +531,8 @@ class ControllerMarketingCoupon extends Controller {
 		} else {
 			$data['status'] = true;
 		}
+
+		$data['locale'] = $this->config->get('config_language');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

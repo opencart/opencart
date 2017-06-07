@@ -546,6 +546,8 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 		} else {
 			$data['success'] = '';
 		}
+		
+		$data['locale'] = $this->config->get('config_language');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

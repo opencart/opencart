@@ -340,8 +340,6 @@ class ControllerAccountAddress extends Controller {
 			$address_info = $this->model_account_address->getAddress($this->request->get['address_id']);
 		}
 
-		$data['locale'] = $this->config->get('config_language');
-
 		if (isset($this->request->post['firstname'])) {
 			$data['firstname'] = $this->request->post['firstname'];
 		} elseif (!empty($address_info)) {
@@ -448,6 +446,8 @@ class ControllerAccountAddress extends Controller {
 		}
 
 		$data['back'] = $this->url->link('account/address', '', true);
+
+		$data['locale'] = $this->config->get('config_language');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

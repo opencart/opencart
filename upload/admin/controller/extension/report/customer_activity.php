@@ -171,8 +171,6 @@ class ControllerExtensionReportCustomerActivity extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		$data['locale'] = $this->config->get('config_language');
-
 		$url = '';
 
 		if (isset($this->request->get['filter_customer'])) {
@@ -205,6 +203,8 @@ class ControllerExtensionReportCustomerActivity extends Controller {
 		$data['filter_ip'] = $filter_ip;
 		$data['filter_date_start'] = $filter_date_start;
 		$data['filter_date_end'] = $filter_date_end;
+
+		$data['locale'] = $this->config->get('config_language');
 
 		$this->response->setOutput($this->load->view('extension/report/customer_activity_info', $data));
 	}

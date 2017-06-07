@@ -403,8 +403,6 @@ class ControllerCustomerCustomField extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		$data['locale'] = $this->config->get('config_language');
-
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -509,6 +507,8 @@ class ControllerCustomerCustomField extends Controller {
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
+		$data['locale'] = $this->config->get('config_language');
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

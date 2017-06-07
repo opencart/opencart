@@ -207,8 +207,6 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
 
-		$data['locale'] = $this->config->get('config_language');
-
 		if (isset($this->request->post['payment_pp_braintree_merchant_id'])) {
 			$data['payment_pp_braintree_merchant_id'] = $this->request->post['payment_pp_braintree_merchant_id'];
 		} else {
@@ -624,6 +622,8 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 				}
 			}
 		}
+
+		$data['locale'] = $this->config->get('config_language');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

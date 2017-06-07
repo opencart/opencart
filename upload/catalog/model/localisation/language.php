@@ -27,7 +27,7 @@ class ModelLocalisationLanguage extends Model {
 				);
 			}
 
-			$this->cache->set('language', $language_data);
+			$this->cache->set('catalog.language', $language_data);
 		}
 
 		return $language_data;

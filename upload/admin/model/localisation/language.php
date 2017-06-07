@@ -3,7 +3,8 @@ class ModelLocalisationLanguage extends Model {
 	public function addLanguage($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "language SET name = '" . $this->db->escape($data['name']) . "', code = '" . $this->db->escape($data['code']) . "', locale = '" . $this->db->escape($data['locale']) . "', sort_order = '" . $this->db->escape($data['sort_order']) . "', status = '" . (int)$data['status'] . "'");
 
-		$this->cache->delete('language');
+		$this->cache->delete('catalog.language');
+		$this->cache->delete('admin.language');
 
 		$language_id = $this->db->getLastId();
 
@@ -208,18 +209,20 @@ class ModelLocalisationLanguage extends Model {
 			$this->db->query("UPDATE " . DB_PREFIX . "setting SET value = '" . $this->db->escape($data['code']) . "' WHERE `key` = 'config_admin_language' AND value = '" . $this->db->escape($language_query->row['code']) . "'");
 		}
 		
-		$this->cache->delete('language');
+		$this->cache->delete('catalog.language');
+		$this->cache->delete('admin.language');
 	}
 	
 	public function deleteLanguage($language_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "language WHERE language_id = '" . (int)$language_id . "'");
 		
-		$this->cache->delete('language');
+		$this->cache->delete('catalog.language');
+		$this->cache->delete('admin.language');
 		
 		/*
 		Do not put any delete code for related tables for languages!!!!!!!!!
 		
-		It is not required as when ever you re save to a multi language table then the enteies for the deleted language will also be deleted! 
+		It is not required as when ever you re save to a multi language table then the entries for the deleted language will also be deleted! 
 		
 		Wasting my time with people adding code here!
 		*/
@@ -289,7 +292,7 @@ class ModelLocalisationLanguage extends Model {
 					);
 				}
 
-				$this->cache->set('language', $language_data);
+				$this->cache->set('admin.language', $language_data);
 			}
 
 			return $language_data;

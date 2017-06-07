@@ -1036,8 +1036,15 @@
       </div>
     </div>
   </div>
+  <link href="view/javascript/codemirror/lib/codemirror.css" rel="stylesheet" />
+  <link href="view/javascript/codemirror/theme/monokai.css" rel="stylesheet" />
+  <script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script> 
+  <script type="text/javascript" src="view/javascript/codemirror/lib/xml.js"></script> 
+  <script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script> 
+   
   <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
   <link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
+  <script type="text/javascript" src="view/javascript/summernote/summernote-image-attributes.js"></script>  
   <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>
   <script type="text/javascript"><!--
 // Manufacturer
@@ -1357,14 +1364,17 @@ $('input[name=\'option\']').autocomplete({
 		});
 
 		$('.date').datetimepicker({
+			language: '{{ locale }}',
 			pickTime: false
 		});
 
 		$('.time').datetimepicker({
+			language: '{{ locale }}',
 			pickDate: false
 		});
 
 		$('.datetime').datetimepicker({
+			language: '{{ locale }}',
 			pickDate: true,
 			pickTime: true
 		});
@@ -1457,6 +1467,7 @@ function addSpecial() {
 	$('#special tbody').append(html);
 
 	$('.date').datetimepicker({
+		language: '{{ locale }}',
 		pickTime: false
 	});
 
@@ -1509,14 +1520,17 @@ function addRecurring() {
 //--></script>
   <script type="text/javascript"><!--
 $('.date').datetimepicker({
+	language: '{{ locale }}',
 	pickTime: false
 });
 
 $('.time').datetimepicker({
+	language: '{{ locale }}',
 	pickDate: false
 });
 
 $('.datetime').datetimepicker({
+	language: '{{ locale }}',
 	pickDate: true,
 	pickTime: true
 });

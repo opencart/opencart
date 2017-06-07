@@ -596,31 +596,42 @@ class ControllerCommonColumnLeft extends Controller {
 			}
 			
 			// Tools	
-			$tool = array();
-			
-			if ($this->user->hasPermission('access', 'tool/upload')) {
-				$system[] = array(
-					'name'	   => $this->language->get('text_upload'),
-					'href'     => $this->url->link('tool/upload', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()		
-				);	
-			}
-			
+			$maintenance = array();
+				
 			if ($this->user->hasPermission('access', 'tool/backup')) {
-				$system[] = array(
+				$maintenance[] = array(
 					'name'	   => $this->language->get('text_backup'),
 					'href'     => $this->url->link('tool/backup', 'user_token=' . $this->session->data['user_token'], true),
 					'children' => array()		
 				);
 			}
+					
+			if ($this->user->hasPermission('access', 'tool/upload')) {
+				$maintenance[] = array(
+					'name'	   => $this->language->get('text_upload'),
+					'href'     => $this->url->link('tool/upload', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);	
+			}
 						
 			if ($this->user->hasPermission('access', 'tool/log')) {
-				$system[] = array(
+				$maintenance[] = array(
 					'name'	   => $this->language->get('text_log'),
 					'href'     => $this->url->link('tool/log', 'user_token=' . $this->session->data['user_token'], true),
 					'children' => array()		
 				);
 			}
+		
+			if ($maintenance) {
+				$system[] = array(
+					'id'       => 'menu-maintenance',
+					'icon'	   => 'fa-cog', 
+					'name'	   => $this->language->get('text_maintenance'),
+					'href'     => '',
+					'children' => $maintenance
+				);
+			}		
+		
 		
 			if ($system) {
 				$data['menus'][] = array(
@@ -679,7 +690,7 @@ class ControllerCommonColumnLeft extends Controller {
 			
 			$complete_total = $this->model_report_statistics->getValue('order_complete');
 			
-			if ($complete_total) {
+			if ((float)$complete_total && $order_total) {
 				$data['complete_status'] = round(($complete_total / $order_total) * 100);
 			} else {
 				$data['complete_status'] = 0;
@@ -687,7 +698,7 @@ class ControllerCommonColumnLeft extends Controller {
 
 			$processing_total = $this->model_report_statistics->getValue('order_processing');
 	
-			if ($processing_total) {
+			if ((float)$processing_total && $order_total) {
 				$data['processing_status'] = round(($processing_total / $order_total) * 100);
 			} else {
 				$data['processing_status'] = 0;
@@ -695,7 +706,7 @@ class ControllerCommonColumnLeft extends Controller {
 	
 			$other_total = $this->model_report_statistics->getValue('order_other');
 	
-			if ($other_total) {
+			if ((float)$other_total && $order_total) {
 				$data['other_status'] = round(($other_total / $order_total) * 100);
 			} else {
 				$data['other_status'] = 0;

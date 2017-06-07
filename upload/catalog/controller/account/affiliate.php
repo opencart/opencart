@@ -139,7 +139,7 @@ class ControllerAccountAffiliate extends Controller {
 		if ($this->request->get['route'] == 'account/affiliate/edit' && $this->request->server['REQUEST_METHOD'] != 'POST') {
 			$affiliate_info = $this->model_account_customer->getAffiliate($this->customer->getId());
 		}
-
+		
 		if (isset($this->request->post['company'])) {
 			$data['company'] = $this->request->post['company'];
 		} elseif (!empty($affiliate_info)) {
@@ -264,6 +264,8 @@ class ControllerAccountAffiliate extends Controller {
 		}
 		
 		$data['back'] = $this->url->link('account/account', '', true);
+
+		$data['locale'] = $this->config->get('config_language');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

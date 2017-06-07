@@ -42,7 +42,6 @@ class ControllerExtensionPaymentBankTransfer extends Controller {
 			$data['error_warning'] = '';
 		}
 
-
 		if (isset($this->error['bank'])) {
 			$data['error_bank'] = $this->error['bank'];
 		} else {
@@ -72,56 +71,56 @@ class ControllerExtensionPaymentBankTransfer extends Controller {
 
 		$this->load->model('localisation/language');
 
-		$data['bank_transfer'] = array();
+		$data['payment_bank_transfer'] = array();
 
 		$languages = $this->model_localisation_language->getLanguages();
 		
 		foreach ($languages as $language) {
-			if (isset($this->request->post['bank_transfer_bank' . $language['language_id']])) {
-				$data['bank_transfer_bank'][$language['language_id']] = $this->request->post['bank_transfer_bank' . $language['language_id']];
+			if (isset($this->request->post['payment_bank_transfer_bank' . $language['language_id']])) {
+				$data['payment_bank_transfer_bank'][$language['language_id']] = $this->request->post['payment_bank_transfer_bank' . $language['language_id']];
 			} else {
-				$data['bank_transfer_bank'][$language['language_id']] = $this->config->get('bank_transfer_bank' . $language['language_id']);
+				$data['payment_bank_transfer_bank'][$language['language_id']] = $this->config->get('payment_bank_transfer_bank' . $language['language_id']);
 			}
 		}
 
 		$data['languages'] = $languages;
 
-		if (isset($this->request->post['bank_transfer_total'])) {
-			$data['bank_transfer_total'] = $this->request->post['bank_transfer_total'];
+		if (isset($this->request->post['payment_bank_transfer_total'])) {
+			$data['payment_bank_transfer_total'] = $this->request->post['payment_bank_transfer_total'];
 		} else {
-			$data['bank_transfer_total'] = $this->config->get('bank_transfer_total');
+			$data['payment_bank_transfer_total'] = $this->config->get('payment_bank_transfer_total');
 		}
 
-		if (isset($this->request->post['bank_transfer_order_status_id'])) {
-			$data['bank_transfer_order_status_id'] = $this->request->post['bank_transfer_order_status_id'];
+		if (isset($this->request->post['payment_bank_transfer_order_status_id'])) {
+			$data['payment_bank_transfer_order_status_id'] = $this->request->post['payment_bank_transfer_order_status_id'];
 		} else {
-			$data['bank_transfer_order_status_id'] = $this->config->get('bank_transfer_order_status_id');
+			$data['payment_bank_transfer_order_status_id'] = $this->config->get('payment_bank_transfer_order_status_id');
 		}
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['bank_transfer_geo_zone_id'])) {
-			$data['bank_transfer_geo_zone_id'] = $this->request->post['bank_transfer_geo_zone_id'];
+		if (isset($this->request->post['payment_bank_transfer_geo_zone_id'])) {
+			$data['payment_bank_transfer_geo_zone_id'] = $this->request->post['payment_bank_transfer_geo_zone_id'];
 		} else {
-			$data['bank_transfer_geo_zone_id'] = $this->config->get('bank_transfer_geo_zone_id');
+			$data['payment_bank_transfer_geo_zone_id'] = $this->config->get('payment_bank_transfer_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['bank_transfer_status'])) {
-			$data['bank_transfer_status'] = $this->request->post['bank_transfer_status'];
+		if (isset($this->request->post['payment_bank_transfer_status'])) {
+			$data['payment_bank_transfer_status'] = $this->request->post['payment_bank_transfer_status'];
 		} else {
-			$data['bank_transfer_status'] = $this->config->get('bank_transfer_status');
+			$data['payment_bank_transfer_status'] = $this->config->get('payment_bank_transfer_status');
 		}
 
-		if (isset($this->request->post['bank_transfer_sort_order'])) {
-			$data['bank_transfer_sort_order'] = $this->request->post['bank_transfer_sort_order'];
+		if (isset($this->request->post['payment_bank_transfer_sort_order'])) {
+			$data['payment_bank_transfer_sort_order'] = $this->request->post['payment_bank_transfer_sort_order'];
 		} else {
-			$data['bank_transfer_sort_order'] = $this->config->get('bank_transfer_sort_order');
+			$data['payment_bank_transfer_sort_order'] = $this->config->get('payment_bank_transfer_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -141,7 +140,7 @@ class ControllerExtensionPaymentBankTransfer extends Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			if (empty($this->request->post['bank_transfer_bank' . $language['language_id']])) {
+			if (empty($this->request->post['payment_bank_transfer_bank' . $language['language_id']])) {
 				$this->error['bank'][$language['language_id']] = $this->language->get('error_bank');
 			}
 		}

@@ -67,6 +67,8 @@ class ControllerCheckoutPaymentAddress extends Controller {
 			$data['payment_address_custom_field'] = array();
 		}
 
+		$data['locale'] = $this->config->get('config_language');
+		
 		$this->response->setOutput($this->load->view('checkout/payment_address', $data));
 	}
 

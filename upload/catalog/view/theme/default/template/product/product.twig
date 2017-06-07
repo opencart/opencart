@@ -282,11 +282,11 @@
             </div>
             {% if minimum > 1 %}
             <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_minimum }}</div>
-            {% endif %} </div>
+            {% endif %}</div>
           {% if review_status %}
           <div class="rating">
-            <p> {% for i in 1..5 %}
-              {% if rating < i %} <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span> {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span> {% endif %}
+            <p>{% for i in 1..5 %}
+              {% if rating < i %}<span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>{% else %}<span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>{% endif %}
               {% endfor %} <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ reviews }}</a> / <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ text_write }}</a></p>
             <hr>
             <!-- AddThis Button BEGIN -->
@@ -427,15 +427,18 @@ $('#button-cart').on('click', function() {
 //--></script> 
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
+	language: '{{ locale }}',
 	pickTime: false
 });
 
 $('.datetime').datetimepicker({
+	language: '{{ locale }}',
 	pickDate: true,
 	pickTime: true
 });
 
 $('.time').datetimepicker({
+	language: '{{ locale }}',
 	pickDate: false
 });
 

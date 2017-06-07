@@ -189,7 +189,9 @@ class ControllerExtensionReportCustomerReward extends Controller {
 		$data['filter_date_start'] = $filter_date_start;
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_customer'] = $filter_customer;
-
+		
+		$data['locale'] = $this->config->get('config_language');
+	
 		$this->response->setOutput($this->load->view('extension/report/customer_reward_info', $data));
 	}
 }

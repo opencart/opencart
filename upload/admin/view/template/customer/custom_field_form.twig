@@ -33,7 +33,8 @@
               {% if error_name[language.language_id] %}
               <div class="text-danger">{{ error_name[language.language_id] }}</div>
               {% endif %}
-              {% endfor %}</div>
+              {% endfor %}
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-location">{{ entry_location }}</label>
@@ -421,14 +422,17 @@ $('select[name=\'type\']').on('change', function() {
 	}
 
 	$('.date').datetimepicker({
+		language: '{{ locale }}',
 		pickTime: false
 	});
 
 	$('.time').datetimepicker({
+		language: '{{ locale }}',
 		pickDate: false
 	});
 
 	$('.datetime').datetimepicker({
+		language: '{{ locale }}',
 		pickDate: true,
 		pickTime: true
 	});

@@ -422,9 +422,7 @@ class ControllerMarketplaceModification extends Controller {
 			$this->model_setting_setting->editSettingValue('config', 'config_maintenance', $maintenance);
 
 			// Do not return success message if refresh() was called with $data
-			if (!empty($data['redirect'])) {
-				$this->session->data['success'] = $this->language->get('text_success');
-			}
+			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';
 

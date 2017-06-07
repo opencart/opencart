@@ -7,7 +7,7 @@ class ModelReportStatistics extends Model {
 	}
 	
 	public function getValue($code) {
-		$query = $this->db->query("SELECT value FROM " . DB_PREFIX . "setting WHERE `code` = '" . $this->db->escape($code) . "'");
+		$query = $this->db->query("SELECT value FROM " . DB_PREFIX . "statistics WHERE `code` = '" . $this->db->escape($code) . "'");
 
 		if ($query->num_rows) {
 			return $query->row['value'];
@@ -17,14 +17,16 @@ class ModelReportStatistics extends Model {
 	}
 	
 	public function addValue($code, $value) {
-		$this->db->query("UPDATE " . DB_PREFIX . "setting SET `value` = (`value` + '" . $this->db->escape($value) . "') WHERE `code` = '" . $this->db->escape($code) . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "statistics SET `value` = (`value` + '" . (float)$value . "') WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 	
-	public function removeValue($code, $value) {
-		$this->db->query("UPDATE " . DB_PREFIX . "setting SET `value` = (`value` - '" . $this->db->escape($value) . "') WHERE `code` = '" . $this->db->escape($code) . "'");
-	}	
-	
 	public function editValue($code, $value) {
-		$this->db->query("UPDATE " . DB_PREFIX . "setting SET `value` = '" . $this->db->escape($value) . "' WHERE `code` = '" . $this->db->escape($code) . "'");
+		echo $code;
+		
+		$this->db->query("UPDATE " . DB_PREFIX . "statistics SET `value` = '" . (float)$value . "' WHERE `code` = '" . $this->db->escape($code) . "'");
+	}
+		
+	public function removeValue($code, $value) {
+		$this->db->query("UPDATE " . DB_PREFIX . "statistics SET `value` = (`value` - '" . (float)$value . "') WHERE `code` = '" . $this->db->escape($code) . "'");
 	}	
 }

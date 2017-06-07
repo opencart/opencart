@@ -690,7 +690,7 @@ class ControllerCommonColumnLeft extends Controller {
 			
 			$complete_total = $this->model_report_statistics->getValue('order_complete');
 			
-			if ($complete_total) {
+			if ((float)$complete_total && $order_total) {
 				$data['complete_status'] = round(($complete_total / $order_total) * 100);
 			} else {
 				$data['complete_status'] = 0;
@@ -698,7 +698,7 @@ class ControllerCommonColumnLeft extends Controller {
 
 			$processing_total = $this->model_report_statistics->getValue('order_processing');
 	
-			if ($processing_total) {
+			if ((float)$processing_total && $order_total) {
 				$data['processing_status'] = round(($processing_total / $order_total) * 100);
 			} else {
 				$data['processing_status'] = 0;
@@ -706,7 +706,7 @@ class ControllerCommonColumnLeft extends Controller {
 	
 			$other_total = $this->model_report_statistics->getValue('order_other');
 	
-			if ($other_total) {
+			if ((float)$other_total && $order_total) {
 				$data['other_status'] = round(($other_total / $order_total) * 100);
 			} else {
 				$data['other_status'] = 0;

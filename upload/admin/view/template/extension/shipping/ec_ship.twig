@@ -201,18 +201,18 @@
                     </label>
                   </div>
                   <div class="checkbox">
- +                    <label>
- +                      {% if shipping_ec_ship_local_parcel %}
- +                      <input type="checkbox" name="shipping_ec_ship_local_parcel" value="1" checked="checked" />
- +                      {{ text_local_parcel }}
- +                      {% else %}
- +                      <input type="checkbox" name="shipping_ec_ship_local_parcel" value="1" />
- +                      {{ text_local_parcel }}
- +                      {% endif %}
- +                    </label>
+                    <label>
+                      {% if shipping_ec_ship_local_parcel %}
+                      <input type="checkbox" name="shipping_ec_ship_local_parcel" value="1" checked="checked" />
+                     {{ text_local_parcel }}
+                      {% else %}
+                     <input type="checkbox" name="shipping_ec_ship_local_parcel" value="1" />
+                    {{ text_local_parcel }}
+                      {% endif %}
+                    </label>
                   </div>
               </div>
-              <a onclick="$(this).parent().find(':checkbox').prop('checked', true);">{{ text_select_all }}</a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);">{{ text_unselect_all }}</a> </div>
+              <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', true);" class="btn btn-link">{{ text_select_all }}</button> / <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', false);" class="btn btn-link">{{ text_unselect_all }}</button></div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-weight-class"><span data-toggle="tooltip" title="{{ help_weight_class }}">{{ entry_weight_class }}</span></label>

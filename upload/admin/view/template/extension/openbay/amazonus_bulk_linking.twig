@@ -18,7 +18,10 @@
       <div class="row">
         <div class="col-sm-12">
           {% if marketplace_processing %}
-          <div class="pull-right"> <a class="btn btn-primary" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i> {{ text_loading }}</a> </div>
+          <div class="pull-right">
+            <a class="btn btn-warning" href="{{ cancel_report_link }}"><i class="fa fa-times fa-lg"></i> {{ button_cancel }}</a>
+            <a class="btn btn-primary" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i> {{ text_loading }}</a>
+          </div>
           {% else %}
           <div class="pull-right"> <a id="button-load-listings" class="btn btn-primary" href="{{ link_load_listings }}">{{ button_load }}</a> </div>
           {% endif %}

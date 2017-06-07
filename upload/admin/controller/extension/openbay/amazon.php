@@ -927,6 +927,21 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 			$linked_item_limit = 25;
 		}
 
+		$data['cancel_report_link'] = '';
+
+        if (isset($this->request->get['cancel_report']) && $this->request->get['cancel_report'] == 1) {
+            $this->load->model('setting/setting');
+
+            $settings = $this->model_setting_setting->getSetting('openbay_amazon');
+            $settings['openbay_amazon_processing_listing_reports'] = '';
+
+            $this->model_setting_setting->editSetting('openbay_amazon', $settings);
+
+            $this->response->redirect($this->url->link('extension/openbay/amazon/bulklinking', 'marketplace=' . $marketplace_code . '&token=' . $this->session->data['token'], true));
+        } else {
+            $data['cancel_report_link'] = $this->url->link('extension/openbay/amazon/bulklinking', 'cancel_report=1&marketplace=uk&token=' . $this->session->data['token'], true);
+        }
+
 		$marketplaces = array(
 			'uk' => array(
 				'name' => $this->language->get('text_uk'),

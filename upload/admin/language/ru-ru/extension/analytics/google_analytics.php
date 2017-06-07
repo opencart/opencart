@@ -7,10 +7,11 @@
 $_['heading_title']    = 'Google Аналитикс';
 
 // Text
-$_['text_Аналитикс']   = 'Аналитикс';
+$_['text_extension']   = 'Расширения';
+$_['text_analytics']   = 'Аналитикс';
 $_['text_success']	   = 'Настройки успешно изменены!';
 $_['text_edit']        = 'Настройки Google Аналитикс';
-$_['text_signup']      = 'Войдите в Ваш <a href="http://www.google.com/Аналитикс/" target="_blank"><u>Google Аналитикс</u></a> и после настройки добавьте сюда выданный код.';
+$_['text_signup']      = 'Войдите в Ваш <a href="http://www.google.com/analytics/" target="_blank"><u>Google Аналитикс</u></a> и после настройки добавьте сюда выданный код.';
 
 // Entry
 $_['entry_code']       = 'Код Google Аналитикс';

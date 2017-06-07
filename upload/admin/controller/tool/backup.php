@@ -65,7 +65,7 @@ class ControllerToolBackup extends Controller {
 			
 			move_uploaded_file($this->request->files['import']['tmp_name'], ini_get('upload_tmp_dir') . '/' . $filename);
 		} elseif (isset($this->request->get['import'])) {
-			$filename = basename(html_entity_decode($this->request->get['import'], ENT_QUOTES, 'UTF-8'));
+			$filename = html_entity_decode($this->request->get['import'], ENT_QUOTES, 'UTF-8');
 		} else {
 			$filename = '';
 		}

@@ -275,7 +275,8 @@ class ControllerAccountReturn extends Controller {
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.js');
+		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment.min.js');
+		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js');
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
 		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
@@ -508,6 +509,8 @@ class ControllerAccountReturn extends Controller {
 		}
 
 		$data['back'] = $this->url->link('account/account', '', true);
+
+		$data['locale'] = $this->config->get('config_language');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

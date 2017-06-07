@@ -424,6 +424,8 @@ class ControllerSaleOrder extends Controller {
 		} else {
 			$data['api_token'] = '';
 		}
+
+		$data['locale'] = $this->config->get('config_language');
 				
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -803,6 +805,8 @@ class ControllerSaleOrder extends Controller {
 		} else {
 			$data['api_token'] = '';
 		}
+
+		$data['locale'] = $this->config->get('config_language');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

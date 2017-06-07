@@ -243,7 +243,15 @@ class ControllerMailOrder extends Controller {
 				'text'  => $this->currency->format($order_total['value'], $order_info['currency_code'], $order_info['currency_value']),
 			);
 		}
-
+	
+		$this->load->model('setting/setting');
+		
+		$from = $this->setting_setting->getSettingValue('config_email', $order_info['store_id']);
+		
+		if (!$from) {
+			$from = $this->config->get('config_email');
+		}
+		
 		$mail = new Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
@@ -253,7 +261,7 @@ class ControllerMailOrder extends Controller {
 		$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 
 		$mail->setTo($order_info['email']);
-		$mail->setFrom($this->config->get('config_email'));
+		$mail->setFrom($from);
 		$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
 		$mail->setSubject(html_entity_decode(sprintf($language->get('text_subject'), $order_info['store_name'], $order_info['order_id']), ENT_QUOTES, 'UTF-8'));
 		$mail->setHtml($this->load->view('mail/order_add', $data));
@@ -291,6 +299,14 @@ class ControllerMailOrder extends Controller {
 
 		$data['comment'] = strip_tags($comment);
 
+		$this->load->model('setting/setting');
+		
+		$from = $this->setting_setting->getSettingValue('config_email', $order_info['store_id']);
+		
+		if (!$from) {
+			$from = $this->config->get('config_email');
+		}
+		
 		$mail = new Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
@@ -300,7 +316,7 @@ class ControllerMailOrder extends Controller {
 		$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 
 		$mail->setTo($order_info['email']);
-		$mail->setFrom($this->config->get('config_email'));
+		$mail->setFrom($from);
 		$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
 		$mail->setSubject(html_entity_decode(sprintf($language->get('text_subject'), $order_info['store_name'], $order_info['order_id']), ENT_QUOTES, 'UTF-8'));
 		$mail->setText($this->load->view('mail/order_edit', $data));
@@ -332,7 +348,6 @@ class ControllerMailOrder extends Controller {
 		} else {
 			$notify = '';
 		}
-		
 
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 		

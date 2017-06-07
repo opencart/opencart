@@ -596,31 +596,42 @@ class ControllerCommonColumnLeft extends Controller {
 			}
 			
 			// Tools	
-			$tool = array();
-			
-			if ($this->user->hasPermission('access', 'tool/upload')) {
-				$system[] = array(
-					'name'	   => $this->language->get('text_upload'),
-					'href'     => $this->url->link('tool/upload', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()		
-				);	
-			}
-			
+			$maintenance = array();
+				
 			if ($this->user->hasPermission('access', 'tool/backup')) {
-				$system[] = array(
+				$maintenance[] = array(
 					'name'	   => $this->language->get('text_backup'),
 					'href'     => $this->url->link('tool/backup', 'user_token=' . $this->session->data['user_token'], true),
 					'children' => array()		
 				);
 			}
+					
+			if ($this->user->hasPermission('access', 'tool/upload')) {
+				$maintenance[] = array(
+					'name'	   => $this->language->get('text_upload'),
+					'href'     => $this->url->link('tool/upload', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);	
+			}
 						
 			if ($this->user->hasPermission('access', 'tool/log')) {
-				$system[] = array(
+				$maintenance[] = array(
 					'name'	   => $this->language->get('text_log'),
 					'href'     => $this->url->link('tool/log', 'user_token=' . $this->session->data['user_token'], true),
 					'children' => array()		
 				);
 			}
+		
+			if ($maintenance) {
+				$system[] = array(
+					'id'       => 'menu-maintenance',
+					'icon'	   => 'fa-cog', 
+					'name'	   => $this->language->get('text_maintenance'),
+					'href'     => '',
+					'children' => $maintenance
+				);
+			}		
+		
 		
 			if ($system) {
 				$data['menus'][] = array(

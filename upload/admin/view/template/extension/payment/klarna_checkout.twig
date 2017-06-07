@@ -527,6 +527,7 @@ $(document).on('click', '#button-process-settlement', function() {
 $('#tabs a:first').tab('show');
 
 $('.date').datetimepicker({
+	language: '{{ locale }}',
 	pickTime: false
 });
 

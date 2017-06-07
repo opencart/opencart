@@ -158,6 +158,8 @@ class ControllerExtensionReportCustomerTransaction extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
+		$data['locale'] = $this->config->get('config_language');
+
 		$url = '';
 
 		if (isset($this->request->get['filter_date_start'])) {

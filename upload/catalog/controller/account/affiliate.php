@@ -140,6 +140,8 @@ class ControllerAccountAffiliate extends Controller {
 			$affiliate_info = $this->model_account_customer->getAffiliate($this->customer->getId());
 		}
 
+		$data['locale'] = $this->config->get('config_language');
+
 		if (isset($this->request->post['company'])) {
 			$data['company'] = $this->request->post['company'];
 		} elseif (!empty($affiliate_info)) {

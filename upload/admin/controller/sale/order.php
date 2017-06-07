@@ -271,6 +271,8 @@ class ControllerSaleOrder extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
+		$data['locale'] = $this->config->get('config_language');
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -564,6 +566,8 @@ class ControllerSaleOrder extends Controller {
 		$data['cancel'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
 		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['locale'] = $this->config->get('config_language');
 
 		if (isset($this->request->get['order_id'])) {
 			$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);

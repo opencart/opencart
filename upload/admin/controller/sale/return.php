@@ -402,6 +402,8 @@ class ControllerSaleReturn extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
+		$data['locale'] = $this->config->get('config_language');
+
 		if (isset($this->session->data['error'])) {
 			$data['error_warning'] = $this->session->data['error'];
 
@@ -594,6 +596,8 @@ class ControllerSaleReturn extends Controller {
 		$data['tab_history'] = $this->language->get('tab_history');
 
 		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['locale'] = $this->config->get('config_language');
 
 		if (isset($this->request->get['return_id'])) {
 			$data['return_id'] = $this->request->get['return_id'];

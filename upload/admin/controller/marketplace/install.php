@@ -266,6 +266,8 @@ class ControllerMarketplaceInstall extends Controller {
 	
 				if ($xml) {
 					try {
+						$this->load->model('setting/modification');
+
 						$dom = new DOMDocument('1.0', 'UTF-8');
 						$dom->loadXml($xml);
 	

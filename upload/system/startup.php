@@ -72,15 +72,20 @@ if (is_file(DIR_SYSTEM . '../../vendor/autoload.php')) {
 }
 
 function library($class) {
-	$file = DIR_SYSTEM . 'library/' . str_replace('\\', '/', strtolower($class)) . '.php';
+    $files = array(
+        DIR_SYSTEM . 'vendor/' . str_replace('\\', '/', strtolower($class)) . '.php',
+        DIR_SYSTEM . 'library/' . str_replace('\\', '/', strtolower($class)) . '.php'
+    );
 
-	if (is_file($file)) {
-		include_once(modification($file));
+    foreach ($files as $file) {
+        if (is_file($file)) {
+            include_once(modification($file));
 
-		return true;
-	} else {
-		return false;
-	}
+            return true;
+        }
+    }
+
+    return false;
 }
 
 spl_autoload_register('library');

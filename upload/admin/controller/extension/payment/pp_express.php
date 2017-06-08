@@ -1192,8 +1192,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$data['date_end'] = date("Y-m-d");
 		$data['view_link'] = $this->url->link('extension/payment/pp_express/info', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['locale'] = $this->config->get('config_language');
-
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

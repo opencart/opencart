@@ -58,7 +58,6 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 
 		$this->load->model('checkout/order');
 		$this->load->model('extension/payment/sagepay_server');
-		$this->load->model('account/order');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
@@ -128,7 +127,7 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 			$payment_data['DeliveryPhone'] = $order_info['telephone'];
 		}
 
-		$order_products = $this->model_account_order->getOrderProducts($this->session->data['order_id']);
+		$order_products = $this->model_checkout_order->getOrderProducts($this->session->data['order_id']);
 		$cart_rows = 0;
 		$str_basket = "";
 		foreach ($order_products as $product) {
@@ -142,11 +141,13 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 			$cart_rows++;
 		}
 
-		$order_totals = $this->model_account_order->getOrderTotals($this->session->data['order_id']);
+		$order_totals = $this->model_checkout_order->getOrderTotals($this->session->data['order_id']);
+		
 		foreach ($order_totals as $total) {
 			$str_basket .= ":" . str_replace(":", " ", $total['title']) . ":::::" . $this->currency->format($total['value'], $order_info['currency_code'], false, false);
 			$cart_rows++;
 		}
+		
 		$str_basket = $cart_rows . $str_basket;
 
 		$payment_data['Basket'] = $str_basket;

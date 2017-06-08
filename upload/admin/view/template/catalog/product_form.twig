@@ -57,7 +57,7 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-description{{ language.language_id }}">{{ entry_description }}</label>
                     <div class="col-sm-10">
-                      <textarea name="product_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" class="form-control summernote">{{ product_description[language.language_id] ? product_description[language.language_id].description }}</textarea>
+                      <textarea name="product_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" data-toggle="summernote" class="form-control">{{ product_description[language.language_id] ? product_description[language.language_id].description }}</textarea>
                     </div>
                   </div>
                   <div class="form-group required">
@@ -1364,17 +1364,17 @@ $('input[name=\'option\']').autocomplete({
 		});
 
 		$('.date').datetimepicker({
-			language: '{{ locale }}',
+			language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
 			pickTime: false
 		});
 
 		$('.time').datetimepicker({
-			language: '{{ locale }}',
+			language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
 			pickDate: false
 		});
 
 		$('.datetime').datetimepicker({
-			language: '{{ locale }}',
+			language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
 			pickDate: true,
 			pickTime: true
 		});
@@ -1467,7 +1467,7 @@ function addSpecial() {
 	$('#special tbody').append(html);
 
 	$('.date').datetimepicker({
-		language: '{{ locale }}',
+		language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
 		pickTime: false
 	});
 
@@ -1520,17 +1520,17 @@ function addRecurring() {
 //--></script>
   <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	language: '{{ locale }}',
+	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
 	pickTime: false
 });
 
 $('.time').datetimepicker({
-	language: '{{ locale }}',
+	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
 	pickDate: false
 });
 
 $('.datetime').datetimepicker({
-	language: '{{ locale }}',
+	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
 	pickDate: true,
 	pickTime: true
 });

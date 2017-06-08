@@ -96,8 +96,6 @@ class ControllerCheckoutRegister extends Controller {
 		}
 
 		$data['shipping_required'] = $this->cart->hasShipping();
-
-		$data['locale'] = $this->config->get('config_language');
 		
 		$this->response->setOutput($this->load->view('checkout/register', $data));
 	}

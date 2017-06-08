@@ -72,8 +72,6 @@ class ControllerCheckoutShippingAddress extends Controller {
 		} else {
 			$data['shipping_address_custom_field'] = array();
 		}
-
-		$data['locale'] = $this->config->get('config_language');
 		
 		$this->response->setOutput($this->load->view('checkout/shipping_address', $data));
 	}

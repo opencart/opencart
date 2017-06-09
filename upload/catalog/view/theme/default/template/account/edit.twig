@@ -294,18 +294,18 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 //--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	language: '{{ locale }}',
+	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
 	pickTime: false
 });
 
 $('.datetime').datetimepicker({
-	language: '{{ locale }}',
+	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
 	pickDate: true,
 	pickTime: true
 });
 
 $('.time').datetimepicker({
-	language: '{{ locale }}',
+	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
 	pickDate: false
 });
 //--></script>

@@ -88,8 +88,6 @@ class ControllerCheckoutGuestShipping extends Controller {
 		} else {
 			$data['address_custom_field'] = array();
 		}
-
-		$data['locale'] = $this->config->get('config_language');
 		
 		$this->response->setOutput($this->load->view('checkout/guest_shipping', $data));
 	}

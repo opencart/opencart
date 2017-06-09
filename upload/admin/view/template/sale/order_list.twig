@@ -289,7 +289,7 @@ $('#form-order .btn-danger').on('click', function(e) {
   <link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
   <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	language: '{{ locale }}',
+	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
 	pickTime: false
 });
 //--></script></div>

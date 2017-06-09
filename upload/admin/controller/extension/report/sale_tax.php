@@ -225,8 +225,6 @@ class ControllerExtensionReportSaleTax extends Controller {
 		$data['filter_group'] = $filter_group;
 		$data['filter_order_status_id'] = $filter_order_status_id;
 
-		$data['locale'] = $this->config->get('config_language');
-
 		$this->response->setOutput($this->load->view('extension/report/sale_tax_info', $data));
 	}
 }

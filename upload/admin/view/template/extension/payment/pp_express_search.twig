@@ -246,17 +246,17 @@ $('#button-edit').on('click', function() {
 });
 
 $('.date').datetimepicker({
-	language: '{{ locale }}',
+	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
 	pickTime: false
 });
 
 $('.time').datetimepicker({
-	language: '{{ locale }}',
+	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
 	pickDate: false
 });
 
 $('.datetime').datetimepicker({
-	language: '{{ locale }}',
+	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
 	pickDate: true,
 	pickTime: true
 });

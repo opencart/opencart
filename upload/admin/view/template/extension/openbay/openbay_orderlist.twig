@@ -14,13 +14,13 @@
   <div class="container-fluid">
     {% if error_warning %}
       {% for error in error_warning %}
-        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error }} <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+        <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error }} <button type="button" class="close" data-dismiss="alert">&times;</button></div>
       {% endfor %}
     {% endif %}
 
     {% if error_orders %}
       {% for error_order in error_orders %}
-      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_order.order_id }} - {{ error_order.error }} <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_order.order_id }} - {{ error_order.error }} <button type="button" class="close" data-dismiss="alert">&times;</button></div>
       {% endfor %}
     {% endif %}
 

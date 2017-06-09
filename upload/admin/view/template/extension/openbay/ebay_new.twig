@@ -13,7 +13,7 @@
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
     {% endif %}
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -397,7 +397,7 @@
                   </table>
                 </div>
                 {% else %}
-                <div class="alert alert-danger">{{ text_images_none }}</div>
+                <div class="alert alert-danger alert-dismissible">{{ text_images_none }}</div>
                 {% endif %}
               </div>
               {% if addon.openstock is not empty and addon.openstock == true and product.options is not empty %}
@@ -1031,7 +1031,7 @@
         </div>
       </div>
       <div class="panel-body" style="display: none;" id="page-failed">
-        <div class="alert alert-danger">
+        <div class="alert alert-danger alert-dismissible">
           <h5>{{ text_failed_title }}</h5>
           <p>{{ text_failed_msg1 }}</p>
           <ul>
@@ -2024,7 +2024,7 @@
                     if (data.data.Errors) {
                       data.Errors = $.makeArray(data.Errors);
                       $.each(data.data.Errors, function(key, val) {
-                        $('#page-review').prepend('<div class="alert alert-danger">'+val+'</div>');
+                        $('#page-review').prepend('<div class="alert alert-danger alert-dismissible">'+val+'</div>');
                       });
                     }
 
@@ -2085,8 +2085,8 @@
               data.data.Errors = $.makeArray(data.data.Errors);
 
               $.each(data.data.Errors, function(key, val) {
-                $('#page-failed').prepend('<div class="alert alert-danger">'+val+'</div>');
-                $('#page-complete').prepend('<div class="alert alert-danger">'+val+'</div>');
+                $('#page-failed').prepend('<div class="alert alert-danger alert-dismissible">'+val+'</div>');
+                $('#page-complete').prepend('<div class="alert alert-danger alert-dismissible">'+val+'</div>');
               });
             }
 

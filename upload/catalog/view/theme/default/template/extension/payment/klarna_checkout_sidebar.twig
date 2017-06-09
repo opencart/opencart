@@ -35,7 +35,7 @@
   </div>
   {% endfor %}
   {% else %}
-  <div class="alert alert-danger">{{ shipping_method.error }}</div>
+  <div class="alert alert-danger alert-dismissible">{{ shipping_method.error }}</div>
   {% endif %}
   {% endfor %}
   <input type="hidden" name="comment" value="">

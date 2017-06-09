@@ -246,7 +246,7 @@ class ControllerMailOrder extends Controller {
 	
 		$this->load->model('setting/setting');
 		
-		$from = $this->setting_setting->getSettingValue('config_email', $order_info['store_id']);
+		$from = $this->model_setting_setting->getSettingValue('config_email', $order_info['store_id']);
 		
 		if (!$from) {
 			$from = $this->config->get('config_email');
@@ -301,7 +301,7 @@ class ControllerMailOrder extends Controller {
 
 		$this->load->model('setting/setting');
 		
-		$from = $this->setting_setting->getSettingValue('config_email', $order_info['store_id']);
+		$from = $this->model_setting_setting->getSettingValue('config_email', $order_info['store_id']);
 		
 		if (!$from) {
 			$from = $this->config->get('config_email');

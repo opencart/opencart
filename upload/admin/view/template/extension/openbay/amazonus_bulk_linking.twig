@@ -107,7 +107,7 @@
         if (json['status'] == 1) {
           $('.alert-info').after('<div class="alert alert-success">' + json['message'] + '</div>');
         } else {
-          $('.alert-info').after('<div class="alert alert-danger">' + json['message'] + '</div>');
+          $('.alert-info').after('<div class="alert alert-danger alert-dismissible">' + json['message'] + '</div>');
         }
       },
       error: function(xhr, ajaxOptions, thrownError) {

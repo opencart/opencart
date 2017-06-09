@@ -16,7 +16,7 @@
     </div>
     <div class="container-fluid">
         {% if errors %}
-        <div class="alert alert-danger">
+        <div class="alert alert-danger alert-dismissible">
             <ul>
                 {% for listing_error in errors %}
                 <li><i class="fa fa-exclamation-circle"></i> {{ listing_error.message }}</li>

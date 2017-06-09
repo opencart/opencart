@@ -14,7 +14,7 @@
     </div>
   </div>
   <div class="container-fluid"> {% if error_warning %}
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endif %}
@@ -1897,7 +1897,7 @@ $('#button-history').on('click', function(e) {
 			$('.alert').remove();
 
 			if (json['error']) {
-				 $('#tab-history').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				 $('#tab-history').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
@@ -1941,7 +1941,7 @@ $('#button-transaction').on('click', function(e) {
 			$('.alert').remove();
 
 			if (json['error']) {
-				 $('#tab-transaction').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				 $('#tab-transaction').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
@@ -1986,7 +1986,7 @@ $('#button-reward').on('click', function(e) {
 			$('.alert').remove();
 
 			if (json['error']) {
-				 $('#tab-reward').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				 $('#tab-reward').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {

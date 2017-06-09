@@ -24,7 +24,7 @@
   </div>
   <div class="container-fluid" id="main-body">{% if error_warning %}
     {% for warning in error_warning %}
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ warning }}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endfor %}

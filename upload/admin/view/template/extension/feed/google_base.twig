@@ -16,7 +16,7 @@
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endif %}
@@ -140,7 +140,7 @@ $('#button-category-add').on('click', function() {
 			$('.alert').remove();
 
 			if (json['error']) {
-				$('#category').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#category').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
@@ -180,7 +180,7 @@ $('#category').delegate('.btn-danger', 'click', function() {
 
 			// Check for errors
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
       if (json['success']) {
@@ -228,7 +228,7 @@ $('#button-import').on('click', function() {
 					$('.alert').remove();
 
           if (json['error']) {
-        		$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+        		$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
         	}
 
         	if (json['success']) {

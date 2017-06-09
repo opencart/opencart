@@ -15,7 +15,7 @@
   </div>
   <div class="container-fluid">
 	{% if error_warning %}
-	  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+	  <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
 	    <button type="button" class="close" data-dismiss="alert">&times;</button>
 	  </div>
 	{% endif %}
@@ -90,7 +90,7 @@
 			</div>
 		    <div class="tab-pane {% if not show_register %} active {% endif %}" id="tab-settings">
 		      {% if error_weight %}
-                <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_weight }}</div>
+                <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_weight }}</div>
 			  {% endif %}
 
 		      {% if notice_email %}

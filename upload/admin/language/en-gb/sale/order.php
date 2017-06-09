@@ -18,6 +18,7 @@ $_['text_customer']              = 'Customer';
 $_['text_customer_group']        = 'Customer Group';
 $_['text_email']                 = 'E-Mail';
 $_['text_telephone']             = 'Telephone';
+$_['text_fax']                   = 'Fax';
 $_['text_invoice']               = 'Invoice';
 $_['text_reward']                = 'Reward Points';
 $_['text_affiliate']             = 'Affiliate';

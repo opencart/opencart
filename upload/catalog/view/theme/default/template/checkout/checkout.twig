@@ -6,7 +6,7 @@
     {% endfor %}
   </ul>
   {% if error_warning %}
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+  <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   {% endif %}
@@ -189,7 +189,7 @@ $(document).delegate('#button-login', 'click', function() {
             if (json['redirect']) {
                 location = json['redirect'];
             } else if (json['error']) {
-                $('#collapse-checkout-option .panel-body').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#collapse-checkout-option .panel-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
 				$('input[name=\'email\']').parent().addClass('has-error');
@@ -222,7 +222,7 @@ $(document).delegate('#button-register', 'click', function() {
                 $('#button-register').button('reset');
 
                 if (json['error']['warning']) {
-                    $('#collapse-payment-address .panel-body').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                    $('#collapse-payment-address .panel-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
 
 				for (i in json['error']) {
@@ -668,7 +668,7 @@ $(document).delegate('#button-guest-shipping', 'click', function() {
                 $('#button-guest-shipping').button('reset');
 
                 if (json['error']['warning']) {
-                    $('#collapse-shipping-address .panel-body').prepend('<div class="alert alert-danger">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                    $('#collapse-shipping-address .panel-body').prepend('<div class="alert alert-danger alert-dismissible">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
 
 				for (i in json['error']) {
@@ -730,7 +730,7 @@ $(document).delegate('#button-shipping-method', 'click', function() {
                 $('#button-shipping-method').button('reset');
 
                 if (json['error']['warning']) {
-                    $('#collapse-shipping-method .panel-body').prepend('<div class="alert alert-danger">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                    $('#collapse-shipping-method .panel-body').prepend('<div class="alert alert-danger alert-dismissible">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
             } else {
                 $.ajax({
@@ -778,7 +778,7 @@ $(document).delegate('#button-payment-method', 'click', function() {
                 $('#button-payment-method').button('reset');
                 
                 if (json['error']['warning']) {
-                    $('#collapse-payment-method .panel-body').prepend('<div class="alert alert-danger">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                    $('#collapse-payment-method .panel-body').prepend('<div class="alert alert-danger alert-dismissible">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
             } else {
                 $.ajax({

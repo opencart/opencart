@@ -36,9 +36,9 @@ final class Amazonus {
         $this->encryption_iv = $encryption_iv;
     }
 
-	public function call($method, $data = array(), $is_json = true) {
+	public function call($method, $data = array(), $use_json = true) {
 	    if (!empty($data)) {
-            if ($is_json) {
+            if ($use_json) {
                 $string = json_encode($data);
             } else {
                 $string = $data;
@@ -48,6 +48,12 @@ final class Amazonus {
         } else {
 	        $encrypted = '';
         }
+
+        $post_data = array(
+            'token' => $this->token,
+            'data' => rawurlencode($encrypted),
+            'opencart_version' => VERSION
+        );
 
         $headers = array();
         $headers[] = 'X-Endpoint-Version: 2';
@@ -64,7 +70,7 @@ final class Amazonus {
 			CURLOPT_TIMEOUT         => 30,
 			CURLOPT_SSL_VERIFYPEER  => 0,
 			CURLOPT_SSL_VERIFYHOST  => 0,
-			CURLOPT_POSTFIELDS      => 'token=' . $this->token . '&data=' . rawurlencode($encrypted) . '&opencart_version=' . VERSION,
+			CURLOPT_POSTFIELDS      => http_build_query($post_data, '', "&"),
 		);
 
 		$curl = curl_init();
@@ -78,9 +84,9 @@ final class Amazonus {
 		return $response;
 	}
 
-	public function callNoResponse($method, $data = array(), $is_json = true) {
+	public function callNoResponse($method, $data = array(), $use_json = true) {
 	    if (!empty($data)) {
-            if ($is_json) {
+            if ($use_json) {
                 $string = json_encode($data);
             } else {
                 $string = $data;
@@ -90,6 +96,12 @@ final class Amazonus {
         } else {
 	        $encrypted = '';
         }
+
+        $post_data = array(
+            'token' => $this->token,
+            'data' => rawurlencode($encrypted),
+            'opencart_version' => VERSION
+        );
 
         $headers = array();
         $headers[] = 'X-Endpoint-Version: 2';
@@ -106,7 +118,7 @@ final class Amazonus {
 			CURLOPT_TIMEOUT         => 2,
 			CURLOPT_SSL_VERIFYPEER  => 0,
 			CURLOPT_SSL_VERIFYHOST  => 0,
-			CURLOPT_POSTFIELDS      => 'token=' . $this->token . '&data=' . rawurlencode($encrypted) . '&opencart_version=' . VERSION,
+			CURLOPT_POSTFIELDS      => http_build_query($post_data, '', "&"),
 		);
 		$curl = curl_init();
 

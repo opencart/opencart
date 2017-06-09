@@ -263,6 +263,9 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 			$this->config->set('openbay_amazon_encryption_key', $this->request->post['openbay_amazon_encryption_key']);
 			$this->config->set('openbay_amazon_encryption_iv', $this->request->post['openbay_amazon_encryption_iv']);
 
+			$this->openbay->amazon->setEncryptionKey($this->request->post['openbay_amazon_encryption_key']);
+			$this->openbay->amazon->setEncryptionIv($this->request->post['openbay_amazon_encryption_iv']);
+
 			if (!empty($this->request->post['openbay_amazon_token']) && !empty($this->request->post['openbay_amazon_encryption_key']) && !empty($this->request->post['openbay_amazon_encryption_iv'])) {
                 $this->model_extension_openbay_amazon->verifyConfig($settings);
             }
@@ -356,7 +359,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
         $api_auth = false;
 
 		if (!empty($data['openbay_amazon_token']) && !empty($data['openbay_amazon_encryption_key']) && !empty($data['openbay_amazon_encryption_iv'])) {
-		    $response = $this->openbay->amazon->call('ping/info');
+		    $response = $this->openbay->amazon->call('ping/info', array('say hello'));
 
 		    if (!empty($response)) {
                 $ping_info = simplexml_load_string($response);

@@ -249,7 +249,6 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 		$settings = $this->model_setting_setting->getSetting('openbay_amazonus');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-
 			if (!isset($this->request->post['openbay_amazonus_orders_marketplace_ids'])) {
 				$this->request->post['openbay_amazonus_orders_marketplace_ids'] = array();
 			}
@@ -260,6 +259,9 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 			$this->config->set('openbay_amazonus_token', $this->request->post['openbay_amazonus_token']);
 			$this->config->set('openbay_amazonus_encryption_key', $this->request->post['openbay_amazonus_encryption_key']);
 			$this->config->set('openbay_amazonus_encryption_iv', $this->request->post['openbay_amazonus_encryption_iv']);
+
+			$this->openbay->amazonus->setEncryptionKey($this->request->post['openbay_amazon_encryption_key']);
+			$this->openbay->amazonus->setEncryptionIv($this->request->post['openbay_amazon_encryption_iv']);
 
 			if (!empty($this->request->post['openbay_amazonus_token']) && !empty($this->request->post['openbay_amazonus_encryption_key']) && !empty($this->request->post['openbay_amazonus_encryption_iv'])) {
                 $this->model_extension_openbay_amazonus->verifyConfig($settings);

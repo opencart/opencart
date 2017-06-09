@@ -198,7 +198,7 @@ $('#button-search').bind('click', function(e) {
       dataType: 'json',
       type: 'POST',
       beforeSend: function() {
-        $('.alert').remove();
+        $('.alert-dismissible').remove();
       },
       success: function (json) {
         $.each(json, function (key, value) {

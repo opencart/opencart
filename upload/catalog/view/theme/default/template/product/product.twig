@@ -362,7 +362,7 @@ $('select[name=\'recurring_id\'], input[name="quantity"]').change(function(){
 			$('#recurring-description').html('');
 		},
 		success: function(json) {
-			$('.alert, .text-danger').remove();
+			$('.alert-dismissible, .text-danger').remove();
 
 			if (json['success']) {
 				$('#recurring-description').html(json['success']);
@@ -385,7 +385,7 @@ $('#button-cart').on('click', function() {
 			$('#button-cart').button('reset');
 		},
 		success: function(json) {
-			$('.alert, .text-danger').remove();
+			$('.alert-dismissible, .text-danger').remove();
 			$('.form-group').removeClass('has-error');
 
 			if (json['error']) {
@@ -520,7 +520,7 @@ $('#button-review').on('click', function() {
 			$('#button-review').button('reset');
 		},
 		success: function(json) {
-			$('.alert-success, .alert-danger').remove();
+			$('.alert-dismissible').remove();
 
 			if (json['error']) {
 				$('#review').after('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');

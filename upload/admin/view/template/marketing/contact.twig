@@ -215,7 +215,7 @@ function send(url) {
 			$('#button-send').button('reset');
 		},
 		success: function(json) {
-			$('.alert, .text-danger').remove();
+			$('.alert-dismissible, .text-danger').remove();
 
 			if (json['error']) {
 				if (json['error']['warning']) {

@@ -167,7 +167,7 @@ $('#button-verify').click(function() {
     data: { 'openbay_fba_api_key' : $('#openbay_fba_api_key').val(), 'openbay_fba_api_account_id' : $('#openbay_fba_api_account_id').val(), 'openbay_fba_encryption_key' : $('#openbay_fba_encryption_key').val() },
     beforeSend: function() {
       $('#button-verify').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
-      $('.alert').remove();
+      $('.alert-dismissible').remove();
     },
     success: function(json) {
       if (json.error === false) {

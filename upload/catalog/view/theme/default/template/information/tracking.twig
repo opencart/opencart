@@ -42,7 +42,7 @@ $('#button-tracking').on('click', function() {
             $('#button-login').button('reset');
         },
         success: function(json) {
-            $('.alert, .text-danger').remove();
+            $('.alert-dismissible, .text-danger').remove();
             $('.form-group').removeClass('has-error');
 
             if (json['redirect']) {

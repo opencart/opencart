@@ -667,7 +667,7 @@ $(document).off('click', '.button-command').on('click', '.button-command', funct
                             $('#button-history').button('reset');
                         },
                         success: function(json) {
-                            $('.alert').remove();
+                            $('.alert-dismissible').remove();
 
                             if (json['error']) {
                                 $('#history').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');

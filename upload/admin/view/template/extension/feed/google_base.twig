@@ -137,7 +137,7 @@ $('#button-category-add').on('click', function() {
 			$('#button-category-add').button('reset');
 		},
 		success: function(json) {
-			$('.alert').remove();
+			$('.alert-dismissible').remove();
 
 			if (json['error']) {
 				$('#category').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
@@ -176,7 +176,7 @@ $('#category').delegate('.btn-danger', 'click', function() {
 			$(node).button('reset');
 		},
 		success: function(json) {
-			$('.alert').remove();
+			$('.alert-dismissible').remove();
 
 			// Check for errors
 			if (json['error']) {
@@ -225,7 +225,7 @@ $('#button-import').on('click', function() {
 					$('#button-import').button('reset');
 				},
 				success: function(json) {
-					$('.alert').remove();
+					$('.alert-dismissible').remove();
 
           if (json['error']) {
         		$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');

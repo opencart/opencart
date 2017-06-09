@@ -129,7 +129,7 @@ $('#button-confirm').on('click', function() {
 			$('#button-confirm').button('reset');
 		},
 		success: function(json) {
-			$('.alert').remove();
+			$('.alert-dismissible').remove();
 
 			if (json['error']) {
 				$('#payment').before('<div class="alert alert-danger alert-dismissible">' + json['error'] + '</div>');

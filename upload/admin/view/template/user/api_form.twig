@@ -187,7 +187,7 @@ $('#session button').on('click', function(e) {
 				$(node).button('reset');
 			},
 			success: function(json) {
-				$('.alert').remove();
+				$('.alert-dismissible').remove();
 
 				if (json['error']) {
 					$('#tab-session').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');

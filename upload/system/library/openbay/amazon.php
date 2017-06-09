@@ -44,14 +44,14 @@ final class Amazon {
                 $string = $data;
             }
 
-            $encrypted = $this->openbay->encrypt($string, $this->getEncryptionKey(), $this->getEncryptionIv());
+            $encrypted = $this->openbay->encrypt($string, $this->getEncryptionKey(), $this->getEncryptionIv(), false);
         } else {
             $encrypted = '';
         }
 
         $post_data = array(
             'token' => $this->token,
-            'data' => rawurlencode($encrypted),
+            'data' => base64_encode($encrypted),
             'opencart_version' => VERSION
         );
 
@@ -92,14 +92,14 @@ final class Amazon {
                 $string = $data;
             }
 
-            $encrypted = $this->openbay->encrypt($string, $this->getEncryptionKey(), $this->getEncryptionIv());
+            $encrypted = $this->openbay->encrypt($string, $this->getEncryptionKey(), $this->getEncryptionIv(), false);
         } else {
             $encrypted = '';
         }
 
         $post_data = array(
             'token' => $this->token,
-            'data' => rawurlencode($encrypted),
+            'data' => rawurlencode(base64_encode($encrypted)),
             'opencart_version' => VERSION
         );
 

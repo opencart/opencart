@@ -281,7 +281,6 @@ class ControllerExtensionModification extends Controller {
 													}
 
 													$i++;
-						  
 												// Check to see if the line matches the search code.
 												} elseif ((stripos($line, $search) !== false) and ($operation->getElementsByTagName('search')->item(0)->getAttribute('regex') != 'true')) {
 													// If indexes are not used then just set the found status to true.

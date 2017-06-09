@@ -494,7 +494,7 @@
 	}
 
 	$('.date').datetimepicker({
-		language: '{{ locale }}',
+		language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
 		pickTime: false
 	});
 </script> 

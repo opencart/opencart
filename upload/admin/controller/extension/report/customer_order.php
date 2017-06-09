@@ -207,8 +207,6 @@ class ControllerExtensionReportCustomerOrder extends Controller {
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_order_status_id'] = $filter_order_status_id;
-		
-		$data['locale'] = $this->config->get('config_language');
 
 		$this->response->setOutput($this->load->view('extension/report/customer_order_info', $data));
 	}

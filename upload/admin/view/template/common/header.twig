@@ -60,8 +60,10 @@
         <li><a href="{{ review }}"><span class="label label-danger pull-right">{{ review_total }}</span>{{ text_review }}</a></li>
       </ul>
     </li>
-    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-home fa-lg"></i></a>
+    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog fa-lg"></i></a>
       <ul class="dropdown-menu dropdown-menu-right">
+        <li class="dropdown-header">{{ text_profile }}</li>
+        <li><a href="{{ profile }}">{{ text_profile_edit }}</a></li>
         <li class="dropdown-header">{{ text_store }}</li>
         {% for store in stores %}
         <li><a href="{{ store.href }}" target="_blank">{{ store.name }}</a></li>

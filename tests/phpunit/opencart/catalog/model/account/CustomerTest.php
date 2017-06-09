@@ -29,6 +29,8 @@ class CatalogModelAccountCustomerTest extends OpenCartTest {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "address");
 	}
 
+	
+
 	public function testEditCustomer() {
 		$this->customerLogin('customer@localhost', '', true);
 

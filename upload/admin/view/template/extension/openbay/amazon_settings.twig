@@ -143,10 +143,10 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="code-{{ marketplace.code }}">{{ marketplace.name }}</label>
                   <div class="col-sm-10">
-                    {% if marketplace.code in marketplace_ids %}
-                      <input id="code-{{ marketplace.code }}" type="checkbox" name="openbay_amazon_orders_marketplace_ids[]" value="{{ marketplace.code }}" checked="checked" />
+                    {% if marketplace.id in marketplace_ids %}
+                      <input id="code-{{ marketplace.code }}" type="checkbox" name="openbay_amazon_orders_marketplace_ids[]" value="{{ marketplace.id }}" checked="checked" />
                     {% else %}
-                      <input id="code-{{ marketplace.code }}" type="checkbox" name="openbay_amazon_orders_marketplace_ids[]" value="{{ marketplace.code }}" />
+                      <input id="code-{{ marketplace.code }}" type="checkbox" name="openbay_amazon_orders_marketplace_ids[]" value="{{ marketplace.id }}" />
                     {% endif %}
                   </div>
                 </div>

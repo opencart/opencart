@@ -849,7 +849,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 	public function ipn() {
 		$this->load->model('extension/payment/amazon_login_pay');
 		$this->model_extension_payment_amazon_login_pay->logger('IPN received');
-		if (isset($this->request->get['token']) && hash_equals($this->config->get('payment_amazon_login_pay_ipn_token'), $this->request->get['token'])) {
+		if (isset($this->request->get['token']) && hash_equals(trim($this->config->get('payment_amazon_login_pay_ipn_token')), trim($this->request->get['token']))) {
 			$body = file_get_contents('php://input');
 			if ($body) {
 				$ipn_details_xml = $this->model_extension_payment_amazon_login_pay->parseRawMessage($body);
@@ -867,6 +867,16 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			}
 		} else {
 			$this->model_extension_payment_amazon_login_pay->logger('Incorrect security token');
+
+			if (!isset($this->request->get['token'])) {
+				$this->model_extension_payment_amazon_login_pay->logger('GET variable "token" is missing');
+			}
+			if (empty($this->request->get['token'])) {
+				$this->model_extension_payment_amazon_login_pay->logger('GET variable "token" set, but is empty');
+			}
+			if (empty($this->config->get('payment_amazon_login_pay_ipn_token'))) {
+				$this->model_extension_payment_amazon_login_pay->logger('CONFIG variable "payment_amazon_login_pay_ipn_token" is empty');
+			}
 		}
 
 		$this->response->addHeader('HTTP/1.1 200 OK');

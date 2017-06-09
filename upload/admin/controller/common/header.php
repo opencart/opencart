@@ -20,7 +20,7 @@ class ControllerCommonHeader extends Controller {
 		$this->load->language('common/header');
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
 		$data['text_order'] = $this->language->get('text_order');
 		$data['text_processing_status'] = $this->language->get('text_processing_status');
 		$data['text_complete_status'] = $this->language->get('text_complete_status');
@@ -33,6 +33,8 @@ class ControllerCommonHeader extends Controller {
 		$data['text_stock'] = $this->language->get('text_stock');
 		$data['text_review'] = $this->language->get('text_review');
 		$data['text_store'] = $this->language->get('text_store');
+		$data['text_profile'] = $this->language->get('text_profile');
+		$data['text_profile_edit'] = $this->language->get('text_profile_edit');
 		$data['text_front'] = $this->language->get('text_front');
 		$data['text_help'] = $this->language->get('text_help');
 		$data['text_homepage'] = $this->language->get('text_homepage');
@@ -101,6 +103,8 @@ class ControllerCommonHeader extends Controller {
 			$data['review'] = $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . '&filter_status=0', true);
 
 			$data['alerts'] = (int)$customer_total + (int)$product_total + (int)$review_total + (int)$affiliate_total + (int)$return_total;
+			
+			$data['profile'] = $this->url->link('common/profile', 'user_token=' . $this->session->data['user_token'], true);
 			
 			// Online Stores
 			$data['stores'] = array();

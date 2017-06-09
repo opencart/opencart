@@ -225,8 +225,7 @@ class ControllerExtensionModification extends Controller {
 
 										$status = false;
 
-						
-										// Search and replace if regex without replace OR no regex else replace by regex
+										// Search and replace if regex without replace too
 										if ((($operation->getElementsByTagName('search')->item(0)->getAttribute('regex') == 'true') and ($operation->getElementsByTagName('add')->item(0)->getAttribute('position') != 'replace')) or ($operation->getElementsByTagName('search')->item(0)->getAttribute('regex') != 'true')) {
 											// Search
 											$search = $operation->getElementsByTagName('search')->item(0)->textContent;
@@ -274,15 +273,14 @@ class ControllerExtensionModification extends Controller {
 												// Status
 												$match = false;
 						  
-											// Check to see if the line matches the search code by regex
-												if ($operation->getElementsByTagName('search')->item(0)->getAttribute('regex') == 'true') { //(stripos($line, $search) !== false) {
+												// Check to see if the line matches the search code by regex
+												if ($operation->getElementsByTagName('search')->item(0)->getAttribute('regex') == 'true') {
 													// If indexes are not used then just set the found status to true.
 													if (preg_match($search, $line)) {
 														$match = true;
 													}
 
 													$i++;
-
 						  
 												// Check to see if the line matches the search code.
 												} elseif ((stripos($line, $search) !== false) and ($operation->getElementsByTagName('search')->item(0)->getAttribute('regex') != 'true')) {
@@ -431,12 +429,9 @@ class ControllerExtensionModification extends Controller {
 			}
 
 			// Maintance mode back to original settings
-			$this->model_setting_setting->editSettingValue('config', 'config_maintenance', $maintenance);
+			$this->model_setting_setting->editSettingValue('config', 'config_maintenance', $maintenance);		  
 
-																	  
-								   
 			$this->session->data['success'] = $this->language->get('text_success');
-	
 
 			$url = '';
 

@@ -225,7 +225,7 @@
           $.each(json, function (key, value) {
             var element = $('#result-' + key);
             if (value.error) {
-              element.html('<div class="alert alert-danger">' + value.error + '</span>');
+              element.html('<div class="alert alert-danger alert-dismissible">' + value.error + '</span>');
             } else if (value.success) {
               element.html('<div class="alert alert-success">' + value.success + '</span>');
             }
@@ -238,7 +238,7 @@
         }
       });
     } else {
-      $('#bulk-list-form').prepend('<div class="alert alert-danger">{{ error_select_items }}</div>');
+      $('#bulk-list-form').prepend('<div class="alert alert-danger alert-dismissible">{{ error_select_items }}</div>');
     }
   });
 //--></script></div>

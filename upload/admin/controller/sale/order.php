@@ -1650,6 +1650,7 @@ class ControllerSaleOrder extends Controller {
 		$data['text_invoice_date'] = $this->language->get('text_invoice_date');
 		$data['text_date_added'] = $this->language->get('text_date_added');
 		$data['text_telephone'] = $this->language->get('text_telephone');
+		$data['text_fax'] = $this->language->get('text_fax');
 		$data['text_email'] = $this->language->get('text_email');
 		$data['text_website'] = $this->language->get('text_website');
 		$data['text_payment_address'] = $this->language->get('text_payment_address');
@@ -1688,10 +1689,12 @@ class ControllerSaleOrder extends Controller {
 					$store_address = $store_info['config_address'];
 					$store_email = $store_info['config_email'];
 					$store_telephone = $store_info['config_telephone'];
+					$store_fax = $store_info['config_fax'];
 				} else {
 					$store_address = $this->config->get('config_address');
 					$store_email = $this->config->get('config_email');
 					$store_telephone = $this->config->get('config_telephone');
+					$store_fax = $this->config->get('config_fax');
 				}
 
 				if ($order_info['invoice_no']) {
@@ -1839,6 +1842,7 @@ class ControllerSaleOrder extends Controller {
 					'store_address'    => nl2br($store_address),
 					'store_email'      => $store_email,
 					'store_telephone'  => $store_telephone,
+					'store_fax'        => $store_fax,
 					'email'            => $order_info['email'],
 					'telephone'        => $order_info['telephone'],
 					'shipping_address' => $shipping_address,

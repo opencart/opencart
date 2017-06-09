@@ -20,7 +20,7 @@
       <div class="panel-body">
         <div id="page-listing">
           {% if error_warning %}
-          <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+          <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
           {% endif %}
           <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
             <input type="hidden" name="etsy_item_id" value="{{ etsy_item_id }}" />

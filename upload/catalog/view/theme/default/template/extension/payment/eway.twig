@@ -1,5 +1,5 @@
 {% if error %}
-<div class="alert alert-danger">Payment Error: {{ error }}</div>
+<div class="alert alert-danger alert-dismissible">Payment Error: {{ error }}</div>
 {% else %}
 <form action="{{ action }}" method="POST" class="form-horizontal" id="eway-payment-form">
   <fieldset id="payment">

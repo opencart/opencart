@@ -13,10 +13,10 @@
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
     {% endif %}
     {% if listing_errors %}
-    <div class="alert alert-danger">
+    <div class="alert alert-danger alert-dismissible">
       <ul>
         {% for listing_error in listing_errors %}
         <li><i class="fa fa-exclamation-circle"></i> {{ listing_error }}</li>

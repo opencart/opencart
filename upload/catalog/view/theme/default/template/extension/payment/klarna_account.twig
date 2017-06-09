@@ -148,7 +148,7 @@ $('#button-confirm').on('click', function() {
 			$('.alert').remove();
 
 			if (json['error']) {
-				$('#payment').before('<div class="alert alert-danger">' + json['error'] + '</div>');
+				$('#payment').before('<div class="alert alert-danger alert-dismissible">' + json['error'] + '</div>');
 			}
 
 			if (json['redirect']) {

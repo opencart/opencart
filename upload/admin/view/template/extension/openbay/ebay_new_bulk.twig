@@ -1023,7 +1023,7 @@
 
                     $('#p_row_buttons_'+data.i).prepend('<a class="btn btn-primary button-listing-view" href="{{ listing_link }}'+data.itemid+'" target="_BLANK">{{ button_view }}</a>');
 
-                    html += '<div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ text_listed }}'+data.itemid+'</div>';
+                    html += '<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ text_listed }}'+data.itemid+'</div>';
                   } else {
                     $.each(data.errors, function(k,v) {
                       html += '<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> '+v+'</div>';

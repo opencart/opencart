@@ -20,7 +20,7 @@
     {% endif %}
     {% if account_info is not empty %}
       {% if account_info.header_code == 200 %}
-        <div class="alert alert-success"><i class="fa fa-check"></i> {{ text_account_ok }}</div>
+        <div class="alert alert-success alert-dismissible"><i class="fa fa-check"></i> {{ text_account_ok }}</div>
       {% else %}
         <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_account_info }} ({{ account_info.header_code }})</div>
       {% endif %}

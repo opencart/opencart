@@ -18,7 +18,7 @@
     </div>
     {% endif %}
     {% if success %}
-    <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endif %}
@@ -160,7 +160,7 @@ $('#customer-approval').on('click', '.btn-success, .btn-danger', function(e) {
 			if (json['success']) {
 				$('#customer-approval').load('index.php?route=customer/customer_approval/list&user_token={{ user_token }}');
 
-				$('#customer-approval').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#customer-approval').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

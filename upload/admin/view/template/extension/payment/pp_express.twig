@@ -25,7 +25,7 @@
       </div>
       <div class="panel-body">
         {% if retrieve_success == 1 %}
-          <div class="alert alert-success"><i class="fa fa-check"></i> {{ text_retrieve }}</div>
+          <div class="alert alert-success alert-dismissible"><i class="fa fa-check"></i> {{ text_retrieve }}</div>
         {% endif %}
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-pp-express" class="form-horizontal">
           <ul class="nav nav-tabs">

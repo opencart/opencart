@@ -146,7 +146,7 @@ $('#button-category-add').on('click', function() {
 			if (json['success']) {
 				$('#category').load('index.php?route=extension/feed/google_base/category&user_token={{ user_token }}');
 
-				$('#category').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#category').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('input[name=\'category\']').val('');
           $('input[name=\'category_id\']').val('');
@@ -186,7 +186,7 @@ $('#category').delegate('.btn-danger', 'click', function() {
       if (json['success']) {
 				$('#category').load('index.php?route=extension/feed/google_base/category&user_token={{ user_token }}');
 
-				$('#category').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#category').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -232,7 +232,7 @@ $('#button-import').on('click', function() {
         	}
 
         	if (json['success']) {
-        		$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+        		$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
         	}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {

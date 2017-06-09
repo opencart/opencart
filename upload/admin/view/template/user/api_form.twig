@@ -194,7 +194,7 @@ $('#session button').on('click', function(e) {
 				}
 
 				if (json['success']) {
-					$('#tab-session').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#tab-session').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 					$(node).parent().parent().remove();
 				}

@@ -171,7 +171,7 @@ $('#button-verify').click(function() {
     },
     success: function(json) {
       if (json.error === false) {
-        $('#credential-container').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ text_validate_success }}</div>');
+        $('#credential-container').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ text_validate_success }}</div>');
       } else {
         if (json.error_messages) {
           $.each(json.error_messages, function(error_key, error_message) {

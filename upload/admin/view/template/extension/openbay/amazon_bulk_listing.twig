@@ -227,7 +227,7 @@
             if (value.error) {
               element.html('<div class="alert alert-danger alert-dismissible">' + value.error + '</span>');
             } else if (value.success) {
-              element.html('<div class="alert alert-success">' + value.success + '</span>');
+              element.html('<div class="alert alert-success alert-dismissible">' + value.success + '</span>');
             }
 
             $('input[name="product_ids[]"]').removeAttr('checked');

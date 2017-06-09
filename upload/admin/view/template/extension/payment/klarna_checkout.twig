@@ -482,13 +482,13 @@ $(document).on('click', '#button-process-settlement', function() {
 				}
 
 				if (json['orders']) {
-					$('.settlement-alerts').append('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{ text_downloading_settlement }}</div>');
+					$('.settlement-alerts').append('<div class="alert alert-success alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ text_downloading_settlement }}</div>');
 
 					if (json['orders'].length > 0) {
-						$('.settlement-alerts').append('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{ text_processing_orders }}</div>');
+						$('.settlement-alerts').append('<div class="alert alert-success alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ text_processing_orders }}</div>');
 
 						$.each(json['orders'], function(index, value) {
-							$('.settlement-alerts').append('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{ text_processing_order }} ' + value + '</div>');
+							$('.settlement-alerts').append('<div class="alert alert-success alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ text_processing_order }} ' + value + '</div>');
 
 							$.ajax({
 								url: '{{ store_url }}index.php?route=api/order/history&token=' + token + '&order_id=' + encodeURIComponent(value),
@@ -507,7 +507,7 @@ $(document).on('click', '#button-process-settlement', function() {
 									}
 
 									if (json['success']) {
-										$('.settlement-alerts').append('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+										$('.settlement-alerts').append('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 									}
 								},
 								error: function(xhr, ajaxOptions, thrownError) {
@@ -517,7 +517,7 @@ $(document).on('click', '#button-process-settlement', function() {
 						});
 					}
 
-					$('.settlement-alerts').append('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{ text_no_files }}</div>');
+					$('.settlement-alerts').append('<div class="alert alert-success alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ text_no_files }}</div>');
 				}
 			}
 		});

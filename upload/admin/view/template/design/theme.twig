@@ -258,7 +258,7 @@ $('.tab-content').on('click', '.btn-primary', function(e) {
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			
 				$('#history').load('index.php?route=design/theme/history&user_token={{ user_token }}');
 			}
@@ -290,7 +290,7 @@ $('.tab-content').on('click', '.btn-danger', function(e) {
 				}
 
 				if (json['success']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 				
 				var codemirror = $('.tab-content .active .CodeMirror')[0].CodeMirror;
@@ -396,7 +396,7 @@ $('#history').on('click', '.btn-danger', function(e) {
 				}
 
 				if (json['success']) {
-					$('#history').before('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#history').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
 					$('#history').load('index.php?route=design/theme/history&user_token={{ user_token }}');
 				}

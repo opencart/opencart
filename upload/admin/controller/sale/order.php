@@ -1922,7 +1922,7 @@ class ControllerSaleOrder extends Controller {
 				$products = $this->model_sale_order->getOrderProducts($order_id);
 
 				foreach ($products as $product) {
-					$option_weight = '';
+					$option_weight = 0;
 
 					$product_info = $this->model_catalog_product->getProduct($product['product_id']);
 

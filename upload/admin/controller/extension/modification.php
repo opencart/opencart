@@ -429,7 +429,7 @@ class ControllerExtensionModification extends Controller {
 			}
 
 			// Maintance mode back to original settings
-			$this->model_setting_setting->editSettingValue('config', 'config_maintenance', $maintenance);		  
+			$this->model_setting_setting->editSettingValue('config', 'config_maintenance', $maintenance);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

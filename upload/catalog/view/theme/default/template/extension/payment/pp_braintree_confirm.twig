@@ -40,7 +40,7 @@
 
       {% if has_shipping %}
         {% if not shipping_methods %}
-          <div class="warning">{{   }}</div>
+          <div class="warning">{{ error_no_shipping }}</div>
         {% else %}
           <form action="{{ action_shipping }}" method="post" id="shipping_form">
             <div class="panel-body">

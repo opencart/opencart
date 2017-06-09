@@ -713,7 +713,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		}
 
 		$this->session->data['payment_methods'] = $method_data;
-		$this->session->data['payment_method'] = $this->session->data['payment_methods']['pp_express'];
+		$this->session->data['payment_method'] = $method_data['pp_express'];
 
 		$data['action_confirm'] = $this->url->link('extension/payment/pp_express/expressComplete', '', true);
 

@@ -242,6 +242,8 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 			'accept_language' => '',
 			'products' => $products,
 			'vouchers' => array(),
+			'marketing_id' => 0,
+			'tracking' => 0,
 			'totals' => array(
 				array(
 					'code' => 'sub_total',

@@ -76,7 +76,15 @@ class ControllerStartupSeoUrl extends Controller {
 
 		foreach ($data as $key => $value) {
 			if (isset($data['route'])) {
-				if (($data['route'] == 'product/product' && $key == 'product_id') || (($data['route'] == 'product/manufacturer/info' || $data['route'] == 'product/product') && $key == 'manufacturer_id') || ($data['route'] == 'information/information' && $key == 'information_id')) {
+				if (($data['route'] == 'product/product' && $key == 'product_id') || ($data['route'] == 'information/information' && $key == 'information_id')) {
+					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = '" . $this->db->escape($key . '=' . (int)$value) . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+					if ($query->num_rows && $query->row['keyword']) {
+						$url .= '/' . $query->row['keyword'];
+
+						unset($data[$key]);
+					}
+				} elseif (($data['route'] == 'product/manufacturer/info' || $data['route'] == 'product/product') && $key == 'manufacturer_id') {
 					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = '" . $this->db->escape($key . '=' . (int)$value) . "'");
 
 					if ($query->num_rows && $query->row['keyword']) {
@@ -88,7 +96,7 @@ class ControllerStartupSeoUrl extends Controller {
 					$categories = explode('_', $value);
 
 					foreach ($categories as $category) {
-						$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = 'category_id=" . (int)$category . "'");
+						$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = 'category_id=" . (int)$category . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 						if ($query->num_rows && $query->row['keyword']) {
 							$url .= '/' . $query->row['keyword'];

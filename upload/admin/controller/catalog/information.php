@@ -457,7 +457,7 @@ class ControllerCatalogInformation extends Controller {
 		foreach ($this->request->post['keyword'] as $language_id => $keyword) {
 			$url_alias_info = $this->model_catalog_url_alias->getUrlAlias($keyword);
 
-			if ($url_alias_info && isset($this->request->get['information_id']) && $url_alias_info['query'] != 'information_id=' . $this->request->get['category_id']) {
+			if ($url_alias_info && isset($this->request->get['information_id']) && $url_alias_info['query'] != 'information_id=' . $this->request->get['information_id']) {
 				$this->error['keyword'][$language_id] = sprintf($this->language->get('error_keyword'));
 			}
 

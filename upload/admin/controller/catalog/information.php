@@ -316,7 +316,7 @@ class ControllerCatalogInformation extends Controller {
 		if (isset($this->error['keyword'])) {
 			$data['error_keyword'] = $this->error['keyword'];
 		} else {
-			$data['error_keyword'] = '';
+			$data['error_keyword'] = array();
 		}
 
 		$url = '';
@@ -386,9 +386,9 @@ class ControllerCatalogInformation extends Controller {
 		if (isset($this->request->post['keyword'])) {
 			$data['keyword'] = $this->request->post['keyword'];
 		} elseif (!empty($information_info)) {
-			$data['keyword'] = $information_info['keyword'];
+			$data['keyword'] = $this->model_catalog_information->getInformationKeywords($this->request->get['information_id']);
 		} else {
-			$data['keyword'] = '';
+			$data['keyword'] = array();
 		}
 
 		if (isset($this->request->post['bottom'])) {
@@ -453,17 +453,16 @@ class ControllerCatalogInformation extends Controller {
 			}
 		}
 
-		if (utf8_strlen($this->request->post['keyword']) > 0) {
-			$this->load->model('catalog/url_alias');
-
-			$url_alias_info = $this->model_catalog_url_alias->getUrlAlias($this->request->post['keyword']);
+		$this->load->model('catalog/url_alias');
+		foreach ($this->request->post['keyword'] as $language_id => $keyword) {
+			$url_alias_info = $this->model_catalog_url_alias->getUrlAlias($keyword);
 
 			if ($url_alias_info && isset($this->request->get['information_id']) && $url_alias_info['query'] != 'information_id=' . $this->request->get['information_id']) {
-				$this->error['keyword'] = sprintf($this->language->get('error_keyword'));
+				$this->error['keyword'][$language_id] = sprintf($this->language->get('error_keyword'));
 			}
 
 			if ($url_alias_info && !isset($this->request->get['information_id'])) {
-				$this->error['keyword'] = sprintf($this->language->get('error_keyword'));
+				$this->error['keyword'][$language_id] = sprintf($this->language->get('error_keyword'));
 			}
 		}
 

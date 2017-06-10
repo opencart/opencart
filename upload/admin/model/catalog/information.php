@@ -21,8 +21,10 @@ class ModelCatalogInformation extends Model {
 			}
 		}
 
-		if ($data['keyword']) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'information_id=" . (int)$information_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
+		foreach ($data['keyword'] as $language_id => $keyword) {
+			if ($keyword) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'information_id=" . (int)$information_id . "', language_id = '" . (int)$language_id . "', keyword = '" . $this->db->escape($keyword) . "'");
+			}
 		}
 
 		$this->cache->delete('information');
@@ -57,8 +59,10 @@ class ModelCatalogInformation extends Model {
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'information_id=" . (int)$information_id . "'");
 
-		if ($data['keyword']) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'information_id=" . (int)$information_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
+		foreach ($data['keyword'] as $language_id => $keyword) {
+			if ($keyword) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'information_id=" . (int)$information_id . "', language_id = '" . (int)$language_id . "', keyword = '" . $this->db->escape($keyword) . "'");
+			}
 		}
 
 		$this->cache->delete('information');
@@ -171,6 +175,18 @@ class ModelCatalogInformation extends Model {
 		}
 
 		return $information_layout_data;
+	}
+	
+	public function getInformationKeywords($information_id) {
+		$information_keyword_data = array();
+
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE query = 'information_id=" . (int)$information_id . "'");
+
+		foreach ($query->rows as $result) {
+			$information_keyword_data[$result['language_id']] = $result['keyword'];
+		}
+
+		return $information_keyword_data;
 	}
 
 	public function getTotalInformations() {

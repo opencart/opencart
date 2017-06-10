@@ -469,7 +469,7 @@ class ControllerCatalogCategory extends Controller {
 		} elseif (!empty($category_info)) {
 			$data['keyword'] = $this->model_catalog_category->getCategoryKeywords($this->request->get['category_id']);
 		} else {
-			$data['keyword'] = array(;
+			$data['keyword'] = array();
 		}
 
 		if (isset($this->request->post['image'])) {

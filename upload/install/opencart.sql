@@ -3462,7 +3462,7 @@ CREATE TABLE `oc_url_alias` (
 -- Dumping data for table `oc_url_alias`
 --
 
-INSERT INTO `oc_url_alias` (`url_alias_id`, `query`, `keyword`) VALUES
+INSERT INTO `oc_url_alias` (`url_alias_id`, `language_id`, `query`, `keyword`) VALUES
 (824, 1, 'product_id=48', 'ipod-classic'),
 (836, 1, 'category_id=20', 'desktops'),
 (834, 1, 'category_id=26', 'pc'),

@@ -45,8 +45,10 @@ class ModelCatalogCategory extends Model {
 			}
 		}
 
-		if ($data['keyword']) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'category_id=" . (int)$category_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
+		foreach ($data['keyword'] as $language_id => $keyword) {
+			if ($keyword) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'category_id=" . (int)$category_id . "', language_id = '" . (int)$language_id . "', keyword = '" . $this->db->escape($keyword) . "'");
+			}
 		}
 
 		$this->cache->delete('category');
@@ -144,8 +146,10 @@ class ModelCatalogCategory extends Model {
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'category_id=" . (int)$category_id . "'");
 
-		if ($data['keyword']) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'category_id=" . (int)$category_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
+		foreach ($data['keyword'] as $language_id => $keyword) {
+			if ($keyword) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'category_id=" . (int)$category_id . "', language_id = '" . (int)$language_id . "', keyword = '" . $this->db->escape($keyword) . "'");
+			}
 		}
 
 		$this->cache->delete('category');
@@ -303,6 +307,18 @@ class ModelCatalogCategory extends Model {
 		}
 
 		return $category_layout_data;
+	}
+	
+	public function getCategoryKeywords($category_id) {
+		$category_keyword_data = array();
+
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE query = 'category_id=" . (int)$category_id . "'");
+
+		foreach ($query->rows as $result) {
+			$category_keyword_data[$result['language_id']] = $result['keyword'];
+		}
+
+		return $category_keyword_data;
 	}
 
 	public function getTotalCategories() {

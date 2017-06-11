@@ -10,7 +10,7 @@ class ControllerEventTheme extends Controller {
 			$theme = $this->config->get('theme_default_directory');
 		} else {
 			$theme = $this->config->get('config_theme');
-		}		
+		}
 	
 		// If there is a theme override we should get it				
 		$this->load->model('design/theme');

@@ -28,6 +28,7 @@
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
             <li><a href="#tab-data" data-toggle="tab">{{ tab_data }}</a></li>
+            <li><a href="#tab-seo" data-toggle="tab">{{ tab_seo }}</a></li>
             <li><a href="#tab-design" data-toggle="tab">{{ tab_design }}</a></li>
           </ul>
           <div class="tab-content">
@@ -108,17 +109,6 @@
                 <label class="col-sm-2 control-label">{{ entry_store }}</label>
                 <div class="col-sm-10">
                   <div class="well well-sm" style="height: 150px; overflow: auto;">
-                    <div class="checkbox">
-                      <label>
-                        {%  if 0 in category_store %}
-                        <input type="checkbox" name="category_store[]" value="0" checked="checked" />
-                        {{ text_default }}
-                        {% else %}
-                        <input type="checkbox" name="category_store[]" value="0" />
-                        {{ text_default }}
-                        {% endif %}
-                      </label>
-                    </div>
                     {% for store in stores %}
                     <div class="checkbox">
                       <label>
@@ -133,15 +123,6 @@
                     </div>
                     {% endfor %}
                   </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-keyword"><span data-toggle="tooltip" title="{{ help_keyword }}">{{ entry_keyword }}</span></label>
-                <div class="col-sm-10">
-                  <input type="text" name="keyword" value="{{ keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control" />
-                  {% if error_keyword %}
-                  <div class="text-danger">{{ error_keyword }}</div>
-                  {% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -191,6 +172,54 @@
                 </div>
               </div>
             </div>
+            <div class="tab-pane" id="tab-seo">
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-left">{{ entry_keyword }}</td>
+                      <td class="text-left">{{ entry_store }}</td>
+                      <td class="text-left">{{ entry_language }}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% set seo_row = 0 %}
+                  {% for category_seo in category_seos %}
+                    <tr>
+                      <td class="text-left"><input type="text" name="keyword" value="{{ keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control" /></td>
+                      <td class="text-left"><select name="category_seo[{{ seo_row }}][store_id]" class="form-control">
+                          <option value=""></option>
+                          {% for store in stores %}
+                          {% if store.store_id == category_seo.store_id %}
+                          <option value="{{ store.store_id }}" selected="selected">{{ store.name }}</option>
+                          {% else %}
+                          <option value="{{ store.store_id }}">{{ store.name }}</option>
+                          {% endif %}
+                          {% endfor %}
+                        </select></td>
+                      <td class="text-left"><select name="category_seo[{{ seo_row }}][language_id]" class="form-control">
+                          <option value=""></option>
+                          {% for store in stores %}
+                          {% if category_layout[store.store_id] and category_layout[store.store_id] == layout.layout_id %}
+                          <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
+                          {% else %}
+                          <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
+                          {% endif %}
+                          {% endfor %}
+                        </select></td>
+                    </tr>
+                    {% set seo_row = seo_row + 1 %}
+                    {% endfor %}
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="2"></td>
+                      <td class="text-right"><button type="button" onclick="addSeo();" data-toggle="tooltip" title="{{ button_seo_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                    </tr>
+                  </tfoot>                  
+                </table>
+              </div>
+            </div>            
             <div class="tab-pane" id="tab-design">
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
@@ -201,19 +230,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td class="text-left">{{ text_default }}</td>
-                      <td class="text-left"><select name="category_layout[0]" class="form-control">
-                          <option value=""></option>
-                          {% for layout in layouts %}
-                          {% if category_layout[0] and category_layout[0] == layout.layout_id %}
-                          <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
-                          {% else %}
-                          <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
-                          {% endif %}
-                          {% endfor %}
-                        </select></td>
-                    </tr>
+
                     {% for store in stores %}
                     <tr>
                       <td class="text-left">{{ store.name }}</td>

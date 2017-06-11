@@ -28,6 +28,7 @@
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
             <li><a href="#tab-data" data-toggle="tab">{{ tab_data }}</a></li>
+            <li><a href="#tab-seo" data-toggle="tab">{{ tab_seo }}</a></li>
             <li><a href="#tab-design" data-toggle="tab">{{ tab_design }}</a></li>
           </ul>
           <div class="tab-content">
@@ -88,17 +89,6 @@
                 <label class="col-sm-2 control-label">{{ entry_store }}</label>
                 <div class="col-sm-10">
                   <div class="well well-sm" style="height: 150px; overflow: auto;">
-                    <div class="checkbox">
-                      <label>
-                        {%  if 0 in information_store %}
-                        <input type="checkbox" name="information_store[]" value="0" checked="checked" />
-                        {{ text_default }}
-                        {% else %}
-                        <input type="checkbox" name="information_store[]" value="0" />
-                        {{ text_default }}
-                        {% endif %}
-                      </label>
-                    </div>
                     {% for store in stores %}
                     <div class="checkbox">
                       <label>
@@ -113,15 +103,6 @@
                     </div>
                     {% endfor %}
                   </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-keyword"><span data-toggle="tooltip" title="{{ help_keyword }}">{{ entry_keyword }}</span></label>
-                <div class="col-sm-10">
-                  <input type="text" name="keyword" value="{{ keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control" />
-                  {% if error_keyword %}
-                  <div class="text-danger">{{ error_keyword }}</div>
-                  {% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -159,6 +140,25 @@
                 </div>
               </div>
             </div>
+            <div class="tab-pane" id="tab-seo">
+              {% set seo_row = 0 %}
+              {% for store in stores %}
+              <fieldset>
+                <legend>{{ store.name }}</legend>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">{{ entry_keyword }}</label>
+                  <div class="col-sm-10">{% for language in languages %}
+                    <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
+                      <input type="text" name="seo_manufacturer[{{ seo_row }}][keyword]" value="{{ keyword }}" placeholder="{{ entry_keyword }}" class="form-control" />
+                      <input type="hidden" name="seo_manufacturer[{{ seo_row }}][store_id]" value="{{ keyword }}" />
+                      <input type="hidden" name="seo_manufacturer[{{ seo_row }}][language_id]" value="{{ keyword }}" />
+                    </div>
+                    {% set seo_row = seo_row + 1 %}
+                    {% endfor %}</div>
+                </div>
+              </fieldset>
+              {% endfor %}
+            </div>            
             <div class="tab-pane" id="tab-design">
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
@@ -169,19 +169,6 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td class="text-left">{{ text_default }}</td>
-                      <td class="text-left"><select name="information_layout[0]" class="form-control">
-                          <option value=""></option>
-                          {% for layout in layouts %}
-                          {% if information_layout[0] and information_layout[0] == layout.layout_id %}
-                          <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
-                          {% else %}
-                          <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
-                          {% endif %}
-                          {% endfor %}
-                        </select></td>
-                    </tr>
                     {% for store in stores %}
                     <tr>
                       <td class="text-left">{{ store.name }}</td>

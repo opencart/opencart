@@ -30,7 +30,7 @@ class ControllerMailReward extends Controller {
 		$customer_info = $this->model_customer_customer->getCustomer($customer_id);
 
 		if ($customer_info) {
-			$this->load->language('mail/customer');
+			$this->load->language('mail/reward');
 
 			$this->load->model('setting/store');
 
@@ -43,7 +43,7 @@ class ControllerMailReward extends Controller {
 			}
 
 			$data['text_received'] = sprintf($this->language->get('text_received'), $points);
-			$data['text_total'] = sprintf($this->language->get('text_total'), $this->getRewardTotal($customer_id));
+			$data['text_total'] = sprintf($this->language->get('text_total'), $this->model_customer_customer->getRewardTotal($customer_id));
 
 			$mail = new Mail($this->config->get('config_mail_engine'));
 			$mail->protocol = $this->config->get('config_mail_protocol');
@@ -57,7 +57,7 @@ class ControllerMailReward extends Controller {
 			$mail->setTo($customer_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject(sprintf($this->language->get('text_reward_subject'), html_entity_decode($store_name, ENT_QUOTES, 'UTF-8')));
+			$mail->setSubject(sprintf($this->language->get('text_subject'), html_entity_decode($store_name, ENT_QUOTES, 'UTF-8')));
 			$mail->setText($this->load->view('mail/reward', $data));
 			$mail->send();
 		}

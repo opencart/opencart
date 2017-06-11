@@ -58,7 +58,11 @@ class ControllerCommonFooter extends Controller {
 			}
 
 			if (isset($this->request->server['HTTP_HOST']) && isset($this->request->server['REQUEST_URI'])) {
-				$url = 'http://' . $this->request->server['HTTP_HOST'] . $this->request->server['REQUEST_URI'];
+				$protocol = 'http://';
+				if ($this->request->server['HTTPS']) {
+					$protocol = 'https://';
+				}
+				$url = $protocol . $this->request->server['HTTP_HOST'] . $this->request->server['REQUEST_URI'];
 			} else {
 				$url = '';
 			}

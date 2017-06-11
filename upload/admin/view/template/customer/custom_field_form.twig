@@ -24,6 +24,9 @@
       </div>
       <div class="panel-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-custom-field" class="form-horizontal">
+                      <fieldset>
+              <legend>{{ text_custom_field }}</legend>
+          
           <div class="form-group required">
             <label class="col-sm-2 control-label">{{ entry_name }}</label>
             <div class="col-sm-10"> {% for language in languages %}
@@ -353,6 +356,7 @@
               <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
             </div>
           </div>
+          </fieldset>
           <br />
           <div id="custom-field-value">
             <fieldset>

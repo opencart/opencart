@@ -31,12 +31,12 @@ class ModelDesignSeoUrl extends Model {
 			$implode[] = " AND keyword LIKE '" . $this->db->escape($data['filter_keyword']) . "'";
 		}
 		
-		if (!empty($data['filter_language_id'])) {
-			$implode[] = " AND language_id = '" . (int)$data['filter_language_id'] . "'";
-		}
-		
-		if (!empty($data['filter_store_id'])) {
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
 			$implode[] = " AND store_id = '" . (int)$data['filter_store_id'] . "'";
+		}
+				
+		if (!empty($data['filter_language_id']) && $data['filter_language_id'] !== '') {
+			$implode[] = " AND language_id = '" . (int)$data['filter_language_id'] . "'";
 		}
 		
 		if ($implode) {
@@ -92,12 +92,12 @@ class ModelDesignSeoUrl extends Model {
 			$implode[] = " AND keyword LIKE '" . $this->db->escape($data['filter_keyword']) . "'";
 		}
 		
-		if (!empty($data['filter_language_id'])) {
-			$implode[] = " AND language_id = '" . (int)$data['filter_language_id'] . "'";
-		}
-		
-		if (!empty($data['filter_store_id'])) {
+		if (!empty($data['filter_store_id']) && $data['filter_store_id'] !== '') {
 			$implode[] = " AND store_id = '" . (int)$data['filter_store_id'] . "'";
+		}
+				
+		if (!empty($data['filter_language_id']) && $data['filter_language_id'] !== '') {
+			$implode[] = " AND language_id = '" . (int)$data['filter_language_id'] . "'";
 		}
 		
 		if ($implode) {
@@ -109,7 +109,7 @@ class ModelDesignSeoUrl extends Model {
 		return $query->row['total'];
 	}
 	
-	public function getSeoUrlsByKeyword($keyword) {
+	public function getSeoUrlByKeyword($keyword) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE keyword LIKE '" . $this->db->escape($keyword) . "'");
 
 		return $query->row;

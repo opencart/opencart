@@ -421,14 +421,14 @@ class ControllerCatalogInformation extends Controller {
 			$data['sort_order'] = '';
 		}
 		
-		if (isset($this->request->post['seo_url'])) {
-			$data['seo_urls'] = $this->request->post['seo_url'];
+		if (isset($this->request->post['information_seo'])) {
+			$data['information_seos'] = $this->request->post['information_seo'];
 		} elseif (isset($this->request->get['seo_url_id'])) {
 			$this->load->model('design/seo_url');
 			
-			$data['seo_urls'] = $this->model_catalog_seo_url->getSeoUrls(array('filter_query' => 'path=' . $this->request->get['category_id']));
+			$data['information_seos'] = $this->model_catalog_seo_url->getSeoUrls(array('filter_query' => 'path=' . $this->request->get['category_id']));
 		} else {
-			$data['seo_urls'] = array();
+			$data['information_seos'] = array();
 		}
 		
 		if (isset($this->request->post['information_layout'])) {

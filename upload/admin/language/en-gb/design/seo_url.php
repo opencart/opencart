@@ -7,6 +7,7 @@ $_['text_success']     = 'Success: You have modified SEO URL!';
 $_['text_list']        = 'SEO URL List';
 $_['text_add']         = 'Add SEO URL';
 $_['text_edit']        = 'Edit SEO URL';
+$_['text_default']     = 'Default';
 
 // Column
 $_['column_query']     = 'Query';

@@ -22,6 +22,7 @@ $_['text_account']         = 'Account';
 $_['text_address']         = 'Address';
 $_['text_affiliate']       = 'Affiliate';
 $_['text_regex']           = 'Regex';
+$_['text_custom_field']    = 'Custom Field';
 $_['text_value']           = 'Custom Field Values';
 
 // Column

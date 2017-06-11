@@ -18,6 +18,7 @@ $_['text_file']          = 'File';
 $_['text_date']          = 'Date';
 $_['text_datetime']      = 'Date &amp; Time';
 $_['text_time']          = 'Time';
+$_['text_option']        = 'Option';
 $_['text_value']         = 'Option Values';
 
 // Column

@@ -13,7 +13,7 @@
       </ul>
     </div>
   </div>
-  <div class="container-fluid"> {% if error_warning %}
+  <div class="container-fluid">{% if error_warning %}
     <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
@@ -28,19 +28,25 @@
             <label class="col-sm-2 control-label" for="input-query">{{ entry_query }}</label>
             <div class="col-sm-10">
               <input type="text" name="query" value="{{ query }}" placeholder="{{ entry_query }}" id="input-query" class="form-control" />
-            </div>
+              {% if error_query %}
+              <div class="text-danger">{{ error_query }}</div>
+              {% endif %}          
+           
+           </div>
           </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-keyword">{{ entry_keyword }}</label>
             <div class="col-sm-10">
               <input type="text" name="keyword" value="{{ keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control" />
+              {% if error_keyword %}
+              <div class="text-danger">{{ error_keyword }}</div>
+              {% endif %}            
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-store">{{ entry_store }}</label>
             <div class="col-sm-10">
               <select name="store_id" id="input-store" class="form-control">
-                <option value="0">{{ text_default }}</option>
                 {% for store in stores %}
                 {% if store.store_id == store_id %}
                 <option value="{{ store.store_id }}" selected="selected">{{ store.name }}</option>
@@ -54,19 +60,14 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-language">{{ entry_language }}</label>
             <div class="col-sm-10">
-              <select name="store_id" id="input-language" class="form-control">
-                    {% for language in stores %}
-                    {% if language.language_id == language_id %}
-                    
+              <select name="language_id" id="input-language" class="form-control">
+                {% for language in languages %}
+                {% if language.language_id == language_id %}
                 <option value="{{ language.language_id }}" selected="selected">{{ language.name }}</option>
-                
-                    {% else %}
-                    
+                {% else %}
                 <option value="{{ language.language_id }}">{{ language.name }}</option>
-                
-                    {% endif %}
-                    {% endfor %}
-                  
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>

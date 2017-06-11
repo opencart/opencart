@@ -881,25 +881,13 @@
                   {% for product_discount in product_discounts %}
                   <tr id="discount-row{{ discount_row }}">
                     <td class="text-left"><select name="product_discount[{{ discount_row }}][customer_group_id]" class="form-control">
-                        
-
-                          {% for customer_group in customer_groups %}
-                          {% if customer_group.customer_group_id == product_discount.customer_group_id %}
-
-                        
+                        {% for customer_group in customer_groups %}
+                        {% if customer_group.customer_group_id == product_discount.customer_group_id %}
                         <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
-                        
-
-                          {% else %}
-
-                        
+                        {% else %}
                         <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
-                        
-
-                          {% endif %}
-                          {% endfor %}
-
-                      
+                        {% endif %}
+                        {% endfor %}
                       </select></td>
                     <td class="text-right"><input type="text" name="product_discount[{{ discount_row }}][quantity]" value="{{ product_discount.quantity }}" placeholder="{{ entry_quantity }}" class="form-control" /></td>
                     <td class="text-right"><input type="text" name="product_discount[{{ discount_row }}][priority]" value="{{ product_discount.priority }}" placeholder="{{ entry_priority }}" class="form-control" /></td>

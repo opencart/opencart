@@ -268,7 +268,7 @@ class ControllerDesignSeoUrl extends Controller {
 				'seo_url_id' => $result['seo_url_id'],
 				'query'      => $result['query'],
 				'keyword'    => $result['keyword'],
-				'store'      => $result['store'],
+				'store'      => $result['store_id'] ? $result['store'] : $this->language->get('text_default'),
 				'language'   => $result['language'],
 				'edit'       => $this->url->link('design/seo_url/edit', 'user_token=' . $this->session->data['user_token'] . '&seo_url_id=' . $result['seo_url_id'] . $url, true)
 			);
@@ -279,6 +279,7 @@ class ControllerDesignSeoUrl extends Controller {
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_default'] = $this->language->get('text_default');
 
 		$data['column_query'] = $this->language->get('column_query');
 		$data['column_keyword'] = $this->language->get('column_keyword');
@@ -392,7 +393,15 @@ class ControllerDesignSeoUrl extends Controller {
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
+		
+		$this->load->model('setting/store');
 
+		$data['stores'] = $this->model_setting_store->getStores();
+		
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -487,7 +496,21 @@ class ControllerDesignSeoUrl extends Controller {
 				
 		$this->load->model('setting/store');
 
-		$data['stores'] = $this->model_setting_store->getStores();
+		$data['stores'] = array();
+		
+		$data['stores'][] = array(
+			'store_id' => 0,
+			'name'     => $this->language->get('text_default')
+		);
+		
+		$stores = $this->model_setting_store->getStores();
+
+		foreach ($stores as $store) {
+			$data['stores'][] = array(
+				'store_id' => $store['store_id'],
+				'name'     => $store['name']
+			);
+		}
 				
 		if (isset($this->request->post['store_id'])) {
 			$data['store_id'] = $this->request->post['store_id'];

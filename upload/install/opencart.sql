@@ -3556,15 +3556,17 @@ CREATE TABLE `oc_upload` (
 -----------------------------------------------------------
 
 --
--- Table structure for table `oc_url_alias`
+-- Table structure for table `oc_seo_url`
 --
 
-DROP TABLE IF EXISTS `oc_url_alias`;
-CREATE TABLE `oc_url_alias` (
-  `url_alias_id` int(11) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `oc_seo_url`;
+CREATE TABLE `oc_seo_url` (
+  `seo_url_id` int(11) NOT NULL AUTO_INCREMENT,
+  `store_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,  
   `query` varchar(255) NOT NULL,
   `keyword` varchar(255) NOT NULL,
-  PRIMARY KEY (`url_alias_id`),
+  PRIMARY KEY (`seo_url_id`),
   KEY `query` (`query`),
   KEY `keyword` (`keyword`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -3573,7 +3575,7 @@ CREATE TABLE `oc_url_alias` (
 -- Dumping data for table `oc_url_alias`
 --
 
-INSERT INTO `oc_url_alias` (`url_alias_id`, `query`, `keyword`) VALUES
+INSERT INTO `oc_seo_url` (`seo_url_id`, `query`, `keyword`) VALUES
 (824, 'product_id=48', 'ipod-classic'),
 (836, 'category_id=20', 'desktops'),
 (834, 'category_id=26', 'pc'),

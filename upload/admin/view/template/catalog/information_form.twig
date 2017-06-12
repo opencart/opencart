@@ -151,9 +151,10 @@
                     {% for language in languages %}
                     <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
                       <input type="text" name="seo_manufacturer[{{ seo_row }}][keyword]" value="{{ keyword }}" placeholder="{{ entry_keyword }}" class="form-control" />
+                      </div>
                       <input type="hidden" name="seo_manufacturer[{{ seo_row }}][store_id]" value="{% if information_seo %}{{ information_seo[seo_row].store_id }}{% endif %}" />
                       <input type="hidden" name="seo_manufacturer[{{ seo_row }}][language_id]" value="{{ keyword }}" />
-                    </div>
+
                     {% set seo_row = seo_row + 1 %}
                     {% endfor %}
                   </div>

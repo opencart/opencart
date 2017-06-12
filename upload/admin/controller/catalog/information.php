@@ -422,13 +422,13 @@ class ControllerCatalogInformation extends Controller {
 		}
 		
 		if (isset($this->request->post['information_seo'])) {
-			$data['information_seos'] = $this->request->post['information_seo'];
+			$data['information_seo'] = $this->request->post['information_seo'];
 		} elseif (isset($this->request->get['seo_url_id'])) {
 			$this->load->model('design/seo_url');
 			
-			$data['information_seos'] = $this->model_catalog_seo_url->getSeoUrls(array('filter_query' => 'path=' . $this->request->get['category_id']));
+			$data['information_seo'] = $this->model_catalog_seo_url->getSeoUrls(array('filter_query' => 'path=' . $this->request->get['category_id']));
 		} else {
-			$data['information_seos'] = array();
+			$data['information_seo'] = array();
 		}
 		
 		if (isset($this->request->post['information_layout'])) {

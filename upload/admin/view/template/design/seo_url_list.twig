@@ -61,7 +61,7 @@
               </div>
               <div class="form-group">
                 <label class="control-label" for="input-language">{{ entry_language }}</label>
-                <select name="filter_language" id="input-language" class="form-control">
+                <select name="filter_language_id" id="input-language" class="form-control">
                   <option value=""></option>
                   
                   {% for language in languages %}
@@ -131,5 +131,36 @@
       </div>
     </div>
   </div>
+  <script type="text/javascript"><!--
+$('#button-filter').on('click', function() {
+	var url = 'index.php?route=design/seo_url&user_token={{ user_token }}';
+
+	var filter_query = $('input[name=\'filter_query\']').val();
+
+	if (filter_query) {
+		url += '&filter_query=' + encodeURIComponent(filter_query);
+	}
+
+	var filter_keyword = $('input[name=\'filter_keyword\']').val();
+
+	if (filter_keyword) {
+		url += '&filter_keyword=' + encodeURIComponent(filter_keyword);
+	}
+
+	var filter_store_id = $('select[name=\'filter_store_id\']').val();
+
+	if (filter_store_id) {
+		url += '&filter_store_id=' + encodeURIComponent(filter_store_id);
+	}
+	
+	var filter_language_id = $('select[name=\'filter_language_id\']').val();
+
+	if (filter_language_id) {
+		url += '&filter_language_id=' + encodeURIComponent(filter_language_id);
+	}
+
+	location = url;
+});
+//--></script>  
 </div>
 {{ footer }}

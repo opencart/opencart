@@ -297,6 +297,8 @@ class ControllerDesignSeoUrl extends Controller {
 		$data['button_delete'] = $this->language->get('button_delete');
 		$data['button_filter'] = $this->language->get('button_filter');
 
+		$data['user_token'] = $this->session->data['user_token'];
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -550,7 +552,7 @@ class ControllerDesignSeoUrl extends Controller {
 		
 		$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($this->request->post['keyword']);
 
-		if ($seo_url_info && (!isset($this->request->get['seo_url_id']) || (($this->request->get['seo_url_id'] != $seo_url_info['seo_url_id']) && ($this->request->post['store_id'] == $seo_url_info['store_id']) && ($this->request->post['language_id'] == $seo_url_info['language_id'])))) {
+		if ($seo_url_info && (!isset($this->request->get['seo_url_id']) || (($this->request->get['query'] != 'information_id=' . $seo_url_info['seo_url_id']) && ($this->request->post['store_id'] == $seo_url_info['store_id']) && ($this->request->post['language_id'] == $seo_url_info['language_id'])))) {
 			$this->error['keyword'] = $this->language->get('error_exists');
 		}
 			

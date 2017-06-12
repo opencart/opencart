@@ -70,7 +70,7 @@ class ControllerCatalogInformation extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			//$this->response->redirect($this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -426,7 +426,7 @@ class ControllerCatalogInformation extends Controller {
 		} elseif (isset($this->request->get['seo_url_id'])) {
 			$this->load->model('design/seo_url');
 			
-			$data['information_seo'] = $this->model_catalog_seo_url->getSeoUrls(array('filter_query' => 'path=' . $this->request->get['category_id']));
+			$data['information_seo'] = $this->model_design_seo_url->getSeoUrl(array('filter_query' => 'information_id=' . $this->request->get['information_id']));
 		} else {
 			$data['information_seo'] = array();
 		}
@@ -469,17 +469,17 @@ class ControllerCatalogInformation extends Controller {
 			}
 		}
 
-		if (utf8_strlen($this->request->post['keyword']) > 0) {
-			$this->load->model('catalog/url_alias');
-
-			$url_alias_info = $this->model_catalog_url_alias->getUrlAlias($this->request->post['keyword']);
-
-			if ($url_alias_info && isset($this->request->get['information_id']) && $url_alias_info['query'] != 'information_id=' . $this->request->get['information_id']) {
-				$this->error['keyword'] = sprintf($this->language->get('error_keyword'));
-			}
-
-			if ($url_alias_info && !isset($this->request->get['information_id'])) {
-				$this->error['keyword'] = sprintf($this->language->get('error_keyword'));
+		if ($this->request->post['information_seo']) {
+			$this->load->model('design/seo_url');
+			
+			foreach ($this->request->post['information_seo'] as $information_seo) {
+				if (trim($information_seo['keyword'])) {
+					$seo_url_info = $this->model_design_seo_url->getSeoUrl($information_seo['keyword']);
+		
+					if ($seo_url_info && (!isset($this->request->get['information_id']) || (($seo_url_info['query'] != 'information_id=' . $this->request->get['information_id']) && ($this->request->post['store_id'] == $seo_url_info['store_id']) && ($this->request->post['language_id'] == $seo_url_info['language_id'])))) {
+						$this->error['keyword'][$key] = sprintf($this->language->get('error_keyword'));
+					}
+				}
 			}
 		}
 

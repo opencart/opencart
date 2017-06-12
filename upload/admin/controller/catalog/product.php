@@ -1284,14 +1284,14 @@ class ControllerCatalogProduct extends Controller {
 			$data['product_reward'] = array();
 		}
 
-		if (isset($this->request->post['information_seo'])) {
-			$data['information_seo'] = $this->request->post['information_seo'];
+		if (isset($this->request->post['product_seo'])) {
+			$data['product_seo'] = $this->request->post['product_seo'];
 		} elseif (isset($this->request->get['seo_url_id'])) {
 			$this->load->model('design/seo_url');
 			
-			$data['information_seo'] = $this->model_design_seo_url->getSeoUrls(array('filter_query' => 'product_id=' . $this->request->get['product_id']));
+			$data['product_seo'] = $this->model_design_seo_url->getSeoUrl(array('filter_query' => 'product_id=' . $this->request->get['product_id']));
 		} else {
-			$data['information_seo'] = array();
+			$data['product_seo'] = array();
 		}
 
 		if (isset($this->request->post['product_layout'])) {

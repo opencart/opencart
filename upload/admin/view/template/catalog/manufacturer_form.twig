@@ -69,21 +69,30 @@
             </div>
             <div class="tab-pane" id="tab-seo">
               <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_keyword }}</div>
-              {% set seo_row = 0 %}
-              {% for store in stores %}
-              <fieldset>
-                <legend>{{ store.name }}</legend>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ entry_keyword }}</label>
-                  <div class="col-sm-10">{% for language in languages %}
-                    <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
-                      <input type="text" name="seo_manufacturer[{{ seo_row }}][keyword]" value="{{ keyword }}" placeholder="{{ entry_keyword }}" class="form-control" />
-                    </div>
-                    {% set seo_row = seo_row + 1 %}
-                    {% endfor %}</div>
-                </div>
-              </fieldset>
-              {% endfor %}
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-left">{{ entry_store }}</td>
+                      <td class="text-left">{{ entry_keyword }}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  
+                  {% for store in stores %}
+                  <tr>
+                    <td class="text-left">{{ store.name }}</td>
+                    <td class="text-left">{% for language in languages %}
+                      <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
+                        <input type="text" name="information_seo[{{ store.store_id }}][{{ language.language_id }}][keyword]" value="{% if information_seo %}{{ information_seo[store.store_id][language.language_id].keyword }}{% endif %}" placeholder="{{ entry_keyword }}" class="form-control" />
+                      </div>
+                      {% endfor %}</td>
+                  </tr>
+                  {% endfor %}
+                    </tbody>
+                  
+                </table>
+              </div>
             </div>
           </div>
         </form>

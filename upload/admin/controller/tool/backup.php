@@ -90,7 +90,7 @@ class ControllerToolBackup extends Controller {
 			fseek($handle, $position, SEEK_SET);
 			
 			while (!feof($handle) && ($i < 100)) {
-				$current_position = ftell($handle);
+				$position = ftell($handle);
 
 				$line = fgets($handle, 1000000);
 				
@@ -101,7 +101,7 @@ class ControllerToolBackup extends Controller {
 				}
 
 				if ($i > 0 && (substr($line, 0, 24) == 'TRUNCATE TABLE `oc_user`' || substr($line, 0, 30) == 'TRUNCATE TABLE `oc_user_group`')) {
-					fseek($handle, $current_position, SEEK_SET);
+					fseek($handle, $position, SEEK_SET);
 
 					break;
 				}

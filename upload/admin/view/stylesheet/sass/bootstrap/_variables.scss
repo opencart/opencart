@@ -151,7 +151,7 @@ $btn-font-weight:                normal !default;
 
 $btn-default-color:              #333 !default;
 $btn-default-bg:                 #fff !default;
-$btn-default-bg-lighter:         lighten($btn-default-bg, 10%) !default;
+$btn-default-bg-lighter:         $btn-default-bg !default;
 $btn-default-border:             #ccc !default;
 
 $btn-primary-color:              #fff !default;
@@ -161,27 +161,27 @@ $btn-primary-border:             $btn-primary-bg !default;
 
 $btn-success-color:              #fff !default;
 $btn-success-bg:                 $brand-success !default;
-$btn-success-bg-lighter:         #53b953 !default;
-$btn-success-border:             $btn-success-bg !default;
+$btn-success-bg-lighter:         $btn-success-bg !default;
+$btn-success-border:             darken($btn-success-bg, 8%) !default;
 
 $btn-info-color:                 #fff !default;
 $btn-info-bg:                    $brand-info !default;
-$btn-info-bg-lighter:            #5ec1df !default;
-$btn-info-border:                $btn-info-bg !default;
+$btn-info-bg-lighter:            $brand-info !default;
+$btn-info-border:                darken($btn-info-bg, 8%) !default;
 
 $btn-warning-color:              #fff !default;
 $btn-warning-bg:                 $brand-warning !default;
-$btn-warning-bg-lighter:         #f4b253 !default;
-$btn-warning-border:             $btn-warning-bg !default;
+$btn-warning-bg-lighter:         $btn-warning-bg !default;
+$btn-warning-border:             darken($btn-warning-bg, 8%) !default;
 
 $btn-danger-color:               #fff !default;
 $btn-danger-bg:                  $brand-danger !default;
-$btn-danger-bg-lighter:          #e76858 !default;
-$btn-danger-border:              $btn-danger-bg !default;
+$btn-danger-bg-lighter:          $btn-danger-bg !default;
+$btn-danger-border:              darken($btn-danger-bg, 8%) !default;
 
 $btn-ghost-dark-color:           #000 !default;
 $btn-ghost-dark-bg:              transparent !default;
-$btn-ghost-dark-bg-lighter:      lighten($btn-ghost-dark-bg, 10%) !default;
+$btn-ghost-dark-bg-lighter:      $btn-ghost-dark-bg !default;
 $btn-ghost-dark-border:          $btn-ghost-dark-color !default;
 
 $btn-link-disabled-color:        $gray-light !default;
@@ -512,22 +512,30 @@ $jumbotron-heading-font-size:    ceil(($font-size-base * 4.5)) !default;
 //
 //## Define colors for form feedback states and, by default, alerts.
 
-$state-success-text:             $brand-success !default;
-$state-success-bg:               lighten($brand-success, 35%) !default;
-$state-success-border:           lighten($brand-success, 30%) !default;
+// $state-success-text:             $brand-success !default;
+// $state-success-bg:               lighten($brand-success, 35%) !default;
+// $state-success-border:           lighten($brand-success, 30%) !default;
+$state-success-text:             #3c763d !default;
+$state-success-bg:               #dff0d8 !default;
+$state-success-border:           #d6e9c6 !default;
 
 $state-info-text:                #31708f !default;
 $state-info-bg:                  #d9edf7 !default;
 $state-info-border:              darken(adjust-hue($state-info-bg, -10), 7%) !default;
 
-$state-warning-text:             $brand-warning !default;
-$state-warning-bg:               lighten($brand-warning, 40%) !default;
-$state-warning-border:           lighten($brand-warning, 22%) !default;
+// $state-warning-text:             $brand-warning !default;
+// $state-warning-bg:               lighten($brand-warning, 40%) !default;
+// $state-warning-border:           lighten($brand-warning, 22%) !default;
+$state-warning-text:             #8a6d3b !default;
+$state-warning-bg:               #fcf8e3 !default;
+$state-warning-border:           #faebcc !default;
 
-$state-danger-text:              $brand-danger !default;
-$state-danger-bg:                lighten($brand-danger, 28%) !default;
-$state-danger-border:            lighten($brand-danger, 25%) !default;
-
+//$state-danger-text:            $brand-danger !default;
+//$state-danger-bg:              lighten($brand-danger, 28%) !default;
+//$state-danger-border:          lighten($brand-danger, 25%) !default;
+$state-danger-text:              #a94442 !default;
+$state-danger-bg:                #f2dede !default;
+$state-danger-border:            #ebccd1 !default;
 
 //== Tooltips
 //

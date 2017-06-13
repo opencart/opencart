@@ -2437,8 +2437,9 @@ a.btn.disabled, fieldset[disabled] a.btn {
 
 .btn-default {
   color: #333;
-  background-color: #fff;
-  border-color: #ccc;}
+  background-color: #eee;
+  background: linear-gradient(#fff, #eee);
+  border-color: #ccc; }
   .btn-default:focus, .btn-default.focus {
     color: #333;
     background-color: #e6e6e6;
@@ -2527,8 +2528,8 @@ a.btn.disabled, fieldset[disabled] a.btn {
 .btn-info {
   color: #fff;
   background-color: #5ec1df;
-  background: linear-gradient(#5ec1df, #47b8da);
-  border-color: #47b8da; }
+  background: linear-gradient(#3AC9F0, #00a9df);
+  border-color: #00a9df; }
   .btn-info:focus, .btn-info.focus {
     color: #fff;
     background-color: #42b6d9;
@@ -4342,6 +4343,7 @@ a.list-group-item-danger, button.list-group-item-danger {
   .well blockquote {
     border-color: #dcdcdc;
     border-color: rgba(0, 0, 0, .15); }
+
 
 .well-lg {
   padding: 24px;

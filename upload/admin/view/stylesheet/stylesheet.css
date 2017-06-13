@@ -17,7 +17,7 @@ a {
 }
 .page-header {
 	vertical-align: middle;
-	margin: 15px 0;
+	margin: 20px 0 15px 0;
 	padding: 0;
 	border-bottom: 1px solid #e9e9e9;
 }
@@ -895,6 +895,10 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 }
 .list-check.list-color-blue li::before {
 	color: #02afe9;
+}
+
+.well.filter {
+	background-color: #ffffff;
 }
 
 

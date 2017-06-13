@@ -3,9 +3,10 @@
 // Easily pump out default styles, as well as :hover, :focus, :active,
 // and disabled options for all buttons
 
-@mixin button-variant($color, $background, $border) {
+@mixin button-variant($color, $background, $background-lighter, $border) {
   color: $color;
   background-color: $background;
+  background: linear-gradient($background-lighter, $background);
   border-color: $border;
 
   &:focus,

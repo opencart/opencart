@@ -1,7 +1,7 @@
 <nav id="column-left">
   <div id="profile">
-    <div> {% if image %} <img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" class="img-circle" /> {% else %} <i class="fa fa-opencart"></i> {% endif %} </div>
-    <div>
+    <div class="thumbnail"> {% if image %} <img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" class="img-circle" /> {% else %} <div><i class="fa fa-opencart"></i></div>{% endif %}  </div>
+    <div class="profile">
       <h4>{{ firstname }} {{ lastname }}</h4>
       <small>{{ user_group }}</small></div>
   </div>

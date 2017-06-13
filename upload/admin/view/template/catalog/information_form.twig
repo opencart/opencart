@@ -90,7 +90,7 @@
                         {% else %}
                         <input type="checkbox" name="information_store[]" value="{{ store.store_id }}" />
                         {{ store.name }}
-                        {% endif %} </label>
+                        {% endif %}</label>
                     </div>
                     {% endfor %}</div>
                 </div>
@@ -99,12 +99,12 @@
                 <label class="col-sm-2 control-label" for="input-bottom"><span data-toggle="tooltip" title="{{ help_bottom }}">{{ entry_bottom }}</span></label>
                 <div class="col-sm-10">
                   <div class="checkbox">
-                    <label> {% if bottom %}
+                    <label>{% if bottom %}
                       <input type="checkbox" name="bottom" value="1" checked="checked" id="input-bottom" />
                       {% else %}
                       <input type="checkbox" name="bottom" value="1" id="input-bottom" />
                       {% endif %}
-                      &nbsp; </label>
+                      &nbsp;</label>
                   </div>
                 </div>
               </div>
@@ -148,8 +148,12 @@
                       <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
                         <input type="text" name="information_seo[{{ seo_row }}][keyword]" value="{% if information_seo %}{{ information_seo[seo_row].keyword }}{% endif %}" placeholder="{{ entry_keyword }}" class="form-control" />
                       </div>
-                      <input type="hidden" name="information_seo[{{ seo_row }}][store_id]" value="{{ store.store_id }}" class="form-control" />
-                      <input type="hidden" name="information_seo[{{ seo_row }}][language_id]" value="{{ language.language_id }}" class="form-control" />
+                      
+                      <input type="hidden" name="information_seo[{{ seo_row }}][store_id]" value="{{ store.store_id }}" />
+                      <input type="hidden" name="information_seo[{{ seo_row }}][language_id]" value="{{ language.language_id }}" />
+                      {% if error_keyword[seo_row] %}
+                      <div class="text-danger">{{ error_keyword[seo_row] }}</div>
+                      {% endif %} 
                       {% set seo_row = seo_row + 1 %}
                       {% endfor %}</td>
                   </tr>

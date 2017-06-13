@@ -472,9 +472,9 @@ class ControllerCatalogInformation extends Controller {
 		if ($this->request->post['information_seo']) {
 			$this->load->model('design/seo_url');
 			
-			foreach ($this->request->post['information_seo'] as $information_seo) {
+			foreach ($this->request->post['information_seo'] as $key => $information_seo) {
 				if (trim($information_seo['keyword'])) {
-					$seo_url_info = $this->model_design_seo_url->getSeoUrl($information_seo['keyword']);
+					$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($information_seo['keyword']);
 		
 					if ($seo_url_info && (!isset($this->request->get['information_id']) || (($seo_url_info['query'] != 'information_id=' . $this->request->get['information_id']) && ($information_seo['store_id'] == $seo_url_info['store_id']) && ($information_seo['language_id'] == $seo_url_info['language_id'])))) {
 						$this->error['keyword'][$key] = sprintf($this->language->get('error_keyword'));

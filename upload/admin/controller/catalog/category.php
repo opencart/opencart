@@ -592,7 +592,7 @@ class ControllerCatalogCategory extends Controller {
 			
 			foreach ($this->request->post['category_seo'] as $key => $category_seo) {
 				if (trim($category_seo['keyword'])) {
-					$seo_url_info = $this->model_design_seo_url->getSeoUrl($category_seo['keyword']);
+					$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($category_seo['keyword']);
 		
 					if ($seo_url_info && (!isset($this->request->get['category_id']) || (($seo_url_info['query'] != 'category_id=' . $this->request->get['category_id']) && ($category_seo['store_id'] == $seo_url_info['store_id']) && ($category_seo['language_id'] == $seo_url_info['language_id'])))) {
 						$this->error['keyword'][$key] = sprintf($this->language->get('error_keyword'));

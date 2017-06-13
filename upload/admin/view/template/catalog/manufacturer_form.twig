@@ -86,8 +86,11 @@
                       <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
                         <input type="text" name="manufacturer_seo[{{ seo_row }}][keyword]" value="{% if manufacturer_seo %}{{ manufacturer_seo[seo_row].keyword }}{% endif %}" placeholder="{{ entry_keyword }}" class="form-control" />
                       </div>
-                      <input type="hidden" name="manufacturer_seo[{{ seo_row }}][store_id]" value="{{ store.store_id }}" class="form-control" />
-                      <input type="hidden" name="manufacturer_seo[{{ seo_row }}][language_id]" value="{{ language.language_id }}" class="form-control" />
+                      <input type="hidden" name="manufacturer_seo[{{ seo_row }}][store_id]" value="{{ store.store_id }}" />
+                      <input type="hidden" name="manufacturer_seo[{{ seo_row }}][language_id]" value="{{ language.language_id }}" />
+                      {% if error_keyword[seo_row] %}
+                      <div class="text-danger">{{ error_keyword[seo_row] }}</div>
+                      {% endif %} 
                       {% set seo_row = seo_row + 1 %}
                       {% endfor %}</td>
                   </tr>

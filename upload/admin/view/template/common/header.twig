@@ -34,24 +34,26 @@
 <body>
 <div id="container">
 <header id="header" class="navbar navbar-static-top">
-  <div class="navbar-header"> {% if logged %} <a type="button" id="button-menu" class="pull-left"><i class="fa fa-indent fa-lg"></i></a> {% endif %} <a href="{{ home }}" class="navbar-brand"><img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}" /></a></div>
+  <div class="navbar-header"><button type="button" id="button-menu" class="pull-left"><i class="fa fa-indent fa-lg"></i></button> <a href="{{ home }}" class="navbar-brand"><img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}" /></a></div>
   {% if logged %}
-  <ul class="nav pull-right">
-    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">
-    
-    
-    
-    <i class="fa fa-cog fa-lg"></i>
-    
-      <div id="profile">
-    <div class="thumbnail">{% if image %}<img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" class="img-circle" /> {% else %} <div><i class="fa fa-opencart"></i></div>{% endif %}  </div>
-    <div class="profile">
-      <h4>{{ firstname }} {{ lastname }}</h4>
-      <small>{{ user_group }}</small></div>
-  </div>
-    
-    
-    </a>
+  <ul class="nav navbar-nav navbar-right">
+    <li class="dropdown">
+      
+      <div class="pull-right">
+        <div class="pull-left">
+        <img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" class="img-circle" />
+        </div>
+
+        
+          <div>{{ firstname }} {{ lastname }}</div>
+          <small>{{ user_group }}</small> 
+          
+          
+          
+      </div>
+      
+      
+      
       <ul class="dropdown-menu dropdown-menu-right">
         <li><a href="{{ profile }}">{{ text_profile }}</a></li>
         <li role="separator" class="divider"></li>
@@ -68,5 +70,4 @@
     </li>
     <li><a href="{{ logout }}"><span class="hidden-xs hidden-sm hidden-md">{{ text_logout }}</span> <i class="fa fa-sign-out fa-lg"></i></a></li>
   </ul>
-  {% endif %}
-</header>
+  {% endif %} </header>

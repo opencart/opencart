@@ -213,7 +213,7 @@ $('select[name="route"]').on('change', function() {
 			html = '<option value=""></option>';
 			
 			if (json) {
-				for (i = 0; i < json[i]['key'].length; i++) {
+				for (i = 0; i < json.length; i++) {
 					translation[json[i]['key']] = json[i]['value'];
 					
 					if (json[i]['key'] == '{{ key }}') {

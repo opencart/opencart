@@ -2467,7 +2467,7 @@ a.btn.disabled, fieldset[disabled] a.btn {
 .btn-primary {
   color: #fff;
   background-color: #1a7ab9;
-  background: linear-gradient(#2696e0, #1a7ab9);
+  background: linear-gradient(#1e8cd3, #1a7ab9);
   border-color: #1a7ab9; }
   .btn-primary:focus, .btn-primary.focus {
     color: #fff;
@@ -2497,7 +2497,7 @@ a.btn.disabled, fieldset[disabled] a.btn {
 .btn-success {
   color: #fff;
   background-color: #4cb64c;
-  background: linear-gradient(#70c570, #4cb64c);
+  background: linear-gradient(#53b953, #4cb64c);
   border-color: #4cb64c; }
   .btn-success:focus, .btn-success.focus {
     color: #fff;
@@ -2527,7 +2527,7 @@ a.btn.disabled, fieldset[disabled] a.btn {
 .btn-info {
   color: #fff;
   background-color: #00a9df;
-  background: linear-gradient(#13c6ff, #00a9df);
+  background: linear-gradient(#5ec1df, #00a9df);
   border-color: #00a9df; }
   .btn-info:focus, .btn-info.focus {
     color: #fff;
@@ -2557,7 +2557,7 @@ a.btn.disabled, fieldset[disabled] a.btn {
 .btn-warning {
   color: #fff;
   background-color: #f3a638;
-  background: linear-gradient(#f6bc68, #f3a638);
+  background: linear-gradient(#f4b253, #f3a638);
   border-color: #f3a638; }
   .btn-warning:focus, .btn-warning.focus {
     color: #fff;
@@ -2587,7 +2587,7 @@ a.btn.disabled, fieldset[disabled] a.btn {
 .btn-danger {
   color: #fff;
   background-color: #e3503e;
-  background: linear-gradient(#e9786b, #e3503e);
+  background: linear-gradient(#e76858, #e3503e);
   border-color: #e3503e; }
   .btn-danger:focus, .btn-danger.focus {
     color: #fff;

@@ -552,7 +552,7 @@ class ControllerDesignSeoUrl extends Controller {
 		
 		$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($this->request->post['keyword']);
 
-		if ($seo_url_info && (!isset($this->request->get['seo_url_id']) || (($this->request->get['query'] != 'information_id=' . $seo_url_info['seo_url_id']) && ($this->request->post['store_id'] == $seo_url_info['store_id']) && ($this->request->post['language_id'] == $seo_url_info['language_id'])))) {
+		if ($seo_url_info && (!isset($this->request->get['seo_url_id']) || (($this->request->post['query'] != $seo_url_info['query']) && ($this->request->post['store_id'] == $seo_url_info['store_id']) && ($this->request->post['language_id'] == $seo_url_info['language_id'])))) {
 			$this->error['keyword'] = $this->language->get('error_exists');
 		}
 			

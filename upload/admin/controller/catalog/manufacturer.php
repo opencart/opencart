@@ -409,8 +409,8 @@ class ControllerCatalogManufacturer extends Controller {
 		
 		if (isset($this->request->post['manufacturer_seo'])) {
 			$data['manufacturer_seo'] = $this->request->post['manufacturer_seo'];
-		} elseif (isset($this->request->get['seo_url_id'])) {
-			$data['manufacturer_seo'] = $this->model_design_seo_url->getSeoUrl(array('filter_query' => 'manufacturer_id=' . $this->request->get['manufacturer_id']));
+		} elseif (isset($this->request->get['manufacturer_id'])) {
+			$data['manufacturer_seo'] = $this->model_design_seo_url->getSeoUrls(array('filter_query' => 'manufacturer_id=' . $this->request->get['manufacturer_id']));
 		} else {
 			$data['manufacturer_seo'] = array();
 		}
@@ -431,13 +431,17 @@ class ControllerCatalogManufacturer extends Controller {
 			$this->error['name'] = $this->language->get('error_name');
 		}
 
-		if (utf8_strlen($this->request->post['keyword']) > 0) {
-			$this->load->model('catalog/url_alias');
-
-			$url_alias_info = $this->model_catalog_url_alias->getUrlAlias($this->request->post['keyword']);
-
-			if ($url_alias_info && isset($this->request->get['manufacturer_id']) && $url_alias_info['query'] != 'manufacturer_id=' . $this->request->get['manufacturer_id']) {
-				$this->error['keyword'] = sprintf($this->language->get('error_keyword'));
+		if ($this->request->post['manufacturer_seo']) {
+			$this->load->model('design/seo_url');
+			
+			foreach ($this->request->post['manufacturer_seo'] as $manufacturer_seo) {
+				if (trim($manufacturer_seo['keyword'])) {
+					$seo_url_info = $this->model_design_seo_url->getSeoUrl($manufacturer_seo['keyword']);
+		
+					if ($seo_url_info && (!isset($this->request->get['manufacturer_id']) || (($seo_url_info['query'] != 'manufacturer_id=' . $this->request->get['manufacturer_id']) && ($manufacturer_seo['store_id'] == $seo_url_info['store_id']) && ($manufacturer_seo['language_id'] == $seo_url_info['language_id'])))) {
+						$this->error['keyword'][$key] = sprintf($this->language->get('error_keyword'));
+					}
+				}
 			}
 		}
 

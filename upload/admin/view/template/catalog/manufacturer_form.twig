@@ -78,19 +78,21 @@
                     </tr>
                   </thead>
                   <tbody>
-                  
+                  {% set seo_row = 0 %}
                   {% for store in stores %}
                   <tr>
                     <td class="text-left">{{ store.name }}</td>
                     <td class="text-left">{% for language in languages %}
                       <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
-                        <input type="text" name="manufacturer_seo[{{ store.store_id }}][{{ language.language_id }}][keyword]" value="{% if manufacturer_seo %}{{ manufacturer_seo[store.store_id][language.language_id].keyword }}{% endif %}" placeholder="{{ entry_keyword }}" class="form-control" />
+                        <input type="text" name="manufacturer_seo[{{ seo_row }}][keyword]" value="{% if manufacturer_seo %}{{ manufacturer_seo[seo_row].keyword }}{% endif %}" placeholder="{{ entry_keyword }}" class="form-control" />
                       </div>
+                      <input type="hidden" name="manufacturer_seo[{{ seo_row }}][store_id]" value="{{ store.store_id }}" class="form-control" />
+                      <input type="hidden" name="manufacturer_seo[{{ seo_row }}][language_id]" value="{{ language.language_id }}" class="form-control" />
+                      {% set seo_row = seo_row + 1 %}
                       {% endfor %}</td>
                   </tr>
                   {% endfor %}
-                    </tbody>
-                  
+                  </tbody>
                 </table>
               </div>
             </div>

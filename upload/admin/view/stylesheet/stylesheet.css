@@ -4,10 +4,6 @@ html, body {
 	margin: 0;
 	padding: 0;
 	font-family: 'Open Sans', sans-serif;
-<<<<<<< HEAD
-=======
-
->>>>>>> ad460446ef10b52a73678a4b22d3374cd33f7018
 	color: #666666;
 	text-rendering: optimizeLegibility;
 	background: #f6f6f6;
@@ -15,9 +11,7 @@ html, body {
 h1, h2, h3, h4, h5, h6, p {
 	margin-top: 0;
 }
-a {
-	color: #4c4d5a;
-}
+
 .page-header {
 	vertical-align: middle;
 	margin: 20px 0 15px 0;

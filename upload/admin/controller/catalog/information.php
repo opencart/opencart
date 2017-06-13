@@ -425,8 +425,8 @@ class ControllerCatalogInformation extends Controller {
 		
 		if (isset($this->request->post['information_seo'])) {
 			$data['information_seo'] = $this->request->post['information_seo'];
-		} elseif (isset($this->request->get['seo_url_id'])) {
-			$data['information_seo'] = $this->model_design_seo_url->getSeoUrl(array('filter_query' => 'information_id=' . $this->request->get['information_id']));
+		} elseif (isset($this->request->get['information_id'])) {
+			$data['information_seo'] = $this->model_design_seo_url->getSeoUrls(array('filter_query' => 'information_id=' . $this->request->get['information_id']));
 		} else {
 			$data['information_seo'] = array();
 		}
@@ -476,7 +476,7 @@ class ControllerCatalogInformation extends Controller {
 				if (trim($information_seo['keyword'])) {
 					$seo_url_info = $this->model_design_seo_url->getSeoUrl($information_seo['keyword']);
 		
-					if ($seo_url_info && (!isset($this->request->get['information_id']) || (($seo_url_info['query'] != 'information_id=' . $this->request->get['information_id']) && ($this->request->post['store_id'] == $seo_url_info['store_id']) && ($this->request->post['language_id'] == $seo_url_info['language_id'])))) {
+					if ($seo_url_info && (!isset($this->request->get['information_id']) || (($seo_url_info['query'] != 'information_id=' . $this->request->get['information_id']) && ($information_seo['store_id'] == $seo_url_info['store_id']) && ($information_seo['language_id'] == $seo_url_info['language_id'])))) {
 						$this->error['keyword'][$key] = sprintf($this->language->get('error_keyword'));
 					}
 				}

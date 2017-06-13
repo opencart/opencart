@@ -530,12 +530,12 @@ $state-warning-text:             #8a6d3b !default;
 $state-warning-bg:               #fcf8e3 !default;
 $state-warning-border:           #faebcc !default;
 
-//$state-danger-text:            $brand-danger !default;
-//$state-danger-bg:              lighten($brand-danger, 28%) !default;
-//$state-danger-border:          lighten($brand-danger, 25%) !default;
-$state-danger-text:              #a94442 !default;
-$state-danger-bg:                #f2dede !default;
-$state-danger-border:            #ebccd1 !default;
+$state-danger-text:            $brand-danger !default;
+$state-danger-bg:              lighten($brand-danger, 28%) !default;
+$state-danger-border:          lighten($brand-danger, 25%) !default;
+//$state-danger-text:              #a94442 !default;
+//$state-danger-bg:                #f2dede !default;
+//$state-danger-border:            #ebccd1 !default;
 
 //== Tooltips
 //

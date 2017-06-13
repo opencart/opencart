@@ -144,7 +144,7 @@ class ModelCatalogCategory extends Model {
 		if (isset($data['category_seo'])) {
 			foreach ($data['category_seo'] as $category_seo) {
 				if ($category_seo['keyword']) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET category_id = '" . (int)$category_id . "', store_id = '" . (int)$category_seo['store_id'] . "', language_id = '" . (int)$category_seo['language_id'] . "', query = 'category_id=" . (int)$category_id . "', keyword = '" . $this->db->escape($category_seo['keyword']) . "'");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET store_id = '" . (int)$category_seo['store_id'] . "', language_id = '" . (int)$category_seo['language_id'] . "', query = 'category_id=" . (int)$category_id . "', keyword = '" . $this->db->escape($category_seo['keyword']) . "'");
 				}
 			}
 		}

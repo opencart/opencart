@@ -634,6 +634,11 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	margin-top: 54px;
 	margin-bottom: 44px;
 }
+#extension-list hr {
+    margin-top: 10px;
+    margin-bottom: 0px;
+    border-top: 1px solid #efefef;
+}
 #extension-list section {
 	border: 1px solid #ddd;
 }
@@ -650,10 +655,8 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 #extension-list > .row {
 	margin-top: 40px;
 }
- @media screen and (max-width: 991px) {
-#extension-list > .row > div + div {
-	margin-top: 30px;
-}
+#extension-list > .row > div {
+	margin-bottom: 30px;
 }
 #extension-list .extension-preview {
 	min-height: 150px;

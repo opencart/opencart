@@ -1060,26 +1060,56 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-seo">
-              <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_keyword }}</div>
+              <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_keyword }}</div>            
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                   <thead>
                     <tr>
-                      <td class="text-left">{{ entry_store }}</td>
                       <td class="text-left">{{ entry_keyword }}</td>
+                      <td class="text-left">{{ entry_store }}</td>
+                      <td class="text-left">{{ entry_language }}</td>
                     </tr>
                   </thead>
                   <tbody>
                   
-                  {% for store in stores %}
+                  {% set seo_row = 0 %}
+                  {% for product_seo in category_seos %}
                   <tr>
-                    <td class="text-left">{{ store.name }}</td>
-                    <td class="text-left">{% for language in languages %}
-                      <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
-                        <input type="text" name="information_seo[{{ store.store_id }}][{{ language.language_id }}][keyword]" value="{% if information_seo %}{{ information_seo[store.store_id][language.language_id].keyword }}{% endif %}" placeholder="{{ entry_keyword }}" class="form-control" />
-                      </div>
-                      {% endfor %}</td>
+                    <td class="text-left"><input type="text" name="keyword" value="{{ keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control" /></td>
+                    <td class="text-left"><select name="category_seo[{{ seo_row }}][store_id]" class="form-control">
+                        <option value=""></option>
+                        
+                          {% for store in stores %}
+                          {% if store.store_id == category_seo.store_id %}
+                          
+                        <option value="{{ store.store_id }}" selected="selected">{{ store.name }}</option>
+                        
+                          {% else %}
+                          
+                        <option value="{{ store.store_id }}">{{ store.name }}</option>
+                        
+                          {% endif %}
+                          {% endfor %}
+                        
+                      </select></td>
+                    <td class="text-left"><select name="category_seo[{{ seo_row }}][language_id]" class="form-control">
+                        <option value=""></option>
+                        
+                          {% for store in stores %}
+                          {% if category_layout[store.store_id] and category_layout[store.store_id] == layout.layout_id %}
+                          
+                        <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
+                        
+                          {% else %}
+                          
+                        <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
+                        
+                          {% endif %}
+                          {% endfor %}
+                        
+                      </select></td>
                   </tr>
+                  {% set seo_row = seo_row + 1 %}
                   {% endfor %}
                     </tbody>
                   

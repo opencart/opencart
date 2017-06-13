@@ -531,11 +531,11 @@ class ControllerCatalogCategory extends Controller {
 			$data['status'] = true;
 		}
 		
+		$this->load->model('design/seo_url');
+		
 		if (isset($this->request->post['seo_url'])) {
 			$data['category_seo'] = $this->request->post['seo_url'];
 		} elseif (isset($this->request->get['category_id'])) {
-			$this->load->model('design/seo_url');
-			
 			$data['category_seo'] = $this->model_design_seo_url->getSeoUrl(array('filter_query' => 'category_id=' . $this->request->get['category_id']));
 		} else {
 			$data['category_seo'] = array();

@@ -21,17 +21,6 @@ class ControllerCommonHeader extends Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 		
-		$data['text_order'] = $this->language->get('text_order');
-		$data['text_processing_status'] = $this->language->get('text_processing_status');
-		$data['text_complete_status'] = $this->language->get('text_complete_status');
-		$data['text_return'] = $this->language->get('text_return');
-		$data['text_customer'] = $this->language->get('text_customer');
-		$data['text_online'] = $this->language->get('text_online');
-		$data['text_approval'] = $this->language->get('text_approval');
-		$data['text_affiliate'] = $this->language->get('text_affiliate');
-		$data['text_product'] = $this->language->get('text_product');
-		$data['text_stock'] = $this->language->get('text_stock');
-		$data['text_review'] = $this->language->get('text_review');
 		$data['text_store'] = $this->language->get('text_store');
 		$data['text_profile'] = $this->language->get('text_profile');
 		$data['text_profile_edit'] = $this->language->get('text_profile_edit');
@@ -52,57 +41,30 @@ class ControllerCommonHeader extends Controller {
 
 			$data['home'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true);
 			$data['logout'] = $this->url->link('common/logout', 'user_token=' . $this->session->data['user_token'], true);
-			
-			$this->load->model('report/statistics');
-			
-			// Processing Orders
-			$data['processing_total'] = (int)$this->model_report_statistics->getValue('order_processing');
-			$data['processing_status'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . '&filter_order_status=' . implode(',', $this->config->get('config_processing_status')), true);
-
-			// Complete Orders
-			$complete_total = $this->model_report_statistics->getValue('order_complete');
-			
-			$data['complete_total'] = (int)$complete_total;
-			$data['complete_status'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . '&filter_order_status=' . implode(',', $this->config->get('config_complete_status')), true);
-
-			// Customers
-			$this->load->model('report/online');
-
-			$data['online_total'] = (int)$this->model_report_online->getTotalOnline();
-			$data['online'] = $this->url->link('report/online', 'user_token=' . $this->session->data['user_token'], true);
-			
-			// Returns
-			$return_total = $this->model_report_statistics->getValue('return');
-			 
-			$data['return_total'] = (int)$return_total;
-			$data['return'] = $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'], true);
-
-			$this->load->model('customer/customer_approval');
-			
- 			$customer_total = $this->model_customer_customer_approval->getTotalCustomerApprovals(array('filter_type' => 'customer'));
- 
-			$data['customer_total'] = $customer_total;
-			$data['customer'] = $this->url->link('customer/customer_approval', 'user_token=' . $this->session->data['user_token'] . '&filter_type=customer', true);
-
-			// Affliate
-			$affiliate_total = $this->model_customer_customer_approval->getTotalCustomerApprovals(array('filter_type' => 'affiliate'));
-			
-			$data['affiliate_total'] = $affiliate_total;
-			$data['affiliate'] = $this->url->link('customer/customer_approval', 'user_token=' . $this->session->data['user_token'] . '&filter_type=affiliate', true);
-
-			// Products
-			$product_total = (int)$this->model_report_statistics->getValue('product');
-			 
-			$data['product_total'] = (int)$product_total;
-			$data['product'] = $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . '&filter_quantity=0', true);
-
-			// Reviews
-			$review_total = (int)$this->model_report_statistics->getValue('review');
-			
-			$data['review_total'] = $review_total;
-			$data['review'] = $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . '&filter_status=0', true);
-
-			$data['alerts'] = (int)$customer_total + (int)$product_total + (int)$review_total + (int)$affiliate_total + (int)$return_total;
+		
+			$this->load->model('user/user');
+	
+			$this->load->model('tool/image');
+	
+			$user_info = $this->model_user_user->getUser($this->user->getId());
+	
+			if ($user_info) {
+				$data['firstname'] = $user_info['firstname'];
+				$data['lastname'] = $user_info['lastname'];
+				$data['username']  = $user_info['username'];
+				$data['user_group'] = $user_info['user_group'];
+	
+				if (is_file(DIR_IMAGE . $user_info['image'])) {
+					$data['image'] = $this->model_tool_image->resize($user_info['image'], 45, 45);
+				} else {
+					$data['image'] = '';
+				}
+			} else {
+				$data['firstname'] = '';
+				$data['lastname'] = '';
+				$data['user_group'] = '';
+				$data['image'] = '';
+			}			
 			
 			$data['profile'] = $this->url->link('common/profile', 'user_token=' . $this->session->data['user_token'], true);
 			

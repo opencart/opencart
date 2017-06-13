@@ -70,7 +70,7 @@ class ControllerCatalogInformation extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			//$this->response->redirect($this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			$this->response->redirect($this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -421,11 +421,11 @@ class ControllerCatalogInformation extends Controller {
 			$data['sort_order'] = '';
 		}
 		
+		$this->load->model('design/seo_url');
+		
 		if (isset($this->request->post['information_seo'])) {
 			$data['information_seo'] = $this->request->post['information_seo'];
 		} elseif (isset($this->request->get['seo_url_id'])) {
-			$this->load->model('design/seo_url');
-			
 			$data['information_seo'] = $this->model_design_seo_url->getSeoUrl(array('filter_query' => 'information_id=' . $this->request->get['information_id']));
 		} else {
 			$data['information_seo'] = array();

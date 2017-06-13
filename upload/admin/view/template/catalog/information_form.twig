@@ -158,19 +158,21 @@
                     </tr>
                   </thead>
                   <tbody>
-                  
+                  {% set seo_row = 0 %}
                   {% for store in stores %}
                   <tr>
                     <td class="text-left">{{ store.name }}</td>
                     <td class="text-left">{% for language in languages %}
                       <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
-                        <input type="text" name="information_seo[{{ store.store_id }}][{{ language.language_id }}][keyword]" value="{% if information_seo %}{{ information_seo[store.store_id][language.language_id].keyword }}{% endif %}" placeholder="{{ entry_keyword }}" class="form-control" />
+                        <input type="text" name="information_seo[{{ seo_row }}][keyword]" value="{% if information_seo %}{{ information_seo[seo_row].keyword }}{% endif %}" placeholder="{{ entry_keyword }}" class="form-control" />
                       </div>
+                      <input type="hidden" name="information_seo[{{ seo_row }}][store_id]" value="{% if information_seo %}{{ information_seo[seo_row].store_id }}{% endif %}" class="form-control" />
+                      <input type="hidden" name="information_seo[{{ seo_row }}][language_id]" value="{% if information_seo %}{{ information_seo[seo_row].language_id }}{% endif %}" class="form-control" />
+                      {% set seo_row = seo_row + 1 %}
                       {% endfor %}</td>
                   </tr>
                   {% endfor %}
-                    </tbody>
-                  
+                  </tbody>
                 </table>
               </div>
             </div>
@@ -190,31 +192,13 @@
                     <td class="text-left">{{ store.name }}</td>
                     <td class="text-left"><select name="information_layout[{{ store.store_id }}]" class="form-control">
                         <option value=""></option>
-                        
-                        
-                        
-                          {% for layout in layouts %}
-                          {% if information_layout[store.store_id] and information_layout[store.store_id] == layout.layout_id %}
-                          
-                        
-                        
+                        {% for layout in layouts %}
+                        {% if information_layout[store.store_id] and information_layout[store.store_id] == layout.layout_id %}
                         <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
-                        
-                        
-                        
-                          {% else %}
-                          
-                        
-                        
+                        {% else %}
                         <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
-                        
-                        
-                        
-                          {% endif %}
-                          {% endfor %}
-                        
-                      
-                      
+                        {% endif %}
+                        {% endfor %}
                       </select></td>
                   </tr>
                   {% endfor %}

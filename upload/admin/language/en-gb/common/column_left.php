@@ -40,6 +40,7 @@ $_['text_manufacturer']         = 'Manufacturers';
 $_['text_option']               = 'Options';
 $_['text_order']                = 'Orders';
 $_['text_order_status']         = 'Order Statuses';
+$_['text_online']               = 'Customers Online';
 $_['text_product']              = 'Products';
 $_['text_reports']              = 'Reports';
 $_['text_review']               = 'Reviews';

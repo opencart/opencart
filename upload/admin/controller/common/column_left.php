@@ -3,31 +3,7 @@ class ControllerCommonColumnLeft extends Controller {
 	public function index() {
 		if (isset($this->request->get['user_token']) && isset($this->session->data['user_token']) && ($this->request->get['user_token'] == $this->session->data['user_token'])) {
 			$this->load->language('common/column_left');
-	
-			$this->load->model('user/user');
-	
-			$this->load->model('tool/image');
-	
-			$user_info = $this->model_user_user->getUser($this->user->getId());
-	
-			if ($user_info) {
-				$data['firstname'] = $user_info['firstname'];
-				$data['lastname'] = $user_info['lastname'];
-				$data['username']  = $user_info['username'];
-				$data['user_group'] = $user_info['user_group'];
-	
-				if (is_file(DIR_IMAGE . $user_info['image'])) {
-					$data['image'] = $this->model_tool_image->resize($user_info['image'], 45, 45);
-				} else {
-					$data['image'] = '';
-				}
-			} else {
-				$data['firstname'] = '';
-				$data['lastname'] = '';
-				$data['user_group'] = '';
-				$data['image'] = '';
-			}			
-		
+
 			// Create a 3 level menu array
 			// Level 2 can not have children
 			

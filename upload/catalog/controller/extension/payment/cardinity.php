@@ -110,7 +110,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 							'secret'   => $this->config->get('payment_cardinity_secret')
 						);
 
-						$hash = $this->encryption->encrypt(json_encode($encryption_data));
+						$hash = $this->encryption->encrypt($this->config->get('config_encryption'), json_encode($encryption_data));
 
 						$json['3ds'] = array(
 							'url'     => $authorization_information->getUrl(),
@@ -146,7 +146,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 			'secret'   => $this->config->get('payment_cardinity_secret')
 		);
 
-		$hash = $this->encryption->encrypt(json_encode($encryption_data));
+		$hash = $this->encryption->encrypt($this->config->get('config_encryption'), json_encode($encryption_data));
 
 		if (hash_equals($hash, $this->request->post['hash'])) {
 			$success = true;
@@ -181,7 +181,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 			'secret'   => $this->config->get('payment_cardinity_secret')
 		);
 
-		$hash = $this->encryption->encrypt(json_encode($encryption_data));
+		$hash = $this->encryption->encrypt($this->config->get('config_encryption'), json_encode($encryption_data));
 
 		if (hash_equals($hash, $this->request->post['MD'])) {
 			$order = $this->model_extension_payment_cardinity->getOrder($encryption_data['order_id']);

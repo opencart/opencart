@@ -23,8 +23,6 @@ class ControllerCommonHeader extends Controller {
 		
 		$data['text_store'] = $this->language->get('text_store');
 		$data['text_profile'] = $this->language->get('text_profile');
-		$data['text_profile_edit'] = $this->language->get('text_profile_edit');
-		$data['text_front'] = $this->language->get('text_front');
 		$data['text_help'] = $this->language->get('text_help');
 		$data['text_homepage'] = $this->language->get('text_homepage');
 		$data['text_documentation'] = $this->language->get('text_documentation');
@@ -41,6 +39,7 @@ class ControllerCommonHeader extends Controller {
 
 			$data['home'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true);
 			$data['logout'] = $this->url->link('common/logout', 'user_token=' . $this->session->data['user_token'], true);
+			$data['profile'] = $this->url->link('common/profile', 'user_token=' . $this->session->data['user_token'], true);
 		
 			$this->load->model('user/user');
 	
@@ -65,8 +64,6 @@ class ControllerCommonHeader extends Controller {
 				$data['user_group'] = '';
 				$data['image'] = '';
 			}			
-			
-			$data['profile'] = $this->url->link('common/profile', 'user_token=' . $this->session->data['user_token'], true);
 			
 			// Online Stores
 			$data['stores'] = array();

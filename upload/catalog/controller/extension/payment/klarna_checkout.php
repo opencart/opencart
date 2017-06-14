@@ -567,7 +567,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 			foreach ($request->order_lines as $order_line) {
 				if ($order_line->type == 'physical' || $order_line->type == 'digital' || $order_line->type == 'gift_card') {
-					$order_id = $this->encryption->decrypt($order_line->merchant_data);
+					$order_id = $this->encryption->decrypt($this->config->get('config_encryption'), $order_line->merchant_data);
 					break;
 				}
 			}
@@ -586,7 +586,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		}
 
 		if ($process) {
-			$klarna_checkout_order_data = json_decode($this->encryption->decrypt($klarna_checkout_order['data']), true);
+			$klarna_checkout_order_data = json_decode($this->encryption->decrypt($this->config->get('config_encryption'), $klarna_checkout_order['data']), true);
 
 			// Check credentials in request with ones stored in db
 			$valid_request = false;
@@ -903,7 +903,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 			foreach ($request->order_lines as $order_line) {
 				if ($order_line->type == 'physical' || $order_line->type == 'digital' || $order_line->type == 'gift_card') {
-					$order_id = $this->encryption->decrypt($order_line->merchant_data);
+					$order_id = $this->encryption->decrypt($this->config->get('config_encryption'), $order_line->merchant_data);
 					break;
 				}
 			}
@@ -1782,7 +1782,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$klarna_order_data['merchant_urls'] = $merchant_urls;
 
 		// Callback data to be used to spoof/simulate customer to accurately calculate shipping
-		$encrypted_order_data = $this->encryption->encrypt(json_encode(array(
+		$encrypted_order_data = $this->encryption->encrypt($this->config->get('config_encryption'), json_encode(array(
 			'session_id'  => session_id(),
 			'session_key' => $this->session->getId(),
 			'customer_id' => $this->customer->getId(),
@@ -1791,7 +1791,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			'secret'      => $klarna_account['secret']
 		)));
 
-		$encrypted_order_id = $this->encryption->encrypt($this->session->data['order_id']);
+		$encrypted_order_id = $this->encryption->encrypt($this->config->get('config_encryption'), $this->session->data['order_id']);
 
 		$klarna_order_data['merchant_reference1'] = $this->session->data['order_id'];
 

@@ -137,7 +137,7 @@
               </select>
             </div>
             <div class="form-group text-right">
-              <button type="button" id="button-filter" class="btn btn-info"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+              <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
             </div>
           </div>
         </div>
@@ -180,46 +180,6 @@ $('#button-filter').on('click', function() {
 
 	location = url;
 });
-
-
-$('button[data-toggle=\'modal\']').on('click', function() {
-	var url = 'index.php?route=catalog/product&user_token={{ user_token }}';
-
-	var filter_name = $('input[name=\'filter_name\']').val();
-
-	if (filter_name) {
-		url += '&filter_name=' + encodeURIComponent(filter_name);
-	}
-
-	var filter_model = $('input[name=\'filter_model\']').val();
-
-	if (filter_model) {
-		url += '&filter_model=' + encodeURIComponent(filter_model);
-	}
-
-	var filter_price = $('input[name=\'filter_price\']').val();
-
-	if (filter_price) {
-		url += '&filter_price=' + encodeURIComponent(filter_price);
-	}
-
-	var filter_quantity = $('input[name=\'filter_quantity\']').val();
-
-	if (filter_quantity) {
-		url += '&filter_quantity=' + encodeURIComponent(filter_quantity);
-	}
-
-	var filter_status = $('select[name=\'filter_status\']').val();
-
-	if (filter_status !== '') {
-		url += '&filter_status=' + encodeURIComponent(filter_status);
-	}
-
-	location = url;
-});
-
-
-
 //--></script> 
   <script type="text/javascript"><!--
 $('input[name=\'filter_name\']').autocomplete({

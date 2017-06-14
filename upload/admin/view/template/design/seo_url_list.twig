@@ -89,27 +89,31 @@
             <label class="control-label" for="input-query">{{ entry_query }}</label>
             <input type="text" name="filter_query" value="{{ filter_query }}" placeholder="{{ entry_query }}" id="input-query" class="form-control" />
           </div>
-            <div class="form-group">
+          <div class="form-group">
             <label class="control-label" for="input-keyword">{{ entry_keyword }}</label>
             <input type="text" name="filter_keyword" value="{{ filter_keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control" />
-          </div>        
-          
+          </div>
           <div class="form-group">
             <label class="control-label" for="input-store">{{ entry_store }}</label>
             <select name="filter_store_id" id="input-store" class="form-control">
               <option value=""></option>
               
               
+              
                   {% if filter_store_id == '0' %}
                   
               
+              
               <option value="0" selected="selected">{{ text_default }}</option>
+              
               
               
                   {% else %}
                   
               
+              
               <option value="0">{{ text_default }}</option>
+              
               
               
                   {% endif %}                  
@@ -117,26 +121,31 @@
                   {% if store.store_id == filter_store_id %}
                   
               
+              
               <option value="{{ store.store_id }}" selected="selected">{{ store.name }}</option>
+              
               
               
                   {% else %}
                   
               
+              
               <option value="{{ store.store_id }}">{{ store.name }}</option>
+              
               
               
                   {% endif %}
                   {% endfor %}
                 
             
+            
             </select>
           </div>
-
           <div class="form-group">
             <label class="control-label" for="input-language">{{ entry_language }}</label>
             <select name="filter_language_id" id="input-language" class="form-control">
               <option value=""></option>
+              
               
               
                   
@@ -145,7 +154,9 @@
                   
                   
               
+              
               <option value="{{ language.language_id }}" selected="selected">{{ language.name }}</option>
+              
               
               
                   
@@ -153,7 +164,9 @@
                   
                   
               
+              
               <option value="{{ language.language_id }}">{{ language.name }}</option>
+              
               
               
                   
@@ -161,6 +174,7 @@
                   {% endfor %}
                 
                 
+            
             
             </select>
           </div>

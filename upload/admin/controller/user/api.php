@@ -273,7 +273,6 @@ class ControllerUserApi extends Controller {
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_ip'] = sprintf($this->language->get('text_ip'), $this->request->server['REMOTE_ADDR']);
-		$data['text_confirm'] = $this->language->get('text_confirm');
 		
 		$data['column_username'] = $this->language->get('column_username');
 		$data['column_token'] = $this->language->get('column_token');

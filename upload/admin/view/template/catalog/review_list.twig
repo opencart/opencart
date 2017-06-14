@@ -3,27 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <div class="btn-group">
-          <button type="button" title="{{ button_filter }}" data-toggle="dropdown" class="btn btn-info dropdown-toggle"><i class="fa fa-filter"></i></button>
-          
-          <ul class="dropdown-menu dropdown-menu-right">
-            
-            <li>
-                  <div class="row">
-            <div class="col-sm-12">
-            
-         
-                <label class="control-label" for="input-product">{{ entry_product }}</label>
-                <input type="text" name="filter_product" value="{{ filter_product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control" />
-       
-              </div></div>
-              
-              
-            </li>
-            
-          </ul>
-          
-        </div>
+        <button type="button" title="{{ button_filter }}" class="btn btn-info dropdown-toggle"><i class="fa fa-filter"></i></button>
         <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
         <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-review').submit() : false;"><i class="fa fa-trash-o"></i></button>
       </div>
@@ -45,62 +25,20 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endif %}
+    
+    
+    
+        <div class="row">
+      <div class="col-sm-9 col-xs-12">
+    
+    
+    
+    
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
       </div>
       <div class="panel-body">
-        <div class="well" id="filter-product">
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label class="control-label" for="input-product">{{ entry_product }}</label>
-                <input type="text" name="filter_product" value="{{ filter_product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control" />
-              </div>
-              <div class="form-group">
-                <label class="control-label" for="input-author">{{ entry_author }}</label>
-                <input type="text" name="filter_author" value="{{ filter_author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control" />
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label class="control-label" for="input-status">{{ entry_status }}</label>
-                <select name="filter_status" id="input-status" class="form-control">
-                  <option value=""></option>
-                  
-                  {% if filter_status == '1' %}
-                  
-                  <option value="1" selected="selected">{{ text_enabled }}</option>
-                  
-                  {% else %}
-                  
-                  <option value="1">{{ text_enabled }}</option>
-                  
-                  {% endif %}
-                  {% if filter_status == '0' %}
-                  
-                  <option value="0" selected="selected">{{ text_disabled }}</option>
-                  
-                  {% else %}
-                  
-                  <option value="0">{{ text_disabled }}</option>
-                  
-                  {% endif %}
-                
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="control-label" for="input-date-added">{{ entry_date_added }}</label>
-                <div class="input-group date">
-                  <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
-                  <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span></div>
-              </div>
-              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
-            </div>
-          </div>
-        </div>
         <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-review">
           <div class="table-responsive">
             <table class="table table-bordered table-hover">
@@ -149,6 +87,92 @@
         </div>
       </div>
     </div>
+      </div>
+    <div class="col-sm-3 xs-hide">
+    
+    
+    
+            <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><a role="button" data-toggle="collapse" href="#collapse-filter"><i class="fa fa-filter"></i> Product Filter</a></h3>
+          </div>
+          <div id="collapse-filter" class="panel-body collapse in sm-hide">
+               <div class="form-group">
+                <label class="control-label" for="input-product">{{ entry_product }}</label>
+                <input type="text" name="filter_product" value="{{ filter_product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="input-author">{{ entry_author }}</label>
+                <input type="text" name="filter_author" value="{{ filter_author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control" />
+              </div>
+     
+     
+              <div class="form-group">
+                <label class="control-label" for="input-status">{{ entry_status }}</label>
+                <select name="filter_status" id="input-status" class="form-control">
+                  <option value=""></option>
+                  
+                  
+                  
+                  {% if filter_status == '1' %}
+                  
+                  
+                  
+                  <option value="1" selected="selected">{{ text_enabled }}</option>
+                  
+                  
+                  
+                  {% else %}
+                  
+                  
+                  
+                  <option value="1">{{ text_enabled }}</option>
+                  
+                  
+                  
+                  {% endif %}
+                  {% if filter_status == '0' %}
+                  
+                  
+                  
+                  <option value="0" selected="selected">{{ text_disabled }}</option>
+                  
+                  
+                  
+                  {% else %}
+                  
+                  
+                  
+                  <option value="0">{{ text_disabled }}</option>
+                  
+                  
+                  
+                  {% endif %}
+                
+                
+                
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="input-date-added">{{ entry_date_added }}</label>
+                <div class="input-group date">
+                  <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
+                  <span class="input-group-btn">
+                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                  </span></div>
+              </div>
+              <div class="form-group">
+                <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+              </div>
+              
+              
+              
+              
+            </div>
+
+
+    
+    
   </div>
   <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {

@@ -96,11 +96,12 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	width: 235px;
 } #header .navbar-header.active img {
 	display: block;
+	margin-left: 5px;
 } #header .navbar-header.active i {
 	display: none;
 }
 
-#header .fa-opencart {
+#header #header-logo .fa-opencart {
 	color: #3AC9F0;
 }
 

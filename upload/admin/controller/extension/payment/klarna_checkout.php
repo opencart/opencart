@@ -614,7 +614,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		$merchant_id = '';
 		if ($order_reference['data']) {
-			$klarna_checkout_order_data = json_decode($this->encryption->decrypt($order_reference['data']), true);
+			$klarna_checkout_order_data = json_decode($this->encryption->decrypt($this->config->get('config_encryption'), $order_reference['data']), true);
 			if ($klarna_checkout_order_data && $klarna_checkout_order_data['merchant_id']) {
 				$merchant_id = $klarna_checkout_order_data['merchant_id'];
 			}
@@ -913,7 +913,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 					$row = array_combine($headings, $data);
 
 					if ($row['type'] == 'SALE') {
-						$order_id = $this->encryption->decrypt($row['merchant_reference1']);
+						$order_id = $this->encryption->decrypt($this->config->get('config_encryption'), $row['merchant_reference1']);
 
 						$klarna_order_info = $this->model_extension_payment_klarna_checkout->getOrder($order_id);
 

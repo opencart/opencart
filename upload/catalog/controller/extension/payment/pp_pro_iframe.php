@@ -70,7 +70,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 		$this->load->model('extension/payment/pp_pro_iframe');
 
 		if (isset($this->request->post['custom'])) {
-			$order_id = $this->encryption->decrypt($this->request->post['custom']);
+			$order_id = $this->encryption->decrypt($this->config->get('config_encryption'), $this->request->post['custom']);
 		} else {
 			$order_id = 0;
 		}
@@ -260,7 +260,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 		$s_data['L_BUTTONVAR51'] = 'orderSummaryBgColor=#AEAEAE';
 		$s_data['L_BUTTONVAR55'] = 'template=templateD';
 		$s_data['L_BUTTONVAR56'] = 'return=' . $this->url->link('checkout/success', '', true);
-		$s_data['L_BUTTONVAR57'] = 'custom=' . $this->encryption->encrypt($order_info['order_id']);
+		$s_data['L_BUTTONVAR57'] = 'custom=' . $this->encryption->encrypt($this->config->get('config_encryption'), $order_info['order_id']);
 
 		if ($this->config->get('payment_pp_pro_iframe_test')) {
 			$url = 'https://api-3t.sandbox.paypal.com/nvp';

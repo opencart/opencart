@@ -3579,6 +3579,8 @@ tbody.collapse.in {
     content: "/\00a0";
     padding: 0 5px;
     color: #ccc; }
+  .breadcrumb > li:last-child a {
+    color: #1e91cf; }
   .breadcrumb > .active {
     color: #777; }
 

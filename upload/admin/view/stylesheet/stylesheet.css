@@ -38,9 +38,6 @@ h1, h2, h3, h4, h5, h6, p {
 	padding: 0px;
 	margin: 0px;
 }
-.breadcrumb li:last-child a {
-	color: #0b91d2;
-}
 .breadcrumb li a:hover {
 	text-decoration: none;
 }
@@ -85,9 +82,35 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #header .navbar-header {
 	min-height: 0px;
 	padding: 0;
+	width: 60px;
+	transition: 0.3s all;
+} #header .navbar-header img {
+	display: none;
+} #header .navbar-header i {
+	display: block;
+	width: 30px;
+	text-align: center;
 }
-#header i {
-	color: #4c4d5a
+
+#header .navbar-header.active {
+	width: 235px;
+} #header .navbar-header.active img {
+	display: block;
+} #header .navbar-header.active i {
+	display: none;
+}
+
+#header .fa-opencart {
+	color: #3AC9F0;
+}
+
+#header #user-profile {
+	max-width: 40px;
+	max-height: 40px;
+	border: 0px solid #eee;
+}
+#header .navbar-right {
+	margin-right: 0;
 }
 /* Mobile */
 @media (max-width: 767px) {
@@ -121,7 +144,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	#header .nav > li > a {
 		padding: 11px 12px;
 		line-height: 22px;
-		border-left: 1px solid #E1E1E1;
 	}
 }
 #header .nav > li > a > .label {
@@ -138,7 +160,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	display: inline-block;
 	cursor: pointer;
 	color: #6D6D6D;
-	border-right: 1px solid #E1E1E1;
+	border-left: 1px solid #eee;
 }
 @media screen and (max-width: 767px){
 	#button-menu {

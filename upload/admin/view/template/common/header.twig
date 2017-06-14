@@ -34,20 +34,25 @@
 <body>
 <div id="container">
 <header id="header" class="navbar navbar-static-top">
-  <div class="navbar-header">
-    <button type="button" id="button-menu" class="pull-left"><i class="fa fa-indent fa-lg"></i></button>
-    <a href="{{ home }}" class="navbar-brand"><img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}" /></a></div>
+
+  <div id="header-logo" class="navbar-header">
+    <a href="{{ home }}" class="navbar-brand">
+      <img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}" />
+      <i class="fa fa-opencart"></i><span class="hidden">{{ heading_title }}</span>
+    </a>
+  </div>
+  <a role="button" id="button-menu"><i class="fa fa-indent fa-lg"></i></a>
+
   {% if logged %}
   <ul class="nav navbar-nav navbar-right">
     <li class="dropdown">
-    
-    
       <div data-toggle="dropdown" class="navbar-text navbar-left">
-        <img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" class="img-circle" /> {{ firstname }} {{ lastname }} <i class="fa fa-caret-down"></i>
+        <img id="user-profile" src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" class="img-circle" />
+        &nbsp; {{ firstname }} {{ lastname }} <i class="fa fa-caret-down fa-fw"></i>
       </div>
-      
+
       <ul class="dropdown-menu dropdown-menu-right">
-        <li><a href="{{ profile }}">{{ text_profile }}</a></li>
+        <li><a href="{{ profile }}"><i class="fa fa-user-circle-o fa-fw"></i> {{ text_profile }}</a></li>
         <li role="separator" class="divider"></li>
         <li class="dropdown-header">{{ text_store }}</li>
         {% for store in stores %}
@@ -55,12 +60,16 @@
         {% endfor %}
         <li role="separator" class="divider"></li>
         <li class="dropdown-header">{{ text_help }}</li>
-        <li><a href="http://www.opencart.com" target="_blank">{{ text_homepage }}</a></li>
-        <li><a href="http://docs.opencart.com" target="_blank">{{ text_documentation }}</a></li>
-        <li><a href="http://forum.opencart.com" target="_blank">{{ text_support }}</a></li>
+        <li><a href="http://www.opencart.com" target="_blank"><i class="fa fa-opencart fa-fw"></i> {{ text_homepage }}</a></li>
+        <li><a href="http://docs.opencart.com" target="_blank"><i class="fa fa-file-text-o fa-fw"></i> {{ text_documentation }}</a></li>
+        <li><a href="http://forum.opencart.com" target="_blank"><i class="fa fa-comments-o fa-fw"></i> {{ text_support }}</a></li>
       </ul>
     </li>
-    <li><a href="{{ logout }}"><span class="hidden-xs hidden-sm hidden-md">{{ text_logout }}</span> <i class="fa fa-sign-out fa-lg"></i></a></li>
+    <li><a href="{{ logout }}">
+      <i class="fa fa-sign-out"></i>
+      <span class="hidden-xs hidden-sm hidden-md">{{ text_logout }}</span>
+      </a>
+    </li>
   </ul>
   {% endif %}
 </header>

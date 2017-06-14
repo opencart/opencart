@@ -15,7 +15,7 @@ $gray:                   lighten($gray-base, 33.5%) !default; // #555
 $gray-light:             lighten($gray-base, 46.7%) !default; // #777
 $gray-lighter:           lighten($gray-base, 93.5%) !default; // #eee
 
-$brand-primary:         #1a7ab9 !default; // #337ab7
+$brand-primary:         #1e91cf !default; // #337ab7
 $brand-success:         #4cb64c !default;
 $brand-info:            #00a9df !default;
 $brand-warning:         #f3a638 !default;
@@ -156,7 +156,7 @@ $btn-default-border:             #ccc !default;
 
 $btn-primary-color:              #fff !default;
 $btn-primary-bg:                 $brand-primary !default;
-$btn-primary-bg-lighter:         #1e8cd3 !default;
+$btn-primary-bg-lighter:         lighten($brand-primary, 10%) !default;
 $btn-primary-border:             $btn-primary-bg !default;
 
 $btn-success-color:              #fff !default;
@@ -167,7 +167,8 @@ $btn-success-border:             darken($btn-success-bg, 8%) !default;
 $btn-info-color:                 #fff !default;
 $btn-info-bg:                    $brand-info !default;
 $btn-info-bg-lighter:            $brand-info !default;
-$btn-info-border:                darken($btn-info-bg, 8%) !default;
+//$btn-info-border:                darken($btn-info-bg, 8%) !default;
+$btn-info-border:                $brand-info !default;
 
 $btn-warning-color:              #fff !default;
 $btn-warning-bg:                 $brand-warning !default;
@@ -373,7 +374,7 @@ $container-lg:                 $container-large-desktop !default;
 //##
 
 // Basics of a navbar
-$navbar-height:                    50px !default;
+$navbar-height:                    60px !default;
 $navbar-margin-bottom:             $line-height-computed !default;
 $navbar-border-radius:             $border-radius-base !default;
 $navbar-padding-horizontal:        floor(($grid-gutter-width / 2)) !default;
@@ -512,30 +513,30 @@ $jumbotron-heading-font-size:    ceil(($font-size-base * 4.5)) !default;
 //
 //## Define colors for form feedback states and, by default, alerts.
 
-// $state-success-text:             $brand-success !default;
-// $state-success-bg:               lighten($brand-success, 35%) !default;
-// $state-success-border:           lighten($brand-success, 30%) !default;
-$state-success-text:             #3c763d !default;
-$state-success-bg:               #dff0d8 !default;
-$state-success-border:           #d6e9c6 !default;
+$state-success-text:             $brand-success !default;
+$state-success-bg:               lighten($brand-success, 35%) !default;
+$state-success-border:           lighten($brand-success, 30%) !default;
+// $state-success-text:             #3c763d !default;
+// $state-success-bg:               #dff0d8 !default;
+// $state-success-border:           #d6e9c6 !default;
 
 $state-info-text:                #31708f !default;
 $state-info-bg:                  #d9edf7 !default;
 $state-info-border:              darken(adjust-hue($state-info-bg, -10), 7%) !default;
 
-// $state-warning-text:             $brand-warning !default;
-// $state-warning-bg:               lighten($brand-warning, 40%) !default;
-// $state-warning-border:           lighten($brand-warning, 22%) !default;
-$state-warning-text:             #8a6d3b !default;
-$state-warning-bg:               #fcf8e3 !default;
-$state-warning-border:           #faebcc !default;
+$state-warning-text:             $brand-warning !default;
+$state-warning-bg:               lighten($brand-warning, 40%) !default;
+$state-warning-border:           lighten($brand-warning, 22%) !default;
+// $state-warning-text:             #8a6d3b !default;
+// $state-warning-bg:               #fcf8e3 !default;
+// $state-warning-border:           #faebcc !default;
 
 $state-danger-text:            $brand-danger !default;
 $state-danger-bg:              lighten($brand-danger, 28%) !default;
 $state-danger-border:          lighten($brand-danger, 25%) !default;
-//$state-danger-text:              #a94442 !default;
-//$state-danger-bg:                #f2dede !default;
-//$state-danger-border:            #ebccd1 !default;
+// $state-danger-text:              #a94442 !default;
+// $state-danger-bg:                #f2dede !default;
+// $state-danger-border:            #ebccd1 !default;
 
 //== Tooltips
 //
@@ -663,6 +664,7 @@ $alert-warning-border:        $state-warning-border !default;
 $alert-danger-bg:             $state-danger-bg !default;
 $alert-danger-text:           $state-danger-text !default;
 $alert-danger-border:         $state-danger-border !default;
+$alert-danger-text-shadow:    #999 !default;
 
 
 //== Progress bars

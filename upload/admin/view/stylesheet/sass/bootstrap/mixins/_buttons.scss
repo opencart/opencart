@@ -8,6 +8,7 @@
   background-color: $background;
   background: linear-gradient($background-lighter, $background);
   border-color: $border;
+  border-bottom-color: darken($border, 9%); 
 
   &:focus,
   &.focus {

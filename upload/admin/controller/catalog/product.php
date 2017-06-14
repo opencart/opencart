@@ -528,7 +528,6 @@ class ControllerCatalogProduct extends Controller {
 		$data['text_no'] = $this->language->get('text_no');
 		$data['text_plus'] = $this->language->get('text_plus');
 		$data['text_minus'] = $this->language->get('text_minus');
-		$data['text_default'] = $this->language->get('text_default');
 		$data['text_option'] = $this->language->get('text_option');
 		$data['text_option_value'] = $this->language->get('text_option_value');
 		$data['text_select'] = $this->language->get('text_select');
@@ -620,14 +619,15 @@ class ControllerCatalogProduct extends Controller {
 
 		$data['tab_general'] = $this->language->get('tab_general');
 		$data['tab_data'] = $this->language->get('tab_data');
+		$data['tab_links'] = $this->language->get('tab_links');
 		$data['tab_attribute'] = $this->language->get('tab_attribute');
 		$data['tab_option'] = $this->language->get('tab_option');
 		$data['tab_recurring'] = $this->language->get('tab_recurring');
 		$data['tab_discount'] = $this->language->get('tab_discount');
 		$data['tab_special'] = $this->language->get('tab_special');
 		$data['tab_image'] = $this->language->get('tab_image');
-		$data['tab_links'] = $this->language->get('tab_links');
 		$data['tab_reward'] = $this->language->get('tab_reward');
+		$data['tab_seo'] = $this->language->get('tab_seo');
 		$data['tab_design'] = $this->language->get('tab_design');
 		$data['tab_openbay'] = $this->language->get('tab_openbay');
 
@@ -799,7 +799,21 @@ class ControllerCatalogProduct extends Controller {
 
 		$this->load->model('setting/store');
 
-		$data['stores'] = $this->model_setting_store->getStores();
+		$data['stores'] = array();
+		
+		$data['stores'][] = array(
+			'store_id' => 0,
+			'name'     => $this->language->get('text_default')
+		);
+		
+		$stores = $this->model_setting_store->getStores();
+
+		foreach ($stores as $store) {
+			$data['stores'][] = array(
+				'store_id' => $store['store_id'],
+				'name'     => $store['name']
+			);
+		}
 
 		if (isset($this->request->post['product_store'])) {
 			$data['product_store'] = $this->request->post['product_store'];
@@ -807,14 +821,6 @@ class ControllerCatalogProduct extends Controller {
 			$data['product_store'] = $this->model_catalog_product->getProductStores($this->request->get['product_id']);
 		} else {
 			$data['product_store'] = array(0);
-		}
-
-		if (isset($this->request->post['keyword'])) {
-			$data['keyword'] = $this->request->post['keyword'];
-		} elseif (!empty($product_info)) {
-			$data['keyword'] = $product_info['keyword'];
-		} else {
-			$data['keyword'] = '';
 		}
 
 		if (isset($this->request->post['shipping'])) {
@@ -1278,6 +1284,16 @@ class ControllerCatalogProduct extends Controller {
 			$data['product_reward'] = array();
 		}
 
+		$this->load->model('design/seo_url');
+
+		if (isset($this->request->post['product_seo'])) {
+			$data['product_seo'] = $this->request->post['product_seo'];
+		} elseif (isset($this->request->get['product_id'])) {
+			$data['product_seo'] = $this->model_design_seo_url->getSeoUrls(array('filter_query' => 'product_id=' . $this->request->get['product_id']));
+		} else {
+			$data['product_seo'] = array();
+		}
+
 		if (isset($this->request->post['product_layout'])) {
 			$data['product_layout'] = $this->request->post['product_layout'];
 		} elseif (isset($this->request->get['product_id'])) {
@@ -1316,17 +1332,17 @@ class ControllerCatalogProduct extends Controller {
 			$this->error['model'] = $this->language->get('error_model');
 		}
 
-		if (utf8_strlen($this->request->post['keyword']) > 0) {
-			$this->load->model('catalog/url_alias');
-
-			$url_alias_info = $this->model_catalog_url_alias->getUrlAlias($this->request->post['keyword']);
-
-			if ($url_alias_info && isset($this->request->get['product_id']) && $url_alias_info['query'] != 'product_id=' . $this->request->get['product_id']) {
-				$this->error['keyword'] = sprintf($this->language->get('error_keyword'));
-			}
-
-			if ($url_alias_info && !isset($this->request->get['product_id'])) {
-				$this->error['keyword'] = sprintf($this->language->get('error_keyword'));
+		if ($this->request->post['product_seo']) {
+			$this->load->model('design/seo_url');
+			
+			foreach ($this->request->post['product_seo'] as $key => $product_seo) {
+				if (trim($product_seo['keyword'])) {
+					$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($product_seo['keyword']);
+		
+					if ($seo_url_info && (!isset($this->request->get['product_id']) || (($seo_url_info['query'] != 'product_id=' . $this->request->get['product_id']) && ($product_seo['store_id'] == $seo_url_info['store_id']) && ($product_seo['language_id'] == $seo_url_info['language_id'])))) {
+						$this->error['keyword'][$key] = sprintf($this->language->get('error_keyword'));
+					}
+				}
 			}
 		}
 

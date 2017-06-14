@@ -19,11 +19,11 @@
       </div>
       <div class="panel-body">
         {% if error_variant %}
-          <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_variant }}</div>
+          <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_variant }}</div>
         {% else %}
           <div id="page-listing">
             {% if error_warning %}
-              <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+              <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
             {% endif %}
             <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
               <input type="hidden" name="product_id" value="{{ product.product_id }}"/>

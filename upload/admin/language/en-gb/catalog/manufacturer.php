@@ -10,6 +10,7 @@ $_['text_edit']         = 'Edit Manufacturer';
 $_['text_default']      = 'Default';
 $_['text_percent']      = 'Percentage';
 $_['text_amount']       = 'Fixed Amount';
+$_['text_keyword']      = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';
 
 // Column
 $_['column_name']       = 'Manufacturer Name';
@@ -19,13 +20,10 @@ $_['column_action']     = 'Action';
 // Entry
 $_['entry_name']        = 'Manufacturer Name';
 $_['entry_store']       = 'Stores';
-$_['entry_keyword']     = 'SEO URL';
+$_['entry_keyword']     = 'Keyword';
 $_['entry_image']       = 'Image';
 $_['entry_sort_order']  = 'Sort Order';
 $_['entry_type']        = 'Type';
-
-// Help
-$_['help_keyword']      = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify manufacturers!';

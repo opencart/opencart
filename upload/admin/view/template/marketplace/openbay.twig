@@ -11,13 +11,13 @@
     </div>
   </div>
   <div class="container-fluid"> {% if success %}
-    <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endif %}
     {% if error %}
     {% for error_message in error %}
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_message }}</div>
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_message }}</div>
     {% endfor %}
     {% endif %}
     <div class="panel panel-default">

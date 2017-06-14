@@ -3,7 +3,9 @@ class ControllerStartupSass extends Controller {
 	public function index() {
 		$file = DIR_APPLICATION . 'view/stylesheet/bootstrap.css';
 
-		if (!is_file($file)) {
+		//if (!is_file($file)) {
+			include_once(DIR_SYSTEM . 'vendor/scss.inc.php');
+			
 			$scss = new Scssc();
 			$scss->setImportPaths(DIR_APPLICATION . 'view/stylesheet/sass/');
 
@@ -20,6 +22,6 @@ class ControllerStartupSass extends Controller {
 			flock($handle, LOCK_UN);
 
 			fclose($handle);
-		}
+		//}
 	}
 }

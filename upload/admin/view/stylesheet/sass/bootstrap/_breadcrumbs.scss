@@ -18,9 +18,16 @@
       padding: 0 5px;
       color: $breadcrumb-color;
     }
+
+    &:last-child {
+      a {
+        color: $brand-primary;
+      }
+    }
   }
 
   > .active {
     color: $breadcrumb-active-color;
   }
+
 }

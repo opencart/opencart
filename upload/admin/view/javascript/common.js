@@ -43,6 +43,7 @@ $(document).ready(function() {
 	});
 
 	if (!sessionStorage.getItem('menu')) {
+		$('#header-logo').addClass('active');
 		$('#menu #dashboard').addClass('active');
 	} else {
 		// Sets active and open to selected page in the left column menu.
@@ -51,7 +52,7 @@ $(document).ready(function() {
 
 	if (localStorage.getItem('column-left') == 'active') {
 		$('#button-menu i').replaceWith('<i class="fa fa-dedent fa-lg"></i>');
-
+		$('#header-logo').addClass('active');
 		$('#column-left').addClass('active');
 
 		// Slide Down Menu
@@ -72,6 +73,7 @@ $(document).ready(function() {
 
 			$('#button-menu i').replaceWith('<i class="fa fa-indent fa-lg"></i>');
 
+			$('#header-logo').removeClass('active');
 			$('#column-left').removeClass('active');
 
 			$('#menu > li > ul').removeClass('in collapse');
@@ -89,6 +91,7 @@ $(document).ready(function() {
 
 			$('#button-menu i').replaceWith('<i class="fa fa-dedent fa-lg"></i>');
 
+			$('#header-logo').addClass('active');
 			$('#column-left').addClass('active');
 
 			// Add the slide down to open menu items
@@ -117,9 +120,9 @@ $(document).ready(function() {
 	$(document).on('click', 'a[data-toggle=\'image\']', function(e) {
 		var $element = $(this);
 		var $popover = $element.data('bs.popover'); // element has bs popover?
-		
+
 		e.preventDefault();
-		
+
 		// destroy all image popovers
 		$('a[data-toggle="image"]').popover('destroy');
 
@@ -142,7 +145,7 @@ $(document).ready(function() {
 		$('#button-image').on('click', function() {
 			var $button = $(this);
 			var $icon   = $button.find('> i');
-			
+
 			$('#modal-image').remove();
 
 			$.ajax({
@@ -156,7 +159,7 @@ $(document).ready(function() {
 				},
 				complete: function() {
 					$button.prop('disabled', false);
-					
+
 					if ($icon.length) {
 						$icon.attr('class', 'fa fa-pencil');
 					}
@@ -208,7 +211,7 @@ $(document).ready(function() {
 		return this.each(function() {
 			var $this = $(this);
 			var $dropdown = $('<ul class="dropdown-menu" />');
-			
+
 			this.timer = null;
 			this.items = [];
 

@@ -86,7 +86,7 @@ $('#button-confirm').bind('click', function() {
 					$('#threed-form').submit();
 				}
 			} else {
-				$('#payment').before('<div class="alert alert-danger"><i class="fa fa-info-circle"></i> ' + json['message'] + '</div>');
+				$('#payment').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-info-circle"></i> ' + json['message'] + '</div>');
 			}
 		}
 	});

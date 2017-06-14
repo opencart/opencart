@@ -14,10 +14,10 @@
   <div class="container-fluid">
       {% if validation == true %}
       {% if image_import > 0 %}
-      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ image_import }} {{ text_import_images_msg1 }} <a href="{{ image_import_link }}" target="_blank">{{ text_import_images_msg2 }}</a> {{ text_import_images_msg3 }}</div>
+      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ image_import }} {{ text_import_images_msg1 }} <a href="{{ image_import_link }}" target="_blank">{{ text_import_images_msg2 }}</a> {{ text_import_images_msg3 }}</div>
       {% endif %}
       {% if maintenance == 1 %}
-      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_maintenance }} </div>
+      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_maintenance }} </div>
       {% endif %}
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -55,7 +55,7 @@
         </div>
       </div>
     {% else %}
-      <div class="alert alert-danger"> <i class="fa fa-exclamation-circle"></i> {{ error_validation }} </div>
+      <div class="alert alert-danger alert-dismissible"> <i class="fa fa-exclamation-circle"></i> {{ error_validation }} </div>
     {% endif %}
   </div>
 </div>

@@ -373,7 +373,21 @@ class ControllerCatalogInformation extends Controller {
 
 		$this->load->model('setting/store');
 
-		$data['stores'] = $this->model_setting_store->getStores();
+		$data['stores'] = array();
+		
+		$data['stores'][] = array(
+			'store_id' => 0,
+			'name'     => $this->language->get('text_default')
+		);
+		
+		$stores = $this->model_setting_store->getStores();
+
+		foreach ($stores as $store) {
+			$data['stores'][] = array(
+				'store_id' => $store['store_id'],
+				'name'     => $store['name']
+			);
+		}
 
 		if (isset($this->request->post['information_store'])) {
 			$data['information_store'] = $this->request->post['information_store'];
@@ -381,14 +395,6 @@ class ControllerCatalogInformation extends Controller {
 			$data['information_store'] = $this->model_catalog_information->getInformationStores($this->request->get['information_id']);
 		} else {
 			$data['information_store'] = array(0);
-		}
-
-		if (isset($this->request->post['keyword'])) {
-			$data['keyword'] = $this->request->post['keyword'];
-		} elseif (!empty($information_info)) {
-			$data['keyword'] = $information_info['keyword'];
-		} else {
-			$data['keyword'] = '';
 		}
 
 		if (isset($this->request->post['bottom'])) {
@@ -414,7 +420,17 @@ class ControllerCatalogInformation extends Controller {
 		} else {
 			$data['sort_order'] = '';
 		}
-
+		
+		$this->load->model('design/seo_url');
+		
+		if (isset($this->request->post['information_seo'])) {
+			$data['information_seo'] = $this->request->post['information_seo'];
+		} elseif (isset($this->request->get['information_id'])) {
+			$data['information_seo'] = $this->model_design_seo_url->getSeoUrls(array('filter_query' => 'information_id=' . $this->request->get['information_id']));
+		} else {
+			$data['information_seo'] = array();
+		}
+		
 		if (isset($this->request->post['information_layout'])) {
 			$data['information_layout'] = $this->request->post['information_layout'];
 		} elseif (isset($this->request->get['information_id'])) {
@@ -453,17 +469,17 @@ class ControllerCatalogInformation extends Controller {
 			}
 		}
 
-		if (utf8_strlen($this->request->post['keyword']) > 0) {
-			$this->load->model('catalog/url_alias');
-
-			$url_alias_info = $this->model_catalog_url_alias->getUrlAlias($this->request->post['keyword']);
-
-			if ($url_alias_info && isset($this->request->get['information_id']) && $url_alias_info['query'] != 'information_id=' . $this->request->get['information_id']) {
-				$this->error['keyword'] = sprintf($this->language->get('error_keyword'));
-			}
-
-			if ($url_alias_info && !isset($this->request->get['information_id'])) {
-				$this->error['keyword'] = sprintf($this->language->get('error_keyword'));
+		if ($this->request->post['information_seo']) {
+			$this->load->model('design/seo_url');
+			
+			foreach ($this->request->post['information_seo'] as $key => $information_seo) {
+				if (trim($information_seo['keyword'])) {
+					$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($information_seo['keyword']);
+		
+					if ($seo_url_info && (!isset($this->request->get['information_id']) || (($seo_url_info['query'] != 'information_id=' . $this->request->get['information_id']) && ($information_seo['store_id'] == $seo_url_info['store_id']) && ($information_seo['language_id'] == $seo_url_info['language_id'])))) {
+						$this->error['keyword'][$key] = sprintf($this->language->get('error_keyword'));
+					}
+				}
 			}
 		}
 

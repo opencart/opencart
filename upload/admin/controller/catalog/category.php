@@ -70,7 +70,7 @@ class ControllerCatalogCategory extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('catalog/category', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			//$this->response->redirect($this->url->link('catalog/category', 'user_token=' . $this->session->data['user_token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -329,6 +329,7 @@ class ControllerCatalogCategory extends Controller {
 
 		$data['tab_general'] = $this->language->get('tab_general');
 		$data['tab_data'] = $this->language->get('tab_data');
+		$data['tab_seo'] = $this->language->get('tab_seo');
 		$data['tab_design'] = $this->language->get('tab_design');
 
 		if (isset($this->error['warning'])) {
@@ -454,7 +455,21 @@ class ControllerCatalogCategory extends Controller {
 
 		$this->load->model('setting/store');
 
-		$data['stores'] = $this->model_setting_store->getStores();
+		$data['stores'] = array();
+		
+		$data['stores'][] = array(
+			'store_id' => 0,
+			'name'     => $this->language->get('text_default')
+		);
+		
+		$stores = $this->model_setting_store->getStores();
+
+		foreach ($stores as $store) {
+			$data['stores'][] = array(
+				'store_id' => $store['store_id'],
+				'name'     => $store['name']
+			);
+		}
 
 		if (isset($this->request->post['category_store'])) {
 			$data['category_store'] = $this->request->post['category_store'];
@@ -462,14 +477,6 @@ class ControllerCatalogCategory extends Controller {
 			$data['category_store'] = $this->model_catalog_category->getCategoryStores($this->request->get['category_id']);
 		} else {
 			$data['category_store'] = array(0);
-		}
-
-		if (isset($this->request->post['keyword'])) {
-			$data['keyword'] = $this->request->post['keyword'];
-		} elseif (!empty($category_info)) {
-			$data['keyword'] = $category_info['keyword'];
-		} else {
-			$data['keyword'] = '';
 		}
 
 		if (isset($this->request->post['image'])) {
@@ -523,7 +530,17 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['status'] = true;
 		}
-
+		
+		$this->load->model('design/seo_url');
+		
+		if (isset($this->request->post['seo_url'])) {
+			$data['category_seo'] = $this->request->post['seo_url'];
+		} elseif (isset($this->request->get['category_id'])) {
+			$data['category_seo'] = $this->model_design_seo_url->getSeoUrls(array('filter_query' => 'category_id=' . $this->request->get['category_id']));
+		} else {
+			$data['category_seo'] = array();
+		}
+				
 		if (isset($this->request->post['category_layout'])) {
 			$data['category_layout'] = $this->request->post['category_layout'];
 		} elseif (isset($this->request->get['category_id'])) {
@@ -570,17 +587,17 @@ class ControllerCatalogCategory extends Controller {
 			}
 		}
 
-		if (utf8_strlen($this->request->post['keyword']) > 0) {
-			$this->load->model('catalog/url_alias');
-
-			$url_alias_info = $this->model_catalog_url_alias->getUrlAlias($this->request->post['keyword']);
-
-			if ($url_alias_info && isset($this->request->get['category_id']) && $url_alias_info['query'] != 'category_id=' . $this->request->get['category_id']) {
-				$this->error['keyword'] = sprintf($this->language->get('error_keyword'));
-			}
-
-			if ($url_alias_info && !isset($this->request->get['category_id'])) {
-				$this->error['keyword'] = sprintf($this->language->get('error_keyword'));
+		if ($this->request->post['category_seo']) {
+			$this->load->model('design/seo_url');
+			
+			foreach ($this->request->post['category_seo'] as $key => $category_seo) {
+				if (trim($category_seo['keyword'])) {
+					$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($category_seo['keyword']);
+		
+					if ($seo_url_info && (!isset($this->request->get['category_id']) || (($seo_url_info['query'] != 'category_id=' . $this->request->get['category_id']) && ($category_seo['store_id'] == $seo_url_info['store_id']) && ($category_seo['language_id'] == $seo_url_info['language_id'])))) {
+						$this->error['keyword'][$key] = sprintf($this->language->get('error_keyword'));
+					}
+				}
 			}
 		}
 		

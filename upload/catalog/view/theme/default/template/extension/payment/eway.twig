@@ -1,12 +1,12 @@
 {% if error %}
-<div class="alert alert-danger">Payment Error: {{ error }}</div>
+<div class="alert alert-danger alert-dismissible">Payment Error: {{ error }}</div>
 {% else %}
 <form action="{{ action }}" method="POST" class="form-horizontal" id="eway-payment-form">
   <fieldset id="payment">
     <legend>{{ text_credit_card }}</legend>
     <input type="hidden" name="EWAY_ACCESSCODE" value="{{ AccessCode }}" />
     {% if text_testing %}
-    <div class="alert alert-warning">{{ text_testing }}</div>
+    <div class="alert alert-warning alert-dismissible">{{ text_testing }}</div>
     {% endif %}
     <div class="form-group">
       <div class="col-sm-12">

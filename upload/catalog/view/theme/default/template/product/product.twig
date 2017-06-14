@@ -362,7 +362,7 @@ $('select[name=\'recurring_id\'], input[name="quantity"]').change(function(){
 			$('#recurring-description').html('');
 		},
 		success: function(json) {
-			$('.alert, .text-danger').remove();
+			$('.alert-dismissible, .text-danger').remove();
 
 			if (json['success']) {
 				$('#recurring-description').html(json['success']);
@@ -385,7 +385,7 @@ $('#button-cart').on('click', function() {
 			$('#button-cart').button('reset');
 		},
 		success: function(json) {
-			$('.alert, .text-danger').remove();
+			$('.alert-dismissible, .text-danger').remove();
 			$('.form-group').removeClass('has-error');
 
 			if (json['error']) {
@@ -410,7 +410,7 @@ $('#button-cart').on('click', function() {
 			}
 
 			if (json['success']) {
-				$('.breadcrumb').after('<div class="alert alert-success">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('.breadcrumb').after('<div class="alert alert-success alert-dismissible">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
 
@@ -520,14 +520,14 @@ $('#button-review').on('click', function() {
 			$('#button-review').button('reset');
 		},
 		success: function(json) {
-			$('.alert-success, .alert-danger').remove();
+			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#review').after('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				$('#review').after('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 
 			if (json['success']) {
-				$('#review').after('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+				$('#review').after('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 
 				$('input[name=\'name\']').val('');
 				$('textarea[name=\'text\']').val('');

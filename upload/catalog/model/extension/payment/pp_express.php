@@ -84,7 +84,7 @@ class ModelExtensionPaymentPPExpress extends Model {
 				if ($option['type'] != 'file') {
 					$value = $option['value'];
 				} else {
-					$filename = $this->encryption->decrypt($option['value']);
+					$filename = $this->encryption->decrypt($this->config->get('config_encryption'), $option['value']);
 					$value = utf8_substr($filename, 0, utf8_strrpos($filename, '.'));
 				}
 

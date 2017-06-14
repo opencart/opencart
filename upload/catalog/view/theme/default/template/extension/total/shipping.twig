@@ -50,11 +50,11 @@ $('#button-quote').on('click', function() {
 			$('#button-quote').button('reset');
 		},
 		success: function(json) {
-			$('.alert, .text-danger').remove();
+			$('.alert-dismissible, .text-danger').remove();
 
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('.breadcrumb').after('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('.breadcrumb').after('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 					$('html, body').animate({ scrollTop: 0 }, 'slow');
 				}
@@ -100,7 +100,7 @@ $('#button-quote').on('click', function() {
 							html += json['shipping_method'][i]['quote'][j]['title'] + ' - ' + json['shipping_method'][i]['quote'][j]['text'] + '</label></div>';
 						}
 					} else {
-						html += '<div class="alert alert-danger">' + json['shipping_method'][i]['error'] + '</div>';
+						html += '<div class="alert alert-danger alert-dismissible">' + json['shipping_method'][i]['error'] + '</div>';
 					}
 				}
 
@@ -147,10 +147,10 @@ $(document).delegate('#button-shipping', 'click', function() {
 			$('#button-shipping').button('reset');
 		},
 		success: function(json) {
-			$('.alert').remove();
+			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('.breadcrumb').after('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('.breadcrumb').after('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('html, body').animate({ scrollTop: 0 }, 'slow');
 			}

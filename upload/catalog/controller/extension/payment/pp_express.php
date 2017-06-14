@@ -1710,7 +1710,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 							$transaction = array(
 								'paypal_order_id'       => $parent_transaction['paypal_order_id'],
 								'transaction_id'        => '',
-								'parent_id' => $this->request->post['parent_txn_id'],
+								'parent_id' 			=> $this->request->post['parent_txn_id'],
 								'note'                  => '',
 								'msgsubid'              => '',
 								'receipt_id'            => '',
@@ -1813,7 +1813,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				}
 
 				//date_added
-				if ($this->request->post['txn_type'] == 'recurring_payment_recurring_date_added') {
+				if ($this->request->post['txn_type'] == 'recurring_payment_profile_date_added') {
 					$recurring = $this->model_account_recurring->getOrderRecurringByReference($this->request->post['recurring_payment_id']);
 
 					if ($recurring != false) {
@@ -1826,7 +1826,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				}
 
 				//cancelled
-				if ($this->request->post['txn_type'] == 'recurring_payment_recurring_cancel') {
+				if ($this->request->post['txn_type'] == 'recurring_payment_profile_cancel') {
 					$recurring = $this->model_account_recurring->getOrderRecurringByReference($this->request->post['recurring_payment_id']);
 
 					if ($recurring != false && $recurring['status'] != 3) {

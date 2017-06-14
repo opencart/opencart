@@ -15,7 +15,7 @@
 </div>
 <div class="container-fluid">
   {% for warning in error_warning %}
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ warning }}</div>
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ warning }}</div>
   {% endif %}
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -339,7 +339,7 @@
               {% set i = i + 1 %}
               {% endfor %}
           {% else %}
-            <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ text_no_results }}</div>
+            <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ text_no_results }}</div>
           {% endif %}
         </form>
         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="overlay-loading" data-backdrop="static" data-keyboard="false">
@@ -356,7 +356,7 @@
         </div>
       {% else %}
         {% for fail in error_fail %}
-          <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ fail }}</div>
+          <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ fail }}</div>
         {% endfor %}
       {% endif %}
     </div>
@@ -848,7 +848,7 @@
                         $('#catalog-results-'+id).append('<div class="alert alert-warning"><i class="fa fa-warning"></i> {{ text_catalog_no_products }}</div>').show();
                       }
                     } else {
-                      $('#catalog-results-'+id).append('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> '+data.error_message+'</div>').show();
+                      $('#catalog-results-'+id).append('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> '+data.error_message+'</div>').show();
                     }
             },
             complete: function() {
@@ -948,7 +948,7 @@
                   html += '<div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_total_fee }} '+currency+' '+parseFloat(fee_total).toFixed(2)+'</div>';
                 } else {
                     $.each(data.errors, function(k,v) {
-                        html += '<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> '+v+'</div>';
+                        html += '<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> '+v+'</div>';
                     });
                 }
                 $('#product_messages_'+data.i).html(html);
@@ -1023,10 +1023,10 @@
 
                     $('#p_row_buttons_'+data.i).prepend('<a class="btn btn-primary button-listing-view" href="{{ listing_link }}'+data.itemid+'" target="_BLANK">{{ button_view }}</a>');
 
-                    html += '<div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ text_listed }}'+data.itemid+'</div>';
+                    html += '<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ text_listed }}'+data.itemid+'</div>';
                   } else {
                     $.each(data.errors, function(k,v) {
-                      html += '<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> '+v+'</div>';
+                      html += '<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> '+v+'</div>';
                     });
                   }
                   $('#product_messages_'+data.i).html(html).show();

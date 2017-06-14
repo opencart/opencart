@@ -263,6 +263,8 @@ class ControllerCatalogFilter extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_form'] = !isset($this->request->get['filter_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+		$data['text_group'] = $this->language->get('text_group');
+		$data['text_value'] = $this->language->get('text_value');
 
 		$data['entry_group'] = $this->language->get('entry_group');
 		$data['entry_name'] = $this->language->get('entry_name');

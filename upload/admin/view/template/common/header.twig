@@ -34,51 +34,42 @@
 <body>
 <div id="container">
 <header id="header" class="navbar navbar-static-top">
-  <div class="navbar-header">
-    {% if logged %}
-    <a type="button" id="button-menu" class="pull-left"><i class="fa fa-indent fa-lg"></i></a>
-    {% endif %}
-    <a href="{{ home }}" class="navbar-brand"><img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}" /></a></div>
+
+  <div id="header-logo" class="navbar-header">
+    <a href="{{ home }}" class="navbar-brand">
+      <img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}" />
+      <i class="fa fa-opencart"></i><span class="hidden">{{ heading_title }}</span>
+    </a>
+  </div>
+  <a role="button" id="button-menu"><i class="fa fa-indent fa-lg"></i></a>
+
   {% if logged %}
-  <ul class="nav pull-right">
-    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">{% if alerts > 0 %} <span class="label label-danger pull-left">{{ alerts }}</span>{% endif %} <i class="fa fa-bell fa-lg"></i></a>
-      <ul class="dropdown-menu dropdown-menu-right alerts-dropdown">
-        <li class="dropdown-header">{{ text_order }}</li>
-        <li><a href="{{ processing_status }}" style="display: block; overflow: auto;"><span class="label label-warning pull-right">{{ processing_total }}</span>{{ text_processing_status }}</a></li>
-        <li><a href="{{ complete_status }}"><span class="label label-success pull-right">{{ complete_total }}</span>{{ text_complete_status }}</a></li>
-        <li><a href="{{ return }}"><span class="label label-danger pull-right">{{ return_total }}</span>{{ text_return }}</a></li>
-        <li class="divider"></li>
-        <li class="dropdown-header">{{ text_customer }}</li>
-        <li><a href="{{ online }}"><span class="label label-success pull-right">{{ online_total }}</span>{{ text_online }}</a></li>
-        <li><a href="{{ customer_approval }}"><span class="label label-danger pull-right">{{ customer_total }}</span>{{ text_approval }}</a></li>
-        <li class="divider"></li>
-        <li class="dropdown-header">{{ text_affiliate }}</li>
-        <li><a href="{{ affiliate_approval }}"><span class="label label-danger pull-right">{{ affiliate_total }}</span>{{ text_approval }}</a></li>
-        <li class="divider"></li>
-        <li class="dropdown-header">{{ text_product }}</li>
-        <li><a href="{{ product }}"><span class="label label-danger pull-right">{{ product_total }}</span>{{ text_stock }}</a></li>
-        <li><a href="{{ review }}"><span class="label label-danger pull-right">{{ review_total }}</span>{{ text_review }}</a></li>
-      </ul>
-    </li>
-    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog fa-lg"></i></a>
+  <ul class="nav navbar-nav navbar-right">
+    <li class="dropdown">
+      <div data-toggle="dropdown" class="navbar-text navbar-left">
+        <img id="user-profile" src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" class="img-circle" />
+        &nbsp; {{ firstname }} {{ lastname }} <i class="fa fa-caret-down fa-fw"></i>
+      </div>
+
       <ul class="dropdown-menu dropdown-menu-right">
-        <li class="dropdown-header">{{ text_profile }}</li>
-        <li><a href="{{ profile }}">{{ text_profile_edit }}</a></li>
+        <li><a href="{{ profile }}"><i class="fa fa-user-circle-o fa-fw"></i> {{ text_profile }}</a></li>
+        <li role="separator" class="divider"></li>
         <li class="dropdown-header">{{ text_store }}</li>
         {% for store in stores %}
         <li><a href="{{ store.href }}" target="_blank">{{ store.name }}</a></li>
         {% endfor %}
-      </ul>
-    </li>
-    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-life-ring fa-lg"></i></a>
-      <ul class="dropdown-menu dropdown-menu-right">
+        <li role="separator" class="divider"></li>
         <li class="dropdown-header">{{ text_help }}</li>
-        <li><a href="http://www.opencart.com" target="_blank">{{ text_homepage }}</a></li>
-        <li><a href="http://docs.opencart.com" target="_blank">{{ text_documentation }}</a></li>
-        <li><a href="http://forum.opencart.com" target="_blank">{{ text_support }}</a></li>
+        <li><a href="http://www.opencart.com" target="_blank"><i class="fa fa-opencart fa-fw"></i> {{ text_homepage }}</a></li>
+        <li><a href="http://docs.opencart.com" target="_blank"><i class="fa fa-file-text-o fa-fw"></i> {{ text_documentation }}</a></li>
+        <li><a href="http://forum.opencart.com" target="_blank"><i class="fa fa-comments-o fa-fw"></i> {{ text_support }}</a></li>
       </ul>
     </li>
-    <li><a href="{{ logout }}"><span class="hidden-xs hidden-sm hidden-md">{{ text_logout }}</span> <i class="fa fa-sign-out fa-lg"></i></a></li>
+    <li><a href="{{ logout }}">
+      <i class="fa fa-sign-out"></i>
+      <span class="hidden-xs hidden-sm hidden-md">{{ text_logout }}</span>
+      </a>
+    </li>
   </ul>
   {% endif %}
 </header>

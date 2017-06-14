@@ -961,11 +961,11 @@ $('select[name=\'currency\']').on('change', function() {
 			$('select[name=\'currency\']').prop('disabled', false);
 		},
 		success: function(json) {
-			$('.alert, .text-danger').remove();
+			$('.alert-dismissible, .text-danger').remove();
 			$('.form-group').removeClass('has-error');
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
 				$('select[name=\'currency\']').closest('.form-group').addClass('has-error');
@@ -1098,12 +1098,12 @@ $('#button-customer').on('click', function() {
 			 $('#button-customer').button('reset');
 		},
 		success: function(json) {
-			$('.alert, .text-danger').remove();
+			$('.alert-dismissible, .text-danger').remove();
 			$('.form-group').removeClass('has-error');
 
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				for (i in json['error']) {
@@ -1133,11 +1133,11 @@ $('#button-customer').on('click', function() {
                         $('#button-product-add').button('reset');
                     },
                     success: function(json) {
-                        $('.alert, .text-danger').remove();
+                        $('.alert-dismissible, .text-danger').remove();
                         $('.form-group').removeClass('has-error');
 
                         if (json['error'] && json['error']['warning']) {
-                            $('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                            $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                         }
             		},
                     error: function(xhr, ajaxOptions, thrownError) {
@@ -1159,11 +1159,11 @@ $('#button-customer').on('click', function() {
                             $('#button-voucher-add').button('reset');
                         },
                         success: function(json) {
-                            $('.alert, .text-danger').remove();
+                            $('.alert-dismissible, .text-danger').remove();
                             $('.form-group').removeClass('has-error');
 
                             if (json['error'] && json['error']['warning']) {
-                                $('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                                $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                             }
                 		},
                         error: function(xhr, ajaxOptions, thrownError) {
@@ -1397,12 +1397,12 @@ $('#button-product-add').on('click', function() {
 			$('#button-product-add').button('reset');
 		},
 		success: function(json) {
-			$('.alert, .text-danger').remove();
+			$('.alert-dismissible, .text-danger').remove();
 			$('.form-group').removeClass('has-error');
 
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				if (json['error']['option']) {
@@ -1418,7 +1418,7 @@ $('#button-product-add').on('click', function() {
 				}
 
 				if (json['error']['store']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['store'] + '</div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['store'] + '</div>');
 				}
 
 				// Highlight any found errors
@@ -1449,12 +1449,12 @@ $('#button-voucher-add').on('click', function() {
 			$('#button-voucher-add').button('reset');
 		},
 		success: function(json) {
-			$('.alert, .text-danger').remove();
+			$('.alert-dismissible, .text-danger').remove();
 			$('.form-group').removeClass('has-error');
 
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				for (i in json['error']) {
@@ -1503,11 +1503,11 @@ $('#cart').delegate('.btn-danger', 'click', function() {
 			$(node).button('reset');
 		},
 		success: function(json) {
-			$('.alert, .text-danger').remove();
+			$('.alert-dismissible, .text-danger').remove();
 
 			// Check for errors
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			} else {
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -1536,15 +1536,15 @@ $('#cart').delegate('.btn-primary', 'click', function() {
             $(node).button('reset');
         },
         success: function(json) {
-            $('.alert, .text-danger').remove();
+            $('.alert-dismissible, .text-danger').remove();
             $('.form-group').removeClass('has-error');
 
             if (json['error'] && json['error']['warning']) {
-                $('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
             }
 
             if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -1669,13 +1669,13 @@ $('#button-payment-address').on('click', function() {
 			$('#button-payment-address').button('reset');
 		},
 		success: function(json) {
-			$('.alert, .text-danger').remove();
+			$('.alert-dismissible, .text-danger').remove();
 			$('.form-group').removeClass('has-error');
 
 			// Check for errors
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				for (i in json['error']) {
@@ -1704,7 +1704,7 @@ $('#button-payment-address').on('click', function() {
 					},
 					success: function(json) {
 						if (json['error']) {
-							$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+							$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 						} else {
 							html = '<option value="">{{ text_select }}</option>';
 
@@ -1853,13 +1853,13 @@ $('#button-shipping-address').on('click', function() {
 			$('#button-shipping-address').button('reset');
 		},
 		success: function(json) {
-			$('.alert, .text-danger').remove();
+			$('.alert-dismissible, .text-danger').remove();
 			$('.form-group').removeClass('has-error');
 
 			// Check for errors
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				for (i in json['error']) {
@@ -1887,7 +1887,7 @@ $('#button-shipping-address').on('click', function() {
 					},
 					success: function(json) {
 						if (json['error']) {
-							$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+							$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 						} else {
 							// Shipping Methods
 							html = '<option value="">{{ text_select }}</option>';
@@ -1947,18 +1947,18 @@ $('#button-shipping-method').on('click', function() {
 			$('#button-shipping-method').button('reset');
 		},
 		success: function(json) {
-			$('.alert, .text-danger').remove();
+			$('.alert-dismissible, .text-danger').remove();
 			$('.form-group').removeClass('has-error');
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
 				$('select[name=\'shipping_method\']').closest('.form-group').addClass('has-error');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -1985,18 +1985,18 @@ $('#button-payment-method').on('click', function() {
 			$('#button-payment-method').button('reset');
 		},
 		success: function(json) {
-			$('.alert, .text-danger').remove();
+			$('.alert-dismissible, .text-danger').remove();
 			$('.form-group').removeClass('has-error');
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
 				$('select[name=\'payment_method\']').closest('.form-group').addClass('has-error');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -2023,18 +2023,18 @@ $('#button-coupon').on('click', function() {
 			$('#button-coupon').button('reset');
 		},
 		success: function(json) {
-			$('.alert, .text-danger').remove();
+			$('.alert-dismissible, .text-danger').remove();
 			$('.form-group').removeClass('has-error');
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
 				$('input[name=\'coupon\']').closest('.form-group').addClass('has-error');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -2061,18 +2061,18 @@ $('#button-voucher').on('click', function() {
 			$('#button-voucher').button('reset');
 		},
 		success: function(json) {
-			$('.alert, .text-danger').remove();
+			$('.alert-dismissible, .text-danger').remove();
 			$('.form-group').removeClass('has-error');
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
 				$('input[name=\'voucher\']').closest('.form-group').addClass('has-error');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -2099,18 +2099,18 @@ $('#button-reward').on('click', function() {
 			$('#button-reward').button('reset');
 		},
 		success: function(json) {
-			$('.alert, .text-danger').remove();
+			$('.alert-dismissible, .text-danger').remove();
 			$('.form-group').removeClass('has-error');
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
 				$('input[name=\'reward\']').closest('.form-group').addClass('has-error');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -2170,14 +2170,14 @@ $('#button-save').on('click', function() {
 			$('#button-save').button('reset');
 		},
 		success: function(json) {
-			$('.alert, .text-danger').remove();
+			$('.alert-dismissible, .text-danger').remove();
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
                 // Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -2315,21 +2315,21 @@ $('#button-refresh').on('click', function() {
 		dataType: 'json',
 		crossDomain: true,
 		success: function(json) {
-			$('.alert-danger, .text-danger').remove();
+			$('.alert-dismissible').remove();
 
 			// Check for errors
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				if (json['error']['stock']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['stock'] + '</div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['stock'] + '</div>');
 				}
 
 				if (json['error']['minimum']) {
 					for (i in json['error']['minimum']) {
-						$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['minimum'][i] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+						$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['minimum'][i] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 					}
 				}
 			}

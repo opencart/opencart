@@ -324,6 +324,7 @@ class ControllerCustomerCustomField extends Controller {
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_regex'] = $this->language->get('text_regex');
+		$data['text_custom_field'] = $this->language->get('text_custom_field');
 		$data['text_value'] = $this->language->get('text_value');
 
 		$data['entry_name'] = $this->language->get('entry_name');

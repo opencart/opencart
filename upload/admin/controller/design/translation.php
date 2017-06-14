@@ -411,7 +411,7 @@ class ControllerDesignTranslation extends Controller {
 		
 		$directory = DIR_CATALOG . 'language/';
 		
-		if ($language_info && is_file($directory . $language_info['code'] . '/' . $route . '.php') && substr(str_replace('\\', '/', realpath($directory . $language_info['code'] . '/' . $route . '.php')), 0, strlen($directory)) == $directory) {
+		if ($language_info && is_file($directory . $language_info['code'] . '/' . $route . '.php') && substr(str_replace('\\', '/', realpath($directory . $language_info['code'] . '/' . $route . '.php')), 0, strlen($directory)) == str_replace('\\', '/', $directory)) {
 			$_ = array();
 						
 			include($directory . $language_info['code'] . '/' . $route . '.php');

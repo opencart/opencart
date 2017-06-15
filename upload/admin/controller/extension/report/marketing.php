@@ -15,18 +15,6 @@ class ControllerExtensionReportMarketing extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report', true));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-		
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -134,28 +122,6 @@ class ControllerExtensionReportMarketing extends Controller {
 				'action'   => $this->url->link('marketing/marketing/edit', 'user_token=' . $this->session->data['user_token'] . '&marketing_id=' . $result['marketing_id'], true)
 			);
 		}
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_filter'] = $this->language->get('text_filter');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-		$data['text_all_status'] = $this->language->get('text_all_status');
-
-		$data['column_campaign'] = $this->language->get('column_campaign');
-		$data['column_code'] = $this->language->get('column_code');
-		$data['column_clicks'] = $this->language->get('column_clicks');
-		$data['column_orders'] = $this->language->get('column_orders');
-		$data['column_total'] = $this->language->get('column_total');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['entry_date_start'] = $this->language->get('entry_date_start');
-		$data['entry_date_end'] = $this->language->get('entry_date_end');
-		$data['entry_status'] = $this->language->get('entry_status');
-
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_filter'] = $this->language->get('button_filter');
 
 		$data['user_token'] = $this->session->data['user_token'];
 

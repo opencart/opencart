@@ -126,20 +126,6 @@ class ControllerSettingStore extends Controller {
 			);
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_url'] = $this->language->get('column_url');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_add'] = $this->language->get('button_add');
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_delete'] = $this->language->get('button_delete');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -168,90 +154,7 @@ class ControllerSettingStore extends Controller {
 	}
 
 	protected function getForm() {
-		$data['heading_title'] = $this->language->get('heading_title');
-
 		$data['text_form'] = !isset($this->request->get['store_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-		$data['text_select'] = $this->language->get('text_select');
-		$data['text_none'] = $this->language->get('text_none');
-		$data['text_yes'] = $this->language->get('text_yes');
-		$data['text_no'] = $this->language->get('text_no');
-		$data['text_tax'] = $this->language->get('text_tax');
-		$data['text_account'] = $this->language->get('text_account');
-		$data['text_checkout'] = $this->language->get('text_checkout');
-		$data['text_stock'] = $this->language->get('text_stock');
-		$data['text_shipping'] = $this->language->get('text_shipping');
-		$data['text_payment'] = $this->language->get('text_payment');
-
-		$data['entry_url'] = $this->language->get('entry_url');
-		$data['entry_ssl'] = $this->language->get('entry_ssl');
-		$data['entry_meta_title'] = $this->language->get('entry_meta_title');
-		$data['entry_meta_description'] = $this->language->get('entry_meta_description');
-		$data['entry_meta_keyword'] = $this->language->get('entry_meta_keyword');
-		$data['entry_theme'] = $this->language->get('entry_theme');
-		$data['entry_layout'] = $this->language->get('entry_layout');
-		$data['entry_name'] = $this->language->get('entry_name');
-		$data['entry_owner'] = $this->language->get('entry_owner');
-		$data['entry_address'] = $this->language->get('entry_address');
-		$data['entry_geocode'] = $this->language->get('entry_geocode');
-		$data['entry_email'] = $this->language->get('entry_email');
-		$data['entry_telephone'] = $this->language->get('entry_telephone');
-		$data['entry_fax'] = $this->language->get('entry_fax');
-		$data['entry_image'] = $this->language->get('entry_image');
-		$data['entry_open'] = $this->language->get('entry_open');
-		$data['entry_comment'] = $this->language->get('entry_comment');
-		$data['entry_location'] = $this->language->get('entry_location');
-		$data['entry_country'] = $this->language->get('entry_country');
-		$data['entry_zone'] = $this->language->get('entry_zone');
-		$data['entry_language'] = $this->language->get('entry_language');
-		$data['entry_currency'] = $this->language->get('entry_currency');
-		$data['entry_tax'] = $this->language->get('entry_tax');
-		$data['entry_tax_default'] = $this->language->get('entry_tax_default');
-		$data['entry_tax_customer'] = $this->language->get('entry_tax_customer');
-		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
-		$data['entry_customer_group_display'] = $this->language->get('entry_customer_group_display');
-		$data['entry_customer_price'] = $this->language->get('entry_customer_price');
-		$data['entry_account'] = $this->language->get('entry_account');
-		$data['entry_cart_weight'] = $this->language->get('entry_cart_weight');
-		$data['entry_checkout_guest'] = $this->language->get('entry_checkout_guest');
-		$data['entry_checkout'] = $this->language->get('entry_checkout');
-		$data['entry_order_status'] = $this->language->get('entry_order_status');
-		$data['entry_stock_display'] = $this->language->get('entry_stock_display');
-		$data['entry_stock_checkout'] = $this->language->get('entry_stock_checkout');
-		$data['entry_ajax_cart'] = $this->language->get('entry_ajax_cart');
-		$data['entry_logo'] = $this->language->get('entry_logo');
-		$data['entry_icon'] = $this->language->get('entry_icon');
-		$data['entry_secure'] = $this->language->get('entry_secure');
-
-		$data['help_url'] = $this->language->get('help_url');
-		$data['help_ssl'] = $this->language->get('help_ssl');
-		$data['help_geocode'] = $this->language->get('help_geocode');
-		$data['help_open'] = $this->language->get('help_open');
-		$data['help_comment'] = $this->language->get('help_comment');
-		$data['help_location'] = $this->language->get('help_location');
-		$data['help_currency'] = $this->language->get('help_currency');
-		$data['help_tax_default'] = $this->language->get('help_tax_default');
-		$data['help_tax_customer'] = $this->language->get('help_tax_customer');
-		$data['help_customer_group'] = $this->language->get('help_customer_group');
-		$data['help_customer_group_display'] = $this->language->get('help_customer_group_display');
-		$data['help_customer_price'] = $this->language->get('help_customer_price');
-		$data['help_account'] = $this->language->get('help_account');
-		$data['help_checkout_guest'] = $this->language->get('help_checkout_guest');
-		$data['help_checkout'] = $this->language->get('help_checkout');
-		$data['help_order_status'] = $this->language->get('help_order_status');
-		$data['help_stock_display'] = $this->language->get('help_stock_display');
-		$data['help_stock_checkout'] = $this->language->get('help_stock_checkout');
-		$data['help_icon'] = $this->language->get('help_icon');
-		$data['help_secure'] = $this->language->get('help_secure');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-
-		$data['tab_general'] = $this->language->get('tab_general');
-		$data['tab_store'] = $this->language->get('tab_store');
-		$data['tab_local'] = $this->language->get('tab_local');
-		$data['tab_option'] = $this->language->get('tab_option');
-		$data['tab_image'] = $this->language->get('tab_image');
-		$data['tab_server'] = $this->language->get('tab_server');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];

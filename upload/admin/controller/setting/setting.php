@@ -22,7 +22,7 @@ class ControllerSettingSetting extends Controller {
 
 			$this->response->redirect($this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'], true));
 		}
-
+	/*
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_edit'] = $this->language->get('text_edit');
@@ -216,7 +216,7 @@ class ControllerSettingSetting extends Controller {
 		$data['tab_image'] = $this->language->get('tab_image');
 		$data['tab_mail'] = $this->language->get('tab_mail');
 		$data['tab_server'] = $this->language->get('tab_server');
-
+*/
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {

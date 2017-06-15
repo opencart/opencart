@@ -1140,10 +1140,6 @@ class ControllerCustomerCustomer extends Controller {
 
 			$this->document->setTitle($this->language->get('heading_title'));
 
-			$data['heading_title'] = $this->language->get('heading_title');
-
-			$data['text_not_found'] = $this->language->get('text_not_found');
-
 			$data['breadcrumbs'] = array();
 
 			$data['breadcrumbs'][] = array(
@@ -1168,11 +1164,6 @@ class ControllerCustomerCustomer extends Controller {
 		$this->load->language('customer/customer');
 
 		$this->load->model('customer/customer');
-
-		$data['text_no_results'] = $this->language->get('text_no_results');
-
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_comment'] = $this->language->get('column_comment');
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
@@ -1229,13 +1220,6 @@ class ControllerCustomerCustomer extends Controller {
 		$this->load->language('customer/customer');
 
 		$this->load->model('customer/customer');
-
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_balance'] = $this->language->get('text_balance');
-
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_description'] = $this->language->get('column_description');
-		$data['column_amount'] = $this->language->get('column_amount');
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
@@ -1296,13 +1280,6 @@ class ControllerCustomerCustomer extends Controller {
 
 		$this->load->model('customer/customer');
 
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_balance'] = $this->language->get('text_balance');
-
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_description'] = $this->language->get('column_description');
-		$data['column_points'] = $this->language->get('column_points');
-
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
 		} else {
@@ -1361,12 +1338,6 @@ class ControllerCustomerCustomer extends Controller {
 		$this->load->language('customer/customer');
 
 		$this->load->model('customer/customer');
-
-		$data['text_no_results'] = $this->language->get('text_no_results');
-
-		$data['column_ip'] = $this->language->get('column_ip');
-		$data['column_total'] = $this->language->get('column_total');
-		$data['column_date_added'] = $this->language->get('column_date_added');
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];

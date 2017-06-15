@@ -5,17 +5,6 @@ class ControllerToolBackup extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_select_all'] = $this->language->get('text_select_all');
-		$data['text_unselect_all'] = $this->language->get('text_unselect_all');
-
-		$data['entry_export'] = $this->language->get('entry_export');
-		$data['entry_import'] = $this->language->get('entry_import');
-
-		$data['button_export'] = $this->language->get('button_export');
-		$data['button_import'] = $this->language->get('button_import');
-
 		if (isset($this->session->data['error'])) {
 			$data['error_warning'] = $this->session->data['error'];
 

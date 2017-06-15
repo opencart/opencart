@@ -17,65 +17,6 @@ class ControllerExtensionShippingFedex extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping', true));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_yes'] = $this->language->get('text_yes');
-		$data['text_no'] = $this->language->get('text_no');
-		$data['text_select_all'] = $this->language->get('text_select_all');
-		$data['text_unselect_all'] = $this->language->get('text_unselect_all');
-		$data['text_all_zones'] = $this->language->get('text_all_zones');
-		$data['text_none'] = $this->language->get('text_none');
-		$data['text_regular_pickup'] = $this->language->get('text_regular_pickup');
-		$data['text_request_courier'] = $this->language->get('text_request_courier');
-		$data['text_drop_box'] = $this->language->get('text_drop_box');
-		$data['text_business_service_center'] = $this->language->get('text_business_service_center');
-		$data['text_station'] = $this->language->get('text_station');
-
-		$data['text_fedex_envelope'] = $this->language->get('text_fedex_envelope');
-		$data['text_fedex_pak'] = $this->language->get('text_fedex_pak');
-		$data['text_fedex_box'] = $this->language->get('text_fedex_box');
-		$data['text_fedex_tube'] = $this->language->get('text_fedex_tube');
-		$data['text_fedex_10kg_box'] = $this->language->get('text_fedex_10kg_box');
-		$data['text_fedex_25kg_box'] = $this->language->get('text_fedex_25kg_box');
-		$data['text_your_packaging'] = $this->language->get('text_your_packaging');
-		$data['text_list_rate'] = $this->language->get('text_list_rate');
-		$data['text_account_rate'] = $this->language->get('text_account_rate');
-
-		$data['entry_key'] = $this->language->get('entry_key');
-		$data['entry_password'] = $this->language->get('entry_password');
-		$data['entry_account'] = $this->language->get('entry_account');
-		$data['entry_meter'] = $this->language->get('entry_meter');
-		$data['entry_postcode'] = $this->language->get('entry_postcode');
-		$data['entry_test'] = $this->language->get('entry_test');
-		$data['entry_service'] = $this->language->get('entry_service');
-		$data['entry_dimension'] = $this->language->get('entry_dimension');
-		$data['entry_length_class'] = $this->language->get('entry_length_class');
-		$data['entry_length'] = $this->language->get('entry_length');
-		$data['entry_width'] = $this->language->get('entry_width');
-		$data['entry_height'] = $this->language->get('entry_height');
-		$data['entry_dropoff_type'] = $this->language->get('entry_dropoff_type');
-		$data['entry_packaging_type'] = $this->language->get('entry_packaging_type');
-		$data['entry_rate_type'] = $this->language->get('entry_rate_type');
-		$data['entry_display_time'] = $this->language->get('entry_display_time');
-		$data['entry_display_weight'] = $this->language->get('entry_display_weight');
-		$data['entry_weight_class'] = $this->language->get('entry_weight_class');
-		$data['entry_weight_class'] = $this->language->get('entry_weight_class');
-		$data['entry_tax_class'] = $this->language->get('entry_tax_class');
-		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-
-		$data['help_display_time'] = $this->language->get('help_display_time');
-		$data['help_length_class'] = $this->language->get('help_length_class');
-		$data['help_display_weight'] = $this->language->get('help_display_weight');
-		$data['help_weight_class'] = $this->language->get('help_weight_class');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {

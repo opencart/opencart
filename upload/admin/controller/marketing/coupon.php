@@ -184,24 +184,6 @@ class ControllerMarketingCoupon extends Controller {
 			);
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_code'] = $this->language->get('column_code');
-		$data['column_discount'] = $this->language->get('column_discount');
-		$data['column_date_start'] = $this->language->get('column_date_start');
-		$data['column_date_end'] = $this->language->get('column_date_end');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_add'] = $this->language->get('button_add');
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_delete'] = $this->language->get('button_delete');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -272,47 +254,7 @@ class ControllerMarketingCoupon extends Controller {
 	}
 
 	protected function getForm() {
-		$data['heading_title'] = $this->language->get('heading_title');
-
 		$data['text_form'] = !isset($this->request->get['coupon_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_yes'] = $this->language->get('text_yes');
-		$data['text_no'] = $this->language->get('text_no');
-		$data['text_percent'] = $this->language->get('text_percent');
-		$data['text_amount'] = $this->language->get('text_amount');
-		$data['text_coupon'] = $this->language->get('text_coupon');
-
-		$data['entry_name'] = $this->language->get('entry_name');
-		$data['entry_description'] = $this->language->get('entry_description');
-		$data['entry_code'] = $this->language->get('entry_code');
-		$data['entry_discount'] = $this->language->get('entry_discount');
-		$data['entry_logged'] = $this->language->get('entry_logged');
-		$data['entry_shipping'] = $this->language->get('entry_shipping');
-		$data['entry_type'] = $this->language->get('entry_type');
-		$data['entry_total'] = $this->language->get('entry_total');
-		$data['entry_category'] = $this->language->get('entry_category');
-		$data['entry_product'] = $this->language->get('entry_product');
-		$data['entry_date_start'] = $this->language->get('entry_date_start');
-		$data['entry_date_end'] = $this->language->get('entry_date_end');
-		$data['entry_uses_total'] = $this->language->get('entry_uses_total');
-		$data['entry_uses_customer'] = $this->language->get('entry_uses_customer');
-		$data['entry_status'] = $this->language->get('entry_status');
-
-		$data['help_code'] = $this->language->get('help_code');
-		$data['help_type'] = $this->language->get('help_type');
-		$data['help_logged'] = $this->language->get('help_logged');
-		$data['help_total'] = $this->language->get('help_total');
-		$data['help_category'] = $this->language->get('help_category');
-		$data['help_product'] = $this->language->get('help_product');
-		$data['help_uses_total'] = $this->language->get('help_uses_total');
-		$data['help_uses_customer'] = $this->language->get('help_uses_customer');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-
-		$data['tab_general'] = $this->language->get('tab_general');
-		$data['tab_history'] = $this->language->get('tab_history');
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -577,13 +519,6 @@ class ControllerMarketingCoupon extends Controller {
 		$this->load->language('marketing/coupon');
 
 		$this->load->model('marketing/coupon');
-
-		$data['text_no_results'] = $this->language->get('text_no_results');
-
-		$data['column_order_id'] = $this->language->get('column_order_id');
-		$data['column_customer'] = $this->language->get('column_customer');
-		$data['column_amount'] = $this->language->get('column_amount');
-		$data['column_date_added'] = $this->language->get('column_date_added');
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];

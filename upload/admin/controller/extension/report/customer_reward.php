@@ -125,29 +125,6 @@ class ControllerExtensionReportCustomerReward extends Controller {
 			);
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_filter'] = $this->language->get('text_filter');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_customer'] = $this->language->get('column_customer');
-		$data['column_email'] = $this->language->get('column_email');
-		$data['column_customer_group'] = $this->language->get('column_customer_group');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_points'] = $this->language->get('column_points');
-		$data['column_orders'] = $this->language->get('column_orders');
-		$data['column_total'] = $this->language->get('column_total');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['entry_date_start'] = $this->language->get('entry_date_start');
-		$data['entry_date_end'] = $this->language->get('entry_date_end');
-		$data['entry_customer'] = $this->language->get('entry_customer');
-
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_filter'] = $this->language->get('button_filter');
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$url = '';

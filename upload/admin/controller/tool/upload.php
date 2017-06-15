@@ -153,24 +153,6 @@ class ControllerToolUpload extends Controller {
 			);
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-		
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_filename'] = $this->language->get('column_filename');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['entry_name'] = $this->language->get('entry_name');
-		$data['entry_date_added'] = $this->language->get('entry_date_added');
-
-		$data['button_download'] = $this->language->get('button_download');
-		$data['button_delete'] = $this->language->get('button_delete');
-		$data['button_filter'] = $this->language->get('button_filter');
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->error['warning'])) {
@@ -304,10 +286,6 @@ class ControllerToolUpload extends Controller {
 			$this->load->language('error/not_found');
 
 			$this->document->setTitle($this->language->get('heading_title'));
-
-			$data['heading_title'] = $this->language->get('heading_title');
-
-			$data['text_not_found'] = $this->language->get('text_not_found');
 
 			$data['breadcrumbs'] = array();
 

@@ -86,26 +86,6 @@ class ControllerReportOnline extends Controller {
 				'edit'        => $this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'], true)
 			);
 		}
-		
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_filter'] = $this->language->get('text_filter');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_ip'] = $this->language->get('column_ip');
-		$data['column_customer'] = $this->language->get('column_customer');
-		$data['column_url'] = $this->language->get('column_url');
-		$data['column_referer'] = $this->language->get('column_referer');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['entry_ip'] = $this->language->get('entry_ip');
-		$data['entry_customer'] = $this->language->get('entry_customer');
-
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_filter'] = $this->language->get('button_filter');
 
 		$data['user_token'] = $this->session->data['user_token'];
 

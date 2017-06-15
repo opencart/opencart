@@ -182,22 +182,6 @@ class ControllerUserApi extends Controller {
 			);
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_username'] = $this->language->get('column_username');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_date_modified'] = $this->language->get('column_date_modified');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_add'] = $this->language->get('button_add');
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_delete'] = $this->language->get('button_delete');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -266,36 +250,9 @@ class ControllerUserApi extends Controller {
 	}
 
 	protected function getForm() {
-		$data['heading_title'] = $this->language->get('heading_title');
-
 		$data['text_form'] = !isset($this->request->get['api_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_ip'] = sprintf($this->language->get('text_ip'), $this->request->server['REMOTE_ADDR']);
 		
-		$data['column_username'] = $this->language->get('column_username');
-		$data['column_token'] = $this->language->get('column_token');
-		$data['column_ip'] = $this->language->get('column_ip');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_date_modified'] = $this->language->get('column_date_modified');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['entry_username'] = $this->language->get('entry_username');
-		$data['entry_key'] = $this->language->get('entry_key');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_ip'] = $this->language->get('entry_ip');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_generate'] = $this->language->get('button_generate');
-		$data['button_ip_add'] = $this->language->get('button_ip_add');
-		$data['button_remove'] = $this->language->get('button_remove');
-
-		$data['tab_general'] = $this->language->get('tab_general');
-		$data['tab_ip'] = $this->language->get('tab_ip');
-		$data['tab_session'] = $this->language->get('tab_session');
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->error['warning'])) {

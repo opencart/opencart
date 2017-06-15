@@ -2,15 +2,6 @@
 class ControllerMarketplaceApi extends Controller {
 	public function index() {	
 		$this->load->language('marketplace/api');
-		
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_signup'] = $this->language->get('text_signup');
-		
-		$data['entry_username'] = $this->language->get('entry_username');
-		$data['entry_secret'] = $this->language->get('entry_secret');
-		
-		$data['button_save'] = $this->language->get('button_save');
 			
 		$data['user_token'] = $this->session->data['user_token'];	
 			

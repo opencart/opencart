@@ -405,8 +405,8 @@ class ControllerCatalogManufacturer extends Controller {
 				if (trim($manufacturer_seo['keyword'])) {
 					$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($manufacturer_seo['keyword']);
 		
-					if ($seo_url_info && (!isset($this->request->get['manufacturer_id']) || (($seo_url_info['query'] != 'manufacturer_id=' . $this->request->get['manufacturer_id']) && ($manufacturer_seo['store_id'] == $seo_url_info['store_id']) && ($manufacturer_seo['language_id'] == $seo_url_info['language_id'])))) {
-						$this->error['keyword'][$key] = sprintf($this->language->get('error_keyword'));
+					if ($seo_url_info && (!isset($this->request->get['manufacturer_id']) || (($seo_url_info['query'] != 'manufacturer_id=' . $this->request->get['manufacturer_id']) && ($manufacturer_seo['store_id'] == $seo_url_info['store_id'])))) {
+						$this->error['keyword'][$key] = $this->language->get('error_keyword');
 					}
 				}
 			}

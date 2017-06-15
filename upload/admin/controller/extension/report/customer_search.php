@@ -15,18 +15,6 @@ class ControllerExtensionReportCustomerSearch extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report', true));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-		
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -163,28 +151,6 @@ class ControllerExtensionReportCustomerSearch extends Controller {
 				'date_added'  => date($this->language->get('datetime_format'), strtotime($result['date_added']))
 			);
 		}
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_filter'] = $this->language->get('text_filter');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_keyword'] = $this->language->get('column_keyword');
-		$data['column_products'] = $this->language->get('column_products');
-		$data['column_category'] = $this->language->get('column_category');
-		$data['column_customer'] = $this->language->get('column_customer');
-		$data['column_ip'] = $this->language->get('column_ip');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-
-		$data['entry_date_start'] = $this->language->get('entry_date_start');
-		$data['entry_date_end'] = $this->language->get('entry_date_end');
-		$data['entry_keyword'] = $this->language->get('entry_keyword');
-		$data['entry_customer'] = $this->language->get('entry_customer');
-		$data['entry_ip'] = $this->language->get('entry_ip');
-
-		$data['button_filter'] = $this->language->get('button_filter');
 
 		$data['user_token'] = $this->session->data['user_token'];
 

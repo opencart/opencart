@@ -287,47 +287,7 @@ class ControllerCustomerCustomField extends Controller {
 	}
 
 	protected function getForm() {
-		$data['heading_title'] = $this->language->get('heading_title');
-
 		$data['text_form'] = !isset($this->request->get['custom_field_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-		$data['text_choose'] = $this->language->get('text_choose');
-		$data['text_select'] = $this->language->get('text_select');
-		$data['text_radio'] = $this->language->get('text_radio');
-		$data['text_checkbox'] = $this->language->get('text_checkbox');
-		$data['text_input'] = $this->language->get('text_input');
-		$data['text_text'] = $this->language->get('text_text');
-		$data['text_textarea'] = $this->language->get('text_textarea');
-		$data['text_file'] = $this->language->get('text_file');
-		$data['text_date'] = $this->language->get('text_date');
-		$data['text_datetime'] = $this->language->get('text_datetime');
-		$data['text_time'] = $this->language->get('text_time');
-		$data['text_account'] = $this->language->get('text_account');
-		$data['text_address'] = $this->language->get('text_address');
-		$data['text_affiliate'] = $this->language->get('text_affiliate');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_regex'] = $this->language->get('text_regex');
-		$data['text_custom_field'] = $this->language->get('text_custom_field');
-		$data['text_value'] = $this->language->get('text_value');
-
-		$data['entry_name'] = $this->language->get('entry_name');
-		$data['entry_location'] = $this->language->get('entry_location');
-		$data['entry_type'] = $this->language->get('entry_type');
-		$data['entry_value'] = $this->language->get('entry_value');
-		$data['entry_validation'] = $this->language->get('entry_validation');
-		$data['entry_custom_value'] = $this->language->get('entry_custom_value');
-		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
-		$data['entry_required'] = $this->language->get('entry_required');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-
-		$data['help_regex'] = $this->language->get('help_regex');
-		$data['help_sort_order'] = $this->language->get('help_sort_order');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_custom_field_value_add'] = $this->language->get('button_custom_field_value_add');
-		$data['button_remove'] = $this->language->get('button_remove');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];

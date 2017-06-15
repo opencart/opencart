@@ -1199,8 +1199,8 @@ class ControllerCatalogProduct extends Controller {
 				if (trim($product_seo['keyword'])) {
 					$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($product_seo['keyword']);
 		
-					if ($seo_url_info && (!isset($this->request->get['product_id']) || (($seo_url_info['query'] != 'product_id=' . $this->request->get['product_id']) && ($product_seo['store_id'] == $seo_url_info['store_id']) && ($product_seo['language_id'] == $seo_url_info['language_id'])))) {
-						$this->error['keyword'][$key] = sprintf($this->language->get('error_keyword'));
+					if ($seo_url_info && (!isset($this->request->get['product_id']) || (($seo_url_info['query'] != 'product_id=' . $this->request->get['product_id']) && ($product_seo['store_id'] == $seo_url_info['store_id'])))) {
+						$this->error['keyword'][$key] = $this->language->get('error_keyword');
 					}
 				}
 			}

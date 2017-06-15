@@ -22,8 +22,6 @@ class ControllerAccountSuccess extends Controller {
 			'href' => $this->url->link('account/success')
 		);
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
 		if ($this->customer->isLogged()) {
 			$data['text_message'] = sprintf($this->language->get('text_message'), $this->url->link('information/contact'));
 		} else {

@@ -50,19 +50,6 @@ class ControllerExtensionExtensionPayment extends Controller {
 	}
 
 	protected function getList() {
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_no_results'] = $this->language->get('text_no_results');
-
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_sort_order'] = $this->language->get('column_sort_order');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_install'] = $this->language->get('button_install');
-		$data['button_uninstall'] = $this->language->get('button_uninstall');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {

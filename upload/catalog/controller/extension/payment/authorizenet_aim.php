@@ -3,16 +3,6 @@ class ControllerExtensionPaymentAuthorizeNetAim extends Controller {
 	public function index() {
 		$this->load->language('extension/payment/authorizenet_aim');
 
-		$data['text_credit_card'] = $this->language->get('text_credit_card');
-		$data['text_wait'] = $this->language->get('text_wait');
-
-		$data['entry_cc_owner'] = $this->language->get('entry_cc_owner');
-		$data['entry_cc_number'] = $this->language->get('entry_cc_number');
-		$data['entry_cc_expire_date'] = $this->language->get('entry_cc_expire_date');
-		$data['entry_cc_cvv2'] = $this->language->get('entry_cc_cvv2');
-
-		$data['button_confirm'] = $this->language->get('button_confirm');
-
 		$data['months'] = array();
 
 		for ($i = 1; $i <= 12; $i++) {

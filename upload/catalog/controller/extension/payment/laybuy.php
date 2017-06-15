@@ -7,24 +7,6 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 		$this->load->model('checkout/order');
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_plan_preview'] = $this->language->get('text_plan_preview');
-		$data['text_payment'] = $this->language->get('text_payment');
-		$data['text_due_date'] = $this->language->get('text_due_date');
-		$data['text_amount'] = $this->language->get('text_amount');
-		$data['text_downpayment'] = $this->language->get('text_downpayment');
-		$data['text_today'] = $this->language->get('text_today');
-		$data['text_delivery_msg'] = $this->language->get('text_delivery_msg');
-		$data['text_fee_msg'] = $this->language->get('text_fee_msg');
-		$data['text_month'] = $this->language->get('text_month');
-		$data['text_loading'] = $this->language->get('text_loading');
-
-		$data['entry_initial'] = $this->language->get('entry_initial');
-		$data['entry_months'] = $this->language->get('entry_months');
-
-		$data['button_confirm'] = $this->language->get('button_confirm');
-
 		$data['action'] = $this->url->link('extension/payment/laybuy/postToLaybuy', '', true);
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);

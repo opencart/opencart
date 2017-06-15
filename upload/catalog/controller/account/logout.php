@@ -41,12 +41,6 @@ class ControllerAccountLogout extends Controller {
 			'href' => $this->url->link('account/logout', '', true)
 		);
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_message'] = $this->language->get('text_message');
-
-		$data['button_continue'] = $this->language->get('button_continue');
-
 		$data['continue'] = $this->url->link('common/home');
 
 		$data['column_left'] = $this->load->controller('common/column_left');

@@ -2,8 +2,6 @@
 class ControllerCommonMenu extends Controller {
 	public function index() {
 		$this->load->language('common/menu');
-		
-		$data['text_all'] = $this->language->get('text_all');
 
 		// Menu
 		$this->load->model('catalog/category');

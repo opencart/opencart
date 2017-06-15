@@ -3,12 +3,6 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 	public function index() {
 		$this->load->language('extension/payment/globalpay');
 
-		$data['entry_cc_type'] = $this->language->get('entry_cc_type');
-
-		$data['help_select_card'] = $this->language->get('help_select_card');
-
-		$data['button_confirm'] = $this->language->get('button_confirm');
-
 		$this->load->model('checkout/order');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);

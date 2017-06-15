@@ -3,31 +3,6 @@ class ControllerExtensionPaymentBluePayRedirect extends Controller {
 	public function index() {
 		$this->load->language('extension/payment/bluepay_redirect');
 
-		$data['text_credit_card'] = $this->language->get('text_credit_card');
-		$data['text_loading'] = $this->language->get('text_loading');
-		$data['text_card_type'] = $this->language->get('text_card_type');
-		$data['text_card_name'] = $this->language->get('text_card_name');
-		$data['text_card_digits'] = $this->language->get('text_card_digits');
-		$data['text_card_expiry'] = $this->language->get('text_card_expiry');
-
-		$data['entry_card'] = $this->language->get('entry_card');
-		$data['entry_card_existing'] = $this->language->get('entry_card_existing');
-		$data['entry_card_new'] = $this->language->get('entry_card_new');
-		$data['entry_card_save'] = $this->language->get('entry_card_save');
-		$data['entry_cc_owner'] = $this->language->get('entry_cc_owner');
-		$data['entry_cc_number'] = $this->language->get('entry_cc_number');
-		$data['entry_cc_expire_date'] = $this->language->get('entry_cc_expire_date');
-		$data['entry_cc_cvv2'] = $this->language->get('entry_cc_cvv2');
-		$data['entry_cc_address'] = $this->language->get('entry_cc_address');
-		$data['entry_cc_city'] = $this->language->get('entry_cc_city');
-		$data['entry_cc_state'] = $this->language->get('entry_cc_state');
-		$data['entry_cc_zipcode'] = $this->language->get('entry_cc_zipcode');
-		$data['entry_cc_phone'] = $this->language->get('entry_cc_phone');
-		$data['entry_cc_email'] = $this->language->get('entry_cc_email');
-		$data['entry_cc_choice'] = $this->language->get('entry_cc_choice');
-
-		$data['button_confirm'] = $this->language->get('button_confirm');
-
 		$data['months'] = array();
 
 		for ($i = 1; $i <= 12; $i++) {

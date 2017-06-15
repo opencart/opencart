@@ -43,21 +43,6 @@ class ControllerAccountWishList extends Controller {
 			'href' => $this->url->link('account/wishlist')
 		);
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_empty'] = $this->language->get('text_empty');
-
-		$data['column_image'] = $this->language->get('column_image');
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_model'] = $this->language->get('column_model');
-		$data['column_stock'] = $this->language->get('column_stock');
-		$data['column_price'] = $this->language->get('column_price');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_continue'] = $this->language->get('button_continue');
-		$data['button_cart'] = $this->language->get('button_cart');
-		$data['button_remove'] = $this->language->get('button_remove');
-
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
 

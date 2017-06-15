@@ -5,8 +5,6 @@ class ControllerExtensionPaymentNochex extends Controller {
 	public function index() {
 		$this->load->language('extension/payment/nochex');
 
-		$data['button_confirm'] = $this->language->get('button_confirm');
-
 		$this->load->model('checkout/order');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);

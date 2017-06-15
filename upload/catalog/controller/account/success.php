@@ -30,8 +30,6 @@ class ControllerAccountSuccess extends Controller {
 			$data['text_message'] = sprintf($this->language->get('text_approval'), $this->config->get('config_name'), $this->url->link('information/contact'));
 		}
 
-		$data['button_continue'] = $this->language->get('button_continue');
-
 		if ($this->cart->hasProducts()) {
 			$data['continue'] = $this->url->link('checkout/cart');
 		} else {

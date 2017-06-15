@@ -2,9 +2,7 @@
 class ControllerExtensionPaymentPPExpress extends Controller {
 	public function index() {
 		$this->load->language('extension/payment/pp_express');
-
-		$data['button_continue'] = $this->language->get('button_continue');
-		$data['text_loading'] = $this->language->get('text_loading');
+		
 		$data['payment_pp_express_incontext_disable'] = $this->config->get('payment_pp_express_incontext_disable');
 
 		if ($this->config->get('payment_pp_express_test') == 1) {
@@ -386,8 +384,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 		$this->document->setTitle($this->language->get('express_text_title'));
 
-		$data['heading_title'] = $this->language->get('express_text_title');
-
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -414,19 +410,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				$points_total += $product['points'];
 			}
 		}
-
-		$data['text_trial'] = $this->language->get('text_trial');
-		$data['text_recurring'] = $this->language->get('text_recurring');
-		$data['text_length'] = $this->language->get('text_length');
-		$data['text_recurring_item'] = $this->language->get('text_recurring_item');
-		$data['text_payment_recurring'] = $this->language->get('text_payment_recurring');
-		$data['text_until_cancelled'] = $this->language->get('text_until_cancelled');
-
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_model'] = $this->language->get('column_model');
-		$data['column_quantity'] = $this->language->get('column_quantity');
-		$data['column_price'] = $this->language->get('column_price');
-		$data['column_total'] = $this->language->get('column_total');
 
 		$data['button_shipping'] = $this->language->get('button_express_shipping');
 		$data['button_confirm'] = $this->language->get('button_express_confirm');

@@ -12,10 +12,6 @@ class ControllerExtensionModuleStore extends Controller {
 		if ($status) {
 			$this->load->language('extension/module/store');
 
-			$data['heading_title'] = $this->language->get('heading_title');
-
-			$data['text_store'] = $this->language->get('text_store');
-
 			$data['store_id'] = $this->config->get('config_store_id');
 
 			$data['stores'] = array();

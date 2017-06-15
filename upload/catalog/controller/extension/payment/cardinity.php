@@ -3,15 +3,6 @@ class ControllerExtensionPaymentCardinity extends Controller {
 	public function index() {
 		$this->load->language('extension/payment/cardinity');
 
-		$data['entry_holder'] = $this->language->get('entry_holder');
-		$data['entry_pan'] = $this->language->get('entry_pan');
-		$data['entry_expires'] = $this->language->get('entry_expires');
-		$data['entry_expiration_month'] = $this->language->get('entry_expiration_month');
-		$data['entry_expiration_year'] = $this->language->get('entry_expiration_year');
-		$data['entry_cvc'] = $this->language->get('entry_cvc');
-
-		$data['button_confirm'] = $this->language->get('button_confirm');
-
 		$data['months'] = array();
 
 		for ($i = 1; $i <= 12; $i++) {

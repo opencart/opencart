@@ -17,53 +17,6 @@ class ControllerExtensionPaymentPPPayflowIframe extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_all_zones'] = $this->language->get('text_all_zones');
-		$data['text_yes'] = $this->language->get('text_yes');
-		$data['text_no'] = $this->language->get('text_no');
-		$data['text_authorization'] = $this->language->get('text_authorization');
-		$data['text_sale'] = $this->language->get('text_sale');
-		$data['text_iframe'] = $this->language->get('text_iframe');
-		$data['text_redirect'] = $this->language->get('text_redirect');
-
-		$data['entry_vendor'] = $this->language->get('entry_vendor');
-		$data['entry_user'] = $this->language->get('entry_user');
-		$data['entry_password'] = $this->language->get('entry_password');
-		$data['entry_partner'] = $this->language->get('entry_partner');
-		$data['entry_test'] = $this->language->get('entry_test');
-		$data['entry_debug'] = $this->language->get('entry_debug');
-		$data['entry_transaction'] = $this->language->get('entry_transaction');
-		$data['entry_total'] = $this->language->get('entry_total');
-		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-		$data['entry_cancel_url'] = $this->language->get('entry_cancel_url');
-		$data['entry_error_url'] = $this->language->get('entry_error_url');
-		$data['entry_return_url'] = $this->language->get('entry_return_url');
-		$data['entry_post_url'] = $this->language->get('entry_post_url');
-		$data['entry_checkout_method'] = $this->language->get('entry_checkout_method');
-		$data['entry_order_status'] = $this->language->get('entry_order_status');
-
-		$data['help_vendor'] = $this->language->get('help_vendor');
-		$data['help_user'] = $this->language->get('help_user');
-		$data['help_password'] = $this->language->get('help_password');
-		$data['help_debug'] = $this->language->get('help_debug');
-		$data['help_total'] = $this->language->get('help_total');
-		$data['help_test'] = $this->language->get('help_test');
-		$data['help_partner'] = $this->language->get('help_partner');
-		$data['help_checkout_method'] = $this->language->get('help_checkout_method');
-
-		$data['tab_settings'] = $this->language->get('tab_settings');
-		$data['tab_order_status'] = $this->language->get('tab_order_status');
-		$data['tab_checkout_customisation'] = $this->language->get('tab_checkout_customisation');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -263,15 +216,6 @@ class ControllerExtensionPaymentPPPayflowIframe extends Controller {
 
 			$data['user_token'] = $this->session->data['user_token'];
 
-			$data['heading_refund'] = $this->language->get('heading_refund');
-
-			$data['entry_transaction_reference'] = $this->language->get('entry_transaction_reference');
-			$data['entry_transaction_amount'] = $this->language->get('entry_transaction_amount');
-			$data['entry_refund_amount'] = $this->language->get('entry_refund_amount');
-
-			$data['button_cancel'] = $this->language->get('button_cancel');
-			$data['button_refund'] = $this->language->get('button_refund');
-
 			$data['header'] = $this->load->controller('common/header');
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['footer'] = $this->load->controller('common/footer');
@@ -454,29 +398,10 @@ class ControllerExtensionPaymentPPPayflowIframe extends Controller {
 		$paypal_order = $this->model_extension_payment_pp_payflow_iframe->getOrder($order_id);
 
 		if ($paypal_order) {
-			$data['entry_capture_status'] = $this->language->get('entry_capture_status');
-			$data['entry_captured_amount'] = $this->language->get('entry_captured_amount');
-			$data['entry_capture'] = $this->language->get('entry_capture');
-			$data['entry_void'] = $this->language->get('entry_void');
-			$data['entry_transactions'] = $this->language->get('entry_transactions');
-			$data['entry_complete_capture'] = $this->language->get('entry_complete_capture');
-
-			$data['text_payment_info'] = $this->language->get('text_payment_info');
-			$data['text_complete'] = $this->language->get('text_complete');
-			$data['text_incomplete'] = $this->language->get('text_incomplete');
-			$data['text_confirm_void'] = $this->language->get('text_confirm_void');
-
-			$data['column_transaction_id'] = $this->language->get('column_transaction_id');
-			$data['column_transaction_type'] = $this->language->get('column_transaction_type');
-			$data['column_amount'] = $this->language->get('column_amount');
-			$data['column_time'] = $this->language->get('column_time');
-			$data['column_actions'] = $this->language->get('column_actions');
-
-			$data['button_capture'] = $this->language->get('button_capture');
-			$data['button_void'] = $this->language->get('button_void');
-
 			$data['complete'] = $paypal_order['complete'];
+			
 			$data['order_id'] = $this->request->get['order_id'];
+			
 			$data['user_token'] = $this->request->get['user_token'];
 
 			$data['transactions'] = array();

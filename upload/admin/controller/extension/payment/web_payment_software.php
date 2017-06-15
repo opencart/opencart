@@ -17,32 +17,6 @@ class ControllerExtensionPaymentWebPaymentSoftware extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_all_zones'] = $this->language->get('text_all_zones');
-		$data['text_test'] = $this->language->get('text_test');
-		$data['text_live'] = $this->language->get('text_live');
-		$data['text_authorization'] = $this->language->get('text_authorization');
-		$data['text_capture'] = $this->language->get('text_capture');
-
-		$data['entry_login'] = $this->language->get('entry_login');
-		$data['entry_key'] = $this->language->get('entry_key');
-		$data['entry_mode'] = $this->language->get('entry_mode');
-		$data['entry_method'] = $this->language->get('entry_method');
-		$data['entry_total'] = $this->language->get('entry_total');
-		$data['entry_order_status'] = $this->language->get('entry_order_status');
-		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-
-		$data['help_total'] = $this->language->get('help_total');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {

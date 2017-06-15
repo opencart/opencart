@@ -56,9 +56,6 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 			$data['url'] = 'http://pre.pilibaba.com/pilipay/payreq';
 		}
 
-		$data['button_confirm'] = $this->language->get('button_confirm');
-		$data['text_loading'] = $this->language->get('text_loading');
-
 		$data['auto_submit'] = false;
 
 		$this->model_extension_payment_pilibaba->log('Request: ' . print_r($data, true));

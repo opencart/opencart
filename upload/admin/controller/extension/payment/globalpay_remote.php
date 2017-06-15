@@ -17,69 +17,6 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_yes'] = $this->language->get('text_yes');
-		$data['text_no'] = $this->language->get('text_no');
-		$data['text_all_zones'] = $this->language->get('text_all_zones');
-		$data['text_card_type'] = $this->language->get('text_card_type');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_use_default'] = $this->language->get('text_use_default');
-		$data['entry_notification_url'] = $this->language->get('entry_notification_url');
-		$data['text_merchant_id'] = $this->language->get('text_merchant_id');
-		$data['text_subaccount'] = $this->language->get('text_subaccount');
-		$data['text_secret'] = $this->language->get('text_secret');
-		$data['text_card_visa'] = $this->language->get('text_card_visa');
-		$data['text_card_master'] = $this->language->get('text_card_master');
-		$data['text_card_amex'] = $this->language->get('text_card_amex');
-		$data['text_card_switch'] = $this->language->get('text_card_switch');
-		$data['text_card_laser'] = $this->language->get('text_card_laser');
-		$data['text_card_diners'] = $this->language->get('text_card_diners');
-		$data['text_settle_delayed'] = $this->language->get('text_settle_delayed');
-		$data['text_settle_auto'] = $this->language->get('text_settle_auto');
-		$data['text_settle_multi'] = $this->language->get('text_settle_multi');
-		$data['text_ip_message'] = $this->language->get('text_ip_message');
-
-		$data['entry_merchant_id'] = $this->language->get('entry_merchant_id');
-		$data['entry_secret'] = $this->language->get('entry_secret');
-		$data['entry_rebate_password'] = $this->language->get('entry_rebate_password');
-		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_debug'] = $this->language->get('entry_debug');
-		$data['entry_auto_settle'] = $this->language->get('entry_auto_settle');
-		$data['entry_tss_check'] = $this->language->get('entry_tss_check');
-		$data['entry_card_data_status'] = $this->language->get('entry_card_data_status');
-		$data['entry_3d'] = $this->language->get('entry_3d');
-		$data['entry_liability_shift'] = $this->language->get('entry_liability_shift');
-		$data['entry_total'] = $this->language->get('entry_total');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-		$data['entry_status_success_settled'] = $this->language->get('entry_status_success_settled');
-		$data['entry_status_success_unsettled'] = $this->language->get('entry_status_success_unsettled');
-		$data['entry_status_decline'] = $this->language->get('entry_status_decline');
-		$data['entry_status_decline_pending'] = $this->language->get('entry_status_decline_pending');
-		$data['entry_status_decline_stolen'] = $this->language->get('entry_status_decline_stolen');
-		$data['entry_status_decline_bank'] = $this->language->get('entry_status_decline_bank');
-		$data['entry_status_void'] = $this->language->get('entry_status_void');
-		$data['entry_status_rebate'] = $this->language->get('entry_status_rebate');
-
-		$data['help_total'] = $this->language->get('help_total');
-		$data['help_card_select'] = $this->language->get('help_card_select');
-		$data['help_debug'] = $this->language->get('help_debug');
-		$data['help_liability'] = $this->language->get('help_liability');
-		$data['help_card_data_status'] = $this->language->get('help_card_data_status');
-		$data['help_notification'] = $this->language->get('help_notification');
-
-		$data['tab_api'] = $this->language->get('tab_api');
-		$data['tab_account'] = $this->language->get('tab_account');
-		$data['tab_order_status'] = $this->language->get('tab_order_status');
-		$data['tab_payment'] = $this->language->get('tab_payment');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -277,27 +214,8 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 
 				$data['auto_settle'] = $globalpay_order['settle_type'];
 
-				$data['text_payment_info'] = $this->language->get('text_payment_info');
-				$data['text_order_ref'] = $this->language->get('text_order_ref');
-				$data['text_order_total'] = $this->language->get('text_order_total');
-				$data['text_total_captured'] = $this->language->get('text_total_captured');
-				$data['text_capture_status'] = $this->language->get('text_capture_status');
-				$data['text_void_status'] = $this->language->get('text_void_status');
-				$data['text_rebate_status'] = $this->language->get('text_rebate_status');
-				$data['text_transactions'] = $this->language->get('text_transactions');
-				$data['text_yes'] = $this->language->get('text_yes');
-				$data['text_no'] = $this->language->get('text_no');
-				$data['text_column_amount'] = $this->language->get('text_column_amount');
-				$data['text_column_type'] = $this->language->get('text_column_type');
-				$data['text_column_date_added'] = $this->language->get('text_column_date_added');
-				$data['button_capture'] = $this->language->get('button_capture');
-				$data['button_rebate'] = $this->language->get('button_rebate');
-				$data['button_void'] = $this->language->get('button_void');
-				$data['text_confirm_void'] = $this->language->get('text_confirm_void');
-				$data['text_confirm_capture'] = $this->language->get('text_confirm_capture');
-				$data['text_confirm_rebate'] = $this->language->get('text_confirm_rebate');
-
 				$data['order_id'] = $this->request->get['order_id'];
+				
 				$data['user_token'] = $this->request->get['user_token'];
 
 				return $this->load->view('extension/payment/globalpay_remote_order', $data);

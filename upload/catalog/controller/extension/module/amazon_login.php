@@ -11,10 +11,12 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 			}
 
 			$amazon_payment_js = $this->model_extension_payment_amazon_login_pay->getWidgetJs();
+			
 			$this->document->addScript($amazon_payment_js);
 
 			$data['payment_amazon_login_pay_client_id'] = $this->config->get('payment_amazon_login_pay_client_id');
 			$data['amazon_login_return_url'] = $this->url->link('extension/module/amazon_login/login', '', true);
+			
 			if ($this->config->get('payment_amazon_login_pay_test') == 'sandbox') {
 				$data['payment_amazon_login_pay_test'] = true;
 			}

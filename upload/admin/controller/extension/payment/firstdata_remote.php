@@ -17,58 +17,6 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_yes'] = $this->language->get('text_yes');
-		$data['text_no'] = $this->language->get('text_no');
-		$data['text_all_zones'] = $this->language->get('text_all_zones');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_notification_url'] = $this->language->get('text_notification_url');
-		$data['text_card_type'] = $this->language->get('text_card_type');
-		$data['text_merchant_id'] = $this->language->get('text_merchant_id');
-		$data['text_subaccount'] = $this->language->get('text_subaccount');
-		$data['text_secret'] = $this->language->get('text_secret');
-		$data['text_settle_delayed'] = $this->language->get('text_settle_delayed');
-		$data['text_settle_auto'] = $this->language->get('text_settle_auto');
-
-		$data['entry_certificate_path'] = $this->language->get('entry_certificate_path');
-		$data['entry_certificate_key_path'] = $this->language->get('entry_certificate_key_path');
-		$data['entry_certificate_key_pw'] = $this->language->get('entry_certificate_key_pw');
-		$data['entry_certificate_ca_path'] = $this->language->get('entry_certificate_ca_path');
-		$data['entry_merchant_id'] = $this->language->get('entry_merchant_id');
-		$data['entry_user_id'] = $this->language->get('entry_user_id');
-		$data['entry_password'] = $this->language->get('entry_password');
-		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_debug'] = $this->language->get('entry_debug');
-		$data['entry_auto_settle'] = $this->language->get('entry_auto_settle');
-		$data['entry_total'] = $this->language->get('entry_total');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-		$data['entry_enable_card_store'] = $this->language->get('entry_enable_card_store');
-		$data['entry_cards_accepted'] = $this->language->get('entry_cards_accepted');
-		$data['entry_status_success_settled'] = $this->language->get('entry_status_success_settled');
-		$data['entry_status_success_unsettled'] = $this->language->get('entry_status_success_unsettled');
-		$data['entry_status_decline'] = $this->language->get('entry_status_decline');
-		$data['entry_status_void'] = $this->language->get('entry_status_void');
-		$data['entry_status_refund'] = $this->language->get('entry_status_refund');
-
-		$data['help_certificate'] = $this->language->get('help_certificate');
-		$data['help_total'] = $this->language->get('help_total');
-		$data['help_card_select'] = $this->language->get('help_card_select');
-		$data['help_debug'] = $this->language->get('help_debug');
-		$data['help_settle'] = $this->language->get('help_settle');
-		$data['help_notification'] = $this->language->get('help_notification');
-
-		$data['tab_account'] = $this->language->get('tab_account');
-		$data['tab_order_status'] = $this->language->get('tab_order_status');
-		$data['tab_payment'] = $this->language->get('tab_payment');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();

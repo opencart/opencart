@@ -3,23 +3,6 @@ class ControllerExtensionPaymentEway extends Controller {
 	public function index() {
 		$this->load->language('extension/payment/eway');
 
-		$data['button_confirm'] = $this->language->get('button_confirm');
-		$data['button_pay'] = $this->language->get('button_pay');
-		$data['text_credit_card'] = $this->language->get('text_credit_card');
-		$data['text_loading'] = $this->language->get('text_loading');
-		$data['entry_cc_name'] = $this->language->get('entry_cc_name');
-		$data['entry_cc_number'] = $this->language->get('entry_cc_number');
-		$data['entry_cc_expire_date'] = $this->language->get('entry_cc_expire_date');
-		$data['entry_cc_cvv2'] = $this->language->get('entry_cc_cvv2');
-
-		$data['text_card_type_pp'] = $this->language->get('text_card_type_pp');
-		$data['text_card_type_mp'] = $this->language->get('text_card_type_mp');
-		$data['text_card_type_vm'] = $this->language->get('text_card_type_vm');
-		$data['text_type_help'] = $this->language->get('text_type_help');
-
-		$data['help_cvv'] = $this->language->get('help_cvv');
-		$data['help_cvv_amex'] = $this->language->get('help_cvv_amex');
-
 		$data['payment_type'] = $this->config->get('payment_eway_payment_type');
 
 		$data['months'] = array();

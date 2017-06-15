@@ -17,29 +17,6 @@ class ControllerExtensionFraudIp extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=fraud', true));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_ip_add'] = $this->language->get('text_ip_add');
-		$data['text_ip_list'] = $this->language->get('text_ip_list');
-		$data['text_loading'] = $this->language->get('text_loading');
-
-		$data['entry_ip'] = $this->language->get('entry_ip');
-		$data['entry_order_status'] = $this->language->get('entry_order_status');
-		$data['entry_status'] = $this->language->get('entry_status');
-
-		$data['help_ip'] = $this->language->get('help_ip');
-		$data['help_order_status'] = $this->language->get('help_order_status');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_ip_add'] = $this->language->get('button_ip_add');
-
-		$data['tab_general'] = $this->language->get('tab_general');
-        $data['tab_ip'] = $this->language->get('tab_ip');
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->error['warning'])) {
@@ -117,16 +94,6 @@ class ControllerExtensionFraudIp extends Controller {
 
 		$this->load->model('extension/fraud/ip');
         $this->load->model('customer/customer');
-
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_loading'] = $this->language->get('text_loading');
-
-		$data['column_ip'] = $this->language->get('column_ip');
-		$data['column_total'] = $this->language->get('column_total');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_action'] = $this->language->get('column_action');
-
-        $data['button_remove'] = $this->language->get('button_remove');
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];

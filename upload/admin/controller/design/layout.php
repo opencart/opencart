@@ -179,19 +179,6 @@ class ControllerDesignLayout extends Controller {
 			);
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_add'] = $this->language->get('button_add');
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_delete'] = $this->language->get('button_delete');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -257,30 +244,7 @@ class ControllerDesignLayout extends Controller {
 	}
 
 	protected function getForm() {
-		$data['heading_title'] = $this->language->get('heading_title');
-
 		$data['text_form'] = !isset($this->request->get['layout_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-		$data['text_route'] = $this->language->get('text_route');
-		$data['text_module'] = $this->language->get('text_module');
-		$data['text_default'] = $this->language->get('text_default');
-		$data['text_content_top'] = $this->language->get('text_content_top');
-		$data['text_content_bottom'] = $this->language->get('text_content_bottom');
-		$data['text_column_left'] = $this->language->get('text_column_left');
-		$data['text_column_right'] = $this->language->get('text_column_right');
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_remove'] = $this->language->get('text_remove');
-		
-		$data['entry_name'] = $this->language->get('entry_name');
-		$data['entry_store'] = $this->language->get('entry_store');
-		$data['entry_route'] = $this->language->get('entry_route');
-		$data['entry_module'] = $this->language->get('entry_module');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_route_add'] = $this->language->get('button_route_add');
-		$data['button_module_add'] = $this->language->get('button_module_add');
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_remove'] = $this->language->get('button_remove');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];

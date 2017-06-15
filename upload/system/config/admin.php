@@ -30,6 +30,16 @@ $_['action_default'] = 'common/dashboard';
 
 // Action Events
 $_['action_event'] = array(
+	'controller/*/before' => array(
+		'event/language/before'
+	),
+	'controller/*/after' => array(
+		'event/language/after'
+	),
+	'view/*/before' => array(
+		999  => 'event/language',
+		1000 => 'event/theme'
+	),
 	'view/*/before' => array(
 		'event/language'
 	)

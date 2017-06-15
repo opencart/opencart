@@ -37,7 +37,7 @@
       <div class="col-sm-3 xs-hide">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
+            <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_filter }}</h3>
           </div>
           <div class="panel-body">
             <div class="form-group">
@@ -55,6 +55,7 @@
                 
                 
                 
+                
                       
                   
                   
@@ -66,7 +67,9 @@
                       
                 
                 
+                
                 <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                
                 
                 
                 
@@ -80,7 +83,9 @@
                       
                 
                 
+                
                 <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+                
                 
                 
                 
@@ -95,12 +100,14 @@
                     
               
               
+              
               </select>
             </div>
             <div class="form-group">
               <label class="control-label" for="input-type">{{ entry_type }}</label>
               <select name="filter_type" id="input-type" class="form-control">
                 <option value=""></option>
+                
                 
                 
                 
@@ -114,7 +121,9 @@
                       
                 
                 
+                
                 <option value="customer" selected="selected">{{ text_customer }}</option>
+                
                 
                 
                 
@@ -128,7 +137,9 @@
                       
                 
                 
+                
                 <option value="customer">{{ text_customer }}</option>
+                
                 
                 
                 
@@ -143,7 +154,9 @@
                       
                 
                 
+                
                 <option value="affiliate" selected="selected">{{ text_affiliate }}</option>
+                
                 
                 
                 
@@ -157,9 +170,12 @@
                       
                 
                 
+                
                 <option value="affiliate">{{ text_affiliate }}</option>
                 
+                
                 {% endif %}
+              
               
               </select>
             </div>
@@ -171,7 +187,7 @@
                 <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                 </span></div>
             </div>
-            <div class="form-group">
+            <div class="form-group text-right">
               <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
             </div>
           </div>

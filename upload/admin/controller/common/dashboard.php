@@ -5,8 +5,6 @@ class ControllerCommonDashboard extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -19,6 +17,9 @@ class ControllerCommonDashboard extends Controller {
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
+		// Dump all lanauage vars
+		array_merge($data, $this->language->all());
+		
 		// Check install directory exists
 		if (is_dir(dirname(DIR_APPLICATION) . '/install')) {
 			$data['error_install'] = $this->language->get('error_install');

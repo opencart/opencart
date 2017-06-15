@@ -704,115 +704,13 @@
                       <div class="col-sm-10">
                         <select name="address[{{ address_row }}][country_id]" id="input-country{{ address_row }}" onchange="country(this, '{{ address_row }}', '{{ address.zone_id }}');" class="form-control">
                           <option value="">{{ text_select }}</option>
-                          
-                          
-                          
-                          
-                          
-                  
-                  
-                  
-                  
-                  
-                  
-                            
-                            
-                            
-                            
-                            
-                            
-                            {% for country in countries %}
-                            {% if country.country_id == address.country_id %}
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                  
-                  
-                  
-                  
-                  
-                  
-                          
-                          
-                          
-                          
+                          {% for country in countries %}
+                          {% if country.country_id == address.country_id %}
                           <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
-                          
-                          
-                          
-                          
-                          
-                  
-                  
-                  
-                  
-                  
-                  
-                            
-                            
-                            
-                            
-                            
-                            
-                            {% else %}
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                  
-                  
-                  
-                  
-                  
-                  
-                          
-                          
-                          
-                          
+                          {% else %}
                           <option value="{{ country.country_id }}">{{ country.name }}</option>
-                          
-                          
-                          
-                          
-                          
-                  
-                  
-                  
-                  
-                  
-                  
-                            
-                            
-                            
-                            
-                            
-                            
-                            {% endif %}
-                            {% endfor %}
-                          
-                          
-                          
-                          
-                          
-                          
-                          
-                
-                
-                
-                
-                
-                
-                        
-                        
-                        
-                        
+                          {% endif %}
+                          {% endfor %}
                         </select>
                         {% if error_address[address_row].country %}
                         <div class="text-danger">{{ error_address[address_row].country }}</div>

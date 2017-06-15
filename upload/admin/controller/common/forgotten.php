@@ -25,16 +25,6 @@ class ControllerCommonForgotten extends Controller {
 			$this->response->redirect($this->url->link('common/login', '', true));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_your_email'] = $this->language->get('text_your_email');
-		$data['text_email'] = $this->language->get('text_email');
-
-		$data['entry_email'] = $this->language->get('entry_email');
-
-		$data['button_reset'] = $this->language->get('button_reset');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {

@@ -18,17 +18,8 @@ class ControllerCommonHeader extends Controller {
 		$data['direction'] = $this->language->get('direction');
 
 		$this->load->language('common/header');
-
-		$data['heading_title'] = $this->language->get('heading_title');
 		
-		$data['text_store'] = $this->language->get('text_store');
-		$data['text_profile'] = $this->language->get('text_profile');
-		$data['text_help'] = $this->language->get('text_help');
-		$data['text_homepage'] = $this->language->get('text_homepage');
-		$data['text_documentation'] = $this->language->get('text_documentation');
-		$data['text_support'] = $this->language->get('text_support');
 		$data['text_logged'] = sprintf($this->language->get('text_logged'), $this->user->getUserName());
-		$data['text_logout'] = $this->language->get('text_logout');
 
 		if (!isset($this->request->get['user_token']) || !isset($this->session->data['user_token']) || ($this->request->get['user_token'] != $this->session->data['user_token'])) {
 			$data['logged'] = '';

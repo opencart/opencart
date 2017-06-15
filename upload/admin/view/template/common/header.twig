@@ -34,29 +34,10 @@
 <body>
 <div id="container">
 <header id="header" class="navbar navbar-static-top">
-
-  <div id="header-logo" class="navbar-header">
-    <a href="{{ home }}" class="navbar-brand">
-      <img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}" />
-      <i class="fa fa-opencart"></i><span class="hidden">{{ heading_title }}</span>
-    </a>
-  </div>
-  
-  
-  <a id="button-menu">
-  <span class="fa fa-icon-bar"></span>
-  <span class="fa fa-icon-bar"></span>
-  <span class="fa fa-icon-bar"></span>
-  </a>
-
-  {% if logged %}
+  <div id="header-logo" class="navbar-header"> <a href="{{ home }}" class="navbar-brand"> <img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}" /> <i class="fa fa-opencart"></i><span class="hidden">{{ heading_title }}</span> </a> </div>
+  <a id="button-menu"><span class="fa fa-icon-bar"></span> <span class="fa fa-icon-bar"></span> <span class="fa fa-icon-bar"></span> </a> {% if logged %}
   <ul class="nav navbar-nav navbar-right">
-    <li class="dropdown">
-      <div data-toggle="dropdown" class="navbar-text navbar-left">
-        <img id="user-profile" src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" class="img-circle" />
-        &nbsp; {{ firstname }} {{ lastname }} <i class="fa fa-caret-down fa-fw"></i>
-      </div>
-
+    <li class="dropdown"><img id="user-profile" src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" class="img-circle" /> <a href="#" class="navbar-text dropdown-toggle" data-toggle="dropdown">{{ firstname }} {{ lastname }} <i class="fa fa-caret-down fa-fw"></i> </a>
       <ul class="dropdown-menu dropdown-menu-right">
         <li><a href="{{ profile }}"><i class="fa fa-user-circle-o fa-fw"></i> {{ text_profile }}</a></li>
         <li role="separator" class="divider"></li>
@@ -71,11 +52,7 @@
         <li><a href="http://forum.opencart.com" target="_blank"><i class="fa fa-comments-o fa-fw"></i> {{ text_support }}</a></li>
       </ul>
     </li>
-    <li><a href="{{ logout }}">
-      <i class="fa fa-sign-out"></i>
-      <span class="hidden-xs hidden-sm hidden-md">{{ text_logout }}</span>
-      </a>
-    </li>
+    <li><a href="{{ logout }}"> <i class="fa fa-sign-out"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_logout }}</span> </a> </li>
   </ul>
   {% endif %}
 </header>

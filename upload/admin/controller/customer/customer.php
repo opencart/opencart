@@ -387,39 +387,6 @@ class ControllerCustomerCustomer extends Controller {
 			);
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_yes'] = $this->language->get('text_yes');
-		$data['text_no'] = $this->language->get('text_no');
-		$data['text_default'] = $this->language->get('text_default');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_email'] = $this->language->get('column_email');
-		$data['column_customer_group'] = $this->language->get('column_customer_group');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_ip'] = $this->language->get('column_ip');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['entry_name'] = $this->language->get('entry_name');
-		$data['entry_email'] = $this->language->get('entry_email');
-		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_ip'] = $this->language->get('entry_ip');
-		$data['entry_date_added'] = $this->language->get('entry_date_added');
-
-		$data['button_add'] = $this->language->get('button_add');
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_delete'] = $this->language->get('button_delete');
-		$data['button_filter'] = $this->language->get('button_filter');
-		$data['button_login'] = $this->language->get('button_login');
-		$data['button_unlock'] = $this->language->get('button_unlock');
-
 		$data['user_token'] = $this->session->data['user_token'];
 		
 		if (isset($this->error['warning'])) {
@@ -555,90 +522,7 @@ class ControllerCustomerCustomer extends Controller {
 	}
 
 	protected function getForm() {
-		$data['heading_title'] = $this->language->get('heading_title');
-
 		$data['text_form'] = !isset($this->request->get['customer_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_yes'] = $this->language->get('text_yes');
-		$data['text_no'] = $this->language->get('text_no');
-		$data['text_select'] = $this->language->get('text_select');
-		$data['text_none'] = $this->language->get('text_none');
-		$data['text_loading'] = $this->language->get('text_loading');
-		$data['text_account'] = $this->language->get('text_account');
-		$data['text_password'] = $this->language->get('text_password');
-		$data['text_other'] = $this->language->get('text_other');
-		$data['text_affiliate'] = $this->language->get('text_affiliate');
-		$data['text_payment'] = $this->language->get('text_payment');
-		$data['text_cheque'] = $this->language->get('text_cheque');
-		$data['text_paypal'] = $this->language->get('text_paypal');
-		$data['text_bank'] = $this->language->get('text_bank');
-		$data['text_history'] = $this->language->get('text_history');
-		$data['text_history_add'] = $this->language->get('text_history_add');
-		$data['text_transaction'] = $this->language->get('text_transaction');
-		$data['text_transaction_add'] = $this->language->get('text_transaction_add');
-		$data['text_reward'] = $this->language->get('text_reward');
-		$data['text_reward_add'] = $this->language->get('text_reward_add');
-		$data['text_ip'] = $this->language->get('text_ip');
-		
-		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
-		$data['entry_firstname'] = $this->language->get('entry_firstname');
-		$data['entry_lastname'] = $this->language->get('entry_lastname');
-		$data['entry_email'] = $this->language->get('entry_email');
-		$data['entry_telephone'] = $this->language->get('entry_telephone');
-		$data['entry_password'] = $this->language->get('entry_password');
-		$data['entry_confirm'] = $this->language->get('entry_confirm');
-		$data['entry_newsletter'] = $this->language->get('entry_newsletter');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_safe'] = $this->language->get('entry_safe');
-		$data['entry_company'] = $this->language->get('entry_company');
-		$data['entry_address_1'] = $this->language->get('entry_address_1');
-		$data['entry_address_2'] = $this->language->get('entry_address_2');
-		$data['entry_city'] = $this->language->get('entry_city');
-		$data['entry_postcode'] = $this->language->get('entry_postcode');
-		$data['entry_zone'] = $this->language->get('entry_zone');
-		$data['entry_country'] = $this->language->get('entry_country');
-		$data['entry_affiliate'] = $this->language->get('entry_affiliate');
-		$data['entry_tracking'] = $this->language->get('entry_tracking');
-		$data['entry_website'] = $this->language->get('entry_website');
-		$data['entry_commission'] = $this->language->get('entry_commission');
-		$data['entry_tax'] = $this->language->get('entry_tax');
-		$data['entry_payment'] = $this->language->get('entry_payment');
-		$data['entry_cheque'] = $this->language->get('entry_cheque');
-		$data['entry_paypal'] = $this->language->get('entry_paypal');
-		$data['entry_bank_name'] = $this->language->get('entry_bank_name');
-		$data['entry_bank_branch_number'] = $this->language->get('entry_bank_branch_number');
-		$data['entry_bank_swift_code'] = $this->language->get('entry_bank_swift_code');
-		$data['entry_bank_account_name'] = $this->language->get('entry_bank_account_name');
-		$data['entry_bank_account_number'] = $this->language->get('entry_bank_account_number');
-		$data['entry_default'] = $this->language->get('entry_default');
-		$data['entry_comment'] = $this->language->get('entry_comment');
-		$data['entry_description'] = $this->language->get('entry_description');
-		$data['entry_amount'] = $this->language->get('entry_amount');
-		$data['entry_points'] = $this->language->get('entry_points');
-		
-		$data['help_safe'] = $this->language->get('help_safe');
-		$data['help_affiliate'] = $this->language->get('help_affiliate');
-		$data['help_tracking'] = $this->language->get('help_tracking');
-		$data['help_commission'] = $this->language->get('help_commission');
-		$data['help_points'] = $this->language->get('help_points');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_address_add'] = $this->language->get('button_address_add');
-		$data['button_history_add'] = $this->language->get('button_history_add');
-		$data['button_transaction_add'] = $this->language->get('button_transaction_add');
-		$data['button_reward_add'] = $this->language->get('button_reward_add');
-		$data['button_remove'] = $this->language->get('button_remove');
-		$data['button_upload'] = $this->language->get('button_upload');
-
-		$data['tab_general'] = $this->language->get('tab_general');
-		$data['tab_affiliate'] = $this->language->get('tab_affiliate');
-		$data['tab_address'] = $this->language->get('tab_address');
-		$data['tab_history'] = $this->language->get('tab_history');
-		$data['tab_transaction'] = $this->language->get('tab_transaction');
-		$data['tab_reward'] = $this->language->get('tab_reward');
-		$data['tab_ip'] = $this->language->get('tab_ip');
 
 		$data['user_token'] = $this->session->data['user_token'];
 

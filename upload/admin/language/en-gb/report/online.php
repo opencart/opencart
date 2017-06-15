@@ -5,7 +5,7 @@ $_['heading_title']     = 'Online Report';
 // Text
 $_['text_extension']    = 'Extensions';
 $_['text_success']      = 'Success: You have modified customers online report!';
-$_['text_edit']         = 'Edit Customers Online Report';
+$_['text_list']         = 'Online List';
 $_['text_filter']       = 'Online Filter';
 $_['text_guest']        = 'Guest';
 

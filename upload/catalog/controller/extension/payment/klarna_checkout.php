@@ -269,12 +269,6 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			$this->session->data['shipping_method'] = $this->model_extension_payment_klarna_checkout->getDefaultShippingMethod($this->session->data['shipping_methods']);
 		}
 
-		$data['text_choose_shipping_method'] = $this->language->get('text_choose_shipping_method');
-		$data['text_shipping_method'] = $this->language->get('text_shipping_method');
-		$data['text_no_shipping'] = $this->language->get('error_no_shipping');
-
-		$data['button_remove'] = $this->language->get('button_remove');
-
 		$data['shipping_required'] = $this->cart->hasShipping();
 
 		if (isset($this->session->data['shipping_methods'])) {
@@ -1134,10 +1128,6 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			'text' => $this->language->get('text_success'),
 			'href' => $this->url->link('checkout/success')
 		);
-
-		$data['heading_title'] = $this->language->get('heading_title_success');
-
-		$data['button_continue'] = $this->language->get('button_continue');
 
 		$data['continue'] = $this->url->link('common/home');
 

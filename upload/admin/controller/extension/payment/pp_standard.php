@@ -17,46 +17,6 @@ class ControllerExtensionPaymentPPStandard extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_all_zones'] = $this->language->get('text_all_zones');
-		$data['text_yes'] = $this->language->get('text_yes');
-		$data['text_no'] = $this->language->get('text_no');
-		$data['text_authorization'] = $this->language->get('text_authorization');
-		$data['text_sale'] = $this->language->get('text_sale');
-
-		$data['entry_email'] = $this->language->get('entry_email');
-		$data['entry_test'] = $this->language->get('entry_test');
-		$data['entry_transaction'] = $this->language->get('entry_transaction');
-		$data['entry_debug'] = $this->language->get('entry_debug');
-		$data['entry_total'] = $this->language->get('entry_total');
-		$data['entry_canceled_reversal_status'] = $this->language->get('entry_canceled_reversal_status');
-		$data['entry_completed_status'] = $this->language->get('entry_completed_status');
-		$data['entry_denied_status'] = $this->language->get('entry_denied_status');
-		$data['entry_expired_status'] = $this->language->get('entry_expired_status');
-		$data['entry_failed_status'] = $this->language->get('entry_failed_status');
-		$data['entry_pending_status'] = $this->language->get('entry_pending_status');
-		$data['entry_processed_status'] = $this->language->get('entry_processed_status');
-		$data['entry_refunded_status'] = $this->language->get('entry_refunded_status');
-		$data['entry_reversed_status'] = $this->language->get('entry_reversed_status');
-		$data['entry_voided_status'] = $this->language->get('entry_voided_status');
-		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-
-		$data['help_test'] = $this->language->get('help_test');
-		$data['help_debug'] = $this->language->get('help_debug');
-		$data['help_total'] = $this->language->get('help_total');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-
-		$data['tab_general'] = $this->language->get('tab_general');
-		$data['tab_order_status'] = $this->language->get('tab_order_status');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {

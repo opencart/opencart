@@ -26,138 +26,6 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_all_zones'] = $this->language->get('text_all_zones');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_production'] = $this->language->get('text_production');
-		$data['text_sandbox'] = $this->language->get('text_sandbox');
-		$data['text_currency'] = $this->language->get('text_currency');
-		$data['text_immediate'] = $this->language->get('text_immediate');
-		$data['text_deferred'] = $this->language->get('text_deferred');
-		$data['text_hosted'] = $this->language->get('text_hosted');
-		$data['text_dropin'] = $this->language->get('text_dropin');
-		$data['text_merchant_account_id'] = $this->language->get('text_merchant_account_id');
-		$data['text_na'] = $this->language->get('text_na');
-		$data['text_all'] = $this->language->get('text_all');
-		$data['text_sale'] = $this->language->get('text_sale');
-		$data['text_credit'] = $this->language->get('text_credit');
-		$data['text_credit_card'] = $this->language->get('text_credit_card');
-		$data['text_paypal'] = $this->language->get('text_paypal');
-		$data['text_enable_transactions'] = $this->language->get('text_enable_transactions');
-		$data['text_app_connected'] = $this->language->get('text_app_connected');
-		$data['text_paypal_button_config'] = $this->language->get('text_paypal_button_config');
-		$data['text_paypal_gold'] = $this->language->get('text_paypal_gold');
-		$data['text_paypal_blue'] = $this->language->get('text_paypal_blue');
-		$data['text_paypal_silver'] = $this->language->get('text_paypal_silver');
-		$data['text_paypal_tiny'] = $this->language->get('text_paypal_tiny');
-		$data['text_paypal_small'] = $this->language->get('text_paypal_small');
-		$data['text_paypal_medium'] = $this->language->get('text_paypal_medium');
-		$data['text_paypal_pill'] = $this->language->get('text_paypal_pill');
-		$data['text_paypal_rectangular'] = $this->language->get('text_paypal_rectangular');
-		$data['text_paypal_preview'] = $this->language->get('text_paypal_preview');
-		$data['text_braintree_learn'] = $this->language->get('text_braintree_learn');
-		$data['text_3ds'] = $this->language->get('text_3ds');
-		$data['text_cvv'] = $this->language->get('text_cvv');
-		$data['text_accept'] = $this->language->get('text_accept');
-		$data['text_decline'] = $this->language->get('text_decline');
-		$data['text_merchant_connected'] = $this->language->get('text_merchant_connected');
-		$data['text_enable_button'] = $this->language->get('text_enable_button');
-		$data['text_3ds_ssl'] = $this->language->get('text_3ds_ssl');
-		$data['text_unlink'] = $this->language->get('text_unlink');
-
-		$data['column_transaction_id'] = $this->language->get('column_transaction_id');
-		$data['column_amount'] = $this->language->get('column_amount');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_type'] = $this->language->get('column_type');
-		$data['column_customer'] = $this->language->get('column_customer');
-		$data['column_order'] = $this->language->get('column_order');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-
-		$data['entry_merchant_id'] = $this->language->get('entry_merchant_id');
-		$data['entry_public_key'] = $this->language->get('entry_public_key');
-		$data['entry_private_key'] = $this->language->get('entry_private_key');
-		$data['entry_environment'] = $this->language->get('entry_environment');
-		$data['entry_settlement_type'] = $this->language->get('entry_settlement_type');
-		$data['entry_integration_type'] = $this->language->get('entry_integration_type');
-		$data['entry_card_vault'] = $this->language->get('entry_card_vault');
-		$data['entry_paypal_vault'] = $this->language->get('entry_paypal_vault');
-		$data['entry_card_check_vault'] = $this->language->get('entry_card_check_vault');
-		$data['entry_paypal_check_vault'] = $this->language->get('entry_paypal_check_vault');
-		$data['entry_vault_cvv_3ds'] = $this->language->get('entry_vault_cvv_3ds');
-		$data['entry_debug'] = $this->language->get('entry_debug');
-		$data['entry_total'] = $this->language->get('entry_total');
-		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-		$data['entry_authorization_expired'] = $this->language->get('entry_authorization_expired');
-		$data['entry_authorized'] = $this->language->get('entry_authorized');
-		$data['entry_authorizing'] = $this->language->get('entry_authorizing');
-		$data['entry_settlement_pending'] = $this->language->get('entry_settlement_pending');
-		$data['entry_failed'] = $this->language->get('entry_failed');
-		$data['entry_gateway_rejected'] = $this->language->get('entry_gateway_rejected');
-		$data['entry_processor_declined'] = $this->language->get('entry_processor_declined');
-		$data['entry_settled'] = $this->language->get('entry_settled');
-		$data['entry_settling'] = $this->language->get('entry_settling');
-		$data['entry_submitted_for_settlement'] = $this->language->get('entry_submitted_for_settlement');
-		$data['entry_voided'] = $this->language->get('entry_voided');
-		$data['entry_transaction_id'] = $this->language->get('entry_transaction_id');
-		$data['entry_transaction_type'] = $this->language->get('entry_transaction_type');
-		$data['entry_date_from'] = $this->language->get('entry_date_from');
-		$data['entry_date_to'] = $this->language->get('entry_date_to');
-		$data['entry_payment_type'] = $this->language->get('entry_payment_type');
-		$data['entry_card_type'] = $this->language->get('entry_card_type');
-		$data['entry_amount_from'] = $this->language->get('entry_amount_from');
-		$data['entry_amount_to'] = $this->language->get('entry_amount_to');
-		$data['entry_transaction_status'] = $this->language->get('entry_transaction_status');
-		$data['entry_merchant_account_id'] = $this->language->get('entry_merchant_account_id');
-		$data['entry_connection'] = $this->language->get('entry_connection');
-		$data['entry_paypal_option'] = $this->language->get('entry_paypal_option');
-		$data['entry_paypal_button_colour'] = $this->language->get('entry_paypal_button_colour');
-		$data['entry_paypal_button_shape'] = $this->language->get('entry_paypal_button_shape');
-		$data['entry_paypal_button_size'] = $this->language->get('entry_paypal_button_size');
-		$data['entry_paypal_billing_agreement'] = $this->language->get('entry_paypal_billing_agreement');
-		$data['entry_3ds_status'] = $this->language->get('entry_3ds_status');
-		$data['entry_3ds_unsupported_card'] = $this->language->get('entry_3ds_unsupported_card');
-		$data['entry_3ds_lookup_error'] = $this->language->get('entry_3ds_lookup_error');
-		$data['entry_3ds_lookup_enrolled'] = $this->language->get('entry_3ds_lookup_enrolled');
-		$data['entry_3ds_lookup_not_enrolled'] = $this->language->get('entry_3ds_lookup_not_enrolled');
-		$data['entry_3ds_not_participating'] = $this->language->get('entry_3ds_not_participating');
-		$data['entry_3ds_unavailable'] = $this->language->get('entry_3ds_unavailable');
-		$data['entry_3ds_signature_failed'] = $this->language->get('entry_3ds_signature_failed');
-		$data['entry_3ds_successful'] = $this->language->get('entry_3ds_successful');
-		$data['entry_3ds_attempt_successful'] = $this->language->get('entry_3ds_attempt_successful');
-		$data['entry_3ds_failed'] = $this->language->get('entry_3ds_failed');
-		$data['entry_3ds_unable_to_auth'] = $this->language->get('entry_3ds_unable_to_auth');
-		$data['entry_3ds_error'] = $this->language->get('entry_3ds_error');
-
-		$data['help_settlement_type'] = $this->language->get('help_settlement_type');
-		$data['help_card_vault'] = $this->language->get('help_card_vault');
-		$data['help_paypal_vault'] = $this->language->get('help_paypal_vault');
-		$data['help_card_check_vault'] = $this->language->get('help_card_check_vault');
-		$data['help_paypal_check_vault'] = $this->language->get('help_paypal_check_vault');
-		$data['help_vault_cvv_3ds'] = $this->language->get('help_vault_cvv_3ds');
-		$data['help_debug'] = $this->language->get('help_debug');
-		$data['help_total'] = $this->language->get('help_total');
-		$data['help_paypal_option'] = $this->language->get('help_paypal_option');
-		$data['help_paypal_billing_agreement'] = $this->language->get('help_paypal_billing_agreement');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_filter'] = $this->language->get('button_filter');
-		$data['button_enable'] = $this->language->get('button_enable');
-
-		$data['tab_setting'] = $this->language->get('tab_setting');
-		$data['tab_currency'] = $this->language->get('tab_currency');
-		$data['tab_order_status'] = $this->language->get('tab_order_status');
-		$data['tab_3ds'] = $this->language->get('tab_3ds');
-		$data['tab_transaction'] = $this->language->get('tab_transaction');
-		$data['tab_vault'] = $this->language->get('tab_vault');
-		$data['tab_paypal'] = $this->language->get('tab_paypal');
-
 		$data['button_configure'] = $this->url->link('extension/module/pp_braintree_button/configure', 'user_token=' . $this->session->data['user_token'], true);
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -681,8 +549,8 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 	public function order() {
 		$this->load->language('extension/payment/pp_braintree');
 
-		$data['text_payment_info'] = $this->language->get('text_payment_info');
 		$data['user_token'] = $this->session->data['user_token'];
+		
 		$data['order_id'] = $this->request->get['order_id'];
 
 		return $this->load->view('extension/payment/pp_braintree_order', $data);
@@ -726,40 +594,8 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$data['transaction'] = array();
 
 		if ($transaction) {
-			$data['text_na'] = $this->language->get('text_na');
-			$data['text_no_refund'] = $this->language->get('text_no_refund');
-			$data['text_yes'] = $this->language->get('text_yes');
-			$data['text_no'] = $this->language->get('text_no');
-
-			$data['column_status'] = $this->language->get('column_status');
-			$data['column_transaction_id'] = $this->language->get('column_transaction_id');
-			$data['column_transaction_type'] = $this->language->get('column_transaction_type');
-			$data['column_transaction_date'] = $this->language->get('column_transaction_date');
-			$data['column_merchant_account'] = $this->language->get('column_merchant_account');
-			$data['column_payment_type'] = $this->language->get('column_payment_type');
-			$data['column_amount'] = $this->language->get('column_amount');
-			$data['column_order_id'] = $this->language->get('column_order_id');
-			$data['column_processor_code'] = $this->language->get('column_processor_code');
-			$data['column_cvv_response'] = $this->language->get('column_cvv_response');
-			$data['column_avs_response'] = $this->language->get('column_avs_response');
-			$data['column_3ds_enrolled'] = $this->language->get('column_3ds_enrolled');
-			$data['column_3ds_status'] = $this->language->get('column_3ds_status');
-			$data['column_3ds_shifted'] = $this->language->get('column_3ds_shifted');
-			$data['column_3ds_shift_possible'] = $this->language->get('column_3ds_shift_possible');
-			$data['column_transaction_history'] = $this->language->get('column_transaction_history');
-			$data['column_date'] = $this->language->get('column_date');
-			$data['column_refund_history'] = $this->language->get('column_refund_history');
-			$data['column_action'] = $this->language->get('column_action');
-			$data['column_amount'] = $this->language->get('column_amount');
-			$data['column_void'] = $this->language->get('column_void');
-			$data['column_settle'] = $this->language->get('column_settle');
-			$data['column_refund'] = $this->language->get('column_refund');
-
-			$data['button_void'] = $this->language->get('button_void');
-			$data['button_settle'] = $this->language->get('button_settle');
-			$data['button_refund'] = $this->language->get('button_refund');
-
 			$data['transaction_id'] = $transaction->id;
+			
 			$data['user_token'] = $this->session->data['user_token'];
 
 			$data['void_action'] = $data['settle_action'] = $data['refund_action'] = false;
@@ -1189,18 +1025,6 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 	public function preferredSolution() {
 		$this->load->language('extension/payment/pp_braintree');
-
-		$data = array();
-		$data['heading_title'] = $this->language->get('heading_title');
-		$data['text_preferred_main'] = $this->language->get('text_preferred_main');
-		$data['text_learn_more'] = $this->language->get('text_learn_more');
-		$data['text_preferred_li_1'] = $this->language->get('text_preferred_li_1');
-		$data['text_preferred_li_2'] = $this->language->get('text_preferred_li_2');
-		$data['text_preferred_li_3'] = $this->language->get('text_preferred_li_3');
-		$data['text_preferred_li_4'] = $this->language->get('text_preferred_li_4');
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
 
 		$data['connect_link'] = '';
 		$data['module_link'] = '';

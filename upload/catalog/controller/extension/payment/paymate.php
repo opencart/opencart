@@ -1,8 +1,6 @@
 <?php
 class ControllerExtensionPaymentPaymate extends Controller {
 	public function index() {
-		$data['button_confirm'] = $this->language->get('button_confirm');
-
 		if (!$this->config->get('payment_paymate_test')) {
 			$data['action'] = 'https://www.paymate.com/PayMate/ExpressPayment';
 		} else {
@@ -86,11 +84,7 @@ class ControllerExtensionPaymentPaymate extends Controller {
 				'href' => $this->url->link('checkout/success')
 			);
 
-			$data['heading_title'] = $this->language->get('text_failed');
-
 			$data['text_message'] = sprintf($this->language->get('text_failed_message'), $error, $this->url->link('information/contact'));
-
-			$data['button_continue'] = $this->language->get('button_continue');
 
 			$data['continue'] = $this->url->link('common/home');
 

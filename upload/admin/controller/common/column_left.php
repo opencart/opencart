@@ -662,10 +662,6 @@ class ControllerCommonColumnLeft extends Controller {
 			);	
 			
 			// Stats
-			$data['text_complete_status'] = $this->language->get('text_complete_status');
-			$data['text_processing_status'] = $this->language->get('text_processing_status');
-			$data['text_other_status'] = $this->language->get('text_other_status');
-	
 			$this->load->model('sale/order');
 	
 			$order_total = $this->model_sale_order->getTotalOrders();

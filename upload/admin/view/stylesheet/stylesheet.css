@@ -6,7 +6,6 @@ html, body {
 	font-family: 'Open Sans', sans-serif;
 	color: #666666;
 	text-rendering: optimizeLegibility;
-	background: #fafafa;
 }
 h1, h2, h3, h4, h5, h6, p {
 	margin-top: 0;
@@ -59,6 +58,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	min-height: 100%;
 	width: 100%;
 	position: relative;
+	background: #f6f6f6;
 }
 .container-fluid {
 	padding-left: 20px;
@@ -84,9 +84,11 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	padding: 0;
 	width: 60px;
 	transition: 0.3s all;
-} #header .navbar-header img {
+}
+#header .navbar-header img {
 	display: none;
-} #header .navbar-header i {
+}
+#header .navbar-header i {
 	display: block;
 	width: 30px;
 	text-align: center;
@@ -94,10 +96,14 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 
 #header .navbar-header.active {
 	width: 235px;
-} #header .navbar-header.active img {
+} 
+
+#header .navbar-header.active img {
 	display: block;
 	margin-left: 5px;
-} #header .navbar-header.active i {
+}
+
+#header .navbar-header.active i {
 	display: none;
 }
 
@@ -109,10 +115,13 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	max-width: 40px;
 	max-height: 40px;
 	border: 0px solid #eee;
+	margin-right: 15px;
 }
 #header .navbar-right {
 	margin-right: 0;
 }
+
+
 /* Mobile */
 @media (max-width: 767px) {
 #header .navbar-header {
@@ -165,61 +174,12 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 @media screen and (max-width: 767px){
 	#button-menu {
-		padding: 10px 13px 9px 13px;
+		padding: 5px 13px 5px 13px;
 	}
 }
-#column-left.active #profile {
-	display: block;
-	padding: 10px 15px 10px 15px;
-	overflow: auto;
-	border-bottom: 1px solid #2e333b;
-}
 
-#profile {
-	display: none;
-}
 
-#profile div {
-	float: left;
-	color: #C4C4C4;
-}
-#profile .thumbnail {
-	padding: 0;
-}
-#profile .thumbnail > div > i {
-	font-size: 28px;
-	color: #2ca5d3;
-}
-#profile div + div {
-	margin-left: 15px;
-}
-#profile .profile {
-	margin-top: 4px;
-}
-#profile h4 {
-	margin-top: 6px;
-	font-family: 'Open Sans', sans-serif;
-	font-size: 15px;
-	font-weight: 400;
-	color: #FFF;
-	margin-bottom: 0;
-}
-#profile .thumbnail {
-	border: 2px solid #b3cbdd;
-	border-radius: 100px;
-	background-color: #ffffff;
-}
-#profile .thumbnail > div {
-	text-align: center;
-	width: 48px;
-	height: 48px;
-}
-#profile .thumbnail i {
-	line-height: 47px;
-}
-#profile .thumbnail {
-	margin-bottom: 0;
-}
+
 #column-left {
 	width: 60px;
 	height: 100%;
@@ -372,6 +332,10 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	padding-left: 80px;
 }
 
+
+
+
+
 /* Menu Active */
 /* Desktop */
 @media (min-width: 768px) {
@@ -426,13 +390,13 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	height: 100px;
 	text-align: center;
 }
-/* Navs */
+/* Navs
 .nav > li.disabled > a {
 	color: #999;
 }
 .nav > li.disabled > a:hover, .nav > li.disabled > a:focus {
 	color: #999;
-}
+} */
 /* Tabs */
 .nav-tabs > li > a {
 	color: #a5a5a5;
@@ -538,12 +502,10 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .table a.asc:after {
 	content: " \f107";
 	font-family: FontAwesome;
-	font-size: 14px;
 }
 .table a.desc:after {
 	content: " \f106";
 	font-family: FontAwesome;
-	font-size: 14px;
 }
 .pagination {
 	margin: 0;
@@ -933,7 +895,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	font-weight: normal;
 	font-style: normal;
 }
- [class^="opencart-icon-"], [class*=" opencart-icon-"] {
+[class^="opencart-icon-"], [class*=" opencart-icon-"] {
  font-family: 'opencart' !important;
  speak: none;
  font-style: normal;

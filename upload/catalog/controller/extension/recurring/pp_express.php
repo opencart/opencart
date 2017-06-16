@@ -14,14 +14,7 @@ class ControllerExtensionRecurringPPExpress extends Controller {
 		$recurring_info = $this->model_account_recurring->getOrderRecurring($order_recurring_id);
 
 		if ($recurring_info) {
-			$data['text_loading'] = $this->language->get('text_loading');
-
-			$data['button_continue'] = $this->language->get('button_continue');
-			$data['button_cancel'] = $this->language->get('button_cancel');
-
-			$data['continue'] = $this->url->link('account/recurring', '', true);
-
-			if ($recurring_info['status'] == 2 || $recurring_info['status'] == 3) {
+			$data['continue'] = $this->url->link('account/recurring', '', true);				if ($recurring_info['status'] == 2 || $recurring_info['status'] == 3) {
 				$data['order_recurring_id'] = $order_recurring_id;
 			} else {
 				$data['order_recurring_id'] = '';

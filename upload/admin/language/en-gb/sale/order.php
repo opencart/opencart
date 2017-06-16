@@ -7,6 +7,7 @@ $_['text_success']               = 'Success: You have modified orders!';
 $_['text_list']                  = 'Order List';
 $_['text_add']                   = 'Add Order';
 $_['text_edit']                  = 'Edit Order';
+$_['text_filter']                = 'Filter';
 $_['text_order_detail']          = 'Order Details';
 $_['text_customer_detail']       = 'Customer Details';
 $_['text_option']                = 'Options';

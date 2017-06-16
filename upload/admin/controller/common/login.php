@@ -21,16 +21,6 @@ class ControllerCommonLogin extends Controller {
 			}
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_login'] = $this->language->get('text_login');
-		$data['text_forgotten'] = $this->language->get('text_forgotten');
-
-		$data['entry_username'] = $this->language->get('entry_username');
-		$data['entry_password'] = $this->language->get('entry_password');
-
-		$data['button_login'] = $this->language->get('button_login');
-
 		if ((isset($this->session->data['user_token']) && !isset($this->request->get['user_token'])) || ((isset($this->request->get['user_token']) && (isset($this->session->data['user_token']) && ($this->request->get['user_token'] != $this->session->data['user_token']))))) {
 			$this->error['warning'] = $this->language->get('error_token');
 		}

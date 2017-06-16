@@ -19,76 +19,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_signup'] = $this->language->get('text_signup');
-		$data['text_sandbox'] = $this->language->get('text_sandbox');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_all_zones'] = $this->language->get('text_all_zones');
-		$data['text_yes'] = $this->language->get('text_yes');
-		$data['text_no'] = $this->language->get('text_no');
-		$data['text_authorization'] = $this->language->get('text_authorization');
-		$data['text_sale'] = $this->language->get('text_sale');
-		$data['text_configure_live'] = $this->language->get('text_configure_live');
-		$data['text_configure_sandbox'] = $this->language->get('text_configure_sandbox');
-		$data['text_show_advanced'] = $this->language->get('text_show_advanced');
-		$data['text_quick_setup'] = $this->language->get('text_quick_setup');
-		$data['text_show_quick_setup'] = $this->language->get('text_show_quick_setup');
-		$data['text_paypal_consent'] = $this->language->get('text_paypal_consent');
-		$data['text_incontext_not_supported'] = $this->language->get('text_incontext_not_supported');
-		$data['text_enable_button'] = $this->language->get('text_enable_button');
-
-		$data['error_consent'] = $this->language->get('error_consent');
-
-		$data['entry_username'] = $this->language->get('entry_username');
-		$data['entry_password'] = $this->language->get('entry_password');
-		$data['entry_signature'] = $this->language->get('entry_signature');
-		$data['entry_sandbox_username'] = $this->language->get('entry_sandbox_username');
-		$data['entry_sandbox_password'] = $this->language->get('entry_sandbox_password');
-		$data['entry_sandbox_signature'] = $this->language->get('entry_sandbox_signature');
-		$data['entry_ipn'] = $this->language->get('entry_ipn');
-		$data['entry_test'] = $this->language->get('entry_test');
-		$data['entry_debug'] = $this->language->get('entry_debug');
-		$data['entry_currency'] = $this->language->get('entry_currency');
-		$data['entry_recurring_cancel'] = $this->language->get('entry_recurring_cancel');
-		$data['entry_transaction'] = $this->language->get('entry_transaction');
-		$data['entry_total'] = $this->language->get('entry_total');
-		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-		$data['entry_canceled_reversal_status'] = $this->language->get('entry_canceled_reversal_status');
-		$data['entry_completed_status'] = $this->language->get('entry_completed_status');
-		$data['entry_denied_status'] = $this->language->get('entry_denied_status');
-		$data['entry_expired_status'] = $this->language->get('entry_expired_status');
-		$data['entry_failed_status'] = $this->language->get('entry_failed_status');
-		$data['entry_pending_status'] = $this->language->get('entry_pending_status');
-		$data['entry_processed_status'] = $this->language->get('entry_processed_status');
-		$data['entry_refunded_status'] = $this->language->get('entry_refunded_status');
-		$data['entry_reversed_status'] = $this->language->get('entry_reversed_status');
-		$data['entry_voided_status'] = $this->language->get('entry_voided_status');
-		$data['entry_allow_notes'] = $this->language->get('entry_allow_notes');
-		$data['entry_logo'] = $this->language->get('entry_logo');
-		$data['entry_colour'] = $this->language->get('entry_colour');
-		$data['entry_incontext'] = $this->language->get('entry_incontext');
-
-		$data['help_total'] = $this->language->get('help_total');
-		$data['help_ipn'] = $this->language->get('help_ipn');
-		$data['help_currency'] = $this->language->get('help_currency');
-		$data['help_logo'] = $this->language->get('help_logo');
-		$data['help_colour'] = $this->language->get('help_colour');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_search'] = $this->language->get('button_search');
-		$data['button_enable'] = $this->language->get('button_enable');
-
-		$data['tab_api'] = $this->language->get('tab_api');
-		$data['tab_general'] = $this->language->get('tab_general');
-		$data['tab_order_status'] = $this->language->get('tab_order_status');
-		$data['tab_checkout'] = $this->language->get('tab_checkout');
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['button_configure'] = $this->url->link('extension/module/pp_button/configure', 'user_token=' . $this->session->data['user_token'], true);
@@ -532,31 +462,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			$paypal_info = $this->model_extension_payment_pp_express->getPayPalOrder($order_id);
 
 			if ($paypal_info) {
-				$data['text_payment'] = $this->language->get('text_payment');
-				$data['text_capture'] = $this->language->get('text_capture');
-				$data['text_transaction'] = $this->language->get('text_transaction');
-				$data['text_capture_status'] = $this->language->get('text_capture_status');
-				$data['text_amount_authorised'] = $this->language->get('text_amount_authorised');
-				$data['text_amount_captured'] = $this->language->get('text_amount_captured');
-				$data['text_amount_refunded'] = $this->language->get('text_amount_refunded');
-				$data['text_confirm_void'] = $this->language->get('text_confirm_void');
-				$data['text_full_refund'] = $this->language->get('text_full_refund');
-				$data['text_partial_refund'] = $this->language->get('text_partial_refund');
-				$data['text_loading'] = $this->language->get('text_loading');
-
-				$data['entry_capture_amount'] = $this->language->get('entry_capture_amount');
-				$data['entry_capture_complete'] = $this->language->get('entry_capture_complete');
-				$data['entry_full_refund'] = $this->language->get('entry_full_refund');
-				$data['entry_note'] = $this->language->get('entry_note');
-				$data['entry_amount'] = $this->language->get('entry_amount');
-
-				$data['button_capture'] = $this->language->get('button_capture');
-				$data['button_refund'] = $this->language->get('button_refund');
-				$data['button_void'] = $this->language->get('button_void');
-
-				$data['tab_capture'] = $this->language->get('tab_capture');
-				$data['tab_refund'] = $this->language->get('tab_refund');
-
 				$data['user_token'] = $this->session->data['user_token'];
 
 				$data['order_id'] = $this->request->get['order_id'];
@@ -582,20 +487,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 	public function transaction() {
 		$this->load->language('extension/payment/pp_express_order');
-
-		$data['text_no_results'] = $this->language->get('text_no_results');
-
-		$data['column_transaction'] = $this->language->get('column_transaction');
-		$data['column_amount'] = $this->language->get('column_amount');
-		$data['column_type'] = $this->language->get('column_type');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_pending_reason'] = $this->language->get('column_pending_reason');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_view'] = $this->language->get('button_view');
-		$data['button_refund'] = $this->language->get('button_refund');
-		$data['button_resend'] = $this->language->get('button_resend');
 
 		$data['transactions'] = array();
 
@@ -717,15 +608,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$this->load->language('extension/payment/pp_express_refund');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$data['heading_title'] = $this->language->get('heading_title');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['entry_transaction_id'] = $this->language->get('entry_transaction_id');
-		$data['entry_full_refund'] = $this->language->get('entry_full_refund');
-		$data['entry_amount'] = $this->language->get('entry_amount');
-		$data['entry_message'] = $this->language->get('entry_message');
-		$data['button_refund'] = $this->language->get('button_refund');
-		$data['text_refund'] = $this->language->get('text_refund');
 
 		$data['breadcrumbs'] = array();
 
@@ -1087,82 +969,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_buyer_info'] = $this->language->get('text_buyer_info');
-		$data['text_name'] = $this->language->get('text_name');
-		$data['text_searching'] = $this->language->get('text_searching');
-		$data['text_view'] = $this->language->get('text_view');
-		$data['text_format'] = $this->language->get('text_format');
-		$data['text_date_search'] = $this->language->get('text_date_search');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-
-		$data['entry_date'] = $this->language->get('entry_date');
-		$data['entry_date_start'] = $this->language->get('entry_date_start');
-		$data['entry_date_end'] = $this->language->get('entry_date_end');
-		$data['entry_date_to'] = $this->language->get('entry_date_to');
-		$data['entry_transaction'] = $this->language->get('entry_transaction');
-		$data['entry_transaction_type'] = $this->language->get('entry_transaction_type');
-		$data['entry_transaction_status'] = $this->language->get('entry_transaction_status');
-		$data['entry_email'] = $this->language->get('entry_email');
-		$data['entry_email_buyer'] = $this->language->get('entry_email_buyer');
-		$data['entry_email_merchant'] = $this->language->get('entry_email_merchant');
-		$data['entry_receipt'] = $this->language->get('entry_receipt');
-		$data['entry_transaction_id'] = $this->language->get('entry_transaction_id');
-		$data['entry_invoice_no'] = $this->language->get('entry_invoice_no');
-		$data['entry_auction'] = $this->language->get('entry_auction');
-		$data['entry_amount'] = $this->language->get('entry_amount');
-		$data['entry_recurring_id'] = $this->language->get('entry_recurring_id');
-
-		$data['entry_firstname'] = $this->language->get('entry_firstname');
-		$data['entry_middlename'] = $this->language->get('entry_middlename');
-		$data['entry_lastname'] = $this->language->get('entry_lastname');
-		$data['entry_suffix'] = $this->language->get('entry_suffix');
-
-		$data['entry_salutation'] = $this->language->get('entry_salutation');
-
-		$data['entry_status_all'] = $this->language->get('entry_status_all');
-		$data['entry_status_pending'] = $this->language->get('entry_status_pending');
-		$data['entry_status_processing'] = $this->language->get('entry_status_processing');
-		$data['entry_status_success'] = $this->language->get('entry_status_success');
-		$data['entry_status_denied'] = $this->language->get('entry_status_denied');
-		$data['entry_status_reversed'] = $this->language->get('entry_status_reversed');
-
-		$data['entry_trans_all'] = $this->language->get('entry_trans_all');
-		$data['entry_trans_sent'] = $this->language->get('entry_trans_sent');
-		$data['entry_trans_received'] = $this->language->get('entry_trans_received');
-		$data['entry_trans_masspay'] = $this->language->get('entry_trans_masspay');
-		$data['entry_trans_money_req'] = $this->language->get('entry_trans_money_req');
-		$data['entry_trans_funds_add'] = $this->language->get('entry_trans_funds_add');
-		$data['entry_trans_funds_with'] = $this->language->get('entry_trans_funds_with');
-		$data['entry_trans_referral'] = $this->language->get('entry_trans_referral');
-		$data['entry_trans_fee'] = $this->language->get('entry_trans_fee');
-		$data['entry_trans_subscription'] = $this->language->get('entry_trans_subscription');
-		$data['entry_trans_dividend'] = $this->language->get('entry_trans_dividend');
-		$data['entry_trans_billpay'] = $this->language->get('entry_trans_billpay');
-		$data['entry_trans_refund'] = $this->language->get('entry_trans_refund');
-		$data['entry_trans_conv'] = $this->language->get('entry_trans_conv');
-		$data['entry_trans_bal_trans'] = $this->language->get('entry_trans_bal_trans');
-		$data['entry_trans_reversal'] = $this->language->get('entry_trans_reversal');
-		$data['entry_trans_shipping'] = $this->language->get('entry_trans_shipping');
-		$data['entry_trans_bal_affect'] = $this->language->get('entry_trans_bal_affect');
-		$data['entry_trans_echeque'] = $this->language->get('entry_trans_echeque');
-
-		$data['column_date'] = $this->language->get('column_date');
-		$data['column_type'] = $this->language->get('column_type');
-		$data['column_email'] = $this->language->get('column_email');
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_transid'] = $this->language->get('column_transid');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_currency'] = $this->language->get('column_currency');
-		$data['column_amount'] = $this->language->get('column_amount');
-		$data['column_fee'] = $this->language->get('column_fee');
-		$data['column_netamt'] = $this->language->get('column_netamt');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_search'] = $this->language->get('button_search');
-		$data['button_edit'] = $this->language->get('button_edit');
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['breadcrumbs'] = array();
@@ -1203,91 +1009,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$this->load->language('extension/payment/pp_express_view');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_product_lines'] = $this->language->get('text_product_lines');
-		$data['text_ebay_txn_id'] = $this->language->get('text_ebay_txn_id');
-		$data['text_name'] = $this->language->get('text_name');
-		$data['text_qty'] = $this->language->get('text_qty');
-		$data['text_price'] = $this->language->get('text_price');
-		$data['text_number'] = $this->language->get('text_number');
-		$data['text_coupon_id'] = $this->language->get('text_coupon_id');
-		$data['text_coupon_amount'] = $this->language->get('text_coupon_amount');
-		$data['text_coupon_currency'] = $this->language->get('text_coupon_currency');
-		$data['text_loyalty_currency'] = $this->language->get('text_loyalty_currency');
-		$data['text_loyalty_disc_amt'] = $this->language->get('text_loyalty_disc_amt');
-		$data['text_options_name'] = $this->language->get('text_options_name');
-		$data['text_tax_amt'] = $this->language->get('text_tax_amt');
-		$data['text_currency_code'] = $this->language->get('text_currency_code');
-		$data['text_amount'] = $this->language->get('text_amount');
-		$data['text_gift_msg'] = $this->language->get('text_gift_msg');
-		$data['text_gift_receipt'] = $this->language->get('text_gift_receipt');
-		$data['text_gift_wrap_name'] = $this->language->get('text_gift_wrap_name');
-		$data['text_gift_wrap_amt'] = $this->language->get('text_gift_wrap_amt');
-		$data['text_buyer_email_market'] = $this->language->get('text_buyer_email_market');
-		$data['text_survey_question'] = $this->language->get('text_survey_question');
-		$data['text_survey_chosen'] = $this->language->get('text_survey_chosen');
-		$data['text_receiver_business'] = $this->language->get('text_receiver_business');
-		$data['text_receiver_email'] = $this->language->get('text_receiver_email');
-		$data['text_receiver_id'] = $this->language->get('text_receiver_id');
-		$data['text_buyer_email'] = $this->language->get('text_buyer_email');
-		$data['text_payer_id'] = $this->language->get('text_payer_id');
-		$data['text_payer_status'] = $this->language->get('text_payer_status');
-		$data['text_country_code'] = $this->language->get('text_country_code');
-		$data['text_payer_business'] = $this->language->get('text_payer_business');
-		$data['text_payer_salute'] = $this->language->get('text_payer_salute');
-		$data['text_payer_firstname'] = $this->language->get('text_payer_firstname');
-		$data['text_payer_middlename'] = $this->language->get('text_payer_middlename');
-		$data['text_payer_lastname'] = $this->language->get('text_payer_lastname');
-		$data['text_payer_suffix'] = $this->language->get('text_payer_suffix');
-		$data['text_address_owner'] = $this->language->get('text_address_owner');
-		$data['text_address_status'] = $this->language->get('text_address_status');
-		$data['text_ship_sec_name'] = $this->language->get('text_ship_sec_name');
-		$data['text_ship_name'] = $this->language->get('text_ship_name');
-		$data['text_ship_street1'] = $this->language->get('text_ship_street1');
-		$data['text_ship_street2'] = $this->language->get('text_ship_street2');
-		$data['text_ship_city'] = $this->language->get('text_ship_city');
-		$data['text_ship_state'] = $this->language->get('text_ship_state');
-		$data['text_ship_zip'] = $this->language->get('text_ship_zip');
-		$data['text_ship_country'] = $this->language->get('text_ship_country');
-		$data['text_ship_phone'] = $this->language->get('text_ship_phone');
-		$data['text_ship_sec_add1'] = $this->language->get('text_ship_sec_add1');
-		$data['text_ship_sec_add2'] = $this->language->get('text_ship_sec_add2');
-		$data['text_ship_sec_city'] = $this->language->get('text_ship_sec_city');
-		$data['text_ship_sec_state'] = $this->language->get('text_ship_sec_state');
-		$data['text_ship_sec_zip'] = $this->language->get('text_ship_sec_zip');
-		$data['text_ship_sec_country'] = $this->language->get('text_ship_sec_country');
-		$data['text_ship_sec_phone'] = $this->language->get('text_ship_sec_phone');
-		$data['text_trans_id'] = $this->language->get('text_trans_id');
-		$data['text_receipt_id'] = $this->language->get('text_receipt_id');
-		$data['text_parent_trans_id'] = $this->language->get('text_parent_trans_id');
-		$data['text_trans_type'] = $this->language->get('text_trans_type');
-		$data['text_payment_type'] = $this->language->get('text_payment_type');
-		$data['text_order_time'] = $this->language->get('text_order_time');
-		$data['text_fee_amount'] = $this->language->get('text_fee_amount');
-		$data['text_settle_amount'] = $this->language->get('text_settle_amount');
-		$data['text_tax_amount'] = $this->language->get('text_tax_amount');
-		$data['text_exchange'] = $this->language->get('text_exchange');
-		$data['text_payment_status'] = $this->language->get('text_payment_status');
-		$data['text_pending_reason'] = $this->language->get('text_pending_reason');
-		$data['text_reason_code'] = $this->language->get('text_reason_code');
-		$data['text_protect_elig'] = $this->language->get('text_protect_elig');
-		$data['text_protect_elig_type'] = $this->language->get('text_protect_elig_type');
-		$data['text_store_id'] = $this->language->get('text_store_id');
-		$data['text_terminal_id'] = $this->language->get('text_terminal_id');
-		$data['text_invoice_number'] = $this->language->get('text_invoice_number');
-		$data['text_custom'] = $this->language->get('text_custom');
-		$data['text_note'] = $this->language->get('text_note');
-		$data['text_sales_tax'] = $this->language->get('text_sales_tax');
-		$data['text_buyer_id'] = $this->language->get('text_buyer_id');
-		$data['text_close_date'] = $this->language->get('text_close_date');
-		$data['text_multi_item'] = $this->language->get('text_multi_item');
-		$data['text_sub_amt'] = $this->language->get('text_sub_amt');
-		$data['text_sub_period'] = $this->language->get('text_sub_period');
-
-		$data['button_cancel'] = $this->language->get('button_cancel');
-
+		
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -1553,19 +1275,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 	public function preferredSolution() {
 		$this->load->language('extension/payment/pp_express');
-
-		$data = [];
-		$data['heading_title'] = $this->language->get('heading_title');
-		$data['text_learn_more'] = $this->language->get('text_learn_more');
-		$data['text_preferred_main'] = $this->language->get('text_preferred_main');
-		$data['text_connect_paypal'] = $this->language->get('text_connect_paypal');
-		$data['text_preferred_li_1'] = $this->language->get('text_preferred_li_1');
-		$data['text_preferred_li_2'] = $this->language->get('text_preferred_li_2');
-		$data['text_preferred_li_3'] = $this->language->get('text_preferred_li_3');
-		$data['text_preferred_li_4'] = $this->language->get('text_preferred_li_4');
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
 
 		$data['connect_link'] = '';
 		$data['module_link'] = '';

@@ -74,29 +74,6 @@ class ControllerAccountAffiliate extends Controller {
 				'href' => $this->url->link('account/affiliate/edit', '', true)
 			);		
 		}
-
-		$data['heading_title'] = $this->language->get('heading_title');
-		
-		$data['text_my_affiliate'] = $this->language->get('text_my_affiliate');
-		$data['text_payment'] = $this->language->get('text_payment');
-		$data['text_cheque'] = $this->language->get('text_cheque');
-		$data['text_paypal'] = $this->language->get('text_paypal');
-		$data['text_bank'] = $this->language->get('text_bank');
-		
-		$data['entry_company'] = $this->language->get('entry_company');
-		$data['entry_website'] = $this->language->get('entry_website');
-		$data['entry_tax'] = $this->language->get('entry_tax');
-		$data['entry_payment'] = $this->language->get('entry_payment');
-		$data['entry_cheque'] = $this->language->get('entry_cheque');
-		$data['entry_paypal'] = $this->language->get('entry_paypal');
-		$data['entry_bank_name'] = $this->language->get('entry_bank_name');
-		$data['entry_bank_branch_number'] = $this->language->get('entry_bank_branch_number');
-		$data['entry_bank_swift_code'] = $this->language->get('entry_bank_swift_code');
-		$data['entry_bank_account_name'] = $this->language->get('entry_bank_account_name');
-		$data['entry_bank_account_number'] = $this->language->get('entry_bank_account_number');
-
-		$data['button_continue'] = $this->language->get('button_continue');
-		$data['button_back'] = $this->language->get('button_back');
 	
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];

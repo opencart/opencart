@@ -40,20 +40,6 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['column_type'] = $this->language->get('column_type');
-		$data['column_digits'] = $this->language->get('column_digits');
-		$data['column_expiry'] = $this->language->get('column_expiry');
-
-		$data['text_empty'] = $this->language->get('text_empty');
-		$data['text_loading'] = $this->language->get('text_loading');
-
-		$data['button_delete'] = $this->language->get('button_delete');
-		$data['button_new_card'] = $this->language->get('button_new_card');
-		$data['button_delete'] = $this->language->get('button_delete');
-		$data['button_back'] = $this->language->get('button_back');
-
 		if ($this->config->get('payment_sagepay_server_card')) {
 			$data['cards'] = $this->model_extension_payment_sagepay_server->getCards($this->customer->getId());
 			$data['delete'] = $this->url->link('extension/credit_card/sagepay_server/delete', 'card_id=', true);
@@ -80,10 +66,10 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 			$data['pagination'] = false;
 			$data['results'] = false;
 		}
-
-		$data['back'] = $this->url->link('account/account', '', true);
+		
 		$data['add'] = $this->url->link('extension/credit_card/sagepay_server/add', '', true);
-
+		$data['back'] = $this->url->link('account/account', '', true);
+		
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');

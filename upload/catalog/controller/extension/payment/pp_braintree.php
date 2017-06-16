@@ -8,40 +8,6 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 		$this->load->language('extension/payment/pp_braintree');
 
-		$data['text_remember'] = $this->language->get('text_remember');
-		$data['text_remove'] = $this->language->get('text_remove');
-		$data['text_remove_confirm'] = $this->language->get('text_remove_confirm');
-		$data['text_month'] = $this->language->get('text_month');
-		$data['text_year'] = $this->language->get('text_year');
-		$data['text_loading'] = $this->language->get('text_loading');
-		$data['text_new_method'] = $this->language->get('text_new_method');
-		$data['text_saved_method'] = $this->language->get('text_saved_method');
-		$data['text_paypal'] = $this->language->get('text_paypal');
-		$data['text_pay_by_paypal'] = $this->language->get('text_pay_by_paypal');
-		$data['text_authentication'] = $this->language->get('text_authentication');
-
-		$data['entry_saved_methods'] = $this->language->get('entry_saved_methods');
-		$data['entry_new'] = $this->language->get('entry_new');
-		$data['entry_card'] = $this->language->get('entry_card');
-		$data['entry_expires'] = $this->language->get('entry_expires');
-		$data['entry_cvv'] = $this->language->get('entry_cvv');
-		$data['entry_remember_card_method'] = $this->language->get('entry_remember_card_method');
-		$data['entry_remember_paypal_method'] = $this->language->get('entry_remember_paypal_method');
-		$data['entry_card_placeholder'] = $this->language->get('entry_card_placeholder');
-		$data['entry_month_placeholder'] = $this->language->get('entry_month_placeholder');
-		$data['entry_year_placeholder'] = $this->language->get('entry_year_placeholder');
-		$data['entry_cvv_placeholder'] = $this->language->get('entry_cvv_placeholder');
-
-		$data['button_confirm'] = $this->language->get('button_confirm');
-		$data['button_delete_card'] = $this->language->get('button_delete_card');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-
-		$data['error_alert_fields_empty'] = $this->language->get('error_alert_fields_empty');
-		$data['error_alert_fields_invalid'] = $this->language->get('error_alert_fields_invalid');
-		$data['error_alert_failed_token'] = $this->language->get('error_alert_failed_token');
-		$data['error_alert_failed_network'] = $this->language->get('error_alert_failed_network');
-		$data['error_alert_unknown'] = $this->language->get('error_alert_unknown');
-
 		$data['payment_url'] = $this->url->link('extension/payment/pp_braintree/payment', '', true);
 		$data['vaulted_url'] = $this->url->link('extension/payment/pp_braintree/vaulted', '', true);
 

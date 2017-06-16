@@ -20,7 +20,7 @@ class Language {
 		return $this->data;
 	}
 			
-	public function load($filename, &$data = array()) {
+	public function load($filename) {
 		$_ = array();
 
 		$file = DIR_LANGUAGE . $this->default . '/' . $filename . '.php';

@@ -19,38 +19,6 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_content_top'] = $this->language->get('text_content_top');
-		$data['text_content_bottom'] = $this->language->get('text_content_bottom');
-		$data['text_column_left'] = $this->language->get('text_column_left');
-		$data['text_column_right'] = $this->language->get('text_column_right');
-		$data['text_pwa_button'] = $this->language->get('text_pwa_button');
-		$data['text_pay_button'] = $this->language->get('text_pay_button');
-		$data['text_a_button'] = $this->language->get('text_a_button');
-		$data['text_gold_button'] = $this->language->get('text_gold_button');
-		$data['text_darkgray_button'] = $this->language->get('text_darkgray_button');
-		$data['text_lightgray_button'] = $this->language->get('text_lightgray_button');
-		$data['text_small_button'] = $this->language->get('text_small_button');
-		$data['text_medium_button'] = $this->language->get('text_medium_button');
-		$data['text_large_button'] = $this->language->get('text_large_button');
-		$data['text_x_large_button'] = $this->language->get('text_x_large_button');
-
-		$data['entry_button_type'] = $this->language->get('entry_button_type');
-		$data['entry_button_colour'] = $this->language->get('entry_button_colour');
-		$data['entry_button_size'] = $this->language->get('entry_button_size');
-		$data['entry_layout'] = $this->language->get('entry_layout');
-		$data['entry_position'] = $this->language->get('entry_position');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_module_add'] = $this->language->get('button_module_add');
-		$data['button_remove'] = $this->language->get('button_remove');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {

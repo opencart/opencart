@@ -274,29 +274,6 @@ class ControllerDesignSeoUrl extends Controller {
 			);
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-		$data['text_default'] = $this->language->get('text_default');
-
-		$data['column_query'] = $this->language->get('column_query');
-		$data['column_keyword'] = $this->language->get('column_keyword');
-		$data['column_store'] = $this->language->get('column_store');
-		$data['column_language'] = $this->language->get('column_language');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['entry_query'] = $this->language->get('entry_query');
-		$data['entry_keyword'] = $this->language->get('entry_keyword');
-		$data['entry_store'] = $this->language->get('entry_store');
-		$data['entry_language'] = $this->language->get('entry_language');
-
-		$data['button_add'] = $this->language->get('button_add');
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_delete'] = $this->language->get('button_delete');
-		$data['button_filter'] = $this->language->get('button_filter');
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->error['warning'])) {
@@ -412,17 +389,7 @@ class ControllerDesignSeoUrl extends Controller {
 	}
 
 	protected function getForm() {
-		$data['heading_title'] = $this->language->get('heading_title');
-
 		$data['text_form'] = !isset($this->request->get['seo_url_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-
-		$data['entry_query'] = $this->language->get('entry_query');
-		$data['entry_keyword'] = $this->language->get('entry_keyword');
-		$data['entry_store'] = $this->language->get('entry_store');
-		$data['entry_language'] = $this->language->get('entry_language');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -538,7 +505,7 @@ class ControllerDesignSeoUrl extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('design/seo_url_form', $this->load->language('design/seo_url_form', $data)));
+		$this->response->setOutput($this->load->view('design/seo_url_form', $data));
 	}
 
 	protected function validateForm() {
@@ -552,7 +519,7 @@ class ControllerDesignSeoUrl extends Controller {
 		
 		$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($this->request->post['keyword']);
 
-		if ($seo_url_info && (!isset($this->request->get['seo_url_id']) || (($this->request->post['query'] != $seo_url_info['query']) && ($this->request->post['store_id'] == $seo_url_info['store_id']) && ($this->request->post['language_id'] == $seo_url_info['language_id'])))) {
+		if ($seo_url_info && (!isset($this->request->get['seo_url_id']) || ($this->request->post['query'] != $seo_url_info['query'] && $this->request->post['store_id'] == $seo_url_info['store_id']))) {
 			$this->error['keyword'] = $this->language->get('error_exists');
 		}
 			

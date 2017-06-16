@@ -230,17 +230,6 @@ class ControllerReportStatistics extends Controller {
 				'href'  => $this->url->link('report/statistics/' . str_replace('_', '', $result['code']), 'user_token=' . $this->session->data['user_token'], true)
 			);
 		}
-		
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_value'] = $this->language->get('column_value');
-		$data['column_action'] = $this->language->get('column_action');
-		
-		$data['button_refresh'] = $this->language->get('button_refresh');
 				
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];

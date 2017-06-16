@@ -158,45 +158,6 @@ class ControllerExtensionPaymentSecureTradingPp extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['entry_site_reference'] = $this->language->get('entry_site_reference');
-		$data['entry_username'] = $this->language->get('entry_username');
-		$data['entry_password'] = $this->language->get('entry_password');
-		$data['entry_security_status'] = $this->language->get('entry_security_status');
-		$data['entry_site_security_password'] = $this->language->get('entry_site_security_password');
-		$data['entry_site_security_status'] = $this->language->get('entry_site_security_status');
-		$data['entry_notification_password'] = $this->language->get('entry_notification_password');
-		$data['entry_order_status'] = $this->language->get('entry_order_status');
-		$data['entry_failed_order_status'] = $this->language->get('entry_failed_order_status');
-		$data['entry_declined_order_status'] = $this->language->get('entry_declined_order_status');
-		$data['entry_refunded_order_status'] = $this->language->get('entry_refunded_order_status');
-		$data['entry_authorisation_reversed_order_status'] = $this->language->get('entry_authorisation_reversed_order_status');
-		$data['entry_settle_status'] = $this->language->get('entry_settle_status');
-		$data['entry_settle_due_date'] = $this->language->get('entry_settle_due_date');
-		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_total'] = $this->language->get('entry_total');
-		$data['entry_parent_css'] = $this->language->get('entry_parent_css');
-		$data['entry_child_css'] = $this->language->get('entry_child_css');
-		$data['entry_cards_accepted'] = $this->language->get('entry_cards_accepted');
-
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_yes'] = $this->language->get('text_yes');
-		$data['text_no'] = $this->language->get('text_no');
-		$data['text_all_geo_zones'] = $this->language->get('text_all_geo_zones');
-		$data['text_process_immediately'] = $this->language->get('text_process_immediately');
-		$data['text_wait_x_days'] = $this->language->get('text_wait_x_days');
-
-		$data['help_username'] = $this->language->get('help_username');
-		$data['help_password'] = $this->language->get('help_password');
-		$data['help_total'] = $this->language->get('help_total');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -282,7 +243,6 @@ class ControllerExtensionPaymentSecureTradingPp extends Controller {
 	}
 
 	public function order() {
-
 		if ($this->config->get('payment_securetrading_pp_status')) {
 			$this->load->model('extension/payment/securetrading_pp');
 
@@ -300,27 +260,8 @@ class ControllerExtensionPaymentSecureTradingPp extends Controller {
 
 				$data['auto_settle'] = $securetrading_pp_order['settle_type'];
 
-				$data['text_payment_info'] = $this->language->get('text_payment_info');
-				$data['text_order_ref'] = $this->language->get('text_order_ref');
-				$data['text_order_total'] = $this->language->get('text_order_total');
-				$data['text_total_released'] = $this->language->get('text_total_released');
-				$data['text_release_status'] = $this->language->get('text_release_status');
-				$data['text_void_status'] = $this->language->get('text_void_status');
-				$data['text_rebate_status'] = $this->language->get('text_rebate_status');
-				$data['text_transactions'] = $this->language->get('text_transactions');
-				$data['text_yes'] = $this->language->get('text_yes');
-				$data['text_no'] = $this->language->get('text_no');
-				$data['text_column_amount'] = $this->language->get('text_column_amount');
-				$data['text_column_type'] = $this->language->get('text_column_type');
-				$data['text_column_created'] = $this->language->get('text_column_created');
-				$data['button_release'] = $this->language->get('button_release');
-				$data['button_rebate'] = $this->language->get('button_rebate');
-				$data['button_void'] = $this->language->get('button_void');
-				$data['text_confirm_void'] = $this->language->get('text_confirm_void');
-				$data['text_confirm_release'] = $this->language->get('text_confirm_release');
-				$data['text_confirm_rebate'] = $this->language->get('text_confirm_rebate');
-
 				$data['order_id'] = $this->request->get['order_id'];
+				
 				$data['user_token'] = $this->request->get['user_token'];
 
 				return $this->load->view('extension/payment/securetrading_pp_order', $data);

@@ -17,34 +17,6 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=fraud', true));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_signup'] = $this->language->get('text_signup');
-
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_key'] = $this->language->get('entry_key');
-		$data['entry_score'] = $this->language->get('entry_score');
-		$data['entry_order_status'] = $this->language->get('entry_order_status');
-		$data['entry_review_status'] = $this->language->get('entry_review_status');
-		$data['entry_approve_status'] = $this->language->get('entry_approve_status');
-		$data['entry_reject_status'] = $this->language->get('entry_reject_status');
-		$data['entry_simulate_ip'] = $this->language->get('entry_simulate_ip');
-
-		$data['help_score'] = $this->language->get('help_score');
-		$data['help_order_status'] = $this->language->get('help_order_status');
-		$data['help_review_status'] = $this->language->get('help_review_status');
-		$data['help_approve_status'] = $this->language->get('help_approve_status');
-		$data['help_reject_status'] = $this->language->get('help_reject_status');
-		$data['help_simulate_ip'] = $this->language->get('help_simulate_ip');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-
-		$data['tab_general'] = $this->language->get('tab_general');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -213,57 +185,6 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 		$fraud_info = $this->model_extension_fraud_fraudlabspro->getOrder($order_id);
 
 		if ($fraud_info) {
-			$data['text_loading'] = $this->language->get('text_loading');
-			$data['text_fraudlabspro_id'] = $this->language->get('text_fraudlabspro_id');
-			$data['text_ip_address'] = $this->language->get('text_ip_address');
-			$data['text_ip_net_speed'] = $this->language->get('text_ip_net_speed');
-			$data['text_ip_isp_name'] = $this->language->get('text_ip_isp_name');
-			$data['text_ip_usage_type'] = $this->language->get('text_ip_usage_type');
-			$data['text_ip_domain'] = $this->language->get('text_ip_domain');
-			$data['text_ip_time_zone'] = $this->language->get('text_ip_time_zone');
-			$data['text_ip_location'] = $this->language->get('text_ip_location');
-			$data['text_ip_distance'] = $this->language->get('text_ip_distance');
-			$data['text_ip_latitude'] = $this->language->get('text_ip_latitude');
-			$data['text_ip_longitude'] = $this->language->get('text_ip_longitude');
-			$data['text_risk_country'] = $this->language->get('text_risk_country');
-			$data['text_free_email'] = $this->language->get('text_free_email');
-			$data['text_ship_forward'] = $this->language->get('text_ship_forward');
-			$data['text_using_proxy'] = $this->language->get('text_using_proxy');
-			$data['text_bin_found'] = $this->language->get('text_bin_found');
-			$data['text_email_blacklist'] = $this->language->get('text_email_blacklist');
-			$data['text_credit_card_blacklist'] = $this->language->get('text_credit_card_blacklist');
-			$data['text_score'] = $this->language->get('text_score');
-			$data['text_status'] = $this->language->get('text_status');
-			$data['text_message'] = $this->language->get('text_message');
-			$data['text_transaction_id'] = $this->language->get('text_transaction_id');
-			$data['text_credits'] = $this->language->get('text_credits');
-			$data['text_flp_upgrade'] = $this->language->get('text_flp_upgrade');
-			$data['text_flp_merchant_area'] = $this->language->get('text_flp_merchant_area');
-
-			$data['help_id'] = $this->language->get('help_id');
-			$data['help_ip_address'] = $this->language->get('help_ip_address');
-			$data['help_ip_net_speed'] = $this->language->get('help_ip_net_speed');
-			$data['help_ip_isp_name'] = $this->language->get('help_ip_isp_name');
-			$data['help_ip_usage_type'] = $this->language->get('help_ip_usage_type');
-			$data['help_ip_domain'] = $this->language->get('help_ip_domain');
-			$data['help_ip_time_zone'] = $this->language->get('help_ip_time_zone');
-			$data['help_ip_location'] = $this->language->get('help_ip_location');
-			$data['help_ip_distance'] = $this->language->get('help_ip_distance');
-			$data['help_ip_latitude'] = $this->language->get('help_ip_latitude');
-			$data['help_ip_longitude'] = $this->language->get('help_ip_longitude');
-			$data['help_risk_country'] = $this->language->get('help_risk_country');
-			$data['help_free_email'] = $this->language->get('help_free_email');
-			$data['help_ship_forward'] = $this->language->get('help_ship_forward');
-			$data['help_using_proxy'] = $this->language->get('help_using_proxy');
-			$data['help_bin_found'] = $this->language->get('help_bin_found');
-			$data['help_email_blacklist'] = $this->language->get('help_email_blacklist');
-			$data['help_credit_card_blacklist'] = $this->language->get('help_credit_card_blacklist');
-			$data['help_score'] = $this->language->get('help_score');
-			$data['help_status'] = $this->language->get('help_status');
-			$data['help_message'] = $this->language->get('help_message');
-			$data['help_transaction_id'] = $this->language->get('help_transaction_id');
-			$data['help_credits'] = $this->language->get('help_credits');
-
 			if ($fraud_info['ip_address']) {
 				$data['flp_ip_address'] = $fraud_info['ip_address'];
 			} else {

@@ -686,30 +686,6 @@ class ControllerMarketplaceModification extends Controller {
 			);
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-		$data['text_refresh'] = $this->language->get('text_refresh');
-
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_author'] = $this->language->get('column_author');
-		$data['column_version'] = $this->language->get('column_version');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_refresh'] = $this->language->get('button_refresh');
-		$data['button_clear'] = $this->language->get('button_clear');
-		$data['button_delete'] = $this->language->get('button_delete');
-		$data['button_link'] = $this->language->get('button_link');
-		$data['button_enable'] = $this->language->get('button_enable');
-		$data['button_disable'] = $this->language->get('button_disable');
-
-		$data['tab_general'] = $this->language->get('tab_general');
-		$data['tab_log'] = $this->language->get('tab_log');
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->error['warning'])) {

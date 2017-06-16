@@ -36,19 +36,6 @@ class ControllerAccountReturn extends Controller {
 			'href' => $this->url->link('account/return', $url, true)
 		);
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_empty'] = $this->language->get('text_empty');
-
-		$data['column_return_id'] = $this->language->get('column_return_id');
-		$data['column_order_id'] = $this->language->get('column_order_id');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_customer'] = $this->language->get('column_customer');
-
-		$data['button_view'] = $this->language->get('button_view');
-		$data['button_continue'] = $this->language->get('button_continue');
-
 		$this->load->model('account/return');
 
 		if (isset($this->request->get['page'])) {
@@ -146,35 +133,6 @@ class ControllerAccountReturn extends Controller {
 				'href' => $this->url->link('account/return/info', 'return_id=' . $this->request->get['return_id'] . $url, true)
 			);
 
-			$data['heading_title'] = $this->language->get('text_return');
-
-			$data['text_return_detail'] = $this->language->get('text_return_detail');
-			$data['text_return_id'] = $this->language->get('text_return_id');
-			$data['text_order_id'] = $this->language->get('text_order_id');
-			$data['text_date_ordered'] = $this->language->get('text_date_ordered');
-			$data['text_customer'] = $this->language->get('text_customer');
-			$data['text_email'] = $this->language->get('text_email');
-			$data['text_telephone'] = $this->language->get('text_telephone');
-			$data['text_status'] = $this->language->get('text_status');
-			$data['text_date_added'] = $this->language->get('text_date_added');
-			$data['text_product'] = $this->language->get('text_product');
-			$data['text_reason'] = $this->language->get('text_reason');
-			$data['text_comment'] = $this->language->get('text_comment');
-			$data['text_history'] = $this->language->get('text_history');
-			$data['text_no_results'] = $this->language->get('text_no_results');
-
-			$data['column_product'] = $this->language->get('column_product');
-			$data['column_model'] = $this->language->get('column_model');
-			$data['column_quantity'] = $this->language->get('column_quantity');
-			$data['column_opened'] = $this->language->get('column_opened');
-			$data['column_reason'] = $this->language->get('column_reason');
-			$data['column_action'] = $this->language->get('column_action');
-			$data['column_date_added'] = $this->language->get('column_date_added');
-			$data['column_status'] = $this->language->get('column_status');
-			$data['column_comment'] = $this->language->get('column_comment');
-
-			$data['button_continue'] = $this->language->get('button_continue');
-
 			$data['return_id'] = $return_info['return_id'];
 			$data['order_id'] = $return_info['order_id'];
 			$data['date_ordered'] = date($this->language->get('date_format_short'), strtotime($return_info['date_ordered']));
@@ -244,12 +202,6 @@ class ControllerAccountReturn extends Controller {
 				'href' => $this->url->link('account/return/info', 'return_id=' . $return_id . $url, true)
 			);
 
-			$data['heading_title'] = $this->language->get('text_return');
-
-			$data['text_error'] = $this->language->get('text_error');
-
-			$data['button_continue'] = $this->language->get('button_continue');
-
 			$data['continue'] = $this->url->link('account/return', '', true);
 
 			$data['column_left'] = $this->load->controller('common/column_left');
@@ -296,30 +248,6 @@ class ControllerAccountReturn extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('account/return/add', '', true)
 		);
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_description'] = $this->language->get('text_description');
-		$data['text_order'] = $this->language->get('text_order');
-		$data['text_product'] = $this->language->get('text_product');
-		$data['text_yes'] = $this->language->get('text_yes');
-		$data['text_no'] = $this->language->get('text_no');
-
-		$data['entry_order_id'] = $this->language->get('entry_order_id');
-		$data['entry_date_ordered'] = $this->language->get('entry_date_ordered');
-		$data['entry_firstname'] = $this->language->get('entry_firstname');
-		$data['entry_lastname'] = $this->language->get('entry_lastname');
-		$data['entry_email'] = $this->language->get('entry_email');
-		$data['entry_telephone'] = $this->language->get('entry_telephone');
-		$data['entry_product'] = $this->language->get('entry_product');
-		$data['entry_model'] = $this->language->get('entry_model');
-		$data['entry_quantity'] = $this->language->get('entry_quantity');
-		$data['entry_reason'] = $this->language->get('entry_reason');
-		$data['entry_opened'] = $this->language->get('entry_opened');
-		$data['entry_fault_detail'] = $this->language->get('entry_fault_detail');
-
-		$data['button_submit'] = $this->language->get('button_submit');
-		$data['button_back'] = $this->language->get('button_back');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -590,12 +518,6 @@ class ControllerAccountReturn extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('account/return', '', true)
 		);
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_message'] = $this->language->get('text_message');
-
-		$data['button_continue'] = $this->language->get('button_continue');
 
 		$data['continue'] = $this->url->link('common/home');
 

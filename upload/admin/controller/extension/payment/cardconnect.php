@@ -36,57 +36,6 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 			'href' => $this->url->link('extension/payment/cardconnect', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['heading_title']                 = $this->language->get('heading_title');
-
-		$data['tab_settings']                  = $this->language->get('tab_settings');
-		$data['tab_order_status']              = $this->language->get('tab_order_status');
-
-		$data['text_edit']                     = $this->language->get('text_edit');
-		$data['text_payment']                  = $this->language->get('text_payment');		
-		$data['text_authorize']                = $this->language->get('text_authorize');
-		$data['text_live']                     = $this->language->get('text_live');
-		$data['text_test']                     = $this->language->get('text_test');
-		$data['text_enabled']                  = $this->language->get('text_enabled');
-		$data['text_disabled']                 = $this->language->get('text_disabled');
-		$data['text_all_zones']                = $this->language->get('text_all_zones');
-
-		$data['entry_merchant_id']             = $this->language->get('entry_merchant_id');
-		$data['entry_api_username']            = $this->language->get('entry_api_username');
-		$data['entry_api_password']            = $this->language->get('entry_api_password');
-		$data['entry_token']                   = $this->language->get('entry_token');
-		$data['entry_transaction']             = $this->language->get('entry_transaction');
-		$data['entry_environment']             = $this->language->get('entry_environment');
-		$data['entry_site']                    = $this->language->get('entry_site');
-		$data['entry_store_cards']             = $this->language->get('entry_store_cards');
-		$data['entry_echeck']                  = $this->language->get('entry_echeck');
-		$data['entry_total']                   = $this->language->get('entry_total');
-		$data['entry_geo_zone']                = $this->language->get('entry_geo_zone');
-		$data['entry_status']                  = $this->language->get('entry_status');
-		$data['entry_logging']                 = $this->language->get('entry_logging');
-		$data['entry_sort_order']              = $this->language->get('entry_sort_order');
-		$data['entry_cron_url']                = $this->language->get('entry_cron_url');
-		$data['entry_cron_time']               = $this->language->get('entry_cron_time');
-		$data['entry_order_status_pending']    = $this->language->get('entry_order_status_pending');
-		$data['entry_order_status_processing'] = $this->language->get('entry_order_status_processing');
-
-		$data['help_merchant_id']              = $this->language->get('help_merchant_id');
-		$data['help_api_username']             = $this->language->get('help_api_username');
-		$data['help_api_password']             = $this->language->get('help_api_password');
-		$data['help_token']                    = $this->language->get('help_token');
-		$data['help_transaction']              = $this->language->get('help_transaction');
-		$data['help_site']                     = $this->language->get('help_site');
-		$data['help_store_cards']              = $this->language->get('help_store_cards');
-		$data['help_echeck']                   = $this->language->get('help_echeck');
-		$data['help_total']                    = $this->language->get('help_total');
-		$data['help_logging']                  = $this->language->get('help_logging');
-		$data['help_cron_url']                 = $this->language->get('help_cron_url');
-		$data['help_cron_time']                = $this->language->get('help_cron_time');
-		$data['help_order_status_pending']     = $this->language->get('help_order_status_pending');
-		$data['help_order_status_processing']  = $this->language->get('help_order_status_processing');
-
-		$data['button_save']                   = $this->language->get('button_save');
-		$data['button_cancel']                 = $this->language->get('button_cancel');
-
 		$data['action'] = $this->url->link('extension/payment/cardconnect', 'user_token=' . $this->session->data['user_token'], true);
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
@@ -335,36 +284,6 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 				}
 
 				$data['cardconnect_order'] = $cardconnect_order;
-
-				$data['text_yes']                  = $this->language->get('text_yes');
-				$data['text_no']                   = $this->language->get('text_no');
-				$data['text_payment_info']         = $this->language->get('text_payment_info');
-				$data['text_payment_method']       = $this->language->get('text_payment_method');
-				$data['text_reference']            = $this->language->get('text_reference');
-				$data['text_update']               = $this->language->get('text_update');
-				$data['text_order_total']          = $this->language->get('text_order_total');
-				$data['text_total_captured']       = $this->language->get('text_total_captured');
-				$data['text_capture_payment']      = $this->language->get('text_capture_payment');
-				$data['text_refund_payment']       = $this->language->get('text_refund_payment');
-				$data['text_void']                 = $this->language->get('text_void');
-				$data['text_transactions']         = $this->language->get('text_transactions');
-				$data['text_column_type']          = $this->language->get('text_column_type');
-				$data['text_column_reference']     = $this->language->get('text_column_reference');
-				$data['text_column_amount']        = $this->language->get('text_column_amount');
-				$data['text_column_status']        = $this->language->get('text_column_status');
-				$data['text_column_date_modified'] = $this->language->get('text_column_date_modified');
-				$data['text_column_date_added']    = $this->language->get('text_column_date_added');
-				$data['text_column_update']        = $this->language->get('text_column_update');
-				$data['text_column_void']          = $this->language->get('text_column_void');
-				$data['text_confirm_capture']      = $this->language->get('text_confirm_capture');
-				$data['text_confirm_refund']       = $this->language->get('text_confirm_refund');
-
-				$data['button_inquire_all']        = $this->language->get('button_inquire_all');
-				$data['button_capture']            = $this->language->get('button_capture');
-				$data['button_refund']             = $this->language->get('button_refund');
-				$data['button_void_all']           = $this->language->get('button_void_all');
-				$data['button_inquire']            = $this->language->get('button_inquire');
-				$data['button_void']               = $this->language->get('button_void');
 
 				$data['order_id'] = $this->request->get['order_id'];
 

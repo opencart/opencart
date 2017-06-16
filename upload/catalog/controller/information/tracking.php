@@ -10,10 +10,6 @@ class ControllerInformationTracking extends Controller {
 			'href' => $this->url->link('common/home')
 		);
 		
-		$data['heading_title'] = $this->language->get('heading_title');
-		
-		$data['text_tracking'] = $this->language->get('text_tracking');
-		
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');

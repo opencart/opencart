@@ -4,8 +4,6 @@ class ControllerMailForgotten extends Controller {
 		$this->load->language('mail/forgotten');
 		
 		$data['text_greeting'] = sprintf($this->language->get('text_greeting'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-		$data['text_change'] = $this->language->get('text_change');
-		$data['text_ip'] = $this->language->get('text_ip');
 		
 		$data['reset'] = str_replace('&amp;', '&', $this->url->link('common/reset', 'code=' . $args[1], true));
 		$data['ip'] = $this->request->server['REMOTE_ADDR'];

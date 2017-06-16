@@ -19,14 +19,6 @@ class ControllerMarketplaceExtension extends Controller {
 			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_type'] = $this->language->get('text_type');
-		$data['text_filter'] = $this->language->get('text_filter');
-		$data['text_loading'] = $this->language->get('text_loading');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->request->get['type'])) {
@@ -35,6 +27,9 @@ class ControllerMarketplaceExtension extends Controller {
 			$data['type'] = '';
 		}
 
+		// Create a new language container so we don't pollute the current one
+		$language = new Language($this->config->get('config_language'));
+		
 		$data['categories'] = array();
 		
 		$files = glob(DIR_APPLICATION . 'controller/extension/extension/*.php', GLOB_BRACE);
@@ -43,14 +38,14 @@ class ControllerMarketplaceExtension extends Controller {
 			$extension = basename($file, '.php');
 			
 			// Compatibility code for old extension folders
-			$this->load->language('extension/extension/' . $extension);
+			$language->load('extension/extension/' . $extension);
 		
 			if ($this->user->hasPermission('access', 'extension/extension/' . $extension)) {
 				$files = glob(DIR_APPLICATION . 'controller/extension/' . $extension . '/*.php', GLOB_BRACE);
 		
 				$data['categories'][] = array(
 					'code' => $extension,
-					'text' => $this->language->get('heading_title') . ' (' . count($files) .')',
+					'text' => $language->get('heading_title') . ' (' . count($files) .')',
 					'href' => $this->url->link('extension/extension/' . $extension, 'user_token=' . $this->session->data['user_token'], true)
 				);
 			}			

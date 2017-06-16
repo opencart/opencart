@@ -17,42 +17,6 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_all_zones'] = $this->language->get('text_all_zones');
-		$data['text_sim'] = $this->language->get('text_sim');
-		$data['text_test'] = $this->language->get('text_test');
-		$data['text_live'] = $this->language->get('text_live');
-		$data['text_payment'] = $this->language->get('text_payment');
-		$data['text_defered'] = $this->language->get('text_defered');
-		$data['text_authenticate'] = $this->language->get('text_authenticate');
-
-		$data['entry_vendor'] = $this->language->get('entry_vendor');
-		$data['entry_test'] = $this->language->get('entry_test');
-		$data['entry_transaction'] = $this->language->get('entry_transaction');
-		$data['entry_total'] = $this->language->get('entry_total');
-		$data['entry_order_status'] = $this->language->get('entry_order_status');
-		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-		$data['entry_debug'] = $this->language->get('entry_debug');
-		$data['entry_card'] = $this->language->get('entry_card');
-		$data['entry_cron_job_token'] = $this->language->get('entry_cron_job_token');
-		$data['entry_cron_job_url'] = $this->language->get('entry_cron_job_url');
-		$data['entry_last_cron_job_run'] = $this->language->get('entry_last_cron_job_run');
-
-		$data['help_total'] = $this->language->get('help_total');
-		$data['help_debug'] = $this->language->get('help_debug');
-		$data['help_transaction'] = $this->language->get('help_transaction');
-		$data['help_cron_job_token'] = $this->language->get('help_cron_job_token');
-		$data['help_cron_job_url'] = $this->language->get('help_cron_job_url');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -194,9 +158,7 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 	}
 
 	public function order() {
-
 		if ($this->config->get('payment_sagepay_direct_status')) {
-
 			$this->load->model('extension/payment/sagepay_direct');
 
 			$sagepay_direct_order = $this->model_extension_payment_sagepay_direct->getOrder($this->request->get['order_id']);
@@ -213,27 +175,8 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 
 				$data['auto_settle'] = $sagepay_direct_order['settle_type'];
 
-				$data['text_payment_info'] = $this->language->get('text_payment_info');
-				$data['text_order_ref'] = $this->language->get('text_order_ref');
-				$data['text_order_total'] = $this->language->get('text_order_total');
-				$data['text_total_released'] = $this->language->get('text_total_released');
-				$data['text_release_status'] = $this->language->get('text_release_status');
-				$data['text_void_status'] = $this->language->get('text_void_status');
-				$data['text_rebate_status'] = $this->language->get('text_rebate_status');
-				$data['text_transactions'] = $this->language->get('text_transactions');
-				$data['text_yes'] = $this->language->get('text_yes');
-				$data['text_no'] = $this->language->get('text_no');
-				$data['text_column_amount'] = $this->language->get('text_column_amount');
-				$data['text_column_type'] = $this->language->get('text_column_type');
-				$data['text_column_date_added'] = $this->language->get('text_column_date_added');
-				$data['button_release'] = $this->language->get('button_release');
-				$data['button_rebate'] = $this->language->get('button_rebate');
-				$data['button_void'] = $this->language->get('button_void');
-				$data['text_confirm_void'] = $this->language->get('text_confirm_void');
-				$data['text_confirm_release'] = $this->language->get('text_confirm_release');
-				$data['text_confirm_rebate'] = $this->language->get('text_confirm_rebate');
-
 				$data['order_id'] = $this->request->get['order_id'];
+				
 				$data['user_token'] = $this->request->get['user_token'];
 
 				return $this->load->view('extension/payment/sagepay_direct_order', $data);

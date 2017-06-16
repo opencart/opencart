@@ -30,16 +30,6 @@ class ControllerAccountReset extends Controller {
 				$this->response->redirect($this->url->link('account/login', '', true));
 			}
 
-			$data['heading_title'] = $this->language->get('heading_title');
-
-			$data['text_password'] = $this->language->get('text_password');
-
-			$data['entry_password'] = $this->language->get('entry_password');
-			$data['entry_confirm'] = $this->language->get('entry_confirm');
-
-			$data['button_continue'] = $this->language->get('button_continue');
-			$data['button_back'] = $this->language->get('button_back');
-
 			$data['breadcrumbs'] = array();
 
 			$data['breadcrumbs'][] = array(

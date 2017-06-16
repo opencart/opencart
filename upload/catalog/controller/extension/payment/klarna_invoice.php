@@ -8,26 +8,6 @@ class ControllerExtensionPaymentKlarnaInvoice extends Controller {
 		if ($order_info) {
 			$this->load->language('extension/payment/klarna_invoice');
 
-			$data['text_additional'] = $this->language->get('text_additional');
-			$data['text_payment_option'] = $this->language->get('text_payment_option');
-			$data['text_loading'] = $this->language->get('text_loading');
-			$data['text_day'] = $this->language->get('text_day');
-			$data['text_month'] = $this->language->get('text_month');
-			$data['text_year'] = $this->language->get('text_year');
-			$data['text_male'] = $this->language->get('text_male');
-			$data['text_female'] = $this->language->get('text_female');
-
-			$data['entry_pno'] = $this->language->get('entry_pno');
-			$data['entry_dob'] = $this->language->get('entry_dob');
-			$data['entry_gender'] = $this->language->get('entry_gender');
-			$data['entry_street'] = $this->language->get('entry_street');
-			$data['entry_house_no'] = $this->language->get('entry_house_no');
-			$data['entry_house_ext'] = $this->language->get('entry_house_ext');
-			$data['entry_phone_no'] = $this->language->get('entry_phone_no');
-			$data['entry_company'] = $this->language->get('entry_company');
-
-			$data['button_confirm'] = $this->language->get('button_confirm');
-
 			$data['days'] = array();
 
 			for ($i = 1; $i <= 31; $i++) {

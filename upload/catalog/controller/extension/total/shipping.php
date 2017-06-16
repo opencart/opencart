@@ -4,22 +4,6 @@ class ControllerExtensionTotalShipping extends Controller {
 		if ($this->config->get('total_shipping_status') && $this->config->get('total_shipping_estimator') && $this->cart->hasShipping()) {
 			$this->load->language('extension/total/shipping');
 
-			$data['heading_title'] = $this->language->get('heading_title');
-
-			$data['text_shipping'] = $this->language->get('text_shipping');
-			$data['text_shipping_method'] = $this->language->get('text_shipping_method');
-			$data['text_select'] = $this->language->get('text_select');
-			$data['text_none'] = $this->language->get('text_none');
-			$data['text_loading'] = $this->language->get('text_loading');
-
-			$data['entry_country'] = $this->language->get('entry_country');
-			$data['entry_zone'] = $this->language->get('entry_zone');
-			$data['entry_postcode'] = $this->language->get('entry_postcode');
-
-			$data['button_quote'] = $this->language->get('button_quote');
-			$data['button_shipping'] = $this->language->get('button_shipping');
-			$data['button_cancel'] = $this->language->get('button_cancel');
-
 			if (isset($this->session->data['shipping_address']['country_id'])) {
 				$data['country_id'] = $this->session->data['shipping_address']['country_id'];
 			} else {

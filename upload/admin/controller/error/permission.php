@@ -5,10 +5,6 @@ class ControllerErrorPermission extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_permission'] = $this->language->get('text_permission');
-
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(

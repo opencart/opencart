@@ -17,39 +17,6 @@ class ControllerExtensionModulePPLogin extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_button_grey'] = $this->language->get('text_button_grey');
-		$data['text_button_blue'] = $this->language->get('text_button_blue');
-		$data['text_yes'] = $this->language->get('text_yes');
-		$data['text_no'] = $this->language->get('text_no');
-
-		$data['entry_client_id'] = $this->language->get('entry_client_id');
-		$data['entry_secret'] = $this->language->get('entry_secret');
-		$data['entry_sandbox'] = $this->language->get('entry_sandbox');
-		$data['entry_debug'] = $this->language->get('entry_debug');
-		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
-		$data['entry_button'] = $this->language->get('entry_button');
-		$data['entry_seamless'] = $this->language->get('entry_seamless');
-		$data['entry_locale'] = $this->language->get('entry_locale');
-		$data['entry_return_url'] = $this->language->get('entry_return_url');
-		$data['entry_status'] = $this->language->get('entry_status');
-
-		$data['help_sandbox'] = $this->language->get('help_sandbox');
-		$data['help_customer_group'] = $this->language->get('help_customer_group');
-		$data['help_seamless'] = $this->language->get('help_seamless');
-		$data['help_debug_logging'] = $this->language->get('help_debug_logging');
-		$data['help_locale'] = $this->language->get('help_locale');
-		$data['help_return_url'] = $this->language->get('help_return_url');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_module_add'] = $this->language->get('button_module_add');
-		$data['button_remove'] = $this->language->get('button_remove');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {

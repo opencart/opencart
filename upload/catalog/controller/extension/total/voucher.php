@@ -4,14 +4,6 @@ class ControllerExtensionTotalVoucher extends Controller {
 		if ($this->config->get('total_voucher_status')) {
 			$this->load->language('extension/total/voucher');
 
-			$data['heading_title'] = $this->language->get('heading_title');
-
-			$data['text_loading'] = $this->language->get('text_loading');
-
-			$data['entry_voucher'] = $this->language->get('entry_voucher');
-
-			$data['button_voucher'] = $this->language->get('button_voucher');
-
 			if (isset($this->session->data['voucher'])) {
 				$data['voucher'] = $this->session->data['voucher'];
 			} else {

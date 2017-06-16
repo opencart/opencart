@@ -2,7 +2,9 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="#filter-product" title="{{ button_filter }}" data-toggle="collapse" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></a> <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+      <div class="pull-right">
+        <a href="#filter-customer" title="{{ button_filter }}" data-toggle="collapse" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></a> 
+        <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
         <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-customer').submit() : false;"><i class="fa fa-trash-o"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
@@ -25,7 +27,7 @@
     {% endif %}
     <div class="row">
       <div class="col-md-3 col-md-push-9 col-sm-12 hidden-sm">
-        <div id="filter-product">
+        <div id="filter-customer">
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
@@ -44,6 +46,7 @@
                 <select name="filter_customer_group_id" id="input-customer-group" class="form-control">
                   <option value=""></option>
                   
+                  
                 
                 
                   {% for customer_group in customer_groups %}
@@ -51,7 +54,9 @@
                   
                 
                 
+                  
                   <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                  
                   
                 
                 
@@ -59,7 +64,9 @@
                   
                 
                 
+                  
                   <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+                  
                   
                 
                 
@@ -68,6 +75,7 @@
                 
               
               
+                
                 </select>
               </div>
               <div class="form-group">
@@ -75,13 +83,16 @@
                 <select name="filter_status" id="input-status" class="form-control">
                   <option value=""></option>
                   
+                  
                 
                 
                   {% if filter_status == '1' %}
                   
                 
                 
+                  
                   <option value="1" selected="selected">{{ text_enabled }}</option>
+                  
                   
                 
                 
@@ -89,7 +100,9 @@
                   
                 
                 
+                  
                   <option value="1">{{ text_enabled }}</option>
+                  
                   
                 
                 
@@ -98,7 +111,9 @@
                   
                 
                 
+                  
                   <option value="0" selected="selected">{{ text_disabled }}</option>
+                  
                   
                 
                 
@@ -106,7 +121,9 @@
                   
                 
                 
+                  
                   <option value="0">{{ text_disabled }}</option>
+                  
                   
                 
                 
@@ -114,6 +131,7 @@
                 
               
               
+                
                 </select>
               </div>
               <div class="form-group">

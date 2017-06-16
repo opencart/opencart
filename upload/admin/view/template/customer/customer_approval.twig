@@ -2,9 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <button type="button" id="button-filter" data-toggle="tooltip" title="{{ button_filter }}" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
-      </div>
+      <div class="pull-right"><a href="#filter-customer" title="{{ button_filter }}" data-toggle="collapse" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -25,7 +23,7 @@
     {% endif %}
     <div class="row">
       <div class="col-md-3 col-md-push-9 col-sm-12 hidden-sm">
-        <div id="filter-product">
+        <div id="filter-customer">
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>

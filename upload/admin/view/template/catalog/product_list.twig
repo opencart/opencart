@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <a href="#filter-product" title="{{ button_filter }}" data-toggle="collapse" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></a>
+        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-product').toggleClass('hidden-sm');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
         <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
         <button type="submit" form="form-product" formaction="{{ copy }}" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-default"><i class="fa fa-copy"></i></button>
         <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-product').submit() : false;"><i class="fa fa-trash-o"></i></button>
@@ -27,33 +27,34 @@
     </div>
     {% endif %}
     <div class="row">
-      <div class="col-md-3 col-md-push-9 col-sm-12 hidden-sm">
-        <div id="filter-product" class="collapse">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
+      <div id="filter-product" class="col-md-3 col-md-push-9 col-sm-12 hidden-sm">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
+          </div>
+          <div class="panel-body">
+            <div class="form-group">
+              <label class="control-label" for="input-name">{{ entry_name }}</label>
+              <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
             </div>
-            <div class="panel-body">
-              <div class="form-group">
-                <label class="control-label" for="input-name">{{ entry_name }}</label>
-                <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
-              </div>
-              <div class="form-group">
-                <label class="control-label" for="input-model">{{ entry_model }}</label>
-                <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control" />
-              </div>
-              <div class="form-group">
-                <label class="control-label" for="input-price">{{ entry_price }}</label>
-                <input type="text" name="filter_price" value="{{ filter_price }}" placeholder="{{ entry_price }}" id="input-price" class="form-control" />
-              </div>
-              <div class="form-group">
-                <label class="control-label" for="input-quantity">{{ entry_quantity }}</label>
-                <input type="text" name="filter_quantity" value="{{ filter_quantity }}" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control" />
-              </div>
-              <div class="form-group">
-                <label class="control-label" for="input-status">{{ entry_status }}</label>
-                <select name="filter_status" id="input-status" class="form-control">
-                  <option value=""></option>
+            <div class="form-group">
+              <label class="control-label" for="input-model">{{ entry_model }}</label>
+              <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="input-price">{{ entry_price }}</label>
+              <input type="text" name="filter_price" value="{{ filter_price }}" placeholder="{{ entry_price }}" id="input-price" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="input-quantity">{{ entry_quantity }}</label>
+              <input type="text" name="filter_quantity" value="{{ filter_quantity }}" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="input-status">{{ entry_status }}</label>
+              <select name="filter_status" id="input-status" class="form-control">
+                <option value=""></option>
+                
+                
                   
                 
 
@@ -61,7 +62,11 @@
 
                 
                 
-                  <option value="1" selected="selected">{{ text_enabled }}</option>
+                  
+                
+                <option value="1" selected="selected">{{ text_enabled }}</option>
+                
+                
                   
                 
 
@@ -69,7 +74,11 @@
 
                 
                 
-                  <option value="1">{{ text_enabled }}</option>
+                  
+                
+                <option value="1">{{ text_enabled }}</option>
+                
+                
                   
                 
 
@@ -78,7 +87,11 @@
 
                 
                 
-                  <option value="0" selected="selected">{{ text_disabled }}</option>
+                  
+                
+                <option value="0" selected="selected">{{ text_disabled }}</option>
+                
+                
                   
                 
 
@@ -86,7 +99,11 @@
 
                 
                 
-                  <option value="0">{{ text_disabled }}</option>
+                  
+                
+                <option value="0">{{ text_disabled }}</option>
+                
+                
                   
                 
 
@@ -95,11 +112,12 @@
 
               
               
-                </select>
-              </div>
-              <div class="form-group text-right">
-                <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
-              </div>
+                
+              
+              </select>
+            </div>
+            <div class="form-group text-right">
+              <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
             </div>
           </div>
         </div>

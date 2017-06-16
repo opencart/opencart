@@ -390,13 +390,13 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	height: 100px;
 	text-align: center;
 }
-/* Navs */
+/* Navs
 .nav > li.disabled > a {
 	color: #999;
 }
 .nav > li.disabled > a:hover, .nav > li.disabled > a:focus {
 	color: #999;
-}
+} */
 /* Tabs */
 .nav-tabs > li > a {
 	color: #a5a5a5;

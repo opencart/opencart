@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="button" id="button-filter" data-toggle="tooltip" title="{{ button_filter }}" class="btn btn-info"><i class="fa fa-filter"></i></button>
+        <button type="button" id="button-filter" data-toggle="tooltip" title="{{ button_filter }}" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
@@ -13,7 +13,7 @@
       </ul>
     </div>
   </div>
-  <div class="container-fluid"> {% if error_warning %}
+  <div class="container-fluid">{% if error_warning %}
     <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
@@ -24,172 +24,88 @@
     </div>
     {% endif %}
     <div class="row">
-      <div class="col-sm-9 col-xs-12">
+      <div class="col-md-3 col-md-push-9 col-sm-12 hidden-sm">
+        <div id="filter-product">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
+            </div>
+            <div class="panel-body">
+              <div class="form-group">
+                <label class="control-label" for="input-name">{{ entry_name }}</label>
+                <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="input-email">{{ entry_email }}</label>
+                <input type="text" name="filter_email" value="{{ filter_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="input-customer-group">{{ entry_customer_group }}</label>
+                <select name="filter_customer_group_id" id="input-customer-group" class="form-control">
+                  <option value=""></option>
+                  
+                {% for customer_group in customer_groups %}
+                {% if customer_group.customer_group_id == filter_customer_group_id %}
+                
+                  <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                  
+                {% else %}
+                
+                  <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+                  
+                {% endif %}
+                {% endfor %}
+              
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="input-type">{{ entry_type }}</label>
+                <select name="filter_type" id="input-type" class="form-control">
+                  <option value=""></option>
+                  
+                {% if filter_type == 'customer' %}
+                
+                  <option value="customer" selected="selected">{{ text_customer }}</option>
+                  
+                {% else %}
+                
+                  <option value="customer">{{ text_customer }}</option>
+                  
+                {% endif %}              
+                {% if filter_type == 'affiliate' %}
+                
+                  <option value="affiliate" selected="selected">{{ text_affiliate }}</option>
+                  
+                {% else %}
+                
+                  <option value="affiliate">{{ text_affiliate }}</option>
+                  
+                {% endif %}
+              
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="input-date-added">{{ entry_date_added }}</label>
+                <div class="input-group date">
+                  <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
+                  <span class="input-group-btn">
+                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                  </span></div>
+              </div>
+              <div class="form-group text-right">
+                <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9 col-md-pull-3 col-sm-12">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
           </div>
           <div class="panel-body">
             <div id="customer-approval"></div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-3 xs-hide">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_filter }}</h3>
-          </div>
-          <div class="panel-body">
-            <div class="form-group">
-              <label class="control-label" for="input-name">{{ entry_name }}</label>
-              <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
-            </div>
-            <div class="form-group">
-              <label class="control-label" for="input-email">{{ entry_email }}</label>
-              <input type="text" name="filter_email" value="{{ filter_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
-            </div>
-            <div class="form-group">
-              <label class="control-label" for="input-customer-group">{{ entry_customer_group }}</label>
-              <select name="filter_customer_group_id" id="input-customer-group" class="form-control">
-                <option value=""></option>
-                
-                
-                
-                
-                      
-                  
-                  
-                  {% for customer_group in customer_groups %}
-                  {% if customer_group.customer_group_id == filter_customer_group_id %}
-                  
-                  
-                  
-                      
-                
-                
-                
-                <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
-                
-                
-                
-                
-                      
-                  
-                  
-                  {% else %}
-                  
-                  
-                  
-                      
-                
-                
-                
-                <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
-                
-                
-                
-                
-                      
-                  
-                  
-                  {% endif %}
-                  {% endfor %}
-                
-                
-                
-                    
-              
-              
-              
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="control-label" for="input-type">{{ entry_type }}</label>
-              <select name="filter_type" id="input-type" class="form-control">
-                <option value=""></option>
-                
-                
-                
-                
-                      
-                  
-                  
-                  {% if filter_type == 'customer' %}
-                  
-                  
-                  
-                      
-                
-                
-                
-                <option value="customer" selected="selected">{{ text_customer }}</option>
-                
-                
-                
-                
-                      
-                  
-                  
-                  {% else %}
-                  
-                  
-                  
-                      
-                
-                
-                
-                <option value="customer">{{ text_customer }}</option>
-                
-                
-                
-                
-                      
-                  
-                  
-                  {% endif %}              
-                  {% if filter_type == 'affiliate' %}
-                  
-                  
-                  
-                      
-                
-                
-                
-                <option value="affiliate" selected="selected">{{ text_affiliate }}</option>
-                
-                
-                
-                
-                      
-                  
-                  
-                  {% else %}
-                  
-                  
-                  
-                      
-                
-                
-                
-                <option value="affiliate">{{ text_affiliate }}</option>
-                
-                
-                {% endif %}
-              
-              
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="control-label" for="input-date-added">{{ entry_date_added }}</label>
-              <div class="input-group date">
-                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
-                <span class="input-group-btn">
-                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                </span></div>
-            </div>
-            <div class="form-group text-right">
-              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
-            </div>
           </div>
         </div>
       </div>

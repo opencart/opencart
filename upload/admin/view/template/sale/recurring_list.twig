@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="button" id="button-filter" data-toggle="tooltip" title="{{ button_filter }}" class="btn btn-info"><i class="fa fa-filter"></i></button>
+        <button type="button" id="button-filter" data-toggle="tooltip" title="{{ button_filter }}" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
@@ -24,7 +24,67 @@
     </div>
     {% endif %}
     <div class="row">
-      <div class="col-sm-9 col-xs-12">
+      <div class="col-md-3 col-md-push-9 col-sm-12 hidden-sm">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
+          </div>
+          <div class="panel-body">
+            <div class="form-group">
+              <label class="control-label" for="input-order-recurring-id">{{ entry_order_recurring_id }}</label>
+              <input type="text" name="filter_order_recurring_id" value="{{ filter_order_recurring_id }}" placeholder="{{ entry_order_recurring_id }}" id="input-order-recurring-id" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="input-customer">{{ entry_customer }}</label>
+              <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="input-order-id">{{ entry_order_id }}</label>
+              <input type="text" name="filter_order_recurring_id" value="{{ filter_order_recurring_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="input-status">{{ entry_status }}</label>
+              <select name="filter_status" id="input-status" class="form-control">
+                
+                
+                  {% for recurring_status in recurring_statuses %}
+                  {% if filter_status == recurring_status.value %}
+                  
+                
+                <option value="{{ recurring_status.value }}" selected="selected">{{ recurring_status.text }}</option>
+                
+                
+                  {% else %}
+                  
+                
+                <option value="{{ recurring_status.value }}">{{ recurring_status.text }}</option>
+                
+                
+                  {% endif %}
+                  {% endfor %}
+                
+              
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="input-reference">{{ entry_reference }}</label>
+              <input type="text" name="filter_reference" value="{{ filter_reference }}" placeholder="{{ entry_reference }}" id="input-reference" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="input-date-date_added">{{ entry_date_added }}</label>
+              <div class="input-group date">
+                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" id="input-date-date_added" class="form-control" />
+                <span class="input-group-btn">
+                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                </span> </div>
+            </div>
+            <div class="form-group text-right">
+              <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9 col-md-pull-3 col-sm-12">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
@@ -71,61 +131,6 @@
             <div class="row">
               <div class="col-sm-6 text-left">{{ pagination }}</div>
               <div class="col-sm-6 text-right">{{ results }}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-3 xs-hide">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-list"></i> Order Filter</h3>
-          </div>
-          <div class="panel-body">
-            <div class="form-group">
-              <label class="control-label" for="input-order-recurring-id">{{ entry_order_recurring_id }}</label>
-              <input type="text" name="filter_order_recurring_id" value="{{ filter_order_recurring_id }}" placeholder="{{ entry_order_recurring_id }}" id="input-order-recurring-id" class="form-control" />
-            </div>
-            <div class="form-group">
-              <label class="control-label" for="input-customer">{{ entry_customer }}</label>
-              <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control" />
-            </div>
-            <div class="form-group">
-              <label class="control-label" for="input-order-id">{{ entry_order_id }}</label>
-              <input type="text" name="filter_order_recurring_id" value="{{ filter_order_recurring_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control" />
-            </div>
-            <div class="form-group">
-              <label class="control-label" for="input-status">{{ entry_status }}</label>
-              <select name="filter_status" id="input-status" class="form-control">
-                
-                  {% for recurring_status in recurring_statuses %}
-                  {% if filter_status == recurring_status.value %}
-                  
-                <option value="{{ recurring_status.value }}" selected="selected">{{ recurring_status.text }}</option>
-                
-                  {% else %}
-                  
-                <option value="{{ recurring_status.value }}">{{ recurring_status.text }}</option>
-                
-                  {% endif %}
-                  {% endfor %}
-                
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="control-label" for="input-reference">{{ entry_reference }}</label>
-              <input type="text" name="filter_reference" value="{{ filter_reference }}" placeholder="{{ entry_reference }}" id="input-reference" class="form-control" />
-            </div>
-            <div class="form-group">
-              <label class="control-label" for="input-date-date_added">{{ entry_date_added }}</label>
-              <div class="input-group date">
-                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" id="input-date-date_added" class="form-control" />
-                <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                </span>
-              </div>
-            </div>
-            <div class="form-group text-right">
-              <button type="button" id="button-filter" class="btn btn-primary"><i class="fa fa-filter"></i> {{ button_filter }}</button>
             </div>
           </div>
         </div>

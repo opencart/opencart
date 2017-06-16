@@ -124,6 +124,9 @@ class ControllerExtensionExtensionModule extends Controller {
 
 		$data['extensions'] = array();
 
+		// Create a new language container so we don't pollute the current one
+		$language = new Language($this->config->get('config_language'));
+		
 		// Compatibility code for old extension folders
 		$files = glob(DIR_APPLICATION . 'controller/extension/module/*.php');
 
@@ -154,7 +157,7 @@ class ControllerExtensionExtensionModule extends Controller {
 				}
 
 				$data['extensions'][] = array(
-					'name'      => $this->language->get('heading_title'),
+					'name'      => $language->get('heading_title'),
 					'status'    => $this->config->get('module_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'module'    => $module_data,
 					'install'   => $this->url->link('extension/extension/module/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),

@@ -77,13 +77,16 @@ class ControllerExtensionExtensionAnalytics extends Controller {
 				unset($extensions[$key]);
 			}
 		}
-
+		
 		$this->load->model('setting/store');
 		$this->load->model('setting/setting');
 
 		$stores = $this->model_setting_store->getStores();
-
+		
 		$data['extensions'] = array();
+		
+		// Create a new language container so we don't pollute the current one
+		$language = new Language($this->config->get('config_language'));
 
 		// Compatibility code for old extension folders
 		$files = glob(DIR_APPLICATION . 'controller/extension/analytics/*.php');
@@ -93,7 +96,7 @@ class ControllerExtensionExtensionAnalytics extends Controller {
 				$extension = basename($file, '.php');
 				
 				// Compatibility code for old extension folders
-				$this->load->language('extension/analytics/' . $extension);
+				$language->load('extension/analytics/' . $extension);
 				
 				$store_data = array();
 
@@ -112,7 +115,7 @@ class ControllerExtensionExtensionAnalytics extends Controller {
 				}
 
 				$data['extensions'][] = array(
-					'name'      => $this->language->get('heading_title'),
+					'name'      => $language->get('heading_title'),
 					'install'   => $this->url->link('extension/extension/analytics/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
 					'uninstall' => $this->url->link('extension/extension/analytics/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),

@@ -75,7 +75,10 @@ class ControllerExtensionExtensionDashboard extends Controller {
 		}
 
 		$data['extensions'] = array();
-
+		
+		// Create a new language container so we don't pollute the current one
+		$language = new Language($this->config->get('config_language'));
+		
 		// Compatibility code for old extension folders
 		$files = glob(DIR_APPLICATION . 'controller/extension/dashboard/*.php');
 
@@ -84,10 +87,10 @@ class ControllerExtensionExtensionDashboard extends Controller {
 				$extension = basename($file, '.php');
 				
 				// Compatibility code for old extension folders
-				$this->load->language('extension/dashboard/' . $extension);
+				$language->load('extension/dashboard/' . $extension);
 
 				$data['extensions'][] = array(
-					'name'       => $this->language->get('heading_title'),
+					'name'       => $language->get('heading_title'),
 					'width'      => $this->config->get('dashboard_' . $extension . '_width'),	
 					'status'     => $this->config->get('dashboard_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),					
 					'sort_order' => $this->config->get('dashboard_' . $extension . '_sort_order'),

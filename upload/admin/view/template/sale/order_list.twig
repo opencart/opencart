@@ -45,6 +45,7 @@
               <select name="filter_order_status_id" id="input-order-status" class="form-control">
                 <option value=""></option>
                 
+                
                   
                 
                 
@@ -57,7 +58,9 @@
                 
                 
                   
+                
                 <option value="0" selected="selected">{{ text_missing }}</option>
+                
                 
                   
                 
@@ -71,7 +74,9 @@
                 
                 
                   
+                
                 <option value="0">{{ text_missing }}</option>
+                
                 
                   
                 
@@ -87,7 +92,9 @@
                 
                 
                   
+                
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                
                 
                   
                 
@@ -101,7 +108,9 @@
                 
                 
                   
+                
                 <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                
                 
                   
                 
@@ -116,6 +125,7 @@
               
               
                 
+              
               </select>
             </div>
             <div class="form-group">
@@ -182,13 +192,14 @@
                     <td class="text-right">{{ order.total }}</td>
                     <td class="text-left">{{ order.date_added }}</td>
                     <td class="text-left">{{ order.date_modified }}</td>
-                    <td class="text-right">
-                    
-                      <a href="{{ order.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa fa-eye"></i></a> <a href="{{ order.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
-                      <button type="button" value="{{ order.order_id }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
-                      
-                      
-                      </td>
+                    <td class="text-right"><div class="btn-group"><a href="{{ order.view }}" class="btn btn-default"><i class="fa fa-eye"></i> {{ button_view }}</a>
+                        <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                          <li><a href="{{ order.edit }}"><i class="fa fa-pencil"></i> {{ button_edit }}</a></li>
+                          <li><a href="{{ order.edit }}"><i class="fa fa-trash-o"></i> {{ button_delete }}</a></li>
+                        </ul>
+                      </div>
+                      <button type="button" value="{{ order.order_id }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa fa-trash-o"></i></button></td>
                   </tr>
                   {% endfor %}
                   {% else %}

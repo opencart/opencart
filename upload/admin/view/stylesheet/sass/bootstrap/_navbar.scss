@@ -182,11 +182,6 @@
       margin-left: -$navbar-padding-horizontal;
     }
   }
-
-  @media screen and (max-width: $screen-xs-max) {
-    padding: ($navbar-padding-vertical - 8) $navbar-padding-horizontal;
-    height: $navbar-height - 15px;
-  }
 }
 
 
@@ -279,11 +274,6 @@
         padding-bottom: $navbar-padding-vertical;
       }
     }
-  }
-
-  @media screen and (max-width: $screen-xs-max){
-    margin-top: 0;
-    margin-bottom: 0;
   }
 }
 
@@ -408,12 +398,6 @@
   }
 }
 
-.navbar-right {
-  @media screen and (max-width: $screen-xs-max) {
-    float: right !important;
-    margin-right: 0;
-  }
-}
 
 // Alternate navbars
 // --------------------------------------------------

@@ -150,40 +150,30 @@ $table-border-color:            #ddd !default;
 $btn-font-weight:                normal !default;
 
 $btn-default-color:              #666 !default;
-$btn-default-bg:                 #f4f5f7 !default;
-$btn-default-bg-lighter:         #fff !default;
+$btn-default-bg:                 #fff !default;
 $btn-default-border:             #ddd !default;
 
 $btn-primary-color:              #fff !default;
 $btn-primary-bg:                 $brand-primary !default;
-$btn-primary-bg-lighter:         lighten($brand-primary, 10%) !default;
-$btn-primary-border:             $btn-primary-bg !default;
+$btn-primary-border:             darken($btn-primary-bg, 7%) !default;
 
 $btn-success-color:              #fff !default;
 $btn-success-bg:                 $brand-success !default;
-$btn-success-bg-lighter:         #65c065 !default;
-$btn-success-border:             $btn-success-bg !default;
+$btn-success-border:             darken($btn-success-bg, 7%) !default;
 
 $btn-info-color:                 #fff !default;
 $btn-info-bg:                    $brand-info !default;
-$btn-info-bg-lighter:            #66ceee !default;
-//$btn-info-border:                darken($btn-info-bg, 8%) !default;
-$btn-info-border:                $btn-info-bg !default;
+$btn-info-border:                darken($btn-info-bg, 7%) !default;
+//$btn-info-border:                $btn-info-bg !default;
 
 $btn-warning-color:              #fff !default;
 $btn-warning-bg:                 $brand-warning !default;
-$btn-warning-bg-lighter:         #f4b253 !default;
-$btn-warning-border:             $brand-warning !default;
+$btn-warning-border:             darken($brand-warning, 7%) !default;
 
 $btn-danger-color:               #fff !default;
 $btn-danger-bg:                  $brand-danger !default;
-$btn-danger-bg-lighter:          #e76858 !default;
-$btn-danger-border:              $btn-danger-bg !default;
+$btn-danger-border:              darken($btn-danger-bg, 7%) !default;
 
-$btn-ghost-dark-color:           #000 !default;
-$btn-ghost-dark-bg:              transparent !default;
-$btn-ghost-dark-bg-lighter:      $btn-ghost-dark-bg !default;
-$btn-ghost-dark-border:          $btn-ghost-dark-color !default;
 
 $btn-link-disabled-color:        $gray-light !default;
 
@@ -889,5 +879,7 @@ $blockquote-border-color:     $gray-lighter !default;
 $page-header-border-color:    $gray-lighter !default;
 //** Width of horizontal description list titles
 $dl-horizontal-offset:        $component-offset-horizontal !default;
+//** Point at which .dl-horizontal becomes horizontal
+$dl-horizontal-breakpoint:    $grid-float-breakpoint !default;
 //** Horizontal line color.
 $hr-border:                   $gray-lighter !default;

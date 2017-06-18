@@ -29,4 +29,5 @@ $_['entry_type']        = 'Type';
 $_['error_permission']  = 'Warning: You do not have permission to modify manufacturers!';
 $_['error_name']        = 'Manufacturer Name must be between 1 and 64 characters!';
 $_['error_keyword']     = 'SEO URL already in use!';
+$_['error_unique']      = 'SEO URL must be unique!';
 $_['error_product']     = 'Warning: This manufacturer cannot be deleted as it is currently assigned to %s products!';

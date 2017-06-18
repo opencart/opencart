@@ -372,14 +372,12 @@ class ControllerCatalogManufacturer extends Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 		
-		$this->load->model('design/seo_url');
-		
-		if (isset($this->request->post['manufacturer_seo'])) {
-			$data['manufacturer_seo'] = $this->request->post['manufacturer_seo'];
+		if (isset($this->request->post['manufacturer_seo_url'])) {
+			$data['manufacturer_seo_url'] = $this->request->post['manufacturer_seo_url'];
 		} elseif (isset($this->request->get['manufacturer_id'])) {
-			$data['manufacturer_seo'] = $this->model_design_seo_url->getSeoUrls(array('filter_query' => 'manufacturer_id=' . $this->request->get['manufacturer_id']));
+			$data['manufacturer_seo_url'] = $this->model_catalog_manufacturer->getManufacturerSeoUrls($this->request->get['manufacturer_id']);
 		} else {
-			$data['manufacturer_seo'] = array();
+			$data['manufacturer_seo_url'] = array();
 		}
 				
 		$data['header'] = $this->load->controller('common/header');
@@ -398,15 +396,23 @@ class ControllerCatalogManufacturer extends Controller {
 			$this->error['name'] = $this->language->get('error_name');
 		}
 
-		if ($this->request->post['manufacturer_seo']) {
+		if ($this->request->post['manufacturer_seo_url']) {
 			$this->load->model('design/seo_url');
 			
-			foreach ($this->request->post['manufacturer_seo'] as $key => $manufacturer_seo) {
-				if (trim($manufacturer_seo['keyword'])) {
-					$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($manufacturer_seo['keyword']);
-		
-					if ($seo_url_info && (!isset($this->request->get['manufacturer_id']) || (($seo_url_info['query'] != 'manufacturer_id=' . $this->request->get['manufacturer_id']) && ($manufacturer_seo['store_id'] == $seo_url_info['store_id'])))) {
-						$this->error['keyword'][$key] = $this->language->get('error_keyword');
+			foreach ($this->request->post['manufacturer_seo_url'] as $store_id => $language) {
+				foreach ($language as $language_id => $keyword) {
+					if (trim($keyword)) {
+						if (count(array_keys($language, $keyword)) > 1) {
+							$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_unique');
+						}							
+						
+						$seo_urls = $this->model_design_seo_url->getSeoUrlsByKeyword($keyword);
+						
+						foreach ($seo_urls as $seo_url) {
+							if (($seo_url['store_id'] == $store_id) && (!isset($this->request->get['manufacturer_id']) || (($seo_url['query'] != 'manufacturer_id=' . $this->request->get['manufacturer_id'])))) {
+								$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
+							}
+						}
 					}
 				}
 			}

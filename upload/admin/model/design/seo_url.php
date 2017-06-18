@@ -114,4 +114,10 @@ class ModelDesignSeoUrl extends Model {
 
 		return $query->rows;
 	}	
+	
+	public function getSeoUrlsByQuery($keyword) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE keyword = '" . $this->db->escape($keyword) . "'");
+
+		return $query->rows;
+	}	
 }

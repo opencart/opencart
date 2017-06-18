@@ -121,7 +121,7 @@ $('#button-filter').on('click', function() {
 		url += '&filter_ip=' + encodeURIComponent(filter_ip);
 	}
 	
-	location = 'index.php?route=extension/report/customer_search/report&user_token={{ user_token }}' + url;
+	location = 'index.php?route=report/report&code=customer_search&user_token={{ user_token }}' + url;
 });
 //--></script> 
 <script type="text/javascript"><!--

@@ -184,7 +184,7 @@ $('#button-filter').on('click', function() {
 		url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
 	} 
 	
-	location = 'index.php?route=extension/report/customer_order/report&user_token={{ user_token }}' + url;
+	location = 'index.php?route=report/report&user_token={{ user_token }}&code=customer_order' + url;
 });
 //--></script> 
 <script type="text/javascript"><!--

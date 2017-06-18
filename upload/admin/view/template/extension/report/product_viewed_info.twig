@@ -1,5 +1,8 @@
 <div class="panel panel-default">
   <div class="panel-heading">
+    <div class="pull-right">
+      <button type="button" id="button-reset" data-loading="{{ text_loading }}" class="btn btn-danger btn-xs"><i class="fa fa-refresh"></i> {{ button_reset }}</button>
+    </div>
     <h3 class="panel-title"><i class="fa fa-filter"></i> {{ heading_title }}</h3>
   </div>
   <div class="panel-body">
@@ -29,17 +32,13 @@
           <td class="text-center" colspan="4">{{ text_no_results }}</td>
         </tr>
         {% endif %}
-          </tbody>
+        </tbody>
         
       </table>
     </div>
     <div class="row">
       <div class="col-sm-6 text-left">{{ pagination }}</div>
       <div class="col-sm-6 text-right">{{ results }}</div>
-    </div>
-    <br />
-    <div class="text-center">
-      <button type="button" id="button-reset" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-refresh"></i> {{ button_reset }}</button>
     </div>
   </div>
 </div>

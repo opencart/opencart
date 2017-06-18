@@ -105,7 +105,7 @@ $('#button-filter').on('click', function() {
 		url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
 	}
 
-	//$('#report').load('index.php?route=extension/report/customer_activity/report&user_token={{ user_token }}' + url);
+	location = 'index.php?route=extension/report/customer_activity/report&user_token={{ user_token }}' + url;
 });
 //--></script> 
 <script type="text/javascript"><!--

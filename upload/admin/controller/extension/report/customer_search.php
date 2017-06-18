@@ -196,6 +196,6 @@ class ControllerExtensionReportCustomerSearch extends Controller {
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_ip'] = $filter_ip;
 
-		$this->response->setOutput($this->load->view('extension/report/customer_search_info', $data));
+		return $this->load->view('extension/report/customer_search_info', $data);
 	}
 }

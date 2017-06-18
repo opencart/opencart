@@ -155,6 +155,6 @@ class ControllerExtensionReportCustomerReward extends Controller {
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_customer'] = $filter_customer;
 	
-		$this->response->setOutput($this->load->view('extension/report/customer_reward_info', $data));
+		return $this->load->view('extension/report/customer_reward_info', $data);
 	}
 }

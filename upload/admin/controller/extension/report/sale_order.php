@@ -191,6 +191,6 @@ class ControllerExtensionReportSaleOrder extends Controller {
 		$data['filter_group'] = $filter_group;
 		$data['filter_order_status_id'] = $filter_order_status_id;
 
-		$this->response->setOutput($this->load->view('extension/report/sale_order_info', $data));
+		return $this->load->view('extension/report/sale_order_info', $data);
 	}
 }

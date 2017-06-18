@@ -170,7 +170,7 @@ $('#button-filter').on('click', function() {
 		url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
 	}	
 
-	//$('#report').load('index.php?route=extension/report/sale_return/report&user_token={{ user_token }}' + url);
+	location = 'index.php?route=extension/report/sale_return/report&user_token={{ user_token }}' + url;
 });
 //--></script> 
 <script type="text/javascript"><!--

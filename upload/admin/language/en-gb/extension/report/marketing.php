@@ -3,10 +3,8 @@
 $_['heading_title']    = 'Marketing Report';
 
 // Text
-$_['text_extension']   = 'Extensions';
 $_['text_success']     = 'Success: You have modified marketing report!';
-$_['text_edit']        = 'Edit Marketing Report';
-$_['text_filter']      = 'Marketing Filter';
+$_['text_filter']      = 'Filter';
 $_['text_all_status']  = 'All Statuses';
 
 // Column

@@ -171,6 +171,6 @@ class ControllerExtensionReportCustomerOrder extends Controller {
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_order_status_id'] = $filter_order_status_id;
 
-		$this->response->setOutput($this->load->view('extension/report/customer_order_info', $data));
+		return $this->load->view('extension/report/customer_order_info', $data);
 	}
 }

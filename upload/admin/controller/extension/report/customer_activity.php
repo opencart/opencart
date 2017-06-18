@@ -174,6 +174,6 @@ class ControllerExtensionReportCustomerActivity extends Controller {
 		$data['filter_date_start'] = $filter_date_start;
 		$data['filter_date_end'] = $filter_date_end;
 
-		$this->response->setOutput($this->load->view('extension/report/customer_activity_info', $data));
+		return $this->load->view('extension/report/customer_activity_info', $data);
 	}
 }

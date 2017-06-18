@@ -3,10 +3,8 @@
 $_['heading_title']    = 'Coupons Report';
 
 // Text
-$_['text_extension']   = 'Extensions';
 $_['text_success']     = 'Success: You have modified coupon report!';
-$_['text_edit']        = 'Edit Coupons Report';
-$_['text_filter']      = 'Coupons Filter';
+$_['text_filter']      = 'Filter';
 
 // Column
 $_['column_name']      = 'Coupon Name';

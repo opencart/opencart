@@ -155,6 +155,6 @@ class ControllerExtensionReportProductPurchased extends Controller {
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_order_status_id'] = $filter_order_status_id;
 
-		$this->response->setOutput($this->load->view('extension/report/product_purchased_info', $data));
+		return $this->load->view('extension/report/product_purchased_info', $data);
 	}
 }

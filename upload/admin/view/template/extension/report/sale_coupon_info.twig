@@ -1,66 +1,76 @@
 <div class="row">
-  <div class="col-md-9 col-sm-12">
-    <fieldset>
-      <legend>{{ heading_title }}</legend>
-      <div class="table-responsive">
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <td class="text-left">{{ column_name }}</td>
-              <td class="text-left">{{ column_code }}</td>
-              <td class="text-right">{{ column_orders }}</td>
-              <td class="text-right">{{ column_total }}</td>
-              <td class="text-right">{{ column_action }}</td>
-            </tr>
-          </thead>
-          <tbody>
-          
-          {% if coupons %}
-          {% for coupon in coupons %}
-          <tr>
-            <td class="text-left">{{ coupon.name }}</td>
-            <td class="text-left">{{ coupon.code }}</td>
-            <td class="text-right">{{ coupon.orders }}</td>
-            <td class="text-right">{{ coupon.total }}</td>
-            <td class="text-right"><a href="{{ coupon.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
-          </tr>
-          {% endfor %}
-          {% else %}
-          <tr>
-            <td class="text-center" colspan="6">{{ text_no_results }}</td>
-          </tr>
-          {% endif %}
-            </tbody>
-          
-        </table>
+  <div id="filter-report" class="col-md-3 col-md-push-9 col-sm-12 hidden-sm">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
       </div>
-      <div class="row">
-        <div class="col-sm-6 text-left">{{ pagination }}</div>
-        <div class="col-sm-6 text-right">{{ results }}</div>
+      <div class="panel-body">
+        <div class="form-group">
+          <label class="control-label" for="input-date-start">{{ entry_date_start }}</label>
+          <div class="input-group date">
+            <input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control" />
+            <span class="input-group-btn">
+            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+            </span></div>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="input-date-end">{{ entry_date_end }}</label>
+          <div class="input-group date">
+            <input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control" />
+            <span class="input-group-btn">
+            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+            </span></div>
+        </div>
+        <div class="form-group text-right">
+          <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+        </div>
       </div>
-    </fieldset>
+    </div>
   </div>
-  <div class="col-md-3 col-sm-12">
-    <fieldset>
-      <legend>{{ text_filter }}</legend>
-      <div class="form-group">
-        <label class="control-label" for="input-date-start">{{ entry_date_start }}</label>
-        <div class="input-group date">
-          <input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control" />
-          <span class="input-group-btn">
-          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-          </span></div>
+  <div class="col-md-9 col-md-pull-3 col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-bar-chart"></i> {{ heading_title }}</h3>
       </div>
-      <div class="form-group">
-        <label class="control-label" for="input-date-end">{{ entry_date_end }}</label>
-        <div class="input-group date">
-          <input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control" />
-          <span class="input-group-btn">
-          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-          </span></div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <td class="text-left">{{ column_name }}</td>
+                <td class="text-left">{{ column_code }}</td>
+                <td class="text-right">{{ column_orders }}</td>
+                <td class="text-right">{{ column_total }}</td>
+                <td class="text-right">{{ column_action }}</td>
+              </tr>
+            </thead>
+            <tbody>
+            
+            {% if coupons %}
+            {% for coupon in coupons %}
+            <tr>
+              <td class="text-left">{{ coupon.name }}</td>
+              <td class="text-left">{{ coupon.code }}</td>
+              <td class="text-right">{{ coupon.orders }}</td>
+              <td class="text-right">{{ coupon.total }}</td>
+              <td class="text-right"><a href="{{ coupon.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+              <td class="text-center" colspan="6">{{ text_no_results }}</td>
+            </tr>
+            {% endif %}
+            </tbody>
+            
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 text-left">{{ pagination }}</div>
+          <div class="col-sm-6 text-right">{{ results }}</div>
+        </div>
       </div>
-      <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
-    </fieldset>
+    </div>
   </div>
 </div>
 <script type="text/javascript"><!--

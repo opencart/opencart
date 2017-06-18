@@ -43,7 +43,7 @@ class ControllerReportReport extends Controller {
 					'code'       => $code,
 					'group'      => $this->language->get('text_' . $this->config->get('report_' . $code . '_group')),
 					'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
-					'href'       => $this->url->link('extension/report/' . $code . '/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true)
+					'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true)
 				);
 			}
 		}
@@ -55,7 +55,15 @@ class ControllerReportReport extends Controller {
 		}
 
 		array_multisort($sort_order, SORT_ASC, $data['reports']);	
-
+		
+		if (isset($this->request->get['code'])) {
+			$data['test'] = $this->load->controller('extension/report/' . $this->request->get['code'] . '/report');
+		} elseif (isset($data['reports'][0])) {
+			$data['test'] = $this->load->controller('extension/report/' . $data['reports'][0]['code'] . '/report');
+		} else {
+			$data['test'] = '';
+		}
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

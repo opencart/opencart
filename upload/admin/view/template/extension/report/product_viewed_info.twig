@@ -1,43 +1,48 @@
-<fieldset>
-  <legend>{{ heading_title }}</legend>
-  <div class="table-responsive">
-    <table class="table table-bordered">
-      <thead>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><i class="fa fa-filter"></i> {{ heading_title }}</h3>
+  </div>
+  <div class="panel-body">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <td class="text-left">{{ column_name }}</td>
+            <td class="text-left">{{ column_model }}</td>
+            <td class="text-right">{{ column_viewed }}</td>
+            <td class="text-right">{{ column_percent }}</td>
+          </tr>
+        </thead>
+        <tbody>
+        
+        {% if products %}
+        {% for product in products %}
         <tr>
-          <td class="text-left">{{ column_name }}</td>
-          <td class="text-left">{{ column_model }}</td>
-          <td class="text-right">{{ column_viewed }}</td>
-          <td class="text-right">{{ column_percent }}</td>
+          <td class="text-left">{{ product.name }}</td>
+          <td class="text-left">{{ product.model }}</td>
+          <td class="text-right">{{ product.viewed }}</td>
+          <td class="text-right">{{ product.percent }}</td>
         </tr>
-      </thead>
-      <tbody>
-      
-      {% if products %}
-      {% for product in products %}
-      <tr>
-        <td class="text-left">{{ product.name }}</td>
-        <td class="text-left">{{ product.model }}</td>
-        <td class="text-right">{{ product.viewed }}</td>
-        <td class="text-right">{{ product.percent }}</td>
-      </tr>
-      {% endfor %}
-      {% else %}
-      <tr>
-        <td class="text-center" colspan="4">{{ text_no_results }}</td>
-      </tr>
-      {% endif %}
-      </tbody>
-      
-    </table>
+        {% endfor %}
+        {% else %}
+        <tr>
+          <td class="text-center" colspan="4">{{ text_no_results }}</td>
+        </tr>
+        {% endif %}
+          </tbody>
+        
+      </table>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 text-left">{{ pagination }}</div>
+      <div class="col-sm-6 text-right">{{ results }}</div>
+    </div>
+    <br />
+    <div class="text-center">
+      <button type="button" id="button-reset" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-refresh"></i> {{ button_reset }}</button>
+    </div>
   </div>
-  <div class="row">
-    <div class="col-sm-6 text-left">{{ pagination }}</div>
-    <div class="col-sm-6 text-right">{{ results }}</div>
-  </div>
-  <br />
-  <div class="text-center"><button type="button" id="button-reset" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-refresh"></i> {{ button_reset }}</button></div>
-
-
+</div>
 <script type="text/javascript"><!--
 $('#button-reset').on('click', function() {
 	if (confirm('{{ text_confirm }}')) {

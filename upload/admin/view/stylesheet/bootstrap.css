@@ -3779,8 +3779,7 @@ a.thumbnail:hover, a.thumbnail:focus, a.thumbnail.active {
   padding: 10px;
   margin-bottom: 18px;
   border: 1px solid transparent;
-  border-radius: 3px;
-  text-shadow: 0px 1px #999; }
+  border-radius: 3px; }
   .alert h4 {
     margin-top: 0;
     color: inherit; }
@@ -4200,12 +4199,12 @@ a.list-group-item-danger, button.list-group-item-danger {
   border-color: #ddd; }
   .panel-default > .panel-heading {
     color: #333;
-    background-color: #f5f5f5;
+    background-color: #fafafa;
     border-color: #ddd; }
   .panel-default > .panel-heading + .panel-collapse > .panel-body {
     border-top-color: #ddd; }
   .panel-default > .panel-heading .badge {
-    color: #f5f5f5;
+    color: #fafafa;
     background-color: #333; }
   .panel-default > .panel-footer + .panel-collapse > .panel-body {
     border-bottom-color: #ddd; }

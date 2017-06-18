@@ -4,7 +4,7 @@ html, body {
 	margin: 0;
 	padding: 0;
 	font-family: 'Open Sans', sans-serif;
-	color: #666666;
+	color: #545454;
 	text-rendering: optimizeLegibility;
 }
 h1, h2, h3, h4, h5, h6, p {
@@ -36,6 +36,7 @@ h1, h2, h3, h4, h5, h6, p {
 	font-size: 14px;
 	padding: 0px;
 	margin: 0px;
+	text-shadow: -1px 0px #FFFFFF;
 }
 .breadcrumb li a:hover {
 	text-decoration: none;
@@ -112,8 +113,8 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 
 #header #user-profile {
-	max-width: 40px;
-	max-height: 40px;
+	max-width: 30px;
+	max-height: 30px;
 	border: 0px solid #eee;
 	margin-right: 15px;
 }

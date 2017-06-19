@@ -38,9 +38,7 @@
 
 .row {
   @include make-row;
-  > * {
-    margin-bottom: 30px;
-  }
+
 }
 
 

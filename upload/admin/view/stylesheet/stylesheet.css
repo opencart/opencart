@@ -96,12 +96,11 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #header .navbar-header i {
 	display: block;
-	width: 30px;
 	text-align: center;
 }
 
 #header .navbar-header.active {
-	width: 235px;
+	width: 235px; 
 }
 
 #header .navbar-header.active img {
@@ -114,6 +113,14 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 
 #header #header-logo .fa-opencart {
 	color: #3AC9F0;
+	line-height: 30px;
+	width: 30px;
+}
+@media (max-width: 767px) {
+	#header #header-logo .fa-opencart {
+		line-height: 33px;
+		width: auto;
+	}
 }
 
 #header #user-profile {

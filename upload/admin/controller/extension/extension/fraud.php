@@ -86,7 +86,7 @@ class ControllerExtensionExtensionFraud extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('extension/fraud/' . $extension);
+				$language->load('extension/fraud/' . $extension);
 
 				$data['extensions'][] = array(
 					'name'      => $language->get('heading_title'),

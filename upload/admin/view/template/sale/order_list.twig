@@ -192,8 +192,8 @@
                     <td class="text-right">{{ order.total }}</td>
                     <td class="text-left">{{ order.date_added }}</td>
                     <td class="text-left">{{ order.date_modified }}</td>
-                    <td class="text-right"><div class="btn-group"><a href="{{ order.view }}" class="btn btn-default"><i class="fa fa-eye"></i> {{ button_view }}</a>
-                        <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
+                    <td class="text-right"><div class="btn-group"><a href="{{ order.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa fa-eye"></i></a>
+                        <button type="button" data-toggle="dropdown" class="btn btn-info dropdown-toggle"><span class="caret"></span></button>
                         <ul class="dropdown-menu dropdown-menu-right">
                           <li><a href="{{ order.edit }}"><i class="fa fa-pencil"></i> {{ button_edit }}</a></li>
                           <li><a href="{{ order.edit }}"><i class="fa fa-trash-o"></i> {{ button_delete }}</a></li>

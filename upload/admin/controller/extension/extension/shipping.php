@@ -68,9 +68,6 @@ class ControllerExtensionExtensionShipping extends Controller {
 
 		$extensions = $this->model_setting_extension->getInstalled('shipping');
 		
-		// Create a new language container so we don't pollute the current one
-		$language = new Language($this->config->get('config_language'));
-		
 		foreach ($extensions as $key => $value) {
 			if (!is_file(DIR_APPLICATION . 'controller/extension/shipping/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/shipping/' . $value . '.php')) {
 				$this->model_setting_extension->uninstall('shipping', $value);
@@ -80,7 +77,10 @@ class ControllerExtensionExtensionShipping extends Controller {
 		}
 
 		$data['extensions'] = array();
-
+		
+		// Create a new language container so we don't pollute the current one
+		$language = new Language($this->config->get('config_language'));
+		
 		// Compatibility code for old extension folders
 		$files = glob(DIR_APPLICATION . 'controller/extension/shipping/*.php');
 
@@ -88,7 +88,7 @@ class ControllerExtensionExtensionShipping extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('extension/shipping/' . $extension);
+				$language->load('extension/shipping/' . $extension);
 
 				$data['extensions'][] = array(
 					'name'       => $language->get('heading_title'),

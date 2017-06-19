@@ -34,10 +34,13 @@
 <body>
 <div id="container">
 <header id="header" class="navbar navbar-static-top">
-  <div id="header-logo" class="navbar-header"><a href="{{ home }}" class="navbar-brand"><img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}" /> <i class="fa fa-opencart"></i></a></div>
-  <a id="button-menu" class="btn"><span class="fa fa-bars"></span></a>
 
-
+  <div id="header-logo" class="navbar-header"><a href="{{ home }}" class="navbar-brand"><img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}" /> <i class="fa fa-opencart"></i><span class="hidden">{{ heading_title }}</span></a></div>
+  
+  <a id="button-menu"><span class="fa fa-bars"></span></a>
+  
+  
+  
 
   {% if logged %}
   <ul class="nav navbar-nav navbar-right">

@@ -88,12 +88,12 @@ class ControllerExtensionExtensionPayment extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('extension/payment/' . $extension);
+				$language->load('extension/payment/' . $extension);
 
 				$text_link = $this->language->get('text_' . $extension);
 
 				if ($text_link != 'text_' . $extension) {
-					$link = $this->language->get('text_' . $extension);
+					$link = $language->get('text_' . $extension);
 				} else {
 					$link = '';
 				}
@@ -103,10 +103,10 @@ class ControllerExtensionExtensionPayment extends Controller {
 					'link'       => $link,
 					'status'     => $this->config->get('payment_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get('payment_' . $extension . '_sort_order'),
-					'install'   => $this->url->link('extension/extension/payment/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/extension/payment/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
-					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('extension/payment/' . $extension, 'user_token=' . $this->session->data['user_token'], true)
+					'install'    => $this->url->link('extension/extension/payment/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
+					'uninstall'  => $this->url->link('extension/extension/payment/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
+					'installed'  => in_array($extension, $extensions),
+					'edit'       => $this->url->link('extension/payment/' . $extension, 'user_token=' . $this->session->data['user_token'], true)
 				);
 			}
 		}

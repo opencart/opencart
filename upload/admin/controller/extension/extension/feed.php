@@ -86,7 +86,7 @@ class ControllerExtensionExtensionFeed extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('extension/feed/' . $extension);
+				$language->load('extension/feed/' . $extension);
 
 				$data['extensions'][] = array(
 					'name'      => $language->get('heading_title'),

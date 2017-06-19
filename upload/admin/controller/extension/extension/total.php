@@ -86,7 +86,7 @@ class ControllerExtensionExtensionTotal extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('extension/total/' . $extension);
+				$language->load('extension/total/' . $extension);
 
 				$data['extensions'][] = array(
 					'name'       => $language->get('heading_title'),

@@ -1467,18 +1467,18 @@ INSERT INTO `oc_extension` (`extension_id`, `type`, `code`) VALUES
 (26, 'dashboard', 'map'),
 (27, 'dashboard', 'customer'),
 (28, 'dashboard', 'chart'),
-(29, 'sale_coupon', 'report'),
-(31, 'customer_search', 'report'),
-(32, 'customer_transaction', 'report'),
-(33, 'product_purchased', 'report'),
-(34, 'product_viewed', 'report'),
-(35, 'sale_return', 'report'),
-(36, 'sale_order', 'report'),
-(37, 'sale_shipping', 'report'),
-(38, 'sale_tax', 'report'),
-(39, 'customer_activity', 'report'),
-(40, 'customer_order', 'report'),
-(41, 'customer_reward', 'report');
+(29, 'report', 'sale_coupon'),
+(31, 'report', 'customer_search'),
+(32, 'report', 'customer_transaction'),
+(33, 'report', 'product_purchased'),
+(34, 'report', 'product_viewed'),
+(35, 'report', 'sale_return'),
+(36, 'report', 'sale_order'),
+(37, 'report', 'sale_shipping'),
+(38, 'report', 'sale_tax'),
+(39, 'report', 'customer_activity'),
+(40, 'report', 'customer_order'),
+(41, 'report', 'customer_reward');
 
 -----------------------------------------------------------
 
@@ -3376,7 +3376,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'dashboard_recent', 'dashboard_recent_status', '1', 0),
 (0, 'dashboard_recent', 'dashboard_recent_sort_order', '8', 0),
 (0, 'dashboard_activity', 'dashboard_activity_width', '4', 0),
-(0, 'dashboard_recent', 'dashboard_recent_width', '8', 0)
+(0, 'dashboard_recent', 'dashboard_recent_width', '8', 0),
 (0, 'report_customer_activity', 'report_customer_activity_status', '1', 0),
 (0, 'report_customer_activity', 'report_customer_activity_sort_order', '1', 0),
 (0, 'report_customer_order', 'report_customer_order_status', '1', 0),

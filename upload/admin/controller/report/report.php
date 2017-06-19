@@ -27,7 +27,10 @@ class ControllerReportReport extends Controller {
 
 		// Reports
 		$data['reports'] = array();
-
+		
+		// Create a new language container so we don't pollute the current one
+		$language = new Language($this->config->get('config_language'));
+		
 		$this->load->model('setting/extension');
 
 		// Get a list of installed modules
@@ -36,10 +39,10 @@ class ControllerReportReport extends Controller {
 		// Add all the modules which have multiple settings for each module
 		foreach ($extensions as $code) {
 			if ($this->config->get('report_' . $code . '_status') && $this->user->hasPermission('access', 'extension/report/' . $code)) {
-				$this->load->language('extension/report/' . $code);
+				$language->load('extension/report/' . $code);
 				
 				$data['reports'][] = array(
-					'text'       => $this->language->get('heading_title'),
+					'text'       => $language->get('heading_title'),
 					'code'       => $code,
 					'group'      => $this->language->get('text_' . $this->config->get('report_' . $code . '_group')),
 					'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
@@ -57,11 +60,11 @@ class ControllerReportReport extends Controller {
 		array_multisort($sort_order, SORT_ASC, $data['reports']);	
 		
 		if (isset($this->request->get['code'])) {
-			$data['test'] = $this->load->controller('extension/report/' . $this->request->get['code'] . '/report');
+			$data['report'] = $this->load->controller('extension/report/' . $this->request->get['code'] . '/report');
 		} elseif (isset($data['reports'][0])) {
-			$data['test'] = $this->load->controller('extension/report/' . $data['reports'][0]['code'] . '/report');
+			$data['report'] = $this->load->controller('extension/report/' . $data['reports'][0]['code'] . '/report');
 		} else {
-			$data['test'] = '';
+			$data['report'] = '';
 		}
 		
 		$data['header'] = $this->load->controller('common/header');

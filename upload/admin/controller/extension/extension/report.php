@@ -86,7 +86,7 @@ class ControllerExtensionExtensionReport extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('extension/report/' . $extension);
+				$language->load('extension/report/' . $extension);
 
 				$data['extensions'][] = array(
 					'name'       => $language->get('heading_title'),

@@ -130,7 +130,7 @@ $('#customer-approval').delegate('.pagination a', 'click', function(e) {
 	$('#customer-approval').load(this.href);
 });
   
-$('#customer-approval').load('index.php?route=customer/customer_approval/list&user_token={{ user_token }}');
+$('#customer-approval').load('index.php?route=customer/customer_approval/getList&user_token={{ user_token }}');
 
 $('#customer-approval').on('click', '.btn-success, .btn-danger', function(e) {
 	e.preventDefault();
@@ -154,7 +154,7 @@ $('#customer-approval').on('click', '.btn-success, .btn-danger', function(e) {
 			}
 
 			if (json['success']) {
-				$('#customer-approval').load('index.php?route=customer/customer_approval/list&user_token={{ user_token }}');
+				$('#customer-approval').load('index.php?route=customer/customer_approval/getList&user_token={{ user_token }}');
 
 				$('#customer-approval').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
@@ -198,7 +198,7 @@ $('#button-filter').on('click', function() {
 		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
 	}
 	
-	$('#customer-approval').load('index.php?route=customer/customer_approval/list&user_token={{ user_token }}' + url);
+	$('#customer-approval').load('index.php?route=customer/customer_approval/getList&user_token={{ user_token }}' + url);
 });
 //--></script> 
   <script type="text/javascript"><!--

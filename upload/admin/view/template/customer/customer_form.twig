@@ -1731,9 +1731,11 @@ function country(element, index, zone_id) {
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'address[' + index + '][country_id]\']').prop('disabled', true);
+			$('button[form=\'form-customer\']').prop('disabled', true);
 		},
 		complete: function() {
 			$('select[name=\'address[' + index + '][country_id]\']').prop('disabled', false);
+			$('button[form=\'form-customer\']').prop('disabled', false);
 		},
 		success: function(json) {
 			if (json['postcode_required'] == '1') {

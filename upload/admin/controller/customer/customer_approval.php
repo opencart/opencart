@@ -92,7 +92,7 @@ class ControllerCustomerCustomerApproval extends Controller {
 		$this->response->setOutput($this->load->view('customer/customer_approval', $data));	
 	}
 				
-	public function list() {
+	public function customer_approval() {
 		$this->load->language('customer/customer_approval');
 		
 		if (isset($this->request->get['filter_name'])) {

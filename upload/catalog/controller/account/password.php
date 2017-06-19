@@ -40,16 +40,6 @@ class ControllerAccountPassword extends Controller {
 			'href' => $this->url->link('account/password', '', true)
 		);
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_password'] = $this->language->get('text_password');
-
-		$data['entry_password'] = $this->language->get('entry_password');
-		$data['entry_confirm'] = $this->language->get('entry_confirm');
-
-		$data['button_continue'] = $this->language->get('button_continue');
-		$data['button_back'] = $this->language->get('button_back');
-
 		if (isset($this->error['password'])) {
 			$data['error_password'] = $this->error['password'];
 		} else {

@@ -47,30 +47,7 @@ class ControllerAccountRegister extends Controller {
 			'text' => $this->language->get('text_register'),
 			'href' => $this->url->link('account/register', '', true)
 		);
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
 		$data['text_account_already'] = sprintf($this->language->get('text_account_already'), $this->url->link('account/login', '', true));
-		$data['text_your_details'] = $this->language->get('text_your_details');
-		$data['text_your_password'] = $this->language->get('text_your_password');
-		$data['text_newsletter'] = $this->language->get('text_newsletter');
-		$data['text_yes'] = $this->language->get('text_yes');
-		$data['text_no'] = $this->language->get('text_no');
-		$data['text_select'] = $this->language->get('text_select');
-		$data['text_none'] = $this->language->get('text_none');
-		$data['text_loading'] = $this->language->get('text_loading');
-
-		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
-		$data['entry_firstname'] = $this->language->get('entry_firstname');
-		$data['entry_lastname'] = $this->language->get('entry_lastname');
-		$data['entry_email'] = $this->language->get('entry_email');
-		$data['entry_telephone'] = $this->language->get('entry_telephone');
-		$data['entry_newsletter'] = $this->language->get('entry_newsletter');
-		$data['entry_password'] = $this->language->get('entry_password');
-		$data['entry_confirm'] = $this->language->get('entry_confirm');
-
-		$data['button_continue'] = $this->language->get('button_continue');
-		$data['button_upload'] = $this->language->get('button_upload');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];

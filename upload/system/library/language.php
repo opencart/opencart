@@ -16,33 +16,33 @@ class Language {
 		$this->data[$key] = $value;
 	}
 	
-	// Please dont use the below function i'm thinking getting rid of it.
 	public function all() {
 		return $this->data;
 	}
-	
-	// Please dont use the below function i'm thinking getting rid of it.
-	public function merge(&$data) {
-		array_merge($this->data, $data);
-	}
 			
-	public function load($filename, &$data = array()) {
-		$_ = array();
-
-		$file = DIR_LANGUAGE . $this->default . '/' . $filename . '.php';
-
-		if (is_file($file)) {
-			require($file);
+	public function load($filename, $key = '') {
+		if (!$key) {
+			$_ = array();
+	
+			$file = DIR_LANGUAGE . $this->default . '/' . $filename . '.php';
+	
+			if (is_file($file)) {
+				require($file);
+			}
+	
+			$file = DIR_LANGUAGE . $this->directory . '/' . $filename . '.php';
+			
+			if (is_file($file)) {
+				require($file);
+			} 
+	
+			$this->data = array_merge($this->data, $_);
+		} else {
+			// Put the language into a sub key
+			$this->data[$key] = new Language($this->directory);
+			$this->data[$key]->load($filename);
 		}
-
-		$file = DIR_LANGUAGE . $this->directory . '/' . $filename . '.php';
 		
-		if (is_file($file)) {
-			require($file);
-		} 
-
-		$this->data = array_merge($this->data, $_);
-
 		return $this->data;
 	}
 }

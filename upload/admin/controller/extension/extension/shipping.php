@@ -50,19 +50,6 @@ class ControllerExtensionExtensionShipping extends Controller {
 	}
 
 	protected function getList() {
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_no_results'] = $this->language->get('text_no_results');
-
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_sort_order'] = $this->language->get('column_sort_order');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_install'] = $this->language->get('button_install');
-		$data['button_uninstall'] = $this->language->get('button_uninstall');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -80,7 +67,7 @@ class ControllerExtensionExtensionShipping extends Controller {
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getInstalled('shipping');
-
+		
 		foreach ($extensions as $key => $value) {
 			if (!is_file(DIR_APPLICATION . 'controller/extension/shipping/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/shipping/' . $value . '.php')) {
 				$this->model_setting_extension->uninstall('shipping', $value);
@@ -90,7 +77,10 @@ class ControllerExtensionExtensionShipping extends Controller {
 		}
 
 		$data['extensions'] = array();
-
+		
+		// Create a new language container so we don't pollute the current one
+		$language = new Language($this->config->get('config_language'));
+		
 		// Compatibility code for old extension folders
 		$files = glob(DIR_APPLICATION . 'controller/extension/shipping/*.php');
 
@@ -98,10 +88,10 @@ class ControllerExtensionExtensionShipping extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('extension/shipping/' . $extension);
+				$language->load('extension/shipping/' . $extension);
 
 				$data['extensions'][] = array(
-					'name'       => $this->language->get('heading_title'),
+					'name'       => $language->get('heading_title'),
 					'status'     => $this->config->get('shipping_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get('shipping_' . $extension . '_sort_order'),
 					'install'    => $this->url->link('extension/extension/shipping/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),

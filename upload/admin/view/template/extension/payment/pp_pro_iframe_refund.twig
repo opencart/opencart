@@ -13,12 +13,12 @@
   </div>
   <div class="container-fluid">
     {% if error != '' %}
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error }}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endif %}
     {% if attention != '' %}
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ attention }}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ attention }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endif %}

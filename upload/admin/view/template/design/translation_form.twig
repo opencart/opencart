@@ -14,7 +14,7 @@
     </div>
   </div>
   <div class="container-fluid">{% if error_warning %}
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endif %}
@@ -213,7 +213,7 @@ $('select[name="route"]').on('change', function() {
 			html = '<option value=""></option>';
 			
 			if (json) {
-				for (i = 0; i < json[i]['key'].length; i++) {
+				for (i = 0; i < json.length; i++) {
 					translation[json[i]['key']] = json[i]['value'];
 					
 					if (json[i]['key'] == '{{ key }}') {

@@ -14,7 +14,7 @@
     </div>
   </div>
   <div id="marketplace-extension-info" class="container-fluid">{% if error_warning %}
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endif %}
@@ -23,7 +23,7 @@
         <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> {{ name }}</h3>
       </div>
       <div class="panel-body">
-        <div class="extension-info">
+        <div class="row extension-info">
           <div class="col-sm-8">{% if banner %}
             <div id="banner" class="well text-center"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></div>
             {% endif %}
@@ -225,14 +225,14 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
 			$(element).button('reset');
 		},
 		success: function(json) {
-			$('.alert').remove();
+			$('.alert-dismissible').remove();
 			
 			if (json['error']) {
-				$('#modal-purchase .modal-body').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#modal-purchase .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('#modal-purchase').modal('hide');
 				
@@ -266,10 +266,10 @@ $('#tab-download').on('click', '.btn-primary', function(e) {
 			$(element).button('reset');
 		},
 		success: function(json) {
-			$('.alert').remove();
+			$('.alert-dismissible').remove();
 			
 			if (json['error']) {
-				$('#tab-download').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button</div>');
+				$('#tab-download').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button</div>');
 			}
 
 			if (json['redirect']) {
@@ -390,14 +390,14 @@ $('#button-comment').on('click', function() {
 			$('#button-comment').button('reset');
 		},
 		success: function(json) {
-			$('.alert').remove();
+			$('.alert-dismissible').remove();
 			
 			if (json['error']) {
-				$('#tab-comment').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#tab-comment').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 			
 			if (json['success']) {
-				$('#tab-comment').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#tab-comment').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('#comment').load('index.php?route=marketplace/marketplace/comment&user_token={{ user_token }}&extension_id={{ extension_id }}');
 			
@@ -461,14 +461,14 @@ $('#comment').on('click', '.btn-primary', function(e) {
 			$(element).button('reset');
 		},
 		success: function(json) {
-			$('.alert').remove();
+			$('.alert-dismissible').remove();
 			
 			if (json['error']) {
-				$(element).parents('.reply-input-box').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$(element).parents('.reply-input-box').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 			
 			if (json['success']) {
-				$(element).parents('.reply-input-box').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$(element).parents('.reply-input-box').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$(element).parents('.reply-input-box').parents('.media').find('.reply-refresh').last().trigger('click');
 			

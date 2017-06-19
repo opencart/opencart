@@ -8,7 +8,7 @@ class ModelExtensionTotalCredit extends Model {
 		if ((float)$balance) {
 			$credit = min($balance, $total['total']);
 
-			if ($credit > 0) {
+			if ((float)$credit > 0) {
 				$total['totals'][] = array(
 					'code'       => 'credit',
 					'title'      => $this->language->get('text_credit'),

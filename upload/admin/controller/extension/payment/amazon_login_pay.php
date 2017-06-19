@@ -25,69 +25,6 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			}
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_amazon_join'] = $this->language->get('text_amazon_join');
-		$data['text_ready_status'] = $this->language->get('text_ready_status');
-		$data['text_us'] = $this->language->get('text_us');
-		$data['text_de'] = $this->language->get('text_de');
-		$data['text_uk'] = $this->language->get('text_uk');
-		$data['text_fr'] = $this->language->get('text_fr');
-		$data['text_it'] = $this->language->get('text_it');
-		$data['text_es'] = $this->language->get('text_es');
-		$data['text_live'] = $this->language->get('text_live');
-		$data['text_sandbox'] = $this->language->get('text_sandbox');
-		$data['text_auth'] = $this->language->get('text_auth');
-		$data['text_payment'] = $this->language->get('text_payment');
-		$data['text_account'] = $this->language->get('text_account');
-		$data['text_guest'] = $this->language->get('text_guest');
-		$data['text_no_capture'] = $this->language->get('text_no_capture');
-		$data['text_sort_order'] = $this->language->get('text_sort_order');
-		$data['text_minimum_total'] = $this->language->get('text_minimum_total');
-		$data['text_all_geo_zones'] = $this->language->get('text_all_geo_zones');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_upload_success'] = $this->language->get('text_upload_success');
-		$data['text_loading'] = $this->language->get('text_loading');
-		$data['text_geo_zone'] = $this->language->get('text_geo_zone');
-		$data['text_status'] = $this->language->get('text_status');
-		$data['text_declined_codes'] = $this->language->get('text_declined_codes');
-		$data['text_amazon_signup'] = $this->language->get('text_amazon_signup');
-		$data['text_credentials'] = $this->language->get('text_credentials');
-		$data['text_validate_credentials'] = $this->language->get('text_validate_credentials');
-		$data['text_amazon_no_declined'] = $this->language->get('text_amazon_no_declined');
-
-		$data['entry_merchant_id'] = $this->language->get('entry_merchant_id');
-		$data['entry_access_key'] = $this->language->get('entry_access_key');
-		$data['entry_access_secret'] = $this->language->get('entry_access_secret');
-		$data['entry_client_id'] = $this->language->get('entry_client_id');
-		$data['entry_client_secret'] = $this->language->get('entry_client_secret');
-		$data['entry_login_pay_test'] = $this->language->get('entry_login_pay_test');
-		$data['entry_login_pay_mode'] = $this->language->get('entry_login_pay_mode');
-		$data['entry_checkout'] = $this->language->get('entry_checkout');
-		$data['entry_capture_status'] = $this->language->get('entry_capture_status');
-		$data['entry_pending_status'] = $this->language->get('entry_pending_status');
-		$data['entry_language'] = $this->language->get('entry_language');
-		$data['entry_payment_region'] = $this->language->get('entry_payment_region');
-		$data['entry_ipn_token'] = $this->language->get('entry_ipn_token');
-		$data['entry_ipn_url'] = $this->language->get('entry_ipn_url');
-		$data['entry_debug'] = $this->language->get('entry_debug');
-
-		$data['help_pay_mode'] = $this->language->get('help_pay_mode');
-		$data['help_checkout'] = $this->language->get('help_checkout');
-		$data['help_capture_status'] = $this->language->get('help_capture_status');
-		$data['help_debug'] = $this->language->get('help_debug');
-		$data['help_ipn_url'] = $this->language->get('help_ipn_url');
-		$data['help_ipn_token'] = $this->language->get('help_ipn_token');
-		$data['help_minimum_total'] = $this->language->get('help_minimum_total');
-		$data['help_declined_codes'] = $this->language->get('help_declined_codes');
-
-		$data['error_credentials'] = $this->language->get('error_credentials');
-
-		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_save'] = $this->language->get('button_save');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -413,31 +350,6 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 				$amazon_login_pay_order['total_captured_formatted'] = $this->currency->format($amazon_login_pay_order['total_captured'], $amazon_login_pay_order['currency_code'], true, true);
 
 				$data['amazon_login_pay_order'] = $amazon_login_pay_order;
-
-				$data['text_payment_info'] = $this->language->get('text_payment_info');
-				$data['text_order_ref'] = $this->language->get('text_order_ref');
-				$data['text_order_total'] = $this->language->get('text_order_total');
-				$data['text_total_captured'] = $this->language->get('text_total_captured');
-				$data['text_capture_status'] = $this->language->get('text_capture_status');
-				$data['text_cancel_status'] = $this->language->get('text_cancel_status');
-				$data['text_refund_status'] = $this->language->get('text_refund_status');
-				$data['text_transactions'] = $this->language->get('text_transactions');
-				$data['text_yes'] = $this->language->get('text_yes');
-				$data['text_no'] = $this->language->get('text_no');
-				$data['text_column_authorization_id'] = $this->language->get('text_column_authorization_id');
-				$data['text_column_capture_id'] = $this->language->get('text_column_capture_id');
-				$data['text_column_refund_id'] = $this->language->get('text_column_refund_id');
-				$data['text_column_amount'] = $this->language->get('text_column_amount');
-				$data['text_column_type'] = $this->language->get('text_column_type');
-				$data['text_column_status'] = $this->language->get('text_column_status');
-				$data['text_column_date_added'] = $this->language->get('text_column_date_added');
-				$data['text_confirm_cancel'] = $this->language->get('text_confirm_cancel');
-				$data['text_confirm_capture'] = $this->language->get('text_confirm_capture');
-				$data['text_confirm_refund'] = $this->language->get('text_confirm_refund');
-
-				$data['button_capture'] = $this->language->get('button_capture');
-				$data['button_refund'] = $this->language->get('button_refund');
-				$data['button_cancel'] = $this->language->get('button_cancel');
 
 				$data['order_id'] = $this->request->get['order_id'];
 				$data['user_token'] = $this->request->get['user_token'];

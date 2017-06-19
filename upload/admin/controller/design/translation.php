@@ -114,7 +114,7 @@ class ControllerDesignTranslation extends Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
-			$sort = 't.name';
+			$sort = 'store';
 		}
 
 		if (isset($this->request->get['order'])) {
@@ -155,6 +155,8 @@ class ControllerDesignTranslation extends Controller {
 			'href' => $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'], true)
 		);
 		
+		$this->load->model('localisation/language');
+		
 		$data['add'] = $this->url->link('design/translation/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
 		$data['delete'] = $this->url->link('design/translation/delete', 'user_token=' . $this->session->data['user_token'] . $url, true);
 		
@@ -173,33 +175,54 @@ class ControllerDesignTranslation extends Controller {
 					
 		foreach ($results as $result) {
 			$data['translations'][] = array(
-				'store_id' => $result['store_id'],
-				'store'    => ($result['store_id'] ? $result['store'] : $this->language->get('text_default')),
-				'route'    => $result['route'],
-				'language' => $result['language'],
-				'key'      => $result['key'],
-				'edit'     => $this->url->link('design/translation/edit', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $result['translation_id'], true),
+				'translation_id' => $result['translation_id'],
+				'store'          => ($result['store_id'] ? $result['store'] : $this->language->get('text_default')),
+				'route'          => $result['route'],
+				'language'       => $result['language'],
+				'key'            => $result['key'],
+				'edit'           => $this->url->link('design/translation/edit', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $result['translation_id'], true),
 			);			
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-		
-		$data['column_store'] = $this->language->get('column_store');
-		$data['column_route'] = $this->language->get('column_route');
-		$data['column_language'] = $this->language->get('column_language');
-		$data['column_key'] = $this->language->get('column_key');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_add'] = $this->language->get('button_add');
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_delete'] = $this->language->get('button_delete');
-		
 		$data['user_token'] = $this->session->data['user_token'];
 
+		if (isset($this->error['warning'])) {
+			$data['error_warning'] = $this->error['warning'];
+		} else {
+			$data['error_warning'] = '';
+		}
+
+		if (isset($this->session->data['success'])) {
+			$data['success'] = $this->session->data['success'];
+
+			unset($this->session->data['success']);
+		} else {
+			$data['success'] = '';
+		}
+
+		if (isset($this->request->post['selected'])) {
+			$data['selected'] = (array)$this->request->post['selected'];
+		} else {
+			$data['selected'] = array();
+		}
+
+		$url = '';
+
+		if ($order == 'ASC') {
+			$url .= '&order=DESC';
+		} else {
+			$url .= '&order=ASC';
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+
+		$data['sort_store'] = $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . '&sort=store' . $url, true);
+		$data['sort_language'] = $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . '&sort=language' . $url, true);
+		$data['sort_route'] = $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . '&sort=route' . $url, true);
+		$data['sort_key'] = $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . '&sort=t.key' . $url, true);
+		
 		$pagination = new Pagination();
 		$pagination->total = $translation_total;
 		$pagination->page = $page;
@@ -221,20 +244,7 @@ class ControllerDesignTranslation extends Controller {
 	}
 
 	protected function getForm() {
-		$data['heading_title'] = $this->language->get('heading_title');
-
 		$data['text_form'] = !isset($this->request->get['translation_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-		$data['text_default'] = $this->language->get('text_default');
-
-		$data['entry_store'] = $this->language->get('entry_store');
-		$data['entry_route'] = $this->language->get('entry_route');
-		$data['entry_language'] = $this->language->get('entry_language');
-		$data['entry_key'] = $this->language->get('entry_key');
-		$data['entry_default'] = $this->language->get('entry_default');
-		$data['entry_value'] = $this->language->get('entry_value');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -282,11 +292,11 @@ class ControllerDesignTranslation extends Controller {
 
 		$data['cancel'] = $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		if (isset($this->request->get['translation_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$translation_info = $this->model_design_translation->getTranslation($this->request->get['translation_id']);
 		}
+		
+		$data['user_token'] = $this->session->data['user_token'];
 		
 		if (isset($this->request->post['language_id'])) {
 			$data['language_id'] = $this->request->post['language_id'];
@@ -411,7 +421,7 @@ class ControllerDesignTranslation extends Controller {
 		
 		$directory = DIR_CATALOG . 'language/';
 		
-		if ($language_info && is_file($directory . $language_info['code'] . '/' . $route . '.php') && substr(str_replace('\\', '/', realpath($directory . $language_info['code'] . '/' . $route . '.php')), 0, strlen($directory)) == $directory) {
+		if ($language_info && is_file($directory . $language_info['code'] . '/' . $route . '.php') && substr(str_replace('\\', '/', realpath($directory . $language_info['code'] . '/' . $route . '.php')), 0, strlen($directory)) == str_replace('\\', '/', $directory)) {
 			$_ = array();
 						
 			include($directory . $language_info['code'] . '/' . $route . '.php');

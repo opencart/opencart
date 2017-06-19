@@ -15,18 +15,6 @@ class ControllerExtensionReportSaleReturn extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report', true));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-		
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -139,26 +127,6 @@ class ControllerExtensionReportSaleReturn extends Controller {
 			);
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_filter'] = $this->language->get('text_filter');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-		$data['text_all_status'] = $this->language->get('text_all_status');
-
-		$data['column_date_start'] = $this->language->get('column_date_start');
-		$data['column_date_end'] = $this->language->get('column_date_end');
-		$data['column_returns'] = $this->language->get('column_returns');
-		$data['column_total'] = $this->language->get('column_total');
-
-		$data['entry_date_start'] = $this->language->get('entry_date_start');
-		$data['entry_date_end'] = $this->language->get('entry_date_end');
-		$data['entry_group'] = $this->language->get('entry_group');
-		$data['entry_status'] = $this->language->get('entry_status');
-
-		$data['button_filter'] = $this->language->get('button_filter');
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->load->model('localisation/return_status');
@@ -209,7 +177,7 @@ class ControllerExtensionReportSaleReturn extends Controller {
 		$pagination->total = $return_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('report/sale_return', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=sale_return' . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -220,6 +188,6 @@ class ControllerExtensionReportSaleReturn extends Controller {
 		$data['filter_group'] = $filter_group;
 		$data['filter_return_status_id'] = $filter_return_status_id;
 		
-		$this->response->setOutput($this->load->view('extension/report/sale_return_info', $data));
+		return $this->load->view('extension/report/sale_return_info', $data);
 	}
 }

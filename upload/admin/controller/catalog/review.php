@@ -275,32 +275,6 @@ class ControllerCatalogReview extends Controller {
 			);
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-
-		$data['column_product'] = $this->language->get('column_product');
-		$data['column_author'] = $this->language->get('column_author');
-		$data['column_rating'] = $this->language->get('column_rating');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['entry_product'] = $this->language->get('entry_product');
-		$data['entry_author'] = $this->language->get('entry_author');
-		$data['entry_rating'] = $this->language->get('entry_rating');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_date_added'] = $this->language->get('entry_date_added');
-
-		$data['button_add'] = $this->language->get('button_add');
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_delete'] = $this->language->get('button_delete');
-		$data['button_filter'] = $this->language->get('button_filter');
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->error['warning'])) {
@@ -409,23 +383,7 @@ class ControllerCatalogReview extends Controller {
 	}
 
 	protected function getForm() {
-		$data['heading_title'] = $this->language->get('heading_title');
-
 		$data['text_form'] = !isset($this->request->get['review_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-
-		$data['entry_product'] = $this->language->get('entry_product');
-		$data['entry_author'] = $this->language->get('entry_author');
-		$data['entry_rating'] = $this->language->get('entry_rating');
-		$data['entry_date_added'] = $this->language->get('entry_date_added');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_text'] = $this->language->get('entry_text');
-
-		$data['help_product'] = $this->language->get('help_product');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];

@@ -18,47 +18,6 @@ class ControllerExtensionPaymentEway extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'], true));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_yes'] = $this->language->get('text_yes');
-		$data['text_no'] = $this->language->get('text_no');
-		$data['text_none'] = $this->language->get('text_none');
-		$data['text_all_zones'] = $this->language->get('text_all_zones');
-		$data['text_authorisation'] = $this->language->get('text_authorisation');
-		$data['text_all_zones'] = $this->language->get('text_all_zones');
-		$data['text_sale'] = $this->language->get('text_sale');
-		$data['text_transparent'] = $this->language->get('text_transparent');
-		$data['text_iframe'] = $this->language->get('text_iframe');
-
-		$data['entry_paymode'] = $this->language->get('entry_paymode');
-		$data['entry_test'] = $this->language->get('entry_test');
-		$data['entry_payment_type'] = $this->language->get('entry_payment_type');
-		$data['entry_transaction'] = $this->language->get('entry_transaction');
-		$data['entry_order_status'] = $this->language->get('entry_order_status');
-		$data['entry_order_status_refund'] = $this->language->get('entry_order_status_refund');
-		$data['entry_order_status_auth'] = $this->language->get('entry_order_status_auth');
-		$data['entry_order_status_fraud'] = $this->language->get('entry_order_status_fraud');
-		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$data['entry_username'] = $this->language->get('entry_username');
-		$data['entry_password'] = $this->language->get('entry_password');
-		$data['entry_transaction_method'] = $this->language->get('entry_transaction_method');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-
-		$data['help_testmode'] = $this->language->get('help_testmode');
-		$data['help_username'] = $this->language->get('help_username');
-		$data['help_password'] = $this->language->get('help_password');
-		$data['help_transaction_method'] = $this->language->get('help_transaction_method');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-
-		$data['tab_general'] = $this->language->get('tab_general');
-
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();

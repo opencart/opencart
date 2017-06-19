@@ -17,20 +17,6 @@ class ControllerDesignTheme extends Controller {
 			'href' => $this->url->link('design/theme', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-		$data['text_loading'] = $this->language->get('text_loading');
-		$data['text_store'] = $this->language->get('text_store');
-		$data['text_template'] = $this->language->get('text_template');
-		$data['text_default'] = $this->language->get('text_default');
-		$data['text_history'] = $this->language->get('text_history');
-		$data['text_twig'] = $this->language->get('text_twig');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_reset'] = $this->language->get('button_reset');
-		
 		$data['user_token'] = $this->session->data['user_token'];
 		
 		$data['stores'] = array();
@@ -55,18 +41,6 @@ class ControllerDesignTheme extends Controller {
 	
 	public function history() {
 		$this->load->language('design/theme');
-		
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_loading'] = $this->language->get('text_loading');
-
-		$data['column_store'] = $this->language->get('column_store');
-		$data['column_route'] = $this->language->get('column_route');
-		$data['column_theme'] = $this->language->get('column_theme');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_delete'] = $this->language->get('button_delete');
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];

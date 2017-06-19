@@ -1,11 +1,7 @@
 <?php
 class ControllerExtensionPaymentCod extends Controller {
 	public function index() {
-		$data['text_loading'] = $this->language->get('text_loading');
-		
-		$data['button_confirm'] = $this->language->get('button_confirm');
-
-		return $this->load->view('extension/payment/cod', $data);
+		return $this->load->view('extension/payment/cod');
 	}
 
 	public function confirm() {

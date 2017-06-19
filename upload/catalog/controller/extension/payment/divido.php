@@ -67,19 +67,6 @@ class ControllerExtensionPaymentDivido extends Controller {
 
 		$data = array(
 			'button_confirm'           => $this->language->get('divido_checkout'),
-			'text_loading'             => $this->language->get('text_loading'),
-			'text_choose_deposit'      => $this->language->get('text_choose_deposit'),
-			'text_choose_plan'         => $this->language->get('text_choose_plan'),
-			'text_checkout_title'      => $this->language->get('text_checkout_title'),
-			'text_monthly_payments'    => $this->language->get('text_monthly_payments'),
-			'text_months'              => $this->language->get('text_months'),
-			'text_term'                => $this->language->get('text_term'),
-			'text_deposit'             => $this->language->get('text_deposit'),
-			'text_credit_amount'       => $this->language->get('text_credit_amount'),
-			'text_amount_payable'      => $this->language->get('text_amount_payable'),
-			'text_total_interest'      => $this->language->get('text_total_interest'),
-			'text_monthly_installment' => $this->language->get('text_monthly_installment'),
-			'text_redirection'         => $this->language->get('text_redirection'),
 			'merchant_script'          => "//cdn.divido.com/calculator/{$js_key}.js",
 			'grand_total'              => $total,
 			'plan_list'                => $plans_list,
@@ -303,20 +290,8 @@ class ControllerExtensionPaymentDivido extends Controller {
 		$plan_list = implode(',', $plans_ids);
 
 		$data = array(
-			'planList'                 => $plan_list,
-			'productPrice'             => $product_price,
-			'text_loading'             => $this->language->get('text_loading'),
-			'text_choose_deposit'      => $this->language->get('text_choose_deposit'),
-			'text_choose_plan'         => $this->language->get('text_choose_plan'),
-			'text_checkout_title'      => $this->language->get('text_checkout_title'),
-			'text_monthly_payments'    => $this->language->get('text_monthly_payments'),
-			'text_months'              => $this->language->get('text_months'),
-			'text_term'                => $this->language->get('text_term'),
-			'text_deposit'             => $this->language->get('text_deposit'),
-			'text_credit_amount'       => $this->language->get('text_credit_amount'),
-			'text_amount_payable'      => $this->language->get('text_amount_payable'),
-			'text_total_interest'      => $this->language->get('text_total_interest'),
-			'text_monthly_installment' => $this->language->get('text_monthly_installment'),
+			'planList'     => $plan_list,
+			'productPrice' => $product_price
 		);
 
 		$filename = ($type == 'full') ? 'extension/payment/divido_calculator' : 'extension/payment/divido_widget';

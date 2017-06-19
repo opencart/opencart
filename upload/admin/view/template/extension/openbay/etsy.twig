@@ -12,10 +12,10 @@
   </div>
   <div class="container-fluid">
     {% if success %}
-      <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
+      <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}</div>
     {% endif %}
     {% if error_warning %}
-      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
     {% endif %}
     <div class="row">
       <div class="col-md-3 text-center">

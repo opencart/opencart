@@ -16,16 +16,6 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			$this->failure(sprintf($this->language->get('error_minimum'), $this->currency->format($this->config->get('payment_amazon_login_pay_minimum_total'), $this->session->data['currency'])));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-		$data['heading_address'] = $this->language->get('heading_address');
-		$data['text_back'] = $this->language->get('text_back');
-		$data['text_cart'] = $this->language->get('text_cart');
-		$data['text_continue'] = $this->language->get('text_continue');
-		$data['error_shipping'] = $this->language->get('error_shipping');
-		$data['error_shipping_address'] = $this->language->get('error_shipping_address');
-		$data['error_shipping_methods'] = $this->language->get('error_shipping_methods');
-		$data['error_no_shipping_methods'] = $this->language->get('error_no_shipping_methods');
-
 		$data['merchant_id'] = $this->config->get('payment_amazon_login_pay_merchant_id');
 		$data['shipping_quotes'] = $this->url->link('extension/payment/amazon_login_pay/shippingquotes', '', true);
 		$data['payment_method'] = $this->url->link('extension/payment/amazon_login_pay/paymentmethod', '', true);
@@ -69,12 +59,6 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			$this->failure(sprintf($this->language->get('error_minimum'), $this->currency->format($this->config->get('payment_amazon_login_pay_minimum_total'), $this->session->data['currency'])));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-		$data['heading_payment'] = $this->language->get('heading_payment');
-		$data['text_back'] = $this->language->get('text_back');
-		$data['text_continue'] = $this->language->get('text_continue');
-		$data['error_payment_method'] = $this->language->get('error_payment_method');
-
 		$data['payment_amazon_login_pay_merchant_id'] = $this->config->get('payment_amazon_login_pay_merchant_id');
 		$data['payment_amazon_login_pay_client_id'] = $this->config->get('payment_amazon_login_pay_client_id');
 		$data['payment_amazon_login_pay_client_secret'] = $this->config->get('payment_amazon_login_pay_client_secret');
@@ -92,7 +76,6 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 		$data['continue'] = $this->url->link('extension/payment/amazon_login_pay/confirm', '', true);
 		$data['back'] = $this->url->link('extension/payment/amazon_login_pay/address', '', true);
-		$data['text_back'] = $this->language->get('text_back');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -849,7 +832,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 	public function ipn() {
 		$this->load->model('extension/payment/amazon_login_pay');
 		$this->model_extension_payment_amazon_login_pay->logger('IPN received');
-		if (isset($this->request->get['token']) && hash_equals($this->config->get('payment_amazon_login_pay_ipn_token'), $this->request->get['token'])) {
+		if (isset($this->request->get['token']) && hash_equals(trim($this->config->get('payment_amazon_login_pay_ipn_token')), trim($this->request->get['token']))) {
 			$body = file_get_contents('php://input');
 			if ($body) {
 				$ipn_details_xml = $this->model_extension_payment_amazon_login_pay->parseRawMessage($body);
@@ -867,6 +850,16 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			}
 		} else {
 			$this->model_extension_payment_amazon_login_pay->logger('Incorrect security token');
+
+			if (!isset($this->request->get['token'])) {
+				$this->model_extension_payment_amazon_login_pay->logger('GET variable "token" is missing');
+			}
+			if (empty($this->request->get['token'])) {
+				$this->model_extension_payment_amazon_login_pay->logger('GET variable "token" set, but is empty');
+			}
+			if (empty($this->config->get('payment_amazon_login_pay_ipn_token'))) {
+				$this->model_extension_payment_amazon_login_pay->logger('CONFIG variable "payment_amazon_login_pay_ipn_token" is empty');
+			}
 		}
 
 		$this->response->addHeader('HTTP/1.1 200 OK');

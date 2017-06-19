@@ -32,12 +32,6 @@ class ControllerMailReturn extends Controller {
 			
 			if ($return_info) {
 				$this->load->language('mail/return');
-				
-				$data['text_return_id'] = $this->language->get('text_return_id');
-				$data['text_date_added'] = $this->language->get('text_return_id');
-				$data['text_return_status'] = $this->language->get('text_return_status');
-				$data['text_comment'] = $this->language->get('text_comment');
-				$data['text_footer'] = $this->language->get('text_footer');
 
 				$data['return_id'] = $return_id;
 				$data['date_added'] = date($this->language->get('date_format_short'), strtotime($return_info['date_modified']));

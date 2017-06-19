@@ -2,6 +2,9 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
+      <div class="pull-right">
+        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-report').toggleClass('hidden-sm hidden-xs');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
+      </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -13,61 +16,31 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-bar-chart"></i> {{ text_list }}</h3>
+        <h3 class="panel-title"><i class="fa fa-bar-chart"></i> {{ text_type }}</h3>
       </div>
       <div class="panel-body">
-        <fieldset>
-          <legend>{{ text_type }}</legend>
-          <div class="well">
-            <div class="input-group">
-              <select name="report" class="form-control">
-                {% for report in reports %}
-                {% if code == report.code %}
-                <option value="{{ report.href }}" selected="selected">{{ report.text }}</option>
-                {% else %}
-                <option value="{{ report.href }}">{{ report.text }}</option>
-                {% endif %}
-                {% endfor %}
-              </select>
-              <span class="input-group-addon"><i class="fa fa-filter"></i> {{ text_filter }}</span>
-            </div>
-          </div>
-        </fieldset>
-        <div id="report"></div>
+        <div class="well">
+          <div class="input-group">
+            <select name="report" onchange="location = this.value;" class="form-control">
+              
+              {% for report in reports %}
+              {% if code == report.code %}
+              
+              <option value="{{ report.href }}" selected="selected">{{ report.text }}</option>
+              
+              {% else %}
+              
+              <option value="{{ report.href }}">{{ report.text }}</option>
+              
+              {% endif %}
+              {% endfor %}
+            
+            </select>
+            <span class="input-group-addon"><i class="fa fa-filter"></i> {{ text_filter }}</span></div>
+        </div>
       </div>
     </div>
+    <div>{{ report }}</div>
   </div>
-  {% if reports %}
-  <script type="text/javascript"><!--
-$('select[name="report"]').on('change', function() {
-	$.ajax({
-		url: $('select[name="report"]').val(),
-		dataType: 'html',
-		beforeSend: function() {
-			$('.fa-filter').addClass('fa-circle-o-notch fa-spin');
-			$('.fa-filter').removeClass('fa-filter');
-		},
-		complete: function() {
-			$('.fa-circle-o-notch').addClass('fa-filter');
-			$('.fa-circle-o-notch').removeClass('fa-circle-o-notch fa-spin');
-		},
-		success: function(html) {
-			$('#report').html(html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
-
-$('select[name="report"]').trigger('change');
-
-$('#report').on('click', '.pagination a', function(e) {
-	e.preventDefault();
-
-	$('#report').load(this.href);
-});
-//--></script>
-{% endif %}
 </div>
 {{ footer }} 

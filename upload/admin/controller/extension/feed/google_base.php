@@ -17,23 +17,6 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=feed', true));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_import'] = $this->language->get('text_import');
-
-		$data['entry_google_category'] = $this->language->get('entry_google_category');
-		$data['entry_category'] = $this->language->get('entry_category');
-		$data['entry_data_feed'] = $this->language->get('entry_data_feed');
-		$data['entry_status'] = $this->language->get('entry_status');
-
-		$data['button_import'] = $this->language->get('button_import');
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_category_add'] = $this->language->get('button_category_add');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -151,15 +134,6 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 
 	public function category() {
 		$this->load->language('extension/feed/google_base');
-
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_loading'] = $this->language->get('text_loading');
-
-		$data['column_google_category'] = $this->language->get('column_google_category');
-		$data['column_category'] = $this->language->get('column_category');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_remove'] = $this->language->get('button_remove');
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];

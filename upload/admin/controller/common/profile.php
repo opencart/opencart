@@ -21,21 +21,6 @@ class ControllerCommonProfile extends Controller {
 
 			$this->response->redirect($this->url->link('common/profile', 'user_token=' . $this->session->data['user_token'], true));
 		}
-		
-		$data['heading_title'] = $this->language->get('heading_title');
-		
-		$data['text_form'] = $this->language->get('text_edit');
-
-		$data['entry_username'] = $this->language->get('entry_username');
-		$data['entry_password'] = $this->language->get('entry_password');
-		$data['entry_confirm'] = $this->language->get('entry_confirm');
-		$data['entry_firstname'] = $this->language->get('entry_firstname');
-		$data['entry_lastname'] = $this->language->get('entry_lastname');
-		$data['entry_email'] = $this->language->get('entry_email');
-		$data['entry_image'] = $this->language->get('entry_image');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];

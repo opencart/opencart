@@ -17,53 +17,6 @@ class ControllerExtensionShippingRoyalMail extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping', true));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_all_zones'] = $this->language->get('text_all_zones');
-		$data['text_none'] = $this->language->get('text_none');
-		$data['text_yes'] = $this->language->get('text_yes');
-		$data['text_no'] = $this->language->get('text_no');
-
-		$data['entry_rate'] = $this->language->get('entry_rate');
-		$data['entry_rate_eu'] = $this->language->get('entry_rate_eu');
-		$data['entry_rate_non_eu'] = $this->language->get('entry_rate_non_eu');
-		$data['entry_rate_zone_1'] = $this->language->get('entry_rate_zone_1');
-		$data['entry_rate_zone_2'] = $this->language->get('entry_rate_zone_2');
-		$data['entry_insurance'] = $this->language->get('entry_insurance');
-		$data['entry_display_weight'] = $this->language->get('entry_display_weight');
-		$data['entry_display_insurance'] = $this->language->get('entry_display_insurance');
-		$data['entry_weight_class'] = $this->language->get('entry_weight_class');
-		$data['entry_tax_class'] = $this->language->get('entry_tax_class');
-		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-
-		$data['help_rate'] = $this->language->get('help_rate');
-		$data['help_insurance'] = $this->language->get('help_insurance');
-		$data['help_display_weight'] = $this->language->get('help_display_weight');
-		$data['help_display_insurance'] = $this->language->get('help_display_insurance');
-		$data['help_international'] = $this->language->get('help_international');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-
-		$data['tab_general'] = $this->language->get('tab_general');
-		$data['tab_special_delivery_500'] = $this->language->get('tab_special_delivery_500');
-		$data['tab_special_delivery_1000'] = $this->language->get('tab_special_delivery_1000');
-		$data['tab_special_delivery_2500'] = $this->language->get('tab_special_delivery_2500');
-		$data['tab_1st_class_signed'] = $this->language->get('tab_1st_class_signed');
-		$data['tab_2nd_class_signed'] = $this->language->get('tab_2nd_class_signed');
-		$data['tab_1st_class_standard'] = $this->language->get('tab_1st_class_standard');
-		$data['tab_2nd_class_standard'] = $this->language->get('tab_2nd_class_standard');
-		$data['tab_international_standard'] = $this->language->get('tab_international_standard');
-		$data['tab_international_tracked_signed'] = $this->language->get('tab_international_tracked_signed');
-		$data['tab_international_tracked'] = $this->language->get('tab_international_tracked');
-		$data['tab_international_signed'] = $this->language->get('tab_international_signed');
-		$data['tab_international_economy'] = $this->language->get('tab_international_economy');
-
 		if (isset($this->error['warning']))  {
 			$data['error_warning'] = $this->error['warning'];
 		} else {

@@ -85,7 +85,7 @@ class ModelUpgrade1009 extends Model {
 		if ($query->num_rows) {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "event` DROP COLUMN `date_added`");
 		}
-				
+						
 		// OPENCART_SERVER
 		$upgrade = true;
 		

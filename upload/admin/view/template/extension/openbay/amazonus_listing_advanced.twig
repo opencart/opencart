@@ -16,7 +16,7 @@
     </div>
     <div class="container-fluid">
         {% if errors %}
-        <div class="alert alert-danger">
+        <div class="alert alert-danger alert-dismissible">
             <ul>
                 {% for listing_error in errors %}
                 <li><i class="fa fa-exclamation-circle"></i> {{ listing_error.message }}</li>
@@ -25,7 +25,7 @@
         </div>
         {% endif %}
         {% if success %}
-        <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
+        <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}</div>
         {% endif %}
         <ul class="nav nav-tabs" id="tabs">
             <li class="active"><a href="#page-main" data-toggle="tab">{{ tab_main }}</a></li>

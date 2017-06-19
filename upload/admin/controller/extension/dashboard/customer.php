@@ -17,19 +17,6 @@ class ControllerExtensionDashboardCustomer extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard', true));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-		
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-
-		$data['entry_width'] = $this->language->get('entry_width');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -98,10 +85,6 @@ class ControllerExtensionDashboardCustomer extends Controller {
 		
 	public function dashboard() {
 		$this->load->language('extension/dashboard/customer');
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_view'] = $this->language->get('text_view');
 
 		$data['user_token'] = $this->session->data['user_token'];
 

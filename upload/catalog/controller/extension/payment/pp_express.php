@@ -2,9 +2,7 @@
 class ControllerExtensionPaymentPPExpress extends Controller {
 	public function index() {
 		$this->load->language('extension/payment/pp_express');
-
-		$data['button_continue'] = $this->language->get('button_continue');
-		$data['text_loading'] = $this->language->get('text_loading');
+		
 		$data['payment_pp_express_incontext_disable'] = $this->config->get('payment_pp_express_incontext_disable');
 
 		if ($this->config->get('payment_pp_express_test') == 1) {
@@ -386,8 +384,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 		$this->document->setTitle($this->language->get('express_text_title'));
 
-		$data['heading_title'] = $this->language->get('express_text_title');
-
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -414,19 +410,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				$points_total += $product['points'];
 			}
 		}
-
-		$data['text_trial'] = $this->language->get('text_trial');
-		$data['text_recurring'] = $this->language->get('text_recurring');
-		$data['text_length'] = $this->language->get('text_length');
-		$data['text_recurring_item'] = $this->language->get('text_recurring_item');
-		$data['text_payment_recurring'] = $this->language->get('text_payment_recurring');
-		$data['text_until_cancelled'] = $this->language->get('text_until_cancelled');
-
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_model'] = $this->language->get('column_model');
-		$data['column_quantity'] = $this->language->get('column_quantity');
-		$data['column_price'] = $this->language->get('column_price');
-		$data['column_total'] = $this->language->get('column_total');
 
 		$data['button_shipping'] = $this->language->get('button_express_shipping');
 		$data['button_confirm'] = $this->language->get('button_express_confirm');
@@ -485,15 +468,12 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 			// Display prices
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-				$price = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+				$unit_price = $this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));
+
+				$price = $this->currency->format($unit_price, $this->session->data['currency']);
+				$total = $this->currency->format($unit_price * $product['quantity'], $this->session->data['currency']);
 			} else {
 				$price = false;
-			}
-
-			// Display prices
-			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-				$total = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']);
-			} else {
 				$total = false;
 			}
 
@@ -713,7 +693,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		}
 
 		$this->session->data['payment_methods'] = $method_data;
-		$this->session->data['payment_method'] = $this->session->data['payment_methods']['pp_express'];
+		$this->session->data['payment_method'] = $method_data['pp_express'];
 
 		$data['action_confirm'] = $this->url->link('extension/payment/pp_express/expressComplete', '', true);
 
@@ -1710,7 +1690,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 							$transaction = array(
 								'paypal_order_id'       => $parent_transaction['paypal_order_id'],
 								'transaction_id'        => '',
-								'parent_id' => $this->request->post['parent_txn_id'],
+								'parent_id' 			=> $this->request->post['parent_txn_id'],
 								'note'                  => '',
 								'msgsubid'              => '',
 								'receipt_id'            => '',
@@ -1813,7 +1793,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				}
 
 				//date_added
-				if ($this->request->post['txn_type'] == 'recurring_payment_recurring_date_added') {
+				if ($this->request->post['txn_type'] == 'recurring_payment_profile_date_added') {
 					$recurring = $this->model_account_recurring->getOrderRecurringByReference($this->request->post['recurring_payment_id']);
 
 					if ($recurring != false) {
@@ -1826,7 +1806,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				}
 
 				//cancelled
-				if ($this->request->post['txn_type'] == 'recurring_payment_recurring_cancel') {
+				if ($this->request->post['txn_type'] == 'recurring_payment_profile_cancel') {
 					$recurring = $this->model_account_recurring->getOrderRecurringByReference($this->request->post['recurring_payment_id']);
 
 					if ($recurring != false && $recurring['status'] != 3) {

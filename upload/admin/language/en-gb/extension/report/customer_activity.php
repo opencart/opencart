@@ -3,10 +3,8 @@
 $_['heading_title']                = 'Customer Activity Report';
 
 // Text
-$_['text_extension']               = 'Extensions';
 $_['text_success']                 = 'Success: You have modified customer activity report!';
-$_['text_edit']                    = 'Edit Customer Activity Report';
-$_['text_filter']                  = 'Customer Activity Filter';
+$_['text_filter']                  = 'Filter';
 $_['text_activity_register']       = '<a href="customer_id=%d">%s</a> registered for an account.';
 $_['text_activity_edit']           = '<a href="customer_id=%d">%s</a> updated their account details.';
 $_['text_activity_password']       = '<a href="customer_id=%d">%s</a> updated their account password.';

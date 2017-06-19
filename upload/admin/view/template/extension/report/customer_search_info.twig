@@ -1,8 +1,10 @@
-<fieldset>
-  <legend>{{ text_filter }}</legend>
-  <div class="well">
-    <div class="row">
-      <div class="col-sm-4">
+<div class="row">
+  <div id="filter-report" class="col-md-3 col-md-push-9 col-sm-12 hidden-sm hidden-xs">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
+      </div>
+      <div class="panel-body">
         <div class="form-group">
           <label class="control-label" for="input-date-start">{{ entry_date_start }}</label>
           <div class="input-group date">
@@ -15,8 +17,6 @@
           <label class="control-label" for="input-customer">{{ entry_customer }}</label>
           <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control" />
         </div>
-      </div>
-      <div class="col-sm-4">
         <div class="form-group">
           <label class="control-label" for="input-date-end">{{ entry_date_end }}</label>
           <div class="input-group date">
@@ -29,58 +29,64 @@
           <label class="control-label" for="input-ip">{{ entry_ip }}</label>
           <input type="text" name="filter_ip" value="{{ filter_ip }}" placeholder="{{ entry_ip }}" id="input-ip" class="form-control" />
         </div>
-      </div>
-      <div class="col-sm-4">
         <div class="form-group">
           <label class="control-label" for="input-keyword">{{ entry_keyword }}</label>
           <input type="text" name="filter_keyword" value="{{ filter_keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control" />
         </div>
-        <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+        <div class="form-group text-right">
+          <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+        </div>
       </div>
     </div>
   </div>
-</fieldset>
-<fieldset>
-  <legend>{{ heading_title }}</legend>
-  <div class="table-responsive">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <td class="text-left">{{ column_keyword }}</td>
-          <td class="text-left">{{ column_products }}</td>
-          <td class="text-left">{{ column_category }}</td>
-          <td class="text-left">{{ column_customer }}</td>
-          <td class="text-left">{{ column_ip }}</td>
-          <td class="text-left">{{ column_date_added }}</td>
-        </tr>
-      </thead>
-      <tbody>
-      
-      {% if searches %}
-      {% for search in searches %}
-      <tr>
-        <td class="text-left">{{ search.keyword }}</td>
-        <td class="text-left">{{ search.products }}</td>
-        <td class="text-left">{{ search.category }}</td>
-        <td class="text-left">{{ search.customer }}</td>
-        <td class="text-left">{{ search.ip }}</td>
-        <td class="text-left">{{ search.date_added }}</td>
-      </tr>
-      {% endfor %}
-      {% else %}
-      <tr>
-        <td class="text-center" colspan="6">{{ text_no_results }}</td>
-      </tr>
-      {% endif %}
-        </tbody>
-      
-    </table>
+  <div class="col-md-9 col-md-pull-3 col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-bar-chart"></i> {{ heading_title }}</h3>
+      </div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <td class="text-left">{{ column_keyword }}</td>
+                <td class="text-left">{{ column_products }}</td>
+                <td class="text-left">{{ column_category }}</td>
+                <td class="text-left">{{ column_customer }}</td>
+                <td class="text-left">{{ column_ip }}</td>
+                <td class="text-left">{{ column_date_added }}</td>
+              </tr>
+            </thead>
+            <tbody>
+            
+            {% if searches %}
+            {% for search in searches %}
+            <tr>
+              <td class="text-left">{{ search.keyword }}</td>
+              <td class="text-left">{{ search.products }}</td>
+              <td class="text-left">{{ search.category }}</td>
+              <td class="text-left">{{ search.customer }}</td>
+              <td class="text-left">{{ search.ip }}</td>
+              <td class="text-left">{{ search.date_added }}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+              <td class="text-center" colspan="6">{{ text_no_results }}</td>
+            </tr>
+            {% endif %}
+            </tbody>
+            
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 text-left">{{ pagination }}</div>
+          <div class="col-sm-6 text-right">{{ results }}</div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="row">
-    <div class="col-sm-6 text-left">{{ pagination }}</div>
-    <div class="col-sm-6 text-right">{{ results }}</div>
-  </div>
-</fieldset>
+</div>
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
 	var url = '';
@@ -115,7 +121,7 @@ $('#button-filter').on('click', function() {
 		url += '&filter_ip=' + encodeURIComponent(filter_ip);
 	}
 	
-	$('#report').load('index.php?route=extension/report/customer_search/report&user_token={{ user_token }}' + url);
+	location = 'index.php?route=report/report&code=customer_search&user_token={{ user_token }}' + url;
 });
 //--></script> 
 <script type="text/javascript"><!--

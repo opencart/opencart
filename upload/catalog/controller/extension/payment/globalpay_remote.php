@@ -3,19 +3,6 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 	public function index() {
 		$this->load->language('extension/payment/globalpay_remote');
 
-		$data['text_credit_card'] = $this->language->get('text_credit_card');
-		$data['text_loading'] = $this->language->get('text_loading');
-		$data['text_wait'] = $this->language->get('text_wait');
-		$data['entry_cc_type'] = $this->language->get('entry_cc_type');
-		$data['entry_cc_number'] = $this->language->get('entry_cc_number');
-		$data['entry_cc_name'] = $this->language->get('entry_cc_name');
-		$data['entry_cc_expire_date'] = $this->language->get('entry_cc_expire_date');
-		$data['entry_cc_cvv2'] = $this->language->get('entry_cc_cvv2');
-		$data['entry_cc_issue'] = $this->language->get('entry_cc_issue');
-		$data['help_start_date'] = $this->language->get('help_start_date');
-		$data['help_issue'] = $this->language->get('help_issue');
-		$data['button_confirm'] = $this->language->get('button_confirm');
-
 		$accounts = $this->config->get('payment_globalpay_remote_account');
 
 		$card_types = array(
@@ -129,7 +116,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 						'cc_issue' => $this->request->post['cc_issue']
 					);
 
-					$md = $this->encryption->encrypt(json_encode($enc_data));
+					$md = $this->encryption->encrypt($this->config->get('config_encryption'), json_encode($enc_data));
 
 					$json = array();
 					$json['ACSURL'] = (string)$verify_3ds->url;
@@ -238,7 +225,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 
 			$post = $this->request->post;
 
-			$md = json_decode($this->encryption->decrypt($post['MD']), true);
+			$md = json_decode($this->encryption->decrypt($this->config->get('config_encryption'), $post['MD']), true);
 
 			$signature_result = $this->model_extension_payment_globalpay_remote->enrollmentSignature($md['account'], $md['amount'], $md['currency'], $md['order_ref'], $md['cc_number'], $md['cc_expire'], $md['cc_type'], $md['cc_name'], $post['PaRes']);
 

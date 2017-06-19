@@ -72,22 +72,7 @@ class ControllerCustomerCustomerApproval extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('customer/customer_approval', 'user_token=' . $this->session->data['user_token'], true)
 		);	
-		
-		$data['heading_title'] = $this->language->get('heading_title');
-		
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_default'] = $this->language->get('text_default');
-		$data['text_customer'] = $this->language->get('text_customer');
-		$data['text_affiliate'] = $this->language->get('text_affiliate');
-		
-		$data['entry_name'] = $this->language->get('entry_name');
-		$data['entry_email'] = $this->language->get('entry_email');
-		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
-		$data['entry_type'] = $this->language->get('entry_type');
-		$data['entry_date_added'] = $this->language->get('entry_date_added');
-		
-		$data['button_filter'] = $this->language->get('button_filter');
-		
+				
 		$data['filter_name'] = $filter_name;
 		$data['filter_email'] = $filter_email;
 		$data['filter_customer_group_id'] = $filter_customer_group_id;
@@ -107,7 +92,7 @@ class ControllerCustomerCustomerApproval extends Controller {
 		$this->response->setOutput($this->load->view('customer/customer_approval', $data));	
 	}
 				
-	public function list() {
+	public function customer_approval() {
 		$this->load->language('customer/customer_approval');
 		
 		if (isset($this->request->get['filter_name'])) {
@@ -177,18 +162,6 @@ class ControllerCustomerCustomerApproval extends Controller {
 				'edit'           => $this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'], true)
 			);
 		}
-		
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_email'] = $this->language->get('column_email');
-		$data['column_customer_group'] = $this->language->get('column_customer_group');
-		$data['column_type'] = $this->language->get('column_type');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_action'] = $this->language->get('column_action');
-		
-		$data['button_approve'] = $this->language->get('button_approve');
-		$data['button_deny'] = $this->language->get('button_deny');
 
 		$url = '';
 
@@ -216,7 +189,7 @@ class ControllerCustomerCustomerApproval extends Controller {
 		$pagination->total = $customer_approval_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('customer/customer_approval', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('customer/customer_approval/customer_approval', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 

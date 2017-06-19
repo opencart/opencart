@@ -233,16 +233,6 @@ class ControllerMarketplaceMarketplace extends Controller {
 				);
 			}
 		}
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_search'] = $this->language->get('text_search');
-		$data['text_category'] = $this->language->get('text_category');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_reviews'] = $this->language->get('text_reviews');
-		
-		$data['button_opencart'] = $this->language->get('button_opencart');
 		
 		$data['user_token'] = $this->session->data['user_token'];
 		
@@ -562,41 +552,6 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$this->load->language('marketplace/marketplace');
 
 			$this->document->setTitle($this->language->get('heading_title'));
-
-			$data['heading_title'] = $this->language->get('heading_title');
-
-			$data['text_loading'] = $this->language->get('text_loading');
-			$data['text_no_results'] = $this->language->get('text_no_results');
-			$data['text_pin'] = $this->language->get('text_pin');
-			$data['text_price'] = $this->language->get('text_price');
-			$data['text_partner'] = $this->language->get('text_partner');
-			$data['text_rating'] = $this->language->get('text_rating');
-			$data['text_downloaded'] = $this->language->get('text_downloaded');
-			$data['text_sales'] = $this->language->get('text_sales');
-			$data['text_compatibility'] = $this->language->get('text_compatibility');
-			$data['text_date_added'] = $this->language->get('text_date_added');
-			$data['text_date_modified'] = $this->language->get('text_date_modified');
-			$data['text_comment'] = $this->language->get('text_comment');
-			$data['text_comment_add'] = $this->language->get('text_comment_add');
-			$data['text_write'] = $this->language->get('text_write');
-			$data['text_purchase'] = $this->language->get('text_purchase');
-			$data['text_pin'] = $this->language->get('text_pin');
-			$data['text_secure'] = $this->language->get('text_secure');
-
-			$data['entry_pin'] = $this->language->get('entry_pin');
-			
-			$data['button_opencart'] = $this->language->get('button_opencart');
-			$data['button_buy'] = $this->language->get('button_buy');
-			$data['button_purchase'] = $this->language->get('button_purchase');
-			$data['button_install'] = $this->language->get('button_install');
-			$data['button_download'] = $this->language->get('button_download');
-			$data['button_cancel'] = $this->language->get('button_cancel');
-			$data['button_comment'] = $this->language->get('button_comment');
-
-			$data['tab_general'] = $this->language->get('tab_general');
-			$data['tab_documentation'] = $this->language->get('tab_documentation');
-			$data['tab_download'] = $this->language->get('tab_download');
-			$data['tab_comment'] = $this->language->get('tab_comment');
 		
 			if ($response_info['license'] && (!$this->config->get('opencart_username') || !$this->config->get('opencart_secret'))) {
 				$data['error_warning'] = $this->language->get('error_opencart');

@@ -7,34 +7,6 @@ class ControllerMarketingContact extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_default'] = $this->language->get('text_default');
-		$data['text_newsletter'] = $this->language->get('text_newsletter');
-		$data['text_customer_all'] = $this->language->get('text_customer_all');
-		$data['text_customer'] = $this->language->get('text_customer');
-		$data['text_customer_group'] = $this->language->get('text_customer_group');
-		$data['text_affiliate_all'] = $this->language->get('text_affiliate_all');
-		$data['text_affiliate'] = $this->language->get('text_affiliate');
-		$data['text_product'] = $this->language->get('text_product');
-		$data['text_loading'] = $this->language->get('text_loading');
-
-		$data['entry_store'] = $this->language->get('entry_store');
-		$data['entry_to'] = $this->language->get('entry_to');
-		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
-		$data['entry_customer'] = $this->language->get('entry_customer');
-		$data['entry_affiliate'] = $this->language->get('entry_affiliate');
-		$data['entry_product'] = $this->language->get('entry_product');
-		$data['entry_subject'] = $this->language->get('entry_subject');
-		$data['entry_message'] = $this->language->get('entry_message');
-
-		$data['help_customer'] = $this->language->get('help_customer');
-		$data['help_affiliate'] = $this->language->get('help_affiliate');
-		$data['help_product'] = $this->language->get('help_product');
-
-		$data['button_send'] = $this->language->get('button_send');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['breadcrumbs'] = array();

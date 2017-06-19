@@ -48,19 +48,6 @@ class ControllerExtensionExtensionReport extends Controller {
 	}
 
 	protected function getList() {
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_no_results'] = $this->language->get('text_no_results');
-
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_sort_order'] = $this->language->get('column_sort_order');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_install'] = $this->language->get('button_install');
-		$data['button_uninstall'] = $this->language->get('button_uninstall');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -88,7 +75,10 @@ class ControllerExtensionExtensionReport extends Controller {
 		}
 
 		$data['extensions'] = array();
-
+		
+		// Create a new language container so we don't pollute the current one
+		$language = new Language($this->config->get('config_language'));
+		
 		// Compatibility code for old extension folders
 		$files = glob(DIR_APPLICATION . 'controller/extension/report/*.php');
 
@@ -96,10 +86,10 @@ class ControllerExtensionExtensionReport extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('extension/report/' . $extension);
+				$language->load('extension/report/' . $extension);
 
 				$data['extensions'][] = array(
-					'name'       => $this->language->get('heading_title'),
+					'name'       => $language->get('heading_title'),
 					'status'     => $this->config->get('report_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get('report_' . $extension . '_sort_order'),
 					'install'    => $this->url->link('extension/extension/report/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),

@@ -19,48 +19,6 @@ class ControllerExtensionPaymentG2APay extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['entry_username'] = $this->language->get('entry_username');
-		$data['entry_secret'] = $this->language->get('entry_secret');
-		$data['entry_api_hash'] = $this->language->get('entry_api_hash');
-		$data['entry_environment'] = $this->language->get('entry_environment');
-		$data['entry_secret_token'] = $this->language->get('entry_secret_token');
-		$data['entry_ipn_url'] = $this->language->get('entry_ipn_url');
-		$data['entry_total'] = $this->language->get('entry_total');
-		$data['entry_order_status'] = $this->language->get('entry_order_status');
-		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-		$data['entry_debug'] = $this->language->get('entry_debug');
-
-		$data['entry_complete_status'] = $this->language->get('entry_complete_status');
-		$data['entry_rejected_status'] = $this->language->get('entry_rejected_status');
-		$data['entry_cancelled_status'] = $this->language->get('entry_cancelled_status');
-		$data['entry_pending_status'] = $this->language->get('entry_pending_status');
-		$data['entry_refunded_status'] = $this->language->get('entry_refunded_status');
-		$data['entry_partially_refunded_status'] = $this->language->get('entry_partially_refunded_status');
-
-		$data['g2apay_environment_live'] = $this->language->get('g2apay_environment_live');
-		$data['g2apay_environment_test'] = $this->language->get('g2apay_environment_test');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_all_zones'] = $this->language->get('text_all_zones');
-
-		$data['help_username'] = $this->language->get('help_username');
-		$data['help_secret_token'] = $this->language->get('help_secret_token');
-		$data['help_ipn_url'] = $this->language->get('help_ipn_url');
-		$data['help_total'] = $this->language->get('help_total');
-		$data['help_debug'] = $this->language->get('help_debug');
-
-		$data['tab_settings'] = $this->language->get('tab_settings');
-		$data['tab_order_status'] = $this->language->get('tab_order_status');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -254,21 +212,8 @@ class ControllerExtensionPaymentG2APay extends Controller {
 
 				$data['g2apay_order'] = $g2apay_order;
 
-				$data['text_payment_info'] = $this->language->get('text_payment_info');
-				$data['text_order_ref'] = $this->language->get('text_order_ref');
-				$data['text_order_total'] = $this->language->get('text_order_total');
-				$data['text_total_released'] = $this->language->get('text_total_released');
-				$data['text_refund_status'] = $this->language->get('text_refund_status');
-				$data['text_transactions'] = $this->language->get('text_transactions');
-				$data['text_yes'] = $this->language->get('text_yes');
-				$data['text_no'] = $this->language->get('text_no');
-				$data['text_column_amount'] = $this->language->get('text_column_amount');
-				$data['text_column_type'] = $this->language->get('text_column_type');
-				$data['text_column_date_added'] = $this->language->get('text_column_date_added');
-				$data['btn_refund'] = $this->language->get('btn_refund');
-				$data['text_confirm_refund'] = $this->language->get('text_confirm_refund');
-
 				$data['order_id'] = $this->request->get['order_id'];
+				
 				$data['user_token'] = $this->request->get['user_token'];
 
 				return $this->load->view('extension/payment/g2apay_order', $data);

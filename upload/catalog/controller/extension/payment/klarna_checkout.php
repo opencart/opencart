@@ -269,12 +269,6 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			$this->session->data['shipping_method'] = $this->model_extension_payment_klarna_checkout->getDefaultShippingMethod($this->session->data['shipping_methods']);
 		}
 
-		$data['text_choose_shipping_method'] = $this->language->get('text_choose_shipping_method');
-		$data['text_shipping_method'] = $this->language->get('text_shipping_method');
-		$data['text_no_shipping'] = $this->language->get('error_no_shipping');
-
-		$data['button_remove'] = $this->language->get('button_remove');
-
 		$data['shipping_required'] = $this->cart->hasShipping();
 
 		if (isset($this->session->data['shipping_methods'])) {
@@ -567,7 +561,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 			foreach ($request->order_lines as $order_line) {
 				if ($order_line->type == 'physical' || $order_line->type == 'digital' || $order_line->type == 'gift_card') {
-					$order_id = $this->encryption->decrypt($order_line->merchant_data);
+					$order_id = $this->encryption->decrypt($this->config->get('config_encryption'), $order_line->merchant_data);
 					break;
 				}
 			}
@@ -586,7 +580,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		}
 
 		if ($process) {
-			$klarna_checkout_order_data = json_decode($this->encryption->decrypt($klarna_checkout_order['data']), true);
+			$klarna_checkout_order_data = json_decode($this->encryption->decrypt($this->config->get('config_encryption'), $klarna_checkout_order['data']), true);
 
 			// Check credentials in request with ones stored in db
 			$valid_request = false;
@@ -903,7 +897,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 			foreach ($request->order_lines as $order_line) {
 				if ($order_line->type == 'physical' || $order_line->type == 'digital' || $order_line->type == 'gift_card') {
-					$order_id = $this->encryption->decrypt($order_line->merchant_data);
+					$order_id = $this->encryption->decrypt($this->config->get('config_encryption'), $order_line->merchant_data);
 					break;
 				}
 			}
@@ -1134,10 +1128,6 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			'text' => $this->language->get('text_success'),
 			'href' => $this->url->link('checkout/success')
 		);
-
-		$data['heading_title'] = $this->language->get('heading_title_success');
-
-		$data['button_continue'] = $this->language->get('button_continue');
 
 		$data['continue'] = $this->url->link('common/home');
 
@@ -1782,7 +1772,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$klarna_order_data['merchant_urls'] = $merchant_urls;
 
 		// Callback data to be used to spoof/simulate customer to accurately calculate shipping
-		$encrypted_order_data = $this->encryption->encrypt(json_encode(array(
+		$encrypted_order_data = $this->encryption->encrypt($this->config->get('config_encryption'), json_encode(array(
 			'session_id'  => session_id(),
 			'session_key' => $this->session->getId(),
 			'customer_id' => $this->customer->getId(),
@@ -1791,7 +1781,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			'secret'      => $klarna_account['secret']
 		)));
 
-		$encrypted_order_id = $this->encryption->encrypt($this->session->data['order_id']);
+		$encrypted_order_id = $this->encryption->encrypt($this->config->get('config_encryption'), $this->session->data['order_id']);
 
 		$klarna_order_data['merchant_reference1'] = $this->session->data['order_id'];
 

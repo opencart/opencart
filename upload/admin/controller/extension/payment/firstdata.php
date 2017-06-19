@@ -17,59 +17,6 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_live'] = $this->language->get('text_live');
-		$data['text_demo'] = $this->language->get('text_demo');
-		$data['text_yes'] = $this->language->get('text_yes');
-		$data['text_no'] = $this->language->get('text_no');
-		$data['text_all_zones'] = $this->language->get('text_all_zones');
-
-		$data['text_card_type'] = $this->language->get('text_card_type');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_notification_url'] = $this->language->get('text_notification_url');
-		$data['text_merchant_id'] = $this->language->get('text_merchant_id');
-		$data['text_secret'] = $this->language->get('text_secret');
-		$data['text_settle_delayed'] = $this->language->get('text_settle_delayed');
-		$data['text_settle_auto'] = $this->language->get('text_settle_auto');
-
-		$data['entry_merchant_id'] = $this->language->get('entry_merchant_id');
-		$data['entry_secret'] = $this->language->get('entry_secret');
-		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_debug'] = $this->language->get('entry_debug');
-		$data['entry_live_demo'] = $this->language->get('entry_live_demo');
-		$data['entry_auto_settle'] = $this->language->get('entry_auto_settle');
-		$data['entry_live_url'] = $this->language->get('entry_live_url');
-		$data['entry_demo_url'] = $this->language->get('entry_demo_url');
-		$data['entry_total'] = $this->language->get('entry_total');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-		$data['entry_enable_card_store'] = $this->language->get('entry_enable_card_store');
-
-		$data['entry_status_success_settled'] = $this->language->get('entry_status_success_settled');
-		$data['entry_status_success_unsettled'] = $this->language->get('entry_status_success_unsettled');
-		$data['entry_status_decline'] = $this->language->get('entry_status_decline');
-		$data['entry_status_decline_pending'] = $this->language->get('entry_status_decline_pending');
-		$data['entry_status_decline_stolen'] = $this->language->get('entry_status_decline_stolen');
-		$data['entry_status_decline_bank'] = $this->language->get('entry_status_decline_bank');
-		$data['entry_status_void'] = $this->language->get('entry_status_void');
-
-		$data['help_total'] = $this->language->get('help_total');
-		$data['help_debug'] = $this->language->get('help_debug');
-		$data['help_notification'] = $this->language->get('help_notification');
-		$data['help_settle'] = $this->language->get('help_settle');
-
-		$data['tab_account'] = $this->language->get('tab_account');
-		$data['tab_order_status'] = $this->language->get('tab_order_status');
-		$data['tab_payment'] = $this->language->get('tab_payment');
-		$data['tab_advanced'] = $this->language->get('tab_advanced');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-
 		$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/firstdata/notify';
 
 		$this->load->model('localisation/order_status');

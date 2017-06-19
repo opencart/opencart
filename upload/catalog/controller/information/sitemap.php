@@ -17,21 +17,6 @@ class ControllerInformationSitemap extends Controller {
 			'href' => $this->url->link('information/sitemap')
 		);
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_special'] = $this->language->get('text_special');
-		$data['text_account'] = $this->language->get('text_account');
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_password'] = $this->language->get('text_password');
-		$data['text_address'] = $this->language->get('text_address');
-		$data['text_history'] = $this->language->get('text_history');
-		$data['text_download'] = $this->language->get('text_download');
-		$data['text_cart'] = $this->language->get('text_cart');
-		$data['text_checkout'] = $this->language->get('text_checkout');
-		$data['text_search'] = $this->language->get('text_search');
-		$data['text_information'] = $this->language->get('text_information');
-		$data['text_contact'] = $this->language->get('text_contact');
-
 		$this->load->model('catalog/category');
 		$this->load->model('catalog/product');
 

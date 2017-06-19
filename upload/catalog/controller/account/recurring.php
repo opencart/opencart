@@ -34,19 +34,6 @@ class ControllerAccountRecurring extends Controller {
 			'href' => $this->url->link('account/recurring', $url, true)
 		);
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_empty'] = $this->language->get('text_empty');
-
-		$data['column_order_recurring_id'] = $this->language->get('column_order_recurring_id');
-		$data['column_product'] = $this->language->get('column_product');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_view'] = $this->language->get('button_view');
-		$data['button_continue'] = $this->language->get('button_continue');
-
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
 		} else {
@@ -148,25 +135,6 @@ class ControllerAccountRecurring extends Controller {
 				'href' => $this->url->link('account/recurring/info', 'order_recurring_id=' . $this->request->get['order_recurring_id'] . $url, true),
 			);
 
-			$data['heading_title'] = $this->language->get('text_recurring');
-
-			$data['text_recurring_detail'] = $this->language->get('text_recurring_detail');
-			$data['text_order_recurring_id'] = $this->language->get('text_order_recurring_id');
-			$data['text_date_added'] = $this->language->get('text_date_added');
-			$data['text_status'] = $this->language->get('text_status');
-			$data['text_payment_method'] = $this->language->get('text_payment_method');
-			$data['text_order_id'] = $this->language->get('text_order_id');
-			$data['text_product'] = $this->language->get('text_product');
-			$data['text_quantity'] = $this->language->get('text_quantity');
-			$data['text_description'] = $this->language->get('text_description');
-			$data['text_reference'] = $this->language->get('text_reference');
-			$data['text_transaction'] = $this->language->get('text_transaction');
-			$data['text_no_results'] = $this->language->get('text_no_results');
-
-			$data['column_date_added'] = $this->language->get('column_date_added');
-			$data['column_type'] = $this->language->get('column_type');
-			$data['column_amount'] = $this->language->get('column_amount');
-
 			$data['order_recurring_id'] = $this->request->get['order_recurring_id'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($recurring_info['date_added']));
 
@@ -212,12 +180,6 @@ class ControllerAccountRecurring extends Controller {
 			$this->response->setOutput($this->load->view('account/recurring_info', $data));
 		} else {
 			$this->document->setTitle($this->language->get('text_recurring'));
-
-			$data['heading_title'] = $this->language->get('text_recurring');
-
-			$data['text_error'] = $this->language->get('text_error');
-
-			$data['button_continue'] = $this->language->get('button_continue');
 
 			$data['breadcrumbs'] = array();
 

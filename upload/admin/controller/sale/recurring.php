@@ -155,32 +155,6 @@ class ControllerSaleRecurring extends Controller {
 			);
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		
-		$data['column_order_recurring_id'] = $this->language->get('column_order_recurring_id');
-		$data['column_order_id'] = $this->language->get('column_order_id');
-		$data['column_reference'] = $this->language->get('column_reference');
-		$data['column_customer'] = $this->language->get('column_customer');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_action'] = $this->language->get('column_action');
-		
-		$data['entry_order_recurring_id'] = $this->language->get('entry_order_recurring_id');
-		$data['entry_order_id'] = $this->language->get('entry_order_id');
-		$data['entry_reference'] = $this->language->get('entry_reference');
-		$data['entry_customer'] = $this->language->get('entry_customer');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_total'] = $this->language->get('entry_total');
-		$data['entry_date_added'] = $this->language->get('entry_date_added');
-		$data['entry_date_modified'] = $this->language->get('entry_date_modified');
-
-		$data['button_filter'] = $this->language->get('button_filter');
-		$data['button_order_recurring'] = $this->language->get('button_order_recurring');
-		$data['button_order'] = $this->language->get('button_order');
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->error['warning'])) {
@@ -331,33 +305,6 @@ class ControllerSaleRecurring extends Controller {
 			$this->load->language('sale/recurring');
 		
 			$this->document->setTitle($this->language->get('heading_title'));
-
-			$data['heading_title'] = $this->language->get('heading_title');
-
-			$data['text_recurring_detail'] = $this->language->get('text_recurring_detail');
-			$data['text_order_detail'] = $this->language->get('text_order_detail');
-			$data['text_product_detail'] = $this->language->get('text_product_detail');
-			$data['text_transaction'] = $this->language->get('text_transaction');
-			$data['text_order_recurring_id'] = $this->language->get('text_order_recurring_id');
-			$data['text_reference'] = $this->language->get('text_reference');
-			$data['text_recurring_name'] = $this->language->get('text_recurring_name');
-			$data['text_recurring_description'] = $this->language->get('text_recurring_description');
-			$data['text_recurring_status'] = $this->language->get('text_recurring_status');			
-			$data['text_payment_method'] = $this->language->get('text_payment_method');
-			$data['text_order_id'] = $this->language->get('text_order_id');
-			$data['text_customer'] = $this->language->get('text_customer');
-			$data['text_email'] = $this->language->get('text_email');
-			$data['text_order_status'] = $this->language->get('text_order_status');
-			$data['text_date_added'] = $this->language->get('text_date_added');
-			$data['text_product'] = $this->language->get('text_product');
-			$data['text_quantity'] = $this->language->get('text_quantity');
-			$data['text_no_results'] = $this->language->get('text_no_results');
-			
-			$data['column_date_added'] = $this->language->get('column_date_added');
-			$data['column_amount'] = $this->language->get('column_amount');
-			$data['column_type'] = $this->language->get('column_type');
-
-			$data['button_cancel'] = $this->language->get('button_cancel');
 
 			$data['user_token'] = $this->request->get['user_token'];
 			

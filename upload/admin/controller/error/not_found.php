@@ -5,10 +5,6 @@ class ControllerErrorNotFound extends Controller {
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_not_found'] = $this->language->get('text_not_found');
-
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(

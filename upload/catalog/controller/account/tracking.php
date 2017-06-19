@@ -33,18 +33,7 @@ class ControllerAccountTracking extends Controller {
 				'href' => $this->url->link('account/tracking', '', true)
 			);
 	
-			$data['heading_title'] = $this->language->get('heading_title');
-	
 			$data['text_description'] = sprintf($this->language->get('text_description'), $this->config->get('config_name'));
-	
-			$data['entry_code'] = $this->language->get('entry_code');
-			$data['entry_generator'] = $this->language->get('entry_generator');
-			$data['entry_link'] = $this->language->get('entry_link');
-	
-			$data['help_generator'] = $this->language->get('help_generator');
-	
-			$data['button_continue'] = $this->language->get('button_continue');
-			$data['button_back'] = $this->language->get('button_back');
 	
 			$data['code'] = $affiliate_info['tracking'];
 	

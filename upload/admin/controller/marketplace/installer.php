@@ -16,21 +16,6 @@ class ControllerMarketplaceInstaller extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('marketplace/installer', 'user_token=' . $this->session->data['user_token'], true)
 		);
-		
-		$data['heading_title'] = $this->language->get('heading_title');
-        
-		$data['text_upload'] = $this->language->get('text_upload');
-		$data['text_loading'] = $this->language->get('text_loading');
-		$data['text_progress'] = $this->language->get('text_progress');
-		$data['text_history'] = $this->language->get('text_history');
-					
-		$data['entry_upload'] = $this->language->get('entry_upload');
-		$data['entry_progress'] = $this->language->get('entry_progress');
-	
-		$data['help_upload'] = $this->language->get('help_upload');
-		
-		$data['button_upload'] = $this->language->get('button_upload');
-		$data['button_uninstall'] = $this->language->get('button_uninstall');
 
 		$data['user_token'] = $this->session->data['user_token'];
 		
@@ -43,13 +28,6 @@ class ControllerMarketplaceInstaller extends Controller {
 
 	public function history() {
 		$this->load->language('marketplace/installer');
-
-		$data['text_loading'] = $this->language->get('text_loading');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-
-		$data['column_filename'] = $this->language->get('column_filename');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_action'] = $this->language->get('column_action');
 		
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];

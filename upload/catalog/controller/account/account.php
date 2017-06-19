@@ -30,29 +30,7 @@ class ControllerAccountAccount extends Controller {
 		} else {
 			$data['success'] = '';
 		} 
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_my_account'] = $this->language->get('text_my_account');
-		$data['text_my_orders'] = $this->language->get('text_my_orders');
-		$data['text_my_affiliate'] = $this->language->get('text_my_affiliate');
-		$data['text_my_newsletter'] = $this->language->get('text_my_newsletter');
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_password'] = $this->language->get('text_password');
-		$data['text_address'] = $this->language->get('text_address');
-		$data['text_credit_card'] = $this->language->get('text_credit_card');
-		$data['text_wishlist'] = $this->language->get('text_wishlist');
-		$data['text_order'] = $this->language->get('text_order');
-		$data['text_download'] = $this->language->get('text_download');
-		$data['text_reward'] = $this->language->get('text_reward');
-		$data['text_return'] = $this->language->get('text_return');
-		$data['text_transaction'] = $this->language->get('text_transaction');
-		$data['text_newsletter'] = $this->language->get('text_newsletter');
-		$data['text_recurring'] = $this->language->get('text_recurring');
-		$data['text_affiliate_add'] = $this->language->get('text_affiliate_add');
-		$data['text_affiliate_edit'] = $this->language->get('text_affiliate_edit');
-		$data['text_tracking'] = $this->language->get('text_tracking');
-
+		
 		$data['edit'] = $this->url->link('account/edit', '', true);
 		$data['password'] = $this->url->link('account/password', '', true);
 		$data['address'] = $this->url->link('account/address', '', true);

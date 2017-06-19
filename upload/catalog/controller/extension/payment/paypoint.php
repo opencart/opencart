@@ -104,10 +104,7 @@ class ControllerExtensionPaymentPaypoint extends Controller {
 
 			$data['heading_title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_name'));
 
-			$data['text_response'] = $this->language->get('text_response');
-			$data['text_success'] = $this->language->get('text_success');
 			$data['text_success_wait'] = sprintf($this->language->get('text_success_wait'), $this->url->link('checkout/success'));
-			$data['text_failure'] = $this->language->get('text_failure');
 			$data['text_failure_wait'] = sprintf($this->language->get('text_failure_wait'), $this->url->link('checkout/cart'));
 
 			if (isset($this->request->get['code']) && $this->request->get['code'] == 'A' && $status) {

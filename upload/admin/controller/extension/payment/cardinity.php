@@ -17,30 +17,6 @@ class ControllerExtensionPaymentCardinity extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_all_zones'] = $this->language->get('text_all_zones');
-		$data['text_production'] = $this->language->get('text_production');
-		$data['text_sandbox'] = $this->language->get('text_sandbox');
-
-		$data['entry_order_status'] = $this->language->get('entry_order_status');
-		$data['entry_total'] = $this->language->get('entry_total');
-		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-		$data['entry_key'] = $this->language->get('entry_key');
-		$data['entry_secret'] = $this->language->get('entry_secret');
-		$data['entry_debug'] = $this->language->get('entry_debug');
-
-		$data['help_debug'] = $this->language->get('help_debug');
-		$data['help_total'] = $this->language->get('help_total');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -146,7 +122,6 @@ class ControllerExtensionPaymentCardinity extends Controller {
 	public function order() {
 		$this->load->language('extension/payment/cardinity');
 
-		$data['text_payment_info'] = $this->language->get('text_payment_info');
 		$data['user_token'] = $this->session->data['user_token'];
 		$data['order_id'] = $this->request->get['order_id'];
 
@@ -157,10 +132,6 @@ class ControllerExtensionPaymentCardinity extends Controller {
 		$this->load->language('extension/payment/cardinity');
 
 		$this->load->model('extension/payment/cardinity');
-
-		$data['text_confirm_refund'] = $this->language->get('text_confirm_refund');
-		$data['text_no_refund'] = $this->language->get('text_no_refund');
-		$data['text_na'] = $this->language->get('text_na');
 
 		$data['column_refund'] = $this->language->get('column_refund');
 		$data['column_date'] = $this->language->get('column_date');

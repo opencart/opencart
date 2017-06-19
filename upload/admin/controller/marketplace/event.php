@@ -178,31 +178,11 @@ class ControllerMarketplaceEvent extends Controller {
 				'action'     => $result['action'],
 				'sort_order' => $result['sort_order'],
 				'status'     => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-				'enable'     => $this->url->link('marketplace/event/enable', 'user_token=' . $this->session->data['user_token'] . '&event_id=' . $result['event_id'], true),
-				'disable'    => $this->url->link('marketplace/event/disable', 'user_token=' . $this->session->data['user_token'] . '&event_id=' . $result['event_id'], true),
+				'enable'     => $this->url->link('marketplace/event/enable', 'user_token=' . $this->session->data['user_token'] . '&event_id=' . $result['event_id'] . $url, true),
+				'disable'    => $this->url->link('marketplace/event/disable', 'user_token=' . $this->session->data['user_token'] . '&event_id=' . $result['event_id'] . $url, true),
 				'enabled'    => $result['status']
 			);
 		}
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-		$data['text_event'] = $this->language->get('text_event');
-		$data['text_info'] = $this->language->get('text_info');
-		$data['text_trigger'] = $this->language->get('text_trigger');
-		$data['text_action'] = $this->language->get('text_action');
-
-		$data['column_code'] = $this->language->get('column_code');
-		$data['column_sort_order'] = $this->language->get('column_sort_order');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_info'] = $this->language->get('button_info');
-		$data['button_enable'] = $this->language->get('button_enable');
-		$data['button_disable'] = $this->language->get('button_disable');
-		$data['button_delete'] = $this->language->get('button_delete');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];

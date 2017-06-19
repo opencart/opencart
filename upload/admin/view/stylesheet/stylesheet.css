@@ -218,11 +218,20 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	z-index: 10;
 	transition: all 0.3s;
 }
+
+
 #column-left #navigation {
 	text-transform: uppercase;
 	padding: 15px 15px 0px 15px;
 	color: #FFFFFF;
+	display: none;
 }
+
+#column-left.active #navigation {
+	display: block;
+}
+
+
 @media screen and (max-width: 767px){
 	#column-left {
 		padding-top: 45px;

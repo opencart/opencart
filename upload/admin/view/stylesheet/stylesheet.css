@@ -222,8 +222,9 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 
 #column-left #navigation {
 	text-transform: uppercase;
-	padding: 15px 15px 0px 15px;
+	padding: 15px 15px 15px 15px;
 	color: #FFFFFF;
+	background: #19222E;
 	display: none;
 }
 

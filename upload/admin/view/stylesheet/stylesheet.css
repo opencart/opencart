@@ -460,6 +460,9 @@ div.required .control-label:not(span):before, td.required:before {
 	color: #F00;
 	font-weight: bold;
 }
+.btn-group {
+	white-space: nowrap;
+}
 .table thead td span[data-toggle="tooltip"]:after, label.control-label span:after {
 	font-family: FontAwesome;
 	color: #1E91CF;

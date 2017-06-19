@@ -23,6 +23,7 @@ h1, h2, h3, h4, h5, h6, p {
 	color: #4c4d5a;
 	display: inline-block;
 	margin-bottom: 15px;
+	text-shadow: 0 1px #fff;
 }
 .breadcrumb {
 	display: inline-block;
@@ -36,7 +37,6 @@ h1, h2, h3, h4, h5, h6, p {
 	font-size: 14px;
 	padding: 0px;
 	margin: 0px;
-	text-shadow: -1px 0px #FFFFFF;
 }
 .breadcrumb li a:hover {
 	text-decoration: none;
@@ -86,6 +86,11 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	width: 60px;
 	transition: 0.3s all;
 }
+@media screen and (max-width: 767px){
+	#header .navbar-header {
+		width: 45px;
+	}
+}
 #header .navbar-header img {
 	display: none;
 }
@@ -97,11 +102,10 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 
 #header .navbar-header.active {
 	width: 235px;
-} 
+}
 
 #header .navbar-header.active img {
 	display: block;
-	margin-left: 5px;
 }
 
 #header .navbar-header.active i {
@@ -113,10 +117,13 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 
 #header #user-profile {
-	max-width: 30px;
-	max-height: 30px;
 	border: 0px solid #eee;
 	margin-right: 15px;
+}
+@media (max-width: 767px) {
+	#header #user-profile {
+		max-width: 30px;
+	}
 }
 #header .navbar-right {
 	margin-right: 0;
@@ -129,6 +136,10 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	margin-right: 0px;
 	margin-left: 0px;
 	float: left;
+}
+#header .navbar-nav {
+	margin-top: 0px;
+	margin-bottom: 0px;
 }
 }
 #header #button-menu + .navbar-brand {
@@ -145,16 +156,20 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	}
 }
 #header .nav > li > a {
-	padding: 11px 21px;
-	line-height: 38px;
+	padding: 0px 21px;
+	line-height: 60px;
 	cursor: pointer;
 	color: #6D6D6D;
 	border-left: 0px solid #E1E1E1;
 }
+#header .nav > li.dropdown > a {
+	padding-left: 10px;
+	padding-right: 10px;
+}
 @media screen and (max-width: 767px){
 	#header .nav > li > a {
-		padding: 11px 12px;
-		line-height: 22px;
+		padding: 0px 12px;
+		line-height: 45px;
 	}
 }
 #header .nav > li > a > .label {
@@ -165,8 +180,8 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	left: 6px;
 }
 #button-menu {
-	padding: 18px 22px 17px 21px;
-	line-height: 25px;
+	line-height: 30px;
+	padding: 15px 22px;
 	float: left;
 	display: inline-block;
 	cursor: pointer;
@@ -175,7 +190,8 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 @media screen and (max-width: 767px){
 	#button-menu {
-		padding: 5px 13px 5px 13px;
+		padding: 9px 16px;
+		line-height: 25px;
 	}
 }
 
@@ -714,11 +730,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 #extension-list > .row {
 	margin-top: 40px;
 }
- @media screen and (max-width: 991px) {
-#extension-list > .row > div + div {
-	margin-top: 30px;
-}
-}
+
 #extension-list .extension-preview {
 	min-height: 150px;
 }

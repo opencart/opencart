@@ -3376,7 +3376,33 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'dashboard_recent', 'dashboard_recent_status', '1', 0),
 (0, 'dashboard_recent', 'dashboard_recent_sort_order', '8', 0),
 (0, 'dashboard_activity', 'dashboard_activity_width', '4', 0),
-(0, 'dashboard_recent', 'dashboard_recent_width', '8', 0);
+(0, 'dashboard_recent', 'dashboard_recent_width', '8', 0)
+(0, 'report_customer_activity', 'report_customer_activity_status', '1', 0),
+(0, 'report_customer_activity', 'report_customer_activity_sort_order', '1', 0),
+(0, 'report_customer_order', 'report_customer_order_status', '1', 0),
+(0, 'report_customer_order', 'report_customer_order_sort_order', '2', 0),
+(0, 'report_customer_reward', 'report_customer_reward_status', '1', 0),
+(0, 'report_customer_reward', 'report_customer_reward_sort_order', '3', 0),
+(0, 'report_customer_search', 'report_customer_search_sort_order', '3', 0),
+(0, 'report_customer_search', 'report_customer_search_status', '1', 0),
+(0, 'report_customer_transaction', 'report_customer_transaction_status', '1', 0),
+(0, 'report_customer_transaction', 'report_customer_transaction_status_sort_order', '4', 0),
+(0, 'report_sale_tax', 'report_sale_tax_status', '1', 0),
+(0, 'report_sale_tax', 'report_sale_tax_sort_order', '5', 0),
+(0, 'report_sale_shipping', 'report_sale_shipping_status', '1', 0),
+(0, 'report_sale_shipping', 'report_sale_shipping_sort_order', '6', 0),
+(0, 'report_sale_return', 'report_sale_return_status', '1', 0),
+(0, 'report_sale_return', 'report_sale_return_sort_order', '7', 0),
+(0, 'report_sale_order', 'report_sale_order_status', '1', 0),
+(0, 'report_sale_order', 'report_sale_order_sort_order', '8', 0),
+(0, 'report_sale_coupon', 'report_sale_coupon_status', '1', 0),
+(0, 'report_sale_coupon', 'report_sale_coupon_sort_order', '9', 0),
+(0, 'report_product_viewed', 'report_product_viewed_status', '1', 0),
+(0, 'report_product_viewed', 'report_product_viewed_sort_order', '10', 0),
+(0, 'report_product_purchased', 'report_product_purchased_status', '1', 0),
+(0, 'report_product_purchased', 'report_product_purchased_sort_order', '11', 0),
+(0, 'report_marketing', 'report_marketing_status', '1', 0),
+(0, 'report_marketing', 'report_marketing_sort_order', '12', 0);
 
 -----------------------------------------------------------
 

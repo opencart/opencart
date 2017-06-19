@@ -425,12 +425,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	text-align: center;
 }
 /* Navs
-.nav > li.disabled > a {
-	color: #999;
-}
-.nav > li.disabled > a:hover, .nav > li.disabled > a:focus {
-	color: #999;
-} */
 /* Tabs */
 .nav-tabs > li > a {
 	color: #a5a5a5;
@@ -564,7 +558,6 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 .panel-heading h3 {
-	font-size: 16px;
 	font-weight: 500;
 	display: inline-block;
 }

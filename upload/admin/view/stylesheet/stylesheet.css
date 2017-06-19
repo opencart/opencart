@@ -100,7 +100,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 
 #header .navbar-header.active {
-	width: 235px; 
+	width: 235px;
 }
 
 #header .navbar-header.active img {
@@ -743,6 +743,9 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 }
 #extension-list > .row {
 	margin-top: 40px;
+}
+#extension-list > .row > * {
+	margin-bottom: 30px;
 }
 
 #extension-list .extension-preview {

@@ -1,4 +1,5 @@
 <nav id="column-left">
+  <div id="">{{ text_navigation }}</div>
   <ul id="menu">
     {% for menu in menus %}
     <li id="{{ menu.id }}"> {% if menu.href %} <a href="{{ menu.href }}"><i class="fa {{ menu.icon }} fw"></i> <span>{{ menu.name }}</span></a> {% else %} <a class="parent"><i class="fa {{ menu.icon }} fw"></i> <span>{{ menu.name }}</span></a> {% endif %}

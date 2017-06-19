@@ -44,7 +44,6 @@ class ControllerReportReport extends Controller {
 				$data['reports'][] = array(
 					'text'       => $language->get('heading_title'),
 					'code'       => $code,
-					'group'      => $this->language->get('text_' . $this->config->get('report_' . $code . '_group')),
 					'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
 					'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true)
 				);

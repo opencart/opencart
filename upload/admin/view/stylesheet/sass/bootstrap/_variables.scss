@@ -368,7 +368,8 @@ $navbar-height:                    60px !default;
 $navbar-margin-bottom:             $line-height-computed !default;
 $navbar-border-radius:             $border-radius-base !default;
 $navbar-padding-horizontal:        floor(($grid-gutter-width / 2)) !default;
-$navbar-padding-vertical:          (($navbar-height - $line-height-computed) / 2) !default;
+//$navbar-padding-vertical:          (($navbar-height - $line-height-computed) / 2) !default;
+$navbar-padding-vertical:          15px !default;
 $navbar-collapse-max-height:       340px !default;
 
 $navbar-default-color:             #777 !default;
@@ -515,7 +516,7 @@ $state-info-bg:                  #d9edf7 !default;
 $state-info-border:              darken(adjust-hue($state-info-bg, -10), 7%) !default;
 
 $state-warning-text:             $brand-warning !default;
-$state-warning-bg:               lighten($brand-warning, 40%) !default;
+$state-warning-bg:               lighten($brand-warning, 30%) !default;
 $state-warning-border:           lighten($brand-warning, 22%) !default;
 // $state-warning-text:             #8a6d3b !default;
 // $state-warning-bg:               #fcf8e3 !default;
@@ -642,19 +643,22 @@ $alert-link-font-weight:      bold !default;
 $alert-success-bg:            $state-success-bg !default;
 $alert-success-text:          $state-success-text !default;
 $alert-success-border:        $state-success-border !default;
+$alert-success-text-shadow:   darken($state-success-text, 20%) !default;
 
 $alert-info-bg:               $state-info-bg !default;
-$alert-info-text:             $state-info-text !default;
+$alert-info-text:             lighten($state-info-text, 20%) !default;
 $alert-info-border:           $state-info-border !default;
+$alert-info-text-shadow:      darken($state-info-text, 10%) !default;
 
 $alert-warning-bg:            $state-warning-bg !default;
 $alert-warning-text:          $state-warning-text !default;
 $alert-warning-border:        $state-warning-border !default;
+$alert-warning-text-shadow:   darken($state-warning-text, 20%) !default;
 
 $alert-danger-bg:             $state-danger-bg !default;
-$alert-danger-text:           $state-danger-text !default;
+$alert-danger-text:           lighten($state-danger-text, 10%) !default;
 $alert-danger-border:         $state-danger-border !default;
-$alert-danger-text-shadow:    #999 !default;
+$alert-danger-text-shadow:    darken($state-danger-text, 12%) !default;
 
 
 //== Progress bars

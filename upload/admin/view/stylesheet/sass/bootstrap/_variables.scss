@@ -641,24 +641,20 @@ $alert-border-radius:         $border-radius-base !default;
 $alert-link-font-weight:      bold !default;
 
 $alert-success-bg:            $state-success-bg !default;
-$alert-success-text:          $state-success-text !default;
+$alert-success-text:          darken($state-success-text, 12%) !default;
 $alert-success-border:        $state-success-border !default;
-$alert-success-text-shadow:   darken($state-success-text, 20%) !default;
 
 $alert-info-bg:               $state-info-bg !default;
-$alert-info-text:             lighten($state-info-text, 20%) !default;
+$alert-info-text:             darken($state-info-text, 12%) !default;
 $alert-info-border:           $state-info-border !default;
-$alert-info-text-shadow:      darken($state-info-text, 10%) !default;
 
 $alert-warning-bg:            $state-warning-bg !default;
-$alert-warning-text:          $state-warning-text !default;
+$alert-warning-text:          darken($state-warning-text, 12%) !default;
 $alert-warning-border:        $state-warning-border !default;
-$alert-warning-text-shadow:   darken($state-warning-text, 20%) !default;
 
 $alert-danger-bg:             $state-danger-bg !default;
-$alert-danger-text:           lighten($state-danger-text, 10%) !default;
+$alert-danger-text:           darken($state-danger-text, 12%) !default;
 $alert-danger-border:         $state-danger-border !default;
-$alert-danger-text-shadow:    darken($state-danger-text, 12%) !default;
 
 
 //== Progress bars

@@ -247,7 +247,6 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 		$settings = $this->model_setting_setting->getSetting('openbay_amazonus');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-
 			if (!isset($this->request->post['openbay_amazonus_orders_marketplace_ids'])) {
 				$this->request->post['openbay_amazonus_orders_marketplace_ids'] = array();
 			}
@@ -258,6 +257,9 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 			$this->config->set('openbay_amazonus_token', $this->request->post['openbay_amazonus_token']);
 			$this->config->set('openbay_amazonus_encryption_key', $this->request->post['openbay_amazonus_encryption_key']);
 			$this->config->set('openbay_amazonus_encryption_iv', $this->request->post['openbay_amazonus_encryption_iv']);
+
+			$this->openbay->amazonus->setEncryptionKey($this->request->post['openbay_amazon_encryption_key']);
+			$this->openbay->amazonus->setEncryptionIv($this->request->post['openbay_amazon_encryption_iv']);
 
 			if (!empty($this->request->post['openbay_amazonus_token']) && !empty($this->request->post['openbay_amazonus_encryption_key']) && !empty($this->request->post['openbay_amazonus_encryption_iv'])) {
                 $this->model_extension_openbay_amazonus->verifyConfig($settings);
@@ -899,6 +901,21 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 		} else {
 			$linked_item_limit = 25;
 		}
+
+        $data['cancel_report_link'] = '';
+
+        if (isset($this->request->get['cancel_report']) && $this->request->get['cancel_report'] == 1) {
+            $this->load->model('setting/setting');
+
+            $settings = $this->model_setting_setting->getSetting('openbay_amazonus');
+            $settings['openbay_amazonus_processing_listing_reports'] = '';
+
+            $this->model_setting_setting->editSetting('openbay_amazonus', $settings);
+
+            $this->response->redirect($this->url->link('extension/openbay/amazonus/bulklinking', 'token=' . $this->session->data['token'], true));
+        } else {
+            $data['cancel_report_link'] = $this->url->link('extension/openbay/amazonus/bulklinking', 'cancel_report=1&token=' . $this->session->data['token'], true);
+        }
 
 		$pagination = new Pagination();
 		$pagination->total = $total_linked;

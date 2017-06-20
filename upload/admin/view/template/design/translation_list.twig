@@ -38,6 +38,7 @@
                   <td class="text-left">{% if sort == 'language' %}<a href="{{ sort_language }}" class="{{ order|lower }}">{{ column_language }}</a>{% else %}<a href="{{ sort_language }}">{{ column_language }}</a>{% endif %}</td>
                   <td class="text-left">{% if sort == 'route' %}<a href="{{ sort_route }}" class="{{ order|lower }}">{{ column_route }}</a> {% else %}<a href="{{ sort_route }}">{{ column_route }}</a>{% endif %}</td>
                   <td class="text-left">{% if sort == 'key' %}<a href="{{ sort_key }}" class="{{ order|lower }}">{{ column_key }}</a>{% else %}<a href="{{ sort_key }}">{{ column_key }}</a>{% endif %}</td>
+                  <td class="text-left">{% if sort == 'value' %}<a href="{{ sort_value }}" class="{{ order|lower }}">{{ column_value }}</a>{% else %}<a href="{{ sort_value }}">{{ column_value }}</a>{% endif %}</td>
                   <td class="text-right">{{ column_action }}</td>
                 </tr>
               </thead>
@@ -54,12 +55,13 @@
                 <td class="text-left">{{ translation.language }}</td>
                 <td class="text-left">{{ translation.route }}</td>
                 <td class="text-left">{{ translation.key }}</td>
+                <td class="text-left">{{ translation.value }}</td>
                 <td class="text-right"><a href="{{ translation.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>
               {% endfor %}
               {% else %}
               <tr>
-                <td class="text-center" colspan="6">{{ text_no_results }}</td>
+                <td class="text-center" colspan="7">{{ text_no_results }}</td>
               </tr>
               {% endif %}
               </tbody>

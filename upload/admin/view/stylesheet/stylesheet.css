@@ -541,11 +541,11 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	vertical-align: middle;
 }
 .table a.asc:after {
-	content: " \f107";
+	content: " \f106";
 	font-family: FontAwesome;
 }
 .table a.desc:after {
-	content: " \f106";
+	content: " \f107";
 	font-family: FontAwesome;
 }
 .pagination {

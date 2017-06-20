@@ -121,16 +121,16 @@ class ControllerMarketplaceOpenbay extends Controller {
 		foreach ($markets as $market) {
 			$extension = basename($market, '.php');
 
-			$this->load->language('extension/openbay/' . $extension);
+			$this->load->language('extension/openbay/' . $extension, 'extension');
 
 			$data['extensions'][] = array(
-				'name' => $this->language->get('heading_title'),
-				'edit' => $this->url->link('extension/openbay/' . $extension . '', 'user_token=' . $this->session->data['user_token'], true),
-				'status' => ($this->config->get('openbay_' . $extension . '_status') || $this->config->get($extension . '_status')) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-				'install' => $this->url->link('marketplace/openbay/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
+				'name'      => $this->language->get('extension')->get('heading_title'),
+				'edit'      => $this->url->link('extension/openbay/' . $extension . '', 'user_token=' . $this->session->data['user_token'], true),
+				'status'    => ($this->config->get('openbay_' . $extension . '_status') || $this->config->get($extension . '_status')) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+				'install'   => $this->url->link('marketplace/openbay/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
 				'uninstall' => $this->url->link('marketplace/openbay/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
 				'installed' => in_array($extension, $extensions),
-				'code' => $extension
+				'code'      => $extension
 			);
 		}
 

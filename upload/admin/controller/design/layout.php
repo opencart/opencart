@@ -323,16 +323,13 @@ class ControllerDesignLayout extends Controller {
 		$this->load->model('setting/module');
 
 		$data['extensions'] = array();
-	
-		// Create a new language container so we don't pollute the current one
-		$language = new Language($this->config->get('config_language'));
 		
 		// Get a list of installed modules
 		$extensions = $this->model_setting_extension->getInstalled('module');
 
 		// Add all the modules which have multiple settings for each module
 		foreach ($extensions as $code) {
-			$language->load('extension/module/' . $code);
+			$this->language->load('extension/module/' . $code, 'extension');
 
 			$module_data = array();
 
@@ -347,7 +344,7 @@ class ControllerDesignLayout extends Controller {
 
 			if ($this->config->has('module_' . $code . '_status') || $module_data) {
 				$data['extensions'][] = array(
-					'name'   => strip_tags($language->get('heading_title')),
+					'name'   => strip_tags($this->language->get('extension')->get('heading_title')),
 					'code'   => $code,
 					'module' => $module_data
 				);

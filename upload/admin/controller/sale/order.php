@@ -1206,14 +1206,14 @@ class ControllerSaleOrder extends Controller {
 
 			foreach ($extensions as $extension) {
 				if ($this->config->get('fraud_' . $extension . '_status')) {
-					$this->load->language('extension/fraud/' . $extension);
+					$this->load->language('extension/fraud/' . $extension, 'extension');
 
 					$content = $this->load->controller('extension/fraud/' . $extension . '/order');
 
 					if ($content) {
 						$data['tabs'][] = array(
 							'code'    => $extension,
-							'title'   => $this->language->get('heading_title'),
+							'title'   => $this->language->get('extension')->get('heading_title'),
 							'content' => $content
 						);
 					}

@@ -2,7 +2,7 @@
 class Language {
 	private $default = 'en-gb';
 	private $directory;
-	private $data = array();
+	public $data = array();
 
 	public function __construct($directory = '') {
 		$this->directory = $directory;
@@ -19,7 +19,7 @@ class Language {
 	public function all() {
 		return $this->data;
 	}
-			
+	
 	public function load($filename, $key = '') {
 		if (!$key) {
 			$_ = array();

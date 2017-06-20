@@ -28,9 +28,6 @@ class ControllerReportReport extends Controller {
 		// Reports
 		$data['reports'] = array();
 		
-		// Create a new language container so we don't pollute the current one
-		$language = new Language($this->config->get('config_language'));
-		
 		$this->load->model('setting/extension');
 
 		// Get a list of installed modules
@@ -39,10 +36,10 @@ class ControllerReportReport extends Controller {
 		// Add all the modules which have multiple settings for each module
 		foreach ($extensions as $code) {
 			if ($this->config->get('report_' . $code . '_status') && $this->user->hasPermission('access', 'extension/report/' . $code)) {
-				$language->load('extension/report/' . $code);
+				$this->language->load('extension/report/' . $code, 'extension');
 				
 				$data['reports'][] = array(
-					'text'       => $language->get('heading_title'),
+					'text'       => $this->language->get('extension')->get('heading_title'),
 					'code'       => $code,
 					'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
 					'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true)

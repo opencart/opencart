@@ -21,8 +21,6 @@ class ModelReportStatistics extends Model {
 	}
 	
 	public function editValue($code, $value) {
-		echo $code;
-		
 		$this->db->query("UPDATE " . DB_PREFIX . "statistics SET `value` = '" . (float)$value . "' WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 		

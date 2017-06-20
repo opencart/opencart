@@ -180,6 +180,7 @@ class ControllerDesignTranslation extends Controller {
 				'route'          => $result['route'],
 				'language'       => $result['language'],
 				'key'            => $result['key'],
+				'value'          => $result['value'],
 				'edit'           => $this->url->link('design/translation/edit', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $result['translation_id'], true),
 			);			
 		}
@@ -222,6 +223,7 @@ class ControllerDesignTranslation extends Controller {
 		$data['sort_language'] = $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . '&sort=language' . $url, true);
 		$data['sort_route'] = $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . '&sort=route' . $url, true);
 		$data['sort_key'] = $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . '&sort=t.key' . $url, true);
+		$data['sort_value'] = $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . '&sort=t.value' . $url, true);
 		
 		$pagination = new Pagination();
 		$pagination->total = $translation_total;

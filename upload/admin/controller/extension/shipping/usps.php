@@ -212,46 +212,46 @@ class ControllerExtensionShippingUsps extends Controller {
 			$data['shipping_usps_international_1'] = $this->config->get('shipping_usps_international_1');
 		}
 
-		if (isset($this->request->post['usps_international_2'])) {
-			$data['usps_international_2'] = $this->request->post['usps_international_2'];
+		if (isset($this->request->post['shipping_usps_international_2'])) {
+			$data['shipping_usps_international_2'] = $this->request->post['shipping_usps_international_2'];
 		} else {
-			$data['usps_international_2'] = $this->config->get('usps_international_2');
+			$data['shipping_usps_international_2'] = $this->config->get('shipping_usps_international_2');
 		}
 
-		if (isset($this->request->post['usps_international_4'])) {
-			$data['usps_international_4'] = $this->request->post['usps_international_4'];
+		if (isset($this->request->post['shipping_usps_international_4'])) {
+			$data['shipping_usps_international_4'] = $this->request->post['shipping_usps_international_4'];
 		} else {
-			$data['usps_international_4'] = $this->config->get('usps_international_4');
+			$data['shipping_usps_international_4'] = $this->config->get('shipping_usps_international_4');
 		}
 
-		if (isset($this->request->post['usps_international_5'])) {
-			$data['usps_international_5'] = $this->request->post['usps_international_5'];
+		if (isset($this->request->post['shipping_usps_international_5'])) {
+			$data['shipping_usps_international_5'] = $this->request->post['shipping_usps_international_5'];
 		} else {
-			$data['usps_international_5'] = $this->config->get('usps_international_5');
+			$data['shipping_usps_international_5'] = $this->config->get('shipping_usps_international_5');
 		}
 
-		if (isset($this->request->post['usps_international_6'])) {
-			$data['usps_international_6'] = $this->request->post['usps_international_6'];
+		if (isset($this->request->post['shipping_usps_international_6'])) {
+			$data['shipping_usps_international_6'] = $this->request->post['shipping_usps_international_6'];
 		} else {
-			$data['usps_international_6'] = $this->config->get('usps_international_6');
+			$data['shipping_usps_international_6'] = $this->config->get('shipping_usps_international_6');
 		}
 
-		if (isset($this->request->post['usps_international_7'])) {
-			$data['usps_international_7'] = $this->request->post['usps_international_7'];
+		if (isset($this->request->post['shipping_usps_international_7'])) {
+			$data['shipping_usps_international_7'] = $this->request->post['shipping_usps_international_7'];
 		} else {
-			$data['usps_international_7'] = $this->config->get('usps_international_7');
+			$data['shipping_usps_international_7'] = $this->config->get('shipping_usps_international_7');
 		}
 
-		if (isset($this->request->post['usps_international_8'])) {
-			$data['usps_international_8'] = $this->request->post['usps_international_8'];
+		if (isset($this->request->post['shipping_usps_international_8'])) {
+			$data['shipping_usps_international_8'] = $this->request->post['shipping_usps_international_8'];
 		} else {
-			$data['usps_international_8'] = $this->config->get('usps_international_8');
+			$data['shipping_usps_international_8'] = $this->config->get('shipping_usps_international_8');
 		}
 
-		if (isset($this->request->post['usps_international_9'])) {
-			$data['usps_international_9'] = $this->request->post['usps_international_9'];
+		if (isset($this->request->post['shipping_usps_international_9'])) {
+			$data['shipping_usps_international_9'] = $this->request->post['shipping_usps_international_9'];
 		} else {
-			$data['usps_international_9'] = $this->config->get('usps_international_9');
+			$data['shipping_usps_international_9'] = $this->config->get('shipping_usps_international_9');
 		}
 
 		if (isset($this->request->post['shipping_usps_international_10'])) {

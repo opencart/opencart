@@ -13,6 +13,8 @@ class Session {
 			} else {
 				$this->adaptor = new $class();
 			}	
+			
+			register_shutdown_function(array($this, 'close'));
 		} else {
 			trigger_error('Error: Could not load cache adaptor ' . $adaptor . ' session!');
 			exit();
@@ -46,11 +48,7 @@ class Session {
 	public function close() {
 		$this->adaptor->write($this->session_id, $this->data);
 	}
-				
-	public function __destruct() {
-		$this->adaptor->write($this->session_id, $this->data);
-	}
-		
+	
 	public function __destory() {
 		$this->adaptor->destory($this->session_id);
 	}

@@ -16,7 +16,9 @@ $_['db_database']       = DB_DATABASE;
 $_['db_port']           = DB_PORT;
 
 // Session
-$_['session_autostart'] = false;
+$_['session_autostart'] = true;
+$_['session_engine']    = 'db';
+$_['session_name']      = 'OCSESSID';
 
 // Template
 $_['template_engine']    = 'twig';
@@ -51,7 +53,7 @@ $_['action_event'] = array(
 	),	
 	'language/*/after' => array(
 		'event/translation'
-	)
+	),
 	//'controller/*/before' => array(
 	//	'event/debug/before'
 	//),

@@ -3156,7 +3156,6 @@ CREATE TABLE `oc_review` (
 
 -----------------------------------------------------------
 
-
 --
 -- Table structure for table `oc_statistics`
 --
@@ -3182,6 +3181,20 @@ INSERT INTO `oc_statistics` (`statistics_id`, `code`, `value`) VALUES
 (5, 'returns', 0),
 (6, 'product', 0),
 (7, 'review', 0);
+
+-----------------------------------------------------------
+
+--
+-- Table structure for table `oc_session`
+--
+
+DROP TABLE IF EXISTS `oc_session`;
+CREATE TABLE `oc_session` (
+  `session_id` varchar(32) NOT NULL,
+  `data` text NOT NULL,
+  `expire` datetime NOT NULL,
+  PRIMARY KEY (`session_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -----------------------------------------------------------
 

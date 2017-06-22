@@ -17,16 +17,29 @@ class ControllerCommonDashboard extends Controller {
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		// Dump all lanauage vars
-		array_merge($data, $this->language->all());
-		
 		// Check install directory exists
-		if (is_dir(dirname(DIR_APPLICATION) . '/install')) {
+		if (is_dir(DIR_APPLICATION . 'install')) {
 			$data['error_install'] = $this->language->get('error_install');
 		} else {
 			$data['error_install'] = '';
 		}
-
+		
+		// Check install directory exists
+		if (is_dir(DIR_SYSTEM . 'storage')) {
+			$args = array(
+				DIR_SYSTEM . 'storage/',
+				str_replace('\\', '/', realpath(DIR_SYSTEM . '../../')) . '/',
+				str_replace('\\', '/', realpath(DIR_SYSTEM . '../../')) . '/',
+				str_replace('\\', '/', realpath(DIR_SYSTEM . '../../')) . '/',
+				str_replace('\\', '/', realpath(DIR_SYSTEM . '../../')) . '/',
+				str_replace('\\', '/', realpath(DIR_SYSTEM . '../../')) . '/'
+			);
+			
+			$data['error_storage'] = vsprintf($this->language->get('error_storage'), $args);
+		} else {
+			$data['error_storage'] = '';
+		}
+		
 		// Dashboard Extensions
 		$dashboards = array();
 

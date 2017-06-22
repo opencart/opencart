@@ -14,7 +14,10 @@ final class Twig {
 		$loader = new \Twig_Loader_Filesystem(DIR_TEMPLATE);	
 		
 		// initialize Twig environment
-		$this->twig = new \Twig_Environment($loader, array('autoescape' => false));			
+		$this->twig = new \Twig_Environment($loader, array(
+			'autoescape' => false,
+			'cache'      => DIR_CACHE
+		));			
 	}
 	
 	public function set($key, $value) {

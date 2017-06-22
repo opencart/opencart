@@ -1,0 +1,46 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-report').toggleClass('hidden-sm hidden-xs');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-bar-chart"></i> {{ text_type }}</h3>
+      </div>
+      <div class="panel-body">
+        <div class="well">
+          <div class="input-group">
+            <select name="report" onchange="location = this.value;" class="form-control">
+              
+              {% for report in reports %}
+              {% if code == report.code %}
+              
+              <option value="{{ report.href }}" selected="selected">{{ report.text }}</option>
+              
+              {% else %}
+              
+              <option value="{{ report.href }}">{{ report.text }}</option>
+              
+              {% endif %}
+              {% endfor %}
+            
+            </select>
+            <span class="input-group-addon"><i class="fa fa-filter"></i> {{ text_filter }}</span></div>
+        </div>
+      </div>
+    </div>
+    <div>{{ report }}</div>
+  </div>
+</div>
+{{ footer }} 

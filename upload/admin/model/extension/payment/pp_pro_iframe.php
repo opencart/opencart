@@ -83,16 +83,16 @@ class ModelExtensionPaymentPPProIframe extends Model {
 
 	public function call($data) {
 
-		if ($this->config->get('pp_pro_iframe_test') == 1) {
+		if ($this->config->get('payment_pp_pro_iframe_test') == 1) {
 			$api_endpoint = 'https://api-3t.sandbox.paypal.com/nvp';
 		} else {
 			$api_endpoint = 'https://api-3t.paypal.com/nvp';
 		}
 
 		$settings = array(
-			'USER' => $this->config->get('pp_pro_iframe_user'),
-			'PWD' => $this->config->get('pp_pro_iframe_password'),
-			'SIGNATURE' => $this->config->get('pp_pro_iframe_sig'),
+			'USER' => $this->config->get('payment_pp_pro_iframe_user'),
+			'PWD' => $this->config->get('payment_pp_pro_iframe_password'),
+			'SIGNATURE' => $this->config->get('payment_pp_pro_iframe_sig'),
 			'VERSION' => '84',
 			'BUTTONSOURCE' => 'WM_PRO_OPENCART_UK_' . VERSION,
 		);
@@ -181,7 +181,7 @@ class ModelExtensionPaymentPPProIframe extends Model {
 	}
 
 	public function log($data, $title = null) {
-		if ($this->config->get('pp_pro_iframe_debug')) {
+		if ($this->config->get('payment_pp_pro_iframe_debug')) {
 			$log = new Log('pp_pro_iframe.log');
 			$log->write($title . ': ' . json_encode($data));
 		}

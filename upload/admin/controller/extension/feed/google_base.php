@@ -10,29 +10,12 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('google_base', $this->request->post);
+			$this->model_setting_setting->editSetting('feed_google_base', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=feed', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=feed', true));
 		}
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_import'] = $this->language->get('text_import');
-
-		$data['entry_google_category'] = $this->language->get('entry_google_category');
-		$data['entry_category'] = $this->language->get('entry_category');
-		$data['entry_data_feed'] = $this->language->get('entry_data_feed');
-		$data['entry_status'] = $this->language->get('entry_status');
-
-		$data['button_import'] = $this->language->get('button_import');
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_category_add'] = $this->language->get('button_category_add');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -44,31 +27,31 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=feed', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=feed', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/feed/google_base', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/feed/google_base', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/feed/google_base', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/feed/google_base', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=feed', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=feed', true);
 
-		$data['token'] = $this->session->data['token'];
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['data_feed'] = HTTP_CATALOG . 'index.php?route=extension/feed/google_base';
 
-		if (isset($this->request->post['google_base_status'])) {
-			$data['google_base_status'] = $this->request->post['google_base_status'];
+		if (isset($this->request->post['feed_google_base_status'])) {
+			$data['feed_google_base_status'] = $this->request->post['feed_google_base_status'];
 		} else {
-			$data['google_base_status'] = $this->config->get('google_base_status');
+			$data['feed_google_base_status'] = $this->config->get('feed_google_base_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -152,15 +135,6 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 	public function category() {
 		$this->load->language('extension/feed/google_base');
 
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_loading'] = $this->language->get('text_loading');
-
-		$data['column_google_category'] = $this->language->get('column_google_category');
-		$data['column_category'] = $this->language->get('column_category');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_remove'] = $this->language->get('button_remove');
-
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
 		} else {
@@ -188,7 +162,7 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 		$pagination->total = $category_total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->link('extension/feed/google_base/category', 'token=' . $this->session->data['token'] . '&page={page}', true);
+		$pagination->url = $this->url->link('extension/feed/google_base/category', 'user_token=' . $this->session->data['user_token'] . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -202,7 +176,7 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'sale/order')) {
+		if (!$this->user->hasPermission('modify', 'extension/feed/google_base')) {
 			$json['error'] = $this->language->get('error_permission');
 		} elseif (!empty($this->request->post['google_base_category_id']) && !empty($this->request->post['category_id'])) {
 			$this->load->model('extension/feed/google_base');
@@ -221,7 +195,7 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'sale/order')) {
+		if (!$this->user->hasPermission('modify', 'extension/feed/google_base')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
 			$this->load->model('extension/feed/google_base');

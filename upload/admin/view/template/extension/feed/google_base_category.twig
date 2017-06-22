@@ -1,0 +1,28 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <td class="text-left">{{ column_google_category }}</td>
+      <td class="text-left">{{ column_category }}</td>
+      <td class="text-right">{{ column_action }}</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% if google_base_categories %}
+    {% for google_base_category in google_base_categories %}
+    <tr>
+      <td class="text-left">{{ google_base_category.google_base_category }}</td>
+      <td class="text-left">{{ google_base_category.category }}</td>
+      <td class="text-right"><button type="button" value="{{ google_base_category.category_id }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <tr>
+      <td class="text-center" colspan="3">{{ text_no_results }}</td>
+    </tr>
+    {% endif %}
+  </tbody>
+</table>
+<div class="row">
+  <div class="col-sm-6 text-left">{{ pagination }}</div>
+  <div class="col-sm-6 text-right">{{ results }}</div>
+</div>

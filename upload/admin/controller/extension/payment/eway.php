@@ -11,53 +11,12 @@ class ControllerExtensionPaymentEway extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
-			$this->model_setting_setting->editSetting('eway', $this->request->post);
+			$this->model_setting_setting->editSetting('payment_eway', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'], true));
 		}
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_yes'] = $this->language->get('text_yes');
-		$data['text_no'] = $this->language->get('text_no');
-		$data['text_none'] = $this->language->get('text_none');
-		$data['text_all_zones'] = $this->language->get('text_all_zones');
-		$data['text_authorisation'] = $this->language->get('text_authorisation');
-		$data['text_all_zones'] = $this->language->get('text_all_zones');
-		$data['text_sale'] = $this->language->get('text_sale');
-		$data['text_transparent'] = $this->language->get('text_transparent');
-		$data['text_iframe'] = $this->language->get('text_iframe');
-
-		$data['entry_paymode'] = $this->language->get('entry_paymode');
-		$data['entry_test'] = $this->language->get('entry_test');
-		$data['entry_payment_type'] = $this->language->get('entry_payment_type');
-		$data['entry_transaction'] = $this->language->get('entry_transaction');
-		$data['entry_order_status'] = $this->language->get('entry_order_status');
-		$data['entry_order_status_refund'] = $this->language->get('entry_order_status_refund');
-		$data['entry_order_status_auth'] = $this->language->get('entry_order_status_auth');
-		$data['entry_order_status_fraud'] = $this->language->get('entry_order_status_fraud');
-		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$data['entry_username'] = $this->language->get('entry_username');
-		$data['entry_password'] = $this->language->get('entry_password');
-		$data['entry_transaction_method'] = $this->language->get('entry_transaction_method');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-
-		$data['help_testmode'] = $this->language->get('help_testmode');
-		$data['help_username'] = $this->language->get('help_username');
-		$data['help_password'] = $this->language->get('help_password');
-		$data['help_transaction_method'] = $this->language->get('help_transaction_method');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-
-		$data['tab_general'] = $this->language->get('tab_general');
 
 		$this->load->model('localisation/geo_zone');
 
@@ -95,110 +54,110 @@ class ControllerExtensionPaymentEway extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/eway', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/eway', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/payment/eway', 'token=' . $this->session->data['token'], true);
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/eway', 'user_token=' . $this->session->data['user_token'], true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'], true);
 
-		if (isset($this->request->post['eway_payment_gateway'])) {
-			$data['eway_payment_gateway'] = $this->request->post['eway_payment_gateway'];
+		if (isset($this->request->post['payment_eway_payment_gateway'])) {
+			$data['payment_eway_payment_gateway'] = $this->request->post['payment_eway_payment_gateway'];
 		} else {
-			$data['eway_payment_gateway'] = $this->config->get('eway_payment_gateway');
+			$data['payment_eway_payment_gateway'] = $this->config->get('payment_eway_payment_gateway');
 		}
 
-		if (isset($this->request->post['eway_paymode'])) {
-			$data['eway_paymode'] = $this->request->post['eway_paymode'];
+		if (isset($this->request->post['payment_eway_paymode'])) {
+			$data['payment_eway_paymode'] = $this->request->post['payment_eway_paymode'];
 		} else {
-			$data['eway_paymode'] = $this->config->get('eway_paymode');
+			$data['payment_eway_paymode'] = $this->config->get('payment_eway_paymode');
 		}
 
-		if (isset($this->request->post['eway_test'])) {
-			$data['eway_test'] = $this->request->post['eway_test'];
+		if (isset($this->request->post['payment_eway_test'])) {
+			$data['payment_eway_test'] = $this->request->post['payment_eway_test'];
 		} else {
-			$data['eway_test'] = $this->config->get('eway_test');
+			$data['payment_eway_test'] = $this->config->get('payment_eway_test');
 		}
 
-		if (isset($this->request->post['eway_payment_type'])) {
-			$data['eway_payment_type'] = $this->request->post['eway_payment_type'];
+		if (isset($this->request->post['payment_eway_payment_type'])) {
+			$data['payment_eway_payment_type'] = $this->request->post['payment_eway_payment_type'];
 		} else {
-			$data['eway_payment_type'] = $this->config->get('eway_payment_type');
+			$data['payment_eway_payment_type'] = $this->config->get('payment_eway_payment_type');
 		}
 
-		if (isset($this->request->post['eway_transaction'])) {
-			$data['eway_transaction'] = $this->request->post['eway_transaction'];
+		if (isset($this->request->post['payment_eway_transaction'])) {
+			$data['payment_eway_transaction'] = $this->request->post['payment_eway_transaction'];
 		} else {
-			$data['eway_transaction'] = $this->config->get('eway_transaction');
+			$data['payment_eway_transaction'] = $this->config->get('payment_eway_transaction');
 		}
 
-		if (isset($this->request->post['eway_standard_geo_zone_id'])) {
-			$data['eway_standard_geo_zone_id'] = $this->request->post['eway_standard_geo_zone_id'];
+		if (isset($this->request->post['payment_eway_standard_geo_zone_id'])) {
+			$data['payment_eway_standard_geo_zone_id'] = $this->request->post['payment_eway_standard_geo_zone_id'];
 		} else {
-			$data['eway_standard_geo_zone_id'] = $this->config->get('eway_standard_geo_zone_id');
+			$data['payment_eway_standard_geo_zone_id'] = $this->config->get('payment_eway_standard_geo_zone_id');
 		}
 
-		if (isset($this->request->post['eway_order_status_id'])) {
-			$data['eway_order_status_id'] = $this->request->post['eway_order_status_id'];
+		if (isset($this->request->post['payment_eway_order_status_id'])) {
+			$data['payment_eway_order_status_id'] = $this->request->post['payment_eway_order_status_id'];
 		} else {
-			$data['eway_order_status_id'] = $this->config->get('eway_order_status_id');
+			$data['payment_eway_order_status_id'] = $this->config->get('payment_eway_order_status_id');
 		}
 
-		if (isset($this->request->post['eway_order_status_refunded_id'])) {
-			$data['eway_order_status_refunded_id'] = $this->request->post['eway_order_status_refunded_id'];
+		if (isset($this->request->post['payment_eway_order_status_refunded_id'])) {
+			$data['payment_eway_order_status_refunded_id'] = $this->request->post['payment_eway_order_status_refunded_id'];
 		} else {
-			$data['eway_order_status_refunded_id'] = $this->config->get('eway_order_status_refunded_id');
+			$data['payment_eway_order_status_refunded_id'] = $this->config->get('payment_eway_order_status_refunded_id');
 		}
 
-		if (isset($this->request->post['eway_order_status_auth_id'])) {
-			$data['eway_order_status_auth_id'] = $this->request->post['eway_order_status_auth_id'];
+		if (isset($this->request->post['payment_eway_order_status_auth_id'])) {
+			$data['payment_eway_order_status_auth_id'] = $this->request->post['payment_eway_order_status_auth_id'];
 		} else {
-			$data['eway_order_status_auth_id'] = $this->config->get('eway_order_status_auth_id');
+			$data['payment_eway_order_status_auth_id'] = $this->config->get('payment_eway_order_status_auth_id');
 		}
 
-		if (isset($this->request->post['eway_order_status_fraud_id'])) {
-			$data['eway_order_status_fraud_id'] = $this->request->post['eway_order_status_fraud_id'];
+		if (isset($this->request->post['payment_eway_order_status_fraud_id'])) {
+			$data['payment_eway_order_status_fraud_id'] = $this->request->post['payment_eway_order_status_fraud_id'];
 		} else {
-			$data['eway_order_status_fraud_id'] = $this->config->get('eway_order_status_fraud_id');
+			$data['payment_eway_order_status_fraud_id'] = $this->config->get('payment_eway_order_status_fraud_id');
 		}
 
-		if (isset($this->request->post['eway_transaction_method'])) {
-			$data['eway_transaction_method'] = $this->request->post['eway_transaction_method'];
+		if (isset($this->request->post['payment_eway_transaction_method'])) {
+			$data['payment_eway_transaction_method'] = $this->request->post['payment_eway_transaction_method'];
 		} else {
-			$data['eway_transaction_method'] = $this->config->get('eway_transaction_method');
+			$data['payment_eway_transaction_method'] = $this->config->get('payment_eway_transaction_method');
 		}
 
-		if (isset($this->request->post['eway_username'])) {
-			$data['eway_username'] = $this->request->post['eway_username'];
+		if (isset($this->request->post['payment_eway_username'])) {
+			$data['payment_eway_username'] = $this->request->post['payment_eway_username'];
 		} else {
-			$data['eway_username'] = $this->config->get('eway_username');
+			$data['payment_eway_username'] = $this->config->get('payment_eway_username');
 		}
 
-		if (isset($this->request->post['eway_password'])) {
-			$data['eway_password'] = $this->request->post['eway_password'];
+		if (isset($this->request->post['payment_eway_password'])) {
+			$data['payment_eway_password'] = $this->request->post['payment_eway_password'];
 		} else {
-			$data['eway_password'] = $this->config->get('eway_password');
+			$data['payment_eway_password'] = $this->config->get('payment_eway_password');
 		}
 
-		if (isset($this->request->post['eway_status'])) {
-			$data['eway_status'] = $this->request->post['eway_status'];
+		if (isset($this->request->post['payment_eway_status'])) {
+			$data['payment_eway_status'] = $this->request->post['payment_eway_status'];
 		} else {
-			$data['eway_status'] = $this->config->get('eway_status');
+			$data['payment_eway_status'] = $this->config->get('payment_eway_status');
 		}
 
-		if (isset($this->request->post['eway_sort_order'])) {
-			$data['eway_sort_order'] = $this->request->post['eway_sort_order'];
+		if (isset($this->request->post['payment_eway_sort_order'])) {
+			$data['payment_eway_sort_order'] = $this->request->post['payment_eway_sort_order'];
 		} else {
-			$data['eway_sort_order'] = $this->config->get('eway_sort_order');
+			$data['payment_eway_sort_order'] = $this->config->get('payment_eway_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -229,7 +188,7 @@ class ControllerExtensionPaymentEway extends Controller {
 	}
 
 	public function order() {
-		if ($this->config->get('eway_status')) {
+		if ($this->config->get('payment_eway_status')) {
 			$this->load->model('extension/payment/eway');
 
 			$eway_order = $this->model_extension_payment_eway->getOrder($this->request->get['order_id']);
@@ -272,7 +231,7 @@ class ControllerExtensionPaymentEway extends Controller {
 				$data['text_empty_capture'] = $this->language->get('text_empty_capture');
 
 				$data['eway_order'] = $eway_order;
-				$data['token'] = $this->request->get['token'];
+				$data['user_token'] = $this->request->get['user_token'];
 				$data['order_id'] = $this->request->get['order_id'];
 
 				return $this->load->view('extension/payment/eway_order', $data);
@@ -396,13 +355,13 @@ class ControllerExtensionPaymentEway extends Controller {
 		if (!$this->user->hasPermission('modify', 'extension/payment/eway')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
-		if (!$this->request->post['eway_username']) {
+		if (!$this->request->post['payment_eway_username']) {
 			$this->error['username'] = $this->language->get('error_username');
 		}
-		if (!$this->request->post['eway_password']) {
+		if (!$this->request->post['payment_eway_password']) {
 			$this->error['password'] = $this->language->get('error_password');
 		}
-		if (!isset($this->request->post['eway_payment_type'])) {
+		if (!isset($this->request->post['payment_eway_payment_type'])) {
 			$this->error['payment_type'] = $this->language->get('error_payment_type');
 		}
 

@@ -40,14 +40,14 @@ class ModelUpgrade1006 extends Model {
 						}
 					}
 
-					$file = fopen($file, 'w');
+					$handle = fopen($file, 'w');
 
-					fwrite($file, $output);
+					fwrite($handle, $output);
 
-					fclose($file);
+					fclose($handle);
 				}
 			}
-		}
+		}			
 
 		// Update the config.php to add /storage/ to paths
 		if (is_file(DIR_OPENCART . 'config.php')) {
@@ -74,12 +74,11 @@ class ModelUpgrade1006 extends Model {
 				$output = str_replace('system/storage/download', '/download', $output);
 				$output = str_replace('/download', 'system/storage/download', $output);
 
-				$file = fopen($file, 'w');
+				$handle = fopen($file, 'w');
 
-				fwrite($file, $output);
+				fwrite($handle, $output);
 
-				fclose($file);
-
+				fclose($handle);
 			}
 		}
 
@@ -176,7 +175,7 @@ class ModelUpgrade1006 extends Model {
 	private function recursive_move($src, $dest){
 
 	    // If source is not a directory stop processing
-	    if(!is_dir($src)) return false;
+	    if (!is_dir($src)) return false;
 
 	    // If the destination directory does not exist create it
 	    if(!is_dir($dest)) {

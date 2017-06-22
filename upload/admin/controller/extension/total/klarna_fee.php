@@ -20,28 +20,12 @@ class ControllerExtensionTotalKlarnaFee extends Controller {
 				}
 			}
 
-			$this->model_setting_setting->editSetting('klarna_fee', array_merge($this->request->post, array('klarna_fee_status' => $status)));
+			$this->model_setting_setting->editSetting('total_klarna_fee', array_merge($this->request->post, array('klarna_fee_status' => $status)));
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total', true));
 		}
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_none'] = $this->language->get('text_none');
-
-		$data['entry_total'] = $this->language->get('entry_total');
-		$data['entry_fee'] = $this->language->get('entry_fee');
-		$data['entry_tax_class'] = $this->language->get('entry_tax_class');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -53,22 +37,22 @@ class ControllerExtensionTotalKlarnaFee extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/total/klarna_fee', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/total/klarna_fee', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/total/klarna_fee', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/total/klarna_fee', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total', true);
 
 		$data['countries'] = array();
 
@@ -102,10 +86,10 @@ class ControllerExtensionTotalKlarnaFee extends Controller {
 			'code' => 'FIN'
 		);
 
-		if (isset($this->request->post['klarna_fee'])) {
-			$data['klarna_fee'] = $this->request->post['klarna_fee'];
+		if (isset($this->request->post['total_klarna_fee'])) {
+			$data['total_klarna_fee'] = $this->request->post['total_klarna_fee'];
 		} else {
-			$data['klarna_fee'] = $this->config->get('klarna_fee');
+			$data['total_klarna_fee'] = $this->config->get('total_klarna_fee');
 		}
 
 		$this->load->model('localisation/tax_class');

@@ -10,40 +10,29 @@ class ControllerExtensionModuleLaybuyLayout extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('laybuy_layout', $this->request->post);
+			$this->model_setting_setting->editSetting('module_laybuy_layout', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true));
 		}
 
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/module/laybuy_layout', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/module/laybuy_layout', 'user_token=' . $this->session->data['user_token'], true)
 		);
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-
-		$data['entry_status'] = $this->language->get('entry_status');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -51,14 +40,14 @@ class ControllerExtensionModuleLaybuyLayout extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['action'] = $this->url->link('extension/module/laybuy_layout', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/module/laybuy_layout', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true);
 
-		if (isset($this->request->post['laybuy_layout_status'])) {
-			$data['laybuy_layout_status'] = $this->request->post['laybuy_layout_status'];
+		if (isset($this->request->post['module_laybuy_layout_status'])) {
+			$data['module_laybuy_layout_status'] = $this->request->post['module_laybuy_layout_status'];
 		} else {
-			$data['laybuy_layout_status'] = $this->config->get('laybuy_layout_status');
+			$data['module_laybuy_layout_status'] = $this->config->get('module_laybuy_layout_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

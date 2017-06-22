@@ -8,7 +8,6 @@ $_['text_etsy']                 = 'Etsy';
 $_['text_success']     			= 'Your settings have been saved';
 $_['text_status']         		= 'Status';
 $_['text_account_ok']  			= 'Connection to Etsy OK';
-$_['text_api_other']            = 'Links';
 $_['text_token_register']       = 'Register';
 $_['text_api_ok']       		= 'API connection OK';
 $_['text_pull_orders']    		= 'Pull orders';
@@ -18,13 +17,14 @@ $_['text_failed']    			= 'Failed';
 $_['text_orders_imported']    	= 'Order pull has been requested';
 $_['text_api_status']           = 'API connection';
 $_['text_edit']           		= 'Edit Etsy settings';
+$_['text_register_banner']      = 'Click here if you need to register for an account';
 
 // Entry
 $_['entry_import_def_id']       = 'Import default status (unpaid):';
 $_['entry_import_paid_id']      = 'Paid status:';
 $_['entry_import_shipped_id']   = 'Shipped status:';
-$_['entry_enc1']            	= 'API Encryption 1';
-$_['entry_enc2']            	= 'API Encryption 2';
+$_['entry_encryption_key']      = 'Encryption key 1';
+$_['entry_encryption_iv']       = 'Encryption key 2';
 $_['entry_token']            	= 'API token';
 $_['entry_address_format']      = 'Default address format';
 $_['entry_debug']				= 'Enable logging';

@@ -10,58 +10,12 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('worldpay', $this->request->post);
+			$this->model_setting_setting->editSetting('payment_worldpay', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_all_zones'] = $this->language->get('text_all_zones');
-		$data['text_test'] = $this->language->get('text_test');
-		$data['text_live'] = $this->language->get('text_live');
-		$data['text_payment'] = $this->language->get('text_payment');
-		$data['text_authenticate'] = $this->language->get('text_authenticate');
-
-		$data['entry_service_key'] = $this->language->get('entry_service_key');
-		$data['entry_client_key'] = $this->language->get('entry_client_key');
-		$data['entry_total'] = $this->language->get('entry_total');
-		$data['entry_order_status'] = $this->language->get('entry_order_status');
-		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-		$data['entry_debug'] = $this->language->get('entry_debug');
-		$data['entry_card'] = $this->language->get('entry_card');
-		$data['entry_secret_token'] = $this->language->get('entry_secret_token');
-		$data['entry_webhook_url'] = $this->language->get('entry_webhook_url');
-		$data['entry_cron_job_url'] = $this->language->get('entry_cron_job_url');
-		$data['entry_last_cron_job_run'] = $this->language->get('entry_last_cron_job_run');
-
-		$data['entry_success_status'] = $this->language->get('entry_success_status');
-		$data['entry_failed_status'] = $this->language->get('entry_failed_status');
-		$data['entry_settled_status'] = $this->language->get('entry_settled_status');
-		$data['entry_refunded_status'] = $this->language->get('entry_refunded_status');
-		$data['entry_partially_refunded_status'] = $this->language->get('entry_partially_refunded_status');
-		$data['entry_charged_back_status'] = $this->language->get('entry_charged_back_status');
-		$data['entry_information_requested_status'] = $this->language->get('entry_information_requested_status');
-		$data['entry_information_supplied_status'] = $this->language->get('entry_information_supplied_status');
-		$data['entry_chargeback_reversed_status'] = $this->language->get('entry_chargeback_reversed_status');
-
-		$data['help_total'] = $this->language->get('help_total');
-		$data['help_debug'] = $this->language->get('help_debug');
-		$data['help_secret_token'] = $this->language->get('help_secret_token');
-		$data['help_webhook_url'] = $this->language->get('help_webhook_url');
-		$data['help_cron_job_url'] = $this->language->get('help_cron_job_url');
-
-		$data['tab_settings'] = $this->language->get('tab_settings');
-		$data['tab_order_status'] = $this->language->get('tab_order_status');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		if (isset($this->error['error_service_key'])) {
 			$data['error_service_key'] = $this->error['error_service_key'];
@@ -79,39 +33,39 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/worldpay', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/worldpay', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/payment/worldpay', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/worldpay', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
 
-		if (isset($this->request->post['worldpay_service_key'])) {
-			$data['worldpay_service_key'] = $this->request->post['worldpay_service_key'];
+		if (isset($this->request->post['payment_worldpay_service_key'])) {
+			$data['payment_worldpay_service_key'] = $this->request->post['payment_worldpay_service_key'];
 		} else {
-			$data['worldpay_service_key'] = $this->config->get('worldpay_service_key');
+			$data['payment_worldpay_service_key'] = $this->config->get('payment_worldpay_service_key');
 		}
 
-		if (isset($this->request->post['worldpay_client_key'])) {
-			$data['worldpay_client_key'] = $this->request->post['worldpay_client_key'];
+		if (isset($this->request->post['payment_worldpay_client_key'])) {
+			$data['payment_worldpay_client_key'] = $this->request->post['payment_worldpay_client_key'];
 		} else {
-			$data['worldpay_client_key'] = $this->config->get('worldpay_client_key');
+			$data['payment_worldpay_client_key'] = $this->config->get('payment_worldpay_client_key');
 		}
 
-		if (isset($this->request->post['worldpay_total'])) {
-			$data['worldpay_total'] = $this->request->post['worldpay_total'];
+		if (isset($this->request->post['payment_worldpay_total'])) {
+			$data['payment_worldpay_total'] = $this->request->post['payment_worldpay_total'];
 		} else {
-			$data['worldpay_total'] = $this->config->get('worldpay_total');
+			$data['payment_worldpay_total'] = $this->config->get('payment_worldpay_total');
 		}
 
 		if (isset($this->request->post['worldpay_card'])) {
@@ -273,28 +227,9 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 
 				$data['worldpay_order'] = $worldpay_order;
 
-				$data['text_payment_info'] = $this->language->get('text_payment_info');
-				$data['text_order_ref'] = $this->language->get('text_order_ref');
-				$data['text_order_total'] = $this->language->get('text_order_total');
-				$data['text_total_released'] = $this->language->get('text_total_released');
-				$data['text_release_status'] = $this->language->get('text_release_status');
-				$data['text_void_status'] = $this->language->get('text_void_status');
-				$data['text_refund_status'] = $this->language->get('text_refund_status');
-				$data['text_transactions'] = $this->language->get('text_transactions');
-				$data['text_yes'] = $this->language->get('text_yes');
-				$data['text_no'] = $this->language->get('text_no');
-				$data['text_column_amount'] = $this->language->get('text_column_amount');
-				$data['text_column_type'] = $this->language->get('text_column_type');
-				$data['text_column_date_added'] = $this->language->get('text_column_date_added');
-				$data['button_release'] = $this->language->get('button_release');
-				$data['button_refund'] = $this->language->get('button_refund');
-				$data['button_void'] = $this->language->get('button_void');
-				$data['text_confirm_void'] = $this->language->get('text_confirm_void');
-				$data['text_confirm_release'] = $this->language->get('text_confirm_release');
-				$data['text_confirm_refund'] = $this->language->get('text_confirm_refund');
-
 				$data['order_id'] = $this->request->get['order_id'];
-				$data['token'] = $this->request->get['token'];
+				
+				$data['user_token'] = $this->request->get['user_token'];
 
 				return $this->load->view('extension/payment/worldpay_order', $data);
 			}
@@ -347,11 +282,11 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['worldpay_service_key']) {
+		if (!$this->request->post['payment_worldpay_service_key']) {
 			$this->error['error_service_key'] = $this->language->get('error_service_key');
 		}
 
-		if (!$this->request->post['worldpay_client_key']) {
+		if (!$this->request->post['payment_worldpay_client_key']) {
 			$this->error['error_client_key'] = $this->language->get('error_client_key');
 		}
 

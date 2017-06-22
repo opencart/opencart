@@ -38,7 +38,7 @@ class ControllerUserApi extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('user/api', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerUserApi extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('user/api', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerUserApi extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('user/api', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url, true));
 		}
 
 		$this->getList();
@@ -114,7 +114,7 @@ class ControllerUserApi extends Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
-			$sort = 'name';
+			$sort = 'username';
 		}
 
 		if (isset($this->request->get['order'])) {
@@ -147,16 +147,16 @@ class ControllerUserApi extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('user/api', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url, true)
 		);
 
-		$data['add'] = $this->url->link('user/api/add', 'token=' . $this->session->data['token'] . $url, true);
-		$data['delete'] = $this->url->link('user/api/delete', 'token=' . $this->session->data['token'] . $url, true);
+		$data['add'] = $this->url->link('user/api/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['delete'] = $this->url->link('user/api/delete', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
 		$data['apis'] = array();
 
@@ -173,28 +173,14 @@ class ControllerUserApi extends Controller {
 
 		foreach ($results as $result) {
 			$data['apis'][] = array(
-				'api_id'     => $result['api_id'],
-				'name'       => $result['name'],
-				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'       => $this->url->link('user/api/edit', 'token=' . $this->session->data['token'] . '&api_id=' . $result['api_id'] . $url, true)
+				'api_id'        => $result['api_id'],
+				'username'      => $result['username'],
+				'status'        => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
+				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
+				'edit'          => $this->url->link('user/api/edit', 'user_token=' . $this->session->data['user_token'] . '&api_id=' . $result['api_id'] . $url, true)
 			);
 		}
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_add'] = $this->language->get('button_add');
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_delete'] = $this->language->get('button_delete');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -228,10 +214,10 @@ class ControllerUserApi extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('user/api', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
-		$data['sort_status'] = $this->url->link('user/api', 'token=' . $this->session->data['token'] . '&sort=status' . $url, true);
-		$data['sort_date_added'] = $this->url->link('user/api', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, true);
-		$data['sort_date_modified'] = $this->url->link('user/api', 'token=' . $this->session->data['token'] . '&sort=date_modified' . $url, true);
+		$data['sort_username'] = $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . '&sort=username' . $url, true);
+		$data['sort_status'] = $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url, true);
+		$data['sort_date_added'] = $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url, true);
+		$data['sort_date_modified'] = $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . '&sort=date_modified' . $url, true);
 
 		$url = '';
 
@@ -247,7 +233,7 @@ class ControllerUserApi extends Controller {
 		$pagination->total = $user_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('user/api', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -264,37 +250,10 @@ class ControllerUserApi extends Controller {
 	}
 
 	protected function getForm() {
-		$data['heading_title'] = $this->language->get('heading_title');
-
 		$data['text_form'] = !isset($this->request->get['api_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_ip'] = sprintf($this->language->get('text_ip'), $this->request->server['REMOTE_ADDR']);
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_token'] = $this->language->get('column_token');
-		$data['column_ip'] = $this->language->get('column_ip');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_date_modified'] = $this->language->get('column_date_modified');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['entry_name'] = $this->language->get('entry_name');
-		$data['entry_key'] = $this->language->get('entry_key');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_ip'] = $this->language->get('entry_ip');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_generate'] = $this->language->get('button_generate');
-		$data['button_ip_add'] = $this->language->get('button_ip_add');
-		$data['button_remove'] = $this->language->get('button_remove');
-
-		$data['tab_general'] = $this->language->get('tab_general');
-		$data['tab_ip'] = $this->language->get('tab_ip');
-		$data['tab_session'] = $this->language->get('tab_session');
-
-		$data['token'] = $this->session->data['token'];
+		
+		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -302,10 +261,10 @@ class ControllerUserApi extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		if (isset($this->error['name'])) {
-			$data['error_name'] = $this->error['name'];
+		if (isset($this->error['username'])) {
+			$data['error_username'] = $this->error['username'];
 		} else {
-			$data['error_name'] = '';
+			$data['error_username'] = '';
 		}
 
 		if (isset($this->error['key'])) {
@@ -313,7 +272,7 @@ class ControllerUserApi extends Controller {
 		} else {
 			$data['error_key'] = '';
 		}
-
+		
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -332,32 +291,32 @@ class ControllerUserApi extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('user/api', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url, true)
 		);
 
 		if (!isset($this->request->get['api_id'])) {
-			$data['action'] = $this->url->link('user/api/add', 'token=' . $this->session->data['token'] . $url, true);
+			$data['action'] = $this->url->link('user/api/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
 		} else {
-			$data['action'] = $this->url->link('user/api/edit', 'token=' . $this->session->data['token'] . '&api_id=' . $this->request->get['api_id'] . $url, true);
+			$data['action'] = $this->url->link('user/api/edit', 'user_token=' . $this->session->data['user_token'] . '&api_id=' . $this->request->get['api_id'] . $url, true);
 		}
 
-		$data['cancel'] = $this->url->link('user/api', 'token=' . $this->session->data['token'] . $url, true);
+		$data['cancel'] = $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
 		if (isset($this->request->get['api_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$api_info = $this->model_user_api->getApi($this->request->get['api_id']);
 		}
 
-		if (isset($this->request->post['name'])) {
-			$data['name'] = $this->request->post['name'];
+		if (isset($this->request->post['username'])) {
+			$data['username'] = $this->request->post['username'];
 		} elseif (!empty($api_info)) {
-			$data['name'] = $api_info['name'];
+			$data['username'] = $api_info['username'];
 		} else {
-			$data['name'] = '';
+			$data['username'] = '';
 		}
 
 		if (isset($this->request->post['key'])) {
@@ -384,23 +343,24 @@ class ControllerUserApi extends Controller {
 		} else {
 			$data['api_ips'] = array();
 		}
-
+		
+		// Session
 		$data['api_sessions'] = array();
-
+		
 		if (isset($this->request->get['api_id'])) {
 			$results = $this->model_user_api->getApiSessions($this->request->get['api_id']);
-
+			
 			foreach ($results as $result) {
 				$data['api_sessions'][] = array(
 					'api_session_id' => $result['api_session_id'],
-					'token'          => $result['token'],
+					'session_id'     => $result['session_id'],
 					'ip'             => $result['ip'],
 					'date_added'     => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
 					'date_modified'  => date($this->language->get('datetime_format'), strtotime($result['date_modified']))
 				);
 			}
 		}
-
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -413,12 +373,16 @@ class ControllerUserApi extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['name'])) < 3) || (utf8_strlen(trim($this->request->post['name'])) > 64)) {
-			$this->error['name'] = $this->language->get('error_name');
+		if ((utf8_strlen(trim($this->request->post['username'])) < 3) || (utf8_strlen(trim($this->request->post['username'])) > 64)) {
+			$this->error['username'] = $this->language->get('error_username');
 		}
 
 		if ((utf8_strlen($this->request->post['key']) < 64) || (utf8_strlen($this->request->post['key']) > 256)) {
 			$this->error['key'] = $this->language->get('error_key');
+		}
+		
+		if (!isset($this->error['warning']) && !isset($this->request->post['api_ip'])) {
+			$this->error['warning'] = $this->language->get('error_ip');
 		}
 
 		return !$this->error;
@@ -430,25 +394,6 @@ class ControllerUserApi extends Controller {
 		}
 
 		return !$this->error;
-	}
-
-	public function addIp() {
-		$this->load->language('user/api');
-
-		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'user/api')) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {
-			$this->load->model('user/api');
-
-			$this->model_user_api->addApiIp($this->request->get['api_id'], $this->request->post['ip']);
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 	public function deleteSession() {
@@ -468,5 +413,5 @@ class ControllerUserApi extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
+	}	
 }

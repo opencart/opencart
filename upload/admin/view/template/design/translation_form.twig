@@ -1,0 +1,250 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-translation" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">{% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-translation" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-store">{{ entry_store }}</label>
+            <div class="col-sm-10">
+              <select name="store_id" id="input-store" class="form-control">
+                <option value="0">{{ text_default }}</option>
+                
+                
+                
+                
+                
+                
+                {% for store in stores %}
+                {% if store.store_id == store_id %}
+                
+                
+                
+                
+                
+                
+                <option value="{{ store.store_id }}" selected="selected">{{ store.name }}</option>
+                
+                
+                
+                
+                
+                
+                {% else %}
+                
+                
+                
+                
+                
+                
+                <option value="{{ store.store_id }}">{{ store.name }}</option>
+                
+                
+                
+                
+                
+                
+                {% endif %}
+                {% endfor %}
+              
+              
+              
+              
+              
+              
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-language">{{ entry_language }}</label>
+            <div class="col-sm-10">
+              <select name="language_id" id="input-language" class="form-control">
+                
+                
+                
+                
+                {% for language in languages %}
+                {% if language.language_id == language_id %}
+                
+                
+                
+                
+                <option value="{{ language.language_id }}" selected="selected">{{ language.name }}</option>
+                
+                
+                
+                
+                {% else %}
+                
+                
+                
+                
+                <option value="{{ language.language_id }}">{{ language.name }}</option>
+                
+                
+                
+                
+                {% endif %}
+                {% endfor %}
+              
+              
+              
+              
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-route">{{ entry_route }}</label>
+            <div class="col-sm-10">
+              <select name="route" id="input-route" class="form-control">
+                
+                
+                
+                
+                
+                
+
+                {% for path in paths %}
+                {% if path == route %}
+                
+                
+                
+                
+                
+                
+                <option value="{{ path }}" selected="selected">{{ path }}</option>
+                
+                
+                
+                
+                
+                
+                {% else %}
+                
+                
+                
+                
+                
+                
+                <option value="{{ path }}">{{ path }}</option>
+                
+                
+                
+                
+                
+                
+                {% endif %}
+                {% endfor %}
+              
+              
+              
+              
+              
+              
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-key">{{ entry_key }}</label>
+            <div class="col-sm-10">
+              <select name="key" id="input-key" class="form-control">
+              </select>
+              <input type="text" name="key" value="{{ key }}" placeholder="{{ entry_key }}" class="form-control" />
+              {% if error_key %}
+              <div class="text-danger">{{ error_key }}</div>
+              {% endif %} </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-default">{{ entry_default }}</label>
+            <div class="col-sm-10">
+              <textarea name="default" placeholder="{{ entry_default }}" rows="5" id="input-default" class="form-control" disabled="disabled"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-value">{{ entry_value }}</label>
+            <div class="col-sm-10">
+              <textarea name="value" rows="5" placeholder="{{ entry_value }}" id="input-value" class="form-control">{{ value }}</textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript"><!--  
+var translation = [];
+
+$('select[name="route"]').on('change', function() {
+	$.ajax({
+		url: 'index.php?route=design/translation/translation&user_token={{ user_token }}&language_id=' + $('select[name="language_id"]').val() + '&path=' + $('select[name="route"]').val(),
+		dataType: 'json',
+		beforeSend: function() {
+			$('select[name="store_id"]').prop('disabled', true);
+			$('select[name="language_id"]').prop('disabled', true);
+			$('select[name="route"]').prop('disabled', true);
+		},
+		complete: function() {
+			$('select[name="store_id"]').prop('disabled', false);
+			$('select[name="language_id"]').prop('disabled', false);
+			$('select[name="route"]').prop('disabled', false);
+		},
+		success: function(json) {
+			translation = [];
+			
+			html = '<option value=""></option>';
+			
+			if (json) {
+				for (i = 0; i < json.length; i++) {
+					translation[json[i]['key']] = json[i]['value'];
+					
+					if (json[i]['key'] == '{{ key }}') {
+						html += '<option value="' + json[i]['key'] + '" selected="selected">' + json[i]['key'] + '</option>';
+					} else {
+						html += '<option value="' + json[i]['key'] + '">' + json[i]['key'] + '</option>';
+					}
+				}
+			}
+			
+			$('select[name="key"]').html(html);
+			
+			$('select[name="key"]').trigger('change');
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$('select[name="route"]').trigger('change');
+
+$('select[name="key"]').on('change', function() {
+	if ($(this).val()) {
+		$('textarea[name="default"]').val(translation[$('select[name="key"]').val()]);
+		
+		$('input[name="key"]').prop('disabled', true);
+	} else {
+		$('input[name="key"]').prop('disabled', false);
+	}
+});
+//--></script> 
+</div>
+{{ footer }} 

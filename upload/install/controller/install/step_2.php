@@ -38,9 +38,7 @@ class ControllerInstallStep2 extends Controller {
 		$data['text_db'] = $this->language->get('text_db');
 		$data['text_gd'] = $this->language->get('text_gd');
 		$data['text_curl'] = $this->language->get('text_curl');
-        $data['text_dom'] = $this->language->get('text_dom');
-		$data['text_mcrypt'] = $this->language->get('text_mcrypt');
-        $data['text_xml'] = $this->language->get('text_xml');
+		$data['text_openssl'] = $this->language->get('text_openssl');
 		$data['text_zlib'] = $this->language->get('text_zlib');
 		$data['text_zip'] = $this->language->get('text_zip');
 		$data['text_mbstring'] = $this->language->get('text_mbstring');
@@ -55,7 +53,75 @@ class ControllerInstallStep2 extends Controller {
 		}
 
 		$data['action'] = $this->url->link('install/step_2');
+		
+		// catalog config
+		if (!is_file(DIR_OPENCART . 'config.php')) {
+			$data['error_catalog_config'] = $this->language->get('error_missing');
+		} else {
+			$data['error_catalog_config'] = '';
+		}
+		
+		if (!is_writable(DIR_OPENCART . 'config.php')) {
+			$data['error_catalog'] = $this->language->get('error_unwritable');
+		} else {
+			$data['error_catalog'] = '';
+		}
 
+		// admin configs
+		if (!is_file(DIR_OPENCART . 'admin/config.php')) {
+			$data['error_admin_config'] = $this->language->get('error_missing');
+		} else {
+			$data['error_admin_config_admin'] = '';
+		}
+		
+		if (!is_writable(DIR_OPENCART . 'admin/config.php')) {
+			$data['error_admin_config'] = $this->language->get('error_unwritable');
+		} else {
+			$data['error_admin_config'] = '';
+		}
+ 
+		if (!is_writable(DIR_OPENCART . 'image/')) {
+			$data['error_image'] = $this->language->get('error_unwritable');
+		} else {
+			$data['error_image'] = '';
+		}
+		        
+		if (!is_writable(DIR_OPENCART . 'image/cache/')) {
+			$data['error_image_cache'] = $this->language->get('error_unwritable');
+		} else {
+			$data['error_image_cache'] = '';
+		}		
+
+		if (!is_writable(DIR_OPENCART . 'image/catalog/')) {
+			$data['error_image_catalog'] = $this->language->get('error_unwritable');
+		} else {
+			$data['error_image_catalog'] = '';
+		}	
+		
+		if (!is_writable(DIR_SYSTEM . 'storage/logs/')) {
+			$data['error_log'] = $this->language->get('error_unwritable');
+		} else {
+			$data['error_log'] = '';
+		}		
+			
+		if (!is_writable(DIR_SYSTEM . 'storage/download/')) {
+			$data['error_download'] = $this->language->get('error_unwritable');
+		} else {
+			$data['error_download'] = '';
+		}			
+
+		if (!is_writable(DIR_SYSTEM . 'storage/upload/')) {
+			$data['error_upload'] = $this->language->get('error_unwritable');
+		} else {
+			$data['error_upload'] = '';
+		}	
+
+		if (!is_writable(DIR_SYSTEM . 'storage/modification/')) {
+			$data['error_modification'] = $this->language->get('error_unwritable');
+		} else {
+			$data['error_modification'] = '';
+		}
+		                 
 		$data['php_version'] = phpversion();
 		$data['register_globals'] = ini_get('register_globals');
 		$data['magic_quotes_gpc'] = ini_get('magic_quotes_gpc');
@@ -77,18 +143,14 @@ class ControllerInstallStep2 extends Controller {
 
 		$data['gd'] = extension_loaded('gd');
 		$data['curl'] = extension_loaded('curl');
-        $data['dom'] = extension_loaded('dom');
-		$data['mcrypt_encrypt'] = function_exists('mcrypt_encrypt');
-        $data['xml'] = extension_loaded('xml');
+		$data['openssl'] = function_exists('openssl_encrypt');
 		$data['zlib'] = extension_loaded('zlib');
 		$data['zip'] = extension_loaded('zip');
-		
 		$data['iconv'] = function_exists('iconv');
 		$data['mbstring'] = extension_loaded('mbstring');
 
-		$data['config_catalog'] = DIR_OPENCART . 'config.php';
-		$data['config_admin'] = DIR_OPENCART . 'admin/config.php';
-		
+		$data['catalog_config'] = DIR_OPENCART . 'config.php';
+		$data['admin_config'] = DIR_OPENCART . 'admin/config.php';
 		$data['image'] = DIR_OPENCART . 'image';
 		$data['image_cache'] = DIR_OPENCART . 'image/cache';
 		$data['image_catalog'] = DIR_OPENCART . 'image/catalog';
@@ -139,19 +201,11 @@ class ControllerInstallStep2 extends Controller {
 			$this->error['warning'] = $this->language->get('error_curl');
 		}
 
-        if (!extension_loaded('dom')) {
-            $this->error['warning'] = $this->language->get('error_dom');
-        }
-
-		if (!function_exists('mcrypt_encrypt')) {
-			$this->error['warning'] = $this->language->get('error_mcrypt');
+		if (!function_exists('openssl_encrypt')) {
+			$this->error['warning'] = $this->language->get('error_openssl');
 		}
 
-        if (!extension_loaded('xml')) {
-            $this->error['warning'] = $this->language->get('error_xml');
-        }
-
-        if (!extension_loaded('zlib')) {
+		if (!extension_loaded('zlib')) {
 			$this->error['warning'] = $this->language->get('error_zlib');
 		}
 

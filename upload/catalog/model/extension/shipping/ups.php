@@ -3,9 +3,9 @@ class ModelExtensionShippingUps extends Model {
 	function getQuote($address) {
 		$this->load->language('extension/shipping/ups');
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('ups_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('shipping_ups_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
-		if (!$this->config->get('ups_geo_zone_id')) {
+		if (!$this->config->get('shipping_ups_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {
 			$status = true;
@@ -16,8 +16,8 @@ class ModelExtensionShippingUps extends Model {
 		$method_data = array();
 
 		if ($status) {
-			$weight = $this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->config->get('ups_weight_class_id'));
-			$weight_code = strtoupper($this->weight->getUnit($this->config->get('ups_weight_class_id')));
+			$weight = $this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->config->get('shipping_ups_weight_class_id'));
+			$weight_code = strtoupper($this->weight->getUnit($this->config->get('shipping_ups_weight_class_id')));
 
 			if ($weight_code == 'KG') {
 				$weight_code = 'KGS';
@@ -27,11 +27,11 @@ class ModelExtensionShippingUps extends Model {
 
 			$weight = ($weight < 0.1 ? 0.1 : $weight);
 
-			$length = $this->length->convert($this->config->get('ups_length'), $this->config->get('config_length_class_id'), $this->config->get('ups_length_class_id'));
-			$width = $this->length->convert($this->config->get('ups_width'), $this->config->get('config_length_class_id'), $this->config->get('ups_length_class_id'));
-			$height = $this->length->convert($this->config->get('ups_height'), $this->config->get('config_length_class_id'), $this->config->get('ups_length_class_id'));
+			$length = $this->length->convert($this->config->get('shipping_ups_length'), $this->config->get('config_length_class_id'), $this->config->get('shipping_ups_length_class_id'));
+			$width = $this->length->convert($this->config->get('shipping_ups_width'), $this->config->get('config_length_class_id'), $this->config->get('shipping_ups_length_class_id'));
+			$height = $this->length->convert($this->config->get('shipping_ups_height'), $this->config->get('config_length_class_id'), $this->config->get('shipping_ups_length_class_id'));
 
-			$length_code = strtoupper($this->length->getUnit($this->config->get('ups_length_class_id')));
+			$length_code = strtoupper($this->length->getUnit($this->config->get('shipping_ups_length_class_id')));
 
 			$service_code = array(
 				// US Origin
@@ -107,9 +107,9 @@ class ModelExtensionShippingUps extends Model {
 
 			$xml  = '<?xml version="1.0"?>';
 			$xml .= '<AccessRequest xml:lang="en-US">';
-			$xml .= '	<AccessLicenseNumber>' . $this->config->get('ups_key') . '</AccessLicenseNumber>';
-			$xml .= '	<UserId>' . $this->config->get('ups_username') . '</UserId>';
-			$xml .= '	<Password>' . $this->config->get('ups_password') . '</Password>';
+			$xml .= '	<AccessLicenseNumber>' . $this->config->get('shipping_ups_key') . '</AccessLicenseNumber>';
+			$xml .= '	<UserId>' . $this->config->get('shipping_ups_username') . '</UserId>';
+			$xml .= '	<Password>' . $this->config->get('shipping_ups_password') . '</Password>';
 			$xml .= '</AccessRequest>';
 			$xml .= '<?xml version="1.0"?>';
 			$xml .= '<RatingServiceSelectionRequest xml:lang="en-US">';
@@ -122,22 +122,22 @@ class ModelExtensionShippingUps extends Model {
 			$xml .= '		<RequestOption>shop</RequestOption>';
 			$xml .= '	</Request>';
 			$xml .= '   <PickupType>';
-			$xml .= '       <Code>' . $this->config->get('ups_pickup') . '</Code>';
+			$xml .= '       <Code>' . $this->config->get('shipping_ups_pickup') . '</Code>';
 			$xml .= '   </PickupType>';
 
-			if ($this->config->get('ups_country') == 'US' && $this->config->get('ups_pickup') == '11') {
+			if ($this->config->get('shipping_ups_country') == 'US' && $this->config->get('shipping_ups_pickup') == '11') {
 				$xml .= '   <CustomerClassification>';
-				$xml .= '       <Code>' . $this->config->get('ups_classification') . '</Code>';
+				$xml .= '       <Code>' . $this->config->get('shipping_ups_classification') . '</Code>';
 				$xml .= '   </CustomerClassification>';
 			}
 
 			$xml .= '	<Shipment>';
 			$xml .= '		<Shipper>';
 			$xml .= '			<Address>';
-			$xml .= '				<City>' . $this->config->get('ups_city') . '</City>';
-			$xml .= '				<StateProvinceCode>' . $this->config->get('ups_state') . '</StateProvinceCode>';
-			$xml .= '				<CountryCode>' . $this->config->get('ups_country') . '</CountryCode>';
-			$xml .= '				<PostalCode>' . $this->config->get('ups_postcode') . '</PostalCode>';
+			$xml .= '				<City>' . $this->config->get('shipping_ups_city') . '</City>';
+			$xml .= '				<StateProvinceCode>' . $this->config->get('shipping_ups_state') . '</StateProvinceCode>';
+			$xml .= '				<CountryCode>' . $this->config->get('shipping_ups_country') . '</CountryCode>';
+			$xml .= '				<PostalCode>' . $this->config->get('shipping_ups_postcode') . '</PostalCode>';
 			$xml .= '			</Address>';
 			$xml .= '		</Shipper>';
 			$xml .= '		<ShipTo>';
@@ -147,7 +147,7 @@ class ModelExtensionShippingUps extends Model {
 			$xml .= '				<CountryCode>' . $address['iso_code_2'] . '</CountryCode>';
 			$xml .= '				<PostalCode>' . $address['postcode'] . '</PostalCode>';
 
-			if ($this->config->get('ups_quote_type') == 'residential') {
+			if ($this->config->get('shipping_ups_quote_type') == 'residential') {
 				$xml .= '				<ResidentialAddressIndicator />';
 			}
 
@@ -155,16 +155,16 @@ class ModelExtensionShippingUps extends Model {
 			$xml .= '		</ShipTo>';
 			$xml .= '		<ShipFrom>';
 			$xml .= '			<Address>';
-			$xml .= '				<City>' . $this->config->get('ups_city') . '</City>';
-			$xml .= '				<StateProvinceCode>' . $this->config->get('ups_state') . '</StateProvinceCode>';
-			$xml .= '				<CountryCode>' . $this->config->get('ups_country') . '</CountryCode>';
-			$xml .= '				<PostalCode>' . $this->config->get('ups_postcode') . '</PostalCode>';
+			$xml .= '				<City>' . $this->config->get('shipping_ups_city') . '</City>';
+			$xml .= '				<StateProvinceCode>' . $this->config->get('shipping_ups_state') . '</StateProvinceCode>';
+			$xml .= '				<CountryCode>' . $this->config->get('shipping_ups_country') . '</CountryCode>';
+			$xml .= '				<PostalCode>' . $this->config->get('shipping_ups_postcode') . '</PostalCode>';
 			$xml .= '			</Address>';
 			$xml .= '		</ShipFrom>';
 
 			$xml .= '		<Package>';
 			$xml .= '			<PackagingType>';
-			$xml .= '				<Code>' . $this->config->get('ups_packaging') . '</Code>';
+			$xml .= '				<Code>' . $this->config->get('shipping_ups_packaging') . '</Code>';
 			$xml .= '			</PackagingType>';
 
 			$xml .= '		    <Dimensions>';
@@ -183,7 +183,7 @@ class ModelExtensionShippingUps extends Model {
 			$xml .= '				<Weight>' . $weight . '</Weight>';
 			$xml .= '			</PackageWeight>';
 
-			if ($this->config->get('ups_insurance')) {
+			if ($this->config->get('shipping_ups_insurance')) {
 				$xml .= '           <PackageServiceOptions>';
 				$xml .= '               <InsuredValue>';
 				$xml .= '                   <CurrencyCode>' . $this->session->data['currency'] . '</CurrencyCode>';
@@ -197,7 +197,7 @@ class ModelExtensionShippingUps extends Model {
 			$xml .= '	</Shipment>';
 			$xml .= '</RatingServiceSelectionRequest>';
 
-			if (!$this->config->get('ups_test')) {
+			if (!$this->config->get('shipping_ups_test')) {
 				$url = 'https://www.ups.com/ups.app/xml/Rate';
 			} else {
 				$url = 'https://wwwcie.ups.com/ups.app/xml/Rate';
@@ -222,7 +222,7 @@ class ModelExtensionShippingUps extends Model {
 			$quote_data = array();
 
 			if ($result) {
-				if ($this->config->get('ups_debug')) {
+				if ($this->config->get('shipping_ups_debug')) {
 					$this->log->write("UPS DATA SENT: " . $xml);
 					$this->log->write("UPS DATA RECV: " . $result);
 				}
@@ -264,13 +264,13 @@ class ModelExtensionShippingUps extends Model {
 							continue;
 						}
 
-						if ($this->config->get('ups_' . strtolower($this->config->get('ups_origin')) . '_' . $code)) {
+						if ($this->config->get('ups_' . strtolower($this->config->get('shipping_ups_origin')) . '_' . $code)) {
 							$quote_data[$code] = array(
 								'code'         => 'ups.' . $code,
-								'title'        => $service_code[$this->config->get('ups_origin')][$code],
+								'title'        => $service_code[$this->config->get('shipping_ups_origin')][$code],
 								'cost'         => $this->currency->convert($cost, $currency, $this->config->get('config_currency')),
-								'tax_class_id' => $this->config->get('ups_tax_class_id'),
-								'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, $currency, $this->session->data['currency']), $this->config->get('ups_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'], 1.0000000)
+								'tax_class_id' => $this->config->get('shipping_ups_tax_class_id'),
+								'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, $currency, $this->session->data['currency']), $this->config->get('shipping_ups_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'], 1.0000000)
 							);
 						}
 					}
@@ -279,8 +279,8 @@ class ModelExtensionShippingUps extends Model {
 
 			$title = $this->language->get('text_title');
 
-			if ($this->config->get('ups_display_weight')) {
-				$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('ups_weight_class_id')) . ')';
+			if ($this->config->get('shipping_ups_display_weight')) {
+				$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('shipping_ups_weight_class_id')) . ')';
 			}
 
 			if ($quote_data || $error) {
@@ -288,7 +288,7 @@ class ModelExtensionShippingUps extends Model {
 					'code'       => 'ups',
 					'title'      => $title,
 					'quote'      => $quote_data,
-					'sort_order' => $this->config->get('ups_sort_order'),
+					'sort_order' => $this->config->get('shipping_ups_sort_order'),
 					'error'      => $error
 				);
 			}

@@ -3,7 +3,7 @@ class ControllerExtensionModuleStore extends Controller {
 	public function index() {
 		$status = true;
 
-		if ($this->config->get('store_admin')) {
+		if ($this->config->get('module_store_admin')) {
 			$this->user = new Cart\User($this->registry);
 
 			$status = $this->user->isLogged();
@@ -11,10 +11,6 @@ class ControllerExtensionModuleStore extends Controller {
 
 		if ($status) {
 			$this->load->language('extension/module/store');
-
-			$data['heading_title'] = $this->language->get('heading_title');
-
-			$data['text_store'] = $this->language->get('text_store');
 
 			$data['store_id'] = $this->config->get('config_store_id');
 

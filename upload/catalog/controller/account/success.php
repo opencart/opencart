@@ -22,19 +22,11 @@ class ControllerAccountSuccess extends Controller {
 			'href' => $this->url->link('account/success')
 		);
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$this->load->model('account/customer_group');
-
-		$customer_group_info = $this->model_account_customer_group->getCustomerGroup($this->config->get('config_customer_group_id'));
-
-		if ($customer_group_info && !$customer_group_info['approval']) {
+		if ($this->customer->isLogged()) {
 			$data['text_message'] = sprintf($this->language->get('text_message'), $this->url->link('information/contact'));
 		} else {
 			$data['text_message'] = sprintf($this->language->get('text_approval'), $this->config->get('config_name'), $this->url->link('information/contact'));
 		}
-
-		$data['button_continue'] = $this->language->get('button_continue');
 
 		if ($this->cart->hasProducts()) {
 			$data['continue'] = $this->url->link('checkout/cart');

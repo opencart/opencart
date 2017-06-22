@@ -12,8 +12,22 @@ class Event {
 		$this->registry = $registry;
 	}
 
-	public function register($trigger, Action $action) {
+	public function register($trigger, Action $action, $priority = 0) {
 		$this->data[$trigger][] = $action;
+		
+		/*
+		if (!isset($this->data[$trigger])) { 
+			$this->data[$trigger] = array();
+		}
+		
+		if ($priority > sizeof($this->data[$trigger])) {
+		
+		} else {
+			$this->data[$trigger][$priority] = 
+		}
+		
+		$this->data[$trigger] = array_splice($this->data[$trigger], $priority, 0, $action);
+		*/
 	}
 	
 	public function trigger($event, array $args = array()) {
@@ -31,22 +45,14 @@ class Event {
 	}
 
 	public function unregister($trigger, $route = '') {
-		if ($route) {
-			foreach ($this->data[$trigger] as $key => $action) {
-				if ($action->getId() == $route) {
-					unset($this->data[$trigger][$key]);
-				}
-			}
-		} else {
-			unset($this->data[$trigger]);
-		}
-	}
-
-	public function removeAction($trigger, $route) {
 		foreach ($this->data[$trigger] as $key => $action) {
 			if ($action->getId() == $route) {
 				unset($this->data[$trigger][$key]);
 			}
 		}
 	}
+	
+	public function clear($trigger) {
+		unset($this->data[$trigger]);
+	}	
 }

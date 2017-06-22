@@ -1,0 +1,114 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right"> <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid"> {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
+      </div>
+      <div class="panel-body">
+        <div class="form-horizontal">
+          <fieldset>
+            <legend>{{ heading_order_info }}</legend>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-seller-fulfillment-order-id">{{ entry_seller_fulfillment_order_id }}</label>
+              <div class="col-sm-10">
+                <input disabled type="text" name="seller_fulfillment_order_id" value="{{ response.seller_fulfillment_order_id }}" placeholder="{{ entry_seller_fulfillment_order_id }}" id="input-seller-fulfillment-order-id" class="form-control disabled" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-displayable-order-id">{{ entry_displayable_order_id }}</label>
+              <div class="col-sm-10">
+                <input disabled type="text" name="displayable_order_id" value="{{ response.displayable_order_id }}" placeholder="{{ entry_displayable_order_id }}" id="input-displayable-order-id" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-displayable-date">{{ entry_displayable_date }}</label>
+              <div class="col-sm-10">
+                <input disabled type="text" name="displayable_date" value="{{ response.displayable_order_date_time }}" placeholder="{{ entry_displayable_date }}" id="input-displayable-date" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-displayable-comment">{{ entry_displayable_comment }}</label>
+              <div class="col-sm-10">
+                <input disabled type="text" name="displayable_comment" value="{{ response.displayable_order_comment }}" placeholder="{{ entry_displayable_comment }}" id="input-displayable-comment" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-shipping-speed-category">{{ entry_shipping_speed_category }}</label>
+              <div class="col-sm-10">
+                <input disabled type="text" name="shipping_speed_category" value="{{ response.shipping_speed_category }}" placeholder="{{ entry_shipping_speed_category }}" id="input-shipping-speed-category" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-fulfillment-policy">{{ entry_fulfillment_policy }}</label>
+              <div class="col-sm-10">
+                <input disabled type="text" name="fulfillment_policy" value="{{ response.fulfillment_policy }}" placeholder="{{ entry_fulfillment_policy }}" id="input-fulfillment-policy" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-fulfillment-order-status">{{ entry_fulfillment_order_status }}</label>
+              <div class="col-sm-10">
+                <input disabled type="text" name="fulfillment_order_status" value="{{ response.fulfillment_order_status }}" placeholder="{{ entry_fulfillment_order_status }}" id="input-fulfillment-order-status" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-notification-email-list">{{ entry_notification_email_list }}</label>
+              <div class="col-sm-10">
+                <input disabled type="text" name="notification_email_list" value="{{ response.notification_email_list }}" placeholder="{{ entry_notification_email_list }}" id="input-notification-email-list" class="form-control" />
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>{{ heading_products }}</legend>
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <td class="text-left">{{ column_sku }}</td>
+                    <td class="text-left">{{ column_order_item_id }}</td>
+                    <td class="text-left">{{ column_quantity }}</td>
+                    <td class="text-left">{{ column_cancelled_quantity }}</td>
+                    <td class="text-left">{{ column_unfulfillable_quantity }}</td>
+                    <td class="text-left">{{ column_estimated_ship }}</td>
+                    <td class="text-left">{{ column_estimated_arrive }}</td>
+                  </tr>
+                </thead>
+                <tbody>
+                
+                {% for items in response.items %}
+                <tr>
+                  <td class="text-left">{{ item.seller_sku }}</td>
+                  <td class="text-left">{{ item.seller_fulfillment_order_item_id }}</td>
+                  <td class="text-left">{{ item.quantity }}</td>
+                  <td class="text-left">{{ item.cancelled_quantity }}</td>
+                  <td class="text-left">{{ item.unfulfillable_quantity }}</td>
+                  <td class="text-left">{{ item.estimated_ship_date_time }}</td>
+                  <td class="text-left">{{ item.estimated_arrival_date_time }}</td>
+                </tr>
+                {% endfor %}
+                  </tbody>
+                
+              </table>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }} 

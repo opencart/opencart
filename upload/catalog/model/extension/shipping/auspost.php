@@ -9,9 +9,9 @@ class ModelExtensionShippingAusPost extends Model {
 	public function getQuote($address) {
 		$this->load->language('extension/shipping/auspost');
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('auspost_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('shipping_auspost_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
-		if (!$this->config->get('auspost_geo_zone_id')) {
+		if (!$this->config->get('shipping_auspost_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {
 			$status = true;
@@ -21,12 +21,12 @@ class ModelExtensionShippingAusPost extends Model {
 
 		$error = '';
 
-		$api_key = $this->config->get('auspost_api');
+		$api_key = $this->config->get('shipping_auspost_api');
 
 		$quote_data = array();
 
 		if ($status) {
-			$weight = $this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->config->get('auspost_weight_class_id'));
+			$weight = $this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->config->get('shipping_auspost_weight_class_id'));
 
 			$length = 0;
 			$width = 0;
@@ -49,7 +49,7 @@ class ModelExtensionShippingAusPost extends Model {
 				$curl = curl_init();
 
 				curl_setopt($curl, CURLOPT_HTTPHEADER, array('AUTH-KEY: ' . $api_key));
-				curl_setopt($curl, CURLOPT_URL, 'https://digitalapi.auspost.com.au/postage/parcel/domestic/service.json?from_postcode=' . urlencode($this->config->get('auspost_postcode')) . '&to_postcode=' . urlencode($address['postcode']) . '&height=' . $height . '&width=' . $width . '&length=' . $height . '&weight=' . urlencode($weight));
+				curl_setopt($curl, CURLOPT_URL, 'https://digitalapi.auspost.com.au/postage/parcel/domestic/service.json?from_postcode=' . urlencode($this->config->get('shipping_auspost_postcode')) . '&to_postcode=' . urlencode($address['postcode']) . '&height=' . $height . '&width=' . $width . '&length=' . $height . '&weight=' . urlencode($weight));
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
 				curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
@@ -73,8 +73,8 @@ class ModelExtensionShippingAusPost extends Model {
 								'code'         => 'auspost.' .  $response_service['name'],
 								'title'        => $response_service['name'],
 								'cost'         => $this->currency->convert($response_service['price'], 'AUD', $this->config->get('config_currency')),
-								'tax_class_id' => $this->config->get('auspost_tax_class_id'),
-								'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($response_service['price'], 'AUD', $this->session->data['currency']), $this->config->get('auspost_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'], 1.0000000)
+								'tax_class_id' => $this->config->get('shipping_auspost_tax_class_id'),
+								'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($response_service['price'], 'AUD', $this->session->data['currency']), $this->config->get('shipping_auspost_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'], 1.0000000)
 							);
 						}
 					}
@@ -107,8 +107,8 @@ class ModelExtensionShippingAusPost extends Model {
 								'code'         => 'auspost.' .  $response_service['name'],
 								'title'        => $response_service['name'],
 								'cost'         => $this->currency->convert($response_service['price'], 'AUD', $this->config->get('config_currency')),
-								'tax_class_id' => $this->config->get('auspost_tax_class_id'),
-								'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($response_service['price'], 'AUD', $this->session->data['currency']), $this->config->get('auspost_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'], 1.0000000)
+								'tax_class_id' => $this->config->get('shipping_auspost_tax_class_id'),
+								'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($response_service['price'], 'AUD', $this->session->data['currency']), $this->config->get('shipping_auspost_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'], 1.0000000)
 							);
 						}
 					}
@@ -123,7 +123,7 @@ class ModelExtensionShippingAusPost extends Model {
 				'code'       => 'auspost',
 				'title'      => $this->language->get('text_title'),
 				'quote'      => $quote_data,
-				'sort_order' => $this->config->get('auspost_sort_order'),
+				'sort_order' => $this->config->get('shipping_auspost_sort_order'),
 				'error'      => $error
 			);
 		}

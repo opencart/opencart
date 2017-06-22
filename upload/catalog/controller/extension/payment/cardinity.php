@@ -3,15 +3,6 @@ class ControllerExtensionPaymentCardinity extends Controller {
 	public function index() {
 		$this->load->language('extension/payment/cardinity');
 
-		$data['entry_holder'] = $this->language->get('entry_holder');
-		$data['entry_pan'] = $this->language->get('entry_pan');
-		$data['entry_expires'] = $this->language->get('entry_expires');
-		$data['entry_expiration_month'] = $this->language->get('entry_expiration_month');
-		$data['entry_expiration_year'] = $this->language->get('entry_expiration_year');
-		$data['entry_cvc'] = $this->language->get('entry_cvc');
-
-		$data['button_confirm'] = $this->language->get('button_confirm');
-
 		$data['months'] = array();
 
 		for ($i = 1; $i <= 12; $i++) {
@@ -74,7 +65,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 			);
 
 			try {
-				$payment = $this->model_extension_payment_cardinity->createPayment($this->config->get('cardinity_key'), $this->config->get('cardinity_secret'), $payment_data);
+				$payment = $this->model_extension_payment_cardinity->createPayment($this->config->get('payment_cardinity_key'), $this->config->get('payment_cardinity_secret'), $payment_data);
 			} catch (Cardinity\Exception\Declined $exception) {
 				$this->failedOrder($this->language->get('error_payment_declined'), $this->language->get('error_payment_declined'));
 
@@ -107,10 +98,10 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
 						$encryption_data = array(
 							'order_id' => $this->session->data['order_id'],
-							'secret'   => $this->config->get('cardinity_secret')
+							'secret'   => $this->config->get('payment_cardinity_secret')
 						);
 
-						$hash = $this->encryption->encrypt(json_encode($encryption_data));
+						$hash = $this->encryption->encrypt($this->config->get('config_encryption'), json_encode($encryption_data));
 
 						$json['3ds'] = array(
 							'url'     => $authorization_information->getUrl(),
@@ -143,10 +134,10 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
 		$encryption_data = array(
 			'order_id' => $this->session->data['order_id'],
-			'secret'   => $this->config->get('cardinity_secret')
+			'secret'   => $this->config->get('payment_cardinity_secret')
 		);
 
-		$hash = $this->encryption->encrypt(json_encode($encryption_data));
+		$hash = $this->encryption->encrypt($this->config->get('config_encryption'), json_encode($encryption_data));
 
 		if (hash_equals($hash, $this->request->post['hash'])) {
 			$success = true;
@@ -178,16 +169,16 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
 		$encryption_data = array(
 			'order_id' => $this->session->data['order_id'],
-			'secret'   => $this->config->get('cardinity_secret')
+			'secret'   => $this->config->get('payment_cardinity_secret')
 		);
 
-		$hash = $this->encryption->encrypt(json_encode($encryption_data));
+		$hash = $this->encryption->encrypt($this->config->get('config_encryption'), json_encode($encryption_data));
 
 		if (hash_equals($hash, $this->request->post['MD'])) {
 			$order = $this->model_extension_payment_cardinity->getOrder($encryption_data['order_id']);
 
 			if ($order && $order['payment_id']) {
-				$payment = $this->model_extension_payment_cardinity->finalizePayment($this->config->get('cardinity_key'), $this->config->get('cardinity_secret'), $order['payment_id'], $this->request->post['PaRes']);
+				$payment = $this->model_extension_payment_cardinity->finalizePayment($this->config->get('payment_cardinity_key'), $this->config->get('payment_cardinity_secret'), $order['payment_id'], $this->request->post['PaRes']);
 
 				if ($payment && $payment->getStatus() == 'approved') {
 					$success = true;
@@ -217,7 +208,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
 		$this->load->language('extension/payment/cardinity');
 
-		$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('cardinity_order_status_id'));
+		$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_cardinity_order_status_id'));
 
 		$this->model_extension_payment_cardinity->log($this->language->get('text_payment_success'));
 		$this->model_extension_payment_cardinity->log($payment);

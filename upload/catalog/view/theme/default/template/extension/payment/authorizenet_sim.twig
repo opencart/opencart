@@ -1,0 +1,41 @@
+<form action="https://test.authorize.net/gateway/transact.dll" method="post">
+  <input type="hidden" name="x_login" value="{{ x_login }}" />
+  <input type="hidden" name="x_fp_sequence" value="{{ x_fp_sequence }}" />
+  <input type="hidden" name="x_fp_timestamp" value="{{ x_fp_timestamp }}" />
+  <input type="hidden" name="x_amount" value="{{ x_amount }}" />
+  <input type="hidden" name="x_fp_hash" value="{{ x_fp_hash }}" />
+  <input type="hidden" name="x_show_form" value="{{ x_show_form }}" />
+  {% if x_test_request %}
+  <input type="hidden" name="x_test_request" value="{{ x_test_request }}" />
+  {% endif %}
+  <input type="hidden" name="x_type" value="{{ x_type }}" />
+  <input type="hidden" name="x_currency_code" value="{{ x_currency_code }}" />
+  <input type="hidden" name="x_invoice_num" value="{{ x_invoice_num }}" />
+  <input type="hidden" name="x_description" value="{{ x_description }}" />
+  <input type="hidden" name="x_first_name" value="{{ x_first_name }}" />
+  <input type="hidden" name="x_last_name" value="{{ x_last_name }}" />
+  <input type="hidden" name="x_company" value="{{ x_company }}" />
+  <input type="hidden" name="x_address" value="{{ x_address }}" />
+  <input type="hidden" name="x_city" value="{{ x_city }}" />
+  <input type="hidden" name="x_state" value="{{ x_state }}" />
+  <input type="hidden" name="x_zip" value="{{ x_zip }}" />
+  <input type="hidden" name="x_country" value="{{ x_country }}" />
+  <input type="hidden" name="x_phone" value="{{ x_phone }}" />
+  <input type="hidden" name="x_ship_to_first_name" value="{{ x_ship_to_first_name }}" />
+  <input type="hidden" name="x_ship_to_last_name" value="{{ x_ship_to_last_name }}" />
+  <input type="hidden" name="x_ship_to_company" value="{{ x_ship_to_company }}" />
+  <input type="hidden" name="x_ship_to_address" value="{{ x_ship_to_address }}" />
+  <input type="hidden" name="x_ship_to_city" value="{{ x_ship_to_city }}" />
+  <input type="hidden" name="x_ship_to_state" value="{{ x_ship_to_state }}" />
+  <input type="hidden" name="x_ship_to_zip" value="{{ x_ship_to_zip }}" />
+  <input type="hidden" name="x_ship_to_country" value="{{ x_ship_to_country }}" />
+  <input type="hidden" name="x_customer_ip" value="{{ x_customer_ip }}" />
+  <input type="hidden" name="x_email" value="{{ x_email }}" />
+  <input type="hidden" name="x_relay_response" value="{{ x_relay_response }}" />
+  <input type="hidden" name="x_solution_id" value="A1000015" />
+  <div class="buttons">
+    <div class="pull-right">
+      <input type="submit" value="{{ button_confirm }}" class="btn btn-primary" />
+    </div>
+  </div>
+</form>

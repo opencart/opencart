@@ -18,7 +18,7 @@
 //                               --username admin \
 //                               --password admin \
 //                               --email youremail@example.com \
-//                               --http_server http://localhost/opencart
+//                               --http_server http://localhost/opencart/
 //
 
 ini_set('display_errors', 1);
@@ -70,7 +70,7 @@ function usage() {
 		'--username', 'admin',
 		'--password', 'admin',
 		'--email', 'youremail@example.com',
-		'--http_server', 'http://localhost/opencart'
+		'--http_server', 'http://localhost/opencart/'
 	));
 	echo 'php cli_install.php install ' . $options . "\n\n";
 }
@@ -141,8 +141,8 @@ function install($options) {
 
 function check_requirements() {
 	$error = null;
-	if (phpversion() < '5.0') {
-		$error = 'Warning: You need to use PHP5 or above for OpenCart to work!';
+	if (phpversion() < '5.4') {
+		$error = 'Warning: You need to use PHP5.4+ or above for OpenCart to work!';
 	}
 
 	if (!ini_get('file_uploads')) {
@@ -165,17 +165,9 @@ function check_requirements() {
 		$error = 'Warning: CURL extension needs to be loaded for OpenCart to work!';
 	}
 
-    if (!extension_loaded('dom')) {
-        $error = 'Warning: DOM extension needs to be loaded for OpenCart to work!';
-    }
-
-	if (!function_exists('mcrypt_encrypt')) {
-		$error = 'Warning: mCrypt extension needs to be loaded for OpenCart to work!';
+	if (!function_exists('openssl_encrypt')) {
+		$error = 'Warning: OpenSSL extension needs to be loaded for OpenCart to work!';
 	}
-
-    if (!extension_loaded('xml')) {
-        $error = 'Warning: XML extension needs to be loaded for OpenCart to work!';
-    }
 
 	if (!extension_loaded('zlib')) {
 		$error = 'Warning: ZLIB extension needs to be loaded for OpenCart to work!';
@@ -231,7 +223,7 @@ function setup_db($data) {
 
 		$db->query("UPDATE `" . $data['db_prefix'] . "product` SET `viewed` = '0'");
 
-		$db->query("INSERT INTO `" . $data['db_prefix'] . "api` SET name = 'Default', `key` = '" . $db->escape(token(256)) . "', status = 1, date_added = NOW(), date_modified = NOW()");
+		$db->query("INSERT INTO `" . $data['db_prefix'] . "api` SET username = 'Default', `key` = '" . $db->escape(token(256)) . "', status = 1, date_added = NOW(), date_modified = NOW()");
 
 		$api_id = $db->getLastId();
 
@@ -245,7 +237,6 @@ function write_config_files($options) {
 	$output  = '<?php' . "\n";
 	$output .= '// HTTP' . "\n";
 	$output .= 'define(\'HTTP_SERVER\', \'' . $options['http_server'] . '\');' . "\n";
-	$output .= 'define(\'HTTP_ADMIN\', \'' . $options['http_server'] . 'admin/\');' . "\n\n";
 
 	$output .= '// HTTPS' . "\n";
 	$output .= 'define(\'HTTPS_SERVER\', \'' . $options['http_server'] . '\');' . "\n";
@@ -272,7 +263,7 @@ function write_config_files($options) {
 	$output .= 'define(\'DB_DATABASE\', \'' . addslashes($options['db_database']) . '\');' . "\n";
 	$output .= 'define(\'DB_PREFIX\', \'' . addslashes($options['db_prefix']) . '\');' . "\n";
 	$output .= 'define(\'DB_PORT\', \'' . addslashes($options['db_port']) . '\');' . "\n";
-	$output .= '?>';
+
 
 	$file = fopen(DIR_OPENCART . 'config.php', 'w');
 
@@ -312,7 +303,10 @@ function write_config_files($options) {
 	$output .= 'define(\'DB_DATABASE\', \'' . addslashes($options['db_database']) . '\');' . "\n";
 	$output .= 'define(\'DB_PREFIX\', \'' . addslashes($options['db_prefix']) . '\');' . "\n";
 	$output .= 'define(\'DB_PORT\', \'' . addslashes($options['db_port']) . '\');' . "\n";
-	$output .= '?>';
+
+	$output .= '// OpenCart API' . "\n";
+	$output .= 'define(\'OPENCART_SERVER\', \'https://www.opencart.com/\');' . "\n";
+
 
 	$file = fopen(DIR_OPENCART . 'admin/config.php', 'w');
 

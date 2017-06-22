@@ -1,0 +1,56 @@
+<ul class="list-group">
+  {% if route|slice(0, 8) != 'upgrade/' %}
+  {% if route == 'install/step_1' %}
+  <li class="list-group-item"><b>{{ text_license }}</b></li>
+  {% else %}
+  <li class="list-group-item">{{ text_license }}</li>
+  {% endif %}
+  {% if route == 'install/step_2' %}
+  <li class="list-group-item"><b>{{ text_installation }}</b></li>
+  {% else %}
+  <li class="list-group-item">{{ text_installation }}</li>
+  {% endif %}
+  {% if route == 'install/step_3' %}
+  <li class="list-group-item"><b>{{ text_configuration }}</b></li>
+  {% else %}
+  <li class="list-group-item">{{ text_configuration }}</li>
+  {% endif %}
+  {% else %}
+  {% if route == 'upgrade/upgrade' %}
+  <li class="list-group-item"><b>{{ text_upgrade }}</b></li>
+  {% else %}
+  <li class="list-group-item">{{ text_upgrade }}</li>
+  {% endif %}
+  {% if route == 'upgrade/upgrade/success' %}
+  <li class="list-group-item"><b>{{ text_finished }}</b></li>
+  {% else %}
+  <li class="list-group-item">{{ text_finished }}</li>
+  {% endif %}
+  {% endif %}
+</ul>
+<form action="{{ action }}" method="post" enctype="multipart/form-data" id="language">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{ text_language }} <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          {% for language in languages %}
+          <li><a href="{{ language }}"><img src="language/{{ language }}/{{ language }}.png" /></a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </li>
+  </ul>
+  <input type="hidden" name="code" value="" />
+  <input type="hidden" name="redirect" value="{{ redirect }}" />
+</form>
+<script type="text/javascript"><!--
+// Language
+$('#language a').on('click', function(e) {
+	e.preventDefault();
+
+	$('#language input[name=\'code\']').val($(this).attr('href'));
+
+	$('#language').submit();
+});
+--></script> 

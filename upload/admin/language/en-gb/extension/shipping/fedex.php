@@ -3,7 +3,6 @@
 $_['heading_title']                            = 'Fedex';
 
 // Text
-$_['text_extension']                           = 'Extensions';
 $_['text_shipping']                            = 'Shipping';
 $_['text_success']                             = 'Success: You have modified Fedex shipping!';
 $_['text_edit']                                = 'Edit Fedex Shipping';

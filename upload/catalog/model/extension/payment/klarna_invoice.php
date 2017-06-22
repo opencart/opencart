@@ -5,7 +5,7 @@ class ModelExtensionPaymentKlarnaInvoice extends Model {
 
 		$status = true;
 
-		$klarna_invoice = $this->config->get('klarna_invoice');
+		$klarna_invoice = $this->config->get('payment_klarna_invoice');
 
 		if (!isset($klarna_invoice[$address['iso_code_3']])) {
 			$status = false;
@@ -44,7 +44,7 @@ class ModelExtensionPaymentKlarnaInvoice extends Model {
 		$method = array();
 
 		if ($status) {
-			$klarna_fee = $this->config->get('klarna_fee');
+			$klarna_fee = $this->config->get('total_klarna_fee');
 
 			if ($klarna_fee[$address['iso_code_3']]['status'] && $this->cart->getSubTotal() < $klarna_fee[$address['iso_code_3']]['total']) {
 				$terms = sprintf($this->language->get('text_terms_fee'), $this->currency->format($this->tax->calculate($klarna_fee[$address['iso_code_3']]['fee'], $klarna_fee[$address['iso_code_3']]['tax_class_id']), $this->session->data['currency'], ''), $klarna_invoice[$address['iso_code_3']]['merchant'], strtolower($address['iso_code_2']), $this->currency->format($this->tax->calculate($klarna_fee[$address['iso_code_3']]['fee'], $klarna_fee[$address['iso_code_3']]['tax_class_id']), $country_to_currency[$address['iso_code_3']], '', false));

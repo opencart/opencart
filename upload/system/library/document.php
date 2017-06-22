@@ -54,13 +54,13 @@ class Document {
 		return $this->styles;
 	}
 
-	public function addScript($href, $position = 'header') {
-		$this->scripts[$position][$href] = $href;
+	public function addScript($href, $postion = 'header') {
+		$this->scripts[$postion][$href] = $href;
 	}
 
-	public function getScripts($position = 'header') {
-		if (isset($this->scripts[$position])) {
-			return $this->scripts[$position];
+	public function getScripts($postion = 'header') {
+		if (isset($this->scripts[$postion])) {
+			return $this->scripts[$postion];
 		} else {
 			return array();
 		}

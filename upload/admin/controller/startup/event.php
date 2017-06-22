@@ -2,9 +2,9 @@
 class ControllerStartupEvent extends Controller {
 	public function index() {
 		// Add events from the DB
-		$this->load->model('extension/event');
+		$this->load->model('setting/event');
 		
-		$results = $this->model_extension_event->getEvents();
+		$results = $this->model_setting_event->getEvents();
 		
 		foreach ($results as $result) {
 			if ((substr($result['trigger'], 0, 6) == 'admin/') && $result['status']) {

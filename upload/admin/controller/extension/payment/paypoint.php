@@ -10,39 +10,12 @@ class ControllerExtensionPaymentPayPoint extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('paypoint', $this->request->post);
+			$this->model_setting_setting->editSetting('payment_paypoint', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_all_zones'] = $this->language->get('text_all_zones');
-		$data['text_yes'] = $this->language->get('text_yes');
-		$data['text_no'] = $this->language->get('text_no');
-		$data['text_live'] = $this->language->get('text_live');
-		$data['text_successful'] = $this->language->get('text_successful');
-		$data['text_fail'] = $this->language->get('text_fail');
-
-		$data['entry_merchant'] = $this->language->get('entry_merchant');
-		$data['entry_password'] = $this->language->get('entry_password');
-		$data['entry_test'] = $this->language->get('entry_test');
-		$data['entry_total'] = $this->language->get('entry_total');
-		$data['entry_order_status'] = $this->language->get('entry_order_status');
-		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-
-		$data['help_password'] = $this->language->get('help_password');
-		$data['help_total'] = $this->language->get('help_total');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -60,51 +33,51 @@ class ControllerExtensionPaymentPayPoint extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/paypoint', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/paypoint', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/payment/paypoint', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/paypoint', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
 
-		if (isset($this->request->post['paypoint_merchant'])) {
-			$data['paypoint_merchant'] = $this->request->post['paypoint_merchant'];
+		if (isset($this->request->post['payment_paypoint_merchant'])) {
+			$data['payment_paypoint_merchant'] = $this->request->post['payment_paypoint_merchant'];
 		} else {
-			$data['paypoint_merchant'] = $this->config->get('paypoint_merchant');
+			$data['payment_paypoint_merchant'] = $this->config->get('payment_paypoint_merchant');
 		}
 
-		if (isset($this->request->post['paypoint_password'])) {
-			$data['paypoint_password'] = $this->request->post['paypoint_password'];
+		if (isset($this->request->post['payment_paypoint_password'])) {
+			$data['payment_paypoint_password'] = $this->request->post['payment_paypoint_password'];
 		} else {
-			$data['paypoint_password'] = $this->config->get('paypoint_password');
+			$data['payment_paypoint_password'] = $this->config->get('payment_paypoint_password');
 		}
 
-		if (isset($this->request->post['paypoint_test'])) {
-			$data['paypoint_test'] = $this->request->post['paypoint_test'];
+		if (isset($this->request->post['payment_paypoint_test'])) {
+			$data['payment_paypoint_test'] = $this->request->post['payment_paypoint_test'];
 		} else {
-			$data['paypoint_test'] = $this->config->get('paypoint_test');
+			$data['payment_paypoint_test'] = $this->config->get('payment_paypoint_test');
 		}
 
-		if (isset($this->request->post['paypoint_total'])) {
-			$data['paypoint_total'] = $this->request->post['paypoint_total'];
+		if (isset($this->request->post['payment_paypoint_total'])) {
+			$data['payment_paypoint_total'] = $this->request->post['payment_paypoint_total'];
 		} else {
-			$data['paypoint_total'] = $this->config->get('paypoint_total');
+			$data['payment_paypoint_total'] = $this->config->get('payment_paypoint_total');
 		}
 
-		if (isset($this->request->post['paypoint_order_status_id'])) {
-			$data['paypoint_order_status_id'] = $this->request->post['paypoint_order_status_id'];
+		if (isset($this->request->post['payment_paypoint_order_status_id'])) {
+			$data['payment_paypoint_order_status_id'] = $this->request->post['payment_paypoint_order_status_id'];
 		} else {
-			$data['paypoint_order_status_id'] = $this->config->get('paypoint_order_status_id');
+			$data['payment_paypoint_order_status_id'] = $this->config->get('payment_paypoint_order_status_id');
 		}
 
 		$this->load->model('localisation/order_status');
@@ -145,7 +118,7 @@ class ControllerExtensionPaymentPayPoint extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['paypoint_merchant']) {
+		if (!$this->request->post['payment_paypoint_merchant']) {
 			$this->error['merchant'] = $this->language->get('error_merchant');
 		}
 

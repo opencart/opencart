@@ -64,7 +64,7 @@ class ModelExtensionOpenBayEtsyProduct extends Model{
 					'name'          	=> $row['name'],
 					'status'        	=> $row['status'],
 					'etsy_item_id'  	=> $row['etsy_item_id'],
-					'link_edit'     	=> $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $row['product_id'], true),
+					'link_edit'     	=> $this->url->link('catalog/product/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $row['product_id'], true),
 					'link_etsy'     	=> 'http://www.etsy.com/listing/' . $row['etsy_item_id'],
 				);
 			}

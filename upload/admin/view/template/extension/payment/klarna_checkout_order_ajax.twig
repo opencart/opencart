@@ -1,0 +1,721 @@
+<table class="table table-bordered">
+  <tr>
+	<td>{{ column_order_id }}</td>
+	<td>
+		{{ transaction.order_id }}
+		{% if cancel_action %}
+		<a class="btn btn-primary button-command" data-type="cancel">{{ button_cancel }}</a>
+		{% endif %}
+	</td>
+  </tr>
+  <tr>
+    <td>{{ column_merchant_id }}</td>
+    <td>{{ transaction.merchant_id }}</td>
+  </tr>
+  <tr>
+	<td>{{ column_reference }}</td>
+	<td>{{ transaction.reference }}</td>
+  </tr>
+  <tr>
+	<td>{{ column_status }}</td>
+	<td>{{ transaction.status }}</td>
+  </tr>
+  <tr>
+    <td>{{ column_fraud_status }}</td>
+    <td>{{ transaction.fraud_status }}</td>
+  </tr>
+  <tr>
+	<td>{{ column_merchant_reference_1 }}</td>
+	<td>
+		{% if merchant_reference_action %}
+		<div class="col-sm-2">
+			<input class="form-control" type="text" name="merchant_reference_1" value="{{ transaction.merchant_reference_1 }}" />
+		</div>
+		<a class="btn btn-primary button-command" data-type="merchant_reference">{{ button_update }}</a>
+		{% else %}
+		{{ transaction.merchant_reference_1 }}
+		{% endif %}
+	</td>
+  </tr>
+  <tr>
+	<td>{{ column_customer_details }}</td>
+	<td>
+	  <table class="table table-bordered">
+		<thead>
+		  <tr>
+			<td>{{ column_billing_address }}</td>
+			<td>{{ column_shipping_address }}</td>
+		  </tr>
+		</thead>
+		<tr>
+		  <td>{{ transaction.billing_address_formatted }}</td>
+		  <td>{{ transaction.shipping_address_formatted }}</td>
+		</tr>
+		{% if address_action %}
+		<tr>
+		  <td>
+			<a class="btn btn-primary" data-toggle="modal" data-target="#billing_address">{{ button_edit }}</a>
+		  </td>
+		  <td>
+			<a class="btn btn-primary" data-toggle="modal" data-target="#shipping_address">{{ button_edit }}</a>
+		  </td>
+		</tr>
+		{% endif %}
+	  </table>
+	</td>
+  </tr>
+  <tr>
+	<td>{{ column_order_lines }}</td>
+	<td>
+	  <table class="table table-bordered">
+		<thead>
+		  <tr>
+			<td class="text-left">{{ column_item_reference }}</td>
+			<td class="text-left">{{ column_type }}</td>
+			<td class="text-left">{{ column_quantity }}</td>
+			<td class="text-left">{{ column_quantity_unit }}</td>
+			<td class="text-left">{{ column_name }}</td>
+			<td class="text-left">{{ column_total_amount }}</td>
+			<td class="text-left">{{ column_unit_price }}</td>
+			<td class="text-left">{{ column_total_discount_amount }}</td>
+			<td class="text-left">{{ column_tax_rate }}</td>
+			<td class="text-left">{{ column_total_tax_amount }}</td>
+		  </tr>
+		</thead>
+		<tbody>
+			{% for order_line in transaction.order_lines %}
+			  <tr>
+				<td>{{ order_line.reference }}</td>
+				<td>{{ order_line.type }}</td>
+				<td>{{ order_line.quantity }}</td>
+				<td>{{ order_line.quantity_unit }}</td>
+				<td>{{ order_line.name }}</td>
+				<td>{{ order_line.total_amount }}</td>
+				<td>{{ order_line.unit_price }}</td>
+				<td>{{ order_line.total_discount_amount }}</td>
+				<td>{{ order_line.tax_rate }}</td>
+				<td>{{ order_line.total_tax_amount }}</td>
+			  </tr>
+            {% endfor %}
+		</tbody>
+	  </table>
+	</td>
+  </tr>
+  <tr>
+	<td>{{ column_amount }}</td>
+	<td>{{ transaction.amount }}</td>
+  </tr>
+  <tr>
+	<td>{{ column_authorization_remaining }}</td>
+	<td>
+	  {{ transaction.authorization_remaining }}
+	  {% if release_authorization_action %}
+	  <a class="btn btn-primary button-command" data-type="release_authorization">{{ button_release_authorization }}</a>
+	  {% endif %}
+	</td>
+  </tr>
+  {% if transaction.authorization_expiry %}
+  <tr>
+	<td>{{ column_authorization_expiry }}</td>
+	<td>
+		{{ transaction.authorization_expiry }}
+		{% if extend_authorization_action %}
+		<a class="btn btn-primary button-command" data-type="extend_authorization">{{ button_extend_authorization }}</a>
+		{% endif %}
+	</td>
+  </tr>
+  {% endif %}
+  <tr>
+	<td>{{ column_capture }}</td>
+	<td>
+		<table class="table table-bordered">
+		  <thead>
+			<tr>
+			  <td class="text-left">{{ column_capture_id }}</td>
+			  <td class="text-left">{{ column_date }}</td>
+			  <td class="text-left">{{ column_amount }}</td>
+			  <td class="text-left">{{ column_reference }}</td>
+			  <td class="text-left">{{ column_action }}</td>
+			</tr>
+		  </thead>
+		  <tbody>
+			{% if captures %}
+			{% for capture in captures %}
+			<tr>
+			  <td>{{ capture.capture_id }}</td>
+			  <td>{{ capture.date_added }}</td>
+			  <td>{{ capture.amount }}</td>
+			  <td>{{ capture.reference }}</td>
+			  <td>
+				<a class="btn btn-primary button-command" data-type="trigger_send_out" data-id="{{ capture.capture_id }}">{{ button_trigger_send_out }}</a>
+				<a class="btn btn-primary" data-toggle="modal" data-target="#capture-shipping-info-{{ capture.capture_id }}">{{ button_edit_shipping_info }}</a>
+				<a class="btn btn-primary" data-toggle="modal" data-target="#capture-billing-address-{{ capture.capture_id }}">{{ button_edit_billing_address }}</a>
+			  </td>
+			</tr>
+			{% endfor %}
+			{% else %}
+			<tr>
+			  <td class="text-center" colspan="4">{{ text_no_capture }}</td>
+			</tr>
+			{% endif %}
+		  </tbody>
+		  {% if capture_action %}
+		  <tfoot>
+			<tr>
+			  <td colspan="4"></td>
+			  <td class="text-left"><a class="btn btn-primary" data-toggle="modal" data-target="#capture">{{ button_new_capture }}</a></td>
+			</tr>
+		  </tfoot>
+		  {% endif %}
+		</table>
+	</td>
+  </tr>
+  <tr>
+	<td>{{ column_refund }}</td>
+	<td>
+		<table class="table table-bordered">
+		  <thead>
+			<tr>
+			  <td class="text-left">{{ column_date }}</td>
+			  <td class="text-left">{{ column_amount }}</td>
+			  <td class="text-left">{{ column_action }}</td>
+			</tr>
+		  </thead>
+		  <tbody>
+			{% if refunds %}
+			{% for refund in refunds %}
+			<tr>
+			  <td>{{ refund.date_added }}</td>
+			  <td>{{ refund.amount }}</td>
+			</tr>
+			{% endfor %}
+			{% endif %}
+		  </tbody>
+		  {% if refund_action %}
+		  <tfoot>
+			<tr>
+			  <td colspan="2"></td>
+			  <td class="text-left">
+				<a class="btn btn-primary" data-toggle="modal" data-target="#refund">{{ button_new_refund }}</a>
+			  </td>
+			</tr>
+		  </tfoot>
+		  {% endif %}
+		</table>
+	</td>
+  </tr>
+</table>
+
+<!-- Modals -->
+<div class="modal fade" id="billing_address" tabindex="-1" role="dialog" aria-labelledby="billing_address_title">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="{{ button_close }}"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="billing_address_title">{{ column_billing_address }}</h4>
+      </div>
+	  <div class="modal-body form-horizontal">
+		<div class="form-group">
+		  <label class="col-sm-2 control-label" for="input-billing-address-title">{{ column_title }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="title" value="{{ transaction.billing_address.title }}" id="input-capture-billing-address-title" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-billing-address-given-name">{{ column_given_name }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="given_name" value="{{ transaction.billing_address.given_name }}" id="input-billing-address-given-name" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-billing-address-family-name">{{ column_family_name }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="family_name" value="{{ transaction.billing_address.family_name }}" id="input-billing-address-family-name" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-billing-address-street-address">{{ column_street_address }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="street_address" value="{{ transaction.billing_address.street_address }}" id="input-billing-address-street-address" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group">
+		  <label class="col-sm-2 control-label" for="input-billing-address-street-address2">{{ column_street_address2 }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="street_address2" value="{{ transaction.billing_address.street_address2 }}" id="input-billing-address-street-address2" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-billing-address-city">{{ column_city }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="city" value="{{ transaction.billing_address.city }}" id="input-billing-address-city" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-billing-address-postal-code">{{ column_postal_code }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="postal_code" value="{{ transaction.billing_address.postal_code }}" id="input-billing-address-postal-code" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-billing-address-region">{{ column_region }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="region" value="{{ transaction.billing_address.region }}" id="input-billing-address-region" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-billing-address-country">{{ column_country }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="country" value="{{ transaction.billing_address.country }}" id="input-billing-address-country" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-billing-address-email">{{ column_email }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="email" value="{{ transaction.billing_address.email }}" id="input-billing-address-email" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-billing-address-phone">{{ column_phone }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="phone" value="{{ transaction.billing_address.phone }}" id="input-billing-address-phone" class="form-control" />
+		  </div>
+		</div>
+	  </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">{{ button_close }}</button>
+        <button type="button" class="btn btn-primary button-command" data-type="billing_address" data-modal="#billing_address">{{ button_update }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="shipping_address" tabindex="-1" role="dialog" aria-labelledby="shipping_address_title">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="{{ button_close }}"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="shipping_address_title">{{ column_shipping_address }}</h4>
+      </div>
+	  <div class="modal-body form-horizontal">
+		<div class="form-group">
+		  <label class="col-sm-2 control-label" for="input-shipping-address-title">{{ column_title }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="title" value="{{ transaction.shipping_address.title }}" id="input-capture-shipping-address-title" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-shipping-address-given-name">{{ column_given_name }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="given_name" value="{{ transaction.shipping_address.given_name }}" id="input-shipping-address-given-name" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-shipping-address-family-name">{{ column_family_name }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="family_name" value="{{ transaction.shipping_address.family_name }}" id="input-shipping-address-family-name" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-shipping-address-street-address">{{ column_street_address }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="street_address" value="{{ transaction.shipping_address.street_address }}" id="input-shipping-address-street-address" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group">
+		  <label class="col-sm-2 control-label" for="input-shipping-address-street-address2">{{ column_street_address2 }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="street_address2" value="{{ transaction.shipping_address.street_address2 }}" id="input-shipping-address-street-address2" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-shipping-address-city">{{ column_city }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="city" value="{{ transaction.shipping_address.city }}" id="input-shipping-address-city" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-shipping-address-postal-code">{{ column_postal_code }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="postal_code" value="{{ transaction.shipping_address.postal_code }}" id="input-shipping-address-postal-code" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-shipping-address-region">{{ column_region }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="region" value="{{ transaction.shipping_address.region }}" id="input-shipping-address-region" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-shipping-address-country">{{ column_country }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="country" value="{{ transaction.shipping_address.country }}" id="input-shipping-address-country" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-shipping-address-email">{{ column_email }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="email" value="{{ transaction.shipping_address.email }}" id="input-shipping-address-email" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-shipping-address-phone">{{ column_phone }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="phone" value="{{ transaction.shipping_address.phone }}" id="input-shipping-address-phone" class="form-control" />
+		  </div>
+		</div>
+	  </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">{{ button_close }}</button>
+        <button type="button" class="btn btn-primary button-command" data-type="shipping_address" data-modal="#shipping_address">{{ button_update }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="capture" tabindex="-1" role="dialog" aria-labelledby="capture_title">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="{{ button_close }}"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="capture_title">{{ text_new_capture_title }}</h4>
+      </div>
+	  <div class="modal-body form-horizontal">
+		<div class="form-group">
+		  <label class="col-sm-2 control-label" for="input-capture-amount">{{ column_amount }}</label>
+		  <div class="col-sm-10">
+			<input text="text" name="capture_amount" value="{{ max_capture_amount }}" id="input-capture-amount" class="form-control" />
+		  </div>
+		</div>
+	  </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">{{ button_close }}</button>
+        <button type="button" class="btn btn-primary button-command" data-type="capture" data-modal="#capture">{{ button_update }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="refund" tabindex="-1" role="dialog" aria-labelledby="refund_title">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="{{ button_close }}"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="refund_title">{{ text_new_refund_title }}</h4>
+      </div>
+	  <div class="modal-body form-horizontal">
+		<div class="form-group">
+		  <label class="col-sm-2 control-label" for="input-refund-amount">{{ column_amount }}</label>
+		  <div class="col-sm-10">
+			<input text="text" name="refund_amount" value="{{ max_refund_amount }}" id="input-refund-amount" class="form-control" />
+		  </div>
+		</div>
+	  </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">{{ button_close }}</button>
+        <button type="button" class="btn btn-primary button-command" data-type="refund" data-modal="#refund">{{ button_update }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% for capture in captures %}
+<div class="modal fade" id="capture-shipping-info-{{ capture.capture_id }}" tabindex="-1" role="dialog" aria-labelledby="capture-shipping-info-{{ capture.capture_id }}-title" style="">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="{{ button_close }}"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="capture-shipping-info-{{ capture.capture_id }}-title">{{ capture.shipping_info_title }}</h4>
+      </div>
+      <div class="modal-body">
+		<table class="table table-bordered shipping-info-data">
+		  <tbody>
+			<tr>
+			  {% for key, shipping_info in capture.shipping_info %}
+			  <td>{{ shipping_info.shipping_company }}</td>
+			  {% endfor %}
+			</tr>
+			<tr>
+			  {% for key, shipping_info in capture.shipping_info %}
+			  <td>{{ shipping_info.shipping_method }}</td>
+			  {% endfor %}
+			</tr>
+			<tr>
+			  {% for key, shipping_info in capture.shipping_info %}
+			  <td>{{ shipping_info.tracking_number }}</td>
+			  {% endfor %}
+			</tr>
+			<tr>
+			  {% for key, shipping_info in capture.shipping_info %}
+			  <td>{{ shipping_info.tracking_uri }}</td>
+			  {% endfor %}
+			</tr>
+			<tr>
+			  {% for key, shipping_info in capture.shipping_info %}
+			  <td>{{ shipping_info.return_shipping_company }}</td>
+			  {% endfor %}
+			</tr>
+			<tr>
+			  {% for key, shipping_info in capture.shipping_info %}
+			  <td>{{ shipping_info.return_tracking_number }}</td>
+			  {% endfor %}
+			</tr>
+			<tr>
+			  {% for key, shipping_info in capture.shipping_info %}
+			  <td>{{ shipping_info.return_tracking_uri }}</td>
+			  {% endfor %}
+			</tr>
+		  </tbody>
+		  <tfoot>
+			<tr>
+			  <td colspan="{{ capture.shipping_info|length + 1 }}"></td>
+			  <td class="text-left"><button id="add-shipping-info" type="button" onclick="addShippingInfo('#capture-shipping-info-{{ capture.capture_id }}');" data-toggle="tooltip" title="{{ button_add_shipping_info }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+			</tr>
+		  </tfoot>
+		</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">{{ button_close }}</button>
+        <button type="button" class="btn btn-primary button-command" data-type="capture_shipping_info" data-id="{{ capture.capture_id }}" data-modal="#capture-shipping-info-{{ capture.capture_id }}">{{ button_update }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="capture-billing-address-{{ capture.capture_id }}" tabindex="-1" role="dialog" aria-labelledby="capture-billing-address-{{ capture.capture_id }}-title" style="">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="{{ button_close }}"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="capture-billing-address-{{ capture.capture_id }}-title">{{ capture.billing_address_title }}</h4>
+      </div>
+      <div class="modal-body form-horizontal">
+		<div class="form-group">
+		  <label class="col-sm-2 control-label" for="input-capture-billing-address-{{ capture.capture_id }}-title">{{ column_title }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="title" value="{{ capture.billing_address.title }}" id="input-capture-billing-address-{{ capture.capture_id }}-title" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-capture-billing-address-{{ capture.capture_id }}-given-name">{{ column_given_name }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="given_name" value="{{ capture.billing_address.given_name }}" id="input-capture-billing-address-{{ capture.capture_id }}-given-name" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-capture-billing-address-{{ capture.capture_id }}-family-name">{{ column_family_name }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="family_name" value="{{ capture.billing_address.family_name }}" id="input-capture-billing-address-{{ capture.capture_id }}-family-name" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-capture-billing-address-{{ capture.capture_id }}-street-address">{{ column_street_address }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="street_address" value="{{ capture.billing_address.street_address }}" id="input-capture-billing-address-{{ capture.capture_id }}-street-address" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group">
+		  <label class="col-sm-2 control-label" for="input-capture-billing-address-{{ capture.capture_id }}-street-address2">{{ column_street_address2 }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="street_address2" value="{{ capture.billing_address.street_address2 }}" id="input-capture-billing-address-{{ capture.capture_id }}-street-address2" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-capture-billing-address-{{ capture.capture_id }}-city">{{ column_city }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="city" value="{{ capture.billing_address.city }}" id="input-capture-billing-address-{{ capture.capture_id }}-city" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-capture-billing-address-{{ capture.capture_id }}-postal-code">{{ column_postal_code }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="postal_code" value="{{ capture.billing_address.postal_code }}" id="input-capture-billing-address-{{ capture.capture_id }}-postal-code" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-capture-billing-address-{{ capture.capture_id }}-region">{{ column_region }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="region" value="{{ capture.billing_address.region }}" id="input-capture-billing-address-{{ capture.capture_id }}-region" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-capture-billing-address-{{ capture.capture_id }}-country">{{ column_country }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="country" value="{{ capture.billing_address.country }}" id="input-capture-billing-address-{{ capture.capture_id }}-country" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-capture-billing-address-{{ capture.capture_id }}-email">{{ column_email }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="email" value="{{ capture.billing_address.email }}" id="input-capture-billing-address-{{ capture.capture_id }}-email" class="form-control" />
+		  </div>
+		</div>
+		<div class="form-group required">
+		  <label class="col-sm-2 control-label" for="input-capture-billing-address-{{ capture.capture_id }}-phone">{{ column_phone }}</label>
+		  <div class="col-sm-10">
+			<input type="text" name="phone" value="{{ capture.billing_address.phone }}" id="input-capture-billing-address-{{ capture.capture_id }}-phone" class="form-control" />
+		  </div>
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">{{ button_close }}</button>
+        <button type="button" class="btn btn-primary button-command" data-type="capture_billing_address" data-id="{{ capture.capture_id }}" data-modal="#capture-billing-address-{{ capture.capture_id }}">{{ button_update }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+<script type="text/javascript"><!--
+$(document).off('click', '.button-command').on('click', '.button-command', function() {
+	var type = $(this).attr('data-type');
+	var id = $(this).attr('data-id');
+	var modal = $(this).attr('data-modal');
+	var confirm_text = '';
+	var clicked_button = $(this);
+	var data = {};
+
+	if (type === 'cancel') {
+		confirm_text = '{{ text_confirm_cancel }}';
+	} else if (type === 'capture') {
+		data = $('#input-capture-amount').val();
+
+		{% if symbol_left %}
+		confirm_text = '{{ text_confirm_capture }} ' + '{{ symbol_left }}' + $('#input-capture-amount').val();
+		{% elseif symbol_right %}
+		confirm_text = '{{ text_confirm_capture }} ' + $('#input-capture-amount').val() + '{{ symbol_right }}';
+		{% endif %}
+	} else if (type === 'refund') {
+		data = $('#input-refund-amount').val();
+
+		{% if symbol_left %}
+		confirm_text = '{{ text_confirm_refund }} ' + '{{ symbol_left }}' + $('#input-refund-amount').val();
+		{% elseif symbol_right %}
+		confirm_text = '{{ text_confirm_refund }} ' + $('#input-refund-amount').val() + '{{ symbol_right }}';
+		{% endif %}
+	} else if (type === 'extend_authorization') {
+		confirm_text = '{{ text_confirm_extend_authorization }}';
+	} else if (type === 'merchant_reference') {
+		data = $('input[name=\'merchant_reference_1\']').serialize();
+
+		confirm_text = '{{ text_confirm_merchant_reference }}';
+	} else if (type === 'billing_address') {
+		data = $('#billing_address :input').serialize();
+
+		confirm_text = '{{ text_confirm_billing_address }}';
+	} else if (type === 'shipping_address') {
+		data = $('#shipping_address :input').serialize();
+
+		confirm_text = '{{ text_confirm_shipping_address }}';
+	} else if (type === 'release_authorization') {
+		confirm_text = '{{ text_confirm_release_authorization }}';
+	} else if (type === 'capture_shipping_info') {
+		data = $('#capture-shipping-info-' + id + ' :input').serialize();
+
+		confirm_text = '{{ text_confirm_shipping_info }}';
+	} else if (type === 'capture_billing_address') {
+		data = $('#capture-billing-address-' + id + ' :input').serialize();
+
+		confirm_text = '{{ text_confirm_billing_address }}';
+	} else if (type === 'trigger_send_out') {
+		confirm_text = '{{ text_confirm_trigger_send_out }}';
+	} else {
+		return;
+	}
+
+	if (confirm(confirm_text)) {
+		$.ajax({
+			url: 'index.php?route=extension/payment/klarna_checkout/transactionCommand&user_token={{ user_token }}&order_id={{ order_id }}',
+			type: 'post',
+			data: {
+				type: type,
+				id: id,
+				order_ref: '{{ order_ref }}',
+				data: data
+			},
+			dataType: 'json',
+			beforeSend: function() {
+				clicked_button.button('loading');
+
+				$('.kc-alert').hide();
+
+				$('.kc-alert').removeClass('alert alert-success alert-danger');
+			},
+			complete: function() {
+				clicked_button.button('reset');
+
+				$(modal).modal('hide');
+			},
+			success: function(json) {
+				if (json.error) {
+					$('.kc-alert').show().addClass('alert alert-danger').html('<i class="fa fa-check-circle"></i> ' + json.error);
+				}
+
+				if (json.success) {
+					$('.kc-alert').show().addClass('alert alert-success').html('<i class="fa fa-exclamation-circle"></i> ' + json.success);
+				}
+
+                if (json.order_status_id) {
+                    $.ajax({
+                        url: '{{ store_url }}index.php?route=api/order/history&token=' + token + '&order_id={{ order_id }}',
+                        type: 'post',
+                        dataType: 'json',
+                        data: 'order_status_id=' + encodeURIComponent(json.order_status_id) + '&notify=0&override=1&comment',
+                        beforeSend: function() {
+                            $('#button-history').button('loading');
+                        },
+                        complete: function() {
+                            $('#button-history').button('reset');
+                        },
+                        success: function(json) {
+                            $('.alert-dismissible').remove();
+
+                            if (json['error']) {
+                                $('#history').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                            }
+
+                            if (json['success']) {
+                                $('#history').load('index.php?route=sale/order/history&user_token={{ user_token }}&order_id={{ order_id }}');
+
+                                $('#history').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+                                $('textarea[name=\'comment\']').val('');
+                            }
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                        }
+                    });
+                }
+
+				setTimeout(function() {
+					getTransaction('{{ order_id }}');
+				}, 300);
+			}
+		});
+	}
+});
+
+var shipping_info_row = 0;
+
+function addShippingInfo(id) {
+	$(id + ' .shipping-info-data tbody tr:nth-child(1)').append('<td><div class="col-sm-12"><input class="form-control" type="text" name="shipping_info[' + shipping_info_row + '][shipping_company]" value="" data-id="' + shipping_info_row + '" placeholder="{{ entry_shipping_company }}" /></div></td>');
+
+    html = '  <td><div class="col-sm-12"><select name="shipping_info[' + shipping_info_row + '][shipping_method]" class="form-control">';
+    {% for shipping_method in allowed_shipping_methods %}
+    html += '    <option value="{{ shipping_method }}">{{ shipping_method|escape('js') }}</option>';
+    {% endfor %}
+    html += '  </select></div></td>';
+
+	$(id + ' .shipping-info-data tbody tr:nth-child(2)').append(html);
+	$(id + ' .shipping-info-data tbody tr:nth-child(3)').append('<td><div class="col-sm-12"><input class="form-control" type="text" name="shipping_info[' + shipping_info_row + '][tracking_number]" value="" data-id="' + shipping_info_row + '" placeholder="{{ entry_tracking_number }}" /></div></td>');
+	$(id + ' .shipping-info-data tbody tr:nth-child(4)').append('<td><div class="col-sm-12"><input class="form-control" type="text" name="shipping_info[' + shipping_info_row + '][tracking_uri]" value="" data-id="' + shipping_info_row + '" placeholder="{{ entry_tracking_uri }}" /></div></td>');
+	$(id + ' .shipping-info-data tbody tr:nth-child(5)').append('<td><div class="col-sm-12"><input class="form-control" type="text" name="shipping_info[' + shipping_info_row + '][return_shipping_company]" value="" data-id="' + shipping_info_row + '" placeholder="{{ entry_return_shipping_company }}" /></div></td>');
+	$(id + ' .shipping-info-data tbody tr:nth-child(6)').append('<td><div class="col-sm-12"><input class="form-control" type="text" name="shipping_info[' + shipping_info_row + '][return_tracking_number]" value="" data-id="' + shipping_info_row + '" placeholder="{{ entry_return_tracking_number }}" /></div></td>');
+	$(id + ' .shipping-info-data tbody tr:nth-child(7)').append('<td><div class="col-sm-12"><input class="form-control" type="text" name="shipping_info[' + shipping_info_row + '][return_tracking_uri]" value="" data-id="' + shipping_info_row + '" placeholder="{{ entry_return_tracking_uri }}" /></div></td>');
+
+	var colspan = $(id + ' .shipping-info-data tfoot tr td:nth-child(1)').attr('colspan');
+	$(id + ' .shipping-info-data tfoot tr td:nth-child(1)').attr('colspan', colspan + 1);
+
+	shipping_info_row++;
+}
+//--></script>

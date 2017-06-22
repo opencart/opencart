@@ -1,0 +1,51 @@
+<nav id="column-left">
+  <div id="navigation">{{ text_navigation }}</div>
+  <ul id="menu">
+    {% for menu in menus %}
+    <li id="{{ menu.id }}"> {% if menu.href %} <a href="{{ menu.href }}"><i class="fa {{ menu.icon }} fw"></i> <span>{{ menu.name }}</span></a> {% else %} <a class="parent"><i class="fa {{ menu.icon }} fw"></i> <span>{{ menu.name }}</span></a> {% endif %}
+      {% if menu.children %}
+      <ul>
+        {% for children_1 in menu.children %}
+        <li> {% if children_1.href %} <a href="{{ children_1.href }}">{{ children_1.name }}</a> {% else %} <a class="parent">{{ children_1.name }}</a> {% endif %}
+          {% if children_1.children %}
+          <ul>
+            {% for children_2 in children_1.children %}
+            <li> {% if children_2.href %} <a href="{{ children_2.href }}">{{ children_2.name }}</a> {% else %} <a class="parent">{{ children_2.name }}</a> {% endif %}
+              {% if children_2.children %}
+              <ul>
+                {% for children_3 in children_2.children %}
+                <li><a href="{{ children_3.href }}">{{ children_3.name }}</a></li>
+                {% endfor %}
+              </ul>
+              {% endif %} </li>
+            {% endfor %}
+          </ul>
+          {% endif %} </li>
+        {% endfor %}
+      </ul>
+      {% endif %} </li>
+    {% endfor %}
+  </ul>
+  <div id="stats">
+    <ul>
+      <li>
+        <div>{{ text_complete_status }} <span class="pull-right">{{ complete_status }}%</span></div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{ complete_status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ complete_status }}%"> <span class="sr-only">{{ complete_status }}%</span></div>
+        </div>
+      </li>
+      <li>
+        <div>{{ text_processing_status }} <span class="pull-right">{{ processing_status }}%</span></div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="{{ processing_status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ processing_status }}%"> <span class="sr-only">{{ processing_status }}%</span></div>
+        </div>
+      </li>
+      <li>
+        <div>{{ text_other_status }} <span class="pull-right">{{ other_status }}%</span></div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{ other_status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ other_status }}%"> <span class="sr-only">{{ other_status }}%</span></div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>

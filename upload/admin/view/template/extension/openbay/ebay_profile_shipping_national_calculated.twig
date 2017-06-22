@@ -1,0 +1,24 @@
+<input type="hidden" value="{{ data.national.calculated.count }}" id="calculated_count_national" />
+{% if data.national.calculated.service_id is not empty %}
+  {% for key,service in data.national.calculated.service_id %}
+    <div class="well" id="national_calculated_{{ key }}">
+      <div class="row form-group">
+        <div class="col-sm-1 text-right">
+          <label class="control-label">{{ text_shipping_service }}</label>
+        </div>
+        <div class="col-sm-11">
+          <select name="data[national][calculated][service_id][{{ key }}]" class="form-control">
+            {% for service_key,service_type in data.national.calculated.types.service %}
+              <option value="{{ service_key }}" {% if service_key = service %} selected{% endif %}>{{ service_type.description }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2 pull-right text-right">
+          <a onclick="removeShipping('national','{{ key }}', 'calculated');" class="btn btn-danger"><i class="fa fa-minus-circle"></i> {{ button_delete }}</a>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+{% endif %}

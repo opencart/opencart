@@ -110,11 +110,12 @@ class ControllerStartupStartup extends Controller {
 		$this->registry->set('customer', $customer);
 		
 		// Customer Group
-		if ($this->customer->isLogged()) {
-			$this->config->set('config_customer_group_id', $this->customer->getGroupId());
-		} elseif (isset($this->session->data['customer']) && isset($this->session->data['customer']['customer_group_id'])) {
+		if (isset($this->session->data['customer']) && isset($this->session->data['customer']['customer_group_id'])) {
 			// For API calls
 			$this->config->set('config_customer_group_id', $this->session->data['customer']['customer_group_id']);
+		} elseif ($this->customer->isLogged()) {
+			// Logged in customers
+			$this->config->set('config_customer_group_id', $this->customer->getGroupId());
 		} elseif (isset($this->session->data['guest']) && isset($this->session->data['guest']['customer_group_id'])) {
 			$this->config->set('config_customer_group_id', $this->session->data['guest']['customer_group_id']);
 		}
@@ -125,9 +126,6 @@ class ControllerStartupStartup extends Controller {
 		
 			$this->db->query("UPDATE `" . DB_PREFIX . "marketing` SET clicks = (clicks + 1) WHERE code = '" . $this->db->escape($this->request->get['tracking']) . "'");
 		}		
-		
-		// Affiliate
-		$this->registry->set('affiliate', new Cart\Affiliate($this->registry));
 		
 		// Currency
 		$code = '';

@@ -1,0 +1,227 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-seo').toggleClass('hidden-sm hidden-xs');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
+        <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-url-alias').submit() : false;"><i class="fa fa-trash-o"></i></button>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">{% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    {% if success %}
+    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="row">
+      <div id="filter-seo" class="col-md-3 col-md-push-9 col-sm-12 hidden-sm hidden-xs">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
+          </div>
+          <div class="panel-body">
+            <div class="form-group">
+              <label class="control-label" for="input-query">{{ entry_query }}</label>
+              <input type="text" name="filter_query" value="{{ filter_query }}" placeholder="{{ entry_query }}" id="input-query" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="input-keyword">{{ entry_keyword }}</label>
+              <input type="text" name="filter_keyword" value="{{ filter_keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="input-store">{{ entry_store }}</label>
+              <select name="filter_store_id" id="input-store" class="form-control">
+                <option value=""></option>
+                {% if filter_store_id == '0' %}
+                <option value="0" selected="selected">{{ text_default }}</option>
+                {% else %}
+                <option value="0">{{ text_default }}</option>
+                {% endif %}                  
+                {% for store in stores %}
+                {% if store.store_id == filter_store_id %}
+                <option value="{{ store.store_id }}" selected="selected">{{ store.name }}</option>
+                {% else %}
+                <option value="{{ store.store_id }}">{{ store.name }}</option>
+                {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="input-language">{{ entry_language }}</label>
+              <select name="filter_language_id" id="input-language" class="form-control">
+                <option value=""></option>
+                
+                
+                  
+                
+              
+              
+              
+              
+              
+                  
+                  {% for language in languages %}
+                  {% if language.language_id == filter_language_id %}
+                  
+                  
+              
+              
+              
+              
+              
+                
+                  
+                
+                <option value="{{ language.language_id }}" selected="selected">{{ language.name }}</option>
+                
+                
+                  
+                
+              
+              
+              
+              
+              
+                  
+                  {% else %}
+                  
+                  
+              
+              
+              
+              
+              
+                
+                  
+                
+                <option value="{{ language.language_id }}">{{ language.name }}</option>
+                
+                
+                  
+                
+              
+              
+              
+              
+              
+                  
+                  {% endif %}
+                  {% endfor %}
+                
+                
+            
+            
+            
+            
+            
+              
+                
+              
+              </select>
+            </div>
+            <div class="text-right">
+              <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9 col-md-pull-3 col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
+          </div>
+          <div class="panel-body">
+            <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-url-alias">
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                      <td class="text-left">{% if sort == 'query' %}<a href="{{ sort_query }}" class="{{ order|lower }}">{{ column_query }}</a>{% else %}<a href="{{ sort_query }}">{{ column_query }}</a>{% endif %}</td>
+                      <td class="text-left">{% if sort == 'keyword' %}<a href="{{ sort_keyword }}" class="{{ order|lower }}">{{ column_keyword }}</a> {% else %}<a href="{{ sort_keyword }}">{{ column_keyword }}</a>{% endif %}</td>
+                      <td class="text-left">{% if sort == 'store' %}<a href="{{ sort_store }}" class="{{ order|lower }}">{{ column_store }}</a>{% else %}<a href="{{ sort_store }}">{{ column_store }}</a>{% endif %}</td>
+                      <td class="text-left">{% if sort == 'language' %}<a href="{{ sort_language }}" class="{{ order|lower }}">{{ column_language }}</a>{% else %}<a href="{{ sort_language }}">{{ column_language }}</a>{% endif %}</td>
+                      <td class="text-right">{{ column_action }}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  
+                  {% if seo_urls %}
+                  {% for seo_url in seo_urls %}
+                  <tr>
+                    <td class="text-center">{% if seo_url.seo_url_id in selected %}
+                      <input type="checkbox" name="selected[]" value="{{ seo_url.seo_url_id }}" checked="checked" />
+                      {% else %}
+                      <input type="checkbox" name="selected[]" value="{{ seo_url.seo_url_id }}" />
+                      {% endif %}</td>
+                    <td class="text-left">{{ seo_url.query }}</td>
+                    <td class="text-left">{{ seo_url.keyword }}</td>
+                    <td class="text-left">{{ seo_url.store }}</td>
+                    <td class="text-left">{{ seo_url.language }}</td>
+                    <td class="text-right"><a href="{{ seo_url.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                  </tr>
+                  {% endfor %}
+                  {% else %}
+                  <tr>
+                    <td class="text-center" colspan="6">{{ text_no_results }}</td>
+                  </tr>
+                  {% endif %}
+                    </tbody>
+                  
+                </table>
+              </div>
+            </form>
+            <div class="row">
+              <div class="col-sm-6 text-left">{{ pagination }}</div>
+              <div class="col-sm-6 text-right">{{ results }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript"><!--
+$('#button-filter').on('click', function() {
+	var url = 'index.php?route=design/seo_url&user_token={{ user_token }}';
+
+	var filter_query = $('input[name=\'filter_query\']').val();
+
+	if (filter_query) {
+		url += '&filter_query=' + encodeURIComponent(filter_query);
+	}
+
+	var filter_keyword = $('input[name=\'filter_keyword\']').val();
+
+	if (filter_keyword) {
+		url += '&filter_keyword=' + encodeURIComponent(filter_keyword);
+	}
+
+	var filter_store_id = $('select[name=\'filter_store_id\']').val();
+
+	if (filter_store_id) {
+		url += '&filter_store_id=' + encodeURIComponent(filter_store_id);
+	}
+	
+	var filter_language_id = $('select[name=\'filter_language_id\']').val();
+
+	if (filter_language_id) {
+		url += '&filter_language_id=' + encodeURIComponent(filter_language_id);
+	}
+
+	location = url;
+});
+//--></script> 
+</div>
+{{ footer }}

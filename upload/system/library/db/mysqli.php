@@ -53,7 +53,7 @@ final class MySQLi {
 		return $this->connection->insert_id;
 	}
 	
-	public function isConnected() {
+	public function connected() {
 		return $this->connection->ping();
 	}
 	

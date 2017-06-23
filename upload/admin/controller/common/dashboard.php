@@ -5,6 +5,8 @@ class ControllerCommonDashboard extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		$data['user_token'] = $this->session->data['user_token'];
+		
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -16,7 +18,18 @@ class ControllerCommonDashboard extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
-
+		
+		$args = array(
+			DIR_SYSTEM . 'storage/',
+			str_replace('\\', '/', realpath(DIR_SYSTEM . '../../')) . '/',
+			'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');',
+			'define(\'DIR_STORAGE\', \'' . realpath(DIR_SYSTEM . '../../') . '/storage/\');',
+			'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');',
+			'define(\'DIR_STORAGE\', \'' . realpath(DIR_SYSTEM . '../../') . '/storage/\');'
+		);
+		
+		$data['text_instruction'] = vsprintf($this->language->get('text_instruction'), $args);
+		
 		// Check install directory exists
 		if (is_dir(DIR_APPLICATION . 'install')) {
 			$data['error_install'] = $this->language->get('error_install');
@@ -26,16 +39,7 @@ class ControllerCommonDashboard extends Controller {
 		
 		// Check install directory exists
 		if (is_dir(DIR_SYSTEM . 'storage')) {
-			$args = array(
-				DIR_SYSTEM . 'storage/',
-				str_replace('\\', '/', realpath(DIR_SYSTEM . '../../')) . '/',
-				str_replace('\\', '/', realpath(DIR_SYSTEM . '../../')) . '/',
-				str_replace('\\', '/', realpath(DIR_SYSTEM . '../../')) . '/',
-				str_replace('\\', '/', realpath(DIR_SYSTEM . '../../')) . '/',
-				str_replace('\\', '/', realpath(DIR_SYSTEM . '../../')) . '/'
-			);
-			
-			$data['error_storage'] = vsprintf($this->language->get('error_storage'), $args);
+			$data['error_storage'] = $this->language->get('error_storage');
 		} else {
 			$data['error_storage'] = '';
 		}
@@ -102,5 +106,13 @@ class ControllerCommonDashboard extends Controller {
 		}
 
 		$this->response->setOutput($this->load->view('common/dashboard', $data));
+	}
+	
+	public function setting() {
+		$this->load->language('common/dashboard');
+		
+		$data['user_token'] = $this->session->data['user_token'];
+		
+		$this->response->setOutput($this->load->view('common/dashboard_setting', $data));
 	}
 }

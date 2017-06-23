@@ -1801,10 +1801,10 @@ $('#tab-shipping select[name=\'country_id\']').on('change', function() {
 		url: 'index.php?route=localisation/country/country&user_token={{ user_token }}&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('#tab-shipping select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+			$('#tab-shipping select[name=\'country_id\']').prop('disabled', true);
 		},
 		complete: function() {
-			$('#tab-shipping .fa-spin').remove();
+			$('#tab-shipping select[name=\'country_id\']').prop('disabled', false);
 		},
 		success: function(json) {
 			if (json['postcode_required'] == '1') {

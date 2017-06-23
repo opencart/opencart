@@ -114,7 +114,7 @@ class ControllerExtensionDashboardMap extends Controller {
 
 		$this->load->model('report/sale');
 
-		$results = $this->model_report_sale->getTotalOrdersByCountry();
+		$results = $this->model_report_sale->getTotalOrdersByCountry($this->config->get('config_complete_status'));
 
 		foreach ($results as $result) {
 			$json[strtolower($result['iso_code_2'])] = array(

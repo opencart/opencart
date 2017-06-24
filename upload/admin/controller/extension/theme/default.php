@@ -328,7 +328,7 @@ class ControllerExtensionThemeDefault extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/theme/theme_default')) {
+		if (!$this->user->hasPermission('modify', 'extension/theme/default')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

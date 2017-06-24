@@ -107,12 +107,4 @@ class ControllerCommonDashboard extends Controller {
 
 		$this->response->setOutput($this->load->view('common/dashboard', $data));
 	}
-	
-	public function setting() {
-		$this->load->language('common/dashboard');
-		
-		$data['user_token'] = $this->session->data['user_token'];
-		
-		$this->response->setOutput($this->load->view('common/dashboard_setting', $data));
-	}
 }

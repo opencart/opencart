@@ -184,6 +184,34 @@ class ModelUpgrade1009 extends Model {
 	
 				fclose($handle);
 			}
+			
+			$replace = array(
+				'DIR_CACHE'        => 'cache',
+				'DIR_DOWNLOAD'     => 'download',
+				'DIR_LOGS'         => 'logs',
+				'DIR_MODIFICATION' => 'modification',
+				'DIR_SESSION'      => 'session',
+				'DIR_UPLOAD'       => 'upload'
+			);
+
+			$output = '';
+
+			foreach ($lines as $line_id => $line) {
+				foreach ($replace as $key => $value) {
+					if (strpos($line, $key) !== false) {
+						$output .= 'define(\'' . $key . '\', DIR_STORAGE . \'' . $value . '/\');' . "\n";
+					} else {
+						$output .= $line;
+					}
+				}
+				
+			}
+
+			$handle = fopen($file, 'w');
+
+			fwrite($handle, $output);
+
+			fclose($handle);
 		}
 	}
 }

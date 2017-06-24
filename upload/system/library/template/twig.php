@@ -16,7 +16,7 @@ final class Twig {
 		// initialize Twig environment
 		$this->twig = new \Twig_Environment($loader, array(
 			'autoescape' => false,
-		//	'cache'      => DIR_CACHE
+			'cache'      => DIR_CACHE
 		));			
 	}
 	

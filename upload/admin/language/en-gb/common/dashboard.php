@@ -9,8 +9,7 @@ $_['text_instruction'] = '
     <p><strong>%s</strong></p>
     <p>to</p>
     <p><strong>%s</strong></p></li>
-  <li><p>Edit config.php</p> 
-    <p>change</p>
+  <li><p>Edit config.php change</p>
 	<p><strong>%s</strong></p>
 	<p>to</p>
 	<p><strong>%s</strong></p></li>

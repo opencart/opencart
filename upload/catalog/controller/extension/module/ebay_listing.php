@@ -56,7 +56,7 @@ class ControllerExtensionModuleEbayListing extends Controller {
 
 			$data['tracking_pixel'] = $product_data['tracking_pixel'];
 
-			return $this->load->view('extension/module/ebay', $data);
+			return $this->load->view('extension/module/ebay_listing', $data);
 		}
 	}
 }

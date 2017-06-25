@@ -49,7 +49,7 @@ class Session {
 		$this->adaptor->write($this->session_id, $this->data);
 	}
 	
-	public function __destory() {
-		$this->adaptor->destory($this->session_id);
+	public function __destroy() {
+		$this->adaptor->destroy($this->session_id);
 	}
 }

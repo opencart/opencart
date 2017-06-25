@@ -38,7 +38,7 @@ class ControllerExtensionExtensionDashboard extends Controller {
 		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_setting_extension->uninstall('dashboard', 'dashboard_' . $this->request->get['extension']);
+			$this->model_setting_extension->uninstall('dashboard', $this->request->get['extension']);
 
 			// Call uninstall method if it exsits
 			$this->load->controller('extension/dashboard/' . $this->request->get['extension'] . '/uninstall');

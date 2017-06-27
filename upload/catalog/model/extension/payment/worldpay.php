@@ -3,7 +3,7 @@
 class ModelExtensionPaymentWorldpay extends Model {
 
 	public function getMethod($address, $total) {
-		$this->load->language('extension/payment/worldpay');
+		$this->load->language('extension/payment/worldpay', 'worldpay');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('worldpay_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
@@ -22,7 +22,7 @@ class ModelExtensionPaymentWorldpay extends Model {
 		if ($status) {
 			$method_data = array(
 				'code' => 'worldpay',
-				'title' => $this->language->get('text_title'),
+				'title' => $this->language->get('worldpay')->get('text_title'),
 				'terms' => '',
 				'sort_order' => $this->config->get('worldpay_sort_order')
 			);

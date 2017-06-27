@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-primary"><i class="fa fa-opencart"></i></button>
+        <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-warning"><i class="fa fa-key"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
@@ -25,7 +25,7 @@
       <div class="panel-body">
         <div class="row extension-info">
           <div class="col-sm-8">{% if banner %}
-            <div id="banner" class="well text-center"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></div>
+            <div id="banner" class="text-center thumbnail"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></div>
             {% endif %}
             <div class="row thumbnails">
               {% for image in images %}<div class="col-xs-4 col-sm-2"><a href="{{ image.popup }}" class="thumbnail"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="img-responsive" /></a></div>{% endfor %}

@@ -1,7 +1,7 @@
 <?php
 class ModelExtensionShippingECShip extends Model {
 	function getQuote($address) {
-		$this->load->language('extension/shipping/ec_ship');
+		$this->load->language('extension/shipping/ec_ship', 'ec_ship');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('shipping_ec_ship_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
@@ -276,99 +276,99 @@ class ModelExtensionShippingECShip extends Model {
 		//Countries available service
 		$shipCode = array(
 			'AUS' => array(
-				'AE2' => $this->language->get('text_e_express_service_two'),
-				'ARM' => $this->language->get('text_air_registered_mail'),
-				'APL' => $this->language->get('text_air_parcel'),
-				'EMS' => $this->language->get('text_speed_post')
+				'AE2' => $this->language->get('ec_ship')->get('text_e_express_service_two'),
+				'ARM' => $this->language->get('ec_ship')->get('text_air_registered_mail'),
+				'APL' => $this->language->get('ec_ship')->get('text_air_parcel'),
+				'EMS' => $this->language->get('ec_ship')->get('text_speed_post')
 			),
 
 			'NZL' => array(
-				'AE2' => $this->language->get('text_e_express_service_two'),
-				'ARM' => $this->language->get('text_air_registered_mail'),
-				'APL' => $this->language->get('text_air_parcel'),
-				'EMS' => $this->language->get('text_speed_post')
+				'AE2' => $this->language->get('ec_ship')->get('text_e_express_service_two'),
+				'ARM' => $this->language->get('ec_ship')->get('text_air_registered_mail'),
+				'APL' => $this->language->get('ec_ship')->get('text_air_parcel'),
+				'EMS' => $this->language->get('ec_ship')->get('text_speed_post')
 			),
 
 			'KOR' => array(
-				'AE2' => $this->language->get('text_e_express_service_two'),
-				'ARM' => $this->language->get('text_air_registered_mail'),
-				'APL' => $this->language->get('text_air_parcel'),
-				'EMS' => $this->language->get('text_speed_post')
+				'AE2' => $this->language->get('ec_ship')->get('text_e_express_service_two'),
+				'ARM' => $this->language->get('ec_ship')->get('text_air_registered_mail'),
+				'APL' => $this->language->get('ec_ship')->get('text_air_parcel'),
+				'EMS' => $this->language->get('ec_ship')->get('text_speed_post')
 			),
 
 			'SGP' => array(
-				'AE2' => $this->language->get('text_e_express_service_two'),
-				'ARM' => $this->language->get('text_air_registered_mail'),
-				'APL' => $this->language->get('text_air_parcel'),
-				'EMS' => $this->language->get('text_speed_post')
+				'AE2' => $this->language->get('ec_ship')->get('text_e_express_service_two'),
+				'ARM' => $this->language->get('ec_ship')->get('text_air_registered_mail'),
+				'APL' => $this->language->get('ec_ship')->get('text_air_parcel'),
+				'EMS' => $this->language->get('ec_ship')->get('text_speed_post')
 			),
 
 			'VNM' => array(
-				'AE2' => $this->language->get('text_e_express_service_two'),
-				'ARM' => $this->language->get('text_air_registered_mail'),
-				'APL' => $this->language->get('text_air_parcel'),
-				'EMS' => $this->language->get('text_speed_post')
+				'AE2' => $this->language->get('ec_ship')->get('text_e_express_service_two'),
+				'ARM' => $this->language->get('ec_ship')->get('text_air_registered_mail'),
+				'APL' => $this->language->get('ec_ship')->get('text_air_parcel'),
+				'EMS' => $this->language->get('ec_ship')->get('text_speed_post')
 			),
 
 			'DEU' => array(
-				'AE1' => $this->language->get('text_e_express_service_one'),
-				'ARM' => $this->language->get('text_air_registered_mail'),
-				'APL' => $this->language->get('text_air_parcel'),
-				'EMS' => $this->language->get('text_speed_post')
+				'AE1' => $this->language->get('ec_ship')->get('text_e_express_service_one'),
+				'ARM' => $this->language->get('ec_ship')->get('text_air_registered_mail'),
+				'APL' => $this->language->get('ec_ship')->get('text_air_parcel'),
+				'EMS' => $this->language->get('ec_ship')->get('text_speed_post')
 			),
 
 			'FRA' => array(
-				'AE1' => $this->language->get('text_e_express_service_one'),
-				'ARM' => $this->language->get('text_air_registered_mail'),
-				'APL' => $this->language->get('text_air_parcel'),
-				'EMS' => $this->language->get('text_speed_post')
+				'AE1' => $this->language->get('ec_ship')->get('text_e_express_service_one'),
+				'ARM' => $this->language->get('ec_ship')->get('text_air_registered_mail'),
+				'APL' => $this->language->get('ec_ship')->get('text_air_parcel'),
+				'EMS' => $this->language->get('ec_ship')->get('text_speed_post')
 			),
 
 			'NOR' => array(
-				'AE1' => $this->language->get('text_e_express_service_one'),
-				'ARM' => $this->language->get('text_air_registered_mail'),
-				'APL' => $this->language->get('text_air_parcel'),
-				'EMS' => $this->language->get('text_speed_post')
+				'AE1' => $this->language->get('ec_ship')->get('text_e_express_service_one'),
+				'ARM' => $this->language->get('ec_ship')->get('text_air_registered_mail'),
+				'APL' => $this->language->get('ec_ship')->get('text_air_parcel'),
+				'EMS' => $this->language->get('ec_ship')->get('text_speed_post')
 			),
 
 			'RUS' => array(
-				'AER' => $this->language->get('text_e_express_service_to_russia'),
-				'ARM' => $this->language->get('text_air_registered_mail'),
-				'APL' => $this->language->get('text_air_parcel'),
-				'EMS' => $this->language->get('text_speed_post')
+				'AER' => $this->language->get('ec_ship')->get('text_e_express_service_to_russia'),
+				'ARM' => $this->language->get('ec_ship')->get('text_air_registered_mail'),
+				'APL' => $this->language->get('ec_ship')->get('text_air_parcel'),
+				'EMS' => $this->language->get('ec_ship')->get('text_speed_post')
 			),
 
 			'GBR' => array(
-				'AEG' => $this->language->get('text_e_express_service_to_united_kingdom'),
-				'ARM' => $this->language->get('text_air_registered_mail'),
-				'APL' => $this->language->get('text_air_parcel'),
-				'EMS' => $this->language->get('text_speed_post')
+				'AEG' => $this->language->get('ec_ship')->get('text_e_express_service_to_united_kingdom'),
+				'ARM' => $this->language->get('ec_ship')->get('text_air_registered_mail'),
+				'APL' => $this->language->get('ec_ship')->get('text_air_parcel'),
+				'EMS' => $this->language->get('ec_ship')->get('text_speed_post')
 			),
 
 			'CAN' => array(
-				'AEC' => $this->language->get('text_e_express_service_to_canada'),
-				'ARM' => $this->language->get('text_air_registered_mail'),
-				'APL' => $this->language->get('text_air_parcel'),
-				'EMS' => $this->language->get('text_speed_post')
+				'AEC' => $this->language->get('ec_ship')->get('text_e_express_service_to_canada'),
+				'ARM' => $this->language->get('ec_ship')->get('text_air_registered_mail'),
+				'APL' => $this->language->get('ec_ship')->get('text_air_parcel'),
+				'EMS' => $this->language->get('ec_ship')->get('text_speed_post')
 			),
 
 			'USA' => array(
-				'AEP' => $this->language->get('text_e_express_service_to_us'),
-				'ARM' => $this->language->get('text_air_registered_mail'),
-				'APL' => $this->language->get('text_air_parcel'),
-				'EMS' => $this->language->get('text_speed_post')
+				'AEP' => $this->language->get('ec_ship')->get('text_e_express_service_to_us'),
+				'ARM' => $this->language->get('ec_ship')->get('text_air_registered_mail'),
+				'APL' => $this->language->get('ec_ship')->get('text_air_parcel'),
+				'EMS' => $this->language->get('ec_ship')->get('text_speed_post')
 			),
 
 			'HKG' => array(
-				'SMP' => $this->language->get('text_smart_post'),
-				'LCP' => $this->language->get('text_local_courier_post'),
-				'LPL' => $this->language->get('text_local_parcel')
+				'SMP' => $this->language->get('ec_ship')->get('text_smart_post'),
+				'LCP' => $this->language->get('ec_ship')->get('text_local_courier_post'),
+				'LPL' => $this->language->get('ec_ship')->get('text_local_parcel')
 			),
 
 			'OTHERS' => array(
-				'ARM' => $this->language->get('text_air_registered_mail'),
-				'APL' => $this->language->get('text_air_parcel'),
-				'EMS' => $this->language->get('text_speed_post')
+				'ARM' => $this->language->get('ec_ship')->get('text_air_registered_mail'),
+				'APL' => $this->language->get('ec_ship')->get('text_air_parcel'),
+				'EMS' => $this->language->get('ec_ship')->get('text_speed_post')
 			)
 		);
 
@@ -423,7 +423,7 @@ class ModelExtensionShippingECShip extends Model {
 			} elseif (isset($country_codes[$address['iso_code_3']])) {
 				$address_to['country'] = $country_codes[$address['iso_code_3']];
 			} else {
-				$error = $this->language->get('text_unavailable');
+				$error = $this->language->get('ec_ship')->get('text_unavailable');
 			}
 
 			if (!$this->config->get('shipping_ec_ship_test')) {
@@ -513,7 +513,7 @@ class ModelExtensionShippingECShip extends Model {
 			if ($quote_data || $error) {
 				$method_data = array(
 					'code'       => 'ec_ship',
-					'title'      => $this->language->get('text_title'),
+					'title'      => $this->language->get('ec_ship')->get('text_title'),
 					'quote'      => $quote_data,
 					'sort_order' => $this->config->get('shipping_ec_ship_sort_order'),
 					'error'      => $error

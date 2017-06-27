@@ -136,7 +136,7 @@ final class Loader {
 		// Keep the original trigger
 		$trigger = $route;
 				
-		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/before', array(&$route));
+		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/before', array(&$route, &$key));
 		
 		if ($result && !$result instanceof Exception) {
 			$output = $result;
@@ -144,7 +144,7 @@ final class Loader {
 			$output = $this->registry->get('language')->load($route, $key);
 		}
 		
-		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/after', array(&$route, &$output));
+		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/after', array(&$route, &$key, &$output));
 		
 		if ($result && !$result instanceof Exception) {
 			$output = $result;

@@ -1,7 +1,7 @@
 <?php
 class ModelExtensionShippingFree extends Model {
 	function getQuote($address) {
-		$this->load->language('extension/shipping/free');
+		$this->load->language('extension/shipping/free', 'free');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('shipping_free_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
@@ -24,7 +24,7 @@ class ModelExtensionShippingFree extends Model {
 
 			$quote_data['free'] = array(
 				'code'         => 'free.free',
-				'title'        => $this->language->get('text_description'),
+				'title'        => $this->language->get('free')->get('text_description'),
 				'cost'         => 0.00,
 				'tax_class_id' => 0,
 				'text'         => $this->currency->format(0.00, $this->session->data['currency'])
@@ -32,7 +32,7 @@ class ModelExtensionShippingFree extends Model {
 
 			$method_data = array(
 				'code'       => 'free',
-				'title'      => $this->language->get('text_title'),
+				'title'      => $this->language->get('free')->get('text_title'),
 				'quote'      => $quote_data,
 				'sort_order' => $this->config->get('shipping_free_sort_order'),
 				'error'      => false

@@ -1,7 +1,7 @@
 <?php
 class ModelExtensionPaymentKlarnaAccount extends Model {
 	public function getMethod($address, $total) {
-		$this->load->language('extension/payment/klarna_account');
+		$this->load->language('extension/payment/klarna_account', 'klarna_account');
 
 		$status = true;
 
@@ -173,8 +173,8 @@ class ModelExtensionPaymentKlarnaAccount extends Model {
 		if ($status) {
 			$method = array(
 				'code'       => 'klarna_account',
-				'title'      => sprintf($this->language->get('text_title'), $this->currency->format($this->currency->convert($payment_option[0]['monthly_cost'], $country_to_currency[$address['iso_code_3']], $this->session->data['currency']), 1, 1)),
-				'terms'      => sprintf($this->language->get('text_terms'), $klarna_account[$address['iso_code_3']]['merchant'], strtolower($address['iso_code_2'])),
+				'title'      => sprintf($this->language->get('klarna_account')->get('text_title'), $this->currency->format($this->currency->convert($payment_option[0]['monthly_cost'], $country_to_currency[$address['iso_code_3']], $this->session->data['currency']), 1, 1)),
+				'terms'      => sprintf($this->language->get('klarna_account')->get('text_terms'), $klarna_account[$address['iso_code_3']]['merchant'], strtolower($address['iso_code_2'])),
 				'sort_order' => $klarna_account[$address['iso_code_3']]['sort_order'],
 			);
 		}

@@ -1,7 +1,7 @@
 <?php
 class ModelExtensionShippingPickup extends Model {
 	function getQuote($address) {
-		$this->load->language('extension/shipping/pickup');
+		$this->load->language('extension/shipping/pickup', 'pickup');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('shipping_pickup_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
@@ -20,7 +20,7 @@ class ModelExtensionShippingPickup extends Model {
 
 			$quote_data['pickup'] = array(
 				'code'         => 'pickup.pickup',
-				'title'        => $this->language->get('text_description'),
+				'title'        => $this->language->get('pickup')->get('text_description'),
 				'cost'         => 0.00,
 				'tax_class_id' => 0,
 				'text'         => $this->currency->format(0.00, $this->session->data['currency'])
@@ -28,7 +28,7 @@ class ModelExtensionShippingPickup extends Model {
 
 			$method_data = array(
 				'code'       => 'pickup',
-				'title'      => $this->language->get('text_title'),
+				'title'      => $this->language->get('pickup')->get('text_title'),
 				'quote'      => $quote_data,
 				'sort_order' => $this->config->get('shipping_pickup_sort_order'),
 				'error'      => false

@@ -1,7 +1,7 @@
 <?php
 class ModelExtensionTotalCredit extends Model {
 	public function getTotal($total) {
-		$this->load->language('extension/total/credit');
+		$this->load->language('extension/total/credit', 'credit');
 
 		$balance = $this->customer->getBalance();
 
@@ -11,7 +11,7 @@ class ModelExtensionTotalCredit extends Model {
 			if ((float)$credit > 0) {
 				$total['totals'][] = array(
 					'code'       => 'credit',
-					'title'      => $this->language->get('text_credit'),
+					'title'      => $this->language->get('credit')->get('text_credit'),
 					'value'      => -$credit,
 					'sort_order' => $this->config->get('total_credit_sort_order')
 				);

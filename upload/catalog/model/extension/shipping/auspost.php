@@ -7,7 +7,7 @@
 
 class ModelExtensionShippingAusPost extends Model {
 	public function getQuote($address) {
-		$this->load->language('extension/shipping/auspost');
+		$this->load->language('extension/shipping/auspost', 'auspost');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('shipping_auspost_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
@@ -121,7 +121,7 @@ class ModelExtensionShippingAusPost extends Model {
 		if ($quote_data) {
 			$method_data = array(
 				'code'       => 'auspost',
-				'title'      => $this->language->get('text_title'),
+				'title'      => $this->language->get('auspost')->get('text_title'),
 				'quote'      => $quote_data,
 				'sort_order' => $this->config->get('shipping_auspost_sort_order'),
 				'error'      => $error

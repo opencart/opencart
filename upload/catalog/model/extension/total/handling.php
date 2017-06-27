@@ -2,11 +2,11 @@
 class ModelExtensionTotalHandling extends Model {
 	public function getTotal($total) {
 		if (($this->cart->getSubTotal() > $this->config->get('total_handling_total')) && ($this->cart->getSubTotal() > 0)) {
-			$this->load->language('extension/total/handling');
+			$this->load->language('extension/total/handling', 'handling');
 
 			$total['totals'][] = array(
 				'code'       => 'handling',
-				'title'      => $this->language->get('text_handling'),
+				'title'      => $this->language->get('handling')->get('text_handling'),
 				'value'      => $this->config->get('total_handling_fee'),
 				'sort_order' => $this->config->get('total_handling_sort_order')
 			);

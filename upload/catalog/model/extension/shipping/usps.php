@@ -1,7 +1,7 @@
 <?php
 class ModelExtensionShippingUsps extends Model {
 	public function getQuote($address) {
-		$this->load->language('extension/shipping/usps');
+		$this->load->language('extension/shipping/usps', 'usps');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('shipping_usps_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
@@ -414,7 +414,7 @@ class ModelExtensionShippingUsps extends Model {
 
 								$method_data = array(
 									'code'       => 'usps',
-									'title'      => $this->language->get('text_title'),
+									'title'      => $this->language->get('usps')->get('text_title'),
 									'quote'      => $quote_data,
 									'sort_order' => $this->config->get('shipping_usps_sort_order'),
 									'error'      => $error->getElementsByTagName('Description')->item(0)->nodeValue
@@ -434,7 +434,7 @@ class ModelExtensionShippingUsps extends Model {
 									$title = $service->getElementsByTagName('SvcDescription')->item(0)->nodeValue;
 
 									if ($this->config->get('shipping_usps_display_time')) {
-										$title .= ' (' . $this->language->get('text_eta') . ' ' . $service->getElementsByTagName('SvcCommitments')->item(0)->nodeValue . ')';
+										$title .= ' (' . $this->language->get('usps')->get('text_eta') . ' ' . $service->getElementsByTagName('SvcCommitments')->item(0)->nodeValue . ')';
 									}
 
 									$cost = $service->getElementsByTagName('Postage')->item(0)->nodeValue;
@@ -452,7 +452,7 @@ class ModelExtensionShippingUsps extends Model {
 					} elseif ($error) {
 						$method_data = array(
 							'code'       => 'usps',
-							'title'      => $this->language->get('text_title'),
+							'title'      => $this->language->get('usps')->get('text_title'),
 							'quote'      => $quote_data,
 							'sort_order' => $this->config->get('shipping_usps_sort_order'),
 							'error'      => $error->getElementsByTagName('Description')->item(0)->nodeValue
@@ -462,10 +462,10 @@ class ModelExtensionShippingUsps extends Model {
 			}
 
 			if ($quote_data) {
-				$title = $this->language->get('text_title');
+				$title = $this->language->get('usps')->get('text_title');
 
 				if ($this->config->get('shipping_usps_display_weight')) {
-					$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('shipping_usps_weight_class_id')) . ')';
+					$title .= ' (' . $this->language->get('usps')->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('shipping_usps_weight_class_id')) . ')';
 				}
 
 				$method_data = array(

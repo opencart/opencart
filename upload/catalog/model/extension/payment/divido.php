@@ -9,7 +9,7 @@ class ModelExtensionPaymentDivido extends Model {
 	}
 
 	public function getMethod($payment_address, $total) {
-		$this->load->language('extension/payment/divido');
+		$this->load->language('extension/payment/divido', 'divido');
 		$this->load->model('localisation/currency');
 
 		if (!$this->isEnabled()) {
@@ -44,7 +44,7 @@ class ModelExtensionPaymentDivido extends Model {
 			return array();
 		}
 
-		$title = $this->language->get('text_checkout_title');
+		$title = $this->language->get('divido')->get('text_checkout_title');
 		if ($title_override = $this->config->get('payment_divido_title')) {
 			$title = $title_override;
 		}

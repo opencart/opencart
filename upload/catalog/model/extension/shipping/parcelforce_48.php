@@ -1,7 +1,7 @@
 <?php
 class ModelExtensionShippingParcelforce48 extends Model {
 	function getQuote($address) {
-		$this->load->language('extension/shipping/parcelforce_48');
+		$this->load->language('extension/shipping/parcelforce_48', 'parcelforce_48');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('shipping_parcelforce_48_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
@@ -51,18 +51,18 @@ class ModelExtensionShippingParcelforce48 extends Model {
 			$quote_data = array();
 
 			if ((float)$cost) {
-				$text = $this->language->get('text_description');
+				$text = $this->language->get('parcelforce_48')->get('text_description');
 
 				if ($this->config->get('shipping_parcelforce_48_display_weight')) {
-					$text .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
+					$text .= ' (' . $this->language->get('parcelforce_48')->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 				}
 
 				if ($this->config->get('shipping_parcelforce_48_display_insurance') && (float)$insurance) {
-					$text .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format($insurance, $this->session->data['currency']) . ')';
+					$text .= ' (' . $this->language->get('parcelforce_48')->get('text_insurance') . ' ' . $this->currency->format($insurance, $this->session->data['currency']) . ')';
 				}
 
 				if ($this->config->get('shipping_parcelforce_48_display_time')) {
-					$text .= ' (' . $this->language->get('text_time') . ')';
+					$text .= ' (' . $this->language->get('parcelforce_48')->get('text_time') . ')';
 				}
 
 				$quote_data['parcelforce_48'] = array(
@@ -75,7 +75,7 @@ class ModelExtensionShippingParcelforce48 extends Model {
 
 				$method_data = array(
 					'code'       => 'parcelforce_48',
-					'title'      => $this->language->get('text_title'),
+					'title'      => $this->language->get('parcelforce_48')->get('text_title'),
 					'quote'      => $quote_data,
 					'sort_order' => $this->config->get('shipping_parcelforce_48_sort_order'),
 					'error'      => false

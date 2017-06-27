@@ -142,7 +142,7 @@ class ModelExtensionPaymentPPBraintree extends Model {
 	}
 
 	public function getMethod($address, $total) {
-		$this->load->language('extension/payment/pp_braintree');
+		$this->load->language('extension/payment/pp_braintree', 'pp_braintree');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('payment_pp_braintree_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
@@ -161,7 +161,7 @@ class ModelExtensionPaymentPPBraintree extends Model {
 		if ($status) {
 			$method_data = array(
 				'code'		 => 'pp_braintree',
-				'title'		 => $this->language->get('text_title'),
+				'title'		 => $this->language->get('pp_braintree')->get('text_title'),
 				'terms'		 => '',
 				'sort_order' => $this->config->get('payment_pp_braintree_sort_order')
 			);

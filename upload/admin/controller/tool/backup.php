@@ -112,8 +112,8 @@ class ControllerToolBackup extends Controller {
 
 			$size = filesize(ini_get('upload_tmp_dir') . '/' . $filename);
 
-			$json['success'] = sprintf($this->language->get('text_success'), round(($position / $size) * 100));
-			
+			$json['total'] = round(($position / $size) * 100);
+
 			if ($position && !feof($handle)) {
 				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/import', 'user_token=' . $this->session->data['user_token'] . '&import=' . $filename . '&position=' . $position, true));
 			
@@ -122,6 +122,8 @@ class ControllerToolBackup extends Controller {
 				fclose($handle);
 				
 				unlink(ini_get('upload_tmp_dir') . '/' . $filename);
+
+				$json['success'] = $this->language->get('text_success');
 
 				$this->cache->delete('*');
 			}

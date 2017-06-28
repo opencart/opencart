@@ -55,7 +55,7 @@
                   <table class="table table-bordered">
                     <thead>
                       <th>Download Name</th>
-                      <th>Date Added</th>
+                      <th{{ text_date_added }}</th>
                       <th class="text-right">Action</th>
                     </thead>
                     <tbody>
@@ -86,7 +86,7 @@
                 <fieldset>
                   <legend>{{ text_comment_add }}</legend>
                   <div class="form-group">
-                    <textarea name="comment" rows="5" placeholder="Write your comment here..." id="input-comment" class="form-control"></textarea>
+                    <textarea name="comment" rows="5" placeholder="{{ text_write }}" id="input-comment" class="form-control"></textarea>
                   </div>
                   <div class="text-right">
                     <button type="button" id="button-comment" class="btn btn-primary">{{ button_comment }}</button>
@@ -102,21 +102,21 @@
           </div>
           <div class="col-sm-4">
             <div id="buy" class="well">{% if license == '1' and not purchased %}
-              <button id="button-buy" class="btn btn-success btn-lg btn-block">Buy</button>
+              <button id="button-buy" class="btn btn-success btn-lg btn-block">{{ button_purchase }}</button>
               {% endif %}
               <div id="price" class="row">
                 <div class="col-xs-5"><strong>{{ text_price }}</strong></div>
                 <div class="col-xs-7 text-right">{% if license %}
                   {{ price }}
                   {% else %}
-                  Free
+                  {{ text_free }}
                   {% endif %}</div>
               </div>
               <hr>
               <ul class="list-check">
-                <li>Developed by OpenCart Partner</li>
-                <li>12 Months Free Support</li>
-                <li>Documentation Included</li>
+                <li>{{ text_partner }}</li>
+                <li>{{ text_support }}</li>
+                <li>{{ text_documentation }}</li>
               </ul>
               <hr>
               <div class="row">

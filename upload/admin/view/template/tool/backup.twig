@@ -26,6 +26,9 @@
       </div>
       <div class="panel-body">
         <form class="form-horizontal">
+	  <div id="progress-import" class="progress">
+	    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+	  </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-import">{{ entry_import }}</label>
             <div class="col-sm-10">
@@ -69,7 +72,10 @@ $('#button-import').on('click', function() {
 	
 	timer = setInterval(function() {
 		if ($('#form-upload input[name=\'import\']').val() != '') {
-			clearInterval(timer);		
+			clearInterval(timer);
+
+			$('#progress-import .progress-bar').attr('aria-valuenow', 0);
+			$('#progress-import .progress-bar').css('width', '0%');
 			
 			$.ajax({
 				url: 'index.php?route=tool/backup/import&user_token={{ user_token }}',
@@ -94,6 +100,11 @@ $('#button-import').on('click', function() {
 								
 					if (json['success']) {
 						$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					}
+
+					if (json['total']) {
+						$('#progress-import .progress-bar').attr('aria-valuenow', json['total']);
+						$('#progress-import .progress-bar').css('width', json['total'] + '%');
 					}
 					
 					if (json['next']) {
@@ -121,6 +132,11 @@ function next(url) {
 						
 			if (json['success']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+			
+			if (json['total']) {
+				$('#progress-import .progress-bar').attr('aria-valuenow', json['total']);
+				$('#progress-import .progress-bar').css('width', json['total'] + '%');
 			}
 			
 			if (json['next']) {

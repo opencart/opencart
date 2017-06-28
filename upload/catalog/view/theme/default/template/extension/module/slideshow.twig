@@ -1,54 +1,19 @@
 <div id="slideshow{{ module }}" class="swiper-container">
-  <div class="swiper-wrapper"> {% for banner in banners %}
-    <div class="swiper-slide text-center"> {% if banner.link %} <a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" /></a> {% else %} <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" /> {% endif %} </div>
-    {% endfor %} </div>
+  <div class="swiper-wrapper">{% for banner in banners %}
+    <div class="swiper-slide text-center">{% if banner.link %}<a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" /></a>{% else %}<img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" />{% endif %}</div>
+    {% endfor %}</div>
+  <div class="swiper-pagination"></div>
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
 </div>
- <style>
-    body {
-   
-        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-        font-size: 14px;
-        color:#000;
-        margin: 0;
-        padding: 0;
-    }
-    .swiper-container {
-        width: 500px;
-        height: 300px;
-        margin: 20px auto;
-    }
-    .swiper-slide {
-        text-align: center;
-        font-size: 18px;
-        background: #fff;
-        /* Center slide text vertically */
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        -webkit-justify-content: center;
-        justify-content: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        -webkit-align-items: center;
-        align-items: center;
-    }
-    </style>
 <script type="text/javascript"><!--
-/*
-$('#slideshow{{ module }}').owlCarousel({
-	items: 6,
-	autoPlay: 3000,
-	singleItem: true,
-	navigation: true,
-	navigationText: ['<i class="fa fa-chevron-left fa-5x"></i>', '<i class="fa fa-chevron-right fa-5x"></i>'],
-	pagination: true
-});
-*/
 $('#slideshow{{ module }}').swiper({
 	pagination: '.swiper-pagination',
-	paginationClickable: true
+	paginationClickable: true,
+	nextButton: '.swiper-button-next',
+    prevButton: '.swiper-button-prev',
+    spaceBetween: 30,
+	autoplay: 2500,
+    autoplayDisableOnInteraction: false	
 });
 --></script>

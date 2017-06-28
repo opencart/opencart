@@ -2,6 +2,9 @@
   <div class="swiper-wrapper">{% for banner in banners %}
     <div class="swiper-slide text-center">{% if banner.link %}<a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" /></a>{% else %}<img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" />{% endif %}</div>
     {% endfor %}</div>
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-pagination"></div>
 </div>
 <script type="text/javascript"><!--
 /*
@@ -13,9 +16,12 @@ $('#carousel{{ module }}').owlCarousel({
 	pagination: true
 });
 */
-var swiper = new Swiper('#carousel{{ module }}', {
+$('#carousel{{ module }}').swiper({
+	slidesPerView: 6,
 	pagination: '.swiper-pagination',
 	paginationClickable: true,
-	direction: 'vertical'
+	freeMode: true,
+	autoplay: 2500,
+    autoplayDisableOnInteraction: false
 });
 --></script>

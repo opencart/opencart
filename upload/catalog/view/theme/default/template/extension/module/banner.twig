@@ -4,19 +4,9 @@
     {% endfor %}</div>
 </div>
 <script type="text/javascript"><!--
-/*
-$('#banner{{ module }}').owlCarousel({
-	items: 6,
-	autoPlay: 3000,
-	singleItem: true,
-	navigation: false,
-	pagination: false,
-	transitionStyle: 'fade'
-});
-*/
-var swiper = new Swiper('#banner{{ module }}', {
-	pagination: '.swiper-pagination',
-	paginationClickable: true,
-	direction: 'vertical'
+$('#banner{{ module }}').swiper({
+	effect: 'fade',
+	autoplay: 2500,
+    autoplayDisableOnInteraction: false
 });
 --></script> 

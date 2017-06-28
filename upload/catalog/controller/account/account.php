@@ -42,7 +42,7 @@ class ControllerAccountAccount extends Controller {
 		foreach ($files as $file) {
 			$code = basename($file, '.php');
 			
-			if ($this->config->get('payment_' . $code . '_status') && $this->config->get($code . '_card')) {
+			if ($this->config->get('payment_' . $code . '_status') && $this->config->get('payment_' . $code . '_card')) {
 				$this->load->language('extension/credit_card/' . $code, 'extension');
 
 				$data['credit_cards'][] = array(

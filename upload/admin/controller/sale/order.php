@@ -1815,7 +1815,7 @@ class ControllerSaleOrder extends Controller {
 							'jan'      => $product_info['jan'],
 							'isbn'     => $product_info['isbn'],
 							'mpn'      => $product_info['mpn'],
-							'weight'   => $this->weight->format(($product_info['weight'] + $option_weight) * $product['quantity'], $product_info['weight_class_id'], $this->language->get('decimal_point'), $this->language->get('thousand_point'))
+							'weight'   => $this->weight->format(($product_info['weight'] + (float)$option_weight) * $product['quantity'], $product_info['weight_class_id'], $this->language->get('decimal_point'), $this->language->get('thousand_point'))
 						);
 					}
 				}

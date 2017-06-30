@@ -49,7 +49,7 @@
               <?php if ($customers) { ?>
               <?php foreach ($customers as $customer) { ?>
               <tr>
-                <td class="text-left"><a href="http://whatismyipaddress.com/ip/<?php echo $customer['ip']; ?>" target="_blank"><?php echo $customer['ip']; ?></a></td>
+                <td class="text-left"><a href="//whatismyipaddress.com/ip/<?php echo $customer['ip']; ?>" target="_blank" rel="noreferrer"><?php echo $customer['ip']; ?></a></td>
                 <td class="text-left"><?php echo $customer['customer']; ?></td>
                 <td class="text-left"><a href="<?php echo $customer['url']; ?>" target="_blank"><?php echo implode('<br/>', str_split($customer['url'], 30)); ?></a></td>
                 <td class="text-left"><?php if ($customer['referer']) { ?>

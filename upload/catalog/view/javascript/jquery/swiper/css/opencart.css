@@ -1,12 +1,12 @@
 /* CSS Document */
 
-/* OpenCart Code */
-.owl-carousel {
+/* OpenCart Code 
+.swiper-container {
 	margin: 0 0 20px;
 	background: #fff;
 	direction: ltr !important;
 	z-index: 1;
-}
+}*/
 .owl-wrapper-outer {
 	border: 4px solid #fff;
 	-webkit-border-radius: 4px;
@@ -37,11 +37,12 @@
 	font-size: 40px;
 	margin: -20px 0 0;
 }
-.owl-pagination {
+.swiper-pagination-bullets {
 	text-align: center;
-	top: 20px;
-	position: relative;
 }
+
+swiper-pagination-bullet swiper-pagination-bullet-active
+
 .owl-controls .owl-page {
 	display: inline-block;
 	margin: 0px 6px;

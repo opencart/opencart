@@ -3,15 +3,15 @@
   <ul id="menu">
     {% set i = 0 %}
     {% for menu in menus %}
-    <li id="{{ menu.id }}">{% if menu.href %}<a href="{{ menu.href }}"><i class="fa {{ menu.icon }} fw"></i> {{ menu.name }}</a>{% else %}<a href="#collapse{{ i }}" data-toggle="collapse" class="parent"><i class="fa {{ menu.icon }} fw"></i> {{ menu.name }}</a>{% endif %}
+    <li id="{{ menu.id }}">{% if menu.href %}<a href="{{ menu.href }}"><i class="fa {{ menu.icon }} fw"></i> {{ menu.name }}</a>{% else %}<a href="#collapse{{ i }}" data-toggle="collapse" class="parent collapsed"><i class="fa {{ menu.icon }} fw"></i> {{ menu.name }}</a>{% endif %}
       {% if menu.children %}
       <ul id="collapse{{ i }}" class="collapse">
         {% for children_1 in menu.children %}
-        <li>{% if children_1.href %}<a href="{{ children_1.href }}">{{ children_1.name }}</a>{% else %}<a href="#collapse{{ i }}" data-toggle="collapse" class="parent">{{ children_1.name }}</a>{% endif %}
+        <li>{% if children_1.href %}<a href="{{ children_1.href }}">{{ children_1.name }}</a>{% else %}<a href="#collapse{{ i }}" data-toggle="collapse" class="parent collapsed">{{ children_1.name }}</a>{% endif %}
           {% if children_1.children %}
           <ul id="collapse{{ i }}" class="collapse">
             {% for children_2 in children_1.children %}
-            <li>{% if children_2.href %}<a href="{{ children_2.href }}">{{ children_2.name }}</a>{% else %}<a href="#collapse{{ i }}" data-toggle="collapse" class="parent">{{ children_2.name }}</a>{% endif %}
+            <li>{% if children_2.href %}<a href="{{ children_2.href }}">{{ children_2.name }}</a>{% else %}<a href="#collapse{{ i }}" data-toggle="collapse" class="parent collapsed">{{ children_2.name }}</a>{% endif %}
               {% if children_2.children %}
               <ul id="collapse{{ i }}" class="collapse">
                 {% for children_3 in children_2.children %}

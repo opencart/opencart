@@ -68,26 +68,7 @@ $(document).ready(function() {
 		e.preventDefault();
 		
 		$('#column-left').toggleClass('active');
-
-		// Add the slide down to open menu items
-		//$('#menu li.open').has('ul').children('ul').addClass('collapse in');
-		//$('#menu li').not('.open').has('ul').children('ul').addClass('collapse');
-		//$('#menu li.active').has('ul').children('ul').addClass('collapse in');
-		//$('#menu li').not('.active').has('ul').children('ul').addClass('collapse');
 	});
-
-/*
-// Menu
-$('#menu').find('li').has('ul').children('a').on('click', function() {
-if ($('#column-left').hasClass('active')) {
-$(this).parent('li').toggleClass('open').children('ul').collapse('toggle');
-$(this).parent('li').siblings().removeClass('open').children('ul.in').collapse('hide');
-} else if (!$(this).parent().parent().is('#menu')) {
-$(this).parent('li').toggleClass('open').children('ul').collapse('toggle');
-$(this).parent('li').siblings().removeClass('open').children('ul.in').collapse('hide');
-}
-});
-*/
 
 	// Set last page opened on the menu
 	$('#menu a[href]').on('click', function() {
@@ -98,8 +79,14 @@ $(this).parent('li').siblings().removeClass('open').children('ul.in').collapse('
 		$('#menu #dashboard').addClass('active');
 	} else {
 		// Sets active and open to selected page in the left column menu.
-		$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li').addClass('active open');
+		$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parent().addClass('active');
 	}
+	
+	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li > a').removeClass('collapsed');
+	
+	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('ul').addClass('in');
+	
+	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li').addClass('active');
 	
 	// Image Manager
 	$(document).on('click', 'a[data-toggle=\'image\']', function(e) {

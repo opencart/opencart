@@ -222,7 +222,17 @@ a:hover, a:focus {
 	cursor: pointer;
 	border-bottom: 0px solid #515151;
 }
-
+#menu li a.parent:after {
+	font-family: FontAwesome;
+	float: right;
+	margin-right: 8px;
+}
+#menu li a.parent:after {
+	content: "\f107";
+}
+#menu li a.collapsed:after {
+	content: "\f105";
+}
 /* 1st lvl */
 #menu > li {
 	position: relative;
@@ -244,21 +254,13 @@ a:hover, a:focus {
 	color: #0b91d2;
 	background-color: #171b21;
 }
-
-/* 2nd lvl */
 #menu > li > ul {
 	background-color: #293141;
 }
-
+/* 2nd lvl */
 #menu li li a {
 	color: #7f8a9b;
 }
-
-#menu li li a:hover {
-	color: #FFFFFF;
-	background-color: #242d37;
-}
-
 #menu li li a:before {
 	content: "\f101";
 	font-size: 13px;
@@ -270,42 +272,14 @@ a:hover, a:focus {
 #menu li li a:hover:before {
 	margin-right: 20px;
 }
-
-#menu li.active li a {
-	color: #7f8a9b;
+#menu li li a:hover {
+	color: #FFFFFF;
+	background-color: #242d37;
 }
-
-#menu li li.active > a:last-child {
+#menu li li.active > a {
 	color: #0b91d2;
 	background-color: #242d37;
 }
-
-
-#menu li li.active a:last-child:before {
-	margin-left: 20px;
-	margin-right: 10px;
-}
-
-
-#menu li > a.parent:after {
-	font-family: FontAwesome;
-	float: right;
-	margin-right: 8px;
-}
-	
-#menu li a.parent:after {
-	content: "\f105";
-}	
-	
-#menu li > a.collapsed:after {
-	content: "\f107";
-
-}
-
-
-
-
-
 #menu li ul a {
 	padding-left: 20px;
 }
@@ -318,15 +292,6 @@ a:hover, a:focus {
 #menu li li li li ul a {
 	padding-left: 80px;
 }
-
-
-
-
-
-
-
-
-
 
 /* footer */
 #footer {

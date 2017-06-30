@@ -15,6 +15,9 @@ $_['db_port']           = DB_PORT;
 // Session
 $_['session_autostart'] = true;
 
+// Template
+$_['template_cache']    = true;
+
 // Actions
 $_['action_pre_action'] = array(
 	'startup/startup',

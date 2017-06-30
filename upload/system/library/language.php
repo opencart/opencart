@@ -11,7 +11,11 @@ class Language {
 	public function get($key) {
 		return (isset($this->data[$key]) ? $this->data[$key] : $key);
 	}
-	
+
+	public function getData() {
+		return $this->data;
+	}
+
 	public function set($key, $value) {
 		$this->data[$key] = $value;
 	}
@@ -36,10 +40,14 @@ class Language {
 		}
 
 		$file = DIR_LANGUAGE . $this->directory . '/' . $filename . '.php';
-		
+
 		if (is_file($file)) {
 			require($file);
-		} 
+		}
+
+		if(!isset($data)){
+			$data = array();
+		}
 
 		$this->data = array_merge($this->data, $_);
 

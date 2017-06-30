@@ -1,7 +1,10 @@
 <?php
 class ControllerStartupSass extends Controller {
 	public function index() {
-		$file = DIR_APPLICATION . 'view/theme/stylesheet/bootstrap.css';
+		
+		$scss = DIR_APPLICATION . 'view/theme/' . $this->config->get('theme_directory') . '/stylesheet/sass/_bootstrap.scss';
+		
+		$file = DIR_APPLICATION . 'view/theme/' . $this->config->get('theme_directory') . '/stylesheet/bootstrap.css';
 
 		if (!is_file($file) || !$this->config->get('developer_sass')) {
 			include_once(DIR_STORAGE . 'vendor/scss.inc.php');

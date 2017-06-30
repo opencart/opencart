@@ -5,12 +5,6 @@
       <h4 class="modal-title"><i class="fa fa-cog"></i> {{ heading_title }}</h4>
     </div>
     <div class="modal-body">
-{% if error_eval %}
-    <div class="alert alert-danger alert-dismissible">
-      <button type="button" class="close pull-right" data-dismiss="alert">&times;</button>
-      <i class="fa fa-exclamation-circle"></i> {{ error_eval }}</div>
-    {% endif %}    
-    
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -21,23 +15,30 @@
         </thead>
         <tr>
           <td>{{ entry_theme }}</td>
-          <td ><div class="btn-group" data-toggle="buttons">{% if developer_theme %}
+          <td ><div class="btn-group" data-toggle="buttons">
+             {% if developer_theme %}
               <label class="btn btn-success active" {% if error_eval %}disabled="disabled"{% endif %}>
-                <input type="radio" name="developer_theme" value="1" autocomplete="off" {% if error_eval %}disabled="disabled"{% endif %} checked>
-                {{ button_on }}</label>
+              <input type="radio" name="developer_theme" value="1" autocomplete="off" {% if error_eval %}disabled="disabled"{% endif %} checked>
+              {{ button_on }}
+              </label>
               {% else %}
               <label class="btn btn-success" {% if error_eval %}disabled="disabled"{% endif %}>
-                <input type="radio" name="developer_theme" value="1" autocomplete="off" {% if error_eval %}disabled="disabled"{% endif %}>
-                {{ button_on }}</label>
+              <input type="radio" name="developer_theme" value="1" autocomplete="off" {% if error_eval %}disabled="disabled"{% endif %}>
+              {{ button_on }}
+              </label>
               {% endif %}
+              
               {% if not developer_theme %}
               <label class="btn btn-danger active" {% if error_eval %}disabled="disabled"{% endif %}>
-                <input type="radio" name="developer_theme" value="0" autocomplete="off" {% if error_eval %}disabled="disabled"{% endif %} checked>
-                {{ button_off }}</label>
+              <input type="radio" name="developer_theme" value="0" autocomplete="off" {% if error_eval %}disabled="disabled"{% endif %} checked>
+              {{ button_off }}
+              </label>
               {% else %}
               <label class="btn btn-danger" {% if error_eval %}disabled="disabled"{% endif %}
-                <input type="radio" name="developer_theme" value="0" autocomplete="off" {% if error_eval %}disabled="disabled"{% endif %}>
-                {{ button_off }}</label>
+                
+              <input type="radio" name="developer_theme" value="0" autocomplete="off" {% if error_eval %}disabled="disabled"{% endif %}>
+              {{ button_off }}
+              </label>
               {% endif %}</div></td>
           <td class="text-right"><button type="button" value="theme" data-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-warning"><i class="fa fa-refresh"></i></button></td>
         </tr>
@@ -67,7 +68,7 @@
     </div>
   </div>
 </div>
-  <script type="text/javascript"><!--
+<script type="text/javascript"><!--
 $('input[name=\'developer_theme\'], input[name=\'developer_sass\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=common/developer/edit&user_token={{ user_token }}',		

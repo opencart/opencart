@@ -9,15 +9,11 @@ class ControllerCommonDeveloper extends Controller {
 		$data['developer_sass'] = $this->config->get('developer_sass');	
 				
 		if (!function_exists('eval')) {
-			$data['error_eval'] = $this->language->get('error_eval');
-			
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->editSetting('developer', array('developer_theme' => 1), 0);
 			
 			$data['developer_theme'] = 1;
-		} else {
-			$data['error_eval'] = '';
 		}
 	
 		$this->response->setOutput($this->load->view('common/developer', $data));
@@ -83,18 +79,23 @@ class ControllerCommonDeveloper extends Controller {
 		if (!$this->user->hasPermission('modify', 'common/developer')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
+			// Before we delete we need to make sure there is a sass file to regenerate the css
 			$file = DIR_APPLICATION  . 'view/stylesheet/bootstrap.css';
 			
-			if (is_file($file)) {
+			if (is_file($file) && is_file(DIR_APPLICATION . 'view/stylesheet/sass/_bootstrap.scss')) {
 				unlink($file);
 			}
-			
-			$file = DIR_CATALOG  . 'view/stylesheet/bootstrap.css';
-			
-			if (is_file($file)) {
-				unlink($file);
+			 
+			$files = glob(DIR_CATALOG  . 'view/theme/*/stylesheet/sass/_bootstrap.scss', GLOB_BRACE);
+			 
+			foreach ($files as $file) {
+				$file = substr($file, 0, -21) . '/bootstrap.css';
+				
+				if (is_file($file)) {
+					unlink($file);
+				}
 			}
-						
+			
 			$json['success'] = sprintf($this->language->get('text_cache'), $this->language->get('text_sass'));
 		}	
 		

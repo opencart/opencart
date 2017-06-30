@@ -23,4 +23,3 @@ $_['button_off']       = 'Off';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify developer settings!';
-$_['error_eval']       = 'Warning: Theme caching can not be disabled as the eval function is not avaliable on this hosting!';

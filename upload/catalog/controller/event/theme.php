@@ -11,7 +11,7 @@ class ControllerEventTheme extends Controller {
 		} else {
 			$theme = $this->config->get('config_theme');
 		}
-	
+			
 		// If there is a theme override we should get it				
 		$this->load->model('design/theme');
 		

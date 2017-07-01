@@ -11,7 +11,5 @@ class ControllerEventTheme extends Controller {
 		} elseif (is_file(DIR_TEMPLATE . $route . '.tpl')) {
 			$this->config->set('template_engine', 'template');
 		}		
-		
-		$this->config->get('template_cache', $this->config->get('developer_theme'));
 	}
 }

@@ -1,4 +1,4 @@
-<form action="https://test.authorize.net/gateway/transact.dll" method="post">
+<form action="https://secure.authorize.net/gateway/transact.dll" method="post">
   <input type="hidden" name="x_login" value="<?php echo $x_login; ?>" />
   <input type="hidden" name="x_fp_sequence" value="<?php echo $x_fp_sequence; ?>" />
   <input type="hidden" name="x_fp_timestamp" value="<?php echo $x_fp_timestamp; ?>" />

@@ -16,6 +16,8 @@ class ControllerCommonSecurity extends Controller {
 	
 		$data['user_token'] = $this->session->data['user_token'];
 		
+		$data['storage'] = DIR_SYSTEM . 'storage/';
+		
 		$path = '';
 		
 		$data['paths'] = '';

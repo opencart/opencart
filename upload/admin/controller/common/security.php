@@ -7,16 +7,30 @@ class ControllerCommonSecurity extends Controller {
 		
 		$args = array(
 			DIR_SYSTEM . 'storage/',
-			str_replace('\\', '/', realpath(DIR_SYSTEM . '../../')) . '/',
+			str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '../')) . '/',
 			'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');',
-			'define(\'DIR_STORAGE\', \'' . realpath(DIR_SYSTEM . '../../') . '/storage/\');',
+			'define(\'DIR_STORAGE\', \'' . realpath($this->request->server['DOCUMENT_ROOT'] . '../') . '/storage/\');',
 			'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');',
-			'define(\'DIR_STORAGE\', \'' . realpath(DIR_SYSTEM . '../../') . '/storage/\');'
+			'define(\'DIR_STORAGE\', \'' . realpath($this->request->server['DOCUMENT_ROOT'] . '../') . '/storage/\');'
 		);
 		
 		$data['text_instruction'] = vsprintf($this->language->get('text_instruction'), $args);
 
-		$data['path'] = substr($this->request->server['DOCUMENT_ROOT'], 0, strrpos($this->request->server['DOCUMENT_ROOT'], '/')) . '/';
+		//$data['path'] = substr($this->request->server['DOCUMENT_ROOT'], 0, strrpos($this->request->server['DOCUMENT_ROOT'], '/')) . '/';
+			
+		$data['paths'] = '';
+		
+		$path = '';
+			
+		$parts = explode('/', substr($this->request->server['DOCUMENT_ROOT'], 0, strrpos($this->request->server['DOCUMENT_ROOT'], '/')));	
+		
+		foreach ($parts as $part) {
+			$path .= $part . '/';
+			
+			$data['paths'][] = $path;
+		}
+		
+		rsort($data['paths']);	
 			
 		return $this->load->view('common/security', $data);
 	}

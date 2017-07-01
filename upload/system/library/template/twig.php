@@ -20,10 +20,16 @@ final class Twig {
 		$loader = new \Twig_Loader_Filesystem(DIR_TEMPLATE);	
 		
 		// initialize Twig environment
-		$this->twig = new \Twig_Environment($loader, array(
-			'autoescape' => false,
-			'cache'      => $cache ? DIR_CACHE : '' 
-		));		
+		if ($cache) {
+			$config = array(
+				'autoescape' => false,
+				'cache'      => DIR_CACHE 
+			);
+		} else {
+			$config = array('autoescape' => false);	
+		}
+		
+		$this->twig = new \Twig_Environment($loader, $config);	
 		
 		try {
 			// load template

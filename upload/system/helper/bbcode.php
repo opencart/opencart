@@ -68,4 +68,3 @@ function bbcode_decode($string) {
 	   
     return $string;  
 }  
-?>

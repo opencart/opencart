@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']    = 'Important Security Notification';
+$_['heading_title']    = 'Important Security Notification!';
 
 // Text
 $_['text_instruction'] = '

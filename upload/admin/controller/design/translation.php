@@ -128,7 +128,7 @@ class ControllerDesignTranslation extends Controller {
 		} else {
 			$page = 1;
 		}
-		
+
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -141,7 +141,7 @@ class ControllerDesignTranslation extends Controller {
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
-		}		
+		}
 		
 		$data['breadcrumbs'] = array();
 
@@ -154,12 +154,12 @@ class ControllerDesignTranslation extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'], true)
 		);
-		
+
 		$this->load->model('localisation/language');
-		
+
 		$data['add'] = $this->url->link('design/translation/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
 		$data['delete'] = $this->url->link('design/translation/delete', 'user_token=' . $this->session->data['user_token'] . $url, true);
-		
+
 		$data['translations'] = array();
 
 		$filter_data = array(
@@ -168,11 +168,11 @@ class ControllerDesignTranslation extends Controller {
 			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
 			'limit' => $this->config->get('config_limit_admin')
 		);
-		
+
 		$translation_total = $this->model_design_translation->getTotalTranslations();
-		
+
 		$results = $this->model_design_translation->getTranslations($filter_data);
-					
+
 		foreach ($results as $result) {
 			$data['translations'][] = array(
 				'translation_id' => $result['translation_id'],
@@ -182,7 +182,7 @@ class ControllerDesignTranslation extends Controller {
 				'key'            => $result['key'],
 				'value'          => $result['value'],
 				'edit'           => $this->url->link('design/translation/edit', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $result['translation_id'], true),
-			);			
+			);
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -224,7 +224,7 @@ class ControllerDesignTranslation extends Controller {
 		$data['sort_route'] = $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . '&sort=route' . $url, true);
 		$data['sort_key'] = $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . '&sort=key' . $url, true);
 		$data['sort_value'] = $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . '&sort=value' . $url, true);
-		
+
 		$pagination = new Pagination();
 		$pagination->total = $translation_total;
 		$pagination->page = $page;
@@ -237,7 +237,7 @@ class ControllerDesignTranslation extends Controller {
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
-				
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -253,12 +253,12 @@ class ControllerDesignTranslation extends Controller {
 		} else {
 			$data['error_warning'] = '';
 		}
-		
+
 		if (isset($this->error['key'])) {
 			$data['error_key'] = $this->error['key'];
 		} else {
 			$data['error_key'] = '';
-		}		
+		}
 
 		$url = '';
 
@@ -283,7 +283,7 @@ class ControllerDesignTranslation extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url, true)
+			'href' => $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . $url, true)
 		);
 
 		if (!isset($this->request->get['translation_id'])) {
@@ -294,24 +294,16 @@ class ControllerDesignTranslation extends Controller {
 
 		$data['cancel'] = $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
+		$data['user_token'] = $this->session->data['user_token'];
+
 		if (isset($this->request->get['translation_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$translation_info = $this->model_design_translation->getTranslation($this->request->get['translation_id']);
 		}
-		
-		$data['user_token'] = $this->session->data['user_token'];
-		
-		if (isset($this->request->post['language_id'])) {
-			$data['language_id'] = $this->request->post['language_id'];
-		} elseif (!empty($translation_info)) {
-			$data['language_id'] = $translation_info['language_id'];
-		} else {
-			$data['language_id'] = '';
-		}
 
-		$this->load->model('localisation/language');
+		$this->load->model('setting/store');
 
-		$data['languages'] = $this->model_localisation_language->getLanguages();
-		
+		$data['stores'] = $this->model_setting_store->getStores();
+
 		if (isset($this->request->post['store_id'])) {
 			$data['store_id'] = $this->request->post['store_id'];
 		} elseif (!empty($translation_info)) {
@@ -320,29 +312,47 @@ class ControllerDesignTranslation extends Controller {
 			$data['store_id'] = '';
 		}
 
-		$this->load->model('setting/store');
+		$this->load->model('localisation/language');
 
-		$data['stores'] = $this->model_setting_store->getStores();
+		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		// Get a list of files ready to upload
-		$data['paths'] = array();
+		if (!empty($translation_info)) {
+			$language = $this->model_localisation_language->getLanguage($translation_info['language_id']);
+			$code = $language['code'];
+		} else {
+			$code = $this->config->get('config_language');
+			$language = $this->model_localisation_language->getLanguageByCode($code);
+		}
 
-		$path = glob(DIR_CATALOG . 'language/en-gb/*');
+		if (isset($this->request->post['language_id'])) {
+			$data['language_id'] = $this->request->post['language_id'];
+		} elseif (!empty($translation_info)) {
+			$data['language_id'] = $translation_info['language_id'];
+		} else {
+			$data['language_id'] = $language['language_id'];
+		}
 
-		while (count($path) != 0) {
-			$next = array_shift($path);
+		if (empty($translation_info)) {
+			// Get a list of files ready to upload
+			$data['paths'] = array();
 
-			foreach ((array)glob($next) as $file) {
-				if (is_dir($file)) {
-					$path[] = $file . '/*';
-				}
-				
-				if (substr($file, -4) == '.php') {
-					$data['paths'][] = substr(substr($file, strlen(DIR_CATALOG . 'language/en-gb/')), 0, -4);
+			$path = glob(DIR_CATALOG . 'language/'.$code.'/*');
+
+			while (count($path) != 0) {
+				$next = array_shift($path);
+
+				foreach ((array)glob($next) as $file) {
+					if (is_dir($file)) {
+						$path[] = $file . '/*';
+					}
+
+					if (substr($file, -4) == '.php') {
+						$data['paths'][] = substr(substr($file, strlen(DIR_CATALOG . 'language/'.$code.'/')), 0, -4);
+					}
 				}
 			}
 		}
-		
+
 		if (isset($this->request->post['route'])) {
 			$data['route'] = $this->request->post['route'];
 		} elseif (!empty($translation_info)) {
@@ -350,7 +360,7 @@ class ControllerDesignTranslation extends Controller {
 		} else {
 			$data['route'] = '';
 		}
-		
+
 		if (isset($this->request->post['key'])) {
 			$data['key'] = $this->request->post['key'];
 		} elseif (!empty($translation_info)) {
@@ -358,7 +368,27 @@ class ControllerDesignTranslation extends Controller {
 		} else {
 			$data['key'] = '';
 		}
-		
+
+		if (!empty($translation_info)) {
+			$directory = DIR_CATALOG . 'language/';
+
+			if (is_file($directory . $code . '/' . $translation_info['route'] . '.php') && substr(str_replace('\\', '/', realpath($directory . $code . '/' . $translation_info['route'] . '.php')), 0, strlen($directory)) == str_replace('\\', '/', $directory)) {
+				$_ = array();
+
+				include($directory . $code . '/' . $translation_info['route'] . '.php');
+
+				foreach ($_ as $key => $value) {
+					if ($translation_info['key'] == $key) {
+						$data['default'] = $value;
+					}
+				}
+
+				if (empty($data['default'])) {
+					$data['default'] = $translation_info['value'];
+				}
+			}
+		}
+
 		if (isset($this->request->post['value'])) {
 			$data['value'] = $this->request->post['value'];
 		} elseif (!empty($translation_info)) {
@@ -366,7 +396,7 @@ class ControllerDesignTranslation extends Controller {
 		} else {
 			$data['value'] = '';
 		}
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -378,7 +408,7 @@ class ControllerDesignTranslation extends Controller {
 		if (!$this->user->hasPermission('modify', 'design/translation')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
-		
+
 		if ((utf8_strlen($this->request->post['key']) < 3) || (utf8_strlen($this->request->post['key']) > 64)) {
 			$this->error['key'] = $this->language->get('error_key');
 		}
@@ -393,41 +423,78 @@ class ControllerDesignTranslation extends Controller {
 
 		return !$this->error;
 	}
-	
-	public function translation() {
+
+	public function path() {
 		$this->load->language('design/translation');
-		
+
 		$json = array();
-		
-		if (isset($this->request->get['store_id'])) {
-			$store_id = $this->request->get['store_id'];			
-		} else {
-			$store_id = 0;
-		}	
-		
+
 		if (isset($this->request->get['language_id'])) {
-			$language_id = $this->request->get['language_id'];			
+			$language_id = $this->request->get['language_id'];
 		} else {
 			$language_id = 0;
 		}
-		
+
+		$this->load->model('localisation/language');
+
+		$language_info = $this->model_localisation_language->getLanguage($language_id);
+
+		if (!empty($language_info)) {
+			$path = glob(DIR_CATALOG . 'language/'.$language_info['code'].'/*');
+
+			while (count($path) != 0) {
+				$next = array_shift($path);
+
+				foreach ((array)glob($next) as $file) {
+					if (is_dir($file)) {
+						$path[] = $file . '/*';
+					}
+
+					if (substr($file, -4) == '.php') {
+						$json[] = substr(substr($file, strlen(DIR_CATALOG . 'language/'.$language_info['code'].'/')), 0, -4);
+					}
+				}
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function translation() {
+		$this->load->language('design/translation');
+
+		$json = array();
+
+		if (isset($this->request->get['store_id'])) {
+			$store_id = $this->request->get['store_id'];
+		} else {
+			$store_id = 0;
+		}
+
+		if (isset($this->request->get['language_id'])) {
+			$language_id = $this->request->get['language_id'];
+		} else {
+			$language_id = 0;
+		}
+
 		if (isset($this->request->get['path'])) {
 			$route = $this->request->get['path'];
 		} else {
 			$route = '';
-		}	
-		
+		}
+
 		$this->load->model('localisation/language');
-					
+
 		$language_info = $this->model_localisation_language->getLanguage($language_id);
-		
+
 		$directory = DIR_CATALOG . 'language/';
-		
+
 		if ($language_info && is_file($directory . $language_info['code'] . '/' . $route . '.php') && substr(str_replace('\\', '/', realpath($directory . $language_info['code'] . '/' . $route . '.php')), 0, strlen($directory)) == str_replace('\\', '/', $directory)) {
 			$_ = array();
-						
+
 			include($directory . $language_info['code'] . '/' . $route . '.php');
-			
+
 			foreach ($_ as $key => $value) {
 				$json[] = array(
 					'key'   => $key,

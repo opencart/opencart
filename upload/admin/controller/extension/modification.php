@@ -123,7 +123,7 @@ class ControllerExtensionModification extends Controller {
 			}
 
 			// Get the default modification file
-			$results = $this->model_extension_modification->getModifications();
+			$results = $this->model_extension_modification->getModifications(array('sort'=>'date_added', 'order'=>'ASC'));
 
 			foreach ($results as $result) {
 				if ($result['status']) {

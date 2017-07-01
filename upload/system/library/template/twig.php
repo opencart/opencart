@@ -29,7 +29,7 @@ final class Twig {
 			$config = array('autoescape' => false);	
 		}
 		
-		$this->twig = new \Twig_Environment($loader, $config);	
+		$this->twig = new \Twig_Environment($loader, $config);
 		
 		try {
 			// load template

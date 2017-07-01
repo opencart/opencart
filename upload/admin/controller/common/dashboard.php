@@ -76,7 +76,7 @@ class ControllerCommonDashboard extends Controller {
 			}
 		}
 
-		if (is_dir(DIR_SYSTEM . 'storage')) {
+		if (DIR_STORAGE == DIR_SYSTEM . 'storage/') {
 			$data['security'] = $this->load->controller('common/security');
 		} else {
 			$data['security'] = '';

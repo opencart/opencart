@@ -6,29 +6,44 @@
         <h4 class="modal-title text-danger"><i class="fa fa-exclamation-triangle"></i> {{ heading_title }}</h4>
       </div>
       <div class="modal-body">
-        <div class="alert alert-info"><i class="fa fa-exclamation-circle"></i> It is very imporant that you move the storage directory out of the web diretory (e.g. public_html or www).</div>
-        <div class="form-group">
-          <label class="control-label" for="input-directory">{{ entry_directory }}</label>
-          <div class="input-group">
-       
-                        <select name="country_id" id="input-country" class="form-control">
-       
-                
-                {% for path in paths %}
-                <option value="{{ path }}">{{ path }}</option>
-                {% endfor %}
-              
+        <div class="alert alert-info"><i class="fa fa-exclamation-circle"></i> {{text_security }}</div>
+        <form class="form-horizontal">
+          <fieldset>
+            <legend>{{ text_choose }}</legend>
+            <div class="form-group">
+              <select name="type" id="input-type" class="form-control">
+                <option value="automatic">{{ text_automatic }}</option>
+                <option value="manual">{{ text_manual }}</option>
               </select>
-          
-          <span class="input-group-addon" id="input-directory">{{ path }}</span>
-           
-            <input type="text" name="filename" value="storage" placeholder="{{ entry_name }}" class="form-control" />
-          </div>
-        </div>
-        <div class="text-right">
-          <button type="button" id="button-move" class="btn btn-danger">{{ button_move }}</button>
-        </div>
-        <div style="height: 300px; overflow: scroll;" class="form-control hidden" disabled="disabled">{{ text_instruction }}</div>
+            </div>
+          </fieldset>
+          <fieldset id="collapse-automatic" class="collapse">
+            <legend>{{ text_automatic }}</legend>
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-btn dropdown">
+                  <button type="button" id="button-path" data-toggle="dropdown" class="btn btn-default">{{ paths[0] }} <span class="caret"></span></button>
+                  <ul class="dropdown-menu">
+                    {% for path in paths %}
+                    <li><a href="{{ path }}">{{ path }}</a></li>
+                    {% endfor %}
+                  </ul>
+                </div>
+                <input type="text" name="directory" value="storage" placeholder="{{ entry_directory }}" class="form-control" />
+                <div class="input-group-btn">
+                  <button type="button" id="button-move" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-exclamation-triangle"></i> {{ button_move }}</button>
+                </div>
+              </div>
+              <input type="hidden" name="path" value="{{ paths[0] }}" />
+            </div>
+          </fieldset>
+          <fieldset id="collapse-manual" class="collapse">
+            <legend>{{ text_manual }}</legend>
+            <div class="form-group">
+              <div style="height: 300px; overflow-y: scroll;" class="form-control" disabled="disabled"></div>
+            </div>
+          </fieldset>
+        </form>
       </div>
     </div>
   </div>
@@ -36,34 +51,57 @@
 <script type="text/javascript"><!--
 $(document).ready(function() {
 	$('#modal-security').modal('show');
-});   
+});
+
+$('#modal-security select[name=\'type\']').on('change', function() {
+	$('#modal-security fieldset.collapse').removeClass('in');
+	
+	$('#modal-security #collapse-' + $(this).val()).addClass('in');
+});
+
+$('#modal-security select[name=\'type\']').trigger('change');
+
+$('#modal-security .dropdown-menu a').on('click', function(e) {
+	e.preventDefault();
+	
+	$('#modal-security #button-path').html($(this).text() + ' <span class="caret"></span>');
+	
+	$('#modal-security input[name=\'path\']').val($(this).attr('href'));
+});
+
+
+$('#modal-security .dropdown-menu a').on('click', function(e) {
+	e.preventDefault();
+	
+	$('#button-path').html($(this).text() + ' <span class="caret"></span>');
+	
+	$('input[name=\'path\']').val($(this).attr('href'));
+});
 
 $('#button-move').on('click', function() {
+	var element = this;
+	
 	$.ajax({
-		url: '{{ catalog }}index.php?route=common/security/move&user_token={{ user_token }}',
+		url: 'index.php?route=common/security/move&user_token={{ user_token }}',
 		type: 'post',
-		data: $('input[name=\'filename\']'),
+		data: $('input[name=\'path\'], input[name=\'directory\']'),
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {
-			$('#button-move').button('loading');
+			$(element).button('loading');
 		},
 		complete: function() {
-			$('#button-move').button('reset');
+			$(element).button('reset');
 		},
 		success: function(json) {
-			$('.alert-dismissible, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
+			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-
-				// Highlight any found errors
-				$('#modal-security').closest('.form-group').addClass('has-error');
+				$('#modal-security #collapse-automatic legend').after('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#modal-security #collapse-automatic legend').after('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -71,4 +109,27 @@ $('#button-move').on('click', function() {
 		}
 	});
 });
+
+$('input[name=\'path\'], input[name=\'directory\']').on('change', function () {
+	html  = '<ol>';
+	html += '<li><p>{{ text_move }}</p>';
+	html += '<p><strong>%s</strong></p>';
+	html += '<p>{{ text_to }}</p>';
+	html += '<p><strong>%s</strong></p></li>';
+	html += '<li><p>{{ text_config }}</p>';
+	html += '<p><strong>%s</strong></p>';
+	html += '<p>to</p>';
+	html += '<p><strong>%s</strong></p></li>';
+	html += '<li><p>{{ text_admin }}</p>';
+	html += '<p><strong>%s</strong></p>';
+	html += '<p>to</p>';
+	html += '<p><strong>%s</strong></p>';
+	html += '<p><strong>%s</strong></p>';
+  	html += '</li>';
+    html += '</ol>';
+	
+	$('#collapse-manual .form-control').html(html);
+});
+
+$('input[name=\'path\']').trigger('change');
 //--></script>

@@ -3,28 +3,21 @@
 $_['heading_title']    = 'Important Security Notification!';
 
 // Text
-$_['text_instruction'] = '
-<ol>
-  <li><p>Move</p>
-    <p><strong>%s</strong></p>
-    <p>to</p>
-    <p><strong>%s</strong></p></li>
-  <li><p>Edit config.php change</p>
-	<p><strong>%s</strong></p>
-	<p>to</p>
-	<p><strong>%s</strong></p></li>
-  <li><p>Edit admin/config.php and change</p>
-	<p><strong>%s</strong></p>
-	<p>to</p>
-	<p><strong>%s</strong></p>
-  </li>
-</ol>';
-
-// Entry
-$_['entry_directory'] = 'Move to directory';
+$_['text_security']    = 'It is very imporant that you move the storage directory outside of the web directory (e.g. public_html or www).';
+$_['text_choose']      = 'Choose how to move the storage directory';
+$_['text_automatic']   = 'Automatic';
+$_['text_manual']      = 'Manually';
+$_['text_move']        = 'Move';
+$_['text_to']          = 'to';
+$_['text_config']      = 'Edit config.php change';
+$_['text_admin']       = 'Edit admin/config.php and change';
 
 // Button
-$_['button_move']     = 'Move';
+$_['button_move']      = 'Move';
+$_['button_manual']    = 'Manual';
 
 // Error
-$_['error_warning']   = 'Warning: You must move the storage directory outside of the web root directory!';
+$_['error_permission'] = 'Warning: You do not have permission to modify the storage directory!';
+$_['error_path']       = 'Warning: Invalid path!';
+$_['error_directory']  = 'Warning: Invalid directory!';
+$_['error_exists']     = 'Warning: Directory already exsits!';

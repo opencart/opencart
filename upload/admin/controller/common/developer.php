@@ -8,14 +8,20 @@ class ControllerCommonDeveloper extends Controller {
 		$data['developer_theme'] = $this->config->get('developer_theme');
 		$data['developer_sass'] = $this->config->get('developer_sass');	
 				
-		if (!function_exists('eval')) {
+		$eval = false;
+		
+		$eval = '$eval = true;';
+
+		eval($eval);		
+		
+		if ($eval === true) {
+			$data['eval'] = true;
+		} else {
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->editSetting('developer', array('developer_theme' => 1), 0);
 		
-			$data['eval'] = false;
-		} else {
-			$data['eval'] = true;
+			$data['eval'] = false;			
 		}
 	
 		$this->response->setOutput($this->load->view('common/developer', $data));

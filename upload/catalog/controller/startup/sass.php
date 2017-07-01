@@ -7,7 +7,7 @@ class ControllerStartupSass extends Controller {
 			include_once(DIR_STORAGE . 'vendor/scss.inc.php');
 			
 			$scss = new Scssc();
-			$scss->setImportPaths(DIR_APPLICATION . 'view/stylesheet/sass/');
+			$scss->setImportPaths(DIR_APPLICATION . 'view/theme/' . $this->config->get('theme_directory') . '/stylesheet/sass/');
 
 			$output = $scss->compile('@import "_bootstrap.scss"');
 

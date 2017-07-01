@@ -7,10 +7,10 @@ final class Encryption {
 	}
 
 	public function encrypt($value) {
-		return strtr(base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, hash('sha256', $this->key, true), $value, MCRYPT_MODE_ECB)), '+/=', '-_,');
+		return base64_encode(openssl_encrypt($value, 'AES-256-CBC', hash('sha256', $this->key, true), 0, substr(hash('sha256', $this->key, true), 16, 16)));
 	}
 
 	public function decrypt($value) {
-		return trim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, hash('sha256', $this->key, true), base64_decode(strtr($value, '-_,', '+/=')), MCRYPT_MODE_ECB));
+		return openssl_decrypt(base64_decode($value), 'AES-256-CBC', hash('sha256', $this->key, true), 0, substr(hash('sha256', $this->key, true), 16, 16));
 	}
 }

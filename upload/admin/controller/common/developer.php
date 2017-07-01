@@ -88,7 +88,7 @@ class ControllerCommonDeveloper extends Controller {
 				unlink($file);
 			}
 			 
-			$files = glob(DIR_CATALOG  . 'view/theme/*/stylesheet/sass/_bootstrap.scss', GLOB_BRACE);
+			$files = glob(DIR_CATALOG  . 'view/theme/*/stylesheet/sass/_bootstrap.scss');
 			 
 			foreach ($files as $file) {
 				$file = substr($file, 0, -21) . '/bootstrap.css';

@@ -206,6 +206,9 @@
                         <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
                         <div class="col-sm-10">
                           <button type="button" id="button-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+                          <?php if(isset($account_custom_field[$custom_field['custom_field_id']]) && $account_custom_field[$custom_field['custom_field_id']]) { ?>
+                          <a href="<?php echo $download.'&code='.$account_custom_field[$custom_field['custom_field_id']]; ?>" data-toggle="tooltip" target="_blank" title="Download" class="btn btn-info"><i class="fa fa-download"></i></a>
+                          <?php  } ?>
                           <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
                           <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
                           <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
@@ -523,6 +526,9 @@
                         <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
                         <div class="col-sm-10">
                           <button type="button" id="button-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+                          <?php if(isset($address['custom_field'][$custom_field['custom_field_id']]) && $address['custom_field'][$custom_field['custom_field_id']]) { ?>
+                          <a href="<?php echo $download.'&code='.$address['custom_field'][$custom_field['custom_field_id']]; ?>" data-toggle="tooltip" target="_blank" title="Download" class="btn btn-info"><i class="fa fa-download"></i></a>
+                          <?php  } ?>
                           <input type="hidden" name="address[<?php echo $address_row; ?>][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : ''); ?>" />
                           <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
                           <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>

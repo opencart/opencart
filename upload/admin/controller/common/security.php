@@ -18,9 +18,9 @@ class ControllerCommonSecurity extends Controller {
 
 		//$data['path'] = substr($this->request->server['DOCUMENT_ROOT'], 0, strrpos($this->request->server['DOCUMENT_ROOT'], '/')) . '/';
 			
-		$data['paths'] = '';
+		$data['paths'] = array();
 		
-		$path = array();
+		$path = '';
 			
 		$parts = explode('/', substr($this->request->server['DOCUMENT_ROOT'], 0, strrpos($this->request->server['DOCUMENT_ROOT'], '/')));	
 		

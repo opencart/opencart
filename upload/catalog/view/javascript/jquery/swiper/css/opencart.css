@@ -4,10 +4,10 @@
 .swiper-viewport {
 	width: 100%;
 	position: relative;
-	margin: 0 0 60px;
+	margin: 0 0 40px;
 }
 .swiper-container {
-	margin: 0 0 20px;
+	margin: 0 0 15px;
 	background: #fff;
 	direction: ltr !important;
 	z-index: 1;

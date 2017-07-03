@@ -1,30 +1,34 @@
 /* CSS Document */
-
-/* OpenCart Code */
 .swiper-viewport {
-	width: 100%;
 	position: relative;
-	margin: 0 0 40px;
-}
-.swiper-container {
-	margin: 0 0 15px;
+	margin: 0 0 60px;
 	background: #fff;
-	direction: ltr !important;
 	z-index: 1;
 	border: 4px solid #fff;
 	border-radius: 4px;
 	box-shadow: 0 1px 4px rgba(0,0,0,.2);
-}
-.swiper-wrapper {
+	width: 100%;
 	overflow: visible;
 }
-.swiper-button-prev, .swiper-button-next {
-	color: rgba(0,0,0,0.8);
-	text-shadow: 1px 1px 0 rgba(255,255,255,0.3);
-	transition: all .3s ease;
-	z-index: 2;
+/* OpenCart Code */
+.swiper-container {
+	direction: ltr !important;
 }
 
+.swiper-pager {
+	width: 100%;
+	position: absolute;
+	top: 50%;
+	line-height: 45px;
+}
+
+.swiper-button-prev, .swiper-button-next {
+	color: rgba(0, 0, 0, 0.8);
+	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+	transition: all .3s ease;
+	z-index: 2;
+ 	background-image: none;
+}
 .swiper-viewport .swiper-button-prev {
 	opacity: 0.7;
 	left: 10px;
@@ -45,19 +49,13 @@
 	right: -50px;
 }
 .swiper-viewport:hover .swiper-button-prev {
-	left: 10px;
 	opacity: 0.7;
+	left: 10px;
 }
 .swiper-viewport:hover .swiper-button-next {
-	right: 10px;
 	opacity: 0.7;
+	right: 10px;
 }
-}
-.swiper-button-prev {
-	background-image: none;
-}
-.swiper-button-next {
-	background-image: none;
 }
 .swiper-button-prev:before {
 	width: 40px;
@@ -75,12 +73,11 @@
 	color: rgba(0,0,0,0.8);
 	font-size: 40px;
 }
-
-
-
-
 .swiper-pagination {
-	position: relative;
+	bottom: -40px;
+	left: 0;
+	text-align: center;
+	width: 100%;
 }
 .swiper-pagination-bullet {
 	width: 11px;

@@ -24,6 +24,7 @@ $_['help_upload']       = 'Requires a modification file with extension \'.ocmod.
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify extensions!';
 $_['error_install']     = 'Extension installation taking place please wait a few seconds before trying to install!';
+$_['error_installed']   = 'There is an installed extension with same zip filename!';
 $_['error_upload']      = 'File could not be uploaded!';
 $_['error_filetype']    = 'Invalid file type!';
 $_['error_file']        = 'File could not be found!';

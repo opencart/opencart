@@ -28,13 +28,13 @@ class ControllerMarketplaceInstaller extends Controller {
 
 	public function history() {
 		$this->load->language('marketplace/installer');
-		
+
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
 		} else {
 			$page = 1;
 		}
-					
+
 		$data['histories'] = array();
 		
 		$this->load->model('setting/extension');
@@ -81,41 +81,41 @@ class ControllerMarketplaceInstaller extends Controller {
 			if (is_file($file) && (filectime($file) < (time() - 5))) {
 				unlink($file);
 			}
-			
+
 			if (is_file($file)) {
 				$json['error'] = $this->language->get('error_install');
-				
+
 				break;
 			}
 		}
 
 		// Check for any install directories
 		$directories = glob(DIR_UPLOAD . 'tmp-*');
-		
+
 		foreach ($directories as $directory) {
 			if (is_dir($directory) && (filectime($directory) < (time() - 5))) {
 				// Get a list of files ready to upload
 				$files = array();
-	
+
 				$path = array($directory);
-	
+
 				while (count($path) != 0) {
 					$next = array_shift($path);
-	
+
 					// We have to use scandir function because glob will not pick up dot files.
 					foreach (array_diff(scandir($next), array('.', '..')) as $file) {
 						$file = $next . '/' . $file;
-	
+
 						if (is_dir($file)) {
 							$path[] = $file;
 						}
-	
+
 						$files[] = $file;
 					}
 				}
-	
+
 				rsort($files);
-	
+
 				foreach ($files as $file) {
 					if (is_file($file)) {
 						unlink($file);
@@ -123,17 +123,19 @@ class ControllerMarketplaceInstaller extends Controller {
 						rmdir($file);
 					}
 				}
-	
+
 				rmdir($directory);
 			}
-			
+
 			if (is_dir($directory)) {
 				$json['error'] = $this->language->get('error_install');
 				
 				break;
-			}		
+			}
 		}
-		
+
+		$this->load->model('setting/extension');
+
 		if (isset($this->request->files['file']['name'])) {
 			if (substr($this->request->files['file']['name'], -10) != '.ocmod.zip') {
 				$json['error'] = $this->language->get('error_filetype');
@@ -142,22 +144,27 @@ class ControllerMarketplaceInstaller extends Controller {
 			if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
 				$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
 			}
+
+			$filename = $this->request->files['file']['name'];
+			$extension_installed = $this->model_setting_extension->getExtensionInstallByFilename($filename);
+
+			if (!empty($extension_installed)) {
+				$json['error'] = $this->language->get('error_installed');
+			}
 		} else {
 			$json['error'] = $this->language->get('error_upload');
 		}
 
 		if (!$json) {
 			$this->session->data['install'] = token(10);
-			
+
 			$file = DIR_UPLOAD . $this->session->data['install'] . '.tmp';
-			
+
 			move_uploaded_file($this->request->files['file']['tmp_name'], $file);
 
 			if (is_file($file)) {
-				$this->load->model('setting/extension');
-				
 				$extension_install_id = $this->model_setting_extension->addExtensionInstall($this->request->files['file']['name']);
-				
+
 				$json['text'] = $this->language->get('text_install');
 
 				$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $extension_install_id, true));		

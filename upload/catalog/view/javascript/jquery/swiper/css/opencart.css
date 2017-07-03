@@ -1,6 +1,5 @@
 /* CSS Document */
 .swiper-viewport {
-	position: relative;
 	margin: 0 0 60px;
 	background: #fff;
 	z-index: 1;
@@ -8,20 +7,19 @@
 	border-radius: 4px;
 	box-shadow: 0 1px 4px rgba(0,0,0,.2);
 	width: 100%;
+	position: relative;
 	overflow: visible;
 }
 /* OpenCart Code */
 .swiper-container {
 	direction: ltr !important;
 }
-
 .swiper-pager {
 	width: 100%;
 	position: absolute;
 	top: 50%;
 	line-height: 45px;
 }
-
 .swiper-button-prev, .swiper-button-next {
 	color: rgba(0, 0, 0, 0.8);
 	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
@@ -36,21 +34,22 @@
 .swiper-viewport .swiper-button-next {
 	opacity: 0.7;
 	right: 10px;
+	
 }
-
 /* Desktop */
 @media (min-width: 768px){
 .swiper-viewport .swiper-button-prev {
 	opacity: 0;
-	left: -50px;
+	left: -20px;
 }
 .swiper-viewport .swiper-button-next {
 	opacity: 0;
-	right: -50px;
+	right: -20px;
 }
 .swiper-viewport:hover .swiper-button-prev {
 	opacity: 0.7;
 	left: 10px;
+
 }
 .swiper-viewport:hover .swiper-button-next {
 	opacity: 0.7;
@@ -94,7 +93,8 @@
 .swiper-pagination-bullet-active {
 	background: rgba(0, 0, 0, 0.9);
 }
-
-
-
-
+.swiper-button-next.swiper-button-disabled, .swiper-button-prev.swiper-button-disabled {
+    opacity: 0;
+    cursor: pointer;
+    pointer-events: auto;
+}

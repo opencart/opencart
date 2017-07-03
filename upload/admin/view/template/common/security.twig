@@ -76,6 +76,8 @@ $('#modal-security .dropdown-menu a').on('click', function(e) {
 	$('#button-path').html($(this).text() + ' <span class="caret"></span>');
 	
 	$('input[name=\'path\']').val($(this).attr('href'));
+	
+	$('input[name=\'path\']').trigger('change');
 });
 
 $('#button-move').on('click', function() {
@@ -110,7 +112,7 @@ $('#button-move').on('click', function() {
 	});
 });
 
-$('input[name=\'path\'], input[name=\'directory\']').on('change', function () {
+$('#modal-security select[name=\'type\']').on('change', function () {
 	html  = '<ol>';
 	html += '<li><p>{{ text_move }}</p>';
 	html += '<p><strong>{{ storage }}</strong></p>';

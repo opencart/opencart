@@ -2,16 +2,7 @@
 class ControllerCommonSecurity extends Controller {
 	public function index() {
 		$this->load->language('common/security');
-		
-		$args = array(
-			DIR_SYSTEM . 'storage/',
-			str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '../')) . '/',
-			'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');',
-			'define(\'DIR_STORAGE\', \'' . realpath($this->request->server['DOCUMENT_ROOT'] . '../') . '/storage/\');',
-			'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');',
-			'define(\'DIR_STORAGE\', \'' . realpath($this->request->server['DOCUMENT_ROOT'] . '../') . '/storage/\');'
-		);
-		//vsprintf(, $args);
+
 		$data['text_instruction'] = $this->language->get('text_instruction');
 	
 		$data['user_token'] = $this->session->data['user_token'];
@@ -40,13 +31,13 @@ class ControllerCommonSecurity extends Controller {
 
 		$json = array();
 		
-		if (!$this->request->post['path']) {
+		if ($this->request->post['path']) {
 			$path = $this->request->post['path'];
 		} else {
 			$path = '';
 		}
 				
-		if (!$this->request->post['directory']) {
+		if ($this->request->post['directory']) {
 			$directory = $this->request->post['directory'];
 		} else {
 			$directory = '';
@@ -54,30 +45,92 @@ class ControllerCommonSecurity extends Controller {
 		
 		if (!$this->user->hasPermission('modify', 'common/developer')) {
 			$json['error'] = $this->language->get('error_permission');
-		}
-				
-		if (!$path) {
-			$json['error'] = $this->language->get('error_path');
-		}
-		
-		if (!$directory || preg_match($directory)) {
-			$json['error'] = $this->language->get('error_directory');
-		}
+		} else {
+			if (!$path || str_replace('\\', '/', realpath($path)) . '/' != str_replace('\\', '/', substr($this->request->server['DOCUMENT_ROOT'], 0, strlen($path)))) {
+				$json['error'] = $this->language->get('error_path');
+			}
 					
-		if (is_dir($path . $directory)) {
-			$json['error'] = $this->language->get('error_exists');
-		}
+			if (!$directory || !preg_match('/^[a-zA-Z0-9]+$/', $directory)) {
+				$json['error'] = $this->language->get('error_directory');
+			}
+						
+			if (is_dir($path . $directory)) {
+				$json['error'] = $this->language->get('error_exists');
+			}
+			
+			if (!is_writable(realpath(DIR_APPLICATION . '/../') . '/config.php') || !is_writable(DIR_APPLICATION . 'config.php')) {
+				$json['error'] = $this->language->get('error_writable');
+			}
+									
+			if (!$json) {
+				$files = array();
+	
+				// Make path into an array
+				$source = array(DIR_SYSTEM . 'storage/');
+	
+				// While the path array is still populated keep looping through
+				while (count($source) != 0) {
+					$next = array_shift($source);
+	
+					foreach (glob($next) as $file) {
+						// If directory add to path array
+						if (is_dir($file)) {
+							$source[] = $file . '/*';
+						}
+	
+						// Add the file to the files to be deleted array
+						$files[] = $file;
+					}
+				}
+	
+				// Create the new storage folder
+				if (!is_dir($path . $directory)) {
+					mkdir($path . $directory, 0777);
+				}			
+	
+				// Copy the 
+				foreach ($files as $file) {
+					$destination = $path . $directory . substr($file, strlen(DIR_SYSTEM . 'storage/'));
+					
+					if (is_dir($file) && !is_dir($destination)) {
+						mkdir($destination, 0777);
+					}
+									
+					if (is_file($file)) {
+						copy($file, $destination);
+					}
+				}
+				
+				// Modify the config files
+				$files = array(
+					DIR_APPLICATION . 'config.php',
+					realpath(DIR_APPLICATION . '/../') . '/config.php'
+				);
 							
-		if (!is_dir($path . $directory) || (str_replace('\\', '/', realpath($path . $directory)) != str_replace('\\', '/', substr($this->request->server['DOCUMENT_ROOT'], 0, strlen($path . $directory))))) {
-			$json['error'] = $this->language->get('error_directory');
-		}
+				foreach ($files as $file) {
+					$output = '';
+					
+					$lines = file($file);
+					
+					foreach ($lines as $line_id => $line) {
+						if (strpos($line, 'define(\'DIR_STORAGE') !== false) {
+							$output .= 'define(\'DIR_STORAGE\', \'' . $path . $directory . '/\');' . "\n";
+						} else {
+							$output .= $line;
+						}
+					}
 		
-		if (!$json) {
-			//	$this->load->model('setting/setting');
-
-			$json['success'] = $this->language->get('text_success');
+					$file = fopen($file, 'w');
+		
+					fwrite($file, $output);
+		
+					fclose($file);
+				}
+				
+				$json['success'] = $this->language->get('text_success');
+			}
 		}
-
+			
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));		
 	}

@@ -75,8 +75,6 @@ class ControllerMarketingContact extends Controller {
 
 				$this->load->model('customer/customer_group');
 
-				$this->load->model('marketing/affiliate');
-
 				$this->load->model('sale/order');
 
 				if (isset($this->request->get['page'])) {
@@ -151,9 +149,9 @@ class ControllerMarketingContact extends Controller {
 							'limit' => 10
 						);
 
-						$email_total = $this->model_marketing_affiliate->getTotalAffiliates($affiliate_data);
+						$email_total = $this->model_customer_customer->getTotalAffiliates($affiliate_data);
 
-						$results = $this->model_marketing_affiliate->getAffiliates($affiliate_data);
+						$results = $this->model_customer_customer->getAffiliates($affiliate_data);
 
 						foreach ($results as $result) {
 							$emails[] = $result['email'];
@@ -162,7 +160,7 @@ class ControllerMarketingContact extends Controller {
 					case 'affiliate':
 						if (!empty($this->request->post['affiliate'])) {
 							foreach ($this->request->post['affiliate'] as $affiliate_id) {
-								$affiliate_info = $this->model_marketing_affiliate->getAffiliate($affiliate_id);
+								$affiliate_info = $this->model_customer_customer->getAffiliate($affiliate_id);
 
 								if ($affiliate_info) {
 									$emails[] = $affiliate_info['email'];

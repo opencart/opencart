@@ -362,7 +362,6 @@ class ControllerLocalisationZone extends Controller {
 
 		$this->load->model('setting/store');
 		$this->load->model('customer/customer');
-		$this->load->model('marketing/affiliate');
 		$this->load->model('localisation/geo_zone');
 
 		foreach ($this->request->post['selected'] as $zone_id) {
@@ -380,12 +379,6 @@ class ControllerLocalisationZone extends Controller {
 
 			if ($address_total) {
 				$this->error['warning'] = sprintf($this->language->get('error_address'), $address_total);
-			}
-
-			$affiliate_total = $this->model_marketing_affiliate->getTotalAffiliatesByZoneId($zone_id);
-
-			if ($affiliate_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_affiliate'), $affiliate_total);
 			}
 
 			$zone_to_geo_zone_total = $this->model_localisation_geo_zone->getTotalZoneToGeoZoneByZoneId($zone_id);

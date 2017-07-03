@@ -25,9 +25,13 @@
             <div class="col-sm-10">
               <select name="store_id" id="input-store" class="form-control">
                 <option value="0">{{ text_default }}</option>
+                
                 {% for store in stores %}
+                
                 <option value="{{ store.store_id }}">{{ store.name }}</option>
+                
                 {% endfor %}
+              
               </select>
             </div>
           </div>
@@ -49,9 +53,13 @@
             <label class="col-sm-2 control-label" for="input-customer-group">{{ entry_customer_group }}</label>
             <div class="col-sm-10">
               <select name="customer_group_id" id="input-customer-group" class="form-control">
+                
                 {% for customer_group in customer_groups %}
+                
                 <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+                
                 {% endfor %}
+              
               </select>
             </div>
           </div>
@@ -97,15 +105,11 @@
   <script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script> 
   <script type="text/javascript" src="view/javascript/codemirror/lib/xml.js"></script> 
   <script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script> 
-    
   <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
   <link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
-  <script type="text/javascript" src="view/javascript/summernote/summernote-image-attributes.js"></script>
-  <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>  
+  <script type="text/javascript" src="view/javascript/summernote/summernote-image-attributes.js"></script> 
+  <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script> 
   <script type="text/javascript"><!--
- console.log(document.cookie);
-  
-  
 $('select[name=\'to\']').on('change', function() {
 	$('.to').hide();
 
@@ -113,7 +117,7 @@ $('select[name=\'to\']').on('change', function() {
 });
 
 $('select[name=\'to\']').trigger('change');
-//--></script>
+//--></script> 
   <script type="text/javascript"><!--
 // Customers
 $('input[name=\'customers\']').autocomplete({
@@ -148,13 +152,13 @@ $('#input-customer').parent().find('.well').delegate('.fa-minus-circle', 'click'
 $('input[name=\'affiliates\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=marketing/affiliate/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
 						label: item['name'],
-						value: item['affiliate_id']
+						value: item['customer_id']
 					}
 				}));
 			}

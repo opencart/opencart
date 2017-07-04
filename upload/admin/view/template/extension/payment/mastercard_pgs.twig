@@ -1,0 +1,851 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-mastercard-hosted-checkout" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ rehook_events }}" data-toggle="tooltip" title="{{ button_rehook_events }}" class="btn btn-warning"><i class="fa fa-refresh"></i></a>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+            <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i>&nbsp;{{ error_warning }}
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+    {% endif %}
+    {% if success %}
+        <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i>&nbsp;{{ success }}
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+    {% endif %}
+    <div class="alert alert-info"><i class="fa fa-exclamation-circle"></i>&nbsp;{{ text_notification_ssl }}</div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i>&nbsp;{{ text_edit }}</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-mastercard-hosted-checkout" class="form-horizontal">
+          <ul class="nav nav-tabs">
+            <li><a href="#tab-transaction" data-toggle="tab"><i class="fa fa-list"></i>&nbsp;{{ tab_transaction }}</a></li>
+            <li><a href="#tab-setting" data-toggle="tab"><i class="fa fa-gear"></i>&nbsp;{{ tab_setting }}</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane" id="tab-setting">
+              <fieldset>
+                <legend>{{ text_general_settings }}</legend>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-merchant"><span data-toggle="tooltip" title="{{ help_merchant }}">{{ entry_merchant }}</span></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="payment_mastercard_pgs_merchant" value="{{ payment_mastercard_pgs_merchant }}" placeholder="{{ entry_merchant }}" id="input-merchant" class="form-control" />
+                    {% if error_merchant %}
+                        <div class="text-danger">{{ error_merchant }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-integration-password"><span data-toggle="tooltip" title="{{ help_integration_password }}">{{ entry_integration_password }}</span></label>
+                  <div class="col-sm-10">
+                    <div class="input-group">
+                      <input type="password" name="payment_mastercard_pgs_integration_password" value="{{ payment_mastercard_pgs_integration_password }}" placeholder="{{ entry_integration_password }}" id="input-integration-password" class="form-control" />
+                      <a class="input-group-addon btn show_hide_credential" data-toggle="tooltip" title="{{ text_show_hide }}"><i class="fa fa-eye"></i></a>
+                    </div>
+                    {% if error_integration_password %}
+                        <div class="text-danger">{{ error_integration_password }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-notification-secret"><span data-toggle="tooltip" title="{{ help_notification_secret }}">{{ entry_notification_secret }}</span></label>
+                  <div class="col-sm-10">
+                    <div class="input-group">
+                      <input type="password" name="payment_mastercard_pgs_notification_secret" value="{{ payment_mastercard_pgs_notification_secret }}" placeholder="{{ entry_notification_secret }}" id="input-notification-secret" class="form-control" />
+                      <a class="input-group-addon btn show_hide_credential" data-toggle="tooltip" title="{{ text_show_hide }}"><i class="fa fa-eye"></i></a>
+                    </div>
+                    {% if error_notification_secret %}
+                        <div class="text-danger">{{ error_notification_secret }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_display_name }}">{{ entry_display_name }}</span></label>
+                  <div class="col-sm-10">
+                    {% for language in languages %}
+                      <div class="input-group form-control-static">
+                        <div class="input-group-addon" data-toggle="tooltip" title="{{ language.name }}"><img src="{{ language.image }}" alt="{{ language.name }}" /></div>
+                        <input type="text" name="payment_mastercard_pgs_display_name[{{ language.language_id }}]" value="{{ payment_mastercard_pgs_display_name[language.language_id] ?? default_display_name }}" placeholder="{{ entry_display_name }}" class="form-control" />
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="select-tokenize"><span data-toggle="tooltip" title="{{ help_tokenize }}">{{ entry_tokenize }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_tokenize" id="select-tokenize" class="form-control">
+                      {% if payment_mastercard_pgs_tokenize %}
+                      <option value="0">{{ text_disabled }}</option>
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      {% else %}
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                      <option value="1">{{ text_enabled }}</option>
+                      {% endif %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="select-checkout"><span data-toggle="tooltip" title="{{ help_checkout }}">{{ entry_checkout }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_checkout" id="select-checkout" class="form-control">
+                      {% if payment_mastercard_pgs_checkout == 'pay' %}
+                      <option value="authorize">{{ text_authorize }}</option>
+                      <option value="pay" selected="selected">{{ text_pay }}</option>
+                      {% else %}
+                      <option value="authorize" selected="selected">{{ text_authorize }}</option>
+                      <option value="pay">{{ text_pay }}</option>
+                      {% endif %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="select-debug-log"><span data-toggle="tooltip" title="{{ help_debug_log }}">{{ entry_debug_log }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_debug_log" id="select-debug-log" class="form-control">
+                      {% if payment_mastercard_pgs_debug_log %}
+                      <option value="0">{{ text_disabled }}</option>
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      {% else %}
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                      <option value="1">{{ text_enabled }}</option>
+                      {% endif %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="select-gateway"><span data-toggle="tooltip" title="{{ help_gateway }}">{{ entry_gateway }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_gateway" id="select-gateway" class="form-control form-control-static">
+                      {% for gateway in gateways %}
+                        <option value="{{ gateway.code }}" {{ gateway.code == payment_mastercard_pgs_gateway ? 'selected' }}>{{ gateway.text }}</option>
+                      {% endfor %}
+                    </select>
+                    <div id="gateway_other">
+                      <input type="text" name="payment_mastercard_pgs_gateway_other" value="{{ payment_mastercard_pgs_gateway_other }}" placeholder="{{ entry_gateway_other }}" class="form-control" />
+                      {% if error_gateway_other %}
+                        <div class="text-danger">{{ error_gateway_other }}</div>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="select-onclick">{{ entry_onclick }}</label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_onclick" id="select-onclick" class="form-control">
+                      {% if payment_mastercard_pgs_onclick == 'hosted_payment_page' %}
+                      <option value="lightbox">{{ text_lightbox }}</option>
+                      <option value="hosted_payment_page" selected="selected">{{ text_hosted_payment_page }}</option>
+                      {% else %}
+                      <option value="lightbox" selected="selected">{{ text_lightbox }}</option>
+                      <option value="hosted_payment_page">{{ text_hosted_payment_page }}</option>
+                      {% endif %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-google-analytics-property-id"><span data-toggle="tooltip" title="{{ help_google_analytics_property_id }}">{{ entry_google_analytics_property_id }}</span></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="payment_mastercard_pgs_google_analytics_property_id" value="{{ payment_mastercard_pgs_google_analytics_property_id }}" placeholder="{{ entry_google_analytics_property_id }}" id="input-google-analytics-property-id" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="{{ help_total }}">{{ entry_total }}</span></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="payment_mastercard_pgs_total" value="{{ payment_mastercard_pgs_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="select-geo-zone">{{ entry_geo_zone }}</label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_geo_zone_id" id="select-geo-zone" class="form-control">
+                        <option value="0">{{ text_all_zones }}</option>
+                        {% for geo_zone in geo_zones %}
+                            <option value="{{ geo_zone.geo_zone_id }}" {{ geo_zone.geo_zone_id == payment_mastercard_pgs_geo_zone_id ? 'selected' }}>{{ geo_zone.name }}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="select-status">{{ entry_status }}</label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_status" id="select-status" class="form-control">
+                      {% if payment_mastercard_pgs_status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                      {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                      {% endif %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="payment_mastercard_pgs_sort_order" value="{{ payment_mastercard_pgs_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>{{ text_transaction_statuses }}</legend>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-approved-authorization-order-status"><span data-toggle="tooltip" title="{{ help_approved_authorization_order_status }}">{{ entry_approved_authorization_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_approved_authorization_order_status_id" id="input-approved-authorization-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_approved_authorization_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-approved-capture-order-status"><span data-toggle="tooltip" title="{{ help_approved_capture_order_status }}">{{ entry_approved_capture_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_approved_capture_order_status_id" id="input-approved-capture-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_approved_capture_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-approved-payment-order-status"><span data-toggle="tooltip" title="{{ help_approved_payment_order_status }}">{{ entry_approved_payment_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_approved_payment_order_status_id" id="input-approved-payment-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_approved_payment_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-approved-refund-order-status"><span data-toggle="tooltip" title="{{ help_approved_refund_order_status }}">{{ entry_approved_refund_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_approved_refund_order_status_id" id="input-approved-refund-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_approved_refund_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-approved-void-order-status"><span data-toggle="tooltip" title="{{ help_approved_void_order_status }}">{{ entry_approved_void_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_approved_void_order_status_id" id="input-approved-void-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_approved_void_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-approved-verification-order-status"><span data-toggle="tooltip" title="{{ help_approved_verification_order_status }}">{{ entry_approved_verification_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_approved_verification_order_status_id" id="input-approved-verification-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_approved_verification_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-unspecified_failure-order-status"><span data-toggle="tooltip" title="{{ help_unspecified_failure_order_status }}">{{ entry_unspecified_failure_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_unspecified_failure_order_status_id" id="input-unspecified_failure-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_unspecified_failure_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-declined-order-status"><span data-toggle="tooltip" title="{{ help_declined_order_status }}">{{ entry_declined_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_declined_order_status_id" id="input-declined-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_declined_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-timed_out-order-status"><span data-toggle="tooltip" title="{{ help_timed_out_order_status }}">{{ entry_timed_out_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_timed_out_order_status_id" id="input-timed_out-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_timed_out_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-expired_card-order-status"><span data-toggle="tooltip" title="{{ help_expired_card_order_status }}">{{ entry_expired_card_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_expired_card_order_status_id" id="input-expired_card-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_expired_card_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-insufficient_funds-order-status"><span data-toggle="tooltip" title="{{ help_insufficient_funds_order_status }}">{{ entry_insufficient_funds_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_insufficient_funds_order_status_id" id="input-insufficient_funds-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_insufficient_funds_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-acquirer_system_error-order-status"><span data-toggle="tooltip" title="{{ help_acquirer_system_error_order_status }}">{{ entry_acquirer_system_error_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_acquirer_system_error_order_status_id" id="input-acquirer_system_error-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_acquirer_system_error_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-system_error-order-status"><span data-toggle="tooltip" title="{{ help_system_error_order_status }}">{{ entry_system_error_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_system_error_order_status_id" id="input-system_error-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_system_error_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-not_supported-order-status"><span data-toggle="tooltip" title="{{ help_not_supported_order_status }}">{{ entry_not_supported_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_not_supported_order_status_id" id="input-not_supported-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_not_supported_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-declined_do_not_contact-order-status"><span data-toggle="tooltip" title="{{ help_declined_do_not_contact_order_status }}">{{ entry_declined_do_not_contact_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_declined_do_not_contact_order_status_id" id="input-declined_do_not_contact-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_declined_do_not_contact_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-aborted-order-status"><span data-toggle="tooltip" title="{{ help_aborted_order_status }}">{{ entry_aborted_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_aborted_order_status_id" id="input-aborted-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_aborted_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-blocked-order-status"><span data-toggle="tooltip" title="{{ help_blocked_order_status }}">{{ entry_blocked_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_blocked_order_status_id" id="input-blocked-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_blocked_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-cancelled-order-status"><span data-toggle="tooltip" title="{{ help_cancelled_order_status }}">{{ entry_cancelled_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_cancelled_order_status_id" id="input-cancelled-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_cancelled_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-deferred_transaction_received-order-status"><span data-toggle="tooltip" title="{{ help_deferred_transaction_received_order_status }}">{{ entry_deferred_transaction_received_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_deferred_transaction_received_order_status_id" id="input-deferred_transaction_received-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_deferred_transaction_received_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-referred-order-status"><span data-toggle="tooltip" title="{{ help_referred_order_status }}">{{ entry_referred_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_referred_order_status_id" id="input-referred-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_referred_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-authentication_failed-order-status"><span data-toggle="tooltip" title="{{ help_authentication_failed_order_status }}">{{ entry_authentication_failed_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_authentication_failed_order_status_id" id="input-authentication_failed-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_authentication_failed_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-invalid_csc-order-status"><span data-toggle="tooltip" title="{{ help_invalid_csc_order_status }}">{{ entry_invalid_csc_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_invalid_csc_order_status_id" id="input-invalid_csc-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_invalid_csc_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-lock_failure-order-status"><span data-toggle="tooltip" title="{{ help_lock_failure_order_status }}">{{ entry_lock_failure_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_lock_failure_order_status_id" id="input-lock_failure-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_lock_failure_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-submitted-order-status"><span data-toggle="tooltip" title="{{ help_submitted_order_status }}">{{ entry_submitted_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_submitted_order_status_id" id="input-submitted-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_submitted_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-not_enrolled_3d_secure-order-status"><span data-toggle="tooltip" title="{{ help_not_enrolled_3d_secure_order_status }}">{{ entry_not_enrolled_3d_secure_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_not_enrolled_3d_secure_order_status_id" id="input-not_enrolled_3d_secure-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_not_enrolled_3d_secure_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-pending-order-status"><span data-toggle="tooltip" title="{{ help_pending_order_status }}">{{ entry_pending_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_pending_order_status_id" id="input-pending-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_pending_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-exceeded_retry_limit-order-status"><span data-toggle="tooltip" title="{{ help_exceeded_retry_limit_order_status }}">{{ entry_exceeded_retry_limit_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_exceeded_retry_limit_order_status_id" id="input-exceeded_retry_limit-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_exceeded_retry_limit_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-duplicate_batch-order-status"><span data-toggle="tooltip" title="{{ help_duplicate_batch_order_status }}">{{ entry_duplicate_batch_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_duplicate_batch_order_status_id" id="input-duplicate_batch-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_duplicate_batch_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-declined_avs-order-status"><span data-toggle="tooltip" title="{{ help_declined_avs_order_status }}">{{ entry_declined_avs_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_declined_avs_order_status_id" id="input-declined_avs-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_declined_avs_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-declined_csc-order-status"><span data-toggle="tooltip" title="{{ help_declined_csc_order_status }}">{{ entry_declined_csc_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_declined_csc_order_status_id" id="input-declined_csc-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_declined_csc_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-declined_avs_csc-order-status"><span data-toggle="tooltip" title="{{ help_declined_avs_csc_order_status }}">{{ entry_declined_avs_csc_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_declined_avs_csc_order_status_id" id="input-declined_avs_csc-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_declined_avs_csc_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-declined_payment_plan-order-status"><span data-toggle="tooltip" title="{{ help_declined_payment_plan_order_status }}">{{ entry_declined_payment_plan_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_declined_payment_plan_order_status_id" id="input-declined_payment_plan-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_declined_payment_plan_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-approved-pending_settlement-order-status"><span data-toggle="tooltip" title="{{ help_approved_pending_settlement_order_status }}">{{ entry_approved_pending_settlement_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_approved_pending_settlement_order_status_id" id="input-approved-pending_settlement-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_approved_pending_settlement_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-partially_approved-order-status"><span data-toggle="tooltip" title="{{ help_partially_approved_order_status }}">{{ entry_partially_approved_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_partially_approved_order_status_id" id="input-partially_approved-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_partially_approved_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-unknown-order-status"><span data-toggle="tooltip" title="{{ help_unknown_order_status }}">{{ entry_unknown_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_unknown_order_status_id" id="input-unknown-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_unknown_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-risk-rejected-order-status"><span data-toggle="tooltip" title="{{ help_risk_rejected_order_status }}">{{ entry_risk_rejected_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_risk_rejected_order_status_id" id="input-risk-rejected-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_risk_rejected_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-risk-review-pending-order-status"><span data-toggle="tooltip" title="{{ help_risk_review_pending_order_status }}">{{ entry_risk_review_pending_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_risk_review_pending_order_status_id" id="input-risk-review-pending-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_risk_review_pending_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-risk-review-rejected-order-status"><span data-toggle="tooltip" title="{{ help_risk_review_rejected_order_status }}">{{ entry_risk_review_rejected_order_status }}</span></label>
+                  <div class="col-sm-10">
+                    <select name="payment_mastercard_pgs_risk_review_rejected_order_status_id" id="input-risk-review-rejected-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                            {% if order_status.order_status_id == payment_mastercard_pgs_risk_review_rejected_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                            {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+            <div class="tab-pane" id="tab-transaction">
+              <div class="text-right form-control-static">
+                <a class="btn btn-warning" data-toggle="tooltip" data-original-title="{{ text_refresh }}" id="refresh_transactions"><i class="fa fa-refresh"></i>&nbsp;{{ button_refresh }}</a>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th class="text-left hidden-xs">{{ column_merchant }}</th>
+                      <th class="text-left">{{ column_order_id }}</th>
+                      <th class="text-left hidden-xs">{{ column_type }}</th>
+                      <th class="text-left hidden-xs">{{ column_amount }}</th>
+                      <th class="text-left hidden-xs">{{ column_risk }}</th>
+                      <th class="text-left hidden-xs hidden-sm">{{ column_ip }}</th>
+                      <th class="text-left">{{ column_date_created }}</th>
+                      <th class="text-right">{{ column_action }}</th>
+                    </tr>
+                  </thead>
+                  <tbody id="transactions">
+                  </tbody>
+                </table>
+                <div id="transactions_pagination"></div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+  var list_transactions = function(page) {
+    $.ajax({
+      url : '{{ url_list_transactions }}'.replace('{PAGE}', page ? page : 1),
+      dataType : 'json',
+      beforeSend : function() {
+        $('#refresh_transactions').button('loading');
+        $('#transactions_pagination').empty();
+        $('#transactions').html('<tr><td colspan="8" class="text-center"><i class="fa fa-circle-o-notch fa-spin"></i>&nbsp;{{ text_loading }}</td></tr>');
+      },
+      success : function(data) {
+        var html = '';
+
+        if (data.transactions.length) {
+          for (var i in data.transactions) {
+            var row = data.transactions[i];
+
+            html += '<tr>';
+            html += '<td class="text-left hidden-xs">' + row.merchant + '</td>';
+            html += '<td class="text-left"><a target="_blank" href="' + row.url_order + '">' + row.order_id + '</td>';
+            html += '<td class="text-left hidden-xs">' + row.type + '</td>';
+            html += '<td class="text-left hidden-xs">' + row.amount + '</td>';
+            html += '<td class="text-left hidden-xs">' + row.risk + '</td>';
+            html += '<td class="text-left hidden-xs hidden-sm">' + row.ip + '</td>';
+            html += '<td class="text-left">' + row.date_created + '</td>';
+            html += '<td class="text-right"><a class="btn btn-info" href="' + row.url_info + '" data-toggle="tooltip" data-original-title="{{ text_view }}"><i class="fa fa-eye"></i></a></td>';
+            html += '</tr>';
+          }
+        } else {
+          html += '<tr>';
+          html += '<td class="text-center" colspan="8">{{ text_no_transactions }}</td>';
+          html += '</tr>';
+        }
+
+        $('#transactions').html(html);
+        
+        $('#transactions_pagination').html(data.pagination).find('a[href]').each(function(index,element) {
+          $(this).click(function(e) {
+            e.preventDefault();
+            list_transactions(isNaN($(this).attr('href')) ? 1 : $(this).attr('href'));
+          })
+        });
+      },
+      complete : function() {
+        $('#refresh_transactions').button('reset');
+      }
+    });
+  }
+
+  $('#refresh_transactions').click(function(e) {
+    e.preventDefault();
+    list_transactions();
+  }).trigger('click');
+
+  $('.nav-tabs a[href="#{{ tab }}"]').tab('show');
+
+  $('.text-danger').each(function() {
+    $(this).closest('.form-group').addClass('has-error');
+  });
+
+  $('#select-gateway').change(function() {
+    if ($(this).val() == 'other') {
+      $('#gateway_other').show();
+    } else {
+      $('#gateway_other').hide();
+      $(this).closest('.form-group').removeClass('has-error');
+    }
+  }).trigger('change');
+
+  $('.show_hide_credential').click(function(e) {
+    e.preventDefault();
+    var input = $(this).closest('.input-group').find('input');
+
+    if ($(input).attr('type') == 'text') {
+      $(input).attr('type', 'password');
+    } else {
+      $(input).attr('type', 'text');
+    }
+  });
+});
+</script>
+{{ footer }} 

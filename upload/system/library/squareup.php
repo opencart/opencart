@@ -26,6 +26,7 @@ class Squareup {
     const PAYMENT_FORM_URL = 'https://js.squareup.com/v2/paymentform';
     const SCOPE = 'MERCHANT_PROFILE_READ PAYMENTS_READ SETTLEMENTS_READ CUSTOMERS_READ CUSTOMERS_WRITE';
     const VIEW_TRANSACTION_URL = 'https://squareup.com/dashboard/sales/transactions/%s/by-unit/%s';
+    const SQUARE_INTEGRATION_ID = 'sqi_65a5ac54459940e3600a8561829fd970';
 
     public function __construct($registry) {
         $this->session = $registry->get('session');

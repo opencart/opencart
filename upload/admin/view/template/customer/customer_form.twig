@@ -1113,33 +1113,33 @@
     $('#address a[href=\'#tab-address' + address_row + '\']').tab('show');
 
     $('.date').datetimepicker({
-      language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
-      pickTime: false
+		language: '{{ datepicker }}',
+		pickTime: false
     });
 
-    $('.datetime').datetimepicker({
-      language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
-      pickDate: true,
-      pickTime: true
+	$('.datetime').datetimepicker({
+		language: '{{ datepicker }}',
+		pickDate: true,
+		pickTime: true
     });
 
     $('.time').datetimepicker({
-      language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
-      pickDate: false
+		language: '{{ datepicker }}',
+		pickDate: false
     });
 
     $('#tab-address' + address_row + ' .form-group[data-sort]').detach().each(function() {
-      if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-address' + address_row + ' .form-group').length) {
-        $('#tab-address' + address_row + ' .form-group').eq($(this).attr('data-sort')).before(this);
-      }
-
-      if ($(this).attr('data-sort') > $('#tab-address' + address_row + ' .form-group').length) {
-        $('#tab-address' + address_row + ' .form-group:last').after(this);
-      }
-
-      if ($(this).attr('data-sort') < -$('#tab-address' + address_row + ' .form-group').length) {
-        $('#tab-address' + address_row + ' .form-group:first').before(this);
-      }
+		if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-address' + address_row + ' .form-group').length) {
+			$('#tab-address' + address_row + ' .form-group').eq($(this).attr('data-sort')).before(this);
+		}
+		
+		if ($(this).attr('data-sort') > $('#tab-address' + address_row + ' .form-group').length) {
+			$('#tab-address' + address_row + ' .form-group:last').after(this);
+		}
+		
+		if ($(this).attr('data-sort') < -$('#tab-address' + address_row + ' .form-group').length) {
+			$('#tab-address' + address_row + ' .form-group:first').before(this);
+		}
     });
 
     address_row++;
@@ -1386,18 +1386,18 @@
   });
 
   $('.date').datetimepicker({
-    language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+    language: '{{ datepicker }}',
     pickTime: false
   });
 
   $('.datetime').datetimepicker({
-    language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+    language: '{{ datepicker }}',
     pickDate: true,
     pickTime: true
   });
 
   $('.time').datetimepicker({
-    language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+    language: '{{ datepicker }}',
     pickDate: false
   });
 

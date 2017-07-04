@@ -15,7 +15,7 @@
         </thead>
         <tr>
           <td>{{ entry_theme }}</td>
-          <td ><div class="btn-group" data-toggle="buttons"> {% if developer_theme %}
+          <td ><div class="btn-group" data-toggle="buttons">{% if developer_theme %}
               <label class="btn btn-success active" {% if not eval %}disabled="disabled"{% endif %}>
               <input type="radio" name="developer_theme" value="1" autocomplete="off" {% if not eval %}disabled="disabled"{% endif %} checked/>
               {{ button_on }}
@@ -96,7 +96,7 @@ $('input[name=\'developer_theme\'], input[name=\'developer_sass\']').on('change'
 	});	
 });	
 
-$('#modal-developer .model-body button').on('click', function() {
+$('#modal-developer table button').on('click', function() {
 	var element = this;
 	
 	$.ajax({
@@ -122,6 +122,6 @@ $('#modal-developer .model-body button').on('click', function() {
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
-	});	
+	});
 });
-//--></script> 
+//--></script>

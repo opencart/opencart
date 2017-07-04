@@ -426,17 +426,17 @@ $('select[name=\'type\']').on('change', function() {
 	}
 
 	$('.date').datetimepicker({
-		language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+		language: '{{ datepicker }}',
 		pickTime: false
 	});
 
 	$('.time').datetimepicker({
-		language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+		language: '{{ datepicker }}',
 		pickDate: false
 	});
 
 	$('.datetime').datetimepicker({
-		language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+		language: '{{ datepicker }}',
 		pickDate: true,
 		pickTime: true
 	});

@@ -355,18 +355,18 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 //--></script> 
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+	language: '{{ datepicker }}',
 	pickTime: false
 });
 
 $('.datetime').datetimepicker({
-	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+	language: '{{ datepicker }}',
 	pickDate: true,
 	pickTime: true
 });
 
 $('.time').datetimepicker({
-	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+	language: '{{ datepicker }}',
 	pickDate: false
 });
 //--></script> 

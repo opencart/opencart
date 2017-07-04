@@ -199,7 +199,7 @@ $('#form input').keydown(function(e) {
 });
 
 $('.date').datetimepicker({ 
-	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+	language: '{{ datepicker }}',
 	pickTime: false 
 });
 //--></script> 

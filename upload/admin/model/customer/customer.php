@@ -78,8 +78,14 @@ class ModelCustomerCustomer extends Model {
 	}
 	
 	public function getCustomers($data = array()) {
-		$sql = "SELECT *, CONCAT(c.firstname, ' ', c.lastname) AS name, cgd.name AS customer_group FROM " . DB_PREFIX . "customer c LEFT JOIN " . DB_PREFIX . "customer_group_description cgd ON (c.customer_group_id = cgd.customer_group_id) WHERE cgd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
-
+		$sql = "SELECT *, CONCAT(c.firstname, ' ', c.lastname) AS name, cgd.name AS customer_group FROM " . DB_PREFIX . "customer c LEFT JOIN " . DB_PREFIX . "customer_group_description cgd ON (c.customer_group_id = cgd.customer_group_id)";
+		
+		if (!empty($data['filter_affiliate'])) {
+			$sql .= " LEFT JOIN " . DB_PREFIX . "customer_affiliate ca ON (c.customer_id = ca.customer_id)";
+		}		
+		
+		$sql .= " WHERE cgd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+		
 		$implode = array();
 
 		if (!empty($data['filter_name'])) {
@@ -98,6 +104,10 @@ class ModelCustomerCustomer extends Model {
 			$implode[] = "c.customer_group_id = '" . (int)$data['filter_customer_group_id'] . "'";
 		}
 
+		if (!empty($data['filter_affiliate'])) {
+			$implode[] = "ca.status = '" . (int)$data['filter_affiliate'] . "'";
+		}
+		
 		if (!empty($data['filter_ip'])) {
 			$implode[] = "c.customer_id IN (SELECT customer_id FROM " . DB_PREFIX . "customer_ip WHERE ip = '" . $this->db->escape($data['filter_ip']) . "')";
 		}

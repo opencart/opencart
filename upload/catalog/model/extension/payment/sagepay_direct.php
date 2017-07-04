@@ -164,14 +164,14 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 
 		if ($trial_end > $subscription_end && $item['recurring']['duration'] != 0) {
 			$subscription_end = new DateTime(date_format($trial_end, 'Y-m-d H:i:s'));
-			$subscription_end = $this->calculateSchedule($item['recurring_frequency'], $subscription_end, $item['recurring_cycle'] * $item['recurring_duration']);
-		} elseif ($trial_end == $subscription_end && $item['recurring_duration'] != 0) {
-			$next_payment = $this->calculateSchedule($item['recurring_frequency'], $next_payment, $item['recurring_cycle']);
-			$subscription_end = $this->calculateSchedule($item['recurring_frequency'], $subscription_end, $item['recurring_cycle'] * $item['recurring_duration']);
-		} elseif ($trial_end > $subscription_end && $item['recurring_duration'] == 0) {
+			$subscription_end = $this->calculateSchedule($item['recurring']['frequency'], $subscription_end, $item['recurring']['cycle'] * $item['recurring']['duration']);
+		} elseif ($trial_end == $subscription_end && $item['recurring']['duration'] != 0) {
+			$next_payment = $this->calculateSchedule($item['recurring']['frequency'], $next_payment, $item['recurring']['cycle']);
+			$subscription_end = $this->calculateSchedule($item['recurring']['frequency'], $subscription_end, $item['recurring']['cycle'] * $item['recurring']['duration']);
+		} elseif ($trial_end > $subscription_end && $item['recurring']['duration'] == 0) {
 			$subscription_end = new DateTime('0000-00-00');
-		} elseif ($trial_end == $subscription_end && $item['recurring_duration'] == 0) {
-			$next_payment = $this->calculateSchedule($item['recurring_frequency'], $next_payment, $item['recurring_cycle']);
+		} elseif ($trial_end == $subscription_end && $item['recurring']['duration'] == 0) {
+			$next_payment = $this->calculateSchedule($item['recurring']['frequency'], $next_payment, $item['recurring']['cycle']);
 			$subscription_end = new DateTime('0000-00-00');
 		}
 

@@ -89,7 +89,9 @@ class ModelUpgrade1009 extends Model {
 		// OPENCART_SERVER
 		$upgrade = true;
 		
-		$lines = file(DIR_OPENCART . 'admin/config.php');
+		$file = DIR_OPENCART . 'admin/config.php';
+		
+		$lines = file($file);
 
 		foreach ($lines as $line) {
 			if (strpos(strtoupper($line), 'OPENCART_SERVER') !== false) {

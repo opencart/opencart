@@ -145,14 +145,14 @@ class ControllerMarketingContact extends Controller {
 						break;
 					case 'affiliate_all':
 						$affiliate_data = array(
-							'filter_affiliate' => $filter_affiliate,
+							'filter_affiliate' => 1,
 							'start'            => ($page - 1) * 10,
 							'limit'            => 10
 						);
 
-						$email_total = $this->model_customer_customer->getTotalAffiliates($affiliate_data);
+						$email_total = $this->model_customer_customer->getTotalCustomers($affiliate_data);
 
-						$results = $this->model_customer_customer->getAffiliates($affiliate_data);
+						$results = $this->model_customer_customer->getCustomers($affiliate_data);
 
 						foreach ($results as $result) {
 							$emails[] = $result['email'];

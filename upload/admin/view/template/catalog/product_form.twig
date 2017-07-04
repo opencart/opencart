@@ -1461,17 +1461,17 @@ $('input[name=\'option\']').autocomplete({
 		});
 
 		$('.date').datetimepicker({
-			language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+			language: '{{ datepicker }}',
 			pickTime: false
 		});
 
 		$('.time').datetimepicker({
-			language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+			language: '{{ datepicker }}',
 			pickDate: false
 		});
 
 		$('.datetime').datetimepicker({
-			language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+			language: '{{ datepicker }}',
 			pickDate: true,
 			pickTime: true
 		});
@@ -1564,7 +1564,7 @@ function addSpecial() {
 	$('#special tbody').append(html);
 
 	$('.date').datetimepicker({
-		language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+		language: '{{ datepicker }}',
 		pickTime: false
 	});
 
@@ -1617,17 +1617,17 @@ function addRecurring() {
 //--></script> 
   <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+	language: '{{ datepicker }}',
 	pickTime: false
 });
 
 $('.time').datetimepicker({
-	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+	language: '{{ datepicker }}',
 	pickDate: false
 });
 
 $('.datetime').datetimepicker({
-	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+	language: '{{ datepicker }}',
 	pickDate: true,
 	pickTime: true
 });

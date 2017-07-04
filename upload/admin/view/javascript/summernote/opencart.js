@@ -3,18 +3,12 @@ $(document).ready(function() {
 	$('[data-toggle=\'summernote\']').each(function() {
 		var element = this;
 		
-		var part = document.cookie.match(new RegExp('language=([^;]+)'))[1].split('-');
-		
-		if (part[1]) {
-			var language = part[0] + '-' + part[1].toUpperCase();
-		} else {
-			var language = part[0];
+		if ($(this).attr('data-lang')) {
+			$('head').append('<script type="text/javascript" src="view/javascript/summernote/lang/summernote-' + $(this).attr('data-lang') + '.js"></script>');
 		}
-		
-		$('head').append('<script type="text/javascript" src="view/javascript/summernote/lang/summernote-' + language + '.js"></script>');
 
 		$(element).summernote({
-			lang: language,
+			lang: $(this).attr('data-lang'),
 			disableDragAndDrop: true,
 			height: 300,
 			emptyPara: '',
@@ -88,5 +82,4 @@ $(document).ready(function() {
   			}
 		});
 	});
-	
 });

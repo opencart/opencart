@@ -289,17 +289,17 @@ $('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('c
 //--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+	language: '{{ datepicker }}',
 	pickTime: false
 });
 
 $('.time').datetimepicker({
-	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+	language: '{{ datepicker }}',
 	pickDate: false
 });
 
 $('.datetime').datetimepicker({
-	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+	language: '{{ datepicker }}',
 	pickDate: true,
 	pickTime: true
 });

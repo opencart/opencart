@@ -93,7 +93,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-message">{{ entry_message }}</label>
             <div class="col-sm-10">
-              <textarea name="message" placeholder="{{ entry_message }}" id="input-message" data-toggle="summernote" data-lang="{{ locale }}" class="form-control"></textarea>
+              <textarea name="message" placeholder="{{ entry_message }}" id="input-message" data-toggle="summernote" data-lang="{{ summernote }}" class="form-control"></textarea>
             </div>
           </div>
         </form>
@@ -152,7 +152,7 @@ $('#input-customer').parent().find('.well').delegate('.fa-minus-circle', 'click'
 $('input[name=\'affiliates\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=customer/affiliate/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {

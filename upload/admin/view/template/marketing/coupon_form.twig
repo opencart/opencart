@@ -283,7 +283,7 @@ $('#history').load('index.php?route=marketing/coupon/history&user_token={{ user_
   {% endif %} 
   <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+	language: '{{ datepicker }}',
 	pickTime: false
 });
 //--></script></div>

@@ -154,12 +154,12 @@ class ModelUpgrade1009 extends Model {
 	
 				fclose($file);
 			}
-				
+			
 			// DIR_SESSION
 			$upgrade = true;
-			
-			$lines = file($file);
 	
+			$lines = file($file);
+			
 			foreach ($lines as $line) {
 				if (strpos(strtoupper($line), 'DIR_SESSION') !== false) {
 					$upgrade = false;
@@ -196,17 +196,24 @@ class ModelUpgrade1009 extends Model {
 				'DIR_UPLOAD'       => 'upload'
 			);
 
+			$lines = file($file);
+			
 			$output = '';
-
+				
 			foreach ($lines as $line_id => $line) {
+				$status = false;
+				
 				foreach ($replace as $key => $value) {
 					if (strpos($line, $key) !== false) {
-						$output .= 'define(\'' . $key . '\', DIR_STORAGE . \'' . $value . '/\');' . "\n";
-					} else {
-						$output .= $line;
+						$status = true;
 					}
 				}
 				
+				if ($status) {
+					$output .= 'define(\'' . $key . '\', DIR_STORAGE . \'' . $value . '/\');' . "\n";
+				} else {
+					$output .= $line;
+				}
 			}
 
 			$handle = fopen($file, 'w');

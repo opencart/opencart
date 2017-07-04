@@ -2178,9 +2178,6 @@ $('#button-save').on('click', function() {
 
 			if (json['success']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-
-                // Refresh products, vouchers and totals
-				$('#button-refresh').trigger('click');
             }
 
 			if (json['order_id']) {
@@ -2314,6 +2311,12 @@ $('#button-refresh').on('click', function() {
 		url: '{{ catalog }}index.php?route=api/cart/products&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		dataType: 'json',
 		crossDomain: true,
+		beforeSend: function() {
+			$('#button-refresh').button('loading');
+		},
+		complete: function() {
+			$('#button-refresh').button('reset');
+		},		
 		success: function(json) {
 			$('.alert-dismissible').remove();
 

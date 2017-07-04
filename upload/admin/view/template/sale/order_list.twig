@@ -44,118 +44,18 @@
             <label class="control-label" for="input-order-status">{{ entry_order_status }}</label>
             <select name="filter_order_status_id" id="input-order-status" class="form-control">
               <option value=""></option>
-              
-              
-                
-                
-                
-                  
-                
-                
-                
-              
-                  {% if filter_order_status_id == '0' %}
-                  
-              
-                
-                
-                
-                  
-                
-                
-                
-              
+              {% if filter_order_status_id == '0' %}
               <option value="0" selected="selected">{{ text_missing }}</option>
-              
-              
-                
-                
-                
-                  
-                
-                
-                
-              
-                  {% else %}
-                  
-              
-                
-                
-                
-                  
-                
-                
-                
-              
+              {% else %}
               <option value="0">{{ text_missing }}</option>
-              
-              
-                
-                
-                
-                  
-                
-                
-                
-              
-                  {% endif %}
-                  {% for order_status in order_statuses %}
-                  {% if order_status.order_status_id == filter_order_status_id %}
-                  
-              
-                
-                
-                
-                  
-                
-                
-                
-              
+              {% endif %}
+              {% for order_status in order_statuses %}
+              {% if order_status.order_status_id == filter_order_status_id %}
               <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
-              
-              
-                
-                
-                
-                  
-                
-                
-                
-              
-                  {% else %}
-                  
-              
-                
-                
-                
-                  
-                
-                
-                
-              
+              {% else %}
               <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-              
-              
-                
-                
-                
-                  
-                
-                
-                
-              
-                  {% endif %}
-                  {% endfor %}
-                
-            
-              
-              
-              
-                
-              
-              
-              
-            
+              {% endif %}
+              {% endfor %}
             </select>
           </div>
           <div class="form-group">
@@ -222,13 +122,13 @@
                 <td class="text-left">{{ order.date_added }}</td>
                 <td class="text-left">{{ order.date_modified }}</td>
                 <td class="text-right"><div style="min-width: 120px;">
-                    <div class="btn-group"><a href="{{ order.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa fa-eye"></i></a>
-                      <button type="button" data-toggle="dropdown" class="btn btn-info dropdown-toggle"><span class="caret"></span></button>
+                    <div class="btn-group"><a href="{{ order.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                      <button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><span class="caret"></span></button>
                       <ul class="dropdown-menu dropdown-menu-right">
                         <li><a href="{{ order.edit }}"><i class="fa fa-pencil"></i> {{ button_edit }}</a></li>
+                        <li><a href="{{ order.order_id }}"><i class="fa fa-trash-o"></i> {{ button_delete }}</a></li>
                       </ul>
                     </div>
-                    <button type="button" value="{{ order.order_id }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
                   </div></td>
               </tr>
               {% endfor %}
@@ -341,18 +241,20 @@ $('#button-shipping, #button-invoice').on('click', function(e) {
 	$('#form-order').attr('action', this.getAttribute('formAction'));
 });
 
-$('#form-order .btn-danger').on('click', function(e) {
+$('#form-order li:last a').on('click', function(e) {
+	e.preventDefault();
+	
 	var element = this;
 	
 	if (confirm('{{ text_confirm }}')) {
 		$.ajax({
-			url: '{{ catalog }}index.php?route=api/order/delete&api_token={{ api_token }}&store_id={{ store_id }}&order_id=' + $(element).val(),
+			url: '{{ catalog }}index.php?route=api/order/delete&api_token={{ api_token }}&store_id={{ store_id }}&order_id=' + $(element).attr('href'),
 			dataType: 'json',
 			beforeSend: function() {
-				$(element).button('loading');
+				$(element).parent().parent().parent().find('button').button('loading');
 			},
 			complete: function() {
-				$(element).button('reset');
+				$(element).parent().parent().parent().find('button').button('reset');
 			},
 			success: function(json) {
 				$('.alert-dismissible').remove();

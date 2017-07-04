@@ -41,7 +41,7 @@
               <div id="tab-documentation" class="tab-pane">{{ documentation }}</div>
               <div id="tab-download" class="tab-pane">
                 <fieldset>
-                  <legend>Progress</legend>
+                  <legend>{{ text_progress }}</legend>
                   <div id="progress">
                     <div class="progress">
                       <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
@@ -51,12 +51,12 @@
                   <hr />
                 </fieldset>
                 <fieldset>
-                  <legend>Available Installs</legend>
+                  <legend>{{ text_available }}</legend>
                   <table class="table table-bordered">
                     <thead>
                       <th>Download Name</th>
-                      <th{{ text_date_added }}</th>
-                      <th class="text-right">Action</th>
+                      <th>{{ text_date_added }}</th>
+                      <th class="text-right">{{ text_action }}</th>
                     </thead>
                     <tbody>
                     {% if downloads %}

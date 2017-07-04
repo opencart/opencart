@@ -145,8 +145,9 @@ class ControllerMarketingContact extends Controller {
 						break;
 					case 'affiliate_all':
 						$affiliate_data = array(
-							'start' => ($page - 1) * 10,
-							'limit' => 10
+							'filter_affiliate' => $filter_affiliate,
+							'start'            => ($page - 1) * 10,
+							'limit'            => 10
 						);
 
 						$email_total = $this->model_customer_customer->getTotalAffiliates($affiliate_data);
@@ -160,7 +161,7 @@ class ControllerMarketingContact extends Controller {
 					case 'affiliate':
 						if (!empty($this->request->post['affiliate'])) {
 							foreach ($this->request->post['affiliate'] as $affiliate_id) {
-								$affiliate_info = $this->model_customer_customer->getAffiliate($affiliate_id);
+								$affiliate_info = $this->model_customer_customer->getCustomer($affiliate_id);
 
 								if ($affiliate_info) {
 									$emails[] = $affiliate_info['email'];

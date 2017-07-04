@@ -229,6 +229,8 @@ class ModelExtensionPaymentSquareup extends Model {
     public function nextRecurringPayments() {
         $payments = array();
 
+        $this->load->library('squareup');
+
         $recurring_sql = "SELECT * FROM `" . DB_PREFIX . "order_recurring` `or` INNER JOIN `" . DB_PREFIX . "squareup_transaction` st ON (st.transaction_id = `or`.reference) WHERE `or`.status='" . self::RECURRING_ACTIVE . "'";
 
         $this->load->model('checkout/order');
@@ -266,7 +268,8 @@ class ModelExtensionPaymentSquareup extends Model {
                 'buyer_email_address' => $order_info['email'],
                 'delay_capture' => false,
                 'customer_id' => $transaction_tenders[0]['customer_id'],
-                'customer_card_id' => $transaction_tenders[0]['card_details']['card']['id']
+                'customer_card_id' => $transaction_tenders[0]['card_details']['card']['id'],
+                'integration_id' => Squareup::SQUARE_INTEGRATION_ID
             );
 
             $payments[] = array(

@@ -99,7 +99,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url, true)
 		);
 		
-		$time = time() + 60;
+		$time = time() + 120;
 		
 		// We create a hash from the data in a similar method to how amazon does things.
 		$string  = 'marketplace/api/list' . "\n";
@@ -513,7 +513,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$extension_id = 0;
 		}
 
-		$time = time() + 60;
+		$time = time() + 120;
 
 		// We create a hash from the data in a similar method to how amazon does things.
 		$string  = 'marketplace/api/info' . "\n";
@@ -700,7 +700,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		}
 
 		if (!$json) {
-			$time = time() + 60;
+			$time = time() + 120;
 
 			// We create a hash from the data in a similar method to how amazon does things.
 			$string  = 'marketplace/api/purchase' . "\n";
@@ -829,7 +829,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		}
 		
 		if (!$json) {
-			$time = time() + 60;
+			$time = time() + 120;
 
 			// We create a hash from the data in a similar method to how amazon does things.
 			$string  = 'marketplace/api/download' . "\n";
@@ -923,7 +923,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		}
 					
 		if (!$json) {	
-			$time = time() + 60;
+			$time = time() + 120;
 
 			// We create a hash from the data in a similar method to how amazon does things.
 			$string  = 'marketplace/api/addcomment' . "\n";

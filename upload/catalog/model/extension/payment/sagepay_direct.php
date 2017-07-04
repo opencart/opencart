@@ -123,45 +123,46 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 		$this->load->model('checkout/recurring');
 		$this->load->model('extension/payment/sagepay_direct');
 		//trial information
-		if ($item['recurring_trial'] == 1) {
-			$price = $item['recurring_trial_price'];
-			$trial_amt = $this->currency->format($this->tax->calculate($item['recurring_trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
-			$trial_text = sprintf($this->language->get('text_trial'), $trial_amt, $item['recurring_trial_cycle'], $item['recurring_trial_frequency'], $item['recurring_trial_duration']);
+		if ($item['recurring']['trial'] == 1) {
+			$price = $item['recurring']['trial_price'];
+			$trial_amt = $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
+			$trial_text = sprintf($this->language->get('text_trial'), $trial_amt, $item['recurring']['trial_cycle'], $item['recurring']['trial_frequency'], $item['recurring']['trial_duration']);
 		} else {
-			$price = $item['recurring_price'];
+			$price = $item['recurring']['price'];
 			$trial_text = '';
 		}
 
-		$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring_price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
-		$recurring_description = $trial_text . sprintf($this->language->get('text_recurring'), $recurring_amt, $item['recurring_cycle'], $item['recurring_frequency']);
+		$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
+		$recurring_description = $trial_text . sprintf($this->language->get('text_recurring'), $recurring_amt, $item['recurring']['cycle'], $item['recurring']['frequency']);
 
-		if ($item['recurring_duration'] > 0) {
-			$recurring_description .= sprintf($this->language->get('text_length'), $item['recurring_duration']);
+		if ($item['recurring']['duration'] > 0) {
+			$recurring_description .= sprintf($this->language->get('text_length'), $item['recurring']['duration']);
 		}
 
 		//create new recurring and set to pending status as no payment has been made yet.
-		$order_recurring_id = $this->model_checkout_recurring->create($item, $this->session->data['order_id'], $recurring_description);
+		$order_recurring_id = $this->model_checkout_recurring->addRecurring($this->session->data['order_id'], $recurring_description, $item['recurring']);
+		
 		$this->model_checkout_recurring->addReference($order_recurring_id, $vendor_tx_code);
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$sagepay_order_info = $this->getOrder($this->session->data['order_id']);
 
-		$response_data = $this->setPaymentData($order_info, $sagepay_order_info, $price, $order_recurring_id, $item['recurring_name']);
+		$response_data = $this->setPaymentData($order_info, $sagepay_order_info, $price, $order_recurring_id, $item['recurring']['name']);
 
 		$next_payment = new DateTime('now');
 		$trial_end = new DateTime('now');
 		$subscription_end = new DateTime('now');
 
-		if ($item['recurring_trial'] == 1 && $item['recurring_trial_duration'] != 0) {
-			$next_payment = $this->calculateSchedule($item['recurring_trial_frequency'], $next_payment, $item['recurring_trial_cycle']);
-			$trial_end = $this->calculateSchedule($item['recurring_trial_frequency'], $trial_end, $item['recurring_trial_cycle'] * $item['recurring_trial_duration']);
+		if ($item['recurring']['trial'] == 1 && $item['recurring']['trial_duration'] != 0) {
+			$next_payment = $this->calculateSchedule($item['recurring']['trial_frequency'], $next_payment, $item['recurring']['trial_cycle']);
+			$trial_end = $this->calculateSchedule($item['recurring']['trial_frequency'], $trial_end, $item['recurring']['trial_cycle'] * $item['recurring']['trial_duration']);
 		} elseif ($item['recurring_trial'] == 1) {
-			$next_payment = $this->calculateSchedule($item['recurring_trial_frequency'], $next_payment, $item['recurring_trial_cycle']);
+			$next_payment = $this->calculateSchedule($item['recurring']['trial_frequency'], $next_payment, $item['recurring']['trial_cycle']);
 			$trial_end = new DateTime('0000-00-00');
 		}
 
-		if ($trial_end > $subscription_end && $item['recurring_duration'] != 0) {
+		if ($trial_end > $subscription_end && $item['recurring']['duration'] != 0) {
 			$subscription_end = new DateTime(date_format($trial_end, 'Y-m-d H:i:s'));
 			$subscription_end = $this->calculateSchedule($item['recurring_frequency'], $subscription_end, $item['recurring_cycle'] * $item['recurring_duration']);
 		} elseif ($trial_end == $subscription_end && $item['recurring_duration'] != 0) {

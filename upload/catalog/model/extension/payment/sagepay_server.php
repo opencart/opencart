@@ -135,8 +135,9 @@ class ModelExtensionPaymentSagePayServer extends Model {
 		}
 
 		//create new recurring and set to pending status as no payment has been made yet.
-		$recurring_id = $this->model_checkout_recurring->create($item, $this->session->data['order_id'], $recurring_description);
-		$this->model_checkout_recurring->addReference($recurring_id, $vendor_tx_code);
+		$recurring_id = $this->model_checkout_recurring->addRecurring($this->session->data['order_id'], $recurring_description, $item['recurring']);
+		
+		$this->model_checkout_recurring->editReference($recurring_id, $vendor_tx_code);
 	}
 
 	public function updateRecurringPayment($item, $order_details) {
@@ -147,9 +148,9 @@ class ModelExtensionPaymentSagePayServer extends Model {
 
 		//trial information
 		if ($item['trial'] == 1) {
-			$price = $this->currency->format($item['recurring']['trial_price'], $this->session->data['currency'], false, false);
+			$price = $this->currency->format($item['trial_price'], $this->session->data['currency'], false, false);
 		} else {
-			$price = $this->currency->format($item['recurring']['price'], $this->session->data['currency'], false, false);
+			$price = $this->currency->format($item['recurring_price'], $this->session->data['currency'], false, false);
 		}
 
 		$response_data = $this->setPaymentData($order_info, $order_details, $price, $item['order_recurring_id'], $item['recurring_name']);

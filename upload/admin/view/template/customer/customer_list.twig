@@ -165,48 +165,53 @@
     </div>
   </div>
   <script type="text/javascript"><!--
+  $('.table-responsive').on('shown.bs.dropdown', function (e) {
+    var t = $(this),
+      m = $(e.target).find('.dropdown-menu'),
+      tb = t.offset().top + t.height(),
+      mb = m.offset().top + m.outerHeight(true),
+      d = 20;
+    if (t[0].scrollWidth > t.innerWidth()) {
+      if (mb + d > tb) {
+        t.css('padding-bottom', ((mb + d) - tb));
+      }
+    } else {
+      t.css('overflow', 'visible');
+    }
+  }).on('hidden.bs.dropdown', function () {
+    $(this).css({'padding-bottom': '', 'overflow': ''});
+  });
+  //--></script>
+  <script type="text/javascript"><!--
   $('#button-filter').on('click', function() {
     url = 'index.php?route=customer/customer&user_token={{ user_token }}';
-
     var filter_name = $('input[name=\'filter_name\']').val();
-
     if (filter_name) {
       url += '&filter_name=' + encodeURIComponent(filter_name);
     }
-
     var filter_email = $('input[name=\'filter_email\']').val();
-
     if (filter_email) {
       url += '&filter_email=' + encodeURIComponent(filter_email);
     }
-
     var filter_customer_group_id = $('select[name=\'filter_customer_group_id\']').val();
-
     if (filter_customer_group_id !== '') {
       url += '&filter_customer_group_id=' + encodeURIComponent(filter_customer_group_id);
     }
-
     var filter_status = $('select[name=\'filter_status\']').val();
-
     if (filter_status !== '') {
       url += '&filter_status=' + encodeURIComponent(filter_status); 
     }
-
     var filter_ip = $('input[name=\'filter_ip\']').val();
-
     if (filter_ip) {
       url += '&filter_ip=' + encodeURIComponent(filter_ip);
     }
-
     var filter_date_added = $('input[name=\'filter_date_added\']').val();
-
     if (filter_date_added) {
       url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
     }
-
     location = url;
   });
-  //--></script> 
+  //--></script>
   <script type="text/javascript"><!--
   $('input[name=\'filter_name\']').autocomplete({
     'source': function(request, response) {
@@ -246,12 +251,12 @@
       $('input[name=\'filter_email\']').val(item['label']);
     }
   });
-  //--></script> 
+  //--></script>
   <script type="text/javascript"><!--
   $('.date').datetimepicker({
     language: '{{ datepicker }}',
     pickTime: false
   });
-  //--></script> 
+  //--></script>
 </div>
 {{ footer }}

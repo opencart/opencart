@@ -1,14 +1,31 @@
-# OpenCart 2.0 change log
+# OpenCart change log
 
-## v2.2.0.0 (02.03.2016)
+## [Unreleased]
 
-## v2.1.0.1 (06.10.2015)
+## [v3.0.1.1] (Release date: 04.07.2017)
+
+## [v3.0.0.0] (Release date: 19.06.2017)
+
+## [v2.3.0.2] (Release date: 01.08.2016)
+
+## [v2.3.0.1] (Release date: 31.07.2016)
+
+## [v2.3.0.0] (Release date: 30.07.2016)
+
+## [v2.2.0.0] (Release date: 02.03.2016)
+
+## [v2.1.0.2] (Release date: 30.12.2015)
+#### Bugs fixed
+* XSS issue resolved for zone_id. Thanks to www.netsparker.com for finding.
+
+## [v2.1.0.1] (Release date: 06.10.2015)
 #### Bugs fixed
 * Use the ip address from data in Fraudlanbs module and update language strings
+
 #### Changes
 * Allow download of the error log
 
-## v2.1.0.0 (29.09.2015)
+## [v2.1.0.0] (Developer Release date: 28.09.2015)
 #### Bugs fixed
 * Change post to session in order API (https://github.com/opencart/opencart/issues/2712)
 * Maxmind error with unused method (https://github.com/opencart/opencart/issues/3069)
@@ -60,7 +77,6 @@
 * Coupon per category does not work #3354 (https://github.com/opencart/opencart/issues/3354)
 * stylesheet form-group fix (https://github.com/opencart/opencart/commit/86b16c0074db9d4a075b92efbab87e703eb848cd)
 * Version 2.0.3.1 Error ----PP_EXPRESS Error #3377 (https://github.com/opencart/opencart/issues/3377)
-
 
 #### Changes
 * Changes to the order API system (https://github.com/opencart/opencart/tree/master/upload/catalog/controller/api)
@@ -123,7 +139,7 @@
 * Moved analyitics into separate module type
 * Added priority to event listener. Higher priority means more importance. (https://github.com/opencart/opencart/commit/e69ec5a94622fe3b3e9964e4a4ea650cffeb9d33)
 
-## v2.0.3.1
+## [v2.0.3.1] (Release date: 29.05.2015)
 #### Bugs fixed
 * Safari text colour change on carousel (https://github.com/opencart/opencart/commit/2adcf21fbdf2c2d0e08860daf4012e14e24ff664)
 * Missing language strings during install for DB port (https://github.com/opencart/opencart/commit/c9f014f3a0441b05f4b2d9fad074a5b883695102)
@@ -140,13 +156,7 @@
 * Updated readonly="readonly" to readonly on form elements (https://github.com/opencart/opencart/commit/f5e85dc3a8cc45c4cbef9ec42735bf74272e15a8)
 * Google sitemap double amp encoding (https://github.com/opencart/opencart/commit/06fe3e5f3b3ff4f72ed74811fb6c32cea5a5776d)
 
-#### Changes
-None
-
-#### Added
-None
-
-## v2.0.3.0 (Developer Release date: 20.05.2015)
+## [v2.0.3.0] (Developer Release date: 20.05.2015)
 #### Bugs fixed
 * Mail config hostname variable (https://github.com/opencart/opencart/issues/2840)
 * Order status id INT size in install.sql (https://github.com/opencart/opencart/issues/2820)
@@ -208,7 +218,7 @@ None
 * Fraud labs pro module added (https://github.com/opencart/opencart/commit/e62ae241f56ea2d3efb4f74ff3f840d2479ea28c)
 * G2A Pay module (https://github.com/opencart/opencart/commit/a0df0385bdc5785128da5302433fd5a65675b3e4)
 
-## v2.0.2.0 (Release date: 31.03.2015)
+## [v2.0.2.0] (Release date: 31.03.2015)
 #### Bugs fixed
 * Fix recurring profile copy button (instead of deleting them) (https://github.com/opencart/opencart/issues/2458, https://github.com/opencart/opencart/commit/be3811153da01d5db132e904adaceeb225449e6a)
 * Owl carousel slider CSS fix (https://github.com/opencart/opencart/commit/870c406643328a6b50770eeb52a85b065812033e)
@@ -291,9 +301,9 @@ None
 * Amazon Login and Pay module
 * PayPal merchant onboarding/signup added to Express Checkout
 
-## v2.0.1.1 (Release date: 06.12.2014)
+## [v2.0.1.1] (Release date: 06.12.2014)
 
-## v2.0.1.0 (Release date: 30.11.2014)
+## [v2.0.1.0] (Release date: 30.11.2014)
 #### Bugs fixed
 * Changed namespace issues in DB driver files.
 * Added missing text_edit string in the settings area.
@@ -327,3 +337,22 @@ None
 #### Added
 * Check for URL alias #1915 (https://github.com/opencart/opencart/commit/69d6252f4157faf207e3db0504de20b34eab58ef)
 * Latest OpenBay Pro release.
+
+## [v2.0.0.0] - (Release date: 01.10.2014)
+
+[Unreleased]: https://github.com/opencart/opencart/compare/3.0.1.1...HEAD
+[v3.0.1.1]: https://github.com/opencart/opencart/compare/3.0.0.0...3.0.1.1
+[v3.0.0.0]: https://github.com/opencart/opencart/compare/2.3.0.2...3.0.0.0
+[v2.3.0.2]: https://github.com/opencart/opencart/compare/2.3.0.1...2.3.0.2
+[v2.3.0.1]: https://github.com/opencart/opencart/compare/2.3.0.0...2.3.0.1
+[v2.3.0.0]: https://github.com/opencart/opencart/compare/2.2.0.0...2.3.0.0
+[v2.2.0.0]: https://github.com/opencart/opencart/compare/2.1.0.2...2.2.0.0
+[v2.1.0.2]: https://github.com/opencart/opencart/compare/2.1.0.1...2.1.0.2
+[v2.1.0.1]: https://github.com/opencart/opencart/compare/2.1.0.0...2.1.0.1
+[v2.1.0.0]: https://github.com/opencart/opencart/compare/2.0.3.1...2.1.0.0
+[v2.0.3.1]: https://github.com/opencart/opencart/compare/2.0.3.0...2.0.3.1
+[v2.0.3.0]: https://github.com/opencart/opencart/compare/2.0.2.0...2.0.3.0
+[v2.0.2.0]: https://github.com/opencart/opencart/compare/2.0.1.1...2.0.2.0
+[v2.0.1.1]: https://github.com/opencart/opencart/compare/2.0.1.0...2.0.1.1
+[v2.0.1.0]: https://github.com/opencart/opencart/compare/2.0.0.0...2.0.1.0
+[v2.0.0.0]: https://github.com/opencart/opencart/compare/2.0.0.0b3...2.0.0.0

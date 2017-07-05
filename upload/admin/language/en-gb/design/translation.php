@@ -7,7 +7,6 @@ $_['text_success']     = 'Success: You have modified language editor!';
 $_['text_list']        = 'Translation List';
 $_['text_edit']        = 'Edit Translation';
 $_['text_add']         = 'Add Translation';
-$_['text_edit']        = 'Edit Translation';
 $_['text_default']     = 'Default';
 $_['text_store']       = 'Store';
 $_['text_language']    = 'Language';

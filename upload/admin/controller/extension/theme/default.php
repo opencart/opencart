@@ -117,7 +117,7 @@ class ControllerExtensionThemeDefault extends Controller {
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=theme', true);
 
 		if (isset($this->request->get['store_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-			$setting_info = $this->model_setting_setting->getSetting('default', $this->request->get['store_id']);
+			$setting_info = $this->model_setting_setting->getSetting('theme_default', $this->request->get['store_id']);
 		}
 		
 		if (isset($this->request->post['theme_default_directory'])) {

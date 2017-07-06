@@ -94,6 +94,31 @@ class ModelCatalogProduct extends Model {
 				}
 
 				$sql .= " AND pf.filter_id IN (" . implode(',', $implode) . ")";
+				
+				$minq=$this->db->query("SELECT id.product_id FROM(SELECT product_id, count(i.product_id) as t, c.filter_group as b FROM 
+					(SELECT 
+						f.filter_id, f.product_id, p.filter_group_id
+					FROM
+						". DB_PREFIX ."product_filter f
+						left join ". DB_PREFIX ."filter p ON p.filter_id = f.filter_id
+					where
+						p.filter_id IN (" . implode(',', $implode) . ")
+						GROUP BY product_id , filter_group_id) as i,
+							(select count(distinct filter_group_id) as filter_group
+						from
+						". DB_PREFIX ."filter_description f_b
+						WHERE f_b.filter_id in (" . implode(',', $implode) . ")) as c
+						GROUP BY product_id
+					HAVING t = b) as id");
+
+				$min=array();
+
+				for($x=0;$x<count($minq->rows);$x++){	
+					foreach($minq->rows[$x] as $value){
+						$min[]=$value;
+					}
+				}
+			$imp=implode(',',$min);
 			}
 		}
 
@@ -151,6 +176,14 @@ class ModelCatalogProduct extends Model {
 
 		if (!empty($data['filter_manufacturer_id'])) {
 			$sql .= " AND p.manufacturer_id = '" . (int)$data['filter_manufacturer_id'] . "'";
+		}
+
+		if(isset($filters)){
+			if(!count($min)){
+				$imp='0000000';
+			}
+
+			$sql .= " AND p.product_id IN(".$imp.")";
 		}
 
 		$sql .= " GROUP BY p.product_id";

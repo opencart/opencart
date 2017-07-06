@@ -2720,7 +2720,9 @@ tbody.collapse.in {
   border-radius: 3px;
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
   box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
-  background-clip: padding-box; }
+  background-clip: padding-box;
+  max-height: 300px;
+  overflow-y: auto; }
   .dropdown-menu.pull-right {
     right: 0;
     left: auto; }

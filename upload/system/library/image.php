@@ -81,6 +81,12 @@ class Image {
 			return;
 		}
 
+		if ($width==0)
+		$width=$height*$this->width/$this->height;
+
+		if ($height==0)
+		$height=$width*$this->height/$this->width;
+
 		$xpos = 0;
 		$ypos = 0;
 		$scale = 1;
@@ -165,7 +171,7 @@ class Image {
 				$watermark_pos_y = $this->height - $watermark->getHeight();
 				break;
 		}
-		
+
 		imagealphablending( $this->image, true );
 		imagesavealpha( $this->image, true );
 		imagecopy($this->image, $watermark->getImage(), $watermark_pos_x, $watermark_pos_y, 0, 0, $watermark->getWidth(), $watermark->getHeight());

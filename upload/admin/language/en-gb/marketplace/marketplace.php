@@ -3,7 +3,7 @@
 $_['heading_title']      = 'Extension Marketplace';
 
 // Text
-$_['text_success']       = 'Success: You have modified your API information!';
+$_['text_success']       = 'Success: You have modified your extension!';
 $_['text_list']          = 'Extension List';
 $_['text_filter']        = 'Filter';
 $_['text_search']        = 'Search for extensions and themes';

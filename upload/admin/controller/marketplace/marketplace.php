@@ -235,9 +235,11 @@ class ControllerMarketplaceMarketplace extends Controller {
 		}
 		
 		$data['user_token'] = $this->session->data['user_token'];
-		
+			 
 		if (isset($response_info['error'])) {
-			$data['error_warning'] = $response_info['error'];
+			$data['error_signature'] = $response_info['error'];
+		} else {
+			$data['error_signature'] = '';
 		}
 		
 		// Categories
@@ -552,13 +554,11 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$this->load->language('marketplace/marketplace');
 
 			$this->document->setTitle($this->language->get('heading_title'));
-		
-			if ($response_info['license'] && (!$this->config->get('opencart_username') || !$this->config->get('opencart_secret'))) {
-				$data['error_warning'] = $this->language->get('error_opencart');
-			} elseif (isset($response_info['error'])) {
-				$data['error_warning'] = $response_info['error'];
+
+			if (isset($response_info['error'])) {
+				$data['error_signature'] = $response_info['error'];
 			} else {
-				$data['error_warning'] = '';
+				$data['error_signature'] = '';
 			}
 				
 			$data['user_token'] = $this->session->data['user_token'];

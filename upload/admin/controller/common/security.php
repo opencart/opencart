@@ -12,8 +12,8 @@ class ControllerCommonSecurity extends Controller {
 		$path = '';
 		
 		$data['paths'] = array();
-			
-		$parts = explode('/', substr($this->request->server['DOCUMENT_ROOT'], 0, strrpos($this->request->server['DOCUMENT_ROOT'], '/')));	
+		
+		$parts = explode('/', str_replace('\\', '/', rtrim(DIR_SYSTEM, '/')));	
 		
 		foreach ($parts as $part) {
 			$path .= $part . '/';
@@ -23,6 +23,8 @@ class ControllerCommonSecurity extends Controller {
 		
 		rsort($data['paths']);	
 			
+		$data['document_root'] = substr($this->request->server['DOCUMENT_ROOT'], 0, strrpos($this->request->server['DOCUMENT_ROOT'], '/')) . '/';
+
 		return $this->load->view('common/security', $data);
 	}
 	
@@ -46,11 +48,11 @@ class ControllerCommonSecurity extends Controller {
 		if (!$this->user->hasPermission('modify', 'common/developer')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
-			if (!$path || str_replace('\\', '/', realpath($path)) . '/' != str_replace('\\', '/', substr($this->request->server['DOCUMENT_ROOT'], 0, strlen($path)))) {
+			if (!$path || str_replace('\\', '/', realpath($path)) . '/' != str_replace('\\', '/', substr(DIR_SYSTEM, 0, strlen($path)))) {
 				$json['error'] = $this->language->get('error_path');
 			}
 					
-			if (!$directory || !preg_match('/^[a-zA-Z0-9]+$/', $directory)) {
+			if (!$directory || !preg_match('/^[a-zA-Z0-9_-]+$/', $directory)) {
 				$json['error'] = $this->language->get('error_directory');
 			}
 						

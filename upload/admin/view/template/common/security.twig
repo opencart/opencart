@@ -22,10 +22,14 @@
             <div class="form-group">
               <div class="input-group">
                 <div class="input-group-btn dropdown">
-                  <button type="button" id="button-path" data-toggle="dropdown" class="btn btn-default">{{ paths[0] }} <span class="caret"></span></button>
+                  <button type="button" id="button-path" data-toggle="dropdown" class="btn btn-default">{{ document_root }} <span class="caret"></span></button>
                   <ul class="dropdown-menu">
                     {% for path in paths %}
-                    <li><a href="{{ path }}">{{ path }}</a></li>
+                    {% if path|length > document_root|length %}
+                    <li><a href="{{ path }}"><i class="fa fa-exclamation-triangle fa-fw text-danger"></i> {{ path }}</a></li>
+                    {% else %}
+                    <li><a href="{{ path }}"><i class="fa fa-check-circle fa-fw text-success"></i> {{ path }}</a></li>
+                    {% endif %}
                     {% endfor %}
                   </ul>
                 </div>
@@ -64,7 +68,7 @@ $('#modal-security select[name=\'type\']').trigger('change');
 $('#modal-security .dropdown-menu a').on('click', function(e) {
 	e.preventDefault();
 	
-	$('#modal-security #button-path').html($(this).text() + ' <span class="caret"></span>');
+	$('#modal-security #button-path').html($(this).html() + ' <span class="caret"></span>');
 	
 	$('#modal-security input[name=\'path\']').val($(this).attr('href'));
 });

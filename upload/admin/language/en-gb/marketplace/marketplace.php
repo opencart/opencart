@@ -28,6 +28,7 @@ $_['text_rating']        = 'Rating';
 $_['text_reviews']       = 'reviews';
 $_['text_compatibility'] = 'Compatibility';
 $_['text_downloaded']    = 'Downloaded';
+$_['text_member_since']  = 'Member since:';
 $_['text_price']         = 'Price';
 $_['text_partner']       = 'Developed by OpenCart Partner';
 $_['text_support']       = '12 Months free support';
@@ -58,6 +59,8 @@ $_['tab_comment']        = 'Comment';
 // Button
 $_['button_opencart']    = 'Marketplace API';
 $_['button_purchase']    = 'Purchase';
+$_['button_view_all']    = 'View all extensions';
+$_['button_get_support'] = 'Get Support';
 $_['button_comment']     = 'Comment';
 $_['button_reply']       = 'Reply';
 

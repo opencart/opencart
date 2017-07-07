@@ -23,7 +23,7 @@ class ControllerCommonSecurity extends Controller {
 		
 		rsort($data['paths']);	
 			
-		$data['document_root'] = substr($this->request->server['DOCUMENT_ROOT'], 0, strrpos($this->request->server['DOCUMENT_ROOT'], '/')) . '/';
+		$data['document_root'] = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../') . '/');
 
 		return $this->load->view('common/security', $data);
 	}
@@ -48,6 +48,10 @@ class ControllerCommonSecurity extends Controller {
 		if (!$this->user->hasPermission('modify', 'common/developer')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
+			if (DIR_STORAGE != DIR_SYSTEM . 'storage/') {
+				$data['error'] = $this->language->get('error_path');		
+			}
+			
 			if (!$path || str_replace('\\', '/', realpath($path)) . '/' != str_replace('\\', '/', substr(DIR_SYSTEM, 0, strlen($path)))) {
 				$json['error'] = $this->language->get('error_path');
 			}

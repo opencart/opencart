@@ -253,7 +253,7 @@ $('#button-shipping, #button-invoice').on('click', function(e) {
 	$('#form-order').attr('action', this.getAttribute('formAction'));
 });
 
-$('#form-order li:last a').on('click', function(e) {
+$('#form-order li:last-child a').on('click', function(e) {
 	e.preventDefault();
 	
 	var element = this;

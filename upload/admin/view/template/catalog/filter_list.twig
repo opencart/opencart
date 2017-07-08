@@ -53,7 +53,7 @@
                 {% if filters %}
                 {% for filter in filters %}
                 <tr>
-                  <td class="text-center"><a href="{{ filter.edit }}"></a>{% if filter.filter_group_id in selected %}
+                  <td class="text-center rowlink-skip"><a href="{{ filter.edit }}"></a>{% if filter.filter_group_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ filter.filter_group_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ filter.filter_group_id }}" />

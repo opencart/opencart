@@ -54,7 +54,7 @@
                 {% if attribute_groups %}
                 {% for attribute_group in attribute_groups %}
                 <tr>
-                  <td class="text-center"><a href="{{ attribute_group.edit }}"></a>{% if attribute_group.attribute_group_id in selected %}
+                  <td class="text-center rowlink-skip"><a href="{{ attribute_group.edit }}"></a>{% if attribute_group.attribute_group_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ attribute_group.attribute_group_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ attribute_group.attribute_group_id }}" />

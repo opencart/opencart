@@ -17,18 +17,15 @@ final class Twig {
 	
 	public function render($template, $cache = false) {
 		// specify where to look for templates
-		$loader = new \Twig_Loader_Filesystem(DIR_TEMPLATE);	
-		
+		$loader = new \Twig_Loader_Filesystem(DIR_TEMPLATE);
+
 		// initialize Twig environment
+		$config = array('autoescape' => false);
+
 		if ($cache) {
-			$config = array(
-				'autoescape' => false,
-				'cache'      => DIR_CACHE 
-			);
-		} else {
-			$config = array('autoescape' => false);	
+			$config['cache'] = DIR_CACHE;
 		}
-		
+
 		$this->twig = new \Twig_Environment($loader, $config);
 		
 		try {

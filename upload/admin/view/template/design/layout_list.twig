@@ -49,7 +49,7 @@
                 {% if layouts %}
                 {% for layout in layouts %}
                 <tr>
-                  <td class="text-center"><a href="{{ layout.edit }}"></a>{% if layout.layout_id in selected %}
+                  <td class="text-center rowlink-skip"><a href="{{ layout.edit }}"></a>{% if layout.layout_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ layout.layout_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ layout.layout_id }}" />

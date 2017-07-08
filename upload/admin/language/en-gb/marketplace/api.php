@@ -3,8 +3,8 @@
 $_['heading_title']    = 'OpenCart Marketplace API';
 
 // Text
-$_['text_success']     = 'Success: You have modified extensions!';
-$_['text_signup']      = 'Please enter you\'re opencart API information which you can obtain <a href="https://www.opencart.com/index.php?route=account/store" target="_blank" class="alert-link">here</a>.';
+$_['text_success']     = 'Success: You have modified your API information!';
+$_['text_signup']      = 'Please enter your OpenCart API information which you can obtain <a href="https://www.opencart.com/index.php?route=account/store" target="_blank" class="alert-link">here</a>.';
 
 // Entry
 $_['entry_username']   = 'Username';

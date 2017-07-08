@@ -45,7 +45,7 @@
                   <td class="text-right">{{ column_action }}</td>
                 </tr>
               </thead>
-              <tbody>
+              <tbody data-link="row" class="rowlink">
                 {% if tax_classes %}
                 {% for tax_class in tax_classes %}
                 <tr>

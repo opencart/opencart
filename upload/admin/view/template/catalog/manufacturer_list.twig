@@ -54,7 +54,7 @@
                 {% if manufacturers %}
                 {% for manufacturer in manufacturers %}
                 <tr>
-                  <td class="text-center"><a href="{{ manufacturer.edit }}"></a>{% if manufacturer.manufacturer_id in selected %}
+                  <td class="text-center rowlink-skip"><a href="{{ manufacturer.edit }}"></a>{% if manufacturer.manufacturer_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ manufacturer.manufacturer_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ manufacturer.manufacturer_id }}" />

@@ -98,7 +98,7 @@
                   {% if reviews %}
                   {% for review in reviews %}
                   <tr>
-                    <td class="text-center"><a href="{{ review.edit }}"></a>{% if review.review_id in selected %}
+                    <td class="text-center rowlink-skip"><a href="{{ review.edit }}"></a>{% if review.review_id in selected %}
                       <input type="checkbox" name="selected[]" value="{{ review.review_id }}" checked="checked" />
                       {% else %}
                       <input type="checkbox" name="selected[]" value="{{ review.review_id }}" />

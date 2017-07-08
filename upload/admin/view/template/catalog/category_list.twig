@@ -52,7 +52,9 @@
                 {% if categories %}
                 {% for category in categories %}
                 <tr>
-                  <td class="text-center">{% if category.category_id in selected %}
+                  <td class="text-center">
+                  <a href="{{ category.edit }}"></a>
+                  {% if category.category_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ category.category_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ category.category_id }}" />

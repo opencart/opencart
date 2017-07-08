@@ -59,7 +59,7 @@
                 {% if attributes %}
                 {% for attribute in attributes %}
                 <tr>
-                  <td class="text-center"><a href="{{ attribute.edit }}"></a>{% if attribute.attribute_id in selected %}
+                  <td class="text-center rowlink-skip"><a href="{{ attribute.edit }}"></a>{% if attribute.attribute_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ attribute.attribute_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ attribute.attribute_id }}" />

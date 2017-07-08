@@ -49,7 +49,7 @@
                 {% if return_reasons %}
                 {% for return_reason in return_reasons %}
                 <tr>
-                  <td class="text-center rowlink-skip"><a href="{{ return_action.edit }}"></a>{% if return_reason.return_reason_id in selected %}
+                  <td class="text-center rowlink-skip"><a href="{{ return_reason.edit }}"></a>{% if return_reason.return_reason_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ return_reason.return_reason_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ return_reason.return_reason_id }}" />

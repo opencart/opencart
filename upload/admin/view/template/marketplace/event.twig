@@ -54,8 +54,11 @@
                 <td class="text-left">{{ event.code }}</td>
                 <td class="text-left">{{ event.status }}</td>
                 <td class="text-right">{{ event.sort_order }}</td>
-                <td class="text-right"><button type="button" data-toggle="modal" data-target="#modal-event{{ event.event_id }}" class="btn btn-info"><i class="fa fa-info-circle"></i></button>
+                <td class="text-right">
+                <div class="btn-group" role="group" aria-label="...">
+                <button type="button" data-toggle="modal" data-target="#modal-event{{ event.event_id }}" class="btn btn-info"><i class="fa fa-info-circle"></i></button>
                   {% if not event.enabled %}<a href="{{ event.enable }}" data-toggle="tooltip" title="{{ button_enable }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>{% else %}<a href="{{ event.disable }}" data-toggle="tooltip" title="{{ button_disable }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>{% endif %}
+                </div>
                   <div id="modal-event{{ event.event_id }}" class="modal text-left">
                     <div class="modal-dialog">
                       <div class="modal-content">

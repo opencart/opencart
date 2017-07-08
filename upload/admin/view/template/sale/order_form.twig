@@ -930,8 +930,10 @@
                   <button type="button" onclick="$('select[name=\'shipping_method\']').prop('disabled') ? $('a[href=\'#tab-payment\']').tab('show') : $('a[href=\'#tab-shipping\']').tab('show');" class="btn btn-default"><i class="fa fa-arrow-left"></i> {{ button_back }}</button>
                 </div>
                 <div class="col-sm-6 text-right">
+		<div class="btn-group" role="group" aria-label="...">
                   <button type="button" id="button-refresh" data-toggle="tooltip" title="{{ button_refresh }}" data-loading-text="{{ text_loading }}" class="btn btn-warning"><i class="fa fa-refresh"></i></button>
                   <button type="button" id="button-save" class="btn btn-primary"><i class="fa fa-check-circle"></i> {{ button_save }}</button>
+		</div>
                 </div>
               </div>
             </div>

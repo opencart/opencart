@@ -278,7 +278,7 @@ class ModelCustomerCustomer extends Model {
 	}
 	
 	public function getAffiliates($data = array()) {
-		$sql = "SELECT DISTINCT *, CONCAT(c.firstname, ' ', c.lastname) AS name FROM " . DB_PREFIX . "customer_affiliate ca LEFT JOIN customer c ON (ca.customer_id = c.customer_id)";
+		$sql = "SELECT DISTINCT *, CONCAT(c.firstname, ' ', c.lastname) AS name FROM " . DB_PREFIX . "customer_affiliate ca LEFT JOIN " . DB_PREFIX . "customer c ON (ca.customer_id = c.customer_id)";
 		
 		$implode = array();
 
@@ -308,7 +308,7 @@ class ModelCustomerCustomer extends Model {
 	}
 	
 	public function getTotalAffiliates($data = array()) {
-		$sql = "SELECT DISTINCT COUNT(*) AS total FROM " . DB_PREFIX . "customer_affiliate ca LEFT JOIN customer c ON (ca.customer_id = c.customer_id)";
+		$sql = "SELECT DISTINCT COUNT(*) AS total FROM " . DB_PREFIX . "customer_affiliate ca LEFT JOIN " . DB_PREFIX . "customer c ON (ca.customer_id = c.customer_id)";
 		
 		$implode = array();
 

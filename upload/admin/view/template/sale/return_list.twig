@@ -118,7 +118,7 @@
                   {% if returns %}
                   {% for return in returns %}
                   <tr>
-                    <td class="text-center"><a href="{{ return.edit }}"></a>{% if return.return_id in selected %}
+                    <td class="text-center rowlink-skip"><a href="{{ return.edit }}"></a>{% if return.return_id in selected %}
                       <input type="checkbox" name="selected[]" value="{{ return.return_id }}" checked="checked" />
                       {% else %}
                       <input type="checkbox" name="selected[]" value="{{ return.return_id }}" />

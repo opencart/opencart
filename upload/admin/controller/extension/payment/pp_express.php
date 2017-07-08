@@ -1279,7 +1279,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$data['connect_link'] = '';
 		$data['module_link'] = '';
 
-		if ($this->config->get('payment_pp_express_username') != 0 || !empty($this->config->get('payment_pp_express_username')) || !empty($this->config->get('payment_pp_express_sandbox_username'))) {
+		if ($this->config->get('payment_pp_express_username') || $this->config->get('payment_pp_express_sandbox_username')) {
 			$data['module_link'] = $this->url->link('extension/payment/pp_express', 'user_token=' . $this->session->data['user_token'], true);
 		} else {
 			if ($this->user->hasPermission('modify', 'extension/extension/payment')) {

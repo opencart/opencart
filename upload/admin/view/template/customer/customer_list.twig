@@ -3,10 +3,14 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
+      <div class="btn-toolbar" role="toolbar" aria-label="...">
+      <div class="btn-group" role="group" aria-label="...">
         <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-customer').toggleClass('hidden-sm hidden-xs');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
+        </div>
+      <div class="btn-group" role="group" aria-label="...">
         <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
         <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-customer').submit() : false;"><i class="fa fa-trash-o"></i></button>
-      </div>
+      </div></div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -109,11 +113,11 @@
                       <td class="text-right">{{ column_action }}</td>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody data-link="row" class="rowlink">
                   {% if customers %}
                   {% for customer in customers %}
                   <tr>
-                    <td class="text-center">{% if customer.customer_id in selected %}
+                    <td class="text-center rowlink-skip"><a href="{{ customer.edit }}"></a>{% if customer.customer_id in selected %}
                       <input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" checked="checked" />
                       {% else %}
                       <input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" />
@@ -125,7 +129,7 @@
                     <td class="text-left">{{ customer.status }}</td>
                     <td class="text-left">{{ customer.ip }}</td>
                     <td class="text-left">{{ customer.date_added }}</td>
-                    <td class="text-right">
+                    <td class="text-right rowlink-skip">
                       <div class="btn-group" style="min-width: 65px;">
                         <a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
                         <button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><span class="caret"></span></button>

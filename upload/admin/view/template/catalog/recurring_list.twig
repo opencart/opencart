@@ -52,11 +52,11 @@
                   <td class="text-right">{{ column_action }}</td>
                 </tr>
               </thead>
-              <tbody>
+              <tbody data-link="row" class="rowlink">
                 {% if recurrings %}
                 {% for recurring in recurrings %}
                 <tr>
-                  <td class="text-center">{% if recurring.recurring_id in selected %}
+                  <td class="text-center rowlink-skip"><a href="{{ recurring.edit }}"></a>{% if recurring.recurring_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ recurring.recurring_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ recurring.recurring_id }}" />

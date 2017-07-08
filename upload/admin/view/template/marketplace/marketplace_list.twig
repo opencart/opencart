@@ -2,9 +2,11 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-warning"><i class="fa fa-cog"></i></button>
-      </div>    
+      <div class="pull-right">{% if not error_signature %}
+        <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-info"><i class="fa fa-cog"></i></button>
+        {% else %}
+        <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ error_signature }}"  data-placement="left" class="btn btn-danger"><i class="fa fa-exclamation-triangle"></i></button>
+        {% endif %}</div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -13,11 +15,7 @@
       </ul>
     </div>
   </div>
-  <div class="container-fluid">{% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
-    {% endif %}
+  <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> {{ text_list }}</h3>
@@ -41,7 +39,7 @@
               <input type="hidden" name="filter_rating" value="{{ filter_rating }}" class="form-control" />
               <input type="hidden" name="filter_license" value="{{ filter_license }}" class="form-control" />
               <input type="hidden" name="filter_partner" value="{{ filter_partner }}" class="form-control" />
-              <input type="hidden" name="sort" value="{{ sort }}" class="form-control" />              
+              <input type="hidden" name="sort" value="{{ sort }}" class="form-control" />
               <button type="button" id="button-filter" class="btn btn-primary"><i class="fa fa-filter"></i></button>
             </div>
           </div>
@@ -56,20 +54,43 @@
             <div class="input-group pull-right">
               <div class="input-group-addon"><i class="fa fa-sort-amount-asc"></i></div>
               <select onchange="location = this.value;" class="form-control">
+                
+              
+            
+              
                   {% for sorts in sorts %}
                   {% if sorts.value == sort %}
+                
+              
+            
+              
                 <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
+                
+              
+            
+              
                   {% else %}
+                
+              
+            
+              
                 <option value="{{ sorts.href }}">{{ sorts.text }}</option>
+                
+              
+            
+              
                   {% endif %}
                   {% endfor %}
+              
+            
+          
+            
               </select>
             </div>
           </div>
         </div>
-
-        <div id="extension-list">
-	  {% if promotions %}
+        <br />
+        <div id="extension-list">{% if promotions %}
           <h3>Featured</h3>
           <div class="row">{% for extension in promotions %}
             {% if extension %}
@@ -94,11 +115,13 @@
               </section>
             </div>
             {% endif %}
-          {% endfor %}</div>
-	  <hr>
+            {% endfor %}</div>
+          <hr />
           {% endif %}
+          
           {% if extensions %}
-          <div class="row">{% for extension in extensions %}
+          <div class="row"> {% for extension in extensions %}
+            
             {% if extension %}
             <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
               <section>
@@ -121,17 +144,17 @@
               </section>
             </div>
             {% endif %}
-          {% endfor %}</div>
+            {% endfor %} </div>
           {% else %}
-          <div>{{ text_no_results }}</div>
-          {% endif %}
-	</div>
-      <div class="row">
-        <div class="col-sm-12 text-center">{{ pagination }}</div>
+          <p class="text-center">{{ text_no_results }}</p>
+          {% endif %} </div>
+        <div class="row">
+          <div class="col-sm-12 text-center">{{ pagination }}</div>
+        </div>
       </div>
     </div>
-  </div>  
-</div>
+  </div>
+
 <script type="text/javascript"><!--
 $('#button-opencart').on('click', function(e) {
 	$('#modal-opencart').remove();
@@ -155,7 +178,7 @@ $('#button-opencart').on('click', function(e) {
 		}
 	});
 });
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function(e) {
 	var url = 'index.php?route=marketplace/marketplace&user_token={{ user_token }}';
@@ -178,5 +201,5 @@ $('input[name="filter_search"]').keydown(function(e) {
 		$('#button-filter').trigger('click');
 	}
 });
-//--></script> 
+//--></script></div>
 {{ footer }} 

@@ -2,9 +2,11 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-warning"><i class="fa fa-cog"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <div class="pull-right">{% if not error_signature %}
+        <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-info"><i class="fa fa-cog"></i></button>
+        {% else %}
+        <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ error_signature }}"  data-placement="left" class="btn btn-danger"><i class="fa fa-exclamation-triangle"></i></button>
+        {% endif %} <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -27,9 +29,9 @@
           <div class="col-sm-8">{% if banner %}
             <div id="banner" class="text-center thumbnail"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></div>
             {% endif %}
-            <div class="row thumbnails">
-              {% for image in images %}<div class="col-xs-4 col-sm-2"><a href="{{ image.popup }}" class="thumbnail"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="img-responsive" /></a></div>{% endfor %}
-            </div>
+            <div class="row thumbnails">{% for image in images %}
+              <div class="col-xs-4 col-sm-2"><a href="{{ image.popup }}" class="thumbnail"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="img-responsive" /></a></div>
+              {% endfor %} </div>
             <ul class="nav nav-tabs">
               <li class="active"><a href="#tab-description" data-toggle="tab">{{ tab_general }}</a></li>
               <li><a href="#tab-documentation" data-toggle="tab">{{ tab_documentation }}</a></li>
@@ -54,11 +56,12 @@
                   <legend>{{ text_available }}</legend>
                   <table class="table table-bordered">
                     <thead>
-                      <th>{{ text_name }}</th>
+                    <th>{{ text_name }}</th>
                       <th>{{ text_date_added }}</th>
                       <th class="text-right">{{ text_action }}</th>
-                    </thead>
+                        </thead>
                     <tbody>
+                    
                     {% if downloads %}
                     {% for download in downloads %}
                     <tr>
@@ -79,6 +82,7 @@
                     </tr>
                     {% endif %}
                     </tbody>
+                    
                   </table>
                 </fieldset>
               </div>
@@ -142,10 +146,10 @@
               <div class="media">
                 <div class="media-left media-middle"><img src="{{ member_image }}" alt="{{ member_username }}" title="{{ member_username }}" class="media-object img-circle"></div>
                 <div class="media-body"> <span><a href="{{ filter_member }}">{{ member_username }}</a></span><br>
-                  <small>Member since: {{ member_date_added }}</small></div>
+                  <small>{{ text_member_since }} {{ member_date_added }}</small></div>
               </div>
               <br />
-              <a href="{{ filter_member }}" class="btn btn-primary btn-lg btn-block">View all extensions</a> <a href="https://www.opencart.com/index.php?route=support/seller&amp;extension_id={{ extension_id }}" target="_blank" class="btn btn-ghost-dark btn-lg btn-block">Get Support</a></div>
+              <a href="{{ filter_member }}" class="btn btn-primary btn-lg btn-block">{{ button_view_all }}</a> <a href="https://www.opencart.com/index.php?route=support/seller&amp;extension_id={{ extension_id }}" target="_blank" class="btn btn-ghost-dark btn-lg btn-block">{{ button_get_support }}</a></div>
           </div>
         </div>
       </div>
@@ -175,7 +179,7 @@ $('#button-opencart').on('click', function(e) {
 	});
 });
 //--></script> 
-<script type="text/javascript"><!--
+  <script type="text/javascript"><!--
 $('#button-buy').on('click', function(e) {
 	e.preventDefault();
 
@@ -505,7 +509,7 @@ $('#comment').on('click', '.reply-refresh', function(e) {
 	});
 });
 //--></script> 
-<script type="text/javascript"><!--
+  <script type="text/javascript"><!--
 $(document).ready(function() {
 	$('.thumbnails').magnificPopup({
 		type:'image',
@@ -515,6 +519,6 @@ $(document).ready(function() {
 		}
 	});
 });
-//--></script>
+//--></script> 
 </div>
 {{ footer }} 

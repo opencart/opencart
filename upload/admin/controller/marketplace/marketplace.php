@@ -98,9 +98,9 @@ class ControllerMarketplaceMarketplace extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url, true)
 		);
-
-		$time = time() + 120;
-
+		
+		$time = time();
+		
 		// We create a hash from the data in a similar method to how amazon does things.
 		$string  = 'marketplace/api/list' . "\n";
 		$string .= $this->config->get('opencart_username') . "\n";
@@ -237,7 +237,9 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($response_info['error'])) {
-			$data['error_warning'] = $response_info['error'];
+			$data['error_signature'] = $response_info['error'];
+		} else {
+			$data['error_signature'] = '';
 		}
 
 		// Categories
@@ -513,7 +515,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$extension_id = 0;
 		}
 
-		$time = time() + 120;
+		$time = time();
 
 		// We create a hash from the data in a similar method to how amazon does things.
 		$string  = 'marketplace/api/info' . "\n";
@@ -553,12 +555,10 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 			$this->document->setTitle($this->language->get('heading_title'));
 
-			if ($response_info['license'] && (!$this->config->get('opencart_username') || !$this->config->get('opencart_secret'))) {
-				$data['error_warning'] = $this->language->get('error_opencart');
-			} elseif (isset($response_info['error'])) {
-				$data['error_warning'] = $response_info['error'];
+			if (isset($response_info['error'])) {
+				$data['error_signature'] = $response_info['error'];
 			} else {
-				$data['error_warning'] = '';
+        $data['error_signature'] = '';
 			}
 
 			$data['user_token'] = $this->session->data['user_token'];
@@ -700,7 +700,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		}
 
 		if (!$json) {
-			$time = time() + 120;
+			$time = time();
 
 			// We create a hash from the data in a similar method to how amazon does things.
 			$string  = 'marketplace/api/purchase' . "\n";
@@ -829,7 +829,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		}
 
 		if (!$json) {
-			$time = time() + 120;
+			$time = time();
 
 			// We create a hash from the data in a similar method to how amazon does things.
 			$string  = 'marketplace/api/download' . "\n";
@@ -921,9 +921,9 @@ class ControllerMarketplaceMarketplace extends Controller {
 		if (!$this->config->get('opencart_username') || !$this->config->get('opencart_secret')) {
 			$json['error'] = $this->language->get('error_opencart');
 		}
-
-		if (!$json) {
-			$time = time() + 120;
+					
+		if (!$json) {	
+			$time = time();
 
 			// We create a hash from the data in a similar method to how amazon does things.
 			$string  = 'marketplace/api/addcomment' . "\n";

@@ -54,7 +54,7 @@
                 {% if banners %}
                 {% for banner in banners %}
                 <tr>
-                  <td class="text-center"><a href="{{ banner.edit }}"></a>{% if banner.banner_id in selected %}
+                  <td class="text-center rowlink-skip"><a href="{{ banner.edit }}"></a>{% if banner.banner_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ banner.banner_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ banner.banner_id }}" />

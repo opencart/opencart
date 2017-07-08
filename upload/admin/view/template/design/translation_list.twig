@@ -47,7 +47,7 @@
               {% if translations %}
               {% for translation in translations %}
               <tr>
-                <td class="text-center"><a href="{{ translation.edit }}"></a>{% if translation.translation_id in selected %}
+                <td class="text-center rowlink-skip"><a href="{{ translation.edit }}"></a>{% if translation.translation_id in selected %}
                   <input type="checkbox" name="selected[]" value="{{ translation.translation_id }}" checked="checked" />
                   {% else %}
                   <input type="checkbox" name="selected[]" value="{{ translation.translation_id }}" />

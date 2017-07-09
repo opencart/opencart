@@ -179,26 +179,26 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-subtract">{{ entry_subtract }}</label>
                 <div class="col-sm-10">
-					<div class="btn-group" data-toggle="buttons">
-  						{% if subtract %}
-						<label class="btn btn-primary active">
+			<div class="btn-group" data-toggle="buttons">
+  			{% if subtract %}
+			<label class="btn btn-primary active">
 	                    	<input type="radio" name="subtract" value="1" checked="checked" />{{ text_yes }}
     	                </label>
     	                {% else %}
-						<label class="btn btn-default">
+			<label class="btn btn-default">
         	            	<input type="radio" name="subtract" value="1" />{{ text_yes }}
     	                </label>
             	        {% endif %}
-	 					{% if not subtract %}
-  						<label class="btn btn-primary active">
+	 		{% if not subtract %}
+  			<label class="btn btn-primary active">
     	                	<input type="radio" name="subtract" value="0" checked="checked" />{{ text_no }}
-  						</label>
-        	            {% else %}
-  						<label class="btn btn-default">
+  			</label>
+        	        {% else %}
+  			<label class="btn btn-default">
             	        	<input type="radio" name="subtract" value="0" />{{ text_no }}
-  						</label>
-                	    {% endif %} 
-					</div>
+  			</label>
+                	{% endif %} 
+			</div>
                 </div>
               </div>
               <div class="form-group">
@@ -218,26 +218,26 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_shipping }}</label>
                 <div class="col-sm-10">
-					<div class="btn-group" data-toggle="buttons">
-  						{% if shipping %}
-						<label class="btn btn-primary active">
+			<div class="btn-group" data-toggle="buttons">
+  			{% if shipping %}
+			<label class="btn btn-primary active">
 	                    	<input type="radio" name="shipping" value="1" checked="checked" />{{ text_yes }}
     	                </label>
     	                {% else %}
-						<label class="btn btn-default">
+			<label class="btn btn-default">
         	            	<input type="radio" name="shipping" value="1" />{{ text_yes }}
     	                </label>
             	        {% endif %}
-	 					{% if not shipping %}
-  						<label class="btn btn-primary active">
+	 		{% if not shipping %}
+  			<label class="btn btn-primary active">
     	                	<input type="radio" name="shipping" value="0" checked="checked" />{{ text_no }}
-  						</label>
-        	            {% else %}
-  						<label class="btn btn-default">
+  			</label>
+        	        {% else %}
+  			<label class="btn btn-default">
             	        	<input type="radio" name="shipping" value="0" />{{ text_no }}
-  						</label>
-                	    {% endif %} 
-					</div>
+  			</label>
+                	{% endif %} 
+			</div>
                 </div>
               </div>
               <div class="form-group">
@@ -303,26 +303,26 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
-					<div class="btn-group" data-toggle="buttons">
-  						{% if status %}
-						<label class="btn btn-primary active">
+			<div class="btn-group" data-toggle="buttons">
+  			{% if status %}
+			<label class="btn btn-primary active">
 	                    	<input type="radio" name="status" value="1" checked="checked" />{{ text_enabled }}
     	                </label>
     	                {% else %}
-						<label class="btn btn-default">
+			<label class="btn btn-default">
         	            	<input type="radio" name="status" value="1" />{{ text_enabled }}
     	                </label>
             	        {% endif %}
-	 					{% if not status %}
-  						<label class="btn btn-primary active">
+	 		{% if not status %}
+  			<label class="btn btn-primary active">
     	                	<input type="radio" name="status" value="0" checked="checked" />{{ text_disabled }}
-  						</label>
-        	            {% else %}
-  						<label class="btn btn-default">
+  			</label>
+        	        {% else %}
+  			<label class="btn btn-default">
             	        	<input type="radio" name="status" value="0" />{{ text_disabled }}
-  						</label>
-                	    {% endif %} 
-					</div>
+  			</label>
+                	{% endif %} 
+			</div>
                 </div>
               </div>
               <div class="form-group">
@@ -464,26 +464,26 @@
                       <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-required{{ option_row }}">{{ entry_required }}</label>
                         <div class="col-sm-10">
-							<div class="btn-group" data-toggle="buttons">
-  								{% if product_option.required %}
-								<label class="btn btn-primary active">
-	                    			<input type="radio" name="product_option[{{ option_row }}][required]" value="1" checked="checked" />{{ text_yes }}
-    	                		</label>
-    	                		{% else %}
-								<label class="btn btn-default">
-        	            			<input type="radio" name="product_option[{{ option_row }}][required]" value="1" />{{ text_yes }}
-    	                		</label>
-            	        		{% endif %}
-	 							{% if not product_option.required %}
-  								<label class="btn btn-primary active">
-    	                			<input type="radio" name="product_option[{{ option_row }}][required]" value="0" checked="checked" />{{ text_no }}
-  								</label>
-        	            		{% else %}
-  								<label class="btn btn-default">
-            	        			<input type="radio" name="product_option[{{ option_row }}][required]" value="0" />{{ text_no }}
-  								</label>
-                	    		{% endif %} 
-							</div>
+				<div class="btn-group" data-toggle="buttons">
+  				{% if product_option.required %}
+				<label class="btn btn-primary active">
+	                    		<input type="radio" name="product_option[{{ option_row }}][required]" value="1" checked="checked" />{{ text_yes }}
+    	                	</label>
+    	                	{% else %}
+				<label class="btn btn-default">
+        	            		<input type="radio" name="product_option[{{ option_row }}][required]" value="1" />{{ text_yes }}
+    	                	</label>
+            	        	{% endif %}
+	 			{% if not product_option.required %}
+  				<label class="btn btn-primary active">
+    	                		<input type="radio" name="product_option[{{ option_row }}][required]" value="0" checked="checked" />{{ text_no }}
+  				</label>
+        	            	{% else %}
+  				<label class="btn btn-default">
+            	        		<input type="radio" name="product_option[{{ option_row }}][required]" value="0" />{{ text_no }}
+  				</label>
+                	    	{% endif %} 
+				</div>
                         </div>
                       </div>
                       {% if product_option.type == 'text' %}
@@ -578,26 +578,26 @@
                               <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][product_option_value_id]" value="{{ product_option_value.product_option_value_id }}" /></td>
                             <td class="text-right"><input type="text" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][quantity]" value="{{ product_option_value.quantity }}" placeholder="{{ entry_quantity }}" class="form-control" /></td>
                             <td class="text-left">
-								<div class="btn-group" data-toggle="buttons">
-  								{% if product_option_value.subtract %}
-									<label class="btn btn-primary active">
-	                    				<input type="radio" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][subtract]" value="1" checked="checked" />{{ text_yes }}
-    	                			</label>
-    	                		{% else %}
-									<label class="btn btn-default">
-        	            				<input type="radio" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][subtract]" value="1" />{{ text_yes }}
-    	                			</label>
-            	        		{% endif %}
-	 							{% if not product_option_value.subtract %}
-  									<label class="btn btn-primary active">
-    	                				<input type="radio" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][subtract]" value="0" checked="checked" />{{ text_no }}
-  									</label>
-        	            		{% else %}
-  									<label class="btn btn-default">
-            	        				<input type="radio" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][subtract]" value="0" />{{ text_no }}
-  									</label>
-                	    		{% endif %} 
-								</div>
+				<div class="btn-group" data-toggle="buttons">
+  				{% if product_option_value.subtract %}
+				<label class="btn btn-primary active">
+	                    		<input type="radio" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][subtract]" value="1" checked="checked" />{{ text_yes }}
+    	                	</label>
+    	                	{% else %}
+				<label class="btn btn-default">
+        	            		<input type="radio" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][subtract]" value="1" />{{ text_yes }}
+    	                	</label>
+            	        	{% endif %}
+	 			{% if not product_option_value.subtract %}
+  				<label class="btn btn-primary active">
+    	                		<input type="radio" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][subtract]" value="0" checked="checked" />{{ text_no }}
+  				</label>
+        	            	{% else %}
+  				<label class="btn btn-default">
+            	        		<input type="radio" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][subtract]" value="0" />{{ text_no }}
+  				</label>
+                	    	{% endif %} 
+				</div>
                               </td>
                             <td class="text-right"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price_prefix]" class="selectpicker">
                                   {% if product_option_value.price_prefix == '+' %}

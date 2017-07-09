@@ -3,8 +3,10 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
+      <div class="btn-group" role="group" aria-label="...">
         <button type="submit" form="form-product" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+	</div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -126,7 +128,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-isbn"><span data-toggle="tooltip" title="{{ help_isbn }}">{{ entry_isbn }}</span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="isbn" value="{{ isbn }}" placeholder="{{ entry_isbn }}" id="input-isbn" class="form-control" />
+                  <input type="text" name="isbn" value="{{ isbn }}" placeholder="{{ entry_isbn }}" id="input-isbn" class="form-control" data-mask="999-99-999-9999-9" />
                 </div>
               </div>
               <div class="form-group">
@@ -1065,27 +1067,21 @@
                 <table class="table table-bordered table-hover">
                   <thead>
                     <tr>
-                      <td class="text-left">{{ entry_keyword }}</td>
                       <td class="text-left">{{ entry_store }}</td>
-                      <td class="text-left">{{ entry_language }}</td>
+		      <td class="text-left">{{ entry_keyword }}</td>
                     </tr>
                   </thead>
                   <tbody>
-                  
-                  {% set seo_row = 0 %}
                   {% for store in stores %}
                   <tr>
                     <td class="text-left">{{ store.name }}</td>
                     <td class="text-left">{% for language in languages %}
                       <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
-                        <input type="text" name="product_seo[{{ seo_row }}][keyword]" value="{% if product_seo %}{{ product_seo[seo_row].keyword }}{% endif %}" placeholder="{{ entry_keyword }}" class="form-control" />
+                        <input type="text" name="product_seo_url[{{ store.store_id }}][{{ language.language_id }}]" value="{% if product_seo_url[store.store_id][language.language_id] %}{{ product_seo_url[store.store_id][language.language_id] }}{% endif %}" placeholder="{{ entry_keyword }}" class="form-control" />
                       </div>
-                      <input type="hidden" name="product_seo[{{ seo_row }}][store_id]" value="{{ store.store_id }}" />
-                      <input type="hidden" name="product_seo[{{ seo_row }}][language_id]" value="{{ language.language_id }}" />
-                      {% if error_keyword[seo_row] %}
-                      <div class="text-danger">{{ error_keyword[seo_row] }}</div>
+                      {% if error_keyword[store.store_id][language.language_id] %}
+                      <div class="text-danger">{{ error_keyword[store.store_id][language.language_id] }}</div>
                       {% endif %} 
-                      {% set seo_row = seo_row + 1 %}
                       {% endfor %}</td>
                   </tr>
                   {% endfor %}
@@ -1467,17 +1463,17 @@ $('input[name=\'option\']').autocomplete({
 		});
 
 		$('.date').datetimepicker({
-			language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+			language: '{{ datepicker }}',
 			pickTime: false
 		});
 
 		$('.time').datetimepicker({
-			language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+			language: '{{ datepicker }}',
 			pickDate: false
 		});
 
 		$('.datetime').datetimepicker({
-			language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+			language: '{{ datepicker }}',
 			pickDate: true,
 			pickTime: true
 		});
@@ -1570,7 +1566,7 @@ function addSpecial() {
 	$('#special tbody').append(html);
 
 	$('.date').datetimepicker({
-		language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+		language: '{{ datepicker }}',
 		pickTime: false
 	});
 
@@ -1623,17 +1619,17 @@ function addRecurring() {
 //--></script> 
   <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+	language: '{{ datepicker }}',
 	pickTime: false
 });
 
 $('.time').datetimepicker({
-	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+	language: '{{ datepicker }}',
 	pickDate: false
 });
 
 $('.datetime').datetimepicker({
-	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+	language: '{{ datepicker }}',
 	pickDate: true,
 	pickTime: true
 });

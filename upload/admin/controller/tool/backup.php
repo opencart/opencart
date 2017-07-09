@@ -50,16 +50,16 @@ class ControllerToolBackup extends Controller {
 		}
 		
 		if (isset($this->request->files['import']['tmp_name']) && is_uploaded_file($this->request->files['import']['tmp_name'])) {
-			$filename = tempnam(ini_get('upload_tmp_dir'), 'bac');
+			$filename = tempnam(DIR_UPLOAD, 'bac');
 			
-			move_uploaded_file($this->request->files['import']['tmp_name'], ini_get('upload_tmp_dir') . '/' . $filename);
+			move_uploaded_file($this->request->files['import']['tmp_name'], $filename);
 		} elseif (isset($this->request->get['import'])) {
 			$filename = html_entity_decode($this->request->get['import'], ENT_QUOTES, 'UTF-8');
 		} else {
 			$filename = '';
 		}
 		
-		if (!is_file(ini_get('upload_tmp_dir') . '/' . $filename) || substr(str_replace('\\', '/', realpath(ini_get('upload_tmp_dir') . '/' . $filename)), 0, strlen(ini_get('upload_tmp_dir'))) != str_replace('\\', '/', ini_get('upload_tmp_dir'))) {
+		if (!is_file($filename)) {
 			$json['error'] = $this->language->get('error_file');
 		}	
 		
@@ -74,11 +74,13 @@ class ControllerToolBackup extends Controller {
 			$i = 0;
 			$start = false;
 			
-			$handle = fopen(ini_get('upload_tmp_dir') . '/' . $filename, 'r');
+			$handle = fopen($filename, 'r');
 
 			fseek($handle, $position, SEEK_SET);
 			
 			while (!feof($handle) && ($i < 100)) {
+				$position = ftell($handle);
+
 				$line = fgets($handle, 1000000);
 				
 				if (substr($line, 0, 14) == 'TRUNCATE TABLE' || substr($line, 0, 11) == 'INSERT INTO') {
@@ -86,7 +88,13 @@ class ControllerToolBackup extends Controller {
 					
 					$start = true;
 				}
-				
+
+				if ($i > 0 && (substr($line, 0, 24) == 'TRUNCATE TABLE `oc_user`' || substr($line, 0, 30) == 'TRUNCATE TABLE `oc_user_group`')) {
+					fseek($handle, $position, SEEK_SET);
+
+					break;
+				}
+
 				if ($start) {
 					$sql .= $line;
 				}
@@ -102,10 +110,10 @@ class ControllerToolBackup extends Controller {
 
 			$position = ftell($handle);
 
-			$size = filesize(ini_get('upload_tmp_dir') . '/' . $filename);
+			$size = filesize($filename);
 
-			$json['success'] = sprintf($this->language->get('text_success'), round(($position / $size) * 100));
-			
+			$json['total'] = round(($position / $size) * 100);
+
 			if ($position && !feof($handle)) {
 				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/import', 'user_token=' . $this->session->data['user_token'] . '&import=' . $filename . '&position=' . $position, true));
 			
@@ -113,7 +121,9 @@ class ControllerToolBackup extends Controller {
 			} else {
 				fclose($handle);
 				
-				unlink(ini_get('upload_tmp_dir') . '/' . $filename);
+				unlink($filename);
+
+				$json['success'] = $this->language->get('text_success');
 
 				$this->cache->delete('*');
 			}

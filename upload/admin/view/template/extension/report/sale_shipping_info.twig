@@ -1,8 +1,10 @@
-<fieldset>
-  <legend>{{ text_filter }}</legend>
-  <div class="well">
-    <div class="row">
-      <div class="col-sm-6">
+<div class="row">
+  <div id="filter-report" class="col-md-3 col-md-push-9 col-sm-12 hidden-sm hidden-xs">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
+      </div>
+      <div class="panel-body">
         <div class="form-group">
           <label class="control-label" for="input-date-start">{{ entry_date_start }}</label>
           <div class="input-group date">
@@ -19,30 +21,34 @@
             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
             </span></div>
         </div>
-      </div>
-      <div class="col-sm-6">
         <div class="form-group">
           <label class="control-label" for="input-group">{{ entry_group }}</label>
           <select name="filter_group" id="input-group" class="form-control">
+            
             
           
                   {% for group in groups %}
                   {% if group.value == filter_group %}
                   
           
+            
             <option value="{{ group.value }}" selected="selected">{{ group.text }}</option>
+            
             
           
                   {% else %}
                   
           
+            
             <option value="{{ group.value }}">{{ group.text }}</option>
+            
             
           
                   {% endif %}
                   {% endfor %}
                 
         
+          
           </select>
         </div>
         <div class="form-group">
@@ -50,70 +56,84 @@
           <select name="filter_order_status_id" id="input-status" class="form-control">
             <option value="0">{{ text_all_status }}</option>
             
+            
           
                   {% for order_status in order_statuses %}
                   {% if order_status.order_status_id == filter_order_status_id %}
                   
           
+            
             <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+            
             
           
                   {% else %}
                   
           
+            
             <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+            
             
           
                   {% endif %}
                   {% endfor %}
                 
         
+          
           </select>
         </div>
-        <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+        <div class="form-group text-right">
+          <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+        </div>
       </div>
     </div>
   </div>
-</fieldset>
-<fieldset>
-  <legend>{{ heading_title }}</legend>
-  <div class="table-responsive">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <td class="text-left">{{ column_date_start }}</td>
-          <td class="text-left">{{ column_date_end }}</td>
-          <td class="text-left">{{ column_title }}</td>
-          <td class="text-right">{{ column_orders }}</td>
-          <td class="text-right">{{ column_total }}</td>
-        </tr>
-      </thead>
-      <tbody>
-      
-      {% if orders %}
-      {% for order in orders %}
-      <tr>
-        <td class="text-left">{{ order.date_start }}</td>
-        <td class="text-left">{{ order.date_end }}</td>
-        <td class="text-left">{{ order.title }}</td>
-        <td class="text-right">{{ order.orders }}</td>
-        <td class="text-right">{{ order.total }}</td>
-      </tr>
-      {% endfor %}
-      {% else %}
-      <tr>
-        <td class="text-center" colspan="5">{{ text_no_results }}</td>
-      </tr>
-      {% endif %}
-        </tbody>
-      
-    </table>
+  <div class="col-md-9 col-md-pull-3 col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-bar-chart"></i> {{ heading_title }}</h3>
+      </div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <td class="text-left">{{ column_date_start }}</td>
+                <td class="text-left">{{ column_date_end }}</td>
+                <td class="text-left">{{ column_title }}</td>
+                <td class="text-right">{{ column_orders }}</td>
+                <td class="text-right">{{ column_total }}</td>
+              </tr>
+            </thead>
+            <tbody>
+            
+            {% if orders %}
+            {% for order in orders %}
+            <tr>
+              <td class="text-left">{{ order.date_start }}</td>
+              <td class="text-left">{{ order.date_end }}</td>
+              <td class="text-left">{{ order.title }}</td>
+              <td class="text-right">{{ order.orders }}</td>
+              <td class="text-right">{{ order.total }}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+              <td class="text-center" colspan="5">{{ text_no_results }}</td>
+            </tr>
+            {% endif %}
+            </tbody>
+            
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 text-left">{{ pagination }}</div>
+          <div class="col-sm-6 text-right">{{ results }}</div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="row">
-    <div class="col-sm-6 text-left">{{ pagination }}</div>
-    <div class="col-sm-6 text-right">{{ results }}</div>
-  </div>
-</fieldset>
+</div>
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
 	var url = '';
@@ -142,12 +162,12 @@ $('#button-filter').on('click', function() {
 		url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
 	}	
 
-	$('#report').load('index.php?route=extension/report/sale_shipping/report&user_token={{ user_token }}' + url);
+	location = 'index.php?route=report/report&code=sale_shipping&user_token={{ user_token }}' + url;
 });
 //--></script> 
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+	language: '{{ datepicker }}',
 	pickTime: false
 });
 //--></script>

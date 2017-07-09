@@ -36,18 +36,24 @@ final class Amazon {
         $this->encryption_iv = $encryption_iv;
     }
 
-	public function call($method, $data = array(), $is_json = true) {
+	public function call($method, $data = array(), $use_json = true) {
         if (!empty($data)) {
-            if ($is_json) {
+            if ($use_json) {
                 $string = json_encode($data);
             } else {
                 $string = $data;
             }
 
-            $encrypted = $this->openbay->encrypt($string, $this->getEncryptionKey(), $this->getEncryptionIv());
+            $encrypted = $this->openbay->encrypt($string, $this->getEncryptionKey(), $this->getEncryptionIv(), false);
         } else {
             $encrypted = '';
         }
+
+        $post_data = array(
+            'token' => $this->token,
+            'data' => base64_encode($encrypted),
+            'opencart_version' => VERSION
+        );
 
         $headers = array();
         $headers[] = 'X-Endpoint-Version: 2';
@@ -64,7 +70,7 @@ final class Amazon {
 			CURLOPT_TIMEOUT         => 30,
 			CURLOPT_SSL_VERIFYPEER  => 0,
 			CURLOPT_SSL_VERIFYHOST  => 0,
-			CURLOPT_POSTFIELDS      => 'token=' . $this->token . '&data=' . rawurlencode($encrypted) . '&opencart_version=' . VERSION,
+			CURLOPT_POSTFIELDS      => http_build_query($post_data, '', "&"),
 		);
 
 		$curl = curl_init();
@@ -78,18 +84,24 @@ final class Amazon {
 		return $response;
 	}
 
-	public function callNoResponse($method, $data = array(), $is_json = true) {
+	public function callNoResponse($method, $data = array(), $use_json = true) {
         if (!empty($data)) {
-            if ($is_json) {
+            if ($use_json) {
                 $string = json_encode($data);
             } else {
                 $string = $data;
             }
 
-            $encrypted = $this->openbay->encrypt($string, $this->getEncryptionKey(), $this->getEncryptionIv());
+            $encrypted = $this->openbay->encrypt($string, $this->getEncryptionKey(), $this->getEncryptionIv(), false);
         } else {
             $encrypted = '';
         }
+
+        $post_data = array(
+            'token' => $this->token,
+            'data' => rawurlencode(base64_encode($encrypted)),
+            'opencart_version' => VERSION
+        );
 
         $headers = array();
         $headers[] = 'X-Endpoint-Version: 2';
@@ -106,7 +118,7 @@ final class Amazon {
 			CURLOPT_TIMEOUT         => 2,
 			CURLOPT_SSL_VERIFYPEER  => 0,
 			CURLOPT_SSL_VERIFYHOST  => 0,
-			CURLOPT_POSTFIELDS      => 'token=' . $this->token . '&data=' . rawurlencode($encrypted) . '&opencart_version=' . VERSION,
+			CURLOPT_POSTFIELDS      => http_build_query($post_data, '', "&"),
 		);
 		$curl = curl_init();
 

@@ -25,16 +25,20 @@
         <tr>
           <td class="text-left">{{ extension.name }}</td>
           <td class="text-left">{{ extension.status }}</td>
-          <td class="text-right">{% if extension.installed %}
-            <a href="{{ extension.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
-            {% else %}
-            <button type="button" class="btn btn-primary" disabled="disabled"><i class="fa fa-pencil"></i></button>
-            {% endif %}
-            {% if not extension.installed %}
-            <a href="{{ extension.install }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
-            {% else %}
-            <a href="{{ extension.uninstall }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
-            {% endif %}</td>
+          <td class="text-right">
+            <div class="btn-group" role="group" aria-label="...">
+              {% if extension.installed %}
+              <a href="{{ extension.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+              {% else %}
+              <button type="button" class="btn btn-primary" disabled="disabled"><i class="fa fa-pencil"></i></button>
+              {% endif %}
+              {% if not extension.installed %}
+              <a href="{{ extension.install }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
+              {% else %}
+              <a href="{{ extension.uninstall }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
+              {% endif %}
+            </div>
+          </td>
         </tr>
         {% endfor %}
         {% else %}

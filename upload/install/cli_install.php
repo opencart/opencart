@@ -237,7 +237,6 @@ function write_config_files($options) {
 	$output  = '<?php' . "\n";
 	$output .= '// HTTP' . "\n";
 	$output .= 'define(\'HTTP_SERVER\', \'' . $options['http_server'] . '\');' . "\n";
-	$output .= 'define(\'HTTP_ADMIN\', \'' . $options['http_server'] . 'admin/\');' . "\n\n";
 
 	$output .= '// HTTPS' . "\n";
 	$output .= 'define(\'HTTPS_SERVER\', \'' . $options['http_server'] . '\');' . "\n";
@@ -264,7 +263,7 @@ function write_config_files($options) {
 	$output .= 'define(\'DB_DATABASE\', \'' . addslashes($options['db_database']) . '\');' . "\n";
 	$output .= 'define(\'DB_PREFIX\', \'' . addslashes($options['db_prefix']) . '\');' . "\n";
 	$output .= 'define(\'DB_PORT\', \'' . addslashes($options['db_port']) . '\');' . "\n";
-	$output .= '?>';
+
 
 	$file = fopen(DIR_OPENCART . 'config.php', 'w');
 
@@ -304,7 +303,10 @@ function write_config_files($options) {
 	$output .= 'define(\'DB_DATABASE\', \'' . addslashes($options['db_database']) . '\');' . "\n";
 	$output .= 'define(\'DB_PREFIX\', \'' . addslashes($options['db_prefix']) . '\');' . "\n";
 	$output .= 'define(\'DB_PORT\', \'' . addslashes($options['db_port']) . '\');' . "\n";
-	$output .= '?>';
+
+	$output .= '// OpenCart API' . "\n";
+	$output .= 'define(\'OPENCART_SERVER\', \'https://www.opencart.com/\');' . "\n";
+
 
 	$file = fopen(DIR_OPENCART . 'admin/config.php', 'w');
 

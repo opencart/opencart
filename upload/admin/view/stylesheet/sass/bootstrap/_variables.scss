@@ -150,40 +150,30 @@ $table-border-color:            #ddd !default;
 $btn-font-weight:                normal !default;
 
 $btn-default-color:              #666 !default;
-$btn-default-bg:                 #f4f5f7 !default;
-$btn-default-bg-lighter:         #fff !default;
+$btn-default-bg:                 #fff !default;
 $btn-default-border:             #ddd !default;
 
 $btn-primary-color:              #fff !default;
 $btn-primary-bg:                 $brand-primary !default;
-$btn-primary-bg-lighter:         lighten($brand-primary, 10%) !default;
-$btn-primary-border:             $btn-primary-bg !default;
+$btn-primary-border:             darken($btn-primary-bg, 7%) !default;
 
 $btn-success-color:              #fff !default;
 $btn-success-bg:                 $brand-success !default;
-$btn-success-bg-lighter:         #65c065 !default;
-$btn-success-border:             $btn-success-bg !default;
+$btn-success-border:             darken($btn-success-bg, 7%) !default;
 
 $btn-info-color:                 #fff !default;
 $btn-info-bg:                    $brand-info !default;
-$btn-info-bg-lighter:            #66ceee !default;
-//$btn-info-border:                darken($btn-info-bg, 8%) !default;
-$btn-info-border:                $btn-info-bg !default;
+$btn-info-border:                darken($btn-info-bg, 7%) !default;
+//$btn-info-border:                $btn-info-bg !default;
 
 $btn-warning-color:              #fff !default;
 $btn-warning-bg:                 $brand-warning !default;
-$btn-warning-bg-lighter:         #f4b253 !default;
-$btn-warning-border:             $brand-warning !default;
+$btn-warning-border:             darken($brand-warning, 7%) !default;
 
 $btn-danger-color:               #fff !default;
 $btn-danger-bg:                  $brand-danger !default;
-$btn-danger-bg-lighter:          #e76858 !default;
-$btn-danger-border:              $btn-danger-bg !default;
+$btn-danger-border:              darken($btn-danger-bg, 7%) !default;
 
-$btn-ghost-dark-color:           #000 !default;
-$btn-ghost-dark-bg:              transparent !default;
-$btn-ghost-dark-bg-lighter:      $btn-ghost-dark-bg !default;
-$btn-ghost-dark-border:          $btn-ghost-dark-color !default;
 
 $btn-link-disabled-color:        $gray-light !default;
 
@@ -378,7 +368,8 @@ $navbar-height:                    60px !default;
 $navbar-margin-bottom:             $line-height-computed !default;
 $navbar-border-radius:             $border-radius-base !default;
 $navbar-padding-horizontal:        floor(($grid-gutter-width / 2)) !default;
-$navbar-padding-vertical:          (($navbar-height - $line-height-computed) / 2) !default;
+//$navbar-padding-vertical:          (($navbar-height - $line-height-computed) / 2) !default;
+$navbar-padding-vertical:          14px !default;
 $navbar-collapse-max-height:       340px !default;
 
 $navbar-default-color:             #777 !default;
@@ -525,7 +516,7 @@ $state-info-bg:                  #d9edf7 !default;
 $state-info-border:              darken(adjust-hue($state-info-bg, -10), 7%) !default;
 
 $state-warning-text:             $brand-warning !default;
-$state-warning-bg:               lighten($brand-warning, 40%) !default;
+$state-warning-bg:               lighten($brand-warning, 30%) !default;
 $state-warning-border:           lighten($brand-warning, 22%) !default;
 // $state-warning-text:             #8a6d3b !default;
 // $state-warning-bg:               #fcf8e3 !default;
@@ -650,21 +641,20 @@ $alert-border-radius:         $border-radius-base !default;
 $alert-link-font-weight:      bold !default;
 
 $alert-success-bg:            $state-success-bg !default;
-$alert-success-text:          $state-success-text !default;
+$alert-success-text:          darken($state-success-text, 12%) !default;
 $alert-success-border:        $state-success-border !default;
 
 $alert-info-bg:               $state-info-bg !default;
-$alert-info-text:             $state-info-text !default;
+$alert-info-text:             darken($state-info-text, 12%) !default;
 $alert-info-border:           $state-info-border !default;
 
 $alert-warning-bg:            $state-warning-bg !default;
-$alert-warning-text:          $state-warning-text !default;
+$alert-warning-text:          darken($state-warning-text, 12%) !default;
 $alert-warning-border:        $state-warning-border !default;
 
 $alert-danger-bg:             $state-danger-bg !default;
-$alert-danger-text:           $state-danger-text !default;
+$alert-danger-text:           darken($state-danger-text, 12%) !default;
 $alert-danger-border:         $state-danger-border !default;
-$alert-danger-text-shadow:    #999 !default;
 
 
 //== Progress bars
@@ -730,7 +720,7 @@ $list-group-link-heading-color: #333 !default;
 
 $panel-bg:                    #fff !default;
 $panel-body-padding:          15px !default;
-$panel-heading-padding:       10px 15px !default;
+$panel-heading-padding:       12px 15px !default;
 $panel-footer-padding:        $panel-heading-padding !default;
 $panel-border-radius:         $border-radius-base !default;
 
@@ -740,7 +730,7 @@ $panel-footer-bg:             #f5f5f5 !default;
 
 $panel-default-text:          $gray-dark !default;
 $panel-default-border:        #ddd !default;
-$panel-default-heading-bg:    #f5f5f5 !default;
+$panel-default-heading-bg:    #fafafa !default;
 
 $panel-primary-text:          #fff !default;
 $panel-primary-border:        $brand-primary !default;
@@ -889,5 +879,7 @@ $blockquote-border-color:     $gray-lighter !default;
 $page-header-border-color:    $gray-lighter !default;
 //** Width of horizontal description list titles
 $dl-horizontal-offset:        $component-offset-horizontal !default;
+//** Point at which .dl-horizontal becomes horizontal
+$dl-horizontal-breakpoint:    $grid-float-breakpoint !default;
 //** Horizontal line color.
 $hr-border:                   $gray-lighter !default;

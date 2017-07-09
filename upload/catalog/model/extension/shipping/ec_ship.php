@@ -270,7 +270,7 @@ class ModelExtensionShippingECShip extends Model {
 			'EMS' => $this->config->get('shipping_ec_ship_speed_post'),
 			'SMP' => $this->config->get('shipping_ec_ship_smart_post'),
 			'LCP' => $this->config->get('shipping_ec_ship_local_courier_post'),
-			'LPL' => $this->config->get('ec_ship_local_parcel')
+			'LPL' => $this->config->get('shipping_ec_ship_local_parcel')
 		);
 
 		//Countries available service

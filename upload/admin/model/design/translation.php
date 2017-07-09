@@ -24,8 +24,9 @@ class ModelDesignTranslation extends Model {
 		$sort_data = array(
 			'store',
 			'language',
-			't.route',
-			't.key'
+			'route',
+			'key',
+			'value'
 		);
 		
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {

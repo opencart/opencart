@@ -1238,12 +1238,12 @@ class ModelExtensionShippingRoyalMail extends Model {
 
 				// World Zones 1
 				if (in_array($address['iso_code_2'], $zone_1)) {
-					$rates = explode(',', $this->config->get('royal_mail_international_signed_zones_1_rate'));
+					$rates = explode(',', $this->config->get('shipping_royal_mail_international_signed_zones_1_rate'));
 				}
 
 				// World Zones 2
 				if (in_array($address['iso_code_2'], $zone_2)) {
-					$rates = explode(',', $this->config->get('royal_mail_international_signed_zones_2_rate'));
+					$rates = explode(',', $this->config->get('shipping_royal_mail_international_signed_zones_2_rate'));
 				}
 
 				foreach ($rates as $rate) {

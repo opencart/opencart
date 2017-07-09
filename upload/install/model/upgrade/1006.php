@@ -40,11 +40,11 @@ class ModelUpgrade1006 extends Model {
 						}
 					}
 
-					$file = fopen($file, 'w');
+					$handle = fopen($file, 'w');
 
-					fwrite($file, $output);
+					fwrite($handle, $output);
 
-					fclose($file);
+					fclose($handle);
 				}
 			}
 		}			
@@ -74,11 +74,11 @@ class ModelUpgrade1006 extends Model {
 				$output = str_replace('system/storage/download', '/download', $output);
 				$output = str_replace('/download', 'system/storage/download', $output);
 
-				$file = fopen($file, 'w');
+				$handle = fopen($file, 'w');
 
-				fwrite($file, $output);
+				fwrite($handle, $output);
 
-				fclose($file);
+				fclose($handle);
 			}
 		}
 

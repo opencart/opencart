@@ -145,7 +145,7 @@ class ControllerExtensionReportCustomerReward extends Controller {
 		$pagination->total = $customer_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('report/customer_reward', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=customer_reward' . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -155,6 +155,6 @@ class ControllerExtensionReportCustomerReward extends Controller {
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_customer'] = $filter_customer;
 	
-		$this->response->setOutput($this->load->view('extension/report/customer_reward_info', $data));
+		return $this->load->view('extension/report/customer_reward_info', $data);
 	}
 }

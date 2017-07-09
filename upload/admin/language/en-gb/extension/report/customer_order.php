@@ -5,8 +5,7 @@ $_['heading_title']         = 'Customer Orders Report';
 // Text
 $_['text_extension']        = 'Extensions';
 $_['text_success']          = 'Success: You have modified customer orders report!';
-$_['text_edit']             = 'Edit Customer Orders Report';
-$_['text_filter']           = 'Customer Orders Filter';
+$_['text_filter']           = 'Filter';
 $_['text_all_status']       = 'All Statuses';
 
 // Column

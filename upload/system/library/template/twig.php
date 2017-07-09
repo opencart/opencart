@@ -9,19 +9,28 @@ final class Twig {
 		include_once(DIR_SYSTEM . 'library/template/Twig/Autoloader.php');
 		
 		\Twig_Autoloader::register();	
-		
-		// specify where to look for templates
-		$loader = new \Twig_Loader_Filesystem(DIR_TEMPLATE);	
-		
-		// initialize Twig environment
-		$this->twig = new \Twig_Environment($loader, array('autoescape' => false));			
 	}
 	
 	public function set($key, $value) {
 		$this->data[$key] = $value;
 	}
 	
-	public function render($template) {
+	public function render($template, $cache = false) {
+		// specify where to look for templates
+		$loader = new \Twig_Loader_Filesystem(DIR_TEMPLATE);	
+		
+		// initialize Twig environment
+		if ($cache) {
+			$config = array(
+				'autoescape' => false,
+				'cache'      => DIR_CACHE 
+			);
+		} else {
+			$config = array('autoescape' => false);	
+		}
+		
+		$this->twig = new \Twig_Environment($loader, $config);
+		
 		try {
 			// load template
 			$template = $this->twig->loadTemplate($template . '.twig');

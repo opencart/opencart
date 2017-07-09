@@ -3,7 +3,7 @@
 $_['heading_title']    = 'Backup &amp; Restore';
 
 // Text
-$_['text_success']     = 'Success: You have successfully imported %d&#37; of your database!';
+$_['text_success']     = 'Success: You have successfully imported your database!';
 
 // Entry
 $_['entry_import']     = 'Import';

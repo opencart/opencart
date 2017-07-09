@@ -76,9 +76,6 @@ class ControllerExtensionExtensionReport extends Controller {
 
 		$data['extensions'] = array();
 		
-		// Create a new language container so we don't pollute the current one
-		$language = new Language($this->config->get('config_language'));
-		
 		// Compatibility code for old extension folders
 		$files = glob(DIR_APPLICATION . 'controller/extension/report/*.php');
 
@@ -86,10 +83,10 @@ class ControllerExtensionExtensionReport extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('extension/report/' . $extension);
+				$this->language->load('extension/report/' . $extension, 'extension');
 
 				$data['extensions'][] = array(
-					'name'       => $language->get('heading_title'),
+					'name'       => $this->language->get('extension')->get('heading_title'),
 					'status'     => $this->config->get('report_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get('report_' . $extension . '_sort_order'),
 					'install'    => $this->url->link('extension/extension/report/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),

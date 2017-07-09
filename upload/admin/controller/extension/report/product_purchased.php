@@ -145,7 +145,7 @@ class ControllerExtensionReportProductPurchased extends Controller {
 		$pagination->total = $product_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('report/product_purchased', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=product_purchased' . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -155,6 +155,6 @@ class ControllerExtensionReportProductPurchased extends Controller {
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_order_status_id'] = $filter_order_status_id;
 
-		$this->response->setOutput($this->load->view('extension/report/product_purchased_info', $data));
+		return $this->load->view('extension/report/product_purchased_info', $data);
 	}
 }

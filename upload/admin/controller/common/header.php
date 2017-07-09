@@ -47,7 +47,7 @@ class ControllerCommonHeader extends Controller {
 				if (is_file(DIR_IMAGE . $user_info['image'])) {
 					$data['image'] = $this->model_tool_image->resize($user_info['image'], 45, 45);
 				} else {
-					$data['image'] = $this->model_tool_image->resize('placeholder.png', 45, 45);
+					$data['image'] = $this->model_tool_image->resize('profile.png', 45, 45);
 				}
 			} else {
 				$data['firstname'] = '';

@@ -3,10 +3,11 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="button" id="button-send" data-toggle="tooltip" title="{{ button_send }}" class="btn btn-primary"><i class="fa fa-envelope"></i></button>
+      <div class="btn-group" role="group" aria-label="...">
+        <button type="button" id="button-send" data-toggle="tooltip" title="{{ button_send }}" class="btn btn-warning"><i class="fa fa-envelope"></i></button>
         <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
         <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-voucher').submit() : false;"><i class="fa fa-trash-o"></i></button>
-      </div>
+      </div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -75,11 +76,11 @@
                   <td class="text-right">{{ column_action }}</td>
                 </tr>
               </thead>
-              <tbody>
+              <tbody data-link="row" class="rowlink">
                 {% if vouchers %}
                 {% for voucher in vouchers %}
                 <tr>
-                  <td class="text-center">{% if voucher.voucher_id in selected %}
+                  <td class="text-center"><a href="{{ voucher.edit }}"></a>{% if voucher.voucher_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ voucher.voucher_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ voucher.voucher_id }}" />
@@ -91,11 +92,12 @@
                   <td class="text-left">{{ voucher.theme }}</td>
                   <td class="text-left">{{ voucher.status }}</td>
                   <td class="text-left">{{ voucher.date_added }}</td>
-                  <td class="text-right">
+                  <td class="text-right"><div class="btn-group" role="group" aria-label="...">
                   {% if voucher.order %}
                   <a href="{{ voucher.order }}" data-toggle="tooltip" title="{{ button_order }}" class="btn btn-info"><i class="fa fa fa-eye"></i></a>
                   {% endif %}
-                  <a href="{{ voucher.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                  <a href="{{ voucher.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+		  </div></td>
                 </tr>
                 {% endfor %}
                 {% else %}

@@ -16,7 +16,7 @@ class Template {
 		$this->adaptor->set($key, $value);
 	}
 
-	public function render($template) {
-		return $this->adaptor->render($template);
+	public function render($template, $cache = false) {
+		return $this->adaptor->render($template, $cache);
 	}
 }

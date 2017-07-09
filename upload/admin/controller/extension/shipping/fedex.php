@@ -53,12 +53,6 @@ class ControllerExtensionShippingFedex extends Controller {
 			$data['error_postcode'] = '';
 		}
 
-		if (isset($this->error['postcode'])) {
-			$data['error_postcode'] = $this->error['postcode'];
-		} else {
-			$data['error_postcode'] = '';
-		}
-
 		if (isset($this->error['dimension'])) {
 			$data['error_dimension'] = $this->error['dimension'];
 		} else {

@@ -78,9 +78,6 @@ class ControllerExtensionExtensionPayment extends Controller {
 
 		$data['extensions'] = array();
 		
-		// Create a new language container so we don't pollute the current one
-		$language = new Language($this->config->get('config_language'));
-		
 		// Compatibility code for old extension folders
 		$files = glob(DIR_APPLICATION . 'controller/extension/payment/*.php');
 
@@ -88,25 +85,25 @@ class ControllerExtensionExtensionPayment extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('extension/payment/' . $extension);
+				$this->language->load('extension/payment/' . $extension, 'extension');
 
-				$text_link = $this->language->get('text_' . $extension);
+				$text_link = $this->language->get('extension')->get('text_' . $extension);
 
 				if ($text_link != 'text_' . $extension) {
-					$link = $this->language->get('text_' . $extension);
+					$link = $text_link;
 				} else {
 					$link = '';
 				}
 
 				$data['extensions'][] = array(
-					'name'       => $language->get('heading_title'),
+					'name'       => $this->language->get('extension')->get('heading_title'),
 					'link'       => $link,
 					'status'     => $this->config->get('payment_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get('payment_' . $extension . '_sort_order'),
-					'install'   => $this->url->link('extension/extension/payment/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/extension/payment/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
-					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('extension/payment/' . $extension, 'user_token=' . $this->session->data['user_token'], true)
+					'install'    => $this->url->link('extension/extension/payment/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
+					'uninstall'  => $this->url->link('extension/extension/payment/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
+					'installed'  => in_array($extension, $extensions),
+					'edit'       => $this->url->link('extension/payment/' . $extension, 'user_token=' . $this->session->data['user_token'], true)
 				);
 			}
 		}

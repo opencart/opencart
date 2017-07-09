@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-customer').toggleClass('hidden-sm');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button></div>
+      <div class="pull-right"><button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-customer').toggleClass('hidden-sm hidden-xs');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -22,7 +22,7 @@
     </div>
     {% endif %}
     <div class="row">
-      <div id="filter-customer" class="col-md-3 col-md-push-9 col-sm-12 hidden-sm">
+      <div id="filter-customer" class="col-md-3 col-md-push-9 col-sm-12 hidden-sm hidden-xs">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
@@ -130,7 +130,7 @@ $('#customer-approval').delegate('.pagination a', 'click', function(e) {
 	$('#customer-approval').load(this.href);
 });
   
-$('#customer-approval').load('index.php?route=customer/customer_approval/list&user_token={{ user_token }}');
+$('#customer-approval').load('index.php?route=customer/customer_approval/customer_approval&user_token={{ user_token }}');
 
 $('#customer-approval').on('click', '.btn-success, .btn-danger', function(e) {
 	e.preventDefault();
@@ -154,7 +154,7 @@ $('#customer-approval').on('click', '.btn-success, .btn-danger', function(e) {
 			}
 
 			if (json['success']) {
-				$('#customer-approval').load('index.php?route=customer/customer_approval/list&user_token={{ user_token }}');
+				$('#customer-approval').load('index.php?route=customer/customer_approval/customer_approval&user_token={{ user_token }}');
 
 				$('#customer-approval').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
@@ -198,7 +198,7 @@ $('#button-filter').on('click', function() {
 		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
 	}
 	
-	$('#customer-approval').load('index.php?route=customer/customer_approval/list&user_token={{ user_token }}' + url);
+	$('#customer-approval').load('index.php?route=customer/customer_approval/customer_approval&user_token={{ user_token }}' + url);
 });
 //--></script> 
   <script type="text/javascript"><!--
@@ -244,7 +244,7 @@ $('input[name=\'filter_email\']').autocomplete({
 //--></script> 
   <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+	language: '{{ datepicker }}',
 	pickTime: false
 });
 //--></script></div>

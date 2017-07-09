@@ -3,10 +3,15 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-product').toggleClass('hidden-sm');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
+      <div class="btn-toolbar" role="toolbar" aria-label="...">
+      <div class="btn-group" role="group" aria-label="...">
+        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-product').toggleClass('hidden-sm hidden-xs');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
+        </div>
+      <div class="btn-group" role="group" aria-label="...">  
         <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
         <button type="submit" form="form-product" formaction="{{ copy }}" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-default"><i class="fa fa-copy"></i></button>
-        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-product').submit() : false;"><i class="fa fa-trash-o"></i></button>
+        <button type="button" form="form-product" formaction="{{ delete }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-product').submit() : false;"><i class="fa fa-trash-o"></i></button>
+      </div></div></div>
       </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
@@ -27,7 +32,7 @@
     </div>
     {% endif %}
     <div class="row">
-      <div id="filter-product" class="col-md-3 col-md-push-9 col-sm-12 hidden-sm">
+      <div id="filter-product" class="col-md-3 col-md-push-9 col-sm-12 hidden-sm hidden-xs">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
@@ -53,67 +58,16 @@
               <label class="control-label" for="input-status">{{ entry_status }}</label>
               <select name="filter_status" id="input-status" class="form-control">
                 <option value=""></option>
-                
-                
-                  
-                
-
                   {% if filter_status == '1' %}
-
-                
-                
-                  
-                
                 <option value="1" selected="selected">{{ text_enabled }}</option>
-                
-                
-                  
-                
-
                   {% else %}
-
-                
-                
-                  
-                
                 <option value="1">{{ text_enabled }}</option>
-                
-                
-                  
-                
-
                   {% endif %}
                   {% if filter_status == '0' %}
-
-                
-                
-                  
-                
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                
-                
-                  
-                
-
                   {% else %}
-
-                
-                
-                  
-                
                 <option value="0">{{ text_disabled }}</option>
-                
-                
-                  
-                
-
                   {% endif %}
-
-
-              
-              
-                
-              
               </select>
             </div>
             <div class="form-group text-right">
@@ -148,7 +102,8 @@
                   {% if products %}
                   {% for product in products %}
                   <tr>
-                    <td class="text-center">{% if product.product_id in selected %}
+                    <td class="text-center rowlink-skip"><a href="{{ product.edit }}"></a>
+		    {% if product.product_id in selected %}
                       <input type="checkbox" name="selected[]" value="{{ product.product_id }}" checked="checked" />
                       {% else %}
                       <input type="checkbox" name="selected[]" value="{{ product.product_id }}" />
@@ -172,7 +127,6 @@
                   </tr>
                   {% endif %}
                     </tbody>
-                  
                 </table>
               </div>
             </form>
@@ -187,7 +141,7 @@
   </div>
   <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-	var url = 'index.php?route=catalog/product&user_token={{ user_token }}';
+	var url = '';
 
 	var filter_name = $('input[name=\'filter_name\']').val();
 
@@ -219,10 +173,15 @@ $('#button-filter').on('click', function() {
 		url += '&filter_status=' + encodeURIComponent(filter_status);
 	}
 
-	location = url;
+	location = 'index.php?route=catalog/product&user_token={{ user_token }}' + url;
 });
 //--></script> 
   <script type="text/javascript"><!--
+// IE and Edge fix!
+$('button[form=\'form-product\']').on('click', function(e) {
+	$('#form-product').attr('action', $(this).attr('formaction'));
+});
+  
 $('input[name=\'filter_name\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({

@@ -24,6 +24,9 @@ $_['text_transaction_add']      = 'Add Transaction';
 $_['text_reward']               = 'Reward Points';
 $_['text_reward_add']           = 'Add Reward Points';
 $_['text_ip']                   = 'IP';
+$_['text_option']               = 'Options';
+$_['text_login']                = 'Login into Store';
+$_['text_unlock']               = 'Unlock Account';
 
 // Column
 $_['column_name']               = 'Customer Name';

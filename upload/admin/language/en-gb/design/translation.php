@@ -7,7 +7,6 @@ $_['text_success']     = 'Success: You have modified language editor!';
 $_['text_list']        = 'Translation List';
 $_['text_edit']        = 'Edit Translation';
 $_['text_add']         = 'Add Translation';
-$_['text_edit']        = 'Edit Translation';
 $_['text_default']     = 'Default';
 $_['text_store']       = 'Store';
 $_['text_language']    = 'Language';
@@ -17,6 +16,7 @@ $_['column_store']     = 'Store';
 $_['column_language']  = 'Language';
 $_['column_route']     = 'Route';
 $_['column_key']       = 'Key';
+$_['column_value']     = 'Value';
 $_['column_action']    = 'Action';
 
 // Entry

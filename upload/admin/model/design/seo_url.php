@@ -109,9 +109,15 @@ class ModelDesignSeoUrl extends Model {
 		return $query->row['total'];
 	}
 	
-	public function getSeoUrlByKeyword($keyword) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE keyword LIKE '" . $this->db->escape($keyword) . "'");
+	public function getSeoUrlsByKeyword($keyword) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE keyword = '" . $this->db->escape($keyword) . "'");
 
-		return $query->row;
+		return $query->rows;
+	}	
+	
+	public function getSeoUrlsByQuery($keyword) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE keyword = '" . $this->db->escape($keyword) . "'");
+
+		return $query->rows;
 	}	
 }

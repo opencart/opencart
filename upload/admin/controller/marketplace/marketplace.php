@@ -99,7 +99,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url, true)
 		);
 		
-		$time = time() + 60;
+		$time = time() + 120;
 		
 		// We create a hash from the data in a similar method to how amazon does things.
 		$string  = 'marketplace/api/list' . "\n";
@@ -423,32 +423,32 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$data['sorts'] = array();
 
 		$data['sorts'][] = array(
-			'text'  => 'Date Modified',
+			'text'  => $this->language->get('text_date_modified'),
 			'value' => 'date_modified',
 			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=date_modified')
 		);
 
 		$data['sorts'][] = array(
-			'text'  => 'Date Added',
+			'text'  => $this->language->get('text_date_added'),
 			'value' => 'date_added',
 			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=date_added')
 		);
 
 		$data['sorts'][] = array(
-			'text'  => 'Rating',
+			'text'  => $this->language->get('text_rating'),
 			'value' => 'rating',
 			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=rating')
 		);
 
 
 		$data['sorts'][] = array(
-			'text'  => 'Name',
+			'text'  => $this->language->get('text_name'),
 			'value' => 'name',
 			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=name')
 		);
 
 		$data['sorts'][] = array(
-			'text'  => 'Price',
+			'text'  => $this->language->get('text_price'),
 			'value' => 'price',
 			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=price')
 		);
@@ -513,7 +513,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$extension_id = 0;
 		}
 
-		$time = time() + 60;
+		$time = time() + 120;
 
 		// We create a hash from the data in a similar method to how amazon does things.
 		$string  = 'marketplace/api/info' . "\n";
@@ -700,7 +700,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		}
 
 		if (!$json) {
-			$time = time() + 60;
+			$time = time() + 120;
 
 			// We create a hash from the data in a similar method to how amazon does things.
 			$string  = 'marketplace/api/purchase' . "\n";
@@ -829,7 +829,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		}
 		
 		if (!$json) {
-			$time = time() + 60;
+			$time = time() + 120;
 
 			// We create a hash from the data in a similar method to how amazon does things.
 			$string  = 'marketplace/api/download' . "\n";
@@ -923,7 +923,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		}
 					
 		if (!$json) {	
-			$time = time() + 60;
+			$time = time() + 120;
 
 			// We create a hash from the data in a similar method to how amazon does things.
 			$string  = 'marketplace/api/addcomment' . "\n";

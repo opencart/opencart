@@ -76,9 +76,6 @@ class ControllerExtensionExtensionTotal extends Controller {
 
 		$data['extensions'] = array();
 		
-		// Create a new language container so we don't pollute the current one
-		$language = new Language($this->config->get('config_language'));
-		
 		// Compatibility code for old extension folders
 		$files = glob(DIR_APPLICATION . 'controller/extension/total/*.php');
 
@@ -86,16 +83,16 @@ class ControllerExtensionExtensionTotal extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('extension/total/' . $extension);
+				$this->language->load('extension/total/' . $extension, 'extension');
 
 				$data['extensions'][] = array(
-					'name'       => $language->get('heading_title'),
+					'name'       => $this->language->get('extension')->get('heading_title'),
 					'status'     => $this->config->get('total_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get('total_' . $extension . '_sort_order'),
-					'install'   => $this->url->link('extension/extension/total/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/extension/total/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
-					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('extension/total/' . $extension, 'user_token=' . $this->session->data['user_token'], true)
+					'install'    => $this->url->link('extension/extension/total/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
+					'uninstall'  => $this->url->link('extension/extension/total/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
+					'installed'  => in_array($extension, $extensions),
+					'edit'       => $this->url->link('extension/total/' . $extension, 'user_token=' . $this->session->data['user_token'], true)
 				);
 			}
 		}

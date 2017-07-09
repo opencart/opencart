@@ -194,18 +194,15 @@ class ControllerSettingSetting extends Controller {
 
 		$data['themes'] = array();
 
-		// Create a new language container so we don't pollute the current one
-		$language = new Language($this->config->get('config_language'));
-
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getInstalled('theme');
 
 		foreach ($extensions as $code) {
-			$language->load('extension/theme/' . $code);
+			$this->language->load('extension/theme/' . $code, 'extension');
 			
 			$data['themes'][] = array(
-				'text'  => $language->get('heading_title'),
+				'text'  => $this->language->get('extension')->get('heading_title'),
 				'value' => $code
 			);
 		}
@@ -629,9 +626,6 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['config_captcha'] = $this->config->get('config_captcha');
 		}
-
-		// Create a new language container so we don't pollute the current one
-		$language = new Language($this->config->get('config_language'));
 		
 		$this->load->model('setting/extension');
 
@@ -641,11 +635,11 @@ class ControllerSettingSetting extends Controller {
 		$extensions = $this->model_setting_extension->getInstalled('captcha');
 
 		foreach ($extensions as $code) {
-			$language->load('extension/captcha/' . $code);
+			$this->language->load('extension/captcha/' . $code, 'extension');
 
 			if ($this->config->get('captcha_' . $code . '_status')) {
 				$data['captchas'][] = array(
-					'text'  => $language->get('heading_title'),
+					'text'  => $this->language->get('extension')->get('heading_title'),
 					'value' => $code
 				);
 			}

@@ -930,8 +930,10 @@
                   <button type="button" onclick="$('select[name=\'shipping_method\']').prop('disabled') ? $('a[href=\'#tab-payment\']').tab('show') : $('a[href=\'#tab-shipping\']').tab('show');" class="btn btn-default"><i class="fa fa-arrow-left"></i> {{ button_back }}</button>
                 </div>
                 <div class="col-sm-6 text-right">
+		<div class="btn-group" role="group" aria-label="...">
                   <button type="button" id="button-refresh" data-toggle="tooltip" title="{{ button_refresh }}" data-loading-text="{{ text_loading }}" class="btn btn-warning"><i class="fa fa-refresh"></i></button>
                   <button type="button" id="button-save" class="btn btn-primary"><i class="fa fa-check-circle"></i> {{ button_save }}</button>
+		</div>
                 </div>
               </div>
             </div>
@@ -1363,18 +1365,18 @@ $('#tab-product input[name=\'product\']').autocomplete({
 			$('#option').html(html);
 
 			$('.date').datetimepicker({
-				language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+				language: '{{ datepicker }}',
 				pickTime: false
 			});
 
 			$('.datetime').datetimepicker({
-				language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+				language: '{{ datepicker }}',
 				pickDate: true,
 				pickTime: true
 			});
 
 			$('.time').datetimepicker({
-				language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+				language: '{{ datepicker }}',
 				pickDate: false
 			});
 		} else {
@@ -1801,10 +1803,10 @@ $('#tab-shipping select[name=\'country_id\']').on('change', function() {
 		url: 'index.php?route=localisation/country/country&user_token={{ user_token }}&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('#tab-shipping select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+			$('#tab-shipping select[name=\'country_id\']').prop('disabled', true);
 		},
 		complete: function() {
-			$('#tab-shipping .fa-spin').remove();
+			$('#tab-shipping select[name=\'country_id\']').prop('disabled', false);
 		},
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
@@ -2178,9 +2180,6 @@ $('#button-save').on('click', function() {
 
 			if (json['success']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-
-                // Refresh products, vouchers and totals
-				$('#button-refresh').trigger('click');
             }
 
 			if (json['order_id']) {
@@ -2248,18 +2247,18 @@ $('#content').delegate('button[id^=\'button-upload\'], button[id^=\'button-custo
 });
 
 $('.date').datetimepicker({
-	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+	language: '{{ datepicker }}',
 	pickTime: false
 });
 
 $('.datetime').datetimepicker({
-	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+	language: '{{ datepicker }}',
 	pickDate: true,
 	pickTime: true
 });
 
 $('.time').datetimepicker({
-	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+	language: '{{ datepicker }}',
 	pickDate: false
 });
 //--></script>
@@ -2314,6 +2313,12 @@ $('#button-refresh').on('click', function() {
 		url: '{{ catalog }}index.php?route=api/cart/products&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		dataType: 'json',
 		crossDomain: true,
+		beforeSend: function() {
+			$('#button-refresh').button('loading');
+		},
+		complete: function() {
+			$('#button-refresh').button('reset');
+		},		
 		success: function(json) {
 			$('.alert-dismissible').remove();
 

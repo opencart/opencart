@@ -5,8 +5,7 @@ $_['heading_title']     = 'Shipping Report';
 // Text
 $_['text_extension']    = 'Extensions';
 $_['text_success']      = 'Success: You have modified shipping report!';
-$_['text_edit']         = 'Edit Shipping Report';
-$_['text_filter']       = 'Shipping Filter';
+$_['text_filter']       = 'Filter';
 $_['text_year']         = 'Years';
 $_['text_month']        = 'Months';
 $_['text_week']         = 'Weeks';

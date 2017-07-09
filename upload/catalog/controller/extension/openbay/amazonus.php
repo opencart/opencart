@@ -12,23 +12,21 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 		$logger = new Log('amazonus.log');
 		$logger->write('amazonus/order - started');
 
-		$token = $this->config->get('openbay_amazonus_token');
-
 		$incoming_token = isset($this->request->post['token']) ? $this->request->post['token'] : '';
 
-		if ($incoming_token !== $token) {
-			$logger->write('amazonus/order - Incorrect token: ' . $incoming_token);
+		if (!hash_equals($this->config->get('openbay_amazonus_token'), $incoming_token)) {
+			$logger->write('amazon/order - Incorrect token: ' . $incoming_token);
 			return;
 		}
 
-        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazonus->getEncryptionKey(), $this->openbay->amazon->getEncryptionIv());
+        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazonus->getEncryptionKey(), $this->openbay->amazonus->getEncryptionIv(), false);
 
 		if (!$decrypted) {
 			$logger->write('amazonus/order Failed to decrypt data');
 			return;
 		}
 
-		$order_xml = simplexml_load_string($decrypted);
+		$order_xml = simplexml_load_string(base64_decode($decrypted));
 
 		$amazonus_order_status = trim(strtolower((string)$order_xml->Status));
 
@@ -244,6 +242,8 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 			'accept_language' => '',
 			'products' => $products,
 			'vouchers' => array(),
+            'marketing_id' => 0,
+            'tracking' => 0,
 			'totals' => array(
 				array(
 					'code' => 'sub_total',
@@ -336,7 +336,7 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 			return;
 		}
 
-        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazonus->getEncryptionKey(), $this->openbay->amazon->getEncryptionIv());
+        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazonus->getEncryptionKey(), $this->openbay->amazonus->getEncryptionIv(), false);
 
 		if (!$decrypted) {
 			$logger->write('amazonus/order Failed to decrypt data');
@@ -376,7 +376,7 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 			return;
 		}
 
-        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazonus->getEncryptionKey(), $this->openbay->amazon->getEncryptionIv());
+        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazonus->getEncryptionKey(), $this->openbay->amazonus->getEncryptionIv(), false);
 
 		if (!$decrypted) {
 			$logger->write('amazonus/listing_reports - Failed to decrypt data');
@@ -429,7 +429,7 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 			return;
 		}
 
-        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazonus->getEncryptionKey(), $this->openbay->amazon->getEncryptionIv());
+        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazonus->getEncryptionKey(), $this->openbay->amazonus->getEncryptionIv(), false);
 
 		if(!$decrypted) {
 			$logger->write("Error - Failed to decrypt received data.");
@@ -500,7 +500,7 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 			return;
 		}
 
-        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazonus->getEncryptionKey(), $this->openbay->amazon->getEncryptionIv());
+        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazonus->getEncryptionKey(), $this->openbay->amazonus->getEncryptionIv(), false);
 
 		if (!$decrypted) {
 			$logger->write('amazonus/search Failed to decrypt data');
@@ -527,7 +527,7 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 			return;
 		}
 
-        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazonus->getEncryptionKey(), $this->openbay->amazon->getEncryptionIv());
+        $decrypted = $this->openbay->decrypt($this->request->post['data'], $this->openbay->amazonus->getEncryptionKey(), $this->openbay->amazonus->getEncryptionIv(), false);
 
 		if (!$decrypted) {
 			$this->response->setOutput("error 003");

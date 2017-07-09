@@ -27,6 +27,7 @@ define('DIR_CACHE', DIR_SYSTEM . 'storage/cache/');
 define('DIR_LOGS', DIR_SYSTEM . 'storage/logs/');
 define('DIR_MODIFICATION', DIR_SYSTEM . 'storage/modification/');
 define('DIR_DOWNLOAD', DIR_SYSTEM . 'storage/download/');
+define('DIR_SESSION', DIR_SYSTEM . 'storage/session/');
 define('DIR_UPLOAD', DIR_SYSTEM . 'storage/upload/');
 
 // Startup

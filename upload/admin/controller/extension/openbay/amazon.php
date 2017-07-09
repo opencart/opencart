@@ -265,6 +265,9 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 			$this->config->set('openbay_amazon_encryption_key', $this->request->post['openbay_amazon_encryption_key']);
 			$this->config->set('openbay_amazon_encryption_iv', $this->request->post['openbay_amazon_encryption_iv']);
 
+			$this->openbay->amazon->setEncryptionKey($this->request->post['openbay_amazon_encryption_key']);
+			$this->openbay->amazon->setEncryptionIv($this->request->post['openbay_amazon_encryption_iv']);
+
 			if (!empty($this->request->post['openbay_amazon_token']) && !empty($this->request->post['openbay_amazon_encryption_key']) && !empty($this->request->post['openbay_amazon_encryption_iv'])) {
                 $this->model_extension_openbay_amazon->verifyConfig($settings);
             }
@@ -358,7 +361,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
         $api_auth = false;
 
 		if (!empty($data['openbay_amazon_token']) && !empty($data['openbay_amazon_encryption_key']) && !empty($data['openbay_amazon_encryption_iv'])) {
-		    $response = $this->openbay->amazon->call('ping/info');
+		    $response = $this->openbay->amazon->call('ping/info', array('say hello'));
 
 		    if (!empty($response)) {
                 $ping_info = simplexml_load_string($response);
@@ -930,6 +933,21 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 		} else {
 			$linked_item_limit = 25;
 		}
+
+		$data['cancel_report_link'] = '';
+
+        if (isset($this->request->get['cancel_report']) && $this->request->get['cancel_report'] == 1) {
+            $this->load->model('setting/setting');
+
+            $settings = $this->model_setting_setting->getSetting('openbay_amazon');
+            $settings['openbay_amazon_processing_listing_reports'] = '';
+
+            $this->model_setting_setting->editSetting('openbay_amazon', $settings);
+
+            $this->response->redirect($this->url->link('extension/openbay/amazon/bulklinking', 'marketplace=' . $marketplace_code . '&token=' . $this->session->data['token'], true));
+        } else {
+            $data['cancel_report_link'] = $this->url->link('extension/openbay/amazon/bulklinking', 'cancel_report=1&marketplace=uk&token=' . $this->session->data['token'], true);
+        }
 
 		$marketplaces = array(
 			'uk' => array(

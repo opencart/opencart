@@ -11,7 +11,7 @@ class ControllerEventTheme extends Controller {
 		} else {
 			$theme = $this->config->get('config_theme');
 		}
-	
+			
 		// If there is a theme override we should get it				
 		$this->load->model('design/theme');
 		
@@ -27,7 +27,10 @@ class ControllerEventTheme extends Controller {
 			$loader = new \Twig_Loader_Filesystem(DIR_TEMPLATE);
 			
 			// initialize Twig environment
-			$twig = new \Twig_Environment($loader, array('autoescape' => false));	
+			$twig = new \Twig_Environment($loader, array(
+				'autoescape' => false, 
+				'cache'      => $this->config->get('template_cache') ? DIR_CACHE : ''
+			));	
 
 			$template = $twig->createTemplate(html_entity_decode($theme_info['code'], ENT_QUOTES, 'UTF-8'));
 			

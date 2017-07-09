@@ -27,7 +27,7 @@ class ControllerReportReport extends Controller {
 
 		// Reports
 		$data['reports'] = array();
-
+		
 		$this->load->model('setting/extension');
 
 		// Get a list of installed modules
@@ -36,14 +36,13 @@ class ControllerReportReport extends Controller {
 		// Add all the modules which have multiple settings for each module
 		foreach ($extensions as $code) {
 			if ($this->config->get('report_' . $code . '_status') && $this->user->hasPermission('access', 'extension/report/' . $code)) {
-				$this->load->language('extension/report/' . $code);
+				$this->language->load('extension/report/' . $code, 'extension');
 				
 				$data['reports'][] = array(
-					'text'       => $this->language->get('heading_title'),
+					'text'       => $this->language->get('extension')->get('heading_title'),
 					'code'       => $code,
-					'group'      => $this->language->get('text_' . $this->config->get('report_' . $code . '_group')),
 					'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
-					'href'       => $this->url->link('extension/report/' . $code . '/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true)
+					'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true)
 				);
 			}
 		}
@@ -55,7 +54,15 @@ class ControllerReportReport extends Controller {
 		}
 
 		array_multisort($sort_order, SORT_ASC, $data['reports']);	
-
+		
+		if (isset($this->request->get['code'])) {
+			$data['report'] = $this->load->controller('extension/report/' . $this->request->get['code'] . '/report');
+		} elseif (isset($data['reports'][0])) {
+			$data['report'] = $this->load->controller('extension/report/' . $data['reports'][0]['code'] . '/report');
+		} else {
+			$data['report'] = '';
+		}
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

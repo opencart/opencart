@@ -5,6 +5,8 @@ class ControllerCommonDashboard extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		$data['user_token'] = $this->session->data['user_token'];
+		
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -16,17 +18,14 @@ class ControllerCommonDashboard extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
-
-		// Dump all lanauage vars
-		array_merge($data, $this->language->all());
 		
 		// Check install directory exists
-		if (is_dir(dirname(DIR_APPLICATION) . '/install')) {
+		if (is_dir(DIR_APPLICATION . 'install')) {
 			$data['error_install'] = $this->language->get('error_install');
 		} else {
 			$data['error_install'] = '';
 		}
-
+		
 		// Dashboard Extensions
 		$dashboards = array();
 
@@ -77,6 +76,12 @@ class ControllerCommonDashboard extends Controller {
 			}
 		}
 
+		if (DIR_STORAGE == DIR_SYSTEM . 'storage/') {
+			$data['security'] = $this->load->controller('common/security');
+		} else {
+			$data['security'] = '';
+		}
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

@@ -81,8 +81,8 @@ final class Loader {
 			foreach ($data as $key => $value) {
 				$template->set($key, $value);
 			}
-			
-			$output = $template->render($this->registry->get('config')->get('template_directory') . $route);		
+
+			$output = $template->render($this->registry->get('config')->get('template_directory') . $route, $this->registry->get('config')->get('template_cache'));		
 		}
 		
 		// Trigger the post events
@@ -129,22 +129,22 @@ final class Loader {
 		$this->registry->get('event')->trigger('config/' . $route . '/after', array(&$route));
 	}
 
-	public function language($route) {
+	public function language($route, $key = '') {
 		// Sanitize the call
-		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);		
+		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 		
 		// Keep the original trigger
 		$trigger = $route;
 				
-		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/before', array(&$route));
+		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/before', array(&$route, &$key));
 		
 		if ($result && !$result instanceof Exception) {
 			$output = $result;
 		} else {
-			$output = $this->registry->get('language')->load($route);
+			$output = $this->registry->get('language')->load($route, $key);
 		}
 		
-		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/after', array(&$route, &$output));
+		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/after', array(&$route, &$key, &$output));
 		
 		if ($result && !$result instanceof Exception) {
 			$output = $result;

@@ -1,5 +1,5 @@
 {{ header }}
-<div class="container">
+<div id="checkout-checkout" class="container">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
     <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
@@ -152,6 +152,7 @@ $(document).delegate('#button-account', 'click', function() {
         },
         success: function(html) {
             $('.alert-dismissible, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
 
             $('#collapse-payment-address .panel-body').html(html);
 
@@ -351,6 +352,7 @@ $(document).delegate('#button-payment-address', 'click', function() {
         },
         success: function(json) {
             $('.alert-dismissible, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
 
             if (json['redirect']) {
                 location = json['redirect'];
@@ -451,6 +453,7 @@ $(document).delegate('#button-shipping-address', 'click', function() {
 	    },
         success: function(json) {
             $('.alert-dismissible, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
 
             if (json['redirect']) {
                 location = json['redirect'];
@@ -536,6 +539,7 @@ $(document).delegate('#button-guest', 'click', function() {
 	    },
         success: function(json) {
             $('.alert-dismissible, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
 
             if (json['redirect']) {
                 location = json['redirect'];
@@ -661,6 +665,7 @@ $(document).delegate('#button-guest-shipping', 'click', function() {
 		},
         success: function(json) {
             $('.alert-dismissible, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
 
             if (json['redirect']) {
                 location = json['redirect'];

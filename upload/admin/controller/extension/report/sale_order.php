@@ -180,7 +180,7 @@ class ControllerExtensionReportSaleOrder extends Controller {
 		$pagination->total = $order_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('report/sale_order', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=sale_order' . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -191,6 +191,6 @@ class ControllerExtensionReportSaleOrder extends Controller {
 		$data['filter_group'] = $filter_group;
 		$data['filter_order_status_id'] = $filter_order_status_id;
 
-		$this->response->setOutput($this->load->view('extension/report/sale_order_info', $data));
+		return $this->load->view('extension/report/sale_order_info', $data);
 	}
 }

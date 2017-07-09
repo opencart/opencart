@@ -1206,14 +1206,14 @@ class ControllerSaleOrder extends Controller {
 
 			foreach ($extensions as $extension) {
 				if ($this->config->get('fraud_' . $extension . '_status')) {
-					$this->load->language('extension/fraud/' . $extension);
+					$this->load->language('extension/fraud/' . $extension, 'extension');
 
 					$content = $this->load->controller('extension/fraud/' . $extension . '/order');
 
 					if ($content) {
 						$data['tabs'][] = array(
 							'code'    => $extension,
-							'title'   => $this->language->get('heading_title'),
+							'title'   => $this->language->get('extension')->get('heading_title'),
 							'content' => $content
 						);
 					}
@@ -1815,7 +1815,7 @@ class ControllerSaleOrder extends Controller {
 							'jan'      => $product_info['jan'],
 							'isbn'     => $product_info['isbn'],
 							'mpn'      => $product_info['mpn'],
-							'weight'   => $this->weight->format(($product_info['weight'] + $option_weight) * $product['quantity'], $product_info['weight_class_id'], $this->language->get('decimal_point'), $this->language->get('thousand_point'))
+							'weight'   => $this->weight->format(($product_info['weight'] + (float)$option_weight) * $product['quantity'], $product_info['weight_class_id'], $this->language->get('decimal_point'), $this->language->get('thousand_point'))
 						);
 					}
 				}

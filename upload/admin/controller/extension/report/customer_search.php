@@ -184,7 +184,7 @@ class ControllerExtensionReportCustomerSearch extends Controller {
 		$pagination->total = $search_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('report/customer_search', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=customer_search' . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -196,6 +196,6 @@ class ControllerExtensionReportCustomerSearch extends Controller {
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_ip'] = $filter_ip;
 
-		$this->response->setOutput($this->load->view('extension/report/customer_search_info', $data));
+		return $this->load->view('extension/report/customer_search_info', $data);
 	}
 }

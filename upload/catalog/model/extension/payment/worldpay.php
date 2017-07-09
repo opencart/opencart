@@ -121,8 +121,9 @@ class ModelExtensionPaymentWorldpay extends Model {
 			$recurring_description .= sprintf($this->language->get('text_length'), $item['recurring']['duration']);
 		}
 
-		$order_recurring_id = $this->model_checkout_recurring->create($item, $this->session->data['order_id'], $recurring_description);
-		$this->model_checkout_recurring->addReference($order_recurring_id, $order_id_rand);
+		$order_recurring_id = $this->model_checkout_recurring->addRecurring($this->session->data['order_id'], $recurring_description, $item['recurring']);
+		
+		$this->model_checkout_recurring->editReference($order_recurring_id, $order_id_rand);
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 

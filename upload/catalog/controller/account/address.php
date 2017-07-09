@@ -397,8 +397,8 @@ class ControllerAccountAddress extends Controller {
 			}
 		}
 		
-		if (isset($this->request->post['custom_field'])) {
-			$data['address_custom_field'] = $this->request->post['custom_field'];
+		if (isset($this->request->post['custom_field']['address'])) {
+			$data['address_custom_field'] = $this->request->post['custom_field']['address'];
 		} elseif (isset($address_info)) {
 			$data['address_custom_field'] = $address_info['custom_field'];
 		} else {
@@ -465,9 +465,9 @@ class ControllerAccountAddress extends Controller {
 
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'address') {
-				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
 					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($this->request->post['custom_field'][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $custom_field['validation'])))) {
+				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $custom_field['validation'])))) {
 					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 				}
 			}

@@ -134,7 +134,7 @@ class ControllerExtensionExtensionModule extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('extension/module/' . $extension);
+				$this->language->load('extension/module/' . $extension, 'extension');
 
 				$module_data = array();
 
@@ -157,7 +157,7 @@ class ControllerExtensionExtensionModule extends Controller {
 				}
 
 				$data['extensions'][] = array(
-					'name'      => $language->get('heading_title'),
+					'name'      => $this->language->get('extension')->get('heading_title'),
 					'status'    => $this->config->get('module_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'module'    => $module_data,
 					'install'   => $this->url->link('extension/extension/module/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),

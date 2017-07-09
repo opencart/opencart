@@ -86,7 +86,7 @@ class ControllerMailOrder extends Controller {
 		$data['text_total'] = $language->get('text_total');
 		$data['text_footer'] = $language->get('text_footer');
 
-		$data['logo'] = $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
+		$data['logo'] = $order_info['store_url'] . 'image/' . $this->config->get('config_logo');
 		$data['store_name'] = $order_info['store_name'];
 		$data['store_url'] = $order_info['store_url'];
 		$data['customer_id'] = $order_info['customer_id'];
@@ -105,7 +105,14 @@ class ControllerMailOrder extends Controller {
 		$data['email'] = $order_info['email'];
 		$data['telephone'] = $order_info['telephone'];
 		$data['ip'] = $order_info['ip'];
-		$data['order_status'] = $order_info['order_status'];
+
+		$order_status_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "' AND language_id = '" . (int)$order_info['language_id'] . "'");
+	
+		if ($order_status_query->num_rows) {
+			$data['order_status'] = $order_status_query->row['name'];
+		} else {
+			$data['order_status'] = '';
+		}
 
 		if ($comment && $notify) {
 			$data['comment'] = nl2br($comment);
@@ -365,9 +372,15 @@ class ControllerMailOrder extends Controller {
 			
 			$data['order_id'] = $order_info['order_id'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
-			
-			$data['order_status'] = $order_info['order_status'];
-			
+
+			$order_status_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+			if ($order_status_query->num_rows) {
+				$data['order_status'] = $order_status_query->row['name'];
+			} else {
+				$data['order_status'] = '';
+			}
+
 			$this->load->model('tool/upload');
 			
 			$data['products'] = array();

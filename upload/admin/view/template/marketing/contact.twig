@@ -3,8 +3,9 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
+      <div class="btn-group" role="group" aria-label="...">
         <button id="button-send" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_send }}" class="btn btn-primary" onclick="send('index.php?route=marketing/contact/send&user_token={{ user_token }}');"><i class="fa fa-envelope"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -25,9 +26,13 @@
             <div class="col-sm-10">
               <select name="store_id" id="input-store" class="form-control">
                 <option value="0">{{ text_default }}</option>
+                
                 {% for store in stores %}
+                
                 <option value="{{ store.store_id }}">{{ store.name }}</option>
+                
                 {% endfor %}
+              
               </select>
             </div>
           </div>
@@ -49,9 +54,13 @@
             <label class="col-sm-2 control-label" for="input-customer-group">{{ entry_customer_group }}</label>
             <div class="col-sm-10">
               <select name="customer_group_id" id="input-customer-group" class="form-control">
+                
                 {% for customer_group in customer_groups %}
+                
                 <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+                
                 {% endfor %}
+              
               </select>
             </div>
           </div>
@@ -85,7 +94,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-message">{{ entry_message }}</label>
             <div class="col-sm-10">
-              <textarea name="message" placeholder="{{ entry_message }}" id="input-message" data-toggle="summernote" data-lang="{{ locale }}" class="form-control"></textarea>
+              <textarea name="message" placeholder="{{ entry_message }}" id="input-message" data-toggle="summernote" data-lang="{{ summernote }}" class="form-control"></textarea>
             </div>
           </div>
         </form>
@@ -97,15 +106,11 @@
   <script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script> 
   <script type="text/javascript" src="view/javascript/codemirror/lib/xml.js"></script> 
   <script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script> 
-    
   <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
   <link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
-  <script type="text/javascript" src="view/javascript/summernote/summernote-image-attributes.js"></script>
-  <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>  
+  <script type="text/javascript" src="view/javascript/summernote/summernote-image-attributes.js"></script> 
+  <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script> 
   <script type="text/javascript"><!--
- console.log(document.cookie);
-  
-  
 $('select[name=\'to\']').on('change', function() {
 	$('.to').hide();
 
@@ -113,7 +118,7 @@ $('select[name=\'to\']').on('change', function() {
 });
 
 $('select[name=\'to\']').trigger('change');
-//--></script>
+//--></script> 
   <script type="text/javascript"><!--
 // Customers
 $('input[name=\'customers\']').autocomplete({
@@ -128,6 +133,9 @@ $('input[name=\'customers\']').autocomplete({
 						value: item['customer_id']
 					}
 				}));
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
 	},
@@ -148,15 +156,18 @@ $('#input-customer').parent().find('.well').delegate('.fa-minus-circle', 'click'
 $('input[name=\'affiliates\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=marketing/affiliate/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request) + '&filter_affiliate=1',
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
 						label: item['name'],
-						value: item['affiliate_id']
+						value: item['customer_id']
 					}
 				}));
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
 	},
@@ -186,6 +197,9 @@ $('input[name=\'products\']').autocomplete({
 						value: item['product_id']
 					}
 				}));
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
 	},
@@ -219,11 +233,11 @@ function send(url) {
 
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '</div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				if (json['error']['email']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['email'] + '</div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['email'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				if (json['error']['subject']) {
@@ -236,7 +250,7 @@ function send(url) {
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i>  ' + json['success'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i>  ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 				
 			if (json['next']) {

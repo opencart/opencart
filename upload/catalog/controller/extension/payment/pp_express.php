@@ -468,15 +468,12 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 			// Display prices
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-				$price = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+				$unit_price = $this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));
+
+				$price = $this->currency->format($unit_price, $this->session->data['currency']);
+				$total = $this->currency->format($unit_price * $product['quantity'], $this->session->data['currency']);
 			} else {
 				$price = false;
-			}
-
-			// Display prices
-			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-				$total = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']);
-			} else {
 				$total = false;
 			}
 
@@ -1206,7 +1203,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 						}
 
 						//create new recurring and set to pending status as no payment has been made yet.
-						$recurring_id = $this->model_checkout_recurring->create($item, $order_id, $recurring_description);
+						$recurring_id = $this->model_checkout_recurring->addRecurring($order_id, $recurring_description, $item['recurring']);
 
 						$data['PROFILEREFERENCE'] = $recurring_id;
 						$data['DESC'] = $recurring_description;
@@ -1500,7 +1497,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 					}
 
 					//create new recurring and set to pending status as no payment has been made yet.
-					$recurring_id = $this->model_checkout_recurring->create($item, $order_id, $recurring_description);
+					$recurring_id = $this->model_checkout_recurring->addRecurring($order_id, $recurring_description, $item['recurring']);
 
 					$data['PROFILEREFERENCE'] = $recurring_id;
 					$data['DESC'] = $recurring_description;
@@ -1508,7 +1505,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 					$result = $this->model_extension_payment_pp_express->call($data);
 
 					if (isset($result['PROFILEID'])) {
-						$this->model_checkout_recurring->addReference($recurring_id, $result['PROFILEID']);
+						$this->model_checkout_recurring->editReference($recurring_id, $result['PROFILEID']);
 					} else {
 						// there was an error creating the recurring, need to log and also alert admin / user
 

@@ -201,7 +201,7 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 
 		$customer_info = $this->model_account_customer->getCustomerByEmail($email);
 
-		if ($customer_info && !$customer_info['approved']) {
+		if ($customer_info && !$customer_info['status']) {
 			$this->error['warning'] = $this->language->get('error_approved');
 		}
 

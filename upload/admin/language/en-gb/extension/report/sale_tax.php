@@ -5,8 +5,7 @@ $_['heading_title']     = 'Tax Report';
 // Text
 $_['text_extension']    = 'Extensions';
 $_['text_success']      = 'Success: You have modified tax report!';
-$_['text_edit']         = 'Edit Tax Report';
-$_['text_filter']       = 'Report Filter';
+$_['text_filter']       = 'Filter';
 $_['text_year']         = 'Years';
 $_['text_month']        = 'Months';
 $_['text_week']         = 'Weeks';

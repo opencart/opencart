@@ -346,6 +346,10 @@ class ControllerCustomerCustomer extends Controller {
 		$data['add'] = $this->url->link('customer/customer/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
 		$data['delete'] = $this->url->link('customer/customer/delete', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
+		$this->load->model('setting/store');
+
+		$stores = $this->model_setting_store->getStores();
+		
 		$data['customers'] = array();
 
 		$filter_data = array(
@@ -374,6 +378,20 @@ class ControllerCustomerCustomer extends Controller {
 				$unlock = '';
 			}
 
+			$store_data = array();
+
+			$store_data[] = array(
+				'name' => $this->config->get('config_name'),
+				'href' => $this->url->link('customer/customer/login', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&store_id=0', true)
+			);
+
+			foreach ($stores as $store) {
+				$store_data[] = array(
+					'name' => $store['name'],
+					'href' => $this->url->link('customer/customer/login', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&store_id=' . $result['store_id'], true)
+				);
+			}
+			
 			$data['customers'][] = array(
 				'customer_id'    => $result['customer_id'],
 				'name'           => $result['name'],
@@ -383,6 +401,7 @@ class ControllerCustomerCustomer extends Controller {
 				'ip'             => $result['ip'],
 				'date_added'     => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'unlock'         => $unlock,
+				'store'          => $store_data,
 				'edit'           => $this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . $url, true)
 			);
 		}
@@ -506,10 +525,6 @@ class ControllerCustomerCustomer extends Controller {
 		$this->load->model('customer/customer_group');
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
-
-		$this->load->model('setting/store');
-
-		$data['stores'] = $this->model_setting_store->getStores();
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
@@ -1388,14 +1403,21 @@ class ControllerCustomerCustomer extends Controller {
 			} else {
 				$filter_email = '';
 			}
-
+			
+			if (isset($this->request->get['filter_affiliate'])) {
+				$filter_affiliate = $this->request->get['filter_affiliate'];
+			} else {
+				$filter_affiliate = '';
+			}
+			
 			$this->load->model('customer/customer');
 
 			$filter_data = array(
-				'filter_name'  => $filter_name,
-				'filter_email' => $filter_email,
-				'start'        => 0,
-				'limit'        => 5
+				'filter_name'      => $filter_name,
+				'filter_email'     => $filter_email,
+				'filter_affiliate' => $filter_affiliate,
+				'start'            => 0,
+				'limit'            => 5
 			);
 
 			$results = $this->model_customer_customer->getCustomers($filter_data);

@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-primary"><i class="fa fa-opencart"></i></button>
+        <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-warning"><i class="fa fa-cog"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
@@ -25,7 +25,7 @@
       <div class="panel-body">
         <div class="row extension-info">
           <div class="col-sm-8">{% if banner %}
-            <div id="banner" class="well text-center"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></div>
+            <div id="banner" class="text-center thumbnail"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></div>
             {% endif %}
             <div class="row thumbnails">
               {% for image in images %}<div class="col-xs-4 col-sm-2"><a href="{{ image.popup }}" class="thumbnail"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="img-responsive" /></a></div>{% endfor %}
@@ -41,7 +41,7 @@
               <div id="tab-documentation" class="tab-pane">{{ documentation }}</div>
               <div id="tab-download" class="tab-pane">
                 <fieldset>
-                  <legend>Progress</legend>
+                  <legend>{{ text_progress }}</legend>
                   <div id="progress">
                     <div class="progress">
                       <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
@@ -51,12 +51,12 @@
                   <hr />
                 </fieldset>
                 <fieldset>
-                  <legend>Available Installs</legend>
+                  <legend>{{ text_available }}</legend>
                   <table class="table table-bordered">
                     <thead>
-                      <th>Download Name</th>
-                      <th>Date Added</th>
-                      <th class="text-right">Action</th>
+                      <th>{{ text_name }}</th>
+                      <th>{{ text_date_added }}</th>
+                      <th class="text-right">{{ text_action }}</th>
                     </thead>
                     <tbody>
                     {% if downloads %}
@@ -86,7 +86,7 @@
                 <fieldset>
                   <legend>{{ text_comment_add }}</legend>
                   <div class="form-group">
-                    <textarea name="comment" rows="5" placeholder="Write your comment here..." id="input-comment" class="form-control"></textarea>
+                    <textarea name="comment" rows="5" placeholder="{{ text_write }}" id="input-comment" class="form-control"></textarea>
                   </div>
                   <div class="text-right">
                     <button type="button" id="button-comment" class="btn btn-primary">{{ button_comment }}</button>
@@ -102,21 +102,21 @@
           </div>
           <div class="col-sm-4">
             <div id="buy" class="well">{% if license == '1' and not purchased %}
-              <button id="button-buy" class="btn btn-success btn-lg btn-block">Buy</button>
+              <button id="button-buy" class="btn btn-success btn-lg btn-block">{{ button_purchase }}</button>
               {% endif %}
               <div id="price" class="row">
                 <div class="col-xs-5"><strong>{{ text_price }}</strong></div>
                 <div class="col-xs-7 text-right">{% if license %}
                   {{ price }}
                   {% else %}
-                  Free
+                  {{ text_free }}
                   {% endif %}</div>
               </div>
               <hr>
               <ul class="list-check">
-                <li>Developed by OpenCart Partner</li>
-                <li>12 Months Free Support</li>
-                <li>Documentation Included</li>
+                <li>{{ text_partner }}</li>
+                <li>{{ text_support }}</li>
+                <li>{{ text_documentation }}</li>
               </ul>
               <hr>
               <div class="row">

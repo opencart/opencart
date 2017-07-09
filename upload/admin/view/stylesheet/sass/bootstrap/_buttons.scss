@@ -66,32 +66,27 @@ a.btn {
 // --------------------------------------------------
 
 .btn-default {
-  @include button-variant($btn-default-color, $btn-default-bg, $btn-default-bg-lighter, $btn-default-border);
+  @include button-variant($btn-default-color, $btn-default-bg, $btn-default-border);
 }
 .btn-primary {
-  @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-bg-lighter, $btn-primary-border);
+  @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
 }
 // Success appears as green
 .btn-success {
-  @include button-variant($btn-success-color, $btn-success-bg, $btn-success-bg-lighter, $btn-success-border);
+  @include button-variant($btn-success-color, $btn-success-bg, $btn-success-border);
 }
 // Info appears as blue-green
 .btn-info {
-  @include button-variant($btn-info-color, $btn-info-bg, $btn-info-bg-lighter, $btn-info-border);
+  @include button-variant($btn-info-color, $btn-info-bg, $btn-info-border);
 }
 // Warning appears as orange
 .btn-warning {
-  @include button-variant($btn-warning-color, $btn-warning-bg, $btn-warning-bg-lighter, $btn-warning-border);
+  @include button-variant($btn-warning-color, $btn-warning-bg, $btn-warning-border);
 }
 // Danger and error appear as red
 .btn-danger {
-  @include button-variant($btn-danger-color, $btn-danger-bg, $btn-danger-bg-lighter, $btn-danger-border);
+  @include button-variant($btn-danger-color, $btn-danger-bg, $btn-danger-border);
 }
-// Transparent dark color using in Marketplace
-.btn-ghost-dark {
-  @include button-variant($btn-ghost-dark-color, $btn-ghost-dark-bg, $btn-ghost-dark-bg-lighter, $btn-ghost-dark-border);
-}
-
 
 // Link buttons
 // -------------------------

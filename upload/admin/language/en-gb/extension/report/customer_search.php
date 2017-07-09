@@ -5,8 +5,7 @@ $_['heading_title']     = 'Customer Searches Report';
 // Text
 $_['text_extension']    = 'Extensions';
 $_['text_success']      = 'Success: You have modified customer searches report!';
-$_['text_edit']         = 'Edit Customer Searches Report';
-$_['text_filter']       = 'Customer Searches Filter';
+$_['text_filter']       = 'Filter';
 $_['text_guest']        = 'Guest';
 $_['text_customer']     = '<a href="%s">%s</a>';
 

@@ -89,6 +89,8 @@ class ModelUpgrade1009 extends Model {
 		// OPENCART_SERVER
 		$upgrade = true;
 		
+		$file = DIR_OPENCART . 'admin/config.php';
+		
 		$lines = file(DIR_OPENCART . 'admin/config.php');
 
 		foreach ($lines as $line) {
@@ -111,11 +113,114 @@ class ModelUpgrade1009 extends Model {
 				}
 			}
 
-			$file = fopen($file, 'w');
+			$handle = fopen($file, 'w');
 
-			fwrite($file, $output);
+			fwrite($handle, $output);
 
-			fclose($file);
-		}	
+			fclose($handle);
+		}
+	
+		$files = glob(DIR_OPENCART . '{config.php,admin/config.php}', GLOB_BRACE);
+
+		foreach ($files as $file) {
+			// DIR_STORAGE
+			$upgrade = true;
+			
+			$lines = file($file);
+	
+			foreach ($lines as $line) {
+				if (strpos(strtoupper($line), 'DIR_STORAGE') !== false) {
+					$upgrade = false;
+	
+					break;
+				}
+			}
+	
+			if ($upgrade) {
+				$output = '';
+	
+				foreach ($lines as $line_id => $line) {
+					if (strpos($line, 'DIR_IMAGE') !== false) {
+						$output .= $line . "\n\n";
+						$output .= 'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');' . "\n";
+					} else {
+						$output .= $line;
+					}
+				}
+	
+				$file = fopen($file, 'w');
+	
+				fwrite($file, $output);
+	
+				fclose($file);
+			}
+			
+			// DIR_SESSION
+			$upgrade = true;
+	
+			$lines = file($file);
+			
+			foreach ($lines as $line) {
+				if (strpos(strtoupper($line), 'DIR_SESSION') !== false) {
+					$upgrade = false;
+	
+					break;
+				}
+			}
+	
+			if ($upgrade) {
+				$output = '';
+	
+				foreach ($lines as $line_id => $line) {
+					if (strpos($line, 'DIR_MODIFICATION') !== false) {
+						$output .= $line . "\n\n";
+						$output .= 'define(\'DIR_SESSION\', DIR_STORAGE . \'session/\');' . "\n";
+					} else {
+						$output .= $line;
+					}
+				}
+	
+				$handle = fopen($file, 'w');
+	
+				fwrite($handle, $output);
+	
+				fclose($handle);
+			}
+			
+			$replace = array(
+				'DIR_CACHE'        => 'cache',
+				'DIR_DOWNLOAD'     => 'download',
+				'DIR_LOGS'         => 'logs',
+				'DIR_MODIFICATION' => 'modification',
+				'DIR_SESSION'      => 'session',
+				'DIR_UPLOAD'       => 'upload'
+			);
+
+			$lines = file($file);
+			
+			$output = '';
+				
+			foreach ($lines as $line_id => $line) {
+				$status = false;
+				
+				foreach ($replace as $key => $value) {
+					if (strpos($line, $key) !== false) {
+						$status = true;
+					}
+				}
+				
+				if ($status) {
+					$output .= 'define(\'' . $key . '\', DIR_STORAGE . \'' . $value . '/\');' . "\n";
+				} else {
+					$output .= $line;
+				}
+			}
+
+			$handle = fopen($file, 'w');
+
+			fwrite($handle, $output);
+
+			fclose($handle);
+		}
 	}
 }

@@ -171,16 +171,6 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			$success = false;
 		}
 
-
-		// nonce only =
-			// new payment option
-			// 3d secured vaulted card
-		// nonce and token = vaulted card and cvv type nonce (verify CVV for stored card)
-		// token only = existing card/paypal, no cvv or 3ds check
-
-
-
-
 		if (isset($this->request->post['payment_method_token'])) {
 			$payment_method_token = $this->request->post['payment_method_token'];
 		} else {
@@ -767,6 +757,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$this->load->language('checkout/cart');
 
 		$this->load->model('tool/image');
+		$this->load->model('extension/payment/pp_braintree');
 
 		// Coupon
 		if (isset($this->request->post['coupon']) && $this->validateCoupon()) {
@@ -891,15 +882,12 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 			// Display prices
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-				$price = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+				$unit_price = $this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));
+
+				$price = $this->currency->format($unit_price, $this->session->data['currency']);
+				$total = $this->currency->format($unit_price * $product['quantity'], $this->session->data['currency']);
 			} else {
 				$price = false;
-			}
-
-			// Display prices
-			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-				$total = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']);
-			} else {
 				$total = false;
 			}
 
@@ -943,7 +931,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 				if (!empty($results)) {
 					foreach ($results as $result) {
-						if ($this->config->get($result['code'] . '_status')) {
+						if ($this->config->get('shipping_' . $result['code'] . '_status')) {
 							$this->load->model('extension/shipping/' . $result['code']);
 
 							$quote = $this->{'model_extension_shipping_' . $result['code']}->getQuote($shipping_address);
@@ -1016,13 +1004,13 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			$results = $this->model_setting_extension->getExtensions('total');
 
 			foreach ($results as $key => $value) {
-				$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
+				$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
 			}
 
 			array_multisort($sort_order, SORT_ASC, $results);
 
 			foreach ($results as $result) {
-				if ($this->config->get($result['code'] . '_status')) {
+				if ($this->config->get('total_' . $result['code'] . '_status')) {
 					$this->load->model('extension/total/' . $result['code']);
 
 					// We have to put the totals in an array so that they pass by reference.
@@ -1064,8 +1052,11 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 		$results = $this->model_setting_extension->getExtensions('payment');
 
+		$this->model_extension_payment_pp_braintree->log("Payment methods returned based on new data");
+		$this->model_extension_payment_pp_braintree->log($results);
+
 		foreach ($results as $result) {
-			if ($this->config->get($result['code'] . '_status')) {
+			if ($this->config->get('payment_' . $result['code'] . '_status')) {
 				$this->load->model('extension/payment/' . $result['code']);
 
 				$method = $this->{'model_extension_payment_' . $result['code']}->getMethod($payment_address, $total);
@@ -1084,7 +1075,11 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 		array_multisort($sort_order, SORT_ASC, $method_data);
 
+		$this->model_extension_payment_pp_braintree->log("Payment methods again - sorted");
+		$this->model_extension_payment_pp_braintree->log($method_data);
+
 		if (!isset($method_data['pp_braintree'])) {
+			$this->model_extension_payment_pp_braintree->log("Braintree module was no longer an option. Check configured zones or minimum order amount based on user address info");
 			$this->session->data['error_warning'] = $this->language->get('error_unavailable');
 			$this->response->redirect($this->url->link('checkout/checkout', '', true));
 		}
@@ -1216,13 +1211,13 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			$results = $this->model_setting_extension->getExtensions('total');
 
 			foreach ($results as $key => $value) {
-				$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
+				$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
 			}
 
 			array_multisort($sort_order, SORT_ASC, $results);
 
 			foreach ($results as $result) {
-				if ($this->config->get($result['code'] . '_status')) {
+				if ($this->config->get('total_' . $result['code'] . '_status')) {
 					$this->load->model('extension/total/' . $result['code']);
 
 					// We have to put the totals in an array so that they pass by reference.
@@ -1401,8 +1396,8 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			$data['products'] = $product_data;
 			$data['vouchers'] = $voucher_data;
 			$data['totals'] = $totals;
-			$data['comment'] = $this->session->data['comment'];
 			$data['total'] = $total;
+			$data['comment'] = '';
 
 			if (isset($this->request->cookie['tracking'])) {
 				$data['tracking'] = $this->request->cookie['tracking'];

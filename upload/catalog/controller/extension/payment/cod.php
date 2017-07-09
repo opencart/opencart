@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionPaymentCod extends Controller {
 	public function index() {
-		return $this->load->view('extension/payment/cod', $data);
+		return $this->load->view('extension/payment/cod');
 	}
 
 	public function confirm() {

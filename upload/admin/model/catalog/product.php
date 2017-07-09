@@ -112,10 +112,12 @@ class ModelCatalogProduct extends Model {
 		}
 		
 		// SEO URL
-		if (isset($data['product_seo'])) {
-			foreach ($data['product_seo'] as $product_seo) {
-				if ($product_seo['keyword']) {
-					$this->db->query("INSERT INTO " . DB_PREFIX . "seo_url SET store_id = '" . (int)$product_seo['store_id'] . "', language_id = '" . (int)$product_seo['language_id'] . "', query = 'product_id=" . (int)$product_id . "', keyword = '" . $this->db->escape($product_seo['keyword']) . "'");
+		if (isset($data['product_seo_url'])) {
+			foreach ($data['product_seo_url'] as $store_id => $language) {
+				foreach ($language as $language_id => $keyword) {
+					if (trim($keyword)) {
+						$this->db->query("INSERT INTO " . DB_PREFIX . "seo_url SET store_id = '" . (int)$store_id . "', language_id = '" . (int)$language_id . "', query = 'product_id=" . (int)$product_id . "', keyword = '" . $this->db->escape($keyword) . "'");
+					}
 				}
 			}
 		}
@@ -270,10 +272,12 @@ class ModelCatalogProduct extends Model {
 		// SEO URL
 		$this->db->query("DELETE FROM " . DB_PREFIX . "seo_url WHERE query = 'product_id=" . (int)$product_id . "'");
 		
-		if (isset($data['product_seo'])) {
-			foreach ($data['product_seo'] as $product_seo) {
-				if ($product_seo['keyword']) {
-					$this->db->query("INSERT INTO " . DB_PREFIX . "seo_url SET store_id = '" . (int)$product_seo['store_id'] . "', language_id = '" . (int)$product_seo['language_id'] . "', query = 'product_id=" . (int)$product_id . "', keyword = '" . $this->db->escape($product_seo['keyword']) . "'");
+		if (isset($data['product_seo_url'])) {
+			foreach ($data['product_seo_url']as $store_id => $language) {
+				foreach ($language as $language_id => $keyword) {
+					if (trim($keyword)) {
+						$this->db->query("INSERT INTO " . DB_PREFIX . "seo_url SET store_id = '" . (int)$store_id . "', language_id = '" . (int)$language_id . "', query = 'product_id=" . (int)$product_id . "', keyword = '" . $this->db->escape($keyword) . "'");
+					}
 				}
 			}
 		}
@@ -584,7 +588,19 @@ class ModelCatalogProduct extends Model {
 
 		return $product_store_data;
 	}
+	
+	public function getProductSeoUrls($product_id) {
+		$product_seo_url_data = array();
+		
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE query = 'product_id=" . (int)$product_id . "'");
 
+		foreach ($query->rows as $result) {
+			$product_seo_url_data[$result['store_id']][$result['language_id']] = $result['keyword'];
+		}
+
+		return $product_seo_url_data;
+	}
+	
 	public function getProductLayouts($product_id) {
 		$product_layout_data = array();
 

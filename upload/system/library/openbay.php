@@ -6,7 +6,7 @@ final class Openbay {
 	private $logging = 1;
 
 	public function __construct($registry) {
-		// OpenBay Pro main class.
+		// OpenBay Pro
 		$this->registry = $registry;
 
 		if ($this->db != null) {
@@ -16,7 +16,7 @@ final class Openbay {
 				$class = '\openbay\\'. ucfirst($market);
 
 				$this->{$market} = new $class($registry);
-			}			
+			}
 		}
 
 		$this->logger = new \Log('openbay.log');
@@ -39,12 +39,22 @@ final class Openbay {
 		}
 	}
 
-	public function encrypt($value, $key, $iv) {
-		return strtr(base64_encode(openssl_encrypt(json_encode($value), 'aes-128-cbc', hash('sha256', hex2bin($key), true), 0, hex2bin($iv))), '+/=', '-_,');
+	public function encrypt($value, $key, $iv, $json = true) {
+		if ($json == true) {
+		    $value = json_encode($value);
+        }
+
+	    return strtr(base64_encode(openssl_encrypt($value, 'aes-128-cbc', hash('sha256', hex2bin($key), true), 0, hex2bin($iv))), '+/=', '-_,');
 	}
 
-	public function decrypt($value, $key, $iv) {
-		return json_decode(trim(openssl_decrypt(base64_decode(strtr($value, '-_,', '+/=')), 'aes-128-cbc', hash('sha256', hex2bin($key), true), 0, hex2bin($iv))), true);
+	public function decrypt($value, $key, $iv, $json = true) {
+		$response = trim(openssl_decrypt(base64_decode(strtr($value, '-_,', '+/=')), 'aes-128-cbc', hash('sha256', hex2bin($key), true), 0, hex2bin($iv)));
+
+		if ($json == true) {
+		    $response =  json_decode($response, true);
+        }
+
+        return $response;
 	}
 
 	private function getInstalled() {

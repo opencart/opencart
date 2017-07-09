@@ -7,8 +7,14 @@ $_['site_ssl']          = HTTP_SERVER;
 $_['language_default']  = 'en-gb';
 $_['language_autoload'] = array('en-gb');
 
+// Session
+$_['session_engine']     = 'file';
+$_['session_autostart']  = true;
+$_['session_name']       = 'OCSESSID';
+
 // Template
 $_['template_engine']   = 'twig';
+$_['template_cache']    = true;
 
 // Actions
 $_['action_default']    = 'install/step_1';

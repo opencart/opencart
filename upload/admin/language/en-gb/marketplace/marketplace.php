@@ -24,7 +24,6 @@ $_['text_paid']          = 'Paid';
 $_['text_purchased']     = 'Purchased';
 $_['text_date_modified'] = 'Date Modified';
 $_['text_date_added']    = 'Date Added';
-$_['text_name']          = 'Name';
 $_['text_rating']        = 'Rating';
 $_['text_reviews']       = 'reviews';
 $_['text_compatibility'] = 'Compatibility';
@@ -37,12 +36,15 @@ $_['text_sales']         = 'Sales';
 $_['text_comment']       = 'Comments';
 $_['text_download']      = 'Downloading';
 $_['text_install']       = 'Installing';
-$_['text_comment']       = 'Comment';
 $_['text_comment_add']   = 'Leave your comment';
 $_['text_write']         = 'Write your comment here..';
 $_['text_purchase']      = 'Please confirm who you are!';
 $_['text_pin']           = 'Please enter your 4 digit PIN number. This PIN number is to protect your account.';
 $_['text_secure']        = 'Do not give your PIN to any one including developers. If you require an extension seller to install an extension for you then you should email them the required extension.';
+$_['text_name']          = 'Download Name';
+$_['text_progress']      = 'Progress';
+$_['text_available']     = 'Available Installs';
+$_['text_action']        = 'Action';
 
 // Entry
 $_['entry_pin']          = 'PIN';

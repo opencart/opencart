@@ -173,7 +173,7 @@ class ControllerExtensionDashboardChart extends Controller {
 				}
 				break;
 			case 'year':
-				$results = $this->model_extension_dashboard_sale->getTotalOrdersByYear();
+				$results = $this->model_extension_dashboard_chart->getTotalOrdersByYear();
 
 				foreach ($results as $key => $value) {
 					$json['order']['data'][] = array($key, $value['total']);

@@ -3,10 +3,14 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-seo').toggleClass('hidden-sm');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
+      <div class="btn-toolbar" role="toolbar" aria-label="...">
+      <div class="btn-group" role="group" aria-label="...">
+        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-seo').toggleClass('hidden-sm hidden-xs');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
+        </div>
+      <div class="btn-group" role="group" aria-label="...">
         <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
         <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-url-alias').submit() : false;"><i class="fa fa-trash-o"></i></button>
-      </div>
+      </div></div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -26,7 +30,7 @@
     </div>
     {% endif %}
     <div class="row">
-      <div id="filter-seo" class="col-md-3 col-md-push-9 col-sm-12 hidden-sm">
+      <div id="filter-seo" class="col-md-3 col-md-push-9 col-sm-12 hidden-sm hidden-xs">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
@@ -62,73 +66,13 @@
               <label class="control-label" for="input-language">{{ entry_language }}</label>
               <select name="filter_language_id" id="input-language" class="form-control">
                 <option value=""></option>
-                
-                
-                  
-                
-              
-              
-              
-              
-              
-                  
                   {% for language in languages %}
                   {% if language.language_id == filter_language_id %}
-                  
-                  
-              
-              
-              
-              
-              
-                
-                  
-                
                 <option value="{{ language.language_id }}" selected="selected">{{ language.name }}</option>
-                
-                
-                  
-                
-              
-              
-              
-              
-              
-                  
                   {% else %}
-                  
-                  
-              
-              
-              
-              
-              
-                
-                  
-                
                 <option value="{{ language.language_id }}">{{ language.name }}</option>
-                
-                
-                  
-                
-              
-              
-              
-              
-              
-                  
                   {% endif %}
                   {% endfor %}
-                
-                
-            
-            
-            
-            
-            
-              
-                
-              
               </select>
             </div>
             <div class="text-right">
@@ -156,12 +100,11 @@
                       <td class="text-right">{{ column_action }}</td>
                     </tr>
                   </thead>
-                  <tbody>
-                  
+                  <tbody data-link="row" class="rowlink">
                   {% if seo_urls %}
                   {% for seo_url in seo_urls %}
                   <tr>
-                    <td class="text-center">{% if seo_url.seo_url_id in selected %}
+                    <td class="text-center rowlink-skip"><a href="{{ seo_url.edit }}"></a>{% if seo_url.seo_url_id in selected %}
                       <input type="checkbox" name="selected[]" value="{{ seo_url.seo_url_id }}" checked="checked" />
                       {% else %}
                       <input type="checkbox" name="selected[]" value="{{ seo_url.seo_url_id }}" />

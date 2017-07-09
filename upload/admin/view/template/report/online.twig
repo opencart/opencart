@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-online').toggleClass('hidden-sm');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
+        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-online').toggleClass('hidden-sm hidden-xs');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
         <a href="{{ refresh }}" data-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-default"><i class="fa fa-refresh"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
@@ -15,7 +15,7 @@
   </div>
   <div class="container-fluid">
     <div class="row">
-      <div id="filter-online" class="col-md-3 col-md-push-9 col-sm-12 hidden-sm">
+      <div id="filter-online" class="col-md-3 col-md-push-9 col-sm-12 hidden-sm hidden-xs">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
@@ -58,9 +58,9 @@
                 {% if customers %}
                 {% for customer in customers %}
                 <tr>
-                  <td class="text-left"><a href="http://whatismyipaddress.com/ip/{{ customer.ip }}" target="_blank">{{ customer.ip }}</a></td>
+                  <td class="text-left"><a href="//whatismyipaddress.com/ip/{{ customer.ip }}" target="_blank">{{ customer.ip }}</a></td>
                   <td class="text-left">{{ customer.customer }}</td>
-                  <td class="text-left"><a href="{{ customer.url }}" target="_blank">{{ customer.url|split('', 30)|join('<br/>
+                  <td class="text-left"><a href="{{ customer.url }}" target="_blank" rel="noreferrer">{{ customer.url|split('', 30)|join('<br/>
                     ') }}</a></td>
                   <td class="text-left">{% if customer.referer %}<a href="{{ customer.referer }}" target="_blank">{{ customer.referer|split('', 30)|join('<br/>
                     ') }}</a>{% endif %}</td>

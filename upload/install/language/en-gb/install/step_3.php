@@ -9,6 +9,7 @@ $_['text_db_administration'] = '2. Please enter a username and password for the 
 $_['text_mysqli']            = 'MySQLi';
 $_['text_mysql']             = 'MySQL';
 $_['text_mpdo']              = 'mPDO';
+$_['text_pgsql']             = 'PostgreSQL';
 
 // Entry
 $_['entry_db_driver']        = 'DB Driver';

@@ -13,22 +13,30 @@ class Event {
 	}
 
 	public function register($trigger, Action $action, $priority = 0) {
-		if (!isset($this->data[$trigger]) || !isset($this->data[$trigger][$priority])) {
-			$this->data[$trigger][$priority] = $action;
-		} else {
-			$this->data[$trigger] = array_splice($this->data[$trigger], $priority, 0, array($action));	
+		$this->data[] = array(
+			'trigger'  => $trigger,
+			'action'   => $action,
+			'priority' => $priority
+		);
+		
+		$sort_order = array();
+
+		foreach ($this->data as $key => $value) {
+			$sort_order[$key] = $value['priority'];
 		}
+
+		array_multisort($sort_order, SORT_ASC, $this->data);	
 	}
 	
 	public function trigger($event, array $args = array()) {
-		foreach ($this->data as $trigger => $actions) {
-			if (preg_match('/^' . str_replace(array('\*', '\?'), array('.*', '.'), preg_quote($trigger, '/')) . '/', $event)) {
-				foreach ($actions as $action) {
-					$result = $action->execute($this->registry, $args);
+		$test = array();
+		
+		foreach ($this->data as $value) {
+			if (preg_match('/^' . str_replace(array('\*', '\?'), array('.*', '.'), preg_quote($value['trigger'], '/')) . '/', $event)) {
+				$result = $value['action']->execute($this->registry, $args);
 
-					if (!is_null($result) && !($result instanceof Exception)) {
-						return $result;
-					}
+				if (!is_null($result) && !($result instanceof Exception)) {
+					return $result;
 				}
 			}
 		}

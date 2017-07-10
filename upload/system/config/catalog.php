@@ -51,12 +51,12 @@ $_['action_event'] = array(
 	'view/*/before' => array(
 		999  => 'event/language',
 		1000 => 'event/theme'
-	),	
+	),
 	'language/*/after' => array(
 		'event/translation'
 	),
-	//'controller/*/before' => array(
-	//	'event/debug/before'
+	//'view/*/before' => array(
+	//	1000  => 'event/debug/before'
 	//),
 	//'controller/*/after'  => array(
 	//	'event/debug/after'

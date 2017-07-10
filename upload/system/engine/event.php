@@ -13,21 +13,11 @@ class Event {
 	}
 
 	public function register($trigger, Action $action, $priority = 0) {
-		$this->data[$trigger][] = $action;
-		
-		/*
-		if (!isset($this->data[$trigger])) { 
-			$this->data[$trigger] = array();
-		}
-		
-		if ($priority > sizeof($this->data[$trigger])) {
-		
+		if (!isset($this->data[$trigger]) || !isset($this->data[$trigger][$priority])) {
+			$this->data[$trigger][$priority] = $action;
 		} else {
-			$this->data[$trigger][$priority] = 
+			$this->data[$trigger] = array_splice($this->data[$trigger], $priority, 0, array($action));	
 		}
-		
-		$this->data[$trigger] = array_splice($this->data[$trigger], $priority, 0, $action);
-		*/
 	}
 	
 	public function trigger($event, array $args = array()) {

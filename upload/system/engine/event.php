@@ -29,8 +29,6 @@ class Event {
 	}
 	
 	public function trigger($event, array $args = array()) {
-		$test = array();
-		
 		foreach ($this->data as $value) {
 			if (preg_match('/^' . str_replace(array('\*', '\?'), array('.*', '.'), preg_quote($value['trigger'], '/')) . '/', $event)) {
 				$result = $value['action']->execute($this->registry, $args);
@@ -42,15 +40,19 @@ class Event {
 		}
 	}
 
-	public function unregister($trigger, $route = '') {
-		foreach ($this->data[$trigger] as $key => $action) {
-			if ($action->getId() == $route) {
-				unset($this->data[$trigger][$key]);
+	public function unregister($trigger, $route) {
+		foreach ($this->data as $key => $value) {
+			if ($trigger == $value['trigger'] && $value['action']->getId() == $route) {
+				unset($this->data[$key]);
 			}
-		}
+		}			
 	}
 	
 	public function clear($trigger) {
-		unset($this->data[$trigger]);
+		foreach ($this->data as $key => $value) {
+			if ($trigger == $value['trigger']) {
+				unset($this->data[$key]);
+			}
+		}
 	}	
 }

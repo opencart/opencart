@@ -3,7 +3,7 @@ class Controller3rdPartyMaxmind extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('3rd_party/maxmind');
+		$this->load->language('3rd_party/maxmind');
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 

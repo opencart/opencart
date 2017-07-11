@@ -36,7 +36,7 @@ class ControllerReportReport extends Controller {
 		// Add all the modules which have multiple settings for each module
 		foreach ($extensions as $code) {
 			if ($this->config->get('report_' . $code . '_status') && $this->user->hasPermission('access', 'extension/report/' . $code)) {
-				$this->language->load('extension/report/' . $code, 'extension');
+				$this->load->language('extension/report/' . $code, 'extension');
 				
 				$data['reports'][] = array(
 					'text'       => $this->language->get('extension')->get('heading_title'),

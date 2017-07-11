@@ -316,7 +316,7 @@ class ControllerSettingStore extends Controller {
 		$extensions = $this->model_setting_extension->getInstalled('theme');
 
 		foreach ($extensions as $code) {
-			$this->language->load('extension/theme/' . $code, 'extension');
+			$this->load->language('extension/theme/' . $code, 'extension');
 
 			$data['themes'][] = array(
 				'text'  => $this->language->get('extension')->get('heading_title'),

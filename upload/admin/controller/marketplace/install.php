@@ -317,6 +317,8 @@ class ControllerMarketplaceInstall extends Controller {
 						}
 	
 						if (!$json) {
+							
+							
 							$modification_data = array(
 								'extension_install_id' => $extension_install_id,
 								'name'                 => $name,

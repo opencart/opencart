@@ -239,6 +239,7 @@ a:hover, a:focus {
 	border-bottom: 1px solid #2b3642;
 }
 #menu > li > a {
+	font-size: 14px;
 	color: #b3cbdd;
 	padding-left: 20px;
 	border-bottom: 0px solid #585858;
@@ -249,6 +250,7 @@ a:hover, a:focus {
 #menu > li > a > i {
 	font-size: 16px;
 	width: 18px;
+	margin-right: 5px;
 }
 #menu > li.active > a {
 	color: #0b91d2;

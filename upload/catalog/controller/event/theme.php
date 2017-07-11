@@ -42,4 +42,9 @@ class ControllerEventTheme extends Controller {
 			$this->config->set('template_directory', 'default/template/');
 		}
 	}
+	
+	// Needs to be before 
+	public function cache(&$route, &$args) {
+		
+	}
 }

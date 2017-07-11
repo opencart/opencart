@@ -1,4 +1,9 @@
 <?php
+ /**
+  * @author My Name
+  * @author My Name <my.name@example.com>
+  */
+
 class Cache {
 	private $adaptor;
 

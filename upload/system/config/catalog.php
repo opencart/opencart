@@ -49,7 +49,8 @@ $_['action_event'] = array(
 		'event/language/after'
 	),	
 	'view/*/before' => array(
-		999  => 'event/language',
+		998  => 'event/language',
+		999  => 'event/theme/override',
 		1000 => 'event/theme'
 	),
 	'language/*/after' => array(

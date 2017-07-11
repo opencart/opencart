@@ -154,6 +154,44 @@ $(document).ready(function() {
 			$element.popover('destroy');
 		});
 	});
+
+	$('.btn-group label:not(.active)').click(function() {
+		var label = $(this);
+		//var input = $('#' + label.attr('for'));
+		var input = $(this).children();
+
+		if (!input.prop('checked')) {
+				
+			label.closest('[data-toggle="buttons"]').find('label.active').removeClass('active btn-success btn-danger btn-primary').addClass('btn-default');
+
+			if (label.closest('[data-toggle="buttons"]').hasClass('btn-group')) {
+				if (input.val() == '0') {
+					label.removeClass('btn-default').addClass('active btn-danger');
+				} else if (input.val() == 1) {
+					label.removeClass('btn-default').addClass('active btn-success');
+				} else {
+					label.removeClass('btn-default').addClass('active btn-primary');
+				} 
+			}
+			input.prop('checked', true);
+			input.trigger('change');
+		}
+	});
+
+	$('[data-toggle="buttons"] label input[checked=checked]').each(function() {
+		var $self  = $(this);
+		var attrId = $self.attr('id');
+		if ($self.parent().parent().hasClass('btn-group')) {
+			if ($self.val() == 1) {
+				$($self.parent()).removeClass('btn-default').addClass('active btn-success');
+			} else if ($self.val() == '0') {
+				$($self.parent()).removeClass('btn-default').addClass('active btn-danger');
+			} else {
+				$($self.parent()).removeClass('btn-default').addClass('active btn-primary');
+			} 
+		} 
+	});
+
 });
 
 // Autocomplete */

@@ -21,7 +21,7 @@
         {% endif %}
         {% if description %}
         <div class="col-sm-10">{{ description }}</div>
-        {% endif %} </div>
+        {% endif %}</div>
       <hr>
       {% endif %}
       {% if categories %}
@@ -37,15 +37,15 @@
         </div>
       </div>
       {% else %}
-      <div class="row"> {% for category in categories|batch((categories|length / 4)|round(1, 'ceil')) %}
+      <div class="row">{% for category in categories|batch((categories|length / 4)|round(1, 'ceil')) %}
         <div class="col-sm-3">
           <ul>
-            {% for category in categories %}
-            <li><a href="{{ category.href }}">{{ category.name }}</a></li>
+            {% for child in category %}
+            <li><a href="{{ child.href }}">{{ child.name }}</a></li>
             {% endfor %}
           </ul>
         </div>
-        {% endfor %} </div>
+        {% endfor %}</div>
       <br />
       {% endif %}
       {% endif %}

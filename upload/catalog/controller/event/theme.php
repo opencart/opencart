@@ -15,7 +15,7 @@ class ControllerEventTheme extends Controller {
 			
 			if ($this->config->get('template_cache')) {
 				$config['cache'] = DIR_CACHE;
-			}		
+			}
 			
 			// initialize Twig environment
 			$twig = new \Twig_Environment($loader, $config);

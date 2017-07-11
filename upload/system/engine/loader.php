@@ -21,7 +21,7 @@ final class Loader {
 			$output = $result;
 		} else {
 			$action = new Action($route);
-			$output = $action->execute($this->registry, array(&$data));			
+			$output = $action->execute($this->registry, array(&$data));
 		}
 		
 		// Trigger the post events
@@ -69,8 +69,11 @@ final class Loader {
 		// Keep the original trigger
 		$trigger = $route;
 		
+		// Template contents. Not the output!
+		$template = '';
+		
 		// Trigger the pre events
-		$result = $this->registry->get('event')->trigger('view/' . $trigger . '/before', array(&$route, &$data));
+		$result = $this->registry->get('event')->trigger('view/' . $trigger . '/before', array(&$route, &$data, &$template));
 		
 		// Make sure its only the last event that returns an output if required.
 		if ($result && !$result instanceof Exception) {

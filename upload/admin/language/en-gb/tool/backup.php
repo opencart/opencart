@@ -6,8 +6,12 @@ $_['heading_title']    = 'Backup &amp; Restore';
 $_['text_success']     = 'Success: You have successfully imported your database!';
 
 // Entry
-$_['entry_import']     = 'Import';
+$_['entry_progress']   = 'Progress';
 $_['entry_export']     = 'Export';
+
+// Tab
+$_['tab_backup']       = 'Backup';
+$_['tab_restore']      = 'Restore';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify Backup &amp; Restore!';

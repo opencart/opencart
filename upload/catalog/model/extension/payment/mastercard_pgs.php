@@ -249,7 +249,7 @@ class ModelExtensionPaymentMastercardPGS extends Model {
 		$payment_city = !empty($data['city']) ? $data['city'] : '';
 		$payment_company = !empty($data['company']) ? $data['company'] : '';
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_country_id`='" . (int)$payment_country_id . "', `payment_country`='" . $this->db->escape($payment_country) . "', `payment_zone_id`='" . (int)$payment_zone_id . "', `payment_zone`='" . $this->db->escape($payment_zone) . "', `payment_postcode`='" . $this->db->escape($payment_postcode) . "', `payment_city`='" . $this->db->escape($payment_city) . "', `payment_address_1`='" . $this->db->escape($payment_address_1) . "', `payment_address_2`='" . $this->db->escape($payment_address_2) . "', `payment_company`='" . $this->db->escape($payment_company) . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_country_id`='" . (int)$payment_country_id . "', `payment_country`='" . $this->db->escape($payment_country) . "', `payment_zone_id`='" . (int)$payment_zone_id . "', `payment_zone`='" . $this->db->escape($payment_zone) . "', `payment_postcode`='" . $this->db->escape($payment_postcode) . "', `payment_city`='" . $this->db->escape($payment_city) . "', `payment_address_1`='" . $this->db->escape($payment_address_1) . "', `payment_address_2`='" . $this->db->escape($payment_address_2) . "', `payment_company`='" . $this->db->escape($payment_company) . "' WHERE `order_id`='" . (int)$order_id . "'");
 	}
 
 	public function addOrderHistory($order_history) {

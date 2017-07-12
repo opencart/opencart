@@ -1,9 +1,26 @@
 <?php
+/**
+ * @package		OpenCart
+ * @author		Daniel Kerr
+ * @copyright	Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
+ * @license		https://opensource.org/licenses/GPL-3.0
+ * @link		https://www.opencart.com
+*/
+
+/**
+* Session class
+*/
 class Session {
 	protected $adaptor;
 	protected $session_id;
 	public $data = array();
 
+	/**
+	 * Constructor
+	 *
+	 * @param	string	$file
+	 *
+ 	*/
 	public function __construct($adaptor, $registry = '') {
 		$class = 'Session\\' . $adaptor;
 		
@@ -21,10 +38,20 @@ class Session {
 		}	
 	}
 	
+	/**
+	 * Description
+	 *
+	 * @param	int		$level
+ 	*/	
 	public function getId() {
 		return $this->session_id;
 	}
-	
+
+	/**
+	 * Description
+	 *
+	 * @param	int		$level
+ 	*/	
 	public function start($session_id = '') {
 		if (!$session_id) {
 			if (function_exists('random_bytes')) {
@@ -44,11 +71,21 @@ class Session {
 		
 		return $session_id;
 	}
-
+	
+	/**
+	 * Description
+	 *
+	 * @param	int		$level
+ 	*/
 	public function close() {
 		$this->adaptor->write($this->session_id, $this->data);
 	}
 	
+	/**
+	 * Description
+	 *
+	 * @param	int		$level
+ 	*/	
 	public function __destroy() {
 		$this->adaptor->destroy($this->session_id);
 	}

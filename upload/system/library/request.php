@@ -1,11 +1,28 @@
 <?php
+/**
+ * @package		OpenCart
+ * @author		Daniel Kerr
+ * @copyright	Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
+ * @license		https://opensource.org/licenses/GPL-3.0
+ * @link		https://www.opencart.com
+*/
+
+/**
+* Request class
+*/
 class Request {
 	public $get = array();
 	public $post = array();
 	public $cookie = array();
 	public $files = array();
 	public $server = array();
-
+	
+	/**
+	 * Constructor
+	 *
+	 * @param	string	$file
+	 *
+ 	*/
 	public function __construct() {
 		$this->get = $this->clean($_GET);
 		$this->post = $this->clean($_POST);

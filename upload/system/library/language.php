@@ -1,13 +1,37 @@
 <?php
+/**
+ * @package		OpenCart
+ * @author		Daniel Kerr
+ * @copyright	Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
+ * @license		https://opensource.org/licenses/GPL-3.0
+ * @link		https://www.opencart.com
+*/
+
+/**
+* Language class
+*/
 class Language {
 	private $default = 'en-gb';
 	private $directory;
 	public $data = array();
-
+	
+	/**
+	 * Constructor
+	 *
+	 * @param	string	$file
+	 *
+ 	*/
 	public function __construct($directory = '') {
 		$this->directory = $directory;
 	}
-
+	
+	/**
+     * 
+     *
+     * @param	string	$sql
+	 * 
+	 * @return	array
+     */
 	public function get($key) {
 		return (isset($this->data[$key]) ? $this->data[$key] : $key);
 	}
@@ -16,10 +40,24 @@ class Language {
 		$this->data[$key] = $value;
 	}
 	
+	/**
+     * 
+     *
+     * @param	string	$sql
+	 * 
+	 * @return	array
+     */	
 	public function all() {
 		return $this->data;
 	}
 	
+	/**
+     * 
+     *
+     * @param	string	$sql
+	 * 
+	 * @return	array
+     */	
 	public function load($filename, $key = '') {
 		if (!$key) {
 			$_ = array();

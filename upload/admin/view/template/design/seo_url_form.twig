@@ -3,8 +3,9 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
+      <div class="btn-group" role="group" aria-label="...">
         <button type="submit" form="form-seo-url" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -46,7 +47,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-store">{{ entry_store }}</label>
             <div class="col-sm-10">
-              <select name="store_id" id="input-store" class="form-control">
+              <select name="store_id" id="input-store" class="selectpicker" data-width="100%">
                 {% for store in stores %}
                 {% if store.store_id == store_id %}
                 <option value="{{ store.store_id }}" selected="selected">{{ store.name }}</option>
@@ -60,7 +61,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-language">{{ entry_language }}</label>
             <div class="col-sm-10">
-              <select name="language_id" id="input-language" class="form-control">
+              <select name="language_id" id="input-language" class="selectpicker" data-width="100%">
                 {% for language in languages %}
                 {% if language.language_id == language_id %}
                 <option value="{{ language.language_id }}" selected="selected">{{ language.name }}</option>

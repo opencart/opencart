@@ -23,7 +23,7 @@
                 <h4 class="list-group-item-heading">{{ text_store }}</h4>
               </div>
               <div class="list-group-item">
-                <select name="store_id" class="form-control">
+                <select name="store_id" class="selectpicker" data-width="100%">
                   <option value="0">{{ text_default }}</option>
                   {% for store in stores %}
                   <option value="{{ store.store_id }}">{{ store.name }}</option>
@@ -68,9 +68,11 @@ $('select[name="store_id"]').on('change', function(e) {
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name="store_id"]').prop('disabled', true);
+			$('select').selectpicker('refresh');
 		},
 		complete: function() {
 			$('select[name="store_id"]').prop('disabled', false);
+			$('select').selectpicker('refresh');
 		},
 		success: function(json) {
 			html = '';
@@ -96,6 +98,7 @@ $('select[name="store_id"]').on('change', function(e) {
 });
 
 $('select[name="store_id"]').trigger('change');
+$('select').selectpicker('refresh');
 
 $('#path').on('click', 'a.directory', function(e) {
 	console.log($(node).attr('href'));

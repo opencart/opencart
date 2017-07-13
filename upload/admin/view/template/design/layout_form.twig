@@ -3,8 +3,9 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
+      <div class="btn-group" role="group" aria-label="...">
         <button type="submit" form="form-layout" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -48,7 +49,7 @@
                 {% set route_row = 0 %}
                 {% for layout_route in layout_routes %}
                 <tr id="route-row{{ route_row }}">
-                  <td class="text-left"><select name="layout_route[{{ route_row }}][store_id]" class="form-control">
+                  <td class="text-left"><select name="layout_route[{{ route_row }}][store_id]" class="selectpicker" data-width="100%">
                       <option value="0">{{ text_default }}</option>
                       {% for store in stores %}
                       {% if store.store_id == layout_route.store_id %}
@@ -88,7 +89,7 @@
                     {% if layout_module.position == 'column_left' %}
                     <tr id="module-row{{ module_row }}">
                       <td class="text-left"><div class="input-group">
-                          <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+                          <select name="layout_module[{{ module_row }}][code]" class="selectpicker" data-style="btn-sm btn-default" data-width="100%">
                             {% for extension in extensions %}
                             <optgroup label="{{ extension.name }}">
                             {% if not extension.module %}
@@ -123,7 +124,7 @@
                   <tfoot>
                     <tr>
                       <td class="text-left"><div class="input-group">
-                          <select class="form-control input-sm">
+                          <select class="selectpicker" data-style="btn-sm btn-default" data-width="100%">
                             <option value=""></option>
                             {% for extension in extensions %}
                             <optgroup label="{{ extension.name }}">
@@ -157,7 +158,7 @@
                     {% if layout_module.position == 'content_top' %}
                     <tr id="module-row{{ module_row }}">
                       <td class="text-left"><div class="input-group">
-                          <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+                          <select name="layout_module[{{ module_row }}][code]" class="selectpicker" data-style="btn-sm btn-default" data-width="100%">
                             {% for extension in extensions %}
                             <optgroup label="{{ extension.name }}">
                             {% if not extension.module %}
@@ -192,7 +193,7 @@
                   <tfoot>
                     <tr>
                       <td class="text-left"><div class="input-group">
-                          <select class="form-control input-sm">
+                          <select class="selectpicker" data-style="btn-sm btn-default" data-width="100%">
                             <option value=""></option>
                             {% for extension in extensions %}
                             <optgroup label="{{ extension.name }}">
@@ -224,7 +225,7 @@
                     {% if layout_module.position == 'content_bottom' %}
                     <tr id="module-row{{ module_row }}">
                       <td class="text-left"><div class="input-group">
-                          <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+                          <select name="layout_module[{{ module_row }}][code]" class="selectpicker" data-style="btn-sm btn-default" data-width="100%">
                             {% for extension in extensions %}
                             <optgroup label="{{ extension.name }}">
                             {% if not extension.module %}
@@ -259,7 +260,7 @@
                   <tfoot>
                     <tr>
                       <td class="text-left"><div class="input-group">
-                          <select class="form-control input-sm">
+                          <select class="selectpicker" data-style="btn-sm btn-default" data-width="100%">
                             <option value=""></option>
                             {% for extension in extensions %}
                             <optgroup label="{{ extension.name }}">
@@ -293,7 +294,7 @@
                     {% if layout_module.position == 'column_right' %}
                     <tr id="module-row{{ module_row }}">
                       <td class="text-left"><div class="input-group">
-                          <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+                          <select name="layout_module[{{ module_row }}][code]" class="selectpicker" data-style="btn-sm btn-default" data-width="100%">
                             {% for extension in extensions %}
                             <optgroup label="{{ extension.name }}">
                             {% if not extension.module %}
@@ -328,7 +329,7 @@
                   <tfoot>
                     <tr>
                       <td class="text-left"><div class="input-group">
-                          <select class="form-control input-sm">
+                          <select class="selectpicker" data-style="btn-sm btn-default" data-width="100%">
                             <option value=""></option>
                             {% for extension in extensions %}
                             <optgroup label="{{ extension.name }}">
@@ -361,7 +362,7 @@ var route_row = {{ route_row }};
 
 function addRoute() {
 	html  = '<tr id="route-row' + route_row + '">';
-	html += '  <td class="text-left"><select name="layout_route[' + route_row + '][store_id]" class="form-control">';
+	html += '  <td class="text-left"><select name="layout_route[' + route_row + '][store_id]" class="selectpicker" data-width="100%">';
 	html += '  <option value="0">{{ text_default }}</option>';
 	{% for store in stores %}
 	html += '<option value="{{ store.store_id }}">{{ store.name|escape('js') }}</option>';
@@ -372,7 +373,7 @@ function addRoute() {
 	html += '</tr>';
 	
 	$('#route tbody').append(html);
-	
+	$('.selectpicker').selectpicker('render');
 	route_row++;
 }
 
@@ -380,7 +381,7 @@ var module_row = {{ module_row }};
 
 function addModule(type) {
 	html  = '<tr id="module-row' + module_row + '">';
-    html += '  <td class="text-left"><div class="input-group"><select name="layout_module[' + module_row + '][code]" class="form-control input-sm">';
+    html += '  <td class="text-left"><div class="input-group"><select name="layout_module[' + module_row + '][code]" class="selectpicker" data-style="btn-sm btn-default" data-width="100%">';
 	{% for extension in extensions %}
 	html += '    <optgroup label="{{ extension.name|escape('js') }}">';
 	{% if not extension.module %}
@@ -407,7 +408,7 @@ function addModule(type) {
 	$('#module-' + type + ' tbody input[name*=\'sort_order\']').each(function(i, element) {
 		$(element).val(i);
 	});
-	
+	$('.selectpicker').selectpicker('render');
 	module_row++;
 }
 

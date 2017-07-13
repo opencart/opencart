@@ -3,8 +3,9 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
+      <div class="btn-group" role="group" aria-label="...">
         <button type="submit" form="form-translation" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -28,7 +29,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-store">{{ entry_store }}</label>
             <div class="col-sm-10">
-              <select name="store_id" id="input-store" class="form-control">
+              <select name="store_id" id="input-store" class="selectpicker" data-width="100%">
                 <option value="0">{{ text_default }}</option>
                 {% for store in stores %}
                 {% if store.store_id == store_id %}
@@ -43,7 +44,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-language">{{ entry_language }}</label>
             <div class="col-sm-10">
-              <select name="language_id" id="input-language" class="form-control">
+              <select name="language_id" id="input-language" class="selectpicker" data-width="100%">
                 {% for language in languages %}
                 {% if language.language_id == language_id %}
                 <option value="{{ language.language_id }}" selected="selected">{{ language.name }}</option>
@@ -57,7 +58,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-route">{{ entry_route }}</label>
             <div class="col-sm-10">
-              <select name="route" id="input-route" class="form-control">
+              <select name="route" id="input-route" class="selectpicker" data-live-search="true" data-width="100%">
                 {% if route %}
                 <option value="{{ route }}" selected="selected">{{ route }}</option>
                 {% endif %}
@@ -67,11 +68,11 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-key">{{ entry_key }}</label>
             <div class="col-sm-10">
-              <select name="key" id="input-key" class="form-control">
+              <select name="key" id="input-key" class="selectpicker" data-live-search="true" data-width="100%">
                 {% if key %}
                 <option value="{{ key }}" selected="selected">{{ key }}</option>
                 {% endif %}
-              </select>
+              </select><br /><br />
               <input type="text" name="key" value="{{ key }}" placeholder="{{ entry_key }}" class="form-control" />
               {% if error_key %}
               <div class="text-danger">{{ error_key }}</div>
@@ -117,11 +118,13 @@
           $('select[name="key"]').prop('disabled', true);
           $('input[name="key"]').prop('disabled', true);
           $('textarea[name="value"]').prop('disabled', true);
+          $('select').selectpicker('refresh');
         },
         complete: function() {
           $('select[name="store_id"]').prop('disabled', false);
           $('select[name="language_id"]').prop('disabled', false);
           $('select[name="route"]').prop('disabled', false);
+          $('select').selectpicker('refresh');
         },
         success: function(json) {
           html = '<option value=""></option>';
@@ -163,6 +166,7 @@
           $('select[name="route"]').prop('disabled', true);
           $('select[name="key"]').prop('disabled', true);
           $('textarea[name="value"]').prop('disabled', true);
+          $('select').selectpicker('refresh');
         },
         complete: function() {
           $('select[name="store_id"]').prop('disabled', false);
@@ -170,6 +174,7 @@
           $('select[name="route"]').prop('disabled', false);
           $('select[name="key"]').prop('disabled', false);
           $('textarea[name="value"]').prop('disabled', false);
+          $('select').selectpicker('refresh');
         },
         {% endif %}
         success: function(json) {
@@ -192,6 +197,7 @@
           $('select[name="key"]').html(html);
 
           $('select[name="key"]').trigger('change');
+          $('select').selectpicker('refresh');
         },
         error: function(xhr, ajaxOptions, thrownError) {
           alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -200,6 +206,7 @@
     });
 
     $('select[name="language_id"]').trigger('change');
+    $('select').selectpicker('refresh');
 
     $('select[name="key"]').on('change', function() {
       if ($(this).val()) {

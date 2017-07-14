@@ -155,14 +155,14 @@ $(document).ready(function() {
 		});
 	});
 
-	$('.btn-group label:not(.active)').click(function() {
+	$('[data-toggle="buttons"] label:not(.active)').click(function() {
 		var label = $(this);
 		//var input = $('#' + label.attr('for'));
-		var input = $(this).children();
+		var input = $(this).children('input:radio');
 
 		if (!input.prop('checked')) {
 				
-			label.closest('[data-toggle="buttons"]').find('label.active').removeClass('active btn-success btn-danger btn-primary').addClass('btn-default');
+			label.closest('[data-toggle="buttons"]').find('label.active').removeClass('active btn-success btn-danger btn-info').addClass('btn-default');
 
 			if (label.closest('[data-toggle="buttons"]').hasClass('btn-group')) {
 				if (input.val() == '0') {
@@ -170,7 +170,7 @@ $(document).ready(function() {
 				} else if (input.val() == 1) {
 					label.removeClass('btn-default').addClass('active btn-success');
 				} else {
-					label.removeClass('btn-default').addClass('active btn-primary');
+					label.removeClass('btn-default').addClass('active btn-info');
 				} 
 			}
 			input.prop('checked', true);
@@ -178,7 +178,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$('[data-toggle="buttons"] label input[checked=checked]').each(function() {
+	$('[data-toggle="buttons"] label input[checked=checked]:radio').each(function() {
 		var $self  = $(this);
 		var attrId = $self.attr('id');
 		if ($self.parent().parent().hasClass('btn-group')) {
@@ -187,11 +187,75 @@ $(document).ready(function() {
 			} else if ($self.val() == '0') {
 				$($self.parent()).removeClass('btn-default').addClass('active btn-danger');
 			} else {
-				$($self.parent()).removeClass('btn-default').addClass('active btn-primary');
-			} 
-		} 
+				$($self.parent()).removeClass('btn-default').addClass('active btn-info');
+			}
+		}
 	});
 
+    $('.button-checkbox').each(function () {
+
+        // Settings
+        var $widget = $(this),
+            $button = $widget.find('button'),
+            $checkbox = $widget.find('input:checkbox'),
+            color = $button.data('color'),
+            settings = {
+                on: {
+                    icon: 'fa fa-check-square-o'
+                },
+                off: {
+                    icon: 'fa fa-square-o'
+                }
+            };
+
+        // Event Handlers
+        $button.on('click', function () {
+            $checkbox.prop('checked', !$checkbox.is(':checked'));
+            $checkbox.triggerHandler('change');
+            updateDisplay();
+        });
+        $checkbox.on('change', function () {
+            updateDisplay();
+        });
+
+        // Actions
+        function updateDisplay() {
+            var isChecked = $checkbox.is(':checked');
+
+            // Set the button's state
+            $button.data('state', (isChecked) ? "on" : "off");
+
+            // Set the button's icon
+            $button.find('.state-icon')
+                .removeClass()
+                .addClass('state-icon ' + settings[$button.data('state')].icon);
+
+            // Update the button's color
+            if (isChecked) {
+                $button
+                    .removeClass('btn-default')
+                    .addClass('btn-' + color + ' active');
+            }
+            else {
+                $button
+                    .removeClass('btn-' + color + ' active')
+                    .addClass('btn-default');
+            }
+        }
+
+        // Initialization
+        function init() {
+
+            updateDisplay();
+
+            // Inject the icon if applicable
+            if ($button.find('.state-icon').length == 0) {
+                $button.prepend('<i class="state-icon ' + settings[$button.data('state')].icon + '"></i> ');
+            }
+        }
+        init();
+    });
+    
 });
 
 // Autocomplete */

@@ -21,9 +21,7 @@ class Document {
 	/**
      * 
      *
-     * @param	string	$sql
-	 * 
-	 * @return	array
+     * @param	string	$title
      */
 	public function setTitle($title) {
 		$this->title = $title;
@@ -31,10 +29,8 @@ class Document {
 
 	/**
      * 
-     *
-     * @param	string	$sql
 	 * 
-	 * @return	array
+	 * @return	string
      */
 	public function getTitle() {
 		return $this->title;
@@ -43,9 +39,7 @@ class Document {
 	/**
      * 
      *
-     * @param	string	$sql
-	 * 
-	 * @return	array
+     * @param	string	$description
      */
 	public function setDescription($description) {
 		$this->description = $description;
@@ -54,9 +48,9 @@ class Document {
 	/**
      * 
      *
-     * @param	string	$sql
+     * @param	string	$description
 	 * 
-	 * @return	array
+	 * @return	string
      */
 	public function getDescription() {
 		return $this->description;
@@ -65,20 +59,16 @@ class Document {
 	/**
      * 
      *
-     * @param	string	$sql
-	 * 
-	 * @return	array
+     * @param	string	$keywords
      */
 	public function setKeywords($keywords) {
 		$this->keywords = $keywords;
 	}
 
 	/**
-     * 
      *
-     * @param	string	$sql
 	 * 
-	 * @return	array
+	 * @return	string
      */
 	public function getKeywords() {
 		return $this->keywords;
@@ -87,9 +77,8 @@ class Document {
 	/**
      * 
      *
-     * @param	string	$sql
-	 * 
-	 * @return	array
+     * @param	string	$href
+	 * @param	string	$rel
      */
 	public function addLink($href, $rel) {
 		$this->links[$href] = array(
@@ -100,8 +89,6 @@ class Document {
 
 	/**
      * 
-     *
-     * @param	string	$sql
 	 * 
 	 * @return	array
      */
@@ -112,9 +99,9 @@ class Document {
 	/**
      * 
      *
-     * @param	string	$sql
-	 * 
-	 * @return	array
+     * @param	string	$href
+	 * @param	string	$rel
+	 * @param	string	$media
      */
 	public function addStyle($href, $rel = 'stylesheet', $media = 'screen') {
 		$this->styles[$href] = array(
@@ -126,8 +113,6 @@ class Document {
 
 	/**
      * 
-     *
-     * @param	string	$sql
 	 * 
 	 * @return	array
      */
@@ -138,9 +123,8 @@ class Document {
 	/**
      * 
      *
-     * @param	string	$sql
-	 * 
-	 * @return	array
+     * @param	string	$href
+	 * @param	string	$postion
      */
 	public function addScript($href, $postion = 'header') {
 		$this->scripts[$postion][$href] = $href;
@@ -149,7 +133,7 @@ class Document {
 	/**
      * 
      *
-     * @param	string	$sql
+     * @param	string	$postion
 	 * 
 	 * @return	array
      */

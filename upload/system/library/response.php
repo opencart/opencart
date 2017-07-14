@@ -26,7 +26,7 @@ class Response {
 	}
 	
 	/**
-	 * Description
+	 * 
 	 *
 	 * @param	string	$url
 	 * @param	int		$status
@@ -38,7 +38,7 @@ class Response {
 	}
 	
 	/**
-	 * Description
+	 * 
 	 *
 	 * @param	int		$level
  	*/
@@ -47,27 +47,30 @@ class Response {
 	}
 	
 	/**
-	 * Description
+	 * 
 	 *
-	 * @param	int		$level
+	 * @return	array
  	*/
 	public function getOutput() {
 		return $this->output;
 	}
 	
 	/**
-	 * Description
+	 * 
 	 *
-	 * @param	int		$level
+	 * @param	string	$output
  	*/	
 	public function setOutput($output) {
 		$this->output = $output;
 	}
 	
 	/**
-	 * Description
+	 * 
 	 *
+	 * @param	string	$data
 	 * @param	int		$level
+	 * 
+	 * @return	string
  	*/
 	private function compress($data, $level = 0) {
 		if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false)) {
@@ -100,9 +103,7 @@ class Response {
 	}
 	
 	/**
-	 * Description
-	 *
-	 * @param	int		$level
+	 * 
  	*/
 	public function output() {
 		if ($this->output) {

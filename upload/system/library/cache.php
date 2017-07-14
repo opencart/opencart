@@ -56,7 +56,7 @@ class Cache {
     /**
      * 
      *
-     * @param string $key     The cache key
+     * @param	string	$key	The cache key
      */
 	public function delete($key) {
 		return $this->adaptor->delete($key);

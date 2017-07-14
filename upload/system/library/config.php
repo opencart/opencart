@@ -38,6 +38,8 @@ class Config {
      * 
      *
      * @param	string	$key
+	 *
+	 * @return	mixed
      */
 	public function has($key) {
 		return isset($this->data[$key]);

@@ -11,10 +11,21 @@
 * Proxy class
 */
 class Proxy {
+    /**
+     * 
+     *
+     * @param	string	$key
+     */	
 	public function __get($key) {
 		return $this->{$key};
 	}	
-	
+
+    /**
+     * 
+     *
+     * @param	string	$key
+	 * @param	string	$value
+     */	
 	public function __set($key, $value) {
 		 $this->{$key} = $value;
 	}

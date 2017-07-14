@@ -18,7 +18,8 @@ class Url {
 	/**
 	 * Constructor
 	 *
-	 * @param	string	$file
+	 * @param	string	$url
+	 * @param	string	$ssl
 	 *
  	*/
 	public function __construct($url, $ssl = '') {
@@ -27,18 +28,22 @@ class Url {
 	}
 
 	/**
-	 * Description
 	 *
-	 * @param	int		$level
+	 *
+	 * @param	object	$rewrite
  	*/	
 	public function addRewrite($rewrite) {
 		$this->rewrite[] = $rewrite;
 	}
 
 	/**
-	 * Description
+	 * 
 	 *
-	 * @param	int		$level
+	 * @param	string		$route
+	 * @param	mixed		$args
+	 * @param	bool		$secure
+	 *
+	 * @return	string
  	*/
 	public function link($route, $args = '', $secure = false) {
 		if ($this->ssl && $secure) {

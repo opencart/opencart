@@ -53,10 +53,8 @@ class Image {
 	
 	/**
      * 
-     *
-     * @param	string	$sql
 	 * 
-	 * @return	array
+	 * @return	string
      */
 	public function getFile() {
 		return $this->file;
@@ -64,8 +62,6 @@ class Image {
 
 	/**
      * 
-     *
-     * @param	string	$sql
 	 * 
 	 * @return	array
      */
@@ -75,10 +71,8 @@ class Image {
 	
 	/**
      * 
-     *
-     * @param	string	$sql
 	 * 
-	 * @return	array
+	 * @return	string
      */
 	public function getWidth() {
 		return $this->width;
@@ -86,10 +80,8 @@ class Image {
 	
 	/**
      * 
-     *
-     * @param	string	$sql
 	 * 
-	 * @return	array
+	 * @return	string
      */
 	public function getHeight() {
 		return $this->height;
@@ -97,10 +89,8 @@ class Image {
 	
 	/**
      * 
-     *
-     * @param	string	$sql
 	 * 
-	 * @return	array
+	 * @return	string
      */
 	public function getBits() {
 		return $this->bits;
@@ -108,10 +98,8 @@ class Image {
 	
 	/**
      * 
-     *
-     * @param	string	$sql
 	 * 
-	 * @return	array
+	 * @return	string
      */
 	public function getMime() {
 		return $this->mime;
@@ -120,9 +108,8 @@ class Image {
 	/**
      * 
      *
-     * @param	string	$sql
-	 * 
-	 * @return	array
+     * @param	string	$file
+	 * @param	int		$quality
      */
 	public function save($file, $quality = 90) {
 		$info = pathinfo($file);
@@ -145,9 +132,9 @@ class Image {
 	/**
      * 
      *
-     * @param	string	$sql
-	 * 
-	 * @return	array
+     * @param	int	$width
+	 * @param	int	$height
+	 * @param	string	$default
      */
 	public function resize($width = 0, $height = 0, $default = '') {
 		if (!$this->width || !$this->height) {
@@ -202,9 +189,8 @@ class Image {
 	/**
      * 
      *
-     * @param	string	$sql
-	 * 
-	 * @return	array
+     * @param	string	$watermark
+	 * @param	string	$position
      */
 	public function watermark($watermark, $position = 'bottomright') {
 		switch($position) {
@@ -256,9 +242,10 @@ class Image {
 	/**
      * 
      *
-     * @param	string	$sql
-	 * 
-	 * @return	array
+     * @param	int		$top_x
+	 * @param	int		$top_y
+	 * @param	int		$bottom_x
+	 * @param	int		$bottom_y
      */
 	public function crop($top_x, $top_y, $bottom_x, $bottom_y) {
 		$image_old = $this->image;
@@ -274,9 +261,8 @@ class Image {
 	/**
      * 
      *
-     * @param	string	$sql
-	 * 
-	 * @return	array
+     * @param	int		$degree
+	 * @param	string	$color
      */
 	public function rotate($degree, $color = 'FFFFFF') {
 		$rgb = $this->html2rgb($color);
@@ -290,9 +276,6 @@ class Image {
 	/**
      * 
      *
-     * @param	string	$sql
-	 * 
-	 * @return	array
      */
 	private function filter() {
         $args = func_get_args();
@@ -303,9 +286,11 @@ class Image {
 	/**
      * 
      *
-     * @param	string	$sql
-	 * 
-	 * @return	array
+     * @param	string	$text
+	 * @param	int		$x
+	 * @param	int		$y 
+	 * @param	int		$size
+	 * @param	string	$color
      */
 	private function text($text, $x = 0, $y = 0, $size = 5, $color = '000000') {
 		$rgb = $this->html2rgb($color);
@@ -316,9 +301,10 @@ class Image {
 	/**
      * 
      *
-     * @param	string	$sql
-	 * 
-	 * @return	array
+     * @param	object	$merge
+	 * @param	object	$x
+	 * @param	object	$y
+	 * @param	object	$opacity
      */
 	private function merge($merge, $x = 0, $y = 0, $opacity = 100) {
 		imagecopymerge($this->image, $merge->getImage(), $x, $y, 0, 0, $merge->getWidth(), $merge->getHeight(), $opacity);
@@ -327,7 +313,7 @@ class Image {
 	/**
      * 
      *
-     * @param	string	$sql
+     * @param	string	$color
 	 * 
 	 * @return	array
      */

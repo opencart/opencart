@@ -19,9 +19,6 @@ class Request {
 	
 	/**
 	 * Constructor
-	 *
-	 * @param	string	$file
-	 *
  	*/
 	public function __construct() {
 		$this->get = $this->clean($_GET);
@@ -31,7 +28,13 @@ class Request {
 		$this->files = $this->clean($_FILES);
 		$this->server = $this->clean($_SERVER);
 	}
-
+	
+	/**
+     * 
+	 * @param	array	$data
+	 *
+     * @return	array
+     */
 	public function clean($data) {
 		if (is_array($data)) {
 			foreach ($data as $key => $value) {

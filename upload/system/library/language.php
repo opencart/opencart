@@ -28,9 +28,9 @@ class Language {
 	/**
      * 
      *
-     * @param	string	$sql
+     * @param	string	$key
 	 * 
-	 * @return	array
+	 * @return	string
      */
 	public function get($key) {
 		return (isset($this->data[$key]) ? $this->data[$key] : $key);
@@ -43,8 +43,6 @@ class Language {
 	/**
      * 
      *
-     * @param	string	$sql
-	 * 
 	 * @return	array
      */	
 	public function all() {
@@ -54,7 +52,8 @@ class Language {
 	/**
      * 
      *
-     * @param	string	$sql
+     * @param	string	$filename
+	 * @param	string	$key
 	 * 
 	 * @return	array
      */	

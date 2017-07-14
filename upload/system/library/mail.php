@@ -24,7 +24,7 @@ class Mail {
 	/**
 	 * Constructor
 	 *
-	 * @param	string	$file
+	 * @param	string	$adaptor
 	 *
  	*/
 	public function __construct($adaptor = 'mail') {
@@ -69,8 +69,6 @@ class Mail {
      * 
      *
      * @param	string	$reply_to
-	 * 
-	 * @return	string
      */
 	public function setReplyTo($reply_to) {
 		$this->reply_to = $reply_to;
@@ -79,9 +77,7 @@ class Mail {
 	/**
      * 
      *
-     * @param	string	$sql
-	 * 
-	 * @return	string
+     * @param	string	$subject
      */
 	public function setSubject($subject) {
 		$this->subject = $subject;
@@ -90,9 +86,7 @@ class Mail {
 	/**
      * 
      *
-     * @param	string	$sql
-	 * 
-	 * @return	string
+     * @param	string	$text
      */
 	public function setText($text) {
 		$this->text = $text;
@@ -101,9 +95,7 @@ class Mail {
 	/**
      * 
      *
-     * @param	string	$sql
-	 * 
-	 * @return	string
+     * @param	string	$html
      */
 	public function setHtml($html) {
 		$this->html = $html;
@@ -112,9 +104,7 @@ class Mail {
 	/**
      * 
      *
-     * @param	string	$sql
-	 * 
-	 * @return	array
+     * @param	string	$filename
      */
 	public function addAttachment($filename) {
 		$this->attachments[] = $filename;
@@ -123,9 +113,6 @@ class Mail {
 	/**
      * 
      *
-     * @param	string	$sql
-	 * 
-	 * @return	array
      */
 	public function send() {
 		if (!$this->to) {

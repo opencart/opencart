@@ -1,7 +1,7 @@
 <?php
 class ControllerCommonColumnLeft extends Controller {
 	public function index() {
-		$this->language->load('common/column_left');
+		$this->load->language('common/column_left');
 	
 		// Step
 		$data['text_license'] = $this->language->get('text_license');

@@ -359,7 +359,7 @@ class ControllerMailOrder extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 		
 		if ($order_info && !$order_info['order_status_id'] && $order_status_id && in_array('order', (array)$this->config->get('config_mail_alert'))) {	
-			$this->language->load('mail/order_alert');
+			$this->load->language('mail/order_alert');
 			
 			// HTML Mail
 			$data['text_received'] = $this->language->get('text_received');

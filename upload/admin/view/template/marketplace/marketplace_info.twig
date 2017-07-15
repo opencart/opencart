@@ -68,7 +68,7 @@
                       <td>{{ download.name }}</td>
                       <td>{{ download.date_added }}</td>
                       <td class="text-right">{% if download.extension_install_id %}
-                        <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="{{ download.extension_install_id }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> {{ button_uninstall }}</button>
+                        <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="{{ download.extension_install_id }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-trash-o"></i> {{ button_uninstall }}</button>
                         {% elseif download.filename|slice(-10) == '.ocmod.zip' %}
                         <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"{% if not download.status %} disabled{% endif %}><i class="fa fa-download"></i> {{ button_install }}</button>
                         {% else %}
@@ -146,10 +146,10 @@
               <div class="media">
                 <div class="media-left media-middle"><img src="{{ member_image }}" alt="{{ member_username }}" title="{{ member_username }}" class="media-object img-circle"></div>
                 <div class="media-body"> <span><a href="{{ filter_member }}">{{ member_username }}</a></span><br>
-                  <small>Member since: {{ member_date_added }}</small></div>
+                  <small>{{ text_member_since }} {{ member_date_added }}</small></div>
               </div>
               <br />
-              <a href="{{ filter_member }}" class="btn btn-primary btn-lg btn-block">View all extensions</a> <a href="https://www.opencart.com/index.php?route=support/seller&amp;extension_id={{ extension_id }}" target="_blank" class="btn btn-ghost-dark btn-lg btn-block">Get Support</a></div>
+              <a href="{{ filter_member }}" class="btn btn-primary btn-lg btn-block">{{ button_view_all }}</a> <a href="https://www.opencart.com/index.php?route=support/seller&amp;extension_id={{ extension_id }}" target="_blank" class="btn btn-ghost-dark btn-lg btn-block">{{ button_get_support }}</a></div>
           </div>
         </div>
       </div>
@@ -286,7 +286,7 @@ $('#tab-download').on('click', '.btn-primary', function(e) {
 			}
 						
 			if (json['extension_install_id']) {
-				$(element).replaceWith('<button type="button" data-install="' + $(element).attr('data-install') + '" data-uninstall="' + json['extension_install_id'] + '" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>');
+				$(element).replaceWith('<button type="button" data-install="' + $(element).attr('data-install') + '" data-uninstall="' + json['extension_install_id'] + '" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-trash-o"></i> {{ button_uninstall }}</button>');
 			}
 						
 			if (json['next']) {
@@ -362,7 +362,7 @@ $('#tab-download').on('click', ' .btn-danger', function(e) {
 				$('#progress-bar').addClass('progress-bar-success');
 				$('#progress-text').html(json['success']);
 				
-				$(element).replaceWith('<button type="button" data-install="' + $(element).attr('data-install') + '" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> Install</button>');
+				$(element).replaceWith('<button type="button" data-install="' + $(element).attr('data-install') + '" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> {{ button_install }}</button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

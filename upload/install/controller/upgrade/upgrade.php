@@ -1,7 +1,7 @@
 <?php
 class ControllerUpgradeUpgrade extends Controller {
 	public function index() {
-		$this->language->load('upgrade/upgrade');
+		$this->load->language('upgrade/upgrade');
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 		

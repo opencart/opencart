@@ -15,7 +15,7 @@ class ModelExtensionOpenBayAmazonOrder extends Model {
 		$row = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "amazon_product_link` WHERE `amazon_sku` = '" . $this->db->escape($sku) . "'")->row;
 
 		if (isset($row['product_id']) && !empty($row['product_id'])) {
-			return $row['product_id'];
+			return (int)$row['product_id'];
 		}
 
 		return 0;
@@ -147,7 +147,7 @@ class ModelExtensionOpenBayAmazonOrder extends Model {
 		$row = $this->db->query("SELECT `order_status_id` FROM `" . DB_PREFIX . "order` WHERE `order_id` = " . (int)$order_id)->row;
 
 		if (isset($row['order_status_id']) && !empty($row['order_status_id'])) {
-			return $row['order_status_id'];
+			return (int)$row['order_status_id'];
 		}
 
 		return 0;

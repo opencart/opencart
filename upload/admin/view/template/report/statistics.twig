@@ -26,7 +26,7 @@
       </div>
       <div class="panel-body">
         <div class="table-responsive">
-          <table class="table table-bordered">
+          <table class="table table-bordered table-hover">
             <thead>
               <tr>
                 <td class="text-left">{{ column_name }}</td>
@@ -34,11 +34,11 @@
                 <td class="text-right">{{ column_action }}</td>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="rowlink" data-link="row"> 
               {% if statistics %}
               {% for statistic in statistics %}
               <tr>
-                <td class="text-left">{{ statistic.name }}</td>
+                <td class="text-left"><a href="{{ statistic.href }}"></a>{{ statistic.name }}</td>
                 <td class="text-right">{{ statistic.value }}</td>
                 <td class="text-right"><a href="{{ statistic.href }}" data-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-warning"><i class="fa fa-refresh"></i></a></td>
               </tr>

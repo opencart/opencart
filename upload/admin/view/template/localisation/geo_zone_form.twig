@@ -2,9 +2,9 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
+      <div class="pull-right"><div class="btn-group" role="group" aria-label="...">
         <button type="submit" form="form-geo-zone" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -55,7 +55,7 @@
               {% set zone_to_geo_zone_row = 0 %}
               {% for zone_to_geo_zone in zone_to_geo_zones %}
               <tr id="zone-to-geo-zone-row{{ zone_to_geo_zone_row }}">
-                <td class="text-left"><select name="zone_to_geo_zone[{{ zone_to_geo_zone_row }}][country_id]" class="form-control" data-index="{{ zone_to_geo_zone_row }}" data-zone-id="{{ zone_to_geo_zone.zone_id }}" disabled="disabled">
+                <td class="text-left"><select name="zone_to_geo_zone[{{ zone_to_geo_zone_row }}][country_id]" class="selectpicker" data-container="body" data-width="100%" data-live-search="true" data-index="{{ zone_to_geo_zone_row }}" data-zone-id="{{ zone_to_geo_zone.zone_id }}" disabled="disabled">
                     
                     {% for country in countries %}
                     {% if country.country_id == zone_to_geo_zone.country_id %}
@@ -70,7 +70,7 @@
                     {% endfor %}
                   
                   </select></td>
-                <td class="text-left"><select name="zone_to_geo_zone[{{ zone_to_geo_zone_row }}][zone_id]" class="form-control" disabled="disabled">
+                <td class="text-left"><select name="zone_to_geo_zone[{{ zone_to_geo_zone_row }}][zone_id]" class="selectpicker" data-container="body" data-width="100%" data-live-search="true" disabled="disabled">
                   </select></td>
                 <td class="text-left"><button type="button" onclick="$('#zone-to-geo-zone-row{{ zone_to_geo_zone_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
               </tr>
@@ -95,18 +95,20 @@ var zone_to_geo_zone_row = {{ zone_to_geo_zone_row }};
 
 $('#button-geo-zone').on('click', function() {
 	html  = '<tr id="zone-to-geo-zone-row' + zone_to_geo_zone_row + '">';
-	html += '  <td class="text-left"><select name="zone_to_geo_zone[' + zone_to_geo_zone_row + '][country_id]" class="form-control" data-index="' + zone_to_geo_zone_row + '">';
+	html += '  <td class="text-left"><select name="zone_to_geo_zone[' + zone_to_geo_zone_row + '][country_id]" class="selectpicker" data-container="body" data-width="100%" data-live-search="true" data-index="' + zone_to_geo_zone_row + '">';
 	{% for country in countries %}
 	html += '    <option value="{{ country.country_id }}">{{ country.name|escape('js') }}</option>';
 	{% endfor %}   
 	html += '</select></td>';
-	html += '  <td class="text-left"><select name="zone_to_geo_zone[' + zone_to_geo_zone_row + '][zone_id]" class="form-control"><option value="0">{{ text_all_zones }}</option></select></td>';
+	html += '  <td class="text-left"><select name="zone_to_geo_zone[' + zone_to_geo_zone_row + '][zone_id]" class="selectpicker" data-container="body" data-width="100%" data-live-search="true"><option value="0">{{ text_all_zones }}</option></select></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#zone-to-geo-zone-row' + zone_to_geo_zone_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 	
 	$('#zone-to-geo-zone tbody').append(html);
 	
 	$('zone_to_geo_zone[' + zone_to_geo_zone_row + '][country_id]').trigger();
+	
+	$('select').selectpicker('refresh');
 			
 	zone_to_geo_zone_row++;
 });
@@ -121,10 +123,12 @@ $('#zone-to-geo-zone').on('change', 'select[name$=\'[country_id]\']', function()
 			beforeSend: function() {
 				$(element).prop('disabled', true);
 				$('button[form=\'form-geo-zone\']').prop('disabled', true);
+				//$('select').selectpicker('refresh');
 			},
 			complete: function() {
 				$(element).prop('disabled', false);
 				$('button[form=\'form-geo-zone\']').prop('disabled', false);
+				$('select').selectpicker('refresh');
 			},
 			success: function(json) {
 				html = '<option value="0">{{ text_all_zones }}</option>';
@@ -146,14 +150,20 @@ $('#zone-to-geo-zone').on('change', 'select[name$=\'[country_id]\']', function()
 				$('select[name=\'zone_to_geo_zone[' + $(element).attr('data-index') + '][zone_id]\']').prop('disabled', false);
 				
 				$('select[name$=\'[country_id]\']:disabled:first').trigger('change');
+				
+				
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
 	}
+	$('select').selectpicker('refresh');
+	
 });
 
 $('select[name$=\'[country_id]\']:disabled:first').trigger('change');
+
+$('select').selectpicker('refresh');
 //--></script></div>
 {{ footer }}

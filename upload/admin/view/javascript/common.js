@@ -155,107 +155,86 @@ $(document).ready(function() {
 		});
 	});
 
-	$('[data-toggle="buttons"] label:not(.active)').click(function() {
-		var label = $(this);
-		//var input = $('#' + label.attr('for'));
-		var input = $(this).children('input:radio');
-
-		if (!input.prop('checked')) {
-				
-			label.closest('[data-toggle="buttons"]').find('label.active').removeClass('active btn-success btn-danger btn-info').addClass('btn-default');
-
-			if (label.closest('[data-toggle="buttons"]').hasClass('btn-group')) {
-				if (input.val() == '0') {
-					label.removeClass('btn-default').addClass('active btn-danger');
-				} else if (input.val() == 1) {
-					label.removeClass('btn-default').addClass('active btn-success');
-				} else {
-					label.removeClass('btn-default').addClass('active btn-info');
-				} 
-			}
-			input.prop('checked', true);
-			input.trigger('change');
-		}
-	});
-
-	$('[data-toggle="buttons"] label input[checked=checked]:radio').each(function() {
-		var $self  = $(this);
-		var attrId = $self.attr('id');
-		if ($self.parent().parent().hasClass('btn-group')) {
-			if ($self.val() == 1) {
-				$($self.parent()).removeClass('btn-default').addClass('active btn-success');
-			} else if ($self.val() == '0') {
-				$($self.parent()).removeClass('btn-default').addClass('active btn-danger');
-			} else {
-				$($self.parent()).removeClass('btn-default').addClass('active btn-info');
-			}
-		}
-	});
-
-    $('.button-checkbox').each(function () {
+    $('[data-toggle="buttons"]').each(function () {
 
         // Settings
         var $widget = $(this),
-            $button = $widget.find('button'),
-            $checkbox = $widget.find('input:checkbox'),
-            color = $button.data('color'),
-            settings = {
-                on: {
-                    icon: 'fa fa-check-square-o'
-                },
-                off: {
-                    icon: 'fa fa-square-o'
-                }
-            };
+            $label = $widget.find('label'),
+            $input = $widget.find('input:radio');
 
         // Event Handlers
-        $button.on('click', function () {
-            $checkbox.prop('checked', !$checkbox.is(':checked'));
-            $checkbox.triggerHandler('change');
+        $label.on('click', function () {
+            $input.prop('checked', !$input.is(':checked'));
+            $input.triggerHandler('change');
             updateDisplay();
         });
-        $checkbox.on('change', function () {
+        $input.on('change', function () {
             updateDisplay();
-        });
+        });        
 
         // Actions
         function updateDisplay() {
-            var isChecked = $checkbox.is(':checked');
-
-            // Set the button's state
-            $button.data('state', (isChecked) ? "on" : "off");
-
-            // Set the button's icon
-            $button.find('.state-icon')
-                .removeClass()
-                .addClass('state-icon ' + settings[$button.data('state')].icon);
-
-            // Update the button's color
+            var isChecked = $input.is(':checked');
+			var $inputChecked = $widget.find('input:checked');
+			
+            // Update the labels's color
             if (isChecked) {
-                $button
-                    .removeClass('btn-default')
-                    .addClass('btn-' + color + ' active');
-            }
-            else {
-                $button
-                    .removeClass('btn-' + color + ' active')
-                    .addClass('btn-default');
+            	if ($inputChecked.val() == 1) {
+                	$inputChecked.parent().removeClass('btn-default').addClass('btn-success active');
+                } else if ($inputChecked.val() == '0') {
+                	$inputChecked.parent().removeClass('btn-default').addClass('btn-danger active');
+                } else {
+                	$inputChecked.parent().removeClass('btn-default').addClass('btn-info active');
+				}
+            } else {
+                $input.parent().removeClass('btn-success btn-danger btn-info active').addClass('btn-default');
             }
         }
-
         // Initialization
         function init() {
-
             updateDisplay();
-
-            // Inject the icon if applicable
-            if ($button.find('.state-icon').length == 0) {
-                $button.prepend('<i class="state-icon ' + settings[$button.data('state')].icon + '"></i> ');
-            }
         }
         init();
     });
-    
+
+
+    $('[data-toggle="buttons"] label').each(function () {
+
+        // Settings
+        var $widget = $(this),
+            $label = $widget.find('label'),
+            $input = $widget.find('input:checkbox');
+
+        // Event Handlers
+        $label.on('click', function () {
+            $input.prop('checked', !$input.is(':checked'));
+            $input.triggerHandler('change');
+            updateDisplay();
+        });
+        $input.on('change', function () {
+            updateDisplay();
+        });        
+
+        // Actions
+        function updateDisplay() {
+            var isChecked = $input.is(':checked');
+			var $inputChecked = $widget.find('input:checked');
+			
+            // Update the labels's color
+				if (isChecked) {
+	                $inputChecked.parent().removeClass('btn-default').addClass('btn-info active');
+	            } else {
+	                $input.parent().removeClass('btn-info active').addClass('btn-default');
+	            }
+
+        }
+        // Initialization
+        function init() {
+            updateDisplay();
+        }
+        init();
+    });
+ 
 });
 
 // Autocomplete */

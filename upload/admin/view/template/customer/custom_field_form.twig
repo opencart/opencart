@@ -244,39 +244,35 @@
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">{{ entry_customer_group }}</label>
-            <div class="col-sm-10">{% set customer_group_row = 0 %}
+            <div class="col-sm-10">
+            <div class="btn-group" data-toggle="buttons">
+            {% set customer_group_row = 0 %}
             {% for customer_group in customer_groups %}
 			{% if customer_group.customer_group_id in custom_field_customer_group %}
-				<span class="button-checkbox">
-    	    		<button type="button" class="btn" data-color="info">{{ customer_group.name }}</button>
-        			<input type="checkbox" class="hidden" checked="checked" name="custom_field_customer_group[{{ customer_group_row }}][customer_group_id]" value="{{ customer_group.customer_group_id }}" />
-	    		</span>
-	        {% else %}
-			    <span class="button-checkbox">
-			        <button type="button" class="btn" data-color="info">{{ customer_group.name }}</button>
-		    	    <input type="checkbox" class="hidden" name="custom_field_customer_group[{{ customer_group_row }}][customer_group_id]" value="{{ customer_group.customer_group_id }}" />
-		    	</span>
-                {% endif %}
+	    		<label class="btn btn-default"><input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][customer_group_id]" value="{{ customer_group.customer_group_id }}" checked="checked" />{{ customer_group.name }}</label>
+	    	{% else %}
+				<label class="btn btn-default"><input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][customer_group_id]" value="{{ customer_group.customer_group_id }}" />{{ customer_group.name }}</label>
+            {% endif %}
         	{% set customer_group_row = customer_group_row + 1 %}
-            {% endfor %}</div>
+            {% endfor %}
+            </div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">{{ entry_required }}</label>
-            <div class="col-sm-10">{% set customer_group_row = 0 %}
+            <div class="col-sm-10">
+            <div class="btn-group" data-toggle="buttons">
+            {% set customer_group_row = 0 %}
             {% for customer_group in customer_groups %}
             {% if customer_group.customer_group_id in custom_field_required %}
-				<span class="button-checkbox">
-    	    		<button type="button" class="btn" data-color="info">{{ customer_group.name }}</button>
-        			<input type="checkbox" class="hidden" checked="checked" name="custom_field_customer_group[{{ customer_group_row }}][required]" value="{{ customer_group.customer_group_id }}" />
-	    		</span>
+	    		<label class="btn btn-default"><input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][required]" value="{{ customer_group.customer_group_id }}" checked="checked" />{{ customer_group.name }}</label>
             {% else %}
-			    <span class="button-checkbox">
-			        <button type="button" class="btn" data-color="info">{{ customer_group.name }}</button>
-		    	    <input type="checkbox" class="hidden" name="custom_field_customer_group[{{ customer_group_row }}][required]" value="{{ customer_group.customer_group_id }}" />
-		    	</span>
+		    	<label class="btn btn-default"><input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][required]" value="{{ customer_group.customer_group_id }}" />{{ customer_group.name }}</label>
             {% endif %}
             {% set customer_group_row = customer_group_row + 1 %}
-            {% endfor %}</div>
+            {% endfor %}
+            </div>  
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>

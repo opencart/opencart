@@ -1381,7 +1381,7 @@ class ControllerSaleOrder extends Controller {
 				$affiliate_total = $this->model_customer_customer->getTotalTransactionsByOrderId($order_id);
 
 				if (!$affiliate_total) {
-					$this->model_marketing_affiliate->addTransaction($order_info['affiliate_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['commission'], $order_id);
+					$this->model_customer_customer->addTransaction($order_info['affiliate_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['commission'], $order_id);
 				}
 			}
 

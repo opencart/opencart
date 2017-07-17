@@ -20,7 +20,7 @@
           <legend>{{ text_type }}</legend>
           <div class="well">
             <div class="input-group">
-              <select name="type" class="form-control">
+              <select name="type" class="selectpicker" data-container="body" data-width="100%">
                 {% for category in categories %}
                 {% if type == category.code %}
                 <option value="{{ category.href }}" selected="selected">{{ category.text }}</option>
@@ -47,11 +47,13 @@ $('select[name="type"]').on('change', function() {
 			$('.fa-filter').addClass('fa-circle-o-notch fa-spin');
 			$('.fa-filter').removeClass('fa-filter');
 			$('select[name=\'type\']').prop('disabled', true);
+			$('select').selectpicker('refresh');
 		},
 		complete: function() {
 			$('.fa-circle-o-notch').addClass('fa-filter');
 			$('.fa-circle-o-notch').removeClass('fa-circle-o-notch fa-spin');
 			$('select[name=\'type\']').prop('disabled', false);
+			$('select').selectpicker('refresh');
 		},
 		success: function(html) {
 			$('#extension').html(html);
@@ -63,6 +65,8 @@ $('select[name="type"]').on('change', function() {
 });
 
 $('select[name="type"]').trigger('change');
+
+$('select').selectpicker('refresh');
 
 $('#extension').on('click', '.btn-success', function(e) {
 	e.preventDefault();

@@ -880,6 +880,9 @@ class ControllerSettingSetting extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
+		$data['config_timezone'] = $this->config->get('config_timezone');
+		$data['timezones'] = DateTimeZone::listIdentifiers(DateTimeZone::ALL);
+
 		$this->response->setOutput($this->load->view('setting/setting', $data));
 	}
 

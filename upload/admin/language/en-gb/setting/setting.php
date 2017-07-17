@@ -51,6 +51,7 @@ $_['entry_open']                     = 'Opening Times';
 $_['entry_comment']                  = 'Comment';
 $_['entry_location']                 = 'Store Location';
 $_['entry_country']                  = 'Country';
+$_['entry_timezone']                 = 'Timezone';
 $_['entry_zone']                     = 'Region / State';
 $_['entry_language']                 = 'Language';
 $_['entry_admin_language']           = 'Administration Language';

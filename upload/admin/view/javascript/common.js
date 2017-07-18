@@ -219,18 +219,29 @@ $(document).ready(function() {
         function updateDisplay() {
             var isChecked = $input.is(':checked');
 			var $inputChecked = $widget.find('input:checked');
+			var $i = $widget.find('i');
 			
             // Update the labels's color
 				if (isChecked) {
 	                $inputChecked.parent().removeClass('btn-default').addClass('btn-info active');
+	                $i.removeClass('fa fa-square-o').addClass('fa fa-check-square-o');
 	            } else {
 	                $input.parent().removeClass('btn-info active').addClass('btn-default');
+	                $i.removeClass('fa fa-check-square-o').addClass('fa fa-square-o');
 	            }
 
         }
         // Initialization
         function init() {
             updateDisplay();
+            
+            var isChecked = $input.is(':checked');
+            
+            if (isChecked) {
+            	$input.parent().prepend('<i class="fa fa-check-square-o"></i> ');
+			} else {
+				$input.parent().prepend('<i class="fa fa-square-o"></i> ');
+			}
         }
         init();
     });

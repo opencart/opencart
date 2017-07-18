@@ -128,7 +128,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-return-reason">{{ entry_return_reason }}</label>
                 <div class="col-sm-10">
-                  <select name="return_reason_id" id="input-return-reason" class="form-control">
+                  <select name="return_reason_id" id="input-return-reason" class="selectpicker" data-container="body" data-width="100%">
                     {% for return_reason in return_reasons %}
                     {% if return_reason.return_reason_id == return_reason_id %}                    
                     <option value="{{ return_reason.return_reason_id }}" selected="selected">{{ return_reason.name }}</option>
@@ -142,15 +142,15 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-opened">{{ entry_opened }}</label>
                 <div class="col-sm-10">
-                  <select name="opened" id="input-opened" class="form-control">
-                    {% if opened %}
-                    <option value="1" selected="selected">{{ text_opened }}</option>
-                    <option value="0">{{ text_unopened }}</option>
-                    {% else %}
-                    <option value="1">{{ text_opened }}</option>
-                    <option value="0" selected="selected">{{ text_unopened }}</option>
-                    {% endif %}
-                  </select>
+					<div class="btn-group" data-toggle="buttons">
+					{% if opened %}
+						<label class="btn btn-default"><input type="radio" name="opened" value="1" checked="checked" />{{ text_opened }}</label>
+						<label class="btn btn-default"><input type="radio" name="opened" value="0" />{{ text_unopened }}</label>
+					{% else %}
+						<label class="btn btn-default"><input type="radio" name="opened" value="1" />{{ text_opened }}</label>
+						<label class="btn btn-default"><input type="radio" name="opened" value="0" checked="checked" />{{ text_unopened }}</label>
+					{% endif %}
+					</div>
                 </div>
               </div>
               <div class="form-group">
@@ -162,7 +162,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-return-action">{{ entry_return_action }}</label>
                 <div class="col-sm-10">
-                  <select name="return_action_id" id="input-return-action" class="form-control">
+                  <select name="return_action_id" id="input-return-action" class="selectpicker" data-container="body" data-width="100%">
                     <option value="0"></option>
                     {% for return_action in return_actions %}
                     {% if return_action.return_action_id == return_action_id %}
@@ -178,7 +178,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-return-status">{{ entry_return_status }}</label>
                 <div class="col-sm-10">
-                  <select name="return_status_id" id="input-return-status" class="form-control">
+                  <select name="return_status_id" id="input-return-status" class="selectpicker" data-container="body" data-width="100%">
                     {% for return_status in return_statuses %}
                     {% if return_status.return_status_id == return_status_id %}
                     <option value="{{ return_status.return_status_id }}" selected="selected">{{ return_status.name }}</option>
@@ -206,7 +206,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-return-status">{{ entry_return_status }}</label>
                 <div class="col-sm-10">
-                  <select name="return_status_id" id="input-return-status" class="form-control">
+                  <select name="return_status_id" id="input-return-status" class="selectpicker" data-container="body" data-width="100%">
                     {% for return_status in return_statuses %}
                     {% if return_status.return_status_id == return_status_id %}
                     <option value="{{ return_status.return_status_id }}" selected="selected">{{ return_status.name }}</option>
@@ -220,7 +220,11 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-notify">{{ entry_notify }}</label>
                 <div class="col-sm-10">
-                  <input type="checkbox" name="notify" value="1" id="input-notify" />
+					<div class="btn-group" data-toggle="buttons">
+						<label class="btn btn-default">
+							<input name="notify" value="1" type="checkbox" id="input-notify" />
+						</label>
+					</div>
                 </div>
               </div>
               <div class="form-group">

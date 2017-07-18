@@ -27,7 +27,7 @@
         </div>
         <div class="form-group">
           <label class="control-label" for="input-status">{{ entry_status }}</label>
-          <select name="filter_order_status_id" id="input-status" class="form-control">
+          <select name="filter_order_status_id" id="input-status" class="selectpicker" data-container="body" data-width="100%">
             <option value="0">{{ text_all_status }}</option>
             
           
@@ -124,12 +124,12 @@
                 <td class="text-right">{{ column_action }}</td>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="rowlink" data-link="row">
             
             {% if customers %}
             {% for customer in customers %}
             <tr>
-              <td class="text-left">{{ customer.customer }}</td>
+              <td class="text-left"><a href="{{ customer.edit }}"></a>{{ customer.customer }}</td>
               <td class="text-left">{{ customer.email }}</td>
               <td class="text-left">{{ customer.customer_group }}</td>
               <td class="text-left">{{ customer.status }}</td>
@@ -141,7 +141,7 @@
             {% endfor %}
             {% else %}
             <tr>
-              <td class="text-center" colspan="8">{{ text_no_results }}</td>
+              <td class="text-center rowlink-skip" colspan="8">{{ text_no_results }}</td>
             </tr>
             {% endif %}
             </tbody>

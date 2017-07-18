@@ -58,6 +58,81 @@ class ModelExtensionPaymentSquareup extends Model {
         $this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = '" . (int)$status . "' WHERE `order_recurring_id` = '" . (int)$order_recurring_id . "'");
     }
 
+    public function getAdminURL() {
+        return $this->url->link('extension/payment/squareup/transaction_info', '&squareup_transaction_id=%s%s', true);
+    }
+
+    public function getTransactionStatus($transaction) {
+        $result['text'] = null;
+        $result['amount_refunded'] = $this->language->get('text_na');
+        $result['type'] = $transaction['transaction_type'];
+
+        $refunds = @json_decode($transaction['refunds'], true);
+        $result['refunds'] = $refunds;
+
+        $this->load->library('squareup');
+
+        if (empty($refunds)) {
+            // Check if transaction has been automatically voided
+            if ($transaction['transaction_type'] == 'AUTHORIZED') {
+                $updated_transaction = $this->squareup->getTransaction($transaction['location_id'], $transaction['transaction_id']);
+                $status = $updated_transaction['tenders'][0]['card_details']['status'];
+
+                $this->updateTransaction($transaction['squareup_transaction_id'], $status, !empty($updated_transaction['refunds']) ? $updated_transaction['refunds'] : array());
+                $result['type'] = $status;
+            }
+
+            $result['text'] = $this->language->get('entry_status_' . strtolower($result['type']));
+        } else {
+            $refunded_amount = 0;
+            $has_pending = false;
+
+            // Fetch transaction again if it has a pending refund
+            foreach ($refunds as $refund) {
+                if ($refund['status'] == 'PENDING') {
+                    $updated_transaction = $this->squareup->getTransaction($transaction['location_id'], $transaction['transaction_id']);
+                    $status = $updated_transaction['tenders'][0]['card_details']['status'];
+
+                    $this->updateTransaction($transaction['squareup_transaction_id'], $status, !empty($updated_transaction['refunds']) ? $updated_transaction['refunds'] : array());
+
+                    $refunds = $updated_transaction['refunds'];
+                    $result['refunds'] = $updated_transaction['refunds'];
+
+                    break;
+                }
+            }
+
+            foreach ($refunds as $refund) {
+                if ($refund['status'] == 'REJECTED' || $refund['status'] == 'FAILED') {
+                    continue;
+                }
+
+                if ($refund['status'] == 'PENDING') {
+                    $has_pending = true;
+                }
+
+                $refunded_amount += $refund['amount_money']['amount'];
+            }
+
+            $result['amount_refunded'] = $this->currency->format(
+                $this->squareup->standardDenomination($refunded_amount, $transaction['transaction_currency']),
+                $transaction['transaction_currency']
+            );
+
+            if ($refunded_amount == $this->squareup->lowestDenomination($transaction['transaction_amount'], $transaction['transaction_currency'])) {
+                $result['text'] = $this->language->get('text_fully_refunded');
+            } else {
+                $result['text'] = $this->language->get('text_partially_refunded');
+            }
+
+            if ($has_pending) {
+                $result['text'] = sprintf($this->language->get('text_refund_pending'), $result['text']);
+            }
+        }
+
+        return $result;
+    }
+
     public function createTables() {
         $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "squareup_transaction` (
           `squareup_transaction_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -113,5 +188,23 @@ class ModelExtensionPaymentSquareup extends Model {
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "squareup_transaction`");
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "squareup_token`");
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "squareup_customer`");
+    }
+
+    public function createEvents() {
+        $events = array(
+            'admin/controller/*/after' => 'extension/payment/squareup/setAdminURL'
+        );
+
+        $this->load->model('setting/event');
+
+        foreach ($events as $trigger => $action) {
+            $this->model_setting_event->addEvent('payment_squareup', $trigger, $action, 1, 0);
+        }
+    }
+
+    public function dropEvents() {
+        $this->load->model('setting/event');
+
+        $this->model_setting_event->deleteEventByCode('payment_squareup');
     }
 }

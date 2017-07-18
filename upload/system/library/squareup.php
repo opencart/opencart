@@ -374,9 +374,27 @@ class Squareup {
             )
         );
 
-        $this->api($request_data);
+        $refund_result = $this->api($request_data);
 
-        return $this->getTransaction($location_id, $transaction_id);
+        $transaction = $this->getTransaction($location_id, $transaction_id);
+
+        $refunds = !empty($transaction['refunds']) ? $transaction['refunds'] : array();
+        $found = false;
+
+        foreach ($refunds as $refund) {
+            if ($refund['id'] == $refund_result['refund']['id']) {
+                $found = true;
+                break;
+            }
+        }
+
+        if (!$found) {
+            $refunds[] = $refund_result['refund'];
+        }
+
+        $transaction['refunds'] = $refunds;
+
+        return $transaction;
     }
 
     public function lowestDenomination($value, $currency) {

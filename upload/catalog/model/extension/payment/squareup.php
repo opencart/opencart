@@ -181,6 +181,71 @@ class ModelExtensionPaymentSquareup extends Model {
         $mail->send();
     }
 
+    public function expirationEmail($expirations) {
+        if (empty($expirations['expiring_authorized_transactions']) && empty($expirations['expired_authorized_transactions'])) {
+            return;
+        }
+
+        $mail = new Mail();
+        
+        $mail->protocol = $this->config->get('config_mail_protocol');
+        $mail->parameter = $this->config->get('config_mail_parameter');
+
+        $mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+        $mail->smtp_username = $this->config->get('config_mail_smtp_username');
+        $mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+        $mail->smtp_port = $this->config->get('config_mail_smtp_port');
+        $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+
+        $br = '<br />';
+
+        $subject = $this->language->get('text_cron_expiration_subject');
+
+        $message = '';
+
+        if (!empty($expirations['expiring_authorized_transactions'])) {
+            $message .= '<strong>' . $this->language->get('text_cron_expiration_message_expiring') . '</strong>' . $br . $br;
+
+            $message .= '<table>';
+            foreach ($expirations['expiring_authorized_transactions'] as $transaction) {
+                $message .= '<tr>';
+                $message .= '<td>' . $transaction['transaction_id'] . '</td>';
+                $message .= '<td>| ' . sprintf($this->language->get('text_order_id'), $transaction['order_id']) . '</td>';
+                $message .= '<td>| ' . $transaction['customer_name'] . '</td>';
+                $message .= '<td>| <a href="' . $transaction['transaction_url'] . '" target="_blank">' . $this->language->get('text_view') . '</a></td>';
+                $message .= '</tr>';
+            }
+            $message .= '</table>';
+
+            $message .= $br . $br;
+        }
+
+        if (!empty($expirations['expired_authorized_transactions'])) {
+            $message .= '<strong>' . $this->language->get('text_cron_expiration_message_expired') . '</strong>' . $br . $br;
+
+            $message .= '<table>';
+            foreach ($expirations['expired_authorized_transactions'] as $transaction) {
+                $message .= '<tr>';
+                $message .= '<td>' . $transaction['transaction_id'] . '</td>';
+                $message .= '<td>| ' . sprintf($this->language->get('text_order_id'), $transaction['order_id']) . '</td>';
+                $message .= '<td>| ' . $transaction['customer_name'] . '</td>';
+                $message .= '<td>| <a href="' . $transaction['transaction_url'] . '" target="_blank">' . $this->language->get('text_view') . '</a></td>';
+                $message .= '</tr>';
+            }
+            $message .= '</table>';
+
+            $message .= $br . $br;
+        }
+
+        $mail->setTo($this->config->get('config_email'));
+        $mail->setFrom($this->config->get('config_email'));
+        $mail->setSender($this->config->get('config_name'));
+        $mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
+        $mail->setText(strip_tags($message));
+        $mail->setHtml($message);
+        $mail->send();
+    }
+
     public function recurringPayments() {
         return (bool)$this->config->get('payment_squareup_recurring_status');
     }
@@ -192,7 +257,7 @@ class ModelExtensionPaymentSquareup extends Model {
     }
 
     public function validateCRON() {
-        if (!$this->config->get('payment_squareup_status') || !$this->config->get('payment_squareup_recurring_status')) {
+        if (!$this->config->get('payment_squareup_status')) {
             return false;
         }
 
@@ -228,6 +293,10 @@ class ModelExtensionPaymentSquareup extends Model {
 
     public function nextRecurringPayments() {
         $payments = array();
+
+        if (!$this->config->get('payment_squareup_recurring_status')) {
+            return $payments;
+        }
 
         $this->load->library('squareup');
 
@@ -344,6 +413,16 @@ class ModelExtensionPaymentSquareup extends Model {
         $this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET status='" . self::RECURRING_SUSPENDED . "' WHERE order_recurring_id='" . (int)$order_recurring_id . "'");
 
         return true;
+    }
+
+    public function updateTransaction($squareup_transaction_id, $type, $refunds = array()) {
+        $this->db->query("UPDATE `" . DB_PREFIX . "squareup_transaction` SET transaction_type='" . $this->db->escape($type) . "', is_refunded='" . (int)!empty($refunds) . "', refunds='" . $this->db->escape(json_encode($refunds)) . "' WHERE squareup_transaction_id='" . (int)$squareup_transaction_id . "'");
+    }
+
+    public function getExpiringAuthorizedTransactions() {
+        $two_days_ago = date('Y-m-d', time() - (2 * 24 * 3600));
+
+        return $this->db->query("SELECT * FROM `" . DB_PREFIX . "squareup_transaction` WHERE transaction_type='AUTHORIZED' AND created_at < '" . $two_days_ago . "'")->rows;
     }
 
     private function getLastSuccessfulRecurringPaymentDate($order_recurring_id) {

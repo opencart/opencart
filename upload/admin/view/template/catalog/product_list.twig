@@ -162,7 +162,7 @@
                   {% if products %}
                   {% for product in products %}
                   <tr>
-                    <td class="text-center rowlink-skip"><a href="{{ product.edit }}"></a>{% if product.product_id in selected %}
+                    <td class="text-center rowlink-skip {% if product.status == "Enabled" %} success {% else %} danger {% endif %}"><a href="{{ product.edit }}"></a>{% if product.product_id in selected %}
                       <input type="checkbox" name="selected[]" value="{{ product.product_id }}" checked="checked" />
                       {% else %}
                       <input type="checkbox" name="selected[]" value="{{ product.product_id }}" />

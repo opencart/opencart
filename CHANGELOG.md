@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [v3.0.2.0] (Release date: 17.07.2017)
+
 ## [v3.0.1.2] (Release date: 07.07.2017)
 
 ## [v3.0.1.1] (Release date: 04.07.2017)
@@ -342,7 +344,8 @@
 
 ## [v2.0.0.0] - (Release date: 01.10.2014)
 
-[Unreleased]: https://github.com/opencart/opencart/compare/3.0.1.2...HEAD
+[Unreleased]: https://github.com/opencart/opencart/compare/3.0.2.0...HEAD
+[v3.0.2.0]: https://github.com/opencart/opencart/compare/3.0.1.2...3.0.2.0
 [v3.0.1.2]: https://github.com/opencart/opencart/compare/3.0.1.1...3.0.1.2
 [v3.0.1.1]: https://github.com/opencart/opencart/compare/3.0.0.0...3.0.1.1
 [v3.0.0.0]: https://github.com/opencart/opencart/compare/2.3.0.2...3.0.0.0

@@ -88,6 +88,6 @@ class Exception extends \Exception {
             $messages[] = $this->errors;
         }
 
-        return implode(' ', $messages);
+        return implode(' ', array_map('strip_tags', $messages));
     }
 }

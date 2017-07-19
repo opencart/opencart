@@ -247,5 +247,29 @@ class ControllerExtensionPaymentSquareup extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    
+    public function info() {
+        if (!$this->validate()) {
+            $this->response->redirect($this->url->link($this->config->get('action_default'), '', true));
+        } else {
+            $append_token = !empty($this->session->data['user_token']) ? '&user_token=' . $this->session->data['user_token'] : '';
+
+            $this->response->redirect(sprintf($this->config->get('payment_squareup_admin_url'), (int)$this->request->get['squareup_transaction_id'], $append_token));
+        }
+    }
+
+    protected function validate() {
+        if (empty($this->request->get['cron_token']) || $this->request->get['cron_token'] != $this->config->get('payment_squareup_cron_token')) {
+            return false;
+        }
+
+        if (empty($this->request->get['squareup_transaction_id'])) {
+            return false;
+        }
+
+        if (!$this->config->get('payment_squareup_admin_url')) {
+            return false;
+        }
+
+        return true;
+    }
 }

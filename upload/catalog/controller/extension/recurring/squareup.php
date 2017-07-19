@@ -81,6 +81,11 @@ class ControllerExtensionRecurringSquareup extends Controller {
             'token_update_error' => ''
         );
 
+        $expirations = array(
+            'expired_authorized_transactions' => array(),
+            'expiring_authorized_transactions' => array()
+        );
+
         $result['token_update_error'] = $this->model_extension_payment_squareup->updateToken();
 
         $this->load->model('checkout/order');
@@ -162,6 +167,40 @@ class ControllerExtensionRecurringSquareup extends Controller {
                 $result['transaction_error'][] = '[ID: ' . $payment['order_recurring_id'] . '] - ' . $e->getMessage();
             }
         };
+
+        $this->load->model('checkout/order');
+
+        foreach ($this->model_extension_payment_squareup->getExpiringAuthorizedTransactions() as $expiring_authorized_transaction) {
+            $new_transaction = $this->squareup->getTransaction($expiring_authorized_transaction['location_id'], $expiring_authorized_transaction['transaction_id']);
+
+            $status = $new_transaction['tenders'][0]['card_details']['status'];
+            $refunds = !empty($new_transaction['refunds']) ? $new_transaction['refunds'] : array();
+
+            $this->model_extension_payment_squareup->updateTransaction($expiring_authorized_transaction['squareup_transaction_id'], $status, $refunds);
+
+            $order_info = $this->model_checkout_order->getOrder($expiring_authorized_transaction['order_id']);
+
+            $transaction_data = array(
+                'transaction_id' => $expiring_authorized_transaction['transaction_id'],
+                'order_id' => $expiring_authorized_transaction['order_id'],
+                'customer_name' => trim($order_info['firstname']) . ' ' . trim($order_info['lastname']),
+                'transaction_url' => $this->url->link('extension/payment/squareup/info', 'squareup_transaction_id=' . $expiring_authorized_transaction['squareup_transaction_id'] . '&cron_token=' . $this->config->get('payment_squareup_cron_token'), true)
+            );
+
+            if ($status != 'AUTHORIZED') {
+                $expirations['expired_authorized_transactions'][] = $transaction_data;
+
+                $order_status_id = $this->config->get('payment_squareup_status_' . strtolower($status));
+
+                $order_status_comment = $this->language->get('squareup_status_comment_' . strtolower($status));
+
+                $this->model_checkout_order->addOrderHistory($expiring_authorized_transaction['order_id'], $order_status_id, $order_status_comment, true);
+            } else {
+                $expirations['expiring_authorized_transactions'][] = $transaction_data;
+            }
+        }
+
+        $this->model_extension_payment_squareup->expirationEmail($expirations);
 
         if ($this->config->get('payment_squareup_cron_email_status')) {
             $this->model_extension_payment_squareup->cronEmail($result);

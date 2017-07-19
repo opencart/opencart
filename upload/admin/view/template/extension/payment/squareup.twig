@@ -28,6 +28,7 @@
             <div class="panel-body">
                 <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-square-checkout" class="form-horizontal">
                     <input type="hidden" name="payment_squareup_card" value="1" />
+                    <input type="hidden" name="payment_squareup_admin_url" value="{{ payment_squareup_admin_url }}" />
                     <ul class="nav nav-tabs">
                         <li><a href="#tab-setting" data-toggle="tab"><i class="fa fa-gear"></i>&nbsp;{{ tab_setting }}</a></li>
                         <li><a href="#tab-transaction" data-toggle="tab"><i class="fa fa-list"></i>&nbsp;{{ tab_transaction }}</a></li>
@@ -42,7 +43,7 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <span data-toggle="tooltip" title="{{ text_disabled_connect_help_text }}">
-                                                <a id="reconnect-button" href="{{ payment_squareup_auth_link }}" class="btn btn-primary btn-lg btn-connect" >{{ button_reconnect}}</a>
+                                                <a id="reconnect-button" href="javascript:void(0)" class="btn btn-primary btn-lg btn-connect" >{{ button_reconnect}}</a>
                                             </span>
                                             
                                             <span data-toggle="tooltip" title="{{ text_disabled_connect_help_text }}">
@@ -57,7 +58,7 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <span data-toggle="tooltip" title="{{ text_disabled_connect_help_text }}">
-                                                <a id="connect-button" href="{{ payment_squareup_auth_link }}" class="btn btn-primary btn-lg btn-connect">{{ button_connect }}</a>
+                                                <a id="connect-button" href="javascript:void(0)" class="btn btn-primary btn-lg btn-connect">{{ button_connect }}</a>
                                             </span>
                                             <p>{{ text_not_connected_info }}</p>
                                         </div>
@@ -93,7 +94,7 @@
                                         <span data-toggle="tooltip" title="{{ text_redirect_uri_help }}">{{ text_redirect_uri_label }}</span>
                                     </label>
                                     <div class="col-sm-10">
-                                        <input type="text" id="input_payment_squareup_redirect_uri_static" name="payment_squareup_redirect_uri_static" value="{{ payment_squareup_redirect_uri }}" class="form-control" disabled />
+                                        <input readonly type="text" id="input_payment_squareup_redirect_uri_static" name="payment_squareup_redirect_uri_static" class="form-control" value="{{ payment_squareup_redirect_uri }}" />
                                     </div>
                                 </div>
                                 <div class="form-group required">
@@ -205,7 +206,7 @@
                                         {{ text_merchant_name_label }}
                                     </label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="merchant_name" value="{{ payment_squareup_merchant_name }}" placeholder="{{ text_merchant_name_placeholder }}" id="input_merchant_name" class="form-control" disabled/>
+                                        <input type="text" name="merchant_name" value="{{ payment_squareup_merchant_name }}" placeholder="{{ text_merchant_name_placeholder }}" id="input_merchant_name" class="form-control" readonly />
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -213,7 +214,7 @@
                                         {{ text_access_token_expires_label }}
                                     </label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="access_token_expires" value="{{ access_token_expires_time }}" placeholder="{{ text_access_token_expires_placeholder }}" id="access_token_expires_time" class="form-control" disabled />
+                                        <input type="text" name="access_token_expires" value="{{ access_token_expires_time }}" placeholder="{{ text_access_token_expires_placeholder }}" id="access_token_expires_time" class="form-control" readonly />
                                     </div>
                                 </div>
                                 <div class="form-group required">
@@ -311,14 +312,14 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label"><span data-toggle="tooltip" data-original-title="{{ help_local_cron }}">{{ text_local_cron }}</span></label>
                                     <div class="col-sm-10">
-                                        <input disabled type="text" class="form-control" value="{{ payment_squareup_cron_command }}" />
+                                        <input readonly type="text" class="form-control" value="{{ payment_squareup_cron_command }}" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label"><span data-toggle="tooltip" data-original-title="{{ help_remote_cron }}">{{ text_remote_cron }}</span></label>
                                     <div class="col-sm-10">
                                         <div class="input-group">
-                                            <input disabled type="text" name="payment_squareup_cron_url" id="input_payment_squareup_cron_url" class="form-control" value="" />
+                                            <input readonly type="text" name="payment_squareup_cron_url" id="input_payment_squareup_cron_url" class="form-control" value="" />
                                             <div data-toggle="tooltip" data-original-title="{{ text_refresh_token }}" class="input-group-addon btn btn-primary" id="refresh-cron-token">
                                                 <i class="fa fa-refresh"></i>
                                             </div>
@@ -461,12 +462,10 @@ $(document).ready(function() {
     }
 
     var onConnectClick = function(event) {
-        if ($('#input_payment_squareup_client_id').val() != '{{ payment_squareup_client_id }}' || $('#input_payment_squareup_client_secret').val() != '{{ payment_squareup_client_secret }}') {
-            event.preventDefault();
-            event.stopPropagation();
+        event.preventDefault();
+        event.stopPropagation();
 
-            $('form').attr('action','{{ action_save_auth }}').submit();
-        }
+        $('form').attr('action','{{ action_save_auth }}').submit();
     }
 
     var listTransactions = function(page) {
@@ -489,9 +488,9 @@ $(document).ready(function() {
                 html += '<td class="text-left hidden-xs">' + row.transaction_id + '</td>';
                 html += '<td class="text-left hidden-xs">' + row.customer + '</td>';
                 html += '<td class="text-left"><a target="_blank" href="' + row.url_order + '">' + row.order_id + '</td>';
-                html += '<td class="text-left hidden-xs">' + row.type + '</td>';
+                html += '<td class="text-left hidden-xs">' + row.status + '</td>';
                 html += '<td class="text-left hidden-xs">' + row.amount + '</td>';
-                html += '<td class="text-left hidden-xs">' + row.num_refunds + '</td>';
+                html += '<td class="text-left hidden-xs">' + row.amount_refunded + '</td>';
                 html += '<td class="text-left hidden-xs hidden-sm">' + row.ip + '</td>';
                 html += '<td class="text-left">' + row.date_created + '</td>';
                 html += '<td class="text-right">';
@@ -736,6 +735,10 @@ $(document).ready(function() {
         );
     });
     
+    $(document).on('click', '#cron_click', function() { 
+        $('.nav-tabs a[href="#tab-cron"]').tab('show'); 
+    });
+
     setCronUrl();
 
     listTransactions();

@@ -31,7 +31,10 @@ class ControllerCommonColumnLeft extends Controller {
 		$languages = glob(DIR_LANGUAGE . '*', GLOB_ONLYDIR);
 		
 		foreach ($languages as $language) {
-			$data['languages'][] = basename($language);
+			$data['languages'][] = array(
+				'text'  => $this->language->get('text_' . basename($language)),
+				'value' => basename($language)
+			);
 		}
 
 		if (!isset($this->request->get['route'])) {

@@ -12,7 +12,6 @@ $_['text_manual']      = 'Manually Move';
 $_['text_move']        = 'Move';
 $_['text_to']          = 'to';
 $_['text_config']      = 'Edit config.php change';
-$_['text_admin']       = 'Edit admin/config.php and change';
 
 // Button
 $_['button_move']      = 'Move';

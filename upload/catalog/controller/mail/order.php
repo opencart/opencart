@@ -24,7 +24,7 @@ class ControllerMailOrder extends Controller {
 		} else {
 			$notify = '';
 		}
-						
+					
 		// We need to grab the old order status ID
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 		

@@ -175,7 +175,7 @@ class ControllerCommonProfile extends Controller {
 		$user_info = $this->model_user_user->getUserByUsername($this->request->post['username']);
 
 		if ($user_info && ($this->user->getId() != $user_info['user_id'])) {
-			$this->error['warning'] = $this->language->get('error_exists_username');
+			$this->error['warning'] = $this->language->get('error_username_exists');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
@@ -193,7 +193,7 @@ class ControllerCommonProfile extends Controller {
 		$user_info = $this->model_user_user->getUserByEmail($this->request->post['email']);
 
 		if ($user_info && ($this->user->getId() != $user_info['user_id'])) {
-			$this->error['warning'] = $this->language->get('error_exists_email');
+			$this->error['warning'] = $this->language->get('error_email_exists');
 		}
 
 		if ($this->request->post['password']) {

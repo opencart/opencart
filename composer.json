@@ -1,5 +1,5 @@
 {
-	"name": "opencart/opencart",
+    "name": "opencart/opencart",
     "type": "project",
     "description": "OpenCart",
     "keywords": ["opencart", "ecommerce", "framework", "opensource"],
@@ -7,11 +7,20 @@
     "license": "GPL-3.0+",
     "require": {
         "cardinity/cardinity-sdk-php": "^1.0",
-        "braintree/braintree_php" : "3.2.0",
+        "braintree/braintree_php": "3.2.0",
         "leafo/scssphp": "0.0.12",
         "twig/twig": "^1.26",
         "divido/divido-php": ">=1.1.1",
         "klarna/kco_rest": "^2.2",
-        "php": ">=5.4.0"
+        "php": ">=5.4.0",
+        "rmanara/opencart_ide": "^1.0"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "IDE\\Installer::Init"
+        ],
+        "post-update-cmd": [
+            "IDE\\Installer::Init"
+        ]
     }
 }

@@ -62,7 +62,7 @@
                       <th class="text-right">{{ text_action }}</th>
                         </thead>
                     <tbody>
-                    
+
                     {% if downloads %}
                     {% for download in downloads %}
                     <tr>
@@ -83,7 +83,7 @@
                     </tr>
                     {% endif %}
                     </tbody>
-                    
+
                   </table>
                 </fieldset>
               </div>
@@ -159,7 +159,7 @@
   <script type="text/javascript"><!--
 $('#button-opencart').on('click', function(e) {
 	$('#modal-opencart').remove();
-	
+
 	$.ajax({
 		url: 'index.php?route=marketplace/api&user_token={{ user_token }}',
 		dataType: 'html',
@@ -171,7 +171,7 @@ $('#button-opencart').on('click', function(e) {
 		},
 		success: function(html) {
 			$('body').append('<div id="modal-opencart" class="modal">' + html + '</div>');
-			
+
 			$('#modal-opencart').modal('show');
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -179,7 +179,7 @@ $('#button-opencart').on('click', function(e) {
 		}
 	});
 });
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('#button-buy').on('click', function(e) {
 	e.preventDefault();
@@ -201,6 +201,7 @@ $('#button-buy').on('click', function(e) {
 	html += '          <input type="password" name="pin" value="" placeholder="{{ entry_pin }}" id="input-pin" class="form-control" />';
 	html += '        </div>';
 	html += '        <div class="form-group text-right">';
+  html += '          <div class="pull-left"><a href="https://www.opencart.com/index.php?route=support/contact" class="btn btn-default btn-lg" target="_blank">{{ button_forgot_pin }}</a></div>';
 	html += '          <button type="button" id="button-purchase" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg">{{ button_purchase }}</button>';
 	html += '        </div>';
 	html += '      </div>';
@@ -231,7 +232,7 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
 		},
 		success: function(json) {
 			$('.alert-dismissible').remove();
-			
+
 			if (json['error']) {
 				$('#modal-purchase .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
@@ -240,7 +241,7 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('#modal-purchase').modal('hide');
-				
+
 				$('#tab-download .btn-primary').prop('disabled', false);
 			}
 		},
@@ -272,7 +273,7 @@ $('#tab-download').on('click', '.btn-primary', function(e) {
 		},
 		success: function(json) {
 			$('.alert-dismissible').remove();
-			
+
 			if (json['error']) {
 				$('#tab-download').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button</div>');
 			}
@@ -280,16 +281,16 @@ $('#tab-download').on('click', '.btn-primary', function(e) {
 			if (json['redirect']) {
 				location = json['redirect'];
 			}
-						
+
 			if (json['text']) {
 				$('#progress-bar').css('width', '20%');
 				$('#progress-text').html(json['text']);
 			}
-						
+
 			if (json['extension_install_id']) {
 				$(element).replaceWith('<button type="button" data-install="' + $(element).attr('data-install') + '" data-uninstall="' + json['extension_install_id'] + '" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-trash-o"></i> {{ button_uninstall }}</button>');
 			}
-						
+
 			if (json['next']) {
 				next(json['next'], element, 1);
 			}
@@ -313,12 +314,12 @@ function next(url, element, i) {
 				$('#progress-bar').addClass('progress-bar-danger');
 				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
 			}
-			
+
 			if (json['success']) {
 				$('#progress-bar').addClass('progress-bar-success');
 				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
 			}
-			
+
 			if (json['text']) {
 				$('#progress-text').html(json['text']);
 			}
@@ -362,7 +363,7 @@ $('#tab-download').on('click', ' .btn-danger', function(e) {
 				$('#progress-bar').css('width', '100%');
 				$('#progress-bar').addClass('progress-bar-success');
 				$('#progress-text').html(json['success']);
-				
+
 				$(element).replaceWith('<button type="button" data-install="' + $(element).attr('data-install') + '" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> {{ button_install }}</button>');
 			}
 		},
@@ -396,16 +397,16 @@ $('#button-comment').on('click', function() {
 		},
 		success: function(json) {
 			$('.alert-dismissible').remove();
-			
+
 			if (json['error']) {
 				$('#tab-comment').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
-			
+
 			if (json['success']) {
 				$('#tab-comment').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('#comment').load('index.php?route=marketplace/marketplace/comment&user_token={{ user_token }}&extension_id={{ extension_id }}');
-			
+
 				$('textarea[name=\'comment\']').val('');
 			}
 		},
@@ -418,9 +419,9 @@ $('#button-comment').on('click', function() {
 // Next replies
 $('#comment').on('click', '.btn-block', function(e) {
 	e.preventDefault();
-	
+
 	var element = this;
-	
+
 	$.ajax({
 		url: $(element).attr('href'),
 		dataType: 'html',
@@ -432,7 +433,7 @@ $('#comment').on('click', '.btn-block', function(e) {
 		},
 		success: function(html) {
 			$(element).parent().parent().parent().append(html);
-			
+
 			$(element).parent().remove();
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -451,14 +452,14 @@ $('#comment').on('click', '.btn-link', function(e) {
 // Add reply
 $('#comment').on('click', '.btn-primary', function(e) {
 	e.preventDefault();
-	
+
 	var element = this;
-	
+
 	$.ajax({
 		url: $(element).attr('href'),
 		type: 'post',
 		dataType: 'json',
-		data: 'comment=' + encodeURIComponent($(element).parents('.reply-input-box').find('textarea[name=\'comment\']').val()),		
+		data: 'comment=' + encodeURIComponent($(element).parents('.reply-input-box').find('textarea[name=\'comment\']').val()),
 		beforeSend: function() {
 			$(element).button('loading');
 		},
@@ -467,16 +468,16 @@ $('#comment').on('click', '.btn-primary', function(e) {
 		},
 		success: function(json) {
 			$('.alert-dismissible').remove();
-			
+
 			if (json['error']) {
 				$(element).parents('.reply-input-box').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
-			
+
 			if (json['success']) {
 				$(element).parents('.reply-input-box').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$(element).parents('.reply-input-box').parents('.media').find('.reply-refresh').last().trigger('click');
-			
+
 				$(element).parents('.reply-input-box').find('textarea[name=\'comment\']').val('');
 			}
 		},
@@ -489,9 +490,9 @@ $('#comment').on('click', '.btn-primary', function(e) {
 // Refresh
 $('#comment').on('click', '.reply-refresh', function(e) {
 	e.preventDefault();
-	
+
 	var element = this;
-	
+
 	$.ajax({
 		url: $(element).attr('href'),
 		dataType: 'html',
@@ -509,7 +510,7 @@ $('#comment').on('click', '.reply-refresh', function(e) {
 		}
 	});
 });
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $(document).ready(function() {
 	$('.thumbnails').magnificPopup({
@@ -520,6 +521,6 @@ $(document).ready(function() {
 		}
 	});
 });
-//--></script> 
+//--></script>
 </div>
-{{ footer }} 
+{{ footer }}

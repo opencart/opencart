@@ -44,7 +44,7 @@ class ControllerCommonHeader extends Controller {
 				if (is_file(DIR_IMAGE . $user_info['image'])) {
 					$data['image'] = $this->model_tool_image->resize($user_info['image'], 45, 45);
 				} else {
-					$data['image'] = $this->model_tool_image->resize('profile.png', 45, 45);
+					$data['image'] = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $user_info['email'] ) ) ) . "?d=" . urlencode( $this->model_tool_image->resize('profile.png', 45, 45) ) . "&s=45";
 				}
 			} else {
 				$data['firstname'] = '';

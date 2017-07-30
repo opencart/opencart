@@ -162,7 +162,7 @@
                   {% if products %}
                   {% for product in products %}
                   <tr>
-                    <td class="text-center rowlink-skip {% if product.status == "Enabled" %} success {% else %} danger {% endif %}"><a href="{{ product.edit }}"></a>{% if product.product_id in selected %}
+                    <td class="text-center rowlink-skip"><a href="{{ product.edit }}"></a>{% if product.product_id in selected %}
                       <input type="checkbox" name="selected[]" value="{{ product.product_id }}" checked="checked" />
                       {% else %}
                       <input type="checkbox" name="selected[]" value="{{ product.product_id }}" />
@@ -176,7 +176,7 @@
                       {{ product.price }}
                       {% endif %}</td>
                     <td class="text-right">{% if product.quantity <= 0 %} <span class="label label-warning">{{ product.quantity }}</span> {% elseif product.quantity <= 5 %} <span class="label label-danger">{{ product.quantity }}</span> {% else %} <span class="label label-success">{{ product.quantity }}</span> {% endif %}</td>
-                    <td class="text-left">{{ product.status }}</td>
+                    <td class="text-left{% if product.status == "Enabled" %} text-success {% else %} text-danger {% endif %}">{{ product.status }}</td>
                     <td class="text-right"><a href="{{ product.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                   </tr>
                   {% endfor %}

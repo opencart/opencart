@@ -2,9 +2,9 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
+      <div class="pull-right"><div class="btn-group" role="group" aria-label="...">
         <button type="submit" form="form-store" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -79,7 +79,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-theme">{{ entry_theme }}</label>
                 <div class="col-sm-10">
-                  <select name="config_theme" id="input-theme" class="form-control">
+                  <select name="config_theme" id="input-theme" class="selectpicker" data-container="body" data-width="100%">
                     {% for theme in themes %}
                     {% if theme.value == config_theme %}
                     <option value="{{ theme.value }}" selected="selected">{{ theme.text }}</option>
@@ -94,7 +94,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-layout">{{ entry_layout }}</label>
                 <div class="col-sm-10">
-                  <select name="config_layout_id" id="input-layout" class="form-control">
+                  <select name="config_layout_id" id="input-layout" class="selectpicker" data-container="body" data-width="100%">
                     {% for layout in layouts %}
                     {% if layout.layout_id == config_layout_id %}
                     <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
@@ -207,7 +207,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-country">{{ entry_country }}</label>
                 <div class="col-sm-10">
-                  <select name="config_country_id" id="input-country" class="form-control">
+                  <select name="config_country_id" id="input-country" class="selectpicker" data-container="body" data-width="100%" data-live-search="true">
                     {% for country in countries %}
                     {% if country.country_id == config_country_id %}
                     <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
@@ -221,14 +221,14 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-zone">{{ entry_zone }}</label>
                 <div class="col-sm-10">
-                  <select name="config_zone_id" id="input-zone" class="form-control">
+                  <select name="config_zone_id" id="input-zone" class="selectpicker" data-container="body" data-width="100%" data-live-search="true">
                   </select>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-language">{{ entry_language }}</label>
                 <div class="col-sm-10">
-                  <select name="config_language" id="input-language" class="form-control">
+                  <select name="config_language" id="input-language" class="selectpicker" data-container="body" data-width="100%">
                     {% for language in languages %}
                     {% if language.code == config_language %}
                     <option value="{{ language.code }}" selected="selected">{{ language.name }}</option>
@@ -242,7 +242,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-currency"><span data-toggle="tooltip" title="{{ help_currency }}">{{ entry_currency }}</span></label>
                 <div class="col-sm-10">
-                  <select name="config_currency" id="input-currency" class="form-control">
+                  <select name="config_currency" id="input-currency" class="selectpicker" data-container="body" data-width="100%">
                     {% for currency in currencies %}
                     {% if currency.code == config_currency %}
                     <option value="{{ currency.code }}" selected="selected">{{ currency.title }}</option>
@@ -260,30 +260,21 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label">{{ entry_tax }}</label>
                   <div class="col-sm-10">
-                    <label class="radio-inline">
-                      {% if config_tax %}
-                      <input type="radio" name="config_tax" value="1" checked="checked" />
-                      {{ text_yes }}
-                      {% else %}
-                      <input type="radio" name="config_tax" value="1" />
-                      {{ text_yes }}
-                      {% endif %}
-                    </label>
-                    <label class="radio-inline">
-                      {% if not config_tax %}
-                      <input type="radio" name="config_tax" value="0" checked="checked" />
-                      {{ text_no }}
-                      {% else %}
-                      <input type="radio" name="config_tax" value="0" />
-                      {{ text_no }}
-                      {% endif %}
-                    </label>
+					<div class="btn-group" data-toggle="buttons">
+					{% if config_tax %}
+						<label class="btn btn-default"><input type="radio" name="config_tax" value="1" checked="checked" />{{ text_yes }}</label>
+						<label class="btn btn-default"><input type="radio" name="config_tax" value="0" />{{ text_no }}</label>
+					{% else %}
+						<label class="btn btn-default"><input type="radio" name="config_tax" value="1" />{{ text_yes }}</label>
+						<label class="btn btn-default"><input type="radio" name="config_tax" value="0" checked="checked" />{{ text_no }}</label>
+					{% endif %}
+					</div>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-tax-default"><span data-toggle="tooltip" title="{{ help_tax_default }}">{{ entry_tax_default }}</span></label>
                   <div class="col-sm-10">
-                    <select name="config_tax_default" id="input-tax-default" class="form-control">
+                    <select name="config_tax_default" id="input-tax-default" class="selectpicker" data-container="body" data-width="100%">
                       <option value="">{{ text_none }}</option>
                       {% if config_tax_default == 'shipping' %}
                       <option value="shipping" selected="selected">{{ text_shipping }}</option>
@@ -301,7 +292,7 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-tax-customer"><span data-toggle="tooltip" title="{{ help_tax_customer }}">{{ entry_tax_customer }}</span></label>
                   <div class="col-sm-10">
-                    <select name="config_tax_customer" id="input-tax-customer" class="form-control">
+                    <select name="config_tax_customer" id="input-tax-customer" class="selectpicker" data-container="body" data-width="100%">
                       <option value="">{{ text_none }}</option>
                       {% if config_tax_customer == 'shipping' %}
                       <option value="shipping" selected="selected">{{ text_shipping }}</option>
@@ -322,7 +313,7 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-customer-group"><span data-toggle="tooltip" title="{{ help_customer_group }}">{{ entry_customer_group }}</span></label>
                   <div class="col-sm-10">
-                    <select name="config_customer_group_id" id="input-customer-group" class="form-control">
+                    <select name="config_customer_group_id" id="input-customer-group" class="selectpicker" data-container="body" data-width="100%">
                       {% for customer_group in customer_groups %}
                       {% if customer_group.customer_group_id == config_customer_group_id %}
                       <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
@@ -357,30 +348,21 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_customer_price }}">{{ entry_customer_price }}</span></label>
                   <div class="col-sm-10">
-                    <label class="radio-inline">
-                      {% if config_customer_price %}
-                      <input type="radio" name="config_customer_price" value="1" checked="checked" />
-                      {{ text_yes }}
-                      {% else %}
-                      <input type="radio" name="config_customer_price" value="1" />
-                      {{ text_yes }}
-                      {% endif %}
-                    </label>
-                    <label class="radio-inline">
-                      {% if not config_customer_price %}
-                      <input type="radio" name="config_customer_price" value="0" checked="checked" />
-                      {{ text_no }}
-                      {% else %}
-                      <input type="radio" name="config_customer_price" value="0" />
-                      {{ text_no }}
-                      {% endif %}
-                    </label>
+                  	<div class="btn-group" data-toggle="buttons">
+					{% if config_customer_price %}
+						<label class="btn btn-default"><input type="radio" name="config_customer_price" value="1" checked="checked" />{{ text_yes }}</label>
+						<label class="btn btn-default"><input type="radio" name="config_customer_price" value="0" />{{ text_no }}</label>
+					{% else %}
+						<label class="btn btn-default"><input type="radio" name="config_customer_price" value="1" />{{ text_yes }}</label>
+						<label class="btn btn-default"><input type="radio" name="config_customer_price" value="0" checked="checked" />{{ text_no }}</label>
+					{% endif %}
+					</div>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-account"><span data-toggle="tooltip" title="{{ help_account }}">{{ entry_account }}</span></label>
                   <div class="col-sm-10">
-                    <select name="config_account_id" id="input-account" class="form-control">
+                    <select name="config_account_id" id="input-account" class="selectpicker" data-container="body" data-width="100%">
                       <option value="0">{{ text_none }}</option>
                       {% for information in informations %}
                       {% if information.information_id == config_account_id %}
@@ -398,53 +380,35 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label">{{ entry_cart_weight }}</label>
                   <div class="col-sm-10">
-                    <label class="radio-inline">
-                      {% if config_cart_weight %}
-                      <input type="radio" name="config_cart_weight" value="1" checked="checked" />
-                      {{ text_yes }}
-                      {% else %}
-                      <input type="radio" name="config_cart_weight" value="1" />
-                      {{ text_yes }}
-                      {% endif %}
-                    </label>
-                    <label class="radio-inline">
-                      {% if not config_cart_weight %}
-                      <input type="radio" name="config_cart_weight" value="0" checked="checked" />
-                      {{ text_no }}
-                      {% else %}
-                      <input type="radio" name="config_cart_weight" value="0" />
-                      {{ text_no }}
-                      {% endif %}
-                    </label>
-                  </div>
+                  	<div class="btn-group" data-toggle="buttons">
+					{% if config_cart_weight %}
+						<label class="btn btn-default"><input type="radio" name="config_cart_weight" value="1" checked="checked" />{{ text_yes }}</label>
+						<label class="btn btn-default"><input type="radio" name="config_cart_weight" value="0" />{{ text_no }}</label>
+					{% else %}
+						<label class="btn btn-default"><input type="radio" name="config_cart_weight" value="1" />{{ text_yes }}</label>
+						<label class="btn btn-default"><input type="radio" name="config_cart_weight" value="0" checked="checked" />{{ text_no }}</label>
+					{% endif %}
+					</div>
+				  </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_checkout_guest }}">{{ entry_checkout_guest }}</span></label>
                   <div class="col-sm-10">
-                    <label class="radio-inline">
-                      {% if config_checkout_guest %}
-                      <input type="radio" name="config_checkout_guest" value="1" checked="checked" />
-                      {{ text_yes }}
-                      {% else %}
-                      <input type="radio" name="config_checkout_guest" value="1" />
-                      {{ text_yes }}
-                      {% endif %}
-                    </label>
-                    <label class="radio-inline">
-                      {% if not config_checkout_guest %}
-                      <input type="radio" name="config_checkout_guest" value="0" checked="checked" />
-                      {{ text_no }}
-                      {% else %}
-                      <input type="radio" name="config_checkout_guest" value="0" />
-                      {{ text_no }}
-                      {% endif %}
-                    </label>
+                  	<div class="btn-group" data-toggle="buttons">
+					{% if config_checkout_guest %}
+						<label class="btn btn-default"><input type="radio" name="config_checkout_guest" value="1" checked="checked" />{{ text_yes }}</label>
+						<label class="btn btn-default"><input type="radio" name="config_checkout_guest" value="0" />{{ text_no }}</label>
+					{% else %}
+						<label class="btn btn-default"><input type="radio" name="config_checkout_guest" value="1" />{{ text_yes }}</label>
+						<label class="btn btn-default"><input type="radio" name="config_checkout_guest" value="0" checked="checked" />{{ text_no }}</label>
+					{% endif %}
+					</div>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-checkout"><span data-toggle="tooltip" title="{{ help_checkout }}">{{ entry_checkout }}</span></label>
                   <div class="col-sm-10">
-                    <select name="config_checkout_id" id="input-checkout" class="form-control">
+                    <select name="config_checkout_id" id="input-checkout" class="selectpicker" data-container="body" data-width="100%">
                       <option value="0">{{ text_none }}</option>
                       {% for information in informations %}
                       {% if information.information_id == config_checkout_id %}
@@ -459,7 +423,7 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-order-status"><span data-toggle="tooltip" title="{{ help_order_status }}">{{ entry_order_status }}</span></label>
                   <div class="col-sm-10">
-                    <select name="config_order_status_id" id="input-order-status" class="form-control">
+                    <select name="config_order_status_id" id="input-order-status" class="selectpicker" data-container="body" data-width="100%">
                       {% for order_status in order_statuses %}
                       {% if order_status.order_status_id == config_order_status_id %}
                       <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
@@ -476,47 +440,29 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_stock_display }}">{{ entry_stock_display }}</span></label>
                   <div class="col-sm-10">
-                    <label class="radio-inline">
-                      {% if config_stock_display %}
-                      <input type="radio" name="config_stock_display" value="1" checked="checked" />
-                      {{ text_yes }}
-                      {% else %}
-                      <input type="radio" name="config_stock_display" value="1" />
-                      {{ text_yes }}
-                      {% endif %}
-                    </label>
-                    <label class="radio-inline">
-                      {% if not config_stock_display %}
-                      <input type="radio" name="config_stock_display" value="0" checked="checked" />
-                      {{ text_no }}
-                      {% else %}
-                      <input type="radio" name="config_stock_display" value="0" />
-                      {{ text_no }}
-                      {% endif %}
-                    </label>
+                  	<div class="btn-group" data-toggle="buttons">
+					{% if config_stock_display %}
+						<label class="btn btn-default"><input type="radio" name="config_stock_display" value="1" checked="checked" />{{ text_yes }}</label>
+						<label class="btn btn-default"><input type="radio" name="config_stock_display" value="0" />{{ text_no }}</label>
+					{% else %}
+						<label class="btn btn-default"><input type="radio" name="config_stock_display" value="1" />{{ text_yes }}</label>
+						<label class="btn btn-default"><input type="radio" name="config_stock_display" value="0" checked="checked" />{{ text_no }}</label>
+					{% endif %}
+					</div>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_stock_checkout }}">{{ entry_stock_checkout }}</span></label>
                   <div class="col-sm-10">
-                    <label class="radio-inline">
-                      {% if config_stock_checkout %}
-                      <input type="radio" name="config_stock_checkout" value="1" checked="checked" />
-                      {{ text_yes }}
-                      {% else %}
-                      <input type="radio" name="config_stock_checkout" value="1" />
-                      {{ text_yes }}
-                      {% endif %}
-                    </label>
-                    <label class="radio-inline">
-                      {% if not config_stock_checkout %}
-                      <input type="radio" name="config_stock_checkout" value="0" checked="checked" />
-                      {{ text_no }}
-                      {% else %}
-                      <input type="radio" name="config_stock_checkout" value="0" />
-                      {{ text_no }}
-                      {% endif %}
-                    </label>
+                  	<div class="btn-group" data-toggle="buttons">
+					{% if config_stock_checkout %}
+						<label class="btn btn-default"><input type="radio" name="config_stock_checkout" value="1" checked="checked" />{{ text_yes }}</label>
+						<label class="btn btn-default"><input type="radio" name="config_stock_checkout" value="0" />{{ text_no }}</label>
+					{% else %}
+						<label class="btn btn-default"><input type="radio" name="config_stock_checkout" value="1" />{{ text_yes }}</label>
+						<label class="btn btn-default"><input type="radio" name="config_stock_checkout" value="0" checked="checked" />{{ text_no }}</label>
+					{% endif %}
+					</div>
                   </div>
                 </div>
               </fieldset>
@@ -539,24 +485,15 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_secure }}">{{ entry_secure }}</span></label>
                 <div class="col-sm-10">
-                  <label class="radio-inline">
-                    {% if config_secure %}
-                    <input type="radio" name="config_secure" value="1" checked="checked" />
-                    {{ text_yes }}
-                    {% else %}
-                    <input type="radio" name="config_secure" value="1" />
-                    {{ text_yes }}
-                    {% endif %}
-                  </label>
-                  <label class="radio-inline">
-                    {% if not config_secure %}
-                    <input type="radio" name="config_secure" value="0" checked="checked" />
-                    {{ text_no }}
-                    {% else %}
-                    <input type="radio" name="config_secure" value="0" />
-                    {{ text_no }}
-                    {% endif %}
-                  </label>
+                  	<div class="btn-group" data-toggle="buttons">
+					{% if config_secure %}
+						<label class="btn btn-default"><input type="radio" name="config_secure" value="1" checked="checked" />{{ text_yes }}</label>
+						<label class="btn btn-default"><input type="radio" name="config_secure" value="0" />{{ text_no }}</label>
+					{% else %}
+						<label class="btn btn-default"><input type="radio" name="config_secure" value="1" />{{ text_yes }}</label>
+						<label class="btn btn-default"><input type="radio" name="config_secure" value="0" checked="checked" />{{ text_no }}</label>
+					{% endif %}
+					</div>
                 </div>
               </div>
             </div>
@@ -572,9 +509,11 @@ $('select[name=\'config_theme\']').on('change', function() {
 		dataType: 'html',
 		beforeSend: function() {
 			$('select[name=\'config_theme\']').prop('disabled', true);
+			$('select').selectpicker('refresh');
 		},
 		complete: function() {
 			$('select[name=\'config_theme\']').prop('disabled', false);
+			$('select').selectpicker('refresh');
 		},
 		success: function(html) {
 			$('#theme').attr('src', html);
@@ -586,6 +525,7 @@ $('select[name=\'config_theme\']').on('change', function() {
 });
 
 $('select[name=\'config_theme\']').trigger('change');
+$('select').selectpicker('refresh');
 //--></script>   <script type="text/javascript"><!--
 $('select[name=\'config_country_id\']').on('change', function() {
 	$.ajax({
@@ -593,9 +533,11 @@ $('select[name=\'config_country_id\']').on('change', function() {
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'config_country_id\']').prop('disabled', true);
+			$('select').selectpicker('refresh');
 		},
 		complete: function() {
 			$('select[name=\'config_country_id\']').prop('disabled', false);
+			$('select').selectpicker('refresh');
 		},
 		success: function(json) {
 			html = '<option value="">{{ text_select }}</option>';
@@ -623,5 +565,6 @@ $('select[name=\'config_country_id\']').on('change', function() {
 });
 
 $('select[name=\'config_country_id\']').trigger('change');
+$('select').selectpicker('refresh');
 //--></script></div>
 {{ footer }} 

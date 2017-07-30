@@ -110,21 +110,15 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_store }}</label>
                 <div class="col-sm-10">
-                  <div class="well well-sm" style="height: 150px; overflow: auto;">
-                    {% for store in stores %}
-                    <div class="checkbox">
-                      <label>
-                        {% if store.store_id in category_store %}
-                        <input type="checkbox" name="category_store[]" value="{{ store.store_id }}" checked="checked" />
-                        {{ store.name }}
-                        {% else %}
-                        <input type="checkbox" name="category_store[]" value="{{ store.store_id }}" />
-                        {{ store.name }}
-                        {% endif %}
-                      </label>
-                    </div>
-                    {% endfor %}
-                  </div>
+					<select name="category_store[]" class="selectpicker" multiple data-actions-box="true" data-width="100%">
+					{% for store in stores %}
+						{% if store.store_id in category_store %}
+						<option value="{{ store.store_id }}" selected="selected">{{ store.name }}</option>
+						{% else %}
+						<option value="{{ store.store_id }}">{{ store.name }}</option>
+						{% endif %}
+  					{% endfor %}
+					</select>
                 </div>
               </div>
               <div class="form-group">
@@ -136,15 +130,17 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-top"><span data-toggle="tooltip" title="{{ help_top }}">{{ entry_top }}</span></label>
                 <div class="col-sm-10">
-                  <div class="checkbox">
-                    <label>
-                      {% if top %}
-                      <input type="checkbox" name="top" value="1" checked="checked" id="input-top" />
-                      {% else %}
-                      <input type="checkbox" name="top" value="1" id="input-top" />
-                      {% endif %}
-                      &nbsp; </label>
-                  </div>
+					<div class="btn-group" data-toggle="buttons">
+					{% if top %}
+						<label class="btn btn-default">
+							<input name="top" value="1" type="checkbox" id="input-top" checked="checked" />
+						</label>
+					{% else %}
+						<label class="btn btn-default">
+							<input name="top" value="1" type="checkbox" id="input-top" />
+						</label>
+					{% endif %}
+					</div>
                 </div>
               </div>
               <div class="form-group">

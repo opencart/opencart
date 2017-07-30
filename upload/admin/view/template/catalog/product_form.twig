@@ -380,7 +380,18 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_store }}</label>
                 <div class="col-sm-10">
-                  <div class="well well-sm" style="height: 150px; overflow: auto;"> {% for store in stores %}
+                  
+					<select name="product_store[]" class="selectpicker" multiple data-actions-box="true" data-width="100%">
+					{% for store in stores %}
+						{% if store.store_id in product_store %}
+						<option value="{{ store.store_id }}" selected="selected">{{ store.name }}</option>
+						{% else %}
+						<option value="{{ store.store_id }}">{{ store.name }}</option>
+						{% endif %}
+  					{% endfor %}
+					</select>
+                  
+<!--                  <div class="well well-sm" style="height: 150px; overflow: auto;"> {% for store in stores %}
                     <div class="checkbox">
                       <label> {% if store.store_id in product_store %}
                         <input type="checkbox" name="product_store[]" value="{{ store.store_id }}" checked="checked" />
@@ -390,7 +401,10 @@
                         {{ store.name }}
                         {% endif %} </label>
                     </div>
-                    {% endfor %}</div>
+                    {% endfor %}</div>-->
+                    
+                    
+                    
                 </div>
               </div>
               <div class="form-group">

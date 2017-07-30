@@ -84,6 +84,12 @@ class ControllerStartupSeoUrl extends Controller {
 
 						unset($data[$key]);
 					}
+				} elseif ($data['route'] == 'common/home') {
+					
+					$url .= '/'; 					
+					
+					unset($data[$key]);
+					
 				} elseif ($key == 'path') {
 					$categories = explode('_', $value);
 

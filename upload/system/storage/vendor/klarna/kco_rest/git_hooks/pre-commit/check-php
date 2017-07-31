@@ -1,0 +1,65 @@
+#!/bin/bash
+
+phpcs_alt="vendor/bin/phpcs bin/phpcs ~/.composer/vendor/bin/phpcs phpcs"
+phpmd_alt="vendor/bin/phpmd bin/phpmd ~/.composer/vendor/bin/phpmd phpmd"
+
+phpcs_standard='PSR2'
+if [ -e "phpcs.xml" ]; then
+    phpcs_standard="./phpcs.xml"
+fi
+
+phpmd_output=text
+phpmd_rules='phpmd.xml'
+if [ ! -e "$phpmd_rules" ]; then
+    phpmd_rules='codesize,design,naming,unusedcode'
+fi
+
+function run_phpcs {
+    $phpcs --report-emacs --standard="$phpcs_standard" ${@}
+}
+
+function run_phpmd {
+    $phpmd "`echo $1 | tr ' ' ','`" "$phpmd_output" "$phpmd_rules"
+}
+
+function changed_files {
+    git diff --cached --name-only --diff-filter=ACM
+}
+
+function write_staged {
+    while read file; do
+        name=`basename $file`
+        tmpfile=`mktemp /tmp/XXXXX-${name}`
+        git show ":$file" > $tmpfile
+        echo "$tmpfile"
+    done
+}
+
+case "${1}" in
+    --about )
+        echo "Perform static analysis of php source files"
+        ;;
+    * )
+        phpcs=`which $phpcs_alt 2>/dev/null | head -n 1`
+        phpmd=`which $phpmd_alt 2>/dev/null | head -n 1`
+
+        # call out to tools
+        files=`changed_files | grep -e '\.php$' | write_staged`
+        if [ -z "$files" ]; then
+            exit 0
+        fi
+
+        if test -z "$phpcs" -o -z "$phpmd"; then
+            echo "Please install phpcs and phpmd: composer global require squizlabs/php_codesniffer phpmd/phpmd"
+            exit 0
+        fi
+
+        run_phpcs $files
+        phpcs_status=$?
+        run_phpmd $files
+        phpmd_status=$?
+        rm $files
+        test "$phpcs_status" -eq 0 -a "$phpmd_status" -eq 0
+        exit $?
+        ;;
+esac

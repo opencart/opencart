@@ -1,12 +1,10 @@
 <?php
 class ControllerStartupSass extends Controller {
 	public function index() {
-		include_once(DIR_STORAGE . 'vendor/scss.inc.php');
-		
 		$file = DIR_APPLICATION . 'view/stylesheet/bootstrap.css';
 
 		if (!is_file($file) || !$this->config->get('developer_sass')) {
-			$scss = new Scssc();
+			$scss = new \scssc();
 			$scss->setImportPaths(DIR_APPLICATION . 'view/stylesheet/sass/');
 
 			$output = $scss->compile('@import "_bootstrap.scss"');

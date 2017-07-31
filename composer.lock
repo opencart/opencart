@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f52fc9452b0dbbe15e947e848dff8aa4",
-    "content-hash": "213b39a97f86b5423c22eee7a887e69e",
+    "content-hash": "5586cdb7d6eeebfa867e13d94daac7e2",
     "packages": [
         {
             "name": "braintree/braintree_php",
@@ -17,7 +16,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/braintree/braintree_php/c7e0e2d1ae21d659cddb5507fb0bf181813b5733.zip",
+                "url": "https://api.github.com/repos/braintree/braintree_php/zipball/c7e0e2d1ae21d659cddb5507fb0bf181813b5733",
                 "reference": "c7e0e2d1ae21d659cddb5507fb0bf181813b5733",
                 "shasum": ""
             },
@@ -49,7 +48,7 @@
                 }
             ],
             "description": "Braintree PHP Client Library",
-            "time": "2015-07-15 15:07:13"
+            "time": "2015-07-15T15:07:13+00:00"
         },
         {
             "name": "cardinity/cardinity-sdk-php",
@@ -61,7 +60,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/cardinity/cardinity-sdk-php/f51f6fbacee393b4eeff7b80be2b1cee77896b4c.zip",
+                "url": "https://api.github.com/repos/cardinity/cardinity-sdk-php/zipball/f51f6fbacee393b4eeff7b80be2b1cee77896b4c",
                 "reference": "f51f6fbacee393b4eeff7b80be2b1cee77896b4c",
                 "shasum": ""
             },
@@ -89,7 +88,7 @@
             ],
             "description": "Client library for Cardinity credit card processing API",
             "homepage": "http://cardinity.com",
-            "time": "2016-12-29 09:57:23"
+            "time": "2016-12-29T09:57:23+00:00"
         },
         {
             "name": "divido/divido-php",
@@ -101,7 +100,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/DividoFinancialServices/divido-api-php/799c8945aae76caba1970e429e2e0ad0510a940f.zip",
+                "url": "https://api.github.com/repos/DividoFinancialServices/divido-api-php/zipball/799c8945aae76caba1970e429e2e0ad0510a940f",
                 "reference": "799c8945aae76caba1970e429e2e0ad0510a940f",
                 "shasum": ""
             },
@@ -134,7 +133,7 @@
                 "instalments",
                 "payment processing"
             ],
-            "time": "2016-12-22 02:27:39"
+            "time": "2016-12-22T02:27:39+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -146,7 +145,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/guzzle/guzzle/70f1fa53b71c4647bf2762c09068a95f77e12fb8.zip",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/70f1fa53b71c4647bf2762c09068a95f77e12fb8",
                 "reference": "70f1fa53b71c4647bf2762c09068a95f77e12fb8",
                 "shasum": ""
             },
@@ -186,7 +185,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2016-07-15 19:28:39"
+            "time": "2016-07-15T19:28:39+00:00"
         },
         {
             "name": "guzzlehttp/log-subscriber",
@@ -198,7 +197,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/guzzle/log-subscriber/99c3c0004165db721d8ef7bbef60c996210e538a.zip",
+                "url": "https://api.github.com/repos/guzzle/log-subscriber/zipball/99c3c0004165db721d8ef7bbef60c996210e538a",
                 "reference": "99c3c0004165db721d8ef7bbef60c996210e538a",
                 "shasum": ""
             },
@@ -239,7 +238,7 @@
                 "log",
                 "plugin"
             ],
-            "time": "2014-10-13 03:31:43"
+            "time": "2014-10-13T03:31:43+00:00"
         },
         {
             "name": "guzzlehttp/oauth-subscriber",
@@ -251,7 +250,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/guzzle/oauth-subscriber/03f1ebe31d3112526106d0570c80eba6820e86e5.zip",
+                "url": "https://api.github.com/repos/guzzle/oauth-subscriber/zipball/03f1ebe31d3112526106d0570c80eba6820e86e5",
                 "reference": "03f1ebe31d3112526106d0570c80eba6820e86e5",
                 "shasum": ""
             },
@@ -290,7 +289,7 @@
                 "Guzzle",
                 "oauth"
             ],
-            "time": "2014-10-23 22:19:02"
+            "time": "2014-10-23T22:19:02+00:00"
         },
         {
             "name": "guzzlehttp/ringphp",
@@ -302,7 +301,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/guzzle/RingPHP/dbbb91d7f6c191e5e405e900e3102ac7f261bc0b.zip",
+                "url": "https://api.github.com/repos/guzzle/RingPHP/zipball/dbbb91d7f6c191e5e405e900e3102ac7f261bc0b",
                 "reference": "dbbb91d7f6c191e5e405e900e3102ac7f261bc0b",
                 "shasum": ""
             },
@@ -341,7 +340,7 @@
                 }
             ],
             "description": "Provides a simple API and specification that abstracts away the details of HTTP into a single PHP function.",
-            "time": "2015-05-20 03:37:09"
+            "time": "2015-05-20T03:37:09+00:00"
         },
         {
             "name": "guzzlehttp/streams",
@@ -353,7 +352,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/guzzle/streams/47aaa48e27dae43d39fc1cea0ccf0d84ac1a2ba5.zip",
+                "url": "https://api.github.com/repos/guzzle/streams/zipball/47aaa48e27dae43d39fc1cea0ccf0d84ac1a2ba5",
                 "reference": "47aaa48e27dae43d39fc1cea0ccf0d84ac1a2ba5",
                 "shasum": ""
             },
@@ -391,7 +390,7 @@
                 "Guzzle",
                 "stream"
             ],
-            "time": "2014-10-12 19:18:40"
+            "time": "2014-10-12T19:18:40+00:00"
         },
         {
             "name": "klarna/kco_rest",
@@ -403,7 +402,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/klarna/kco_rest_php/8a2142a2ebb087bb61901d51d1bb9698790e78c5.zip",
+                "url": "https://api.github.com/repos/klarna/kco_rest_php/zipball/8a2142a2ebb087bb61901d51d1bb9698790e78c5",
                 "reference": "8a2142a2ebb087bb61901d51d1bb9698790e78c5",
                 "shasum": ""
             },
@@ -439,7 +438,7 @@
             ],
             "description": "Klarna Checkout PHP SDK",
             "homepage": "http://developers.klarna.com",
-            "time": "2015-12-07 09:51:35"
+            "time": "2015-12-07T09:51:35+00:00"
         },
         {
             "name": "leafo/scssphp",
@@ -451,7 +450,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/leafo/scssphp/ff76df3e45af45e808f3fcd516a2cb5cbc77f45e.zip",
+                "url": "https://api.github.com/repos/leafo/scssphp/zipball/ff76df3e45af45e808f3fcd516a2cb5cbc77f45e",
                 "reference": "ff76df3e45af45e808f3fcd516a2cb5cbc77f45e",
                 "shasum": ""
             },
@@ -485,7 +484,7 @@
             ],
             "description": "scssphp is a compiler for SCSS written in PHP.",
             "homepage": "http://leafo.net/scssphp/",
-            "time": "2014-07-07 01:51:39"
+            "time": "2014-07-07T01:51:39+00:00"
         },
         {
             "name": "psr/log",
@@ -497,7 +496,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/php-fig/log/4ebe3a8bf773a19edfe0a84b6585ba3d401b724d.zip",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
                 "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
                 "shasum": ""
             },
@@ -532,7 +531,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10 12:19:37"
+            "time": "2016-10-10T12:19:37+00:00"
         },
         {
             "name": "react/promise",
@@ -544,7 +543,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/reactphp/promise/62785ae604c8d69725d693eb370e1d67e94c4053.zip",
+                "url": "https://api.github.com/repos/reactphp/promise/zipball/62785ae604c8d69725d693eb370e1d67e94c4053",
                 "reference": "62785ae604c8d69725d693eb370e1d67e94c4053",
                 "shasum": ""
             },
@@ -578,7 +577,7 @@
                 "promise",
                 "promises"
             ],
-            "time": "2017-03-25 12:08:31"
+            "time": "2017-03-25T12:08:31+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -590,7 +589,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/symfony/polyfill-mbstring/f29dca382a6485c3cbe6379f0c61230167681937.zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/f29dca382a6485c3cbe6379f0c61230167681937",
                 "reference": "f29dca382a6485c3cbe6379f0c61230167681937",
                 "shasum": ""
             },
@@ -637,7 +636,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2017-06-09 14:24:12"
+            "time": "2017-06-09T14:24:12+00:00"
         },
         {
             "name": "symfony/translation",
@@ -649,7 +648,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/symfony/translation/eee6c664853fd0576f21ae25725cfffeafe83f26.zip",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/eee6c664853fd0576f21ae25725cfffeafe83f26",
                 "reference": "eee6c664853fd0576f21ae25725cfffeafe83f26",
                 "shasum": ""
             },
@@ -701,11 +700,11 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2016-07-30 07:22:48"
+            "time": "2016-07-30T07:22:48+00:00"
         },
         {
             "name": "symfony/validator",
-            "version": "v2.8.24",
+            "version": "v2.8.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/validator.git",
@@ -713,7 +712,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/symfony/validator/6c019627f2a69b9ab2ac41fd53102148a55af564.zip",
+                "url": "https://api.github.com/repos/symfony/validator/zipball/6c019627f2a69b9ab2ac41fd53102148a55af564",
                 "reference": "6c019627f2a69b9ab2ac41fd53102148a55af564",
                 "shasum": ""
             },
@@ -774,20 +773,81 @@
             ],
             "description": "Symfony Validator Component",
             "homepage": "https://symfony.com",
-            "time": "2017-07-03 08:04:30"
+            "time": "2017-07-03T08:04:30+00:00"
         },
         {
-            "name": "zoujingli/wechat-php-sdk",
-            "version": "v1.3.10",
+            "name": "twig/twig",
+            "version": "v1.24.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/zoujingli/wechat-php-sdk.git",
-                "reference": "38f86a42b1c0058d889a0969190540037629606a"
+                "url": "https://github.com/twigphp/Twig.git",
+                "reference": "33093f6e310e6976baeac7b14f3a6ec02f2d79b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/zoujingli/wechat-php-sdk/38f86a42b1c0058d889a0969190540037629606a.zip",
-                "reference": "38f86a42b1c0058d889a0969190540037629606a",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/33093f6e310e6976baeac7b14f3a6ec02f2d79b7",
+                "reference": "33093f6e310e6976baeac7b14f3a6ec02f2d79b7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.7"
+            },
+            "require-dev": {
+                "symfony/debug": "~2.7",
+                "symfony/phpunit-bridge": "~2.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.24-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Twig_": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Armin Ronacher",
+                    "email": "armin.ronacher@active-4.com",
+                    "role": "Project Founder"
+                },
+                {
+                    "name": "Twig Team",
+                    "homepage": "http://twig.sensiolabs.org/contributors",
+                    "role": "Contributors"
+                }
+            ],
+            "description": "Twig, the flexible, fast, and secure template language for PHP",
+            "homepage": "http://twig.sensiolabs.org",
+            "keywords": [
+                "templating"
+            ],
+            "time": "2016-09-01T17:50:53+00:00"
+        },
+        {
+            "name": "zoujingli/wechat-php-sdk",
+            "version": "v1.3.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zoujingli/wechat-php-sdk.git",
+                "reference": "c0c55fe440418267ae97cc45809e4064c95744d0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zoujingli/wechat-php-sdk/zipball/c0c55fe440418267ae97cc45809e4064c95744d0",
+                "reference": "c0c55fe440418267ae97cc45809e4064c95744d0",
                 "shasum": ""
             },
             "require": {
@@ -808,7 +868,7 @@
             "keywords": [
                 "wechat-php-sdk"
             ],
-            "time": "2017-04-19 13:34:58"
+            "time": "2017-07-18T12:00:27+00:00"
         }
     ],
     "packages-dev": [],

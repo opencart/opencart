@@ -24,11 +24,11 @@ class ModelDesignSeoUrl extends Model {
 		$implode = array();
 
 		if (!empty($data['filter_query'])) {
-			$implode[] = "`query` LIKE '" . $this->db->escape($data['filter_query']) . "'";
+			$implode[] = "`query` LIKE '%" . $this->db->escape($data['filter_query']) . "%'";
 		}
 		
 		if (!empty($data['filter_keyword'])) {
-			$implode[] = "`keyword` LIKE '" . $this->db->escape($data['filter_keyword']) . "'";
+			$implode[] = "`keyword` LIKE '%" . $this->db->escape($data['filter_keyword']) . "%'";
 		}
 		
 		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
@@ -85,11 +85,11 @@ class ModelDesignSeoUrl extends Model {
 		$implode = array();
 
 		if (!empty($data['filter_query'])) {
-			$implode[] = "query LIKE '" . $this->db->escape($data['filter_query']) . "'";
+			$implode[] = "query LIKE '%" . $this->db->escape($data['filter_query']) . "%'";
 		}
-		
+	
 		if (!empty($data['filter_keyword'])) {
-			$implode[] = "keyword LIKE '" . $this->db->escape($data['filter_keyword']) . "'";
+			$implode[] = "keyword LIKE '%" . $this->db->escape($data['filter_keyword']) . "%'";
 		}
 		
 		if (!empty($data['filter_store_id']) && $data['filter_store_id'] !== '') {

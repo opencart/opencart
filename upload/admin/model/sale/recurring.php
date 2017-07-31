@@ -14,11 +14,11 @@ class ModelSaleRecurring extends Model {
 		}
 
 		if (!empty($data['filter_reference'])) {
-			$implode[] = "or.reference LIKE '" . $this->db->escape($data['filter_reference']) . "%'";
+			$implode[] = "or.reference LIKE '%" . $this->db->escape($data['filter_reference']) . "%'";
 		}
 
 		if (!empty($data['filter_customer'])) {
-			$implode[] = "CONCAT(o.firstname, ' ', o.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "%'";
+			$implode[] = "CONCAT(o.firstname, ' ', o.lastname) LIKE '%" . $this->db->escape($data['filter_customer']) . "%'";
 		}
 
 		if (!empty($data['filter_status'])) {
@@ -171,11 +171,11 @@ class ModelSaleRecurring extends Model {
 		}
 
 		if (!empty($data['filter_payment_reference'])) {
-			$implode[] .= " or.reference LIKE '" . $this->db->escape($data['filter_reference']) . "%'";
+			$implode[] .= " or.reference LIKE '%" . $this->db->escape($data['filter_reference']) . "%'";
 		}
 
 		if (!empty($data['filter_customer'])) {
-			$implode[] .= "CONCAT(o.firstname, ' ', o.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "%'";
+			$implode[] .= "CONCAT(o.firstname, ' ', o.lastname) LIKE '%" . $this->db->escape($data['filter_customer']) . "%'";
 		}
 
 		if (!empty($data['filter_status'])) {

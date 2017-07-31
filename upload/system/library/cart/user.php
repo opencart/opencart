@@ -40,9 +40,8 @@ class User {
 		$user_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "user WHERE username = '" . $this->db->escape($username) . "' AND status = '1'");
 
 		if ($user_query->num_rows) {
-			
 			if (password_verify($password, $user_query->row['password'])) {
-				if (password_needs_rehash($password_hashed, PASSWORD_DEFAULT)) {
+				if (password_needs_rehash($user_query->row['password'], PASSWORD_DEFAULT)) {
 					$new_password_hashed = password_hash($password, PASSWORD_DEFAULT);
 				}
 			} elseif ($user_query->row['password'] == sha1($user_query->row['salt'] . sha1($user_query->row['salt'] . sha1($password))) || $user_query->row['password'] == md5($password)) {

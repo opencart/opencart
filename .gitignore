@@ -46,12 +46,8 @@
 # /upload/backup.install/*
 # /upload/install/*
 
-# Ignore all vendor files included by composer and the lock file
 /tests/phpunit/vendor/*
 /tests/phpunit/composer.lock
-/vendor/*
-
-# Test Config File
 /tests/phpunit/bootstrap.php
 
 # IDE Project files

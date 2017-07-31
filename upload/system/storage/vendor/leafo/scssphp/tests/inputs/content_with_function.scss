@@ -1,0 +1,17 @@
+$test-var: true;
+
+@mixin mixin-using-content() {
+    @content;
+}
+
+@function test-function($value) {
+    @return $value;
+}
+
+@include mixin-using-content {
+    @if $test-var {
+        body {
+            padding: test-function(1 px);
+        }
+    }
+}

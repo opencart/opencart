@@ -1,0 +1,76 @@
+
+@function conds($val) {
+    @if $val {
+        @return "red";
+    }
+
+    @return "blue";
+}
+
+div {
+    @if something {
+        color: blue;
+    }
+}
+
+pre {
+    val-1: conds(true);
+    val-2: conds(false);
+    val-3: conds(null);
+    val-4: conds(1);
+    val-5: conds(0);
+}
+
+
+span {
+    @if false {
+        color: red;
+    } @else {
+        color: blue;
+    }
+
+    @if true {
+        height: 10px;
+    } @else {
+        color: 20px;
+    }
+
+    @if false {
+        height: 10px;
+    } @elseif false {
+        color: 20px;
+    } @else {
+        width: 20px;
+    }
+}
+
+div {
+    @if false {
+        color: red;
+    } @else if false {
+        color: green;
+    } @else {
+        color: blue;
+    }
+
+    @if false {
+        border-color: red;
+    } @else if true {
+        border-color: green;
+    } @else {
+        border-color: blue;
+    }
+
+}
+
+// doesn't work in scss, thing loses scope
+del {
+    @if false {
+        $thing: yes;
+    } @else {
+        $thing: no;
+    }
+
+    thing: $thing;
+}
+

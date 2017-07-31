@@ -1,0 +1,303 @@
+
+$site_width: 640px;
+
+$light_teal: #7FC7AF;
+$teal: desaturate(#3FB8AF, 10%);
+$brown: #DAD8A7;
+$pink: darken(#FF9E9D, 10%);
+$btn_color: desaturate(#FF3D7F, 10%);
+
+::selection {
+    background: red;
+    color: white;
+}
+
+@mixin unselectable {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+@mixin grad($top, $bottom) {
+    background-color: mix($top, $bottom);
+    background-image: linear-gradient(bottom, $bottom 0%, $top 100%);
+    background-image: -webkit-linear-gradient(bottom, $bottom 0%, $top 100%);
+    background-image: -moz-linear-gradient(bottom, $bottom 0%, $top 100%);
+    background-image: -o-linear-gradient(bottom, $bottom 0%, $top 100%);
+    background-image: -ms-linear-gradient(bottom, $bottom 0%, $top 100%);
+}
+
+@mixin autograd($color, $amount: 10%) {
+    @include grad($color, darken($color, $amount));
+}
+
+body {
+    background: $pink;
+    font-family: Lato, sans-serif;
+}
+
+.header, .footer, .body {
+    .inner {
+        width: $site_width;
+        margin: 0 auto;
+    }
+}
+
+.header {
+    text-shadow: 0px -1px 0px darken($teal, 15%);
+
+    .color {
+        background: $teal url(../img/tile.png);
+        border-top: 4px solid $light_teal;
+        box-shadow: inset 0px 1px 0px rgba(255,255,255, 0.5), inset 0px 8px 8px -8px #37505A, inset 0px -1px 0px rgba(255,255,255, 0.3);
+    }
+
+    h1 {
+        font-family: 'Quicksand', sans-serif;
+        font-size: 40px;
+        line-height: 100px;
+        font-weight: normal;
+        margin: 0;
+
+        a {
+            text-decoration: none;
+            color: #EDFFF9;
+
+            &:active {
+                position: relative;
+                top: 1px;
+            }
+        }
+    }
+
+    .nav {
+        padding: 8px 0;
+        font-size: 17px;
+        text-shadow: none;
+        background: darken($teal, 30%);
+        color: $teal;
+        box-shadow: inset 0px 4px 8px -4px rgba(0,0,0,0.9), inset 0px -1px 0px rgba(255,255,255, 0.8);
+
+        a {
+            color: lighten($teal, 40%);
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        .social {
+            float: right;
+            margin-top: -2px;
+        }
+    }
+
+    .download-area {
+        float: right;
+        margin-top: 25px;
+        background: rgba(255,255,255, 0.3);
+        border-radius: 8px;
+        padding: 5px;
+
+        a {
+            text-decoration: none;
+        }
+
+        .download-button {
+            $height: 8px;
+            $depress: 4px;
+
+            @include unselectable;
+
+            color: white;
+            text-align: center;
+
+            @include autograd($btn_color);
+
+            position: relative;
+            top: -1 * $height;
+
+            padding: 8px 20px;
+            border-radius: 8px;
+            text-shadow: none;
+
+            box-shadow: 0px $height 0px darken($btn_color, 30%), inset 0px -1px 0px rgba(255,255,255, 0.2), inset 0px 1px 0px rgba(0,0,0, 0.2);
+            text-shadow: 0px 1px 2px darken($btn_color, 40%);
+
+            cursor: pointer;
+
+            -webkit-transition: all 0.05s ease-in-out;
+            -moz-transition: all 0.05s ease-in-out;
+            transition: all 0.05s ease-in-out;
+
+            &:hover {
+                @include autograd(lighten($btn_color, 3%));
+            }
+
+            &:active {
+                box-shadow: 0px $height - $depress 0px darken($btn_color, 30%), inset 0px -1px 0px rgba(255,255,255, 0.2), inset 0px 1px 0px rgba(0,0,0, 0.2);
+                top: -1 * ($height - $depress);
+            }
+
+            .top {
+                font-weight: bold;
+                font-size: 16px;
+            }
+
+            .sub {
+                font-size: 14px;
+            }
+        }
+    }
+
+}
+
+.body {
+    $bg_color: #FEFFED;
+    $text_color: darken($brown, 60%);
+    box-shadow: inset 0px 4px 8px -4px rgba(0,0,0,0.7), inset 0px -4px 8px -4px rgba(0,0,0,0.4);
+    background: $bg_color;
+    overflow: hidden;
+    color: $text_color;
+    font-size: 18px;
+    padding-bottom: 20px;
+
+    .inner {
+        background: white;
+        margin-top: 20px;
+        padding: 30px 50px;
+        border: 1px solid lightGrey;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.19);
+
+        h1, h2, h3 {
+            margin: 0 0 20px 0;
+        }
+    }
+
+    h1, h2, h3 {
+        text-shadow: 1px 1px 0px $bg_color, 2px 2px 0px rgba($text_color, 0.3);
+        letter-spacing: -1px;
+    }
+
+    h3 {
+        color: #4D4C3D;
+    }
+
+    p {
+        margin: 0 0 15px 0;
+    }
+
+    a {
+        color: #DB1C4A;
+        &:hover {
+            color: lighten(#DB1C4A, 10%);
+        }
+    }
+
+    pre {
+        margin: 20px 0;
+    }
+}
+
+.footer {
+    font-size: 16px;
+    color: lighten($pink, 20%);
+    text-shadow: 0px 1px 0px darken($pink, 20%);
+
+    border-top: 1px dashed darken($pink, 50%);
+    box-shadow: inset 0px 1px 0px rgba(255,255,255, 0.5);
+    padding: 8px 0 20px 0;
+
+    line-height: 150%;
+
+    a {
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+        padding: 0 4px;
+        border-radius: 4px;
+        border: 1px solid lighten($pink, 4%);
+
+        &:hover {
+            background: darken($pink, 3%);
+            border: 1px solid lighten($pink, 4%);
+        }
+    }
+}
+
+
+p {
+    line-height: 150%;
+    code {
+        background: rgba(0,0,0, 0.1);
+        border-radius: 4px;
+        padding: 1px 4px;
+    }
+}
+
+.comments {
+    font-size: 12px;
+}
+
+.index {
+    line-height: 150%;
+    margin-bottom: 20px;
+
+    ul {
+        margin: 0;
+    }
+}
+
+.highlight {
+    background: #333;
+    color: white;
+    font-size: 14px;
+    padding: 10px;
+    box-shadow: 0px 1px 3px rgba(0,0,0, 0.7), inset 0px 0px 0px 1px rgba(255,255,255,0.3);
+    border-radius: 2px;
+    border: 1px solid #222;
+
+
+    // builtins
+    .nb {
+        color: #FFA67C;
+    }
+
+    // strings
+    .s, .s1, .s2, .se, .nt {
+        color: #ffe898;
+    }
+
+    // proper names
+    .nc, .vc, .bp {
+        color: #98d9ff;
+    }
+
+    // true, false, nil
+    .kc {
+        color: #acfff0;
+    }
+
+    // function lit, braces, parens
+    .nf, .kt {
+        color: #9fff98;
+    }
+
+    .nv {
+        color: #ff9898;
+    }
+
+    // keywords
+    .k, .kd, .na {
+        color: #cb98ff;
+    }
+
+    .c1, .c2 {
+        color: #929292;
+    }
+
+    .m, .mi, .mf, .mh, .o {
+        color: #9495ff;
+    }
+}

@@ -1,0 +1,34 @@
+#values {
+  color: #eee;
+  color: #eee;
+  height: 20px;
+  width: 80%;
+  color: "hello world";
+  height: url("http://google.com");
+  dads: url(http://leafo.net);
+  padding: 10px 10px 10px 10px, 3px 3px 3px;
+  textblock: "This is a \
+multiline block \
+#not { color: #eee;}";
+  margin: 4, 3, 1;
+  content: "This is a \
+multiline string.";
+  border-radius: -1px -1px -1px black; }
+
+#subtraction {
+  lit: 10 -11;
+  lit: -1;
+  lit: -1;
+  lit: -1;
+  var: 10 -100;
+  var: -90;
+  var: -90;
+  var: -90; }
+
+#special {
+  a: 12px expression(1 + (3 / Foo.bar("baz" + "bang") + function() {return 12;}) % 12); }
+
+#unary {
+  b: 0.5em;
+  c: -foo(12px);
+  d: +foo(12px); }

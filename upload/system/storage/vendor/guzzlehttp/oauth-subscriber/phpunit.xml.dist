@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="./vendor/autoload.php"
+         colors="true">
+    <php>
+        <!-- Specify your twitter OAuth credentials -->
+        <server name="OAUTH_CONSUMER_KEY" value="" />
+        <server name="OAUTH_CONSUMER_SECRET" value="" />
+        <server name="OAUTH_TOKEN" value="" />
+        <server name="OAUTH_TOKEN_SECRET" value="" />
+    </php>
+    <testsuites>
+        <testsuite>
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
+</phpunit>

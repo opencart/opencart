@@ -8,7 +8,7 @@ class ModelCustomerCustomerApproval extends Model {
 		}
 
 		if (!empty($data['filter_email'])) {
-			$sql .= " AND c.`email` LIKE '" . $this->db->escape($data['filter_email']) . "%'";
+			$sql .= " AND c.`email` LIKE '%" . $this->db->escape($data['filter_email']) . "%'";
 		}
 		
 		if (!empty($data['filter_customer_group_id'])) {
@@ -58,7 +58,7 @@ class ModelCustomerCustomerApproval extends Model {
 		}
 
 		if (!empty($data['filter_email'])) {
-			$implode[] = "c.`email` LIKE '" . $this->db->escape($data['filter_email']) . "%'";
+			$implode[] = "c.`email` LIKE '%" . $this->db->escape($data['filter_email']) . "%'";
 		}
 
 		if (!empty($data['filter_customer_group_id'])) {

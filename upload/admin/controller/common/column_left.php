@@ -581,7 +581,15 @@ class ControllerCommonColumnLeft extends Controller {
 			
 			// Tools	
 			$maintenance = array();
-				
+			
+			if ($this->user->hasPermission('access', 'tool/upgrade')) {
+				$maintenance[] = array(
+					'name'	   => $this->language->get('text_upgrade'),
+					'href'     => $this->url->link('tool/upgrade', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}
+						
 			if ($this->user->hasPermission('access', 'tool/backup')) {
 				$maintenance[] = array(
 					'name'	   => $this->language->get('text_backup'),

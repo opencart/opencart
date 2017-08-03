@@ -101,6 +101,15 @@
     $('select[name="route"]').prop('disabled', true);
     $('select[name="key"]').prop('disabled', true);
     $('input[name="key"]').prop('disabled', true);
+    
+    $('form').submit(function() {
+    	$('select[name="store_id"]').prop('disabled', false);
+    	$('select[name="language_id"]').prop('disabled', false);
+    	$('select[name="route"]').prop('disabled', false);
+    	$('select[name="key"]').prop('disabled', false);
+    	$('input[name="key"]').prop('disabled', false);
+	});
+    
     {% else %}
     $('select[name="language_id"]').on('change', function() {
       $.ajax({

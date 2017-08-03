@@ -328,6 +328,7 @@ class ModelExtensionPaymentSquareup extends Model {
             $price = (float)($recurring['trial'] ? $recurring['trial_price'] : $recurring['recurring_price']);
 
             $transaction = array(
+                'note' => sprintf($this->language->get('text_order_id'), $order_info['order_id']),
                 'idempotency_key' => uniqid(),
                 'amount_money' => array(
                     'amount' => $this->squareup->lowestDenomination($price * $recurring['product_quantity'], $recurring['transaction_currency']),

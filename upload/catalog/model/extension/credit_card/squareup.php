@@ -9,6 +9,28 @@ class ModelExtensionCreditCardSquareup extends Model {
         return $this->db->query("SELECT * FROM `" . DB_PREFIX . "squareup_customer` WHERE customer_id = '" . (int)$customer_id . "' AND sandbox='" . (int)$sandbox . "'")->row;
     }
 
+    public function updateDefaultCustomerToken($customer_id, $sandbox, $squareup_token_id) {
+        $this->db->query("UPDATE `" . DB_PREFIX . "squareup_customer` SET squareup_token_id='" . (int)$squareup_token_id . "' WHERE customer_id = '" . (int)$customer_id . "' AND sandbox='" . (int)$sandbox . "'");
+    }
+
+    public function getFirstTokenId($customer_id, $sandbox) {
+        foreach ($this->getCards($customer_id, $sandbox) as $card) {
+            return (int)$card['squareup_token_id'];
+        }
+
+        return 0;
+    }
+
+    public function getTokenIdByCustomerAndToken($customer_id, $sandbox, $token) {
+        foreach ($this->getCards($customer_id, $sandbox) as $card) {
+            if ($card['token'] == $token) {
+                return (int)$card['squareup_token_id'];
+            }
+        }
+
+        return 0;
+    }
+
     public function addCard($customer_id, $sandbox, $data) {
         $this->db->query("INSERT INTO `" . DB_PREFIX . "squareup_token` SET customer_id='" . (int)$customer_id . "', sandbox='" . (int)$sandbox . "', token='" . $this->db->escape($data['id']) . "', brand='" . $this->db->escape($data['card_brand']) . "', ends_in='" . (int)$data['last_4'] . "', date_added=NOW()");
     }

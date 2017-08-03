@@ -14,16 +14,16 @@
             <label class="col-sm-2 control-label" for="squareup_select_card">{{ text_saved_card }}</label>
             <div class="col-sm-10">
                 <select class="form-control" name="squareup_select_card" id="squareup_select_card">
-                    <option selected value>{{ text_new_card }}</option>
+                    <option {{ not has_selected_card ? 'selected' }} value>{{ text_new_card }}</option>
                     {% for card in cards %}
-                        <option value="{{ card.id }}">{{ card.text }}</option>
+                        <option value="{{ card.id }}" {{ card.selected ? 'selected' }}>{{ card.text }}</option>
                     {% endfor %}
                 </select>
             </div>
         </div>
         {% endif %}
     </fieldset>
-    <fieldset id="hide-card-details">
+    <fieldset id="hide-card-details" {{ has_selected_card ? 'style="display: none;"' }}>
         <div class="form-group">
             <label class="col-sm-2 control-label" for="id_card_number">{{ text_card_number }}</label>
             <div class="col-sm-10"><div id="id_card_number"></div></div>
@@ -163,6 +163,7 @@
     }
 
     function onScriptLoad() {
+        // paymentForm must be global
         paymentForm = new SqPaymentForm(paymentFormSettings);
         paymentForm.build();
     }
@@ -188,6 +189,12 @@
     }
 
     function initSquareup(init_ajax_setup) {
+        if (typeof paymentForm != 'undefined') {
+            paymentForm.destroy();
+            onScriptLoad();
+            return;
+        }
+
         toggleAjaxSetup(false);
         
         var script = document.createElement('script');

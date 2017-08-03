@@ -65,7 +65,9 @@ class ModelExtensionPaymentSquareup extends Model {
     public function getTransactionStatus($transaction) {
         $result['text'] = null;
         $result['amount_refunded'] = $this->language->get('text_na');
+        $result['is_fully_refunded'] = false;
         $result['type'] = $transaction['transaction_type'];
+        $result['order_history_data'] = null;
 
         $refunds = @json_decode($transaction['refunds'], true);
         $result['refunds'] = $refunds;
@@ -86,6 +88,7 @@ class ModelExtensionPaymentSquareup extends Model {
         } else {
             $refunded_amount = 0;
             $has_pending = false;
+            $used_to_have_pending = true;
 
             // Fetch transaction again if it has a pending refund
             foreach ($refunds as $refund) {
@@ -98,6 +101,8 @@ class ModelExtensionPaymentSquareup extends Model {
                     $refunds = $updated_transaction['refunds'];
                     $result['refunds'] = $updated_transaction['refunds'];
 
+                    $used_to_have_pending = true;
+
                     break;
                 }
             }
@@ -109,6 +114,11 @@ class ModelExtensionPaymentSquareup extends Model {
 
                 if ($refund['status'] == 'PENDING') {
                     $has_pending = true;
+
+                    if ($used_to_have_pending) {
+                        // Set to false because it still has pending
+                        $used_to_have_pending = false;
+                    }
                 }
 
                 $refunded_amount += $refund['amount_money']['amount'];
@@ -121,12 +131,31 @@ class ModelExtensionPaymentSquareup extends Model {
 
             if ($refunded_amount == $this->squareup->lowestDenomination($transaction['transaction_amount'], $transaction['transaction_currency'])) {
                 $result['text'] = $this->language->get('text_fully_refunded');
+                $result['is_fully_refunded'] = true;
             } else {
                 $result['text'] = $this->language->get('text_partially_refunded');
             }
 
             if ($has_pending) {
                 $result['text'] = sprintf($this->language->get('text_refund_pending'), $result['text']);
+            }
+
+            if ($used_to_have_pending) {
+                if ($result['is_fully_refunded']) {
+                    $result['order_history_data'] = array(
+                        'notify' => 1,
+                        'order_id' => $transaction['order_id'],
+                        'order_status_id' => $this->model_extension_payment_squareup->getOrderStatusId($transaction['order_id'], 'fully_refunded'),
+                        'comment' => $this->language->get('text_fully_refunded_comment'),
+                    );
+                } else {
+                    $result['order_history_data'] = array(
+                        'notify' => 1,
+                        'order_id' => $transaction['order_id'],
+                        'order_status_id' => $this->model_extension_payment_squareup->getOrderStatusId($transaction['order_id'], 'partially_refunded'),
+                        'comment' => $this->language->get('text_partially_refunded_comment'),
+                    );
+                }
             }
         }
 
@@ -179,6 +208,7 @@ class ModelExtensionPaymentSquareup extends Model {
         $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "squareup_customer` (
          `customer_id` int(11) NOT NULL,
          `sandbox` tinyint(1) NOT NULL,
+         `squareup_token_id` int(11) unsigned NOT NULL,
          `square_customer_id` varchar(32) NOT NULL,
          PRIMARY KEY (`customer_id`, `sandbox`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8");

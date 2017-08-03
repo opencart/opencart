@@ -94,6 +94,9 @@ $(document).ready(function() {
                     } break;
 
                     case "CAPTURED" : {
+                        if (row.is_fully_refunded) {
+                            break;
+                        }
                         html += '<a class="btn btn-danger" data-url-transaction-refund="' + row.url_refund + '" data-confirm-refund="' + row.confirm_refund + '" data-insert-amount="' + row.insert_amount + '">{{ text_refund }}</a> ';
                     } break;
                 }
@@ -119,6 +122,23 @@ $(document).ready(function() {
                 listTransactions();
               })
             });
+
+            for (var j in data.order_histories) {
+                var order_history_data = data.order_histories[j];
+
+                $.ajax({
+                    url: '{{ catalog }}index.php?route=api/order/history&api_token={{ api_token }}&order_id=' + order_history_data.order_id,
+                    type: 'post',
+                    dataType: 'json',
+                    data: order_history_data,
+                    async: false,
+                    success: function() {
+                        $('#history').load('index.php?route=sale/order/history&user_token={{ user_token }}&order_id={{ order_id }}');
+
+                        $('select[name="order_status_id"]').val(order_history_data.order_status_id);
+                    }
+                });
+            }
           },
           complete : function() {
             $('#refresh_transactions').button('reset');
@@ -182,6 +202,8 @@ $(document).ready(function() {
                         listTransactions();
 
                         $('#history').load('index.php?route=sale/order/history&user_token={{ user_token }}&order_id={{ order_id }}');
+
+                        $('select[name="order_status_id"]').val(json.order_history_data.order_status_id);
                     });
                 }
             },

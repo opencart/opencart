@@ -8,7 +8,7 @@
             <a id="transaction_void" data-url-transaction-void="{{ url_void }}" data-confirm-void="{{ confirm_void }}" class="btn btn-warning">{{ button_void }}</a>
         {% endif %}
         
-        {% if is_captured %}
+        {% if is_captured and not is_fully_refunded %}
             <a id="transaction_refund" data-url-transaction-refund="{{ url_refund }}" data-confirm-refund="{{ confirm_refund }}" data-insert-amount="{{ insert_amount }}" class="btn btn-danger">{{ button_refund }}</a>
         {% endif %}
         
@@ -216,7 +216,7 @@ $(document).ready(function() {
                     refreshPage();
                 }
 
-                if (json['success']) {
+                if (json['success'] && typeof success_callback == 'function') {
                     success_callback();
                 }
             },
@@ -327,6 +327,17 @@ $(document).ready(function() {
         });
         
         $(modal).modal('show');
+    }
+
+    var order_history_data = {{ order_history_data }};
+
+    if (order_history_data) {
+        $.ajax({
+            url: '{{ catalog }}index.php?route=api/order/history&api_token={{ api_token }}&order_id=' + order_history_data.order_id,
+            type: 'post',
+            dataType: 'json',
+            data: order_history_data
+        });
     }
 
     $(document).on('click', '*[data-url-transaction-capture]', function() {

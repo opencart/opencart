@@ -49,7 +49,7 @@ class Customer {
 
 			if (!$override) {
 				if (password_verify($password, $customer_query->row['password'])) {
-					if (password_needs_rehash($password_hashed, PASSWORD_DEFAULT)) {
+					if (password_needs_rehash($customer_query->row['password'], PASSWORD_DEFAULT)) {
 						$new_password_hashed = password_hash($password, PASSWORD_DEFAULT);
 					}
 				} elseif ($customer_query->row['password'] == sha1($customer_query->row['salt'] . sha1($customer_query->row['salt'] . sha1($password))) || $customer_query->row['password'] == md5($password)) {

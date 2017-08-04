@@ -23,7 +23,7 @@ class ControllerExtensionCaptchaBasic extends Controller {
 	}
 
 	public function captcha() {
-		$this->session->data['captcha'] = substr(sha1(mt_rand()), 17, 6);
+		$this->session->data['captcha'] = substr(token(100), rand(0, 94), 6);
 
 		$image = imagecreatetruecolor(150, 35);
 

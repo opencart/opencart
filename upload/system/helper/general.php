@@ -1,16 +1,11 @@
 <?php
 function token($length = 32) {
-	// Create random token
-	$string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-	
-	$max = strlen($string) - 1;
-	
-	$token = '';
-	
-	for ($i = 0; $i < $length; $i++) {
-		$token .= $string[mt_rand(0, $max)];
-	}	
-	
+	if (function_exists('random_bytes')) {
+		$token = bin2hex(random_bytes($length));
+	} else {
+		$token = bin2hex(openssl_random_pseudo_bytes($length));
+	}
+
 	return $token;
 }
 

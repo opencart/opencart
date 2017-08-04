@@ -44,29 +44,45 @@
               <label class="control-label" for="input-customer-group">{{ entry_customer_group }}</label>
               <select name="filter_customer_group_id" id="input-customer-group" class="form-control">
                 <option value=""></option>
+                
                 {% for customer_group in customer_groups %}
                 {% if customer_group.customer_group_id == filter_customer_group_id %}
+                
                 <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                
                 {% else %}
+                
                 <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+                
                 {% endif %}
                 {% endfor %}
+              
               </select>
             </div>
             <div class="form-group">
               <label class="control-label" for="input-status">{{ entry_status }}</label>
               <select name="filter_status" id="input-status" class="form-control">
                 <option value=""></option>
+                
                 {% if filter_status == '1' %}
+                
                 <option value="1" selected="selected">{{ text_enabled }}</option>
+                
                 {% else %}
+                
                 <option value="1">{{ text_enabled }}</option>
+                
                 {% endif %}
                 {% if filter_status == '0' %}
+                
                 <option value="0" selected="selected">{{ text_disabled }}</option>
+                
                 {% else %}
+                
                 <option value="0">{{ text_disabled }}</option>
+                
                 {% endif %}
+              
               </select>
             </div>
             <div class="form-group">
@@ -79,8 +95,7 @@
                 <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
                 <span class="input-group-btn">
                 <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                </span>
-              </div>
+                </span> </div>
             </div>
             <div class="form-group text-right">
               <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
@@ -94,8 +109,8 @@
             <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
           </div>
           <div class="panel-body">
-            <div class="table-responsive">
-              <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-customer">
+            <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-customer">
+              <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                   <thead>
                     <tr>
@@ -110,6 +125,7 @@
                     </tr>
                   </thead>
                   <tbody>
+                  
                   {% if customers %}
                   {% for customer in customers %}
                   <tr>
@@ -117,17 +133,14 @@
                       <input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" checked="checked" />
                       {% else %}
                       <input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" />
-                      {% endif %}
-                    </td>
-                      <td class="text-left">{{ customer.name }}</td>
+                      {% endif %} </td>
+                    <td class="text-left">{{ customer.name }}</td>
                     <td class="text-left">{{ customer.email }}</td>
                     <td class="text-left">{{ customer.customer_group }}</td>
                     <td class="text-left">{{ customer.status }}</td>
                     <td class="text-left">{{ customer.ip }}</td>
                     <td class="text-left">{{ customer.date_added }}</td>
-                    <td class="text-right">
-                      <div class="btn-group" style="min-width: 65px;">
-                        <a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                    <td class="text-right"><div class="btn-group" style="min-width: 65px;"> <a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
                         <button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><span class="caret"></span></button>
                         <ul class="dropdown-menu dropdown-menu-right">
                           <li class="dropdown-header">{{ text_option }}</li>
@@ -142,8 +155,7 @@
                           <li><a href="{{ store.href }}" target="_blank"><i class="fa fa-lock"></i> {{ store.name }}</a></li>
                           {% endfor %}
                         </ul>
-                      </div>
-                    </td>
+                      </div></td>
                   </tr>
                   {% endfor %}
                   {% else %}
@@ -152,6 +164,7 @@
                   </tr>
                   {% endif %}
                     </tbody>
+                  
                 </table>
               </div>
             </form>
@@ -181,7 +194,7 @@
   }).on('hidden.bs.dropdown', function () {
     $(this).css({'padding-bottom': '', 'overflow': ''});
   });
-  //--></script>
+  //--></script> 
   <script type="text/javascript"><!--
   $('#button-filter').on('click', function() {
     url = 'index.php?route=customer/customer&user_token={{ user_token }}';
@@ -211,7 +224,7 @@
     }
     location = url;
   });
-  //--></script>
+  //--></script> 
   <script type="text/javascript"><!--
   $('input[name=\'filter_name\']').autocomplete({
     'source': function(request, response) {
@@ -251,12 +264,12 @@
       $('input[name=\'filter_email\']').val(item['label']);
     }
   });
-  //--></script>
+  //--></script> 
   <script type="text/javascript"><!--
   $('.date').datetimepicker({
     language: '{{ datepicker }}',
     pickTime: false
   });
-  //--></script>
+  //--></script> 
 </div>
-{{ footer }}
+{{ footer }} 

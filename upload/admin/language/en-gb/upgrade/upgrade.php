@@ -25,4 +25,5 @@ $_['entry_filename']    = 'Filename';
 $_['entry_date_added']  = 'Date Added';
 
 // Error
-$_['error_permission']  = 'Warning: You do not have permission to modify upgrades!';
+$_['error_permission'] = 'Warning: You do not have permission to modify upgrades!';
+$_['error_version'] = 'Your current OpenCart version is out of date! The current latest version is <strong>%s</strong>';

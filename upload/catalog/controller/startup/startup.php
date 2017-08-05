@@ -82,7 +82,7 @@ class ControllerStartupStartup extends Controller {
 			
 			array_multisort($sort_order, SORT_ASC, $browser_codes);
 			
-			$locales = array_reverse($browser_codes);		
+			$browser_codes = array_reverse($browser_codes);		
 			
 			foreach (array_values($browser_codes) as $browser_code) {
 				foreach ($languages as $key => $value) {

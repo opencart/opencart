@@ -38,7 +38,7 @@
       </div>
       <div class="panel-body">
         <div class="table-responsive">
-          <table class="table table-bordered">
+          <table class="table table-bordered table-hover">
             <thead>
               <tr>
                 <td class="text-left">{{ column_customer }}</td>
@@ -51,12 +51,12 @@
                 <td class="text-right">{{ column_action }}</td>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="rowlink" data-link="row">
             
             {% if customers %}
             {% for customer in customers %}
             <tr>
-              <td class="text-left">{{ customer.customer }}</td>
+              <td class="text-left"><a href="{{ customer.edit }}"></a>{{ customer.customer }}</td>
               <td class="text-left">{{ customer.email }}</td>
               <td class="text-left">{{ customer.customer_group }}</td>
               <td class="text-left">{{ customer.status }}</td>
@@ -68,7 +68,7 @@
             {% endfor %}
             {% else %}
             <tr>
-              <td class="text-center" colspan="8">{{ text_no_results }}</td>
+              <td class="text-center rowlink-skip" colspan="8">{{ text_no_results }}</td>
             </tr>
             {% endif %}
             </tbody>

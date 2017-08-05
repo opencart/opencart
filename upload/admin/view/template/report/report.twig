@@ -21,7 +21,7 @@
       <div class="panel-body">
         <div class="well">
           <div class="input-group">
-            <select name="report" onchange="location = this.value;" class="form-control">
+            <select name="report" onchange="location = this.value;" class="selectpicker" data-container="body" data-width="100%">
               
               {% for report in reports %}
               {% if code == report.code %}

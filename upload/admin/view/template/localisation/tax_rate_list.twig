@@ -2,9 +2,10 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+      <div class="pull-right">
+      <div class="btn-group" role="group" aria-label="..."><a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
         <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-tax-rate').submit() : false;"><i class="fa fa-trash-o"></i></button>
-      </div>
+      </div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -68,11 +69,11 @@
                   <td class="text-right">{{ column_action }}</td>
                 </tr>
               </thead>
-              <tbody>
+              <tbody class="rowlink" data-link="row">
                 {% if tax_rates %}
                 {% for tax_rate in tax_rates %}
                 <tr>
-                  <td class="text-center">{% if tax_rate.tax_rate_id in selected %}
+                  <td class="text-center rowlink-skip"><a href="{{ tax_rate.edit }}"></a>{% if tax_rate.tax_rate_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ tax_rate.tax_rate_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ tax_rate.tax_rate_id }}" />

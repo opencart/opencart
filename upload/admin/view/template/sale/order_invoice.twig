@@ -13,59 +13,87 @@
 <body>
 <div class="container">
   {% for order in orders %}
-  <div style="page-break-after: always;">
-    <h1>{{ text_invoice }} #{{ order.order_id }}</h1>
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <td colspan="2">{{ text_order_detail }}</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="width: 50%;"><address>
-            <strong>{{ order.store_name }}</strong><br />
-            {{ order.store_address }}
-            </address>
-            <b>{{ text_telephone }}</b> {{ order.store_telephone }}<br />
-            {% if order.store_fax %}
-            <b>{{ text_fax }}</b> {{ order.store_fax }}<br />
-            {% endif %}
-            <b>{{ text_email }}</b> {{ order.store_email }}<br />
-            <b>{{ text_website }}</b> <a href="{{ order.store_url }}">{{ order.store_url }}</a></td>
-          <td style="width: 50%;"><b>{{ text_date_added }}</b> {{ order.date_added }}<br />
+  
+  <div class="row">
+  	<div class="col-md-12">
+  		<div class="page-header">
+  			<div class="row">
+				<div class="col-md-8">
+					<h2>{{ order.store_name }} <br />
+		  			<small>Someone famous in <cite title="Source Title">Source Title</cite></small></h2>
+				</div>
+  				<div class="col-md-4 text-right">
+  					<small><i class="fa fa-phone"></i> {{ order.store_telephone }}<br />
+            		{% if order.store_fax %}
+            		<i class="fa fa-fax" aria-hidden="true"></i> {{ order.store_fax }}<br />
+            		{% endif %}
+            		<i class="fa fa-envelope" aria-hidden="true"></i> {{ order.store_email }}<br />
+            		<i class="fa fa-globe" aria-hidden="true"></i> <a href="{{ order.store_url }}">{{ order.store_url }}</a></small>
+				</div>
+  			</div>
+  		</div>
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="col-md-12">
+		<h1 class="text-uppercase"><strong>{{ text_invoice }}</strong> <small>{{ order.invoice_no }}</small></h1>
+  	</div>
+  </div>
+  
+  <div class="row">
+  	<div class="col-md-6">
+        <small>
+  		<strong>{{ text_date_added }}:</strong> {{ order.date_added }}<br />
             {% if order.invoice_no %}
-            <b>{{ text_invoice_no }}</b> {{ order.invoice_no }}<br />
+            <strong>{{ text_invoice_no }}:</strong> {{ order.invoice_no }}<br />
             {% endif %}
-            <b>{{ text_order_id }}</b> {{ order.order_id }}<br />
-            <b>{{ text_payment_method }}</b> {{ order.payment_method }}<br />
+            <strong>{{ text_order_id }}</strong> {{ order.order_id }}<br />
+            <strong>{{ text_payment_method }}:</strong> {{ order.payment_method }}<br />
             {% if order.shipping_method %}
-            <b>{{ text_shipping_method }}</b> {{ order.shipping_method }}<br />
-            {% endif %}</td>
-        </tr>
-      </tbody>
-    </table>
+            <strong>{{ text_shipping_method }}:</strong> {{ order.shipping_method }}<br />
+            {% endif %}</small>
+  	</div>
+  	<div class="col-md-6 text-right">
+  		<address>
+            {{ order.store_address }}
+        </address>  	
+  	</div>
+  </div>
+  
+  <div class="row">
+  	<div class="col-md-12">
+  		<table class="table table-bordered">
+  			<thead>
+  				<tr class="active">
+  					<td>
+  						<strong>{{ text_payment_address }}</strong>
+  					</td>
+  					<td>
+  						<strong>{{ text_shipping_address }}</strong>
+  					</td>
+  				</tr>
+  			</thead>
+  			<tbody>
+	  			<tr>
+	  				<td>
+  						<address>
+           				{{ order.payment_address }}
+            			</address>
+  					</td>
+  					<td>
+	  					<address>
+        	    		{{ order.shipping_address }}
+            			</address>
+  					</td>
+  				</tr>
+  			</tbody>
+  		</table>
+  	</div>
+  </div>
+
     <table class="table table-bordered">
       <thead>
-        <tr>
-          <td style="width: 50%;"><b>{{ text_payment_address }}</b></td>
-          <td style="width: 50%;"><b>{{ text_shipping_address }}</b></td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><address>
-            {{ order.payment_address }}
-            </address></td>
-          <td><address>
-            {{ order.shipping_address }}
-            </address></td>
-        </tr>
-      </tbody>
-    </table>
-    <table class="table table-bordered">
-      <thead>
-        <tr>
+        <tr class="active">
           <td><b>{{ column_product }}</b></td>
           <td><b>{{ column_model }}</b></td>
           <td class="text-right"><b>{{ column_quantity }}</b></td>
@@ -118,7 +146,15 @@
       </tbody>
     </table>
     {% endif %}
-  </div>
+    
+  	<div class="page-header">&nbsp;
+  	</div>
+  	<div class="row">
+		<div class="col-md-12">
+		
+		</div>
+  	</div>
+
   {% endfor %}
 </div>
 </body>

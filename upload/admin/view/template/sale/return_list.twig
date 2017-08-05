@@ -2,11 +2,14 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
+      <div class="pull-right"><div class="btn-toolbar" role="toolbar" aria-label="...">
+      <div class="btn-group" role="group" aria-label="...">
         <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-return').toggleClass('hidden-sm hidden-xs');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
+    	</div>
+    	<div class="btn-group" role="group" aria-label="...">
         <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
         <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-return').submit() : false;"><i class="fa fa-trash-o"></i></button>
-      </div>
+      </div></div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -54,7 +57,7 @@
             </div>
             <div class="form-group">
               <label class="control-label" for="input-return-status">{{ entry_return_status }}</label>
-              <select name="filter_return_status_id" id="input-return-status" class="form-control">
+              <select name="filter_return_status_id" id="input-return-status" class="selectpicker" data-container="body" data-width="100%">
                 <option value=""></option>
                 
                   
@@ -158,12 +161,12 @@
                       <td class="text-right">{{ column_action }}</td>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody class="rowlink" data-link="row">
                   
                   {% if returns %}
                   {% for return in returns %}
                   <tr>
-                    <td class="text-center">{% if return.return_id in selected %}
+                    <td class="text-center rowlink-skip"><a href="{{ return.edit }}"></a>{% if return.return_id in selected %}
                       <input type="checkbox" name="selected[]" value="{{ return.return_id }}" checked="checked" />
                       {% else %}
                       <input type="checkbox" name="selected[]" value="{{ return.return_id }}" />

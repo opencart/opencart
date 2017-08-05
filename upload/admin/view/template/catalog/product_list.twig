@@ -3,11 +3,15 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
+      <div class="btn-toolbar" role="toolbar" aria-label="...">
+      <div class="btn-group" role="group" aria-label="...">
         <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-product').toggleClass('hidden-sm hidden-xs');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
+        </div>
+      <div class="btn-group" role="group" aria-label="...">  
         <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
         <button type="submit" form="form-product" formaction="{{ copy }}" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-default"><i class="fa fa-copy"></i></button>
         <button type="button" form="form-product" formaction="{{ delete }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-product').submit() : false;"><i class="fa fa-trash-o"></i></button>
-      </div>
+      </div></div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -51,7 +55,7 @@
             </div>
             <div class="form-group">
               <label class="control-label" for="input-status">{{ entry_status }}</label>
-              <select name="filter_status" id="input-status" class="form-control">
+              <select name="filter_status" id="input-status" class="selectpicker" data-container="body" data-width="100%">
                 <option value=""></option>
                 
                 
@@ -142,7 +146,7 @@
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                   <thead>
-                    <tr>
+                    <tr class="active">
                       <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
                       <td class="text-center">{{ column_image }}</td>
                       <td class="text-left">{% if sort == 'pd.name' %} <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a> {% else %} <a href="{{ sort_name }}">{{ column_name }}</a> {% endif %}</td>
@@ -153,12 +157,12 @@
                       <td class="text-right">{{ column_action }}</td>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody data-link="row" class="rowlink">
                   
                   {% if products %}
                   {% for product in products %}
                   <tr>
-                    <td class="text-center">{% if product.product_id in selected %}
+                    <td class="text-center rowlink-skip"><a href="{{ product.edit }}"></a>{% if product.product_id in selected %}
                       <input type="checkbox" name="selected[]" value="{{ product.product_id }}" checked="checked" />
                       {% else %}
                       <input type="checkbox" name="selected[]" value="{{ product.product_id }}" />

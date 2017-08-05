@@ -2,9 +2,9 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
+      <div class="pull-right"><div class="btn-group" role="group" aria-label="...">
         <button id="button-send" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_send }}" class="btn btn-primary" onclick="send('index.php?route=marketing/contact/send&user_token={{ user_token }}');"><i class="fa fa-envelope"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -23,7 +23,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-store">{{ entry_store }}</label>
             <div class="col-sm-10">
-              <select name="store_id" id="input-store" class="form-control">
+              <select name="store_id" id="input-store" class="selectpicker" data-container="body" data-width="100%">
                 <option value="0">{{ text_default }}</option>
                 
                 {% for store in stores %}
@@ -38,7 +38,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-to">{{ entry_to }}</label>
             <div class="col-sm-10">
-              <select name="to" id="input-to" class="form-control">
+              <select name="to" id="input-to" class="selectpicker" data-container="body" data-width="100%">
                 <option value="newsletter">{{ text_newsletter }}</option>
                 <option value="customer_all">{{ text_customer_all }}</option>
                 <option value="customer_group">{{ text_customer_group }}</option>

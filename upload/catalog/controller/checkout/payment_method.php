@@ -99,8 +99,6 @@ class ControllerCheckoutPaymentMethod extends Controller {
 			$data['comment'] = '';
 		}
 
-		$data['scripts'] = $this->document->getScripts();
-
 		if ($this->config->get('config_checkout_id')) {
 			$this->load->model('catalog/information');
 

@@ -48,6 +48,8 @@ class ControllerExtensionCaptchaBasic extends Controller {
 		imagestring($image, 10, intval(($width - (strlen($this->session->data['captcha']) * 9)) / 2), intval(($height - 15) / 2), $this->session->data['captcha'], $black);
 
 		header('Content-type: image/jpeg');
+		header('Cache-Control: no-cache');
+		header('Expires: Sat, 26 Jul 1997 05:00:00 GMT');
 
 		imagejpeg($image);
 

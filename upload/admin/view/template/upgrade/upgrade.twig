@@ -27,7 +27,9 @@
           <div class="tab-content">
             <div class="tab-pane active" id="tab-preparation">
               <fieldset>
-                <legend>Latest Version</legend>
+                <legend id="version">Latest Version</legend>
+                <div class="alert alert-warning">Checking version <button type="button" id="button-version" class="btn btn-warning pull-right"><i class="fa fa-refresh"></i> Refresh</button></div>
+                
                 <p>Before upgrading its very important to</p>
                 <ol>
                   <li>make a complete backup of your web site!</li>
@@ -134,7 +136,7 @@
 $('#button-version').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=upgrade/upgrade/version&user_token={{ user_token }}',
-		dataType: 'json',
+		dataType: 'html',
 		beforeSend: function() {
 			$('#button-version').button('loading');
 		},
@@ -142,6 +144,8 @@ $('#button-version').on('click', function() {
 			$('#button-version').button('reset');
 		},
 		success: function(json) {
+			alert(json);
+			
 			if (json['error']) {
 			
 			}

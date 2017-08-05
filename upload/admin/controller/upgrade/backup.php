@@ -66,12 +66,18 @@ class ControllerUpgradeBackup extends Controller {
 			$backup = explode(',', $this->request->get['backup']);
 			
 			if (in_array('file', $backup)) {
+				$files = $this->getFiles();
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				$directories[] = DIR_IMAGE . $file;
 			}			
-			
-			
-			
-			
 			
 			$directories = array();
 			
@@ -93,9 +99,9 @@ class ControllerUpgradeBackup extends Controller {
 				$paths = array();
 			}
 
-		if (!$json) {
+
 			// Loop through each path
-			foreach ($paths as $path) {
+			foreach ($directories as $directory) {
 				$path = rtrim(DIR_IMAGE . $path, '/');
 
 				// If path is just a file delete it
@@ -139,6 +145,7 @@ class ControllerUpgradeBackup extends Controller {
 					}
 				}
 			}
+
 			
 			
 			

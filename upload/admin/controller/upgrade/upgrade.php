@@ -49,9 +49,7 @@ class ControllerUpgradeUpgrade extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		
-
-
+		$data['version'] = VERSION;
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -70,8 +68,9 @@ class ControllerUpgradeUpgrade extends Controller {
 		}	
 				
 		if (!$json) {
-			$curl = curl_init(OPENCART_SERVER . 'index.php?route=marketplace/api/version');
-	
+			$curl = curl_init('https://api.github.com/repos/opencart/opencart/opencart-master/releases');
+			
+			curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart ' . VERSION);
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
@@ -79,7 +78,9 @@ class ControllerUpgradeUpgrade extends Controller {
 			curl_setopt($curl, CURLOPT_POST, 1);
 			
 			$response = curl_exec($curl);
-	
+			
+			print_r($response);
+			
 			curl_close($curl);	
 			
 			$response_info = json_decode($response, true);

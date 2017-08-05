@@ -45,41 +45,55 @@ class ControllerStartupStartup extends Controller {
 		
 		$languages = $this->model_localisation_language->getLanguages();
 		
+		$language_codes = array_column($languages, 'code');
+		
 		if (isset($this->session->data['language'])) {
 			$code = $this->session->data['language'];
 		}
 				
-		if (isset($this->request->cookie['language']) && !array_key_exists($code, $languages)) {
+		if (isset($this->request->cookie['language']) && !array_key_exists($code, $language_codes)) {
 			$code = $this->request->cookie['language'];
 		}
 		
 		// Language Detection
-		if (!empty($this->request->server['HTTP_ACCEPT_LANGUAGE']) && !array_key_exists($code, $languages)) {
+		if (!empty($this->request->server['HTTP_ACCEPT_LANGUAGE']) && !array_key_exists($code, $language_codes)) {
 			$detect = '';
 			
-			$browser_languages = explode(',', $this->request->server['HTTP_ACCEPT_LANGUAGE']);
+			$browser_codes = array();
+			
+			$browser_languages = explode(',', strtolower($this->request->server['HTTP_ACCEPT_LANGUAGE']));
 			
 			// Try using local to detect the language
 			foreach ($browser_languages as $browser_language) {
+				$position = strpos($browser_language, ';q=');
+				
+				if ($position !== false) {
+					$browser_codes[][substr($browser_language, 0, $position)] = (float)substr($browser_language, $position + 3);
+				} else {
+					$browser_codes[][$browser_language] = 1.0;
+				}
+			}			
+			
+			$sort_order = array();
+			
+			foreach ($browser_codes as $key => $value) {
+				$sort_order[$key] = $value[key($value)];
+			}
+			
+			array_multisort($sort_order, SORT_ASC, $browser_codes);
+			
+			$locales = array_reverse($browser_codes);		
+			
+			foreach (array_values($browser_codes) as $browser_code) {
 				foreach ($languages as $key => $value) {
 					if ($value['status']) {
 						$locale = explode(',', $value['locale']);
 						
-						if (in_array($browser_language, $locale)) {
-							$detect = $key;
+						if (in_array(key($browser_code), $locale)) {
+							$detect = $value['code'];
+							
 							break 2;
 						}
-					}
-				}	
-			}			
-			
-			if (!$detect) { 
-				// Try using language folder to detect the language
-				foreach ($browser_languages as $browser_language) {
-					if (array_key_exists(strtolower($browser_language), $languages)) {
-						$detect = strtolower($browser_language);
-						
-						break;
 					}
 				}
 			}
@@ -87,7 +101,7 @@ class ControllerStartupStartup extends Controller {
 			$code = $detect ? $detect : '';
 		}
 		
-		if (!array_key_exists($code, $languages)) {
+		if (!array_key_exists($code, $language_codes)) {
 			$code = $this->config->get('config_language');
 		}
 		
@@ -106,7 +120,7 @@ class ControllerStartupStartup extends Controller {
 		$this->registry->set('language', $language);
 		
 		// Set the config language_id
-		$this->config->set('config_language_id', $languages[$code]['language_id']);	
+		$this->config->set('config_language_id', $languages[array_search($code, $language_codes)]['language_id']);	
 
 		// Customer
 		$customer = new Cart\Customer($this->registry);

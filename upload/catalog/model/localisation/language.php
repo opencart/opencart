@@ -15,7 +15,7 @@ class ModelLocalisationLanguage extends Model {
 			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "language WHERE status = '1' ORDER BY sort_order, name");
 
 			foreach ($query->rows as $result) {
-				$language_data[$result['code']] = array(
+				$language_data[] = array(
 					'language_id' => $result['language_id'],
 					'name'        => $result['name'],
 					'code'        => $result['code'],

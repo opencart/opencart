@@ -3,8 +3,9 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
+      <div class="btn-group" role="group" aria-label="...">
         <button type="submit" form="form-user-group" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -52,7 +53,11 @@
                 </div>
                 {% endfor %}
               </div>
-              <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', true);" class="btn btn-link">{{ text_select_all }}</button> / <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', false);" class="btn btn-link">{{ text_unselect_all }}</button></div>
+            <div class="btn-group" role="group" aria-label="...">
+              <button type="button" onclick="$(this).parent().parent().find(':checkbox').prop('checked', true);" class="btn btn-info">
+              <span class="fa fa-check-square-o" aria-hidden="true"></span> {{ text_select_all }}</button>
+             <button type="button" onclick="$(this).parent().parent().find(':checkbox').prop('checked', false);" class="btn btn-default">
+               <span class="fa fa-square-o" aria-hidden="true"></span> {{ text_unselect_all }}</button></div></div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">{{ entry_modify }}</label>
@@ -72,7 +77,11 @@
                 </div>
                 {% endfor %}
               </div>
-              <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', true);" class="btn btn-link">{{ text_select_all }}</button> / <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', false);" class="btn btn-link">{{ text_unselect_all }}</button></div>
+              <div class="btn-group" role="group" aria-label="...">
+              <button type="button" onclick="$(this).parent().parent().find(':checkbox').prop('checked', true);" class="btn btn-info">
+              <span class="fa fa-check-square-o" aria-hidden="true"></span> {{ text_select_all }}</button>
+             <button type="button" onclick="$(this).parent().parent().find(':checkbox').prop('checked', false);" class="btn btn-default">
+               <span class="fa fa-square-o" aria-hidden="true"></span> {{ text_unselect_all }}</button></div></div>
           </div>
         </form>
       </div>

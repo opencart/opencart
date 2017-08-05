@@ -2,9 +2,10 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+      <div class="pull-right">
+      <div class="btn-group" role="group" aria-label="..."><a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
         <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-store').submit() : false;"><i class="fa fa-trash-o"></i></button>
-      </div>
+      </div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -40,11 +41,11 @@
                   <td class="text-right">{{ column_action }}</td>
                 </tr>
               </thead>
-              <tbody>
+              <tbody class="rowlink" data-link="row">
                 {% if stores %}
                 {% for store in stores %}
                 <tr>
-                  <td class="text-center">{% if store.store_id in selected %}
+                  <td class="text-center rowlink-skip"><a href="{{ store.edit }}"></a>{% if store.store_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ store.store_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ store.store_id }}" />

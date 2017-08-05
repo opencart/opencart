@@ -3,10 +3,14 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
+      <div class="btn-toolbar" role="toolbar" aria-label="...">
+      <div class="btn-group" role="group" aria-label="...">
         <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-seo').toggleClass('hidden-sm hidden-xs');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
+        </div>
+      <div class="btn-group" role="group" aria-label="...">
         <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
         <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-url-alias').submit() : false;"><i class="fa fa-trash-o"></i></button>
-      </div>
+      </div></div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -42,7 +46,7 @@
             </div>
             <div class="form-group">
               <label class="control-label" for="input-store">{{ entry_store }}</label>
-              <select name="filter_store_id" id="input-store" class="form-control">
+              <select name="filter_store_id" id="input-store" class="selectpicker" data-width="100%">
                 <option value=""></option>
                 {% if filter_store_id == '0' %}
                 <option value="0" selected="selected">{{ text_default }}</option>
@@ -60,7 +64,7 @@
             </div>
             <div class="form-group">
               <label class="control-label" for="input-language">{{ entry_language }}</label>
-              <select name="filter_language_id" id="input-language" class="form-control">
+              <select name="filter_language_id" id="input-language" class="selectpicker" data-width="100%">
                 <option value=""></option>
                 
                 
@@ -156,12 +160,11 @@
                       <td class="text-right">{{ column_action }}</td>
                     </tr>
                   </thead>
-                  <tbody>
-                  
+                  <tbody data-link="row" class="rowlink">
                   {% if seo_urls %}
                   {% for seo_url in seo_urls %}
                   <tr>
-                    <td class="text-center">{% if seo_url.seo_url_id in selected %}
+                    <td class="text-center rowlink-skip"><a href="{{ seo_url.edit }}"></a>{% if seo_url.seo_url_id in selected %}
                       <input type="checkbox" name="selected[]" value="{{ seo_url.seo_url_id }}" checked="checked" />
                       {% else %}
                       <input type="checkbox" name="selected[]" value="{{ seo_url.seo_url_id }}" />

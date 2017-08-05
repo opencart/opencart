@@ -3,8 +3,9 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
+      <div class="btn-group" role="group" aria-label="...">
         <button type="submit" form="form-manufacturer" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -41,17 +42,15 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_store }}</label>
                 <div class="col-sm-10">
-                  <div class="well well-sm" style="height: 150px; overflow: auto;"> {% for store in stores %}
-                    <div class="checkbox">
-                      <label>{% if store.store_id in manufacturer_store %}
-                        <input type="checkbox" name="manufacturer_store[]" value="{{ store.store_id }}" checked="checked" />
-                        {{ store.name }}
-                        {% else %}
-                        <input type="checkbox" name="manufacturer_store[]" value="{{ store.store_id }}" />
-                        {{ store.name }}
-                        {% endif %}</label>
-                    </div>
-                    {% endfor %}</div>
+					<select name="manufacturer_store[]" class="selectpicker" multiple data-actions-box="true" data-width="100%">
+					{% for store in stores %}
+						{% if store.store_id in manufacturer_store %}
+						<option value="{{ store.store_id }}" selected="selected">{{ store.name }}</option>
+						{% else %}
+						<option value="{{ store.store_id }}">{{ store.name }}</option>
+						{% endif %}
+  					{% endfor %}
+					</select>
                 </div>
               </div>
               <div class="form-group">

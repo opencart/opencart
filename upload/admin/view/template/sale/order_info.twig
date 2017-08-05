@@ -2,7 +2,12 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="{{ invoice }}" target="_blank" data-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info"><i class="fa fa-print"></i></a> <a href="{{ shipping }}" target="_blank" data-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info"><i class="fa fa-truck"></i></a> <a href="{{ edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <div class="pull-right">
+      <a href="{{ invoice }}" target="_blank" data-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info"><i class="fa fa-print"></i></a> 
+      <a href="{{ shipping }}" target="_blank" data-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info"><i class="fa fa-truck"></i></a> 
+      <div class="btn-group" role="group" aria-label="...">
+      <a href="{{ edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a> 
+      <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -221,7 +226,7 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
                   <div class="col-sm-10">
-                    <select name="order_status_id" id="input-order-status" class="form-control">
+                    <select name="order_status_id" id="input-order-status" class="selectpicker" data-container="body" data-width="100%">
                       
                       
                       {% for order_statuses in order_statuses %}
@@ -247,17 +252,21 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-override"><span data-toggle="tooltip" title="{{ help_override }}">{{ entry_override }}</span></label>
                   <div class="col-sm-10">
-                    <div class="checkbox">
-                      <input type="checkbox" name="override" value="1" id="input-override" />
-                    </div>
+					<div class="btn-group" data-toggle="buttons">
+						<label class="btn btn-default">
+							<input name="override" value="1" type="checkbox" id="input-notify" />
+						</label>
+					</div>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-notify">{{ entry_notify }}</label>
                   <div class="col-sm-10">
-                    <div class="checkbox">
-                      <input type="checkbox" name="notify" value="1" id="input-notify" />
-                    </div>
+					<div class="btn-group" data-toggle="buttons">
+						<label class="btn btn-default">
+							<input name="notify" value="1" type="checkbox" id="input-notify" />
+						</label>
+					</div>
                   </div>
                 </div>
                 <div class="form-group">

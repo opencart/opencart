@@ -154,6 +154,98 @@ $(document).ready(function() {
 			$element.popover('destroy');
 		});
 	});
+
+    $('[data-toggle="buttons"]').each(function () {
+
+        // Settings
+        var $widget = $(this),
+            $label = $widget.find('label'),
+            $input = $widget.find('input:radio');
+
+        // Event Handlers
+        $label.on('click', function () {
+            $input.prop('checked', !$input.is(':checked'));
+            $input.triggerHandler('change');
+            updateDisplay();
+        });
+        $input.on('change', function () {
+            updateDisplay();
+        });        
+
+        // Actions
+        function updateDisplay() {
+            var isChecked = $input.is(':checked');
+			var $inputChecked = $widget.find('input:checked');
+			
+            // Update the labels's color
+            if (isChecked) {
+            	if ($inputChecked.val() == 1) {
+                	$inputChecked.parent().removeClass('btn-default').addClass('btn-success active');
+                } else if ($inputChecked.val() == '0') {
+                	$inputChecked.parent().removeClass('btn-default').addClass('btn-danger active');
+                } else {
+                	$inputChecked.parent().removeClass('btn-default').addClass('btn-info active');
+				}
+            } else {
+                $input.parent().removeClass('btn-success btn-danger btn-info active').addClass('btn-default');
+            }
+        }
+        // Initialization
+        function init() {
+            updateDisplay();
+        }
+        init();
+    });
+
+
+    $('[data-toggle="buttons"] label').each(function () {
+
+        // Settings
+        var $widget = $(this),
+            $label = $widget.find('label'),
+            $input = $widget.find('input:checkbox');
+
+        // Event Handlers
+        $label.on('click', function () {
+            $input.prop('checked', !$input.is(':checked'));
+            $input.triggerHandler('change');
+            updateDisplay();
+        });
+        $input.on('change', function () {
+            updateDisplay();
+        });        
+
+        // Actions
+        function updateDisplay() {
+            var isChecked = $input.is(':checked');
+			var $inputChecked = $widget.find('input:checked');
+			var $i = $widget.find('i');
+			
+            // Update the labels's color
+				if (isChecked) {
+	                $inputChecked.parent().removeClass('btn-default').addClass('btn-info active');
+	                $i.removeClass('fa fa-square-o').addClass('fa fa-check-square-o');
+	            } else {
+	                $input.parent().removeClass('btn-info active').addClass('btn-default');
+	                $i.removeClass('fa fa-check-square-o').addClass('fa fa-square-o');
+	            }
+
+        }
+        // Initialization
+        function init() {
+            updateDisplay();
+            
+            var isChecked = $input.is(':checked');
+            
+            if (isChecked) {
+            	$input.parent().prepend('<i class="fa fa-check-square-o"></i> ');
+			} else {
+				$input.parent().prepend('<i class="fa fa-square-o"></i> ');
+			}
+        }
+        init();
+    });
+ 
 });
 
 // Autocomplete */

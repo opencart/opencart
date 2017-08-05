@@ -3,8 +3,9 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
+      <div class="btn-group" role="group" aria-label="...">
         <button type="submit" form="form-custom-field" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -42,74 +43,29 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-location">{{ entry_location }}</label>
             <div class="col-sm-10">
-              <select name="location" id="input-location" class="form-control">
-                
-                
-
+            	<div class="btn-group" data-toggle="buttons">
                 {% if location == 'account' %}
-
-                
-                
-                <option value="account" selected="selected">{{ text_account }}</option>
-                
-                
-
+	                <label class="btn btn-default"><input type="radio" name="location" value="account" checked="checked" />{{ text_account }}</label>
                 {% else %}
-
-                
-                
-                <option value="account">{{ text_account }}</option>
-                
-                
-
+    	            <label class="btn btn-default"><input type="radio" name="location" value="account" />{{ text_account }}</label>
                 {% endif %}
                 {% if location == 'address' %}
-
-                
-                
-                <option value="address" selected="selected">{{ text_address }}</option>
-                
-                
-
+	                <label class="btn btn-default"><input type="radio" name="location" value="address" checked="checked" />{{ text_address }}</label>
                 {% else %}
-
-                
-                
-                <option value="address">{{ text_address }}</option>
-                
-                
-
+    	            <label class="btn btn-default"><input type="radio" name="location" value="address" />{{ text_address }}</label>
                 {% endif %}
-
-
                 {% if location == 'affiliate' %}
-
-                
-                
-                <option value="affiliate" selected="selected">{{ text_affiliate }}</option>
-                
-                
-
+	                <label class="btn btn-default"><input type="radio" name="location" value="affiliate" checked="checked" />{{ text_affiliate }}</label>
                 {% else %}
-
-                
-                
-                <option value="affiliate">{{ text_affiliate }}</option>
-                
-                
-
+    	            <label class="btn btn-default"><input type="radio" name="location" value="affiliate" />{{ text_affiliate }}</label>
                 {% endif %}
-
-
-              
-              
-              </select>
+                </div>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-type">{{ entry_type }}</label>
             <div class="col-sm-10">
-              <select name="type" id="input-type" class="form-control">
+              <select name="type" id="input-type" class="selectpicker" data-container="body" data-width="100%">
                 <optgroup label="{{ text_choose }}">
                 {% if type == 'select' %}
 
@@ -288,66 +244,48 @@
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">{{ entry_customer_group }}</label>
-            <div class="col-sm-10">{% set customer_group_row = 0 %}
-              {% for customer_group in customer_groups %}
-              <div class="checkbox">
-                <label> {% if customer_group.customer_group_id in custom_field_customer_group %}
-                  <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][customer_group_id]" value="{{ customer_group.customer_group_id }}" checked="checked" />
-                  {{ customer_group.name }}
-                  {% else %}
-                  <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][customer_group_id]" value="{{ customer_group.customer_group_id }}" />
-                  {{ customer_group.name }}
-                  {% endif %} </label>
-              </div>
-              {% set customer_group_row = customer_group_row + 1 %}
-              {% endfor %}</div>
+            <div class="col-sm-10">
+            <div class="btn-group" data-toggle="buttons">
+            {% set customer_group_row = 0 %}
+            {% for customer_group in customer_groups %}
+			{% if customer_group.customer_group_id in custom_field_customer_group %}
+	    		<label class="btn btn-default"><input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][customer_group_id]" value="{{ customer_group.customer_group_id }}" checked="checked" />{{ customer_group.name }}</label>
+	    	{% else %}
+				<label class="btn btn-default"><input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][customer_group_id]" value="{{ customer_group.customer_group_id }}" />{{ customer_group.name }}</label>
+            {% endif %}
+        	{% set customer_group_row = customer_group_row + 1 %}
+            {% endfor %}
+            </div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">{{ entry_required }}</label>
-            <div class="col-sm-10">{% set customer_group_row = 0 %}
-              {% for customer_group in customer_groups %}
-              <div class="checkbox">
-                <label> {% if customer_group.customer_group_id in custom_field_required %}
-                  <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][required]" value="{{ customer_group.customer_group_id }}" checked="checked" />
-                  {{ customer_group.name }}
-                  {% else %}
-                  <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][required]" value="{{ customer_group.customer_group_id }}" />
-                  {{ customer_group.name }}
-                  {% endif %}</label>
-              </div>
-              {% set customer_group_row = customer_group_row + 1 %}
-              {% endfor %}</div>
+            <div class="col-sm-10">
+            <div class="btn-group" data-toggle="buttons">
+            {% set customer_group_row = 0 %}
+            {% for customer_group in customer_groups %}
+            {% if customer_group.customer_group_id in custom_field_required %}
+	    		<label class="btn btn-default"><input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][required]" value="{{ customer_group.customer_group_id }}" checked="checked" />{{ customer_group.name }}</label>
+            {% else %}
+		    	<label class="btn btn-default"><input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][required]" value="{{ customer_group.customer_group_id }}" />{{ customer_group.name }}</label>
+            {% endif %}
+            {% set customer_group_row = customer_group_row + 1 %}
+            {% endfor %}
+            </div>  
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
-              <select name="status" id="input-status" class="form-control">
-                
-                
-
-                {% if status %}
-
-                
-                
-                <option value="1" selected="selected">{{ text_enabled }}</option>
-                <option value="0">{{ text_disabled }}</option>
-                
-                
-
-                {% else %}
-
-                
-                
-                <option value="1">{{ text_enabled }}</option>
-                <option value="0" selected="selected">{{ text_disabled }}</option>
-                
-                
-
-                {% endif %}
-
-              
-              
-              </select>
+				<div class="btn-group" data-toggle="buttons">
+		  		{% if status %}
+					<label class="btn btn-default"><input type="radio" name="status" value="1" checked="checked" />{{ text_enabled }}</label>
+		  			<label class="btn btn-default"><input type="radio" name="status" value="0" />{{ text_disabled }}</label>
+		    	{% else %}
+					<label class="btn btn-default"><input type="radio" name="status" value="1" />{{ text_enabled }}</label>
+					<label class="btn btn-default"><input type="radio" name="status" value="0" checked="checked" />{{ text_disabled }}</label>
+			    {% endif %}
+				</div>
             </div>
           </div>
           <div class="form-group">

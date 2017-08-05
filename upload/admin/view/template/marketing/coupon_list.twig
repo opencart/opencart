@@ -2,9 +2,11 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+      <div class="pull-right">
+      <div class="btn-group" role="group" aria-label="...">
+		<a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
         <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-coupon').submit() : false;"><i class="fa fa-trash-o"></i></button>
-      </div>
+      </div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -68,11 +70,11 @@
                   <td class="text-right">{{ column_action }}</td>
                 </tr>
               </thead>
-              <tbody>
+              <tbody class="rowlink" data-link="row">
                 {% if coupons %}
                 {% for coupon in coupons %}
                 <tr>
-                  <td class="text-center">{% if coupon.coupon_id in selected %}
+                  <td class="text-center rowlink-skip"><a href="{{ coupon.edit }}"></a>{% if coupon.coupon_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ coupon.coupon_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ coupon.coupon_id }}" />

@@ -58,8 +58,10 @@ class DB {
 
 	/**
      * 
+     *
+     * @param	string	$value
 	 * 
-	 * @return	int
+	 * @return	array
      */
 	public function countAffected() {
 		return $this->adaptor->countAffected();
@@ -77,7 +79,7 @@ class DB {
 	/**
      * 
 	 * 
-	 * @return	bool
+	 * @return	array
      */	
 	public function connected() {
 		return $this->adaptor->connected();

@@ -30,7 +30,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-store">{{ entry_store }}</label>
                 <div class="col-sm-10">
-                  <select name="store_id" id="input-store" class="form-control">
+                  <select name="store_id" id="input-store" class="selectpicker" data-container="body" data-width="100%">
                     {% for store in stores %}
                     {% if store.store_id == store_id %}
                     <option value="{{ store.store_id }}" selected="selected">{{ store.name }}</option>
@@ -44,7 +44,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-currency">{{ entry_currency }}</label>
                 <div class="col-sm-10">
-                  <select name="currency" id="input-currency" class="form-control">
+                  <select name="currency" id="input-currency" class="selectpicker" data-container="body" data-width="100%">
                     {% for currency in currencies %}
                     {% if currency.code == currency_code %}
                     <option value="{{ currency.code }}" selected="selected">{{ currency.title }}</option>
@@ -65,7 +65,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-customer-group">{{ entry_customer_group }}</label>
                 <div class="col-sm-10">
-                  <select name="customer_group_id" id="input-customer-group" class="form-control">
+                  <select name="customer_group_id" id="input-customer-group" class="selectpicker" data-container="body" data-width="100%">
                     {% for customer_group in customer_groups %}
                     {% if customer_group.customer_group_id == customer_group_id %}
                     <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
@@ -232,7 +232,7 @@
             </div>
             <div class="tab-pane" id="tab-cart">
               <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table table-bordered table-hover">
                   <thead>
                     <tr>
                       <td class="text-left">{{ column_product }}</td>
@@ -358,7 +358,7 @@
                     <div class="form-group required">
                       <label class="col-sm-2 control-label" for="input-theme">{{ entry_theme }}</label>
                       <div class="col-sm-10">
-                        <select name="voucher_theme_id" id="input-theme" class="form-control">
+                        <select name="voucher_theme_id" id="input-theme" class="selectpicker" data-container="body" data-width="100%">
                           {% for voucher_theme in voucher_themes %}
                           <option value="{{ voucher_theme.voucher_theme_id }}">{{ voucher_theme.name }}</option>
                           {% endfor %}
@@ -397,7 +397,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-payment-address">{{ entry_address }}</label>
                 <div class="col-sm-10">
-                  <select name="payment_address" id="input-payment-address" class="form-control">
+                  <select name="payment_address" id="input-payment-address" class="selectpicker" data-container="body" data-width="100%">
                     <option value="0" selected="selected">{{ text_none }}</option>
                     {% for address in addresses %}
                     <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
@@ -450,7 +450,7 @@
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-payment-country">{{ entry_country }}</label>
                 <div class="col-sm-10">
-                  <select name="country_id" id="input-payment-country" class="form-control">
+                  <select name="country_id" id="input-payment-country" class="selectpicker" data-container="body" data-width="100%" data-live-search="true">
                     <option value="">{{ text_select }}</option>
                     {% for country in countries %}
                     {% if country.country_id == payment_country_id %}
@@ -465,7 +465,7 @@
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-payment-zone">{{ entry_zone }}</label>
                 <div class="col-sm-10">
-                  <select name="zone_id" id="input-payment-zone" class="form-control">
+                  <select name="zone_id" id="input-payment-zone" class="selectpicker" data-container="body" data-width="100%" data-live-search="true">
                   </select>
                 </div>
               </div>
@@ -608,7 +608,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-shipping-address">{{ entry_address }}</label>
                 <div class="col-sm-10">
-                  <select name="shipping_address" id="input-shipping-address" class="form-control">
+                  <select name="shipping_address" id="input-shipping-address" class="selectpicker" data-container="body" data-width="100%">
                     <option value="0" selected="selected">{{ text_none }}</option>
                     {% for address in addresses %}
                     <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
@@ -661,7 +661,7 @@
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-shipping-country">{{ entry_country }}</label>
                 <div class="col-sm-10">
-                  <select name="country_id" id="input-shipping-country" class="form-control">
+                  <select name="country_id" id="input-shipping-country" class="selectpicker" data-container="body" data-width="100%" data-live-search="true">
                     <option value="">{{ text_select }}</option>
                     {% for country in countries %}
                     {% if country.country_id == shipping_country_id %}
@@ -676,7 +676,7 @@
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-shipping-zone">{{ entry_zone }}</label>
                 <div class="col-sm-10">
-                  <select name="zone_id" id="input-shipping-zone" class="form-control">
+                  <select name="zone_id" id="input-shipping-zone" class="selectpicker" data-container="body" data-width="100%" data-live-search="true">
                   </select>
                 </div>
               </div>
@@ -840,7 +840,7 @@
                   <label class="col-sm-2 control-label" for="input-shipping-method">{{ entry_shipping_method }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
-                      <select name="shipping_method" id="input-shipping-method" class="form-control">
+                      <select name="shipping_method" id="input-shipping-method" class="selectpicker" data-container="body" data-width="100%">
                         <option value="">{{ text_select }}</option>
                         {% if shipping_code %}
                         <option value="{{ shipping_code }}" selected="selected">{{ shipping_method }}</option>
@@ -855,7 +855,7 @@
                   <label class="col-sm-2 control-label" for="input-payment-method">{{ entry_payment_method }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
-                      <select name="payment_method" id="input-payment-method" class="form-control">
+                      <select name="payment_method" id="input-payment-method" class="selectpicker" data-container="body" data-width="100%">
                         <option value="">{{ text_select }}</option>
                         {% if payment_code %}
                         <option value="{{ payment_code }}" selected="selected">{{ payment_method }}</option>
@@ -899,7 +899,7 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
                   <div class="col-sm-10">
-                    <select name="order_status_id" id="input-order-status" class="form-control">
+                    <select name="order_status_id" id="input-order-status" class="selectpicker" data-container="body" data-width="100%">
                       {% for order_status in order_statuses %}
                       {% if order_status.order_status_id == order_status_id %}
                       <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
@@ -929,10 +929,10 @@
                 <div class="col-sm-6 text-left">
                   <button type="button" onclick="$('select[name=\'shipping_method\']').prop('disabled') ? $('a[href=\'#tab-payment\']').tab('show') : $('a[href=\'#tab-shipping\']').tab('show');" class="btn btn-default"><i class="fa fa-arrow-left"></i> {{ button_back }}</button>
                 </div>
-                <div class="col-sm-6 text-right">
+                <div class="col-sm-6 text-right"><div class="btn-group" role="group" aria-label="...">
                   <button type="button" id="button-refresh" data-toggle="tooltip" title="{{ button_refresh }}" data-loading-text="{{ text_loading }}" class="btn btn-warning"><i class="fa fa-refresh"></i></button>
                   <button type="button" id="button-save" class="btn btn-primary"><i class="fa fa-check-circle"></i> {{ button_save }}</button>
-                </div>
+                </div></div>
               </div>
             </div>
           </div>
@@ -959,6 +959,7 @@ $('select[name=\'currency\']').on('change', function() {
 		},
 		complete: function() {
 			$('select[name=\'currency\']').prop('disabled', false);
+			$('select').selectpicker('refresh');
 		},
 		success: function(json) {
 			$('.alert-dismissible, .text-danger').remove();
@@ -1569,6 +1570,7 @@ $('select[name=\'payment_address\']').on('change', function() {
 		},
 		complete: function() {
 			$('select[name=\'payment_address\']').prop('disabled', false);
+			$('select').selectpicker('refresh');
 		},
 		success: function(json) {
 			// Reset all fields
@@ -1621,6 +1623,7 @@ $('#tab-payment select[name=\'country_id\']').on('change', function() {
 		},
 		complete: function() {
 			$('#tab-payment .fa-spin').remove();
+			$('select').selectpicker('refresh');
 		},
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
@@ -1654,6 +1657,7 @@ $('#tab-payment select[name=\'country_id\']').on('change', function() {
 });
 
 $('#tab-payment select[name=\'country_id\']').trigger('change');
+$('select').selectpicker('refresh');
 
 $('#button-payment-address').on('click', function() {
 	$.ajax({
@@ -1753,6 +1757,7 @@ $('select[name=\'shipping_address\']').on('change', function() {
 		},
 		complete: function() {
 			$('select[name=\'shipping_address\']').prop('disabled', false);
+			$('select').selectpicker('refresh');
 		},
 		success: function(json) {
 			// Reset all fields
@@ -1805,6 +1810,7 @@ $('#tab-shipping select[name=\'country_id\']').on('change', function() {
 		},
 		complete: function() {
 			$('#tab-shipping select[name=\'country_id\']').prop('disabled', false);
+			$('select').selectpicker('refresh');
 		},
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
@@ -1838,6 +1844,7 @@ $('#tab-shipping select[name=\'country_id\']').on('change', function() {
 });
 
 $('#tab-shipping select[name=\'country_id\']').trigger('change');
+$('select').selectpicker('refresh');
 
 $('#button-shipping-address').on('click', function() {
 	$.ajax({
@@ -2371,7 +2378,7 @@ $('#button-refresh').on('click', function() {
 
 					html += '</td>';
 					html += '  <td class="text-left">' + product['model'] + '</td>';
-					html += '  <td class="text-right"><div class="input-group btn-block" style="max-width: 200px;"><input type="text" name="product[' + i + '][quantity]" value="' + product['quantity'] + '" class="form-control" /><span class="input-group-btn"><button type="button" data-toggle="tooltip" title="{{ button_refresh }}" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-refresh"></i></button></span></div></td>';
+					html += '  <td class="text-right"><div class="col-xs-4"><div class="input-group btn-block" style="max-width: 200px;"><input type="text" name="product[' + i + '][quantity]" value="' + product['quantity'] + '" class="form-control" /><span class="input-group-btn"><button type="button" data-toggle="tooltip" title="{{ button_refresh }}" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-refresh"></i></button></span></div></div></td>';
                     html += '  <td class="text-right">' + product['price'] + '</td>';
 					html += '  <td class="text-right">' + product['total'] + '</td>';
 					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + product['cart_id'] + '" data-toggle="tooltip" title="{{ button_remove }}" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';

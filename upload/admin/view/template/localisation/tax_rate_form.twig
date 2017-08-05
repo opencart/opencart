@@ -2,9 +2,9 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
+      <div class="pull-right"><div class="btn-group" role="group" aria-label="...">
         <button type="submit" form="form-tax-rate" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -46,42 +46,35 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-type">{{ entry_type }}</label>
             <div class="col-sm-10">
-              <select name="type" id="input-type" class="form-control">
-                {% if type == 'P' %}
-                <option value="P" selected="selected">{{ text_percent }}</option>
-                {% else %}
-                <option value="P">{{ text_percent }}</option>
-                {% endif %}
-                {% if type == 'F' %}
-                <option value="F" selected="selected">{{ text_amount }}</option>
-                {% else %}
-                <option value="F">{{ text_amount }}</option>
-                {% endif %}
-              </select>
+				<div class="btn-group" data-toggle="buttons">
+				{% if type == 'P' %}
+					<label class="btn btn-default"><input type="radio" name="type" value="P" checked="checked" />{{ text_percent }}</label>
+					<label class="btn btn-default"><input type="radio" name="type" value="F" />{{ text_amount }}</label>
+				{% elseif type == 'F' %}
+					<label class="btn btn-default"><input type="radio" name="type" value="P" />{{ text_percent }}</label>
+					<label class="btn btn-default"><input type="radio" name="type" value="F" checked="checked" />{{ text_amount }}</label>
+				{% endif %}
+				</div>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">{{ entry_customer_group }}</label>
             <div class="col-sm-10">
+            <div class="btn-group" data-toggle="buttons">
               {% for customer_group in customer_groups %}
-              <div class="checkbox">
-                <label>
                   {% if customer_group.customer_group_id in tax_rate_customer_group %}
-                  <input type="checkbox" name="tax_rate_customer_group[]" value="{{ customer_group.customer_group_id }}" checked="checked" />
-                  {{ customer_group.name }}
+                  <label class="btn btn-default"><input type="checkbox" name="tax_rate_customer_group[]" value="{{ customer_group.customer_group_id }}" checked="checked" />{{ customer_group.name }}</label>
                   {% else %}
-                  <input type="checkbox" name="tax_rate_customer_group[]" value="{{ customer_group.customer_group_id }}" />
-                  {{ customer_group.name }}
+                  <label class="btn btn-default"><input type="checkbox" name="tax_rate_customer_group[]" value="{{ customer_group.customer_group_id }}" />{{ customer_group.name }}</label>
                   {% endif %}
-                </label>
-              </div>
               {% endfor %}
+              </div>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
-              <select name="geo_zone_id" id="input-geo-zone" class="form-control">
+              <select name="geo_zone_id" id="input-geo-zone" class="selectpicker" data-container="body" data-width="100%">
                 {% for geo_zone in geo_zones %}
                 {% if geo_zone.geo_zone_id == geo_zone_id %}
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>

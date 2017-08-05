@@ -2,12 +2,14 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
+      <div class="pull-right"><div class="btn-toolbar" role="toolbar" aria-label="...">
+      <div class="btn-group" role="group" aria-label="...">
         {% if voucher_id %}
-        <button type="button" id="button-send" data-toggle="tooltip" title="{{ button_send }}" class="btn btn-primary"><i class="fa fa-envelope"></i></button>
+        <button type="button" id="button-send" data-toggle="tooltip" title="{{ button_send }}" class="btn btn-info"><i class="fa fa-envelope"></i></button>
         {% endif %}
+        </div><div class="btn-group" role="group" aria-label="...">
         <button type="submit" form="form-voucher" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div></div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -84,7 +86,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-theme">{{ entry_theme }}</label>
                 <div class="col-sm-10">
-                  <select name="voucher_theme_id" id="input-theme" class="form-control">
+                  <select name="voucher_theme_id" id="input-theme" class="selectpicker" data-container="body" data-width="100%" data-live-search="true">
                     {% for voucher_theme in voucher_themes %}
                     {% if voucher_theme.voucher_theme_id == voucher_theme_id %}
                     <option value="{{ voucher_theme.voucher_theme_id }}" selected="selected">{{ voucher_theme.name }}</option>
@@ -113,15 +115,15 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
-                  <select name="status" id="input-status" class="form-control">
-                    {% if status %}
-                    <option value="1" selected="selected">{{ text_enabled }}</option>
-                    <option value="0">{{ text_disabled }}</option>
-                    {% else %}
-                    <option value="1">{{ text_enabled }}</option>
-                    <option value="0" selected="selected">{{ text_disabled }}</option>
-                    {% endif %}
-                  </select>
+					<div class="btn-group" data-toggle="buttons">
+					{% if status %}
+						<label class="btn btn-default"><input type="radio" name="status" value="1" checked="checked" />{{ text_enabled }}</label>
+						<label class="btn btn-default"><input type="radio" name="status" value="0" />{{ text_disabled }}</label>
+					{% else %}
+						<label class="btn btn-default"><input type="radio" name="status" value="1" />{{ text_enabled }}</label>
+						<label class="btn btn-default"><input type="radio" name="status" value="0" checked="checked" />{{ text_disabled }}</label>
+					{% endif %}
+					</div>
                 </div>
               </div>
             </div>

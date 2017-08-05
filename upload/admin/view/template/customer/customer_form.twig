@@ -3,8 +3,9 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
+      <div class="btn-group" role="group" aria-label="...">
         <button type="submit" form="form-customer" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -56,7 +57,7 @@
                         <div class="form-group">
                           <label class="col-sm-2 control-label" for="input-customer-group">{{ entry_customer_group }}</label>
                           <div class="col-sm-10">
-                            <select name="customer_group_id" id="input-customer-group" class="form-control">
+                            <select name="customer_group_id" id="input-customer-group" class="selectpicker" data-container="body" data-width="100%">
                               {% for customer_group in customer_groups %}
                               {% if customer_group.customer_group_id == customer_group_id %}
                               <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
@@ -105,7 +106,7 @@
                         <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
                           <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                           <div class="col-sm-10">
-                            <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control">
+                            <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field{{ custom_field.custom_field_id }}" class="selectpicker" data-container="body" data-width="100%">
                               <option value="">{{ text_select }}</option>
                               {% for custom_field_value in custom_field.custom_field_value %}
                               {% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == account_custom_field[custom_field.custom_field_id] %}
@@ -260,43 +261,44 @@
                         <div class="form-group">
                           <label class="col-sm-2 control-label" for="input-newsletter">{{ entry_newsletter }}</label>
                           <div class="col-sm-10">
-                            <select name="newsletter" id="input-newsletter" class="form-control">
-                              {% if newsletter %}
-                              <option value="1" selected="selected">{{ text_enabled }}</option>
-                              <option value="0">{{ text_disabled }}</option>
-                              {% else %}
-                              <option value="1">{{ text_enabled }}</option>
-                              <option value="0" selected="selected">{{ text_disabled }}</option>
-                              {% endif %}
-                            </select>
+
+							<div class="btn-group" data-toggle="buttons">
+  							{% if newsletter %}
+								<label class="btn btn-default"><input type="radio" name="newsletter" value="1" checked="checked" />{{ text_enabled }}</label>
+  								<label class="btn btn-default"><input type="radio" name="newsletter" value="0" />{{ text_disabled }}</label>
+    	                	{% else %}
+								<label class="btn btn-default"><input type="radio" name="newsletter" value="1" />{{ text_enabled }}</label>
+								<label class="btn btn-default"><input type="radio" name="newsletter" value="0" checked="checked" />{{ text_disabled }}</label>
+	       	        		{% endif %}
+							</div>
                           </div>
                         </div>
                         <div class="form-group">
                           <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                           <div class="col-sm-10">
-                            <select name="status" id="input-status" class="form-control">
-                              {% if status %}
-                              <option value="1" selected="selected">{{ text_enabled }}</option>
-                              <option value="0">{{ text_disabled }}</option>
-                              {% else %}
-                              <option value="1">{{ text_enabled }}</option>
-                              <option value="0" selected="selected">{{ text_disabled }}</option>
-                              {% endif %}
-                            </select>
+							<div class="btn-group" data-toggle="buttons">
+				  			{% if status %}
+								<label class="btn btn-default"><input type="radio" name="status" value="1" checked="checked" />{{ text_enabled }}</label>
+					  			<label class="btn btn-default"><input type="radio" name="status" value="0" />{{ text_disabled }}</label>
+	    	                {% else %}
+								<label class="btn btn-default"><input type="radio" name="status" value="1" />{{ text_enabled }}</label>
+								<label class="btn btn-default"><input type="radio" name="status" value="0" checked="checked" />{{ text_disabled }}</label>
+			       	        {% endif %}
+							</div>
                           </div>
                         </div>
                         <div class="form-group">
                           <label class="col-sm-2 control-label" for="input-safe">{{ entry_safe }}</label>
                           <div class="col-sm-10">
-                            <select name="safe" id="input-safe" class="form-control">
-                              {% if safe %}
-                              <option value="1" selected="selected">{{ text_yes }}</option>
-                              <option value="0">{{ text_no }}</option>
-                              {% else %}
-                              <option value="1">{{ text_yes }}</option>
-                              <option value="0" selected="selected">{{ text_no }}</option>
-                              {% endif %}
-                            </select>
+							<div class="btn-group" data-toggle="buttons">
+				  			{% if safe %}
+								<label class="btn btn-default"><input type="radio" name="safe" value="1" checked="checked" />{{ text_yes }}</label>
+					  			<label class="btn btn-default"><input type="radio" name="safe" value="0" />{{ text_no }}</label>
+	    	                {% else %}
+								<label class="btn btn-default"><input type="radio" name="safe" value="1" />{{ text_yes }}</label>
+								<label class="btn btn-default"><input type="radio" name="safe" value="0" checked="checked" />{{ text_no }}</label>
+			       	        {% endif %}
+							</div>
                           </div>
                         </div>
                       </fieldset>
@@ -360,7 +362,7 @@
                       <div class="form-group required">
                         <label class="col-sm-2 control-label" for="input-country{{ address_row }}">{{ entry_country }}</label>
                         <div class="col-sm-10">
-                          <select name="address[{{ address_row }}][country_id]" id="input-country{{ address_row }}" onchange="country(this, '{{ address_row }}', '{{ address.zone_id }}');" class="form-control">
+                          <select name="address[{{ address_row }}][country_id]" id="input-country{{ address_row }}" onchange="country(this, '{{ address_row }}', '{{ address.zone_id }}');" class="selectpicker" data-container="body" data-width="100%" data-live-search="true">
                             <option value="">{{ text_select }}</option>
                             {% for country in countries %}
                             {% if country.country_id == address.country_id %}
@@ -377,7 +379,7 @@
                       <div class="form-group required">
                         <label class="col-sm-2 control-label" for="input-zone{{ address_row }}">{{ entry_zone }}</label>
                         <div class="col-sm-10">
-                          <select name="address[{{ address_row }}][zone_id]" id="input-zone{{ address_row }}" class="form-control">
+                          <select name="address[{{ address_row }}][zone_id]" id="input-zone{{ address_row }}" class="selectpicker" data-container="body" data-width="100%" data-live-search="true">
                           </select>
                           {% if error_address[address_row].zone %}
                           <div class="text-danger">{{ error_address[address_row].zone }}</div>
@@ -389,7 +391,7 @@
                       <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
                         <label class="col-sm-2 control-label" for="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
-                          <select name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" id="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control">
+                          <select name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" id="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="selectpicker" data-container="body" data-width="100%" data-live-search="true">
                             <option value="">{{ text_select }}</option>
                             {% for custom_field_value in custom_field.custom_field_value %}
                             {% if address.custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == address.custom_field[custom_field.custom_field_id] %}
@@ -569,7 +571,7 @@
                 <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
                   <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                   <div class="col-sm-10">
-                    <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control">
+                    <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field{{ custom_field.custom_field_id }}" class="selectpicker" data-container="body" data-width="100%" data-live-search="true">
                       <option value="">{{ text_select }}</option>
                       {% for custom_field_value in custom_field.custom_field_value %}
                       {% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == account_custom_field[custom_field.custom_field_id] %}
@@ -711,29 +713,22 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label">{{ entry_payment }}</label>
                   <div class="col-sm-10">
-                    <div class="radio">
-                      <label>{% if payment == 'cheque' %}
-                        <input type="radio" name="payment" value="cheque" checked="checked" />
-                        {% else %}
-                        <input type="radio" name="payment" value="cheque" />
-                        {% endif %}
-                        {{ text_cheque }}</label>
-                    </div>
-                    <div class="radio">
-                      <label> {% if payment == 'paypal' %}
-                        <input type="radio" name="payment" value="paypal" checked="checked" />
-                        {% else %}
-                        <input type="radio" name="payment" value="paypal" />
-                        {% endif %}
-                        {{ text_paypal }}</label>
-                    </div>
-                    <div class="radio">
-                      <label> {% if payment == 'bank' %}
-                        <input type="radio" name="payment" value="bank" checked="checked" />
-                        {% else %}
-                        <input type="radio" name="payment" value="bank" />
-                        {% endif %}
-                        {{ text_bank }}</label>
+                    <div class="btn-group" data-toggle="buttons">
+					{% if payment == 'cheque' %}
+						<label class="btn btn-default"><input type="radio" name="payment" value="cheque" checked="checked" />{{ text_cheque }}</label>
+                    {% else %}
+                    	<label class="btn btn-default"><input type="radio" name="payment" value="cheque" />{{ text_cheque }}</label>
+					{% endif %}
+					{% if payment == 'paypal' %}
+						<label class="btn btn-default"><input type="radio" name="payment" value="paypal" checked="checked" />{{ text_paypal }}</label>
+					{% else %}
+                        <label class="btn btn-default"><input type="radio" name="payment" value="paypal" />{{ text_paypal }}</label>
+					{% endif %}
+					{% if payment == 'bank' %}
+						<label class="btn btn-default"><input type="radio" name="payment" value="bank" checked="checked" />{{ text_bank }}</label>
+					{% else %}
+						<label class="btn btn-default"><input type="radio" name="payment" value="bank" />{{ text_bank }}</label>
+					{% endif %}
                     </div>
                   </div>
                 </div>
@@ -796,15 +791,15 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-affiliate">{{ entry_status }}</label>
                   <div class="col-sm-10">
-                    <select name="affiliate" id="input-affiliate" class="form-control">
-                      {% if affiliate %}
-                      <option value="1" selected="selected">{{ text_enabled }}</option>
-                      <option value="0">{{ text_disabled }}</option>
-                      {% else %}
-                      <option value="1">{{ text_enabled }}</option>
-                      <option value="0" selected="selected">{{ text_disabled }}</option>
-                      {% endif %}
-                     </select>
+					<div class="btn-group" data-toggle="buttons">
+		  			{% if affiliate %}
+						<label class="btn btn-default"><input type="radio" name="affiliate" value="1" checked="checked" />{{ text_enabled }}</label>
+			  			<label class="btn btn-default"><input type="radio" name="affiliate" value="0" />{{ text_disabled }}</label>
+   	                {% else %}
+						<label class="btn btn-default"><input type="radio" name="affiliate" value="1" />{{ text_enabled }}</label>
+						<label class="btn btn-default"><input type="radio" name="affiliate" value="0" checked="checked" />{{ text_disabled }}</label>
+	       	        {% endif %}
+					</div>
                   </div>
                 </div>
               </fieldset>           
@@ -974,7 +969,7 @@
 
     html += '  <div class="form-group required">';
     html += '    <label class="col-sm-2 control-label" for="input-country' + address_row + '">{{ entry_country }}</label>';
-    html += '    <div class="col-sm-10"><select name="address[' + address_row + '][country_id]" id="input-country' + address_row + '" onchange="country(this, \'' + address_row + '\', \'0\');" class="form-control">';
+    html += '    <div class="col-sm-10"><select name="address[' + address_row + '][country_id]" id="input-country' + address_row + '" onchange="country(this, \'' + address_row + '\', \'0\');" class="selectpicker" data-container="body" data-width="100%" data-live-search="true">';
       html += '         <option value="">{{ text_select }}</option>';
       {% for country in countries %}
       html += '         <option value="{{ country.country_id }}">{{ country.name|escape('js') }}</option>';
@@ -984,7 +979,7 @@
 
     html += '  <div class="form-group required">';
     html += '    <label class="col-sm-2 control-label" for="input-zone' + address_row + '">{{ entry_zone }}</label>';
-    html += '    <div class="col-sm-10"><select name="address[' + address_row + '][zone_id]" id="input-zone' + address_row + '" class="form-control"><option value="">{{ text_none }}</option></select></div>';
+    html += '    <div class="col-sm-10"><select name="address[' + address_row + '][zone_id]" id="input-zone' + address_row + '" class="selectpicker" data-container="body" data-width="100%" data-live-search="true"><option value="">{{ text_none }}</option></select></div>';
     html += '  </div>';
 
     // Custom Fields
@@ -995,7 +990,7 @@
     html += '  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
     html += '  		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name|e('js') }}</label>';
     html += '  		<div class="col-sm-10">';
-    html += '  		  <select name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control">';
+    html += '  		  <select name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="selectpicker" data-container="body" data-width="100%" data-live-search="true">';
     html += '  			<option value="">{{ text_select }}</option>';
 
     {% for custom_field_value in custom_field.custom_field_value %}
@@ -1141,7 +1136,7 @@
 			$('#tab-address' + address_row + ' .form-group:first').before(this);
 		}
     });
-
+	$('select').selectpicker('refresh');
     address_row++;
   }
   //--></script> 
@@ -1152,9 +1147,11 @@
       dataType: 'json',
       beforeSend: function() {
         $('select[name=\'address[' + index + '][country_id]\']').prop('disabled', true);
+        $('select').selectpicker('refresh');
       },
       complete: function() {
         $('select[name=\'address[' + index + '][country_id]\']').prop('disabled', false);
+        $('select').selectpicker('refresh');
       },
       success: function(json) {
         if (json['postcode_required'] == '1') {
@@ -1180,6 +1177,7 @@
         }
 
         $('select[name=\'address[' + index + '][zone_id]\']').html(html);
+        $('select').selectpicker('refresh');
       },
       error: function(xhr, ajaxOptions, thrownError) {
         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

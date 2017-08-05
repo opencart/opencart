@@ -3,8 +3,10 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
+      <div class="btn-group" role="group" aria-label="...">
         <button type="submit" form="form-category" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+        </div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -108,21 +110,15 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_store }}</label>
                 <div class="col-sm-10">
-                  <div class="well well-sm" style="height: 150px; overflow: auto;">
-                    {% for store in stores %}
-                    <div class="checkbox">
-                      <label>
-                        {% if store.store_id in category_store %}
-                        <input type="checkbox" name="category_store[]" value="{{ store.store_id }}" checked="checked" />
-                        {{ store.name }}
-                        {% else %}
-                        <input type="checkbox" name="category_store[]" value="{{ store.store_id }}" />
-                        {{ store.name }}
-                        {% endif %}
-                      </label>
-                    </div>
-                    {% endfor %}
-                  </div>
+					<select name="category_store[]" class="selectpicker" multiple data-actions-box="true" data-width="100%">
+					{% for store in stores %}
+						{% if store.store_id in category_store %}
+						<option value="{{ store.store_id }}" selected="selected">{{ store.name }}</option>
+						{% else %}
+						<option value="{{ store.store_id }}">{{ store.name }}</option>
+						{% endif %}
+  					{% endfor %}
+					</select>
                 </div>
               </div>
               <div class="form-group">
@@ -134,15 +130,17 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-top"><span data-toggle="tooltip" title="{{ help_top }}">{{ entry_top }}</span></label>
                 <div class="col-sm-10">
-                  <div class="checkbox">
-                    <label>
-                      {% if top %}
-                      <input type="checkbox" name="top" value="1" checked="checked" id="input-top" />
-                      {% else %}
-                      <input type="checkbox" name="top" value="1" id="input-top" />
-                      {% endif %}
-                      &nbsp; </label>
-                  </div>
+					<div class="btn-group" data-toggle="buttons">
+					{% if top %}
+						<label class="btn btn-default">
+							<input name="top" value="1" type="checkbox" id="input-top" checked="checked" />
+						</label>
+					{% else %}
+						<label class="btn btn-default">
+							<input name="top" value="1" type="checkbox" id="input-top" />
+						</label>
+					{% endif %}
+					</div>
                 </div>
               </div>
               <div class="form-group">
@@ -160,15 +158,15 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
-                  <select name="status" id="input-status" class="form-control">
-                    {% if status %}
-                    <option value="1" selected="selected">{{ text_enabled }}</option>
-                    <option value="0">{{ text_disabled }}</option>
-                    {% else %}
-                    <option value="1">{{ text_enabled }}</option>
-                    <option value="0" selected="selected">{{ text_disabled }}</option>
-                    {% endif %}
-                  </select>
+					<div class="btn-group" data-toggle="buttons">
+  						{% if status %}
+						<label class="btn btn-default"><input type="radio" name="status" value="1" checked="checked" />{{ text_enabled }}</label>
+  						<label class="btn btn-default"><input type="radio" name="status" value="0" />{{ text_disabled }}</label>
+    	                {% else %}
+						<label class="btn btn-default"><input type="radio" name="status" value="1" />{{ text_enabled }}</label>
+  						<label class="btn btn-default"><input type="radio" name="status" value="0" checked="checked" />{{ text_disabled }}</label>
+            	        {% endif %}
+					</div>
                 </div>
               </div>
             </div>
@@ -215,7 +213,7 @@
                     {% for store in stores %}
                     <tr>
                       <td class="text-left">{{ store.name }}</td>
-                      <td class="text-left"><select name="category_layout[{{ store.store_id }}]" class="form-control">
+                      <td class="text-left"><select name="category_layout[{{ store.store_id }}]" class="selectpicker" data-container="body" data-live-search="true" data-width="100%">
                           <option value=""></option>
                           {% for layout in layouts %}
                           {% if category_layout[store.store_id] and category_layout[store.store_id] == layout.layout_id %}

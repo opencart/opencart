@@ -2,9 +2,9 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
+      <div class="pull-right"><div class="btn-group" role="group" aria-label="...">
         <button type="submit" form="form-coupon" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -51,28 +51,17 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-type"><span data-toggle="tooltip" title="{{ help_type }}">{{ entry_type }}</span></label>
                 <div class="col-sm-10">
-                  <select name="type" id="input-type" class="form-control">
-                    
-                    {% if type == 'P' %}
-                    
-                    <option value="P" selected="selected">{{ text_percent }}</option>
-                    
-                    {% else %}
-                    
-                    <option value="P">{{ text_percent }}</option>
-                    
-                    {% endif %}
-                    {% if type == 'F' %}
-                    
-                    <option value="F" selected="selected">{{ text_amount }}</option>
-                    
-                    {% else %}
-                    
-                    <option value="F">{{ text_amount }}</option>
-                    
-                    {% endif %}
-                  
-                  </select>
+
+				<div class="btn-group" data-toggle="buttons">
+				{% if type == 'P' %}
+					<label class="btn btn-default"><input type="radio" name="type" value="P" checked="checked" />{{ text_percent }}</label>
+					<label class="btn btn-default"><input type="radio" name="type" value="F" />{{ text_amount }}</label>
+				{% elseif type == 'F' %}
+					<label class="btn btn-default"><input type="radio" name="type" value="P" />{{ text_percent }}</label>
+					<label class="btn btn-default"><input type="radio" name="type" value="F" checked="checked" />{{ text_amount }}</label>
+				{% endif %}
+				</div>
+
                 </div>
               </div>
               <div class="form-group">
@@ -90,39 +79,33 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_logged }}">{{ entry_logged }}</span></label>
                 <div class="col-sm-10">
-                  <label class="radio-inline"> {% if logged %}
-                    <input type="radio" name="logged" value="1" checked="checked" />
-                    {{ text_yes }}
-                    {% else %}
-                    <input type="radio" name="logged" value="1" />
-                    {{ text_yes }}
-                    {% endif %} </label>
-                  <label class="radio-inline"> {% if not logged %}
-                    <input type="radio" name="logged" value="0" checked="checked" />
-                    {{ text_no }}
-                    {% else %}
-                    <input type="radio" name="logged" value="0" />
-                    {{ text_no }}
-                    {% endif %} </label>
+                
+					<div class="btn-group" data-toggle="buttons">
+					{% if logged %}
+						<label class="btn btn-default"><input type="radio" name="logged" value="1" checked="checked" />{{ text_yes }}</label>
+						<label class="btn btn-default"><input type="radio" name="logged" value="0" />{{ text_no }}</label>
+					{% else %}
+						<label class="btn btn-default"><input type="radio" name="logged" value="1" />{{ text_yes }}</label>
+						<label class="btn btn-default"><input type="radio" name="logged" value="0" checked="checked" />{{ text_no }}</label>
+					{% endif %}
+					</div>
+                
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_shipping }}</label>
                 <div class="col-sm-10">
-                  <label class="radio-inline"> {% if shipping %}
-                    <input type="radio" name="shipping" value="1" checked="checked" />
-                    {{ text_yes }}
-                    {% else %}
-                    <input type="radio" name="shipping" value="1" />
-                    {{ text_yes }}
-                    {% endif %} </label>
-                  <label class="radio-inline"> {% if not shipping %}
-                    <input type="radio" name="shipping" value="0" checked="checked" />
-                    {{ text_no }}
-                    {% else %}
-                    <input type="radio" name="shipping" value="0" />
-                    {{ text_no }}
-                    {% endif %} </label>
+
+					<div class="btn-group" data-toggle="buttons">
+					{% if shipping %}
+						<label class="btn btn-default"><input type="radio" name="shipping" value="1" checked="checked" />{{ text_yes }}</label>
+						<label class="btn btn-default"><input type="radio" name="shipping" value="0" />{{ text_no }}</label>
+					{% else %}
+						<label class="btn btn-default"><input type="radio" name="shipping" value="1" />{{ text_yes }}</label>
+						<label class="btn btn-default"><input type="radio" name="shipping" value="0" checked="checked" />{{ text_no }}</label>
+					{% endif %}
+					</div>
+
                 </div>
               </div>
               <div class="form-group">
@@ -182,21 +165,15 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
-                  <select name="status" id="input-status" class="form-control">
-                    
-                    {% if status %}
-                    
-                    <option value="1" selected="selected">{{ text_enabled }}</option>
-                    <option value="0">{{ text_disabled }}</option>
-                    
-                    {% else %}
-                    
-                    <option value="1">{{ text_enabled }}</option>
-                    <option value="0" selected="selected">{{ text_disabled }}</option>
-                    
-                    {% endif %}
-                  
-                  </select>
+					<div class="btn-group" data-toggle="buttons">
+					{% if status %}
+						<label class="btn btn-default"><input type="radio" name="status" value="1" checked="checked" />{{ text_enabled }}</label>
+						<label class="btn btn-default"><input type="radio" name="status" value="0" />{{ text_disabled }}</label>
+					{% else %}
+						<label class="btn btn-default"><input type="radio" name="status" value="1" />{{ text_enabled }}</label>
+						<label class="btn btn-default"><input type="radio" name="status" value="0" checked="checked" />{{ text_disabled }}</label>
+					{% endif %}
+					</div>
                 </div>
               </div>
             </div>

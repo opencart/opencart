@@ -3,9 +3,9 @@
 <div class="page-header">
   <div class="container-fluid">
     <div class="pull-right">
-      <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-order').toggleClass('hidden-sm hidden-xs');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
-      <button type="submit" id="button-shipping" form="form-order" formaction="{{ shipping }}" formtarget="_blank" data-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info"><i class="fa fa-truck"></i></button>
-      <button type="submit" id="button-invoice" form="form-order" formaction="{{ invoice }}" formtarget="_blank" data-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info"><i class="fa fa-print"></i></button>
+      <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-order').toggleClass('hidden-sm hidden-xs');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button> 
+      <button type="submit" id="button-shipping" form="form-order" formaction="{{ shipping }}" formtarget="_blank" data-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info"><i class="fa fa-truck"></i></button> 
+      <button type="submit" id="button-invoice" form="form-order" formaction="{{ invoice }}" formtarget="_blank" data-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info"><i class="fa fa-print"></i></button> 
       <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a> </div>
     <h1>{{ heading_title }}</h1>
     <ul class="breadcrumb">
@@ -42,7 +42,7 @@
           </div>
           <div class="form-group">
             <label class="control-label" for="input-order-status">{{ entry_order_status }}</label>
-            <select name="filter_order_status_id" id="input-order-status" class="form-control">
+            <select name="filter_order_status_id" id="input-order-status" class="selectpicker" data-container="body" data-width="100%">
               <option value=""></option>
               
               {% if filter_order_status_id == '0' %}
@@ -115,12 +115,12 @@
                     <td class="text-right">{{ column_action }}</td>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody class="rowlink" data-link="row">
                 
                 {% if orders %}
                 {% for order in orders %}
                 <tr>
-                  <td class="text-center"> {% if order.order_id in selected %}
+                  <td class="text-center rowlink-skip"><a href="{{ order.view }}"></a> {% if order.order_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ order.order_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ order.order_id }}" />

@@ -33,7 +33,7 @@ $_['text_on']                = 'On';
 $_['text_off']               = 'Off';
 $_['text_writable']          = 'Writable';
 $_['text_unwritable']        = 'Unwritable';
-//$_['text_missing']           = 'Missing';
+$_['text_missing']           = 'Missing';
 
 // Error
 $_['error_missing']          = 'Missing';

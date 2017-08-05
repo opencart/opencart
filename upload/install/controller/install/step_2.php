@@ -57,24 +57,16 @@ class ControllerInstallStep2 extends Controller {
 		// catalog config
 		if (!is_file(DIR_OPENCART . 'config.php')) {
 			$data['error_catalog_config'] = $this->language->get('error_missing');
+		} elseif (!is_writable(DIR_OPENCART . 'config.php')) {
+			$data['error_catalog_config'] = $this->language->get('error_unwritable');		
 		} else {
 			$data['error_catalog_config'] = '';
-		}
-		
-		if (!is_writable(DIR_OPENCART . 'config.php')) {
-			$data['error_catalog'] = $this->language->get('error_unwritable');
-		} else {
-			$data['error_catalog'] = '';
 		}
 
 		// admin configs
 		if (!is_file(DIR_OPENCART . 'admin/config.php')) {
 			$data['error_admin_config'] = $this->language->get('error_missing');
-		} else {
-			$data['error_admin_config_admin'] = '';
-		}
-		
-		if (!is_writable(DIR_OPENCART . 'admin/config.php')) {
+		} elseif (!is_writable(DIR_OPENCART . 'admin/config.php')) {
 			$data['error_admin_config'] = $this->language->get('error_unwritable');
 		} else {
 			$data['error_admin_config'] = '';
@@ -221,9 +213,7 @@ class ControllerInstallStep2 extends Controller {
 			$this->error['warning'] = $this->language->get('error_catalog_exist');
 		} elseif (!is_writable(DIR_OPENCART . 'config.php')) {
 			$this->error['warning'] = $this->language->get('error_catalog_writable');
-		}
-
-		if (!file_exists(DIR_OPENCART . 'admin/config.php')) {
+		} elseif (!file_exists(DIR_OPENCART . 'admin/config.php')) {
 			$this->error['warning'] = $this->language->get('error_admin_exist');
 		} elseif (!is_writable(DIR_OPENCART . 'admin/config.php')) {
 			$this->error['warning'] = $this->language->get('error_admin_writable');

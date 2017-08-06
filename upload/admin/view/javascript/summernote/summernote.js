@@ -4769,6 +4769,15 @@
       context.invoke('toolbar.updateCodeview', true);
       $editor.addClass('codeview');
       $codable.focus();
+      
+      $codable.on('input', function(e) {
+        var value = dom.value($codable, options.prettifyHtml) || dom.emptyPara;
+        var isChange = $editable.html() !== value;
+        $editable.html(value);
+        if (isChange) {
+         context.triggerEvent('change', $editable.html(), $editable);
+        }
+      });
 
       // activate CodeMirror as codable
       if (agent.hasCodeMirror) {

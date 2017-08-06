@@ -101,6 +101,11 @@
     $('select[name="route"]').prop('disabled', true);
     $('select[name="key"]').prop('disabled', true);
     $('input[name="key"]').prop('disabled', true);
+    
+    $('form').bind('submit', function() {
+        $(this).find(':disabled').prop('disabled', false);
+    });
+    
     {% else %}
     $('select[name="language_id"]').on('change', function() {
       $.ajax({

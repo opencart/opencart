@@ -219,4 +219,5 @@ $_['button_help']                                       = 'Documentation';
 $_['button_reconnect']                                  = 'Reconnect';
 $_['button_refresh']                                    = 'Refresh token';
 $_['button_refund']                                     = 'Refund';
+$_['button_video_help']                                 = 'Installation Video';
 $_['button_void']                                       = 'Void';

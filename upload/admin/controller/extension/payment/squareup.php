@@ -269,7 +269,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
 
         $data['url_list_transactions'] = html_entity_decode($this->url->link('extension/payment/squareup/transactions', 'user_token=' . $this->session->data['user_token'] . '&page={PAGE}', true));
         $data['help'] = 'http://docs.isenselabs.com/square';
-        $data['url_video_help'] = 'http://bit.ly/2uYGoTA';
+        $data['url_video_help'] = 'https://www.youtube.com/watch?v=YVJyBrNb-BU';
         $data['url_integration_settings_help'] = 'http://docs.isenselabs.com/square/integration_settings';
 
         $this->load->model('localisation/language');

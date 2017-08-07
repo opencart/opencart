@@ -99,17 +99,10 @@ class ControllerCheckoutGuest extends Controller {
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
-		// Customer Group
-		if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
-			$customer_group_id = $this->request->post['customer_group_id'];
-		} else {
-			$customer_group_id = $this->config->get('config_customer_group_id');
-		}
-
 		// Custom Fields
 		$this->load->model('account/custom_field');
 
-		$data['custom_fields'] = $this->model_account_custom_field->getCustomFields($customer_group_id);
+		$data['custom_fields'] = $this->model_account_custom_field->getCustomFields($data['customer_group_id']);
 
 		if (isset($this->session->data['guest']['custom_field'])) {
 			if (isset($this->session->data['guest']['custom_field'])) {

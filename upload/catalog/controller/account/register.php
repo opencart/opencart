@@ -143,12 +143,19 @@ class ControllerAccountRegister extends Controller {
 			$data['telephone'] = '';
 		}
 
+		// Customer Group
+		if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+			$customer_group_id = $this->request->post['customer_group_id'];
+		} else {
+			$customer_group_id = $this->config->get('config_customer_group_id');
+		}
+
 		// Custom Fields
 		$data['custom_fields'] = array();
-		
+
 		$this->load->model('account/custom_field');
-		
-		$custom_fields = $this->model_account_custom_field->getCustomFields();
+
+		$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
 		
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'account') {

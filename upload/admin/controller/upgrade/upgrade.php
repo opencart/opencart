@@ -44,12 +44,74 @@ class ControllerUpgradeUpgrade extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('tool/upgrade', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('upgrade/upgrade', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		$data['version'] = VERSION;
+		$request_data = array();
+		
+		$this->load->model('setting/extension');
+		
+		$results = $this->model_setting_extension->getExtensionInstalls(0, 1000);
+		
+		foreach ($results as $result) {
+			if ($result['extension_download_id']) {
+				$request_data['extension_download'][] = $result['extension_download_id'];
+			}
+		}
+		
+		$curl = curl_init(OPENCART_SERVER . 'index.php?route=marketplace/api/upgrade');
+
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($curl, CURLOPT_POST, true);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $request_data);
+		
+		$response = curl_exec($curl);
+
+		curl_close($curl);	
+		
+		$response_info = json_decode($response, true);
+
+		if ($response_info) {
+			//if (VERSION >= $json['version']) {
+			if ('2.0' == $json['version']) {	
+				$data['success'] = sprintf($this->language->get('text_success'), $json['version']);
+			} else {
+				$data['error_warning'] = sprintf($this->language->get('error_version'), $json['version']);
+			}
+		} else {
+			$data['error_warning'] = $this->language->get('error_connection');
+		}		
+		
+		if (isset($response_info['version'])) {
+			$data['version'] = $response_info['version'];
+		} else {
+			$data['version'] = '';
+		}
+		
+		if (isset($response_info['download'])) {
+			$data['download'] = $response_info['download'];
+		} else {
+			$data['download'] = '';
+		}
+		
+		$data['extensions'] = array();	
+		
+		if (isset($response_info['extension'])) {
+			foreach ($response_info['extension'] as $result) {
+				$data['extensions'][] = array(
+					'extension_download_id' => $result['extension_download_id'],
+					'extension_id'          => $result['extension_id'],
+					'name'                  => $result['name'],
+					'status'                => $result['status']
+				); 
+			}
+		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -57,132 +119,49 @@ class ControllerUpgradeUpgrade extends Controller {
 
 		$this->response->setOutput($this->load->view('upgrade/upgrade', $data));
 	}
-
-	public function version() {
-		$this->load->language('tool/upgrade');
-		
-		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'upgrade/upgrade')) {
-			$json['error'] = $this->language->get('error_permission');
-		}	
-				
-		if (!$json) {
-			$curl = curl_init('https://api.github.com/repos/opencart/opencart/opencart-master/releases');
-			
-			curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart ' . VERSION);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
-			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-			curl_setopt($curl, CURLOPT_POST, 1);
-			
-			$response = curl_exec($curl);
-			
-			print_r($response);
-			
-			curl_close($curl);	
-			
-			$response_info = json_decode($response, true);
-			
-			if (isset($response_info['version'])) {
-				$json['version'] = $response_info['version'];
-				
-				if (VERSION >= $response_info['version']) {
-					$json['success'] = sprintf($this->language->get('text_success'), $response_info['version']);
-				} else {
-					$json['error'] = sprintf($this->language->get('error_version'), $response_info['version']);
-				}
-			} else {
-				$json['error'] = $this->language->get('error_connection');
-			}
-		}
-		
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function compatibility() {
-		$this->load->language('tool/upgrade');
-		
-		$json = array();
-
-		if (isset($this->request->get['version'])) {
-			$version = $this->request->get['version'];
-		} else {
-			$version = '';
-		}
-				
-		if (!$this->user->hasPermission('modify', 'upgrade/upgrade')) {
-			$json['error'] = $this->language->get('error_permission');
-		}		
-
-		if (!$version) {
-			$json['error'] = $this->language->get('error_compatibility');
-		}	
-				
-		if (!$json) {
-			$this->load->model('setting/extension');
-			
-			$request_data = array();
-			
-			$results = $this->model_setting_extension->getTotalExtensionInstalls();
-			
-			foreach ($results as $result) {
-				$request_data['extension_download_ids'][] = $result['extension_download_id'];
-			}
-			
-			$curl = curl_init(OPENCART_SERVER . 'index.php?route=marketplace/api/compatibility');
-	
-			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
-			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
-			curl_setopt($curl, CURLOPT_POST, true);
-			curl_setopt($curl, CURLOPT_POSTFIELDS, $request_data);
-			
-			$response = curl_exec($curl);
-	
-			curl_close($curl);	
-			
-			$response_info = json_decode($response, true);
-			
-			if ($response_info) {
-				$json['extension'] = array();
-				
-				foreach ($response_info as $result) {
-					$json['extension'][] = array(
-						'extension_download_id' => $result['extension_download_id'],
-						'extension_id'          => $result['extension_id'],
-						'name'                  => $result['name'],
-						'extension_download'    => $result['extension_download']
-					); 
-				}
-			} else {
-				$json['error'] = $this->language->get('error_download');
-			}
-		}
-		
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
 				
 	public function download() {
-		$this->load->language('tool/upgrade');
+		$this->load->language('upgrade/upgrade');
 		
 		$json = array();
 		
 		if (!$this->user->hasPermission('modify', 'upgrade/upgrade')) {
 			$json['error'] = $this->language->get('error_permission');
 		}			
+
+		if (!$this->request->post['download']) {
+			$json['error'] = $this->language->get('error_permission');
+		}	
+
+		if (!isset($response_info['download'])) {
+			$data['download'] = $response_info['download'];
+		} else {
+			$data['download'] = '';
+		}	
+		fgetconent();
+		
+		$curl = curl_init('https://api.github.com/repos/opencart/opencart/releases');
+		
+		curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart ' . VERSION);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+		
+		$response = curl_exec($curl);
+		
+		curl_close($curl);	
+		
+		$results = json_decode($response, true);
+		
+		
 		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 		
 	public function install() {
-		$this->load->language('tool/upgrade');
+		$this->load->language('upgrade/upgrade');
 		
 		$json = array();
 		
@@ -194,5 +173,4 @@ class ControllerUpgradeUpgrade extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));	
 	}
-
 }

@@ -2,7 +2,9 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"> <a onclick="confirm('{{ text_confirm }}') ? location.href='{{ clear }}' : false;" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-info"><i class="fa fa-question-circle"></i></a> </div>
+      <div class="pull-right">
+        <button type="button" data-toggle="tooltip" title="{{ button_help }}" class="btn btn-info"><i class="fa fa-question-circle"></i></button>
+      </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -14,21 +16,36 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-exclamation-triangle"></i> {{ text_list }}</h3>
+        <h3 class="panel-title"><i class="fa fa-exclamation-triangle"></i> {{ text_system }}</h3>
       </div>
       <div class="panel-body">
         <form class="form-horizontal">
           <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab-preparation" data-toggle="tab">1. Preparation</a></li>
-            <li><a href="#tab-backup" data-toggle="tab">2. Backup</a></li>
-            <li><a href="#tab-upgrade" data-toggle="tab">3. Upgrade</a></li>
-            <li><a href="#tab-finish" data-toggle="tab">4. Finish</a></li>
+            <li class="active"><a href="#tab-version" data-toggle="tab">{{ tab_version }}</a></li>
+            <li><a href="#tab-backup" data-toggle="tab">{{ tab_backup }}</a></li>
+            <li><a href="#tab-upgrade" data-toggle="tab">{{ tab_upgrade }}</a></li>
+            <li><a href="#tab-finish" data-toggle="tab">{{ tab_finish }}</a></li>
           </ul>
           <div class="tab-content">
-            <div class="tab-pane active" id="tab-preparation">
+            <div class="tab-pane active" id="tab-version">
               <fieldset>
-                <legend id="version">Latest Version</legend>
-                <div class="alert alert-warning">Checking version <button type="button" id="button-version" class="btn btn-warning pull-right"><i class="fa fa-refresh"></i> Refresh</button></div>
+                <legend id="version">{{ text_version }}</legend>
+                
+                
+    {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    {% if success %}
+    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+                
+                
+                
+                
                 
                 <p>Before upgrading its very important to</p>
                 <ol>
@@ -39,8 +56,34 @@
                 </ol>
               </fieldset>
               <fieldset>
-                <legend>Compatibility</legend>
+                <legend>{{ text_compatibility }}</legend>
                 <p>Before upgrading its very important to check if extensions installed are compatible with the latest version</p>
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-left">{{ column_name }}</td>
+                      <td class="text-left">{{ column_latest }}</td>
+                      <td class="text-center">{{ column_status }}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  
+                  {% if extensions %}
+                  {% for extension in extensions %}
+                  <tr>
+                    <td class="text-left">{{ extension.name }}</td>
+                    <td class="text-left">{{ extension.name }}</td>
+                    <td class="text-center">{% if extension.status %}{{ extension.success }}{% else %}{{ extension.success }}{% endif %}</td>
+                  </tr>
+                  {% endfor %}
+                  {% else %}
+                  <tr>
+                    <td class="text-center" colspan="3">{{ text_no_results }}</td>
+                  </tr>
+                  {% endif %}
+                    </tbody>
+                  
+                </table>
               </fieldset>
               <button type="button" id="button-upload" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-wrench"></i> Next</button>
             </div>
@@ -52,17 +95,6 @@
             </div>
             <div class="tab-pane" id="tab-backup">
               <fieldset>
-                <legend>Backup Progress</legend>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label">Progress</label>
-                  <div class="col-sm-10">
-                    <div id="progress-download" class="progress">
-                      <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  </div>
-                </div>
-              </fieldset>
-              <fieldset>
                 <legend>Backup Options</legend>
                 <p>Backup modified files only backs up the original  opencart files that have been modified. this will not backup up 3rd party files.</p>
                 <div class="form-group">
@@ -72,41 +104,56 @@
                       <div class="checkbox">
                         <label>
                           <input type="checkbox" name="file" value="1" />
-                          Modified Files</label>
+                          {{ text_file }}</label>
                       </div>
                       <div class="checkbox">
                         <label>
                           <input type="checkbox" name="database" value="1" />
-                          Database</label>
+                          {{ text_database }}</label>
                       </div>
                       <div class="checkbox">
                         <label>
                           <input type="checkbox" name="image" value="1" />
-                          Images</label>
+                          {{ text_image }}</label>
                       </div>
                       <div class="checkbox">
                         <label>
                           <input type="checkbox" name="download" value="1" />
-                          Downloads</label>
+                          {{ text_download }}</label>
                       </div>
                       <div class="checkbox">
                         <label>
                           <input type="checkbox" name="upload" value="1" />
-                          Uploads</label>
+                          {{ text_upload }}</label>
                       </div>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>{{ text_progress }}</legend>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Progress</label>
+                  <div class="col-sm-10">
+                    <div id="progress-download" class="progress">
+                      <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </div>
                 <div class="col-sm-10 col-sm-offset-2">
                   <div class="form-group">
+                    {% if download %}
                     <button type="button" id="button-backup" data-loading-text="{{ text_loading }}" class="btn btn-success" disabled="disabled"><i class="fa fa-play"></i> Start</button>
+                  	{% else %}
+                    <button type="button" id="button-backup" data-loading-text="{{ text_loading }}" class="btn btn-success" disabled="disabled"><i class="fa fa-play"></i> Start</button>
+                    {% endif %}
                   </div>
                 </div>
               </fieldset>
             </div>
             <div class="tab-pane" id="tab-upgrade">
               <fieldset>
-                <legend>Upgrade Progress</legend>
+                <legend>{{ text_progress }}</legend>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Progress</label>
                   <div class="col-sm-10">
@@ -133,68 +180,6 @@
     </div>
   </div>
   <script type="text/javascript"><!--
-$('#button-version').on('click', function() {
-	$.ajax({
-		url: 'index.php?route=upgrade/upgrade/version&user_token={{ user_token }}',
-		dataType: 'html',
-		beforeSend: function() {
-			$('#button-version').button('loading');
-		},
-		complete: function() {
-			$('#button-version').button('reset');
-		},
-		success: function(json) {
-			alert(json);
-			
-			if (json['error']) {
-			
-			}
-
-			if (json['error']) {
-			
-			}
-	
-			if (json['success']) {
-
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-}); 
-
-$('#button-version').trigger('click');
- 
-$('#button-compatiblity').on('click', function() {
-	$.ajax({
-		url: 'index.php?route=tool/upgrade/compatiblity&user_token={{ user_token }}',
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-compatiblity').button('loading');
-		},
-		complete: function() {
-			$('#button-compatiblity').button('reset');
-		},
-		success: function(json) {
-			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
-				
-				$('#button-version').replaceWith('<button id="button-commission-add" data-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>');
-			}
-
-			if (json['success']) {
-                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
-
-				$('#button-version').replaceWith('<button id="button-commission-add" data-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>');
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
-
 $('#button-backup').on('click', function() {
 	//url = 
 	

@@ -102,7 +102,7 @@ class ControllerCheckoutGuest extends Controller {
 		// Custom Fields
 		$this->load->model('account/custom_field');
 
-		$data['custom_fields'] = $this->model_account_custom_field->getCustomFields();
+		$data['custom_fields'] = $this->model_account_custom_field->getCustomFields($data['customer_group_id']);
 
 		if (isset($this->session->data['guest']['custom_field'])) {
 			if (isset($this->session->data['guest']['custom_field'])) {

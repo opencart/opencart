@@ -25,7 +25,6 @@ Upgrade
 
 6. Alert the user to any modified files that have not be updated         
 
-fdfdf
 
 7. Allow the user to download the changed files.
 
@@ -42,7 +41,7 @@ class ControllerUpgradeBackup extends Controller {
 		}
 				
 		if (!$json) {
-            $curl = curl_init(OPENCART_SERVER . 'index.php?route=marketplace/api/upgrade');
+            $curl = curl_init(OPENCART_SERVER . 'index.php?route=upgrade/upgrade');
 
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -85,16 +84,18 @@ class ControllerUpgradeBackup extends Controller {
 			
 			if (in_array('file', $backup)) {
 				$files = $this->getFiles();
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				$directories[] = DIR_IMAGE . $file;
+				DIR_CATALOG
+                DIR_APPLICATION
+                DIR_CONFIG .
+                DIR_SYSTEM . 'engine'
+                DIR_SYSTEM . 'engine'
+
+
+
+
+
+
+                $directories[] = DIR_IMAGE . $file;
 			}			
 			
 			$directories = array();
@@ -174,9 +175,85 @@ class ControllerUpgradeBackup extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-			
+
+	function database() {
+        $this->load->language('upgrade/backup');
+
+        $json = array();
+
+        if (!$this->user->hasPermission('modify', 'upgrade/backup')) {
+            $json['error'] = $this->language->get('error_permission');
+        }
+
+        if (!$json) {
+
+        }
+
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($json));
+    }
+
+    function image() {
+        $this->load->language('upgrade/backup');
+
+        $json = array();
+
+        if (!$this->user->hasPermission('modify', 'upgrade/backup')) {
+            $json['error'] = $this->language->get('error_permission');
+        }
+
+        if (!$json) {
+
+        }
+
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($json));
+    }
+
+    function download() {
+        $this->load->language('upgrade/backup');
+
+        $json = array();
+
+        if (!$this->user->hasPermission('modify', 'upgrade/backup')) {
+            $json['error'] = $this->language->get('error_permission');
+        }
+
+        if (!$json) {
+            $files = glob(DIR_DOWNLOAD . );
+
+
+
+            foreach ($files as $file) {
+
+
+
+            }
+        }
+
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($json));
+    }
+
+    function upload() {
+        $this->load->language('upgrade/backup');
+
+        $json = array();
+
+        if (!$this->user->hasPermission('modify', 'upgrade/backup')) {
+            $json['error'] = $this->language->get('error_permission');
+        }
+
+        if (!$json) {
+
+        }
+
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($json));
+    }
+
 	public function current() {
-		$this->load->language('upgrade/upgrade');
+		$this->load->language('upgrade/backup');
 		
 		$json = array();
 		
@@ -192,8 +269,8 @@ class ControllerUpgradeBackup extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function compare() {
-		$this->load->language('upgrade/upgrade');
+	public function modified() {
+		$this->load->language('upgrade/backup');
 		
 		$json = array();
 		
@@ -209,8 +286,8 @@ class ControllerUpgradeBackup extends Controller {
 		$this->response->setOutput(json_encode($json));	
 	}
 	
-	public function backup() {
-		$this->load->language('tool/upgrade');
+	public function zip() {
+		$this->load->language('upgrade/backup');
 		
 		$json = array();
 		

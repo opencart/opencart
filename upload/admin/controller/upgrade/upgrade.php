@@ -80,8 +80,10 @@ class ControllerUpgradeUpgrade extends Controller {
 		$response_info = json_decode($response, true);
 
 		if ($response_info) {
-			//if (VERSION >= $json['version']) {
-			if ('2.0' == $json['version']) {	
+            $data['version'] = $response_info['version'];
+
+			if (version_compare(VERSION, $response_info['version'], '>=') {
+			//if (version_compare('2.0', $json['version'], '>=') {
 				$data['success'] = sprintf($this->language->get('text_success'), $json['version']);
 			} else {
 				$data['error_warning'] = sprintf($this->language->get('error_version'), $json['version']);
@@ -89,17 +91,7 @@ class ControllerUpgradeUpgrade extends Controller {
 		} else {
 			$data['error_warning'] = $this->language->get('error_connection');
 		}		
-		
-		if (isset($response_info['version'])) {
-			$data['version'] = $response_info['version'];
-		}
-		
-		if (isset($response_info['download'])) {
-			$data['download'] = $response_info['download'];
-		} else {
-			$data['download'] = '';
-		}
-		
+
 		$data['extensions'] = array();	
 		
 		if (isset($response_info['extension'])) {
@@ -119,7 +111,7 @@ class ControllerUpgradeUpgrade extends Controller {
 
 		$this->response->setOutput($this->load->view('upgrade/upgrade', $data));
 	}
-				
+
 	public function download() {
 		$this->load->language('upgrade/upgrade');
 		
@@ -128,33 +120,36 @@ class ControllerUpgradeUpgrade extends Controller {
 		if (!$this->user->hasPermission('modify', 'upgrade/upgrade')) {
 			$json['error'] = $this->language->get('error_permission');
 		}			
-
-		if (!$this->request->post['download']) {
-			$json['error'] = $this->language->get('error_permission');
-		}	
-
-		if (!isset($response_info['download'])) {
-			$data['download'] = $response_info['download'];
+s
+		if (isset($this->request->get['version'])) {
+			$version = $this->request->get['version'];
 		} else {
-            $data['download'] = '';
+            $version = '';
         }
 
-		file_get_content();
-		
-		$curl = curl_init('https://api.github.com/repos/opencart/opencart/releases');
-		
-		curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart ' . VERSION);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
-		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-		
-		$response = curl_exec($curl);
-		
-		curl_close($curl);	
-		
-		$results = json_decode($response, true);
-		
+        if (!$json) {
+            $filename = 'opencart-' . $version . '.zip';
+            DIR_DOWNLOAD .
+            file_get_content();
+            https://github.com/opencart/opencart/releases/download/3.0.2.0/
+            $curl = curl_init('https://github.com/repos/opencart/opencart/releases/download/3.0.2.0/' . $version . '/' . $filename);
+
+            curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart ' . VERSION);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+            curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+
+            if () {
+
+            }
+
+            $results = json_decode($response, true);
+        }
 		
 		
 		$this->response->addHeader('Content-Type: application/json');

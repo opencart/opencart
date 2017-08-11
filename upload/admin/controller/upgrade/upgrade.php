@@ -61,7 +61,7 @@ class ControllerUpgradeUpgrade extends Controller {
 			}
 		}
 		
-		$curl = curl_init(OPENCART_SERVER . 'index.php?route=marketplace/api/upgrade');
+		$curl = curl_init(OPENCART_SERVER . 'index.php?route=marketplace/upgrade/upgrade');
 
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);

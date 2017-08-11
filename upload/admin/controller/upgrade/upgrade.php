@@ -73,8 +73,10 @@ class ControllerUpgradeUpgrade extends Controller {
 		
 		$response = curl_exec($curl);
 
-		curl_close($curl);	
-		
+		curl_close($curl);
+
+        $data['version'] = VERSION;
+
 		$response_info = json_decode($response, true);
 
 		if ($response_info) {
@@ -90,8 +92,6 @@ class ControllerUpgradeUpgrade extends Controller {
 		
 		if (isset($response_info['version'])) {
 			$data['version'] = $response_info['version'];
-		} else {
-			$data['version'] = '';
 		}
 		
 		if (isset($response_info['download'])) {
@@ -136,9 +136,10 @@ class ControllerUpgradeUpgrade extends Controller {
 		if (!isset($response_info['download'])) {
 			$data['download'] = $response_info['download'];
 		} else {
-			$data['download'] = '';
-		}	
-		fgetconent();
+            $data['download'] = '';
+        }
+
+		file_get_content();
 		
 		$curl = curl_init('https://api.github.com/repos/opencart/opencart/releases');
 		

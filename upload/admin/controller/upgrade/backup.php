@@ -33,7 +33,7 @@ Upgrade
 */
 class ControllerUpgradeBackup extends Controller {
 	public function index() {
-		$this->load->language('upgrade/upgrade');
+		$this->load->language('upgrade/backup');
 		
 		$json = array();
 		
@@ -42,7 +42,25 @@ class ControllerUpgradeBackup extends Controller {
 		}
 				
 		if (!$json) {
-			
+            $curl = curl_init(OPENCART_SERVER . 'index.php?route=marketplace/api/upgrade');
+
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+            curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+            curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $request_data);
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+
+            $response_info = json_decode($response, true);
+
+            if ($response_info) {
+
+            }
 		}		
 		
 		$this->response->addHeader('Content-Type: application/json');

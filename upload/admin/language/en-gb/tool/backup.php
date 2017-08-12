@@ -4,6 +4,12 @@ $_['heading_title']    = 'Backup &amp; Restore';
 
 // Text
 $_['text_success']     = 'Success: You have successfully imported your database!';
+$_['text_backup']      = 'Backup Options';
+$_['text_file']        = 'Modified Files';
+$_['text_database']    = 'Database';
+$_['text_image']       = 'Images';
+$_['text_download']    = 'Downloads';
+$_['text_upload']      = 'Uploads';
 
 // Entry
 $_['entry_progress']   = 'Progress';

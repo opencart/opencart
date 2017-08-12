@@ -582,10 +582,10 @@ class ControllerCommonColumnLeft extends Controller {
 			// Tools	
 			$maintenance = array();
 			
-			if ($this->user->hasPermission('access', 'upgrade/upgrade')) {
+			if ($this->user->hasPermission('access', 'tool/upgrade')) {
 				$maintenance[] = array(
 					'name'	   => $this->language->get('text_upgrade'),
-					'href'     => $this->url->link('upgrade/upgrade', 'user_token=' . $this->session->data['user_token'], true),
+					'href'     => $this->url->link('tool/upgrade', 'user_token=' . $this->session->data['user_token'], true),
 					'children' => array()		
 				);
 			}
@@ -622,8 +622,7 @@ class ControllerCommonColumnLeft extends Controller {
 					'href'     => '',
 					'children' => $maintenance
 				);
-			}		
-		
+			}
 		
 			if ($system) {
 				$data['menus'][] = array(

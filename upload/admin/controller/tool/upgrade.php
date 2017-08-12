@@ -34,9 +34,9 @@ Upgrade
 
 8. Replace the files	
 */
-class ControllerUpgradeUpgrade extends Controller {
+class ControllerToolUpgrade extends Controller {
     public function index() {
-		$this->load->language('upgrade/upgrade');
+		$this->load->language('tool/upgrade');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -49,7 +49,7 @@ class ControllerUpgradeUpgrade extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('upgrade/upgrade', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('tool/upgrade', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -114,15 +114,15 @@ class ControllerUpgradeUpgrade extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('upgrade/upgrade', $data));
+		$this->response->setOutput($this->load->view('tool/upgrade', $data));
 	}
 
 	public function download() {
-		$this->load->language('upgrade/upgrade');
+		$this->load->language('tool/upgrade');
 		
 		$json = array();
 		
-		if (!$this->user->hasPermission('modify', 'upgrade/upgrade')) {
+		if (!$this->user->hasPermission('modify', 'tool/upgrade')) {
 			$json['error'] = $this->language->get('error_permission');
 		}			
 
@@ -160,12 +160,18 @@ class ControllerUpgradeUpgrade extends Controller {
             }
         }
 
+        if ($version != VERSION) {
+			$json['next'] = $this->url->link('tool/upgrade/unzip', 'version=' . VERSION);
+		} else {
+			$json['next'] = $this->url->link('tool/upgrade/download', 'version=' . $version);
+		}
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
     public function unzip() {
-		$this->load->language('upgrade/upgrade');
+		$this->load->language('tool/upgrade');
 
 		$json = array();
 
@@ -201,8 +207,103 @@ class ControllerUpgradeUpgrade extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function compare() {
+		$this->load->language('tool/upgrade');
+
+		$json = array();
+
+		if (isset($this->request->get['version'])) {
+			$version = $this->request->get['version'];
+		} else {
+			$version = '';
+		}
+
+		if (!$this->user->hasPermission('modify', 'upgrade/upgrade')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$directory = DIR_DOWNLOAD . $version . '/upload/';
+
+		if (!is_dir($directory)) {
+			$json['error'] = $this->language->get('error_directory');
+		}
+
+		if (!$json) {
+			$this->session->data['patch'] = array();
+
+			$files = array();
+
+			// Get a list of files ready to upload
+			$path = array($directory . '/*');
+
+			while (count($path) != 0) {
+				$next = array_shift($path);
+
+				foreach ((array)glob($next) as $file) {
+					if (is_dir($file)) {
+						$path[] = $file . '/*';
+					}
+
+					$files[] = $file;
+				}
+			}
+
+			foreach ($files as $file) {
+				$destination = str_replace('\\', '/', substr($file, strlen($directory)));
+
+				$path = '';
+
+				// Check if the copy location exists or not
+				if (substr($destination, 0, 5) == 'admin') {
+					$path = DIR_APPLICATION . substr($destination, 6);
+				}
+
+				if (substr($destination, 0, 7) == 'catalog') {
+					$path = DIR_CATALOG . substr($destination, 8);
+				}
+
+				if (substr($destination, 0, 5) == 'image') {
+					$path = DIR_IMAGE . substr($destination, 6);
+				}
+
+				if (substr($destination, 0, 6) == 'system') {
+					$path = DIR_SYSTEM . substr($destination, 7);
+				}
+
+				if (is_file($file) && sha1_file() != ) {
+					$this->session->data['patch'][] = array();
+				}
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function patch() {
+		if ($this->request->get['skip'] = false) {
+			unset($this->session->data['patch'][0]);
+		} else {
+			//twig_date_format_filter();
+
+
+
+			//file_put_contents();
+		}
+
+		$json['source'] = file_get_contents($this->session->data['patch'][0]);
+
+		$json['patch'] = file_get_contents($this->session->data['patch'][0]);
+
+		if (count($this->session->data['patch'])) {
+			$json['next'] = $this->url->link('tool/upgrade/patch', 'version=' . $version);
+		} else {
+			$json['next'] = $this->url->link('tool/upgrade/install', 'version=' . $version);
+		}
+	}
+
 	public function install() {
-		$this->load->language('upgrade/upgrade');
+		$this->load->language('tool/upgrade');
 
 		$json = array();
 
@@ -243,32 +344,34 @@ class ControllerUpgradeUpgrade extends Controller {
 			foreach ($files as $file) {
 				$destination = str_replace('\\', '/', substr($file, strlen($directory)));
 
+				$path = '';
+
 				// Check if the copy location exists or not
 				if (substr($destination, 0, 5) == 'admin') {
-					$destination = DIR_APPLICATION . substr($destination, 6);
+					$path = DIR_APPLICATION . substr($destination, 6);
 				}
 
 				if (substr($destination, 0, 7) == 'catalog') {
-					$destination = DIR_CATALOG . substr($destination, 8);
+					$path = DIR_CATALOG . substr($destination, 8);
 				}
 
 				if (substr($destination, 0, 5) == 'image') {
-					$destination = DIR_IMAGE . substr($destination, 6);
+					$path = DIR_IMAGE . substr($destination, 6);
 				}
 
 				if (substr($destination, 0, 6) == 'system') {
-					$destination = DIR_SYSTEM . substr($destination, 7);
+					$path = DIR_SYSTEM . substr($destination, 7);
 				}
 
 				if (is_dir($file) && !is_dir($path)) {
-					if (mkdir($path, 0777)) {
-						$this->model_setting_extension->addExtensionPath($extension_install_id, $destination);
+					if (!mkdir($path, 0777)) {
+						$json['error'] = sprintf($this->language->get('error_directory'), $destination);
 					}
 				}
 
 				if (is_file($file)) {
-					if (rename($file, $path)) {
-						$this->model_setting_extension->addExtensionPath($extension_install_id, $destination);
+					if (!rename($file, $path)) {
+						$json['error'] = sprintf($this->language->get('error_file'), $destination);
 					}
 				}
 			}
@@ -277,9 +380,9 @@ class ControllerUpgradeUpgrade extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));	
 	}
-	
+
 	public function remove() {
-		$this->load->language('upgrade/upgrade');
+		$this->load->language('tool/upgrade');
 
 		$json = array();
 

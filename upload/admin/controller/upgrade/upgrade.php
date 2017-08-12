@@ -66,7 +66,7 @@ class ControllerUpgradeUpgrade extends Controller {
 			}
 		}
 		
-		$curl = curl_init(OPENCART_SERVER . 'index.php?route=marketplace/upgrade/upgrade');
+		$curl = curl_init(OPENCART_SERVER . 'index.php?route=upgrade/upgrade');
 
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -145,7 +145,11 @@ class ControllerUpgradeUpgrade extends Controller {
 
             $response = curl_exec($curl);
 
-            if () {
+			$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+			curl_close($curl);
+
+            if ($status == 200) {
                 $handle = fopen(DIR_DOWNLOAD . filename, 'w');
 
                 fwrite($handle, $response);
@@ -154,8 +158,6 @@ class ControllerUpgradeUpgrade extends Controller {
             } else {
                 $json['error'] = $this->language->get('error_download');
             }
-
-            curl_close($curl);
         }
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -167,24 +169,32 @@ class ControllerUpgradeUpgrade extends Controller {
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'upgrade/upgrade')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
 		if (isset($this->request->get['version'])) {
 			$version = $this->request->get['version'];
 		} else {
 			$version = '';
 		}
 
+		if (!$this->user->hasPermission('modify', 'upgrade/upgrade')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
 		$file = DIR_DOWNLOAD . 'opencart-' . $version . '.zip';
 
 		if (!is_file($file)) {
-
+			$json['error'] = $this->language->get('error_file');
 		}
 
 		if (!$json) {
+			// Unzip the files
+			$zip = new ZipArchive();
 
+			if ($zip->open($file)) {
+				$zip->extractTo(DIR_DOWNLOAD . $version);
+				$zip->close();
+			} else {
+				$json['error'] = $this->language->get('error_unzip');
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -193,22 +203,81 @@ class ControllerUpgradeUpgrade extends Controller {
 
 	public function install() {
 		$this->load->language('upgrade/upgrade');
-		
+
 		$json = array();
-		
+
+		if (isset($this->request->get['version'])) {
+			$version = $this->request->get['version'];
+		} else {
+			$version = '';
+		}
+
 		if (!$this->user->hasPermission('modify', 'upgrade/upgrade')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		if (!$json) {
+		$directory = DIR_DOWNLOAD . $version . '/upload/';
 
+		if (!is_dir($directory)) {
+			$json['error'] = $this->language->get('error_directory');
+		}
+
+		if (!$json) {
+			$files = array();
+
+			// Get a list of files ready to upload
+			$path = array($directory . '/*');
+
+			while (count($path) != 0) {
+				$next = array_shift($path);
+
+				foreach ((array)glob($next) as $file) {
+					if (is_dir($file)) {
+						$path[] = $file . '/*';
+					}
+
+					$files[] = $file;
+				}
+			}
+
+			foreach ($files as $file) {
+				$destination = str_replace('\\', '/', substr($file, strlen($directory)));
+
+				// Check if the copy location exists or not
+				if (substr($destination, 0, 5) == 'admin') {
+					$destination = DIR_APPLICATION . substr($destination, 6);
+				}
+
+				if (substr($destination, 0, 7) == 'catalog') {
+					$destination = DIR_CATALOG . substr($destination, 8);
+				}
+
+				if (substr($destination, 0, 5) == 'image') {
+					$destination = DIR_IMAGE . substr($destination, 6);
+				}
+
+				if (substr($destination, 0, 6) == 'system') {
+					$destination = DIR_SYSTEM . substr($destination, 7);
+				}
+
+				if (is_dir($file) && !is_dir($path)) {
+					if (mkdir($path, 0777)) {
+						$this->model_setting_extension->addExtensionPath($extension_install_id, $destination);
+					}
+				}
+
+				if (is_file($file)) {
+					if (rename($file, $path)) {
+						$this->model_setting_extension->addExtensionPath($extension_install_id, $destination);
+					}
+				}
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));	
 	}
-
-
+	
 	public function remove() {
 		$this->load->language('upgrade/upgrade');
 

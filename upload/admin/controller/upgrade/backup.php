@@ -80,25 +80,18 @@ class ControllerUpgradeBackup extends Controller {
 		}
 		
 		if (!$json) {
+			$directories = array();
+
 			$backup = explode(',', $this->request->get['backup']);
 			
 			if (in_array('file', $backup)) {
-				$files = $this->getFiles();
-				DIR_CATALOG
-                DIR_APPLICATION
-                DIR_CONFIG .
-                DIR_SYSTEM . 'engine'
-                DIR_SYSTEM . 'helper'
-				DIR_SYSTEM . 'library'
-
-
-
-
-
-                $directories[] = DIR_IMAGE . $file;
-			}			
-			
-			$directories = array();
+				$directories[] = DIR_CATALOG;
+                $directories[] = DIR_APPLICATION;
+                $directories[] = DIR_CONFIG;
+				$directories[] = DIR_SYSTEM . 'engine';
+                $directories[] = DIR_SYSTEM . 'helper';
+				$directories[] = DIR_SYSTEM . 'library';
+			}
 			
 			if (in_array('image', $backup)) {
 				$directories[] = DIR_IMAGE;

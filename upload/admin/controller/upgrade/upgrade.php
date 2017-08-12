@@ -17,6 +17,11 @@ Backup
 
 4. Let the user download the copies of all the modified files
 
+5. database
+
+6. image
+
+
 Upgrade
 
 5. Download a copy of the latest version
@@ -30,7 +35,7 @@ Upgrade
 8. Replace the files	
 */
 class ControllerUpgradeUpgrade extends Controller {
-	public function index() {
+    public function index() {
 		$this->load->language('upgrade/upgrade');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -82,7 +87,7 @@ class ControllerUpgradeUpgrade extends Controller {
 		if ($response_info) {
             $data['version'] = $response_info['version'];
 
-			if (version_compare(VERSION, $response_info['version'], '>=') {
+			if (version_compare(VERSION, $response_info['version'], '>=')) {
 			//if (version_compare('2.0', $json['version'], '>=') {
 				$data['success'] = sprintf($this->language->get('text_success'), $json['version']);
 			} else {
@@ -120,7 +125,7 @@ class ControllerUpgradeUpgrade extends Controller {
 		if (!$this->user->hasPermission('modify', 'upgrade/upgrade')) {
 			$json['error'] = $this->language->get('error_permission');
 		}			
-s
+
 		if (isset($this->request->get['version'])) {
 			$version = $this->request->get['version'];
 		} else {
@@ -129,10 +134,8 @@ s
 
         if (!$json) {
             $filename = 'opencart-' . $version . '.zip';
-            DIR_DOWNLOAD .
-            file_get_content();
-            https://github.com/opencart/opencart/releases/download/3.0.2.0/
-            $curl = curl_init('https://github.com/repos/opencart/opencart/releases/download/3.0.2.0/' . $version . '/' . $filename);
+
+            $curl = curl_init('https://github.com/repos/opencart/opencart/releases/download/' . $version . '/' . $version . '/' . $filename);
 
             curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart ' . VERSION);
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
@@ -142,20 +145,52 @@ s
 
             $response = curl_exec($curl);
 
-            curl_close($curl);
-
             if () {
+                $handle = fopen(DIR_DOWNLOAD . filename, 'w');
 
+                fwrite($handle, $response);
+
+                fclose($handle);
+            } else {
+                $json['error'] = $this->language->get('error_download');
             }
 
-            $results = json_decode($response, true);
+            curl_close($curl);
         }
-		
-		
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-		
+
+    public function unzip() {
+		$this->load->language('upgrade/upgrade');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'upgrade/upgrade')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (isset($this->request->get['version'])) {
+			$version = $this->request->get['version'];
+		} else {
+			$version = '';
+		}
+
+		$file = DIR_DOWNLOAD . 'opencart-' . $version . '.zip';
+
+		if (!is_file($file)) {
+
+		}
+
+		if (!$json) {
+
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
 	public function install() {
 		$this->load->language('upgrade/upgrade');
 		
@@ -163,10 +198,31 @@ s
 		
 		if (!$this->user->hasPermission('modify', 'upgrade/upgrade')) {
 			$json['error'] = $this->language->get('error_permission');
-		}			
-		
-		
+		}
+
+		if (!$json) {
+
+		}
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));	
+	}
+
+
+	public function remove() {
+		$this->load->language('upgrade/upgrade');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'upgrade/upgrade')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

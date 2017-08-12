@@ -88,8 +88,8 @@ class ControllerUpgradeBackup extends Controller {
                 DIR_APPLICATION
                 DIR_CONFIG .
                 DIR_SYSTEM . 'engine'
-                DIR_SYSTEM . 'engine'
-
+                DIR_SYSTEM . 'helper'
+				DIR_SYSTEM . 'library'
 
 
 
@@ -176,6 +176,22 @@ class ControllerUpgradeBackup extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function current() {
+		$this->load->language('upgrade/backup');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'upgrade/backup')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 	function database() {
         $this->load->language('upgrade/backup');
 
@@ -252,23 +268,6 @@ class ControllerUpgradeBackup extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-	public function current() {
-		$this->load->language('upgrade/backup');
-		
-		$json = array();
-		
-		if (!$this->user->hasPermission('modify', 'upgrade/backup')) {
-			$json['error'] = $this->language->get('error_permission');
-		}		
-		
-		if (!$json) {
-			
-		}
-				
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
 	public function modified() {
 		$this->load->language('upgrade/backup');
 		
@@ -304,7 +303,7 @@ class ControllerUpgradeBackup extends Controller {
 	}
 	
 	public function download() {
-		$this->load->language('tool/upgrade');
+		$this->load->language('upgrade/backup');
 		
 		$json = array();
 		

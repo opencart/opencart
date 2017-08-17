@@ -13,6 +13,7 @@ class ControllerExtensionModuleFeatured extends Controller {
 			if (!isset($this->request->get['module_id'])) {
 				$this->model_setting_module->addModule('featured', $this->request->post);
 			} else {
+				$this->request->post['limit'] = ( isset( $this->request->post['limit'] ) ) ? intval( $this->request->post['limit'] ) : 0;
 				$this->model_setting_module->editModule($this->request->get['module_id'], $this->request->post);
 			}
 
@@ -31,6 +32,12 @@ class ControllerExtensionModuleFeatured extends Controller {
 			$data['error_name'] = $this->error['name'];
 		} else {
 			$data['error_name'] = '';
+		}
+
+		if ( isset( $this->error['limit'] ) ) {
+			$data['error_limit'] = $this->error['limit'];
+		} else {
+			$data['error_limit'] = '';
 		}
 
 		if (isset($this->error['width'])) {
@@ -160,6 +167,10 @@ class ControllerExtensionModuleFeatured extends Controller {
 
 		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 64)) {
 			$this->error['name'] = $this->language->get('error_name');
+		}
+
+		if ( ! $this->request->post['limit'] ) {
+			$this->error['limit'] = $this->language->get( 'error_limit' );
 		}
 
 		if (!$this->request->post['width']) {

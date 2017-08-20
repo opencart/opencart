@@ -30,18 +30,17 @@
               <fieldset>
                 <legend id="version">{{ text_version }}</legend>
 
-
                 {% if error_warning %}
                   <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                   </div>
                 {% endif %}
+
                 {% if success %}
                   <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                   </div>
                 {% endif %}
-
 
                 <p>Before upgrading its very important to</p>
                 <ol>
@@ -84,22 +83,6 @@
             </div>
             <div class="tab-pane" id="tab-upgrade">
               <fieldset>
-                <legend>{{ text_option }}</legend>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_patch }}">{{ entry_patch }}</span></label>
-                  <div class="col-sm-10">
-                    <label class="radio-inline">
-                      <input type="radio" name="patch" value="1"/>
-                      {{ text_yes }}
-                    </label>
-                    <label class="radio-inline">
-                      <input type="radio" name="patch" value="0" checked="checked"/>
-                      {{ text_no }}
-                    </label>
-                  </div>
-                </div>
-              </fieldset>
-              <fieldset>
                 <legend>{{ text_progress }}</legend>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Progress</label>
@@ -107,11 +90,16 @@
                     <div id="progress-download" class="progress">
                       <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
+                    <div id="progress-text"></div>
                   </div>
                 </div>
                 <div class="col-sm-10 col-sm-offset-2">
                   <div class="form-group">
-                    <button type="button" id="button-upgrade" data-loading-text="{{ text_loading }}" class="btn btn-success" disabled="disabled"><i class="fa fa-play"></i> Start</button>
+                    {% if upgrade %}
+                      <button type="button" id="button-upgrade" data-loading-text="{{ text_loading }}" class="btn btn-success"><i class="fa fa-play"></i> Start</button>
+                    {% else %}
+                      <button type="button" id="button-upgrade" data-loading-text="{{ text_loading }}" class="btn btn-success" disabled="disabled"><i class="fa fa-play"></i> Start</button>
+                    {% endif %}
                   </div>
                 </div>
               </fieldset>
@@ -127,73 +115,75 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript"><!--
-      $('#button-backup').on('click', function () {
-          //url =
-
-          $.ajax({
-              url: 'index.php?route=upgrade/backup&user_token={{ user_token }}&',
-              dataType: 'json',
-              beforeSend: function () {
-                  $('#button-compatiblity').button('loading');
-              },
-              complete: function () {
-                  $('#button-compatiblity').button('reset');
-              },
-              success: function (json) {
-                  if (json['error']) {
-                      $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
-                  }
-
-                  if (json['success']) {
-                      $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
-                  }
-
-                  if (json['next']) {
-                      $('#data-next').attr('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
-                  }
-              },
-              error: function (xhr, ajaxOptions, thrownError) {
-                  alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-              }
-          });
-      });
-
-      function next(url, i) {
-          i = i + 1;
-
-          $.ajax({
-              url: url,
-              dataType: 'json',
-              success: function (json) {
-                  $('#progress-bar').css('width', (i * 20) + '%');
-
-                  if (json['error']) {
-                      $('#progress-bar').addClass('progress-bar-danger');
-                      $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-                  }
-
-                  if (json['success']) {
-                      $('#progress-bar').addClass('progress-bar-success');
-                      $('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
-
-                      $('#history').load('index.php?route=marketplace/installer/history&user_token={{ user_token }}');
-                  }
-
-                  if (json['text']) {
-                      $('#progress-text').html(json['text']);
-                  }
-
-                  if (json['next']) {
-                      next(json['next'], i);
-                  }
-              },
-              error: function (xhr, ajaxOptions, thrownError) {
-                  alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-              }
-          });
-      }
-
-      //--></script>
 </div>
+<script type="text/javascript"><!--
+$('#button-upgrade').on('click', function() {
+	$('#progress-text').html('{{ text_download }}');
+
+	$.ajax({
+		url: 'index.php?route=tool/upgrade/download&user_token={{ user_token }}&version={{ version }}',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-upgrade').button('loading');
+		},
+		complete: function() {
+			$('#button-upgrade').button('reset');
+		},
+		success: function(json) {
+			if (json['error']) {
+				$('#progress-bar').addClass('progress-bar-danger');
+
+				$('#progress-text').html(json['text']);
+			}
+
+			if (json['text']) {
+				$('#progress-text').html(json['text']);
+			}
+
+			if (json['next']) {
+				$('#data-next').attr('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+			}
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+function next(url, i) {
+	i = i + 1;
+
+	$.ajax({
+		url: url,
+		dataType: 'json',
+		success: function(json) {
+			$('#progress-bar').css('width', (i * 20) + '%');
+
+			if (json['error']) {
+				$('#progress-bar').addClass('progress-bar-danger');
+				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+			}
+
+			if (json['success']) {
+				$('#progress-bar').addClass('progress-bar-success');
+				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
+
+				$('#history').load('index.php?route=marketplace/installer/history&user_token={{ user_token }}');
+			}
+
+			if (json['text']) {
+				$('#progress-text').html(json['text']);
+			}
+
+			if (json['next']) {
+				next(json['next'], i);
+			}
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+}
+
+//--></script>
 {{ footer }}

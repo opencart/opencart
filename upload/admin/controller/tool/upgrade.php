@@ -54,19 +54,22 @@ class ControllerToolUpgrade extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
+		$data['version'] = VERSION;
+		$data['upgrade'] = false;
+
 		$request_data = array();
-		
+
 		$this->load->model('setting/extension');
-		
+
 		$results = $this->model_setting_extension->getExtensionInstalls(0, 1000);
-		
+
 		foreach ($results as $result) {
 			if ($result['extension_download_id']) {
 				$request_data['extension_download'][] = $result['extension_download_id'];
 			}
 		}
-		
-		$curl = curl_init(OPENCART_SERVER . 'index.php?route=upgrade/upgrade');
+
+		$curl = curl_init(OPENCART_SERVER . 'index.php?route=api/upgrade');
 
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -75,23 +78,23 @@ class ControllerToolUpgrade extends Controller {
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
 		curl_setopt($curl, CURLOPT_POST, true);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $request_data);
-		
+
 		$response = curl_exec($curl);
 
 		curl_close($curl);
-
-        $data['version'] = VERSION;
 
 		$response_info = json_decode($response, true);
 
 		if ($response_info) {
             $data['version'] = $response_info['version'];
 
-			if (version_compare(VERSION, $response_info['version'], '>=')) {
-			//if (version_compare('2.0', $json['version'], '>=') {
-				$data['success'] = sprintf($this->language->get('text_success'), $json['version']);
+			$data['upgrade'] = true;
+
+			//if (version_compare(VERSION, $response_info['version'], '>=')) {
+			if (version_compare('2.0.0', $response_info['version'], '>=')) {
+				$data['success'] = sprintf($this->language->get('text_success'), $response_info['version']);
 			} else {
-				$data['error_warning'] = sprintf($this->language->get('error_version'), $json['version']);
+				$data['error_warning'] = sprintf($this->language->get('error_version'), $response_info['version']);
 			}
 		} else {
 			$data['error_warning'] = $this->language->get('error_connection');
@@ -116,90 +119,43 @@ class ControllerToolUpgrade extends Controller {
 
 		$this->response->setOutput($this->load->view('tool/upgrade', $data));
 	}
-
-	public function download() {
+	
+	public function install() {
 		$this->load->language('tool/upgrade');
-		
+
 		$json = array();
-		
+
+		if (isset($this->request->get['version'])) {
+			$version = $this->request->get['version'];
+		} else {
+			$version = '3.0.2.0';
+		}
+
 		if (!$this->user->hasPermission('modify', 'tool/upgrade')) {
 			$json['error'] = $this->language->get('error_permission');
-		}			
-
-		if (isset($this->request->get['version'])) {
-			$version = $this->request->get['version'];
-		} else {
-            $version = '';
-        }
-
-        if (!$json) {
-            $filename = 'opencart-' . $version . '.zip';
-
-            $curl = curl_init('https://github.com/repos/opencart/opencart/releases/download/' . $version . '/' . $version . '/' . $filename);
-
-            curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart ' . VERSION);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
-            curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-
-            $response = curl_exec($curl);
-
-			$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-			curl_close($curl);
-
-            if ($status == 200) {
-                $handle = fopen(DIR_DOWNLOAD . filename, 'w');
-
-                fwrite($handle, $response);
-
-                fclose($handle);
-            } else {
-                $json['error'] = $this->language->get('error_download');
-            }
-        }
-
-        if ($version != VERSION) {
-			$json['next'] = $this->url->link('tool/upgrade/unzip', 'version=' . VERSION);
-		} else {
-			$json['next'] = $this->url->link('tool/upgrade/download', 'version=' . $version);
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-    public function unzip() {
-		$this->load->language('tool/upgrade');
-
-		$json = array();
-
-		if (isset($this->request->get['version'])) {
-			$version = $this->request->get['version'];
-		} else {
-			$version = '';
-		}
-
-		if (!$this->user->hasPermission('modify', 'upgrade/upgrade')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		$file = DIR_DOWNLOAD . 'opencart-' . $version . '.zip';
-
-		if (!is_file($file)) {
-			$json['error'] = $this->language->get('error_file');
 		}
 
 		if (!$json) {
-			// Unzip the files
-			$zip = new ZipArchive();
+			$curl = curl_init(OPENCART_SERVER . 'index.php?route=api/upgrade/hash&version=' . $version);
 
-			if ($zip->open($file)) {
-				$zip->extractTo(DIR_DOWNLOAD . $version);
-				$zip->close();
-			} else {
-				$json['error'] = $this->language->get('error_unzip');
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+
+			$response = curl_exec($curl);
+
+			curl_close($curl);
+
+			$response_info = json_decode($response, true);
+
+			if ($response_info) {
+				$this->session->data['files'] = $response_info['files'];
+
+				$json['text'] = $this->language->get('text_compare');
+
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/compare', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
 			}
 		}
 
@@ -215,10 +171,10 @@ class ControllerToolUpgrade extends Controller {
 		if (isset($this->request->get['version'])) {
 			$version = $this->request->get['version'];
 		} else {
-			$version = '';
+			$version = '3.0.2.0';
 		}
 
-		if (!$this->user->hasPermission('modify', 'upgrade/upgrade')) {
+		if (!$this->user->hasPermission('modify', 'tool/upgrade')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -270,9 +226,63 @@ class ControllerToolUpgrade extends Controller {
 					$path = DIR_SYSTEM . substr($destination, 7);
 				}
 
-				if (is_file($file) && sha1_file() != ) {
-					$this->session->data['patch'][] = array();
+				if (is_file($file) && (sha1_file($file) != sha1_file($path))) {
+					$this->session->data['patch'][] = $file;
 				}
+			}
+
+
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function download() {
+		$this->load->language('tool/upgrade');
+		
+		$json = array();
+		
+		if (!$this->user->hasPermission('modify', 'tool/upgrade')) {
+			$json['error'] = $this->language->get('error_permission');
+		}			
+
+		if (isset($this->request->get['version'])) {
+			$version = $this->request->get['version'];
+		} else {
+            $version = '';
+        }
+
+        if (!$json) {
+			set_time_limit(0);
+
+			$curl = curl_init('https://github.com/opencart/opencart/archive/' . $version . '.zip');
+			//$curl = curl_init('https://github.com/opencart/opencart/archive/' . $version . '.zip');
+
+			$handle = fopen(DIR_DOWNLOAD . $version . '.zip', 'w');
+
+			curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart ' . VERSION);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+			curl_setopt($curl, CURLOPT_TIMEOUT, 300);
+			curl_setopt($curl, CURLOPT_FILE, $handle);
+
+			curl_exec($curl);
+
+			fclose($handle);
+
+			$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+			curl_close($curl);
+
+			if ($status == 200) {
+				$json['text'] = $this->language->get('text_unzip');
+
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/unzip', 'version=' . $version));
+			} else {
+				$json['error'] = $this->language->get('error_download');
 			}
 		}
 
@@ -280,29 +290,48 @@ class ControllerToolUpgrade extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function patch() {
-		if ($this->request->get['skip'] = false) {
-			unset($this->session->data['patch'][0]);
+    public function unzip() {
+		$this->load->language('tool/upgrade');
+
+		$json = array();
+
+		if (isset($this->request->get['version'])) {
+			$version = $this->request->get['version'];
 		} else {
-			//twig_date_format_filter();
-
-
-
-			//file_put_contents();
+			$version = '3.0.2.0';
 		}
 
-		$json['source'] = file_get_contents($this->session->data['patch'][0]);
-
-		$json['patch'] = file_get_contents($this->session->data['patch'][0]);
-
-		if (count($this->session->data['patch'])) {
-			$json['next'] = $this->url->link('tool/upgrade/patch', 'version=' . $version);
-		} else {
-			$json['next'] = $this->url->link('tool/upgrade/install', 'version=' . $version);
+		if (!$this->user->hasPermission('modify', 'tool/upgrade')) {
+			$json['error'] = $this->language->get('error_permission');
 		}
+
+		$file = DIR_DOWNLOAD . $version . '.zip';
+
+		if (!is_file($file)) {
+			$json['error'] = $this->language->get('error_file');
+		}
+
+		if (!$json) {
+			// Unzip the files
+			$zip = new ZipArchive();
+
+			if ($zip->open($file)) {
+				$zip->extractTo(DIR_DOWNLOAD . $version);
+				$zip->close();
+
+				$json['text'] = 'Copying files!';
+
+				$json['next'] = $this->url->link('tool/upgrade/move', 'version=' . $version);
+			} else {
+				$json['error'] = $this->language->get('error_unzip');
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
-	public function install() {
+	public function move() {
 		$this->load->language('tool/upgrade');
 
 		$json = array();
@@ -313,7 +342,7 @@ class ControllerToolUpgrade extends Controller {
 			$version = '';
 		}
 
-		if (!$this->user->hasPermission('modify', 'upgrade/upgrade')) {
+		if (!$this->user->hasPermission('modify', 'tool/upgrade')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -386,7 +415,7 @@ class ControllerToolUpgrade extends Controller {
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'upgrade/upgrade')) {
+		if (!$this->user->hasPermission('modify', 'tool/upgrade')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

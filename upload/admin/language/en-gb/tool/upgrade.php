@@ -7,8 +7,7 @@ $_['text_success']       = 'Success: You are using the latest version %s!';
 $_['text_system']        = 'Upgrade System';
 $_['text_version']       = 'Latest Version';
 $_['text_compatibility'] = 'Compatibility';
-$_['text_progress']      = 'Progress';
-$_['text_option']        = 'Upgrade Options';
+$_['text_progress']      = 'Upgrade Progress';
 $_['text_log']           = 'Upgrade Log';
 $_['text_compare']       = 'Comparing Files';
 
@@ -18,8 +17,6 @@ $_['text_compatible']    = 'Upgrade Log';
 $_['text_current']       = 'Downloadng latest version';
 $_['text_download']      = 'Downloadng latest version';
 
-
-//$_['text_latest_checking']  = 'Comparing differences with current version';
 // Column
 $_['column_name']        = 'Extension Name';
 $_['column_latest']      = 'Latest Version';
@@ -36,6 +33,8 @@ $_['entry_patch']        = 'Patch';
 $_['help_patch']         = 'help_patch';
 
 // Button
+$_['button_skip']        = 'Skip';
+$_['button_patch']       = 'Patch';
 $_['button_help']        = 'Help';
 
 // Tab

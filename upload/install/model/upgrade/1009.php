@@ -54,13 +54,13 @@ class ModelUpgrade1009 extends Model {
 			
 			$affiliate_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_activity'");
 			
-			if (!$affiliate_query->num_rows) {
+			if ($affiliate_query->num_rows) {
 				$this->db->query("DROP TABLE `" . DB_PREFIX . "affiliate_activity`");
 			}
 			
 			$affiliate_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_login'");
 			
-			if (!$affiliate_query->num_rows) {			
+			if ($affiliate_query->num_rows) {
 				$this->db->query("DROP TABLE `" . DB_PREFIX . "affiliate_login`");
 			}
 			

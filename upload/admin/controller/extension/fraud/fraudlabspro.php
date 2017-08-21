@@ -275,6 +275,12 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 				$data['flp_credit_card_blacklist'] = '';
 			}
 
+			if ($fraud_info['fraudlabspro_score']) {
+				$data['flp_score'] = $fraud_info['fraudlabspro_score'];
+			} else {
+				$data['flp_score'] = '';
+			}
+
 			if ($fraud_info['fraudlabspro_status']) {
 				$data['flp_status'] = $fraud_info['fraudlabspro_status'];
 			} else {

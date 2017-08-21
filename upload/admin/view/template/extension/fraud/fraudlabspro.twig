@@ -59,38 +59,7 @@
               <div class="text-danger">{{ error_key }}</div>
               {% endif %} </div>
           </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-score"><span data-toggle="tooltip" title="{{ help_score }}">{{ entry_score }}</span></label>
-            <div class="col-sm-10">
-              <input type="text" name="fraud_fraudlabspro_score" value="{{ fraud_fraudlabspro_score }}" placeholder="{{ entry_score }}" id="input-score" class="form-control" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-order-status"><span data-toggle="tooltip" title="{{ help_order_status }}">{{ entry_order_status }}</span></label>
-            <div class="col-sm-10">
-              <select name="fraud_fraudlabspro_order_status_id" id="input-order-status" class="form-control">
-                
-                
-								{% for order_status in order_statuses %}
-								{% if order_status.order_status_id == fraud_fraudlabspro_order_status_id %}
-								
-                
-                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
-                
-                
-								{% else %}
-								
-                
-                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                
-                
-								{% endif %}
-								{% endfor %}
-							
-              
-              </select>
-            </div>
-          </div>
+          
           <fieldset>
             <legend>Rules Validation</legend>
             <div class="form-group">

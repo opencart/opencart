@@ -135,13 +135,6 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 			return;
 		}
 
-<<<<<<< HEAD
-=======
-		if ($risk_score > $this->config->get('fraud_fraudlabspro_score')) {
-			return $this->config->get('fraud_fraudlabspro_order_status_id');
-		}
-
->>>>>>> upstream/master
 		if ($json->fraudlabspro_status == 'REVIEW') {
 			return $this->config->get('fraud_fraudlabspro_review_status_id');
 		}

@@ -56,25 +56,8 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 			$data['fraud_fraudlabspro_key'] = $this->config->get('fraud_fraudlabspro_key');
 		}
 
-<<<<<<< HEAD
-		if (isset($this->request->post['fraudlabspro_review_status_id'])) {
-			$data['fraudlabspro_review_status_id'] = $this->request->post['fraudlabspro_review_status_id'];
-=======
-		if (isset($this->request->post['fraud_fraudlabspro_score'])) {
-			$data['fraud_fraudlabspro_score'] = $this->request->post['fraud_fraudlabspro_score'];
-		} else {
-			$data['fraud_fraudlabspro_score'] = $this->config->get('fraud_fraudlabspro_score');
-		}
-
-		if (isset($this->request->post['fraud_fraudlabspro_order_status_id'])) {
-			$data['fraud_fraudlabspro_order_status_id'] = $this->request->post['fraud_fraudlabspro_order_status_id'];
-		} else {
-			$data['fraud_fraudlabspro_order_status_id'] = $this->config->get('fraud_fraudlabspro_order_status_id');
-		}
-
 		if (isset($this->request->post['fraud_fraudlabspro_review_status_id'])) {
 			$data['fraud_fraudlabspro_review_status_id'] = $this->request->post['fraud_fraudlabspro_review_status_id'];
->>>>>>> upstream/master
 		} else {
 			$data['fraud_fraudlabspro_review_status_id'] = $this->config->get('fraud_fraudlabspro_review_status_id');
 		}

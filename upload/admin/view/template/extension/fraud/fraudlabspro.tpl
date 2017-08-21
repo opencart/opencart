@@ -50,26 +50,7 @@
 							<?php } ?>
 						</div>
 					</div>
-					<div class="form-group">
-						<label class="col-sm-2 control-label" for="input-score"><span data-toggle="tooltip" title="<?php echo $help_score; ?>"><?php echo $entry_score; ?></span></label>
-						<div class="col-sm-10">
-							<input type="text" name="fraudlabspro_score" value="<?php echo $fraudlabspro_score; ?>" placeholder="<?php echo $entry_score; ?>" id="input-score" class="form-control" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-2 control-label" for="input-order-status"><span data-toggle="tooltip" title="<?php echo $help_order_status; ?>"><?php echo $entry_order_status; ?></span></label>
-						<div class="col-sm-10">
-							<select name="fraudlabspro_order_status_id" id="input-order-status" class="form-control">
-								<?php foreach ($order_statuses as $order_status) { ?>
-								<?php if ($order_status['order_status_id'] == $fraudlabspro_order_status_id) { ?>
-								<option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-								<?php } else { ?>
-								<option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-								<?php } ?>
-								<?php } ?>
-							</select>
-						</div>
-					</div>
+					
 					<fieldset>
 						<legend>Rules Validation</legend>
 						<div class="form-group">

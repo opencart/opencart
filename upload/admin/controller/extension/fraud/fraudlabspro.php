@@ -84,18 +84,6 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 			$data['fraudlabspro_key'] = $this->config->get('fraudlabspro_key');
 		}
 
-		if (isset($this->request->post['fraudlabspro_score'])) {
-			$data['fraudlabspro_score'] = $this->request->post['fraudlabspro_score'];
-		} else {
-			$data['fraudlabspro_score'] = $this->config->get('fraudlabspro_score');
-		}
-
-		if (isset($this->request->post['fraudlabspro_order_status_id'])) {
-			$data['fraudlabspro_order_status_id'] = $this->request->post['fraudlabspro_order_status_id'];
-		} else {
-			$data['fraudlabspro_order_status_id'] = $this->config->get('fraudlabspro_order_status_id');
-		}
-
 		if (isset($this->request->post['fraudlabspro_review_status_id'])) {
 			$data['fraudlabspro_review_status_id'] = $this->request->post['fraudlabspro_review_status_id'];
 		} else {
@@ -370,12 +358,6 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 				$data['flp_credit_card_blacklist'] = $fraud_info['is_credit_card_blacklist'];
 			} else {
 				$data['flp_credit_card_blacklist'] = '';
-			}
-
-			if ($fraud_info['fraudlabspro_score']) {
-				$data['flp_score'] = $fraud_info['fraudlabspro_score'];
-			} else {
-				$data['flp_score'] = '';
 			}
 
 			if ($fraud_info['fraudlabspro_status']) {

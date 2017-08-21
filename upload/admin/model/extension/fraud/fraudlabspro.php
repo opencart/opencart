@@ -61,8 +61,6 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 		
 		$status_fraud_review_id = $this->db->getLastId();
 
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` (`code`, `key`, `value`, `serialized`) VALUES ('fraudlabspro', 'fraudlabspro_score', '80', '0');");
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` (`code`, `key`, `value`, `serialized`) VALUES ('fraudlabspro', 'fraudlabspro_order_status_id', '$status_fraud_id', '0');");
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` (`code`, `key`, `value`, `serialized`) VALUES ('fraudlabspro', 'fraudlabspro_review_status_id', '$status_fraud_review_id', '0');");
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` (`code`, `key`, `value`, `serialized`) VALUES ('fraudlabspro', 'fraudlabspro_approve_status_id', '2', '0');");
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` (`code`, `key`, `value`, `serialized`) VALUES ('fraudlabspro', 'fraudlabspro_reject_status_id', '8', '0');");

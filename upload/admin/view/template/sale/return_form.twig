@@ -1,0 +1,343 @@
+{{ header }}{{ column_left }}
+<div id="content">
+<div class="page-header">
+  <div class="container-fluid">
+    <div class="pull-right">
+      <button type="submit" form="form-return" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+      <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
+    <h1>{{ heading_title }}</h1>
+    <ul class="breadcrumb">
+      {% for breadcrumb in breadcrumbs %}
+      <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+<div class="container-fluid">
+  {% if error_warning %}
+  <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  {% endif %}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
+    </div>
+    <div class="panel-body">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
+        {% if return_id %}
+        <li><a href="#tab-history" data-toggle="tab">{{ tab_history }}</a></li>
+        {% endif %}
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab-general">
+          <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-return" class="form-horizontal">
+            <fieldset>
+              <legend>{{ text_order }}</legend>
+              <div class="form-group required">
+                <label class="col-sm-2 control-label" for="input-order-id">{{ entry_order_id }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="order_id" value="{{ order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control" />
+                  {% if error_order_id %}
+                  <div class="text-danger">{{ error_order_id }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-date-ordered">{{ entry_date_ordered }}</label>
+                <div class="col-sm-3">
+                  <div class="input-group date">
+                    <input type="text" name="date_ordered" value="{{ date_ordered }}" placeholder="{{ entry_date_ordered }}" data-date-format="YYYY-MM-DD" id="input-date-ordered" class="form-control" />
+                    <span class="input-group-btn">
+                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-customer">{{ entry_customer }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control" />
+                  <input type="hidden" name="customer_id" value="{{ customer_id }}" />
+                </div>
+              </div>
+              <div class="form-group required">
+                <label class="col-sm-2 control-label" for="input-firstname">{{ entry_firstname }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" />
+                  {% if error_firstname %}
+                  <div class="text-danger">{{ error_firstname }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group required">
+                <label class="col-sm-2 control-label" for="input-lastname">{{ entry_lastname }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" />
+                  {% if error_lastname %}
+                  <div class="text-danger">{{ error_lastname }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group required">
+                <label class="col-sm-2 control-label" for="input-email">{{ entry_email }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
+                  {% if error_email %}
+                  <div class="text-danger">{{ error_email }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group required">
+                <label class="col-sm-2 control-label" for="input-telephone">{{ entry_telephone }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" />
+                  {% if error_telephone %}
+                  <div class="text-danger">{{ error_telephone }}</div>
+                  {% endif %}
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>{{ text_product }}</legend>
+              <div class="form-group required">
+                <label class="col-sm-2 control-label" for="input-product"><span data-toggle="tooltip" title="{{ help_product }}">{{ entry_product }}</span></label>
+                <div class="col-sm-10">
+                  <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control" />
+                  <input type="hidden" name="product_id" value="{{ product_id }}" />
+                  {% if error_product %}
+                  <div class="text-danger">{{ error_product }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group required">
+                <label class="col-sm-2 control-label" for="input-model">{{ entry_model }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control" />
+                  {% if error_model %}
+                  <div class="text-danger">{{ error_model }}</div>
+                  {% endif %} </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-quantity">{{ entry_quantity }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="quantity" value="{{ quantity }}" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-return-reason">{{ entry_return_reason }}</label>
+                <div class="col-sm-10">
+                  <select name="return_reason_id" id="input-return-reason" class="form-control">
+                    {% for return_reason in return_reasons %}
+                    {% if return_reason.return_reason_id == return_reason_id %}                    
+                    <option value="{{ return_reason.return_reason_id }}" selected="selected">{{ return_reason.name }}</option>
+                    {% else %}
+                    <option value="{{ return_reason.return_reason_id }}">{{ return_reason.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-opened">{{ entry_opened }}</label>
+                <div class="col-sm-10">
+                  <select name="opened" id="input-opened" class="form-control">
+                    {% if opened %}
+                    <option value="1" selected="selected">{{ text_opened }}</option>
+                    <option value="0">{{ text_unopened }}</option>
+                    {% else %}
+                    <option value="1">{{ text_opened }}</option>
+                    <option value="0" selected="selected">{{ text_unopened }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-comment">{{ entry_comment }}</label>
+                <div class="col-sm-10">
+                  <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-return-action">{{ entry_return_action }}</label>
+                <div class="col-sm-10">
+                  <select name="return_action_id" id="input-return-action" class="form-control">
+                    <option value="0"></option>
+                    {% for return_action in return_actions %}
+                    {% if return_action.return_action_id == return_action_id %}
+                    <option value="{{ return_action.return_action_id }}" selected="selected"> {{ return_action.name }}</option>
+                    {% else %}
+                    <option value="{{ return_action.return_action_id }}">{{ return_action.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              {% if not return_id %}
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-return-status">{{ entry_return_status }}</label>
+                <div class="col-sm-10">
+                  <select name="return_status_id" id="input-return-status" class="form-control">
+                    {% for return_status in return_statuses %}
+                    {% if return_status.return_status_id == return_status_id %}
+                    <option value="{{ return_status.return_status_id }}" selected="selected">{{ return_status.name }}</option>
+                    {% else %}
+                    <option value="{{ return_status.return_status_id }}">{{ return_status.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              {% endif %}
+            </fieldset>
+          </form>
+        </div>
+        {% if return_id %}
+        <div class="tab-pane" id="tab-history">
+          <fieldset>
+            <legend>{{ text_history }}</legend>
+            <div id="history"></div>
+          </fieldset>
+          <br />
+          <fieldset>
+            <legend>{{ text_history_add }}</legend>
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-return-status">{{ entry_return_status }}</label>
+                <div class="col-sm-10">
+                  <select name="return_status_id" id="input-return-status" class="form-control">
+                    {% for return_status in return_statuses %}
+                    {% if return_status.return_status_id == return_status_id %}
+                    <option value="{{ return_status.return_status_id }}" selected="selected">{{ return_status.name }}</option>
+                    {% else %}
+                    <option value="{{ return_status.return_status_id }}">{{ return_status.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-notify">{{ entry_notify }}</label>
+                <div class="col-sm-10">
+                  <input type="checkbox" name="notify" value="1" id="input-notify" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-history-comment">{{ entry_comment }}</label>
+                <div class="col-sm-10">
+                  <textarea name="comment" rows="8" id="input-history-comment" class="form-control"></textarea>
+                </div>
+              </div>
+              <div class="text-right">
+                <button id="button-history" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> {{ button_history_add }}</button>
+              </div>
+            </form>
+          </fieldset>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript"><!--
+$('input[name=\'customer\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',			
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						category: item['customer_group'],
+						label: item['name'],
+						value: item['customer_id'],
+						firstname: item['firstname'],
+						lastname: item['lastname'],
+						email: item['email'],
+						telephone: item['telephone']			
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'customer\']').val(item['label']);
+		$('input[name=\'customer_id\']').val(item['value']);
+		$('input[name=\'firstname\']').val(item['firstname']);
+		$('input[name=\'lastname\']').val(item['lastname']);
+		$('input[name=\'email\']').val(item['email']);
+		$('input[name=\'telephone\']').val(item['telephone']);
+	}
+});
+//--></script> 
+  <script type="text/javascript"><!--
+$('input[name=\'product\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',			
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['product_id'],
+						model: item['model']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'product\']').val(item['label']);
+		$('input[name=\'product_id\']').val(item['value']);	
+		$('input[name=\'model\']').val(item['model']);	
+	}
+});
+
+$('#history').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
+	
+	$('#history').load(this.href);
+});			
+
+$('#history').load('index.php?route=sale/return/history&user_token={{ user_token }}&return_id={{ return_id }}');
+
+$('#button-history').on('click', function(e) {
+	e.preventDefault();
+
+	$.ajax({
+		url: 'index.php?route=sale/return/addhistory&user_token={{ user_token }}&return_id={{ return_id }}',
+		type: 'post',
+		dataType: 'json',
+		data: 'return_status_id=' + encodeURIComponent($('#tab-history select[name=\'return_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('#tab-history textarea[name=\'comment\']').val()),
+		beforeSend: function() {
+			$('#button-history').button('loading');	
+		},
+		complete: function() {
+			$('#button-history').button('reset');	
+		},
+		success: function(json) {
+			$('.alert-dismissible').remove();
+	
+			if (json['error']) {
+				 $('#tab-history').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+
+			if (json['success']) {
+				$('#history').load('index.php?route=sale/return/history&user_token={{ user_token }}&return_id={{ return_id }}');
+				
+				$('#tab-history').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+				$('#tab-history textarea[name=\'comment\']').val('');
+			}
+		}
+	});
+});
+//--></script> 
+  <script type="text/javascript"><!--
+$('.date').datetimepicker({
+	language: '{{ datepicker }}',
+	pickTime: false
+});
+//--></script></div>
+{{ footer }} 

@@ -4,7 +4,7 @@ class ControllerExtensionModuleKlarnaCheckoutModule extends Controller {
 		$this->load->model('extension/payment/klarna_checkout');
 
 		// If Payment Method or Module is disabled
-		if (!$this->config->get('klarna_checkout_module_status') || !$this->config->get('klarna_checkout_status')) {
+		if (!$this->config->get('module_klarna_checkout_status') || !$this->config->get('klarna_checkout_status')) {
 			$this->model_extension_payment_klarna_checkout->log('Not shown due to Payment Method or Module being disabled');
 			return false;
 		}
@@ -103,12 +103,12 @@ class ControllerExtensionModuleKlarnaCheckoutModule extends Controller {
 			// Shipping Methods
 			$method_data = array();
 
-			$this->load->model('extension/extension');
+			$this->load->model('setting/extension');
 
-			$results = $this->model_extension_extension->getExtensions('shipping');
+			$results = $this->model_setting_extension->getExtensions('shipping');
 
 			foreach ($results as $result) {
-				if ($this->config->get($result['code'] . '_status')) {
+				if ($this->config->get('shipping_' . $result['code'] . '_status')) {
 					$this->load->model('extension/shipping/' . $result['code']);
 
 					$quote = $this->{'model_extension_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);

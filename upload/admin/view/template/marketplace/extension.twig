@@ -1,0 +1,117 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> {{ text_list }}</h3>
+      </div>
+      <div class="panel-body">
+        <fieldset>
+          <legend>{{ text_type }}</legend>
+          <div class="well">
+            <div class="input-group">
+              <select name="type" class="form-control">
+                {% for category in categories %}
+                {% if type == category.code %}
+                <option value="{{ category.href }}" selected="selected">{{ category.text }}</option>
+                {% else %}
+                <option value="{{ category.href }}">{{ category.text }}</option>
+                {% endif %}
+                {% endfor %}
+              </select>
+              <span class="input-group-addon"><i class="fa fa-filter"></i> {{ text_filter }}</span>
+            </div>
+          </div>
+        </fieldset>
+        <div id="extension"></div>
+      </div>
+    </div>
+  </div>
+  {% if categories %}
+  <script type="text/javascript"><!--
+$('select[name="type"]').on('change', function() {
+	$.ajax({
+		url: $('select[name="type"]').val(),
+		dataType: 'html',
+		beforeSend: function() {
+			$('.fa-filter').addClass('fa-circle-o-notch fa-spin');
+			$('.fa-filter').removeClass('fa-filter');
+			$('select[name=\'type\']').prop('disabled', true);
+		},
+		complete: function() {
+			$('.fa-circle-o-notch').addClass('fa-filter');
+			$('.fa-circle-o-notch').removeClass('fa-circle-o-notch fa-spin');
+			$('select[name=\'type\']').prop('disabled', false);
+		},
+		success: function(html) {
+			$('#extension').html(html);
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$('select[name="type"]').trigger('change');
+
+$('#extension').on('click', '.btn-success', function(e) {
+	e.preventDefault();
+	
+	var element = this;
+
+	$.ajax({
+		url: $(element).attr('href'),
+		dataType: 'html',
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(html) {
+			$('#extension').html(html);
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$('#extension').on('click', '.btn-danger, .btn-warning', function(e) {
+	e.preventDefault();
+	
+	if (confirm('{{ text_confirm }}')) {
+		var element = this;
+	
+		$.ajax({
+			url: $(element).attr('href'),
+			dataType: 'html',
+			beforeSend: function() {
+				$(element).button('loading');
+			},
+			complete: function() {
+				$(element).button('reset');
+			},
+			success: function(html) {
+				$('#extension').html(html);
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	}
+});
+//--></script>
+  {% endif %}
+</div>
+{{ footer }} 

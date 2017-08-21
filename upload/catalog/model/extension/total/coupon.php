@@ -97,7 +97,7 @@ class ModelExtensionTotalCoupon extends Model {
 
 	public function getTotal($total) {
 		if (isset($this->session->data['coupon'])) {
-			$this->load->language('extension/total/coupon');
+			$this->load->language('extension/total/coupon', 'coupon');
 
 			$coupon_info = $this->getCoupon($this->session->data['coupon']);
 
@@ -165,14 +165,14 @@ class ModelExtensionTotalCoupon extends Model {
 				}
 
 				// If discount greater than total
-				if ($discount_total > $total) {
-					$discount_total = $total;
+				if ($discount_total > $total['total']) {
+					$discount_total = $total['total'];
 				}
 
 				if ($discount_total > 0) {
 					$total['totals'][] = array(
 						'code'       => 'coupon',
-						'title'      => sprintf($this->language->get('text_coupon'), $this->session->data['coupon']),
+						'title'      => sprintf($this->language->get('coupon')->get('text_coupon'), $this->session->data['coupon']),
 						'value'      => -$discount_total,
 						'sort_order' => $this->config->get('total_coupon_sort_order')
 					);

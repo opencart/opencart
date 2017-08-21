@@ -1,7 +1,7 @@
 <?php
 class Controller3rdPartyOpenbay extends Controller {
 	public function index() {
-		$this->language->load('3rd_party/openbay');
+		$this->load->language('3rd_party/openbay');
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 

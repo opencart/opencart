@@ -42,8 +42,7 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 		$message .= $this->language->get('text_thanks') . "\n";
 		$message .= html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
-		$mail = new Mail();
-		$mail->protocol = $this->config->get('config_mail_protocol');
+		$mail = new Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -68,8 +67,7 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 			$message .= $this->language->get('text_email') . ' '  .  $data['email'] . "\n";
 			$message .= $this->language->get('text_telephone') . ' ' . $data['telephone'] . "\n";
 
-			$mail = new Mail();
-			$mail->protocol = $this->config->get('config_mail_protocol');
+			$mail = new Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -85,7 +83,7 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 			$mail->send();
 
 			// Send to additional alert emails if new account email is enabled
-			$emails = explode(',', $this->config->get('config_alert_email'));
+			$emails = explode(',', $this->config->get('config_mail_alert_email'));
 
 			foreach ($emails as $email) {
 				if (utf8_strlen($email) > 0 && filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -132,7 +130,7 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 	}
 
 	public function getAdditionalCharges($order_id) {
-		return $this->db->query("SELECT `ot`.`title`, `ot`.`order_total_id`, `value` + IF(`tax` IS NULL, 0, `tax`) AS 'price' FROM `" . DB_PREFIX . "order_total` `ot` LEFT JOIN `" . DB_PREFIX . "amazon_login_pay_order_total_tax` `ott` USING(`order_total_id`)  WHERE `ott`.`code` NOT IN ('shipping', 'total', 'sub_total', 'tax') AND `value` > 0 AND `order_id` = " . (int)$order_id)->rows;
+		return $this->db->query("SELECT `ot`.`title`, `ot`.`order_total_id`, `value` + IF(`tax` IS NULL, 0, `tax`) AS 'price' FROM `" . DB_PREFIX . "order_total` `ot` LEFT JOIN `" . DB_PREFIX . "amazon_login_pay_order_total_tax` `ott` USING(`order_total_id`)  WHERE `ott`.`code` NOT IN ('shipping', 'total', 'sub_total', 'tax') AND `order_id` = " . (int)$order_id)->rows;
 	}
 
 	public function addAmazonOrderId($order_id, $amazon_authorization_id, $capture_status, $total, $currency_code) {
@@ -157,7 +155,7 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 		$update_paramter_data['OrderReferenceAttributes.OrderTotal.CurrencyCode'] = $currency_code;
 		$update_paramter_data['OrderReferenceAttributes.SellerOrderAttributes.SellerOrderId'] = $order_id;
 		$update_paramter_data['OrderReferenceAttributes.SellerOrderAttributes.StoreName'] = $this->config->get('config_name');
-		if ($this->config->get('amazon_login_pay_payment_region') == 'USD') {
+		if ($this->config->get('payment_amazon_login_pay_payment_region') == 'USD') {
 			$update_paramter_data['OrderReferenceAttributes.PlatformId'] = 'A3GK1RS09H3A7D';
 		} else {
 			$update_paramter_data['OrderReferenceAttributes.PlatformId'] = 'A3EIRX2USI2KJV';
@@ -185,14 +183,14 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 
 		$response['capture_status'] = 0;
 		$authorize_paramter_data = array();
-		if ($this->config->get('amazon_login_pay_mode') == 'payment') {
+		if ($this->config->get('payment_amazon_login_pay_mode') == 'payment') {
 			$authorize_paramter_data['CaptureNow'] = true;
 			$authorize_paramter_data['CaptureReferenceId'] = 'capture_' . mt_rand();
 			$response['capture_status'] = 1;
 		}
 
-		if ($this->config->get('amazon_login_pay_declined_code')) {
-			$authorize_paramter_data['SellerAuthorizationNote'] = '{"SandboxSimulation": {"State":"Declined", "ReasonCode":"' . $this->config->get('amazon_login_pay_declined_code') . '"}}';
+		if ($this->config->get('payment_amazon_login_pay_declined_code')) {
+			$authorize_paramter_data['SellerAuthorizationNote'] = '{"SandboxSimulation": {"State":"Declined", "ReasonCode":"' . $this->config->get('payment_amazon_login_pay_declined_code') . '"}}';
 		}
 
 		$authorize_paramter_data['AuthorizationAmount.Amount'] = $total;
@@ -314,11 +312,11 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 	}
 
 	public function getUserInfo($access_token) {
-		if ($this->config->get('amazon_login_pay_test') == 'sandbox') {
-			if ($this->config->get('amazon_login_pay_payment_region') == 'GBP') {
+		if ($this->config->get('payment_amazon_login_pay_test') == 'sandbox') {
+			if ($this->config->get('payment_amazon_login_pay_payment_region') == 'GBP') {
 				$curl_token = curl_init('https://api.sandbox.amazon.co.uk/auth/o2/tokeninfo?access_token=' . urlencode($access_token));
 				$curl_profile = curl_init('https://api.sandbox.amazon.co.uk/user/profile');
-			} elseif ($this->config->get('amazon_login_pay_payment_region') == 'EUR') {
+			} elseif ($this->config->get('payment_amazon_login_pay_payment_region') == 'EUR') {
 				$curl_token = curl_init('https://api.sandbox.amazon.de/auth/o2/tokeninfo?access_token=' . urlencode($access_token));
 				$curl_profile = curl_init('https://api.sandbox.amazon.de/user/profile');
 			} else {
@@ -326,10 +324,10 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 				$curl_profile = curl_init('https://api.sandbox.amazon.com/user/profile');
 			}
 		} else {
-			if ($this->config->get('amazon_login_pay_payment_region') == 'GBP') {
+			if ($this->config->get('payment_amazon_login_pay_payment_region') == 'GBP') {
 				$curl_token = curl_init('https://api.amazon.co.uk/auth/o2/tokeninfo?access_token=' . urlencode($access_token));
 				$curl_profile = curl_init('https://api.amazon.co.uk/user/profile');
-			} elseif ($this->config->get('amazon_login_pay_payment_region') == 'EUR') {
+			} elseif ($this->config->get('payment_amazon_login_pay_payment_region') == 'EUR') {
 				$curl_token = curl_init('https://api.amazon.de/auth/o2/tokeninfo?access_token=' . urlencode($access_token));
 				$curl_profile = curl_init('https://api.amazon.de/user/profile');
 			} else {
@@ -344,7 +342,7 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 		curl_close($curl_token);
 		$decoded_token = json_decode($response_token);
 
-		if (!isset($decoded_token->aud) || $decoded_token->aud != $this->config->get('amazon_login_pay_client_id')) {
+		if (!isset($decoded_token->aud) || $decoded_token->aud != $this->config->get('payment_amazon_login_pay_client_id')) {
 			$this->logger($decoded_token);
 			$this->logger('the access token does not belong to us');
 			return;
@@ -387,14 +385,14 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 	}
 
 	public function offAmazon($Action, $parameter_data = array()) {
-		if ($this->config->get('amazon_login_pay_test') == 'sandbox') {
-			if ($this->config->get('amazon_login_pay_payment_region') == 'USD') {
+		if ($this->config->get('payment_amazon_login_pay_test') == 'sandbox') {
+			if ($this->config->get('payment_amazon_login_pay_payment_region') == 'USD') {
 				$url = 'https://mws.amazonservices.com/OffAmazonPayments_Sandbox/2013-01-01/';
 			} else {
 				$url = 'https://mws-eu.amazonservices.com/OffAmazonPayments_Sandbox/2013-01-01/';
 			}
 		} else {
-			if ($this->config->get('amazon_login_pay_payment_region') == 'USD') {
+			if ($this->config->get('payment_amazon_login_pay_payment_region') == 'USD') {
 				$url = 'https://mws.amazonservices.com/OffAmazonPayments/2013-01-01/';
 			} else {
 				$url = 'https://mws-eu.amazonservices.com/OffAmazonPayments/2013-01-01/';
@@ -402,14 +400,14 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 		}
 
 		$parameters = array();
-		$parameters['AWSAccessKeyId'] = $this->config->get('amazon_login_pay_access_key');
+		$parameters['AWSAccessKeyId'] = $this->config->get('payment_amazon_login_pay_access_key');
 		$parameters['Action'] = $Action;
 		if (isset($parameter_data['AmazonOrderReferenceId'])) {
 			$parameters['AmazonOrderReferenceId'] = $parameter_data['AmazonOrderReferenceId'];
 		} else {
 			$parameters['AmazonOrderReferenceId'] = $this->session->data['lpa']['AmazonOrderReferenceId'];
 		}
-		$parameters['SellerId'] = $this->config->get('amazon_login_pay_merchant_id');
+		$parameters['SellerId'] = $this->config->get('payment_amazon_login_pay_merchant_id');
 		$parameters['SignatureMethod'] = 'HmacSHA256';
 		$parameters['SignatureVersion'] = 2;
 		$parameters['Timestamp'] = date('c', time());
@@ -420,7 +418,7 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 
 		$query = $this->calculateStringToSignV2($parameters, $url);
 
-		$parameters['Signature'] = base64_encode(hash_hmac('sha256', $query, $this->config->get('amazon_login_pay_access_secret'), true));
+		$parameters['Signature'] = base64_encode(hash_hmac('sha256', $query, $this->config->get('payment_amazon_login_pay_access_secret'), true));
 
 		return $this->sendCurl($url, $parameters);
 	}
@@ -526,24 +524,24 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 	}
 
 	public function getWidgetJs() {
-		if ($this->config->get('amazon_login_pay_test') == 'sandbox') {
-			if ($this->config->get('amazon_login_pay_payment_region') == 'GBP') {
+		if ($this->config->get('payment_amazon_login_pay_test') == 'sandbox') {
+			if ($this->config->get('payment_amazon_login_pay_payment_region') == 'GBP') {
 				$amazon_payment_js = 'https://static-eu.payments-amazon.com/OffAmazonPayments/uk/sandbox/lpa/js/Widgets.js';
-			} elseif ($this->config->get('amazon_login_pay_payment_region') == 'USD') {
+			} elseif ($this->config->get('payment_amazon_login_pay_payment_region') == 'USD') {
 				$amazon_payment_js = 'https://static-na.payments-amazon.com/OffAmazonPayments/us/sandbox/js/Widgets.js';
 			} else {
 				$amazon_payment_js = 'https://static-eu.payments-amazon.com/OffAmazonPayments/de/sandbox/lpa/js/Widgets.js';
 			}
 		} else {
-			if ($this->config->get('amazon_login_pay_payment_region') == 'GBP') {
+			if ($this->config->get('payment_amazon_login_pay_payment_region') == 'GBP') {
 				$amazon_payment_js = 'https://static-eu.payments-amazon.com/OffAmazonPayments/uk/lpa/js/Widgets.js';
-			} elseif ($this->config->get('amazon_login_pay_payment_region') == 'USD') {
+			} elseif ($this->config->get('payment_amazon_login_pay_payment_region') == 'USD') {
 				$amazon_payment_js = 'https://static-na.payments-amazon.com/OffAmazonPayments/us/js/Widgets.js';
 			} else {
 				$amazon_payment_js = 'https://static-eu.payments-amazon.com/OffAmazonPayments/de/lpa/js/Widgets.js';
 			}
 		}
-		return $amazon_payment_js . '?sellerId=' . $this->config->get('amazon_login_pay_merchant_id');
+		return $amazon_payment_js . '?sellerId=' . $this->config->get('payment_amazon_login_pay_merchant_id');
 	}
 
 	public function getMethod($address, $total) {
@@ -552,7 +550,7 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 	}
 
 	public function logger($data) {
-		if ($this->config->get('amazon_login_pay_debug')) {
+		if ($this->config->get('payment_amazon_login_pay_debug')) {
 			$log = new Log('amazon_login_pay.log');
 			$backtrace = debug_backtrace();
 			$log->write($backtrace[6]['class'] . '::' . $backtrace[6]['function'] . ' Data:  ' . print_r($data, 1));

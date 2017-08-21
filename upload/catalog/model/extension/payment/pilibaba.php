@@ -16,7 +16,7 @@ class ModelExtensionPaymentPilibaba extends Model {
 				'code'			=> 'pilibaba',
 				'title'			=> $this->language->get('text_title'),
 				'terms'			=> '',
-				'sort_order'	=> $this->config->get('pilibaba_sort_order')
+				'sort_order'	=> $this->config->get('payment_pilibaba_sort_order')
 			);
 		}
 
@@ -38,15 +38,15 @@ class ModelExtensionPaymentPilibaba extends Model {
 	}
 
 	public function getConsumerInfo($order_id) {
-		$sign_msg = strtoupper(md5($this->config->get('pilibaba_merchant_number') . $order_id . 'MD5' . $this->config->get('pilibaba_secret_key')));
+		$sign_msg = strtoupper(md5($this->config->get('payment_pilibaba_merchant_number') . $order_id . 'MD5' . $this->config->get('payment_pilibaba_secret_key')));
 
-		if ($this->config->get('pilibaba_environment') == 'live') {
+		if ($this->config->get('payment_pilibaba_environment') == 'live') {
 			$url = 'https://www.pilibaba.com/pilipay/consumerInfo';
 		} else {
 			$url = 'http://pre.pilibaba.com/pilipay/consumerInfo';
 		}
 
-		$url .= '?merchantNo=' . $this->config->get('pilibaba_merchant_number') . '&orderNo=' . $order_id . '&signType=' . 'MD5' . '&signMsg=' . $sign_msg;
+		$url .= '?merchantNo=' . $this->config->get('payment_pilibaba_merchant_number') . '&orderNo=' . $order_id . '&signType=' . 'MD5' . '&signMsg=' . $sign_msg;
 
 		$this->log('URL: ' . $url);
 
@@ -79,7 +79,7 @@ class ModelExtensionPaymentPilibaba extends Model {
 	}
 
 	public function log($data) {
-		if ($this->config->get('pilibaba_logging')) {
+		if ($this->config->get('payment_pilibaba_logging')) {
 			$log = new Log('pilibaba.log');
 
 			$log->write($data);

@@ -86,7 +86,7 @@ class ModelExtensionPaymentCardConnect extends Model {
 
 		$this->log('Order ID: ' . $order_info['order_id']);
 
-		$url = 'https://' . $this->config->get('cardconnect_site') . '.cardconnect.com:' . (($this->config->get('cardconnect_environment') == 'live') ? 8443 : 6443) . '/cardconnect/rest/inquire/' . $retref . '/' . $this->config->get('cardconnect_merchant_id');
+		$url = 'https://' . $this->config->get('cardconnect_site') . '.cardconnect.com:' . (($this->config->get('cardconnect_environment') == 'live') ? 8443 : 6443) . '/cardconnect/rest/inquire/' . $retref . '/' . $this->config->get('payment_cardconnect_merchant_id');
 
 		$header = array();
 
@@ -160,7 +160,7 @@ class ModelExtensionPaymentCardConnect extends Model {
 		}
 
 		$data = array(
-			'merchid'       => $this->config->get('cardconnect_merchant_id'),
+			'merchid'       => $this->config->get('payment_cardconnect_merchant_id'),
 			'retref'        => $order_info['retref'],
 			'authcode'      => $order_info['authcode'],
 			'ponumber'      => $order_info['order_id'],
@@ -218,7 +218,7 @@ class ModelExtensionPaymentCardConnect extends Model {
 		$this->log('Order ID: ' . $order_info['order_id']);
 
 		$data = array(
-			'merchid'   => $this->config->get('cardconnect_merchant_id'),
+			'merchid'   => $this->config->get('payment_cardconnect_merchant_id'),
 			'amount'    => round(floatval($amount), 2, PHP_ROUND_HALF_DOWN),
 			'currency'  => $order_info['currency_code'],
 			'retref'    => $order_info['retref']
@@ -267,7 +267,7 @@ class ModelExtensionPaymentCardConnect extends Model {
 		$this->log('Order ID: ' . $order_info['order_id']);
 
 		$data = array(
-			'merchid'   => $this->config->get('cardconnect_merchant_id'),
+			'merchid'   => $this->config->get('payment_cardconnect_merchant_id'),
 			'amount'    => 0,
 			'currency'  => $order_info['currency_code'],
 			'retref'    => $retref

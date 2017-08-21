@@ -5,33 +5,6 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 
 		$this->load->model('extension/payment/cardconnect');
 
-		$data['text_title']            = $this->language->get('text_title');
-		$data['text_card_details']     = $this->language->get('text_card_details');
-		$data['text_echeck_details']   = $this->language->get('text_echeck_details');
-		$data['text_card']             = $this->language->get('text_card');
-		$data['text_echeck']           = $this->language->get('text_echeck');
-		$data['text_wait']             = $this->language->get('text_wait');
-		$data['text_loading']          = $this->language->get('text_loading');
-		$data['text_confirm_delete']   = $this->language->get('text_confirm_delete');
-		$data['text_no_cards']         = $this->language->get('text_no_cards');
-		$data['text_select_card']      = $this->language->get('text_select_card');
-
-		$data['entry_method']          = $this->language->get('entry_method');
-		$data['entry_card_new_or_old'] = $this->language->get('entry_card_new_or_old');
-		$data['entry_card_new']        = $this->language->get('entry_card_new');
-		$data['entry_card_old']        = $this->language->get('entry_card_old');
-		$data['entry_card_type']       = $this->language->get('entry_card_type');
-		$data['entry_card_number']     = $this->language->get('entry_card_number');
-		$data['entry_card_expiry']     = $this->language->get('entry_card_expiry');
-		$data['entry_card_cvv2']       = $this->language->get('entry_card_cvv2');
-		$data['entry_card_save']       = $this->language->get('entry_card_save');
-		$data['entry_card_choice']     = $this->language->get('entry_card_choice');
-		$data['entry_account_number']  = $this->language->get('entry_account_number');
-		$data['entry_routing_number']  = $this->language->get('entry_routing_number');
-
-		$data['button_confirm']        = $this->language->get('button_confirm');
-		$data['button_delete']         = $this->language->get('button_delete');
-
 		$data['card_types'] = $this->model_extension_payment_cardconnect->getCardTypes();
 
 		$data['months'] = $this->model_extension_payment_cardconnect->getMonths();
@@ -137,7 +110,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 						}
 
 						$data = array(
-							'merchid'    => $this->config->get('cardconnect_merchant_id'),
+							'merchid'    => $this->config->get('payment_cardconnect_merchant_id'),
 							'accttype'   => $accttype,
 							'account'    => $account,
 							'expiry'     => $expiry,
@@ -311,7 +284,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 			if (isset($this->request->get['token']) && hash_equals($this->config->get('cardconnect_token'), $this->request->get['token'])) {
 				$date = date('md', strtotime('yesterday'));
 
-				$responses = $this->model_extension_payment_cardconnect->getSettlementStatuses($this->config->get('cardconnect_merchant_id'), $date);
+				$responses = $this->model_extension_payment_cardconnect->getSettlementStatuses($this->config->get('payment_cardconnect_merchant_id'), $date);
 
 				foreach($responses as $response) {
 					foreach($response['txns'] as $transaction) {

@@ -47,17 +47,25 @@ class ModelExtensionOpenBayEtsyOrder extends Model {
 
 					$order_id = $this->create($order);
 
+					$order_status_id = $this->config->get('etsy_order_status_new');
+
 					// is paid?
 					if ($order->paid == 1) {
+						$order_status_id = $this->config->get('etsy_order_status_paid');
 						$this->openbay->etsy->log("Order is paid");
 
 						$this->updatePaid($order_id, $order->paid);
 
 						// is shipped?
 						if ($order->shipped == 1) {
+							$order_status_id = $this->config->get('etsy_order_status_shipped');
 							$this->openbay->etsy->log("Order is shipped");
 							$this->updateShipped($order_id, $order->shipped);
 						}
+					}
+
+                    if($this->config->get('openbay_amazon_notify_admin') == 1){
+						$this->openbay->newOrderAdminNotify($order_id, $order_status_id);
 					}
 
 					$this->openbay->etsy->log('Created Order ID: ' . $order_id);
@@ -157,7 +165,6 @@ class ModelExtensionOpenBayEtsyOrder extends Model {
 		   `lastname`				  = '" . $this->db->escape((string)$customer_name['surname']) . "',
 		   `email`				  	  = '" . $this->db->escape((string)$order->buyer_email) . "',
 		   `telephone`				  = '',
-		   `fax`				  	  = '',
 		   `payment_firstname`		  = '" . $this->db->escape((string)$customer_name['firstname']) . "',
 		   `payment_lastname`		  = '" . $this->db->escape((string)$customer_name['surname']) . "',
 		   `payment_company`		  = '',
@@ -183,7 +190,7 @@ class ModelExtensionOpenBayEtsyOrder extends Model {
 		   `shipping_zone`			  = '" . $this->db->escape((string)$order->address_state) . "',
 		   `shipping_zone_id`		  = '" . (int)$zone_id . "',
 		   `shipping_address_format`  = '" . $this->db->escape((string)$country_address_format) . "',
-		   `shipping_method`  		  = '',
+		   `shipping_method`  		  = '" . $this->db->escape((string)$order->shipping_method_name) . "',
 		   `shipping_code`  		  = '',
 		   `comment`                  = '" . $this->db->escape((string)$order->buyer_note) . "',
 		   `total`                    = '" . (double)$order->amount_total . "',
@@ -286,7 +293,7 @@ class ModelExtensionOpenBayEtsyOrder extends Model {
 		}
 
 		$this->openbay->etsy->log("Setting order to new order status ID: " . $this->config->get('etsy_order_status_new'));
-		
+
 		$this->updateOrderStatus($order_id, $this->config->get('etsy_order_status_new'));
 
 		$this->event->trigger('model/checkout/order/addOrderHistory/after', array('model/checkout/order/addOrderHistory/after', array($order_id, $this->config->get('etsy_order_status_new'))));

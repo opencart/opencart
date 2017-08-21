@@ -1,0 +1,189 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="button" data-toggle="tooltip" title="{{ button_help }}" class="btn btn-info"><i class="fa fa-question-circle"></i></button>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-exclamation-triangle"></i> {{ text_system }}</h3>
+      </div>
+      <div class="panel-body">
+        <form class="form-horizontal">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab-version" data-toggle="tab">{{ tab_version }}</a></li>
+            <li><a href="#tab-upgrade" data-toggle="tab">{{ tab_upgrade }}</a></li>
+            <li><a href="#tab-finish" data-toggle="tab">{{ tab_finish }}</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab-version">
+              <fieldset>
+                <legend id="version">{{ text_version }}</legend>
+
+                {% if error_warning %}
+                  <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                  </div>
+                {% endif %}
+
+                {% if success %}
+                  <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                  </div>
+                {% endif %}
+
+                <p>Before upgrading its very important to</p>
+                <ol>
+                  <li>make a complete backup of your web site!</li>
+                  <li>check if extensions installed are compatible with the latest version</li>
+                  <li>Its better if u can copy your site to a test server and practise upgrading before strting with the live web site.</li>
+                  <li></li>
+                </ol>
+              </fieldset>
+              <fieldset>
+                <legend>{{ text_compatibility }}</legend>
+                <p>Before upgrading its very important to check if extensions installed are compatible with the latest version</p>
+                <table class="table table-bordered table-hover">
+                  <thead>
+                  <tr>
+                    <td class="text-left">{{ column_name }}</td>
+                    <td class="text-left">{{ column_latest }}</td>
+                    <td class="text-center">{{ column_status }}</td>
+                  </tr>
+                  </thead>
+                  <tbody>
+
+                  {% if extensions %}
+                    {% for extension in extensions %}
+                      <tr>
+                        <td class="text-left">{{ extension.name }}</td>
+                        <td class="text-left">{{ extension.name }}</td>
+                        <td class="text-center">{% if extension.status %}{{ extension.success }}{% else %}{{ extension.success }}{% endif %}</td>
+                      </tr>
+                    {% endfor %}
+                  {% else %}
+                    <tr>
+                      <td class="text-center" colspan="3">{{ text_no_results }}</td>
+                    </tr>
+                  {% endif %}
+                  </tbody>
+
+                </table>
+              </fieldset>
+            </div>
+            <div class="tab-pane" id="tab-upgrade">
+              <fieldset>
+                <legend>{{ text_progress }}</legend>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Progress</label>
+                  <div class="col-sm-10">
+                    <div id="progress-download" class="progress">
+                      <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div id="progress-text"></div>
+                  </div>
+                </div>
+                <div class="col-sm-10 col-sm-offset-2">
+                  <div class="form-group">
+                    {% if upgrade %}
+                      <button type="button" id="button-upgrade" data-loading-text="{{ text_loading }}" class="btn btn-success"><i class="fa fa-play"></i> Start</button>
+                    {% else %}
+                      <button type="button" id="button-upgrade" data-loading-text="{{ text_loading }}" class="btn btn-success" disabled="disabled"><i class="fa fa-play"></i> Start</button>
+                    {% endif %}
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+            <div class="tab-pane" id="tab-finish">
+              <fieldset>
+                <legend>Upgrade Log</legend>
+                <textarea wrap="off" rows="15" readonly class="form-control">{{ log }}</textarea>
+              </fieldset>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#button-upgrade').on('click', function() {
+	$('#progress-text').html('{{ text_download }}');
+
+	$.ajax({
+		url: 'index.php?route=tool/upgrade/download&user_token={{ user_token }}&version={{ version }}',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-upgrade').button('loading');
+		},
+		complete: function() {
+			$('#button-upgrade').button('reset');
+		},
+		success: function(json) {
+			if (json['error']) {
+				$('#progress-bar').addClass('progress-bar-danger');
+
+				$('#progress-text').html(json['text']);
+			}
+
+			if (json['text']) {
+				$('#progress-text').html(json['text']);
+			}
+
+			if (json['next']) {
+				$('#data-next').attr('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+			}
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+function next(url, i) {
+	i = i + 1;
+
+	$.ajax({
+		url: url,
+		dataType: 'json',
+		success: function(json) {
+			$('#progress-bar').css('width', (i * 20) + '%');
+
+			if (json['error']) {
+				$('#progress-bar').addClass('progress-bar-danger');
+				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+			}
+
+			if (json['success']) {
+				$('#progress-bar').addClass('progress-bar-success');
+				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
+
+				$('#history').load('index.php?route=marketplace/installer/history&user_token={{ user_token }}');
+			}
+
+			if (json['text']) {
+				$('#progress-text').html(json['text']);
+			}
+
+			if (json['next']) {
+				next(json['next'], i);
+			}
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+}
+
+//--></script>
+{{ footer }}

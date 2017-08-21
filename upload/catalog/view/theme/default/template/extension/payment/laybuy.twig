@@ -1,0 +1,133 @@
+<form id="laybuy-form" action="{{ action }}" method="post" class="form form-horizontal">
+  <div>
+    <h3>{{ heading_title }}</h3>
+  </div>
+  <div class="form-group">
+    <label for="down-payment" class="col-sm-2">{{ entry_initial }}</label>
+    <div class="col-sm-3">
+      <select name="INIT" id="input-down-payment" class="form-control">
+       {% for percent in initial_payments %}
+        <option value="{{ percent }}">{{ percent }}%</option>
+       {% endfor %}
+      </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="months" class="col-sm-2">{{ entry_months }}</label>
+    <div class="col-sm-3">
+      <select name="MONTHS" id="input-months" class="form-control">
+        {% for month in months %}
+		  {% if month.value == 3 %}
+            <option value="{{ month.value }}" selected="selected">{{ month.label }}</option>
+		  {% else %}
+            <option value="{{ month.value }}">{{ month.label }}</option>
+		  {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+</form>
+<div class="table-responsive">
+  <h3>{{ text_plan_preview }}</h3>
+  <table class="table table-responsive table-condensed" id="payment-table">
+    <thead>
+    <th>{{ text_payment }}</th>
+      <th>{{ text_due_date }}</th>
+      <th class="text-right">{{ text_amount }}</th>
+        </thead>
+    <tbody>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p style="font-size: 1.3em">{{ text_delivery_msg }}</p>
+<p style="font-size: 1.3em">{{ text_fee_msg }}</p>
+<div class="buttons">
+  <div class="pull-right">
+    <input type="submit" form="laybuy-form" value="{{ button_confirm }}" id="button-confirm" class="btn btn-primary" data-loading-text="{{ text_loading }}">
+  </div>
+</div>
+<script type="text/javascript"><!--
+$(document).ready(function() {
+	$('#laybuy-form').on('change', 'select', function() {
+   		calculate($('#input-down-payment').val(), $('#input-months').val());
+	});
+
+	var symbol_left = "{{ currency_symbol_left }}";
+	var symbol_right = "{{ currency_symbol_right }}";
+	var order = {{ order_info|json_encode() }};
+	var total = parseFloat(parseFloat({{ total }}) * parseFloat(order.currency_value)).toFixed(4);
+
+	calculate($('#input-down-payment').val(), $('#input-months').val());
+
+	function calculate(dp, months) {
+		var down_payment = getPercent(dp, total);
+
+		var remainder = total - down_payment;
+
+		var payments = getPayments(remainder, months);
+			payments[0] = {
+			payment: '{{ text_downpayment }}',
+			dueDate: '{{ text_today }}',
+			amount: parseFloat(down_payment).toFixed(2)
+		};
+
+		replaceRows(payments);
+	}
+
+	function getPercent(percent, value) {
+		var result = (percent / 100) * value;
+
+		return result.toFixed(4);
+	}
+
+	function getPayments(amount, months) {
+		var payment_amount = amount / months;
+
+		var payments = {};
+
+		for (i = 1; i <= months; i++) {
+			var new_date = new Date();
+
+			new_date.setMonth(new_date.getMonth() + i);
+
+			payments[i] = {
+				payment: '{{ text_month }} ' + i,
+				dueDate: ('0' + new_date.getDate()).slice(-2) + '/' + ('0' + (new_date.getMonth() + 1)).slice(-2) + '/' + new_date.getFullYear(),
+				amount: parseFloat(payment_amount).toFixed(2)
+			}
+		}
+
+		return payments;
+	}
+
+	function replaceRows(payments) {
+		$('#payment-table').find('tbody').html('');
+
+		for (payment in payments) {
+			addRow(payments[payment]);
+		}
+	}
+
+	function addRow(payment) {
+		var row;
+
+		row = '<tr>';
+		row += '<td>' + payment.payment + '</td>';
+		row += '<td>' + payment.dueDate + '</td>';
+		row += '<td class="text-right">' + symbol_left + payment.amount + symbol_right + '</td>';
+		row += '</tr>';
+
+		$('#payment-table').find('tbody').append(row);
+	}
+});
+//--></script> 
+<script type="text/javascript"><!--
+$('#button-confirm').on('click', function() {
+	$('#button-confirm').button('loading');
+});
+//--></script>

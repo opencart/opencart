@@ -3,11 +3,11 @@ class ModelExtensionPaymentSecureTradingPp extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('extension/payment/securetrading_pp');
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('securetrading_pp_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('payment_securetrading_pp_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
-		if ($this->config->get('securetrading_pp_total') > $total) {
+		if ($this->config->get('payment_securetrading_pp_total') > $total) {
 			$status = false;
-		} elseif (!$this->config->get('securetrading_pp_geo_zone_id')) {
+		} elseif (!$this->config->get('payment_securetrading_pp_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {
 			$status = true;
@@ -22,7 +22,7 @@ class ModelExtensionPaymentSecureTradingPp extends Model {
 				'code'       => 'securetrading_pp',
 				'title'      => $this->language->get('text_title'),
 				'terms'      => '',
-				'sort_order' => $this->config->get('securetrading_pp_sort_order')
+				'sort_order' => $this->config->get('payment_securetrading_pp_sort_order')
 			);
 		}
 
@@ -59,7 +59,7 @@ class ModelExtensionPaymentSecureTradingPp extends Model {
 
 		$amount = $this->currency->format($order_info['total'], $order_info['currency_code'], false, false);
 
-		switch($this->config->get('securetrading_pp_settle_status')){
+		switch($this->config->get('payment_securetrading_pp_settle_status')){
 			case 0:
 				$trans_type = 'auth';
 				break;
@@ -76,7 +76,7 @@ class ModelExtensionPaymentSecureTradingPp extends Model {
 				$trans_type = 'default';
 		}
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "securetrading_pp_order` SET `settle_type` = '" . $this->config->get('securetrading_pp_settle_status') . "', `modified` = now(), `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $amount . "' WHERE order_id = " . (int)$order_info['order_id']);
+		$this->db->query("UPDATE `" . DB_PREFIX . "securetrading_pp_order` SET `settle_type` = '" . $this->config->get('payment_securetrading_pp_settle_status') . "', `modified` = now(), `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $amount . "' WHERE order_id = " . (int)$order_info['order_id']);
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "securetrading_pp_order_transaction` SET `securetrading_pp_order_id` = '" . (int)$securetrading_pp_order['securetrading_pp_order_id'] . "', `amount` = '" . $amount . "', type = '" . $trans_type . "',  `created` = now()");
 

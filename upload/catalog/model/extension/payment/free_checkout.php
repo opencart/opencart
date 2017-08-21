@@ -16,7 +16,7 @@ class ModelExtensionPaymentFreeCheckout extends Model {
 				'code'       => 'free_checkout',
 				'title'      => $this->language->get('text_title'),
 				'terms'      => '',
-				'sort_order' => $this->config->get('free_checkout_sort_order')
+				'sort_order' => $this->config->get('payment_free_checkout_sort_order')
 			);
 		}
 

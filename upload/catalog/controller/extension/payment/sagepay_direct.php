@@ -3,28 +3,6 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 	public function index() {
 		$this->load->language('extension/payment/sagepay_direct');
 
-		$data['text_credit_card'] = $this->language->get('text_credit_card');
-		$data['text_loading'] = $this->language->get('text_loading');
-		$data['text_card_type'] = $this->language->get('text_card_type');
-		$data['text_card_name'] = $this->language->get('text_card_name');
-		$data['text_card_digits'] = $this->language->get('text_card_digits');
-		$data['text_card_expiry'] = $this->language->get('text_card_expiry');
-		$data['text_confirm_delete'] = $this->language->get('text_confirm_delete');
-
-		$data['entry_card'] = $this->language->get('entry_card');
-		$data['entry_card_existing'] = $this->language->get('entry_card_existing');
-		$data['entry_card_new'] = $this->language->get('entry_card_new');
-		$data['entry_card_save'] = $this->language->get('entry_card_save');
-		$data['entry_cc_owner'] = $this->language->get('entry_cc_owner');
-		$data['entry_cc_type'] = $this->language->get('entry_cc_type');
-		$data['entry_cc_number'] = $this->language->get('entry_cc_number');
-		$data['entry_cc_expire_date'] = $this->language->get('entry_cc_expire_date');
-		$data['entry_cc_cvv2'] = $this->language->get('entry_cc_cvv2');
-		$data['entry_cc_choice'] = $this->language->get('entry_cc_choice');
-
-		$data['button_confirm'] = $this->language->get('button_confirm');
-		$data['button_delete_card'] = $this->language->get('button_delete_card');
-
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
 			unset($this->session->data['success']);
@@ -108,7 +86,7 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 			);
 		}
 
-		if ($this->config->get('sagepay_direct_card') == '1') {
+		if ($this->config->get('payment_sagepay_direct_card') == '1') {
 			$data['sagepay_direct_card'] = true;
 		} else {
 			$data['sagepay_direct_card'] = false;
@@ -131,13 +109,13 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 
 		$payment_data = array();
 
-		if ($this->config->get('sagepay_direct_test') == 'live') {
+		if ($this->config->get('payment_sagepay_direct_test') == 'live') {
 			$url = 'https://live.sagepay.com/gateway/service/vspdirect-register.vsp';
 			$payment_data['VPSProtocol'] = '3.00';
-		} elseif ($this->config->get('sagepay_direct_test') == 'test') {
+		} elseif ($this->config->get('payment_sagepay_direct_test') == 'test') {
 			$url = 'https://test.sagepay.com/gateway/service/vspdirect-register.vsp';
 			$payment_data['VPSProtocol'] = '3.00';
-		} elseif ($this->config->get('sagepay_direct_test') == 'sim') {
+		} elseif ($this->config->get('payment_sagepay_direct_test') == 'sim') {
 			$url = 'https://test.sagepay.com/Simulator/VSPDirectGateway.asp';
 			$payment_data['VPSProtocol'] = '2.23';
 		}
@@ -145,12 +123,12 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$payment_data['ReferrerID'] = 'E511AF91-E4A0-42DE-80B0-09C981A3FB61';
-		$payment_data['Vendor'] = $this->config->get('sagepay_direct_vendor');
+		$payment_data['Vendor'] = $this->config->get('payment_sagepay_direct_vendor');
 		$payment_data['VendorTxCode'] = $this->session->data['order_id'] . 'SD' . strftime("%Y%m%d%H%M%S") . mt_rand(1, 999);
 		$payment_data['Amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], false, false);
 		$payment_data['Currency'] = $this->session->data['currency'];
 		$payment_data['Description'] = substr($this->config->get('config_name'), 0, 100);
-		$payment_data['TxType'] = $this->config->get('sagepay_direct_transaction');
+		$payment_data['TxType'] = $this->config->get('payment_sagepay_direct_transaction');
 
 		$payment_data['CV2'] = $this->request->post['cc_cvv2'];
 
@@ -337,11 +315,11 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 			$this->model_extension_payment_sagepay_direct->logger('$payment_data', $payment_data);
 			$this->model_extension_payment_sagepay_direct->logger('order_id', $this->session->data['order_id']);
 
-			$this->model_extension_payment_sagepay_direct->addTransaction($sagepay_direct_order_id, $this->config->get('sagepay_direct_transaction'), $order_info);
+			$this->model_extension_payment_sagepay_direct->addTransaction($sagepay_direct_order_id, $this->config->get('payment_sagepay_direct_transaction'), $order_info);
 
-			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('sagepay_direct_order_status_id'), $message, false);
+			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_sagepay_direct_order_status_id'), $message, false);
 
-			if ($this->config->get('sagepay_direct_transaction') == 'PAYMENT') {
+			if ($this->config->get('payment_sagepay_direct_transaction') == 'PAYMENT') {
 				$recurring_products = $this->cart->getRecurringProducts();
 				//loop through any products that are recurring items
 				foreach ($recurring_products as $item) {
@@ -365,11 +343,11 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 		$this->load->model('checkout/order');
 
 		if (isset($this->session->data['order_id'])) {
-			if ($this->config->get('sagepay_direct_test') == 'live') {
+			if ($this->config->get('payment_sagepay_direct_test') == 'live') {
 				$url = 'https://live.sagepay.com/gateway/service/direct3dcallback.vsp';
-			} elseif ($this->config->get('sagepay_direct_test') == 'test') {
+			} elseif ($this->config->get('payment_sagepay_direct_test') == 'test') {
 				$url = 'https://test.sagepay.com/gateway/service/direct3dcallback.vsp';
-			} elseif ($this->config->get('sagepay_direct_test') == 'sim') {
+			} elseif ($this->config->get('payment_sagepay_direct_test') == 'sim') {
 				$url = 'https://test.sagepay.com/Simulator/VSPDirectCallback.asp';
 			}
 
@@ -416,8 +394,8 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 				$this->model_extension_payment_sagepay_direct->logger('$sagepay_order_info', $sagepay_order_info);
 
 				$this->model_extension_payment_sagepay_direct->updateOrder($order_info, $response_data);
-				$this->model_extension_payment_sagepay_direct->addTransaction($sagepay_order_info['sagepay_direct_order_id'], $this->config->get('sagepay_direct_transaction'), $order_info);
-				$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('sagepay_direct_order_status_id'), $message, false);
+				$this->model_extension_payment_sagepay_direct->addTransaction($sagepay_order_info['sagepay_direct_order_id'], $this->config->get('payment_sagepay_direct_transaction'), $order_info);
+				$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_sagepay_direct_order_status_id'), $message, false);
 
 				if (!empty($response_data['Token']) && $this->customer->isLogged()) {
 					$this->model_extension_payment_sagepay_direct->updateCard($sagepay_order_info['card_id'], $response_data['Token']);
@@ -425,7 +403,7 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 					$this->model_extension_payment_sagepay_direct->deleteCard($sagepay_order_info['card_id']);
 				}
 
-				if ($this->config->get('sagepay_direct_transaction') == 'PAYMENT') {
+				if ($this->config->get('payment_sagepay_direct_transaction') == 'PAYMENT') {
 					$recurring_products = $this->cart->getRecurringProducts();
 					//loop through any products that are recurring items
 					foreach ($recurring_products as $item) {
@@ -453,13 +431,13 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 		$card = $this->model_extension_payment_sagepay_direct->getCard(false, $this->request->post['Token']);
 
 		if (!empty($card['token'])) {
-			if ($this->config->get('sagepay_direct_test') == 'live') {
+			if ($this->config->get('payment_sagepay_direct_test') == 'live') {
 				$url = 'https://live.sagepay.com/gateway/service/removetoken.vsp';
 			} else {
 				$url = 'https://test.sagepay.com/gateway/service/removetoken.vsp';
 			}
 			$payment_data['VPSProtocol'] = '3.00';
-			$payment_data['Vendor'] = $this->config->get('sagepay_direct_vendor');
+			$payment_data['Vendor'] = $this->config->get('payment_sagepay_direct_vendor');
 			$payment_data['TxType'] = 'REMOVETOKEN';
 			$payment_data['Token'] = $card['token'];
 
@@ -478,7 +456,7 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 	}
 
 	public function cron() {
-		if (isset($this->request->get['token']) && hash_equals($this->config->get('sagepay_direct_cron_job_token'), $this->request->get['token'])) {
+		if (isset($this->request->get['token']) && hash_equals($this->config->get('payment_sagepay_direct_cron_job_token'), $this->request->get['token'])) {
 			$this->load->model('extension/payment/sagepay_direct');
 
 			$orders = $this->model_extension_payment_sagepay_direct->cronPayment();

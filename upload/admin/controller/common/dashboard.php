@@ -5,34 +5,34 @@ class ControllerCommonDashboard extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
+		$data['user_token'] = $this->session->data['user_token'];
+		
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
-
+		
 		// Check install directory exists
-		if (is_dir(dirname(DIR_APPLICATION) . '/install')) {
+		if (is_dir(DIR_APPLICATION . 'install')) {
 			$data['error_install'] = $this->language->get('error_install');
 		} else {
 			$data['error_install'] = '';
 		}
-
+		
 		// Dashboard Extensions
 		$dashboards = array();
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		// Get a list of installed modules
-		$extensions = $this->model_extension_extension->getInstalled('dashboard');
+		$extensions = $this->model_setting_extension->getInstalled('dashboard');
 		
 		// Add all the modules which have multiple settings for each module
 		foreach ($extensions as $code) {
@@ -76,6 +76,12 @@ class ControllerCommonDashboard extends Controller {
 			}
 		}
 
+		if (DIR_STORAGE == DIR_SYSTEM . 'storage/') {
+			$data['security'] = $this->load->controller('common/security');
+		} else {
+			$data['security'] = '';
+		}
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

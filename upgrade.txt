@@ -1,5 +1,5 @@
 ///////////////////////////////////////
-///    OpenCart V1.5.x TO 1.5.x     ///
+///    OpenCart V1.5.x TO 3.0.x     ///
 ///      Upgrade Instructions       ///
 ///     http://www.opencart.com     ///
 ///////////////////////////////////////
@@ -49,6 +49,11 @@ Watch this video to understand how to properly upload folder using FTP: http://f
 Even if you do not see any new fields, click save anyway to update the database with any new field names.
 
 10. Other Adjustments that may need to be made, depending on which version you are upgrading from and to. These are broken down by which version they were added in. So if you are not currently at that version, you may need to make changes
+
+##########################################
+OPTIONAL 
+##########################################
+
 v151
    - Modules must all be reinstalled to update the database with the new serialized data method or you will see errors on the front end
 v151.3

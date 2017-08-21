@@ -1,0 +1,83 @@
+div {
+  color: blue;
+  color: red; }
+  div pre {
+    height: 200px; }
+
+span {
+  color: blue; }
+  span div {
+    height: 20px; }
+
+html {
+  height: 43px; }
+
+del {
+  height: 20px; }
+
+div {
+  color: white;
+  color: blue;
+  color: white; }
+
+div {
+  background-image: linear-gradient(left top, red, green); }
+
+div {
+  -moz-box-shadow: 10px 10px 5px #888;
+  -webkit-box-shadow: 10px 10px 5px #888;
+  box-shadow: 10px 10px 5px #888;
+  -moz-box-shadow: inset 10px 10px #888, -10px -10px #f4f4f4;
+  -webkit-box-shadow: inset 10px 10px #888, -10px -10px #f4f4f4;
+  box-shadow: inset 10px 10px #888, -10px -10px #f4f4f4; }
+
+div p {
+  color: red;
+  color: blue; }
+  div p .class {
+    color: red; }
+    div p .class div {
+      height: 20px; }
+  div p div {
+    height: 20px; }
+  div p .top {
+    top: 0; }
+    div p .top div {
+      color: red; }
+
+div.mixin-content-simple {
+  color: red; }
+
+div.mixin-content-with-arg {
+  background: blue;
+  color: red; }
+
+div.mixin-content-with-arg {
+  background: purple;
+  height: 20px; }
+
+div.mixin-content-simple {
+  height: 43px; }
+
+div.mixin-content-simple {
+  color: orange; }
+  div.mixin-content-simple div {
+    height: 20px; }
+
+div.mixin-content-with-arg {
+  background: purple;
+  height: 43px; }
+
+div.mixin-content-with-arg {
+  background: purple;
+  color: orange; }
+  div.mixin-content-with-arg div {
+    height: 20px; }
+
+#please-wait {
+  background: url(/images/logo.png);
+  position: absolute;
+  top: 1em;
+  right: 0;
+  bottom: 3em;
+  left: 4em; }

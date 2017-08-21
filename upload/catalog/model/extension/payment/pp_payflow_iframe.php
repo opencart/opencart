@@ -3,11 +3,11 @@ class ModelExtensionPaymentPPPayflowIframe extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('extension/payment/pp_payflow_iframe');
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('pp_payflow_iframe_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('payment_pp_payflow_iframe_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
-		if ($this->config->get('pp_payflow_iframe_total') > $total) {
+		if ($this->config->get('payment_pp_payflow_iframe_total') > $total) {
 			$status = false;
-		} elseif (!$this->config->get('pp_payflow_iframe_geo_zone_id')) {
+		} elseif (!$this->config->get('payment_pp_payflow_iframe_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {
 			$status = true;
@@ -22,7 +22,7 @@ class ModelExtensionPaymentPPPayflowIframe extends Model {
 				'code' => 'pp_payflow_iframe',
 				'title' => $this->language->get('text_title'),
 				'terms'      => '',
-				'sort_order' => $this->config->get('pp_payflow_iframe_sort_order')
+				'sort_order' => $this->config->get('payment_pp_payflow_iframe_sort_order')
 			);
 		}
 
@@ -57,16 +57,16 @@ class ModelExtensionPaymentPPPayflowIframe extends Model {
 
 	public function call($data) {
 		$default_parameters = array(
-			'USER' => $this->config->get('pp_payflow_iframe_user'),
-			'VENDOR' => $this->config->get('pp_payflow_iframe_vendor'),
-			'PWD' => $this->config->get('pp_payflow_iframe_password'),
-			'PARTNER' => $this->config->get('pp_payflow_iframe_partner'),
+			'USER' => $this->config->get('payment_pp_payflow_iframe_user'),
+			'VENDOR' => $this->config->get('payment_pp_payflow_iframe_vendor'),
+			'PWD' => $this->config->get('payment_pp_payflow_iframe_password'),
+			'PARTNER' => $this->config->get('payment_pp_payflow_iframe_partner'),
 			'BUTTONSOURCE' => 'OpenCart_Cart_PFP',
 		);
 
 		$call_parameters = array_merge($data, $default_parameters);
 
-		if ($this->config->get('pp_payflow_iframe_test')) {
+		if ($this->config->get('payment_pp_payflow_iframe_test')) {
 			$url = 'https://pilot-payflowpro.paypal.com';
 		} else {
 			$url = 'https://payflowpro.paypal.com';
@@ -111,7 +111,7 @@ class ModelExtensionPaymentPPPayflowIframe extends Model {
 	}
 
 	public function log($message) {
-		if ($this->config->get('pp_payflow_iframe_debug')) {
+		if ($this->config->get('payment_pp_payflow_iframe_debug')) {
 			$log = new Log('payflow-iframe.log');
 			$log->write($message);
 		}

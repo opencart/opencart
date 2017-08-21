@@ -10,30 +10,12 @@ class ControllerExtensionTotalHandling extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('handling', $this->request->post);
+			$this->model_setting_setting->editSetting('total_handling', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total', true));
 		}
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_none'] = $this->language->get('text_none');
-
-		$data['entry_total'] = $this->language->get('entry_total');
-		$data['entry_fee'] = $this->language->get('entry_fee');
-		$data['entry_tax_class'] = $this->language->get('entry_tax_class');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-
-		$data['help_total'] = $this->language->get('help_total');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -45,55 +27,55 @@ class ControllerExtensionTotalHandling extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/total/handling', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/total/handling', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/total/handling', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/total/handling', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total', true);
 
-		if (isset($this->request->post['handling_total'])) {
-			$data['handling_total'] = $this->request->post['handling_total'];
+		if (isset($this->request->post['total_handling_total'])) {
+			$data['total_handling_total'] = $this->request->post['total_handling_total'];
 		} else {
-			$data['handling_total'] = $this->config->get('handling_total');
+			$data['total_handling_total'] = $this->config->get('total_handling_total');
 		}
 
-		if (isset($this->request->post['handling_fee'])) {
-			$data['handling_fee'] = $this->request->post['handling_fee'];
+		if (isset($this->request->post['total_handling_fee'])) {
+			$data['total_handling_fee'] = $this->request->post['total_handling_fee'];
 		} else {
-			$data['handling_fee'] = $this->config->get('handling_fee');
+			$data['total_handling_fee'] = $this->config->get('total_handling_fee');
 		}
 
-		if (isset($this->request->post['handling_tax_class_id'])) {
-			$data['handling_tax_class_id'] = $this->request->post['handling_tax_class_id'];
+		if (isset($this->request->post['total_handling_tax_class_id'])) {
+			$data['total_handling_tax_class_id'] = $this->request->post['total_handling_tax_class_id'];
 		} else {
-			$data['handling_tax_class_id'] = $this->config->get('handling_tax_class_id');
+			$data['total_handling_tax_class_id'] = $this->config->get('total_handling_tax_class_id');
 		}
 
 		$this->load->model('localisation/tax_class');
 
 		$data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
 
-		if (isset($this->request->post['handling_status'])) {
-			$data['handling_status'] = $this->request->post['handling_status'];
+		if (isset($this->request->post['total_handling_status'])) {
+			$data['total_handling_status'] = $this->request->post['total_handling_status'];
 		} else {
-			$data['handling_status'] = $this->config->get('handling_status');
+			$data['total_handling_status'] = $this->config->get('total_handling_status');
 		}
 
-		if (isset($this->request->post['handling_sort_order'])) {
-			$data['handling_sort_order'] = $this->request->post['handling_sort_order'];
+		if (isset($this->request->post['total_handling_sort_order'])) {
+			$data['total_handling_sort_order'] = $this->request->post['total_handling_sort_order'];
 		} else {
-			$data['handling_sort_order'] = $this->config->get('handling_sort_order');
+			$data['total_handling_sort_order'] = $this->config->get('total_handling_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

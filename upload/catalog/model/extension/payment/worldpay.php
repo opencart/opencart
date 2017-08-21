@@ -7,7 +7,7 @@ class ModelExtensionPaymentWorldpay extends Model {
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('worldpay_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
-		if ($this->config->get('worldpay_total') > 0 && $this->config->get('worldpay_total') > $total) {
+		if ($this->config->get('payment_worldpay_total') > 0 && $this->config->get('payment_worldpay_total') > $total) {
 			$status = false;
 		} elseif (!$this->config->get('worldpay_geo_zone_id')) {
 			$status = true;
@@ -121,8 +121,9 @@ class ModelExtensionPaymentWorldpay extends Model {
 			$recurring_description .= sprintf($this->language->get('text_length'), $item['recurring']['duration']);
 		}
 
-		$order_recurring_id = $this->model_checkout_recurring->create($item, $this->session->data['order_id'], $recurring_description);
-		$this->model_checkout_recurring->addReference($order_recurring_id, $order_id_rand);
+		$order_recurring_id = $this->model_checkout_recurring->addRecurring($this->session->data['order_id'], $recurring_description, $item['recurring']);
+		
+		$this->model_checkout_recurring->editReference($order_recurring_id, $order_id_rand);
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
@@ -343,7 +344,7 @@ class ModelExtensionPaymentWorldpay extends Model {
 		curl_setopt($curl, CURLOPT_TIMEOUT, 10);
 		curl_setopt(
 				$curl, CURLOPT_HTTPHEADER, array(
-			"Authorization: " . $this->config->get('worldpay_service_key'),
+			"Authorization: " . $this->config->get('payment_worldpay_service_key'),
 			"Content-Type: application/json",
 			"Content-Length: " . $content_length
 				)

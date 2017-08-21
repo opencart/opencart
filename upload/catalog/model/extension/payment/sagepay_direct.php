@@ -3,11 +3,11 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('extension/payment/sagepay_direct');
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('sagepay_direct_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('payment_sagepay_direct_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
-		if ($this->config->get('sagepay_direct_total') > 0 && $this->config->get('sagepay_direct_total') > $total) {
+		if ($this->config->get('sagepay_direct_total') > 0 && $this->config->get('payment_sagepay_direct_total') > $total) {
 			$status = false;
-		} elseif (!$this->config->get('sagepay_direct_geo_zone_id')) {
+		} elseif (!$this->config->get('payment_sagepay_direct_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {
 			$status = true;
@@ -22,7 +22,7 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 				'code' => 'sagepay_direct',
 				'title' => $this->language->get('text_title'),
 				'terms' => '',
-				'sort_order' => $this->config->get('sagepay_direct_sort_order')
+				'sort_order' => $this->config->get('payment_sagepay_direct_sort_order')
 			);
 		}
 
@@ -123,54 +123,55 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 		$this->load->model('checkout/recurring');
 		$this->load->model('extension/payment/sagepay_direct');
 		//trial information
-		if ($item['recurring_trial'] == 1) {
-			$price = $item['recurring_trial_price'];
-			$trial_amt = $this->currency->format($this->tax->calculate($item['recurring_trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
-			$trial_text = sprintf($this->language->get('text_trial'), $trial_amt, $item['recurring_trial_cycle'], $item['recurring_trial_frequency'], $item['recurring_trial_duration']);
+		if ($item['recurring']['trial'] == 1) {
+			$price = $item['recurring']['trial_price'];
+			$trial_amt = $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
+			$trial_text = sprintf($this->language->get('text_trial'), $trial_amt, $item['recurring']['trial_cycle'], $item['recurring']['trial_frequency'], $item['recurring']['trial_duration']);
 		} else {
-			$price = $item['recurring_price'];
+			$price = $item['recurring']['price'];
 			$trial_text = '';
 		}
 
-		$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring_price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
-		$recurring_description = $trial_text . sprintf($this->language->get('text_recurring'), $recurring_amt, $item['recurring_cycle'], $item['recurring_frequency']);
+		$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
+		$recurring_description = $trial_text . sprintf($this->language->get('text_recurring'), $recurring_amt, $item['recurring']['cycle'], $item['recurring']['frequency']);
 
-		if ($item['recurring_duration'] > 0) {
-			$recurring_description .= sprintf($this->language->get('text_length'), $item['recurring_duration']);
+		if ($item['recurring']['duration'] > 0) {
+			$recurring_description .= sprintf($this->language->get('text_length'), $item['recurring']['duration']);
 		}
 
 		//create new recurring and set to pending status as no payment has been made yet.
-		$order_recurring_id = $this->model_checkout_recurring->create($item, $this->session->data['order_id'], $recurring_description);
+		$order_recurring_id = $this->model_checkout_recurring->addRecurring($this->session->data['order_id'], $recurring_description, $item['recurring']);
+		
 		$this->model_checkout_recurring->addReference($order_recurring_id, $vendor_tx_code);
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$sagepay_order_info = $this->getOrder($this->session->data['order_id']);
 
-		$response_data = $this->setPaymentData($order_info, $sagepay_order_info, $price, $order_recurring_id, $item['recurring_name']);
+		$response_data = $this->setPaymentData($order_info, $sagepay_order_info, $price, $order_recurring_id, $item['recurring']['name']);
 
 		$next_payment = new DateTime('now');
 		$trial_end = new DateTime('now');
 		$subscription_end = new DateTime('now');
 
-		if ($item['recurring_trial'] == 1 && $item['recurring_trial_duration'] != 0) {
-			$next_payment = $this->calculateSchedule($item['recurring_trial_frequency'], $next_payment, $item['recurring_trial_cycle']);
-			$trial_end = $this->calculateSchedule($item['recurring_trial_frequency'], $trial_end, $item['recurring_trial_cycle'] * $item['recurring_trial_duration']);
+		if ($item['recurring']['trial'] == 1 && $item['recurring']['trial_duration'] != 0) {
+			$next_payment = $this->calculateSchedule($item['recurring']['trial_frequency'], $next_payment, $item['recurring']['trial_cycle']);
+			$trial_end = $this->calculateSchedule($item['recurring']['trial_frequency'], $trial_end, $item['recurring']['trial_cycle'] * $item['recurring']['trial_duration']);
 		} elseif ($item['recurring_trial'] == 1) {
-			$next_payment = $this->calculateSchedule($item['recurring_trial_frequency'], $next_payment, $item['recurring_trial_cycle']);
+			$next_payment = $this->calculateSchedule($item['recurring']['trial_frequency'], $next_payment, $item['recurring']['trial_cycle']);
 			$trial_end = new DateTime('0000-00-00');
 		}
 
-		if ($trial_end > $subscription_end && $item['recurring_duration'] != 0) {
+		if ($trial_end > $subscription_end && $item['recurring']['duration'] != 0) {
 			$subscription_end = new DateTime(date_format($trial_end, 'Y-m-d H:i:s'));
-			$subscription_end = $this->calculateSchedule($item['recurring_frequency'], $subscription_end, $item['recurring_cycle'] * $item['recurring_duration']);
-		} elseif ($trial_end == $subscription_end && $item['recurring_duration'] != 0) {
-			$next_payment = $this->calculateSchedule($item['recurring_frequency'], $next_payment, $item['recurring_cycle']);
-			$subscription_end = $this->calculateSchedule($item['recurring_frequency'], $subscription_end, $item['recurring_cycle'] * $item['recurring_duration']);
-		} elseif ($trial_end > $subscription_end && $item['recurring_duration'] == 0) {
+			$subscription_end = $this->calculateSchedule($item['recurring']['frequency'], $subscription_end, $item['recurring']['cycle'] * $item['recurring']['duration']);
+		} elseif ($trial_end == $subscription_end && $item['recurring']['duration'] != 0) {
+			$next_payment = $this->calculateSchedule($item['recurring']['frequency'], $next_payment, $item['recurring']['cycle']);
+			$subscription_end = $this->calculateSchedule($item['recurring']['frequency'], $subscription_end, $item['recurring']['cycle'] * $item['recurring']['duration']);
+		} elseif ($trial_end > $subscription_end && $item['recurring']['duration'] == 0) {
 			$subscription_end = new DateTime('0000-00-00');
-		} elseif ($trial_end == $subscription_end && $item['recurring_duration'] == 0) {
-			$next_payment = $this->calculateSchedule($item['recurring_frequency'], $next_payment, $item['recurring_cycle']);
+		} elseif ($trial_end == $subscription_end && $item['recurring']['duration'] == 0) {
+			$next_payment = $this->calculateSchedule($item['recurring']['frequency'], $next_payment, $item['recurring']['cycle']);
 			$subscription_end = new DateTime('0000-00-00');
 		}
 
@@ -186,19 +187,19 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 	}
 
 	private function setPaymentData($order_info, $sagepay_order_info, $price, $order_recurring_id, $recurring_name, $i = null) {
-		if ($this->config->get('sagepay_direct_test') == 'live') {
+		if ($this->config->get('payment_sagepay_direct_test') == 'live') {
 			$url = 'https://live.sagepay.com/gateway/service/repeat.vsp';
 			$payment_data['VPSProtocol'] = '3.00';
-		} elseif ($this->config->get('sagepay_direct_test') == 'test') {
+		} elseif ($this->config->get('payment_sagepay_direct_test') == 'test') {
 			$url = 'https://test.sagepay.com/gateway/service/repeat.vsp';
 			$payment_data['VPSProtocol'] = '3.00';
-		} elseif ($this->config->get('sagepay_direct_test') == 'sim') {
+		} elseif ($this->config->get('payment_sagepay_direct_test') == 'sim') {
 			$url = 'https://test.sagepay.com/Simulator/VSPServerGateway.asp?Service=VendorRepeatTx';
 			$payment_data['VPSProtocol'] = '2.23';
 		}
 
 		$payment_data['TxType'] = 'REPEAT';
-		$payment_data['Vendor'] = $this->config->get('sagepay_direct_vendor');
+		$payment_data['Vendor'] = $this->config->get('payment_sagepay_direct_vendor');
 		$payment_data['VendorTxCode'] = $order_recurring_id . 'RSD' . strftime("%Y%m%d%H%M%S") . mt_rand(1, 999);
 		$payment_data['Amount'] = $this->currency->format($price, $this->session->data['currency'], false, false);
 		$payment_data['Currency'] = $this->session->data['currency'];
@@ -384,8 +385,8 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 	}
 
 	public function updateCronJobRunTime() {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = 'sagepay_direct' AND `key` = 'sagepay_direct_last_cron_job_run'");
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALUES (0, 'sagepay_direct', 'sagepay_direct_last_cron_job_run', NOW(), 0)");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = 'sagepay_direct' AND `key` = 'payment_sagepay_direct_last_cron_job_run'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALUES (0, 'sagepay_direct', 'payment_sagepay_direct_last_cron_job_run', NOW(), 0)");
 	}
 
 	public function sendCurl($url, $payment_data, $i = null) {
@@ -420,7 +421,7 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 	}
 
 	public function logger($title, $data) {
-		if ($this->config->get('sagepay_direct_debug')) {
+		if ($this->config->get('payment_sagepay_direct_debug')) {
 			$log = new Log('sagepay_direct.log');
 			$backtrace = debug_backtrace();
 			$log->write($backtrace[6]['class'] . '::' . $backtrace[6]['function'] . ' - ' . $title . ': ' . print_r($data, 1));

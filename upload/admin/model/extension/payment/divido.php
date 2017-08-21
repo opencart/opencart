@@ -13,7 +13,7 @@ class ModelExtensionPaymentDivido extends Model {
 			return $plans;
 		}
 
-		$api_key = $this->config->get('divido_api_key');
+		$api_key = $this->config->get('payment_divido_api_key');
 		if (!$api_key) {
 			throw new Exception("No Divido api-key defined");
 		}

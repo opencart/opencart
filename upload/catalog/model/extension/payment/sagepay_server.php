@@ -3,11 +3,11 @@ class ModelExtensionPaymentSagePayServer extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('extension/payment/sagepay_server');
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE geo_zone_id = '" . (int)$this->config->get('sagepay_server_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE geo_zone_id = '" . (int)$this->config->get('payment_sagepay_server_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
-		if ($this->config->get('sagepay_server_total') > 0 && $this->config->get('sagepay_server_total') > $total) {
+		if ($this->config->get('payment_sagepay_server_total') > 0 && $this->config->get('payment_sagepay_server_total') > $total) {
 			$status = false;
-		} elseif (!$this->config->get('sagepay_server_geo_zone_id')) {
+		} elseif (!$this->config->get('payment_sagepay_server_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {
 			$status = true;
@@ -22,7 +22,7 @@ class ModelExtensionPaymentSagePayServer extends Model {
 				'code' => 'sagepay_server',
 				'title' => $this->language->get('text_title'),
 				'terms' => '',
-				'sort_order' => $this->config->get('sagepay_server_sort_order')
+				'sort_order' => $this->config->get('payment_sagepay_server_sort_order')
 			);
 		}
 
@@ -70,6 +70,8 @@ class ModelExtensionPaymentSagePayServer extends Model {
 	}
 
 	public function addOrder($order_info) {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "sagepay_server_order` WHERE `order_id` = '" . (int)$order_info['order_id'] . "'");
+		
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "sagepay_server_order` SET `order_id` = '" . (int)$order_info['order_id'] . "', `customer_id` = '" . (int)$this->customer->getId() . "', `VPSTxId` = '" . $this->db->escape($order_info['VPSTxId']) . "',  `VendorTxCode` = '" . $this->db->escape($order_info['VendorTxCode']) . "', `SecurityKey` = '" . $this->db->escape($order_info['SecurityKey']) . "', `date_added` = now(), `date_modified` = now(), `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $this->currency->format($order_info['total'], $order_info['currency_code'], false, false) . "'");
 	}
 
@@ -120,23 +122,24 @@ class ModelExtensionPaymentSagePayServer extends Model {
 		$this->load->language('extension/payment/sagepay_server');
 
 		//trial information
-		if ($item['recurring_trial'] == 1) {
-			$trial_amt = $this->currency->format($this->tax->calculate($item['recurring_trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
-			$trial_text = sprintf($this->language->get('text_trial'), $trial_amt, $item['recurring_trial_cycle'], $item['recurring_trial_frequency'], $item['recurring_trial_duration']);
+		if ($item['recurring']['trial'] == 1) {
+			$trial_amt = $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
+			$trial_text = sprintf($this->language->get('text_trial'), $trial_amt, $item['recurring']['trial_cycle'], $item['recurring']['trial_frequency'], $item['recurring']['trial_duration']);
 		} else {
 			$trial_text = '';
 		}
 
-		$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring_price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
-		$recurring_description = $trial_text . sprintf($this->language->get('text_recurring'), $recurring_amt, $item['recurring_cycle'], $item['recurring_frequency']);
+		$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
+		$recurring_description = $trial_text . sprintf($this->language->get('text_recurring'), $recurring_amt, $item['recurring']['cycle'], $item['recurring']['frequency']);
 
-		if ($item['recurring_duration'] > 0) {
-			$recurring_description .= sprintf($this->language->get('text_length'), $item['recurring_duration']);
+		if ($item['recurring']['duration'] > 0) {
+			$recurring_description .= sprintf($this->language->get('text_length'), $item['recurring']['duration']);
 		}
 
 		//create new recurring and set to pending status as no payment has been made yet.
-		$recurring_id = $this->model_checkout_recurring->create($item, $this->session->data['order_id'], $recurring_description);
-		$this->model_checkout_recurring->addReference($recurring_id, $vendor_tx_code);
+		$recurring_id = $this->model_checkout_recurring->addRecurring($this->session->data['order_id'], $recurring_description, $item['recurring']);
+		
+		$this->model_checkout_recurring->editReference($recurring_id, $vendor_tx_code);
 	}
 
 	public function updateRecurringPayment($item, $order_details) {
@@ -191,19 +194,19 @@ class ModelExtensionPaymentSagePayServer extends Model {
 	}
 
 	private function setPaymentData($order_info, $sagepay_order_info, $price, $order_recurring_id, $recurring_name, $i = null) {
-		if ($this->config->get('sagepay_server_test') == 'live') {
+		if ($this->config->get('payment_sagepay_server_test') == 'live') {
 			$url = 'https://live.sagepay.com/gateway/service/repeat.vsp';
 			$payment_data['VPSProtocol'] = '3.00';
-		} elseif ($this->config->get('sagepay_server_test') == 'test') {
+		} elseif ($this->config->get('payment_sagepay_server_test') == 'test') {
 			$url = 'https://test.sagepay.com/gateway/service/repeat.vsp';
 			$payment_data['VPSProtocol'] = '3.00';
-		} elseif ($this->config->get('sagepay_server_test') == 'sim') {
+		} elseif ($this->config->get('payment_sagepay_server_test') == 'sim') {
 			$url = 'https://test.sagepay.com/Simulator/VSPServerGateway.asp?Service=VendorRepeatTx';
 			$payment_data['VPSProtocol'] = '2.23';
 		}
 
 		$payment_data['TxType'] = 'REPEAT';
-		$payment_data['Vendor'] = $this->config->get('sagepay_server_vendor');
+		$payment_data['Vendor'] = $this->config->get('payment_sagepay_server_vendor');
 		$payment_data['VendorTxCode'] = $order_recurring_id . 'RSD' . strftime("%Y%m%d%H%M%S") . mt_rand(1, 999);
 		$payment_data['Amount'] = $this->currency->format($price, $this->session->data['currency'], false, false);
 		$payment_data['Currency'] = $this->session->data['currency'];
@@ -389,8 +392,8 @@ class ModelExtensionPaymentSagePayServer extends Model {
 	}
 
 	public function updateCronJobRunTime() {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = 'sagepay_server' AND `key` = 'sagepay_server_last_cron_job_run'");
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALUES (0, 'sagepay_server', 'sagepay_server_last_cron_job_run', NOW(), 0)");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = 'sagepay_server' AND `key` = 'payment_sagepay_server_last_cron_job_run'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALUES (0, 'sagepay_server', 'payment_sagepay_server_last_cron_job_run', NOW(), 0)");
 	}
 
 	public function sendCurl($url, $payment_data, $i = null) {
@@ -425,7 +428,7 @@ class ModelExtensionPaymentSagePayServer extends Model {
 	}
 
 	public function logger($title, $data) {
-		if ($this->config->get('sagepay_server_debug')) {
+		if ($this->config->get('payment_sagepay_server_debug')) {
 			$log = new Log('sagepay_server.log');
 			$backtrace = debug_backtrace();
 			$log->write($backtrace[6]['class'] . '::' . $backtrace[6]['function'] . ' - ' . $title . ': ' . print_r($data, 1));

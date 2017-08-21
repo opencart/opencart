@@ -29,28 +29,17 @@ class ControllerAccountAddress extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.js');
+		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment.min.js');
+		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js');
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
 		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
 		$this->load->model('account/address');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_account_address->addAddress($this->request->post);
+			$this->model_account_address->addAddress($this->customer->getId(), $this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_add');
-
-			// Add to activity log
-			if ($this->config->get('config_customer_activity')) {
-				$this->load->model('account/activity');
-
-				$activity_data = array(
-					'customer_id' => $this->customer->getId(),
-					'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-				);
-
-				$this->model_account_activity->addActivity('address_add', $activity_data);
-			}
 
 			$this->response->redirect($this->url->link('account/address', '', true));
 		}
@@ -69,7 +58,8 @@ class ControllerAccountAddress extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.js');
+		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment.min.js');
+		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js');
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
 		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
@@ -95,18 +85,6 @@ class ControllerAccountAddress extends Controller {
 			}
 
 			$this->session->data['success'] = $this->language->get('text_edit');
-
-			// Add to activity log
-			if ($this->config->get('config_customer_activity')) {
-				$this->load->model('account/activity');
-
-				$activity_data = array(
-					'customer_id' => $this->customer->getId(),
-					'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-				);
-
-				$this->model_account_activity->addActivity('address_edit', $activity_data);
-			}
 
 			$this->response->redirect($this->url->link('account/address', '', true));
 		}
@@ -146,18 +124,6 @@ class ControllerAccountAddress extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_delete');
 
-			// Add to activity log
-			if ($this->config->get('config_customer_activity')) {
-				$this->load->model('account/activity');
-
-				$activity_data = array(
-					'customer_id' => $this->customer->getId(),
-					'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-				);
-				
-				$this->model_account_activity->addActivity('address_delete', $activity_data);
-			}
-
 			$this->response->redirect($this->url->link('account/address', '', true));
 		}
 
@@ -179,16 +145,6 @@ class ControllerAccountAddress extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('account/address', '', true)
 		);
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_address_book'] = $this->language->get('text_address_book');
-		$data['text_empty'] = $this->language->get('text_empty');
-
-		$data['button_new_address'] = $this->language->get('button_new_address');
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_delete'] = $this->language->get('button_delete');
-		$data['button_back'] = $this->language->get('button_back');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -282,39 +238,17 @@ class ControllerAccountAddress extends Controller {
 
 		if (!isset($this->request->get['address_id'])) {
 			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_edit_address'),
+				'text' => $this->language->get('text_address_add'),
 				'href' => $this->url->link('account/address/add', '', true)
 			);
 		} else {
 			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_edit_address'),
+				'text' => $this->language->get('text_address_edit'),
 				'href' => $this->url->link('account/address/edit', 'address_id=' . $this->request->get['address_id'], true)
 			);
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_edit_address'] = $this->language->get('text_edit_address');
-		$data['text_yes'] = $this->language->get('text_yes');
-		$data['text_no'] = $this->language->get('text_no');
-		$data['text_select'] = $this->language->get('text_select');
-		$data['text_none'] = $this->language->get('text_none');
-		$data['text_loading'] = $this->language->get('text_loading');
-
-		$data['entry_firstname'] = $this->language->get('entry_firstname');
-		$data['entry_lastname'] = $this->language->get('entry_lastname');
-		$data['entry_company'] = $this->language->get('entry_company');
-		$data['entry_address_1'] = $this->language->get('entry_address_1');
-		$data['entry_address_2'] = $this->language->get('entry_address_2');
-		$data['entry_postcode'] = $this->language->get('entry_postcode');
-		$data['entry_city'] = $this->language->get('entry_city');
-		$data['entry_country'] = $this->language->get('entry_country');
-		$data['entry_zone'] = $this->language->get('entry_zone');
-		$data['entry_default'] = $this->language->get('entry_default');
-
-		$data['button_continue'] = $this->language->get('button_continue');
-		$data['button_back'] = $this->language->get('button_back');
-		$data['button_upload'] = $this->language->get('button_upload');
+		$data['text_address'] = !isset($this->request->get['address_id']) ? $this->language->get('text_address_add') : $this->language->get('text_address_edit');
 
 		if (isset($this->error['firstname'])) {
 			$data['error_firstname'] = $this->error['firstname'];
@@ -451,12 +385,20 @@ class ControllerAccountAddress extends Controller {
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
 		// Custom fields
+		$data['custom_fields'] = array();
+		
 		$this->load->model('account/custom_field');
 
-		$data['custom_fields'] = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
+		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
 
-		if (isset($this->request->post['custom_field'])) {
-			$data['address_custom_field'] = $this->request->post['custom_field'];
+		foreach ($custom_fields as $custom_field) {
+			if ($custom_field['location'] == 'address') {
+				$data['custom_fields'][] = $custom_field;
+			}
+		}
+		
+		if (isset($this->request->post['custom_field']['address'])) {
+			$data['address_custom_field'] = $this->request->post['custom_field']['address'];
 		} elseif (isset($address_info)) {
 			$data['address_custom_field'] = $address_info['custom_field'];
 		} else {
@@ -479,7 +421,6 @@ class ControllerAccountAddress extends Controller {
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
-
 
 		$this->response->setOutput($this->load->view('account/address_form', $data));
 	}
@@ -523,11 +464,13 @@ class ControllerAccountAddress extends Controller {
 		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
 
 		foreach ($custom_fields as $custom_field) {
-			if (($custom_field['location'] == 'address') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
-				$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-			} elseif (($custom_field['location'] == 'address') && ($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($this->request->post['custom_field'][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $custom_field['validation'])))) {
-                $this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-            }
+			if ($custom_field['location'] == 'address') {
+				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
+					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $custom_field['validation'])))) {
+					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+				}
+			}
 		}
 
 		return !$this->error;

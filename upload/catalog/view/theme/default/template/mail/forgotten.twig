@@ -1,0 +1,9 @@
+{{ text_greeting }}
+
+{{ text_change }}
+
+{{ reset }}
+
+{{ text_ip }} 
+
+{{ ip }}

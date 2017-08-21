@@ -1,0 +1,28 @@
+{
+    "name": "leafo/scssphp",
+    "type": "library",
+    "description": "scssphp is a compiler for SCSS written in PHP.",
+    "homepage": "http://leafo.net/scssphp/",
+    "license": [
+      "MIT",
+      "GPL-3.0"
+    ],
+    "authors": [
+        {
+            "name": "Leaf Corcoran",
+            "email": "leafot@gmail.com",
+            "homepage": "http://leafo.net"
+        }
+    ],
+    "autoload": {
+        "classmap": ["scss.inc.php"]
+    },
+    "require": {
+        "php": ">=5.2.0"
+    },
+    "require-dev": {
+        "php": ">=5.3.0",
+        "phpunit/phpunit": "3.7.*"
+    },
+    "bin": ["pscss"]
+}

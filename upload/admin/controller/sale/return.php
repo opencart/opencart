@@ -70,7 +70,7 @@ class ControllerSaleReturn extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -134,7 +134,7 @@ class ControllerSaleReturn extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -200,7 +200,7 @@ class ControllerSaleReturn extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . $url, true));
 		}
 
 		$this->getList();
@@ -210,49 +210,49 @@ class ControllerSaleReturn extends Controller {
 		if (isset($this->request->get['filter_return_id'])) {
 			$filter_return_id = $this->request->get['filter_return_id'];
 		} else {
-			$filter_return_id = null;
+			$filter_return_id = '';
 		}
 
 		if (isset($this->request->get['filter_order_id'])) {
 			$filter_order_id = $this->request->get['filter_order_id'];
 		} else {
-			$filter_order_id = null;
+			$filter_order_id = '';
 		}
 
 		if (isset($this->request->get['filter_customer'])) {
 			$filter_customer = $this->request->get['filter_customer'];
 		} else {
-			$filter_customer = null;
+			$filter_customer = '';
 		}
 
 		if (isset($this->request->get['filter_product'])) {
 			$filter_product = $this->request->get['filter_product'];
 		} else {
-			$filter_product = null;
+			$filter_product = '';
 		}
 
 		if (isset($this->request->get['filter_model'])) {
 			$filter_model = $this->request->get['filter_model'];
 		} else {
-			$filter_model = null;
+			$filter_model = '';
 		}
 
 		if (isset($this->request->get['filter_return_status_id'])) {
 			$filter_return_status_id = $this->request->get['filter_return_status_id'];
 		} else {
-			$filter_return_status_id = null;
+			$filter_return_status_id = '';
 		}
 
 		if (isset($this->request->get['filter_date_added'])) {
 			$filter_date_added = $this->request->get['filter_date_added'];
 		} else {
-			$filter_date_added = null;
+			$filter_date_added = '';
 		}
 
 		if (isset($this->request->get['filter_date_modified'])) {
 			$filter_date_modified = $this->request->get['filter_date_modified'];
 		} else {
-			$filter_date_modified = null;
+			$filter_date_modified = '';
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -323,16 +323,16 @@ class ControllerSaleReturn extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . $url, true)
 		);
 
-		$data['add'] = $this->url->link('sale/return/add', 'token=' . $this->session->data['token'] . $url, true);
-		$data['delete'] = $this->url->link('sale/return/delete', 'token=' . $this->session->data['token'] . $url, true);
+		$data['add'] = $this->url->link('sale/return/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['delete'] = $this->url->link('sale/return/delete', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
 		$data['returns'] = array();
 
@@ -362,45 +362,14 @@ class ControllerSaleReturn extends Controller {
 				'customer'      => $result['customer'],
 				'product'       => $result['product'],
 				'model'         => $result['model'],
-				'status'        => $result['status'],
+				'return_status' => $result['return_status'],
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
-				'edit'          => $this->url->link('sale/return/edit', 'token=' . $this->session->data['token'] . '&return_id=' . $result['return_id'] . $url, true)
+				'edit'          => $this->url->link('sale/return/edit', 'user_token=' . $this->session->data['user_token'] . '&return_id=' . $result['return_id'] . $url, true)
 			);
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_return_id'] = $this->language->get('column_return_id');
-		$data['column_order_id'] = $this->language->get('column_order_id');
-		$data['column_customer'] = $this->language->get('column_customer');
-		$data['column_product'] = $this->language->get('column_product');
-		$data['column_model'] = $this->language->get('column_model');
-		$data['column_status'] = $this->language->get('column_status');
-
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_date_modified'] = $this->language->get('column_date_modified');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['entry_return_id'] = $this->language->get('entry_return_id');
-		$data['entry_order_id'] = $this->language->get('entry_order_id');
-		$data['entry_customer'] = $this->language->get('entry_customer');
-		$data['entry_product'] = $this->language->get('entry_product');
-		$data['entry_model'] = $this->language->get('entry_model');
-		$data['entry_return_status'] = $this->language->get('entry_return_status');
-		$data['entry_date_added'] = $this->language->get('entry_date_added');
-		$data['entry_date_modified'] = $this->language->get('entry_date_modified');
-
-		$data['button_add'] = $this->language->get('button_add');
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_delete'] = $this->language->get('button_delete');
-		$data['button_filter'] = $this->language->get('button_filter');
-
-		$data['token'] = $this->session->data['token'];
+		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->session->data['error'])) {
 			$data['error_warning'] = $this->session->data['error'];
@@ -470,14 +439,14 @@ class ControllerSaleReturn extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_return_id'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . '&sort=r.return_id' . $url, true);
-		$data['sort_order_id'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . '&sort=r.order_id' . $url, true);
-		$data['sort_customer'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . '&sort=customer' . $url, true);
-		$data['sort_product'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . '&sort=r.product' . $url, true);
-		$data['sort_model'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . '&sort=r.model' . $url, true);
-		$data['sort_status'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . '&sort=status' . $url, true);
-		$data['sort_date_added'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . '&sort=r.date_added' . $url, true);
-		$data['sort_date_modified'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . '&sort=r.date_modified' . $url, true);
+		$data['sort_return_id'] = $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . '&sort=r.return_id' . $url, true);
+		$data['sort_order_id'] = $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . '&sort=r.order_id' . $url, true);
+		$data['sort_customer'] = $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . '&sort=customer' . $url, true);
+		$data['sort_product'] = $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . '&sort=r.product' . $url, true);
+		$data['sort_model'] = $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . '&sort=r.model' . $url, true);
+		$data['sort_status'] = $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url, true);
+		$data['sort_date_added'] = $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . '&sort=r.date_added' . $url, true);
+		$data['sort_date_modified'] = $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . '&sort=r.date_modified' . $url, true);
 
 		$url = '';
 
@@ -525,7 +494,7 @@ class ControllerSaleReturn extends Controller {
 		$pagination->total = $return_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -555,44 +524,9 @@ class ControllerSaleReturn extends Controller {
 	}
 
 	protected function getForm() {
-		$data['heading_title'] = $this->language->get('heading_title');
-
 		$data['text_form'] = !isset($this->request->get['return_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-		$data['text_select'] = $this->language->get('text_select');
-		$data['text_opened'] = $this->language->get('text_opened');
-		$data['text_unopened'] = $this->language->get('text_unopened');
-		$data['text_order'] = $this->language->get('text_order');
-		$data['text_product'] = $this->language->get('text_product');
-		$data['text_history'] = $this->language->get('text_history');
-		$data['text_loading'] = $this->language->get('text_loading');
 
-		$data['entry_customer'] = $this->language->get('entry_customer');
-		$data['entry_order_id'] = $this->language->get('entry_order_id');
-		$data['entry_date_ordered'] = $this->language->get('entry_date_ordered');
-		$data['entry_firstname'] = $this->language->get('entry_firstname');
-		$data['entry_lastname'] = $this->language->get('entry_lastname');
-		$data['entry_email'] = $this->language->get('entry_email');
-		$data['entry_telephone'] = $this->language->get('entry_telephone');
-		$data['entry_product'] = $this->language->get('entry_product');
-		$data['entry_model'] = $this->language->get('entry_model');
-		$data['entry_quantity'] = $this->language->get('entry_quantity');
-		$data['entry_opened'] = $this->language->get('entry_opened');
-		$data['entry_return_reason'] = $this->language->get('entry_return_reason');
-		$data['entry_return_action'] = $this->language->get('entry_return_action');
-		$data['entry_return_status'] = $this->language->get('entry_return_status');
-		$data['entry_comment'] = $this->language->get('entry_comment');
-		$data['entry_notify'] = $this->language->get('entry_notify');
-
-		$data['help_product'] = $this->language->get('help_product');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_history_add'] = $this->language->get('button_history_add');
-
-		$data['tab_general'] = $this->language->get('tab_general');
-		$data['tab_history'] = $this->language->get('tab_history');
-
-		$data['token'] = $this->session->data['token'];
+		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->request->get['return_id'])) {
 			$data['return_id'] = $this->request->get['return_id'];
@@ -698,21 +632,21 @@ class ControllerSaleReturn extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . $url, true)
 		);
 
 		if (!isset($this->request->get['return_id'])) {
-			$data['action'] = $this->url->link('sale/return/add', 'token=' . $this->session->data['token'] . $url, true);
+			$data['action'] = $this->url->link('sale/return/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
 		} else {
-			$data['action'] = $this->url->link('sale/return/edit', 'token=' . $this->session->data['token'] . '&return_id=' . $this->request->get['return_id'] . $url, true);
+			$data['action'] = $this->url->link('sale/return/edit', 'user_token=' . $this->session->data['user_token'] . '&return_id=' . $this->request->get['return_id'] . $url, true);
 		}
 
-		$data['cancel'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url, true);
+		$data['cancel'] = $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
 		if (isset($this->request->get['return_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$return_info = $this->model_sale_return->getReturn($this->request->get['return_id']);
@@ -928,29 +862,7 @@ class ControllerSaleReturn extends Controller {
 	public function history() {
 		$this->load->language('sale/return');
 
-		$data['error'] = '';
-		$data['success'] = '';
-
 		$this->load->model('sale/return');
-
-		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
-			if (!$this->user->hasPermission('modify', 'sale/return')) {
-				$data['error'] = $this->language->get('error_permission');
-			}
-
-			if (!$data['error']) {
-				$this->model_sale_return->addReturnHistory($this->request->get['return_id'], $this->request->post);
-
-				$data['success'] = $this->language->get('text_success');
-			}
-		}
-
-		$data['text_no_results'] = $this->language->get('text_no_results');
-
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_notify'] = $this->language->get('column_notify');
-		$data['column_comment'] = $this->language->get('column_comment');
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
@@ -977,7 +889,7 @@ class ControllerSaleReturn extends Controller {
 		$pagination->total = $history_total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->link('sale/return/history', 'token=' . $this->session->data['token'] . '&return_id=' . $this->request->get['return_id'] . '&page={page}', true);
+		$pagination->url = $this->url->link('sale/return/history', 'user_token=' . $this->session->data['user_token'] . '&return_id=' . $this->request->get['return_id'] . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -985,4 +897,23 @@ class ControllerSaleReturn extends Controller {
 
 		$this->response->setOutput($this->load->view('sale/return_history', $data));
 	}
+	
+	public function addHistory() {
+		$this->load->language('sale/return');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'sale/return')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('sale/return');
+
+			$this->model_sale_return->addReturnHistory($this->request->get['return_id'], $this->request->post['return_status_id'], $this->request->post['comment'], $this->request->post['notify']);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}	
 }

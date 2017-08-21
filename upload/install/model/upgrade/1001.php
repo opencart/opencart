@@ -11,7 +11,11 @@ class ModelUpgrade1001 extends Model {
 		$this->db->query("ALTER TABLE `" . DB_PREFIX . "order` CHANGE `shipping_company` `shipping_company` VARCHAR(40) NOT NULL");
 
 		// affiliate
-		$this->db->query("ALTER TABLE `" . DB_PREFIX . "affiliate` CHANGE `company` `company` VARCHAR(40) NOT NULL");
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate'");
+		
+		if ($query->num_rows) {
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "affiliate` CHANGE `company` `company` VARCHAR(40) NOT NULL");
+		}
 
 		// order_history
 		$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_history` CHANGE `order_status_id` `order_status_id` int(11) NOT NULL");
@@ -93,7 +97,7 @@ class ModelUpgrade1001 extends Model {
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order' AND COLUMN_NAME = 'custom_field'");
 
 		if (!$query->num_rows) {
-			$this->db->query("ALTER TABLE `" . DB_PREFIX . "order` ADD `custom_field` TEXT NOT NULL AFTER `fax`");
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "order` ADD `custom_field` TEXT NOT NULL AFTER `telephone`");
 		}
 
 		// order

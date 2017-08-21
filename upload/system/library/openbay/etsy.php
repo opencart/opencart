@@ -3,8 +3,8 @@ namespace openbay;
 
 final class Etsy {
 	private $token;
-	private $enc1;
-	private $enc2;
+    private $encryption_key;
+    private $encryption_iv;
 	private $url = 'https://api.openbaypro.io/';
 	private $registry;
 	private $logger;
@@ -13,30 +13,46 @@ final class Etsy {
 	public function __construct($registry) {
 		$this->registry = $registry;
 		$this->token = $this->config->get('etsy_token');
-		$this->enc1 = $this->config->get('etsy_enc1');
-		$this->enc2 = $this->config->get('etsy_enc2');
 		$this->logging = $this->config->get('etsy_logging');
 
 		if ($this->logging == 1) {
 			$this->setLogger();
 		}
+
+		$this->setEncryptionKey($this->config->get('etsy_encryption_key'));
+		$this->setEncryptionIv($this->config->get('etsy_encryption_iv'));
 	}
 
 	public function __get($name) {
 		return $this->registry->get($name);
 	}
-	
-	public function resetConfig($token, $enc1, $enc2) {
+
+    public function getEncryptionKey() {
+        return $this->encryption_key;
+    }
+
+	public function setEncryptionKey($key) {
+	    $this->encryption_key = $key;
+    }
+
+    public function getEncryptionIv() {
+        return $this->encryption_iv;
+    }
+
+    public function setEncryptionIv($encryption_iv) {
+        $this->encryption_iv = $encryption_iv;
+    }
+
+	public function resetConfig($token, $encryption_key) {
 		$this->token = $token;
-		$this->enc1 = $enc1;
-		$this->enc2 = $enc2;
+		$this->setEncryptionKey($encryption_key);
 	}
 
 	public function call($uri, $method, $data = array()) {
 		if($this->config->get('etsy_status') == 1) {
 			$headers = array ();
 			$headers[] = 'X-Auth-Token: ' . $this->token;
-			$headers[] = 'X-Auth-Enc: ' . $this->enc1;
+			$headers[] = 'X-Endpoint-Version: 2';
 			$headers[] = 'Content-Type: application/json';
 			//$headers[] = 'Content-Length: '.strlen(json_encode($data));
 
@@ -60,13 +76,13 @@ final class Etsy {
 				$defaults[CURLOPT_POSTFIELDS] = json_encode($data);
 			}
 
-			$ch = curl_init();
-			curl_setopt_array($ch, $defaults);
+			$curl = curl_init();
+			curl_setopt_array($curl, $defaults);
 
 			$response = array();
 
-			if (! $result = curl_exec($ch)) {
-				$this->log('call() - Curl Failed ' . curl_error($ch) . ' ' . curl_errno($ch));
+			if (! $result = curl_exec($curl)) {
+				$this->log('call() - Curl Failed ' . curl_error($curl) . ' ' . curl_errno($curl));
 
 				return false;
 			} else {
@@ -80,7 +96,7 @@ final class Etsy {
 
 				$result = json_decode($result, 1);
 
-				$response['header_code'] = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+				$response['header_code'] = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
 				if(!empty($result)) {
 					$response['data'] = $result;
@@ -89,7 +105,7 @@ final class Etsy {
 				}
 			}
 
-			curl_close($ch);
+			curl_close($curl);
 
 			return $response;
 		} else {
@@ -116,31 +132,8 @@ final class Etsy {
 				$data = $process_id . ' - ' . print_r($data, true);
 			}
 
-			if ($write == true) {
-				$this->logger->write($data);
-			}
+            $this->logger->write($data);
 		}
-	}
-
-	public function encryptArgs($data) {
-		$token = $this->openbay->pbkdf2($this->enc1, $this->enc2, 1000, 32);
-		$crypt = $this->openbay->encrypt($data, $token, true);
-
-		return $crypt;
-	}
-
-	public function decryptArgs($crypt, $is_base_64 = true) {
-		if ($is_base_64) {
-			$crypt = base64_decode($crypt, true);
-			if (!$crypt) {
-				return false;
-			}
-		}
-
-		$token = $this->openbay->pbkdf2($this->enc1, $this->enc2, 1000, 32);
-		$data = $this->openbay->decrypt($crypt, $token);
-
-		return $data;
 	}
 
 	public function getServer() {
@@ -156,7 +149,7 @@ final class Etsy {
 			foreach ($response['data'] as $key => $options) {
 				$this->db->query("DELETE FROM `" . DB_PREFIX . "etsy_setting_option` WHERE  `key` = '" . $this->db->escape($key) . "' LIMIT 1");
 
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "etsy_setting_option` SET `data` = '" . $this->db->escape(serialize($options)) . "', `key` = '" . $this->db->escape($key) . "', `last_updated`  = now()");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "etsy_setting_option` SET `data` = '" . $this->db->escape(json_encode($options)) . "', `key` = '" . $this->db->escape($key) . "', `last_updated`  = now()");
 
 				$this->log("settingsUpdate() - updated option: " . $key);
 			}
@@ -175,7 +168,7 @@ final class Etsy {
 		if($qry->num_rows > 0) {
 			$this->log("getSetting() - Found setting");
 
-			return unserialize($qry->row['data']);
+			return json_decode($qry->row['data']);
 		} else {
 			return false;
 		}
@@ -227,10 +220,10 @@ final class Etsy {
 
 	public function updateListingStock($etsy_item_id, $new_stock, $status) {
 		$this->log("updateListingStock() - ItemID: " . $etsy_item_id . ", new stock: " . $new_stock . ", status: " . $status);
-		
+
 		if ($new_stock > 0) {
 			$this->log("updateListingStock() - stock > 0 - update stock");
-			
+
 			if ($status == 'edit') {
 				$status = 'inactive';
 			}
@@ -244,18 +237,18 @@ final class Etsy {
 			}
 		} else {
 			$this->log("updateListingStock() - stock > 0 - set to inactive");
-			
+
 			$this->deleteLink(null, $etsy_item_id);
 
 			$response = $this->call('v1/etsy/product/listing/' . (int)$etsy_item_id . '/inactive/', 'POST');
 
 			if (isset($response['data']['error'])) {
 				$this->log("updateListingStock() - Error: " . json_encode($response));
-				
+
 				return $response;
 			} else {
 				$this->log("updateListingStock() - Item ended OK");
-				
+
 				return true;
 			}
 		}
@@ -453,7 +446,7 @@ final class Etsy {
 	}
 
 	public function validate() {
-		if ($this->config->get('etsy_token') && $this->config->get('etsy_enc1') && $this->config->get('etsy_enc2')) {
+		if ($this->config->get('etsy_token') && $this->config->get('etsy_encryption_key') && $this->config->get('etsy_encryption_iv')) {
 			$this->log("Etsy details valid");
 
 			return true;

@@ -3,11 +3,11 @@ class ModelExtensionPaymentRealex extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('extension/payment/realex');
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('realex_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('payment_realex_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
-		if ($this->config->get('realex_total') > 0 && $this->config->get('realex_total') > $total) {
+		if ($this->config->get('payment_realex_total') > 0 && $this->config->get('payment_realex_total') > $total) {
 			$status = false;
-		} elseif (!$this->config->get('realex_geo_zone_id')) {
+		} elseif (!$this->config->get('payment_realex_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {
 			$status = true;
@@ -22,7 +22,7 @@ class ModelExtensionPaymentRealex extends Model {
 				'code'       => 'realex',
 				'title'      => $this->language->get('text_title'),
 				'terms'      => '',
-				'sort_order' => $this->config->get('realex_sort_order')
+				'sort_order' => $this->config->get('payment_realex_sort_order')
 			);
 		}
 
@@ -30,13 +30,13 @@ class ModelExtensionPaymentRealex extends Model {
 	}
 
 	public function addOrder($order_info, $pas_ref, $auth_code, $account, $order_ref) {
-		if ($this->config->get('realex_auto_settle') == 1) {
+		if ($this->config->get('payment_realex_auto_settle') == 1) {
 			$settle_status = 1;
 		} else {
 			$settle_status = 0;
 		}
 
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "realex_order` SET `order_id` = '" . (int)$order_info['order_id'] . "', `settle_type` = '" . (int)$this->config->get('realex_auto_settle') . "', `order_ref` = '" . $this->db->escape($order_ref) . "', `order_ref_previous` = '" . $this->db->escape($order_ref) . "', `date_added` = now(), `date_modified` = now(), `capture_status` = '" . (int)$settle_status . "', `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `pasref` = '" . $this->db->escape($pas_ref) . "', `pasref_previous` = '" . $this->db->escape($pas_ref) . "', `authcode` = '" . $this->db->escape($auth_code) . "', `account` = '" . $this->db->escape($account) . "', `total` = '" . $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "realex_order` SET `order_id` = '" . (int)$order_info['order_id'] . "', `settle_type` = '" . (int)$this->config->get('payment_realex_auto_settle') . "', `order_ref` = '" . $this->db->escape($order_ref) . "', `order_ref_previous` = '" . $this->db->escape($order_ref) . "', `date_added` = now(), `date_modified` = now(), `capture_status` = '" . (int)$settle_status . "', `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `pasref` = '" . $this->db->escape($pas_ref) . "', `pasref_previous` = '" . $this->db->escape($pas_ref) . "', `authcode` = '" . $this->db->escape($auth_code) . "', `account` = '" . $this->db->escape($account) . "', `total` = '" . $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) . "'");
 
 		return $this->db->getLastId();
 	}
@@ -50,7 +50,7 @@ class ModelExtensionPaymentRealex extends Model {
 	}
 
 	public function logger($message) {
-		if ($this->config->get('realex_debug') == 1) {
+		if ($this->config->get('payment_realex_debug') == 1) {
 			$log = new Log('realex.log');
 			$log->write($message);
 		}

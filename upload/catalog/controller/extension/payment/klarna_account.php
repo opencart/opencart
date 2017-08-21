@@ -8,27 +8,6 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 		if ($order_info) {
 			$this->load->language('extension/payment/klarna_account');
 
-			$data['text_information'] = $this->language->get('text_information');
-			$data['text_additional'] = $this->language->get('text_additional');
-			$data['text_payment_option'] = $this->language->get('text_payment_option');
-			$data['text_loading'] = $this->language->get('text_loading');
-			$data['text_day'] = $this->language->get('text_day');
-			$data['text_month'] = $this->language->get('text_month');
-			$data['text_year'] = $this->language->get('text_year');
-			$data['text_male'] = $this->language->get('text_male');
-			$data['text_female'] = $this->language->get('text_female');
-
-			$data['entry_pno'] = $this->language->get('entry_pno');
-			$data['entry_dob'] = $this->language->get('entry_dob');
-			$data['entry_gender'] = $this->language->get('entry_gender');
-			$data['entry_street'] = $this->language->get('entry_street');
-			$data['entry_house_no'] = $this->language->get('entry_house_no');
-			$data['entry_house_ext'] = $this->language->get('entry_house_ext');
-			$data['entry_phone_no'] = $this->language->get('entry_phone_no');
-			$data['entry_company'] = $this->language->get('entry_company');
-
-			$data['button_confirm'] = $this->language->get('button_confirm');
-
 			$data['days'] = array();
 
 			for ($i = 1; $i <= 31; $i++) {
@@ -68,14 +47,14 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 				'total'  => &$total
 			);
 
-			$this->load->model('extension/extension');
+			$this->load->model('setting/extension');
 
 			$sort_order = array();
 
-			$results = $this->model_extension_extension->getExtensions('total');
+			$results = $this->model_setting_extension->getExtensions('total');
 
 			foreach ($results as $key => $value) {
-				$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
+				$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
 			}
 
 			array_multisort($sort_order, SORT_ASC, $results);
@@ -83,7 +62,7 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 			$klarna_tax = array();
 
 			foreach ($results as $result) {
-				if ($this->config->get($result['code'] . '_status')) {
+				if ($this->config->get('total_' . $result['code'] . '_status')) {
 					$this->load->model('extension/total/' . $result['code']);
 
 					$taxes = array();
@@ -124,7 +103,7 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 				$data['error_warning'] = '';
 			}
 
-			$klarna_account = $this->config->get('klarna_account');
+			$klarna_account = $this->config->get('payment_klarna_account');
 
 			$data['merchant'] = $klarna_account[$order_info['payment_iso_code_3']]['merchant'];
 			$data['phone_number'] = $order_info['telephone'];
@@ -304,7 +283,7 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 			}
 
 			if (!$json) {
-				$klarna_account = $this->config->get('klarna_account');
+				$klarna_account = $this->config->get('payment_klarna_account');
 
 				if ($klarna_account[$order_info['payment_iso_code_3']]['server'] == 'live') {
 					$url = 'https://payment.klarna.com/';
@@ -441,7 +420,7 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 				$digest = '';
 
 				foreach ($goods_list as $goods) {
-					$digest .= utf8_decode(htmlspecialchars(html_entity_decode($goods['goods']['title'], ENT_COMPAT, "UTF-8"))) . ':';
+					$digest .= utf8_decode(htmlspecialchars(html_entity_decode($goods['goods']['title'], ENT_COMPAT, 'UTF-8'))) . ':';
 				}
 
 				$digest = base64_encode(pack('H*', hash('sha256', $digest . $klarna_account[$order_info['payment_iso_code_3']]['secret'])));

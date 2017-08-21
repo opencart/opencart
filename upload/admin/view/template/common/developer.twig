@@ -1,0 +1,127 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h4 class="modal-title"><i class="fa fa-cog"></i> {{ heading_title }}</h4>
+    </div>
+    <div class="modal-body">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <td>{{ column_component }}</td>
+            <td style="width: 150px;">{{ entry_cache }}</td>
+            <td class="text-right" style="width: 1px;">{{ column_action }}</td>
+          </tr>
+        </thead>
+        <tr>
+          <td>{{ entry_theme }}</td>
+          <td ><div class="btn-group" data-toggle="buttons">{% if developer_theme %}
+              <label class="btn btn-success active" {% if not eval %}disabled="disabled"{% endif %}>
+              <input type="radio" name="developer_theme" value="1" autocomplete="off" {% if not eval %}disabled="disabled"{% endif %} checked/>
+              {{ button_on }}
+              </label>
+              {% else %}
+              <label class="btn btn-success" {% if not eval %}disabled="disabled"{% endif %}>
+              <input type="radio" name="developer_theme" value="1" autocomplete="off" {% if not eval %}disabled="disabled"{% endif %}/>
+              {{ button_on }}
+              </label>
+              {% endif %}
+              
+              {% if not developer_theme %}
+              <label class="btn btn-danger active" {% if not eval %}disabled="disabled"{% endif %}>
+              <input type="radio" name="developer_theme" value="0" autocomplete="off" {% if not eval %}disabled="disabled"{% endif %} checked/>
+              {{ button_off }}
+              </label>
+              {% else %}
+              <label class="btn btn-danger" {% if not eval %}disabled="disabled"{% endif %}>
+              <input type="radio" name="developer_theme" value="0" autocomplete="off" {% if not eval %}disabled="disabled"{% endif %}/>
+              {{ button_off }}
+              </label>
+              {% endif %}</div></td>
+          <td class="text-right"><button type="button" value="theme" data-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-warning"><i class="fa fa-refresh"></i></button></td>
+        </tr>
+        <tr>
+          <td>{{ entry_sass }}</td>
+          <td><div class="btn-group" data-toggle="buttons">{% if developer_sass %}
+              <label class="btn btn-success active">
+                <input type="radio" name="developer_sass" value="1" autocomplete="off" checked>
+                {{ button_on }}</label>
+              {% else %}
+              <label class="btn btn-success">
+                <input type="radio" name="developer_sass" value="1" autocomplete="off">
+                {{ button_on }}</label>
+              {% endif %}
+              {% if not developer_sass %}
+              <label class="btn btn-danger active">
+                <input type="radio" name="developer_sass" value="0" autocomplete="off" checked>
+                {{ button_off }}</label>
+              {% else %}
+              <label class="btn btn-danger">
+                <input type="radio" name="developer_sass" value="0" autocomplete="off">
+                {{ button_off }}</label>
+              {% endif %}</div></td>
+          <td class="text-right"><button type="button" value="sass" data-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-warning"><i class="fa fa-refresh"></i></button></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('input[name=\'developer_theme\'], input[name=\'developer_sass\']').on('change', function() {
+	$.ajax({
+		url: 'index.php?route=common/developer/edit&user_token={{ user_token }}',		
+		type: 'post',
+        data: $('input[name=\'developer_theme\']:checked, input[name=\'developer_sass\']:checked'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('input[name=\'developer_theme\'], input[name=\'developer_sass\']').prop('disabled', true);
+		},
+		complete: function() {
+			$('input[name=\'developer_theme\'], input[name=\'developer_sass\']').prop('disabled', false);
+		},
+		success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#modal-developer .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+            }
+
+            if (json['success']) {
+				$('#modal-developer .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}			
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});	
+});	
+
+$('#modal-developer table button').on('click', function() {
+	var element = this;
+	
+	$.ajax({
+		url: 'index.php?route=common/developer/' + $(element).attr('value') + '&user_token={{ user_token }}',		
+		dataType: 'json',
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#modal-developer .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+            }
+
+            if (json['success']) {
+				$('#modal-developer .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}			
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+//--></script>

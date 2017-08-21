@@ -1,0 +1,254 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-payment" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+	{% if error_warning %}
+	  <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+	    <button type="button" class="close" data-dismiss="alert">&times;</button>
+	  </div>
+	{% endif %}
+    {% if success %}
+      <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment" class="form-horizontal">
+		  <ul class="nav nav-tabs">
+		    {% if show_register %}
+		      <li class="active" id="li-tab-register"><a href="#tab-register" data-toggle="tab">{{ tab_register }}</a></li>
+		      <li id="li-tab-settings"><a href="#tab-settings" data-toggle="tab">{{ tab_settings }}</a></li>
+			{% else %}
+		      <li class="active" id="li-tab-settings"><a href="#tab-settings" data-toggle="tab">{{ tab_settings }}</a></li>
+			{% endif %}
+		  </ul>
+		  <div class="tab-content">
+		    <div class="tab-pane {% if show_register %} active {% endif %}" id="tab-register">
+		      <div class="form-group required">
+                <label class="col-sm-2 control-label" for="input-pilibaba-email-address"><span data-toggle="tooltip" title="{{ help_email_address }}">{{ entry_email_address }}</span></label>
+                <div class="col-sm-10">
+			    <input type="email" name="payment_pilibaba_email_address" value="" placeholder="{{ entry_email_address }}" id="input-pilibaba-email-address" class="form-control" />
+		        </div>
+		      </div>
+		      <div class="form-group required">
+                <label class="col-sm-2 control-label" for="input-pilibaba-password"><span data-toggle="tooltip" title="{{ help_password }}">{{ entry_password }}</span></label>
+                <div class="col-sm-10">
+			    <input type="password" name="pilibaba_password" value="" placeholder="{{ entry_password }}" id="input-pilibaba-password" class="form-control" />
+		        </div>
+		      </div>
+		      <div class="form-group required">
+		        <label class="col-sm-2 control-label" for="input-pilibaba-currency"><span data-toggle="tooltip" title="{{ help_currency }}">{{ entry_currency }}</span></label>
+			    <div class="col-sm-10">
+			      <select name="pilibaba_currency" id="input-pilibaba-currency" class="form-control">
+			      	<option value="">Select Currency</option>
+			        {% for currency in currencies %}
+			        <option value="{{ currency }}">{{ currency }}</option>
+			        {% endfor %}
+			      </select>
+			    </div>
+		      </div>
+		      <div class="form-group required">
+		        <label class="col-sm-2 control-label" for="input-pilibaba-warehouse"><span data-toggle="tooltip" title="{{ help_warehouse }}">{{ entry_warehouse }}</span></label>
+			    <div class="col-sm-10">
+			      <select name="pilibaba_warehouse" id="input-pilibaba-warehouse" class="form-control">
+			      	<option value="">Select Warehouse</option>
+			        {% for warehouse in warehouses %}
+			        <option value="{{ warehouse.id }}">{{ warehouse.country }} {{ warehouse.city }} {{ warehouse.firstName }} {{ warehouse.lastName }}</option>
+			        {% endfor %}
+			        <option value="other">{{ text_other }}</option>
+			      </select>
+			    </div>
+		      </div>
+		      <div class="form-group" style="display:none">
+		        <label class="col-sm-2 control-label" for="input-pilibaba-country"><span data-toggle="tooltip" title="{{ help_country }}">{{ entry_country }}</span></label>
+			    <div class="col-sm-10">
+			      <select name="pilibaba_country" id="input-pilibaba-country" class="form-control">
+			      	<option value="">Select Country</option>
+			        {% for country in countries %}
+			        <option value="{{ country.iso_code_3 }}">{{ country.name }}</option>
+			        {% endfor %}
+			      </select>
+			    </div>
+		      </div>
+			  <a class="button btn btn-primary col-sm-offset-2" id="button-register">{{ button_register }}</a> <span class="btn btn-primary col-sm-offset-2" id="img_loading_register" style="display:none"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+			</div>
+		    <div class="tab-pane {% if not show_register %} active {% endif %}" id="tab-settings">
+		      {% if error_weight %}
+                <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_weight }}</div>
+			  {% endif %}
+
+		      {% if notice_email %}
+				<div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ notice_email }}</div>
+			  {% endif %}
+
+		      <div class="form-group required">
+                <label class="col-sm-2 control-label" for="input-pilibaba-merchant-number"><span data-toggle="tooltip" title="{{ help_merchant_number }}">{{ entry_merchant_number }}</span></label>
+                <div class="col-sm-10">
+			    <input type="text" name="payment_pilibaba_merchant_number" value="{{ payment_pilibaba_merchant_number }}" placeholder="{{ entry_merchant_number }}" id="input-pilibaba-merchant-number" class="form-control" />
+			    {% if error_pilibaba_merchant_number %}
+                  <div class="text-danger">{{ error_pilibaba_merchant_number }}</div>
+                {% endif %}
+		        </div>
+		      </div>
+		      <div class="form-group required">
+		        <label class="col-sm-2 control-label" for="input-pilibaba-secret-key"><span data-toggle="tooltip" title="{{ help_secret_key }}">{{ entry_secret_key }}</span></label>
+			    <div class="col-sm-10">
+			    <input type="text" name="payment_pilibaba_secret_key" value="{{ payment_pilibaba_secret_key }}" placeholder="{{ entry_secret_key }}" id="input-pilibaba-secret-key" class="form-control" />
+			    {% if error_pilibaba_secret_key %}
+                  <div class="text-danger">{{ error_pilibaba_secret_key }}</div>
+                {% endif %}
+			    </div>
+		      </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-pilibaba-environment">{{ entry_environment }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_pilibaba_environment" id="input-pilibaba-environment" class="form-control">
+                    {% if payment_pilibaba_environment == 'live' %}
+                      <option value="live" selected="selected">{{ text_live }}</option>
+                    {% else %}
+                      <option value="live">{{ text_live }}</option>
+                    {% endif %}
+                    {% if payment_pilibaba_environment == 'test' %}
+                      <option value="test" selected="selected">{{ text_test }}</option>
+                    {% else %}
+                      <option value="test">{{ text_test }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+		      <div class="form-group">
+		        <label class="col-sm-2 control-label" for="input-pilibaba-shipping-fee"><span data-toggle="tooltip" title="{{ help_shipping_fee }}">{{ entry_shipping_fee }}</span></label>
+			    <div class="col-sm-10">
+			      <input type="text" name="payment_pilibaba_shipping_fee" value="{{ payment_pilibaba_shipping_fee }}" placeholder="{{ entry_shipping_fee }} (e.g. 4.99)" id="input-pilibaba-shipping-fee" class="form-control" />
+			      {% if error_pilibaba_shipping_fee %}
+                    <div class="text-danger">{{ error_pilibaba_shipping_fee }}</div>
+                  {% endif %}
+			    </div>
+		      </div>
+		      <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-pilibaba-order-status"><span data-toggle="tooltip" title="{{ help_order_status }}">{{ entry_order_status }}</span></label>
+                <div class="col-sm-10">
+                  <select name="payment_pilibaba_order_status_id" id="input-pilibaba-order-status" class="form-control">
+                    {% for order_status in order_statuses %}
+                      {% if order_status.order_status_id == payment_pilibaba_order_status_id %}
+                        <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                      {% else %}
+                        <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+		      <div class="form-group">
+		        <label class="col-sm-2 control-label" for="input-pilibaba-status">{{ entry_status }}</label>
+		        <div class="col-sm-10">
+		          <select name="payment_pilibaba_status" id="input-pilibaba-status" class="form-control">
+                    {% if payment_pilibaba_status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+			      </select>
+			    </div>
+		      </div>
+		      <div class="form-group">
+		        <label class="col-sm-2 control-label" for="input-pilibaba-logging"><span data-toggle="tooltip" title="{{ help_logging }}">{{ entry_logging }}</span></label>
+			    <div class="col-sm-10">
+		          <select name="payment_pilibaba_logging" id="input-pilibaba-logging" class="form-control">
+                    {% if payment_pilibaba_logging %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+			      </select>
+			    </div>
+		      </div>
+		      <div class="form-group">
+		        <label class="col-sm-2 control-label" for="input-pilibaba-sort-order">{{ entry_sort_order }}</label>
+		        <div class="col-sm-10">
+			      <input type="text" name="payment_pilibaba_sort_order" value="{{ payment_pilibaba_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-pilibaba-sort-order" class="form-control" />
+			    </div>
+		      </div>
+		      <div class="form-group" style="display:none">
+		        <label class="col-sm-2 control-label" for="input-pilibaba-email-address"></label>
+		        <div class="col-sm-10">
+			      <input type="text" name="payment_pilibaba_email_address" value="{{ payment_pilibaba_email_address }}" placeholder="" id="input-pilibaba-email-address" class="form-control" />
+			    </div>
+		      </div>
+		    </div>
+		  </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript"><!--
+	$('#input-pilibaba-warehouse').change(function() {
+		var value = $(this).val();
+
+		if (value == 'other') {
+			$('#input-pilibaba-country').parent().parent().show();
+		} else {
+			$('#input-pilibaba-country').parent().parent().hide();
+		}
+	});
+
+	$('#button-register').click(function() {
+		$.ajax({
+			type: 'POST',
+			dataType: 'json',
+			data: {'email_address': $('#input-pilibaba-email-address').val(), 'password': $('#input-pilibaba-password').val(), 'currency': $('#input-pilibaba-currency').val(), 'warehouse': $('#input-pilibaba-warehouse').val(), 'country': $('#input-pilibaba-country').val(), 'environment': $('#input-pilibaba-environment').val()},
+			url: 'index.php?route=extension/payment/pilibaba/register&user_token={{ user_token }}',
+			beforeSend: function() {
+				$('#button-register').hide();
+				$('#img_loading_register').show();
+				$('.pilibaba_message').remove();
+			},
+			success: function(json) {
+				if (json['redirect']) {
+					location = json['redirect'].replace('&amp;', '&');
+				}
+
+				if (json['error']) {
+					$('#tab-register').prepend('<div class="alert alert-danger pilibaba_message" style="display:none"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>').fadeIn();
+				}
+
+				$('#button-register').show();
+				$('#img_loading_register').hide();
+				$('.pilibaba_message').fadeIn();
+			}
+		});
+	});
+//--></script>
+
+<style>
+@media (min-width: 768px) {
+	#button-register, #img_loading_register {
+		position: relative;
+		left: 5px;
+	}
+}
+</style>
+
+{{ footer }}

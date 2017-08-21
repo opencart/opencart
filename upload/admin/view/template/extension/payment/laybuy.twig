@@ -1,0 +1,575 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-payment" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ fetch }}" data-toggle="tooltip" title="{{ button_fetch }}" class="btn btn-info"><i class="fa fa-refresh"></i></a>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+	{% if error_warning %}
+		<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+		  <button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+	{% endif %}
+    {% if success %}
+      <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment" class="form-horizontal">
+		  <ul class="nav nav-tabs">
+		    <li class="active" id="li-tab-settings"><a href="#tab-settings" data-toggle="tab">{{ tab_settings }}</a></li>
+		    <li class="" id="li-tab-reports"><a href="#tab-reports" data-toggle="tab">{{ tab_reports }}</a></li>
+		  </ul>
+		  <div class="tab-content">
+		    <div class="tab-pane active" id="tab-settings">
+			  <div class="form-group required">
+			    <label class="col-sm-2 control-label" for="input-laybuys-membership-id"><span data-toggle="tooltip" title="{{ help_membership_id }}">{{ entry_membership_id }}</span></label>
+			    <div class="col-sm-10">
+			      <input type="text" name="payment_laybuys_membership_id" value="{{ payment_laybuys_membership_id }}" placeholder="{{ entry_membership_id }}" id="input-laybuys-membership-id" class="form-control" />
+				  {% if error_laybuys_membership_id %}
+              	    <div class="text-danger">{{ error_laybuys_membership_id }}</div>
+                  {% endif %}
+			    </div>
+			  </div>
+			  <div class="form-group required">
+			    <label class="col-sm-2 control-label" for="input-laybuy-token"><span data-toggle="tooltip" title="{{ help_token }}">{{ entry_token }}</span></label>
+			    <div class="col-sm-10">
+			      <input type="text" name="payment_laybuy_token" value="{{ payment_laybuy_token }}" placeholder="{{ entry_token }}" id="input-laybuy-token" class="form-control" />
+				  {% if error_laybuy_token %}
+              	    <div class="text-danger">{{ error_laybuy_token }}</div>
+                  {% endif %}
+			    </div>
+			  </div>
+		      <div class="form-group">
+			    <label class="col-sm-2 control-label" for="input-laybuy-min-deposit"><span data-toggle="tooltip" title="{{ help_minimum }}">{{ entry_minimum }}</span></label>
+			    <div class="col-sm-10">
+		          <select name="payment_laybuy_min_deposit" id="input-laybuy-min-deposit" class="form-control">
+                    <option value="10" {{ payment_laybuy_min_deposit == 10 ? 'selected="selected"' : '' }} >10%</option>
+                    <option value="20" {{ payment_laybuy_min_deposit == 20 ? 'selected="selected"' : '' }} >20%</option>
+                    <option value="30" {{ payment_laybuy_min_deposit == 30 ? 'selected="selected"' : '' }} >30%</option>
+                    <option value="40" {{ payment_laybuy_min_deposit == 40 ? 'selected="selected"' : '' }} >40%</option>
+                    <option value="50" {{ payment_laybuy_min_deposit == 50 ? 'selected="selected"' : '' }} >50%</option>
+			      </select>
+				  {% if error_laybuy_min_deposit %}
+              	    <div class="text-danger">{{ error_laybuy_min_deposit }}</div>
+                  {% endif %}
+			    </div>
+			  </div>
+		      <div class="form-group">
+			    <label class="col-sm-2 control-label" for="input-laybuy-max-deposit"><span data-toggle="tooltip" title="{{ help_maximum }}">{{ entry_maximum }}</span></label>
+			    <div class="col-sm-10">
+		          <select name="payment_laybuy_max_deposit" id="input-laybuy-max-deposit" class="form-control">
+                    <option value="10" {{ payment_laybuy_max_deposit == 10 ? 'selected="selected"' : '' }} >10%</option>
+                    <option value="20" {{ payment_laybuy_max_deposit == 20 ? 'selected="selected"' : '' }} >20%</option>
+                    <option value="30" {{ payment_laybuy_max_deposit == 30 ? 'selected="selected"' : '' }} >30%</option>
+                    <option value="40" {{ payment_laybuy_max_deposit == 40 ? 'selected="selected"' : '' }} >40%</option>
+                    <option value="50" {{ payment_laybuy_max_deposit == 50 ? 'selected="selected"' : '' }} >50%</option>
+			      </select>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="col-sm-2 control-label" for="input-laybuy-max-months"><span data-toggle="tooltip" title="{{ help_months }}">{{ entry_max_months }}</span></label>
+			    <div class="col-sm-10">
+		          <select name="payment_laybuy_max_months" id="input-laybuy-max-months" class="form-control">
+                    <option value="1" {{ payment_laybuy_max_months == 1 ? 'selected="selected"' : '' }} >1</option>
+                    <option value="2" {{ payment_laybuy_max_months == 2 ? 'selected="selected"' : '' }} >2</option>
+                    <option value="3" {{ payment_laybuy_max_months == 3 ? 'selected="selected"' : '' }} >3</option>
+                    <option value="4" {{ payment_laybuy_max_months == 4 ? 'selected="selected"' : '' }} >4</option>
+                    <option value="5" {{ payment_laybuy_max_months == 5 ? 'selected="selected"' : '' }} >5</option>
+                    <option value="6" {{ payment_laybuy_max_months == 6 ? 'selected="selected"' : '' }} >6</option>
+			      </select>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="col-sm-2 control-label" for="category"><span data-toggle="tooltip" title="{{ help_category }}">{{ entry_category }}</span></label>
+			    <div class="col-sm-10">
+			      <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="category" class="form-control" />
+				  <div id="laybuy-category" class="well well-sm" style="height: 150px; overflow: auto;">
+				    {% for category in categories %}
+				      <div id="category{{ category.category_id }}"><i class="fa fa-minus-circle"></i> {{ category.name }}
+					    <input type="hidden" name="payment_laybuy_category[]" value="{{ category.category_id }}" />
+					  </div>
+				    {% endfor %}
+				  </div>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="col-sm-2 control-label" for="input-laybuy-xproducts"><span data-toggle="tooltip" title="{{ help_product_ids }}">{{ entry_product_ids }}</span></label>
+			    <div class="col-sm-10">
+			      <input type="text" name="payment_laybuy_xproducts" value="{{ payment_laybuy_xproducts }}" placeholder="{{ entry_product_ids }}" id="input-laybuy-xproducts" class="form-control" />
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="col-sm-2 control-label" for="customer-group"><span data-toggle="tooltip" title="{{ help_customer_group }}">{{ entry_customer_group }}</span></label>
+			    <div class="col-sm-10">
+			      <input type="text" name="customer_group" value="" placeholder="{{ entry_customer_group }}" id="customer-group" class="form-control" />
+				  <div id="laybuy-customer-group" class="well well-sm" style="height: 150px; overflow: auto;">
+				    {% for customer_group in customer_groups %}
+				      <div id="customer-group{{ customer_group.customer_group_id }}"><i class="fa fa-minus-circle"></i> {{ customer_group.name }}
+					    <input type="hidden" name="payment_laybuy_customer_group[]" value="{{ customer_group.customer_group_id }}" />
+					  </div>
+				    {% endfor %}
+				  </div>
+			    </div>
+			  </div>
+		      <div class="form-group">
+			    <label class="col-sm-2 control-label" for="input-laybuy-logging"><span data-toggle="tooltip" title="{{ help_logging }}">{{ entry_logging }}</span></label>
+			    <div class="col-sm-10">
+		          <select name="payment_laybuy_logging" id="input-laybuy-logging" class="form-control">
+                    {% if payment_laybuy_logging %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+			      </select>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="col-sm-2 control-label" for="input-laybuy-total"><span data-toggle="tooltip" title="{{ help_total }}">{{ entry_total }}</span></label>
+			    <div class="col-sm-10">
+			      <input type="text" name="payment_laybuy_total" value="{{ payment_laybuy_total }}" placeholder="{{ entry_total }}" id="input-laybuy-total" class="form-control" />
+			    </div>
+			  </div>
+		      <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-laybuy-order-status-pending"><span data-toggle="tooltip" title="{{ help_order_status_pending }}">{{ entry_order_status_pending }}</span></label>
+                <div class="col-sm-10">
+                  <select name="payment_laybuy_order_status_id_pending" id="input-laybuy-order-status-pending" class="form-control">
+                    {% for order_status in order_statuses %}
+                      {% if order_status.order_status_id == payment_laybuy_order_status_id_pending %}
+                        <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                      {% else %}
+                        <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+		      <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-laybuy-order-status-canceled"><span data-toggle="tooltip" title="{{ help_order_status_canceled }}">{{ entry_order_status_canceled }}</span></label>
+                <div class="col-sm-10">
+                  <select name="payment_laybuy_order_status_id_canceled" id="input-laybuy-order-status-canceled" class="form-control">
+                    {% for order_status in order_statuses %}
+                      {% if order_status.order_status_id == payment_laybuy_order_status_id_canceled %}
+                        <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                      {% else %}
+                        <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+		      <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-laybuy-order-status-processing"><span data-toggle="tooltip" title="{{ help_order_status_processing }}">{{ entry_order_status_processing }}</span></label>
+                <div class="col-sm-10">
+                  <select name="payment_laybuy_order_status_id_processing" id="input-laybuy-order-status-processing" class="form-control">
+                    {% for order_status in order_statuses %}
+                      {% if order_status.order_status_id == payment_laybuy_order_status_id_processing %}
+                        <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                      {% else %}
+                        <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                      {% endif %}
+                   {% endfor %}
+                  </select>
+                </div>
+              </div>
+			  <div class="form-group">
+			    <label class="col-sm-2 control-label" for="input-laybuy-gateway-url">{{ entry_gateway_url }}</label>
+			    <div class="col-sm-10">
+			      <input type="text" name="payment_laybuy_gateway_url" value="{{ payment_laybuy_gateway_url }}" placeholder="{{ entry_gateway_url }}" id="input-laybuy-gateway-url" class="form-control" />
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="col-sm-2 control-label" for="input-laybuy-api-url">{{ entry_api_url }}</label>
+			    <div class="col-sm-10">
+			      <input type="text" name="payment_laybuy_api_url" value="{{ payment_laybuy_api_url }}" placeholder="{{ entry_api_url }}" id="input-laybuy-api-url" class="form-control" />
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="col-sm-2 control-label" for="input-laybuy-geo-zone">{{ entry_geo_zone }}</label>
+			    <div class="col-sm-10">
+			      <select name="payment_laybuy_geo_zone_id" id="input-laybuy-geo-zone" class="form-control">
+				    <option value="0">{{ text_all_zones }}</option>
+				    {% for geo_zone in geo_zones %}
+                      {% if geo_zone.geo_zone_id == payment_laybuy_geo_zone_id %}
+				        <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+					  {% else %}
+				        <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
+    			      {% endif %}
+				    {% endfor %}
+				  </select>
+			    </div>
+			  </div>
+		      <div class="form-group">
+			    <label class="col-sm-2 control-label" for="input-laybuy-status">{{ entry_status }}</label>
+			    <div class="col-sm-10">
+		          <select name="payment_laybuy_status" id="input-laybuy-status" class="form-control">
+                    {% if payment_laybuy_status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+			      </select>
+			    </div>
+			  </div>
+		      <div class="form-group">
+		        <label class="col-sm-2 control-label" for="input-laybuy-sort-order">{{ entry_sort_order }}</label>
+			    <div class="col-sm-10">
+			      <input type="text" name="payment_laybuy_sort_order" value="{{ payment_laybuy_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-laybuy-sort-order" class="form-control" />
+			    </div>
+			  </div>
+		      <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-laybuy-cron-url"><span data-toggle="tooltip" title="{{ help_cron_url }}">{{ entry_cron_url }}</span></label>
+			    <div class="col-sm-10">
+				  <input type="text" name="laybuy_cron_url" value="{{ laybuy_cron_url }}" readonly placeholder="{{ entry_cron_url }}" id="input-laybuy-cron-url" class="form-control" />
+			    </div>
+			  </div>
+		      <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-laybuy-cron-time"><span data-toggle="tooltip" title="{{ help_cron_time }}">{{ entry_cron_time }}</span></label>
+			    <div class="col-sm-10">
+				  <input type="text" name="laybuy_cron_time" value="{{ laybuy_cron_time }}" readonly disabled placeholder="{{ entry_cron_time }}" id="input-laybuy-cron-time" class="form-control" />
+			    </div>
+			  </div>
+		    </div>
+  		    <div class="tab-pane" id="tab-reports">
+		      <div class="well">
+	            <div class="row">
+	              <div class="col-sm-4">
+	                <div class="form-group">
+	                  <label class="control-label" for="input-order-id">{{ entry_order_id }}</label>
+	                  <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control" />
+	                </div>
+				    <div class="form-group">
+	                  <label class="control-label" for="input-months">{{ entry_months }}</label>
+	                  <input type="text" name="filter_months" value="{{ filter_months }}" placeholder="{{ entry_months }}" id="input-months" class="form-control" />
+	                </div>
+	              </div>
+	              <div class="col-sm-4">
+                    <div class="form-group">
+                      <label class="control-label" for="input-customer">{{ entry_customer }}</label>
+                      <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control" />
+                    </div>
+				    <div class="form-group">
+	                  <label class="control-label" for="input-status">{{ entry_status }}</label>
+	                  <select name="filter_status" id="input-status" class="form-control" />
+	                    <option value="*"></option>
+	                    {% for transaction_status in transaction_statuses %}
+					      {% if transaction_status.status_id == filter_status %}
+					        <option value="{{ transaction_status.status_id }}" selected="selected">{{ transaction_status.status_name }}</option>
+					      {% else %}
+					        <option value="{{ transaction_status.status_id }}">{{ transaction_status.status_name }}</option>
+				   	      {% endif %}
+					    {% endfor %}
+	                  </select>
+	                </div>
+	              </div>
+	              <div class="col-sm-4">
+	                <div class="form-group">
+	                  <label class="control-label" for="input-dp-percent">{{ entry_dp_percent }}</label>
+	                  <input type="text" name="filter_dp_percent" value="{{ filter_dp_percent }}" placeholder="{{ entry_dp_percent }}" id="input-dp-percent" class="form-control" />
+	                </div>
+				    <div class="form-group">
+	                  <label class="control-label" for="input-date-added">{{ entry_date_added }}</label>
+	                  <div class="input-group date">
+	                    <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
+	                    <span class="input-group-btn">
+	                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+	                    </span></div>
+	                </div>
+	                <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+	              </div>
+	            </div>
+	          </div>
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                      <td class="text-left">
+                      	{% if sort == 'lt.order_id' %}
+                        <a href="{{ sort_order_id }}" class="{{ order|lower }}">{{ column_order_id }}</a>
+                        {% else %}
+                        <a href="{{ sort_order_id }}">{{ column_order_id }}</a>
+                        {% endif %}</td>
+                      <td class="text-left">
+                      	{% if sort == 'customer' %}
+                        <a href="{{ sort_customer }}" class="{{ order|lower }}">{{ column_customer }}</a>
+                        {% else %}
+                        <a href="{{ sort_customer }}">{{ column_customer }}</a>
+                        {% endif %}</td>
+                      <td class="text-left">
+                      	{% if sort == 'lt.amount' %}
+                        <a href="{{ sort_amount }}" class="{{ order|lower }}">{{ column_amount }}</a>
+                        {% else %}
+                        <a href="{{ sort_amount }}">{{ column_amount }}</a>
+                        {% endif %}</td>
+                      <td class="text-left">
+                      	{% if sort == 'lt.downpayment' %}
+                        <a href="{{ sort_dp_percent }}" class="{{ order|lower }}">{{ column_dp_percent }}</a>
+                        {% else %}
+                        <a href="{{ sort_dp_percent }}">{{ column_dp_percent }}</a>
+                        {% endif %}</td>
+                      <td class="text-left">
+                      	{% if sort == 'lt.months' %}
+                        <a href="{{ sort_months }}" class="{{ order|lower }}">{{ column_months }}</a>
+                        {% else %}
+                        <a href="{{ sort_months }}">{{ column_months }}</a>
+                        {% endif %}</td>
+                      <td class="text-left">
+                      	{% if sort == 'lt.downpayment_amount' %}
+                        <a href="{{ sort_dp_amount }}" class="{{ order|lower }}">{{ column_dp_amount }}</a>
+                        {% else %}
+                        <a href="{{ sort_dp_amount }}">{{ column_dp_amount }}</a>
+                        {% endif %}</td>
+                      <td class="text-left">
+                      	{% if sort == 'lt.first_payment_due' %}
+                        <a href="{{ sort_first_payment }}" class="{{ order|lower }}">{{ column_first_payment }}</a>
+                        {% else %}
+                        <a href="{{ sort_first_payment }}">{{ column_first_payment }}</a>
+                        {% endif %}</td>
+                      <td class="text-left">
+                      	{% if sort == 'lt.last_payment_due' %}
+                        <a href="{{ sort_last_payment }}" class="{{ order|lower }}">{{ column_last_payment }}</a>
+                        {% else %}
+                        <a href="{{ sort_last_payment }}">{{ column_last_payment }}</a>
+                        {% endif %}</td>
+                      <td class="text-left">
+                      	{% if sort == 'lt.status' %}
+                        <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
+                        {% else %}
+                        <a href="{{ sort_status }}">{{ column_status }}</a>
+                        {% endif %}</td>
+                      <td class="text-left">
+                      	{% if sort == 'lt.date_added' %}
+                        <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
+                        {% else %}
+                        <a href="{{ sort_date_added }}">{{ column_date_added }}</a>
+                        {% endif %}</td>
+                      <td class="text-right">{{ column_action }}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% if reports %}
+                    {% for report in reports %}
+                    <tr>
+                      <td class="text-center">
+                      	{% if report.id in selected %}
+                        <input type="checkbox" name="selected[]" value="{{ report.id }}" checked="checked" />
+                        {% else %}
+                        <input type="checkbox" name="selected[]" value="{{ report.id }}" />
+                        {% endif %}</td>
+                      <td class="text-left"><a href="{{ report.order_url }}">{{ report.order_id }}</a></td>
+					  {% if report.customer_url %}
+                        <td class="text-left"><a href="{{ report.customer_url }}">{{ report.customer_name }}</a></td>
+					  {% else %}
+                        <td class="text-left">{{ report.customer_name }}</td>
+					  {% endif %}
+                      <td class="text-left">{{ report.amount }}</td>
+                      <td class="text-left">{{ report.dp_percent ~ '%' }}</td>
+                      <td class="text-left">{{ report.months }}</td>
+                      <td class="text-left">{{ report.dp_amount }}</td>
+                      <td class="text-left">{{ report.first_payment }}</td>
+                      <td class="text-left">{{ report.last_payment }}</td>
+                      <td class="text-left">{{ report.status }}</td>
+                      <td class="text-left">{{ report.date_added }}</td>
+                      <td class="text-right"><a href="{{ report.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                      <td class="text-center" colspan="12">{{ text_no_results }}</td>
+                    </tr>
+                   {% endif %}
+                  </tbody>
+                </table>
+              </div>
+	          <div class="row">
+	            <div class="col-sm-6 text-left">{{ pagination }}</div>
+	            <div class="col-sm-6 text-right">{{ results }}</div>
+	          </div>
+		    </div>
+		  </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+#tab-reports .form-group {
+	margin-left: 0;
+	margin-right: 0;
+}
+</style>
+
+<script type="text/javascript"><!--
+	$('input[name="category"]').autocomplete({
+		source: function(request, response) {
+			$.ajax({
+				url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+				dataType: 'json',
+				success: function(json) {
+					response($.map(json, function(item) {
+						return {
+							label: item['name'],
+							value: item['category_id']
+						}
+					}));
+				}
+			});
+		},
+		select: function(item) {
+			$('input[name=\'category\']').val('');
+
+			$('#laybuy-category' + item['value']).remove();
+
+			$('#laybuy-category').append('<div id="laybuy-category' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="payment_laybuy_category[]" value="' + item['value'] + '" /></div>');
+		}
+	});
+
+	$('#laybuy-category').delegate('.fa-minus-circle', 'click', function() {
+		$(this).parent().remove();
+	});
+//--></script>
+
+<script type="text/javascript"><!--
+	$('input[name="customer_group"]').autocomplete({
+		source: function(request, response) {
+			$.ajax({
+				url: 'index.php?route=extension/payment/laybuy/autocomplete&user_token={{ user_token }}&filter_customer_group=' +  encodeURIComponent(request),
+				dataType: 'json',
+				success: function(json) {
+					response($.map(json, function(item) {
+						return {
+							label: item['name'],
+							value: item['customer_group_id']
+						}
+					}));
+				}
+			});
+		},
+		select: function(item) {
+			$('input[name=\'customer_group\']').val('');
+
+			$('#laybuy-customer-group' + item['value']).remove();
+
+			$('#laybuy-customer-group').append('<div id="laybuy-customer-group' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="payment_laybuy_customer_group[]" value="' + item['value'] + '" /></div>');
+		}
+	});
+
+	$('#laybuy-customer-group').delegate('.fa-minus-circle', 'click', function() {
+		$(this).parent().remove();
+	});
+//--></script>
+
+<script type="text/javascript"><!--
+$('input[name=\'filter_customer\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['customer_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'filter_customer\']').val(item['label']);
+	}
+});
+//--></script>
+
+<script type="text/javascript"><!--
+$('#button-filter').on('click', function() {
+	url = 'index.php?route=extension/payment/laybuy&user_token={{ user_token }}';
+
+	var filter_order_id = $('input[name=\'filter_order_id\']').val();
+
+	if (filter_order_id) {
+		url += '&filter_order_id=' + encodeURIComponent(filter_order_id);
+	}
+
+	var filter_customer = $('input[name=\'filter_customer\']').val();
+
+	if (filter_customer) {
+		url += '&filter_customer=' + encodeURIComponent(filter_customer);
+	}
+
+	var filter_dp_percent = $('input[name=\'filter_dp_percent\']').val();
+
+	if (filter_dp_percent) {
+		url += '&filter_dp_percent=' + encodeURIComponent(filter_dp_percent);
+	}
+
+	var filter_months = $('input[name=\'filter_months\']').val();
+
+	if (filter_months) {
+		url += '&filter_months=' + encodeURIComponent(filter_months);
+	}
+
+	var filter_status = $('select[name=\'filter_status\']').val();
+
+	if (filter_status != '*') {
+		url += '&filter_status=' + encodeURIComponent(filter_status);
+	}
+
+	var filter_date_added = $('input[name=\'filter_date_added\']').val();
+
+	if (filter_date_added) {
+		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
+	}
+
+	location = url + '#reportstab';
+});
+//--></script>
+
+<script type="text/javascript"><!--
+$('.date').datetimepicker({
+	language: '{{ datepicker }}',
+	pickTime: false,
+	format: 'YYYY-MM-DD'
+});
+//--></script>
+
+<script type="text/javascript"><!--
+if (document.location.hash != '') {
+	var hash = window.location.hash.substring(1);
+
+	if (hash == 'settingstab') {
+		hash = 'tab-settings';
+	} else {
+		hash = 'tab-reports';
+	}
+
+	$(".nav-tabs li").removeClass('active');
+	$(".tab-pane").removeClass('active');
+
+	$("#" + hash).addClass('active');
+	$("#li-" + hash).addClass('active');
+}
+//--></script>
+
+{{ footer }}

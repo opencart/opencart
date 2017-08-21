@@ -1,0 +1,8 @@
+@function testfunc($pseudo: null) {
+  $output: if($pseudo, "green", "red");
+  @return $output;
+}
+
+body {
+  background-color: testfunc();
+}

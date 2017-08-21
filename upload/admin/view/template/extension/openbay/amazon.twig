@@ -1,0 +1,64 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <h1>{{ text_dashboard }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if success %}
+    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}</div>
+    {% endif %}
+    <div class="row">
+      <div class="col-md-3 text-center">
+        <div class="well"> <a href="{{ link_settings }}"> <span class="fa-stack fa-3x"> <i class="fa fa-square-o fa-stack-2x"></i> <i class="fa fa-wrench fa-stack-1x"></i> </span>
+          <h4>{{ text_heading_settings }}</h4>
+          </a> </div>
+      </div>
+      {% if validation %}
+      <div class="col-md-3 text-center">
+        <div class="well"> <a href="{{ link_subscription }}"> <span class="fa-stack fa-3x"> <i class="fa fa-square-o fa-stack-2x"></i> <i class="fa fa-user fa-stack-1x"></i> </span>
+          <h4>{{ text_heading_account }}</h4>
+          </a> </div>
+      </div>
+      <div class="col-md-3 text-center">
+        <div class="well"> <a href="{{ link_item_link }}"> <span class="fa-stack fa-3x"> <i class="fa fa-square-o fa-stack-2x"></i> <i class="fa fa-link fa-stack-1x"></i> </span>
+          <h4>{{ text_heading_links }}</h4>
+          </a> </div>
+      </div>
+      <div class="col-md-3 text-center">
+        <div class="well"> <a href="{{ link_bulk_linking }}"> <span class="fa-stack fa-3x"> <i class="fa fa-square-o fa-stack-2x"></i> <i class="fa fa-list fa-stack-1x"></i> </span>
+          <h4>{{ text_heading_bulk_linking }}</h4>
+          </a> </div>
+      </div>
+      <div class="col-md-3 text-center">
+        <div class="well"> <a href="{{ link_bulk_listing }}"> <span class="fa-stack fa-3x"> <i class="fa fa-square-o fa-stack-2x"></i> <i class="fa fa-copy fa-stack-1x"></i> </span>
+          <h4>{{ text_heading_bulk_listing }}</h4>
+          </a> </div>
+      </div>
+      <div class="col-md-3 text-center">
+        <div class="well"> <a href="{{ link_stock_updates }}"> <span class="fa-stack fa-3x"> <i class="fa fa-square-o fa-stack-2x"></i> <i class="fa fa-sitemap fa-stack-1x"></i> </span>
+          <h4>{{ text_heading_stock_updates }}</h4>
+          </a> </div>
+      </div>
+      <div class="col-md-3 text-center">
+        <div class="well"> <a href="{{ link_saved_listings }}"> <span class="fa-stack fa-3x"> <i class="fa fa-square-o fa-stack-2x"></i> <i class="fa fa-save fa-stack-1x"></i> </span>
+          <h4>{{ text_heading_saved_listings }}</h4>
+          </a> </div>
+      </div>
+      {% else %}
+      <div class="col-md-3 text-center">
+        <div class="well"><a href="{{ link_signup }}" target="_BLANK"><span class="fa-stack fa-3x"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-star fa-stack-1x"></i></span>
+          <h4>{{ text_heading_register }}</h4>
+          </a> </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{{ footer }}

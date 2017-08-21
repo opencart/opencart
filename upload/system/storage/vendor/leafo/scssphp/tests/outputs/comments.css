@@ -1,0 +1,19 @@
+/** what the heck **/
+/**
+
+Here is a block comment
+
+**/
+/*hello*/
+div {
+  /* another property */
+  border: 1px solid red;
+  color: url('http://mage-page.com');
+  string: "hello /* this is not a comment */";
+  world: "// neither is this";
+  /*what if this is a comment */
+  string: 'hello /* this is not a comment */';
+  world: '// neither is this';
+  what-ever: 100px;
+  /*this is not a comment?*/
+  background: url(); }

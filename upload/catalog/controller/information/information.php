@@ -32,8 +32,6 @@ class ControllerInformationInformation extends Controller {
 
 			$data['heading_title'] = $information_info['title'];
 
-			$data['button_continue'] = $this->language->get('button_continue');
-
 			$data['description'] = html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8');
 
 			$data['continue'] = $this->url->link('common/home');
@@ -57,8 +55,6 @@ class ControllerInformationInformation extends Controller {
 			$data['heading_title'] = $this->language->get('text_error');
 
 			$data['text_error'] = $this->language->get('text_error');
-
-			$data['button_continue'] = $this->language->get('button_continue');
 
 			$data['continue'] = $this->url->link('common/home');
 

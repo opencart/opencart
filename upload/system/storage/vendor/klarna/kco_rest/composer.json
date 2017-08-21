@@ -1,0 +1,46 @@
+{
+    "name": "klarna/kco_rest",
+    "description": "Klarna Checkout PHP SDK",
+    "homepage": "http://developers.klarna.com",
+    "license": "Apache-2.0",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Klarna AB",
+            "email": "integration@klarna.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.4.0",
+        "guzzlehttp/guzzle": ">=4.2,<6.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.2.*",
+        "squizlabs/php_codesniffer": "1.5.*",
+        "phpmd/phpmd": "2.1.*",
+        "phploc/phploc": "2.0.*",
+        "sebastian/phpcpd": "2.0.*",
+        "satooshi/php-coveralls": "0.6.*",
+        "apigen/apigen": "4.0.*",
+        "klarna/apigen-theme": "~1.0"
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --colors",
+        "reference": "vendor/bin/apigen generate -s src -d docs/reference --template-config='vendor/klarna/apigen-theme/src/config.neon'",
+        "analyze": [
+            "mkdir -p build/logs",
+            "vendor/bin/phploc --log-csv build/logs/phploc.csv src/ tests/",
+            "mkdir -p build/pdepend",
+            "vendor/bin/pdepend --jdepend-xml=build/logs/jdepend.xml --jdepend-chart=build/pdepend/dependencies.svg --overview-pyramid=build/pdepend/overview-pyramid.svg src/",
+            "vendor/bin/phpmd src/,tests/ xml phpmd.xml --reportfile build/logs/pmd.xml || true",
+            "vendor/bin/phpcs --standard=PSR2 --report=checkstyle --report-file=build/logs/checkstyle.xml --extensions=php src/ tests/",
+            "vendor/bin/phpcpd --log-pmd build/logs/pmd-cpd.xml src/ tests/ || true"
+        ]
+    }
+}

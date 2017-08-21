@@ -37,25 +37,6 @@ class ControllerProductCompare extends Controller {
 			'href' => $this->url->link('product/compare')
 		);
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_product'] = $this->language->get('text_product');
-		$data['text_name'] = $this->language->get('text_name');
-		$data['text_image'] = $this->language->get('text_image');
-		$data['text_price'] = $this->language->get('text_price');
-		$data['text_model'] = $this->language->get('text_model');
-		$data['text_manufacturer'] = $this->language->get('text_manufacturer');
-		$data['text_availability'] = $this->language->get('text_availability');
-		$data['text_rating'] = $this->language->get('text_rating');
-		$data['text_summary'] = $this->language->get('text_summary');
-		$data['text_weight'] = $this->language->get('text_weight');
-		$data['text_dimension'] = $this->language->get('text_dimension');
-		$data['text_empty'] = $this->language->get('text_empty');
-
-		$data['button_continue'] = $this->language->get('button_continue');
-		$data['button_cart'] = $this->language->get('button_cart');
-		$data['button_remove'] = $this->language->get('button_remove');
-
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
 
@@ -75,7 +56,7 @@ class ControllerProductCompare extends Controller {
 
 			if ($product_info) {
 				if ($product_info['image']) {
-					$image = $this->model_tool_image->resize($product_info['image'], $this->config->get($this->config->get('config_theme') . '_image_compare_width'), $this->config->get($this->config->get('config_theme') . '_image_compare_height'));
+					$image = $this->model_tool_image->resize($product_info['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_compare_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_compare_height'));
 				} else {
 					$image = false;
 				}

@@ -61,11 +61,11 @@ class ControllerToolUpgrade extends Controller {
 
 		$this->load->model('setting/extension');
 
-		$results = $this->model_setting_extension->getExtensionInstalls(0, 1000);
+		$installs = $this->model_setting_extension->getExtensionInstalls(0, 1000);
 
-		foreach ($results as $result) {
-			if ($result['extension_id']) {
-				$request_data['extension'][] = $result['extension_id'];
+		foreach ($installs as $install) {
+			if ($install['extension_id']) {
+				$request_data['extension'][] = $install['extension_id'];
 			}
 		}
 
@@ -102,15 +102,18 @@ class ControllerToolUpgrade extends Controller {
 
 				if (isset($response_info['extension'])) {
 					foreach ($response_info['extension'] as $result) {
-						//in_array($response_info['version'], );
 
+						foreach ($result['download'] as $extension_download_id => $download) {
+							//in_array($response_info['version'], );
+
+						}
 
 
 						$data['extensions'][] = array(
-							'extension_download_id' => $result['extension_download_id'],
 							'extension_id'          => $result['extension_id'],
 							'name'                  => $result['name'],
 							'status'                => $result['status']
+							'avaliable'               => $result['avaliable']
 						);
 					}
 				}

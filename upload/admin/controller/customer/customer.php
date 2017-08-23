@@ -542,7 +542,7 @@ class ControllerCustomerCustomer extends Controller {
 		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->request->get['customer_id'])) {
-			$data['customer_id'] = $this->request->get['customer_id'];
+			$data['customer_id'] = (int)$this->request->get['customer_id'];
 		} else {
 			$data['customer_id'] = 0;
 		}

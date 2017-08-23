@@ -22,6 +22,7 @@
         <form class="form-horizontal">
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-version" data-toggle="tab">{{ tab_version }}</a></li>
+            <li><a href="#tab-compatibility" data-toggle="tab">{{ tab_compatibility }}</a></li>
             <li><a href="#tab-upgrade" data-toggle="tab">{{ tab_upgrade }}</a></li>
             <li><a href="#tab-finish" data-toggle="tab">{{ tab_finish }}</a></li>
           </ul>
@@ -50,35 +51,14 @@
                   <li></li>
                 </ol>
               </fieldset>
+
+            </div>
+            <div class="tab-pane" id="tab-compatibility">
+
               <fieldset>
                 <legend>{{ text_compatibility }}</legend>
                 <p>Before upgrading its very important to check if extensions installed are compatible with the latest version</p>
-                <table class="table table-bordered table-hover">
-                  <thead>
-                  <tr>
-                    <td class="text-left">{{ column_name }}</td>
-                    <td class="text-left">{{ column_latest }}</td>
-                    <td class="text-center">{{ column_status }}</td>
-                  </tr>
-                  </thead>
-                  <tbody>
-
-                  {% if extensions %}
-                    {% for extension in extensions %}
-                      <tr>
-                        <td class="text-left">{{ extension.name }}</td>
-                        <td class="text-left">{{ extension.name }}</td>
-                        <td class="text-center">{% if extension.status %}{{ extension.success }}{% else %}{{ extension.success }}{% endif %}</td>
-                      </tr>
-                    {% endfor %}
-                  {% else %}
-                    <tr>
-                      <td class="text-center" colspan="3">{{ text_no_results }}</td>
-                    </tr>
-                  {% endif %}
-                  </tbody>
-
-                </table>
+                <div id="compatibility"></div>
               </fieldset>
             </div>
             <div class="tab-pane" id="tab-upgrade">
@@ -144,7 +124,7 @@ $('#button-upgrade').on('click', function() {
 				$('#data-next').attr('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 			}
 		},
-		error: function (xhr, ajaxOptions, thrownError) {
+		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
@@ -179,7 +159,7 @@ function next(url, i) {
 				next(json['next'], i);
 			}
 		},
-		error: function (xhr, ajaxOptions, thrownError) {
+		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});

@@ -57,15 +57,15 @@ class ControllerToolUpgrade extends Controller {
 		$data['version'] = VERSION;
 		$data['upgrade'] = false;
 
-		$request_data = array();
+		$request_data['extension'] = array();
 
 		$this->load->model('setting/extension');
 
 		$results = $this->model_setting_extension->getExtensionInstalls(0, 1000);
 
 		foreach ($results as $result) {
-			if ($result['extension_download_id']) {
-				$request_data['extension_download'][] = $result['extension_download_id'];
+			if ($result['extension_id']) {
+				$request_data['extension'][] = $result['extension_id'];
 			}
 		}
 
@@ -77,7 +77,7 @@ class ControllerToolUpgrade extends Controller {
 		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
 		curl_setopt($curl, CURLOPT_POST, true);
-		curl_setopt($curl, CURLOPT_POSTFIELDS, $request_data);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($request_data));
 
 		$response = curl_exec($curl);
 
@@ -85,32 +85,38 @@ class ControllerToolUpgrade extends Controller {
 
 		$response_info = json_decode($response, true);
 
+		print_r($response_info);
+		// Extension compatibility check
+		$data['extensions'] = array();
+
 		if ($response_info) {
-            $data['version'] = $response_info['version'];
-
-			$data['upgrade'] = true;
-
 			//if (version_compare(VERSION, $response_info['version'], '>=')) {
 			if (version_compare('2.0.0', $response_info['version'], '>=')) {
 				$data['success'] = sprintf($this->language->get('text_success'), $response_info['version']);
 			} else {
+				$data['version'] = $response_info['version'];
+
+				$data['upgrade'] = true;
+
 				$data['error_warning'] = sprintf($this->language->get('error_version'), $response_info['version']);
+
+				if (isset($response_info['extension'])) {
+					foreach ($response_info['extension'] as $result) {
+						//in_array($response_info['version'], );
+
+
+
+						$data['extensions'][] = array(
+							'extension_download_id' => $result['extension_download_id'],
+							'extension_id'          => $result['extension_id'],
+							'name'                  => $result['name'],
+							'status'                => $result['status']
+						);
+					}
+				}
 			}
 		} else {
 			$data['error_warning'] = $this->language->get('error_connection');
-		}		
-
-		$data['extensions'] = array();	
-		
-		if (isset($response_info['extension'])) {
-			foreach ($response_info['extension'] as $result) {
-				$data['extensions'][] = array(
-					'extension_download_id' => $result['extension_download_id'],
-					'extension_id'          => $result['extension_id'],
-					'name'                  => $result['name'],
-					'status'                => $result['status']
-				); 
-			}
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -119,8 +125,8 @@ class ControllerToolUpgrade extends Controller {
 
 		$this->response->setOutput($this->load->view('tool/upgrade', $data));
 	}
-	
-	public function install() {
+
+    public function install() {
 		$this->load->language('tool/upgrade');
 
 		$json = array();
@@ -136,7 +142,7 @@ class ControllerToolUpgrade extends Controller {
 		}
 
 		if (!$json) {
-			$curl = curl_init(OPENCART_SERVER . 'index.php?route=api/upgrade/hash&version=' . $version);
+			$curl = curl_init(OPENCART_SERVER . 'index.php?route=api/upgrade/remove&version=' . $version);
 
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -151,7 +157,7 @@ class ControllerToolUpgrade extends Controller {
 			$response_info = json_decode($response, true);
 
 			if ($response_info) {
-				$this->session->data['files'] = $response_info['files'];
+				$this->session->data['remove'] = $response_info['remove'];
 
 				$json['text'] = $this->language->get('text_compare');
 
@@ -163,7 +169,7 @@ class ControllerToolUpgrade extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function compare() {
+	public function remove() {
 		$this->load->language('tool/upgrade');
 
 		$json = array();
@@ -178,35 +184,14 @@ class ControllerToolUpgrade extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$directory = DIR_DOWNLOAD . $version . '/upload/';
-
-		if (!is_dir($directory)) {
-			$json['error'] = $this->language->get('error_directory');
+		if (empty($this->session->data['files'])) {
+			$json['error'] = $this->language->get('error_compare');
 		}
 
 		if (!$json) {
-			$this->session->data['patch'] = array();
-
 			$files = array();
 
-			// Get a list of files ready to upload
-			$path = array($directory . '/*');
-
-			while (count($path) != 0) {
-				$next = array_shift($path);
-
-				foreach ((array)glob($next) as $file) {
-					if (is_dir($file)) {
-						$path[] = $file . '/*';
-					}
-
-					$files[] = $file;
-				}
-			}
-
-			foreach ($files as $file) {
-				$destination = str_replace('\\', '/', substr($file, strlen($directory)));
-
+			foreach ($this->session->data['files'] as $file) {
 				$path = '';
 
 				// Check if the copy location exists or not
@@ -226,12 +211,21 @@ class ControllerToolUpgrade extends Controller {
 					$path = DIR_SYSTEM . substr($destination, 7);
 				}
 
-				if (is_file($file) && (sha1_file($file) != sha1_file($path))) {
+				if (is_file($file)) {
 					$this->session->data['patch'][] = $file;
 				}
 			}
+			// Files to remove
+			$data['remove'] = array();
 
+			if (isset($response_info['remove'])) {
+				foreach ($response_info['remove'] as $result) {
+					$data['remove'][] = $result['path'];
+				}
+			}
+			$json['text'] = $this->language->get('text_download');
 
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/download', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -242,16 +236,16 @@ class ControllerToolUpgrade extends Controller {
 		$this->load->language('tool/upgrade');
 		
 		$json = array();
-		
-		if (!$this->user->hasPermission('modify', 'tool/upgrade')) {
-			$json['error'] = $this->language->get('error_permission');
-		}			
 
 		if (isset($this->request->get['version'])) {
 			$version = $this->request->get['version'];
 		} else {
-            $version = '';
-        }
+			$version = '';
+		}
+
+		if (!$this->user->hasPermission('modify', 'tool/upgrade')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
 
         if (!$json) {
 			set_time_limit(0);
@@ -280,7 +274,7 @@ class ControllerToolUpgrade extends Controller {
 			if ($status == 200) {
 				$json['text'] = $this->language->get('text_unzip');
 
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/unzip', 'version=' . $version));
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/unzip', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
 			} else {
 				$json['error'] = $this->language->get('error_download');
 			}
@@ -319,9 +313,9 @@ class ControllerToolUpgrade extends Controller {
 				$zip->extractTo(DIR_DOWNLOAD . $version);
 				$zip->close();
 
-				$json['text'] = 'Copying files!';
+				$json['text'] = $this->language->get('text_move');
 
-				$json['next'] = $this->url->link('tool/upgrade/move', 'version=' . $version);
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/move', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
 			}
@@ -404,16 +398,26 @@ class ControllerToolUpgrade extends Controller {
 					}
 				}
 			}
+
+			$json['text'] = $this->language->get('text_remove');
+
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/clear', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));	
 	}
 
-	public function remove() {
+	public function clear() {
 		$this->load->language('tool/upgrade');
 
 		$json = array();
+
+		if (isset($this->request->get['version'])) {
+			$version = $this->request->get['version'];
+		} else {
+			$version = '';
+		}
 
 		if (!$this->user->hasPermission('modify', 'tool/upgrade')) {
 			$json['error'] = $this->language->get('error_permission');

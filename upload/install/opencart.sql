@@ -1508,6 +1508,7 @@ INSERT INTO `oc_extension` (`extension_id`, `type`, `code`) VALUES
 DROP TABLE IF EXISTS `oc_extension_install`;
 CREATE TABLE `oc_extension_install` (
   `extension_install_id` int(11) NOT NULL AUTO_INCREMENT,
+  `extension_id` int(11) NOT NULL,
   `extension_download_id` int(11) NOT NULL,
   `filename` varchar(255) NOT NULL,
   `date_added` datetime NOT NULL,

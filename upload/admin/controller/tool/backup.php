@@ -158,8 +158,6 @@ class ControllerToolBackup extends Controller {
 		}
 	}
 
-
-
 	public function calculate() {
 		$this->load->language('upgrade/upgrade');
 
@@ -205,7 +203,6 @@ class ControllerToolBackup extends Controller {
 				$paths = array();
 			}
 
-
 			// Loop through each path
 			foreach ($directories as $directory) {
 				$path = rtrim(DIR_IMAGE . $path, '/');
@@ -235,35 +232,17 @@ class ControllerToolBackup extends Controller {
 							$files[] = $file;
 						}
 					}
-
-					// Reverse sort the file array
-					rsort($files);
-
-					foreach ($files as $file) {
-						// If file just delete
-						if (is_file($file)) {
-							unlink($file);
-
-							// If directory use the remove directory function
-						} elseif (is_dir($file)) {
-							rmdir($file);
-						}
-					}
 				}
 			}
 
-
-
-
-			disk_total_space();
-
+			//disk_total_space();
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function current() {
+	public function modified() {
 		$this->load->language('upgrade/backup');
 
 		$json = array();
@@ -279,6 +258,7 @@ class ControllerToolBackup extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
 	function database() {
 		$this->load->language('upgrade/backup');
 
@@ -323,15 +303,15 @@ class ControllerToolBackup extends Controller {
 		}
 
 		if (!$json) {
-			$files = glob(DIR_DOWNLOAD . );
+			//$files = glob(DIR_DOWNLOAD . );
 
 
 
-			foreach ($files as $file) {
+			//foreach ($files as $file) {
 
 
 
-			}
+			//}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -339,23 +319,6 @@ class ControllerToolBackup extends Controller {
 	}
 
 	function upload() {
-		$this->load->language('upgrade/backup');
-
-		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'upgrade/backup')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function modified() {
 		$this->load->language('upgrade/backup');
 
 		$json = array();

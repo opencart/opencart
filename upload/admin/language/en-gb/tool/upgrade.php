@@ -4,10 +4,14 @@ $_['heading_title']      = 'Upgrade';
 
 // Text
 $_['text_success']       = 'Success: You are using the latest version %s!';
-$_['text_system']        = 'Upgrade System';
-$_['text_version']       = 'Latest Version';
+
+$_['text_version']       = '1. Check Latest Version';
+$_['text_compatibility'] = '2. Compatibility';
+$_['text_upgrade']       = '3. Upgrade System';
+
+
 $_['text_change']        = 'Change Log';
-$_['text_compatible']    = 'Compatibility';
+
 $_['text_progress']      = 'Upgrade Progress';
 $_['text_log']           = 'Upgrade Log';
 
@@ -19,10 +23,6 @@ $_['text_download']      = 'Downloading latest version';
 $_['text_unzip']         = 'Extracting files!';
 $_['text_move']          = 'Copying files!';
 $_['text_clear']         = 'Clearing temporary files!';
-
-
-$_['text_current']       = 'Downloadng latest version';
-
 
 // Column
 $_['column_name']        = 'Extension Name';
@@ -36,14 +36,7 @@ $_['entry_date_added']   = 'Date Added';
 $_['entry_name']         = 'Upload Name';
 
 // Button
-$_['button_skip']        = 'Skip';
-$_['button_help']        = 'Help';
-
-// Tab
-$_['tab_version']        = '1. Latest Version';
-$_['tab_compatibility']  = '2. Compatibility';
-$_['tab_upgrade']        = '3. Upgrade';
-$_['tab_finish']         = '4. Finish';
+$_['button_start']       = 'Start';
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify upgrades!';

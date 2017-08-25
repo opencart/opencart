@@ -6,23 +6,29 @@ $_['heading_title']      = 'Upgrade';
 $_['text_success']       = 'Success: You are using the latest version %s!';
 $_['text_system']        = 'Upgrade System';
 $_['text_version']       = 'Latest Version';
-$_['text_compatibility'] = 'Compatibility';
-
-
+$_['text_change']        = 'Changes';
+$_['text_compatible']    = 'Compatibility';
 $_['text_progress']      = 'Upgrade Progress';
 $_['text_log']           = 'Upgrade Log';
-$_['text_compare']       = 'Comparing Files';
 
 
-$_['text_log']           = 'Upgrade Log';
+
+
+
+$_['text_remove']        = 'Removing unessay files';
+
+$_['text_unzip']         = 'Extracting files!';
+$_['text_move']          = 'Copying files!';
+$_['text_clear']         = 'Removing temporary files!';
+
 
 $_['text_current']       = 'Downloadng latest version';
 $_['text_download']      = 'Downloadng latest version';
 
 // Column
 $_['column_name']        = 'Extension Name';
-$_['column_latest']      = 'Latest Version';
-$_['column_status']      = 'Status';
+$_['column_compatible']  = 'Latest Version Compatible';
+$_['column_available']   = 'Available';
 
 // Entry
 $_['entry_name']         = 'Upload Name';
@@ -49,3 +55,6 @@ $_['tab_finish']         = '4. Finish';
 $_['error_permission']   = 'Warning: You do not have permission to modify upgrades!';
 $_['error_version']      = 'Your current OpenCart version is out of date! The current latest version is <strong>%s</strong>';
 $_['error_connection']   = 'Warning: Could not connect to the upgrade server!';
+$_['error_file']         = 'Upgrade file could not be found!';
+$_['error_unzip']        = 'Zip file could not be opened!';
+$_['error_directory']    = 'Upgrade directory could not be found!';

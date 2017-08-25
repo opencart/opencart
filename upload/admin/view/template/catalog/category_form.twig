@@ -236,75 +236,75 @@
       </div>
     </div>
   </div>
-  <link href="view/javascript/codemirror/lib/codemirror.css" rel="stylesheet"/>
-  <link href="view/javascript/codemirror/theme/monokai.css" rel="stylesheet"/>
-  <script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script>
-  <script type="text/javascript" src="view/javascript/codemirror/lib/xml.js"></script>
-  <script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script>
-
-  <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
-  <link href="view/javascript/summernote/summernote.css" rel="stylesheet"/>
-  <script type="text/javascript" src="view/javascript/summernote/summernote-image-attributes.js"></script>
-  <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>
-
-  <script type="text/javascript"><!--
-      $('input[name=\'path\']').autocomplete({
-          'source': function (request, response) {
-              $.ajax({
-                  url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
-                  dataType: 'json',
-                  success: function (json) {
-                      json.unshift({
-                          category_id: 0,
-                          name: '{{ text_none }}'
-                      });
-
-                      response($.map(json, function (item) {
-                          return {
-                              label: item['name'],
-                              value: item['category_id']
-                          }
-                      }));
-                  }
-              });
-          },
-          'select': function (item) {
-              $('input[name=\'path\']').val(item['label']);
-              $('input[name=\'parent_id\']').val(item['value']);
-          }
-      });
-      //--></script>
-  <script type="text/javascript"><!--
-      $('input[name=\'filter\']').autocomplete({
-          'source': function (request, response) {
-              $.ajax({
-                  url: 'index.php?route=catalog/filter/autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
-                  dataType: 'json',
-                  success: function (json) {
-                      response($.map(json, function (item) {
-                          return {
-                              label: item['name'],
-                              value: item['filter_id']
-                          }
-                      }));
-                  }
-              });
-          },
-          'select': function (item) {
-              $('input[name=\'filter\']').val('');
-
-              $('#category-filter' + item['value']).remove();
-
-              $('#category-filter').append('<div id="category-filter' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="category_filter[]" value="' + item['value'] + '" /></div>');
-          }
-      });
-
-      $('#category-filter').delegate('.fa-minus-circle', 'click', function () {
-          $(this).parent().remove();
-      });
-      //--></script>
-  <script type="text/javascript"><!--
-      $('#language a:first').tab('show');
-      //--></script>
 </div>
+<link href="view/javascript/codemirror/lib/codemirror.css" rel="stylesheet"/>
+<link href="view/javascript/codemirror/theme/monokai.css" rel="stylesheet"/>
+<script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script>
+<script type="text/javascript" src="view/javascript/codemirror/lib/xml.js"></script>
+<script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script>
+
+<script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
+<link href="view/javascript/summernote/summernote.css" rel="stylesheet"/>
+<script type="text/javascript" src="view/javascript/summernote/summernote-image-attributes.js"></script>
+<script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>
+
+<script type="text/javascript"><!--
+$('input[name=\'path\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				json.unshift({
+					category_id: 0,
+					name: '{{ text_none }}'
+				});
+
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['category_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'path\']').val(item['label']);
+		$('input[name=\'parent_id\']').val(item['value']);
+	}
+});
+//--></script>
+<script type="text/javascript"><!--
+$('input[name=\'filter\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/filter/autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['filter_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'filter\']').val('');
+
+		$('#category-filter' + item['value']).remove();
+
+		$('#category-filter').append('<div id="category-filter' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="category_filter[]" value="' + item['value'] + '" /></div>');
+	}
+});
+
+$('#category-filter').delegate('.fa-minus-circle', 'click', function() {
+	$(this).parent().remove();
+});
+//--></script>
+<script type="text/javascript"><!--
+$('#language a:first').tab('show');
+//--></script>
 {{ footer }}

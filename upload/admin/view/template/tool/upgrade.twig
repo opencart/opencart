@@ -51,14 +51,47 @@
                   <li></li>
                 </ol>
               </fieldset>
-
+              <br />
+              <fieldset>
+                <legend id="version">{{ text_change }}</legend>
+              </fieldset>
             </div>
             <div class="tab-pane" id="tab-compatibility">
 
               <fieldset>
-                <legend>{{ text_compatibility }}</legend>
+                <legend>{{ text_compatible }}</legend>
                 <p>Before upgrading its very important to check if extensions installed are compatible with the latest version</p>
-                <div id="compatibility"></div>
+                <div id="compatibility">
+                  <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                      <td class="text-left">{{ column_name }}</td>
+                      <td class="text-center">{{ column_compatible }}</td>
+                      <td class="text-center">{{ column_available }}</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% if extensions %}
+                      {% for extension in extensions %}
+                        <tr>
+                          <td class="text-left">{{ extension.name }}</td>
+                          <td class="text-center">{% if extension.compatible %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
+                          <td class="text-center">{% if extension.available %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
+                        </tr>
+                      {% endfor %}
+                    {% else %}
+                      <tr>
+                        <td class="text-center" colspan="3">{{ text_no_results }}</td>
+                      </tr>
+                    {% endif %}
+                    </tbody>
+
+                  </table>
+
+
+
+                </div>
               </fieldset>
             </div>
             <div class="tab-pane" id="tab-upgrade">
@@ -101,7 +134,7 @@ $('#button-upgrade').on('click', function() {
 	$('#progress-text').html('{{ text_download }}');
 
 	$.ajax({
-		url: 'index.php?route=tool/upgrade/download&user_token={{ user_token }}&version={{ version }}',
+		url: 'index.php?route=tool/upgrade/install&user_token={{ user_token }}&version={{ version }}',
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-upgrade').button('loading');
@@ -164,6 +197,5 @@ function next(url, i) {
 		}
 	});
 }
-
 //--></script>
 {{ footer }}

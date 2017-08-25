@@ -14,6 +14,9 @@
     </div>
   </div>
   <div class="container-fluid">
+
+
+
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-exclamation-triangle"></i> {{ text_system }}</h3>
@@ -24,7 +27,6 @@
             <li class="active"><a href="#tab-version" data-toggle="tab">{{ tab_version }}</a></li>
             <li><a href="#tab-compatibility" data-toggle="tab">{{ tab_compatibility }}</a></li>
             <li><a href="#tab-upgrade" data-toggle="tab">{{ tab_upgrade }}</a></li>
-            <li><a href="#tab-finish" data-toggle="tab">{{ tab_finish }}</a></li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-version">
@@ -51,9 +53,10 @@
                   <li></li>
                 </ol>
               </fieldset>
-              <br />
+              <br/>
               <fieldset>
                 <legend id="version">{{ text_change }}</legend>
+                <textarea wrap="off" rows="15" readonly class="form-control">{{ log }}</textarea>
               </fieldset>
             </div>
             <div class="tab-pane" id="tab-compatibility">
@@ -90,7 +93,6 @@
                   </table>
 
 
-
                 </div>
               </fieldset>
             </div>
@@ -116,8 +118,6 @@
                   </div>
                 </div>
               </fieldset>
-            </div>
-            <div class="tab-pane" id="tab-finish">
               <fieldset>
                 <legend>Upgrade Log</legend>
                 <textarea wrap="off" rows="15" readonly class="form-control">{{ log }}</textarea>
@@ -127,10 +127,16 @@
         </form>
       </div>
     </div>
+
+
+
   </div>
 </div>
 <script type="text/javascript"><!--
 $('#button-upgrade').on('click', function() {
+	$('.alert-dismissible').remove();
+	$('#progress-bar').css('width', '0%');
+	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
 	$('#progress-text').html('{{ text_download }}');
 
 	$.ajax({
@@ -144,17 +150,17 @@ $('#button-upgrade').on('click', function() {
 		},
 		success: function(json) {
 			if (json['error']) {
-				$('#progress-bar').addClass('progress-bar-danger');
-
-				$('#progress-text').html(json['text']);
+                $('#progress-bar').addClass('progress-bar-danger');
+                $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
 			}
 
 			if (json['text']) {
+				$('#progress-bar').css('width', '20%');
 				$('#progress-text').html(json['text']);
 			}
 
 			if (json['next']) {
-				$('#data-next').attr('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+				next(json['next'], element, 1);
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -163,7 +169,7 @@ $('#button-upgrade').on('click', function() {
 	});
 });
 
-function next(url, i) {
+function next(url, element, i) {
 	i = i + 1;
 
 	$.ajax({
@@ -197,5 +203,6 @@ function next(url, i) {
 		}
 	});
 }
+
 //--></script>
 {{ footer }}

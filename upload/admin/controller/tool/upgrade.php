@@ -119,8 +119,6 @@ class ControllerToolUpgrade extends Controller {
 								}
 							}
 
-							$compatible = false;
-
 							$data['extensions'][] = array(
 								'name'       => $extension['name'],
 								'compatible' => $compatible,
@@ -141,7 +139,7 @@ class ControllerToolUpgrade extends Controller {
 		$this->response->setOutput($this->load->view('tool/upgrade', $data));
 	}
 
-    public function install() {
+	public function install() {
 		$this->load->language('tool/upgrade');
 
 		$json = array();
@@ -196,7 +194,11 @@ class ControllerToolUpgrade extends Controller {
 						if (is_file($path)) {
 							unlink($path);
 						} elseif (is_dir($path)) {
-							rmdir($path);
+							$files = glob($path . '/*');
+
+							if (!count($files)) {
+								rmdir($path);
+							}
 						}
 					}
 				}
@@ -205,7 +207,7 @@ class ControllerToolUpgrade extends Controller {
 
 				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/download', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
 			} else {
-				$data['error'] = $this->language->get('error_remove');
+				$data['error'] = $this->language->get('error_connection');
 			}
 		}
 
@@ -272,7 +274,7 @@ class ControllerToolUpgrade extends Controller {
 		if (isset($this->request->get['version'])) {
 			$version = $this->request->get['version'];
 		} else {
-			$version = '3.0.2.0';
+			$version = '';
 		}
 
 		if (!$this->user->hasPermission('modify', 'tool/upgrade')) {
@@ -379,7 +381,7 @@ class ControllerToolUpgrade extends Controller {
 				}
 			}
 
-			$json['text'] = $this->language->get('text_remove');
+			$json['text'] = $this->language->get('text_clear');
 
 			$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/clear', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
 		}
@@ -388,7 +390,7 @@ class ControllerToolUpgrade extends Controller {
 		$this->response->setOutput(json_encode($json));	
 	}
 
-	public function remove() {
+	public function clear() {
 		$this->load->language('tool/upgrade');
 
 		$json = array();
@@ -404,53 +406,52 @@ class ControllerToolUpgrade extends Controller {
 		}
 
 		if (!$json) {
-			if (!$json) {
-				$directory = DIR_UPLOAD . 'tmp-' . $this->session->data['install'] . '/';
+			$directory = DIR_DOWNLOAD . $version . '/';
+
+			if (is_dir($directory)) {
+				// Get a list of files ready to upload
+				$files = array();
+
+				$path = array($directory);
+
+				while (count($path) != 0) {
+					$next = array_shift($path);
+
+					// We have to use scandir function because glob will not pick up dot files.
+					foreach (array_diff(scandir($next), array('.', '..')) as $file) {
+						$file = $next . '/' . $file;
+
+						if (is_dir($file)) {
+							$path[] = $file;
+						}
+
+						$files[] = $file;
+					}
+				}
+
+				rsort($files);
+
+				foreach ($files as $file) {
+					if (is_file($file)) {
+						unlink($file);
+					} elseif (is_dir($file)) {
+						rmdir($file);
+					}
+				}
 
 				if (is_dir($directory)) {
-					// Get a list of files ready to upload
-					$files = array();
-
-					$path = array($directory);
-
-					while (count($path) != 0) {
-						$next = array_shift($path);
-
-						// We have to use scandir function because glob will not pick up dot files.
-						foreach (array_diff(scandir($next), array('.', '..')) as $file) {
-							$file = $next . '/' . $file;
-
-							if (is_dir($file)) {
-								$path[] = $file;
-							}
-
-							$files[] = $file;
-						}
-					}
-
-					rsort($files);
-
-					foreach ($files as $file) {
-						if (is_file($file)) {
-							unlink($file);
-						} elseif (is_dir($file)) {
-							rmdir($file);
-						}
-					}
-
-					if (is_dir($directory)) {
-						rmdir($directory);
-					}
+					rmdir($directory);
 				}
-
-				$file = DIR_UPLOAD . $this->session->data['install'] . '.tmp';
-
-				if (is_file($file)) {
-					unlink($file);
-				}
-
-				$json['success'] = $this->language->get('text_success');
 			}
+
+			$file = DIR_DOWNLOAD . $version . '.zip';
+
+			if (is_file($file)) {
+				unlink($file);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

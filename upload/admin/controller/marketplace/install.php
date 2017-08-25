@@ -338,16 +338,16 @@ class ControllerMarketplaceInstall extends Controller {
 		}
 
 		if (!$json) {
-			$json['text'] = $this->language->get('text_remove');
+			$json['text'] = $this->language->get('text_clear');
 
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/remove', 'user_token=' . $this->session->data['user_token'], true));
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/clear', 'user_token=' . $this->session->data['user_token'], true));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function remove() {
+	public function clear() {
 		$this->load->language('marketplace/install');
 
 		$json = array();

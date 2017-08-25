@@ -6,24 +6,23 @@ $_['heading_title']      = 'Upgrade';
 $_['text_success']       = 'Success: You are using the latest version %s!';
 $_['text_system']        = 'Upgrade System';
 $_['text_version']       = 'Latest Version';
-$_['text_change']        = 'Changes';
+$_['text_change']        = 'Change Log';
 $_['text_compatible']    = 'Compatibility';
 $_['text_progress']      = 'Upgrade Progress';
 $_['text_log']           = 'Upgrade Log';
 
+$_['text_install']       = 'Installing';
 
-
-
-
-$_['text_remove']        = 'Removing unessay files';
+$_['text_remove']        = 'Removing unnecessary files';
+$_['text_download']      = 'Downloading latest version';
 
 $_['text_unzip']         = 'Extracting files!';
 $_['text_move']          = 'Copying files!';
-$_['text_clear']         = 'Removing temporary files!';
+$_['text_clear']         = 'Clearing temporary files!';
 
 
 $_['text_current']       = 'Downloadng latest version';
-$_['text_download']      = 'Downloadng latest version';
+
 
 // Column
 $_['column_name']        = 'Extension Name';
@@ -35,14 +34,9 @@ $_['entry_name']         = 'Upload Name';
 $_['entry_filename']     = 'Filename';
 $_['entry_date_added']   = 'Date Added';
 $_['entry_name']         = 'Upload Name';
-$_['entry_patch']        = 'Patch';
-
-// Help
-$_['help_patch']         = 'help_patch';
 
 // Button
 $_['button_skip']        = 'Skip';
-$_['button_patch']       = 'Patch';
 $_['button_help']        = 'Help';
 
 // Tab
@@ -55,6 +49,13 @@ $_['tab_finish']         = '4. Finish';
 $_['error_permission']   = 'Warning: You do not have permission to modify upgrades!';
 $_['error_version']      = 'Your current OpenCart version is out of date! The current latest version is <strong>%s</strong>';
 $_['error_connection']   = 'Warning: Could not connect to the upgrade server!';
+
+
+$_['error_download']     = 'Upgrade could not be downloaded!';
 $_['error_file']         = 'Upgrade file could not be found!';
-$_['error_unzip']        = 'Zip file could not be opened!';
 $_['error_directory']    = 'Upgrade directory could not be found!';
+
+
+
+$_['error_unzip']        = 'Zip file could not be opened!';
+

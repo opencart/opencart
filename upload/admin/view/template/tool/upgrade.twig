@@ -87,7 +87,7 @@
       </div>
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ text_upgrade }}</h3>
+          <h3 class="panel-title"><i class="fa fa-exclamation-circle"></i> {{ text_upgrade }}</h3>
         </div>
         <div id="collapse-upgrade" class="panel-collapse collapse">
           <div class="panel-body">
@@ -114,7 +114,7 @@
             </fieldset>
             <fieldset>
               <legend>Upgrade Log</legend>
-              <textarea wrap="off" rows="10" readonly class="form-control"></textarea>
+              <textarea id="log" wrap="off" rows="10" readonly class="form-control"></textarea>
             </fieldset>
           </div>
         </div>
@@ -124,10 +124,10 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-upgrade').on('click', function() {
-	$('.alert-dismissible').remove();
 	$('#progress-bar').css('width', '0%');
 	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
 	$('#progress-text').html('{{ text_install }}');
+	$('#log').prepend('{{ text_install }}' + "\n");
 
 	$.ajax({
 		url: 'index.php?route=tool/upgrade/install&user_token={{ user_token }}&version={{ version }}',
@@ -139,15 +139,17 @@ $('#button-upgrade').on('click', function() {
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
 				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+				$('#log').prepend(json['error'] + "\n");
 			}
 
 			if (json['text']) {
 				$('#progress-bar').css('width', '20%');
 				$('#progress-text').html(json['text']);
+				$('#log').prepend(json['text'] + "\n");
 			}
 
 			if (json['next']) {
-				next(json['next'], element, 1);
+				next(json['next'], 1);
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -156,7 +158,7 @@ $('#button-upgrade').on('click', function() {
 	});
 });
 
-function next(url, element, i) {
+function next(url, i) {
 	i = i + 1;
 
 	$.ajax({
@@ -168,17 +170,22 @@ function next(url, element, i) {
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
 				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+				$('#log').prepend(json['error'] + "\n");
+
+				$('#button-upgrade').button('reset');
 			}
-			$('#button-upgrade').button('reset');
+
 			if (json['success']) {
 				$('#progress-bar').addClass('progress-bar-success');
 				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
+				$('#log').prepend(json['success'] + "\n");
 
-				$('#history').load('index.php?route=marketplace/installer/history&user_token={{ user_token }}');
+				$('#button-upgrade').button('reset');
 			}
 
 			if (json['text']) {
 				$('#progress-text').html(json['text']);
+				$('#log').prepend(json['text'] + "\n");
 			}
 
 			if (json['next']) {
@@ -190,6 +197,5 @@ function next(url, element, i) {
 		}
 	});
 }
-
 //--></script>
 {{ footer }}

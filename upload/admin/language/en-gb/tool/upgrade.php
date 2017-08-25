@@ -5,9 +5,9 @@ $_['heading_title']      = 'Upgrade';
 // Text
 $_['text_success']       = 'Success: You are using the latest version %s!';
 
-$_['text_version']       = '1. Check Latest Version';
-$_['text_compatibility'] = '2. Compatibility';
-$_['text_upgrade']       = '3. Upgrade System';
+$_['text_version']       = 'Check Latest Version';
+$_['text_compatibility'] = 'Compatibility';
+$_['text_upgrade']       = 'Upgrade System';
 
 
 $_['text_change']        = 'Change Log';

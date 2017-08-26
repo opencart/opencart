@@ -333,6 +333,11 @@ class ControllerToolUpgrade extends Controller {
 		}
 
 		if (!$json) {
+			$ignore = array(
+				'config-dist.php',
+				'admin/config-dist.php'
+			);
+
 			$files = array();
 
 			// Get a list of files ready to upload

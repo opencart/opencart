@@ -203,9 +203,13 @@ class ControllerToolUpgrade extends Controller {
 					}
 				}
 
-				$json['text'] = $this->language->get('text_download');
+				//$json['text'] = $this->language->get('text_download');
 
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/download', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
+				//$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/download', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
+
+				$json['text'] = $this->language->get('text_unzip');
+
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/unzip', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
 			} else {
 				$data['error'] = $this->language->get('error_connection');
 			}
@@ -235,7 +239,7 @@ class ControllerToolUpgrade extends Controller {
 
 			$curl = curl_init('https://github.com/opencart/opencart/archive/' . $version . '.zip');
 
-			$handle = fopen(DIR_DOWNLOAD . $version . '.zip', 'w');
+			$handle = fopen(DIR_DOWNLOAD . 'opencart-' . $version . '.zip', 'w');
 
 			curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart ' . VERSION);
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
@@ -281,7 +285,7 @@ class ControllerToolUpgrade extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$file = DIR_DOWNLOAD . $version . '.zip';
+		$file = DIR_DOWNLOAD . 'opencart-' . $version . '.zip';
 
 		if (!is_file($file)) {
 			$json['error'] = $this->language->get('error_file');
@@ -292,7 +296,7 @@ class ControllerToolUpgrade extends Controller {
 			$zip = new ZipArchive();
 
 			if ($zip->open($file)) {
-				$zip->extractTo(DIR_DOWNLOAD . $version);
+				$zip->extractTo(DIR_DOWNLOAD . 'opencart-' . $version);
 				$zip->close();
 
 				$json['text'] = $this->language->get('text_move');
@@ -322,7 +326,7 @@ class ControllerToolUpgrade extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$directory = DIR_DOWNLOAD . $version . '/upload/';
+		$directory = DIR_DOWNLOAD . 'opencart-' . $version . '/opencart-' . $version . '/upload/';
 
 		if (!is_dir($directory)) {
 			$json['error'] = $this->language->get('error_directory');

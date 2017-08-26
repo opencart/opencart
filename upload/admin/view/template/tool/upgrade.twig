@@ -139,13 +139,13 @@ $('#button-upgrade').on('click', function() {
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
 				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-				$('#log').prepend(json['error'] + "\n");
+				$('#log').append(json['error'] + "\n");
 			}
 
 			if (json['text']) {
 				$('#progress-bar').css('width', '20%');
 				$('#progress-text').html(json['text']);
-				$('#log').prepend(json['text'] + "\n");
+				$('#log').append(json['text'] + "\n");
 			}
 
 			if (json['next']) {
@@ -170,7 +170,7 @@ function next(url, i) {
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
 				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-				$('#log').prepend(json['error'] + "\n");
+				$('#log').append(json['error'] + "\n");
 
 				$('#button-upgrade').button('reset');
 			}
@@ -178,14 +178,14 @@ function next(url, i) {
 			if (json['success']) {
 				$('#progress-bar').addClass('progress-bar-success');
 				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
-				$('#log').prepend(json['success'] + "\n");
+				$('#log').append(json['success'] + "\n");
 
 				$('#button-upgrade').button('reset');
 			}
 
 			if (json['text']) {
 				$('#progress-text').html(json['text']);
-				$('#log').prepend(json['text'] + "\n");
+				$('#log').append(json['text'] + "\n");
 			}
 
 			if (json['next']) {

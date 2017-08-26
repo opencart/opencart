@@ -351,7 +351,7 @@ class ControllerToolUpgrade extends Controller {
 			}
 
 			foreach ($files as $file) {
-				$destination = str_replace('\\', '/', substr($file, strlen($directory)));
+				$destination = str_replace('\\', '/', substr($file, strlen($directory . '/')));
 
 				$path = '';
 

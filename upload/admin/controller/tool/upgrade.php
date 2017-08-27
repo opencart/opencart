@@ -459,7 +459,7 @@ class ControllerToolUpgrade extends Controller {
 			$file = DIR_DOWNLOAD . 'opencart-' . $version . '.zip';
 
 			if (is_file($file)) {
-				unlink($file);
+			//	unlink($file);
 			}
 
 			$json['success'] = $this->language->get('text_success');

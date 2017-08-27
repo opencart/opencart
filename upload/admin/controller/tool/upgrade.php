@@ -305,15 +305,15 @@ class ControllerToolUpgrade extends Controller {
 				$this->log->write($path);
 
 				if (is_dir($file) && !is_dir($path)) {
-					//if (!mkdir($path, 0777)) {
+					if (!mkdir($path, 0777)) {
 						$json['error'] = sprintf($this->language->get('error_directory'), $destination);
-					//}
+					}
 				}
 
 				if (is_file($file)) {
-					//if (!rename($file, $path)) {
+					if (!rename($file, $path)) {
 						$json['error'] = sprintf($this->language->get('error_file'), $destination);
-					//}
+					}
 				}
 			}
 
@@ -462,7 +462,7 @@ class ControllerToolUpgrade extends Controller {
 			//	unlink($file);
 			}
 
-			$json['success'] = $this->language->get('text_success');
+			$json['success'] = sprintf($this->language->get('text_success'), VERSION);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

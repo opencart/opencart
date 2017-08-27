@@ -278,7 +278,7 @@ class ControllerToolUpgrade extends Controller {
 			foreach ($files as $file) {
 				$destination = str_replace('\\', '/', substr($file, strlen($directory . '/')));
 
-				$path = '';
+				$path = str_replace('\\', '/', realpath(DIR_CATALOG . '../'));
 
 				// Check if the copy location exists or not
 				if (substr($destination, 0, 5) == 'admin') {
@@ -289,6 +289,10 @@ class ControllerToolUpgrade extends Controller {
 					$path = DIR_CATALOG . substr($destination, 8);
 				}
 
+				if (substr($destination, 0, 5) == 'install') {
+					$path = DIR_IMAGE . substr($destination, 6);
+				}
+
 				if (substr($destination, 0, 5) == 'image') {
 					$path = DIR_IMAGE . substr($destination, 6);
 				}
@@ -297,8 +301,8 @@ class ControllerToolUpgrade extends Controller {
 					$path = DIR_SYSTEM . substr($destination, 7);
 				}
 
-				$this->log->write($destination);
 				$this->log->write($path);
+				$this->log->write($destination);
 
 				if (is_dir($file) && !is_dir($path)) {
 					if (!mkdir($path, 0777)) {

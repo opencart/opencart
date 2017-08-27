@@ -289,8 +289,8 @@ class ControllerToolUpgrade extends Controller {
 					$path = DIR_CATALOG . substr($destination, 8);
 				}
 
-				if (substr($destination, 0, 5) == 'install') {
-					$path = DIR_IMAGE . substr($destination, 6);
+				if (substr($destination, 0, 7) == 'install') {
+					$path = DIR_IMAGE . substr($destination, 8);
 				}
 
 				if (substr($destination, 0, 5) == 'image') {

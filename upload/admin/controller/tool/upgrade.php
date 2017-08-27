@@ -301,19 +301,16 @@ class ControllerToolUpgrade extends Controller {
 					$path = DIR_SYSTEM . substr($destination, 7);
 				}
 
-				$this->log->write($destination);
-				$this->log->write($path);
-
 				if (is_dir($file) && !is_dir($path)) {
-					if (!mkdir($path, 0777)) {
-						$json['error'] = sprintf($this->language->get('error_directory'), $destination);
-					}
+					//if (!mkdir($path, 0777)) {
+					//	$json['error'] = sprintf($this->language->get('error_directory'), $destination);
+					//}
 				}
 
 				if (is_file($file)) {
-					if (!rename($file, $path)) {
-						$json['error'] = sprintf($this->language->get('error_file'), $destination);
-					}
+					//if (!rename($file, $path)) {
+					//	$json['error'] = sprintf($this->language->get('error_file'), $destination);
+					//}
 				}
 			}
 
@@ -447,12 +444,12 @@ class ControllerToolUpgrade extends Controller {
 					if (is_file($file)) {
 					//	unlink($file);
 					} elseif (is_dir($file)) {
-					//	rmdir($file);
+				//		rmdir($file);
 					}
 				}
 
 				if (is_dir($directory)) {
-					//rmdir($directory);
+				//	rmdir($directory);
 				}
 			}
 

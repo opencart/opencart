@@ -97,7 +97,7 @@
                 <label class="col-sm-2 control-label">Progress</label>
                 <div class="col-sm-10">
                   <div id="progress-download" class="progress">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div id="progress-bar" class="progress-bar"></div>
                   </div>
                   <div id="progress-text"></div>
                 </div>
@@ -188,6 +188,8 @@ function next(url, i) {
 			}
 
 			if (json['text']) {
+
+
 				$('#progress-text').html(json['text']);
 				$('#log').append(json['text'] + "\n");
 			}

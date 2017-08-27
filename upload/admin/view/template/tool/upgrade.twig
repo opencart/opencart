@@ -126,11 +126,11 @@
 $('#button-upgrade').on('click', function() {
 	$('#progress-bar').css('width', '0%');
 	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
-	$('#progress-text').html('{{ text_install }}');
-	$('#log').prepend('{{ text_install }}' + "\n");
+	$('#progress-text').html('{{ text_download }}');
+	$('#log').prepend('{{ text_download }}' + "\n");
 
 	$.ajax({
-		url: 'index.php?route=tool/upgrade/install&user_token={{ user_token }}&version={{ version }}',
+		url: 'index.php?route=tool/upgrade/download&user_token={{ user_token }}&version={{ version }}',
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-upgrade').button('loading');
@@ -153,7 +153,7 @@ $('#button-upgrade').on('click', function() {
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			$('#log').append(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
 });
@@ -193,7 +193,7 @@ function next(url, i) {
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			$('#log').append(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
 }

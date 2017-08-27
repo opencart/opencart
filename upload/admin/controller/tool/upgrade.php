@@ -139,86 +139,6 @@ class ControllerToolUpgrade extends Controller {
 		$this->response->setOutput($this->load->view('tool/upgrade', $data));
 	}
 
-	public function install() {
-		$this->load->language('tool/upgrade');
-
-		$json = array();
-
-		if (isset($this->request->get['version'])) {
-			$version = $this->request->get['version'];
-		} else {
-			$version = '';
-		}
-
-		if (!$this->user->hasPermission('modify', 'tool/upgrade')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$curl = curl_init(OPENCART_SERVER . 'index.php?route=api/upgrade/remove&version=' . VERSION);
-
-			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
-			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
-
-			$response = curl_exec($curl);
-
-			curl_close($curl);
-
-			$response_info = json_decode($response, true);
-
-			if ($response_info) {
-				foreach ($response_info['remove'] as $remove) {
-					$path = '';
-
-					// Check if the location exists or not
-					if (substr($remove, 0, 5) == 'admin') {
-						$path = DIR_APPLICATION . substr($remove, 6);
-					}
-
-					if (substr($remove, 0, 7) == 'catalog') {
-						$path = DIR_CATALOG . substr($remove, 8);
-					}
-
-					if (substr($remove, 0, 5) == 'image') {
-						$path = DIR_IMAGE . substr($remove, 6);
-					}
-
-					if (substr($remove, 0, 6) == 'system') {
-						$path = DIR_SYSTEM . substr($remove, 7);
-					}
-
-					if ($path) {
-						if (is_file($path)) {
-							unlink($path);
-						} elseif (is_dir($path)) {
-							$files = glob($path . '/*');
-
-							if (!count($files)) {
-								rmdir($path);
-							}
-						}
-					}
-				}
-
-				//$json['text'] = $this->language->get('text_download');
-
-				//$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/download', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
-
-				$json['text'] = $this->language->get('text_unzip');
-
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/unzip', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
-			} else {
-				$data['error'] = $this->language->get('error_connection');
-			}
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
 	public function download() {
 		$this->load->language('tool/upgrade');
 		
@@ -396,7 +316,87 @@ class ControllerToolUpgrade extends Controller {
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));	
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function remove() {
+		$this->load->language('tool/upgrade');
+
+		$json = array();
+
+		if (isset($this->request->get['version'])) {
+			$version = $this->request->get['version'];
+		} else {
+			$version = '';
+		}
+
+		if (!$this->user->hasPermission('modify', 'tool/upgrade')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$curl = curl_init(OPENCART_SERVER . 'index.php?route=api/upgrade/remove&version=' . VERSION);
+
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+
+			$response = curl_exec($curl);
+
+			curl_close($curl);
+
+			$response_info = json_decode($response, true);
+
+			if ($response_info) {
+				foreach ($response_info['remove'] as $remove) {
+					$path = '';
+
+					// Check if the location exists or not
+					if (substr($remove, 0, 5) == 'admin') {
+						$path = DIR_APPLICATION . substr($remove, 6);
+					}
+
+					if (substr($remove, 0, 7) == 'catalog') {
+						$path = DIR_CATALOG . substr($remove, 8);
+					}
+
+					if (substr($remove, 0, 5) == 'image') {
+						$path = DIR_IMAGE . substr($remove, 6);
+					}
+
+					if (substr($remove, 0, 6) == 'system') {
+						$path = DIR_SYSTEM . substr($remove, 7);
+					}
+
+					if ($path) {
+						if (is_file($path)) {
+							unlink($path);
+						} elseif (is_dir($path)) {
+							$files = glob($path . '/*');
+
+							if (!count($files)) {
+								rmdir($path);
+							}
+						}
+					}
+				}
+
+				//$json['text'] = $this->language->get('text_download');
+
+				//$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/download', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
+
+				$json['text'] = $this->language->get('text_unzip');
+
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/unzip', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
+			} else {
+				$data['error'] = $this->language->get('error_connection');
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function clear() {
@@ -415,7 +415,7 @@ class ControllerToolUpgrade extends Controller {
 		}
 
 		if (!$json) {
-			$directory = DIR_DOWNLOAD . $version . '/';
+			$directory = DIR_DOWNLOAD . 'opencart-' . $version . '/';
 
 			if (is_dir($directory)) {
 				// Get a list of files ready to upload
@@ -453,7 +453,7 @@ class ControllerToolUpgrade extends Controller {
 				}
 			}
 
-			$file = DIR_DOWNLOAD . $version . '.zip';
+			$file = DIR_DOWNLOAD . 'opencart-' . $version . '.zip';
 
 			if (is_file($file)) {
 				unlink($file);

@@ -278,7 +278,7 @@ class ControllerToolUpgrade extends Controller {
 			foreach ($files as $file) {
 				$destination = str_replace('\\', '/', substr($file, strlen($directory . '/')));
 
-				$path = str_replace('\\', '/', realpath(DIR_CATALOG . '../')) . $destination;
+				$path = str_replace('\\', '/', realpath(DIR_CATALOG . '../')) . '/' . $destination;
 
 				// Check if the copy location exists or not
 				if (substr($destination, 0, 5) == 'admin') {

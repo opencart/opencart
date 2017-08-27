@@ -8,10 +8,7 @@ $_['text_success']       = 'Success: You are using the latest version %s!';
 $_['text_version']       = 'Check Latest Version';
 $_['text_compatibility'] = 'Compatibility';
 $_['text_upgrade']       = 'Upgrade System';
-
-
 $_['text_change']        = 'Change Log';
-
 $_['text_progress']      = 'Upgrade Progress';
 $_['text_log']           = 'Upgrade Log';
 $_['text_download']      = 'Downloading latest version';

@@ -297,6 +297,9 @@ class ControllerToolUpgrade extends Controller {
 					$path = DIR_SYSTEM . substr($destination, 7);
 				}
 
+				$this->log->write($destination);
+				$this->log->write($path);
+
 				if (is_dir($file) && !is_dir($path)) {
 					if (!mkdir($path, 0777)) {
 						$json['error'] = sprintf($this->language->get('error_directory'), $destination);
@@ -310,9 +313,9 @@ class ControllerToolUpgrade extends Controller {
 				}
 			}
 
-			$json['text'] = $this->language->get('text_clear');
+			$json['text'] = $this->language->get('text_remove');
 
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/clear', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/remove', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -383,13 +386,9 @@ class ControllerToolUpgrade extends Controller {
 					}
 				}
 
-				//$json['text'] = $this->language->get('text_download');
+				$json['text'] = $this->language->get('text_clear');
 
-				//$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/download', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
-
-				$json['text'] = $this->language->get('text_unzip');
-
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/unzip', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/clear', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
 			} else {
 				$data['error'] = $this->language->get('error_connection');
 			}
@@ -460,7 +459,6 @@ class ControllerToolUpgrade extends Controller {
 			}
 
 			$json['success'] = $this->language->get('text_success');
-
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

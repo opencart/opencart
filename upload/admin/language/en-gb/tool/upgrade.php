@@ -4,6 +4,7 @@ $_['heading_title']      = 'Upgrade';
 
 // Text
 $_['text_success']       = 'Success: You are using the latest version %s!';
+$_['error_version']      = 'Your current OpenCart version is out of date! The current latest version is <strong>%s</strong>';
 
 $_['text_version']       = 'Check Latest Version';
 $_['text_compatibility'] = 'Compatibility';
@@ -33,15 +34,8 @@ $_['button_start']       = 'Start';
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify upgrades!';
-$_['error_version']      = 'Your current OpenCart version is out of date! The current latest version is <strong>%s</strong>';
-$_['error_connection']   = 'Warning: Could not connect to the upgrade server!';
-
-
+$_['error_connection']   = 'Could not connect to the upgrade server!';
 $_['error_download']     = 'Upgrade could not be downloaded!';
 $_['error_file']         = 'Upgrade file could not be found!';
 $_['error_directory']    = 'Upgrade directory could not be found!';
-
-
-
 $_['error_unzip']        = 'Zip file could not be opened!';
-

@@ -93,6 +93,7 @@ class ControllerToolUpgrade extends Controller {
 				$data['success'] = sprintf($this->language->get('text_success'), $response_info['version']);
 			} else {
 				$data['version'] = $response_info['version'];
+				$data['log'] = $response_info['log'];
 
 				$data['upgrade'] = true;
 
@@ -121,6 +122,7 @@ class ControllerToolUpgrade extends Controller {
 
 							$data['extensions'][] = array(
 								'name'       => $extension['name'],
+								'link'       => $this->url->link('marketplace/marketplace/info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id'], true),
 								'compatible' => $compatible,
 								'available'  => $available
 							);

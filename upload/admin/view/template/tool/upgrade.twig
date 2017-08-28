@@ -18,19 +18,23 @@
         </div>
         <div id="collapse-version" class="panel-collapse collapse in">
           <div class="panel-body">
+            <fieldset>
+              {% if error_warning %}
+              <legend class="text-success" id="version">{{ text_change }}</legend>
+              {% else %}{% endif %}
 
-            {% if error_warning %}
-              <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-              </div>
-            {% endif %}
+              {% if error_warning %}
+                <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+              {% endif %}
 
-            {% if success %}
-              <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-              </div>
-            {% endif %}
-
+              {% if success %}
+                <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+              {% endif %}
+            </fieldset>
             <p>Before upgrading its very important to</p>
             <ol>
               <li>make a complete backup of your web site!</li>
@@ -59,6 +63,7 @@
             <table class="table table-bordered table-hover">
               <thead>
               <tr>
+
                 <td class="text-left">{{ column_name }}</td>
                 <td class="text-center">{{ column_compatible }}</td>
                 <td class="text-center">{{ column_available }}</td>
@@ -68,7 +73,8 @@
               {% if extensions %}
                 {% for extension in extensions %}
                   <tr>
-                    <td class="text-left">{{ extension.name }}</td>
+
+                    <td class="text-left"><a href="{{ extension.link }}">{{ extension.name }}</a></td>
                     <td class="text-center">{% if extension.compatible %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
                     <td class="text-center">{% if extension.available %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
                   </tr>
@@ -203,5 +209,6 @@ function next(url, i) {
 		}
 	});
 }
+
 //--></script>
 {{ footer }}

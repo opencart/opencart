@@ -208,7 +208,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 				$data['promotions'][] = array(
 					'name'         => $result['name'],
 					'description'  => $result['description'],
-					'image'        => $result['image'],
+					'image'        => ($this->request->server['HTTPS'] ? 'https://' : 'http://') . $result['image'],
 					'license'      => $result['license'],
 					'price'        => $result['price'],
 					'rating'       => $result['rating'],
@@ -225,7 +225,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 				$data['extensions'][] = array(
 					'name'         => utf8_decode($result['name']),
 					'description'  => utf8_decode($result['description']),
-					'image'        => $result['image'],
+					'image'        => ($this->request->server['HTTPS'] ? 'https://' : 'http://') . $result['image'],
 					'license'      => $result['license'],
 					'price'        => $result['price'],
 					'rating'       => $result['rating'],
@@ -607,7 +607,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 			$this->load->helper('bbcode');
 
-			$data['banner'] = $response_info['banner'];
+			$data['banner'] = ($this->request->server['HTTPS'] ? 'https://' : 'http://') . $response_info['banner'];
 
 			$data['extension_id'] = (int)$this->request->get['extension_id'];
 			$data['name'] = $response_info['name'];
@@ -635,8 +635,8 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 			foreach ($response_info['images'] as $result) {
 				$data['images'][] = array(
-					'thumb' => $result['thumb'],
-					'popup' => $result['popup']
+					'thumb' => ($this->request->server['HTTPS'] ? 'https://' : 'http://') . $result['thumb'],
+					'popup' => ($this->request->server['HTTPS'] ? 'https://' : 'http://') . $result['popup']
 				);
 			}
 
@@ -1025,7 +1025,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 				$data['comments'][] = array(
 					'extension_comment_id' => $result['extension_comment_id'],
 					'member'               => $result['member'],
-					'image'                => $result['image'],
+					'image'                => ($this->request->server['HTTPS'] ? 'https://' : 'http://') . $result['image'],
 					'comment'              => $result['comment'],
 					'date_added'           => $result['date_added'],
 					'reply'                => $result['reply'],
@@ -1093,7 +1093,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 				$data['replies'][] = array(
 					'extension_comment_id' => $result['extension_comment_id'],
 					'member'               => $result['member'],
-					'image'                => $result['image'],
+					'image'                => ($this->request->server['HTTPS'] ? 'https://' : 'http://') . $result['image'],
 					'comment'              => $result['comment'],
 					'date_added'           => $result['date_added']
 				);

@@ -26,7 +26,8 @@
       <a href="{{ transaction.refund }}" data-toggle="tooltip" title="{{ button_refund }}" class="btn btn-danger"><i class="fa fa-reply"></i></a>&nbsp;
       {% else %}
       <button type="button" value="{{ transaction.resend }}" data-toggle="tooltip" title="{{ button_resend }}" class="btn btn-info"><i class="fa fa-refresh"></i></button>
-      {% endif %} </td>
+      {% endif %}
+    {% endif %} </td>
   </tr>
   {% endfor %}
   {% else %}

@@ -10,6 +10,11 @@ html, body {
 h1, h2, h3, h4, h5, h6, p {
 	margin-top: 0;
 }
+
+p {
+	margin-bottom: 40px;
+}
+
 .page-header {
 	vertical-align: middle;
 	margin: 20px 0 15px 0;
@@ -245,7 +250,7 @@ a:hover, a:focus {
 	border-bottom: 0px solid #585858;
 }
 #menu > li > a:hover {
-	background-color: #444444;
+	background-color: #1B2127;
 }
 #menu > li > a > i {
 	font-size: 16px;

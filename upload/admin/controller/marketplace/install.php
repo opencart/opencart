@@ -338,16 +338,16 @@ class ControllerMarketplaceInstall extends Controller {
 		}
 
 		if (!$json) {
-			$json['text'] = $this->language->get('text_remove');
+			$json['text'] = $this->language->get('text_clear');
 
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/remove', 'user_token=' . $this->session->data['user_token'], true));
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/clear', 'user_token=' . $this->session->data['user_token'], true));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function remove() {
+	public function clear() {
 		$this->load->language('marketplace/install');
 
 		$json = array();
@@ -453,49 +453,15 @@ class ControllerMarketplaceInstall extends Controller {
 				if (substr($result['path'], 0, 14) == 'system/library') {
 					$source = DIR_SYSTEM . 'library/' . substr($result['path'], 15);
 				}
-				
+
 				if (is_file($source)) {
 					unlink($source);
-				}
+				} elseif (is_dir($source)) {
+					$files = glob($source . '/*');
 
-				if (is_dir($source)) {
-					// Get a list of files ready to upload
-					$files = array();
-
-					$path = array($source);
-
-					while (count($path) != 0) {
-						$next = array_shift($path);
-
-						// We have to use scandir function because glob will not pick up dot files.
-						foreach (array_diff(scandir($next), array('.', '..')) as $file) {
-							$file = $next . '/' . $file;
-
-							if (is_dir($file)) {
-								$path[] = $file;
-							}
-
-							$files[] = $file;
-						}
-					}
-
-					rsort($files);
-
-					foreach ($files as $file) {
-						if (is_file($file)) {
-							unlink($file);
-						} elseif (is_dir($file)) {
-							rmdir($file);
-						}
-					}
-
-					if (is_file($source)) {
-						unlink($source);
-					}
-		
-					if (is_dir($source)) {
+					if (!count($files)) {
 						rmdir($source);
-					}					
+					}
 				}
 
 				$this->model_setting_extension->deleteExtensionPath($result['extension_path_id']);

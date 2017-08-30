@@ -250,7 +250,7 @@ class ModelUpgrade1001 extends Model {
 					$output = '';
 
 					foreach ($lines as $line_id => $line) {
-						if (strpos($line, "'mysql'") !== false) {
+						if (strpos($line, "define('DB_DRIVER', 'mysql'") !== false) {
 							$new_line = "define('DB_DRIVER', 'mysqli');";
 							$output .= $new_line . "\n";
 						} else {

@@ -1,5 +1,5 @@
 <?php
-class ModelUpgrade1009 extends Model {
+class ModelUpgrade1010 extends Model {
 	public function upgrade() {
 		// Add missing core events
 		$events = array();

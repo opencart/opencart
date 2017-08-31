@@ -21,7 +21,11 @@
             <fieldset>
               {% if error_warning %}
               <legend class="text-success" id="version">{{ text_change }}</legend>
-              {% else %}{% endif %}
+              {% else %}
+
+                <legend class="text-danger" id="version">{{ text_change }}</legend>
+
+              {% endif %}
 
               {% if error_warning %}
                 <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
@@ -37,10 +41,11 @@
             </fieldset>
             <p>Before upgrading its very important to</p>
             <ol>
-              <li>make a complete backup of your web site!</li>
-              <li>check if extensions installed are compatible with the latest version</li>
-              <li>Its better if u can copy your site to a test server and practise upgrading before strting with the live web site.</li>
-              <li></li>
+              <li>Make a complete backup of your web site! If you are using the cloud you can backup using your account backup <a href="">here</a>.</li>
+              <li>Check if extensions installed are compatible with the latest version</li>
+
+              <li>Its better if u can copy your site to a test server and practise upgrading before starting with the live web site.</li>
+
             </ol>
             <fieldset>
               <legend id="version">{{ text_change }}</legend>
@@ -57,6 +62,9 @@
         </div>
         <div id="collapse-compatible" class="panel-collapse collapse">
           <div class="panel-body">
+
+
+
 
             <p>Before upgrading its very important to check if extensions installed are compatible with the latest version</p>
 
@@ -132,15 +140,12 @@
 $('#button-upgrade').on('click', function() {
 	$('#progress-bar').css('width', '0%');
 	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
-	//$('#progress-text').html('{{ text_download }}');
-	//$('#log').prepend('{{ text_download }}' + "\n");
-
-	$('#progress-text').html('{{ text_unzip }}');
-	$('#log').prepend('{{ text_unzip }}' + "\n");
+	$('#progress-text').html('{{ text_download }}');
+	$('#log').prepend('{{ text_download }}' + "\n");
 
 	$.ajax({
-		//url: 'index.php?route=tool/upgrade/download&user_token={{ user_token }}&version={{ version }}',
-		url: 'index.php?route=tool/upgrade/unzip&user_token={{ user_token }}&version={{ version }}',
+		url: 'index.php?route=tool/upgrade/download&user_token={{ user_token }}&version={{ version }}',
+		//url: 'index.php?route=tool/upgrade/unzip&user_token={{ user_token }}&version={{ version }}',
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-upgrade').button('loading');
@@ -194,9 +199,7 @@ function next(url, i) {
 			}
 
 			if (json['text']) {
-
-
-				$('#progress-text').html(json['text']);
+                $('#progress-text').html(json['text']);
 				$('#log').append(json['text'] + "\n");
 			}
 
@@ -209,6 +212,5 @@ function next(url, i) {
 		}
 	});
 }
-
 //--></script>
 {{ footer }}

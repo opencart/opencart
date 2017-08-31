@@ -1062,6 +1062,8 @@ $('#button-customer').on('click', function() {
 			$('#button-customer').button('reset');
 		},
 		success: function(json) {
+			console.log(json);
+
 			$('.alert-dismissible, .text-danger').remove();
 			$('.form-group').removeClass('has-error');
 
@@ -1085,18 +1087,21 @@ $('#button-customer').on('click', function() {
 			} else {
 				// Refresh products, vouchers and totals
 				var request_1 = $.ajax({
-					url: '{{ catalog }}index.php?route=api/cart/add&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+					url: '{{ catalog }}index.php?route=api/voucher/add&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 					type: 'post',
-					data: $('#cart input[name^=\'product\'][type=\'text\'], #cart input[name^=\'product\'][type=\'hidden\'], #cart input[name^=\'product\'][type=\'radio\']:checked, #cart input[name^=\'product\'][type=\'checkbox\']:checked, #cart select[name^=\'product\'], #cart textarea[name^=\'product\']'),
+					data: $('#cart input[name^=\'voucher\'][type=\'hidden\']'),
 					dataType: 'json',
 					crossDomain: true,
 					beforeSend: function() {
-						$('#button-product-add').button('loading');
+						$('#button-voucher-add').button('loading');
 					},
 					complete: function() {
-						$('#button-product-add').button('reset');
+						$('#button-voucher-add').button('reset');
 					},
 					success: function(json) {
+						console.log(json);
+
+
 						$('.alert-dismissible, .text-danger').remove();
 						$('.form-group').removeClass('has-error');
 
@@ -1107,22 +1112,24 @@ $('#button-customer').on('click', function() {
 					error: function(xhr, ajaxOptions, thrownError) {
 						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 					}
-				});
 
-				var request_2 = request_1.then(function() {
+
+				}).then(function() {
 					$.ajax({
-						url: '{{ catalog }}index.php?route=api/voucher/add&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+						url: '{{ catalog }}index.php?route=api/cart/add&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 						type: 'post',
-						data: $('#cart input[name^=\'voucher\'][type=\'text\'], #cart input[name^=\'voucher\'][type=\'hidden\'], #cart input[name^=\'voucher\'][type=\'radio\']:checked, #cart input[name^=\'voucher\'][type=\'checkbox\']:checked, #cart select[name^=\'voucher\'], #cart textarea[name^=\'voucher\']'),
+						data: $('#cart input[name^=\'product\'][type=\'text\'], #cart input[name^=\'product\'][type=\'hidden\'], #cart input[name^=\'product\'][type=\'radio\']:checked, #cart input[name^=\'product\'][type=\'checkbox\']:checked, #cart select[name^=\'product\'], #cart textarea[name^=\'product\']'),
 						dataType: 'json',
 						crossDomain: true,
 						beforeSend: function() {
-							$('#button-voucher-add').button('loading');
+							$('#button-product-add').button('loading');
 						},
 						complete: function() {
-							$('#button-voucher-add').button('reset');
+							$('#button-product-add').button('reset');
 						},
 						success: function(json) {
+							console.log(json);
+
 							$('.alert-dismissible, .text-danger').remove();
 							$('.form-group').removeClass('has-error');
 
@@ -1134,14 +1141,12 @@ $('#button-customer').on('click', function() {
 							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 						}
 					});
-				});
-
-				request_2.done(function() {
+				}).done(function() {
 					$('#button-refresh').trigger('click');
 
 					$('a[href=\'#tab-cart\']').tab('show');
 				});
-			}
+            }
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -2282,6 +2287,8 @@ $('#button-refresh').on('click', function() {
 			$('#button-refresh').button('reset');
 		},
 		success: function(json) {
+			console.log(json);
+
 			$('.alert-dismissible').remove();
 
 			// Check for errors
@@ -2357,6 +2364,8 @@ $('#button-refresh').on('click', function() {
 			}
 
 			if (json['vouchers'].length) {
+				alert(json['vouchers'].length);
+
 				for (i in json['vouchers']) {
 					voucher = json['vouchers'][i];
 

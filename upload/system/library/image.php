@@ -118,14 +118,23 @@ class Image {
 
 		if (is_resource($this->image)) {
 			if ($extension == 'jpeg' || $extension == 'jpg') {
-				imagejpeg($this->image, $file, $quality);
+				imageinterlace($this->image, true);
+				$result = imagejpeg($this->image, $file, $quality);
 			} elseif ($extension == 'png') {
-				imagepng($this->image, $file);
+				$result = imagepng($this->image, $file);
 			} elseif ($extension == 'gif') {
-				imagegif($this->image, $file);
+				$result = imagegif($this->image, $file);
 			}
 
 			imagedestroy($this->image);
+			if (class_exists('Imagick') && !empty($result)) {
+				$img = new Imagick($file);
+				if (!empty($img)) {
+					$img->stripImage();
+					$img->writeImage($file);
+					$img->destroy();
+				}
+			}
 		}
 	}
 	

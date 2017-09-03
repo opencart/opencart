@@ -1062,9 +1062,7 @@ $('#button-customer').on('click', function() {
 			$('#button-customer').button('reset');
 		},
 		success: function(json) {
-			console.log(json);
-
-			$('.alert-dismissible, .text-danger').remove();
+    		$('.alert-dismissible, .text-danger').remove();
 			$('.form-group').removeClass('has-error');
 
 			if (json['error']) {
@@ -1086,7 +1084,7 @@ $('#button-customer').on('click', function() {
 				$('.text-danger').parentsUntil('.form-group').parent().addClass('has-error');
 			} else {
 				// Refresh products, vouchers and totals
-				var request_1 = $.ajax({
+				$.ajax({
 					url: '{{ catalog }}index.php?route=api/voucher/add&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 					type: 'post',
 					data: $('#cart input[name^=\'voucher\'][type=\'hidden\']'),
@@ -1099,9 +1097,6 @@ $('#button-customer').on('click', function() {
 						$('#button-voucher-add').button('reset');
 					},
 					success: function(json) {
-						console.log(json);
-
-
 						$('.alert-dismissible, .text-danger').remove();
 						$('.form-group').removeClass('has-error');
 
@@ -1112,8 +1107,6 @@ $('#button-customer').on('click', function() {
 					error: function(xhr, ajaxOptions, thrownError) {
 						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 					}
-
-
 				}).then(function() {
 					$.ajax({
 						url: '{{ catalog }}index.php?route=api/cart/add&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
@@ -1128,8 +1121,6 @@ $('#button-customer').on('click', function() {
 							$('#button-product-add').button('reset');
 						},
 						success: function(json) {
-							console.log(json);
-
 							$('.alert-dismissible, .text-danger').remove();
 							$('.form-group').removeClass('has-error');
 
@@ -1140,11 +1131,11 @@ $('#button-customer').on('click', function() {
 						error: function(xhr, ajaxOptions, thrownError) {
 							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 						}
-					});
-				}).done(function() {
-					$('#button-refresh').trigger('click');
+					}).done(function() {
+						$('#button-refresh').trigger('click');
 
-					$('a[href=\'#tab-cart\']').tab('show');
+						$('a[href=\'#tab-cart\']').tab('show');
+					});
 				});
             }
 		},
@@ -2287,8 +2278,6 @@ $('#button-refresh').on('click', function() {
 			$('#button-refresh').button('reset');
 		},
 		success: function(json) {
-			console.log(json);
-
 			$('.alert-dismissible').remove();
 
 			// Check for errors
@@ -2364,8 +2353,6 @@ $('#button-refresh').on('click', function() {
 			}
 
 			if (json['vouchers'].length) {
-				alert(json['vouchers'].length);
-
 				for (i in json['vouchers']) {
 					voucher = json['vouchers'][i];
 

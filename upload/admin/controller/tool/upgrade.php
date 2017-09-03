@@ -304,15 +304,15 @@ class ControllerToolUpgrade extends Controller {
 				}
 
 				if (is_dir($file) && !is_dir($path)) {
-					//if (!mkdir($path, 0777)) {
-					//	$json['error'] = sprintf($this->language->get('error_directory'), $destination);
-					//}
+					if (!mkdir($path, 0777)) {
+						$json['error'] = sprintf($this->language->get('error_directory'), $destination);
+					}
 				}
 
 				if (is_file($file)) {
-					//if (!rename($file, $path)) {
-					//	$json['error'] = sprintf($this->language->get('error_file'), $destination);
-					//}
+					if (!rename($file, $path)) {
+						$json['error'] = sprintf($this->language->get('error_file'), $destination);
+					}
 				}
 			}
 
@@ -389,12 +389,50 @@ class ControllerToolUpgrade extends Controller {
 					}
 				}
 
-				$json['text'] = $this->language->get('text_clear');
+				$json['text'] = $this->language->get('text_db');
 
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/clear', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/db', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
 			} else {
 				$data['error'] = $this->language->get('error_connection');
 			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function db() {
+		$this->load->language('tool/upgrade');
+
+		$json = array();
+
+		if (isset($this->request->get['version'])) {
+			$version = $this->request->get['version'];
+		} else {
+			$version = '';
+		}
+
+		if (!$this->user->hasPermission('modify', 'tool/upgrade')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$files = glob(DIR_APPLCATION .  'model/upgrade/*.php');
+
+			if ($files) {
+				foreach ($files AS $file) {
+					$upgrade = basename($file, '.php');
+
+					$this->load->model('upgrade/' . $upgrade);
+
+
+					$this->{'model_upgrade_' . $upgrade}->execute();
+				}
+			}
+
+			$json['text'] = $this->language->get('text_clear');
+
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/clear', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -444,21 +482,21 @@ class ControllerToolUpgrade extends Controller {
 
 				foreach ($files as $file) {
 					if (is_file($file)) {
-					//	unlink($file);
+						unlink($file);
 					} elseif (is_dir($file)) {
-				//		rmdir($file);
+						rmdir($file);
 					}
 				}
 
 				if (is_dir($directory)) {
-				//	rmdir($directory);
+					rmdir($directory);
 				}
 			}
 
 			$file = DIR_DOWNLOAD . 'opencart-' . $version . '.zip';
 
 			if (is_file($file)) {
-			//	unlink($file);
+				unlink($file);
 			}
 
 			$json['success'] = sprintf($this->language->get('text_success'), VERSION);

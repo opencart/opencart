@@ -16,6 +16,7 @@ $_['text_download']      = 'Downloading latest version';
 $_['text_unzip']         = 'Extracting files!';
 $_['text_move']          = 'Copying files!';
 $_['text_remove']        = 'Removing unnecessary files';
+$_['text_db']            = 'Modifying database!';
 $_['text_clear']         = 'Clearing temporary files!';
 
 // Column

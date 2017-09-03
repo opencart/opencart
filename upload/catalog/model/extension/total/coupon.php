@@ -137,7 +137,7 @@ class ModelExtensionTotalCoupon extends Model {
 						}
 
 						if ($product['tax_class_id']) {
-							$tax_rates = $this->tax->getRates($product['total'] - ($product['total'] - $discount), $product['tax_class_id']);
+							$tax_rates = $this->tax->getRates($discount, $product['tax_class_id']);
 
 							foreach ($tax_rates as $tax_rate) {
 								if ($tax_rate['type'] == 'P') {

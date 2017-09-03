@@ -425,7 +425,6 @@ class ControllerToolUpgrade extends Controller {
 
 					$this->load->model('upgrade/' . $upgrade);
 
-
 					$this->{'model_upgrade_' . $upgrade}->execute();
 				}
 			}

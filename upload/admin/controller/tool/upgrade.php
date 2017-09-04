@@ -417,7 +417,7 @@ class ControllerToolUpgrade extends Controller {
 		}
 
 		if (!$json) {
-			$files = glob(DIR_APPLCATION .  'model/upgrade/*.php');
+			$files = glob(DIR_APPLICATION .  'model/upgrade/*.php');
 
 			if ($files) {
 				foreach ($files AS $file) {

@@ -18,13 +18,14 @@
         </div>
         <div id="collapse-version" class="panel-collapse collapse in">
           <div class="panel-body">
+
+
             <fieldset>
+
               {% if error_warning %}
               <legend class="text-success" id="version">{{ text_change }}</legend>
               {% else %}
-
                 <legend class="text-danger" id="version">{{ text_change }}</legend>
-
               {% endif %}
 
               {% if error_warning %}
@@ -38,7 +39,11 @@
                   <button type="button" class="close" data-dismiss="alert">&times;</button>
                 </div>
               {% endif %}
+
             </fieldset>
+
+
+
             <p>Before upgrading its very important to</p>
             <ol>
               <li>Make a complete backup of your web site! If you are using the cloud you can backup using your account backup <a href="">here</a>.</li>
@@ -141,7 +146,7 @@ $('#button-upgrade').on('click', function() {
 	$('#progress-bar').css('width', '0%');
 	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
 	$('#progress-text').html('{{ text_download }}');
-	$('#log').prepend('{{ text_download }}' + "\n");
+	$('#log').append('{{ text_download }}' + "\n");
 
 	$.ajax({
 		url: 'index.php?route=tool/upgrade/download&user_token={{ user_token }}&version={{ version }}',

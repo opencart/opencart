@@ -159,9 +159,9 @@ class ControllerToolUpgrade extends Controller {
         if (!$json) {
 			set_time_limit(0);
 
-			$curl = curl_init('https://github.com/opencart/opencart/archive/' . $version . '.zip');
-
 			$handle = fopen(DIR_DOWNLOAD . 'opencart-' . $version . '.zip', 'w');
+
+			$curl = curl_init('https://github.com/opencart/opencart/archive/' . $version . '.zip');
 
 			curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart ' . VERSION);
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);

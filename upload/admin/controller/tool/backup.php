@@ -293,7 +293,7 @@ class ControllerToolBackup extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	function download() {
+	function ghghghf() {
 		$this->load->language('upgrade/backup');
 
 		$json = array();

@@ -11,47 +11,51 @@
     </div>
   </div>
   <div class="container-fluid">
+
+    {% if error_warning %}
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+
+    {% if success %}
+      <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+
     <div class="panel-group" id="collapse">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title"><a href="#collapse-version" data-toggle="collapse" data-parent="#collapse">{{ text_version }}</a></h3>
+          <h3 class="panel-title"><a href="#collapse-version" data-toggle="collapse" data-parent="#collapse">
+          <span class="text-info"><i class="fa fa-refresh"></i> {{ text_version }}</span></a></h3>
         </div>
         <div id="collapse-version" class="panel-collapse collapse in">
           <div class="panel-body">
 
-
             <fieldset>
 
               {% if error_warning %}
-              <legend class="text-success" id="version">{{ text_change }}</legend>
+              <legend class="text-danger" id="btn-version">{{ text_update }}</legend>
               {% else %}
-                <legend class="text-danger" id="version">{{ text_change }}</legend>
-              {% endif %}
-
-              {% if error_warning %}
-                <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-                  <button type="button" class="close" data-dismiss="alert">&times;</button>
-                </div>
-              {% endif %}
-
-              {% if success %}
-                <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
-                  <button type="button" class="close" data-dismiss="alert">&times;</button>
-                </div>
+              <legend id="btn-version">{{ text_update }}</legend>
               {% endif %}
 
             </fieldset>
 
 
+            <div class="alert alert-info">
+              <p><strong><i class="fa fa-exclamation-circle "></i> Tips: Before upgrading it's very important to</strong></p>
+              <ol>
+                <li>Make a complete backup of your web site! <br/>
+                  Backup <a href="{{ backup }}">here</a>; <br/>
+                  If you are using the cloud version, you can backup with your opencart account <a href="{{ opencart_account }}" target="_blank">here</a>.</li>
+                <li>Check the extensions installed are compatible with the latest version</li>
 
-            <p>Before upgrading its very important to</p>
-            <ol>
-              <li>Make a complete backup of your web site! If you are using the cloud you can backup using your account backup <a href="">here</a>.</li>
-              <li>Check if extensions installed are compatible with the latest version</li>
+                <li>It's better if you could copy your site to a test server and practise upgrading before starting with the live web site.</li>
 
-              <li>Its better if u can copy your site to a test server and practise upgrading before starting with the live web site.</li>
-
-            </ol>
+              </ol>
+            </div>
             <fieldset>
               <legend id="version">{{ text_change }}</legend>
               <textarea wrap="off" rows="10" readonly class="form-control">{{ log }}</textarea>
@@ -63,15 +67,18 @@
       </div>
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title"><a href="#collapse-compatible" data-toggle="collapse" data-parent="#collapse">{{ text_compatibility }}</a></h3>
+          <h3 class="panel-title"><a href="#collapse-compatible" data-toggle="collapse" data-parent="#collapse">
+          <span class="text-warning"><i class="fa fa-random"></i> {{ text_compatibility }}</span></a></h3>
         </div>
         <div id="collapse-compatible" class="panel-collapse collapse">
           <div class="panel-body">
 
 
 
-
-            <p>Before upgrading its very important to check if extensions installed are compatible with the latest version</p>
+            <div class="alert alert-warning">
+              Before upgrading, it's very important to check the extensions installed are compatible with the latest version!
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
 
             <table class="table table-bordered table-hover">
               <thead>
@@ -106,7 +113,7 @@
       </div>
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title"><a href="#collapse-upgrade" data-toggle="collapse" data-parent="#collapse"><i class="fa fa-exclamation-circle"></i> {{ text_upgrade }}</a></h3>
+          <h3 class="panel-title"><a href="#collapse-upgrade" data-toggle="collapse" data-parent="#collapse"><span class="text-success"><i class="fa fa-check"></i> {{ text_upgrade }}</span></a></h3>
         </div>
         <div id="collapse-upgrade" class="panel-collapse collapse">
           <div class="panel-body">

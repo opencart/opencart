@@ -37,11 +37,11 @@ class ControllerAccountLogin extends Controller {
 					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 				}
 
-				$this->model_account_customer->editCode($this->request->get['email'], '');
+				$this->model_account_customer->editToken($this->request->get['email'], '');
 
 				$this->response->redirect($this->url->link('account/account', '', true));
 			} else {
-				$this->model_account_customer->editCode($this->request->get['email'], '');
+				$this->model_account_customer->editToken($this->request->get['email'], '');
 			}
 		}
 

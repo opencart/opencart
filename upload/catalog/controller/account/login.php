@@ -6,7 +6,7 @@ class ControllerAccountLogin extends Controller {
 		$this->load->model('account/customer');
 
 		// Login override for admin users
-		if (!empty($this->request->get['token'])) {
+		if (!empty($this->request->get['email']) && !empty($this->request->get['token'])) {
 			$this->customer->logout();
 			$this->cart->clear();
 
@@ -23,9 +23,9 @@ class ControllerAccountLogin extends Controller {
 			unset($this->session->data['voucher']);
 			unset($this->session->data['vouchers']);
 
-			$customer_info = $this->model_account_customer->getCustomerByToken($this->request->get['token']);
+			$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->get['email']);
 
-			if ($customer_info && $this->customer->login($customer_info['email'], '', true)) {
+			if ($customer_info && !empty($customer_info['token']) && $customer_info['token'] == $this->request->get['token'] && $this->customer->login($customer_info['email'], '', true)) {
 				// Default Addresses
 				$this->load->model('account/address');
 
@@ -37,7 +37,11 @@ class ControllerAccountLogin extends Controller {
 					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 				}
 
+				$this->model_account_customer->editCode($this->request->get['email'], '');
+
 				$this->response->redirect($this->url->link('account/account', '', true));
+			} else {
+				$this->model_account_customer->editCode($this->request->get['email'], '');
 			}
 		}
 

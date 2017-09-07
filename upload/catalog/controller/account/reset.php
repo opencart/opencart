@@ -7,6 +7,14 @@ class ControllerAccountReset extends Controller {
 			$this->response->redirect($this->url->link('account/account', '', true));
 		}
 
+		$this->load->language('account/reset');
+
+		if (isset($this->request->get['email'])) {
+			$email = $this->request->get['email'];
+		} else {
+			$email = '';
+		}
+
 		if (isset($this->request->get['code'])) {
 			$code = $this->request->get['code'];
 		} else {
@@ -15,11 +23,9 @@ class ControllerAccountReset extends Controller {
 
 		$this->load->model('account/customer');
 
-		$customer_info = $this->model_account_customer->getCustomerByCode($code);
+		$customer_info = $this->model_account_customer->getCustomerByEmail($email);
 
-		if ($customer_info) {
-			$this->load->language('account/reset');
-
+		if ($customer_info && $customer_info['code'] && $code && $customer_info['code'] === $code) {
 			$this->document->setTitle($this->language->get('heading_title'));
 
 			if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
@@ -84,7 +90,9 @@ class ControllerAccountReset extends Controller {
 
 			$this->response->setOutput($this->load->view('account/reset', $data));
 		} else {
-			$this->load->language('account/reset');
+			if ($email) {
+				$this->model_account_customer->editCode($email, '');
+			}
 
 			$this->session->data['error'] = $this->language->get('error_code');
 

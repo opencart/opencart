@@ -6,7 +6,7 @@ class ControllerAccountLogin extends Controller {
 		$this->load->model('account/customer');
 
 		// Login override for admin users
-		if (!empty($this->request->get['email']) && !empty($this->request->get['token'])) {
+		if (!empty($this->request->get['email']) && !empty($this->request->get['login_token'])) {
 			$this->customer->logout();
 			$this->cart->clear();
 
@@ -25,7 +25,7 @@ class ControllerAccountLogin extends Controller {
 
 			$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->get['email']);
 
-			if ($customer_info && !empty($customer_info['token']) && $customer_info['token'] == $this->request->get['token'] && $this->customer->login($customer_info['email'], '', true)) {
+			if ($customer_info && !empty($customer_info['token']) && $customer_info['token'] == $this->request->get['login_token'] && $this->customer->login($customer_info['email'], '', true)) {
 				// Default Addresses
 				$this->load->model('account/address');
 

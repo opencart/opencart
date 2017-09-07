@@ -25,79 +25,77 @@ class ControllerAccountReset extends Controller {
 
 		$customer_info = $this->model_account_customer->getCustomerByEmail($email);
 
-		if ($customer_info && $customer_info['code'] && $code && $customer_info['code'] === $code) {
-			$this->document->setTitle($this->language->get('heading_title'));
-
-			if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-				$this->model_account_customer->editPassword($customer_info['email'], $this->request->post['password']);
-
-				$this->session->data['success'] = $this->language->get('text_success');
-
-				$this->response->redirect($this->url->link('account/login', '', true));
-			}
-
-			$data['breadcrumbs'] = array();
-
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/home')
-			);
-
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_account'),
-				'href' => $this->url->link('account/account', '', true)
-			);
-
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('account/reset', '', true)
-			);
-
-			if (isset($this->error['password'])) {
-				$data['error_password'] = $this->error['password'];
-			} else {
-				$data['error_password'] = '';
-			}
-
-			if (isset($this->error['confirm'])) {
-				$data['error_confirm'] = $this->error['confirm'];
-			} else {
-				$data['error_confirm'] = '';
-			}
-
-			$data['action'] = $this->url->link('account/reset', 'code=' . $code, true);
-
-			$data['back'] = $this->url->link('account/login', '', true);
-
-			if (isset($this->request->post['password'])) {
-				$data['password'] = $this->request->post['password'];
-			} else {
-				$data['password'] = '';
-			}
-
-			if (isset($this->request->post['confirm'])) {
-				$data['confirm'] = $this->request->post['confirm'];
-			} else {
-				$data['confirm'] = '';
-			}
-
-			$data['column_left'] = $this->load->controller('common/column_left');
-			$data['column_right'] = $this->load->controller('common/column_right');
-			$data['content_top'] = $this->load->controller('common/content_top');
-			$data['content_bottom'] = $this->load->controller('common/content_bottom');
-			$data['footer'] = $this->load->controller('common/footer');
-			$data['header'] = $this->load->controller('common/header');
-
-			$this->response->setOutput($this->load->view('account/reset', $data));
-		} else {
-			if ($email) {
-				$this->model_account_customer->editCode($email, '');
-			}
+		if (!$customer_info || !$customer_info['code'] || $customer_info['code'] !== $code) {
+			$this->model_account_customer->editCode($email, '');
 
 			$this->session->data['error'] = $this->language->get('error_code');
 
-			return new Action('account/login');
+			$this->response->redirect($this->url->link('account/login', '', true));
 		}
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+			$this->model_account_customer->editPassword($customer_info['email'], $this->request->post['password']);
+
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$this->response->redirect($this->url->link('account/login', '', true));
+		}
+
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_account'),
+			'href' => $this->url->link('account/account', '', true)
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('account/reset', '', true)
+		);
+
+		if (isset($this->error['password'])) {
+			$data['error_password'] = $this->error['password'];
+		} else {
+			$data['error_password'] = '';
+		}
+
+		if (isset($this->error['confirm'])) {
+			$data['error_confirm'] = $this->error['confirm'];
+		} else {
+			$data['error_confirm'] = '';
+		}
+
+		$data['action'] = $this->url->link('account/reset', 'code=' . $code, true);
+
+		$data['back'] = $this->url->link('account/login', '', true);
+
+		if (isset($this->request->post['password'])) {
+			$data['password'] = $this->request->post['password'];
+		} else {
+			$data['password'] = '';
+		}
+
+		if (isset($this->request->post['confirm'])) {
+			$data['confirm'] = $this->request->post['confirm'];
+		} else {
+			$data['confirm'] = '';
+		}
+
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
+
+		$this->response->setOutput($this->load->view('account/reset', $data));
 	}
 
 	protected function validate() {

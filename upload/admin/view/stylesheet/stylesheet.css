@@ -336,7 +336,7 @@ div.required .control-label:not(span):before, td.required:before {
 	white-space: nowrap;
 }
 .btn-group > .btn, .btn-group-vertical > .btn {
-	opacity: 0.5;
+	opacity: 0.3;
 }
 .btn-group > .btn.active, .btn-group-vertical > .btn.active {
 	opacity: 1;

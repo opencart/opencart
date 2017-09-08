@@ -1141,14 +1141,16 @@ class ControllerCustomerCustomer extends Controller {
 				$store_id = 0;
 			}
 
+			$this->load->model('setting/setting');
+
 			$this->load->model('setting/store');
 
 			$store_info = $this->model_setting_store->getStore($store_id);
 
 			if ($store_info) {
-				$this->response->redirect($store_info['url'] . 'index.php?route=account/login&email=' . urlencode($customer_info['email']). '&login_token=' . $token);
+				$this->response->redirect(($this->model_setting_setting->getSetting('config_secure', $store_id) ? $store_info['ssl'] : $store_info['url']) . 'index.php?route=account/login/token&email=' . urlencode($customer_info['email']). '&login_token=' . $token);
 			} else {
-				$this->response->redirect(HTTP_CATALOG . 'index.php?route=account/login&email=' . urlencode($customer_info['email']). '&login_token=' . $token);
+				$this->response->redirect(($this->model_setting_setting->getSetting('config_secure', 0) ? HTTPS_CATALOG : HTTP_CATALOG) . 'index.php?route=account/login/token&email=' . urlencode($customer_info['email']) . '&login_token=' . $token);
 			}
 		} else {
 			$this->load->language('error/not_found');

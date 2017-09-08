@@ -14,7 +14,7 @@ class ControllerCommonReset extends Controller {
 
 			$this->response->redirect($this->url->link('common/login', '', true));
 		}
-		
+
 		if (isset($this->request->get['email'])) {
 			$email = $this->request->get['email'];
 		} else {

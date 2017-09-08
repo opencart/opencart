@@ -356,7 +356,7 @@ class ModelExtensionPaymentWorldpay extends Model {
 	}
 
 	public function logger($data) {
-		if ($this->config->get('worldpay_debug')) {
+		if ($this->config->get('payment_worldpay_debug')) {
 			$log = new Log('worldpay_debug.log');
 			$backtrace = debug_backtrace();
 			$log->write($backtrace[6]['class'] . '::' . $backtrace[6]['function'] . ' Data:  ' . print_r($data, 1));

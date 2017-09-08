@@ -17,6 +17,12 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
 
+		if (isset($this->error['warning'])) {
+			$data['error_warning'] = $this->error['warning'];
+		} else {
+			$data['error_warning'] = '';
+		}
+
 		if (isset($this->error['error_service_key'])) {
 			$data['error_service_key'] = $this->error['error_service_key'];
 		} else {
@@ -138,10 +144,10 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['payment_worldpay_entry_success_status_id'])) {
-			$data['payment_worldpay_entry_success_status_id'] = $this->request->post['payment_worldpay_entry_success_status_id'];
+		if (isset($this->request->post['payment_worldpay_success_status_id'])) {
+			$data['payment_worldpay_success_status_id'] = $this->request->post['payment_worldpay_success_status_id'];
 		} else {
-			$data['payment_worldpay_entry_success_status_id'] = $this->config->get('payment_worldpay_entry_success_status_id');
+			$data['payment_worldpay_success_status_id'] = $this->config->get('payment_worldpay_success_status_id');
 		}
 
 		if (isset($this->request->post['payment_worldpay_failed_status_id'])) {
@@ -150,10 +156,10 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 			$data['payment_worldpay_failed_status_id'] = $this->config->get('payment_worldpay_failed_status_id');
 		}
 
-		if (isset($this->request->post['payment_worldpay_entry_settled_status_id'])) {
-			$data['payment_worldpay_entry_settled_status_id'] = $this->request->post['payment_worldpay_entry_settled_status_id'];
+		if (isset($this->request->post['payment_worldpay_settled_status_id'])) {
+			$data['payment_worldpay_settled_status_id'] = $this->request->post['payment_worldpay_settled_status_id'];
 		} else {
-			$data['payment_worldpay_entry_settled_status_id'] = $this->config->get('payment_worldpay_entry_settled_status_id');
+			$data['payment_worldpay_settled_status_id'] = $this->config->get('payment_worldpay_settled_status_id');
 		}
 
 		if (isset($this->request->post['payment_worldpay_refunded_status_id'])) {
@@ -168,10 +174,10 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 			$data['payment_worldpay_partially_refunded_status_id'] = $this->config->get('payment_worldpay_partially_refunded_status_id');
 		}
 
-		if (isset($this->request->post['payment_worldpay_charged_back_status_id'])) {
-			$data['payment_worldpay_charged_back_status_id'] = $this->request->post['payment_worldpay_charged_back_status_id'];
+		if (isset($this->request->post['payment_worldpay_chargeback_status_id'])) {
+			$data['payment_worldpay_chargeback_status_id'] = $this->request->post['payment_worldpay_chargeback_status_id'];
 		} else {
-			$data['payment_worldpay_charged_back_status_id'] = $this->config->get('payment_worldpay_charged_back_status_id');
+			$data['payment_worldpay_chargeback_status_id'] = $this->config->get('payment_worldpay_chargeback_status_id');
 		}
 
 		if (isset($this->request->post['payment_worldpay_information_requested_status_id'])) {
@@ -180,16 +186,16 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 			$data['payment_worldpay_information_requested_status_id'] = $this->config->get('payment_worldpay_information_requested_status_id');
 		}
 
-		if (isset($this->request->post['payment_worldpay_entry_information_supplied_status_id'])) {
-			$data['payment_worldpay_entry_information_supplied_status_id'] = $this->request->post['payment_worldpay_entry_information_supplied_status_id'];
+		if (isset($this->request->post['payment_worldpay_information_supplied_status_id'])) {
+			$data['payment_worldpay_information_supplied_status_id'] = $this->request->post['payment_worldpay_information_supplied_status_id'];
 		} else {
-			$data['payment_worldpay_entry_information_supplied_status_id'] = $this->config->get('payment_worldpay_entry_information_supplied_status_id');
+			$data['payment_worldpay_information_supplied_status_id'] = $this->config->get('payment_worldpay_information_supplied_status_id');
 		}
 
-		if (isset($this->request->post['payment_worldpay_entry_chargeback_reversed_status_id'])) {
-			$data['payment_worldpay_entry_chargeback_reversed_status_id'] = $this->request->post['payment_worldpay_entry_chargeback_reversed_status_id'];
+		if (isset($this->request->post['payment_worldpay_chargeback_reversed_status_id'])) {
+			$data['payment_worldpay_chargeback_reversed_status_id'] = $this->request->post['payment_worldpay_chargeback_reversed_status_id'];
 		} else {
-			$data['payment_worldpay_entry_chargeback_reversed_status_id'] = $this->config->get('payment_worldpay_entry_chargeback_reversed_status_id');
+			$data['payment_worldpay_chargeback_reversed_status_id'] = $this->config->get('payment_worldpay_chargeback_reversed_status_id');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -201,11 +207,13 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 
 	public function install() {
 		$this->load->model('extension/payment/worldpay');
+
 		$this->model_extension_payment_worldpay->install();
 	}
 
 	public function uninstall() {
 		$this->load->model('extension/payment/worldpay');
+
 		$this->model_extension_payment_worldpay->uninstall();
 	}
 

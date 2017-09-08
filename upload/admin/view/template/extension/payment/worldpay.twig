@@ -196,10 +196,10 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_success_status }}</label>
                 <div class="col-sm-10">
-                  <select name="payment_worldpay_entry_success_status_id" class="form-control">
+                  <select name="payment_worldpay_success_status_id" class="form-control">
 
                     {% for order_status in order_statuses %}
-                      {% if order_status.order_status_id == payment_worldpay_entry_success_status_id %}
+                      {% if order_status.order_status_id == payment_worldpay_success_status_id %}
 
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 
@@ -236,10 +236,10 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_settled_status }}</label>
                 <div class="col-sm-10">
-                  <select name="payment_worldpay_entry_settled_status_id" class="form-control">
+                  <select name="payment_worldpay_settled_status_id" class="form-control">
 
                     {% for order_status in order_statuses %}
-                      {% if order_status.order_status_id == payment_worldpay_entry_settled_status_id %}
+                      {% if order_status.order_status_id == payment_worldpay_settled_status_id %}
 
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 
@@ -296,10 +296,10 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_charged_back_status }}</label>
                 <div class="col-sm-10">
-                  <select name="payment_worldpay_charged_back_status_id" class="form-control">
+                  <select name="payment_worldpay_chargeback_status_id" class="form-control">
 
                     {% for order_status in order_statuses %}
-                      {% if order_status.order_status_id == payment_worldpay_charged_back_status_id %}
+                      {% if order_status.order_status_id == payment_worldpay_chargeback_status_id %}
 
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 
@@ -336,10 +336,10 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_information_supplied_status }}</label>
                 <div class="col-sm-10">
-                  <select name="payment_worldpay_entry_information_supplied_status_id" class="form-control">
+                  <select name="payment_worldpay_information_supplied_status_id" class="form-control">
 
                     {% for order_status in order_statuses %}
-                      {% if order_status.order_status_id == payment_worldpay_entry_information_supplied_status_id %}
+                      {% if order_status.order_status_id == payment_worldpay_information_supplied_status_id %}
 
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 
@@ -356,10 +356,10 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_chargeback_reversed_status }}</label>
                 <div class="col-sm-10">
-                  <select name="payment_worldpay_entry_chargeback_reversed_status_id" class="form-control">
+                  <select name="payment_worldpay_chargeback_reversed_status_id" class="form-control">
 
                     {% for order_status in order_statuses %}
-                      {% if order_status.order_status_id == payment_worldpay_entry_chargeback_reversed_status_id %}
+                      {% if order_status.order_status_id == payment_worldpay_chargeback_reversed_status_id %}
 
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 

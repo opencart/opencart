@@ -1,6 +1,6 @@
 <?php
 /*
- 
+
 Installed versionh
 current version
 latest version
@@ -28,18 +28,18 @@ Upgrade
 
 6. Scan files to confirm what changes have been made between the current version and latest
 
-6. Alert the user to any modified files that have not be updated         
+6. Alert the user to any modified files that have not be updated
 
 7. Allow the user to download the changed files.
 
-8. Replace the files	
+8. Replace the files
 */
 class ControllerToolUpgrade extends Controller {
     public function index() {
 		$this->load->language('tool/upgrade');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -134,6 +134,9 @@ class ControllerToolUpgrade extends Controller {
 			$data['error_warning'] = $this->language->get('error_connection');
 		}
 
+    $data['backup'] = $this->url->link('tool/backup', 'user_token=' . $this->session->data['user_token']);
+    $data['opencart_account'] = 'https://www.opencart.com/index.php?route=account/account';
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -143,7 +146,7 @@ class ControllerToolUpgrade extends Controller {
 
 	public function download() {
 		$this->load->language('tool/upgrade');
-		
+
 		$json = array();
 
 		if (isset($this->request->get['version'])) {

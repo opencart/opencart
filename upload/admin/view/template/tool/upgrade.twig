@@ -11,41 +11,31 @@
     </div>
   </div>
   <div class="container-fluid">
-
     {% if error_warning %}
       <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
-
     {% if success %}
       <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
-
     <div class="panel-group" id="collapse">
       <div class="panel panel-default">
         <div class="panel-heading">
-
           <h3 class="panel-title"><a href="#collapse-version" data-toggle="collapse" data-parent="#collapse">
           <span class="text-info"><i class="fa fa-refresh"></i> {{ text_version }}</span></a></h3>
-
         </div>
         <div id="collapse-version" class="panel-collapse collapse in">
           <div class="panel-body">
-
             <fieldset>
-
               {% if error_warning %}
               <legend class="text-danger" id="btn-version">{{ text_update }}</legend>
               {% else %}
               <legend id="btn-version">{{ text_update }}</legend>
               {% endif %}
-
             </fieldset>
-
-
             <div class="alert alert-info">
               <p><strong><i class="fa fa-exclamation-circle "></i> Tips: Before upgrading it's very important to</strong></p>
               <ol>
@@ -53,9 +43,7 @@
                   Backup <a href="{{ backup }}">here</a>; <br/>
                   If you are using the cloud version, you can backup with your opencart account <a href="{{ opencart_account }}" target="_blank">here</a>.</li>
                 <li>Check the extensions installed are compatible with the latest version</li>
-
                 <li>It's better if you could copy your site to a test server and practise upgrading before starting with the live web site.</li>
-
               </ol>
             </div>
             <fieldset>
@@ -74,18 +62,13 @@
         </div>
         <div id="collapse-compatible" class="panel-collapse collapse">
           <div class="panel-body">
-
-
-
-            <div class="alert alert-warning">
+           <div class="alert alert-warning">
               Before upgrading, it's very important to check the extensions installed are compatible with the latest version!
               <button type="button" class="close" data-dismiss="alert">&times;</button>
             </div>
-
             <table class="table table-bordered table-hover">
               <thead>
               <tr>
-
                 <td class="text-left">{{ column_name }}</td>
                 <td class="text-center">{{ column_compatible }}</td>
                 <td class="text-center">{{ column_available }}</td>

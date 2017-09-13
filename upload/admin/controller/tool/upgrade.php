@@ -134,8 +134,8 @@ class ControllerToolUpgrade extends Controller {
 			$data['error_warning'] = $this->language->get('error_connection');
 		}
 
-    $data['backup'] = $this->url->link('tool/backup', 'user_token=' . $this->session->data['user_token']);
-    $data['opencart_account'] = 'https://www.opencart.com/index.php?route=account/account';
+		$data['backup'] = $this->url->link('tool/backup', 'user_token=' . $this->session->data['user_token']);
+    	$data['opencart_account'] = 'https://www.opencart.com/index.php?route=account/account';
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

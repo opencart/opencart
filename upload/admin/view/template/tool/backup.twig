@@ -10,7 +10,7 @@
       </ul>
     </div>
   </div>
-  <div class="container-fluid"> {% if error_warning %}
+  <div class="container-fluid">{% if error_warning %}
       <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
@@ -30,15 +30,12 @@
             <li class="active"><a href="#tab-backup" data-toggle="tab">{{ tab_backup }}</a></li>
             <li><a href="#tab-restore" data-toggle="tab">{{ tab_restore }}</a></li>
           </ul>
-
           <div class="tab-content">
-
             <div class="tab-pane active" id="tab-backup">
-
               <fieldset>
-                <legend>Backup Progress</legend>
+                <legend>{{  text_progress }}</legend>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">Progress</label>
+                  <label class="col-sm-2 control-label">{{  text_progress }}</label>
                   <div class="col-sm-10">
                     <div id="progress-download" class="progress">
                       <div class="progress-bar" role="progressbar"></div>
@@ -47,42 +44,22 @@
                 </div>
                 <div class="col-sm-10 col-sm-offset-2">
                   <div class="form-group">
-
-                    <button type="button" id="button-backup" data-loading-text="{{ text_loading }}" class="btn btn-success"><i class="fa fa-play"></i> Start</button>
-
+					  <button type="button" id="button-backup" data-loading-text="{{ text_loading }}" class="btn btn-success"><i class="fa fa-play"></i> Start</button>
                   </div>
                 </div>
               </fieldset>
               <fieldset>
-                <legend>Backup Options</legend>
+                <legend>{{  text_backup }}</legend>
                 <p>Backup modified files only backs up the original opencart files that have been modified. this will not backup up 3rd party files.</p>
-
-                <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ entry_php }}</label>
-                  <div class="col-sm-10">
-
-                    <div class="radio">
-                      <label><input type="radio" name="file" value="all"/>
-                        {{ text_all }}</label>
-                    </div>
-
-                    <div class="radio">
-                      <label><input type="radio" name="file" value="modified"/>
-                        {{ text_modified }}</label>
-                    </div>
-
-                    <div class="radio">
-                      <label><input type="radio" name="file" value="0" checked/>
-                        {{ text_none }}</label>
-                    </div>
-
-                  </div>
-                </div>
 
                 <div class="form-group">
                   <label class="col-sm-2 control-label">{{ entry_file }}</label>
                   <div class="col-sm-10">
                     <div class="well well-sm" style="height: 150px; overflow: auto;">
+                      <div class="checkbox">
+                        <label><input type="checkbox" name="modified" value="modified"/>
+                          {{ text_modified }}</label>
+                      </div>
                       <div class="checkbox">
                         <label><input type="checkbox" name="file" value="image"/>
                           {{ text_image }}</label>
@@ -98,8 +75,6 @@
                     </div>
                   </div>
                 </div>
-
-
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Database</label>
                   <div class="col-sm-10">
@@ -117,12 +92,8 @@
                   </div>
                 </div>
               </fieldset>
-
-
             </div>
-
             <div class="tab-pane" id="tab-restore">
-
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_progress }}</label>
                 <div class="col-sm-10">
@@ -136,66 +107,61 @@
                   <button type="button" id="button-import" class="btn btn-primary"><i class="fa fa-upload"></i> {{ button_import }}</button>
                 </div>
               </div>
-
             </div>
-
-
           </div>
-
-
         </form>
-
       </div>
     </div>
-
   </div>
 </div>
 <script type="text/javascript"><!--
 $('#button-start').on('click', function() {
-  $('#progress-import .progress-bar').attr('aria-valuenow', 0);
-  $('#progress-import .progress-bar').css('width', '0%');
+	$('#progress-import .progress-bar').attr('aria-valuenow', 0);
+	$('#progress-import .progress-bar').css('width', '0%');
 
-  $.ajax({
-      url: 'index.php?route=tool/backup/import&user_token={{ user_token }}',
-      type: 'post',
-      dataType: 'json',
-      data: new FormData($('#form-upload')[0]),
-      cache: false,
-      contentType: false,
-      processData: false,
-      beforeSend: function() {
-          $('#button-import').button('loading');
-      },
-      complete: function() {
-          $('#button-import').button('reset');
-      },
-      success: function(json) {
-          $('.alert-dismissible').remove();
+	$.ajax({
+		url: 'index.php?route=tool/backup/import&user_token={{ user_token }}',
+		type: 'post',
+		dataType: 'json',
+		data: new FormData($('#form-upload')[0]),
+		cache: false,
+		contentType: false,
+		processData: false,
+		beforeSend: function() {
+			$('#button-import').button('loading');
+		},
+		complete: function() {
+			$('#button-import').button('reset');
+		},
+		success: function(json) {
+			$('.alert-dismissible').remove();
 
-          if (json['error']) {
-              $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-          }
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
 
-          if (json['success']) {
-              $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-          }
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
 
-          if (json['total']) {
-              $('#progress-import .progress-bar').attr('aria-valuenow', json['total']);
-              $('#progress-import .progress-bar').css('width', json['total'] + '%');
-          }
+			if (json['total']) {
+				$('#progress-import .progress-bar').attr('aria-valuenow', json['total']);
+				$('#progress-import .progress-bar').css('width', json['total'] + '%');
+			}
 
-          if (json['next']) {
-              next(json['next']);
-          }
-      },
-      error: function(xhr, ajaxOptions, thrownError) {
-          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-      }
-  });
+			if (json['next']) {
+				next(json['next'], 1);
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
 });
 
 function next(url) {
+	i = i + 1;
+
 	$.ajax({
 		url: url,
 		dataType: 'json',
@@ -211,8 +177,8 @@ function next(url) {
 			}
 
 			if (json['total']) {
-				$('#progress-import .progress-bar').attr('aria-valuenow', json['total']);
-				$('#progress-import .progress-bar').css('width', json['total'] + '%');
+				$('#progress-backup .progress-bar').attr('aria-valuenow', json['total']);
+				$('#progress-backup .progress-bar').css('width', json['total'] + '%');
 			}
 
 			if (json['next']) {
@@ -284,35 +250,5 @@ $('#button-import').on('click', function() {
 		}
 	}, 500);
 });
-
-function next(url) {
-	$.ajax({
-		url: url,
-		dataType: 'json',
-		success: function(json) {
-			$('.alert-dismissible').remove();
-
-			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
-
-			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
-
-			if (json['total']) {
-				$('#progress-import .progress-bar').attr('aria-valuenow', json['total']);
-				$('#progress-import .progress-bar').css('width', json['total'] + '%');
-			}
-
-			if (json['next']) {
-				next(json['next']);
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-}
 //--></script>
 {{ footer }} 

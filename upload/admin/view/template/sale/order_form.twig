@@ -12,21 +12,15 @@
     </div>
   </div>
   <div class="container-fluid">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
-      </div>
-      <div class="panel-body">
-        <form class="form-horizontal">
-          <ul id="order" class="nav nav-tabs nav-justified">
-            <li class="disabled active"><a href="#tab-customer" data-toggle="tab"><i class="fa fa-user fa-fw"></i>  {{ tab_customer }}</a></li>
-            <li class="disabled"><a href="#tab-cart" data-toggle="tab"><i class="fa fa-shopping-cart fa-fw"></i> {{ tab_product }}</a></li>
-            <li class="disabled"><a href="#tab-payment" data-toggle="tab"><i class="fa fa-credit-card fa-fw"></i> {{ tab_payment }}</a></li>
-            <li class="disabled"><a href="#tab-shipping" data-toggle="tab"><i class="fa fa-truck fa-fw"></i> {{ tab_shipping }}</a></li>
-            <li class="disabled"><a href="#tab-total" data-toggle="tab"><i class="fa fa-usd fa-fw"></i> {{ tab_total }}</a></li>
-          </ul>
-          <div class="tab-content">
-            <div class="tab-pane active" id="tab-customer">
+    <div id="collapse" class="panel-group">
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><i class="fa fa-user fa-fw"></i> {{ text_customer }}</h3>
+        </div>
+        <div id="collapse-customer" class="panel-collapse collapse in">
+          <div class="panel-body">
+            <form class="form-horizontal">
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-store">{{ entry_store }}</label>
                 <div class="col-sm-10">
@@ -99,6 +93,7 @@
                   <input type="text" name="telephone" value="{{ telephone }}" id="input-telephone" class="form-control"/>
                 </div>
               </div>
+
               {% for custom_field in custom_fields %}
                 {% if custom_field.location == 'account' %}
                   {% if custom_field.type == 'select' %}
@@ -219,13 +214,23 @@
                 {% endif %}
               {% endfor %}
               <div class="text-right">
-                <button type="button" id="button-customer" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-arrow-right"></i> {{ button_continue }}</button>
+                <buttton id="button-customer" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-arrow-right"></i> {{ button_continue }}</buttton>
               </div>
-            </div>
-            <div class="tab-pane" id="tab-cart">
-              <div class="table-responsive">
-                <table class="table table-bordered">
-                  <thead>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><i class="fa fa-shopping-cart fa-fw"></i> {{ text_cart }}</h3>
+        </div>
+        <div id="collapse-cart" data-parent="#collapse" class="panel-collapse collapse">
+          <div class="panel-body">
+
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
                   <tr>
                     <td class="text-left">{{ column_product }}</td>
                     <td class="text-left">{{ column_model }}</td>
@@ -234,8 +239,8 @@
                     <td class="text-right">{{ column_total }}</td>
                     <td>{{ column_action }}</td>
                   </tr>
-                  </thead>
-                  <tbody id="cart">
+                </thead>
+                <tbody id="cart">
                   {% if order_products or order_vouchers %}
                   {% set product_row = 0 %}
                   {% for order_product in order_products %}
@@ -284,10 +289,11 @@
                   <tr>
                     <td class="text-center" colspan="6">{{ text_no_results }}</td>
                   </tr>
-                  </tbody>
-                  {% endif %}
-                </table>
-              </div>
+                </tbody>
+                {% endif %}
+              </table>
+            </div>
+            <form class="form-horizontal">
               <ul class="nav nav-tabs nav-justified">
                 <li class="active"><a href="#tab-product" data-toggle="tab">{{ tab_product }}</a></li>
                 <li><a href="#tab-voucher" data-toggle="tab">{{ tab_voucher }}</a></li>
@@ -369,17 +375,30 @@
                   </div>
                 </div>
               </div>
-              <br/>
-              <div class="row">
-                <div class="col-sm-6 text-left">
-                  <button type="button" onclick="$('a[href=\'#tab-customer\']').tab('show');" class="btn btn-default"><i class="fa fa-arrow-left"></i> {{ button_back }}</button>
-                </div>
-                <div class="col-sm-6 text-right">
-                  <button type="button" id="button-cart" class="btn btn-primary"><i class="fa fa-arrow-right"></i> {{ button_continue }}</button>
-                </div>
+            </form>
+            <br/>
+            <div class="row">
+              <div class="col-sm-6 text-left">
+                <a href="#collapse-customer" data-toggle="collapse" data-parent="#collapse" class="btn btn-default"><i class="fa fa-arrow-left"></i> {{ button_back }}</a>
+              </div>
+              <div class="col-sm-6 text-right">
+                <button type="button" id="button-cart" class="btn btn-primary"><i class="fa fa-arrow-right"></i> {{ button_continue }}</button>
               </div>
             </div>
-            <div class="tab-pane" id="tab-payment">
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><i class="fa fa-credit-card fa-fw"></i> {{ text_payment }}</h3>
+        </div>
+        <div id="collapse-payment" data-parent="#collapse" class="panel-collapse collapse">
+          <div class="panel-body">
+
+            <form class="form-horizontal">
+
+
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-payment-address">{{ entry_address }}</label>
                 <div class="col-sm-10">
@@ -573,16 +592,32 @@
                   {% endif %}
                 {% endif %}
               {% endfor %}
+
+
               <div class="row">
                 <div class="col-sm-6 text-left">
-                  <button type="button" onclick="$('a[href=\'#tab-cart\']').tab('show');" class="btn btn-default"><i class="fa fa-arrow-left"></i> {{ button_back }}</button>
+                  <a href="#collapse-cart" data-toggle="collapse" data-parent="#collapse" class="btn btn-default"><i class="fa fa-arrow-left"></i> {{ button_back }}</a>
                 </div>
                 <div class="col-sm-6 text-right">
                   <button type="button" id="button-payment-address" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-arrow-right"></i> {{ button_continue }}</button>
                 </div>
               </div>
-            </div>
-            <div class="tab-pane" id="tab-shipping">
+            </form>
+
+
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><i class="fa fa-truck fa-fw"></i> {{ text_shipping }}</h3>
+        </div>
+        <div id="collapse-shipping" data-parent="#collapse" class="panel-collapse collapse">
+          <div class="panel-body">
+
+            <form class="form-horizontal">
+
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-shipping-address">{{ entry_address }}</label>
                 <div class="col-sm-10">
@@ -654,9 +689,10 @@
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-shipping-zone">{{ entry_zone }}</label>
                 <div class="col-sm-10">
-                  <select name="zone_id" id="input-shipping-zone" class="form-control"> </select>
+                  <select name="zone_id" id="input-shipping-zone" class="form-control"></select>
                 </div>
               </div>
+
               {% for custom_field in custom_fields %}
                 {% if custom_field.location == 'address' %}
                   {% if custom_field.type == 'select' %}
@@ -776,140 +812,156 @@
                   {% endif %}
                 {% endif %}
               {% endfor %}
+
               <div class="row">
                 <div class="col-sm-6 text-left">
-                  <button type="button" onclick="$('a[href=\'#tab-payment\']').tab('show');" class="btn btn-default"><i class="fa fa-arrow-left"></i> {{ button_back }}</button>
+                  <a href="#collapse-payment" data-toggle="collapse" data-parent="#collapse" class="btn btn-default"><i class="fa fa-arrow-left"></i> {{ button_back }}</a>
                 </div>
                 <div class="col-sm-6 text-right">
                   <button type="button" id="button-shipping-address" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-arrow-right"></i> {{ button_continue }}</button>
                 </div>
               </div>
-            </div>
-            <div class="tab-pane" id="tab-total">
+
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><i class="fa fa-usd fa-fw"></i> {{ text_total }}</h3>
+        </div>
+        <div id="collapse-total" data-parent="#collapse" class="panel-collapse collapse">
+          <div class="panel-body">
+            <form class="form-horizontal">
               <div class="table-responsive">
                 <table class="table table-bordered">
                   <thead>
-                  <tr>
-                    <td class="text-left">{{ column_product }}</td>
-                    <td class="text-left">{{ column_model }}</td>
-                    <td class="text-right">{{ column_quantity }}</td>
-                    <td class="text-right">{{ column_price }}</td>
-                    <td class="text-right">{{ column_total }}</td>
-                  </tr>
+                    <tr>
+                      <td class="text-left">{{ column_product }}</td>
+                      <td class="text-left">{{ column_model }}</td>
+                      <td class="text-right">{{ column_quantity }}</td>
+                      <td class="text-right">{{ column_price }}</td>
+                      <td class="text-right">{{ column_total }}</td>
+                    </tr>
                   </thead>
                   <tbody id="total">
-                  <tr>
-                    <td class="text-center" colspan="5">{{ text_no_results }}</td>
-                  </tr>
+                    <tr>
+                      <td class="text-center" colspan="5">{{ text_no_results }}</td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
-              <fieldset>
-                <legend>{{ text_order_detail }}</legend>
-                <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-shipping-method">{{ entry_shipping_method }}</label>
-                  <div class="col-sm-10">
-                    <div class="input-group">
-                      <select name="shipping_method" id="input-shipping-method" class="form-control">
-                        <option value="">{{ text_select }}</option>
-                        {% if shipping_code %}
-                          <option value="{{ shipping_code }}" selected="selected">{{ shipping_method }}</option>
-                        {% endif %}
-                      </select> <span class="input-group-btn">
+
+              <form class="form-horizontal">
+                <fieldset>
+                  <legend>{{ text_order_detail }}</legend>
+                  <div class="form-group required">
+                    <label class="col-sm-2 control-label" for="input-shipping-method">{{ entry_shipping_method }}</label>
+                    <div class="col-sm-10">
+                      <div class="input-group">
+                        <select name="shipping_method" id="input-shipping-method" class="form-control">
+                          <option value="">{{ text_select }}</option>
+                          {% if shipping_code %}
+                            <option value="{{ shipping_code }}" selected="selected">{{ shipping_method }}</option>
+                          {% endif %}
+                        </select>
+                        <span class="input-group-btn">
                       <button type="button" id="button-shipping-method" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_apply }}</button>
-                      </span></div>
+                    </span>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-payment-method">{{ entry_payment_method }}</label>
-                  <div class="col-sm-10">
-                    <div class="input-group">
-                      <select name="payment_method" id="input-payment-method" class="form-control">
-                        <option value="">{{ text_select }}</option>
-                        {% if payment_code %}
-                          <option value="{{ payment_code }}" selected="selected">{{ payment_method }}</option>
-                        {% endif %}
-                      </select> <span class="input-group-btn">
+                  <div class="form-group required">
+                    <label class="col-sm-2 control-label" for="input-payment-method">{{ entry_payment_method }}</label>
+                    <div class="col-sm-10">
+                      <div class="input-group">
+                        <select name="payment_method" id="input-payment-method" class="form-control">
+                          <option value="">{{ text_select }}</option>
+                          {% if payment_code %}
+                            <option value="{{ payment_code }}" selected="selected">{{ payment_method }}</option>
+                          {% endif %}
+                        </select> <span class="input-group-btn">
                       <button type="button" id="button-payment-method" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_apply }}</button>
                       </span></div>
+                    </div>
                   </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-coupon">{{ entry_coupon }}</label>
-                  <div class="col-sm-10">
-                    <div class="input-group">
-                      <input type="text" name="coupon" value="{{ coupon }}" id="input-coupon" class="form-control"/> <span class="input-group-btn">
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label" for="input-coupon">{{ entry_coupon }}</label>
+                    <div class="col-sm-10">
+                      <div class="input-group">
+                        <input type="text" name="coupon" value="{{ coupon }}" id="input-coupon" class="form-control"/> <span class="input-group-btn">
                       <button type="button" id="button-coupon" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_apply }}</button>
                       </span></div>
+                    </div>
                   </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-voucher">{{ entry_voucher }}</label>
-                  <div class="col-sm-10">
-                    <div class="input-group">
-                      <input type="text" name="voucher" value="{{ voucher }}" id="input-voucher" data-loading-text="{{ text_loading }}" class="form-control"/> <span class="input-group-btn">
-                      <button type="button" id="button-voucher" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_apply }}</button>
-                      </span></div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label" for="input-voucher">{{ entry_voucher }}</label>
+                    <div class="col-sm-10">
+                      <div class="input-group">
+                        <input type="text" name="voucher" value="{{ voucher }}" id="input-voucher" data-loading-text="{{ text_loading }}" class="form-control"/>
+                        <div class="input-group-btn">
+                          <button type="button" id="button-voucher" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_apply }}</button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-reward">{{ entry_reward }}</label>
-                  <div class="col-sm-10">
-                    <div class="input-group">
-                      <input type="text" name="reward" value="{{ reward }}" id="input-reward" data-loading-text="{{ text_loading }}" class="form-control"/> <span class="input-group-btn">
-                      <button type="button" id="button-reward" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_apply }}</button>
-                      </span></div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label" for="input-reward">{{ entry_reward }}</label>
+                    <div class="col-sm-10">
+                      <div class="input-group">
+                        <input type="text" name="reward" value="{{ reward }}" id="input-reward" data-loading-text="{{ text_loading }}" class="form-control"/>
+                        <div class="input-group-btn">
+                          <button type="button" id="button-reward" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_apply }}</button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
-                  <div class="col-sm-10">
-                    <select name="order_status_id" id="input-order-status" class="form-control">
-                      {% for order_status in order_statuses %}
-                        {% if order_status.order_status_id == order_status_id %}
-                          <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
-                        {% else %}
-                          <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                        {% endif %}
-                      {% endfor %}
-                    </select> <input type="hidden" name="order_id" value="{{ order_id }}"/>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
+                    <div class="col-sm-10">
+                      <select name="order_status_id" id="input-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                          {% if order_status.order_status_id == order_status_id %}
+                            <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                          {% else %}
+                            <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                          {% endif %}
+                        {% endfor %}
+                      </select>
+                      <input type="hidden" name="order_id" value="{{ order_id }}"/>
+                    </div>
                   </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-comment">{{ entry_comment }}</label>
-                  <div class="col-sm-10">
-                    <textarea name="comment" rows="5" id="input-comment" class="form-control">{{ comment }}</textarea>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label" for="input-comment">{{ entry_comment }}</label>
+                    <div class="col-sm-10">
+                      <textarea name="comment" rows="5" id="input-comment" class="form-control">{{ comment }}</textarea>
+                    </div>
                   </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-affiliate">{{ entry_affiliate }}</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="affiliate" value="{{ affiliate }}" id="input-affiliate" class="form-control"/> <input type="hidden" name="affiliate_id" value="{{ affiliate_id }}"/>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label" for="input-affiliate">{{ entry_affiliate }}</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="affiliate" value="{{ affiliate }}" id="input-affiliate" class="form-control"/> <input type="hidden" name="affiliate_id" value="{{ affiliate_id }}"/>
+                    </div>
                   </div>
-                </div>
-              </fieldset>
+                </fieldset>
+              </form>
               <div class="row">
                 <div class="col-sm-6 text-left">
-                  <button type="button" onclick="$('select[name=\'shipping_method\']').prop('disabled') ? $('a[href=\'#tab-payment\']').tab('show') : $('a[href=\'#tab-shipping\']').tab('show');" class="btn btn-default"><i class="fa fa-arrow-left"></i> {{ button_back }}</button>
+                  <button type="button" onclick="$('select[name=\'shipping_method\']').prop('disabled') ? $('#collapse-payment').collapse('show') : $('#collapse-shipping').collapse('show');" class="btn btn-default"><i class="fa fa-arrow-left"></i> {{ button_back }}</button>
                 </div>
                 <div class="col-sm-6 text-right">
                   <button type="button" id="button-refresh" data-toggle="tooltip" title="{{ button_refresh }}" data-loading-text="{{ text_loading }}" class="btn btn-warning"><i class="fa fa-refresh"></i></button>
                   <button type="button" id="button-save" class="btn btn-primary"><i class="fa fa-check-circle"></i> {{ button_save }}</button>
                 </div>
               </div>
-            </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-// Disable the tabs
-$('#order a[data-toggle=\'tab\']').on('click', function(e) {
-	return false;
-});
-
 // Currency
 $('select[name=\'currency\']').on('change', function() {
 	$.ajax({
@@ -982,28 +1034,28 @@ $('input[name=\'customer\']').autocomplete({
 	},
 	'select': function(item) {
 		// Reset all custom fields
-		$('#tab-customer input[type=\'text\'], #tab-customer textarea').not('#tab-customer input[name=\'customer\'], #tab-customer input[name=\'customer_id\']').val('');
-		$('#tab-customer select option').not($('#tab-customer select[name=\'store_id\'] option, #tab-customer select[name=\'currency\'] option')).removeAttr('selected');
-		$('#tab-customer input[type=\'checkbox\'], #tab-customer input[type=\'radio\']').removeAttr('checked');
+		$('#collapse-customer input[type=\'text\'], #collapse-customer textarea').not('#collapse-customer input[name=\'customer\'], #collapse-customer input[name=\'customer_id\']').val('');
+		$('#collapse-customer select option').not($('#collapse-customer select[name=\'store_id\'] option, #collapse-customer select[name=\'currency\'] option')).removeAttr('selected');
+		$('#collapse-customer input[type=\'checkbox\'], #collapse-customer input[type=\'radio\']').removeAttr('checked');
 
-		$('#tab-customer input[name=\'customer\']').val(item['label']);
-		$('#tab-customer input[name=\'customer_id\']').val(item['value']);
-		$('#tab-customer select[name=\'customer_group_id\']').val(item['customer_group_id']);
-		$('#tab-customer input[name=\'firstname\']').val(item['firstname']);
-		$('#tab-customer input[name=\'lastname\']').val(item['lastname']);
-		$('#tab-customer input[name=\'email\']').val(item['email']);
-		$('#tab-customer input[name=\'telephone\']').val(item['telephone']);
+		$('#collapse-customer input[name=\'customer\']').val(item['label']);
+		$('#collapse-customer input[name=\'customer_id\']').val(item['value']);
+		$('#collapse-customer select[name=\'customer_group_id\']').val(item['customer_group_id']);
+		$('#collapse-customer input[name=\'firstname\']').val(item['firstname']);
+		$('#collapse-customer input[name=\'lastname\']').val(item['lastname']);
+		$('#collapse-customer input[name=\'email\']').val(item['email']);
+		$('#collapse-customer input[name=\'telephone\']').val(item['telephone']);
 
 		for (i in item.custom_field) {
-			$('#tab-customer select[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
-			$('#tab-customer textarea[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
-			$('#tab-customer input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(item.custom_field[i]);
-			$('#tab-customer input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(item.custom_field[i]);
-			$('#tab-customer input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + item.custom_field[i] + '\']').prop('checked', true);
+			$('#collapse-customer select[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
+			$('#collapse-customer textarea[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
+			$('#collapse-customer input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(item.custom_field[i]);
+			$('#collapse-customer input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(item.custom_field[i]);
+			$('#collapse-customer input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + item.custom_field[i] + '\']').prop('checked', true);
 
 			if (item.custom_field[i] instanceof Array) {
 				for (j = 0; j < item.custom_field[i].length; j++) {
-					$('#tab-customer input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + item.custom_field[i][j] + '\']').prop('checked', true);
+					$('#collapse-customer input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + item.custom_field[i][j] + '\']').prop('checked', true);
 				}
 			}
 		}
@@ -1052,7 +1104,7 @@ $('#button-customer').on('click', function() {
 	$.ajax({
 		url: '{{ catalog }}index.php?route=api/customer&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
-		data: $('#tab-customer input[type=\'text\'], #tab-customer input[type=\'hidden\'], #tab-customer input[type=\'radio\']:checked, #tab-customer input[type=\'checkbox\']:checked, #tab-customer select, #tab-customer textarea'),
+		data: $('#collapse-customer input[type=\'text\'], #collapse-customer input[type=\'hidden\'], #collapse-customer input[type=\'radio\']:checked, #collapse-customer input[type=\'checkbox\']:checked, #collapse-customer select, #collapse-customer textarea'),
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {
@@ -1062,7 +1114,7 @@ $('#button-customer').on('click', function() {
 			$('#button-customer').button('reset');
 		},
 		success: function(json) {
-    		$('.alert-dismissible, .text-danger').remove();
+			$('.alert-dismissible, .text-danger').remove();
 			$('.form-group').removeClass('has-error');
 
 			if (json['error']) {
@@ -1134,10 +1186,10 @@ $('#button-customer').on('click', function() {
 					}).done(function() {
 						$('#button-refresh').trigger('click');
 
-						$('a[href=\'#tab-cart\']').tab('show');
+						$('#collapse-cart').collapse('toggle');
 					});
 				});
-            }
+			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -1516,7 +1568,7 @@ $('#cart').delegate('.btn-primary', 'click', function() {
 });
 
 $('#button-cart').on('click', function() {
-	$('a[href=\'#tab-payment\']').tab('show');
+	$('#collapse-payment').collapse('toggle');
 });
 
 // Payment Address
@@ -1532,37 +1584,37 @@ $('select[name=\'payment_address\']').on('change', function() {
 		},
 		success: function(json) {
 			// Reset all fields
-			$('#tab-payment input[type=\'text\'], #tab-payment input[type=\'text\'], #tab-payment textarea').val('');
-			$('#tab-payment select option').not('#tab-payment select[name=\'payment_address\']').removeAttr('selected');
-			$('#tab-payment input[type=\'checkbox\'], #tab-payment input[type=\'radio\']').removeAttr('checked');
+			$('#collapse-payment input[type=\'text\'], #collapse-payment input[type=\'text\'], #collapse-payment textarea').val('');
+			$('#collapse-payment select option').not('#collapse-payment select[name=\'payment_address\']').removeAttr('selected');
+			$('#collapse-payment input[type=\'checkbox\'], #collapse-payment input[type=\'radio\']').removeAttr('checked');
 
-			$('#tab-payment input[name=\'firstname\']').val(json['firstname']);
-			$('#tab-payment input[name=\'lastname\']').val(json['lastname']);
-			$('#tab-payment input[name=\'company\']').val(json['company']);
-			$('#tab-payment input[name=\'address_1\']').val(json['address_1']);
-			$('#tab-payment input[name=\'address_2\']').val(json['address_2']);
-			$('#tab-payment input[name=\'city\']').val(json['city']);
-			$('#tab-payment input[name=\'postcode\']').val(json['postcode']);
-			$('#tab-payment select[name=\'country_id\']').val(json['country_id']);
+			$('#collapse-payment input[name=\'firstname\']').val(json['firstname']);
+			$('#collapse-payment input[name=\'lastname\']').val(json['lastname']);
+			$('#collapse-payment input[name=\'company\']').val(json['company']);
+			$('#collapse-payment input[name=\'address_1\']').val(json['address_1']);
+			$('#collapse-payment input[name=\'address_2\']').val(json['address_2']);
+			$('#collapse-payment input[name=\'city\']').val(json['city']);
+			$('#collapse-payment input[name=\'postcode\']').val(json['postcode']);
+			$('#collapse-payment select[name=\'country_id\']').val(json['country_id']);
 
 			payment_zone_id = json['zone_id'];
 
 			for (i in json['custom_field']) {
-				$('#tab-payment select[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
-				$('#tab-payment textarea[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
-				$('#tab-payment input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(json['custom_field'][i]);
-				$('#tab-payment input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(json['custom_field'][i]);
-				$('#tab-payment input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
-				$('#tab-payment input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
+				$('#collapse-payment select[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
+				$('#collapse-payment textarea[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
+				$('#collapse-payment input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(json['custom_field'][i]);
+				$('#collapse-payment input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(json['custom_field'][i]);
+				$('#collapse-payment input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
+				$('#collapse-payment input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
 
 				if (json['custom_field'][i] instanceof Array) {
 					for (j = 0; j < json['custom_field'][i].length; j++) {
-						$('#tab-payment input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i][j] + '\']').prop('checked', true);
+						$('#collapse-payment input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i][j] + '\']').prop('checked', true);
 					}
 				}
 			}
 
-			$('#tab-payment select[name=\'country_id\']').trigger('change');
+			$('#collapse-payment select[name=\'country_id\']').trigger('change');
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -1572,21 +1624,21 @@ $('select[name=\'payment_address\']').on('change', function() {
 
 var payment_zone_id = '{{ payment_zone_id }}';
 
-$('#tab-payment select[name=\'country_id\']').on('change', function() {
+$('#collapse-payment select[name=\'country_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=localisation/country/country&user_token={{ user_token }}&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('#tab-payment select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+			$('#collapse-payment select[name=\'country_id\']').prop(' disabled', true);
 		},
 		complete: function() {
-			$('#tab-payment .fa-spin').remove();
+			$('#collapse-payment select[name=\'country_id\']').prop(' disabled', true);
 		},
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
-				$('#tab-payment input[name=\'postcode\']').closest('.form-group').addClass('required');
+				$('#collapse-payment input[name=\'postcode\']').closest('.form-group').addClass('required');
 			} else {
-				$('#tab-payment input[name=\'postcode\']').closest('.form-group').removeClass('required');
+				$('#collapse-payment input[name=\'postcode\']').closest('.form-group').removeClass('required');
 			}
 
 			html = '<option value="">{{ text_select }}</option>';
@@ -1605,7 +1657,7 @@ $('#tab-payment select[name=\'country_id\']').on('change', function() {
 				html += '<option value="0" selected="selected">{{ text_none }}</option>';
 			}
 
-			$('#tab-payment select[name=\'zone_id\']').html(html);
+			$('#collapse-payment select[name=\'zone_id\']').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -1613,13 +1665,13 @@ $('#tab-payment select[name=\'country_id\']').on('change', function() {
 	});
 });
 
-$('#tab-payment select[name=\'country_id\']').trigger('change');
+$('#collapse-payment select[name=\'country_id\']').trigger('change');
 
 $('#button-payment-address').on('click', function() {
 	$.ajax({
 		url: '{{ catalog }}index.php?route=api/payment/address&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
-		data: $('#tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea'),
+		data: $('#collapse-payment input[type=\'text\'], #collapse-payment input[type=\'hidden\'], #collapse-payment input[type=\'radio\']:checked, #collapse-payment input[type=\'checkbox\']:checked, #collapse-payment select, #collapse-payment textarea'),
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {
@@ -1690,9 +1742,9 @@ $('#button-payment-address').on('click', function() {
 
 					// If shipping required got to shipping tab else total tabs
 					if ($('select[name=\'shipping_method\']').prop('disabled')) {
-						$('a[href=\'#tab-total\']').tab('show');
+                        $('#collapse-total').collapse('toggle');
 					} else {
-						$('a[href=\'#tab-shipping\']').tab('show');
+						$('#collapse-shipping').collapse('toggle');
 					}
 				});
 			}
@@ -1716,37 +1768,37 @@ $('select[name=\'shipping_address\']').on('change', function() {
 		},
 		success: function(json) {
 			// Reset all fields
-			$('#tab-shipping input[type=\'text\'], #tab-shipping input[type=\'text\'], #tab-shipping textarea').val('');
-			$('#tab-shipping select option').not('#tab-shipping select[name=\'shipping_address\']').removeAttr('selected');
-			$('#tab-shipping input[type=\'checkbox\'], #tab-shipping input[type=\'radio\']').removeAttr('checked');
+			$('#collapse-shipping input[type=\'text\'], #collapse-shipping input[type=\'text\'], #collapse-shipping textarea').val('');
+			$('#collapse-shipping select option').not('#collapse-shipping select[name=\'shipping_address\']').removeAttr('selected');
+			$('#collapse-shipping input[type=\'checkbox\'], #collapse-shipping input[type=\'radio\']').removeAttr('checked');
 
-			$('#tab-shipping input[name=\'firstname\']').val(json['firstname']);
-			$('#tab-shipping input[name=\'lastname\']').val(json['lastname']);
-			$('#tab-shipping input[name=\'company\']').val(json['company']);
-			$('#tab-shipping input[name=\'address_1\']').val(json['address_1']);
-			$('#tab-shipping input[name=\'address_2\']').val(json['address_2']);
-			$('#tab-shipping input[name=\'city\']').val(json['city']);
-			$('#tab-shipping input[name=\'postcode\']').val(json['postcode']);
-			$('#tab-shipping select[name=\'country_id\']').val(json['country_id']);
+			$('#collapse-shipping input[name=\'firstname\']').val(json['firstname']);
+			$('#collapse-shipping input[name=\'lastname\']').val(json['lastname']);
+			$('#collapse-shipping input[name=\'company\']').val(json['company']);
+			$('#collapse-shipping input[name=\'address_1\']').val(json['address_1']);
+			$('#collapse-shipping input[name=\'address_2\']').val(json['address_2']);
+			$('#collapse-shipping input[name=\'city\']').val(json['city']);
+			$('#collapse-shipping input[name=\'postcode\']').val(json['postcode']);
+			$('#collapse-shipping select[name=\'country_id\']').val(json['country_id']);
 
 			shipping_zone_id = json['zone_id'];
 
 			for (i in json['custom_field']) {
-				$('#tab-shipping select[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
-				$('#tab-shipping textarea[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
-				$('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(json['custom_field'][i]);
-				$('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(json['custom_field'][i]);
-				$('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
-				$('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
+				$('#collapse-shipping select[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
+				$('#collapse-shipping textarea[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
+				$('#collapse-shipping input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(json['custom_field'][i]);
+				$('#collapse-shipping input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(json['custom_field'][i]);
+				$('#collapse-shipping input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
+				$('#collapse-shipping input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
 
 				if (json['custom_field'][i] instanceof Array) {
 					for (j = 0; j < json['custom_field'][i].length; j++) {
-						$('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i][j] + '\']').prop('checked', true);
+						$('#collapse-shipping input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i][j] + '\']').prop('checked', true);
 					}
 				}
 			}
 
-			$('#tab-shipping select[name=\'country_id\']').trigger('change');
+			$('#collapse-shipping select[name=\'country_id\']').trigger('change');
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -1756,21 +1808,21 @@ $('select[name=\'shipping_address\']').on('change', function() {
 
 var shipping_zone_id = '{{ shipping_zone_id }}';
 
-$('#tab-shipping select[name=\'country_id\']').on('change', function() {
+$('#collapse-shipping select[name=\'country_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=localisation/country/country&user_token={{ user_token }}&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('#tab-shipping select[name=\'country_id\']').prop('disabled', true);
+			$('#collapse-shipping select[name=\'country_id\']').prop('disabled', true);
 		},
 		complete: function() {
-			$('#tab-shipping select[name=\'country_id\']').prop('disabled', false);
+			$('#collapse-shipping select[name=\'country_id\']').prop('disabled', false);
 		},
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
-				$('#tab-shipping input[name=\'postcode\']').closest('.form-group').addClass('required');
+				$('#collapse-shipping input[name=\'postcode\']').closest('.form-group').addClass('required');
 			} else {
-				$('#tab-shipping input[name=\'postcode\']').closest('.form-group').removeClass('required');
+				$('#collapse-shipping input[name=\'postcode\']').closest('.form-group').removeClass('required');
 			}
 
 			html = '<option value="">{{ text_select }}</option>';
@@ -1789,7 +1841,7 @@ $('#tab-shipping select[name=\'country_id\']').on('change', function() {
 				html += '<option value="0" selected="selected">{{ text_none }}</option>';
 			}
 
-			$('#tab-shipping select[name=\'zone_id\']').html(html);
+			$('#collapse-shipping select[name=\'zone_id\']').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -1797,13 +1849,13 @@ $('#tab-shipping select[name=\'country_id\']').on('change', function() {
 	});
 });
 
-$('#tab-shipping select[name=\'country_id\']').trigger('change');
+$('#collapse-shipping select[name=\'country_id\']').trigger('change');
 
 $('#button-shipping-address').on('click', function() {
 	$.ajax({
 		url: '{{ catalog }}index.php?route=api/shipping/address&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
-		data: $('#tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked, #tab-shipping select, #tab-shipping textarea'),
+		data: $('#collapse-shipping input[type=\'text\'], #collapse-shipping input[type=\'hidden\'], #collapse-shipping input[type=\'radio\']:checked, #collapse-shipping input[type=\'checkbox\']:checked, #collapse-shipping select, #collapse-shipping textarea'),
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {
@@ -1882,7 +1934,7 @@ $('#button-shipping-address').on('click', function() {
 					// Refresh products, vouchers and totals
 					$('#button-refresh').trigger('click');
 
-					$('a[href=\'#tab-total\']').tab('show');
+					$('#collapse-total').collapse('toggle');
 				});
 			}
 		},
@@ -2120,7 +2172,7 @@ $('#button-save').on('click', function() {
 	$.ajax({
 		url: url,
 		type: 'post',
-		data: $('select[name=\'payment_method\'] option:selected, select[name=\'shipping_method\'] option:selected,  #tab-total select[name=\'order_status_id\'], #tab-total select, textarea[name=\'comment\'], input[name=\'affiliate_id\']'),
+		data: $('select[name=\'payment_method\'] option:selected, select[name=\'shipping_method\'] option:selected,  #collapse-total select[name=\'order_status_id\'], #collapse-total select, textarea[name=\'comment\'], input[name=\'affiliate_id\']'),
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {
@@ -2222,46 +2274,46 @@ $('.time').datetimepicker({
 //--></script>
 <script type="text/javascript"><!--
 // Sort the custom fields
-$('#tab-customer .form-group[data-sort]').detach().each(function() {
-	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-customer .form-group').length) {
-		$('#tab-customer .form-group').eq($(this).attr('data-sort')).before(this);
+$('#collapse-customer .form-group[data-sort]').detach().each(function() {
+	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#collapse-customer .form-group').length) {
+		$('#collapse-customer .form-group').eq($(this).attr('data-sort')).before(this);
 	}
 
-	if ($(this).attr('data-sort') > $('#tab-customer .form-group').length) {
-		$('#tab-customer .form-group:last').after(this);
+	if ($(this).attr('data-sort') > $('#collapse-customer .form-group').length) {
+		$('#collapse-customer .form-group:last').after(this);
 	}
 
-	if ($(this).attr('data-sort') < -$('#tab-customer .form-group').length) {
-		$('#tab-customer .form-group:first').before(this);
+	if ($(this).attr('data-sort') < -$('#collapse-customer .form-group').length) {
+		$('#collapse-customer .form-group:first').before(this);
 	}
 });
 
 // Sort the custom fields
-$('#tab-payment .form-group[data-sort]').detach().each(function() {
-	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-payment .form-group').length) {
-		$('#tab-payment .form-group').eq($(this).attr('data-sort')).before(this);
+$('#collapse-payment .form-group[data-sort]').detach().each(function() {
+	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#collapse-payment .form-group').length) {
+		$('#collapse-payment .form-group').eq($(this).attr('data-sort')).before(this);
 	}
 
-	if ($(this).attr('data-sort') > $('#tab-payment .form-group').length) {
-		$('#tab-payment .form-group:last').after(this);
+	if ($(this).attr('data-sort') > $('#collapse-payment .form-group').length) {
+		$('#collapse-payment .form-group:last').after(this);
 	}
 
-	if ($(this).attr('data-sort') < -$('#tab-payment .form-group').length) {
-		$('#tab-payment .form-group:first').before(this);
+	if ($(this).attr('data-sort') < -$('#collapse-payment .form-group').length) {
+		$('#collapse-payment .form-group:first').before(this);
 	}
 });
 
-$('#tab-shipping .form-group[data-sort]').detach().each(function() {
-	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-shipping .form-group').length) {
-		$('#tab-shipping .form-group').eq($(this).attr('data-sort')).before(this);
+$('#collapse-shipping .form-group[data-sort]').detach().each(function() {
+	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#collapse-shipping .form-group').length) {
+		$('#collapse-shipping .form-group').eq($(this).attr('data-sort')).before(this);
 	}
 
-	if ($(this).attr('data-sort') > $('#tab-shipping .form-group').length) {
-		$('#tab-shipping .form-group:last').after(this);
+	if ($(this).attr('data-sort') > $('#collapse-shipping .form-group').length) {
+		$('#collapse-shipping .form-group:last').after(this);
 	}
 
-	if ($(this).attr('data-sort') < -$('#tab-shipping .form-group').length) {
-		$('#tab-shipping .form-group:first').before(this);
+	if ($(this).attr('data-sort') < -$('#collapse-shipping .form-group').length) {
+		$('#collapse-shipping .form-group:first').before(this);
 	}
 });
 

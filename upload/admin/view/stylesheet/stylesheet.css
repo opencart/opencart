@@ -644,7 +644,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	margin: 0 auto;
 }
 #extension-list .extension-name {
-	min-height: 100px;
+	min-height: 105px;
 }
 #extension-list .extension-name p {
 	color: #000;

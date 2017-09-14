@@ -107,28 +107,13 @@ class ControllerMarketplaceCron extends Controller {
 		$results = $this->model_setting_cron->getCrons($filter_data);
 
 		foreach ($results as $result) {
-			$cycle = $result['cycle'];
-
-			switch($result['cycle']) {
-				case 'hour':
-					$cycle = $this->language->get('text_hour');
-					break;
-				case 'day':
-					$cycle = $this->language->get('text_day');
-					break;
-				case 'month':
-					$cycle = $this->language->get('text_month');
-					break;
-			}
-
 			$data['crons'][] = array(
 				'cron_id'       => $result['cron_id'],
 				'code'          => $result['code'],
-				'cycle'         => $cycle,
+				'cycle'         => $this->language->get('text_' . $result['cycle']),
 				'action'        => $result['action'],
 				'status'        => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'date_added'    => $result['date_added'],
-				'date_start'    => $result['date_start'],
 				'date_modified' => $result['date_modified'],
 				'enabled'       => $result['status']
 			);

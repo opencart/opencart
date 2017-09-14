@@ -34,7 +34,7 @@
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                  <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');" /></td>
                   <td class="text-left">{% if sort == 'c.name' %}
                     <a href="{{ sort_country }}" class="{{ order|lower }}">{{ column_country }}</a>
                     {% else %}

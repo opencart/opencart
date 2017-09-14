@@ -1182,6 +1182,12 @@ class ControllerCustomerCustomer extends Controller {
 
 		$this->load->model('customer/customer');
 
+		if (isset($this->request->get['customer_id'])) {
+			$customer_id = $this->request->get['customer_id'];
+		} else {
+			$customer_id = 0;
+		}
+
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
 		} else {
@@ -1190,7 +1196,7 @@ class ControllerCustomerCustomer extends Controller {
 
 		$data['histories'] = array();
 
-		$results = $this->model_customer_customer->getHistories($this->request->get['customer_id'], ($page - 1) * 10, 10);
+		$results = $this->model_customer_customer->getHistories($customer_id, ($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
 			$data['histories'][] = array(
@@ -1199,13 +1205,13 @@ class ControllerCustomerCustomer extends Controller {
 			);
 		}
 
-		$history_total = $this->model_customer_customer->getTotalHistories($this->request->get['customer_id']);
+		$history_total = $this->model_customer_customer->getTotalHistories($customer_id);
 
 		$pagination = new Pagination();
 		$pagination->total = $history_total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->link('customer/customer/history', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $this->request->get['customer_id'] . '&page={page}', true);
+		$pagination->url = $this->url->link('customer/customer/history', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -1219,12 +1225,18 @@ class ControllerCustomerCustomer extends Controller {
 
 		$json = array();
 
+		if (isset($this->request->get['customer_id'])) {
+			$customer_id = $this->request->get['customer_id'];
+		} else {
+			$customer_id = 0;
+		}
+
 		if (!$this->user->hasPermission('modify', 'customer/customer')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
 			$this->load->model('customer/customer');
 
-			$this->model_customer_customer->addHistory($this->request->get['customer_id'], $this->request->post['comment']);
+			$this->model_customer_customer->addHistory($customer_id, $this->request->post['comment']);
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -1236,7 +1248,11 @@ class ControllerCustomerCustomer extends Controller {
 	public function transaction() {
 		$this->load->language('customer/customer');
 
-		$this->load->model('customer/customer');
+		if (isset($this->request->get['customer_id'])) {
+			$customer_id = $this->request->get['customer_id'];
+		} else {
+			$customer_id = 0;
+		}
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
@@ -1244,9 +1260,11 @@ class ControllerCustomerCustomer extends Controller {
 			$page = 1;
 		}
 
+		$this->load->model('customer/customer');
+
 		$data['transactions'] = array();
 
-		$results = $this->model_customer_customer->getTransactions($this->request->get['customer_id'], ($page - 1) * 10, 10);
+		$results = $this->model_customer_customer->getTransactions($customer_id, ($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
 			$data['transactions'][] = array(
@@ -1256,15 +1274,15 @@ class ControllerCustomerCustomer extends Controller {
 			);
 		}
 
-		$data['balance'] = $this->currency->format($this->model_customer_customer->getTransactionTotal($this->request->get['customer_id']), $this->config->get('config_currency'));
+		$data['balance'] = $this->currency->format($this->model_customer_customer->getTransactionTotal($customer_id), $this->config->get('config_currency'));
 
-		$transaction_total = $this->model_customer_customer->getTotalTransactions($this->request->get['customer_id']);
+		$transaction_total = $this->model_customer_customer->getTotalTransactions($customer_id);
 
 		$pagination = new Pagination();
 		$pagination->total = $transaction_total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->link('customer/customer/transaction', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $this->request->get['customer_id'] . '&page={page}', true);
+		$pagination->url = $this->url->link('customer/customer/transaction', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -1278,12 +1296,18 @@ class ControllerCustomerCustomer extends Controller {
 
 		$json = array();
 
+		if (isset($this->request->get['customer_id'])) {
+			$customer_id = $this->request->get['customer_id'];
+		} else {
+			$customer_id = 0;
+		}
+
 		if (!$this->user->hasPermission('modify', 'customer/customer')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
 			$this->load->model('customer/customer');
 
-			$this->model_customer_customer->addTransaction($this->request->get['customer_id'], $this->request->post['description'], $this->request->post['amount']);
+			$this->model_customer_customer->addTransaction($customer_id, $this->request->post['description'], $this->request->post['amount']);
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -1295,7 +1319,11 @@ class ControllerCustomerCustomer extends Controller {
 	public function reward() {
 		$this->load->language('customer/customer');
 
-		$this->load->model('customer/customer');
+		if (isset($this->request->get['customer_id'])) {
+			$customer_id = $this->request->get['customer_id'];
+		} else {
+			$customer_id = 0;
+		}
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
@@ -1303,9 +1331,11 @@ class ControllerCustomerCustomer extends Controller {
 			$page = 1;
 		}
 
+		$this->load->model('customer/customer');
+
 		$data['rewards'] = array();
 
-		$results = $this->model_customer_customer->getRewards($this->request->get['customer_id'], ($page - 1) * 10, 10);
+		$results = $this->model_customer_customer->getRewards($customer_id, ($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
 			$data['rewards'][] = array(
@@ -1315,15 +1345,15 @@ class ControllerCustomerCustomer extends Controller {
 			);
 		}
 
-		$data['balance'] = $this->model_customer_customer->getRewardTotal($this->request->get['customer_id']);
+		$data['balance'] = $this->model_customer_customer->getRewardTotal($customer_id);
 
-		$reward_total = $this->model_customer_customer->getTotalRewards($this->request->get['customer_id']);
+		$reward_total = $this->model_customer_customer->getTotalRewards($customer_id);
 
 		$pagination = new Pagination();
 		$pagination->total = $reward_total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->link('customer/customer/reward', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $this->request->get['customer_id'] . '&page={page}', true);
+		$pagination->url = $this->url->link('customer/customer/reward', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -1337,12 +1367,18 @@ class ControllerCustomerCustomer extends Controller {
 
 		$json = array();
 
+		if (isset($this->request->get['customer_id'])) {
+			$customer_id = $this->request->get['customer_id'];
+		} else {
+			$customer_id = 0;
+		}
+
 		if (!$this->user->hasPermission('modify', 'customer/customer')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
 			$this->load->model('customer/customer');
 
-			$this->model_customer_customer->addReward($this->request->get['customer_id'], $this->request->post['description'], $this->request->post['points']);
+			$this->model_customer_customer->addReward($customer_id, $this->request->post['description'], $this->request->post['points']);
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -1354,7 +1390,11 @@ class ControllerCustomerCustomer extends Controller {
 	public function ip() {
 		$this->load->language('customer/customer');
 
-		$this->load->model('customer/customer');
+		if (isset($this->request->get['customer_id'])) {
+			$customer_id = $this->request->get['customer_id'];
+		} else {
+			$customer_id = 0;
+		}
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
@@ -1362,9 +1402,11 @@ class ControllerCustomerCustomer extends Controller {
 			$page = 1;
 		}
 
+		$this->load->model('customer/customer');
+
 		$data['ips'] = array();
 
-		$results = $this->model_customer_customer->getIps($this->request->get['customer_id'], ($page - 1) * 10, 10);
+		$results = $this->model_customer_customer->getIps($customer_id, ($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
 			$data['ips'][] = array(
@@ -1375,13 +1417,13 @@ class ControllerCustomerCustomer extends Controller {
 			);
 		}
 
-		$ip_total = $this->model_customer_customer->getTotalIps($this->request->get['customer_id']);
+		$ip_total = $this->model_customer_customer->getTotalIps($customer_id);
 
 		$pagination = new Pagination();
 		$pagination->total = $ip_total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->link('customer/customer/ip', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $this->request->get['customer_id'] . '&page={page}', true);
+		$pagination->url = $this->url->link('customer/customer/ip', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 

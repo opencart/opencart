@@ -25,36 +25,53 @@
       </div>
       <div class="panel-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-marketing" class="form-horizontal">
-          <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
-              {% if error_name %}
-                <div class="text-danger">{{ error_name }}</div>
-              {% endif %}
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
+            {% if marketing_id %}
+              <li><a href="#tab-history" data-toggle="tab">{{ tab_history }}</a></li>
+            {% endif %}
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab-general">
+
+              <div class="form-group required">
+                <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+                  {% if error_name %}
+                    <div class="text-danger">{{ error_name }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-description">{{ entry_description }}</label>
+                <div class="col-sm-10">
+                  <textarea name="description" rows="5" placeholder="{{ entry_description }}" id="input-description" class="form-control">{{ description }}</textarea>
+                </div>
+              </div>
+              <div class="form-group required">
+                <label class="col-sm-2 control-label" for="input-code"><span data-toggle="tooltip" title="{{ help_code }}">{{ entry_code }}</span></label>
+                <div class="col-sm-10">
+                  <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
+                  {% if error_code %}
+                    <div class="text-danger">{{ error_code }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-example"><span data-toggle="tooltip" title="{{ help_example }}">{{ entry_example }}</span></label>
+                <div class="col-sm-10">
+                  <input type="text" placeholder="{{ entry_example }}" id="input-example1" class="form-control"/>
+                  <br/>
+                  <input type="text" placeholder="{{ entry_example }}" id="input-example2" class="form-control"/>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-description">{{ entry_description }}</label>
-            <div class="col-sm-10">
-              <textarea name="description" rows="5" placeholder="{{ entry_description }}" id="input-description" class="form-control">{{ description }}</textarea>
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-code"><span data-toggle="tooltip" title="{{ help_code }}">{{ entry_code }}</span></label>
-            <div class="col-sm-10">
-              <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
-              {% if error_code %}
-                <div class="text-danger">{{ error_code }}</div>
-              {% endif %}
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-example"><span data-toggle="tooltip" title="{{ help_example }}">{{ entry_example }}</span></label>
-            <div class="col-sm-10">
-              <input type="text" placeholder="{{ entry_example }}" id="input-example1" class="form-control"/>
-              <br/>
-              <input type="text" placeholder="{{ entry_example }}" id="input-example2" class="form-control"/>
+            <div class="tab-pane" id="tab-history">
+              <fieldset>
+                <legend>{{ text_history }}</legend>
+                <div id="history"></div>
+              </fieldset>
             </div>
           </div>
         </form>
@@ -69,5 +86,18 @@ $('#input-code').on('keyup', function() {
 });
 
 $('#input-code').trigger('keyup');
+
+
 //--></script>
+{% if marketing_id %}
+<script type="text/javascript"><!--
+$('#history').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
+
+	$('#history').load(this.href);
+});
+
+$('#history').load('index.php?route=marketing/coupon/history&user_token={{ user_token }}&marketing_id={{ marketing_id }}');
+//--></script>
+{% endif %}
 {{ footer }}

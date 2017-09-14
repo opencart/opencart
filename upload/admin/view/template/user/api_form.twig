@@ -158,7 +158,7 @@ $('#button-generate').on('click', function() {
 var ip_row = {{ ip_row }};
 
 function addIp() {
-	html = '<tr id="ip-row' + ip_row + '">';
+	html  = '<tr id="ip-row' + ip_row + '">';
 	html += '  <td class="text-right"><input type="text" name="api_ip[]" value="" placeholder="{{ entry_ip }}" class="form-control" /></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#ip-row' + ip_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';
@@ -167,23 +167,22 @@ function addIp() {
 
 	ip_row++;
 }
-
 //--></script>
 <script type="text/javascript"><!--
 $('#session button').on('click', function(e) {
 	e.preventDefault();
 
-	var node = this;
+	var element = this;
 
 	$.ajax({
-		url: 'index.php?route=user/api/deletesession&user_token={{ user_token }}&api_session_id=' + $(node).val(),
+		url: 'index.php?route=user/api/deletesession&user_token={{ user_token }}&api_session_id=' + $(element).val(),
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$(node).button('loading');
+			$(element).button('loading');
 		},
 		complete: function() {
-			$(node).button('reset');
+			$(element).button('reset');
 		},
 		success: function(json) {
 			$('.alert-dismissible').remove();
@@ -195,7 +194,7 @@ $('#session button').on('click', function(e) {
 			if (json['success']) {
 				$('#tab-session').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$(node).parent().parent().remove();
+				$(element).parent().parent().remove();
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

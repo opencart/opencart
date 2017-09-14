@@ -10,13 +10,10 @@ $_['text_edit']                  = 'Edit Order';
 $_['text_filter']                = 'Filter';
 $_['text_order_detail']          = 'Order Details';
 $_['text_customer_detail']       = 'Customer Details';
-
 $_['text_cart']                  = 'Shopping Cart';
-
-$_['text_payment']               = 'Payment Details';
-$_['text_shipping']              = 'Shipping Details';
-$_['text_total']                 = 'Totals';
-
+$_['text_payment_detail']        = 'Payment Details';
+$_['text_shipping_detail']       = 'Shipping Details';
+$_['text_total_detail']          = 'Total';
 $_['text_option']                = 'Options';
 $_['text_store']                 = 'Store';
 $_['text_date_added']            = 'Date Added';

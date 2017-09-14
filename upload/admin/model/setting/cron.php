@@ -1,7 +1,7 @@
 <?php
 class ModelSettingCron extends Model {
-	public function addCron($code, $date_start = '', $cycle = 'day', $action, $status = 1) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "cron` SET `code` = '" . $this->db->escape($code) . "', `date_start` = '" . $this->db->escape($date_start) . "', `cycle` = '" . $this->db->escape($cycle) . "', `action` = '" . $this->db->escape($action) . "', `status` = '" . (int)$status . "', `date_added` = NOW(), `date_modified` = NOW()");
+	public function addCron($code, $cycle = 'day', $action, $status) {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "cron` SET `code` = '" . $this->db->escape($code) . "', `cycle` = '" . $this->db->escape($cycle) . "', `action` = '" . $this->db->escape($action) . "', `status` = '" . (int)$status . "', `date_added` = NOW(), `date_modified` = NOW()");
 	
 		return $this->db->getLastId();
 	}
@@ -14,12 +14,8 @@ class ModelSettingCron extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "cron` WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 
-	public function enableCron($cron_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `status` = '1' WHERE cron_id = '" . (int)$cron_id . "'");
-	}
-	
-	public function disableCron($cron_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `status` = '0' WHERE cron_id = '" . (int)$cron_id . "'");
+	public function editStatus($cron_id, $status) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `status` = '" . (int)$status . "' WHERE cron_id = '" . (int)$cron_id . "'");
 	}
 
 	public function getCron($cron_id) {
@@ -39,11 +35,11 @@ class ModelSettingCron extends Model {
 
 		$sort_data = array(
 			'code',
-			'date_start',
 			'cycle',
 			'action',
 			'status',
-			'date_added'
+			'date_added',
+			'date_modified'
 		);
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {

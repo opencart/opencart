@@ -142,6 +142,10 @@ class ControllerToolBackup extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		if (!isset($this->session->data['backup'])) {
+			$json['error'] = $this->language->get('error_file');
+		}
+
 		if (!$json) {
 			$directory = rtrim(DIR_IMAGE, '/');
 

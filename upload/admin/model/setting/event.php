@@ -14,12 +14,8 @@ class ModelSettingEvent extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 
-	public function enableEvent($event_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `status` = '1' WHERE event_id = '" . (int)$event_id . "'");
-	}
-	
-	public function disableEvent($event_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `status` = '0' WHERE event_id = '" . (int)$event_id . "'");
+	public function editStatus($event_id, $status) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `status` = '" . (int)$status . "' WHERE event_id = '" . (int)$event_id . "'");
 	}
 	
 	public function uninstall($type, $code) {

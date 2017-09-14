@@ -123,11 +123,9 @@ $('#button-send').on('click', function() {
 		dataType: 'json',
 		data: $('input[name^=\'selected\']:checked'),
 		beforeSend: function() {
-			$('#button-send i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 			$('#button-send').prop('disabled', true);
 		},
 		complete: function() {
-			$('#button-send i').replaceWith('<i class="fa fa-envelope"></i>');
 			$('#button-send').prop('disabled', false);
 		},
 		success: function(json) {

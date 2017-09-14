@@ -7,7 +7,6 @@ $_['text_success']      = 'Success: You have successfully imported your database
 $_['text_backup']       = 'Backup Options';
 $_['text_progress']     = 'Progress';
 $_['text_modified']     = 'Modified Files';
-$_['text_none']         = 'None';
 $_['text_image']        = 'Images';
 $_['text_download']     = 'Downloads';
 $_['text_upload']       = 'Uploads';

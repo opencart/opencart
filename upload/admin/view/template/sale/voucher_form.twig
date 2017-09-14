@@ -145,11 +145,9 @@
 		  dataType: 'json',
 		  data: 'voucher_id={{ voucher_id }}',
 		  beforeSend: function() {
-			  $('#button-send i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 			  $('#button-send').prop('disabled', true);
 		  },
 		  complete: function() {
-			  $('#button-send i').replaceWith('<i class="fa fa-envelope"></i>');
 			  $('#button-send').prop('disabled', false);
 		  },
 		  success: function(json) {

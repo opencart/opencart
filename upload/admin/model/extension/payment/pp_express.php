@@ -324,25 +324,25 @@ class ModelExtensionPaymentPPExpress extends Model {
 			CURLOPT_POSTFIELDS => http_build_query(array_merge($data, $settings), '', "&")
 		);
 
-		$ch = curl_init();
+		$curl = curl_init();
 
-		curl_setopt_array($ch, $defaults);
+		curl_setopt_array($curl, $defaults);
 
-		if (!$result = curl_exec($ch)) {
+		if (!$curl_response = curl_exec($curl)) {
 			$log_data = array(
-				'curl_error' => curl_error($ch),
-				'curl_errno' => curl_errno($ch)
+				'curl_error' => curl_error($curl),
+				'curl_errno' => curl_errno($curl)
 			);
 
 			$this->log($log_data, 'CURL failed');
 			return false;
 		}
 
-		$this->log($result, 'Result');
+		$this->log($curl_response, 'Result');
 
-		curl_close($ch);
+		curl_close($curl);
 
-		return $this->cleanReturn($result);
+		return $this->cleanReturn($curl_response);
 	}
 
 	private function curl($endpoint, $additional_opts = array()) {
@@ -356,15 +356,16 @@ class ModelExtensionPaymentPPExpress extends Model {
 			CURLOPT_URL => $endpoint,
 		);
 
-		$ch = curl_init($endpoint);
+		$curl = curl_init($endpoint);
 
 		$opts = $default_opts + $additional_opts;
 
-		curl_setopt_array($ch, $opts);
+		curl_setopt_array($curl, $opts);
 
-		$response = json_decode(curl_exec($ch));
+		$curl_response = curl_exec($curl);
+		$response = json_decode($curl_response);
 
-		curl_close($ch);
+		curl_close($curl);
 
 		return $response;
 	}

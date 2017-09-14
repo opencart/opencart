@@ -593,7 +593,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 					$json['success'] = $this->language->get('text_success');
 				} else {
-					$json['error'] = (isset($response_info['L_SHORTMESSAGE0']) ? $response_info['L_SHORTMESSAGE0'] : $this->language->get('error_transaction'));
+					$json['error'] = (isset($response['L_SHORTMESSAGE0']) ? $response['L_SHORTMESSAGE0'] : $this->language->get('error_transaction'));
 				}
 			} else {
 				$json['error'] = $this->language->get('error_not_found');
@@ -778,9 +778,9 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				'MSGSUBID'        => uniqid(mt_rand(), true)
 			);
 
-			$response_info = $this->model_extension_payment_pp_express->call($request);
+			$response = $this->model_extension_payment_pp_express->call($request);
 
-			if (isset($response_info['ACK']) && ($response_info['ACK'] != 'Failure') && ($response_info['ACK'] != 'FailureWithWarning')) {
+			if (isset($response['ACK']) && ($response['ACK'] != 'Failure') && ($response['ACK'] != 'FailureWithWarning')) {
 				$transaction = array(
 					'paypal_order_id'       => $paypal_info['paypal_order_id'],
 					'transaction_id'        => '',
@@ -793,7 +793,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 					'pending_reason'        => '',
 					'transaction_entity'    => 'auth',
 					'amount'                => '',
-					'debug_data'            => json_encode($response_info)
+					'debug_data'            => json_encode($response)
 				);
 
 				$this->model_extension_payment_pp_express->addTransaction($transaction);
@@ -804,7 +804,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 				$json['success'] = $this->language->get('text_success');
 			} else {
-				$json['error'] = (isset($result['L_SHORTMESSAGE0']) ? $result['L_SHORTMESSAGE0'] : $this->language->get('error_transaction'));
+				$json['error'] = (isset($response['L_SHORTMESSAGE0']) ? $response['L_SHORTMESSAGE0'] : $this->language->get('error_transaction'));
 			}
 		} else {
 			$json['error'] = $this->language->get('error_not_found');
@@ -865,25 +865,25 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
-			$response = curl_exec($curl);
+			$curl_response = curl_exec($curl);
 
-			if (!$response) {
+			if (!$curl_response) {
 				$this->log(sprintf($this->language->get('error_curl'), curl_errno($curl), curl_error($curl)));
 			}
 
 			curl_close($curl);
 
-			$response_info = array();
+			$response = array();
 
-			parse_str($response, $response_info);
+			parse_str($curl_response, $response);
 
-			if (isset($response_info['PROFILEID'])) {
+			if (isset($response['PROFILEID'])) {
 				$this->model_account_recurring->editOrderRecurringStatus($order_recurring_id, 4);
 				$this->model_account_recurring->addOrderRecurringTransaction($order_recurring_id, 5);
 
 				$json['success'] = $this->language->get('text_cancelled');
 			} else {
-				$json['error'] = sprintf($this->language->get('error_not_cancelled'), $response_info['L_LONGMESSAGE0']);
+				$json['error'] = sprintf($this->language->get('error_not_cancelled'), $response['L_LONGMESSAGE0']);
 			}
 		} else {
 			$json['error'] = $this->language->get('error_not_found');
@@ -1009,7 +1009,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$this->load->language('extension/payment/pp_express_view');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(

@@ -145,7 +145,13 @@ class ControllerStartupStartup extends Controller {
 		if (isset($this->request->get['tracking'])) {
 			setcookie('tracking', $this->request->get['tracking'], time() + 3600 * 24 * 1000, '/');
 
-			$this->db->query("UPDATE `" . DB_PREFIX . "marketing` SET clicks = (clicks + 1) WHERE code = '" . $this->db->escape($this->request->get['tracking']) . "'");
+			$this->load->model('marketing/marketing');
+
+			$marketing_info = $this->model_marketing_marketing->getMarketingByCode($this->request->get['tracking']);
+
+			if ($marketing_info) {
+				$this->model_marketing_marketing->addMarketingHistory($marketing_info['marketing_id'], $this->request->server['REMOTE_ADDR']);
+			}
 		}
 
 		// Currency

@@ -1970,7 +1970,7 @@ DROP TABLE IF EXISTS `oc_marketing_history`;
 CREATE TABLE `oc_marketing_history` (
   `marketing_history_id` int(11) NOT NULL AUTO_INCREMENT,
   `marketing_id` int(11) NOT NULL,
-  `ip` int(11) NOT NULL,
+  `ip` varchar(40) NOT NULL,
   `country` varchar(2) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`marketing_history_id`)

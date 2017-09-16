@@ -33,7 +33,6 @@
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
-
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
                 <div class="col-sm-10">
@@ -97,7 +96,7 @@ $('#history').delegate('.pagination a', 'click', function(e) {
 	$('#history').load(this.href);
 });
 
-$('#history').load('index.php?route=marketing/coupon/history&user_token={{ user_token }}&marketing_id={{ marketing_id }}');
+$('#history').load('index.php?route=marketing/marketing/history&user_token={{ user_token }}&marketing_id={{ marketing_id }}');
 //--></script>
 {% endif %}
 {{ footer }}

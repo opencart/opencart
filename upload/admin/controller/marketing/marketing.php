@@ -517,11 +517,11 @@ class ControllerMarketingMarketing extends Controller {
 			$page = 1;
 		}
 
-		$this->load->model('marketing/marketing');
-
 		$data['histories'] = array();
 
-		$results = $this->model_marketing_coupon->getMarketingHistories($marketing_id, ($page - 1) * 10, 10);
+		$this->load->model('marketing/marketing');
+
+		$results = $this->model_marketing_marketing->getMarketingHistories($marketing_id, ($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
 			$data['histories'][] = array(
@@ -533,7 +533,7 @@ class ControllerMarketingMarketing extends Controller {
 			);
 		}
 
-		$history_total = $this->model_marketing_coupon->getTotalCouponHistories($marketing_id);
+		$history_total = $this->model_marketing_marketing->getTotalMarketingHistories($marketing_id);
 
 		$pagination = new Pagination();
 		$pagination->total = $history_total;

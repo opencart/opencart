@@ -1962,14 +1962,16 @@ CREATE TABLE `oc_marketing` (
 
 -------------------------------------------------------------
 
+--
+-- Table structure for table `oc_marketing_history`
+--
+
 DROP TABLE IF EXISTS `oc_marketing_history`;
 CREATE TABLE `oc_marketing_history` (
   `marketing_history_id` int(11) NOT NULL AUTO_INCREMENT,
   `marketing_id` int(11) NOT NULL,
-  `customer_id` int(11) NOT NULL,
   `ip` int(11) NOT NULL,
-  `order_id` int(11) NOT NULL,
-  `amount` decimal(15,4) NOT NULL,
+  `country` varchar(2) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`marketing_history_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;

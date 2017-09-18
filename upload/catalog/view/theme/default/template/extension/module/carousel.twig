@@ -1,20 +1,24 @@
-<div id="carousel{{ module }}" class="owl-carousel">
- {% for banner in banners %}
-  <div class="item text-center">
-    {% if banner.link %}
-    <a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" /></a>
-    {% else %}
-    <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" />
-    {% endif %}
+<div class="swiper-viewport">
+  <div id="carousel{{ module }}" class="swiper-container">
+    <div class="swiper-wrapper">{% for banner in banners %}
+      <div class="swiper-slide text-center">{% if banner.link %}<a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" /></a>{% else %}<img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" />{% endif %}</div>
+      {% endfor %}</div>
   </div>
-  {% endfor %}
+  <div class="swiper-pagination carousel{{ module }}"></div>
+  <div class="swiper-pager">
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
 </div>
 <script type="text/javascript"><!--
-$('#carousel{{ module }}').owlCarousel({
-	items: 6,
-	autoPlay: 3000,
-	navigation: true,
-	navigationText: ['<i class="fa fa-chevron-left fa-5x"></i>', '<i class="fa fa-chevron-right fa-5x"></i>'],
-	pagination: true
+$('#carousel{{ module }}').swiper({
+	mode: 'horizontal',
+	slidesPerView: 5,
+	pagination: '.carousel{{ module }}',
+	paginationClickable: true,
+	nextButton: '.swiper-button-next',
+    prevButton: '.swiper-button-prev',
+	autoplay: 2500,
+	loop: true
 });
 --></script>

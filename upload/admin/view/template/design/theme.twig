@@ -5,7 +5,7 @@
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
-        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
         {% endfor %}
       </ul>
     </div>
@@ -26,7 +26,7 @@
                 <select name="store_id" class="form-control">
                   <option value="0">{{ text_default }}</option>
                   {% for store in stores %}
-                  <option value="{{ store.store_id }}">{{ store.name }}</option>
+                    <option value="{{ store.store_id }}">{{ store.name }}</option>
                   {% endfor %}
                 </select>
               </div>
@@ -45,10 +45,9 @@
                 <legend>{{ text_history }}</legend>
                 <div id="history"></div>
               </fieldset>
-            </div>            
+            </div>
             <div id="code" style="display: none;">
-              <ul class="nav nav-tabs">
-              </ul>
+              <ul class="nav nav-tabs"></ul>
               <div class="tab-content"></div>
             </div>
           </div>
@@ -56,12 +55,13 @@
       </div>
     </div>
   </div>
-  <link href="view/javascript/codemirror/lib/codemirror.css" rel="stylesheet" />
-  <link href="view/javascript/codemirror/theme/monokai.css" rel="stylesheet" />
-  <script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script> 
-  <script type="text/javascript" src="view/javascript/codemirror/lib/xml.js"></script> 
-  <script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script> 
-  <script type="text/javascript"><!--
+</div>
+<link href="view/javascript/codemirror/lib/codemirror.css" rel="stylesheet"/>
+<link href="view/javascript/codemirror/theme/monokai.css" rel="stylesheet"/>
+<script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script>
+<script type="text/javascript" src="view/javascript/codemirror/lib/xml.js"></script>
+<script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script>
+<script type="text/javascript"><!--
 $('select[name="store_id"]').on('change', function(e) {
 	$.ajax({
 		url: 'index.php?route=design/theme/path&user_token={{ user_token }}&store_id=' + $('select[name="store_id"]').val(),
@@ -99,11 +99,11 @@ $('select[name="store_id"]').trigger('change');
 
 $('#path').on('click', 'a.directory', function(e) {
 	console.log($(node).attr('href'));
-	
+
 	e.preventDefault();
 
 	var node = this;
-	
+
 	$.ajax({
 		url: 'index.php?route=design/theme/path&user_token={{ user_token }}&store_id=' + $('select[name="store_id"]').val() + '&path=' + $(node).attr('href'),
 		dataType: 'json',
@@ -146,7 +146,7 @@ $('#path').on('click', 'a.file', function(e) {
 	e.preventDefault();
 
 	var node = this;
-	
+
 	// Check if the file has an extension
 	var pos = $(node).attr('href').lastIndexOf('.');
 
@@ -155,7 +155,7 @@ $('#path').on('click', 'a.file', function(e) {
 	} else {
 		var tab_id = $('select[name="store_id"]').val() + '-' + $(node).attr('href').replace(/\//g, '-').replace(/_/g, '-');
 	}
-	
+
 	if (!$('#tab-' + tab_id).length) {
 		$.ajax({
 			url: 'index.php?route=design/theme/template&user_token={{ user_token }}&store_id=' + $('select[name="store_id"]').val() + '&path=' + $(node).attr('href'),
@@ -175,7 +175,7 @@ $('#path').on('click', 'a.file', function(e) {
 
 					$('.nav-tabs').append('<li><a href="#tab-' + tab_id + '" data-toggle="tab">' + $(node).attr('href').split('/').join(' / ') + '&nbsp;&nbsp;<i class="fa fa-minus-circle"></i></a></li>');
 
-					html  = '<div class="tab-pane" id="tab-' + tab_id + '">';
+					html = '<div class="tab-pane" id="tab-' + tab_id + '">';
 					html += '  <textarea name="code" rows="10"></textarea>';
 					html += '  <input type="hidden" name="store_id" value="' + $('select[name="store_id"]').val() + '" />';
 					html += '  <input type="hidden" name="path" value="' + $(node).attr('href') + '" />';
@@ -189,7 +189,7 @@ $('#path').on('click', 'a.file', function(e) {
 					$('.tab-content').append(html);
 
 					$('.nav-tabs a[href=\'#tab-' + tab_id + '\']').tab('show');
-					
+
 					// Initialize codemirrror
 					var codemirror = CodeMirror.fromTextArea(document.querySelector('.tab-content .active textarea'), {
 						mode: 'text/html',
@@ -238,7 +238,7 @@ $('.tab-content').on('click', '.btn-primary', function(e) {
 	var node = this;
 
 	var editor = $('.tab-content .active .CodeMirror')[0].CodeMirror;
-				
+
 	$.ajax({
 		url: 'index.php?route=design/theme/save&user_token={{ user_token }}&store_id=' + $('.tab-content .active input[name="store_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
 		type: 'post',
@@ -252,14 +252,14 @@ $('.tab-content').on('click', '.btn-primary', function(e) {
 		},
 		success: function(json) {
 			$('.alert-dismissible').remove();
-			
+
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			
+
 				$('#history').load('index.php?route=design/theme/history&user_token={{ user_token }}');
 			}
 		},
@@ -284,7 +284,7 @@ $('.tab-content').on('click', '.btn-danger', function(e) {
 			},
 			success: function(json) {
 				$('.alert-dismissible').remove();
-				
+
 				if (json['error']) {
 					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
@@ -292,9 +292,9 @@ $('.tab-content').on('click', '.btn-danger', function(e) {
 				if (json['success']) {
 					$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
-				
+
 				var codemirror = $('.tab-content .active .CodeMirror')[0].CodeMirror;
-				
+
 				codemirror.setValue(json['code']);
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
@@ -316,7 +316,7 @@ $('#history').on('click', '.btn-primary', function(e) {
 	e.preventDefault();
 
 	var node = this;
-	
+
 	// Check if the file has an extension
 	var tab_id = $(node).parent().parent().find('input[name="store_id"]').val() + '-' + $(node).parent().parent().find('input[name="path"]').val().replace(/\//g, '-').replace(/_/g, '-');
 
@@ -337,7 +337,7 @@ $('#history').on('click', '.btn-primary', function(e) {
 
 					$('.nav-tabs').append('<li><a href="#tab-' + tab_id + '" data-toggle="tab">' + $(node).parent().parent().find('input[name="path"]').val().split('/').join(' / ') + '&nbsp;&nbsp;<i class="fa fa-minus-circle"></i></a></li>');
 
-					html  = '<div class="tab-pane" id="tab-' + tab_id + '">';
+					html = '<div class="tab-pane" id="tab-' + tab_id + '">';
 					html += '  <textarea name="code" rows="10"></textarea>';
 					html += '  <input type="hidden" name="store_id" value="' + $(node).parent().parent().find('input[name="store_id"]').val() + '" />';
 					html += '  <input type="hidden" name="path" value="' + $(node).parent().parent().find('input[name="path"]').val() + '.twig" />';
@@ -351,7 +351,7 @@ $('#history').on('click', '.btn-primary', function(e) {
 					$('.tab-content').append(html);
 
 					$('.nav-tabs a[href=\'#tab-' + tab_id + '\']').tab('show');
-					
+
 					// Initialize codemirrror
 					var codemirror = CodeMirror.fromTextArea(document.querySelector('.tab-content .active textarea'), {
 						mode: 'text/html',
@@ -375,7 +375,7 @@ $('#history').on('click', '.btn-primary', function(e) {
 
 $('#history').on('click', '.btn-danger', function(e) {
 	e.preventDefault();
-	
+
 	if (confirm('{{ text_confirm }}')) {
 		var node = this;
 
@@ -390,14 +390,14 @@ $('#history').on('click', '.btn-danger', function(e) {
 			},
 			success: function(json) {
 				$('.alert-dismissible').remove();
-				
+
 				if (json['error']) {
 					$('#history').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				if (json['success']) {
 					$('#history').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				
+
 					$('#history').load('index.php?route=design/theme/history&user_token={{ user_token }}');
 				}
 			},
@@ -407,6 +407,5 @@ $('#history').on('click', '.btn-danger', function(e) {
 		});
 	}
 });
-//--></script> 
-</div>
-{{ footer }} 
+//--></script>
+{{ footer }}

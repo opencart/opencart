@@ -1,11 +1,35 @@
 <?php
+/**
+ * @package		OpenCart
+ * @author		Daniel Kerr
+ * @copyright	Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
+ * @license		https://opensource.org/licenses/GPL-3.0
+ * @link		https://www.opencart.com
+*/
+
+/**
+* Loader class
+*/
 final class Loader {
 	protected $registry;
 
+	/**
+	 * Constructor
+	 *
+	 * @param	object	$registry
+ 	*/
 	public function __construct($registry) {
 		$this->registry = $registry;
 	}
-	
+
+	/**
+	 * 
+	 *
+	 * @param	string	$route
+	 * @param	array	$data
+	 *
+	 * @return	mixed
+ 	*/	
 	public function controller($route, $data = array()) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
@@ -21,7 +45,7 @@ final class Loader {
 			$output = $result;
 		} else {
 			$action = new Action($route);
-			$output = $action->execute($this->registry, array(&$data));			
+			$output = $action->execute($this->registry, array(&$data));
 		}
 		
 		// Trigger the post events
@@ -35,7 +59,12 @@ final class Loader {
 			return $output;
 		}
 	}
-	
+
+	/**
+	 * 
+	 *
+	 * @param	string	$route
+ 	*/	
 	public function model($route) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
@@ -62,6 +91,14 @@ final class Loader {
 		}
 	}
 
+	/**
+	 * 
+	 *
+	 * @param	string	$route
+	 * @param	array	$data
+	 *
+	 * @return	string
+ 	*/
 	public function view($route, $data = array()) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
@@ -69,8 +106,11 @@ final class Loader {
 		// Keep the original trigger
 		$trigger = $route;
 		
+		// Template contents. Not the output!
+		$template = '';
+		
 		// Trigger the pre events
-		$result = $this->registry->get('event')->trigger('view/' . $trigger . '/before', array(&$route, &$data));
+		$result = $this->registry->get('event')->trigger('view/' . $trigger . '/before', array(&$route, &$data, &$template));
 		
 		// Make sure its only the last event that returns an output if required.
 		if ($result && !$result instanceof Exception) {
@@ -81,8 +121,8 @@ final class Loader {
 			foreach ($data as $key => $value) {
 				$template->set($key, $value);
 			}
-			
-			$output = $template->render($this->registry->get('config')->get('template_directory') . $route);		
+
+			$output = $template->render($this->registry->get('config')->get('template_directory') . $route, $this->registry->get('config')->get('template_cache'));		
 		}
 		
 		// Trigger the post events
@@ -95,6 +135,11 @@ final class Loader {
 		return $output;
 	}
 
+	/**
+	 * 
+	 *
+	 * @param	string	$route
+ 	*/
 	public function library($route) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
@@ -110,7 +155,12 @@ final class Loader {
 			throw new \Exception('Error: Could not load library ' . $route . '!');
 		}
 	}
-	
+
+	/**
+	 * 
+	 *
+	 * @param	string	$route
+ 	*/	
 	public function helper($route) {
 		$file = DIR_SYSTEM . 'helper/' . preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route) . '.php';
 
@@ -120,7 +170,12 @@ final class Loader {
 			throw new \Exception('Error: Could not load helper ' . $route . '!');
 		}
 	}
-	
+
+	/**
+	 * 
+	 *
+	 * @param	string	$route
+ 	*/	
 	public function config($route) {
 		$this->registry->get('event')->trigger('config/' . $route . '/before', array(&$route));
 		
@@ -129,6 +184,14 @@ final class Loader {
 		$this->registry->get('event')->trigger('config/' . $route . '/after', array(&$route));
 	}
 
+	/**
+	 * 
+	 *
+	 * @param	string	$route
+	 * @param	string	$key
+	 *
+	 * @return	array
+ 	*/
 	public function language($route, $key = '') {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
@@ -136,7 +199,7 @@ final class Loader {
 		// Keep the original trigger
 		$trigger = $route;
 				
-		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/before', array(&$route));
+		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/before', array(&$route, &$key));
 		
 		if ($result && !$result instanceof Exception) {
 			$output = $result;
@@ -144,7 +207,7 @@ final class Loader {
 			$output = $this->registry->get('language')->load($route, $key);
 		}
 		
-		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/after', array(&$route, &$output));
+		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/after', array(&$route, &$key, &$output));
 		
 		if ($result && !$result instanceof Exception) {
 			$output = $result;

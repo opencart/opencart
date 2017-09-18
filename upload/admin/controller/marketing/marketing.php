@@ -355,6 +355,14 @@ class ControllerMarketingMarketing extends Controller {
 	protected function getForm() {
 		$data['text_form'] = !isset($this->request->get['marketing_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
+		$data['user_token'] = $this->session->data['user_token'];
+
+		if (isset($this->request->get['marketing_id'])) {
+			$data['marketing_id'] = $this->request->get['marketing_id'];
+		} else {
+			$data['marketing_id'] = 0;
+		}
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -492,5 +500,51 @@ class ControllerMarketingMarketing extends Controller {
 		}
 
 		return !$this->error;
+	}
+
+	public function history() {
+		$this->load->language('marketing/marketing');
+
+		if (isset($this->request->get['marketing_id'])) {
+			$marketing_id = $this->request->get['marketing_id'];
+		} else {
+			$marketing_id = 0;
+		}
+
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		$data['histories'] = array();
+
+		$this->load->model('marketing/marketing');
+
+		$results = $this->model_marketing_marketing->getMarketingHistories($marketing_id, ($page - 1) * 10, 10);
+
+		foreach ($results as $result) {
+			$data['histories'][] = array(
+				'ip'         => $result['ip'],
+				'order_id'   => $result['order_id'],
+				'customer'   => $result['customer'],
+				'amount'     => $result['amount'],
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+			);
+		}
+
+		$history_total = $this->model_marketing_marketing->getTotalMarketingHistories($marketing_id);
+
+		$pagination = new Pagination();
+		$pagination->total = $history_total;
+		$pagination->page = $page;
+		$pagination->limit = 10;
+		$pagination->url = $this->url->link('marketing/coupon/history', 'user_token=' . $this->session->data['user_token'] . '&coupon_id=' . $marketing_id . '&page={page}', true);
+
+		$data['pagination'] = $pagination->render();
+
+		$data['results'] = sprintf('Showing %d to %d of %d (%d Pages)', ($history_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($history_total - 10)) ? $history_total : ((($page - 1) * 10) + 10), $history_total, ceil($history_total / 10));
+
+		$this->response->setOutput($this->load->view('marketing/marketing_history', $data));
 	}
 }

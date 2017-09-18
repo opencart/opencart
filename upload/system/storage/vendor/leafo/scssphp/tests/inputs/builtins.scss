@@ -1,0 +1,171 @@
+
+#color {
+    color: rgb(34,234,24);
+
+    red: red(rgb(34,234,24));
+    green: green(rgb(34,234,24));
+    blue: blue(rgb(34,234,24));
+
+    color: rgba(1,2,4, 0.5);
+    a1: alpha(rgb(1,2,4));
+    a2: alpha(rgba(1,2,4, 0.5));
+
+    mix: mix(rgb(1,2,3), rgb(3,4,5));
+
+    rgba: rgba($color: #a7c, $alpha: 0.4);
+    rgba: rgba(#a7c, 0.4);
+}
+
+#hsl {
+    color: hsl(100, 50, 55);
+    color: hsla(100, 50, 55, 0.5);
+
+    hue: hue(hsl(100, 50, 55));
+    sat: saturation(hsl(100, 50, 55));
+    lig: lightness(hsl(100, 50, 55));
+}
+
+#more-color {
+    $color: hsl(-80,44,33);
+
+    light: lighten($color, 10%);
+    dark: darken($color, 10%);
+
+    sat: saturate($color, 10%);
+    desat: desaturate($color, 10%);
+
+    gray: grayscale($color);
+    comp: complement($color);
+    inv: invert($color);
+}
+
+#more-more-color {
+    $color: rgba(1,2,3,0.5);
+    op: opacity($color);
+
+    opacify: opacify($color, 0.1);
+    opacify: fade-in($color, 0.1);
+
+    transparentize: transparentize($color, 0.1);
+    transparentize: fade-out($color, 0.1);
+    transparentize: transparentize(#348203, 0.1);
+}
+
+#more-more-more-color {
+    $color: rgba(10,10,10,0);
+    color: adjust-color($color, $blue: 69, $red: 55, $green: 100, $alpha: 0.4);
+    color: adjust-color($color, $hue: 170, $saturation: 100, $lightness: 50);
+
+    color: change-color($color, $blue: 69, $red: 55, $green: 100, $alpha: 0.4);
+    color: change-color($color, $hue: 170, $saturation: 100, $lightness: 50);
+
+    color: scale-color($color, $red: 55%);
+    color: scale-color($color, $red: -55%);
+
+    color: scale-color($color, $lightness: 55%);
+    color: scale-color($color, $lightness: -55%);
+    
+    color: ie-hex-str($color);
+    color: ie-hex-str(#abc);
+}
+
+#string {
+    color: unquote("hello what is going on");
+    // color: quote(yeah you know it); // **
+    color: quote(yeah);
+    color: quote("I do?");
+}
+
+#number {
+    color: percentage(100/40);
+    color: round(3.4);
+    color: floor(3.4);
+    color: ceil(3.4);
+    
+    top: floor(10.4px);
+    top: ceil(.4ex);
+    width: percentage(100px / 50px); 
+    bottom: abs(-10px);
+    padding: min(5em, 3em, 4em) max(2px, 1in) min(1in, 96px) max(1in, 72pt);
+}
+
+#list {
+    len: length(hello world what);
+    len: length(thing);
+
+    n: nth(hello world what, 1);
+    // n: nth(hello world what, 100); // **
+
+    hello: join(one two three, hello, comma);
+    hello: join(one two three, hello world what is going, comma);
+    hello: append(one two three, hello, comma);
+
+    index: index(1px solid red, solid);
+    index: index(1px solid red, dashed);
+    index: index(1px solid red, #f00);
+    index: index(96px solid red, 1in);
+    index: index((1in 2) a b, 1in);
+    index: index((1in 2) a b, (96px 2));
+    index: index((1in 2) a b, (1in, 2));
+    index: index((1px solid red), solid);
+    index: index(1px 3px + 3px, 4+2px);
+    $var: oo;
+    index: index(foo bar, f#{$var});
+
+    $yes: one, two, three;
+    $no: great job;
+    world: join($yes, $no);
+    world: append($yes, $no);
+
+    cool: join($yes, $no, space);
+    cool: join($no, $yes);
+
+    zip: zip((1px, 2px), (solid dashed));
+    zip: zip(1px 2px 3px, solid dashed, red green blue);
+} 
+
+#introspection {
+    t: type-of(100px);
+    t: type-of(asdf);
+    t: type-of("asdf");
+    t: type-of(true);
+    t: type-of(#fff);
+    t: type-of(blue);
+    t: type-of(one two three);
+
+    u: unit(12);
+    u: unit(12px);
+    u: unit(12em);
+
+    l: unitless(23);
+    l: unitless(23deg);
+
+    c: comparable(2px, 1px);
+    c: comparable(100px, 3em);
+    c: comparable(10cm, 3mm);
+    c: comparable(1, 4);
+    c: comparable(1ex, 4em);
+    c: comparable(2em, 5em);
+}
+
+#if {
+    color: if(true, yes, no);
+    color: if(false, yes, no);
+    color: if(false or true, yes, no);
+    color: if(10px, yes, no);
+}
+
+.transparent {
+  r: red(transparent);
+  g: green(transparent);
+  b: blue(transparent);
+  a: alpha(transparent);
+}
+
+.alpha {
+  a: alpha(black);
+  a: alpha(#fff);
+  a: alpha(rgb(0, 0, 0));
+  a: alpha(rgba(0, 0, 0, 0.5));
+  a: alpha(currentColor);
+}

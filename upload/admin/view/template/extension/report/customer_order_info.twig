@@ -29,73 +29,13 @@
           <label class="control-label" for="input-status">{{ entry_status }}</label>
           <select name="filter_order_status_id" id="input-status" class="form-control">
             <option value="0">{{ text_all_status }}</option>
-            
-          
-          
-            
-          
-            
-          
-            
-            
-          
           {% for order_status in order_statuses %}
           {% if order_status.order_status_id == filter_order_status_id %}
-                  
-          
-            
-            
-          
-            
-          
-            
-          
-          
             <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
-            
-          
-          
-            
-          
-            
-          
-            
-            
-          
           {% else %}
-                  
-          
-            
-            
-          
-            
-          
-            
-          
-          
-            <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-            
-          
-          
-            
-          
-            
-          
-            
-            
-          
+           <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
           {% endif %}
           {% endfor %}
-                
-        
-          
-          
-        
-          
-        
-          
-        
-        
           </select>
         </div>
         <div class="form-group text-right">
@@ -125,7 +65,6 @@
               </tr>
             </thead>
             <tbody>
-            
             {% if customers %}
             {% for customer in customers %}
             <tr>
@@ -145,7 +84,6 @@
             </tr>
             {% endif %}
             </tbody>
-            
           </table>
         </div>
         <div class="row">
@@ -189,7 +127,7 @@ $('#button-filter').on('click', function() {
 //--></script> 
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+	language: '{{ datepicker }}',
 	pickTime: false
 });
 //--></script> 

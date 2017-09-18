@@ -20,7 +20,7 @@ class ModelUpgrade1009 extends Model {
 				$customer_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer` WHERE `email` = '" . $this->db->escape($affiliate['email']) . "'");
 				
 				if (!$customer_query->num_rows) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "customer` SET `customer_group_id` = '" . (int)$config->get('config_customer_group_id') . "', `language_id` = '" . (int)$config->get('config_customer_group_id') . "', `firstname` = '" . $this->db->escape($affiliate['firstname']) . "', `lastname` = '" . $this->db->escape($affiliate['lastname']) . "', `email` = '" . $this->db->escape($affiliate['email']) . "', `telephone` = '" . $this->db->escape($affiliate['telephone']) . "', `password` = '" . $this->db->escape($affiliate['password']) . "', `salt` = '" . $this->db->escape($affiliate['salt']) . "', `cart` = '" . $this->db->escape(json_encode(array())) . "', `wishlist` = '" . $this->db->escape(json_encode(array())) . "', `newsletter` = '0', `custom_field` = '" . $this->db->escape(json_encode(array())) . "', `ip` = '" . $this->db->escape($affiliate['ip']) . "', `status` = '" . $this->db->escape($affiliate['status']) . "', `approved` = '" . (int)$affiliatee['approved'] . "', `date_added` = '" . $this->db->escape($affiliate['date_added']) . "'");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "customer` SET `customer_group_id` = '" . (int)$config->get('config_customer_group_id') . "', `language_id` = '" . (int)$config->get('config_customer_group_id') . "', `firstname` = '" . $this->db->escape($affiliate['firstname']) . "', `lastname` = '" . $this->db->escape($affiliate['lastname']) . "', `email` = '" . $this->db->escape($affiliate['email']) . "', `telephone` = '" . $this->db->escape($affiliate['telephone']) . "', `password` = '" . $this->db->escape($affiliate['password']) . "', `salt` = '" . $this->db->escape($affiliate['salt']) . "', `cart` = '" . $this->db->escape(json_encode(array())) . "', `wishlist` = '" . $this->db->escape(json_encode(array())) . "', `newsletter` = '0', `custom_field` = '" . $this->db->escape(json_encode(array())) . "', `ip` = '" . $this->db->escape($affiliate['ip']) . "', `status` = '" . $this->db->escape($affiliate['status']) . "', `approved` = '" . (int)$affiliate['approved'] . "', `date_added` = '" . $this->db->escape($affiliate['date_added']) . "'");
 					
 					$customer_id = $this->db->getLastId();
 					
@@ -54,13 +54,13 @@ class ModelUpgrade1009 extends Model {
 			
 			$affiliate_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_activity'");
 			
-			if (!$affiliate_query->num_rows) {
+			if ($affiliate_query->num_rows) {
 				$this->db->query("DROP TABLE `" . DB_PREFIX . "affiliate_activity`");
 			}
 			
 			$affiliate_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_login'");
 			
-			if (!$affiliate_query->num_rows) {			
+			if ($affiliate_query->num_rows) {
 				$this->db->query("DROP TABLE `" . DB_PREFIX . "affiliate_login`");
 			}
 			
@@ -88,6 +88,8 @@ class ModelUpgrade1009 extends Model {
 						
 		// OPENCART_SERVER
 		$upgrade = true;
+		
+		$file = DIR_OPENCART . 'admin/config.php';
 		
 		$lines = file(DIR_OPENCART . 'admin/config.php');
 
@@ -121,69 +123,49 @@ class ModelUpgrade1009 extends Model {
 		$files = glob(DIR_OPENCART . '{config.php,admin/config.php}', GLOB_BRACE);
 
 		foreach ($files as $file) {
-			// DIR_STORAGE
-			$upgrade = true;
-			
 			$lines = file($file);
 	
-			foreach ($lines as $line) {
-				if (strpos(strtoupper($line), 'DIR_STORAGE') !== false) {
-					$upgrade = false;
-	
-					break;
+			for ($i = 0; $i < count($lines); $i++) { 
+				if ((strpos($lines[$i], 'DIR_IMAGE') !== false) && (strpos($lines[$i + 1], 'DIR_STORAGE') === false)) {
+					array_splice($lines, $i + 1, 0, array('define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');'));
 				}
-			}
-	
-			if ($upgrade) {
-				$output = '';
-	
-				foreach ($lines as $line_id => $line) {
-					if (strpos($line, 'DIR_IMAGE') !== false) {
-						$output .= $line . "\n\n";
-						$output .= 'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');' . "\n";
-					} else {
-						$output .= $line;
-					}
+
+				if ((strpos($lines[$i], 'DIR_MODIFICATION') !== false) && (strpos($lines[$i + 1], 'DIR_SESSION') === false)) {
+					array_splice($lines, $i + 1, 0, array('define(\'DIR_SESSION\', DIR_STORAGE . \'session/\');'));
 				}
-	
-				$file = fopen($file, 'w');
-	
-				fwrite($file, $output);
-	
-				fclose($file);
-			}
+
+				if (strpos($lines[$i], 'DIR_CACHE') !== false) {
+					$lines[$i] = 'define(\'DIR_CACHE\', DIR_STORAGE . \'cache/\');' . "\n";
+				}
+
+				if (strpos($lines[$i], 'DIR_DOWNLOAD') !== false) {
+					$lines[$i] = 'define(\'DIR_DOWNLOAD\', DIR_STORAGE . \'download/\');' . "\n";
+				}
+
+				if (strpos($lines[$i], 'DIR_LOGS') !== false) {
+					$lines[$i] = 'define(\'DIR_LOGS\', DIR_STORAGE . \'logs/\');' . "\n";
+				}
+
+				if (strpos($lines[$i], 'DIR_MODIFICATION') !== false) {
+					$lines[$i] = 'define(\'DIR_MODIFICATION\', DIR_STORAGE . \'modification/\');' . "\n";
+				}
 				
-			// DIR_SESSION
-			$upgrade = true;
+				if (strpos($lines[$i], 'DIR_SESSION') !== false) {
+					$lines[$i] = 'define(\'DIR_SESSION\', DIR_STORAGE . \'session/\');' . "\n";
+				}				
+	
+				if (strpos($lines[$i], 'DIR_UPLOAD') !== false) {
+					$lines[$i] = 'define(\'DIR_UPLOAD\', DIR_STORAGE . \'upload/\');' . "\n";
+				}
+			}
 			
-			$lines = file($file);
-	
-			foreach ($lines as $line) {
-				if (strpos(strtoupper($line), 'DIR_SESSION') !== false) {
-					$upgrade = false;
-	
-					break;
-				}
-			}
-	
-			if ($upgrade) {
-				$output = '';
-	
-				foreach ($lines as $line_id => $line) {
-					if (strpos($line, 'DIR_MODIFICATION') !== false) {
-						$output .= $line . "\n\n";
-						$output .= 'define(\'DIR_SESSION\', DIR_STORAGE . \'session/\');' . "\n";
-					} else {
-						$output .= $line;
-					}
-				}
-	
-				$handle = fopen($file, 'w');
-	
-				fwrite($handle, $output);
-	
-				fclose($handle);
-			}
+			$output = implode('', $lines);
+			
+			$handle = fopen($file, 'w');
+
+			fwrite($handle, $output);
+
+			fclose($handle);
 		}
 	}
 }

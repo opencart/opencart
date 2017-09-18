@@ -384,7 +384,7 @@ class ModelExtensionShippingUsps extends Model {
 												}
 											}
 
-											if (($this->config->get('usps_domestic_' . $classid))) {
+											if (($this->config->get('shipping_usps_domestic_' . $classid))) {
 												$cost = $postage->getElementsByTagName('Rate')->item(0)->nodeValue;
 
 												$quote_data[$classid] = array(
@@ -396,7 +396,7 @@ class ModelExtensionShippingUsps extends Model {
 												);
 											}
 
-										} elseif ($this->config->get('usps_domestic_' . $classid)) {
+										} elseif ($this->config->get('shipping_usps_domestic_' . $classid)) {
 											$cost = $postage->getElementsByTagName('Rate')->item(0)->nodeValue;
 
 											$quote_data[$classid] = array(
@@ -430,7 +430,7 @@ class ModelExtensionShippingUsps extends Model {
 							foreach ($services as $service) {
 								$id = $service->getAttribute('ID');
 
-								if (in_array($id, $allowed) && $this->config->get('usps_international_' . $id)) {
+								if (in_array($id, $allowed) && $this->config->get('shipping_usps_international_' . $id)) {
 									$title = $service->getElementsByTagName('SvcDescription')->item(0)->nodeValue;
 
 									if ($this->config->get('shipping_usps_display_time')) {

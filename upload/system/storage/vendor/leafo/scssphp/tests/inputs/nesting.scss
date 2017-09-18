@@ -1,0 +1,45 @@
+
+
+body {
+    color: red;
+}
+
+
+div {
+    color: red;
+    height: yes;
+
+    pre {
+        color: blue;
+    }
+}
+
+
+div: blue;
+
+
+div {
+    font: 10px hello world {
+        size: 10px;
+        color: blue;
+    }
+
+    border: {
+        left: 1px solid blue;
+        right: 2px dashed green;
+    }
+}
+
+
+#nested-nesting {
+    bar: baz;
+    bang: {
+        bop: bar;
+        bip: 1px;
+        blat: {
+            baf: bort
+        }
+    }
+}
+
+

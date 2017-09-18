@@ -145,35 +145,36 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 				$this->model_extension_payment_worldpay->logger($order);
 				switch ($message['paymentStatus']) {
 					case 'SUCCESS':
-						$order_status_id = $this->config->get('worldpay_entry_success_status_id');
+						$order_status_id = $this->config->get('payment_worldpay_success_status_id');
 						break;
 					case 'FAILED':
-						$order_status_id = $this->config->get('worldpay_entry_failed_status_id');
+						$order_status_id = $this->config->get('payment_worldpay_failed_status_id');
 						break;
 					case 'SETTLED':
-						$order_status_id = $this->config->get('worldpay_entry_settled_status_id');
+						$order_status_id = $this->config->get('payment_worldpay_settled_status_id');
 						break;
 					case 'REFUNDED':
-						$order_status_id = $this->config->get('worldpay_refunded_status_id');
+						$order_status_id = $this->config->get('payment_worldpay_refunded_status_id');
 						break;
 					case 'PARTIALLY_REFUNDED':
-						$order_status_id = $this->config->get('worldpay_entry_partially_refunded_status_id');
+						$order_status_id = $this->config->get('payment_worldpay_partially_refunded_status_id');
 						break;
 					case 'CHARGED_BACK':
-						$order_status_id = $this->config->get('worldpay_entry_charged_back_status_id');
+						$order_status_id = $this->config->get('payment_worldpay_chargeback_status_id');
 						break;
 					case 'INFORMATION_REQUESTED':
-						$order_status_id = $this->config->get('worldpay_entry_information_requested_status_id');
+						$order_status_id = $this->config->get('payment_worldpay_information_requested_status_id');
 						break;
 					case 'INFORMATION_SUPPLIED':
-						$order_status_id = $this->config->get('worldpay_entry_information_supplied_status_id');
+						$order_status_id = $this->config->get('payment_worldpay_information_supplied_status_id');
 						break;
 					case 'CHARGEBACK_REVERSED':
-						$order_status_id = $this->config->get('worldpay_entry_chargeback_reversed_status_id');
+						$order_status_id = $this->config->get('payment_worldpay_chargeback_reversed_status_id');
 						break;
 				}
 
 				$this->model_extension_payment_worldpay->logger($order_status_id);
+
 				if (isset($order['order_id'])) {
 					$this->load->model('checkout/order');
 					$this->model_checkout_order->addOrderHistory($order['order_id'], $order_status_id);

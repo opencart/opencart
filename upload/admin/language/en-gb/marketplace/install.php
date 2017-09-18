@@ -4,7 +4,7 @@ $_['text_success']     = 'Success: You have modified extensions!';
 $_['text_unzip']       = 'Extracting files!';
 $_['text_move']        = 'Copying files!';
 $_['text_xml']         = 'Applying modifications!';
-$_['text_remove']      = 'Removing temporary files!';
+$_['text_clear']       = 'Clearing temporary files!';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify extensions!';

@@ -302,7 +302,7 @@
                 <table class="table table-bordered table-hover">
                   <thead>
                     <tr>
-                      <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                      <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');" /></td>
                       <td class="text-left">
                       	{% if sort == 'lt.order_id' %}
                         <a href="{{ sort_order_id }}" class="{{ order|lower }}">{{ column_order_id }}</a>
@@ -548,7 +548,7 @@ $('#button-filter').on('click', function() {
 
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+	language: '{{ datepicker }}',
 	pickTime: false,
 	format: 'YYYY-MM-DD'
 });

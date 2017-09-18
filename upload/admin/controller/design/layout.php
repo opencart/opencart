@@ -329,7 +329,7 @@ class ControllerDesignLayout extends Controller {
 
 		// Add all the modules which have multiple settings for each module
 		foreach ($extensions as $code) {
-			$this->language->load('extension/module/' . $code, 'extension');
+			$this->load->language('extension/module/' . $code, 'extension');
 
 			$module_data = array();
 
@@ -366,7 +366,7 @@ class ControllerDesignLayout extends Controller {
 		foreach ($layout_modules as $layout_module) {
 			$part = explode('.', $layout_module['code']);
 		
-			$language->load('extension/module/' . $part[0]);
+			$this->load->language('extension/module/' . $part[0]);
 
 			if (!isset($part[1])) {
 				$data['layout_modules'][] = array(

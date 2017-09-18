@@ -1,0 +1,30 @@
+{
+    "name": "guzzlehttp/log-subscriber",
+    "description": "Logs HTTP requests and responses as they are sent over the wire (Guzzle 4+)",
+    "homepage": "http://guzzlephp.org/",
+    "keywords": ["plugin", "log", "guzzle"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michael Dowling",
+            "email": "mtdowling@gmail.com",
+            "homepage": "https://github.com/mtdowling"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "guzzlehttp/guzzle": "~4.0 | ~5.0",
+        "psr/log": "~1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0"
+    },
+    "autoload": {
+        "psr-4": { "GuzzleHttp\\Subscriber\\Log\\": "src/" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}

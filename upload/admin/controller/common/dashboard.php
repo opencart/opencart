@@ -19,29 +19,11 @@ class ControllerCommonDashboard extends Controller {
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 		
-		$args = array(
-			DIR_SYSTEM . 'storage/',
-			str_replace('\\', '/', realpath(DIR_SYSTEM . '../../')) . '/',
-			'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');',
-			'define(\'DIR_STORAGE\', \'' . realpath(DIR_SYSTEM . '../../') . '/storage/\');',
-			'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');',
-			'define(\'DIR_STORAGE\', \'' . realpath(DIR_SYSTEM . '../../') . '/storage/\');'
-		);
-		
-		$data['text_instruction'] = vsprintf($this->language->get('text_instruction'), $args);
-		
 		// Check install directory exists
-		if (is_dir(DIR_APPLICATION . 'install')) {
+		if (is_dir(DIR_CATALOG . '../install')) {
 			$data['error_install'] = $this->language->get('error_install');
 		} else {
 			$data['error_install'] = '';
-		}
-		
-		// Check install directory exists
-		if (is_dir(DIR_SYSTEM . 'storage')) {
-			$data['error_storage'] = $this->language->get('error_storage');
-		} else {
-			$data['error_storage'] = '';
 		}
 		
 		// Dashboard Extensions
@@ -94,6 +76,12 @@ class ControllerCommonDashboard extends Controller {
 			}
 		}
 
+		if (DIR_STORAGE == DIR_SYSTEM . 'storage/') {
+			$data['security'] = $this->load->controller('common/security');
+		} else {
+			$data['security'] = '';
+		}
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -106,13 +94,5 @@ class ControllerCommonDashboard extends Controller {
 		}
 
 		$this->response->setOutput($this->load->view('common/dashboard', $data));
-	}
-	
-	public function setting() {
-		$this->load->language('common/dashboard');
-		
-		$data['user_token'] = $this->session->data['user_token'];
-		
-		$this->response->setOutput($this->load->view('common/dashboard_setting', $data));
 	}
 }

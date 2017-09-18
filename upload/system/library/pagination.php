@@ -1,4 +1,15 @@
 <?php
+/**
+ * @package		OpenCart
+ * @author		Daniel Kerr
+ * @copyright	Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
+ * @license		https://opensource.org/licenses/GPL-3.0
+ * @link		https://www.opencart.com
+*/
+
+/**
+* Pagination class
+*/
 class Pagination {
 	public $total = 0;
 	public $page = 1;
@@ -10,6 +21,11 @@ class Pagination {
 	public $text_next = '&gt;';
 	public $text_prev = '&lt;';
 
+	/**
+     * 
+     *
+     * @return	text
+     */
 	public function render() {
 		$total = $this->total;
 

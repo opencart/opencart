@@ -12,70 +12,6 @@ class ControllerMarketplaceEvent extends Controller {
 		$this->getList();
 	}
 
-	public function enable() {
-		$this->load->language('marketplace/event');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('setting/event');
-
-		if (isset($this->request->get['event_id']) && $this->validate()) {
-			$this->model_setting_event->enableEvent($this->request->get['event_id']);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('marketplace/event', 'user_token=' . $this->session->data['user_token'] . $url, true));
-		}
-
-		$this->getList();
-	}
-
-	public function disable() {
-		$this->load->language('marketplace/event');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('setting/event');
-
-		if (isset($this->request->get['event_id']) && $this->validate()) {
-			$this->model_setting_event->disableEvent($this->request->get['event_id']);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('marketplace/event', 'user_token=' . $this->session->data['user_token'] . $url, true));
-		}
-
-		$this->getList();
-	}
-	
 	public function delete() {
 		$this->load->language('marketplace/event');
 
@@ -184,6 +120,8 @@ class ControllerMarketplaceEvent extends Controller {
 			);
 		}
 
+		$data['user_token'] = $this->session->data['user_token'];
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -256,5 +194,55 @@ class ControllerMarketplaceEvent extends Controller {
 		}
 
 		return !$this->error;
+	}
+
+	public function enable() {
+		$this->load->language('marketplace/event');
+
+		$json = array();
+
+		if (isset($this->request->get['event_id'])) {
+			$event_id = $this->request->get['event_id'];
+		} else {
+			$event_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'marketplace/event')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('setting/event');
+
+			$this->model_setting_event->editStatus($event_id, 1);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function disable() {
+		$this->load->language('marketplace/event');
+
+		$json = array();
+
+		if (isset($this->request->get['event_id'])) {
+			$event_id = $this->request->get['event_id'];
+		} else {
+			$event_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'marketplace/event')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('setting/event');
+
+			$this->model_setting_event->editStatus($event_id, 0);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

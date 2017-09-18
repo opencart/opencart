@@ -295,7 +295,7 @@ class ControllerApiOrder extends Controller {
 					$affiliate_info = $this->model_account_customer->getAffiliate($this->request->post['affiliate_id']);
 
 					if ($affiliate_info) {
-						$order_data['affiliate_id'] = $affiliate_info['affiliate_id'];
+						$order_data['affiliate_id'] = $affiliate_info['customer_id'];
 						$order_data['commission'] = ($subtotal / 100) * $affiliate_info['commission'];
 					} else {
 						$order_data['affiliate_id'] = 0;
@@ -665,7 +665,7 @@ class ControllerApiOrder extends Controller {
 						$affiliate_info = $this->model_account_customer->getAffiliate($this->request->post['affiliate_id']);
 
 						if ($affiliate_info) {
-							$order_data['affiliate_id'] = $affiliate_info['affiliate_id'];
+							$order_data['affiliate_id'] = $affiliate_info['customer_id'];
 							$order_data['commission'] = ($subtotal / 100) * $affiliate_info['commission'];
 						} else {
 							$order_data['affiliate_id'] = 0;

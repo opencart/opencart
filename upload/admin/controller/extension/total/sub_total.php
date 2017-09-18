@@ -50,10 +50,10 @@ class ControllerExtensionTotalSubTotal extends Controller {
 			$data['total_sub_total_status'] = $this->config->get('total_sub_total_status');
 		}
 
-		if (isset($this->request->post['sub_total_sort_order'])) {
-			$data['sub_total_sort_order'] = $this->request->post['sub_total_sort_order'];
+		if (isset($this->request->post['total_sub_total_sort_order'])) {
+			$data['total_sub_total_sort_order'] = $this->request->post['total_sub_total_sort_order'];
 		} else {
-			$data['sub_total_sort_order'] = $this->config->get('sub_total_sort_order');
+			$data['total_sub_total_sort_order'] = $this->config->get('total_sub_total_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

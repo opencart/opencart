@@ -10,6 +10,10 @@ $_['text_edit']                  = 'Edit Order';
 $_['text_filter']                = 'Filter';
 $_['text_order_detail']          = 'Order Details';
 $_['text_customer_detail']       = 'Customer Details';
+$_['text_cart']                  = 'Shopping Cart';
+$_['text_payment_detail']        = 'Payment Details';
+$_['text_shipping_detail']       = 'Shipping Details';
+$_['text_total_detail']          = 'Total';
 $_['text_option']                = 'Options';
 $_['text_store']                 = 'Store';
 $_['text_date_added']            = 'Date Added';
@@ -39,7 +43,7 @@ $_['text_user_agent']            = 'User Agent';
 $_['text_accept_language']       = 'Accept Language';
 $_['text_order_id']              = 'Order ID:';
 $_['text_website']               = 'Web Site:';
-$_['text_invoice_no']            = 'Invoice No.:';
+$_['text_invoice_no']            = 'Invoice No.';
 $_['text_invoice_date']          = 'Invoice Date:';
 $_['text_sku']                   = 'SKU:';
 $_['text_upc']                   = 'UPC:';
@@ -60,6 +64,7 @@ $_['text_commission_removed']    = 'Success: Commission removed!';
 $_['text_restock']               = 'Success: Products have been restocked!';
 $_['text_upload']                = 'Your file was successfully uploaded!';
 $_['text_picklist']              = 'Dispatch Note';
+$_['text_reward']                = 'Reward Points';
 
 // Column
 $_['column_order_id']            = 'Order ID';

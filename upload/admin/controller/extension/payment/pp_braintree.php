@@ -1029,7 +1029,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$data['connect_link'] = '';
 		$data['module_link'] = '';
 
-		if ($this->config->get('payment_pp_braintree_status') != 0 || !empty($this->config->get('payment_pp_braintree_merchant_id')) || !empty($this->config->get('payment_pp_braintree_access_token'))) {
+		if ($this->config->get('payment_pp_braintree_status') || $this->config->get('payment_pp_braintree_merchant_id') || $this->config->get('payment_pp_braintree_access_token')) {
 			$data['module_link'] = $this->url->link('extension/payment/pp_braintree', 'user_token=' . $this->session->data['user_token'], true);
 		} else {
 			if ($this->user->hasPermission('modify', 'extension/extension/payment')) {

@@ -54,6 +54,7 @@ class ModelExtensionPaymentPPExpress extends Model {
 
 		$defaults['payment_pp_express_incontext_disable'] = 0;
 		$defaults['payment_pp_express_status'] = 0;
+		$defaults['payment_pp_express_currency'] = "USD";
 
 		$this->model_setting_setting->editSetting('payment_pp_express', $defaults);
 	}

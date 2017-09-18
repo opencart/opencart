@@ -38,7 +38,7 @@ class ControllerExtensionExtensionDashboard extends Controller {
 		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_setting_extension->uninstall('dashboard', 'dashboard_' . $this->request->get['extension']);
+			$this->model_setting_extension->uninstall('dashboard', $this->request->get['extension']);
 
 			// Call uninstall method if it exsits
 			$this->load->controller('extension/dashboard/' . $this->request->get['extension'] . '/uninstall');
@@ -84,7 +84,7 @@ class ControllerExtensionExtensionDashboard extends Controller {
 				$extension = basename($file, '.php');
 				
 				// Compatibility code for old extension folders
-				$this->language->load('extension/dashboard/' . $extension, 'extension');
+				$this->load->language('extension/dashboard/' . $extension, 'extension');
 
 				$data['extensions'][] = array(
 					'name'       => $this->language->get('extension')->get('heading_title'),

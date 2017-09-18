@@ -24,7 +24,7 @@ class ControllerMailOrder extends Controller {
 		} else {
 			$notify = '';
 		}
-						
+					
 		// We need to grab the old order status ID
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 		
@@ -105,7 +105,14 @@ class ControllerMailOrder extends Controller {
 		$data['email'] = $order_info['email'];
 		$data['telephone'] = $order_info['telephone'];
 		$data['ip'] = $order_info['ip'];
-		$data['order_status'] = $order_info['order_status'];
+
+		$order_status_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "' AND language_id = '" . (int)$order_info['language_id'] . "'");
+	
+		if ($order_status_query->num_rows) {
+			$data['order_status'] = $order_status_query->row['name'];
+		} else {
+			$data['order_status'] = '';
+		}
 
 		if ($comment && $notify) {
 			$data['comment'] = nl2br($comment);
@@ -352,7 +359,7 @@ class ControllerMailOrder extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 		
 		if ($order_info && !$order_info['order_status_id'] && $order_status_id && in_array('order', (array)$this->config->get('config_mail_alert'))) {	
-			$this->language->load('mail/order_alert');
+			$this->load->language('mail/order_alert');
 			
 			// HTML Mail
 			$data['text_received'] = $this->language->get('text_received');
@@ -365,9 +372,15 @@ class ControllerMailOrder extends Controller {
 			
 			$data['order_id'] = $order_info['order_id'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
-			
-			$data['order_status'] = $order_info['order_status'];
-			
+
+			$order_status_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+			if ($order_status_query->num_rows) {
+				$data['order_status'] = $order_status_query->row['name'];
+			} else {
+				$data['order_status'] = '';
+			}
+
 			$this->load->model('tool/upload');
 			
 			$data['products'] = array();

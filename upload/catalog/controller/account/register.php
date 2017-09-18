@@ -156,8 +156,8 @@ class ControllerAccountRegister extends Controller {
 			}
 		}
 		
-		if (isset($this->request->post['custom_field'])) {
-			$data['register_custom_field'] = $this->request->post['custom_field'];
+		if (isset($this->request->post['custom_field']['account'])) {
+			$data['register_custom_field'] = $this->request->post['custom_field']['account'];
 		} else {
 			$data['register_custom_field'] = array();
 		}
@@ -264,7 +264,7 @@ class ControllerAccountRegister extends Controller {
 			$this->error['password'] = $this->language->get('error_password');
 		}
 
-		if ($this->request->post['confirm'] != $this->request->post['password']) {
+		if ($this->request->post['confirm'] !== $this->request->post['password']) {
 			$this->error['confirm'] = $this->language->get('error_confirm');
 		}
 

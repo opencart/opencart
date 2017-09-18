@@ -1811,7 +1811,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 		// OpenBay Pro Menu
 		$openbay_menu = array();
 
-		$this->language->load('extension/openbay/openbay_menu');
+		$this->load->language('extension/openbay/openbay_menu');
 
 		if ($this->user->hasPermission('access', 'marketplace/openbay')) {
 			$openbay_menu[] = array(

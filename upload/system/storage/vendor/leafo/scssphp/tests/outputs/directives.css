@@ -1,0 +1,77 @@
+@charset "hello-world";
+@page :left {
+  div {
+    color: red; } }
+
+@page test {
+  @media yes {
+    div {
+      color: red; } } }
+
+@media something {
+  @page {
+    @media else {
+      div {
+        height: 200px; } } } }
+
+div {
+  color: red; }
+  @page yeah {
+  div pre {
+    height: 20px; } }
+
+@font-face {
+  color: red;
+  height: 20px; }
+
+@keyframes 'bounce' {
+  from {
+    top: 100px;
+    animation-timing-function: ease-out; }
+
+  25% {
+    top: 50px;
+    animation-timing-function: ease-in; }
+
+  50% {
+    top: 100px;
+    animation-timing-function: ease-out; }
+
+  75% {
+    top: 75px;
+    animation-timing-function: ease-in; }
+
+  to {
+    top: 100px; } }
+
+@-webkit-keyframes flowouttoleft {
+  0% {
+    -webkit-transform: translateX(0) scale(1); }
+
+  60%, 70% {
+    -webkit-transform: translateX(0) scale(0.7); }
+
+  100% {
+    -webkit-transform: translateX(-100%) scale(0.7); } }
+
+div {
+  animation-name: 'diagonal-slide';
+  animation-duration: 5s;
+  animation-iteration-count: 10; }
+
+@keyframes 'diagonal-slide' {
+  from {
+    left: 0;
+    top: 0; }
+
+  to {
+    left: 100px;
+    top: 100px; } }
+
+@document url(http://www.w3.org/),
+          url-prefix(http://www.w3.org/Style/),
+          domain(mozilla.org),
+          regexp("https:.*") {
+  body {
+    color: purple;
+    background: yellow; } }

@@ -1,0 +1,100 @@
+/* CSS Document */
+.swiper-viewport {
+	margin: 0 0 60px;
+	background: #fff;
+	z-index: 1;
+	border: 4px solid #fff;
+	border-radius: 4px;
+	box-shadow: 0 1px 4px rgba(0,0,0,.2);
+	width: 100%;
+	position: relative;
+	overflow: visible;
+}
+/* OpenCart Code */
+.swiper-container {
+	direction: ltr !important;
+}
+.swiper-pager {
+	width: 100%;
+	position: absolute;
+	top: 50%;
+	line-height: 45px;
+}
+.swiper-button-prev, .swiper-button-next {
+	color: rgba(0, 0, 0, 0.8);
+	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+	transition: all .3s ease;
+	z-index: 2;
+ 	background-image: none;
+}
+.swiper-viewport .swiper-button-prev {
+	opacity: 0.7;
+	left: 10px;
+}
+.swiper-viewport .swiper-button-next {
+	opacity: 0.7;
+	right: 10px;
+	
+}
+/* Desktop */
+@media (min-width: 768px){
+.swiper-viewport .swiper-button-prev {
+	opacity: 0;
+	left: -20px;
+}
+.swiper-viewport .swiper-button-next {
+	opacity: 0;
+	right: -20px;
+}
+.swiper-viewport:hover .swiper-button-prev {
+	opacity: 0.7;
+	left: 10px;
+
+}
+.swiper-viewport:hover .swiper-button-next {
+	opacity: 0.7;
+	right: 10px;
+}
+}
+.swiper-button-prev:before {
+	width: 40px;
+    height: 40px;
+	font-family: FontAwesome;
+	content: "\f053"; 
+	color: rgba(0,0,0,0.8);
+	font-size: 40px;
+}
+.swiper-button-next:before {
+	width: 40px;
+    height: 40px;
+	font-family: FontAwesome;
+	content: "\f054"; 
+	color: rgba(0,0,0,0.8);
+	font-size: 40px;
+}
+.swiper-pagination {
+	bottom: -40px;
+	left: 0;
+	text-align: center;
+	width: 100%;
+}
+.swiper-pagination-bullet {
+	width: 11px;
+	height: 11px;
+	background: rgba(0, 0, 0, 0.5);
+	border-radius: 20px;
+	box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+	margin: 0 5px;
+	opacity: 1;
+}
+.swiper-pagination-bullet:hover {
+	background: rgba(0, 0, 0, 0.7);
+}
+.swiper-pagination-bullet-active {
+	background: rgba(0, 0, 0, 0.9);
+}
+.swiper-button-next.swiper-button-disabled, .swiper-button-prev.swiper-button-disabled {
+    opacity: 0;
+    cursor: pointer;
+    pointer-events: auto;
+}

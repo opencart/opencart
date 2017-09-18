@@ -64,7 +64,7 @@ class File {
 
 		if ($files) {
 			foreach ($files as $file) {
-				if (file_exists($file)) {
+				if (is_file($file)) {
 					unlink($file);
 				}
 			}

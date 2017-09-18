@@ -52,7 +52,6 @@
               </tr>
             </thead>
             <tbody>
-            
             {% if customers %}
             {% for customer in customers %}
             <tr>
@@ -72,7 +71,6 @@
             </tr>
             {% endif %}
             </tbody>
-            
           </table>
         </div>
         <div class="row">
@@ -110,7 +108,7 @@ $('#button-filter').on('click', function() {
 //--></script> 
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	language: document.cookie.match(new RegExp('language=([^;]+)'))[1],
+	language: '{{ datepicker }}',
 	pickTime: false
 });
 //--></script> 

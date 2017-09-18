@@ -239,7 +239,7 @@ class ModelUpgrade1001 extends Model {
 				$lines = file($file);
 
 				foreach ($lines as $line) {
-					if (strpos($line, "'mysql'") !== false) {
+					if (strpos($line, "define('DB_DRIVER', 'mysql'") !== false) {
 						$upgrade = true;
 
 						break;

@@ -134,7 +134,7 @@ class ControllerExtensionExtensionModule extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->language->load('extension/module/' . $extension, 'extension');
+				$this->load->language('extension/module/' . $extension, 'extension');
 
 				$module_data = array();
 

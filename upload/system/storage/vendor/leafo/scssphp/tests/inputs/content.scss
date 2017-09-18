@@ -1,0 +1,61 @@
+
+@mixin apply-to-ie6-only {
+    * html {
+        @content;
+    }
+}
+@include apply-to-ie6-only {
+    #logo {
+        background-image: url(/logo.gif);
+    }
+}
+
+
+$color: white;
+@mixin colors($color: blue) {
+    background-color: $color;
+    @content;
+    border-color: $color;
+}
+.colors {
+    @include colors { color: $color; }
+}
+
+
+@mixin iphone {
+    @media only screen and (max-width: 480px) {
+        @content;
+    }
+}
+
+@include iphone {
+    body { color: red }
+}
+
+
+#sidebar {
+  $sidebar-width: 300px;
+  width: $sidebar-width;
+  @include iphone {
+    width: $sidebar-width / 3;
+  }
+}
+
+
+@mixin respond-to($width) {
+  @media only screen and (min-width: $width) { @content; }
+}
+
+@include respond-to(40em) {
+  @for $i from 1 through 2 {
+    .grid-#{$i} { width: 100%; }
+  }
+}
+
+@include respond-to(40em) {
+  $i: 1;
+  @while $i <= 2 {
+    .grid-#{$i} { width: 100%; }
+    $i: $i + 1;
+  }
+}

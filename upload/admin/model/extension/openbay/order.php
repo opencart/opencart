@@ -27,11 +27,11 @@ class ModelExtensionOpenBayOrder extends Model {
 			$sql .= " JOIN (SELECT NULL AS order_id) eto ";
 		}
 
-		if (isset($data['filter_order_status_id']) && !is_null($data['filter_order_status_id'])) {
-			$sql .= " WHERE `o`.`order_status_id` = '" . (int)$data['filter_order_status_id'] . "'";
-		} else {
-			$sql .= " WHERE `o`.`order_status_id` > '0'";
-		}
+        if (!empty($data['filter_order_status_id']) && isset($data['filter_order_status_id']) && !is_null($data['filter_order_status_id'])) {
+            $sql .= " WHERE `o`.`order_status_id` = '" . (int)$data['filter_order_status_id'] . "'";
+        } else {
+            $sql .= " WHERE `o`.`order_status_id` > '0'";
+        }
 
 		if (!empty($data['filter_order_id'])) {
 			$sql .= " AND o.`order_id` = '" . (int)$data['filter_order_id'] . "'";
@@ -81,11 +81,11 @@ class ModelExtensionOpenBayOrder extends Model {
 			$sql .= " JOIN (SELECT NULL AS order_id) eto ";
 		}
 
-		if (isset($data['filter_order_status_id']) && !is_null($data['filter_order_status_id'])) {
-			$sql .= " WHERE o.order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
-		} else {
-			$sql .= " WHERE o.order_status_id > '0'";
-		}
+        if (!empty($data['filter_order_status_id']) && isset($data['filter_order_status_id']) && !is_null($data['filter_order_status_id'])) {
+            $sql .= " WHERE o.order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
+        } else {
+            $sql .= " WHERE o.order_status_id > '0'";
+        }
 
 		if (!empty($data['filter_order_id'])) {
 			$sql .= " AND o.order_id = '" . (int)$data['filter_order_id'] . "'";

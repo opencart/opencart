@@ -7,7 +7,7 @@
         <div class="col-sm-11">
           <select name="data[international][calculated][service_id][{{ key }}]" class="form-control">
             {% for service_key,service_type in data.international.calculated.types.service %}
-              <option value="{{ service_key }}" {% if service_key = service %} selected{% endif %}>{{ service_type.description }}</option>
+              <option value="{{ service_key }}" {% if service_key == service %} selected{% endif %}>{{ service_type.description }}</option>
             {% endfor %}
           </select>
         </div>

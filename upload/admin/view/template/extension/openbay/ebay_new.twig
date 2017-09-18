@@ -385,7 +385,7 @@
                         </td>
                         <td class="text-center">
                           {% if img.width >= 500 or img.height >= 500 %}
-                            <input type="radio" name="main_image"{% if i_valid !== null and i == i_valid %} checked{% endif %} value="{{ i }}" id="image-radio-{{ i }}" {% if i != 0 %}disabled="disabled"{% endif %} />
+                            <input type="radio" name="main_image"{% if i_valid != null and i == i_valid %} checked{% endif %} value="{{ i }}" id="image-radio-{{ i }}" {% if i != 0 %}disabled="disabled"{% endif %} />
                           {% else %}
                             -
                           {% endif %}
@@ -1047,10 +1047,10 @@
 </div>
   <link href="view/javascript/codemirror/lib/codemirror.css" rel="stylesheet" />
   <link href="view/javascript/codemirror/theme/monokai.css" rel="stylesheet" />
-  <script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script> 
-  <script type="text/javascript" src="view/javascript/codemirror/lib/xml.js"></script> 
-  <script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script> 
-  
+  <script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script>
+  <script type="text/javascript" src="view/javascript/codemirror/lib/xml.js"></script>
+  <script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script>
+
 <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
 <link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
 <script type="text/javascript" src="view/javascript/summernote/summernote-image-attributes.js"></script>

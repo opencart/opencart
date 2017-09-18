@@ -632,29 +632,24 @@ class ModelExtensionOpenBayOpenbay extends Model {
 			$sql .= " AND p.price <= '" . (double)$data['filter_price_to'] . "'";
 		}
 
-		if (isset($data['filter_quantity']) && !is_null($data['filter_quantity'])) {
-			$sql .= " AND p.quantity >= '" . $this->db->escape($data['filter_quantity']) . "'";
-		}
-
-		if (isset($data['filter_quantity_to']) && !is_null($data['filter_quantity_to'])) {
-			$sql .= " AND p.quantity <= '" . $this->db->escape($data['filter_quantity_to']) . "'";
-		}
-
-		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
-			$sql .= " AND p.status = '" . (int)$data['filter_status'] . "'";
-		}
-
-		if (isset($data['filter_sku']) && !is_null($data['filter_sku'])) {
-			$sql .= " AND p.sku != ''";
-		}
-
-		if (isset($data['filter_desc']) && !is_null($data['filter_desc'])) {
-			$sql .= " AND pd.description != ''";
-		}
-
-		if (isset($data['filter_manufacturer']) && !is_null($data['filter_manufacturer'])) {
-			$sql .= " AND p.manufacturer_id = '" . (int)$data['filter_manufacturer'] . "'";
-		}
+        if (!empty($data['filter_quantity']) && isset($data['filter_quantity']) && !is_null($data['filter_quantity'])) {
+            $sql .= " AND p.quantity >= '" . $this->db->escape($data['filter_quantity']) . "'";
+        }
+        if (!empty($data['filter_quantity_to']) && isset($data['filter_quantity_to']) && !is_null($data['filter_quantity_to'])) {
+            $sql .= " AND p.quantity <= '" . $this->db->escape($data['filter_quantity_to']) . "'";
+        }
+        if (!empty($data['filter_status']) && isset($data['filter_status']) && !is_null($data['filter_status'])) {
+            $sql .= " AND p.status = '" . (int)$data['filter_status'] . "'";
+        }
+        if (!empty($data['filter_sku']) && isset($data['filter_sku']) && !is_null($data['filter_sku'])) {
+            $sql .= " AND p.sku != ''";
+        }
+        if (!empty($data['filter_desc']) && isset($data['filter_desc']) && !is_null($data['filter_desc'])) {
+            $sql .= " AND pd.description != ''";
+        }
+        if (!empty($data['filter_manufacturer']) && isset($data['filter_manufacturer']) && !is_null($data['filter_manufacturer'])) {
+            $sql .= " AND p.manufacturer_id = '" . (int)$data['filter_manufacturer'] . "'";
+        }
 
 		$sql .= " GROUP BY p.product_id";
 

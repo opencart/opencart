@@ -143,7 +143,8 @@ final class Ebay {
 			$data = array('token' => $this->token, 'secret' => $this->secret, 'server' => $this->server, 'domain' => $domain, 'openbay_version' => (int)$this->config->get('feed_openbaypro_version'), 'opencart_version' => VERSION, 'data' => $post, 'content_type' => $content_type, 'language' => $this->config->get('openbay_language'));
 
 			$defaults = array(
-                CURLOPT_HEADER          => $headers,
+                CURLOPT_HEADER      	=> 0,
+                CURLOPT_HTTPHEADER      => $headers,
 				CURLOPT_POST            => 1,
 				CURLOPT_URL             => $this->url . $call,
 				CURLOPT_USERAGENT       => "OpenBay Pro for eBay",

@@ -1,8 +1,10 @@
 <?php
 class ControllerExtensionOpenbayAmazonProduct extends Controller {
 	public function index() {
-		$data = $this->load->language('catalog/product');
-		$data = $this->load->language('extension/openbay/amazon_listing', $data);
+		$this->load->language('catalog/product');
+		$this->load->language('extension/openbay/amazon_listing');
+
+		$data = $this->language->all();
 
 		$this->load->model('extension/openbay/amazon');
 		$this->load->model('catalog/product');

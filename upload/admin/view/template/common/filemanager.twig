@@ -13,9 +13,11 @@
         </div>
         <div class="col-sm-7">
           <div class="input-group">
-            <input type="text" name="search" value="{{ filter_name }}" placeholder="{{ entry_search }}" class="form-control"> <span class="input-group-btn">
-            <button type="button" data-toggle="tooltip" title="{{ button_search }}" id="button-search" class="btn btn-primary"><i class="fa fa-search"></i></button>
-            </span></div>
+            <input type="text" name="search" value="{{ filter_name }}" placeholder="{{ entry_search }}" class="form-control">
+            <div class="input-group-btn">
+              <button type="button" data-toggle="tooltip" title="{{ button_search }}" id="button-search" class="btn btn-primary"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
         </div>
       </div>
       <hr/>
@@ -88,7 +90,7 @@ $('input[name=\'search\']').on('keydown', function(e) {
 });
 
 $('#button-search').on('click', function(e) {
-    var url = 'index.php?route=common/filemanager&user_token={{ user_token }}&directory={{ directory|escape('js') }}';
+	var url = 'index.php?route=common/filemanager&user_token={{ user_token }}&directory={{ directory|escape('js') }}';
 
 	var filter_name = $('input[name=\'search\']').val();
 
@@ -101,7 +103,7 @@ $('#button-search').on('click', function(e) {
   {% endif %}
 
   {% if target %}
-    url += '&target=' + '{{ target }}';
+	url += '&target=' + '{{ target }}';
   {% endif %}
 
 	$('#modal-image').load(url);

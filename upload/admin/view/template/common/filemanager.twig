@@ -51,7 +51,7 @@ $('a.thumbnail').on('click', function(e) {
 	$('#{{ thumb }}').find('img').attr('src', $(this).find('img').attr('src'));
   {% endif %}
 
-	$('#{{ target }}').val($(this).parent().find('input').val());
+	$('#{{ target|escape('js') }}').val($(this).parent().find('input').val());
 
 	$('#modal-image').modal('hide');
 });
@@ -88,7 +88,7 @@ $('input[name=\'search\']').on('keydown', function(e) {
 });
 
 $('#button-search').on('click', function(e) {
-    var url = 'index.php?route=common/filemanager&user_token={{ user_token }}&directory={{ directory }}';
+    var url = 'index.php?route=common/filemanager&user_token={{ user_token }}&directory={{ directory|escape('js') }}';
 
 	var filter_name = $('input[name=\'search\']').val();
 
@@ -124,7 +124,7 @@ $('#button-upload').on('click', function() {
 			clearInterval(timer);
 
 			$.ajax({
-				url: 'index.php?route=common/filemanager/upload&user_token={{ user_token }}&directory={{ directory }}',
+				url: 'index.php?route=common/filemanager/upload&user_token={{ user_token }}&directory={{ directory|escape('js') }}',
 				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),
@@ -176,7 +176,7 @@ $('#button-folder').popover({
 $('#button-folder').on('shown.bs.popover', function() {
 	$('#button-create').on('click', function() {
 		$.ajax({
-			url: 'index.php?route=common/filemanager/folder&user_token={{ user_token }}&directory={{ directory }}',
+			url: 'index.php?route=common/filemanager/folder&user_token={{ user_token }}&directory={{ directory|escape('js') }}',
 			type: 'post',
 			dataType: 'json',
 			data: 'folder=' + encodeURIComponent($('input[name=\'folder\']').val()),

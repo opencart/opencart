@@ -4,6 +4,8 @@ $registry = new Registry();
 
 // Config
 $config = new Config();
+
+// Load the default config
 $config->load('default');
 $config->load($application_config);
 $registry->set('config', $config);

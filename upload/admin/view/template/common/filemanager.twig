@@ -88,7 +88,7 @@ $('input[name=\'search\']').on('keydown', function(e) {
 });
 
 $('#button-search').on('click', function(e) {
-	var url = 'index.php?route=common/filemanager&user_token={{ user_token }}&directory={{ directory }}';
+    var url = 'index.php?route=common/filemanager&user_token={{ user_token }}&directory={{ directory }}';
 
 	var filter_name = $('input[name=\'search\']').val();
 
@@ -101,7 +101,7 @@ $('#button-search').on('click', function(e) {
   {% endif %}
 
   {% if target %}
-	url += '&target=' + '{{ target }}';
+    url += '&target=' + '{{ target }}';
   {% endif %}
 
 	$('#modal-image').load(url);

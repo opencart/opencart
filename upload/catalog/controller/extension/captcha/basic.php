@@ -9,7 +9,7 @@ class ControllerExtensionCaptchaBasic extends Controller {
 			$data['error_captcha'] = '';
 		}
 
-		$data['route'] = $this->request->get['route']; 
+		$data['route'] = (string)$this->request->get['route'];
 
 		return $this->load->view('extension/captcha/basic', $data);
 	}

@@ -4,7 +4,7 @@ class ModelExtensionReportSale extends Model {
 		$sql = "SELECT SUM(total) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0'";
 
 		if (!empty($data['filter_date_added'])) {
-			$sql .= " AND DATE(date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
+			$sql .= " AND DATE(date_added) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
 		}
 
 		$query = $this->db->query($sql);
@@ -146,11 +146,11 @@ class ModelExtensionReportSale extends Model {
 		}
 
 		if (!empty($data['filter_date_start'])) {
-			$sql .= " AND DATE(o.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
+			$sql .= " AND DATE(o.date_added) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";
 		}
 
 		if (!empty($data['filter_date_end'])) {
-			$sql .= " AND DATE(o.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
+			$sql .= " AND DATE(o.date_added) <= '" . $this->db->escape((string)$data['filter_date_end']) . "'";
 		}
 
 		if (!empty($data['filter_group'])) {
@@ -224,11 +224,11 @@ class ModelExtensionReportSale extends Model {
 		}
 
 		if (!empty($data['filter_date_start'])) {
-			$sql .= " AND DATE(date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
+			$sql .= " AND DATE(date_added) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";
 		}
 
 		if (!empty($data['filter_date_end'])) {
-			$sql .= " AND DATE(date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
+			$sql .= " AND DATE(date_added) <= '" . $this->db->escape((string)$data['filter_date_end']) . "'";
 		}
 
 		$query = $this->db->query($sql);
@@ -246,11 +246,11 @@ class ModelExtensionReportSale extends Model {
 		}
 
 		if (!empty($data['filter_date_start'])) {
-			$sql .= " AND DATE(o.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
+			$sql .= " AND DATE(o.date_added) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";
 		}
 
 		if (!empty($data['filter_date_end'])) {
-			$sql .= " AND DATE(o.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
+			$sql .= " AND DATE(o.date_added) <= '" . $this->db->escape((string)$data['filter_date_end']) . "'";
 		}
 
 		if (!empty($data['filter_group'])) {
@@ -324,11 +324,11 @@ class ModelExtensionReportSale extends Model {
 		}
 
 		if (!empty($data['filter_date_start'])) {
-			$sql .= " AND DATE(o.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
+			$sql .= " AND DATE(o.date_added) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";
 		}
 
 		if (!empty($data['filter_date_end'])) {
-			$sql .= " AND DATE(o.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
+			$sql .= " AND DATE(o.date_added) <= '" . $this->db->escape((string)$data['filter_date_end']) . "'";
 		}
 
 		$query = $this->db->query($sql);
@@ -346,11 +346,11 @@ class ModelExtensionReportSale extends Model {
 		}
 
 		if (!empty($data['filter_date_start'])) {
-			$sql .= " AND DATE(o.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
+			$sql .= " AND DATE(o.date_added) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";
 		}
 
 		if (!empty($data['filter_date_end'])) {
-			$sql .= " AND DATE(o.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
+			$sql .= " AND DATE(o.date_added) <= '" . $this->db->escape((string)$data['filter_date_end']) . "'";
 		}
 
 		if (!empty($data['filter_group'])) {
@@ -424,11 +424,11 @@ class ModelExtensionReportSale extends Model {
 		}
 
 		if (!empty($data['filter_date_start'])) {
-			$sql .= " AND DATE(o.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
+			$sql .= " AND DATE(o.date_added) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";
 		}
 
 		if (!empty($data['filter_date_end'])) {
-			$sql .= " AND DATE(o.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
+			$sql .= " AND DATE(o.date_added) <= '" . $this->db->escape((string)$data['filter_date_end']) . "'";
 		}
 
 		$query = $this->db->query($sql);

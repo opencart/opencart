@@ -1966,8 +1966,8 @@ CREATE TABLE `oc_marketing` (
 -- Table structure for table `oc_marketing_history`
 --
 
-DROP TABLE IF EXISTS `oc_marketing_history`;
-CREATE TABLE `oc_marketing_history` (
+DROP TABLE IF EXISTS `oc_marketing_report`;
+CREATE TABLE `oc_marketing_report` (
   `marketing_history_id` int(11) NOT NULL AUTO_INCREMENT,
   `marketing_id` int(11) NOT NULL,
   `ip` varchar(40) NOT NULL,

@@ -21,9 +21,9 @@ class ModelExtensionOpenBayAmazonusProduct extends Model {
 	}
 
 	public function insertError($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "amazonus_product_error` SET `sku` = '" . $this->db->escape($data['sku']) . "', `error_code` = '" . (int)$data['error_code'] . "', `message` = '" . $this->db->escape($data['message']) . "', `insertion_id` = '" . $this->db->escape($data['insertion_id']) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "amazonus_product_error` SET `sku` = '" . $this->db->escape((string)$data['sku']) . "', `error_code` = '" . (int)$data['error_code'] . "', `message` = '" . $this->db->escape((string)$data['message']) . "', `insertion_id` = '" . $this->db->escape((string)$data['insertion_id']) . "'");
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "amazonus_product` SET `status` = 'error' WHERE `sku` = '" . $this->db->escape($data['sku']) . "' AND `insertion_id` = '" . $this->db->escape($data['insertion_id']) . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "amazonus_product` SET `status` = 'error' WHERE `sku` = '" . $this->db->escape((string)$data['sku']) . "' AND `insertion_id` = '" . $this->db->escape((string)$data['insertion_id']) . "'");
 	}
 
 	public function deleteErrors($insertion_id) {
@@ -87,7 +87,7 @@ class ModelExtensionOpenBayAmazonusProduct extends Model {
 
 			$data = json_encode($result['results']);
 
-			$this->db->query("UPDATE " . DB_PREFIX . "amazonus_product_search SET matches = " . (int)$results_found . ", `data` = '" . $this->db->escape($data) . "', `status` = 'finished' WHERE product_id = " . (int)$result['product_id'] . " LIMIT 1");
+			$this->db->query("UPDATE " . DB_PREFIX . "amazonus_product_search SET matches = " . (int)$results_found . ", `data` = '" . $this->db->escape((string)$data) . "', `status` = 'finished' WHERE product_id = " . (int)$result['product_id'] . " LIMIT 1");
 		}
 	}
 

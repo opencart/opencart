@@ -1,7 +1,7 @@
 <?php
 class ModelCatalogDownload extends Model {
 	public function addDownload($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "download SET filename = '" . $this->db->escape($data['filename']) . "', mask = '" . $this->db->escape($data['mask']) . "', date_added = NOW()");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "download SET filename = '" . $this->db->escape((string)$data['filename']) . "', mask = '" . $this->db->escape((string)$data['mask']) . "', date_added = NOW()");
 
 		$download_id = $this->db->getLastId();
 
@@ -13,7 +13,7 @@ class ModelCatalogDownload extends Model {
 	}
 
 	public function editDownload($download_id, $data) {
-		$this->db->query("UPDATE " . DB_PREFIX . "download SET filename = '" . $this->db->escape($data['filename']) . "', mask = '" . $this->db->escape($data['mask']) . "' WHERE download_id = '" . (int)$download_id . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "download SET filename = '" . $this->db->escape((string)$data['filename']) . "', mask = '" . $this->db->escape((string)$data['mask']) . "' WHERE download_id = '" . (int)$download_id . "'");
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "download_description WHERE download_id = '" . (int)$download_id . "'");
 
@@ -37,7 +37,7 @@ class ModelCatalogDownload extends Model {
 		$sql = "SELECT * FROM " . DB_PREFIX . "download d LEFT JOIN " . DB_PREFIX . "download_description dd ON (d.download_id = dd.download_id) WHERE dd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " AND dd.name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
+			$sql .= " AND dd.name LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
 		}
 
 		$sort_data = array(

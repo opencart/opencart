@@ -38,15 +38,15 @@ class ModelExtensionOpenBayOrder extends Model {
 		}
 
 		if (!empty($data['filter_customer'])) {
-			$sql .= " AND CONCAT(`firstname`, ' ', `lastname`) LIKE '%" . $this->db->escape($data['filter_customer']) . "%'";
+			$sql .= " AND CONCAT(`firstname`, ' ', `lastname`) LIKE '%" . $this->db->escape((string)$data['filter_customer']) . "%'";
 		}
 
 		if (!empty($data['filter_date_added'])) {
-			$sql .= " AND DATE(`date_added`) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
+			$sql .= " AND DATE(`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
 		}
 
 		if (!empty($data['filter_channel'])) {
-			$sql .= " AND IF(eto.order_id IS NULL, IF(ao.order_id IS NULL, IF(auso.order_id IS NULL, IF(eo.order_id IS NULL, 'web', 'ebay'), 'amazonus'), 'amazon'), 'etsy') = '" . $this->db->escape($data['filter_channel']) . "'";
+			$sql .= " AND IF(eto.order_id IS NULL, IF(ao.order_id IS NULL, IF(auso.order_id IS NULL, IF(eo.order_id IS NULL, 'web', 'ebay'), 'amazonus'), 'amazon'), 'etsy') = '" . $this->db->escape((string)$data['filter_channel']) . "'";
 		}
 
 		$query = $this->db->query($sql);
@@ -96,11 +96,11 @@ class ModelExtensionOpenBayOrder extends Model {
 		}
 
 		if (!empty($data['filter_date_added'])) {
-			$sql .= " AND DATE(o.date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
+			$sql .= " AND DATE(o.date_added) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
 		}
 
 		if (!empty($data['filter_channel'])) {
-			$sql .= " HAVING channel = '" . $this->db->escape($data['filter_channel']) . "'";
+			$sql .= " HAVING channel = '" . $this->db->escape((string)$data['filter_channel']) . "'";
 		}
 
 		$sort_data = array(

@@ -152,6 +152,14 @@ class ControllerStartupStartup extends Controller {
 			if ($marketing_info) {
 				$this->model_marketing_marketing->addMarketingHistory($marketing_info['marketing_id'], $this->request->server['REMOTE_ADDR']);
 			}
+
+			$this->load->model('account/customer');
+
+			$affiliate_info = $this->model_account_customer->getAffiliateByTracking($this->request->get['tracking']);
+
+			if ($affiliate_info) {
+				$this->model_account_customer->addAffiliateHistory($affiliate_info['customer_id'], $this->request->server['REMOTE_ADDR']);
+			}
 		}
 
 		// Currency

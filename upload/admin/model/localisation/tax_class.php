@@ -1,7 +1,7 @@
 <?php
 class ModelLocalisationTaxClass extends Model {
 	public function addTaxClass($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "tax_class SET title = '" . $this->db->escape($data['title']) . "', description = '" . $this->db->escape($data['description']) . "', date_added = NOW()");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "tax_class SET title = '" . $this->db->escape((string)$data['title']) . "', description = '" . $this->db->escape((string)$data['description']) . "', date_added = NOW()");
 
 		$tax_class_id = $this->db->getLastId();
 
@@ -17,7 +17,7 @@ class ModelLocalisationTaxClass extends Model {
 	}
 
 	public function editTaxClass($tax_class_id, $data) {
-		$this->db->query("UPDATE " . DB_PREFIX . "tax_class SET title = '" . $this->db->escape($data['title']) . "', description = '" . $this->db->escape($data['description']) . "', date_modified = NOW() WHERE tax_class_id = '" . (int)$tax_class_id . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "tax_class SET title = '" . $this->db->escape((string)$data['title']) . "', description = '" . $this->db->escape((string)$data['description']) . "', date_modified = NOW() WHERE tax_class_id = '" . (int)$tax_class_id . "'");
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "tax_rule WHERE tax_class_id = '" . (int)$tax_class_id . "'");
 

@@ -19,6 +19,9 @@ class ControllerInstallStep4 extends Controller {
 		$data['text_facebook'] = $this->language->get('text_facebook');
 		$data['text_facebook_description'] = $this->language->get('text_facebook_description');
 		$data['text_facebook_visit'] = $this->language->get('text_facebook_visit');
+		$data['text_vkontakte'] = $this->language->get('text_facebook');
+        $data['text_vkontakte_description'] = $this->language->get('text_facebook_description');
+        $data['text_vkontakte_visit'] = $this->language->get('text_vkontakte_visit');
 		$data['text_forum'] = $this->language->get('text_forum');
 		$data['text_forum_description'] = $this->language->get('text_forum_description');
 		$data['text_forum_visit'] = $this->language->get('text_forum_visit');

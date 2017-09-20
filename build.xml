@@ -35,6 +35,7 @@
         </exec>
     </target>
 
+    <!--
     <target name="phploc" description="Measure project size using PHPLOC">
         <exec executable="phploc">
             <arg value="--log-csv"/>
@@ -42,7 +43,7 @@
             <arg path="${basedir}/upload"/>
         </exec>
     </target>
-
+    -->
     <target name="phpcs" description="Generate checkstyle.xml using PHP_CodeSniffer">
         <exec executable="phpcs">
             <arg line="--report=checkstyle --report-file=${basedir}/tests/checkstyle.xml --standard=tests/phpcs/OpenCart/ruleset.xml --extensions=php ${source}/"/>

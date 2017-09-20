@@ -53,6 +53,7 @@ $_['text_module']                      = 'Модули';
 $_['text_option']                      = 'Опции';
 $_['text_order']                       = 'Заказы';
 $_['text_order_status']                = 'Статус заказов';
+$_['text_online']               	   = 'Покупатели онлайн';
 $_['text_payment']                     = 'Оплата';
 $_['text_paypal']                      = 'PayPal';
 $_['text_paypal_search']               = 'Поиск транзакции';

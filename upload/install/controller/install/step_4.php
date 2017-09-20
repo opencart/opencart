@@ -1,4 +1,7 @@
 <?php
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ControllerInstallStep4 extends Controller {
 	public function index() {
 		$this->load->language('install/step_4');
@@ -19,8 +22,8 @@ class ControllerInstallStep4 extends Controller {
 		$data['text_facebook'] = $this->language->get('text_facebook');
 		$data['text_facebook_description'] = $this->language->get('text_facebook_description');
 		$data['text_facebook_visit'] = $this->language->get('text_facebook_visit');
-		$data['text_vkontakte'] = $this->language->get('text_facebook');
-        $data['text_vkontakte_description'] = $this->language->get('text_facebook_description');
+		$data['text_vkontakte'] = $this->language->get('text_vkontakte');
+        $data['text_vkontakte_description'] = $this->language->get('text_vkontakte_description');
         $data['text_vkontakte_visit'] = $this->language->get('text_vkontakte_visit');
 		$data['text_forum'] = $this->language->get('text_forum');
 		$data['text_forum_description'] = $this->language->get('text_forum_description');

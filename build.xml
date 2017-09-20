@@ -19,6 +19,7 @@
             <arg value="-l"/>
             <fileset dir="${basedir}/upload">
                 <include name="**/*.php"/>
+                <exclude name="**/vendor/**" />
                 <modified/>
             </fileset>
         </apply>

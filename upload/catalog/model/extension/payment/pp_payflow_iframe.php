@@ -48,10 +48,10 @@ class ModelExtensionPaymentPPPayflowIframe extends Model {
 	public function updateOrder($data) {
 		$this->db->query("
 			UPDATE `" . DB_PREFIX . "paypal_payflow_iframe_order`
-			SET `transaction_reference` = '" . $this->db->escape($data['transaction_reference']) . "',
-				`transaction_type` = '" . $this->db->escape($data['transaction_type']) . "',
+			SET `transaction_reference` = '" . $this->db->escape((string)$data['transaction_reference']) . "',
+				`transaction_type` = '" . $this->db->escape((string)$data['transaction_type']) . "',
 				`complete` = " . (int)$data['complete'] . "
-			WHERE `secure_token_id` = '" . $this->db->escape($data['secure_token_id']) . "'
+			WHERE `secure_token_id` = '" . $this->db->escape((string)$data['secure_token_id']) . "'
 		");
 	}
 
@@ -103,10 +103,10 @@ class ModelExtensionPaymentPPPayflowIframe extends Model {
 		$this->db->query("
 			INSERT INTO " . DB_PREFIX . "paypal_payflow_iframe_order_transaction
 			SET order_id = " . (int)$data['order_id'] . ",
-				transaction_reference = '" . $this->db->escape($data['transaction_reference']) . "',
-				transaction_type = '" . $this->db->escape($data['type']) . "',
+				transaction_reference = '" . $this->db->escape((string)$data['transaction_reference']) . "',
+				transaction_type = '" . $this->db->escape((string)$data['type']) . "',
 				`time` = NOW(),
-				`amount` = '" . $this->db->escape($data['amount']) .  "'
+				`amount` = '" . $this->db->escape((string)$data['amount']) .  "'
 		");
 	}
 

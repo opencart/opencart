@@ -467,7 +467,7 @@ class ControllerSaleOrder extends Controller {
 		}
 
 		if (!empty($order_info)) {
-			$data['order_id'] = $this->request->get['order_id'];
+			$data['order_id'] = (int)$this->request->get['order_id'];
 			$data['store_id'] = $order_info['store_id'];
 			$data['store_url'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
 
@@ -712,7 +712,7 @@ class ControllerSaleOrder extends Controller {
 		$this->load->model('sale/order');
 
 		if (isset($this->request->get['order_id'])) {
-			$order_id = $this->request->get['order_id'];
+			$order_id = (int)$this->request->get['order_id'];
 		} else {
 			$order_id = 0;
 		}
@@ -725,7 +725,7 @@ class ControllerSaleOrder extends Controller {
 			$this->document->setTitle($this->language->get('heading_title'));
 
 			$data['text_ip_add'] = sprintf($this->language->get('text_ip_add'), $this->request->server['REMOTE_ADDR']);
-			$data['text_order'] = sprintf($this->language->get('text_order'), $this->request->get['order_id']);
+			$data['text_order'] = sprintf($this->language->get('text_order'), $order_id);
 
 			$url = '';
 

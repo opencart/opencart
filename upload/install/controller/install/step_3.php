@@ -277,9 +277,7 @@ class ControllerInstallStep3 extends Controller {
 					$db->close();
 				}
 			} catch(Exception $e) {
-				if ($db->connect_errno) {
-					$this->error['warning'] = $db->connect_error;
-				}
+				$this->error['warning'] = 'PHP ' . $e->getCode() . ':  ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine();
 			}
 		} elseif ($this->request->post['db_driver'] == 'mpdo') {
 			try {
@@ -289,7 +287,7 @@ class ControllerInstallStep3 extends Controller {
 					$db->close();
 				}
 			} catch(Exception $e) {
-				$this->error['warning'] = $e->getMessage();
+				$this->error['warning'] = 'PHP ' . $e->getCode() . ':  ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine();
 			}
 		}			
 		

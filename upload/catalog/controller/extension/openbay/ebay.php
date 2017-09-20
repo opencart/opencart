@@ -28,7 +28,7 @@ class ControllerExtensionOpenbayEbay extends Controller {
 
 						if(!empty($rules)) {
 							$this->openbay->ebay->log('Item is due to be automatically relisted');
-							$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_listing_pending` SET `ebay_item_id` = '" . $this->db->escape($data['itemId']) . "', `product_id` = '" . (int)$product_id . "', `key` = '" . $this->db->escape($data['key']) . "'");
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_listing_pending` SET `ebay_item_id` = '" . $this->db->escape((string)$data['itemId']) . "', `product_id` = '" . (int)$product_id . "', `key` = '" . $this->db->escape((string)$data['key']) . "'");
 							$this->openbay->ebay->removeItemByItemId($data['itemId']);
 						} else {
 							$this->openbay->ebay->log('No automation rule set');
@@ -47,7 +47,7 @@ class ControllerExtensionOpenbayEbay extends Controller {
 
 					if($product_id != false) {
 						$this->openbay->ebay->createLink($product_id, $data['itemId'], '');
-						$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_listing_pending` WHERE `key` = '" . $this->db->escape($data['key']) . "' LIMIT 1");
+						$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_listing_pending` WHERE `key` = '" . $this->db->escape((string)$data['key']) . "' LIMIT 1");
 						$this->openbay->ebay->log('A link was found with product id: ' . $product_id . ', item id: ' . $data['itemId'] . ' and key: ' . $data['key']);
 					} else {
 						$this->openbay->ebay->log('No link found to previous item');

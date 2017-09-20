@@ -1,7 +1,7 @@
 <?php
 class ControllerCommonColumnLeft extends Controller {
 	public function index() {
-		if (isset($this->request->get['user_token']) && isset($this->session->data['user_token']) && ($this->request->get['user_token'] == $this->session->data['user_token'])) {
+		if (isset($this->request->get['user_token']) && isset($this->session->data['user_token']) && ((string)$this->request->get['user_token'] == $this->session->data['user_token'])) {
 			$this->load->language('common/column_left');
 
 			// Create a 3 level menu array

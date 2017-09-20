@@ -1,11 +1,11 @@
 <?php
 class ModelDesignTranslation extends Model {
 	public function addTranslation($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "translation` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `route` = '" . $this->db->escape($data['route']) . "', `key` = '" . $this->db->escape($data['key']) . "', `value` = '" . $this->db->escape($data['value']) . "', `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "translation` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `route` = '" . $this->db->escape((string)$data['route']) . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `date_added` = NOW()");
 	}
 		
 	public function editTranslation($translation_id, $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "translation` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `route` = '" . $this->db->escape($data['route']) . "', `key` = '" . $this->db->escape($data['key']) . "', `value` = '" . $this->db->escape($data['value']) . "' WHERE `translation_id` = '" . (int)$translation_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "translation` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `route` = '" . $this->db->escape((string)$data['route']) . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "' WHERE `translation_id` = '" . (int)$translation_id . "'");
 	}
 
 	public function deleteTranslation($translation_id) {

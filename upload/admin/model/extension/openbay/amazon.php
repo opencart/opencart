@@ -172,7 +172,7 @@ class ModelExtensionOpenBayAmazon extends Model {
 			SET `product_id` = '" . (int)$product_id . "',
 				`sku` = '" . $this->db->escape($sku) . "',
 				`category` = '" . $this->db->escape($category) . "',
-				`data` = '" . $this->db->escape($data_encoded) . "',
+				`data` = '" . $this->db->escape((string)$data_encoded) . "',
 				`status` = 'saved',
 				`insertion_id` = '',
 				`price` = '" . $price . "',
@@ -551,13 +551,13 @@ class ModelExtensionOpenBayAmazon extends Model {
 		$sql = "
 			SELECT COUNT(*) AS product_total
 			FROM " . DB_PREFIX . "product p
-			LEFT JOIN " . DB_PREFIX . "amazon_product_search aps ON p.product_id = aps.product_id AND aps.marketplace = '" . $this->db->escape($data['filter_marketplace']) . "'
+			LEFT JOIN " . DB_PREFIX . "amazon_product_search aps ON p.product_id = aps.product_id AND aps.marketplace = '" . $this->db->escape((string)$data['filter_marketplace']) . "'
 			LEFT JOIN " . DB_PREFIX . "amazon_product_link apl ON p.product_id = apl.product_id
 			LEFT JOIN " . DB_PREFIX . "amazon_product ap ON p.product_id = ap.product_id
 			WHERE apl.product_id IS NULL AND ap.product_id IS NULL ";
 
 		if (!empty($data['status'])) {
-			$sql .= " AND aps.status = '" . $this->db->escape($data['status']) . "'";
+			$sql .= " AND aps.status = '" . $this->db->escape((string)$data['status']) . "'";
 		}
 
 		return $this->db->query($sql)->row['product_total'];
@@ -567,13 +567,13 @@ class ModelExtensionOpenBayAmazon extends Model {
 		$sql = "
 			SELECT p.product_id, marketplace, aps.status, aps.data, aps.matches
 			FROM " . DB_PREFIX . "product p
-			LEFT JOIN " . DB_PREFIX . "amazon_product_search aps ON p.product_id = aps.product_id AND aps.marketplace = '" . $this->db->escape($data['filter_marketplace']) . "'
+			LEFT JOIN " . DB_PREFIX . "amazon_product_search aps ON p.product_id = aps.product_id AND aps.marketplace = '" . $this->db->escape((string)$data['filter_marketplace']) . "'
 			LEFT JOIN " . DB_PREFIX . "amazon_product_link apl ON p.product_id = apl.product_id
 			LEFT JOIN " . DB_PREFIX . "amazon_product ap ON p.product_id = ap.product_id
 			WHERE apl.product_id IS NULL AND ap.product_id IS NULL ";
 
 		if (!empty($data['status'])) {
-			$sql .= " AND aps.status = '" . $this->db->escape($data['status']) . "'";
+			$sql .= " AND aps.status = '" . $this->db->escape((string)$data['status']) . "'";
 		}
 
 		$sql .= " LIMIT " . (int)$data['start'] . ", " . (int)$data['limit'];

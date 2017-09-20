@@ -529,7 +529,7 @@ class ControllerSaleReturn extends Controller {
 		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->request->get['return_id'])) {
-			$data['return_id'] = $this->request->get['return_id'];
+			$data['return_id'] = (int)$this->request->get['return_id'];
 		} else {
 			$data['return_id'] = 0;
 		}

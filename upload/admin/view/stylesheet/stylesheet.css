@@ -14,7 +14,9 @@ h1, h2, h3, h4, h5, h6, p {
 p {
 	margin-bottom: 40px;
 }
-
+fieldset {
+	margin-bottom: 10px;
+}
 .page-header {
 	vertical-align: middle;
 	margin: 20px 0 15px 0;

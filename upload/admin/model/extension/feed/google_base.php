@@ -40,7 +40,7 @@ class ModelExtensionFeedGoogleBase extends Model {
     }
 
     public function getGoogleBaseCategories($data = array()) {
-        $sql = "SELECT * FROM `" . DB_PREFIX . "google_base_category` WHERE name LIKE '%" . $this->db->escape($data['filter_name']) . "%' ORDER BY name ASC";
+        $sql = "SELECT * FROM `" . DB_PREFIX . "google_base_category` WHERE name LIKE '%" . $this->db->escape((string)$data['filter_name']) . "%' ORDER BY name ASC";
 
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {

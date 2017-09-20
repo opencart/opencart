@@ -11,11 +11,13 @@ $_['text_list']              = 'Category List';
 $_['text_add']               = 'Add Category';
 $_['text_edit']              = 'Edit Category';
 $_['text_default']           = 'Default';
+$_['text_category_total']    = 'Total Categories: ';
 $_['text_keyword']           = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';
 
 // Column
 $_['column_name']            = 'Category Name';
 $_['column_sort_order']      = 'Sort Order';
+$_['column_noindex']         = 'Index';
 $_['column_action']          = 'Action';
 
 // Entry

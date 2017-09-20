@@ -95,6 +95,22 @@
                 {% endif %}
               </div>
             </div>
+			<div class="form-group required">
+              <label class="col-sm-2 control-label" for="input-image-manufacturer-width">{{ entry_image_manufacturer }}</label>
+              <div class="col-sm-10">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <input type="text" name="theme_default_image_manufacturer_width" value="{{ theme_default_image_manufacturer_width }}" placeholder="{{ entry_width }}" id="input-image-manufacturer-width" class="form-control" />
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" name="theme_default_image_manufacturer_height" value="{{ theme_default_image_manufacturer_height }}" placeholder="{{ entry_height }}" class="form-control" />
+                  </div>
+                </div>
+                {% if error_image_manufacturer %}
+                <div class="text-danger">{{ error_image_manufacturer }}</div>
+                {% endif %}
+              </div>
+			</div>
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-image-thumb-width">{{ entry_image_thumb }}</label>
               <div class="col-sm-10">

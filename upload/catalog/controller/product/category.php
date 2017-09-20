@@ -1,4 +1,7 @@
 <?php
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ControllerProductCategory extends Controller {
 	public function index() {
 		$this->load->language('product/category');
@@ -90,11 +93,21 @@ class ControllerProductCategory extends Controller {
 		$category_info = $this->model_catalog_category->getCategory($category_id);
 
 		if ($category_info) {
-			$this->document->setTitle($category_info['meta_title']);
+			
+			if ($category_info['meta_title']) {
+				$this->document->setTitle($category_info['meta_title']);
+			} else {
+				$this->document->setTitle($category_info['name']);
+			}
+			
+			if ($category_info['meta_h1']) {
+				$data['heading_title'] = $category_info['meta_h1'];
+			} else {
+				$data['heading_title'] = $category_info['name'];
+			}
+			
 			$this->document->setDescription($category_info['meta_description']);
 			$this->document->setKeywords($category_info['meta_keyword']);
-
-			$data['heading_title'] = $category_info['name'];
 
 			$data['text_compare'] = sprintf($this->language->get('text_compare'), (isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0));
 

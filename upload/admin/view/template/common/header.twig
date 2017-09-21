@@ -41,7 +41,17 @@
     <a href="#" id="button-menu" class="hidden-md hidden-lg"><span class="fa fa-bars"></span></a>{% if logged %}
     
     
-
+	<ul class="nav pull-left">
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"  title="{{ text_new }}"><i class="fa fa-plus fa-lg"></i> <span class="header-item">{{ text_new }}</span></a>
+      <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
+        <li><a href="{{ new_product }}" style="display: block; overflow: auto;">{{ text_new_product }}</a></li>
+        <li><a href="{{ new_category }}" style="display: block; overflow: auto;">{{ text_new_category }}</a></li>
+        <li><a href="{{ new_manufacturer }}" style="display: block; overflow: auto;">{{ text_new_manufacturer }}</a></li>
+        <li><a href="{{ new_customer }}" style="display: block; overflow: auto;">{{ text_new_customer }}</a></li>
+        <li><a href="{{ new_download }}" style="display: block; overflow: auto;">{{ text_new_download }}</a></li>
+      </ul>
+    </li> 
+    </ul>
     
     <ul class="nav navbar-nav navbar-right">
       <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" id="user-profile" class="img-circle" />{{ firstname }} {{ lastname }} <i class="fa fa-caret-down fa-fw"></i></a>

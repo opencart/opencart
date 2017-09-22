@@ -676,7 +676,7 @@ class ControllerMarketingAffiliate extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		$customer_info = $this->model_customer_customer->getAffiliate($this->request->post['customer_id']);
+		$customer_info = $this->model_marketing_affiliate->getAffiliate($this->request->post['customer_id']);
 
 		if (!isset($this->request->get['customer_id'])) {
 			if ($customer_info) {

@@ -16,7 +16,7 @@ class Proxy {
      *
      * @param	string	$key
      */	
-	public function __get($key) {
+	public function &__get($key) {
 		return $this->{$key};
 	}	
 

@@ -1504,7 +1504,7 @@ $('#button-voucher-add').on('click', function() {
 });
 
 $('#cart').delegate('.btn-danger', 'click', function() {
-	var node = this;
+	var element = this;
 
 	$.ajax({
 		url: '{{ catalog }}index.php?route=api/cart/remove&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
@@ -1513,10 +1513,10 @@ $('#cart').delegate('.btn-danger', 'click', function() {
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {
-			$(node).button('loading');
+			$(element).button('loading');
 		},
 		complete: function() {
-			$(node).button('reset');
+			$(element).button('reset');
 		},
 		success: function(json) {
 			$('.alert-dismissible, .text-danger').remove();
@@ -1536,7 +1536,7 @@ $('#cart').delegate('.btn-danger', 'click', function() {
 });
 
 $('#cart').delegate('.btn-primary', 'click', function() {
-	var node = this;
+	var element = this;
 
 	// Refresh products, vouchers and totals
 	$.ajax({
@@ -1546,10 +1546,10 @@ $('#cart').delegate('.btn-primary', 'click', function() {
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {
-			$(node).button('loading');
+			$(element).button('loading');
 		},
 		complete: function() {
-			$(node).button('reset');
+			$(element).button('reset');
 		},
 		success: function(json) {
 			$('.alert-dismissible, .text-danger').remove();
@@ -2207,7 +2207,7 @@ $('#button-save').on('click', function() {
 });
 
 $('#content').delegate('button[id^=\'button-upload\'], button[id^=\'button-custom-field\'], button[id^=\'button-payment-custom-field\'], button[id^=\'button-shipping-custom-field\']', 'click', function() {
-	var node = this;
+	var element = this;
 
 	$('#form-upload').remove();
 
@@ -2232,16 +2232,16 @@ $('#content').delegate('button[id^=\'button-upload\'], button[id^=\'button-custo
 				contentType: false,
 				processData: false,
 				beforeSend: function() {
-					$(node).button('loading');
+					$(element).button('loading');
 				},
 				complete: function() {
-					$(node).button('reset');
+					$(element).button('reset');
 				},
 				success: function(json) {
-					$(node).parent().find('.text-danger').remove();
+					$(element).parent().find('.text-danger').remove();
 
 					if (json['error']) {
-						$(node).parent().find('input[type=\'hidden\']').after('<div class="text-danger">' + json['error'] + '</div>');
+						$(element).parent().find('input[type=\'hidden\']').after('<div class="text-danger">' + json['error'] + '</div>');
 					}
 
 					if (json['success']) {
@@ -2249,7 +2249,7 @@ $('#content').delegate('button[id^=\'button-upload\'], button[id^=\'button-custo
 					}
 
 					if (json['code']) {
-						$(node).parent().find('input[type=\'hidden\']').val(json['code']);
+						$(element).parent().find('input[type=\'hidden\']').val(json['code']);
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {

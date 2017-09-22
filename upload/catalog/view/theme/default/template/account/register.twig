@@ -382,7 +382,7 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 					$(element).parent().find('.text-danger').remove();
 
 					if (json['error']) {
-						$(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
+						$(element).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
 					}
 
 					if (json['success']) {

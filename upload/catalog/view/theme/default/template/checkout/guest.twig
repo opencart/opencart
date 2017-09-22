@@ -398,7 +398,7 @@ $('#collapse-payment-address input[name=\'customer_group_id\']:checked').trigger
 //--></script> 
 <script type="text/javascript"><!--
 $('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('click', function() {
-	var node = this;
+	var element = this;
 
 	$('#form-upload').remove();
 
@@ -423,22 +423,22 @@ $('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('c
 				contentType: false,
 				processData: false,
 				beforeSend: function() {
-					$(node).button('loading');
+					$(element).button('loading');
 				},
 				complete: function() {
-					$(node).button('reset');
+					$(element).button('reset');
 				},
 				success: function(json) {
-					$(node).parent().find('.text-danger').remove();
+					$(element).parent().find('.text-danger').remove();
 
 					if (json['error']) {
-						$(node).parent().find('input[name^=\'custom_field\']').after('<div class="text-danger">' + json['error'] + '</div>');
+						$(element).parent().find('input[name^=\'custom_field\']').after('<div class="text-danger">' + json['error'] + '</div>');
 					}
 
 					if (json['success']) {
 						alert(json['success']);
 
-						$(node).parent().find('input[name^=\'custom_field\']').val(json['code']);
+						$(element).parent().find('input[name^=\'custom_field\']').val(json['code']);
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {

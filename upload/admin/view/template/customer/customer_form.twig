@@ -1050,7 +1050,7 @@ $('#ip').delegate('.pagination a', 'click', function(e) {
 $('#ip').load('index.php?route=customer/customer/ip&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
 $('#content').delegate('button[id^=\'button-custom-field\'], button[id^=\'button-address\']', 'click', function() {
-	var node = this;
+	var element = this;
 
 	$('#form-upload').remove();
 
@@ -1075,16 +1075,16 @@ $('#content').delegate('button[id^=\'button-custom-field\'], button[id^=\'button
 				contentType: false,
 				processData: false,
 				beforeSend: function() {
-					$(node).button('loading');
+					$(element).button('loading');
 				},
 				complete: function() {
-					$(node).button('reset');
+					$(element).button('reset');
 				},
 				success: function(json) {
-					$(node).parent().find('.text-danger').remove();
+					$(element).parent().find('.text-danger').remove();
 
 					if (json['error']) {
-						$(node).parent().find('input[type=\'hidden\']').after('<div class="text-danger">' + json['error'] + '</div>');
+						$(element).parent().find('input[type=\'hidden\']').after('<div class="text-danger">' + json['error'] + '</div>');
 					}
 
 					if (json['success']) {
@@ -1092,7 +1092,7 @@ $('#content').delegate('button[id^=\'button-custom-field\'], button[id^=\'button
 					}
 
 					if (json['code']) {
-						$(node).parent().find('input[type=\'hidden\']').val(json['code']);
+						$(element).parent().find('input[type=\'hidden\']').val(json['code']);
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {

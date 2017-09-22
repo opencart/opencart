@@ -339,7 +339,7 @@ $('.form-group[data-sort]').detach().each(function() {
 //--></script>
 <script type="text/javascript"><!--
 $('button[id^=\'button-custom-field\']').on('click', function() {
-	var node = this;
+	var element = this;
 
 	$('#form-upload').remove();
 
@@ -364,22 +364,22 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 				contentType: false,
 				processData: false,
 				beforeSend: function() {
-					$(node).button('loading');
+					$(element).button('loading');
 				},
 				complete: function() {
-					$(node).button('reset');
+					$(element).button('reset');
 				},
 				success: function(json) {
-					$(node).parent().find('.text-danger').remove();
+					$(element).parent().find('.text-danger').remove();
 
 					if (json['error']) {
-						$(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
+						$(element).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
 					}
 
 					if (json['success']) {
 						alert(json['success']);
 
-						$(node).parent().find('input').val(json['code']);
+						$(element).parent().find('input').val(json['code']);
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {

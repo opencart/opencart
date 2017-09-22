@@ -317,6 +317,7 @@ class ModelCustomerCustomer extends Model {
 		return $query->rows;
 	}
 
+
 	public function getTotalTransactions($customer_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total  FROM " . DB_PREFIX . "customer_transaction WHERE customer_id = '" . (int)$customer_id . "'");
 

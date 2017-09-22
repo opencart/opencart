@@ -15,7 +15,7 @@ class ModelMarketingAffiliate extends Model {
 	}
 
 	public function getAffiliate($customer_id) {
-		$query = $this->db->query("SELECT DISTINCT *, (SELECT CONCAT(c.firstname, ' ', c.lastname) FROM " . DB_PREFIX . "customer c WHERE) AS customer FROM " . DB_PREFIX . "customer_affiliate WHERE customer_id = '" . (int)$customer_id . "'");
+		$query = $this->db->query("SELECT DISTINCT *, (SELECT CONCAT(c.firstname, ' ', c.lastname) FROM `" . DB_PREFIX . "customer` c WHERE c.customer_id = ca.customer_id) AS customer FROM " . DB_PREFIX . "customer_affiliate ca WHERE ca.customer_id = '" . (int)$customer_id . "'");
 
 		return $query->row;
 	}
@@ -27,7 +27,7 @@ class ModelMarketingAffiliate extends Model {
 	}
 
 	public function getAffiliates($data = array()) {
-		$sql = "SELECT *, CONCAT(c.firstname, ' ', c.lastname) AS customer FROM " . DB_PREFIX . "customer_affiliate ca LEFT JOIN " . DB_PREFIX . "customer c ON (ca.customer_id = c.customer_id)";
+		$sql = "SELECT *, CONCAT(c.firstname, ' ', c.lastname) AS name, ca.status FROM " . DB_PREFIX . "customer_affiliate ca LEFT JOIN " . DB_PREFIX . "customer c ON (ca.customer_id = c.customer_id)";
 
 		$implode = array();
 
@@ -56,7 +56,7 @@ class ModelMarketingAffiliate extends Model {
 		}
 
 		$sort_data = array(
-			'customer',
+			'name',
 			'ca.tracking',
 			'ca.commission',
 			'ca.status',
@@ -66,7 +66,7 @@ class ModelMarketingAffiliate extends Model {
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY customer";
+			$sql .= " ORDER BY name";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {

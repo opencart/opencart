@@ -92,7 +92,6 @@ class ModelMarketingAffiliate extends Model {
 		return $query->rows;
 	}
 
-
 	public function getTotalAffiliates($data = array()) {
 		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer_affiliate ca LEFT JOIN " . DB_PREFIX . "customer c ON (ca.customer_id = c.customer_id)";
 
@@ -136,7 +135,7 @@ class ModelMarketingAffiliate extends Model {
 			$limit = 10;
 		}
 
-		$query = $this->db->query("SELECT ip, country, date_added FROM " . DB_PREFIX . "customer_affiliate_report WHERE customer_id = '" . (int)$customer_id . "' ORDER BY date_added ASC LIMIT " . (int)$start . "," . (int)$limit);
+		$query = $this->db->query("SELECT ip, store_id, country, date_added FROM " . DB_PREFIX . "customer_affiliate_report WHERE customer_id = '" . (int)$customer_id . "' ORDER BY date_added ASC LIMIT " . (int)$start . "," . (int)$limit);
 
 		return $query->rows;
 	}

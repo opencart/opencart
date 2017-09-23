@@ -21,7 +21,9 @@ class ControllerAffiliateRegister extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$customer_id = $this->model_account_customer->addCustomer($this->request->post);
 
-			$this->model_account_customer->addAffiliate($customer_id, $this->request->post);
+			$this->load->model('account/affiliate');
+
+			$this->model_account_affiliate->addAffiliate($customer_id, $this->request->post);
 
 			// Clear any previous login attempts in not registered.
 			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);

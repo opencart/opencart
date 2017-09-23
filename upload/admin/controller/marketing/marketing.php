@@ -514,14 +514,17 @@ class ControllerMarketingMarketing extends Controller {
 		$data['reports'] = array();
 
 		$this->load->model('marketing/marketing');
+		$this->load->model('customer/customer');
 
 		$results = $this->model_marketing_marketing->getReports($marketing_id, ($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
 			$data['reports'][] = array(
 				'ip'         => $result['ip'],
+				'account'    => $this->model_customer_customer->getTotalCustomersByIp($result['ip']),
 				'country'    => $result['country'],
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'filter_ip'  => $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . '&filter_ip=' . $result['ip'], true)
 			);
 		}
 

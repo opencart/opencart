@@ -18,6 +18,7 @@ $_['column_code']       = 'Code';
 $_['column_clicks']     = 'Clicks';
 $_['column_orders']     = 'Orders';
 $_['column_ip']         = 'IP';
+$_['column_account']    = 'Accounts';
 $_['column_country']    = 'Country';
 $_['column_date_added'] = 'Date Added';
 $_['column_action']     = 'Action';

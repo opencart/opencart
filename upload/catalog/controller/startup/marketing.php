@@ -10,7 +10,7 @@ class ControllerStartupMarketing extends Controller {
 			$marketing_info = $this->model_marketing_marketing->getMarketingByCode($this->request->get['tracking']);
 
 			if ($marketing_info) {
-				$this->model_marketing_marketing->addMarketingHistory($marketing_info['marketing_id'], $this->request->server['REMOTE_ADDR']);
+				$this->model_marketing_marketing->addMarketingReport($marketing_info['marketing_id'], $this->request->server['REMOTE_ADDR']);
 			}
 
 			$this->load->model('account/customer');
@@ -18,7 +18,7 @@ class ControllerStartupMarketing extends Controller {
 			$affiliate_info = $this->model_account_customer->getAffiliateByTracking($this->request->get['tracking']);
 
 			if ($affiliate_info) {
-				$this->model_account_customer->addAffiliateHistory($affiliate_info['customer_id'], $this->request->server['REMOTE_ADDR']);
+				$this->model_account_customer->addAffiliateReport($affiliate_info['customer_id'], $this->request->server['REMOTE_ADDR']);
 			}
 		}
 	}

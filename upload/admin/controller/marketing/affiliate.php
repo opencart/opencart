@@ -690,9 +690,9 @@ class ControllerMarketingAffiliate extends Controller {
 
 		// Check to see if customer is already a affiliate
 		if (isset($this->request->post['customer_id'])) {
-			$customer_info = $this->model_marketing_affiliate->getAffiliate($this->request->post['customer_id']);
+			$affiliate_info = $this->model_marketing_affiliate->getAffiliate($this->request->post['customer_id']);
 
-			if ($customer_info) {
+			if ($affiliate_info) {
 				$this->error['warning'] = $this->language->get('error_already');
 			}
 		}
@@ -768,14 +768,17 @@ class ControllerMarketingAffiliate extends Controller {
 		$data['reports'] = array();
 
 		$this->load->model('marketing/affiliate');
+		$this->load->model('customer/customer');
 
 		$results = $this->model_marketing_affiliate->getReports($customer_id, ($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
 			$data['reports'][] = array(
 				'ip'         => $result['ip'],
+				'account'    => $this->model_customer_customer->getTotalCustomersByIp($result['ip']),
 				'country'    => $result['country'],
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'filter_ip'  => $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . '&filter_ip=' . $result['ip'], true)
 			);
 		}
 

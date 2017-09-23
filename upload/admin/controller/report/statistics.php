@@ -123,46 +123,6 @@ class ControllerReportStatistics extends Controller {
 		
 		$this->getList();	
 	}
-	
-	public function customer() {
-		$this->load->language('report/statistics');
-
-		$this->document->setTitle($this->language->get('heading_title'));	
-				
-		$this->load->model('report/statistics');
-		
-		if ($this->validate()) {	
-			$this->load->model('customer/customer');
-			
-			$this->model_report_statistics->editValue('customer', $this->model_customer_customer->getTotalCustomers(array('filter_approved' => 0)));
-		
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('report/statistics', 'user_token=' . $this->session->data['user_token'], true));		
-		}
-		
-		$this->getList();	
-	}	
-		
-	public function affiliate() {
-		$this->load->language('report/statistics');
-
-		$this->document->setTitle($this->language->get('heading_title'));	
-				
-		$this->load->model('report/statistics');
-		
-		if ($this->validate()) {
-			$this->load->model('customer/customer');
-	
-			$this->model_report_statistics->editValue('affiliate', $this->model_customer_customer->getTotalAffiliates(array('filter_approved' => 0)));
-			
-			$this->session->data['success'] = $this->language->get('text_success');
-			
-			$this->response->redirect($this->url->link('report/statistics', 'user_token=' . $this->session->data['user_token'], true));
-		}
-		
-		$this->getList();				
-	}
 
 	public function product() {
 		$this->load->language('report/statistics');

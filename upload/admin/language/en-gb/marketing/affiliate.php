@@ -7,7 +7,6 @@ $_['text_success']              = 'Success: You have modified affiliates!';
 $_['text_list']                 = 'Affiliate List';
 $_['text_add']                  = 'Add Affiliate';
 $_['text_edit']                 = 'Edit Affiliate';
-
 $_['text_affiliate']            = 'Affiliate Details';
 $_['text_payment']              = 'Payment Details';
 $_['text_balance']              = 'Balance';
@@ -27,6 +26,7 @@ $_['column_commission']         = 'Commission';
 $_['column_balance']            = 'Balance';
 $_['column_status']             = 'Status';
 $_['column_ip']                 = 'IP';
+$_['column_account']            = 'Accounts';
 $_['column_country']            = 'Country';
 $_['column_date_added']         = 'Date Added';
 $_['column_comment']            = 'Comment';

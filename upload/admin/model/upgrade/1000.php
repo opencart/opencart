@@ -45,5 +45,12 @@ class ModelUpgrade1000 extends Model {
 				PRIMARY KEY (`download_report_id`)
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci");
 		}
+
+		// customer_ip
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer_ip' AND COLUMN_NAME = 'country'");
+
+		if (!$query->num_rows) {
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_ip` ADD `country` varchar(2) NOT NULL AFTER `ip`");
+		}
 	}
 }

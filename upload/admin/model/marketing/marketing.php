@@ -116,7 +116,7 @@ class ModelMarketingMarketing extends Model {
 		return $query->row['total'];
 	}
 
-	public function getMarketingHistories($marketing_id, $start = 0, $limit = 10) {
+	public function getReports($marketing_id, $start = 0, $limit = 10) {
 		if ($start < 0) {
 			$start = 0;
 		}
@@ -125,13 +125,13 @@ class ModelMarketingMarketing extends Model {
 			$limit = 10;
 		}
 
-		$query = $this->db->query("SELECT ip, country, date_added FROM " . DB_PREFIX . "marketing_history WHERE marketing_id = '" . (int)$marketing_id . "' ORDER BY date_added ASC LIMIT " . (int)$start . "," . (int)$limit);
+		$query = $this->db->query("SELECT ip, country, date_added FROM " . DB_PREFIX . "marketing_report WHERE marketing_id = '" . (int)$marketing_id . "' ORDER BY date_added ASC LIMIT " . (int)$start . "," . (int)$limit);
 
 		return $query->rows;
 	}
 
-	public function getTotalMarketingHistories($marketing_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "marketing_history WHERE marketing_id = '" . (int)$marketing_id . "'");
+	public function getTotalReports($marketing_id) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "marketing_report WHERE marketing_id = '" . (int)$marketing_id . "'");
 
 		return $query->row['total'];
 	}

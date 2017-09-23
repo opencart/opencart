@@ -28,7 +28,7 @@
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
             {% if marketing_id %}
-              <li><a href="#tab-history" data-toggle="tab">{{ tab_history }}</a></li>
+              <li><a href="#tab-report" data-toggle="tab">{{ tab_report }}</a></li>
             {% endif %}
           </ul>
           <div class="tab-content">
@@ -66,10 +66,10 @@
                 </div>
               </div>
             </div>
-            <div class="tab-pane" id="tab-history">
+            <div class="tab-pane" id="tab-report">
               <fieldset>
-                <legend>{{ text_history }}</legend>
-                <div id="history"></div>
+                <legend>{{ text_report }}</legend>
+                <div id="report"></div>
               </fieldset>
             </div>
           </div>
@@ -80,23 +80,31 @@
 </div>
 <script type="text/javascript"><!--
 $('#input-code').on('keyup', function() {
-	$('#input-example1').val('{{ store }}?tracking=' + $('#input-code').val());
-	$('#input-example2').val('{{ store }}index.php?route=common/home&tracking=' + $('#input-code').val());
+  $('#input-example1').val('{{ store }}?tracking=' + $('#input-code').val());
+
+  $('#input-example2').val('{{ store }}index.php?route=common/home&tracking=' + $('#input-code').val());
 });
 
 $('#input-code').trigger('keyup');
-
-
 //--></script>
 {% if marketing_id %}
 <script type="text/javascript"><!--
 $('#history').delegate('.pagination a', 'click', function(e) {
-	e.preventDefault();
+  e.preventDefault();
 
-	$('#history').load(this.href);
+  $('#history').load(this.href);
 });
 
 $('#history').load('index.php?route=marketing/marketing/history&user_token={{ user_token }}&marketing_id={{ marketing_id }}');
+//--></script>
+<script type="text/javascript"><!--
+$('#report').delegate('.pagination a', 'click', function(e) {
+  e.preventDefault();
+
+  $('#report').load(this.href);
+});
+
+$('#report').load('index.php?route=marketing/marketing/report&user_token={{ user_token }}&customer_id={{ customer_id }}');
 //--></script>
 {% endif %}
 {{ footer }}

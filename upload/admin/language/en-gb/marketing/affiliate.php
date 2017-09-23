@@ -53,19 +53,17 @@ $_['entry_amount']              = 'Amount';
 $_['entry_date_added']          = 'Date Added';
 
 // Help
-$_['help_affiliate']            = 'Enable / Disable the customers ability to use the affiliate system.';
 $_['help_tracking']             = 'The tracking code that will be used to track referrals.';
 $_['help_commission']           = 'Percentage the affiliate receives on each order.';
 
 // Error
 $_['error_warning']             = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']          = 'Warning: You do not have permission to modify customers!';
-$_['error_exists']              = 'Warning: E-Mail Address is already registered!';
-
-$_['error_custom_field']        = '%s required!';
+$_['error_already']             = 'Warning: Customer is already registered as an affiliate!';
 $_['error_tracking']            = 'Tracking Code required!';
-$_['error_tracking_exists']     = 'Tracking code is being used by another affiliate!';
+$_['error_exists']              = 'Tracking code is being used by another affiliate!';
 $_['error_cheque']              = 'Cheque Payee Name required!';
 $_['error_paypal']              = 'PayPal Email Address does not appear to be valid!';
 $_['error_bank_account_name']   = 'Account Name required!';
 $_['error_bank_account_number'] = 'Account Number required!';
+$_['error_custom_field']        = '%s required!';

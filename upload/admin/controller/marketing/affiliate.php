@@ -688,18 +688,26 @@ class ControllerMarketingAffiliate extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		$customer_info = $this->model_marketing_affiliate->getAffiliate($this->request->post['customer_id']);
+		// Check to see if customer is already a affiliate
+		if (isset($this->request->post['customer_id'])) {
+			$customer_info = $this->model_marketing_affiliate->getAffiliate($this->request->post['customer_id']);
 
-		if (!isset($this->request->get['customer_id'])) {
 			if ($customer_info) {
-				$this->error['warning'] = $this->language->get('error_exists');
-			}
-		} else {
-			if ($customer_info && ($this->request->get['customer_id'] != $customer_info['customer_id'])) {
-				$this->error['warning'] = $this->language->get('error_exists');
+				$this->error['warning'] = $this->language->get('error_already');
 			}
 		}
 
+		if (!$this->request->post['tracking']) {
+			$this->error['tracking'] = $this->language->get('error_tracking');
+		}
+
+		$affiliate_info = $this->model_marketing_affiliate->getAffliateByTracking($this->request->post['tracking']);
+
+		if ($affiliate_info && !isset($this->request->get['customer_id']) || ($this->request->get['customer_id'] != $affiliate_info['customer_id'])) {
+			$this->error['tracking'] = $this->language->get('error_exists');
+		}
+
+		// Payment validation
 		if ($this->request->post['payment'] == 'cheque' && $this->request->post['cheque'] == '') {
 			$this->error['cheque'] = $this->language->get('error_cheque');
 		} elseif ($this->request->post['payment'] == 'paypal' && ((utf8_strlen($this->request->post['paypal']) > 96) || !filter_var($this->request->post['paypal'], FILTER_VALIDATE_EMAIL))) {
@@ -711,22 +719,6 @@ class ControllerMarketingAffiliate extends Controller {
 
 			if ($this->request->post['bank_account_number'] == '') {
 				$this->error['bank_account_number'] = $this->language->get('error_bank_account_number');
-			}
-		}
-
-		if (!$this->request->post['tracking']) {
-			$this->error['tracking'] = $this->language->get('error_tracking');
-		}
-
-		$affiliate_info = $this->model_marketing_affiliate->getAffliateByTracking($this->request->post['tracking']);
-
-		if (!isset($this->request->get['customer_id'])) {
-			if ($affiliate_info) {
-				$this->error['tracking'] = $this->language->get('error_tracking_exists');
-			}
-		} else {
-			if ($affiliate_info && ($this->request->get['customer_id'] != $affiliate_info['customer_id'])) {
-				$this->error['tracking'] = $this->language->get('error_tracking_exists');
 			}
 		}
 
@@ -756,5 +748,49 @@ class ControllerMarketingAffiliate extends Controller {
 		}
 
 		return !$this->error;
+	}
+
+	public function report() {
+		$this->load->language('marketing/affiliate');
+
+		if (isset($this->request->get['customer_id'])) {
+			$customer_id = $this->request->get['customer_id'];
+		} else {
+			$customer_id = 0;
+		}
+
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		$data['reports'] = array();
+
+		$this->load->model('marketing/affiliate');
+
+		$results = $this->model_marketing_affiliate->getReports($customer_id, ($page - 1) * 10, 10);
+
+		foreach ($results as $result) {
+			$data['reports'][] = array(
+				'ip'         => $result['ip'],
+				'country'    => $result['country'],
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+			);
+		}
+
+		$report_total = $this->model_marketing_affiliate->getTotalReports($customer_id);
+
+		$pagination = new Pagination();
+		$pagination->total = $report_total;
+		$pagination->page = $page;
+		$pagination->limit = 10;
+		$pagination->url = $this->url->link('marketing/affiliate/history', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&page={page}', true);
+
+		$data['pagination'] = $pagination->render();
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($report_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($report_total - 10)) ? $report_total : ((($page - 1) * 10) + 10), $report_total, ceil($report_total / 10));
+
+		$this->response->setOutput($this->load->view('marketing/affiliate_report', $data));
 	}
 }

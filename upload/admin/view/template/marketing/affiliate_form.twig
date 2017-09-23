@@ -29,6 +29,7 @@
             {% if customer_id %}
               <li><a href="#tab-history" data-toggle="tab">{{ tab_history }}</a></li>
               <li><a href="#tab-transaction" data-toggle="tab">{{ tab_transaction }}</a></li>
+              <li><a href="#tab-report" data-toggle="tab">{{ tab_report }}</a></li>
             {% endif %}
           </ul>
           <div class="tab-content">
@@ -38,9 +39,12 @@
                 <div class="form-group required">
                   <label class="col-sm-2 control-label" for="input-customer">{{ entry_customer }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
-                    <input type="hidden" name="customer_id" value="{{ customer_id }}"/>
-                   {% if error_customer %}
+                    {% if not customer_id %}
+                    <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/> <input type="hidden" name="customer_id" value="{{ customer_id }}"/>
+                    {% else %}
+                      <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control" readonly/>
+                    {% endif %}
+                    {% if error_customer %}
                       <div class="text-danger">{{ error_customer }}</div>
                     {% endif %}</div>
                 </div>
@@ -318,6 +322,25 @@
 
 
             {% if customer_id %}
+              <div class="tab-pane" id="tab-history">
+                <fieldset>
+                  <legend>{{ text_history }}</legend>
+                  <div id="history"></div>
+                </fieldset>
+                <br/>
+                <fieldset>
+                  <legend>{{ text_history_add }}</legend>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label" for="input-comment">{{ entry_comment }}</label>
+                    <div class="col-sm-10">
+                      <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-comment" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </fieldset>
+                <div class="text-right">
+                  <button id="button-history" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> {{ button_history_add }}</button>
+                </div>
+              </div>
               <div class="tab-pane" id="tab-transaction">
                 <fieldset>
                   <legend>{{ text_transaction }}</legend>
@@ -343,8 +366,13 @@
                   <button type="button" id="button-transaction" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> {{ button_transaction_add }}</button>
                 </div>
               </div>
+              <div class="tab-pane" id="tab-report">
+                <fieldset>
+                  <legend>{{ text_report }}</legend>
+                  <div id="report"></div>
+                </fieldset>
+              </div>
             {% endif %}
-
           </div>
         </form>
       </div>
@@ -362,7 +390,7 @@ $('input[name=\'customer\']').autocomplete({
 					return {
 						label: item['name'],
 						value: item['customer_id'],
-					//	value: item['customer_group_id']
+						//	value: item['customer_group_id']
 					}
 				}));
 			}
@@ -489,6 +517,15 @@ $('#button-transaction').on('click', function(e) {
 		}
 	});
 });
+//--></script>
+<script type="text/javascript"><!--
+$('#report').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
+
+	$('#report').load(this.href);
+});
+
+$('#report').load('index.php?route=marketing/affiliate/report&user_token={{ user_token }}&customer_id={{ customer_id }}');
 //--></script>
 <script type="text/javascript"><!--
 $('#content').delegate('button[id^=\'button-custom-field\'], button[id^=\'button-address\']', 'click', function() {

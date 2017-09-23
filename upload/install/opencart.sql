@@ -1052,6 +1052,22 @@ CREATE TABLE `oc_customer_affiliate` (
   PRIMARY KEY (`customer_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+-------------------------------------------------------------
+
+--
+-- Table structure for table `oc_marketing_report`
+--
+
+DROP TABLE IF EXISTS `oc_customer_affiliate_report`;
+CREATE TABLE `oc_customer_affiliate_report` (
+  `customer_affiliate_report_id` int(11) NOT NULL AUTO_INCREMENT,
+  `customer_id` int(11) NOT NULL,
+  `ip` varchar(40) NOT NULL,
+  `country` varchar(2) NOT NULL,
+  `date_added` timestamp NOT NULL,
+  PRIMARY KEY (`customer_affiliate_report_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
 -----------------------------------------------------------
 
 --
@@ -1963,17 +1979,17 @@ CREATE TABLE `oc_marketing` (
 -------------------------------------------------------------
 
 --
--- Table structure for table `oc_marketing_history`
+-- Table structure for table `oc_marketing_report`
 --
 
 DROP TABLE IF EXISTS `oc_marketing_report`;
 CREATE TABLE `oc_marketing_report` (
-  `marketing_history_id` int(11) NOT NULL AUTO_INCREMENT,
+  `marketing_report_id` int(11) NOT NULL AUTO_INCREMENT,
   `marketing_id` int(11) NOT NULL,
   `ip` varchar(40) NOT NULL,
   `country` varchar(2) NOT NULL,
   `date_added` timestamp NOT NULL,
-  PRIMARY KEY (`marketing_history_id`)
+  PRIMARY KEY (`marketing_report_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -------------------------------------------------------------

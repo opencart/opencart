@@ -754,7 +754,7 @@ class ControllerMarketingAffiliate extends Controller {
 		$this->load->language('marketing/affiliate');
 
 		if (isset($this->request->get['customer_id'])) {
-			$customer_id = $this->request->get['customer_id'];
+			$customer_id = (int)$this->request->get['customer_id'];
 		} else {
 			$customer_id = 0;
 		}
@@ -785,7 +785,7 @@ class ControllerMarketingAffiliate extends Controller {
 		$pagination->total = $report_total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->link('marketing/affiliate/history', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&page={page}', true);
+		$pagination->url = $this->url->link('marketing/affiliate/report', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 

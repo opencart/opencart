@@ -89,15 +89,6 @@ $('#input-code').trigger('keyup');
 //--></script>
 {% if marketing_id %}
 <script type="text/javascript"><!--
-$('#history').delegate('.pagination a', 'click', function(e) {
-  e.preventDefault();
-
-  $('#history').load(this.href);
-});
-
-$('#history').load('index.php?route=marketing/marketing/history&user_token={{ user_token }}&marketing_id={{ marketing_id }}');
-//--></script>
-<script type="text/javascript"><!--
 $('#report').delegate('.pagination a', 'click', function(e) {
   e.preventDefault();
 

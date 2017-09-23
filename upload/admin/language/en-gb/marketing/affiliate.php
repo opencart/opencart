@@ -9,15 +9,16 @@ $_['text_add']                  = 'Add Affiliate';
 $_['text_edit']                 = 'Edit Affiliate';
 
 $_['text_affiliate']            = 'Affiliate Details';
-
-
 $_['text_payment']              = 'Payment Details';
 $_['text_balance']              = 'Balance';
 $_['text_cheque']               = 'Cheque';
 $_['text_paypal']               = 'PayPal';
 $_['text_bank']                 = 'Bank Transfer';
+$_['text_history']              = 'History';
+$_['text_history_add']          = 'Add History';
 $_['text_transaction']          = 'Transactions';
 $_['text_transaction_add']      = 'Add Transaction';
+$_['text_report']               = 'Report';
 
 // Column
 $_['column_name']               = 'Customer Name';
@@ -25,6 +26,8 @@ $_['column_tracking']           = 'Tracking';
 $_['column_commission']         = 'Commission';
 $_['column_balance']            = 'Balance';
 $_['column_status']             = 'Status';
+$_['column_ip']                 = 'IP';
+$_['column_country']            = 'Country';
 $_['column_date_added']         = 'Date Added';
 $_['column_comment']            = 'Comment';
 $_['column_description']        = 'Description';

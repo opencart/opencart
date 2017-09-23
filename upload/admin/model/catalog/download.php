@@ -91,4 +91,24 @@ class ModelCatalogDownload extends Model {
 
 		return $query->row['total'];
 	}
+
+	public function getReports($download_id, $start = 0, $limit = 10) {
+		if ($start < 0) {
+			$start = 0;
+		}
+
+		if ($limit < 1) {
+			$limit = 10;
+		}
+
+		$query = $this->db->query("SELECT ip, country, date_added FROM " . DB_PREFIX . "download_report WHERE download_id = '" . (int)$download_id . "' ORDER BY date_added ASC LIMIT " . (int)$start . "," . (int)$limit);
+
+		return $query->rows;
+	}
+
+	public function getTotalReports($download_id) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "download_report WHERE download_id = '" . (int)$download_id . "'");
+
+		return $query->row['total'];
+	}
 }

@@ -3,22 +3,24 @@
     <thead>
       <tr>
         <td class="text-left">{{ column_ip }}</td>
+        <td class="text-left">{{ column_account }}</td>
         <td class="text-left">{{ column_country }}</td>
         <td class="text-left">{{ column_date_added }}</td>
       </tr>
     </thead>
     <tbody>
-      {% if histories %}
-        {% for history in histories %}
+      {% if reports %}
+        {% for report in reports %}
           <tr>
-            <td class="text-left">{{ history.ip }}</td>
-            <td class="text-left">{{ history.country }}</td>
-            <td class="text-left">{{ history.date_added }}</td>
+            <td class="text-left"><a href="http://www.geoiptool.com/en/?IP={{ report.ip }}" target="_blank">{{ report.ip }}</a></td>
+            <td class="text-left"><a href="{{ report.filter_ip }}" target="_blank">{{ report.account }}</a></td>
+            <td class="text-left">{{ report.country }}</td>
+            <td class="text-left">{{ report.date_added }}</td>
           </tr>
         {% endfor %}
       {% else %}
         <tr>
-          <td class="text-center" colspan="3">{{ text_no_results }}</td>
+          <td class="text-center" colspan="4">{{ text_no_results }}</td>
         </tr>
       {% endif %}
     </tbody>

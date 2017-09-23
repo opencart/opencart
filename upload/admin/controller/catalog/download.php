@@ -248,6 +248,8 @@ class ControllerCatalogDownload extends Controller {
 	protected function getForm() {
 		$data['text_form'] = !isset($this->request->get['download_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
+		$data['user_token'] = $this->session->data['user_token'];
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -395,6 +397,50 @@ class ControllerCatalogDownload extends Controller {
 		}
 
 		return !$this->error;
+	}
+
+	public function report() {
+		$this->load->language('catalog/download');
+
+		if (isset($this->request->get['download_id'])) {
+			$download_id = (int)$this->request->get['download_id'];
+		} else {
+			$download_id = 0;
+		}
+
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		$data['reports'] = array();
+
+		$this->load->model('catalog/download');
+
+		$results = $this->model_catalog_download->getReports($download_id, ($page - 1) * 10, 10);
+
+		foreach ($results as $result) {
+			$data['reports'][] = array(
+				'ip'         => $result['ip'],
+				'country'    => $result['country'],
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+			);
+		}
+
+		$report_total = $this->model_catalog_download->getTotalReports($download_id);
+
+		$pagination = new Pagination();
+		$pagination->total = $report_total;
+		$pagination->page = $page;
+		$pagination->limit = 10;
+		$pagination->url = $this->url->link('catalog/download/report', 'user_token=' . $this->session->data['user_token'] . '&download_id=' . $download_id . '&page={page}', true);
+
+		$data['pagination'] = $pagination->render();
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($report_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($report_total - 10)) ? $report_total : ((($page - 1) * 10) + 10), $report_total, ceil($report_total / 10));
+
+		$this->response->setOutput($this->load->view('catalog/download_report', $data));
 	}
 
 	public function upload() {

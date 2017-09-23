@@ -500,7 +500,7 @@ class ControllerMarketingMarketing extends Controller {
 		$this->load->language('marketing/marketing');
 
 		if (isset($this->request->get['marketing_id'])) {
-			$marketing_id = $this->request->get['marketing_id'];
+			$marketing_id = (int)$this->request->get['marketing_id'];
 		} else {
 			$marketing_id = 0;
 		}

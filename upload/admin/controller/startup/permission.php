@@ -21,6 +21,7 @@ class ControllerStartupPermission extends Controller {
 				'extension/captcha',
 				'extension/extension',
 				'extension/feed',
+				'extension/menu',
 				'extension/fraud',
 				'extension/module',
 				'extension/payment',

@@ -372,9 +372,9 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 			$subtotal = $this->cart->getSubTotal();
 
-			$this->load->model('affiliate/affiliate');
+			$this->load->model('account/affiliate');
 
-			$affiliate_info = $this->model_affiliate_affiliate->getAffiliateByCode($this->request->cookie['tracking']);
+			$affiliate_info = $this->model_account_affiliate->getAffiliateByCode($this->request->cookie['tracking']);
 
 			if ($affiliate_info) {
 				$order_data['affiliate_id'] = $affiliate_info['affiliate_id'];

@@ -266,7 +266,9 @@ class ControllerCheckoutConfirm extends Controller {
 				$subtotal = $this->cart->getSubTotal();
 
 				// Affiliate
-				$affiliate_info = $this->model_account_customer->getAffiliateByTracking($this->request->cookie['tracking']);
+				$this->load->model('account/affiliate');
+
+				$affiliate_info = $this->model_account_affiliate->getAffiliateByCode($this->request->cookie['tracking']);
 
 				if ($affiliate_info) {
 					$order_data['affiliate_id'] = $affiliate_info['customer_id'];

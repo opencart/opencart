@@ -427,7 +427,7 @@ class ControllerCatalogDownload extends Controller {
 
 			if ($store_info) {
 				$store = $store_info['name'];
-			} elseif ($store_info['store_id']) {
+			} elseif ($result['store_id']) {
 				$store = '';
 			} else {
 				$store = $this->config->get('config_name');

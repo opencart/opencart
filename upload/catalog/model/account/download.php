@@ -62,7 +62,7 @@ class ModelAccountDownload extends Model {
 		}
 	}
 
-
-
-
+	public function addDownloadReport($download_id, $ip, $country = '') {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "download_report` SET download_id = '" . (int)$download_id . "', store_id = '" . (int)$this->config->get('config_store_id') . "', ip = '" . $this->db->escape($ip) . "', country = '" . $this->db->escape($country) . "', date_added = NOW()");
+	}
 }

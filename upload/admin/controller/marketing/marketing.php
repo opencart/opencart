@@ -481,7 +481,7 @@ class ControllerMarketingMarketing extends Controller {
 
 		$marketing_info = $this->model_marketing_marketing->getMarketingByCode($this->request->post['code']);
 
-		if ($marketing_info && !isset($this->request->get['marketing_id']) || ($this->request->get['marketing_id'] != $marketing_info['marketing_id'])) {
+		if ($marketing_info && (!isset($this->request->get['marketing_id']) || ($this->request->get['marketing_id'] != $marketing_info['marketing_id']))) {
 			$this->error['code'] = $this->language->get('error_exists');
 		}
 
@@ -524,10 +524,10 @@ class ControllerMarketingMarketing extends Controller {
 
 			if ($store_info) {
 				$store = $store_info['name'];
-			} elseif ($result['store_id']) {
-				$store = '';
-			} else {
+			} elseif (!$result['store_id']) {
 				$store = $this->config->get('config_name');
+			} else {
+				$store = '';
 			}
 
 			$data['reports'][] = array(

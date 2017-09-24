@@ -133,6 +133,8 @@ class ControllerAccountDownload extends Controller {
 
 					readfile($file, 'rb');
 
+					$this->model_account_download->addDownloadReport($download_id, $this->request->server['REMOTE_ADDR']);
+
 					exit();
 				} else {
 					exit('Error: Could not find file ' . $file . '!');

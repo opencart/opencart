@@ -703,7 +703,7 @@ class ControllerMarketingAffiliate extends Controller {
 
 		$affiliate_info = $this->model_marketing_affiliate->getAffliateByTracking($this->request->post['tracking']);
 
-		if ($affiliate_info && !isset($this->request->get['customer_id']) || ($this->request->get['customer_id'] != $affiliate_info['customer_id'])) {
+		if ($affiliate_info && (!isset($this->request->get['customer_id']) || ($this->request->get['customer_id'] != $affiliate_info['customer_id']))) {
 			$this->error['tracking'] = $this->language->get('error_exists');
 		}
 
@@ -778,10 +778,10 @@ class ControllerMarketingAffiliate extends Controller {
 
 			if ($store_info) {
 				$store = $store_info['name'];
-			} elseif ($result['store_id']) {
-				$store = '';
-			} else {
+			} elseif (!$result['store_id']) {
 				$store = $this->config->get('config_name');
+			} else {
+				$store = '';
 			}
 
 			$data['reports'][] = array(

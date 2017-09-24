@@ -7,9 +7,9 @@ class ControllerAccountTracking extends Controller {
 			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 
-		$this->load->model('account/customer');
+		$this->load->model('account/affiliate');
 
-		$affiliate_info = $this->model_account_customer->getAffiliate($this->customer->getId());
+		$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
 			
 		if ($affiliate_info) {
 			$this->load->language('account/tracking');

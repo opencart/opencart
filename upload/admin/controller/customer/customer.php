@@ -1245,10 +1245,10 @@ class ControllerCustomerCustomer extends Controller {
 
 			if ($store_info) {
 				$store = $store_info['name'];
-			} elseif ($result['store_id']) {
-				$store = '';
-			} else {
+			} elseif (!$result['store_id']) {
 				$store = $this->config->get('config_name');
+			} else {
+				$store = '';
 			}
 
 			$data['ips'][] = array(

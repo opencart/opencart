@@ -293,7 +293,7 @@ $(document).ready(function() {
 				$dropdown.html(html);
 			}
 
-			$dropdown.on('focus', '> li > a', $.proxy(this.click, this));
+			$dropdown.on('click', '> li > a', $.proxy(this.click, this));
 			$this.after($dropdown);
 		});
 	}

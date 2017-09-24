@@ -101,7 +101,7 @@ class ModelCatalogDownload extends Model {
 			$limit = 10;
 		}
 
-		$query = $this->db->query("SELECT ip, country, date_added FROM " . DB_PREFIX . "download_report WHERE download_id = '" . (int)$download_id . "' ORDER BY date_added ASC LIMIT " . (int)$start . "," . (int)$limit);
+		$query = $this->db->query("SELECT ip, store_id, country, date_added FROM " . DB_PREFIX . "download_report WHERE download_id = '" . (int)$download_id . "' ORDER BY date_added ASC LIMIT " . (int)$start . "," . (int)$limit);
 
 		return $query->rows;
 	}

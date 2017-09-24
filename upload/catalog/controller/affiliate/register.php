@@ -19,6 +19,8 @@ class ControllerAffiliateRegister extends Controller {
 		$this->load->model('account/customer');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+			unset($this->session->data['guest']);
+
 			$customer_id = $this->model_account_customer->addCustomer($this->request->post);
 
 			$this->load->model('account/affiliate');
@@ -29,6 +31,9 @@ class ControllerAffiliateRegister extends Controller {
 			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
 
 			$this->customer->login($this->request->post['email'], $this->request->post['password']);
+
+			// Log the IP info
+			$this->model_account_customer->addLogin($this->customer->getId(), $this->request->server['REMOTE_ADDR']);
 
 			$this->response->redirect($this->url->link('affiliate/success'));
 		}

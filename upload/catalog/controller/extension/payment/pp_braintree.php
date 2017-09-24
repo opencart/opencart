@@ -1407,7 +1407,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 				// Affiliate
 				$this->load->model('account/affiliate');
 
-				$affiliate_info = $this->model_account_affiliate->getAffiliateByCode($this->request->cookie['tracking']);
+				$affiliate_info = $this->model_account_affiliate->getAffiliateByTracking($this->request->cookie['tracking']);
 
 				if ($affiliate_info) {
 					$data['affiliate_id'] = $affiliate_info['affiliate_id'];

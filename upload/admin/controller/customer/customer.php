@@ -1234,15 +1234,27 @@ class ControllerCustomerCustomer extends Controller {
 		}
 
 		$this->load->model('customer/customer');
+		$this->load->model('setting/store');
 
 		$data['ips'] = array();
 
 		$results = $this->model_customer_customer->getIps($customer_id, ($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
+			$store_info = $this->model_setting_store->getStore($result['store_id']);
+
+			if ($store_info) {
+				$store = $store_info['name'];
+			} elseif ($store_info['store_id']) {
+				$store = '';
+			} else {
+				$store = $this->config->get('config_name');
+			}
+
 			$data['ips'][] = array(
 				'ip'         => $result['ip'],
 				'account'    => $this->model_customer_customer->getTotalCustomersByIp($result['ip']),
+				'store'      => $store,
 				'country'    => $result['country'],
 				'date_added' => date('d/m/y', strtotime($result['date_added'])),
 				'filter_ip'  => $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . '&filter_ip=' . $result['ip'], true)

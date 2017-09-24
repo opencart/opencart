@@ -34,7 +34,8 @@ $_['column_description']    = 'Description';
 $_['column_amount']         = 'Amount';
 $_['column_points']         = 'Points';
 $_['column_ip']             = 'IP';
-$_['column_account']        = 'Total Accounts';
+$_['column_account']        = 'Accounts';
+$_['column_store']          = 'Store';
 $_['column_country']        = 'Country';
 $_['column_action']         = 'Action';
 

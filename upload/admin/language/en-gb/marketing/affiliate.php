@@ -27,6 +27,7 @@ $_['column_balance']            = 'Balance';
 $_['column_status']             = 'Status';
 $_['column_ip']                 = 'IP';
 $_['column_account']            = 'Accounts';
+$_['column_store']              = 'Store';
 $_['column_country']            = 'Country';
 $_['column_date_added']         = 'Date Added';
 $_['column_comment']            = 'Comment';

@@ -26,5 +26,5 @@ class ModelAccountAffiliate extends Model {
 
 	public function addAffiliateReport($customer_id, $ip, $country = '') {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_affiliate_report` SET customer_id = '" . (int)$customer_id . "', store_id = '" . (int)$this->config->get('config_store_id') . "', ip = '" . $this->db->escape($ip) . "', country = '" . $this->db->escape($country) . "', date_added = NOW()");
-	}F
+	}
 }

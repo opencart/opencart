@@ -59,7 +59,10 @@
                     {% endif %}</td>
                   <td class="text-left">{{ information.title }}</td>
                   <td class="text-right">{{ information.sort_order }}</td>
-                  <td class="text-right"><a href="{{ information.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                  <td class="text-right">
+					<a target="_blank" href="{{ information.href_shop }}" data-toggle="tooltip" title="{{ button_shop }}" class="btn btn-success"><i class="fa fa-eye"></i></a>
+					<a href="{{ information.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+				  </td>
                 </tr>
                 {% endfor %}
                 {% else %}

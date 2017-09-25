@@ -370,6 +370,7 @@ class ControllerCatalogProduct extends Controller {
 				'special'    => $special,
 				'quantity'   => $result['quantity'],
 				'status'     => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+				'href_shop'  => HTTP_CATALOG . 'index.php?route=product/product&product_id=' . $result['product_id'],
 				'edit'       => $this->url->link('catalog/product/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . $url, true)
 			);
 		}

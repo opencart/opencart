@@ -179,6 +179,7 @@ class ControllerCatalogManufacturer extends Controller {
 				'manufacturer_id' => $result['manufacturer_id'],
 				'name'            => $result['name'],
 				'sort_order'      => $result['sort_order'],
+				'href_shop'  	  => HTTP_CATALOG . 'index.php?route=product/manufacturer/info&manufacturer_id=' . ($result['manufacturer_id']),
 				'edit'            => $this->url->link('catalog/manufacturer/edit', 'user_token=' . $this->session->data['user_token'] . '&manufacturer_id=' . $result['manufacturer_id'] . $url, true)
 			);
 		}

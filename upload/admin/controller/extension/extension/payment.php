@@ -1,4 +1,7 @@
 <?php
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ControllerExtensionExtensionPayment extends Controller {
 	private $error = array();
 
@@ -111,6 +114,18 @@ class ControllerExtensionExtensionPayment extends Controller {
 		$data['promoted_solution_1'] = $this->load->controller('extension/payment/pp_express/preferredSolution');
 		$data['promoted_solution_2'] = $this->load->controller('extension/payment/pp_braintree/preferredSolution');
 
+		$sort_order = array();
+		
+		foreach ($data['extensions'] as $key => $value) {
+			if($value['installed']){
+				$add = '0';
+			}else{
+				$add = '1';
+			}
+				$sort_order[$key] = $add.$value['name'];
+		}
+		array_multisort($sort_order, SORT_ASC, $data['extensions']);
+		
 		$this->response->setOutput($this->load->view('extension/extension/payment', $data));
 	}
 

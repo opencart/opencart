@@ -9,6 +9,7 @@ $_['text_add']                  = 'Add Affiliate';
 $_['text_edit']                 = 'Edit Affiliate';
 $_['text_affiliate']            = 'Affiliate Details';
 $_['text_payment']              = 'Payment Details';
+$_['text_other']                = 'Other';
 $_['text_balance']              = 'Balance';
 $_['text_cheque']               = 'Cheque';
 $_['text_paypal']               = 'PayPal';

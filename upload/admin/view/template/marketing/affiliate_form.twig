@@ -40,10 +40,11 @@
                   <label class="col-sm-2 control-label" for="input-customer">{{ entry_customer }}</label>
                   <div class="col-sm-10">
                     {% if not customer_id %}
-                    <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/> <input type="hidden" name="customer_id" value="{{ customer_id }}"/>
+                      <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/> <input type="hidden" name="customer_id" value="{{ customer_id }}"/>
                     {% else %}
                       <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control" readonly/>
                     {% endif %}
+                    <input type="hidden" name="customer_group_id" value="{{ customer_group_id }}" />
                     {% if error_customer %}
                       <div class="text-danger">{{ error_customer }}</div>
                     {% endif %}</div>
@@ -60,6 +61,7 @@
                     <input type="text" name="website" value="{{ website }}" placeholder="{{ entry_website }}" id="input-website" class="form-control"/>
                   </div>
                 </div>
+
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-tracking"><span data-toggle="tooltip" title="{{ help_tracking }}">{{ entry_tracking }}</span></label>
                   <div class="col-sm-10">
@@ -72,20 +74,7 @@
                     <input type="text" name="commission" value="{{ commission }}" placeholder="{{ entry_commission }}" id="input-commission" class="form-control"/>
                   </div>
                 </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
-                  <div class="col-sm-10">
-                    <select name="status" id="input-status" class="form-control">
-                      {% if status %}
-                        <option value="1" selected="selected">{{ text_enabled }}</option>
-                        <option value="0">{{ text_disabled }}</option>
-                      {% else %}
-                        <option value="1">{{ text_enabled }}</option>
-                        <option value="0" selected="selected">{{ text_disabled }}</option>
-                      {% endif %}
-                    </select>
-                  </div>
-                </div>
+
                 {% for custom_field in custom_fields %}
                   {% if custom_field.location == 'affiliate' %}
                     {% if custom_field.type == 'select' %}
@@ -131,7 +120,7 @@
                         <div class="col-sm-10">
                           <div> {% for custom_field_value in custom_field.custom_field_value %}
                               <div class="checkbox">{% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in account_custom_field[custom_field.custom_field_id] %}
-                                  <label> <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked"/>
+                                  <label><input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked"/>
                                     {{ custom_field_value.name }}</label>
                                 {% else %}
                                   <label> <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}"/>
@@ -143,8 +132,10 @@
                           {% endif %}</div>
                       </div>
                     {% endif %}
+
                     {% if custom_field.type == 'text' %}
                       <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+
                         <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
@@ -153,6 +144,8 @@
                           {% endif %}</div>
                       </div>
                     {% endif %}
+
+
                     {% if custom_field.type == 'textarea' %}
                       <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
                         <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
@@ -221,6 +214,8 @@
                     {% endif %}
                   {% endif %}
                 {% endfor %}
+
+
               </fieldset>
 
 
@@ -318,6 +313,23 @@
                   </div>
                 </div>
               </fieldset>
+              <fieldset>
+                <legend>{{ text_other }}</legend>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                  <div class="col-sm-10">
+                    <select name="status" id="input-status" class="form-control">
+                      {% if status %}
+                        <option value="1" selected="selected">{{ text_enabled }}</option>
+                        <option value="0">{{ text_disabled }}</option>
+                      {% else %}
+                        <option value="1">{{ text_enabled }}</option>
+                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                      {% endif %}
+                    </select>
+                  </div>
+                </div>
+              </fieldset>
             </div>
             {% if customer_id %}
               <div class="tab-pane" id="tab-history">
@@ -386,9 +398,10 @@ $('input[name=\'customer\']').autocomplete({
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
+						category: item['customer_group'],
 						label: item['name'],
 						value: item['customer_id'],
-						//	value: item['customer_group_id']
+						customer_group_id: item['customer_group_id'],
 					}
 				}));
 			}
@@ -397,11 +410,12 @@ $('input[name=\'customer\']').autocomplete({
 	'select': function(item) {
 		$('input[name=\'customer\']').val(item['label']);
 		$('input[name=\'customer_id\']').val(item['value']);
+		$('input[name=\'customer_group_id\']').val(item['customer_group_id']);
 	}
 });
 //--></script>
 <script type="text/javascript"><!--
-$('select[name=\'customer_group_id\']').on('change', function() {
+$('input[name=\'customer_group_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=customer/customer/customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
 		dataType: 'json',
@@ -425,7 +439,7 @@ $('select[name=\'customer_group_id\']').on('change', function() {
 	});
 });
 
-$('select[name=\'customer_group_id\']').trigger('change');
+$('input[name=\'customer_group_id\']').trigger('change');
 //--></script>
 <script type="text/javascript"><!--
 $('#history').delegate('.pagination a', 'click', function(e) {
@@ -596,17 +610,18 @@ $('.time').datetimepicker({
 	pickDate: false
 });
 
+
 $('#tab-general .form-group[data-sort]').detach().each(function() {
-	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-affiliate .form-group').length) {
-		$('#tab-general .form-group').eq($(this).attr('data-sort')).before(this);
+	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-general .form-group').length) {
+			$('#tab-general .form-group').eq($(this).attr('data-sort')).before(this);
 	}
 
-	if ($(this).attr('data-sort') > $('#tab-affiliate .form-group').length) {
-		$('#tab-general .form-group:last').after(this);
+	if ($(this).attr('data-sort') > $('#tab-general .form-group').length) {
+			$('#tab-general .form-group:last').after(this);
 	}
 
-	if ($(this).attr('data-sort') < -$('#tab-affiliate .form-group').length) {
-		$('#tab-general .form-group:first').before(this);
+	if ($(this).attr('data-sort') < -$('#tab-general .form-group').length) {
+			$('#tab-general .form-group:first').before(this);
 	}
 });
 //--></script>

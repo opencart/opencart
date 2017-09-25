@@ -12,10 +12,11 @@ class ModelMarketingAffiliate extends Model {
 
 	public function deleteAffiliate($customer_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_affiliate WHERE customer_id = '" . (int)$customer_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_affiliate_report WHERE customer_id = '" . (int)$customer_id . "'");
 	}
 
 	public function getAffiliate($customer_id) {
-		$query = $this->db->query("SELECT DISTINCT *, (SELECT CONCAT(c.firstname, ' ', c.lastname) FROM `" . DB_PREFIX . "customer` c WHERE c.customer_id = ca.customer_id) AS customer FROM " . DB_PREFIX . "customer_affiliate ca WHERE ca.customer_id = '" . (int)$customer_id . "'");
+		$query = $this->db->query("SELECT DISTINCT *, CONCAT(c.firstname, ' ', c.lastname) AS customer FROM " . DB_PREFIX . "customer_affiliate ca LEFT JOIN `" . DB_PREFIX . "customer` c ON (ca.customer_id = c.customer_id) WHERE ca.customer_id = '" . (int)$customer_id . "'");
 
 		return $query->row;
 	}

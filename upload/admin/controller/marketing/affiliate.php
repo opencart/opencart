@@ -524,6 +524,14 @@ class ControllerMarketingAffiliate extends Controller {
 			$data['customer_id'] = 0;
 		}
 
+		if (isset($this->request->post['customer_group_id'])) {
+			$data['customer_group_id'] = (int)$this->request->post['customer_group_id'];
+		} elseif (!empty($affiliate_info)) {
+			$data['customer_group_id'] = $affiliate_info['customer_group_id'];
+		} else {
+			$data['customer_group_id'] = 0;
+		}
+
 		if (isset($this->request->post['customer'])) {
 			$data['customer'] = $this->request->post['customer'];
 		} elseif (!empty($affiliate_info)) {

@@ -391,6 +391,17 @@ class ControllerCatalogManufacturer extends Controller {
 		}
 
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+		
+		if (isset($this->request->post['manufacturer_layout'])) {
+			$data['manufacturer_layout'] = $this->request->post['manufacturer_layout'];
+		} elseif (isset($this->request->get['manufacturer_id'])) {
+			$data['manufacturer_layout'] = $this->model_catalog_manufacturer->getManufacturerLayouts($this->request->get['manufacturer_id']);
+		} else {
+			$data['manufacturer_layout'] = array();
+		}
+		$this->load->model('design/layout');
+		
+		$data['layouts'] = $this->model_design_layout->getLayouts();
 
 		if (isset($this->request->post['sort_order'])) {
 			$data['sort_order'] = $this->request->post['sort_order'];

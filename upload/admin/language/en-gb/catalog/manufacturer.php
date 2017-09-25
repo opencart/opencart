@@ -32,6 +32,8 @@ $_['entry_keyword']     	 = 'Keyword';
 $_['entry_image']       	 = 'Image';
 $_['entry_sort_order']  	 = 'Sort Order';
 $_['entry_type']        	 = 'Type';
+$_['entry_layout']           = 'Layout Override';
+$_['tab_design']             = 'Design';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify manufacturers!';

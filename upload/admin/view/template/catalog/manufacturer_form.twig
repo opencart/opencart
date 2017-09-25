@@ -26,7 +26,9 @@
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-manufacturer" class="form-horizontal">
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
+			<li><a href="#tab-data" data-toggle="tab">{{ tab_data }}</a></li>
             <li><a href="#tab-seo" data-toggle="tab">{{ tab_seo }}</a></li>
+			<li><a href="#tab-design" data-toggle="tab">{{ tab_design }}</a></li>
           </ul>
 			  <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
@@ -134,6 +136,36 @@
                       {% endfor %}</td>
                   </tr>
                   {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          <div class="tab-pane" id="tab-design">
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-left">{{ entry_store }}</td>
+                      <td class="text-left">{{ entry_layout }}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    {% for store in stores %}
+                    <tr>
+                      <td class="text-left">{{ store.name }}</td>
+                      <td class="text-left"><select name="manufacturer_layout[{{ store.store_id }}]" class="form-control">
+                          <option value=""></option>
+                          {% for layout in layouts %}
+                          {% if manufacturer_layout[store.store_id] and manufacturer_layout[store.store_id] == layout.layout_id %}
+                          <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
+                          {% else %}
+                          <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
+                          {% endif %}
+                          {% endfor %}
+                        </select></td>
+                    </tr>
+                    {% endfor %}
                   </tbody>
                 </table>
               </div>

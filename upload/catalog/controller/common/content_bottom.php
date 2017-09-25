@@ -1,4 +1,7 @@
 <?php
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ControllerCommonContentBottom extends Controller {
 	public function index() {
 		$this->load->model('design/layout');
@@ -17,6 +20,12 @@ class ControllerCommonContentBottom extends Controller {
 			$path = explode('_', (string)$this->request->get['path']);
 
 			$layout_id = $this->model_catalog_category->getCategoryLayoutId(end($path));
+		}
+		
+		if ($route == 'product/manufacturer/info' && isset($this->request->get['manufacturer_id'])) {
+			$this->load->model('catalog/manufacturer');
+		
+			$layout_id = $this->model_catalog_manufacturer->getManufacturerLayoutId($this->request->get['manufacturer_id']);
 		}
 
 		if ($route == 'product/product' && isset($this->request->get['product_id'])) {

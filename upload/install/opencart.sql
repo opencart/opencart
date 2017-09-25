@@ -2048,7 +2048,21 @@ INSERT INTO `oc_manufacturer_to_store` (`manufacturer_id`, `store_id`) VALUES
 (9, 0),
 (10, 0);
 
------------------------------------------------------------
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_manufacturer_to_layout`
+--
+
+DROP TABLE IF EXISTS `oc_manufacturer_to_layout`;
+CREATE TABLE `oc_manufacturer_to_layout` (
+  `manufacturer_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `layout_id` int(11) NOT NULL,
+  PRIMARY KEY (`manufacturer_id`,`store_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `oc_marketing`

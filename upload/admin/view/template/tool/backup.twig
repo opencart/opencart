@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="button" data-toggle="tooltip" title="{{ button_upload }}" class="btn btn-primary"><i class="fa fa-upload"></i></button>
-        <button type="button" id="button-backup" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_upload }}" class="btn btn-primary"><i class="fa fa-upload"></i></button>
+        <button type="button" data-toggle="tooltip" title="{{ button_backup }}" class="btn btn-primary"><i class="fa fa-upload"></i></button>
+        <button type="button" id="button-backup" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_import }}" class="btn btn-primary"><i class="fa fa-upload"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
@@ -29,6 +29,7 @@
         <h3 class="panel-title"><i class="fa fa-exchange"></i> {{ heading_title }}</h3>
       </div>
       <div class="panel-body">
+        <div class="alert alert-info"><i class="fa fa fa-exclamation-triangle"></i> {{ text_import }}</div>
         <form class="form-horizontal">
           <fieldset>
             <legend>{{ text_progress }}</legend>

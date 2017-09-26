@@ -6,6 +6,7 @@ $_['heading_title']     = 'Backup &amp; Restore';
 $_['text_success']      = 'Success: You have successfully imported your database!';
 $_['text_backup']       = 'Backup Options';
 $_['text_progress']     = 'Progress';
+$_['text_import']       = 'For large backup files its better to upload the sql file via ftp to the <strong>system/storage/backup</strong> directory.';
 
 // Column
 $_['column_filename']   = 'Filename';

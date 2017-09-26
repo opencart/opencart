@@ -19,8 +19,6 @@ class ControllerToolBackup extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		$data['export'] = $this->url->link('tool/backup/export', 'user_token=' . $this->session->data['user_token'], true);
-		
 		$this->load->model('tool/backup');
 
 		$ignore = array(
@@ -50,13 +48,34 @@ class ControllerToolBackup extends Controller {
 
 		$data['histories'] = array();
 
-		$results = glob(DIR_STORAGE . 'backup/*.sql');
+		$files = glob(DIR_STORAGE . 'backup/*.sql');
 
-		foreach ($results as $result) {
+		foreach ($files as $file) {
+			$size = filesize($file);
+
+			$i = 0;
+
+			$suffix = array(
+				'B',
+				'KB',
+				'MB',
+				'GB',
+				'TB',
+				'PB',
+				'EB',
+				'ZB',
+				'YB'
+			);
+
+			while (($size / 1024) > 1) {
+				$size = $size / 1024;
+				$i++;
+			}
+
 			$data['histories'][] = array(
-				'filename'   => $result['filename'],
-				'size'       => filesize($result['filename']),
-				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
+				'filename'   => basename($file),
+				'size'       => round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i],
+				'date_added' => date($this->language->get('datetime_format'), filemtime($file))
 			);
 		}
 
@@ -138,15 +157,22 @@ class ControllerToolBackup extends Controller {
 			if (!$filename) {
 				$filename =  date('Y-m-d H:i:s') . '.sql';
 			}
-
+			
 			$handle = fopen(DIR_STORAGE . 'backup/' . $filename, 'w+');
 
 			fwrite($handle, $file);
 
 			fclose($handle);
 
-			if ($position && !feof($handle)) {
+			if (($page - 1) * 100) {
 				$output .= "\n\n";
+
+			}
+
+			if ((($page - 1) * 100) < $record_total) {
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . $filename . '&page=' . $page, true));
+			} else {
+
 
 			}
 		}
@@ -164,9 +190,8 @@ class ControllerToolBackup extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-
-		if (isset($this->request->get['import'])) {
-			$filename = html_entity_decode($this->request->get['import'], ENT_QUOTES, 'UTF-8');
+		if (isset($this->request->get['filename'])) {
+			$filename = $this->request->get['filename'];
 		} else {
 			$filename = '';
 		}
@@ -174,6 +199,15 @@ class ControllerToolBackup extends Controller {
 		if (!is_file($filename)) {
 			$json['error'] = $this->language->get('error_file');
 		}
+
+		$directory = DIR_IMAGE . 'backup';
+
+		// Validate the directory
+		if (substr(str_replace('\\', '/', realpath($directory . '/' . $filename)), 0, strlen($directory)) == str_replace('\\', '/', $directory)) {
+			$json['error'] = $this->language->get('error_directory');
+		}
+
+
 
 		if (isset($this->request->get['position'])) {
 			$position = $this->request->get['position'];
@@ -254,6 +288,14 @@ class ControllerToolBackup extends Controller {
 	}
 
 	public function download() {
+		if (isset($this->request->get['import'])) {
+			$filename = html_entity_decode($this->request->get['import'], ENT_QUOTES, 'UTF-8');
+		} else {
+			$filename = '';
+		}
+
+
+
 		if (!isset($this->request->post['backup'])) {
 			$this->session->data['error'] = $this->language->get('error_export');
 
@@ -274,5 +316,24 @@ class ControllerToolBackup extends Controller {
 
 			$this->response->setOutput($this->model_tool_backup->backup($this->request->post['backup']));
 		}
+	}
+
+	public function delete() {
+		$this->load->language('tool/backup');
+
+		$json = array();
+
+		if (isset($this->request->get['filename'])) {
+			$filename = $this->request->get['filename'];
+		} else {
+			$filename = '';
+		}
+
+		if (!$json) {
+
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

@@ -2,6 +2,10 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
+      <div class="pull-right">
+        <button type="button" data-toggle="tooltip" title="{{ button_upload }}" class="btn btn-primary"><i class="fa fa-upload"></i></button>
+        <button type="button" id="button-backup" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_upload }}" class="btn btn-primary"><i class="fa fa-upload"></i></button>
+      </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -26,67 +30,51 @@
       </div>
       <div class="panel-body">
         <form class="form-horizontal">
-			<div class="radio">
-			<label><input type="radio" name="type" value="image"/> I want to backup my site</label>
-			</div>
-			<div class="radio">
-			<label><input type="radio" name="type" value="image"/> I want to restore my site</label>
-			</div>
-
-
-
-
-
-
-
-
-
-
-              <fieldset>
-                <legend>{{ text_progress }}</legend>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ text_progress }}</label>
-                  <div class="col-sm-10">
-                    <div id="progress-download" class="progress">
-                      <div class="progress-bar" role="progressbar"></div>
+          <fieldset>
+            <legend>{{ text_progress }}</legend>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">{{ entry_progress }}</label>
+              <div class="col-sm-10">
+                <div id="progress-download" class="progress">
+                  <div class="progress-bar" role="progressbar"></div>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>{{ text_backup }}</legend>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">{{ entry_export }}</label>
+              <div class="col-sm-10">
+                <div class="well well-sm" style="height: 150px; overflow: auto;">
+                  {% for table in tables %}
+                    <div class="checkbox">
+                      <label><input type="checkbox" name="backup[]" value="{{ table }}" checked="checked"/> {{ table }}</label>
                     </div>
-                  </div>
+                  {% endfor %}
                 </div>
-                <div class="col-sm-10 col-sm-offset-2">
-                  <div class="form-group">
-					  <button type="button" id="button-setting" data-toggle="tooltip" title="Settings" data-loading-text="{{ text_loading }}" class="btn btn-info"><i class="fa fa-cog"></i></button>
-                    <button type="button" id="button-backup" data-loading-text="{{ text_loading }}" class="btn btn-success"><i class="fa fa-play"></i> Start</button>
-                  </div>
-                </div>
-              </fieldset>
-
-              <fieldset>
-                <legend>Backup History</legend>
-                <p>Backup modified files only backs up the original opencart files that have been modified. this will not backup up 3rd party files.</p>
-
-              </fieldset>
-
-
-              <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_progress }}</label>
-                <div class="col-sm-10">
-                  <div id="progress-import" class="progress">
-                    <div class="progress-bar" role="progressbar"></div>
-                  </div>
-                </div>
+                <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', true);" class="btn btn-link">{{ text_select_all }}</button> / <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', false);" class="btn btn-link">{{ text_unselect_all }}</button>
               </div>
-              <div class="form-group">
-                <div class="col-sm-10 col-sm-offset-2">
-                  <button type="button" id="button-import" class="btn btn-primary"><i class="fa fa-upload"></i> {{ button_import }}</button>
-                </div>
-              </div>
-
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Backup History</legend>
+            <div id="history"></div>
+          </fieldset>
         </form>
       </div>
     </div>
   </div>
 </div>
+<script type="text/javascript"><!--
+$('#history').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
 
+	$('#history').load(this.href);
+});
+
+$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token }}');
+//--></script>
 <script type="text/javascript"><!--
 $('#button-start').on('click', function() {
 	$('#progress-import .progress-bar').css('width', '0%');
@@ -162,87 +150,6 @@ function next(url) {
 		}
 	});
 }
-
-$('#button-setting').on('click', function(e) {
-	e.preventDefault();
-
-	$('#modal-setting').remove();
-
-	html = '<div id="modal-setting" class="modal">';
-	html += '  <div class="modal-dialog">';
-	html += '    <div class="modal-content">';
-	html += '      <div class="modal-header">';
-	html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
-	html += '        <h4 class="modal-title">{{ text_backup }}</h4>';
-	html += '      </div>';
-	html += '      <div class="modal-body">';
-	html += '        <fieldset>';
-	html += '        	<legend>{{ text_backup }}</legend>';
-	html += '           <div class="form-group">';
-	html += '        	  <label class="col-sm-2 control-label">{{ entry_file }}</label>';
-	html += '        	  <div class="col-sm-10">';
-	html += '        	    <div class="well well-sm" style="height: 150px; overflow: auto;">';
-	html += '        	      <div class="checkbox">';
-	html += '        	        <label><input type="checkbox" name="file" value="modified"/> {{ text_modified }}</label>';
-	html += '        	      </div>';
-	html += '        	      <div class="checkbox">';
-	html += '        	        <label><input type="checkbox" name="file" value="image"/> {{ text_image }}</label>';
-	html += '        	      </div>';
-	html += '        	      <div class="checkbox">';
-	html += '        	        <label><input type="checkbox" name="file" value="download" / > {{ text_download }}</label>';
-	html += '        	      </div>';
-	html += '        	      <div class="checkbox">';
-	html += '        	        <label><input type="checkbox" name="file" value="upload" /> {{ text_upload }}</label>';
-	html += '        	      </div>';
-		</div>
-		</div>
-		</div>
-		<div class= "form-group" >
-		<label class= "col-sm-2 control-label" > Database</label>
-		< div
-class
-	= "col-sm-10" >
-		< div
-class
-	= "well well-sm"
-	style = "height: 150px; overflow: auto;" >
-    {% for table in tables %}
-		< div
-class
-	= "checkbox" >
-		< label > < input
-	type = "checkbox"
-	name = "backup[]"
-	value = "{{ table }}"
-	checked = "checked" / >
-    {{ table }}< /label>
-		< /div>
-    {% endfor %}
-		< /div>
-		< button
-	type = "button"
-	onclick = "$(this).parent().find(':checkbox').prop('checked', true);"
-class
-	= "btn btn-link" >{{ text_select_all }}< /button> / <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', false);" class= "btn btn-link" >{{ text_unselect_all }}< /button> < /div> < /div> < /fieldset>
-
-
-	html += '        <div class="form-group">';
-	html += '          <label for="input-pin">{{ entry_pin }}</label>';
-	html += '          <input type="password" name="pin" value="" placeholder="{{ entry_pin }}" id="input-pin" class="form-control" />';
-	html += '        </div>';
-	html += '        <div class="form-group text-right">';
-	html += '          <div class="pull-left"><a href="https://www.opencart.com/index.php?route=support/contact" class="btn btn-default btn-lg" target="_blank">{{ button_forgot_pin }}</a></div>';
-	html += '          <button type="button" id="button-purchase" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg">{{ button_purchase }}</button>';
-	html += '        </div>';
-	html += '      </div>';
-	html += '    </div>';
-	html += '  </div>';
-	html += '</div>';
-
-	$('body').append(html);
-
-	$('#modal-setting').modal('show');
-});
 
 $('#button-import').on('click', function() {
 	$('#form-upload').remove();

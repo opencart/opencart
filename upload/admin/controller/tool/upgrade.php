@@ -144,6 +144,84 @@ class ControllerToolUpgrade extends Controller {
 		$this->response->setOutput($this->load->view('tool/upgrade', $data));
 	}
 
+	public function modified() {
+		$this->load->language('upgrade/backup');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'tool/backup')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			set_time_limit(0);
+
+			$curl = curl_init('https://www.opencart.com/index.php?route=api/modified/' . VERSION);
+
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+
+			$response = curl_exec($curl);
+
+			curl_close($curl);
+
+			$response_info = json_decode($response, true);
+
+			if ($response_info) {
+				foreach ($response_info['file'] as $file) {
+					$destination = str_replace('\\', '/', substr($file, strlen($directory . '/')));
+
+					$path = str_replace('\\', '/', realpath(DIR_CATALOG . '../')) . '/' . $destination;
+
+					// Check if the copy location exists or not
+					if (substr($destination, 0, 5) == 'admin') {
+						$path = DIR_APPLICATION . substr($destination, 6);
+					}
+
+					if (substr($destination, 0, 7) == 'catalog') {
+						$path = DIR_CATALOG . substr($destination, 8);
+					}
+
+					if (substr($destination, 0, 7) == 'install') {
+						$path = DIR_IMAGE . substr($destination, 8);
+					}
+
+					if (substr($destination, 0, 5) == 'image') {
+						$path = DIR_IMAGE . substr($destination, 6);
+					}
+
+					if (substr($destination, 0, 6) == 'system') {
+						$path = DIR_SYSTEM . substr($destination, 7);
+					}
+
+					if (is_dir($file) && !is_dir($path)) {
+						if (!mkdir($path, 0777)) {
+							$json['error'] = sprintf($this->language->get('error_directory'), $destination);
+						}
+					}
+
+					if (is_file($file)) {
+						if (!rename($file, $path)) {
+							$json['error'] = sprintf($this->language->get('error_file'), $destination);
+						}
+					}
+				}
+			} else {
+				$json['error'] = $this->language->get('error_download');
+			}
+
+			$json['text'] = $this->language->get('text_unzip');
+
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/unzip', 'user_token=' . $this->session->data['user_token']));
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
 	public function download() {
 		$this->load->language('tool/upgrade');
 

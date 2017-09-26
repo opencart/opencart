@@ -1,4 +1,7 @@
 <?php
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ControllerCatalogReview extends Controller {
 	private $error = array();
 
@@ -245,6 +248,8 @@ class ControllerCatalogReview extends Controller {
 
 		$data['add'] = $this->url->link('catalog/review/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
 		$data['delete'] = $this->url->link('catalog/review/delete', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['enabled'] = $this->url->link('catalog/review/enable', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['disabled'] = $this->url->link('catalog/review/disable', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
 		$data['reviews'] = array();
 
@@ -555,6 +560,81 @@ class ControllerCatalogReview extends Controller {
 
 		if (!isset($this->request->post['rating']) || $this->request->post['rating'] < 0 || $this->request->post['rating'] > 5) {
 			$this->error['rating'] = $this->language->get('error_rating');
+		}
+
+		return !$this->error;
+	}
+	
+		public function enable() {
+        $this->load->language('catalog/review');
+        $this->document->setTitle($this->language->get('heading_title'));
+        $this->load->model('catalog/review');
+        if (isset($this->request->post['selected']) && $this->validateEnable()) {
+            foreach ($this->request->post['selected'] as $review_id) {
+                $data = array();
+                $result = $this->model_catalog_review->getReview($review_id);
+                foreach ($result as $key => $value) {
+                    $data[$key] = $value;
+                }
+                $data['status'] = 1;
+                $this->model_catalog_review->editReview($review_id, $data);
+            }
+            $this->session->data['success'] = $this->language->get('text_success');
+            $url = '';
+            if (isset($this->request->get['page'])) {
+                $url .= '&page=' . $this->request->get['page'];
+            }
+            if (isset($this->request->get['sort'])) {
+                $url .= '&sort=' . $this->request->get['sort'];
+            }
+            if (isset($this->request->get['order'])) {
+                $url .= '&order=' . $this->request->get['order'];
+            }
+            $this->response->redirect($this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . $url, true));
+        }
+        $this->getList();
+    }
+    public function disable() {
+        $this->load->language('catalog/review');
+        $this->document->setTitle($this->language->get('heading_title'));
+        $this->load->model('catalog/review');
+        if (isset($this->request->post['selected']) && $this->validateDisable()) {
+            foreach ($this->request->post['selected'] as $review_id) {
+                $data = array();
+                $result = $this->model_catalog_review->getReview($review_id);
+                foreach ($result as $key => $value) {
+                    $data[$key] = $value;
+                }
+                $data['status'] = 0;
+                $this->model_catalog_review->editReview($review_id, $data);
+            }
+            $this->session->data['success'] = $this->language->get('text_success');
+            $url = '';
+            if (isset($this->request->get['page'])) {
+                $url .= '&page=' . $this->request->get['page'];
+            }
+            if (isset($this->request->get['sort'])) {
+                $url .= '&sort=' . $this->request->get['sort'];
+            }
+            if (isset($this->request->get['order'])) {
+                $url .= '&order=' . $this->request->get['order'];
+            }
+            $this->response->redirect($this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . $url, true));
+        }
+        $this->getList();
+    }
+	
+	protected function validateEnable() {
+		if (!$this->user->hasPermission('modify', 'catalog/review')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		return !$this->error;
+	}
+	
+	protected function validateDisable() {
+		if (!$this->user->hasPermission('modify', 'catalog/review')) {
+			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
 		return !$this->error;

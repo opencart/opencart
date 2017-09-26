@@ -321,6 +321,8 @@ class ControllerCatalogProduct extends Controller {
 		$data['add'] = $this->url->link('catalog/product/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
 		$data['copy'] = $this->url->link('catalog/product/copy', 'user_token=' . $this->session->data['user_token'] . $url, true);
 		$data['delete'] = $this->url->link('catalog/product/delete', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['enabled'] = $this->url->link('catalog/product/enable', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['disabled'] = $this->url->link('catalog/product/disable', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
 		$data['products'] = array();
 
@@ -1235,6 +1237,69 @@ class ControllerCatalogProduct extends Controller {
 
 		if ($this->error && !isset($this->error['warning'])) {
 			$this->error['warning'] = $this->language->get('error_warning');
+		}
+
+		return !$this->error;
+	}
+	
+	public function enable() {
+        $this->load->language('catalog/product');
+        $this->document->setTitle($this->language->get('heading_title'));
+        $this->load->model('catalog/product');
+        if (isset($this->request->post['selected']) && $this->validateEnable()) {
+            foreach ($this->request->post['selected'] as $product_id) {
+                $this->model_catalog_product->editProductStatus($product_id, 1);
+            }
+            $this->session->data['success'] = $this->language->get('text_success');
+            $url = '';
+            if (isset($this->request->get['page'])) {
+                $url .= '&page=' . $this->request->get['page'];
+            }
+            if (isset($this->request->get['sort'])) {
+                $url .= '&sort=' . $this->request->get['sort'];
+            }
+            if (isset($this->request->get['order'])) {
+                $url .= '&order=' . $this->request->get['order'];
+            }
+            $this->response->redirect($this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . $url, true));
+        }
+        $this->getList();
+    }
+    public function disable() {
+        $this->load->language('catalog/product');
+        $this->document->setTitle($this->language->get('heading_title'));
+        $this->load->model('catalog/product');
+        if (isset($this->request->post['selected']) && $this->validateDisable()) {
+            foreach ($this->request->post['selected'] as $product_id) {
+                $this->model_catalog_product->editProductStatus($product_id, 0);
+            }
+            $this->session->data['success'] = $this->language->get('text_success');
+            $url = '';
+            if (isset($this->request->get['page'])) {
+                $url .= '&page=' . $this->request->get['page'];
+            }
+            if (isset($this->request->get['sort'])) {
+                $url .= '&sort=' . $this->request->get['sort'];
+            }
+            if (isset($this->request->get['order'])) {
+                $url .= '&order=' . $this->request->get['order'];
+            }
+            $this->response->redirect($this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . $url, true));
+        }
+        $this->getList();
+    }
+	
+	protected function validateEnable() {
+		if (!$this->user->hasPermission('modify', 'catalog/product')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		return !$this->error;
+	}
+	
+	protected function validateDisable() {
+		if (!$this->user->hasPermission('modify', 'catalog/product')) {
+			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
 		return !$this->error;

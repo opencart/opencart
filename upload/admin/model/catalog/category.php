@@ -166,6 +166,13 @@ class ModelCatalogCategory extends Model {
 
 		$this->cache->delete('category');
 	}
+	
+	public function editCategoryStatus($category_id, $status) {
+        $this->db->query("UPDATE " . DB_PREFIX . "category SET status = '" . (int)$status . "', date_modified = NOW() WHERE category_id = '" . (int)$category_id . "'");
+        
+		$this->cache->delete('category');
+		
+    }
 
 	public function deleteCategory($category_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "category_path WHERE category_id = '" . (int)$category_id . "'");

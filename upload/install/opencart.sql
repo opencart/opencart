@@ -1384,7 +1384,7 @@ CREATE TABLE `oc_download_report` (
   `country` varchar(2) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`download_report_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -----------------------------------------------------------
 

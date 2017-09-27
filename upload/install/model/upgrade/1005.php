@@ -134,23 +134,6 @@ class ModelUpgrade1005 extends Model {
 		// order_recurring_transaction
 		$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring_transaction` CHANGE `type` `type` varchar(255) NOT NULL AFTER `reference`");
 
-		// url_alias
-		$index_data = array();
-
-		$query = $this->db->query("SHOW INDEX FROM `" . DB_PREFIX . "url_alias` WHERE Key_name != 'PRIMARY'");
-
-		foreach ($query->rows as $result) {
-			$index_data[] = $result['Column_name'];
-		}
-
-		if (!in_array('query', $index_data)) {
-			$this->db->query("ALTER TABLE `" . DB_PREFIX . "url_alias` ADD INDEX `query` (`query`)");
-		}
-
-		if (!in_array('keyword', $index_data)) {
-			$this->db->query("ALTER TABLE `" . DB_PREFIX . "url_alias` ADD INDEX `keyword` (`keyword`)");
-		}
-
 		// user
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "user' AND COLUMN_NAME = 'image'");
 

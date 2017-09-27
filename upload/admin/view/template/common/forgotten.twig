@@ -1,0 +1,35 @@
+{{ header }}
+<div id="content">
+  <div class="container-fluid"><br />
+    <br />
+    <div class="row">
+      <div class="col-sm-offset-4 col-sm-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h1 class="panel-title"><i class="fa fa-repeat"></i> {{ heading_title }}</h1>
+          </div>
+          <div class="panel-body">
+            {% if error_warning %}
+            <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+            {% endif %}
+            <form action="{{ action }}" method="post" enctype="multipart/form-data">
+              <div class="form-group">
+                <label for="input-email">{{ entry_email }}</label>
+                <div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                  <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
+                </div>
+              </div>
+              <div class="text-right">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> {{ button_reset }}</button>
+                <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

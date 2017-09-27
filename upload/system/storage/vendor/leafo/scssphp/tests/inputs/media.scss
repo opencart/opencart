@@ -1,0 +1,208 @@
+
+// media syntax
+@media {
+    div { color: blue; }
+}
+@media what {
+    div { color: blue; }
+}
+
+@media (cool) {
+    div { color: blue; }
+}
+@media (cool: blue) {
+    div { color: blue; }
+}
+
+@media hello and (world) and (butt: man) {
+    div { color: blue; }
+}
+
+$navbarCollapseWidth: 940px;
+
+@media (max-width: $navbarCollapseWidth) {
+  color: red;
+}
+
+// media bubbling
+@media not hello and (world) {
+   color: blue;
+   pre {
+       color: blue;
+   }
+
+   @media butt {
+       color: red;
+       div {
+           color: red;
+       }
+   }
+}
+
+@media a, b {
+    @media c {
+        color: blue;
+    }
+}
+
+@media a{
+    @media b, c {
+        color: blue;
+    }
+}
+
+@media a, b{
+    @media c, d {
+        color: blue;
+    }
+}
+
+$media: cree;
+$feature: -webkit-min-device-pixel-ratio;
+$value: 1.5;
+
+div {
+    color: blue;
+    @media s#{$media}n and ($feature: $value) {
+        .sidebar {
+            width: 500px;
+        }
+    }
+}
+
+// @media + @mixin
+@mixin color {
+    color: red;
+    .success {
+         color: green;
+    }
+}
+
+div {
+    position: absolute;
+    $y: 2em;
+    @media screen {
+        top: 0;
+        $x: 5px;
+        p {
+            margin: $x;
+        }
+        bottom: 6em + $y;
+        @include color;
+    }
+}
+
+.button {
+  width: 300px;
+  height: 100px;
+  background: #eee;
+   
+  :hover {
+    background: #aaa;
+  }
+   
+  @media only screen and (max-width : 300px){
+    width: 100px;
+    height: 100px;
+  }
+}
+
+code {
+    position: absolute;
+    @media screen {
+        pre {
+            height: 20px;
+        }
+        height: 10px;
+    }
+}
+
+dt {
+    @media screen {
+        @media (color: blue) {
+            height: 10px;
+        }
+    }
+}
+
+// nesting media queries
+@media screen {
+    .screen {
+        width: 12px;
+    }
+    @media only screen {
+        .only-screen {
+            height: 11px;
+        }    
+    }
+}
+
+@media only screen {
+    .only-screen {
+        width: 14px;
+    }
+    @media only screen {
+        .only-screen {
+            height: 16px;
+        }    
+    }
+}
+
+@media not screen {
+    @media screen {
+        .invalid {
+            height: 12px;
+        }
+    }
+}
+
+@media not screen {
+    @media print {
+        .only-print {
+            height: 12px;
+        }
+    }
+}
+
+@media screen {
+    @media not print {
+        .only-print {
+            height: 12px;
+        }
+    }
+}
+
+@media not screen {
+    @media not print {
+        .invalid {
+            height: 12px;
+        }
+    }
+}
+
+@media not screen {
+    @media not screen {
+        .not-screen {
+            height: 15px;
+        }
+    }
+}
+
+@media only screen {
+    @media print {
+        .invalid {
+            height: 15px;
+        }
+    }
+}
+
+@media only screen {
+    @media screen and (color: blue) {
+        @media screen and (width: 13) {
+            .only-screen {
+                height: 15px;
+            }
+        }
+    }
+}
+

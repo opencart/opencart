@@ -14,11 +14,6 @@ class ControllerExtensionRecurringPPExpress extends Controller {
 		$recurring_info = $this->model_account_recurring->getOrderRecurring($order_recurring_id);
 		
 		if ($recurring_info) {
-			$data['text_loading'] = $this->language->get('text_loading');
-			
-			$data['button_continue'] = $this->language->get('button_continue');
-			$data['button_cancel'] = $this->language->get('button_cancel');
-			
 			$data['continue'] = $this->url->link('account/recurring', '', true);	
 			
 			if ($recurring_info['status'] == 2 || $recurring_info['status'] == 3) {
@@ -48,16 +43,16 @@ class ControllerExtensionRecurringPPExpress extends Controller {
 		$recurring_info = $this->model_account_recurring->getOrderRecurring($order_recurring_id);
 
 		if ($recurring_info && $recurring_info['reference']) {
-			if ($this->config->get('pp_express_test')) {
+			if ($this->config->get('payment_pp_express_test')) {
 				$api_url = 'https://api-3t.sandbox.paypal.com/nvp';
-				$api_username = $this->config->get('pp_express_sandbox_username');
-				$api_password = $this->config->get('pp_express_sandbox_password');
-				$api_signature = $this->config->get('pp_express_sandbox_signature');
+				$api_username = $this->config->get('payment_pp_express_sandbox_username');
+				$api_password = $this->config->get('payment_pp_express_sandbox_password');
+				$api_signature = $this->config->get('payment_pp_express_sandbox_signature');
 			} else {
 				$api_url = 'https://api-3t.paypal.com/nvp';
-				$api_username = $this->config->get('pp_express_username');
-				$api_password = $this->config->get('pp_express_password');
-				$api_signature = $this->config->get('pp_express_signature');
+				$api_username = $this->config->get('payment_pp_express_username');
+				$api_password = $this->config->get('payment_pp_express_password');
+				$api_signature = $this->config->get('payment_pp_express_signature');
 			}
 		
 			$request = array(

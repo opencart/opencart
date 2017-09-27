@@ -4,7 +4,7 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 
 		$this->load->model('extension/payment/amazon_login_pay');
 
-		if ($this->config->get('amazon_login_pay_status') && $this->config->get('amazon_pay_status') && !empty($this->request->server['HTTPS']) && !($this->config->get('amazon_login_pay_minimum_total') > 0 && $this->config->get('amazon_login_pay_minimum_total') > $this->cart->getSubTotal())) {
+		if ($this->config->get('payment_amazon_login_pay_status') && $this->config->get('amazon_pay_status') && !empty($this->request->server['HTTPS']) && !($this->config->get('payment_amazon_login_pay_minimum_total') > 0 && $this->config->get('payment_amazon_login_pay_minimum_total') > $this->cart->getSubTotal())) {
 			// capital L in Amazon cookie name is required, do not alter for coding standards
 			if (!$this->customer->isLogged() && isset($this->request->cookie['amazon_Login_state_cache'])) {
 				setcookie('amazon_Login_state_cache', '', time() - 4815162342);
@@ -13,10 +13,10 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 			$amazon_payment_js = $this->model_extension_payment_amazon_login_pay->getWidgetJs();
 			$this->document->addScript($amazon_payment_js);
 
-			$data['amazon_login_pay_client_id'] = $this->config->get('amazon_login_pay_client_id');
+			$data['payment_amazon_login_pay_client_id'] = $this->config->get('payment_amazon_login_pay_client_id');
 
-			if ($this->config->get('amazon_login_pay_test') == 'sandbox') {
-				$data['amazon_login_pay_test'] = true;
+			if ($this->config->get('payment_amazon_login_pay_test') == 'sandbox') {
+				$data['payment_amazon_login_pay_test'] = true;
 			}
 
 			$data['amazon_pay_return_url'] = $this->url->link('extension/module/amazon_pay/login', '', true);
@@ -39,10 +39,10 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 				$data['amazon_pay_button_size'] = 'medium';
 			}
 
-			if ($this->config->get('amazon_login_pay_language')) {
-				$data['amazon_login_pay_language'] = $this->config->get('amazon_login_pay_language');
+			if ($this->config->get('payment_amazon_login_pay_language')) {
+				$data['payment_amazon_login_pay_language'] = $this->config->get('payment_amazon_login_pay_language');
 			} else {
-				$data['amazon_login_pay_language'] = 'en-US';
+				$data['payment_amazon_login_pay_language'] = 'en-US';
 			}
 
 			return $this->load->view('extension/module/amazon_pay', $data);
@@ -83,7 +83,7 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 			$customer_info = $this->model_account_customer->getCustomerByEmail($user->email);
 			$this->model_extension_payment_amazon_login_pay->logger($user);
 
-			if ($this->config->get('amazon_login_pay_checkout') == 'guest') {
+			if ($this->config->get('payment_amazon_login_pay_checkout') == 'guest') {
 				$full_name = explode(' ', $user->name);
 				$last_name = array_pop($full_name);
 				$first_name = implode(' ', $full_name);
@@ -93,7 +93,6 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 				$this->session->data['guest']['lastname'] = $last_name;
 				$this->session->data['guest']['email'] = $user->email;
 				$this->session->data['guest']['telephone'] = '';
-				$this->session->data['guest']['fax'] = '';
 				$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/address', '', true));
 			} else if ($customer_info) {
 				if ($this->validate($user->email)) {
@@ -113,17 +112,6 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 						if($shipping_address){
 							$this->session->data['shipping_address'] = $shipping_address;
 						}
-					}
-
-					if ($this->config->get('config_customer_activity')) {
-						$this->load->model('account/activity');
-
-						$activity_data = array(
-							'customer_id' => $this->customer->getId(),
-							'name' => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-						);
-
-						$this->model_account_activity->addActivity('login', $activity_data);
 					}
 
 					$this->model_extension_payment_amazon_login_pay->logger('Customer logged in - ID: ' . $customer_info['customer_id'] . ', Email: ' . $customer_info['email']);
@@ -148,7 +136,6 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 					'lastname' => $last_name,
 					'email' => $user->email,
 					'telephone' => '',
-					'fax' => '',
 					'password' => uniqid(rand(), true),
 					'company' => '',
 					'address_1' => '',
@@ -180,17 +167,6 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 						if($shipping_address){
 							$this->session->data['shipping_address'] = $shipping_address;
 						}
-					}
-
-					if ($this->config->get('config_customer_activity')) {
-						$this->load->model('account/activity');
-
-						$activity_data = array(
-							'customer_id' => $this->customer->getId(),
-							'name' => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-						);
-
-						$this->model_account_activity->addActivity('login', $activity_data);
 					}
 
 					$this->model_extension_payment_amazon_login_pay->logger('Customer logged in - ID: ' . $customer_id . ', Email: ' . $user->email);
@@ -225,7 +201,7 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 
 		$customer_info = $this->model_account_customer->getCustomerByEmail($email);
 
-		if ($customer_info && !$customer_info['approved']) {
+		if ($customer_info && !$customer_info['status']) {
 			$this->error['warning'] = $this->language->get('error_approved');
 		}
 

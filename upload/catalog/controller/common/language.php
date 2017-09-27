@@ -3,8 +3,6 @@ class ControllerCommonLanguage extends Controller {
 	public function index() {
 		$this->load->language('common/language');
 
-		$data['text_language'] = $this->language->get('text_language');
-
 		$data['action'] = $this->url->link('common/language/language', '', $this->request->server['HTTPS']);
 
 		$data['code'] = $this->session->data['language'];
@@ -28,6 +26,8 @@ class ControllerCommonLanguage extends Controller {
 			$data['redirect'] = $this->url->link('common/home');
 		} else {
 			$url_data = $this->request->get;
+
+			unset($url_data['_route_']);
 
 			$route = $url_data['route'];
 

@@ -1,0 +1,34 @@
+<input type="hidden" value="{{ data.national.flat.count }}" id="flat_count_national" />
+{% if data.national.flat.service_id is not empty %}
+  {% for key,service in data.national.flat.service_id %}
+    <div class="well" id="national_flat_{{ key }}">
+      <div class="row form-group">
+        <div class="col-sm-1 text-right">
+          <label class="control-label">{{ text_shipping_service }}</label>
+        </div>
+        <div class="col-sm-11">
+          <select name="data[national][flat][service_id][{{ key }}]" class="form-control">
+            {% for service_key,service_type in data.national.flat.types.service %}
+              <option value="{{ service_key }}" {% if service_key = service %} selected{% endif %}>{{ service_type.description }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-1 text-right">
+          <label class="control-label">{{ text_shipping_first }}</label>
+        </div>
+        <div class="col-sm-3">
+          <input type="text" name="data[national][flat][price][{{ key }}]" class="form-control" value="{{ data.national.flat.price[key] }}" />
+        </div>
+        <div class="col-sm-2 text-right">
+          <label class="control-label">{{ text_shipping_add }}</label>
+        </div>
+        <div class="col-sm-3">
+          <input type="text" name="data[national][flat][price_additional][{{ key }}]" class="form-control" value="{{ data.national.flat.price_additional[key] }}" />
+        </div>
+        <div class="col-sm-3 pull-right text-right"> <a onclick="removeShipping('national','{{ key }}', 'flat');" class="btn btn-danger"><i class="fa fa-minus-circle"></i> {{ button_delete }}</a> </div>
+      </div>
+    </div>
+  {% endfor %}
+{% endif %}

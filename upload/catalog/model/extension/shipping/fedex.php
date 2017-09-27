@@ -3,9 +3,9 @@ class ModelExtensionShippingFedex extends Model {
 	function getQuote($address) {
 		$this->load->language('extension/shipping/fedex');
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('fedex_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('shipping_fedex_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
-		if (!$this->config->get('fedex_geo_zone_id')) {
+		if (!$this->config->get('shipping_fedex_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {
 			$status = true;
@@ -18,8 +18,8 @@ class ModelExtensionShippingFedex extends Model {
 		$quote_data = array();
 
 		if ($status) {
-			$weight = $this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->config->get('fedex_weight_class_id'));
-			$weight_code = strtoupper($this->weight->getUnit($this->config->get('fedex_weight_class_id')));
+			$weight = $this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->config->get('shipping_fedex_weight_class_id'));
+			$weight_code = strtoupper($this->weight->getUnit($this->config->get('shipping_fedex_weight_class_id')));
 
 			if ($weight_code == 'KGS') {
 				$weight_code = 'KG';
@@ -47,7 +47,7 @@ class ModelExtensionShippingFedex extends Model {
 
 			$zone_info = $this->model_localisation_zone->getZone($this->config->get('config_zone_id'));
 
-			if (!$this->config->get('fedex_test')) {
+			if (!$this->config->get('shipping_fedex_test')) {
 				$url = 'https://gateway.fedex.com/web-services/';
 			} else {
 				$url = 'https://gatewaybeta.fedex.com/web-services/';
@@ -60,13 +60,13 @@ class ModelExtensionShippingFedex extends Model {
 			$xml .= '		<ns1:RateRequest>';
 			$xml .= '			<ns1:WebAuthenticationDetail>';
 			$xml .= '				<ns1:UserCredential>';
-			$xml .= '					<ns1:Key>' . $this->config->get('fedex_key') . '</ns1:Key>';
-			$xml .= '					<ns1:Password>' . $this->config->get('fedex_password') . '</ns1:Password>';
+			$xml .= '					<ns1:Key>' . $this->config->get('shipping_fedex_key') . '</ns1:Key>';
+			$xml .= '					<ns1:Password>' . $this->config->get('shipping_fedex_password') . '</ns1:Password>';
 			$xml .= '				</ns1:UserCredential>';
 			$xml .= '			</ns1:WebAuthenticationDetail>';
 			$xml .= '			<ns1:ClientDetail>';
-			$xml .= '				<ns1:AccountNumber>' . $this->config->get('fedex_account') . '</ns1:AccountNumber>';
-			$xml .= '				<ns1:MeterNumber>' . $this->config->get('fedex_meter') . '</ns1:MeterNumber>';
+			$xml .= '				<ns1:AccountNumber>' . $this->config->get('shipping_fedex_account') . '</ns1:AccountNumber>';
+			$xml .= '				<ns1:MeterNumber>' . $this->config->get('shipping_fedex_meter') . '</ns1:MeterNumber>';
 			$xml .= '			</ns1:ClientDetail>';
 			$xml .= '			<ns1:Version>';
 			$xml .= '				<ns1:ServiceId>crs</ns1:ServiceId>';
@@ -77,8 +77,8 @@ class ModelExtensionShippingFedex extends Model {
 			$xml .= '			<ns1:ReturnTransitAndCommit>true</ns1:ReturnTransitAndCommit>';
 			$xml .= '			<ns1:RequestedShipment>';
 			$xml .= '				<ns1:ShipTimestamp>' . date('c', $date) . '</ns1:ShipTimestamp>';
-			$xml .= '				<ns1:DropoffType>' . $this->config->get('fedex_dropoff_type') . '</ns1:DropoffType>';
-			$xml .= '				<ns1:PackagingType>' . $this->config->get('fedex_packaging_type') . '</ns1:PackagingType>';
+			$xml .= '				<ns1:DropoffType>' . $this->config->get('shipping_fedex_dropoff_type') . '</ns1:DropoffType>';
+			$xml .= '				<ns1:PackagingType>' . $this->config->get('shipping_fedex_packaging_type') . '</ns1:PackagingType>';
 			$xml .= '				<ns1:Shipper>';
 			$xml .= '					<ns1:Contact>';
 			$xml .= '						<ns1:PersonName>' . $this->config->get('config_owner') . '</ns1:PersonName>';
@@ -93,7 +93,7 @@ class ModelExtensionShippingFedex extends Model {
 				$xml .= '						<ns1:StateOrProvinceCode></ns1:StateOrProvinceCode>';
 			}
 
-			$xml .= '						<ns1:PostalCode>' . $this->config->get('fedex_postcode') . '</ns1:PostalCode>';
+			$xml .= '						<ns1:PostalCode>' . $this->config->get('shipping_fedex_postcode') . '</ns1:PostalCode>';
 			$xml .= '						<ns1:CountryCode>' . $country_info['iso_code_2'] . '</ns1:CountryCode>';
 			$xml .= '					</ns1:Address>';
 			$xml .= '				</ns1:Shipper>';
@@ -122,11 +122,11 @@ class ModelExtensionShippingFedex extends Model {
 			$xml .= '				<ns1:ShippingChargesPayment>';
 			$xml .= '					<ns1:PaymentType>SENDER</ns1:PaymentType>';
 			$xml .= '					<ns1:Payor>';
-			$xml .= '						<ns1:AccountNumber>' . $this->config->get('fedex_account') . '</ns1:AccountNumber>';
+			$xml .= '						<ns1:AccountNumber>' . $this->config->get('shipping_fedex_account') . '</ns1:AccountNumber>';
 			$xml .= '						<ns1:CountryCode>' . $country_info['iso_code_2'] . '</ns1:CountryCode>';
 			$xml .= '					</ns1:Payor>';
 			$xml .= '				</ns1:ShippingChargesPayment>';
-			$xml .= '				<ns1:RateRequestTypes>' . $this->config->get('fedex_rate_type') . '</ns1:RateRequestTypes>';
+			$xml .= '				<ns1:RateRequestTypes>' . $this->config->get('shipping_fedex_rate_type') . '</ns1:RateRequestTypes>';
 			$xml .= '				<ns1:PackageCount>1</ns1:PackageCount>';
 			$xml .= '				<ns1:RequestedPackageLineItems>';
 			$xml .= '					<ns1:SequenceNumber>1</ns1:SequenceNumber>';
@@ -136,10 +136,10 @@ class ModelExtensionShippingFedex extends Model {
 			$xml .= '						<ns1:Value>' . $weight . '</ns1:Value>';
 			$xml .= '					</ns1:Weight>';
 			$xml .= '					<ns1:Dimensions>';
-			$xml .= '						<ns1:Length>' . $this->config->get('fedex_length') . '</ns1:Length>';
-			$xml .= '						<ns1:Width>' . $this->config->get('fedex_width') . '</ns1:Width>';
-			$xml .= '						<ns1:Height>' . $this->config->get('fedex_height') . '</ns1:Height>';
-			$xml .= '						<ns1:Units>' . strtoupper($this->length->getUnit($this->config->get('fedex_length_class_id'))) . '</ns1:Units>';
+			$xml .= '						<ns1:Length>' . $this->config->get('shipping_fedex_length') . '</ns1:Length>';
+			$xml .= '						<ns1:Width>' . $this->config->get('shipping_fedex_width') . '</ns1:Width>';
+			$xml .= '						<ns1:Height>' . $this->config->get('shipping_fedex_height') . '</ns1:Height>';
+			$xml .= '						<ns1:Units>' . strtoupper($this->length->getUnit($this->config->get('shipping_fedex_length_class_id'))) . '</ns1:Units>';
 			$xml .= '					</ns1:Dimensions>';
 			$xml .= '				</ns1:RequestedPackageLineItems>';
 			$xml .= '			</ns1:RequestedShipment>';
@@ -177,12 +177,12 @@ class ModelExtensionShippingFedex extends Model {
 				foreach ($rate_reply_details as $rate_reply_detail) {
 					$code = strtolower($rate_reply_detail->getElementsByTagName('ServiceType')->item(0)->nodeValue);
 
-					if (in_array(strtoupper($code), $this->config->get('fedex_service'))) {
+					if (in_array(strtoupper($code), $this->config->get('shipping_fedex_service'))) {
 						$title = $this->language->get('text_' . $code);
 
 						$delivery_time_stamp = $rate_reply_detail->getElementsByTagName('DeliveryTimestamp');
 						
-						if ($this->config->get('fedex_display_time') && $delivery_time_stamp->length) {
+						if ($this->config->get('shipping_fedex_display_time') && $delivery_time_stamp->length) {
 							$title .= ' (' . $this->language->get('text_eta') . ' ' . date($this->language->get('date_format_short') . ' ' . $this->language->get('time_format'), strtotime($delivery_time_stamp->item(0)->nodeValue)) . ')';
 						}
 
@@ -192,7 +192,7 @@ class ModelExtensionShippingFedex extends Model {
 							$shipment_rate_detail = $rated_shipment_detail->getElementsByTagName('ShipmentRateDetail')->item(0);
 							$shipment_rate_detail_type = explode('_', $shipment_rate_detail->getElementsByTagName('RateType')->item(0)->nodeValue);
 
-							if (count($shipment_rate_detail_type) == 3 && $shipment_rate_detail_type[1] == $this->config->get('fedex_rate_type')) {
+							if (count($shipment_rate_detail_type) == 3 && $shipment_rate_detail_type[1] == $this->config->get('shipping_fedex_rate_type')) {
 								$total_net_charge = $shipment_rate_detail->getElementsByTagName('TotalNetCharge')->item(0);
 
 								break;
@@ -207,8 +207,8 @@ class ModelExtensionShippingFedex extends Model {
 							'code'         => 'fedex.' . $code,
 							'title'        => $title,
 							'cost'         => $this->currency->convert($cost, $currency, $this->config->get('config_currency')),
-							'tax_class_id' => $this->config->get('fedex_tax_class_id'),
-							'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, $currency, $this->session->data['currency']), $this->config->get('fedex_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'], 1.0000000)
+							'tax_class_id' => $this->config->get('shipping_fedex_tax_class_id'),
+							'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, $currency, $this->session->data['currency']), $this->config->get('shipping_fedex_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'], 1.0000000)
 						);
 					}
 				}
@@ -220,15 +220,15 @@ class ModelExtensionShippingFedex extends Model {
 		if ($quote_data || $error) {
 			$title = $this->language->get('text_title');
 
-			if ($this->config->get('fedex_display_weight')) {
-				$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('fedex_weight_class_id')) . ')';
+			if ($this->config->get('shipping_fedex_display_weight')) {
+				$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('shipping_fedex_weight_class_id')) . ')';
 			}
 
 			$method_data = array(
 				'code'       => 'fedex',
 				'title'      => $title,
 				'quote'      => $quote_data,
-				'sort_order' => $this->config->get('fedex_sort_order'),
+				'sort_order' => $this->config->get('shipping_fedex_sort_order'),
 				'error'      => $error
 			);
 		}

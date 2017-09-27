@@ -6,8 +6,8 @@ final class MySQLi {
 	public function __construct($hostname, $username, $password, $database, $port = '3306') {
 		$this->connection = new \mysqli($hostname, $username, $password, $database, $port);
 
-		if ($this->connection->connect_error) {
-			throw new \Exception('Error: ' . $this->connection->error . '<br />Error No: ' . $this->connection->errno);
+		if ($this->connection->connect_errno) {
+			throw new \Exception('Error: ' . $this->connection->connect_error . '<br />Error No: ' . $this->connection->connect_errno);
 		}
 
 		$this->connection->set_charset("utf8");

@@ -1,0 +1,363 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        {% if link_amazon_eu_bulk %}
+          <a class="btn btn-primary" href="{{ link_amazon_eu_bulk }}"><i class="fa fa-cloud-upload fa-lg"></i> {{ button_amazon_eu_bulk }}</a>
+        {% endif %}
+        {% if link_amazon_us_bulk %}
+          <a class="btn btn-primary" href="{{ link_amazon_us_bulk }}"><i class="fa fa-cloud-upload fa-lg"></i> {{ button_amazon_us_bulk }}</a>
+        {% endif %}
+        {% if link_ebay_bulk %}
+          <a class="btn btn-primary" id="button-ebay-bulk"><i class="fa fa-cloud-upload fa-lg"></i> {{ button_ebay_bulk }}</a>
+        {% endif %}
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+    {% endif %}
+    {% if success %}
+      <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}</div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
+      </div>
+      <div class="panel-body">
+        <div class="well">
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label" for="filter_name">{{ entry_title }}</label>
+                <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_title }}" id="filter_name" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="filter_model">{{ entry_model }}</label>
+                <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="filter_model" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="filter_manufacturer">{{ entry_manufacturer }}</label>
+                <select name="filter_manufacturer" id="filter_manufacturer" class="form-control">
+                  <option value=""></option>
+                  {% for manufacturer in manufacturer_list %}
+                    <option value="{{ manufacturer.manufacturer_id }}"{% if filter_manufacturer == manufacturer.manufacturer_id %} selected{% endif %}>{{ manufacturer.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label" for="filter_marketplace">{{ entry_status_marketplace }}</label>
+                <select name="filter_marketplace" id="filter_marketplace" class="form-control">
+                  <option value="all"{% if filter_marketplace is empty or filter_marketplace == "all" %} selected{% endif %}>{{ text_status_all }}</option>
+                  {% if marketplace_statuses.ebay %}
+                    <option value="ebay_active"{% if filter_marketplace == "ebay_active" %} selected{% endif %}>{{ text_status_ebay_active }}</option>
+                    <option value="ebay_inactive"{% if filter_marketplace == "ebay_inactive" %} selected{% endif %}>{{ text_status_ebay_inactive }}</option>
+                  {% endif %}
+                  {% if marketplace_statuses.amazon %}
+                    <option value="amazon_saved"{% if filter_marketplace == "amazon_saved" %} selected{% endif %}>{{ text_status_amazoneu_saved }}</option>
+                    <option value="amazon_uploaded"{% if filter_marketplace == "amazon_uploaded" %} selected{% endif %}>{{ text_status_amazoneu_processing }}</option>
+                    <option value="amazon_ok"{% if filter_marketplace == "amazon_ok" %} selected{% endif %}>{{ text_status_amazoneu_active }}</option>
+                    <option value="amazon_unlisted"{% if filter_marketplace == "amazon_unlisted" %} selected{% endif %}>{{ text_status_amazoneu_notlisted }}</option>
+                    <option value="amazon_error"{% if filter_marketplace == "amazon_error" %} selected{% endif %}>{{ text_status_amazoneu_failed }}</option>
+                    <option value="amazon_linked"{% if filter_marketplace == "amazon_linked" %} selected{% endif %}>{{ text_status_amazoneu_linked }}</option>
+                    <option value="amazon_not_linked"{% if filter_marketplace == "amazon_not_linked" %} selected{% endif %}>{{ text_status_amazoneu_notlinked }}</option>
+                  {% endif %}
+                  {% if marketplace_statuses.amazonus %}
+                    <option value="amazonus_saved"{% if filter_marketplace == "amazonus_saved" %} selected{% endif %}>{{ text_status_amazonus_saved }}</option>
+                    <option value="amazonus_uploaded"{% if filter_marketplace == "amazonus_uploaded" %} selected{% endif %}>{{ text_status_amazonus_processing }}</option>
+                    <option value="amazonus_ok"{% if filter_marketplace == "amazonus_ok" %} selected{% endif %}>{{ text_status_amazonus_active }}</option>
+                    <option value="amazonus_unlisted"{% if filter_marketplace == "amazonus_unlisted" %} selected{% endif %}>{{ text_status_amazonus_notlisted }}</option>
+                    <option value="amazonus_error"{% if filter_marketplace == "amazonus_error" %} selected{% endif %}>{{ text_status_amazonus_failed }}</option>
+                    <option value="amazonus_linked"{% if filter_marketplace == "amazonus_linked" %} selected{% endif %}>{{ text_status_amazonus_linked }}</option>
+                    <option value="amazonus_not_linked"{% if filter_marketplace == "amazonus_not_linked" %} selected{% endif %}>{{ text_status_amazonus_notlinked }}</option>
+                  {% endif %}
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="control-label">{{ entry_status }}</label>
+                <select name="filter_status" class="form-control">
+                  <option value=""></option>
+                  {% if filter_status == '1' %}
+                    <option value="1" selected="selected">{{ text_enabled }}</option>
+                  {% else %}
+                    <option value="1">{{ text_enabled }}</option>
+                  {% endif %}
+                  {% if filter_status == '0' %}
+                    <option value="0" selected="selected">{{ text_disabled }}</option>
+                  {% else %}
+                    <option value="0">{{ text_disabled }}</option>
+                  {% endif %}
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="filter_category">{{ entry_category }}</label>
+                <select name="filter_category" id="filter_category" class="form-control">
+                  <option value=""></option>
+                  <option value="none">{{ text_category_missing }}</option>
+                  {% for category in category_list %}
+                    <option value="{{ category.category_id }}"{% if filter_category == category.category_id %} selected{% endif %}>{{ category.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <label class="control-label">{{ entry_stock_range }}</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <input type="text" name="filter_quantity" value="{{ filter_quantity }}" class="form-control" placeholder="{{ text_min }}" id="input-quantity" />
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" name="filter_quantity_to" value="{{ filter_quantity_to }}"  class="form-control" placeholder="{{ text_max }}" id="input-quantity-to" />
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <label class="control-label">{{ entry_populated }}</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label class="control-label">{{ entry_sku }}</label>
+                  </div>
+                  <div class="col-sm-3">
+                    <input type="checkbox" name="filter_sku" id="filter_sku" value="1"{% if filter_sku == 1 %} checked="checked"{% endif %} />
+                  </div>
+                  <div class="col-sm-3">
+                    <label class="control-label">{{ entry_description }}</label>
+                  </div>
+                  <div class="col-sm-3">
+                    <input type="checkbox" name="filter_desc" id="filter_desc" value="1"{% if filter_desc == 1 %} checked="checked"{% endif %}/>
+                  </div>
+                </div>
+              </div>
+              <a onclick="filter();" class="btn btn-primary pull-right" data-toggle="tooltip" title="{{ button_filter }}"><i class="fa fa-filter"></i> {{ button_filter }}</a>
+            </div>
+          </div>
+        </div>
+        <form method="post" id="form">
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
+              <td class="text-center">{{ column_image }}</td>
+              <td class="text-left">
+                {% if sort == 'pd.name' %}
+                <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
+                {% else %}
+                <a href="{{ sort_name }}">{{ column_name }}</a>
+                {% endif %}
+              </td>
+              <td class="text-left">
+                {% if sort == 'p.model' %}
+                <a href="{{ sort_model }}" class="{{ order|lower }}">{{ column_model }}</a>
+                {% else %}
+                <a href="{{ sort_model }}">{{ column_model }}</a>
+                {% endif %}
+              </td>
+              <td class="text-left">
+                {% if sort == 'p.price' %}
+                <a href="{{ sort_price }}" class="{{ order|lower }}">{{ column_price }}</a>
+                {% else %}
+                <a href="{{ sort_price }}">{{ column_price }}</a>
+                {% endif %}
+              </td>
+              <td class="text-right">
+                {% if sort == 'p.quantity' %}
+                <a href="{{ sort_quantity }}" class="{{ order|lower }}">{{ column_quantity }}</a>
+                {% else %}
+                <a href="{{ sort_quantity }}">{{ column_quantity }}</a>
+                {% endif %}
+              </td>
+              <td class="text-left">
+                {% if sort == 'p.status' %}
+                <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
+                {% else %}
+                <a href="{{ sort_status }}">{{ column_status }}</a>
+                {% endif %}
+              </td>
+              <td width="230">{{ text_markets }}</td>
+            </tr>
+          </thead>
+          <tbody>
+            {% if products %}
+              {% for product in products %}
+                <tr>
+                  <td class="text-center">
+                    <input type="checkbox" name="selected[]" value="{{ product.product_id }}" />
+                  </td>
+                  <td class="text-center">
+                    {% if product.image %}
+                      <img src="{{ product.image }}" alt="{{ product.name }}" class="img-thumbnail" />
+                      {% else %}
+                      <span class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></span>
+                      {% endif %}
+                  </td>
+                  <td class="text-left"><a href="{{ product.edit }}">{{ product.name }}</a></td>
+                  <td class="text-left">{{ product.model }}</td>
+                  <td class="text-left">
+                    {% if product.special %}
+                      <span style="text-decoration: line-through;">{{ product.price }}</span><br/>
+                      <div class="text-danger">{{ product.special }}</div>
+                    {% else %}
+                      {{ product.price }}
+                    {% endif %}
+                  </td>
+                  <td class="text-right">
+                    {% if product.has_option == 0 %}
+                      {% if product.quantity <= 0 %}
+                        <span class="label label-danger">{{ product.quantity }}</span>
+                      {% elseif product.quantity <= 5 %}
+                        <span class="label label-warning">{{ product.quantity }}</span>
+                      {% else %}
+                        <span class="label label-success">{{ product.quantity }}</span>
+                      {% endif %}
+                    {% else %}
+                      <span class="label label-info">{{ product.vCount }} {{ text_variations }}</span><br />
+                      <span class="label label-info">{{ product.vsCount }} {{ text_variations_stock }}</span>
+                    {% endif %}
+                  </td>
+                  <td class="text-left">{{ product.status }}</td>
+                  <td>
+                    {% for markets in product.markets %}
+                      {% if market.status == 1 %}
+                        <a href="{{ market.href }}" data-toggle="tooltip" title="{{ market.text }}" class="btn btn-block btn-sm btn-success">{{ market.name }}</a>
+                      {% elseif market.status == 2 %}
+                        <a href="{{ market.href }}" data-toggle="tooltip" title="{{ market.text }}" class="btn btn-block btn-sm btn-danger">{{ market.name }}</a>
+                      {% elseif market.status == 3 %}
+                        {% if market.href is not empty %}
+                          <a href="{{ market.href }}" data-toggle="tooltip" title="{{ market.text }}" class="btn btn-block btn-sm btn-info">{{ market.name }}</a>
+                        {% else %}
+                          <a disable="disable" data-toggle="tooltip" title="{{ market.text }}" class="btn btn-info btn-block btn-sm">{{ market.name }}</a>
+                        {% endif %}
+                      {% else %}
+                        <a href="{{ market.href }}" data-toggle="tooltip" title="{{ market.text }}" class="btn btn-block btn-sm btn-default">{{ market.name }}</a>
+                      {% endif %}
+                    {% endfor %}
+                  </td>
+                </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td class="center" colspan="8">{{ text_no_results }}</td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+          </div>
+        </form>
+        <div class="row">
+          <div class="col-sm-6 text-left">{{ pagination }}</div>
+          <div class="col-sm-6 text-right">{{ results }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+  function filter() {
+      url = 'index.php?route=marketplace/openbay/items&user_token={{ user_token }}';
+
+      var filter_name = $('input[name=\'filter_name\']').val();
+
+      if (filter_name) {
+        url += '&filter_name=' + encodeURIComponent(filter_name);
+      }
+
+      var filter_model = $('input[name=\'filter_model\']').val();
+
+      if (filter_model) {
+        url += '&filter_model=' + encodeURIComponent(filter_model);
+      }
+
+      var filter_price = $('input[name=\'filter_price\']').val();
+
+      if (filter_price) {
+          url += '&filter_price=' + encodeURIComponent(filter_price);
+      }
+
+      var filter_price_to = $('input[name=\'filter_price_to\']').val();
+
+      if (filter_price) {
+          url += '&filter_price_to=' + encodeURIComponent(filter_price_to);
+      }
+
+      var filter_quantity = $('input[name=\'filter_quantity\']').val();
+
+      if (filter_quantity) {
+          url += '&filter_quantity=' + encodeURIComponent(filter_quantity);
+      }
+
+      var filter_quantity_to = $('input[name=\'filter_quantity_to\']').val();
+
+      if (filter_quantity_to) {
+          url += '&filter_quantity_to=' + encodeURIComponent(filter_quantity_to);
+      }
+
+      var filter_status = $('select[name=\'filter_status\']').find(":selected").val();
+
+      if (filter_status !== '') {
+          url += '&filter_status=' + encodeURIComponent(filter_status);
+      }
+
+      var filter_sku = $('input[name=\'filter_sku\']:checked').val();
+
+      if (filter_sku) {
+          url += '&filter_sku=' + encodeURIComponent(filter_sku);
+      }
+
+      var filter_desc = $('input[name=\'filter_desc\']:checked').val();
+
+      if (filter_desc) {
+          url += '&filter_desc=' + encodeURIComponent(filter_desc);
+      }
+
+      var filter_category = $('select[name=\'filter_category\']').find(":selected").val();
+
+      if (filter_category) {
+          url += '&filter_category=' + encodeURIComponent(filter_category);
+      }
+
+      var filter_manufacturer = $('select[name=\'filter_manufacturer\']').find(":selected").val();
+
+      if (filter_manufacturer) {
+          url += '&filter_manufacturer=' + encodeURIComponent(filter_manufacturer);
+      }
+
+      var filter_marketplace = $('select[name=\'filter_marketplace\']').find(":selected").val();
+
+      if (filter_marketplace) {
+          url += '&filter_marketplace=' + encodeURIComponent(filter_marketplace);
+      }
+
+      location = url;
+  }
+
+  $('#button-ebay-bulk').bind('click', function() {
+    var request_data = $('input[name="selected[]"]:checked').serialize();
+
+    if (request_data != '') {
+      $('#form').attr('action', 'index.php?route=extension/openbay/ebay/createBulk&user_token={{ user_token }}').submit();
+    } else {
+      alert('{{ error_select_items }}');
+    }
+  });
+//--></script>
+{{ footer }}

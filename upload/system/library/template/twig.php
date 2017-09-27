@@ -1,39 +1,34 @@
 <?php
-
 namespace Template;
+final class Twig {
+	private $twig;
+	private $data = array();
 
-use \Twig_Loader_Filesystem;
-use \Twig_Environment;
-use \Twig_Extension_Debug;
+	public function set($key, $value) {
+		$this->data[$key] = $value;
+	}
 
-final class TWIG {
+	public function render($template, $cache = false) {
+		// specify where to look for templates
+		$loader = new \Twig_Loader_Filesystem(DIR_TEMPLATE);
 
-    private $data = array();
+		// initialize Twig environment
+		$config = array('autoescape' => false);
 
-    /**
-     * 
-     * @param type $key
-     * @param type $value
-     */
-    public function set($key, $value) {
-        $this->data[$key] = $value;
-    }
+		if ($cache) {
+			$config['cache'] = DIR_CACHE;
+		}
 
-    /**
-     * 
-     * @param type $template
-     */
-    public function render($template) {
+		$this->twig = new \Twig_Environment($loader, $config);
 
-        $loader = new Twig_Loader_Filesystem(DIR_TEMPLATE);
-        $twig = new Twig_Environment($loader, array(
-            'cache' => DIR_CACHE,
-            'debug' => true
-        ));
+		try {
+			// load template
+			$template = $this->twig->loadTemplate($template . '.twig');
 
-        $twig->addExtension(new Twig_Extension_Debug());
-
-        return $twig->render($template . ".html.twig", $this->data);
-    }
-
+			return $template->render($this->data);
+		} catch (Exception $e) {
+			trigger_error('Error: Could not load template ' . $template . '!');
+			exit();
+		}
+	}
 }

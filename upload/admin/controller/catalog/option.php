@@ -38,7 +38,7 @@ class ControllerCatalogOption extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('catalog/option', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerCatalogOption extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('catalog/option', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerCatalogOption extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('catalog/option', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url, true));
 		}
 
 		$this->getList();
@@ -147,16 +147,16 @@ class ControllerCatalogOption extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/option', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url, true)
 		);
 
-		$data['add'] = $this->url->link('catalog/option/add', 'token=' . $this->session->data['token'] . $url, true);
-		$data['delete'] = $this->url->link('catalog/option/delete', 'token=' . $this->session->data['token'] . $url, true);
+		$data['add'] = $this->url->link('catalog/option/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['delete'] = $this->url->link('catalog/option/delete', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
 		$data['options'] = array();
 
@@ -176,23 +176,9 @@ class ControllerCatalogOption extends Controller {
 				'option_id'  => $result['option_id'],
 				'name'       => $result['name'],
 				'sort_order' => $result['sort_order'],
-				'edit'       => $this->url->link('catalog/option/edit', 'token=' . $this->session->data['token'] . '&option_id=' . $result['option_id'] . $url, true)
+				'edit'       => $this->url->link('catalog/option/edit', 'user_token=' . $this->session->data['user_token'] . '&option_id=' . $result['option_id'] . $url, true)
 			);
 		}
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_sort_order'] = $this->language->get('column_sort_order');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_add'] = $this->language->get('button_add');
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_delete'] = $this->language->get('button_delete');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -226,8 +212,8 @@ class ControllerCatalogOption extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('catalog/option', 'token=' . $this->session->data['token'] . '&sort=od.name' . $url, true);
-		$data['sort_sort_order'] = $this->url->link('catalog/option', 'token=' . $this->session->data['token'] . '&sort=o.sort_order' . $url, true);
+		$data['sort_name'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . '&sort=od.name' . $url, true);
+		$data['sort_sort_order'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . '&sort=o.sort_order' . $url, true);
 
 		$url = '';
 
@@ -243,7 +229,7 @@ class ControllerCatalogOption extends Controller {
 		$pagination->total = $option_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('catalog/option', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -260,31 +246,7 @@ class ControllerCatalogOption extends Controller {
 	}
 
 	protected function getForm() {
-		$data['heading_title'] = $this->language->get('heading_title');
-
 		$data['text_form'] = !isset($this->request->get['option_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-		$data['text_choose'] = $this->language->get('text_choose');
-		$data['text_select'] = $this->language->get('text_select');
-		$data['text_radio'] = $this->language->get('text_radio');
-		$data['text_checkbox'] = $this->language->get('text_checkbox');
-		$data['text_input'] = $this->language->get('text_input');
-		$data['text_text'] = $this->language->get('text_text');
-		$data['text_textarea'] = $this->language->get('text_textarea');
-		$data['text_file'] = $this->language->get('text_file');
-		$data['text_date'] = $this->language->get('text_date');
-		$data['text_datetime'] = $this->language->get('text_datetime');
-		$data['text_time'] = $this->language->get('text_time');
-
-		$data['entry_name'] = $this->language->get('entry_name');
-		$data['entry_type'] = $this->language->get('entry_type');
-		$data['entry_option_value'] = $this->language->get('entry_option_value');
-		$data['entry_image'] = $this->language->get('entry_image');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_option_value_add'] = $this->language->get('button_option_value_add');
-		$data['button_remove'] = $this->language->get('button_remove');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -322,27 +284,27 @@ class ControllerCatalogOption extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/option', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url, true)
 		);
 
 		if (!isset($this->request->get['option_id'])) {
-			$data['action'] = $this->url->link('catalog/option/add', 'token=' . $this->session->data['token'] . $url, true);
+			$data['action'] = $this->url->link('catalog/option/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
 		} else {
-			$data['action'] = $this->url->link('catalog/option/edit', 'token=' . $this->session->data['token'] . '&option_id=' . $this->request->get['option_id'] . $url, true);
+			$data['action'] = $this->url->link('catalog/option/edit', 'user_token=' . $this->session->data['user_token'] . '&option_id=' . $this->request->get['option_id'] . $url, true);
 		}
 
-		$data['cancel'] = $this->url->link('catalog/option', 'token=' . $this->session->data['token'] . $url, true);
+		$data['cancel'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
 		if (isset($this->request->get['option_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$option_info = $this->model_catalog_option->getOption($this->request->get['option_id']);
 		}
 
-		$data['token'] = $this->session->data['token'];
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->load->model('localisation/language');
 

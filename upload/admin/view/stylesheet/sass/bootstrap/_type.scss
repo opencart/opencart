@@ -56,7 +56,7 @@ h6, .h6 { font-size: $font-size-h6; }
 // -------------------------
 
 p {
-  margin: 0 0 ($line-height-computed / 2);
+  margin: 0 0 ($line-height-computed / 1);
 }
 
 .lead {
@@ -207,7 +207,7 @@ dd {
     @include clearfix; // Clear the floated `dt` if an empty `dd` is present
   }
 
-  @media (min-width: $grid-float-breakpoint) {
+  @media (min-width: $dl-horizontal-breakpoint) {
     dt {
       float: left;
       width: ($dl-horizontal-offset - 20);

@@ -1,0 +1,213 @@
+<table class="table table-bordered">
+  <tr>
+		<td>{{ column_status }}</td>
+		<td>{{ transaction.status }}</td>
+  </tr>
+  <tr>
+		<td>{{ column_transaction_id }}</td>
+		<td>{{ transaction.transaction_id }}</td>
+  </tr>
+  <tr>
+		<td>{{ column_transaction_type }}</td>
+		<td>{{ transaction.type }}</td>
+  </tr>
+  <tr>
+		<td>{{ column_transaction_date }}</td>
+		<td>{{ transaction.date_added }}</td>
+  </tr>
+  <tr>
+		<td>{{ column_merchant_account }}</td>
+		<td>{{ transaction.merchant_account_id }}</td>
+  </tr>
+  <tr>
+		<td>{{ column_payment_type }}</td>
+		<td>{{ transaction.payment_type }}</td>
+  </tr>
+  <tr>
+		<td>{{ column_amount }}</td>
+		<td>{{ transaction.amount }} {{ transaction.currency }}</td>
+  </tr>
+  <tr>
+		<td>{{ column_order_id }}</td>
+		<td>{{ transaction.order_id }}</td>
+  </tr>
+{% if transaction.processor_code %}
+  <tr>
+		<td>{{ column_processor_code }}</td>
+		<td>{{ transaction.processor_code }}</td>
+  </tr>
+{% endif %}
+  <tr>
+		<td>{{ column_cvv_response }}</td>
+		<td>{{ transaction.cvv_response }}</td>
+  </tr>
+  <tr>
+		<td>{{ column_avs_response }}</td>
+		<td>{{ transaction.avs_response }}</td>
+  </tr>
+{% if transaction.threeds_status %}
+  <tr>
+		<td>{{ column_3ds_enrolled }}</td>
+		<td>{{ transaction.threeds_enrolled }}</td>
+  </tr>
+  <tr>
+		<td>{{ column_3ds_status }}</td>
+		<td>{{ transaction.threeds_status }}</td>
+  </tr>
+  <tr>
+		<td>{{ column_3ds_shifted }}</td>
+		<td>{{ transaction.threeds_shifted }}</td>
+  </tr>
+  <tr>
+		<td>{{ column_3ds_shift_possible }}</td>
+		<td>{{ transaction.threeds_shift_possible }}</td>
+  </tr>
+{% endif %}
+  <tr>
+	<td>{{ column_transaction_history }}</td>
+	<td>
+		<table class="table table-bordered">
+		  <thead>
+				<tr>
+					<td class="text-left">{{ column_date }}</td>
+					<td class="text-left">{{ column_status }}</td>
+				</tr>
+		  </thead>
+		  <tbody>
+				{% for status in statuses %}
+					<tr>
+						<td>{{ status.date_added }}</td>
+						<td>{{ status.status }}</td>
+					</tr>
+				{% endfor %}
+		  </tbody>
+		</table>
+	</td>
+  </tr>
+  <tr>
+	<td>{{ column_refund_history }}</td>
+	<td>
+		<table class="table table-bordered">
+		  <thead>
+				<tr>
+					<td class="text-left">{{ column_date }}</td>
+					<td class="text-left">{{ column_amount }}</td>
+					<td class="text-left">{{ column_status }}</td>
+				</tr>
+		  </thead>
+		  <tbody>
+				{% if refunds is not empty %}
+					{% for refund in refunds %}
+					<tr>
+						<td>{{ refund.date_added }}</td>
+						<td>{{ refund.amount }}</td>
+						<td>{{ refund.status }}</td>
+					</tr>
+					{% endfor %}
+				{% else %}
+			<tr>
+			  <td class="text-center" colspan="3">{{ text_no_refund }}</td>
+			</tr>
+			{% endif %}
+		  </tbody>
+		</table>
+	</td>
+  </tr>
+  <tr>
+	<td>{{ column_action }}</td>
+	<td>
+		<table class="table table-bordered">
+		  <thead>
+				<tr>
+					<td class="text-left">{{ column_void }}</td>
+					<td class="text-left">{{ column_settle }}</td>
+					<td class="text-left">{{ column_refund }}</td>
+				</tr>
+		  </thead>
+		  <tbody>
+				<tr>
+					<td>
+						{% if void_action is not empty %}
+							<a class="btn btn-primary button-command" data-type="void">{{ button_void }}</a>
+						{% else %}
+							{{ text_na }}
+						{% endif %}
+					</td>
+					<td>
+						{% if settle_action is not empty %}
+							<input id="settle-amount" text="text" name="settle_amount" value="{{ max_settle_amount }}" />
+							<a class="btn btn-primary button-command" data-type="settle">{{ button_settle }}</a>
+						{% else %}
+							{{ text_na }}
+						{% endif %}
+					</td>
+					<td>
+						{% if refund_action is not empty %}
+							<input id="refund-amount" text="text" name="refund_amount" value="{{ max_refund_amount }}" />
+							<a class="btn btn-primary button-command" data-type="refund">{{ button_refund }}</a>
+						{% else %}
+							{{ text_na }}
+						{% endif %}
+					</td>
+				</tr>
+		  </tbody>
+		</table>
+	</td>
+  </tr>
+</table>
+
+<script type="text/javascript"><!--
+$('.button-command').on('click', function() {
+	var type = $(this).attr('data-type');
+	var confirm_text = '';
+	var clicked_button = $(this);
+
+	if (type === 'void') {
+		confirm_text = '{{ text_confirm_void }}';
+	} else if (type === 'settle') {
+		{% if symbol_left is not empty %}
+			confirm_text = '{{ text_confirm_settle }} ' + '{{ symbol_left }}' + $('#settle-amount').val();
+		{% elseif symbol_right is not empty %}
+			confirm_text = '{{ text_confirm_settle }} ' + $('#settle-amount').val() + '{{ symbol_right }}';
+		{% endif %}
+	} else if (type === 'refund') {
+		{% if symbol_left is not empty %}
+			confirm_text = '{{ text_confirm_refund }} ' + '{{ symbol_left }}' + $('#refund-amount').val();
+		{% elseif symbol_right is not empty %}
+			confirm_text = '{{ text_confirm_refund }} ' + $('#refund-amount').val() + '{{ symbol_right }}';
+		{% endif %}
+	}
+
+	if (confirm(confirm_text)) {
+		$.ajax({
+			url: 'index.php?route=extension/payment/pp_braintree/transactionCommand&user_token={{ user_token }}',
+			type: 'post',
+			data: {
+				type: type,
+				transaction_id: '{{ transaction_id }}',
+				amount: $(this).prev('input').val()
+			},
+			dataType: 'json',
+			beforeSend: function() {
+				clicked_button.button('loading');
+
+				$('.alert').hide().removeClass('alert-success alert-danger');
+			},
+			complete: function() {
+				clicked_button.button('reset');
+			},
+			success: function(json) {
+				if (json.error) {
+					$('.alert').show().addClass('alert-danger').html('<i class="fa fa-check-circle"></i> ' + json.error);
+				}
+
+				if (json.success) {
+					$('.alert').show().addClass('alert-success').html('<i class="fa fa-exclamation-circle"></i> ' + json.success);
+				}
+
+				getTransaction('{{ transaction_id }}');
+			}
+		});
+	}
+});
+//--></script>

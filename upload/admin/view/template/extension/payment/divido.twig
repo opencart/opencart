@@ -1,0 +1,232 @@
+{{ header }} {{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <button type="submit" form="form-payment" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+                <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+            <h1>{{ heading_title }}</h1>      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+        </div>
+    </div>
+    <div class="container-fluid">
+	{% if error_warning %}
+		<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+		  <button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+	{% endif %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+            </div>
+            <div class="panel-body">
+                <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment" class="form-horizontal">
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="api_key"><span data-toggle="tooltip" title="{{ help_api_key }}">{{ entry_api_key }}</span></label>
+                        <div class="col-sm-10">
+                            <input id="api_key" class="form-control" type="text" name="payment_divido_api_key" value="{{ payment_divido_api_key }}" size="60">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="divido_status"><span data-toggle="tooltip" title="{{ help_status }}">{{ entry_status }}</span></label>
+                        <div class="col-sm-10">
+                            <select name="payment_divido_status" id="divido_status" class="form-control">
+                                {% if payment_divido_status %}
+                                <option value="1" selected="selected">{{ text_enabled }}</option>
+                                <option value="0">{{ text_disabled }}</option>
+                                {% else %}
+                                <option value="1">{{ text_enabled }}</option>
+                                <option value="0" selected="selected">{{ text_disabled }}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="divido_order_status_id"><span data-toggle="tooltip" title="{{ help_order_status }}">{{ entry_order_status }}</span></label>
+                        <div class="col-sm-10">
+                            <select name="payment_divido_order_status_id" id="divido_order_status_id" class="form-control">
+                                {% for order_status in order_statuses %}
+                                {% if order_status.order_status_id == payment_divido_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                                {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="divido_title"><span data-toggle="tooltip" title="{{ help_title }}">{{ entry_title }}</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" id="divido_title" name="payment_divido_title" value="{{ payment_divido_title }}" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="divido_planselection"><span data-toggle="tooltip" title="{{ help_planselection }}">{{ entry_planselection }}</span></label>
+                        <div class="col-sm-10">
+                            <select name="payment_divido_planselection" id="divido_planselection" class="form-control">
+                                {% for option, text in entry_plans_options %}
+                                {% if option == payment_divido_planselection %}
+                                <option value="{{ option }}" selected="selected">{{ text }}</option>
+                                {% else %}
+                                <option value="{{ option }}">{{ text }}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="plan-list" class="form-group">
+                        <label class="col-sm-2 control-label">{{ entry_planlist }}</label>
+                        <div class="col-sm-10">
+                            {% for plan in divido_plans %}
+                            {% if plan.id in payment_divido_plans_selected %}
+                            <label>
+                                <input type="checkbox" name="payment_divido_plans_selected[]" value="{{ plan.id }}" checked="checked">
+                                {{ plan.text }} {{ plan.interest_rate }}% APR
+                            </label><br>
+                            {% else %}
+                            <label>
+                                <input type="checkbox" name="payment_divido_plans_selected[]" value="{{ plan.id }}">
+                                {{ plan.text }} {{ plan.interest_rate }}% APR
+                            </label><br>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="payment_divido_productselection"><span data-toggle="tooltip" title="{{ help_productselection }}">{{ entry_productselection }}</span></label>
+                        <div class="col-sm-10">
+                            <select name="payment_divido_productselection" id="divido_productselection" class="form-control">
+                                {% for option, text in entry_products_options %}
+                                {% if option == payment_divido_productselection %}
+                                <option value="{{ option }}" selected="selected">{{ text }}</option>
+                                {% else %}
+                                <option value="{{ option }}">{{ text }}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="threshold" class="form-group">
+                        <label class="col-sm-2 control-label" for="divido_price_threshold">{{ entry_price_threshold }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="payment_divido_price_threshold" value="{{ payment_divido_price_threshold }}" class="form-control" id="divido_price_threshold">
+                        </div>
+                    </div>
+
+                    <div id="cart-threshold" class="form-group">
+                        <label class="col-sm-2 control-label" for="divido_cart_threshold"><span data-toggle="tooltip" title="{{ help_cart_threshold }}">{{ entry_cart_threshold }}</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="payment_divido_cart_threshold" value="{{ payment_divido_cart_threshold }}" class="form-control" id="divido_cart_threshold">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="sort_order">{{ entry_sort_order }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="payment_divido_sort_order" class="form-control" name="payment_divido_sort_order" value="{{ payment_divido_sort_order }}" size="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="category"><span data-toggle="tooltip" title="{{ help_category }}">{{ entry_category }}</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="category" class="form-control" />
+                            <div id="divido-category" class="well well-sm" style="height: 150px; overflow: auto;">
+                            {% for category in categories %}
+                                <div id="category{{ category.category_id }}"><i class="fa fa-minus-circle"></i> {{ category.name }}
+                                    <input type="hidden" name="payment_divido_categories[]" value="{{ category.category_id }}" />
+                                </div>
+                            {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+(function($) {
+    var divido = {
+        initialize: function () {
+            this.bindEvents();
+            this.toggleFields();
+        },
+
+        bindEvents: function () {
+            $('#divido_productselection').on('change', this.toggleFields);
+            $('#divido_planselection').on('change', this.toggleFields);
+
+        },
+
+        toggleFields: function () {
+            var $apiKeyField = $('#api_key');
+
+            if ($apiKeyField.val().length < 1) {
+                $apiKeyField.closest('.form-group').siblings().hide();
+            }
+
+            var productSelection = $('#divido_productselection').val();
+            var $threshold       = $('#threshold');
+            if (productSelection == 'threshold') {
+                $threshold.show();
+            } else {
+                $threshold.hide();
+            }
+
+            var planSelection = $('#divido_planselection').val();
+            var $planList     = $('#plan-list');
+            if (planSelection == 'selected') {
+                $planList.show();
+            } else {
+                $planList.hide();
+            }
+        }
+    };
+
+    $(function () {
+        divido.initialize();
+    });
+
+	$('input[name="category"]').autocomplete({
+		source: function(request, response) {
+			$.ajax({
+				url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+				dataType: 'json',
+				success: function(json) {
+					response($.map(json, function(item) {
+						return {
+							label: item['name'],
+							value: item['category_id']
+						}
+					}));
+				}
+			});
+		},
+		select: function(item) {
+			$('input[name=\'category\']').val('');
+			$('#divido-category' + item['value']).remove();
+			$('#divido-category').append('<div id="divido-category' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="payment_divido_categories[]" value="' + item['value'] + '" /></div>');
+		}
+	});
+
+	$('#divido-category').delegate('.fa-minus-circle', 'click', function() {
+		$(this).parent().remove();
+	});
+
+})(jQuery);
+</script>
+{{ footer }}

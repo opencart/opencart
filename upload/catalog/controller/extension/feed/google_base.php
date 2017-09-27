@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionFeedGoogleBase extends Controller {
 	public function index() {
-		if ($this->config->get('google_base_status')) {
+		if ($this->config->get('feed_google_base_status')) {
 			$output  = '<?xml version="1.0" encoding="UTF-8" ?>';
 			$output .= '<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">';
 			$output .= '  <channel>';
@@ -29,6 +29,9 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 
 				foreach ($products as $product) {
 					if (!in_array($product['product_id'], $product_data) && $product['description']) {
+						
+						$product_data[] = $product['product_id'];
+						
 						$output .= '<item>';
 						$output .= '<title><![CDATA[' . $product['name'] . ']]></title>';
 						$output .= '<link>' . $this->url->link('product/product', 'product_id=' . $product['product_id']) . '</link>';

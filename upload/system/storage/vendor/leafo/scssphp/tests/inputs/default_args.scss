@@ -1,0 +1,15 @@
+
+
+@mixin cool($color: blue) {
+    margin: 100px;
+}
+
+@function what($height: red) {
+    @return $height;
+}
+
+div {
+    height: what();
+    @include cool;
+}
+

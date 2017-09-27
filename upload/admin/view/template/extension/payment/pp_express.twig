@@ -1,0 +1,461 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-pp-express" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a> <a href="{{ search }}" data-toggle="tooltip" title="{{ button_search }}" class="btn btn-info"><i class="fa fa-search"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      </div>
+      <div class="panel-body">
+        {% if retrieve_success == 1 %}
+          <div class="alert alert-success alert-dismissible"><i class="fa fa-check"></i> {{ text_retrieve }}</div>
+        {% endif %}
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-pp-express" class="form-horizontal">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab-api" data-toggle="tab">{{ tab_api }}</a></li>
+            <li><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
+            <li><a href="#tab-order-status" data-toggle="tab">{{ tab_order_status }}</a></li>
+            <li><a href="#tab-checkout" data-toggle="tab">{{ tab_checkout }}</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab-api">
+              <div id="content-setup">
+                <a href="#" id="show-advanced" class="btn btn-sm btn-default">{{ text_show_advanced }}</a>
+                <div class="row" style="margin-top: 20px;">
+                  <div class="col-sm-3"></div>
+                  <div class="col-sm-2 img-rounded text-center" style="border:1px solid #cecece; padding:5px; cursor: pointer;">
+                    <a id="configure-live-setup" data-paypal-button="true" href="{{ auth_connect_url_live }}&displayMode=minibrowser" target="PPFrame">
+                      <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_200x51.png" alt="PayPal - {{ text_configure_sandbox }}" /><h3>{{ text_configure_live }}</h3>
+                    </a>
+                  </div>
+                  <div class="col-sm-2"></div>
+                  <div class="col-sm-2 img-rounded text-center" style="border:1px solid #cecece; padding:5px; cursor: pointer;">
+                    <a id="configure-sandbox-setup" data-paypal-button="true" href="{{ auth_connect_url_sandbox }}&displayMode=minibrowser" target="PPFrame">
+                      <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_200x51.png" alt="PayPal - {{ text_configure_sandbox }}" /><h3>{{ text_configure_sandbox }}</h3>
+                    </a>
+                  </div>
+                  <div class="col-sm-3"></div>
+                </div>
+              </div>
+              <div id="content-advanced" style="display: none;">
+                <a href="#" id="show-setup" class="btn btn-sm btn-default">{{ text_show_quick_setup }}</a>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="entry-username">{{ entry_username }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="payment_pp_express_username" value="{{ payment_pp_express_username }}" placeholder="{{ entry_username }}" id="entry-username" class="form-control" />
+                    {% if error_username %}
+                    <div class="text-danger">{{ error_username }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="entry-password">{{ entry_password }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="payment_pp_express_password" value="{{ payment_pp_express_password }}" placeholder="{{ entry_password }}" id="entry-password" class="form-control" />
+                    {% if error_password %}
+                    <div class="text-danger">{{ error_password }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="entry-signature">{{ entry_signature }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="payment_pp_express_signature" value="{{ payment_pp_express_signature }}" placeholder="{{ entry_signature }}" id="entry-signature" class="form-control" />
+                    {% if error_signature %}
+                    <div class="text-danger">{{ error_signature }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="entry-sandbox-username">{{ entry_sandbox_username }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="payment_pp_express_sandbox_username" value="{{ payment_pp_express_sandbox_username }}" placeholder="{{ entry_sandbox_username }}" id="entry-sandbox-username" class="form-control" />
+                    {% if error_sandbox_username %}
+                    <div class="text-danger">{{ error_sandbox_username }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="entry-sandbox-password">{{ entry_sandbox_password }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="payment_pp_express_sandbox_password" value="{{ payment_pp_express_sandbox_password }}" placeholder="{{ entry_sandbox_password }}" id="entry-sandbox-password" class="form-control" />
+                    {% if error_sandbox_password %}
+                    <div class="text-danger">{{ error_sandbox_password }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="entry-sandbox-signature">{{ entry_sandbox_signature }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="payment_pp_express_sandbox_signature" value="{{ payment_pp_express_sandbox_signature }}" placeholder="{{ entry_sandbox_signature }}" id="entry-sandbox-signature" class="form-control" />
+                    {% if error_sandbox_signature %}
+                    <div class="text-danger">{{ error_sandbox_signature }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_ipn }}">{{ entry_ipn }}</span></label>
+                  <div class="col-sm-10">
+                    <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
+                      <input type="text" value="{{ ipn_url }}" class="form-control" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-general">
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_pp_express_status" id="input-status" class="form-control">
+                    {% if payment_pp_express_status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-test">{{ entry_test }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_pp_express_test" id="input-test" class="form-control">
+                    {% if payment_pp_express_test %}
+                    <option value="1" selected="selected">{{ text_yes }}</option>
+                    <option value="0">{{ text_no }}</option>
+                    {% else %}
+                    <option value="1">{{ text_yes }}</option>
+                    <option value="0" selected="selected">{{ text_no }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-debug">{{ entry_debug }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_pp_express_debug" id="input-debug" class="form-control">
+                    {% if payment_pp_express_debug %}
+                    <option value="1" selected="selected">{{ text_yes }}</option>
+                    <option value="0">{{ text_no }}</option>
+                    {% else %}
+                    <option value="1">{{ text_yes }}</option>
+                    <option value="0" selected="selected">{{ text_no }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-currency"><span data-toggle="tooltip" title="{{ help_currency }}">{{ entry_currency }}</span></label>
+                <div class="col-sm-10">
+                  <select name="payment_pp_express_currency" id="input-currency" class="form-control">
+                    {% for currency in currencies %}
+                    {% if currency == payment_pp_express_currency %}
+                    <option value="{{ currency }}" selected="selected">{{ currency }}</option>
+                    {% else %}
+                    <option value="{{ currency }}">{{ currency }}</option>
+                    {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-recurring-cancel">{{ entry_recurring_cancel }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_pp_express_recurring_cancel" id="input-recurring-cancel" class="form-control">
+                    {% if payment_pp_express_recurring_cancel %}
+                    <option value="1" selected="selected">{{ text_enabled }}</option>
+                    <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                    <option value="1">{{ text_enabled }}</option>
+                    <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-transaction">{{ entry_transaction }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_pp_express_transaction" id="input-transaction" class="form-control">
+                    {% if payment_pp_express_transaction == 'sale' %}
+                    <option value="Sale" selected="selected">{{ text_sale }}</option>
+                    {% else %}
+                    <option value="Sale">{{ text_sale }}</option>
+                    {% endif %}
+                    {% if payment_pp_express_transaction == 'Authorization' %}
+                    <option value="Authorization" selected="selected">{{ text_authorization }}</option>
+                    {% else %}
+                    <option value="Authorization">{{ text_authorization }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="{{ help_total }}">{{ entry_total }}</span></label>
+                <div class="col-sm-10">
+                  <input type="text" name="payment_pp_express_total" value="{{ payment_pp_express_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_pp_express_geo_zone_id" id="input-geo-zone" class="form-control">
+                    <option value="0">{{ text_all_zones }}</option>
+                    {% for geo_zone in geo_zones %}
+                    {% if geo_zone.geo_zone_id == payment_pp_express_geo_zone_id %}
+                    <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                    {% else %}
+                    <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="payment_pp_express_sort_order" value="{{ payment_pp_express_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-order-status">
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-canceled-reversal-status">{{ entry_canceled_reversal_status }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_pp_express_canceled_reversal_status_id" id="input-canceled-reversal-status" class="form-control">
+                    {% for order_status in order_statuses %}
+                    {% if order_status.order_status_id == payment_pp_express_canceled_reversal_status_id %}
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-completed-status">{{ entry_completed_status }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_pp_express_completed_status_id" id="input-completed-status" class="form-control">
+                    {% for order_status in order_statuses %}
+                    {% if order_status.order_status_id == payment_pp_express_completed_status_id %}
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-denied-status">{{ entry_denied_status }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_pp_express_denied_status_id" id="input-denied-status" class="form-control">
+                    {% for order_status in order_statuses %}
+                    {% if order_status.order_status_id == payment_pp_express_denied_status_id %}
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-expired-status">{{ entry_expired_status }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_pp_express_expired_status_id" id="input-expired-status" class="form-control">
+                    {% for order_status in order_statuses %}
+                    {% if order_status.order_status_id == payment_pp_express_expired_status_id %}
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-failed-status">{{ entry_failed_status }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_pp_express_failed_status_id" id="input-failed-status" class="form-control">
+                    {% for order_status in order_statuses %}
+                    {% if order_status.order_status_id == payment_pp_express_failed_status_id %}
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-pending-status">{{ entry_pending_status }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_pp_express_pending_status_id" id="input-pending-status" class="form-control">
+                    {% for order_status in order_statuses %}
+                    {% if order_status.order_status_id == payment_pp_express_pending_status_id %}
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-processed-status">{{ entry_processed_status }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_pp_express_processed_status_id" id="input-processed-status" class="form-control">
+                    {% for order_status in order_statuses %}
+                    {% if order_status.order_status_id == payment_pp_express_processed_status_id %}
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                    {% endif %}
+                    {% endfor %}>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-refunded-status">{{ entry_refunded_status }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_pp_express_refunded_status_id" id="input-refunded-status"class="form-control">
+                    {% for order_status in order_statuses %}
+                    {% if order_status.order_status_id == payment_pp_express_refunded_status_id %}
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-reversed-status">{{ entry_reversed_status }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_pp_express_reversed_status_id" id="input-reversed-status" class="form-control">
+                    {% for order_status in order_statuses %}
+                    {% if order_status.order_status_id == payment_pp_express_reversed_status_id %}
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-voided-status">{{ entry_voided_status }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_pp_express_voided_status_id" id="input-voided-status" class="form-control">
+                    {% for order_status in order_statuses %}
+                    {% if order_status.order_status_id == payment_pp_express_voided_status_id %}
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-checkout">
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-notes">{{ entry_allow_notes }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_pp_express_allow_note" id="input-notes" class="form-control">
+                    {% if payment_pp_express_allow_note %}
+                    <option value="1" selected="selected">{{ text_yes }}</option>
+                    <option value="0">{{ text_no }}</option>
+                    {% else %}
+                    <option value="1">{{ text_yes }}</option>
+                    <option value="0" selected="selected">{{ text_no }}</option>
+                    {% endif %}
+                  </select>
+                  <br />{{ text_incontext_not_supported }}
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-color"><span data-toggle="tooltip" title="{{ help_colour }}">{{ entry_colour }}</span></label>
+                <div class="col-sm-10">
+                  <input type="text" name="payment_pp_express_colour" value="{{ payment_pp_express_colour }}" placeholder="{{ entry_colour }}" id="input-color" class="form-control" />
+                  <br />{{ text_incontext_not_supported }}
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_logo }}">{{ entry_logo }}</span></label>
+                <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
+                  <input type="hidden" name="payment_pp_express_logo" value="{{ payment_pp_express_logo }}" id="input-logo" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-incontext-disable">{{ entry_incontext }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_pp_express_incontext_disable" id="input-incontext-disable" class="form-control">
+                    {% if payment_pp_express_incontext_disable %}
+                      <option value="1" selected="selected">{{ text_yes }}</option>
+                      <option value="0">{{ text_no }}</option>
+                    {% else %}
+                      <option value="1">{{ text_yes }}</option>
+                      <option value="0" selected="selected">{{ text_no }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-2"><a href="{{ button_configure }}" target="_blank" class="btn btn-primary pull-right">{{ button_enable }}</a></div>
+                <div class="col-sm-10"><p>{{ text_enable_button }}</p></div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript"><!--
+  $('body').on('click', '#show-advanced', function(event) {
+    event.preventDefault();
+    $('#content-setup').hide();
+    $('#content-advanced').show();
+  });
+
+  $('body').on('click', '#show-setup', function(event) {
+    event.preventDefault();
+    $('#content-setup').show();
+    $('#content-advanced').hide();
+  });
+
+  (function (d, s, id) {
+    var js, ref = d.getElementsByTagName(s)[0];
+    if(!d.getElementById(id)) {
+      js = d.createElement(s);
+      js.id = id;
+      js.async = true;
+      js.src = "https://www.paypal.com/webapps/merchantboarding/js/lib/lightbox/partner.js";
+      ref.parentNode.insertBefore(js, ref);
+    }
+  } (document, "script", "paypal-js"));
+--></script>
+
+{{ footer }} 

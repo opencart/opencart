@@ -5,20 +5,16 @@ class ControllerErrorPermission extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_permission'] = $this->language->get('text_permission');
-
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link($this->request->get['route'], 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link($this->request->get['route'], 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['header'] = $this->load->controller('common/header');

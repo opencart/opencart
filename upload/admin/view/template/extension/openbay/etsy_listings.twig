@@ -1,0 +1,332 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if success %}
+      <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}</div>
+    {% endif %}
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_listings }}</h3>
+      </div>
+      <div class="panel-body">
+        <div class="well">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="input-keywords">{{ entry_keywords }}</label>
+                <input type="text" name="keywords" value="{{ filter.keywords }}" placeholder="{{ entry_keywords }}" id="input-keywords" class="form-control" />
+                <span class="help-block">{{ help_keywords }}</span>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="input-status">{{ entry_status }}</label>
+                <select name="status" id="input-status" class="form-control">
+                  <option value="active"{% if filter.status == "active" %} selected{% endif %}>{{ text_active }}</option>
+                  <option value="inactive"{% if filter.status == "inactive" %} selected{% endif %}>{{ text_inactive }}</option>
+                  <option value="draft"{% if filter.status == "draft" %} selected{% endif %}>{{ text_draft }}</option>
+                  <option value="expired"{% if filter.status == "expired" %} selected{% endif %}>{{ text_expired }}</option>
+                </select>
+              </div>
+              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+            </div>
+          </div>
+        </div>
+        <div class="alert alert-danger" id="alert-error" style="display:none;"></div>
+        <div class="well" style="display:none;" id="link-well">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="input-name">{{ entry_name }}</label>
+                <input type="hidden" name="add_link_product_id" value="" id="input-product-id"/>
+                <input type="text" name="add_link_product" value="" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="input-etsy-id">{{ entry_etsy_id }}</label>
+                <input type="text" name="add_link_etsy_id" value="" placeholder="{{ entry_etsy_id }}" id="input-etsy-id" class="form-control" />
+              </div>
+              <a onclick="addLink();" class="btn btn-primary pull-right" id="button-submit-link"><i class="fa fa-check"></i> {{ button_save }}</a> </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <td class="text-left">{{ column_listing_id }}</td>
+                <td class="text-left">{{ column_title }}</td>
+                <td class="text-center">{{ column_listing_qty }}</td>
+                <td class="text-center">{{ column_store_qty }}</td>
+                <td class="text-center">{{ column_link_status }}</td>
+                <td class="text-center">{{ column_status }}</td>
+                <td class="text-right">{{ column_action }}</td>
+              </tr>
+            </thead>
+            <tbody>
+              {% if listings %}
+              {% for listing in listings %}
+              <tr>
+                <td class="text-left">{{ listing.listing.listing_id }}</td>
+                <td class="text-left">{{ listing.listing.title }}</td>
+                <td class="text-center">{{ listing.listing.quantity }}</td>
+                {% if listing.link is not empty %}
+                  <td class="text-center">{{ listing.link.quantity }}</td>
+                  <td class="text-center"><i class="fa fa-check" style="color: green;"></i></td>
+                  <td class="text-center">{% if listing.link.quantity != listing.listing.quantity %}{{ text_status_stock }}{% else %}{{ text_status_ok }}{% endif %}</td>
+                {% else %}
+                  <td class="text-center"><i class="fa fa-minus"></i></td>
+                  <td class="text-center"><i class="fa fa-times" style="color: red;"></i></td>
+                  <td class="text-center">{{ text_status_nolink }}</td>
+                {% endif %}
+                <td class="text-right">
+                  {% if "activate_item" in listing.actions %}
+                    <button data-toggle="tooltip" title="{{ text_activate }}" class="btn btn-primary" onclick="activateListing('{{ listing.listing.listing_id }}');" id="btn-activate-{{ listing.listing.listing_id }}"><i class="fa fa-plus"></i></button>
+                  {% endif %}
+                  {% if "add_link" in listing.actions %}
+                    <button data-toggle="tooltip" title="{{ text_add_link }}" class="btn btn-primary" onclick="showLinkOption('{{ listing.listing.listing_id }}');"><i class="fa fa-link"></i></button>
+                  {% endif %}
+                  {% if "delete_link" in listing.actions %}
+                    <button data-toggle="tooltip" title="{{ text_delete_link }}" class="btn btn-danger" id="btn-delete-{{ listing.link.etsy_listing_id }}" onclick="deleteLink('{{ listing.link.etsy_listing_id }}');"><i class="fa fa-unlink"></i></button>
+                  {% endif %}
+                  {% if "end_item" in listing.actions %}
+                    <button data-toggle="tooltip" title="{{ text_delete }}" class="btn btn-danger" onclick="endListing('{{ listing.listing.listing_id }}');" id="btn-end-{{ listing.link.etsy_listing_id }}"><i class="fa fa-times"></i></button>
+                    <button data-toggle="tooltip" title="{{ text_deactivate }}" class="btn btn-danger" onclick="deactivateListing('{{ listing.listing.listing_id }}');" id="btn-deactivate-{{ listing.listing.listing_id }}"><i class="fa fa-ban"></i></button>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+              {% else %}
+              <tr>
+                <td class="text-center" colspan="8">{{ text_no_results }}</td>
+              </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 text-left">{{ pagination }}</div>
+          <div class="col-sm-6 text-right">{{ results }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+var url = 'index.php?route=extension/openbay/etsy_product/listings&user_token={{ user_token }}&page={{ filter.page }}';
+
+var filter_keywords = $('input[name=\'keywords\']').val();
+
+if (filter_keywords) {
+  url += '&keywords=' + encodeURIComponent(filter_keywords);
+}
+
+var filter_status = $('input[name=\'status\']').val();
+
+if (filter_status) {
+  url += '&status=' + encodeURIComponent(filter_status);
+}
+
+$('#button-filter').on('click', function() {
+  var url = 'index.php?route=extension/openbay/etsy_product/listings&user_token={{ user_token }}';
+
+  var status = $('select[name=\'status\']').val();
+
+  url += '&status=' + encodeURIComponent(status);
+
+  var keywords = $('input[name=\'keywords\']').val();
+
+  if (keywords != '') {
+    url += '&keywords=' + encodeURIComponent(keywords);
+  }
+
+  location = url;
+});
+
+function showLinkOption(id) {
+  $('#input-etsy-id').val(id);
+  $('#link-well').slideDown();
+}
+
+function addLink() {
+  var product_id = $('#input-product-id').val();
+  var etsy_id = $('#input-etsy-id').val();
+
+  if (product_id == '') {
+    alert('{{ error_product_id }}');
+    return false;
+  }
+
+  if (etsy_id == '') {
+    alert('{{ error_etsy_id }}');
+    return false;
+  }
+
+  $.ajax({
+    url: 'index.php?route=extension/openbay/etsy_product/addLink&user_token={{ user_token }}',
+    dataType: 'json',
+    method: 'POST',
+    data: { 'product_id' : product_id, 'etsy_id' : etsy_id },
+    beforeSend: function() {
+      $('#alert-error').hide().empty();
+      $('#button-submit-link').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+    },
+    success: function(json) {
+      if (json.error == false) {
+        url += '&link_added=1';
+        location = url;
+      } else {
+        $('#alert-error').html('<i class="fa fa-times fa-lg" style="color:red;"></i> '+json.error).show();
+      }
+
+      $('#button-submit-link').empty().html('<i class="fa fa-check"></i> {{ button_save }}').removeAttr('disabled');
+    },
+    failure: function() {
+      $('#button-submit').empty().html('<i class="fa fa-check"></i> {{ button_save }}').removeAttr('disabled');
+    }
+  });
+}
+
+function deleteLink(etsy_link_id) {
+  $.ajax({
+    url: 'index.php?route=extension/openbay/etsy_product/deleteLink&user_token={{ user_token }}',
+    dataType: 'json',
+    method: 'POST',
+    data: { 'etsy_link_id' : etsy_link_id },
+    beforeSend: function() {
+      $('#btn-delete-'+etsy_link_id).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+    },
+    success: function(json) {
+      if (json.error == false) {
+        url += '&link_deleted=1';
+        location = url;
+      } else {
+        $('#btn-delete-'+etsy_link_id).empty().html('<i class="fa fa-times fa-lg" style="color:red;"></i>').removeAttr('disabled');
+        $('#alert-error').html('<i class="fa fa-times fa-lg"></i> '+json.error).show();
+      }
+    },
+    failure: function() {
+      $('#btn-delete-'+etsy_link_id).empty().html('<i class="fa fa-times fa-lg"></i>').removeAttr('disabled');
+    }
+  });
+}
+
+function endListing(etsy_item_id) {
+  var pass = confirm("{{ text_confirm_end }}");
+
+  if (pass == true) {
+    $.ajax({
+      url: 'index.php?route=extension/openbay/etsy_product/endlisting&user_token={{ user_token }}',
+      dataType: 'json',
+      method: 'POST',
+      data: { 'etsy_item_id' : etsy_item_id },
+      beforeSend: function() {
+        $('#btn-end-'+etsy_item_id).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+      },
+      success: function(json) {
+        if (json.error == false) {
+          url += '&item_ended=1';
+          location = url;
+        } else {
+          $('#btn-end-'+etsy_item_id).empty().html('<i class="fa fa-times fa-lg" style="color:red;"></i>').removeAttr('disabled');
+          $('#alert-error').html('<i class="fa fa-times fa-lg"></i> '+json.error).show();
+        }
+      },
+      failure: function() {
+        $('#btn-end-'+etsy_item_id).empty().html('<i class="fa fa-times fa-lg"></i>').removeAttr('disabled');
+      }
+    });
+  }
+}
+
+function deactivateListing(etsy_item_id) {
+  var pass = confirm("{{ text_confirm_deactivate }}");
+
+  if (pass == true) {
+    $.ajax({
+      url: 'index.php?route=extension/openbay/etsy_product/deactivatelisting&user_token={{ user_token }}',
+      dataType: 'json',
+      method: 'POST',
+      data: { 'etsy_item_id' : etsy_item_id },
+      beforeSend: function() {
+        $('#btn-deactivate-'+etsy_item_id).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+      },
+      success: function(json) {
+        if (json.error == false) {
+          url += '&item_deactivated=1';
+          location = url;
+        } else {
+          $('#btn-deactivate-'+etsy_item_id).empty().html('<i class="fa fa-times fa-lg" style="color:red;"></i>').removeAttr('disabled');
+          $('#alert-error').html('<i class="fa fa-times fa-lg"></i> '+json.error).show();
+        }
+      },
+      failure: function() {
+        $('#btn-deactivate-'+etsy_item_id).empty().html('<i class="fa fa-times fa-lg"></i>').removeAttr('disabled');
+      }
+    });
+  }
+}
+
+function activateListing(etsy_item_id) {
+  var pass = confirm("{{ text_confirm_activate }}");
+
+  if (pass == true) {
+    $.ajax({
+      url: 'index.php?route=extension/openbay/etsy_product/activatelisting&user_token={{ user_token }}',
+      dataType: 'json',
+      method: 'POST',
+      data: { 'etsy_item_id' : etsy_item_id },
+      beforeSend: function() {
+        $('#btn-activate-'+etsy_item_id).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+      },
+      success: function(json) {
+        if (json.error == false) {
+          url += '&item_activated=1';
+          location = url;
+        } else {
+          $('#btn-activate-'+etsy_item_id).empty().html('<i class="fa fa-times fa-lg" style="color:red;"></i>').removeAttr('disabled');
+          $('#alert-error').html('<i class="fa fa-times fa-lg"></i> '+json.error).show();
+        }
+      },
+      failure: function() {
+        $('#btn-activate-'+etsy_item_id).empty().html('<i class="fa fa-times fa-lg"></i>').removeAttr('disabled');
+      }
+    });
+  }
+}
+
+$('input[name=\'add_link_product\']').autocomplete({
+  'source': function(request, response) {
+    $.ajax({
+      url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+      dataType: 'json',
+      success: function(json) {
+        response($.map(json, function(item) {
+          return {
+            label: item['name'],
+            value: item['product_id']
+          }
+        }));
+      }
+    });
+  },
+  'select': function(item) {
+    $('input[name=\'add_link_product\']').val(item['label']);
+    $('#input-product-id').val(item['value']);
+  }
+});
+//--></script>
+{{ footer }}

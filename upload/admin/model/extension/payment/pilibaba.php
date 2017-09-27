@@ -115,9 +115,9 @@ class ModelExtensionPaymentPilibaba extends Model {
 	public function updateTrackingNumber($order_id, $tracking_number, $merchant_number) {
 		$this->log('Posting tracking');
 
-		$sign_msg = strtoupper(md5($order_id . $tracking_number . $merchant_number . $this->config->get('pilibaba_secret_key')));
+		$sign_msg = strtoupper(md5($order_id . $tracking_number . $merchant_number . $this->config->get('payment_pilibaba_secret_key')));
 
-		if ($this->config->get('pilibaba_environment') == 'live') {
+		if ($this->config->get('payment_pilibaba_environment') == 'live') {
 			$url = 'https://www.pilibaba.com/pilipay/updateTrackNo';
 		} else {
 			$url = 'http://pre.pilibaba.com/pilipay/updateTrackNo';
@@ -156,7 +156,7 @@ class ModelExtensionPaymentPilibaba extends Model {
 	}
 
 	public function log($data) {
-		if ($this->config->has('pilibaba_logging') && $this->config->get('pilibaba_logging')) {
+		if ($this->config->has('payment_pilibaba_logging') && $this->config->get('payment_pilibaba_logging')) {
 			$log = new Log('pilibaba.log');
 
 			$log->write($data);

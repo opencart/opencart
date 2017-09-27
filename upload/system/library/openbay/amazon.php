@@ -1,37 +1,67 @@
 <?php
 namespace openbay;
 
-class Amazon {
+final class Amazon {
 	private $token;
-	private $enc1;
-	private $enc2;
-	private $url = 'http://uk-amazon.openbaypro.com/';
+    private $encryption_key;
+    private $encryption_iv;
+	private $url = 'https://uk-amazon.openbaypro.com/';
 	private $registry;
 
 	public function __construct($registry) {
 		$this->registry = $registry;
-
 		$this->token = $this->config->get('openbay_amazon_token');
-		$this->enc1 = $this->config->get('openbay_amazon_enc_string1');
-		$this->enc2 = $this->config->get('openbay_amazon_enc_string2');
+
+		$this->setEncryptionKey($this->config->get('openbay_amazon_encryption_key'));
+		$this->setEncryptionIv($this->config->get('openbay_amazon_encryption_iv'));
 	}
 
 	public function __get($name) {
 		return $this->registry->get($name);
 	}
 
-	public function call($method, $data = array(), $is_json = true) {
-		if ($is_json) {
-			$arg_string = json_encode($data);
-		} else {
-			$arg_string = $data;
-		}
+    public function getEncryptionKey() {
+        return $this->encryption_key;
+    }
 
-		$crypt = $this->encryptArgs($arg_string);
+	public function setEncryptionKey($key) {
+	    $this->encryption_key = $key;
+    }
+
+    public function getEncryptionIv() {
+        return $this->encryption_iv;
+    }
+
+    public function setEncryptionIv($encryption_iv) {
+        $this->encryption_iv = $encryption_iv;
+    }
+
+	public function call($method, $data = array(), $use_json = true) {
+        if (!empty($data)) {
+            if ($use_json) {
+                $string = json_encode($data);
+            } else {
+                $string = $data;
+            }
+
+            $encrypted = $this->openbay->encrypt($string, $this->getEncryptionKey(), $this->getEncryptionIv(), false);
+        } else {
+            $encrypted = '';
+        }
+
+        $post_data = array(
+            'token' => $this->token,
+            'data' => base64_encode($encrypted),
+            'opencart_version' => VERSION
+        );
+
+        $headers = array();
+        $headers[] = 'X-Endpoint-Version: 2';
 
 		$defaults = array(
+            CURLOPT_HEADER      	=> 0,
+            CURLOPT_HTTPHEADER      => $headers,
 			CURLOPT_POST            => 1,
-			CURLOPT_HEADER          => 0,
 			CURLOPT_URL             => $this->url . $method,
 			CURLOPT_USERAGENT       => 'OpenBay Pro for Amazon/Opencart',
 			CURLOPT_FRESH_CONNECT   => 1,
@@ -40,69 +70,63 @@ class Amazon {
 			CURLOPT_TIMEOUT         => 30,
 			CURLOPT_SSL_VERIFYPEER  => 0,
 			CURLOPT_SSL_VERIFYHOST  => 0,
-			CURLOPT_POSTFIELDS      => 'token=' . $this->token . '&data=' . rawurlencode($crypt) . '&opencart_version=' . VERSION,
+			CURLOPT_POSTFIELDS      => http_build_query($post_data, '', "&"),
 		);
-		$ch = curl_init();
 
-		curl_setopt_array($ch, $defaults);
+		$curl = curl_init();
 
-		$response = curl_exec($ch);
+		curl_setopt_array($curl, $defaults);
 
-		curl_close($ch);
+		$response = curl_exec($curl);
+
+		curl_close($curl);
 
 		return $response;
 	}
 
-	public function callNoResponse($method, $data = array(), $is_json = true) {
-		if ($is_json) {
-			$arg_string = json_encode($data);
-		} else {
-			$arg_string = $data;
-		}
+	public function callNoResponse($method, $data = array(), $use_json = true) {
+        if (!empty($data)) {
+            if ($use_json) {
+                $string = json_encode($data);
+            } else {
+                $string = $data;
+            }
 
-		$crypt = $this->encryptArgs($arg_string);
+            $encrypted = $this->openbay->encrypt($string, $this->getEncryptionKey(), $this->getEncryptionIv(), false);
+        } else {
+            $encrypted = '';
+        }
+
+        $post_data = array(
+            'token' => $this->token,
+            'data' => rawurlencode(base64_encode($encrypted)),
+            'opencart_version' => VERSION
+        );
+
+        $headers = array();
+        $headers[] = 'X-Endpoint-Version: 2';
 
 		$defaults = array(
-			CURLOPT_POST => 1,
-			CURLOPT_HEADER => 0,
-			CURLOPT_URL => $this->url . $method,
-			CURLOPT_USERAGENT => 'OpenBay Pro for Amazon/Opencart',
-			CURLOPT_FRESH_CONNECT => 1,
-			CURLOPT_RETURNTRANSFER => 1,
-			CURLOPT_FORBID_REUSE => 1,
-			CURLOPT_TIMEOUT => 2,
-			CURLOPT_SSL_VERIFYPEER => 0,
-			CURLOPT_SSL_VERIFYHOST => 0,
-			CURLOPT_POSTFIELDS => 'token=' . $this->token . '&data=' . rawurlencode($crypt) . '&opencart_version=' . VERSION,
+            CURLOPT_HEADER      	=> 0,
+            CURLOPT_HTTPHEADER      => $headers,
+			CURLOPT_POST            => 1,
+			CURLOPT_URL             => $this->url . $method,
+			CURLOPT_USERAGENT       => 'OpenBay Pro for Amazon/Opencart',
+			CURLOPT_FRESH_CONNECT   => 1,
+			CURLOPT_RETURNTRANSFER  => 1,
+			CURLOPT_FORBID_REUSE    => 1,
+			CURLOPT_TIMEOUT         => 2,
+			CURLOPT_SSL_VERIFYPEER  => 0,
+			CURLOPT_SSL_VERIFYHOST  => 0,
+			CURLOPT_POSTFIELDS      => http_build_query($post_data, '', "&"),
 		);
-		$ch = curl_init();
+		$curl = curl_init();
 
-		curl_setopt_array($ch, $defaults);
+		curl_setopt_array($curl, $defaults);
 
-		curl_exec($ch);
+		curl_exec($curl);
 
-		curl_close($ch);
-	}
-
-	public function encryptArgs($data) {
-		$token = $this->openbay->pbkdf2($this->enc1, $this->enc2, 1000, 32);
-		$crypt = $this->openbay->encrypt($data, $token, true);
-
-		return $crypt;
-	}
-
-	public function decryptArgs($crypt, $is_base_64 = true) {
-		if ($is_base_64) {
-			$crypt = base64_decode($crypt, true);
-			if (!$crypt) {
-				return false;
-			}
-		}
-
-		$token = $this->openbay->pbkdf2($this->enc1, $this->enc2, 1000, 32);
-		$data = $this->openbay->decrypt($crypt, $token);
-
-		return $data;
+		curl_close($curl);
 	}
 
 	public function getServer() {
@@ -349,8 +373,8 @@ class Amazon {
 	public function validate() {
 		if($this->config->get('openbay_amazon_status') != 0 &&
 			$this->config->get('openbay_amazon_token') != '' &&
-			$this->config->get('openbay_amazon_enc_string1') != '' &&
-			$this->config->get('openbay_amazon_enc_string2') != ''){
+			$this->config->get('openbay_amazon_encryption_key') != '' &&
+			$this->config->get('openbay_amazon_encryption_iv') != ''){
 			return true;
 		} else {
 			return false;

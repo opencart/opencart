@@ -4,11 +4,11 @@ class ModelExtensionPaymentG2APay extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('extension/payment/g2apay');
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('g2apay_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('payment_g2apay_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
-		if ($this->config->get('g2apay_total') > 0 && $this->config->get('g2apay_total') > $total) {
+		if ($this->config->get('payment_g2apay_total') > 0 && $this->config->get('payment_g2apay_total') > $total) {
 			$status = false;
-		} elseif (!$this->config->get('g2apay_geo_zone_id')) {
+		} elseif (!$this->config->get('payment_g2apay_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {
 			$status = true;
@@ -23,7 +23,7 @@ class ModelExtensionPaymentG2APay extends Model {
 				'code' => 'g2apay',
 				'title' => $this->language->get('text_title'),
 				'terms' => '',
-				'sort_order' => $this->config->get('g2apay_sort_order')
+				'sort_order' => $this->config->get('payment_g2apay_sort_order')
 			);
 		}
 
@@ -70,7 +70,7 @@ class ModelExtensionPaymentG2APay extends Model {
 	}
 
 	public function logger($message) {
-		if ($this->config->get('g2apay_debug') == 1) {
+		if ($this->config->get('payment_g2apay_debug') == 1) {
 			$log = new Log('g2apay.log');
 			$backtrace = debug_backtrace();
 			$log->write('Origin: ' . $backtrace[6]['class'] . '::' . $backtrace[6]['function']);

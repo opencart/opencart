@@ -30,25 +30,7 @@ class ControllerAccountAccount extends Controller {
 		} else {
 			$data['success'] = '';
 		} 
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_my_account'] = $this->language->get('text_my_account');
-		$data['text_my_orders'] = $this->language->get('text_my_orders');
-		$data['text_my_newsletter'] = $this->language->get('text_my_newsletter');
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_password'] = $this->language->get('text_password');
-		$data['text_address'] = $this->language->get('text_address');
-		$data['text_credit_card'] = $this->language->get('text_credit_card');
-		$data['text_wishlist'] = $this->language->get('text_wishlist');
-		$data['text_order'] = $this->language->get('text_order');
-		$data['text_download'] = $this->language->get('text_download');
-		$data['text_reward'] = $this->language->get('text_reward');
-		$data['text_return'] = $this->language->get('text_return');
-		$data['text_transaction'] = $this->language->get('text_transaction');
-		$data['text_newsletter'] = $this->language->get('text_newsletter');
-		$data['text_recurring'] = $this->language->get('text_recurring');
-
+		
 		$data['edit'] = $this->url->link('account/edit', '', true);
 		$data['password'] = $this->url->link('account/password', '', true);
 		$data['address'] = $this->url->link('account/address', '', true);
@@ -60,11 +42,11 @@ class ControllerAccountAccount extends Controller {
 		foreach ($files as $file) {
 			$code = basename($file, '.php');
 			
-			if ($this->config->get($code . '_status') && $this->config->get($code . '_card')) {
-				$this->load->language('extension/credit_card/' . $code);
+			if ($this->config->get('payment_' . $code . '_status') && $this->config->get('payment_' . $code . '_card')) {
+				$this->load->language('extension/credit_card/' . $code, 'extension');
 
 				$data['credit_cards'][] = array(
-					'name' => $this->language->get('heading_title'),
+					'name' => $this->language->get('extension')->get('heading_title'),
 					'href' => $this->url->link('extension/credit_card/' . $code, '', true)
 				);
 			}
@@ -74,7 +56,7 @@ class ControllerAccountAccount extends Controller {
 		$data['order'] = $this->url->link('account/order', '', true);
 		$data['download'] = $this->url->link('account/download', '', true);
 		
-		if ($this->config->get('reward_status')) {
+		if ($this->config->get('total_reward_status')) {
 			$data['reward'] = $this->url->link('account/reward', '', true);
 		} else {
 			$data['reward'] = '';
@@ -84,6 +66,22 @@ class ControllerAccountAccount extends Controller {
 		$data['transaction'] = $this->url->link('account/transaction', '', true);
 		$data['newsletter'] = $this->url->link('account/newsletter', '', true);
 		$data['recurring'] = $this->url->link('account/recurring', '', true);
+		
+		$this->load->model('account/affiliate');
+		
+		$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
+		
+		if (!$affiliate_info) {	
+			$data['affiliate'] = $this->url->link('account/affiliate/add', '', true);
+		} else {
+			$data['affiliate'] = $this->url->link('account/affiliate/edit', '', true);
+		}
+		
+		if ($affiliate_info) {		
+			$data['tracking'] = $this->url->link('account/tracking', '', true);
+		} else {
+			$data['tracking'] = '';
+		}
 		
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

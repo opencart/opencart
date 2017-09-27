@@ -3,16 +3,20 @@ final class Openbay {
 	private $registry;
 	private $installed_modules = array();
 	public $installed_markets = array();
+	private $logging = 1;
 
 	public function __construct($registry) {
+		// OpenBay Pro
 		$this->registry = $registry;
 
-		$this->getInstalled();
+		if ($this->db != null) {
+			$this->getInstalled();
 
-		foreach ($this->installed_markets as $market) {
-			$class = '\openbay\\'. ucfirst($market);
+			foreach ($this->installed_markets as $market) {
+				$class = '\openbay\\'. ucfirst($market);
 
-			$this->{$market} = new $class($registry);
+				$this->{$market} = new $class($registry);
+			}
 		}
 
 		$this->logger = new \Log('openbay.log');
@@ -35,82 +39,22 @@ final class Openbay {
 		}
 	}
 
-	public function encrypt($msg, $k, $base64 = false) {
-		$td = mcrypt_module_open('rijndael-256', '', 'ctr', '');
+	public function encrypt($value, $key, $iv, $json = true) {
+		if ($json == true) {
+		    $value = json_encode($value);
+        }
 
-		if (!$td) {
-			return false;
-		}
-
-		$iv = mcrypt_create_iv(32, MCRYPT_RAND);
-
-		if (mcrypt_generic_init($td, $k, $iv) !== 0) {
-			return false;
-		}
-
-		$msg = mcrypt_generic($td, $msg);
-		$msg = $iv . $msg;
-		$mac = $this->pbkdf2($msg, $k, 1000, 32);
-		$msg .= $mac;
-
-		mcrypt_generic_deinit($td);
-		mcrypt_module_close($td);
-
-		if ($base64) {
-			$msg = base64_encode($msg);
-		}
-
-		return $msg;
+	    return strtr(base64_encode(openssl_encrypt($value, 'aes-128-cbc', hash('sha256', hex2bin($key), true), 0, hex2bin($iv))), '+/=', '-_,');
 	}
 
-	public function decrypt($msg, $k, $base64 = false) {
-		if ($base64) {
-			$msg = base64_decode($msg);
-		}
+	public function decrypt($value, $key, $iv, $json = true) {
+		$response = trim(openssl_decrypt(base64_decode(strtr($value, '-_,', '+/=')), 'aes-128-cbc', hash('sha256', hex2bin($key), true), 0, hex2bin($iv)));
 
-		if (!$td = mcrypt_module_open('rijndael-256', '', 'ctr', '')) {
-			return false;
-		}
+		if ($json == true) {
+		    $response =  json_decode($response, true);
+        }
 
-		$iv = substr($msg, 0, 32);
-		$mo = strlen($msg) - 32;
-		$em = substr($msg, $mo);
-		$msg = substr($msg, 32, strlen($msg) - 64);
-		$mac = $this->pbkdf2($iv . $msg, $k, 1000, 32);
-
-		if ($em !== $mac) {
-			return false;
-		}
-
-		if (mcrypt_generic_init($td, $k, $iv) !== 0) {
-			return false;
-		}
-
-		$msg = mdecrypt_generic($td, $msg);
-		$msg = unserialize($msg);
-
-		mcrypt_generic_deinit($td);
-		mcrypt_module_close($td);
-
-		return $msg;
-	}
-
-	public function pbkdf2($p, $s, $c, $kl, $a = 'sha256') {
-		$hl = strlen(hash($a, null, true));
-		$kb = ceil($kl / $hl);
-		$dk = '';
-
-		for ($block = 1; $block <= $kb; $block++) {
-
-			$ib = $b = hash_hmac($a, $s . pack('N', $block), $p, true);
-
-			for ($i = 1; $i < $c; $i++)
-				$ib ^= ($b = hash_hmac($a, $b, $p, true));
-
-			$dk .= $ib;
-		}
-
-		return substr($dk, 0, $kl);
+        return $response;
 	}
 
 	private function getInstalled() {
@@ -237,13 +181,13 @@ final class Openbay {
 	public function newOrderAdminNotify($order_id, $order_status_id) {
 		$this->load->model('checkout/order');
 		$order_info = $this->model_checkout_order->getOrder($order_id);
-		
+
 		if (version_compare(VERSION, '2.2', '>') == true) {
 			$language_code = $order_info['language_code'];
 		} else {
 			$language_code = $order_info['language_directory'];
 		}
-		
+
 		$language = new Language($language_code);
 		$language->load($language_code);
 		$language->load('mail/order');
@@ -318,7 +262,7 @@ final class Openbay {
 		$mail->send();
 
 		// Send to additional alert emails
-		$emails = explode(',', $this->config->get('config_alert_emails'));
+		$emails = explode(',', $this->config->get('config_mail_alert_email'));
 
 		foreach ($emails as $email) {
 			if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {

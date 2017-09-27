@@ -1,0 +1,22 @@
+div {
+  color: 14px;
+  sum: 23; }
+
+div {
+  hello: 10 55;
+  hello: 1010 55;
+  hello: "hello 10 and 55"; }
+
+del {
+  color: 1000; }
+
+div {
+  hello: "hello foo and bar";
+  hello: "hello bar and default";
+  hello: "hello Alice, Bob, Tom"; }
+
+.foo {
+  test2: -moz-art; }
+
+div span {
+  height: 3px; }

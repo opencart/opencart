@@ -5,10 +5,10 @@ class ControllerExtensionModuleDividoCalculator extends Controller {
 		$this->load->model('extension/payment/divido');
 		$this->load->model('catalog/product');
 
-		$product_selection = $this->config->get('divido_productselection');
-		$product_threshold = $this->config->get('divido_price_threshold');
+		$product_selection = $this->config->get('payment_divido_productselection');
+		$product_threshold = $this->config->get('payment_divido_price_threshold');
 
-		if (!isset($this->request->get['product_id']) || !$this->config->get('divido_status') || !$this->config->get('divido_calculator_status')) {
+		if (!isset($this->request->get['product_id']) || !$this->config->get('payment_divido_status') || !$this->config->get('module_divido_calculator_status')) {
 			return false;
 		}
 
@@ -24,7 +24,7 @@ class ControllerExtensionModuleDividoCalculator extends Controller {
 			return false;
 		}
 
-		$api_key = $this->config->get('divido_api_key');
+		$api_key = $this->config->get('payment_divido_api_key');
 		$key_parts = explode('.', $api_key);
 		$js_key = strtolower(array_shift($key_parts));
 
@@ -42,18 +42,6 @@ class ControllerExtensionModuleDividoCalculator extends Controller {
 		$plans_list = implode(',', $plans_ids);
 
 		$data = array(
-			'text_choose_deposit'		=> $this->language->get('text_choose_deposit'),
-			'text_choose_plan'			=> $this->language->get('text_choose_plan'),
-			'text_checkout_title'		=> $this->language->get('text_checkout_title'),
-			'text_monthly_payments'		=> $this->language->get('text_monthly_payments'),
-			'text_months'				=> $this->language->get('text_months'),
-			'text_term'					=> $this->language->get('text_term'),
-			'text_deposit'				=> $this->language->get('text_deposit'),
-			'text_credit_amount'		=> $this->language->get('text_credit_amount'),
-			'text_amount_payable'		=> $this->language->get('text_amount_payable'),
-			'text_total_interest'		=> $this->language->get('text_total_interest'),
-			'text_monthly_installment'	=> $this->language->get('text_monthly_installment'),
-			'text_redirection'			=> $this->language->get('text_redirection'),
 			'merchant_script'			=> "//cdn.divido.com/calculator/{$js_key}.js",
 			'product_price'				=> $price,
 			'plan_list'					=> $plans_list,

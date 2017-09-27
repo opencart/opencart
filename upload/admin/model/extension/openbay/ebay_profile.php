@@ -5,7 +5,7 @@ class ModelExtensionOpenBayEbayProfile extends Model{
 			$this->clearDefault($data['type']);
 		}
 
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_profile` SET `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `type` = '" . (int)$data['type'] . "', `default` = '" . (int)$data['default'] . "', `data` = '" . $this->db->escape(serialize($data['data'])) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_profile` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `type` = '" . (int)$data['type'] . "', `default` = '" . (int)$data['default'] . "', `data` = '" . $this->db->escape(serialize($data['data'])) . "'");
 
 		return $this->db->getLastId();
 	}
@@ -15,7 +15,7 @@ class ModelExtensionOpenBayEbayProfile extends Model{
 			$this->clearDefault($data['type']);
 		}
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "ebay_profile` SET `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `data` = '" . $this->db->escape(serialize($data['data'])) . "', `default` = '" . (int)$data['default'] . "' WHERE `ebay_profile_id` = '" . (int)$id . "' LIMIT 1");
+		$this->db->query("UPDATE `" . DB_PREFIX . "ebay_profile` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `data` = '" . $this->db->escape(serialize($data['data'])) . "', `default` = '" . (int)$data['default'] . "' WHERE `ebay_profile_id` = '" . (int)$id . "' LIMIT 1");
 	}
 
 	public function delete($id) {
@@ -33,8 +33,8 @@ class ModelExtensionOpenBayEbayProfile extends Model{
 
 		if ($qry->num_rows) {
 			$row                = $qry->row;
-			$row['link_edit']   = $this->url->link('extension/openbay/ebay_profile/edit', 'token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'], true);
-			$row['link_delete'] = $this->url->link('extension/openbay/ebay_profile/delete', 'token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'], true);
+			$row['link_edit']   = $this->url->link('extension/openbay/ebay_profile/edit', 'user_token=' . $this->session->data['user_token'] . '&ebay_profile_id=' . $row['ebay_profile_id'], true);
+			$row['link_delete'] = $this->url->link('extension/openbay/ebay_profile/delete', 'user_token=' . $this->session->data['user_token'] . '&ebay_profile_id=' . $row['ebay_profile_id'], true);
 			$row['data']        = unserialize($row['data']);
 
 			return $row;
@@ -55,8 +55,8 @@ class ModelExtensionOpenBayEbayProfile extends Model{
 		if ($qry->num_rows) {
 			$profiles = array();
 			foreach ($qry->rows as $row) {
-				$row['link_edit']   = $this->url->link('extension/openbay/ebay_profile/edit', 'token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'], true);
-				$row['link_delete'] = $this->url->link('extension/openbay/ebay_profile/delete', 'token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'], true);
+				$row['link_edit']   = $this->url->link('extension/openbay/ebay_profile/edit', 'user_token=' . $this->session->data['user_token'] . '&ebay_profile_id=' . $row['ebay_profile_id'], true);
+				$row['link_delete'] = $this->url->link('extension/openbay/ebay_profile/delete', 'user_token=' . $this->session->data['user_token'] . '&ebay_profile_id=' . $row['ebay_profile_id'], true);
 				$row['data']        = !empty($row['data']) ? unserialize($row['data']) : array();
 				$profiles[]         = $row;
 			}

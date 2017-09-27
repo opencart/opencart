@@ -23,7 +23,9 @@ $_['text_validate_success']    = 'Your API details are working correctly! You mu
 $_['text_register_banner']     = 'Click here if you need to register for an account';
 
 // Entry
-$_['entry_api_key']            = 'API key';
+$_['entry_api_key']            = 'API token';
+$_['entry_encryption_key']     = 'Encryption key 1';
+$_['entry_encryption_iv']      = 'Encryption key 2';
 $_['entry_account_id']         = 'Account ID';
 $_['entry_send_orders']        = 'Send orders automatically';
 $_['entry_fulfill_policy']     = 'Fulfillment policy';
@@ -34,7 +36,9 @@ $_['entry_order_id_prefix']    = 'Order ID Prefix';
 $_['entry_only_fill_complete'] = 'All items must be FBA';
 
 // Help
-$_['help_api_key']             = 'This is your API key, obtain this from your OpenBay Pro account area';
+$_['help_api_key']             = 'This is your API token, obtain this from your OpenBay Pro account area';
+$_['help_encryption_key']      = 'This is your Encryption key #1, obtain this from your OpenBay Pro account area';
+$_['help_encryption_iv']       = 'This is your Encryption key #2, obtain this from your OpenBay Pro account area';
 $_['help_account_id']          = 'This is the account ID that matches the registered Amazon account for OpenBay Pro, obtain this from your OpenBay Pro account area';
 $_['help_send_orders']  	   = 'Orders containing matching Fulfillment by Amazon products will be send to Amazon automatically';
 $_['help_fulfill_policy']  	   = 'The default fulfillment policy (FillAll - All fulfillable items in the fulfillment order are shipped. The fulfillment order remains in a processing state until all items are either shipped by Amazon or cancelled by the seller. FillAllAvailable - All fulfillable items in the fulfillment order are shipped. All unfulfillable items in the order are cancelled by Amazon.FillOrKill - If an item in a fulfillment order is determined to be unfulfillable before any shipment in the order moves to the Pending status (the process of picking units from inventory has begun), then the entire order is considered unfulfillable. However, if an item in a fulfillment order is determined to be unfulfillable after a shipment in the order moves to the Pending status, Amazon cancels as much of the fulfillment order as possible.)';
@@ -47,8 +51,10 @@ $_['help_only_fill_complete']  = 'This will only allow orders to be sent for ful
 // Error
 $_['error_api_connect']        = 'Failed to connect to the API';
 $_['error_account_info']       = 'Unable to verify API connection to Fulfillment by Amazon ';
-$_['error_api_key']    		   = 'The API key is invalid';
+$_['error_api_key']    		   = 'The API token is invalid';
 $_['error_api_account_id']     = 'The Account ID is invalid';
+$_['error_encryption_key']     = 'The Encryption key #1 is invalid';
+$_['error_encryption_iv']      = 'The Encryption key #2 is invalid';
 $_['error_validation']    	   = 'There was an error validating your details';
 
 // Tabs

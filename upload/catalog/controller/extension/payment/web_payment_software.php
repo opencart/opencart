@@ -3,17 +3,6 @@ class ControllerExtensionPaymentWebPaymentSoftware extends Controller {
 	public function index() {
 		$this->load->language('extension/payment/web_payment_software');
 
-		$data['text_credit_card'] = $this->language->get('text_credit_card');
-		$data['text_loading'] = $this->language->get('text_loading');
-
-		$data['entry_cc_owner'] = $this->language->get('entry_cc_owner');
-		$data['entry_cc_number'] = $this->language->get('entry_cc_number');
-		$data['entry_cc_expire_date'] = $this->language->get('entry_cc_expire_date');
-		$data['entry_cc_cvv2'] = $this->language->get('entry_cc_cvv2');
-
-		$data['button_confirm'] = $this->language->get('button_confirm');
-		$data['button_back'] = $this->language->get('button_back');
-
 		$data['months'] = array();
 
 		for ($i = 1; $i <= 12; $i++) {
@@ -42,9 +31,9 @@ class ControllerExtensionPaymentWebPaymentSoftware extends Controller {
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		$request  = 'MERCHANT_ID=' . urlencode($this->config->get('web_payment_software_merchant_name'));
-		$request .= '&MERCHANT_KEY=' . urlencode($this->config->get('web_payment_software_merchant_key'));
-		$request .= '&TRANS_TYPE=' . urlencode($this->config->get('web_payment_software_method') == 'capture' ? 'AuthCapture' : 'AuthOnly');
+		$request  = 'MERCHANT_ID=' . urlencode($this->config->get('payment_web_payment_software_merchant_name'));
+		$request .= '&MERCHANT_KEY=' . urlencode($this->config->get('payment_web_payment_software_merchant_key'));
+		$request .= '&TRANS_TYPE=' . urlencode($this->config->get('payment_web_payment_software_method') == 'capture' ? 'AuthCapture' : 'AuthOnly');
 		$request .= '&AMOUNT=' . urlencode($this->currency->format($order_info['total'], $order_info['currency_code'], 1.00000, false));
 		$request .= '&CC_NUMBER=' . urlencode(str_replace(' ', '', $this->request->post['cc_number']));
 		$request .= '&CC_EXP=' . urlencode($this->request->post['cc_expire_date_month'] . substr($this->request->post['cc_expire_date_year'], 2));
@@ -60,7 +49,7 @@ class ControllerExtensionPaymentWebPaymentSoftware extends Controller {
 		$request .= '&CC_EMAIL=' . urlencode($order_info['email']);
 		$request .= '&INVOICE_NUM=' . urlencode($this->session->data['order_id']);
 
-		if ($this->config->get('web_payment_software_mode') == 'test') {
+		if ($this->config->get('payment_web_payment_software_mode') == 'test') {
 			$request .= '&TEST_MODE=1';
 		}
 
@@ -80,7 +69,7 @@ class ControllerExtensionPaymentWebPaymentSoftware extends Controller {
 		curl_close($curl);
 
 		//If in test mode strip results to only contain xml data
-		if ($this->config->get('web_payment_software_mode') == 'test') {
+		if ($this->config->get('payment_web_payment_software_mode') == 'test') {
 			$end_index = strpos($response, '</WebPaymentSoftwareResponse>');
 			$debug = substr($response, $end_index + 30);
 			$response = substr($response, 0, $end_index) . '</WebPaymentSoftwareResponse>';
@@ -132,7 +121,7 @@ class ControllerExtensionPaymentWebPaymentSoftware extends Controller {
 				$message .= (string)$xml->response_text . "\n";
 			}
 
-			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('web_payment_software_order_status_id'), $message, false);
+			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_web_payment_software_order_status_id'), $message, false);
 
 			$json['redirect'] = $this->url->link('checkout/success', '', true);
 		} else {

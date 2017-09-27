@@ -2,35 +2,8 @@
 class ControllerCheckoutRegister extends Controller {
 	public function index() {
 		$this->load->language('checkout/checkout');
-
-		$data['text_checkout_payment_address'] = $this->language->get('text_checkout_payment_address');
-		$data['text_your_details'] = $this->language->get('text_your_details');
-		$data['text_your_address'] = $this->language->get('text_your_address');
-		$data['text_your_password'] = $this->language->get('text_your_password');
-		$data['text_select'] = $this->language->get('text_select');
-		$data['text_none'] = $this->language->get('text_none');
-		$data['text_loading'] = $this->language->get('text_loading');
-
-		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
-		$data['entry_firstname'] = $this->language->get('entry_firstname');
-		$data['entry_lastname'] = $this->language->get('entry_lastname');
-		$data['entry_email'] = $this->language->get('entry_email');
-		$data['entry_telephone'] = $this->language->get('entry_telephone');
-		$data['entry_fax'] = $this->language->get('entry_fax');
-		$data['entry_company'] = $this->language->get('entry_company');
-		$data['entry_address_1'] = $this->language->get('entry_address_1');
-		$data['entry_address_2'] = $this->language->get('entry_address_2');
-		$data['entry_postcode'] = $this->language->get('entry_postcode');
-		$data['entry_city'] = $this->language->get('entry_city');
-		$data['entry_country'] = $this->language->get('entry_country');
-		$data['entry_zone'] = $this->language->get('entry_zone');
+		
 		$data['entry_newsletter'] = sprintf($this->language->get('entry_newsletter'), $this->config->get('config_name'));
-		$data['entry_password'] = $this->language->get('entry_password');
-		$data['entry_confirm'] = $this->language->get('entry_confirm');
-		$data['entry_shipping'] = $this->language->get('entry_shipping');
-
-		$data['button_continue'] = $this->language->get('button_continue');
-		$data['button_upload'] = $this->language->get('button_upload');
 
 		$data['customer_groups'] = array();
 
@@ -76,7 +49,7 @@ class ControllerCheckoutRegister extends Controller {
 		$data['custom_fields'] = $this->model_account_custom_field->getCustomFields();
 
 		// Captcha
-		if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {
+		if ($this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {
 			$data['captcha'] = $this->load->controller('extension/captcha/' . $this->config->get('config_captcha'));
 		} else {
 			$data['captcha'] = '';
@@ -97,7 +70,7 @@ class ControllerCheckoutRegister extends Controller {
 		}
 
 		$data['shipping_required'] = $this->cart->hasShipping();
-
+		
 		$this->response->setOutput($this->load->view('checkout/register', $data));
 	}
 
@@ -182,7 +155,7 @@ class ControllerCheckoutRegister extends Controller {
 				$json['error']['zone'] = $this->language->get('error_zone');
 			}
 
-			if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, "UTF-8")) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, "UTF-8")) > 20)) {
+			if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
 				$json['error']['password'] = $this->language->get('error_password');
 			}
 
@@ -221,7 +194,7 @@ class ControllerCheckoutRegister extends Controller {
 			}
 
 			// Captcha
-			if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {
+			if ($this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {
 				$captcha = $this->load->controller('extension/captcha/' . $this->config->get('config_captcha') . '/validate');
 
 				if ($captcha) {
@@ -233,6 +206,14 @@ class ControllerCheckoutRegister extends Controller {
 		if (!$json) {
 			$customer_id = $this->model_account_customer->addCustomer($this->request->post);
 
+			// Default Payment Address
+			$this->load->model('account/address');
+				
+			$address_id = $this->model_account_address->addAddress($customer_id, $this->request->post);
+			
+			// Set the address as default
+			$this->model_account_customer->editAddressId($customer_id, $address_id);
+			
 			// Clear any previous login attempts for unregistered accounts.
 			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
 
@@ -244,9 +225,6 @@ class ControllerCheckoutRegister extends Controller {
 
 			if ($customer_group_info && !$customer_group_info['approval']) {
 				$this->customer->login($this->request->post['email'], $this->request->post['password']);
-
-				// Default Payment Address
-				$this->load->model('account/address');
 
 				$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 
@@ -262,18 +240,6 @@ class ControllerCheckoutRegister extends Controller {
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
-
-			// Add to activity log
-			if ($this->config->get('config_customer_activity')) {
-				$this->load->model('account/activity');
-
-				$activity_data = array(
-					'customer_id' => $customer_id,
-					'name'        => $this->request->post['firstname'] . ' ' . $this->request->post['lastname']
-				);
-
-				$this->model_account_activity->addActivity('register', $activity_data);
-			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

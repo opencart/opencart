@@ -110,7 +110,7 @@ function version() {
 	setTimeout(function() {
 		$.ajax({
 			type: 'GET',
-			url: 'index.php?route=marketplace/openbay/version&user_token={{ user_token }}',
+			url: 'index.php?route=marketplace/openbay/version&user_token={{ user_token|e('js') }}',
 			dataType: 'json',
 			success: function(json) {
 				$('#openbay-version-loading').hide();
@@ -143,7 +143,7 @@ function getNotifications() {
 	setTimeout(function() {
 		$.ajax({
 			type: 'GET',
-			url: 'index.php?route=marketplace/openbay/notifications&user_token={{ user_token }}',
+			url: 'index.php?route=marketplace/openbay/notifications&user_token={{ user_token|e('js') }}',
 			dataType: 'json',
 			success: function(json) {
 				html = '<h4><i class="fa fa-info-circle"></i>  {{ text_title_messages }}</h4>';

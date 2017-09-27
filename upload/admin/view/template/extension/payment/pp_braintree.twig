@@ -838,7 +838,7 @@ $('.date').datetimepicker({
 $('#button-filter').on('click', function(event) {
 	event.preventDefault();
 
-	var url = 'index.php?route=extension/payment/pp_braintree/search&user_token={{ user_token }}';
+	var url = 'index.php?route=extension/payment/pp_braintree/search&user_token={{ user_token|e('js') }}';
 
 	var filter_transaction_id = $('input[name=\'filter_transaction_id\']').val();
 
@@ -995,7 +995,7 @@ $('#input-3ds-status').on('change', function() {
 
 function getTransaction(transaction_id) {
 	$.ajax({
-		url: 'index.php?route=extension/payment/pp_braintree/getTransaction&user_token={{ user_token }}',
+		url: 'index.php?route=extension/payment/pp_braintree/getTransaction&user_token={{ user_token|e('js') }}',
 		dataType: 'html',
 		data: {
 			transaction_id: transaction_id

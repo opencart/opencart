@@ -181,7 +181,7 @@ $(document).ready(function() {
                         transactionSuccess(json.success);
                         listTransactions();
 
-                        $('#history').load('index.php?route=sale/order/history&user_token={{ user_token }}&order_id={{ order_id }}');
+                        $('#history').load('index.php?route=sale/order/history&user_token={{ user_token|e('js') }}&order_id={{ order_id }}');
                     });
                 }
             },

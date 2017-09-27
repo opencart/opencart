@@ -66,5 +66,21 @@ class ModelUpgrade1000 extends Model {
 		// Update events because we moved the affiliate functions out of the customer class
 		$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `trigger` = 'catalog/model/account/affiliate/addAffiliate/after' WHERE `code` = 'activity_affiliate_add'");
 		$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `trigger` = 'catalog/model/account/affiliate/editAffiliate/after' WHERE `code` = 'activity_affiliate_edit'");
+
+		if (!is_dir(DIR_STORAGE . 'backup')) {
+			mkdir(DIR_STORAGE . 'backup', '0644');
+
+			$handle = fopen(DIR_STORAGE . 'backup/index.html', 'w');
+
+			fclose($handle);
+		}
+
+		if (!is_dir(DIR_STORAGE . 'marketplace')) {
+			mkdir(DIR_STORAGE . 'marketplace', '0644');
+
+			$handle = fopen(DIR_STORAGE . 'marketplace/index.html', 'w');
+
+			fclose($handle);
+		}
 	}
 }

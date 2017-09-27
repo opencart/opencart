@@ -705,6 +705,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$time = time();
 
 			// We create a hash from the data in a similar method to how amazon does things.
+
 			$string  = 'api/marketplace/purchase' . "\n";
 			$string .= $this->config->get('opencart_username') . "\n";
 			$string .= $this->request->server['HTTP_HOST'] . "\n";
@@ -771,7 +772,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		}
 
 		// Check if there is a install zip already there
-		$files = glob(DIR_UPLOAD . '*.tmp');
+		$files = glob(DIR_STORAGE . 'marketplace/*.tmp');
 
 		foreach ($files as $file) {
 			if (is_file($file) && (filectime($file) < (time() - 5))) {
@@ -786,7 +787,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		}
 
 		// Check for any install directories
-		$directories = glob(DIR_UPLOAD . 'tmp-*');
+		$directories = glob(DIR_STORAGE . 'marketplace/tmp-*');
 
 		foreach ($directories as $directory) {
 			if (is_dir($directory) && (filectime($directory) < (time() - 5))) {

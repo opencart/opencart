@@ -175,7 +175,7 @@ $('#session button').on('click', function(e) {
 	var element = this;
 
 	$.ajax({
-		url: 'index.php?route=user/api/deletesession&user_token={{ user_token }}&api_session_id=' + $(element).val(),
+		url: 'index.php?route=user/api/deletesession&user_token={{ user_token|e('js') }}&api_session_id=' + $(element).val(),
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {

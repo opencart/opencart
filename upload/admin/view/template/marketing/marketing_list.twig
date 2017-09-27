@@ -111,7 +111,7 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-	url = 'index.php?route=marketing/marketing&user_token={{ user_token }}';
+	url = 'index.php?route=marketing/marketing&user_token={{ user_token|e('js') }}';
 
 	var filter_name = $('input[name=\'filter_name\']').val();
 

@@ -17,7 +17,15 @@ class ModelToolBackup extends Model {
 	}
 
 	public function getRecords($table, $start = 0, $limit = 100) {
-		$query = $this->db->query("SELECT * FROM `" . $table . "` LIMIT ");
+		if ($start < 0) {
+			$start = 0;
+		}
+
+		if ($limit < 1) {
+			$limit = 10;
+		}
+
+		$query = $this->db->query("SELECT * FROM `" . $table . "` LIMIT " . (int)$start . "," . (int)$limit);
 
 		if ($query->num_rows) {
 			return $query->rows;
@@ -26,8 +34,8 @@ class ModelToolBackup extends Model {
 		}
 	}
 
-	public function getTotalRecords() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . $table . "`");
+	public function getTotalRecords($table) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . $table . "`");
 
 		if ($query->num_rows) {
 			return $query->row['total'];

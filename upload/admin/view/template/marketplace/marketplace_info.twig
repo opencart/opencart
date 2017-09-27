@@ -164,7 +164,7 @@ $('#button-opencart').on('click', function(e) {
 	$('#modal-opencart').remove();
 
 	$.ajax({
-		url: 'index.php?route=marketplace/api&user_token={{ user_token }}',
+		url: 'index.php?route=marketplace/api&user_token={{ user_token|e('js') }}',
 		dataType: 'html',
 		beforeSend: function() {
 			$('#button-opencart').button('loading');
@@ -223,7 +223,7 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
 	var element = this;
 
 	$.ajax({
-		url: 'index.php?route=marketplace/marketplace/purchase&user_token={{ user_token }}&extension_id={{ extension_id }}',
+		url: 'index.php?route=marketplace/marketplace/purchase&user_token={{ user_token|e('js') }}&extension_id={{ extension_id }}',
 		type: 'post',
 		data: $('input[name=\'pin\']'),
 		dataType: 'json',
@@ -266,7 +266,7 @@ $('#tab-download').on('click', '.btn-primary', function(e) {
 	$('#progress-text').html('');
 
 	$.ajax({
-		url: 'index.php?route=marketplace/marketplace/download&user_token={{ user_token }}&extension_id={{ extension_id }}&extension_download_id=' + $(this).attr('data-install'),
+		url: 'index.php?route=marketplace/marketplace/download&user_token={{ user_token|e('js') }}&extension_id={{ extension_id }}&extension_download_id=' + $(this).attr('data-install'),
 		dataType: 'json',
 		beforeSend: function() {
 			$(element).button('loading');
@@ -352,7 +352,7 @@ $('#tab-download').on('click', ' .btn-danger', function(e) {
 	$('#progress-text').html('');
 
 	$.ajax({
-		url: 'index.php?route=marketplace/install/uninstall&user_token={{ user_token }}&extension_install_id=' + $(element).attr('data-uninstall'),
+		url: 'index.php?route=marketplace/install/uninstall&user_token={{ user_token|e('js') }}&extension_install_id=' + $(element).attr('data-uninstall'),
 		dataType: 'json',
 		beforeSend: function() {
 			$(element).button('loading');
@@ -387,12 +387,12 @@ $('#comment').delegate('.pagination a', 'click', function(e) {
 });
 
 // Comment
-$('#comment').load('index.php?route=marketplace/marketplace/comment&user_token={{ user_token }}&extension_id={{ extension_id }}');
+$('#comment').load('index.php?route=marketplace/marketplace/comment&user_token={{ user_token|e('js') }}&extension_id={{ extension_id }}');
 
 // Add comment
 $('#button-comment').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=marketplace/marketplace/addcomment&user_token={{ user_token }}&extension_id={{ extension_id }}',
+		url: 'index.php?route=marketplace/marketplace/addcomment&user_token={{ user_token|e('js') }}&extension_id={{ extension_id }}',
 		type: 'post',
 		dataType: 'json',
 		data: 'comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
@@ -412,7 +412,7 @@ $('#button-comment').on('click', function() {
 			if (json['success']) {
 				$('#tab-comment').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$('#comment').load('index.php?route=marketplace/marketplace/comment&user_token={{ user_token }}&extension_id={{ extension_id }}');
+				$('#comment').load('index.php?route=marketplace/marketplace/comment&user_token={{ user_token|e('js') }}&extension_id={{ extension_id }}');
 
 				$('textarea[name=\'comment\']').val('');
 			}

@@ -81,7 +81,7 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-	var url = 'index.php?route=extension/openbay/fba/fulfillmentlist&user_token={{ user_token }}';
+	var url = 'index.php?route=extension/openbay/fba/fulfillmentlist&user_token={{ user_token|e('js') }}';
 	
 	var filter_date = $('input[name=\'filter_date\']').val();
 	

@@ -89,7 +89,7 @@ $('#form-cron').on('click', '.btn-success', function() {
 	var element = this;
 
 	$.ajax({
-		url: 'index.php?route=marketplace/cron/enable&user_token={{ user_token }}&cron_id=' + $(element).val(),
+		url: 'index.php?route=marketplace/cron/enable&user_token={{ user_token|e('js') }}&cron_id=' + $(element).val(),
 		dataType: 'json',
 		beforeSend: function() {
 			$(element).button('loading');
@@ -120,7 +120,7 @@ $('#form-cron').on('click', '.btn-danger', function() {
 	var element = this;
 
 	$.ajax({
-		url: 'index.php?route=marketplace/cron/disable&user_token={{ user_token }}&cron_id=' + $(element).val(),
+		url: 'index.php?route=marketplace/cron/disable&user_token={{ user_token|e('js') }}&cron_id=' + $(element).val(),
 		dataType: 'json',
 		beforeSend: function() {
 			$(element).button('loading');

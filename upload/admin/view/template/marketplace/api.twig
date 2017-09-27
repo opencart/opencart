@@ -21,7 +21,7 @@
 <script type="text/javascript"><!--
 $('#button-save').on('click', function(e) {
 	$.ajax({
-		url: 'index.php?route=marketplace/api/save&user_token={{ user_token }}',
+		url: 'index.php?route=marketplace/api/save&user_token={{ user_token|e('js') }}',
 		type: 'post',
 		dataType: 'json',
 		data: $('#modal-opencart :input'),

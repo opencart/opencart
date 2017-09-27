@@ -65,7 +65,7 @@
 <script type="text/javascript"><!--
 $('input[name=\'developer_theme\'], input[name=\'developer_sass\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=common/developer/edit&user_token={{ user_token }}',
+		url: 'index.php?route=common/developer/edit&user_token={{ user_token|e('js') }}',
 		type: 'post',
 		data: $('input[name=\'developer_theme\']:checked, input[name=\'developer_sass\']:checked'),
 		dataType: 'json',
@@ -96,7 +96,7 @@ $('#modal-developer table button').on('click', function() {
 	var element = this;
 
 	$.ajax({
-		url: 'index.php?route=common/developer/' + $(element).attr('value') + '&user_token={{ user_token }}',
+		url: 'index.php?route=common/developer/' + $(element).attr('value') + '&user_token={{ user_token|e('js') }}',
 		dataType: 'json',
 		beforeSend: function() {
 			$(element).button('loading');

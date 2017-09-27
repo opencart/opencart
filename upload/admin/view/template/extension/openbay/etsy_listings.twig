@@ -126,7 +126,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-var url = 'index.php?route=extension/openbay/etsy_product/listings&user_token={{ user_token }}&page={{ filter.page }}';
+var url = 'index.php?route=extension/openbay/etsy_product/listings&user_token={{ user_token|e('js') }}&page={{ filter.page }}';
 
 var filter_keywords = $('input[name=\'keywords\']').val();
 
@@ -141,7 +141,7 @@ if (filter_status) {
 }
 
 $('#button-filter').on('click', function() {
-  var url = 'index.php?route=extension/openbay/etsy_product/listings&user_token={{ user_token }}';
+  var url = 'index.php?route=extension/openbay/etsy_product/listings&user_token={{ user_token|e('js') }}';
 
   var status = $('select[name=\'status\']').val();
 
@@ -176,7 +176,7 @@ function addLink() {
   }
 
   $.ajax({
-    url: 'index.php?route=extension/openbay/etsy_product/addLink&user_token={{ user_token }}',
+    url: 'index.php?route=extension/openbay/etsy_product/addLink&user_token={{ user_token|e('js') }}',
     dataType: 'json',
     method: 'POST',
     data: { 'product_id' : product_id, 'etsy_id' : etsy_id },
@@ -202,7 +202,7 @@ function addLink() {
 
 function deleteLink(etsy_link_id) {
   $.ajax({
-    url: 'index.php?route=extension/openbay/etsy_product/deleteLink&user_token={{ user_token }}',
+    url: 'index.php?route=extension/openbay/etsy_product/deleteLink&user_token={{ user_token|e('js') }}',
     dataType: 'json',
     method: 'POST',
     data: { 'etsy_link_id' : etsy_link_id },
@@ -229,7 +229,7 @@ function endListing(etsy_item_id) {
 
   if (pass == true) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/etsy_product/endlisting&user_token={{ user_token }}',
+      url: 'index.php?route=extension/openbay/etsy_product/endlisting&user_token={{ user_token|e('js') }}',
       dataType: 'json',
       method: 'POST',
       data: { 'etsy_item_id' : etsy_item_id },
@@ -257,7 +257,7 @@ function deactivateListing(etsy_item_id) {
 
   if (pass == true) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/etsy_product/deactivatelisting&user_token={{ user_token }}',
+      url: 'index.php?route=extension/openbay/etsy_product/deactivatelisting&user_token={{ user_token|e('js') }}',
       dataType: 'json',
       method: 'POST',
       data: { 'etsy_item_id' : etsy_item_id },
@@ -285,7 +285,7 @@ function activateListing(etsy_item_id) {
 
   if (pass == true) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/etsy_product/activatelisting&user_token={{ user_token }}',
+      url: 'index.php?route=extension/openbay/etsy_product/activatelisting&user_token={{ user_token|e('js') }}',
       dataType: 'json',
       method: 'POST',
       data: { 'etsy_item_id' : etsy_item_id },
@@ -311,7 +311,7 @@ function activateListing(etsy_item_id) {
 $('input[name=\'add_link_product\']').autocomplete({
   'source': function(request, response) {
     $.ajax({
-      url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+      url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token|e('js') }}&filter_name=' +  encodeURIComponent(request),
       dataType: 'json',
       success: function(json) {
         response($.map(json, function(item) {

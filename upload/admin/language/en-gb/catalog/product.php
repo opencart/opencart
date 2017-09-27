@@ -27,6 +27,7 @@ $_['column_image']           = 'Image';
 $_['column_price']           = 'Price';
 $_['column_quantity']        = 'Quantity';
 $_['column_status']          = 'Status';
+$_['column_noindex']         = 'Index';
 $_['column_action']          = 'Action';
 
 // Entry
@@ -86,6 +87,7 @@ $_['entry_tag']              = 'Product Tags';
 $_['entry_reward']           = 'Reward Points';
 $_['entry_layout']           = 'Layout Override';
 $_['entry_recurring']        = 'Recurring Profile';
+$_['entry_noindex']          = 'Index';
 
 // Help
 $_['help_sku']               = 'Stock Keeping Unit';

@@ -48,6 +48,10 @@ class ControllerCatalogProduct extends Controller {
 			if (isset($this->request->get['filter_status'])) {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
 			}
+			
+			if (isset($this->request->get['filter_noindex'])) {
+				$url .= '&filter_noindex=' . $this->request->get['filter_noindex'];
+			}
 
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
@@ -99,6 +103,10 @@ class ControllerCatalogProduct extends Controller {
 
 			if (isset($this->request->get['filter_status'])) {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
+			}
+			
+			if (isset($this->request->get['filter_noindex'])) {
+				$url .= '&filter_noindex=' . $this->request->get['filter_noindex'];
 			}
 
 			if (isset($this->request->get['sort'])) {
@@ -154,6 +162,10 @@ class ControllerCatalogProduct extends Controller {
 			if (isset($this->request->get['filter_status'])) {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
 			}
+			
+			if (isset($this->request->get['filter_noindex'])) {
+				$url .= '&filter_noindex=' . $this->request->get['filter_noindex'];
+			}
 
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
@@ -208,6 +220,10 @@ class ControllerCatalogProduct extends Controller {
 			if (isset($this->request->get['filter_status'])) {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
 			}
+			
+			if (isset($this->request->get['filter_noindex'])) {
+				$url .= '&filter_noindex=' . $this->request->get['filter_noindex'];
+			}
 
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
@@ -257,6 +273,12 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$filter_status = '';
 		}
+		
+		if (isset($this->request->get['filter_noindex'])) {
+			$filter_noindex = $this->request->get['filter_noindex'];
+		} else {
+			$filter_noindex = '';
+		}
 
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
@@ -297,6 +319,10 @@ class ControllerCatalogProduct extends Controller {
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
+		
+		if (isset($this->request->get['filter_noindex'])) {
+			$url .= '&filter_noindex=' . $this->request->get['filter_noindex'];
+		}
 
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
@@ -332,6 +358,7 @@ class ControllerCatalogProduct extends Controller {
 			'filter_price'	  => $filter_price,
 			'filter_quantity' => $filter_quantity,
 			'filter_status'   => $filter_status,
+			'filter_noindex'  => $filter_noindex,
 			'sort'            => $sort,
 			'order'           => $order,
 			'start'           => ($page - 1) * $this->config->get('config_limit_admin'),
@@ -371,7 +398,8 @@ class ControllerCatalogProduct extends Controller {
 				'price'      => $this->currency->format($result['price'], $this->config->get('config_currency')),
 				'special'    => $special,
 				'quantity'   => $result['quantity'],
-				'status'     => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+				'status'     => $result['status'] ? $this->language->get('text_enabled_short') : $this->language->get('text_disabled_short'),
+				'noindex'    => $result['noindex'] ? $this->language->get('text_enabled_short') : $this->language->get('text_disabled_short'),
 				'href_shop'  => HTTP_CATALOG . 'index.php?route=product/product&product_id=' . $result['product_id'],
 				'edit'       => $this->url->link('catalog/product/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . $url, true)
 			);
@@ -420,6 +448,10 @@ class ControllerCatalogProduct extends Controller {
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
+		
+		if (isset($this->request->get['filter_noindex'])) {
+			$url .= '&filter_noindex=' . $this->request->get['filter_noindex'];
+		}
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -436,6 +468,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['sort_price'] = $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . '&sort=p.price' . $url, true);
 		$data['sort_quantity'] = $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . '&sort=p.quantity' . $url, true);
 		$data['sort_status'] = $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . '&sort=p.status' . $url, true);
+		$data['sort_noindex'] = $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . '&sort=p.noindex' . $url, true);
 		$data['sort_order'] = $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . '&sort=p.sort_order' . $url, true);
 
 		$url = '';
@@ -458,6 +491,10 @@ class ControllerCatalogProduct extends Controller {
 
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
+		
+		if (isset($this->request->get['filter_noindex'])) {
+			$url .= '&filter_noindex=' . $this->request->get['filter_noindex'];
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -483,6 +520,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['filter_price'] = $filter_price;
 		$data['filter_quantity'] = $filter_quantity;
 		$data['filter_status'] = $filter_status;
+		$data['filter_noindex'] = $filter_noindex;
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
@@ -553,6 +591,10 @@ class ControllerCatalogProduct extends Controller {
 
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
+		
+		if (isset($this->request->get['filter_noindex'])) {
+			$url .= '&filter_noindex=' . $this->request->get['filter_noindex'];
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -798,6 +840,14 @@ class ControllerCatalogProduct extends Controller {
 			$data['status'] = $product_info['status'];
 		} else {
 			$data['status'] = true;
+		}
+		
+		if (isset($this->request->post['noindex'])) {
+			$data['noindex'] = $this->request->post['noindex'];
+		} elseif (!empty($product_info)) {
+			$data['noindex'] = $product_info['noindex'];
+		} else {
+			$data['noindex'] = 1;
 		}
 
 		if (isset($this->request->post['weight'])) {

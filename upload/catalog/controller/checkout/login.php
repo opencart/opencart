@@ -1,4 +1,7 @@
 <?php
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ControllerCheckoutLogin extends Controller {
 	public function index() {
 		$this->load->language('checkout/checkout');

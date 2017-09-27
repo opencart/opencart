@@ -18,6 +18,7 @@ $_['text_keyword']      = 'Do not use spaces, instead replace spaces with - and 
 // Column
 $_['column_name']       = 'Manufacturer Name';
 $_['column_sort_order'] = 'Sort Order';
+$_['column_noindex']    = 'Index';
 $_['column_action']     = 'Action';
 
 // Entry
@@ -32,6 +33,7 @@ $_['entry_keyword']     	 = 'Keyword';
 $_['entry_image']       	 = 'Image';
 $_['entry_sort_order']  	 = 'Sort Order';
 $_['entry_type']        	 = 'Type';
+$_['entry_noindex']     	 = 'Index';
 $_['entry_layout']           = 'Layout Override';
 $_['tab_design']             = 'Design';
 

@@ -435,6 +435,14 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['category_seo_url'] = array();
 		}
+		
+		if (isset($this->request->post['noindex'])) {
+			$data['noindex'] = $this->request->post['noindex'];
+		} elseif (!empty($category_info)) {
+			$data['noindex'] = $category_info['noindex'];
+		} else {
+			$data['noindex'] = 1;
+		}
 				
 		if (isset($this->request->post['category_layout'])) {
 			$data['category_layout'] = $this->request->post['category_layout'];

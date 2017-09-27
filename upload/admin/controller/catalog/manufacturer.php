@@ -179,6 +179,7 @@ class ControllerCatalogManufacturer extends Controller {
 				'manufacturer_id' => $result['manufacturer_id'],
 				'name'            => $result['name'],
 				'sort_order'      => $result['sort_order'],
+				'noindex'  	  	  => $result['noindex'],
 				'href_shop'  	  => HTTP_CATALOG . 'index.php?route=product/manufacturer/info&manufacturer_id=' . ($result['manufacturer_id']),
 				'edit'            => $this->url->link('catalog/manufacturer/edit', 'user_token=' . $this->session->data['user_token'] . '&manufacturer_id=' . $result['manufacturer_id'] . $url, true)
 			);
@@ -218,7 +219,8 @@ class ControllerCatalogManufacturer extends Controller {
 
 		$data['sort_name'] = $this->url->link('catalog/manufacturer', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url, true);
 		$data['sort_sort_order'] = $this->url->link('catalog/manufacturer', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url, true);
-
+		$data['sort_noindex'] = $this->url->link('catalog/manufacturer', 'user_token=' . $this->session->data['user_token'] . '&sort=noindex' . $url, true);
+ 
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -391,6 +393,14 @@ class ControllerCatalogManufacturer extends Controller {
 		}
 
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+		
+		if (isset($this->request->post['noindex'])) {
+			$data['noindex'] = $this->request->post['noindex'];
+		} elseif (!empty($manufacturer_info)) {
+			$data['noindex'] = $manufacturer_info['noindex'];
+		} else {
+			$data['noindex'] = 1;
+		}
 		
 		if (isset($this->request->post['manufacturer_layout'])) {
 			$data['manufacturer_layout'] = $this->request->post['manufacturer_layout'];

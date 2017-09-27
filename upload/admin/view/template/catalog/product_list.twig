@@ -128,6 +128,22 @@
               
               </select>
             </div>
+			<div class="form-group">
+              <label class="control-label" for="input-noindex">{{ entry_noindex }}</label>
+              <select name="filter_noindex" id="input-noindex" class="form-control">
+                <option value=""></option>
+                  {% if filter_noindex == '1' %}
+                <option value="1" selected="selected">{{ text_enabled }}</option>
+                  {% else %}
+                <option value="1">{{ text_enabled }}</option>
+                  {% endif %}
+                  {% if filter_noindex == '0' %}
+                <option value="0" selected="selected">{{ text_disabled }}</option>
+                  {% else %}
+                <option value="0">{{ text_disabled }}</option>
+                  {% endif %}
+              </select>
+			</div>
             <div class="form-group text-right">
               <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
             </div>
@@ -152,7 +168,8 @@
                       <td class="text-right">{% if sort == 'p.price' %} <a href="{{ sort_price }}" class="{{ order|lower }}">{{ column_price }}</a> {% else %} <a href="{{ sort_price }}">{{ column_price }}</a> {% endif %}</td>
                       <td class="text-right">{% if sort == 'p.quantity' %} <a href="{{ sort_quantity }}" class="{{ order|lower }}">{{ column_quantity }}</a> {% else %} <a href="{{ sort_quantity }}">{{ column_quantity }}</a> {% endif %}</td>
                       <td class="text-left">{% if sort == 'p.status' %} <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a> {% else %} <a href="{{ sort_status }}">{{ column_status }}</a> {% endif %}</td>
-                      <td class="text-right">{{ column_action }}</td>
+                      <td class="text-left">{% if sort == 'p.noindex' %} <a href="{{ sort_noindex }}" class="{{ order|lower }}">{{ column_noindex }}</a> {% else %} <a href="{{ sort_noindex }}">{{ column_noindex }}</a> {% endif %}</td>
+					  <td class="text-right">{{ column_action }}</td>
                     </tr>
                   </thead>
                   <tbody>
@@ -175,6 +192,7 @@
                       {% endif %}</td>
                     <td class="text-right">{% if product.quantity <= 0 %} <span class="label label-warning">{{ product.quantity }}</span> {% elseif product.quantity <= 5 %} <span class="label label-danger">{{ product.quantity }}</span> {% else %} <span class="label label-success">{{ product.quantity }}</span> {% endif %}</td>
                     <td class="text-left">{{ product.status }}</td>
+					<td class="text-left">{{ product.noindex }}</td>
                     <td class="text-right">
 						<a target="_blank" href="{{ product.href_shop }}" data-toggle="tooltip" title="{{ button_shop }}" class="btn btn-success"><i class="fa fa-eye"></i></a>
 						<a href="{{ product.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
@@ -232,6 +250,11 @@ $('#button-filter').on('click', function() {
 
 	if (filter_status !== '') {
 		url += '&filter_status=' + encodeURIComponent(filter_status);
+	}
+	
+	var filter_noindex = $('select[name=\'filter_noindex\']').val();
+	if (filter_noindex !== '') {
+		url += '&filter_noindex=' + encodeURIComponent(filter_noindex);
 	}
 
 	location = 'index.php?route=catalog/product&user_token={{ user_token }}' + url;

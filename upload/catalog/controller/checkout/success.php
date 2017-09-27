@@ -29,8 +29,10 @@ class ControllerCheckoutSuccess extends Controller {
 
 		if (! empty($this->session->data['last_order_id']) ) {
 			$this->document->setTitle(sprintf($this->language->get('heading_title_customer'), $this->session->data['last_order_id']));
+			$this->document->setRobots('noindex,follow');
 		} else {
 			$this->document->setTitle($this->language->get('heading_title'));
+			$this->document->setRobots('noindex,follow');
 		}
 
 		$data['breadcrumbs'] = array();

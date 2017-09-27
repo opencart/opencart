@@ -31,6 +31,10 @@ class ControllerInformationInformation extends Controller {
 				$this->document->setTitle($information_info['title']);
 			}
 			
+			if ($information_info['noindex'] <= 0) {
+				$this->document->setRobots('noindex,follow');
+			}
+			
 			if ($information_info['meta_h1']) {
 				$data['heading_title'] = $information_info['meta_h1'];
 			} else {

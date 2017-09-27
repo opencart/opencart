@@ -37,6 +37,7 @@ $_['entry_column']           = 'Columns';
 $_['entry_sort_order']       = 'Sort Order';
 $_['entry_status']           = 'Status';
 $_['entry_layout']           = 'Layout Override';
+$_['entry_noindex']          = 'Index';
 
 // Help
 $_['help_filter']            = '(Autocomplete)';

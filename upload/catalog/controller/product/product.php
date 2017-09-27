@@ -223,6 +223,10 @@ class ControllerProductProduct extends Controller {
 				$this->document->setTitle($product_info['name']);
 			}
 			
+			if ($product_info['noindex'] <= 0) {
+				$this->document->setRobots('noindex,follow');
+			}
+			
 			if ($product_info['meta_h1']) {
 				$data['heading_title'] = $product_info['meta_h1'];
 			} else {

@@ -45,6 +45,11 @@
                     {% else %}
                     <a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>
                     {% endif %}</td>
+				  <td class="text-right">{% if sort == 'noindex' %}
+                    <a href="{{ sort_noindex }}" class="{{ order|lower }}">{{ column_noindex }}</a>
+                    {% else %}
+                    <a href="{{ sort_noindex }}">{{ column_noindex }}</a>
+					{% endif %}</td>
                   <td class="text-right">{{ column_action }}</td>
                 </tr>
               </thead>
@@ -59,6 +64,7 @@
                     {% endif %}</td>
                   <td class="text-left">{{ manufacturer.name }}</td>
                   <td class="text-right">{{ manufacturer.sort_order }}</td>
+				  <td class="text-right">{{ manufacturer.noindex }}</td>
                   <td class="text-right">
 					<a target="_blank" href="{{ manufacturer.href_shop }}" data-toggle="tooltip" title="{{ button_shop }}" class="btn btn-success"><i class="fa fa-eye"></i></a>
 					<a href="{{ manufacturer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>

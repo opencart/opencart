@@ -16,6 +16,7 @@ $_['text_keyword']           = 'Do not use spaces, instead replace spaces with -
 // Column
 $_['column_title']           = 'Information Title';
 $_['column_sort_order']      = 'Sort Order';
+$_['column_noindex']         = 'Index';
 $_['column_action']          = 'Action';
 
 // Entry
@@ -31,6 +32,7 @@ $_['entry_bottom']           = 'Bottom';
 $_['entry_status']           = 'Status';
 $_['entry_sort_order']       = 'Sort Order';
 $_['entry_layout']           = 'Layout Override';
+$_['entry_noindex']          = 'Index';
 
 // Help
 $_['help_bottom']            = 'Display in the bottom footer.';

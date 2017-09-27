@@ -181,6 +181,7 @@ class ControllerCatalogInformation extends Controller {
 				'information_id' => $result['information_id'],
 				'title'          => $result['title'],
 				'sort_order'     => $result['sort_order'],
+				'noindex'  	  	 => $result['noindex'],
 				'href_shop'  	 => HTTP_CATALOG . 'index.php?route=information/information&information_id=' . ($result['information_id']),
 				'edit'           => $this->url->link('catalog/information/edit', 'user_token=' . $this->session->data['user_token'] . '&information_id=' . $result['information_id'] . $url, true)
 			);
@@ -220,7 +221,8 @@ class ControllerCatalogInformation extends Controller {
 
 		$data['sort_title'] = $this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . '&sort=id.title' . $url, true);
 		$data['sort_sort_order'] = $this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . '&sort=i.sort_order' . $url, true);
-
+		$data['sort_noindex'] = $this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . '&sort=i.noindex' . $url, true);
+		
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -387,6 +389,14 @@ class ControllerCatalogInformation extends Controller {
 			$data['status'] = $information_info['status'];
 		} else {
 			$data['status'] = true;
+		}
+		
+		if (isset($this->request->post['noindex'])) {
+			$data['noindex'] = $this->request->post['noindex'];
+		} elseif (!empty($information_info)) {
+			$data['noindex'] = $information_info['noindex'];
+		} else {
+			$data['noindex'] = 1;
 		}
 
 		if (isset($this->request->post['sort_order'])) {

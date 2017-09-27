@@ -1,4 +1,7 @@
 <?php
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ControllerProductSearch extends Controller {
 	public function index() {
 		$this->load->language('product/search');
@@ -72,6 +75,8 @@ class ControllerProductSearch extends Controller {
 		} else {
 			$this->document->setTitle($this->language->get('heading_title'));
 		}
+		
+		$this->document->setRobots('noindex,follow');
 
 		$data['breadcrumbs'] = array();
 
@@ -128,6 +133,8 @@ class ControllerProductSearch extends Controller {
 		} else {
 			$data['heading_title'] = $this->language->get('heading_title');
 		}
+		
+		$this->document->setRobots('noindex,follow');
 
 		$data['text_compare'] = sprintf($this->language->get('text_compare'), (isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0));
 

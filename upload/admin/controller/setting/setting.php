@@ -131,6 +131,18 @@ class ControllerSettingSetting extends Controller {
 			$data['error_encryption'] = '';
 		}
 
+		if (isset($this->error['extension'])) {
+			$data['error_extension'] = $this->error['extension'];
+		} else {
+			$data['error_extension'] = '';
+		}
+
+		if (isset($this->error['mime'])) {
+			$data['error_mime'] = $this->error['mime'];
+		} else {
+			$data['error_mime'] = '';
+		}
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -949,8 +961,10 @@ class ControllerSettingSetting extends Controller {
 		$extensions = explode("\n", $this->request->post['config_file_ext_allowed']);
 
 		foreach ($extensions as $extension) {
-			if (in_array($extension, $disallowed)) {
+			if (in_array(trim($extension), $disallowed)) {
 				$this->error['extension'] = $this->language->get('error_extension');
+
+				break;
 			}
 		}
 
@@ -963,8 +977,10 @@ class ControllerSettingSetting extends Controller {
 		$mimes = explode("\n", $this->request->post['config_file_mime_allowed']);
 
 		foreach ($mimes as $mime) {
-			if (in_array($mime, $disallowed)) {
-				$this->error['extension'] = $this->language->get('error_mime');
+			if (in_array(trim($mime), $disallowed)) {
+				$this->error['mime'] = $this->language->get('error_mime');
+
+				break;
 			}
 		}
 

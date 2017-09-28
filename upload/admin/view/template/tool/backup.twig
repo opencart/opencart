@@ -3,8 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="button" data-toggle="tooltip" title="{{ button_backup }}" class="btn btn-primary"><i class="fa fa-upload"></i></button>
-        <button type="button" id="button-backup" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_import }}" class="btn btn-primary"><i class="fa fa-upload"></i></button>
+        <button type="button" id="button-upload" data-toggle="tooltip" title="{{ button_upload }}" class="btn btn-primary"><i class="fa fa-upload"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
@@ -57,6 +56,11 @@
                 <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', true);" class="btn btn-link">{{ text_select_all }}</button> / <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', false);" class="btn btn-link">{{ text_unselect_all }}</button>
               </div>
             </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="button" id="button-backup" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_import }}" class="btn btn-success"><i class="fa fa-upload"></i> Backup</button>
+              </div>
+            </div>
           </fieldset>
           <fieldset>
             <legend>Backup History</legend>
@@ -95,6 +99,8 @@ $('#button-backup').on('click', function() {
 			$('#button-backup').button('reset');
 		},
 		success: function(json) {
+			console.log(json);
+
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
@@ -107,6 +113,41 @@ $('#button-backup').on('click', function() {
 
 			if (json['next']) {
 				next(json['next'], 1);
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+// Restore
+$('#history').on('click', '.btn-warning', function() {
+	var element = this;
+
+	$.ajax({
+		url: 'index.php?route=tool/backup/restore&&user_token={{ user_token }}&filename=' + encodeURIComponent($(element).val()),
+		type: 'post',
+		dataType: 'json',
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(json) {
+			console.log(json);
+
+			$('.alert-dismissible').remove();
+
+			if (json['error']) {
+				$('#history').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+
+			if (json['success']) {
+				$('#history').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+				$('#history').load('index.php?route=tool/backup/history&&user_token={{ user_token }}');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -149,21 +190,18 @@ $('#button-upload').on('click', function() {
 
 	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="upload" /></form>');
 
-	$('#form-upload input[name=\'import\']').trigger('click');
+	$('#form-upload input[name=\'upload\']').trigger('click');
 
 	if (typeof timer != 'undefined') {
 		clearInterval(timer);
 	}
 
 	timer = setInterval(function() {
-		if ($('#form-upload input[name=\'import\']').val() != '') {
+		if ($('#form-upload input[name=\'upload\']').val() != '') {
 			clearInterval(timer);
 
-			$('#progress-import .progress-bar').attr('aria-valuenow', 0);
-			$('#progress-import .progress-bar').css('width', '0%');
-
 			$.ajax({
-				url: 'index.php?route=tool/backup/import&&user_token={{ user_token }}',
+				url: 'index.php?route=tool/backup/upload&&user_token={{ user_token }}',
 				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),
@@ -171,29 +209,22 @@ $('#button-upload').on('click', function() {
 				contentType: false,
 				processData: false,
 				beforeSend: function() {
-					$('#button-import').button('loading');
+					$('#button-upload').button('loading');
 				},
 				complete: function() {
-					$('#button-import').button('reset');
+					$('#button-upload').button('reset');
 				},
 				success: function(json) {
 					$('.alert-dismissible').remove();
 
 					if (json['error']) {
-						$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+						$('#history').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 					}
 
 					if (json['success']) {
-						$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-					}
+						$('#history').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-					if (json['total']) {
-						$('#progress-import .progress-bar').attr('aria-valuenow', json['total']);
-						$('#progress-import .progress-bar').css('width', json['total'] + '%');
-					}
-
-					if (json['next']) {
-						next(json['next']);
+						$('#history').load('index.php?route=tool/backup/history&&user_token={{ user_token }}');
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {
@@ -204,23 +235,19 @@ $('#button-upload').on('click', function() {
 	}, 500);
 });
 
-$('#button-upload').on('click', function() {
-
-
-
-});
-
 // Delete
 $('#history').on('click', '.btn-danger', function() {
+	var element = this;
+
 	$.ajax({
-		url: 'index.php?route=tool/backup/backup&&user_token={{ user_token }}&filename=' + $(this).val(),
+		url: 'index.php?route=tool/backup/delete&&user_token={{ user_token }}&filename=' + encodeURIComponent($(element).val()),
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-backup').button('loading');
+			$(element).button('loading');
 		},
 		complete: function() {
-			$('#button-backup').button('reset');
+			$(element).button('reset');
 		},
 		success: function(json) {
 			$('.alert-dismissible').remove();

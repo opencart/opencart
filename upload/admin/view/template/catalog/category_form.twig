@@ -252,7 +252,7 @@
 $('input[name=\'path\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token|e('js') }}&filter_name=' + encodeURIComponent(request),
+			url: 'index.php?route=catalog/category/autocomplete&&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				json.unshift({
@@ -279,7 +279,7 @@ $('input[name=\'path\']').autocomplete({
 $('input[name=\'filter\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/filter/autocomplete&user_token={{ user_token|e('js') }}&filter_name=' + encodeURIComponent(request),
+			url: 'index.php?route=catalog/filter/autocomplete&&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {

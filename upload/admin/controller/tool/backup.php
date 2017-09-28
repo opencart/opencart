@@ -76,7 +76,8 @@ class ControllerToolBackup extends Controller {
 			$data['histories'][] = array(
 				'filename'   => basename($file),
 				'size'       => round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i],
-				'date_added' => date($this->language->get('datetime_format'), filemtime($file))
+				'date_added' => date($this->language->get('datetime_format'), filemtime($file)),
+				'download'   => $this->url->link('tool/backup/download', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode(basename($file)), true),
 			);
 		}
 
@@ -296,6 +297,7 @@ class ControllerToolBackup extends Controller {
 	}
 
 	public function upload() {
+		/*
 		$this->load->language('tool/backup');
 
 		$json = array();
@@ -344,63 +346,48 @@ class ControllerToolBackup extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+		*/
 	}
 
 	public function download() {
-		if (isset($this->request->get['import'])) {
-			$filename = html_entity_decode($this->request->get['import'], ENT_QUOTES, 'UTF-8');
+		$this->load->language('tool/backup');
+
+		$json = array();
+
+		if (isset($this->request->get['filename'])) {
+			$filename = $this->request->get['filename'];
 		} else {
 			$filename = '';
 		}
 
-
-
-		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/download', '', true);
-
-			$this->response->redirect($this->url->link('account/login', '', true));
+		// Check user has permission
+		if (!$this->user->hasPermission('modify', 'tool/backup')) {
+			$this->response->redirect($this->url->link('error/permission', '', true));
 		}
 
-		$this->load->model('account/download');
+		$file = DIR_STORAGE . 'backup/' . $filename;
 
-		if (isset($this->request->get['download_id'])) {
-			$download_id = $this->request->get['download_id'];
-		} else {
-			$download_id = 0;
+		if (!is_file($file)) {
+			$this->response->redirect($this->url->link('error/not_found', '', true));
 		}
 
-		$download_info = $this->model_account_download->getDownload($download_id);
+		if (!headers_sent()) {
+			header('Content-Type: application/octet-stream');
+			header('Content-Disposition: attachment; filename="' . ($mask ? $mask : basename($file)) . '"');
+			header('Expires: 0');
+			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+			header('Pragma: public');
+			header('Content-Length: ' . filesize($file));
 
-		if ($download_info) {
-			$file = DIR_DOWNLOAD . $download_info['filename'];
-			$mask = basename($download_info['mask']);
-
-			if (!headers_sent()) {
-				if (file_exists($file)) {
-					header('Content-Type: application/octet-stream');
-					header('Content-Disposition: attachment; filename="' . ($mask ? $mask : basename($file)) . '"');
-					header('Expires: 0');
-					header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-					header('Pragma: public');
-					header('Content-Length: ' . filesize($file));
-
-					if (ob_get_level()) {
-						ob_end_clean();
-					}
-
-					readfile($file, 'rb');
-
-					$this->model_account_download->addDownloadReport($download_id, $this->request->server['REMOTE_ADDR']);
-
-					exit();
-				} else {
-					exit('Error: Could not find file ' . $file . '!');
-				}
-			} else {
-				exit('Error: Headers already sent out!');
+			if (ob_get_level()) {
+				ob_end_clean();
 			}
+
+			readfile($file, 'rb');
+
+			exit();
 		} else {
-			$this->response->redirect($this->url->link('account/download', '', true));
+			exit('Error: Headers already sent out!');
 		}
 	}
 
@@ -409,19 +396,32 @@ class ControllerToolBackup extends Controller {
 
 		$json = array();
 
-		// Check user has permission
-		if (!$this->user->hasPermission('modify', 'tool/backup')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
 		if (isset($this->request->get['filename'])) {
 			$filename = $this->request->get['filename'];
 		} else {
 			$filename = '';
 		}
 
-		if (!$json) {
+		// Check user has permission
+		if (!$this->user->hasPermission('modify', 'tool/backup')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
 
+		$file = DIR_STORAGE . 'backup/' . $filename;
+
+		if (!is_file($file)) {
+			$json['error'] = $this->language->get('error_file');
+		}
+
+		// Validate the directory
+		if (substr(str_replace('\\', '/', realpath($file)), 0, strlen(DIR_STORAGE . 'backup/')) != str_replace('\\', '/', DIR_STORAGE . 'backup/')) {
+			$json['error'] = $this->language->get('error_directory');
+		}
+
+		if (!$json) {
+			$json['success'] = $this->language->get('text_success');
+
+			unlink($file);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

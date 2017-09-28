@@ -131,7 +131,7 @@ $('#customer-approval').delegate('.pagination a', 'click', function(e) {
 	$('#customer-approval').load(this.href);
 });
 
-$('#customer-approval').load('index.php?route=customer/customer_approval/customer_approval&user_token={{ user_token|e('js') }}');
+$('#customer-approval').load('index.php?route=customer/customer_approval/customer_approval&&user_token={{ user_token }}');
 
 $('#customer-approval').on('click', '.btn-success, .btn-danger', function(e) {
 	e.preventDefault();
@@ -155,7 +155,7 @@ $('#customer-approval').on('click', '.btn-success, .btn-danger', function(e) {
 			}
 
 			if (json['success']) {
-				$('#customer-approval').load('index.php?route=customer/customer_approval/customer_approval&user_token={{ user_token|e('js') }}');
+				$('#customer-approval').load('index.php?route=customer/customer_approval/customer_approval&&user_token={{ user_token }}');
 
 				$('#customer-approval').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
@@ -199,14 +199,14 @@ $('#button-filter').on('click', function() {
 		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
 	}
 
-	$('#customer-approval').load('index.php?route=customer/customer_approval/customer_approval&user_token={{ user_token|e('js') }}' + url);
+	$('#customer-approval').load('index.php?route=customer/customer_approval/customer_approval&&user_token={{ user_token }}' + url);
 });
 //--></script>
 <script type="text/javascript"><!--
 $('input[name=\'filter_name\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token|e('js') }}&filter_name=' + encodeURIComponent(request),
+			url: 'index.php?route=customer/customer/autocomplete&&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
@@ -226,7 +226,7 @@ $('input[name=\'filter_name\']').autocomplete({
 $('input[name=\'filter_email\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token|e('js') }}&filter_email=' + encodeURIComponent(request),
+			url: 'index.php?route=customer/customer/autocomplete&&user_token={{ user_token }}&filter_email=' + encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {

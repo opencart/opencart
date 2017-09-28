@@ -74,7 +74,7 @@ $('#history').delegate('.pagination a', 'click', function(e) {
 	$('#history').load(this.href);
 });
 
-$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token|e('js') }}');
+$('#history').load('index.php?route=tool/backup/history&&user_token={{ user_token }}');
 //--></script>
 <script type="text/javascript"><!--
 $('#button-backup').on('click', function() {
@@ -85,7 +85,7 @@ $('#button-backup').on('click', function() {
 	}).get();
 
 	$.ajax({
-		url: 'index.php?route=tool/backup/backup&user_token={{ user_token|e('js') }}&table=' + table.join(','),
+		url: 'index.php?route=tool/backup/backup&&user_token={{ user_token }}&table=' + table.join(','),
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
@@ -163,7 +163,7 @@ $('#button-upload').on('click', function() {
 			$('#progress-import .progress-bar').css('width', '0%');
 
 			$.ajax({
-				url: 'index.php?route=tool/backup/import&user_token={{ user_token|e('js') }}',
+				url: 'index.php?route=tool/backup/import&&user_token={{ user_token }}',
 				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),
@@ -202,6 +202,43 @@ $('#button-upload').on('click', function() {
 			});
 		}
 	}, 500);
+});
+
+$('#button-upload').on('click', function() {
+
+
+
+});
+
+// Delete
+$('#history').on('click', '.btn-danger', function() {
+	$.ajax({
+		url: 'index.php?route=tool/backup/backup&&user_token={{ user_token }}&filename=' + $(this).val(),
+		type: 'post',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-backup').button('loading');
+		},
+		complete: function() {
+			$('#button-backup').button('reset');
+		},
+		success: function(json) {
+			$('.alert-dismissible').remove();
+
+			if (json['error']) {
+				$('#history').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+
+			if (json['success']) {
+				$('#history').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+				$('#history').load('index.php?route=tool/backup/history&&user_token={{ user_token }}');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
 });
 //--></script>
 {{ footer }} 

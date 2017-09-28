@@ -110,7 +110,7 @@ $('form').bind('submit', function() {
 {% else %}
 $('select[name="language_id"]').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=design/translation/path&user_token={{ user_token|e('js') }}&language_id=' + $('select[name="language_id"]').val(),
+		url: 'index.php?route=design/translation/path&&user_token={{ user_token }}&language_id=' + $('select[name="language_id"]').val(),
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name="route"]').html('');
@@ -156,7 +156,7 @@ var translation = [];
 
 $('select[name="route"]').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=design/translation/translation&user_token={{ user_token|e('js') }}&language_id=' + $('select[name="language_id"]').val() + '&path=' + $('select[name="route"]').val(),
+		url: 'index.php?route=design/translation/translation&&user_token={{ user_token }}&language_id=' + $('select[name="language_id"]').val() + '&path=' + $('select[name="route"]').val(),
 		dataType: 'json',
       {% if not key %}
 		beforeSend: function() {

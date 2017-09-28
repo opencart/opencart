@@ -88,7 +88,7 @@ $('#report').delegate('.pagination a', 'click', function(e) {
 	$('#report').load(this.href);
 });
 
-$('#report').load('index.php?route=catalog/download/report&user_token={{ user_token|e('js') }}&download_id={{ download_id }}');
+$('#report').load('index.php?route=catalog/download/report&&user_token={{ user_token }}&download_id={{ download_id }}');
 //--></script>
 <script type="text/javascript"><!--
 $('#button-upload').on('click', function() {
@@ -107,7 +107,7 @@ $('#button-upload').on('click', function() {
 			clearInterval(timer);
 
 			$.ajax({
-				url: 'index.php?route=catalog/download/upload&user_token={{ user_token|e('js') }}',
+				url: 'index.php?route=catalog/download/upload&&user_token={{ user_token }}',
 				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),

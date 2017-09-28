@@ -477,7 +477,7 @@
 <script type="text/javascript"><!--
     $('#button-clear-locks').bind('click', function() {
       $.ajax({
-        url: 'index.php?route=extension/openbay/ebay/deleteAllLocks&user_token={{ user_token|e('js') }}',
+        url: 'index.php?route=extension/openbay/ebay/deleteAllLocks&&user_token={{ user_token }}',
         type: 'post',
         dataType: 'json',
         beforeSend: function() {
@@ -498,7 +498,7 @@
 
     $('#button-repair-links').bind('click', function() {
       $.ajax({
-        url: 'index.php?route=extension/openbay/ebay/repairLinks&user_token={{ user_token|e('js') }}',
+        url: 'index.php?route=extension/openbay/ebay/repairLinks&&user_token={{ user_token }}',
         type: 'post',
         dataType: 'json',
         beforeSend: function() {
@@ -529,7 +529,7 @@
 
         if (token.length > 25 && secret.length > 1 && encryption_key.length > 25 && encryption_iv.length > 25) {
           $.ajax({
-              url: 'index.php?route=extension/openbay/ebay/verifycredentials&user_token={{ user_token|e('js') }}',
+              url: 'index.php?route=extension/openbay/ebay/verifycredentials&&user_token={{ user_token }}',
               type: 'POST',
               dataType: 'json',
               data: {token: token, secret: secret, encryption_key: encryption_key, encryption_iv: encryption_iv},

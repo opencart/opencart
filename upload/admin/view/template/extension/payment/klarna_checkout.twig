@@ -458,7 +458,7 @@ $('.klarna-checkout-api').on('change', function() {
 $(document).on('click', '#button-process-settlement', function() {
 	if (confirm('{{ text_confirm_settlement }}')) {
 		$.ajax({
-			url: 'index.php?route=extension/payment/klarna_checkout/downloadSettlementFiles&user_token={{ user_token|e('js') }}',
+			url: 'index.php?route=extension/payment/klarna_checkout/downloadSettlementFiles&&user_token={{ user_token }}',
 			type: 'post',
 			data: {
 				username: $('input[name=klarna_checkout_sftp_username]').val(),
@@ -580,7 +580,7 @@ function addAccount() {
 
 $(document).delegate('#button-ip-add', 'click', function() {
     $.ajax({
-        url: 'index.php?route=user/api/addip&user_token={{ user_token|e('js') }}&api_id={{ api_id }}',
+        url: 'index.php?route=user/api/addip&&user_token={{ user_token }}&api_id={{ api_id }}',
         type: 'post',
         data: 'ip={{ api_ip }}',
         dataType: 'json',

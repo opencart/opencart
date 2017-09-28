@@ -111,7 +111,7 @@ class ControllerToolBackup extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$directory = DIR_STORAGE . 'backup';
+		$directory = DIR_STORAGE . 'backup/';
 
 		// Validate the directory
 		if (substr(str_replace('\\', '/', realpath($directory . '/' . $filename)), 0, strlen($directory)) != str_replace('\\', '/', $directory)) {
@@ -203,28 +203,26 @@ class ControllerToolBackup extends Controller {
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'tool/backup')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
 		if (isset($this->request->get['filename'])) {
 			$filename = $this->request->get['filename'];
 		} else {
 			$filename = '';
 		}
 
+		if (!$this->user->hasPermission('modify', 'tool/backup')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$file = DIR_STORAGE . 'backup/' . $filename;
+
 		if (!is_file($filename)) {
 			$json['error'] = $this->language->get('error_file');
 		}
 
-		$directory = DIR_IMAGE . 'backup';
-
 		// Validate the directory
-		if (substr(str_replace('\\', '/', realpath($directory . '/' . $filename)), 0, strlen($directory)) == str_replace('\\', '/', $directory)) {
+		if (substr(str_replace('\\', '/', realpath(DIR_STORAGE . 'backup/' . $filename)), 0, strlen(DIR_STORAGE . 'backup/')) == str_replace('\\', '/', DIR_STORAGE . 'backup/')) {
 			$json['error'] = $this->language->get('error_directory');
 		}
-
-
 
 		if (isset($this->request->get['position'])) {
 			$position = $this->request->get['position'];
@@ -297,7 +295,6 @@ class ControllerToolBackup extends Controller {
 	}
 
 	public function upload() {
-		/*
 		$this->load->language('tool/backup');
 
 		$json = array();
@@ -311,7 +308,6 @@ class ControllerToolBackup extends Controller {
 			$json['error'] = $this->language->get('error_upload');
 		}
 
-		// backup
 		if (!$json) {
 			// Sanitize the filename
 			$filename = html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8');
@@ -331,22 +327,19 @@ class ControllerToolBackup extends Controller {
 				'text/plain'
 			);
 
-			if (!in_array($this->request->files['file']['type'], )) {
+			if (!in_array($this->request->files['file']['type'], $allowed)) {
 				$json['error'] = $this->language->get('error_filetype');
 			}
-
 		}
 
 		if (!$json) {
 
 
 			move_uploaded_file($this->request->files['import']['tmp_name'], $filename);
-
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-		*/
 	}
 
 	public function download() {

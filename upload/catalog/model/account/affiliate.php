@@ -18,7 +18,7 @@ class ModelAccountAffiliate extends Model {
 		return $query->row;
 	}
 
-	public function getAffliateByTracking($code) {
+	public function getAffiliateByTracking($code) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_affiliate` WHERE `tracking` = '" . $this->db->escape($code) . "'");
 
 		return $query->row;

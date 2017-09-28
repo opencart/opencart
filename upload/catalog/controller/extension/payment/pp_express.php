@@ -1022,9 +1022,9 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				}
 
 				// Marketing
-				$this->load->model('checkout/marketing');
+				$this->load->model('marketing/marketing');
 
-				$marketing_info = $this->model_checkout_marketing->getMarketingByCode($this->request->cookie['tracking']);
+				$marketing_info = $this->model_marketing_marketing->getMarketingByCode($this->request->cookie['tracking']);
 
 				if ($marketing_info) {
 					$data['marketing_id'] = $marketing_info['marketing_id'];

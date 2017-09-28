@@ -939,7 +939,35 @@ class ControllerSettingSetting extends Controller {
 		if (!isset($this->request->post['config_complete_status'])) {
 			$this->error['complete_status'] = $this->language->get('error_complete_status');
 		}
-		
+
+		$disallowed = array(
+			'php',
+			'php4',
+			'php3',
+		);
+
+		$extensions = explode("\n", $this->request->post['config_file_ext_allowed']);
+
+		foreach ($extensions as $extension) {
+			if (in_array($extension, $disallowed)) {
+				$this->error['extension'] = $this->language->get('error_extension');
+			}
+		}
+
+		$disallowed = array(
+			'php',
+			'php4',
+			'php3',
+		);
+
+		$mimes = explode("\n", $this->request->post['config_file_mime_allowed']);
+
+		foreach ($mimes as $mime) {
+			if (in_array($mime, $disallowed)) {
+				$this->error['extension'] = $this->language->get('error_mime');
+			}
+		}
+
 		if (!$this->request->post['config_error_filename']) {
 			$this->error['log'] = $this->language->get('error_log_required');
 		} elseif (preg_match('/\.\.[\/\\\]?/', $this->request->post['config_error_filename'])) {

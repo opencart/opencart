@@ -84,41 +84,43 @@ $('#history').load('index.php?route=tool/backup/history&&user_token={{ user_toke
 $('#button-backup').on('click', function() {
 	$('#progress-backup .progress-bar').css('width', '0%');
 
-	var table = $('input[name^=\'backup\']:checked').map(function() {
+	var backup = $('input[name^=\'backup\']:checked').map(function() {
 		return $(this).val();
 	}).get();
 
-	$.ajax({
-		url: 'index.php?route=tool/backup/backup&&user_token={{ user_token }}&table=' + table.join(','),
-		type: 'post',
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-backup').button('loading');
-		},
-		complete: function() {
-			$('#button-backup').button('reset');
-		},
-		success: function(json) {
-			console.log(json);
+	if (backup) {
+		$.ajax({
+			url: 'index.php?route=tool/backup/backup&&user_token={{ user_token }}&backup=' + backup,
+			type: 'post',
+			dataType: 'json',
+			beforeSend: function() {
+				$('#button-backup').button('loading');
+			},
+			complete: function() {
+				$('#button-backup').button('reset');
+			},
+			success: function(json) {
+				console.log(json);
 
-			$('.alert-dismissible').remove();
+				$('.alert-dismissible').remove();
 
-			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				if (json['error']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+
+				if (json['success']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+
+				if (json['next']) {
+					next(json['next'], 1);
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
-
-			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
-
-			if (json['next']) {
-				next(json['next'], 1);
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+		});
+	}
 });
 
 // Restore

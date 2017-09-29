@@ -873,7 +873,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 					$download = file_get_contents($response_info['download']);
 
-					$handle = fopen(DIR_UPLOAD . $this->session->data['install'] . '.tmp', 'w');
+					$handle = fopen(DIR_STORAGE . 'marketplace/' . $this->session->data['install'] . '.tmp', 'w');
 
 					fwrite($handle, $download);
 

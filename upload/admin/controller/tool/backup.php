@@ -95,10 +95,10 @@ class ControllerToolBackup extends Controller {
 			$filename = 'test1.sql'; //date('Y-m-d H:i:s') . '.sql';
 		}
 
-		if (isset($this->request->get['table'])) {
-			$tables = explode(',', $this->request->get['table']);
+		if (isset($this->request->get['backup'])) {
+			$backup = explode(',', $this->request->get['backup']);
 		} else {
-			$tables = array();
+			$backup = array();
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -118,8 +118,6 @@ class ControllerToolBackup extends Controller {
 			$json['error'] = $this->language->get('error_directory');
 		}
 
-
-
 		$this->load->model('tool/backup');
 
 		$allowed = $this->model_tool_backup->getTables();
@@ -127,7 +125,7 @@ class ControllerToolBackup extends Controller {
 		//print_r($allowed);
 		//print_r($tables);
 
-		foreach ($tables as $table) {
+		foreach ($backup as $table) {
 			if (!in_array($table, $allowed)) {
 				$json['error'] = sprintf($this->language->get('error_table'), $table);
 
@@ -141,7 +139,7 @@ class ControllerToolBackup extends Controller {
 		//}
 
 		if (!$json) {
-			$table = $tables[0];
+			$table = $backup[0];
 
 			$output = '';
 
@@ -203,11 +201,11 @@ class ControllerToolBackup extends Controller {
 
 				$json['success'] = sprintf('backing up table ' . $table);
 
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&table=' . implode(',', $tables) . '&page=' . ($page + 1), true));
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&backup=' . implode(',', $backup) . '&page=' . ($page + 1), true));
 			} else {
 
 			//	echo '3';
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&table=' . implode(',', $tables) . '&page=1', true));
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&backup=' . implode(',', $backup) . '&page=1', true));
 			}
 		}
 
@@ -292,10 +290,10 @@ class ControllerToolBackup extends Controller {
 
 			$size = filesize($filename);
 
-			$json['total'] = round(($position / $size) * 100);
+			//$json['total'] = round(($position / $size) * 100);
 
 			if ($position && !feof($handle)) {
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/import', 'user_token=' . $this->session->data['user_token'] . '&filename=' . $filename . '&position=' . $position, true));
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/restore', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&position=' . $position, true));
 
 				fclose($handle);
 			} else {

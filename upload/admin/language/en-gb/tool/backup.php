@@ -6,7 +6,7 @@ $_['heading_title']     = 'Backup &amp; Restore';
 $_['text_success']      = 'Success: You have successfully imported your database!';
 $_['text_backup']       = 'Backup Options';
 $_['text_progress']     = 'Progress';
-$_['text_import']       = 'For large backup files its better to upload the sql file via ftp to the <strong>system/storage/backup</strong> directory.';
+$_['text_import']       = 'For large backup files its better to upload the sql file via ftp to the <strong>system/storage/backup/</strong> directory.';
 
 // Column
 $_['column_filename']   = 'Filename';
@@ -23,3 +23,5 @@ $_['error_permission']  = 'Warning: You do not have permission to modify Backup 
 $_['error_export']      = 'Warning: You must select at least one table to export!';
 $_['error_table']       = 'Table %s is not in the allowed list!';
 $_['error_file']        = 'File could not be found!';
+$_['error_directory']  =  'Directory could not be found!';
+

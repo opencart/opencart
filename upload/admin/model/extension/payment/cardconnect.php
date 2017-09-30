@@ -86,12 +86,12 @@ class ModelExtensionPaymentCardConnect extends Model {
 
 		$this->log('Order ID: ' . $order_info['order_id']);
 
-		$url = 'https://' . $this->config->get('cardconnect_site') . '.cardconnect.com:' . (($this->config->get('cardconnect_environment') == 'live') ? 8443 : 6443) . '/cardconnect/rest/inquire/' . $retref . '/' . $this->config->get('payment_cardconnect_merchant_id');
+		$url = 'https://' . $this->config->get('payment_cardconnect_site') . '.cardconnect.com:' . (($this->config->get('payment_cardconnect_environment') == 'live') ? 8443 : 6443) . '/cardconnect/rest/inquire/' . $retref . '/' . $this->config->get('payment_cardconnect_merchant_id');
 
 		$header = array();
 
 		$header[] = 'Content-type: application/json';
-		$header[] = 'Authorization: Basic ' . base64_encode($this->config->get('cardconnect_api_username') . ':' . $this->config->get('cardconnect_api_password'));
+		$header[] = 'Authorization: Basic ' . base64_encode($this->config->get('payment_cardconnect_api_username') . ':' . $this->config->get('payment_cardconnect_api_password'));
 
 		$this->model_extension_payment_cardconnect->log('Header: ' . print_r($header, true));
 
@@ -177,13 +177,13 @@ class ModelExtensionPaymentCardConnect extends Model {
 
 		$data_json = json_encode($data);
 
-		$url = 'https://' . $this->config->get('cardconnect_site') . '.cardconnect.com:' . (($this->config->get('cardconnect_environment') == 'live') ? 8443 : 6443) . '/cardconnect/rest/capture';
+		$url = 'https://' . $this->config->get('payment_cardconnect_site') . '.cardconnect.com:' . (($this->config->get('payment_cardconnect_environment') == 'live') ? 8443 : 6443) . '/cardconnect/rest/capture';
 
 		$header = array();
 
 		$header[] = 'Content-type: application/json';
 		$header[] = 'Content-length: ' . strlen($data_json);
-		$header[] = 'Authorization: Basic ' . base64_encode($this->config->get('cardconnect_api_username') . ':' . $this->config->get('cardconnect_api_password'));
+		$header[] = 'Authorization: Basic ' . base64_encode($this->config->get('payment_cardconnect_api_username') . ':' . $this->config->get('payment_cardconnect_api_password'));
 
 		$this->model_extension_payment_cardconnect->log('Header: ' . print_r($header, true));
 
@@ -226,13 +226,13 @@ class ModelExtensionPaymentCardConnect extends Model {
 
 		$data_json = json_encode($data);
 
-		$url = 'https://' . $this->config->get('cardconnect_site') . '.cardconnect.com:' . (($this->config->get('cardconnect_environment') == 'live') ? 8443 : 6443) . '/cardconnect/rest/refund';
+		$url = 'https://' . $this->config->get('payment_cardconnect_site') . '.cardconnect.com:' . (($this->config->get('payment_cardconnect_environment') == 'live') ? 8443 : 6443) . '/cardconnect/rest/refund';
 
 		$header = array();
 
 		$header[] = 'Content-type: application/json';
 		$header[] = 'Content-length: ' . strlen($data_json);
-		$header[] = 'Authorization: Basic ' . base64_encode($this->config->get('cardconnect_api_username') . ':' . $this->config->get('cardconnect_api_password'));
+		$header[] = 'Authorization: Basic ' . base64_encode($this->config->get('payment_cardconnect_api_username') . ':' . $this->config->get('payment_cardconnect_api_password'));
 
 		$this->model_extension_payment_cardconnect->log('Header: ' . print_r($header, true));
 
@@ -275,13 +275,13 @@ class ModelExtensionPaymentCardConnect extends Model {
 
 		$data_json = json_encode($data);
 
-		$url = 'https://' . $this->config->get('cardconnect_site') . '.cardconnect.com:' . (($this->config->get('cardconnect_environment') == 'live') ? 8443 : 6443) . '/cardconnect/rest/void';
+		$url = 'https://' . $this->config->get('payment_cardconnect_site') . '.cardconnect.com:' . (($this->config->get('payment_cardconnect_environment') == 'live') ? 8443 : 6443) . '/cardconnect/rest/void';
 
 		$header = array();
 
 		$header[] = 'Content-type: application/json';
 		$header[] = 'Content-length: ' . strlen($data_json);
-		$header[] = 'Authorization: Basic ' . base64_encode($this->config->get('cardconnect_api_username') . ':' . $this->config->get('cardconnect_api_password'));
+		$header[] = 'Authorization: Basic ' . base64_encode($this->config->get('payment_cardconnect_api_username') . ':' . $this->config->get('payment_cardconnect_api_password'));
 
 		$this->model_extension_payment_cardconnect->log('Header: ' . print_r($header, true));
 
@@ -319,7 +319,7 @@ class ModelExtensionPaymentCardConnect extends Model {
 	}
 
 	public function log($data) {
-		if ($this->config->get('cardconnect_logging')) {
+		if ($this->config->get('payment_cardconnect_logging')) {
 			$log = new Log('cardconnect.log');
 
 			$log->write($data);

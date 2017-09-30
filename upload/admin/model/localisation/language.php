@@ -216,7 +216,7 @@ class ModelLocalisationLanguage extends Model {
 	public function deleteLanguage($language_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "language WHERE language_id = '" . (int)$language_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "seo_url WHERE language_id = '" . (int)$language_id . "'");
-		
+
 		$this->cache->delete('catalog.language');
 		$this->cache->delete('admin.language');
 

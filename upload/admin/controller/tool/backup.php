@@ -174,29 +174,27 @@ class ControllerToolBackup extends Controller {
 					$output .= 'INSERT INTO `' . $table . '` (' . preg_replace('/, $/', '', $fields) . ') VALUES (' . preg_replace('/, $/', '', $values) . ');' . "\n";
 				}
 
-				if ($record_total >= (($page - 1) * 200)) {
+				if ((($page - 1) * 200) >= $record_total) {
 					$output .= "\n\n";
 
 					array_shift($backup);
 				}
 
-				$handle = fopen($file, 'w+');
+				$handle = fopen($file, 'a');
 
 				fwrite($handle, $output);
 
 				fclose($handle);
 
-				if ((($page + 1) * 200) >= $record_total) {
-					echo '2';
+				//echo (($page - 1) * 200) . "\n";
+				//echo $record_total;
 
-					$json['success'] = sprintf('backing up table ' . $table);
+				$json['success'] = sprintf('backing up table ' . $table);
 
-					$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&backup=' . implode(',', $backup) . '&page=' . ($page + 1), true));
-				} else {
-					$json['success'] = sprintf('backing up table ' . $table);
-
-					//	echo '3';
+				if ((($page - 1) * 200) >= $record_total) {
 					$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&backup=' . implode(',', $backup) . '&page=1', true));
+				} else {
+					$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&backup=' . implode(',', $backup) . '&page=' . ($page + 1), true));
 				}
 			} else {
 				$json['success'] = $this->language->get('text_success');

@@ -120,7 +120,6 @@ $('#button-backup').on('click', function() {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
-
 });
 
 // Restore
@@ -167,7 +166,7 @@ function next(url, i) {
 		success: function(json) {
 			$('.alert-dismissible').remove();
 
-			$('#progress-backup .progress-bar').css('width', json['total'] + '%');
+			//$('#progress-backup .progress-bar').css('width', json['total'] + '%');
 
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');

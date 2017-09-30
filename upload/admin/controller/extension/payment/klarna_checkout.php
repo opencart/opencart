@@ -286,13 +286,19 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
 
 		if ($api_info) {
-			$data['api_id'] = $api_info['api_id'];
-			$data['api_key'] = $api_info['key'];
-			$data['api_ip'] = $this->request->server['REMOTE_ADDR'];
+			$session = new Session($this->config->get('session_engine'), $this->registry);
+
+			$session->start();
+
+			$this->model_user_api->deleteApiSessionBySessonId($session->getId());
+
+			$this->model_user_api->addApiSession($api_info['api_id'], $session->getId(), $this->request->server['REMOTE_ADDR']);
+
+			$session->data['api_id'] = $api_info['api_id'];
+
+			$data['api_token'] = $session->getId();
 		} else {
-			$data['api_id'] = '';
-			$data['api_key'] = '';
-			$data['api_ip'] = '';
+			$data['api_token'] = '';
 		}
 
 		$data['header'] = $this->load->controller('common/header');

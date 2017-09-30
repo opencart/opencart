@@ -491,7 +491,7 @@ $(document).on('click', '#button-process-settlement', function() {
 							$('.settlement-alerts').append('<div class="alert alert-success alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ text_processing_order }} ' + value + '</div>');
 
 							$.ajax({
-								url: '{{ store_url }}index.php?route=api/order/history&token=' + token + '&order_id=' + encodeURIComponent(value),
+								url: '{{ store_url }}index.php?route=api/order/history&api_token={{ api_token }}&order_id=' + encodeURIComponent(value),
 								type: 'post',
 								dataType: 'json',
 								data: 'order_status_id=' + encodeURIComponent($('select[name=klarna_checkout_settlement_order_status_id]').val()) + '&notify=0&override=1&comment',
@@ -577,65 +577,5 @@ function addAccount() {
 
 	account_row++;
 }
-
-$(document).delegate('#button-ip-add', 'click', function() {
-	$.ajax({
-		url: 'index.php?route=user/api/addip&user_token={{ user_token }}&api_id={{ api_id }}',
-		type: 'post',
-		data: 'ip={{ api_ip }}',
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-ip-add').button('loading');
-		},
-		complete: function() {
-			$('#button-ip-add').button('reset');
-		},
-		success: function(json) {
-			$('.api-alert').remove();
-
-			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger api-alert"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
-
-			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success api-alert"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
-
-var token = '';
-
-// Login to the API
-$.ajax({
-	url: '{{ store_url }}index.php?route=api/login',
-	type: 'post',
-	dataType: 'json',
-	data: 'key={{ api_key }}',
-	crossDomain: true,
-	success: function(json) {
-		$('.api-alert').remove();
-
-		if (json['error']) {
-			if (json['error']['key']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger api-alert"><i class="fa fa-exclamation-circle"></i> ' + json['error']['key'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
-
-			if (json['error']['ip']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger api-alert"><i class="fa fa-exclamation-circle"></i> ' + json['error']['ip'] + ' <button type="button" id="button-ip-add" data-loading-text="{{ text_loading }}" class="btn btn-danger btn-xs pull-right"><i class="fa fa-plus"></i> {{ button_ip_add }}</button></div>');
-			}
-		}
-
-		if (json['user_token']) {
-			token = json['user_token'];
-		}
-	},
-	error: function(xhr, ajaxOptions, thrownError) {
-		alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-	}
-});
 //--></script>
 {{ footer }}

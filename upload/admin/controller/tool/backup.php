@@ -111,6 +111,8 @@ class ControllerToolBackup extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		print_r($this->request->get);
+
 		$file = DIR_STORAGE . 'backup/' . $filename;
 
 		// Validate the directory
@@ -130,80 +132,63 @@ class ControllerToolBackup extends Controller {
 			}
 		}
 
-		//
-
-		//print_r($backup);
-
 		if (!$json) {
 			$table = current($backup);
 
-			$this->log->write($table);
+			$output = '';
 
-			if ($table) {
-				$output = '';
-
-				if ($page == 1) {
-					$output .= 'TRUNCATE TABLE `' . $this->db->escape($table) . '`;' . "\n\n";
-				}
-
-				$record_total = $this->model_tool_backup->getTotalRecords($table);
-
-				$results = $this->model_tool_backup->getRecords($table, ($page - 1) * 200, 200);
-
-				foreach ($results as $result) {
-					$fields = '';
-
-					foreach (array_keys($result) as $value) {
-						$fields .= '`' . $value . '`, ';
-					}
-
-					$values = '';
-
-					foreach (array_values($result) as $value) {
-						$value = str_replace(array("\x00", "\x0a", "\x0d", "\x1a"), array('\0', '\n', '\r', '\Z'), $value);
-						$value = str_replace(array("\n", "\r", "\t"), array('\n', '\r', '\t'), $value);
-						$value = str_replace('\\', '\\\\', $value);
-						$value = str_replace('\'', '\\\'', $value);
-						$value = str_replace('\\\n', '\n', $value);
-						$value = str_replace('\\\r', '\r', $value);
-						$value = str_replace('\\\t', '\t', $value);
-
-						$values .= '\'' . $value . '\', ';
-					}
-
-					$output .= 'INSERT INTO `' . $table . '` (' . preg_replace('/, $/', '', $fields) . ') VALUES (' . preg_replace('/, $/', '', $values) . ');' . "\n";
-				}
-
-				if ((($page - 1) * 200) >= $record_total) {
-					$output .= "\n\n";
-
-					array_shift($backup);
-				}
-
-				$handle = fopen($file, 'a');
-
-				fwrite($handle, $output);
-
-				fclose($handle);
-
-				//echo (($page - 1) * 200) . "\n";
-				//echo $record_total;
-
-				$json['success'] = sprintf('backing up table ' . $table);
-
-				if ((($page - 1) * 200) >= $record_total) {
-					$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&backup=' . implode(',', $backup) . '&page=1', true));
-				} else {
-					$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&backup=' . implode(',', $backup) . '&page=' . ($page + 1), true));
-				}
-			} else {
-				$json['success'] = $this->language->get('text_success');
+			if ($page == 1) {
+				$output .= 'TRUNCATE TABLE `' . $this->db->escape($table) . '`;' . "\n\n";
 			}
 
+			$record_total = $this->model_tool_backup->getTotalRecords($table);
 
+			$results = $this->model_tool_backup->getRecords($table, ($page - 1) * 200, 200);
+
+			foreach ($results as $result) {
+				$fields = '';
+
+				foreach (array_keys($result) as $value) {
+					$fields .= '`' . $value . '`, ';
+				}
+
+				$values = '';
+
+				foreach (array_values($result) as $value) {
+					$value = str_replace(array("\x00", "\x0a", "\x0d", "\x1a"), array('\0', '\n', '\r', '\Z'), $value);
+					$value = str_replace(array("\n", "\r", "\t"), array('\n', '\r', '\t'), $value);
+					$value = str_replace('\\', '\\\\', $value);
+					$value = str_replace('\'', '\\\'', $value);
+					$value = str_replace('\\\n', '\n', $value);
+					$value = str_replace('\\\r', '\r', $value);
+					$value = str_replace('\\\t', '\t', $value);
+
+					$values .= '\'' . $value . '\', ';
+				}
+
+				$output .= 'INSERT INTO `' . $table . '` (' . preg_replace('/, $/', '', $fields) . ') VALUES (' . preg_replace('/, $/', '', $values) . ');' . "\n";
+			}
+
+			if ((($page - 1) * 200) >= $record_total) {
+				$output .= "\n";
+
+				array_shift($backup);
+			}
+
+			$handle = fopen($file, 'a');
+
+			fwrite($handle, $output);
+
+			fclose($handle);
+
+			$json['success'] = sprintf('Backing up table %s record %s to %s of %s records', $table, ($page - 1) * 200, $page * 200, $record_total);
+
+			if ((($page - 1) * 200) >= $record_total) {
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&backup=' . implode(',', $backup) . '&page=1', true));
+			} elseif ($backup) {
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&backup=' . implode(',', $backup) . '&page=' . ($page + 1), true));
+			}
 		}
-
-		//$this->log->write($json);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

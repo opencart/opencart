@@ -78,7 +78,7 @@ $('#history').delegate('.pagination a', 'click', function(e) {
 	$('#history').load(this.href);
 });
 
-$('#history').load('index.php?route=tool/backup/history&&user_token={{ user_token }}');
+$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token }}');
 //--></script>
 <script type="text/javascript"><!--
 $('#button-backup').on('click', function() {
@@ -88,9 +88,10 @@ $('#button-backup').on('click', function() {
 		return $(this).val();
 	}).get();
 
+	console.log('index.php?route=tool/backup/backup&user_token={{ user_token }}&backup=' + backup);
 
 	$.ajax({
-		url: 'index.php?route=tool/backup/backup&&user_token={{ user_token }}&backup=' + backup,
+		url: 'index.php?route=tool/backup/backup&user_token={{ user_token }}&backup=' + backup,
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
@@ -127,7 +128,7 @@ $('#history').on('click', '.btn-warning', function() {
 	var element = this;
 
 	$.ajax({
-		url: 'index.php?route=tool/backup/restore&&user_token={{ user_token }}&filename=' + encodeURIComponent($(element).val()),
+		url: 'index.php?route=tool/backup/restore&user_token={{ user_token }}&filename=' + encodeURIComponent($(element).val()),
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
@@ -148,7 +149,7 @@ $('#history').on('click', '.btn-warning', function() {
 			if (json['success']) {
 				$('#history').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$('#history').load('index.php?route=tool/backup/history&&user_token={{ user_token }}');
+				$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token }}');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -202,7 +203,7 @@ $('#button-upload').on('click', function() {
 			clearInterval(timer);
 
 			$.ajax({
-				url: 'index.php?route=tool/backup/upload&&user_token={{ user_token }}',
+				url: 'index.php?route=tool/backup/upload&user_token={{ user_token }}',
 				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),
@@ -225,7 +226,7 @@ $('#button-upload').on('click', function() {
 					if (json['success']) {
 						$('#history').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-						$('#history').load('index.php?route=tool/backup/history&&user_token={{ user_token }}');
+						$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token }}');
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {
@@ -241,7 +242,7 @@ $('#history').on('click', '.btn-danger', function() {
 	var element = this;
 
 	$.ajax({
-		url: 'index.php?route=tool/backup/delete&&user_token={{ user_token }}&filename=' + encodeURIComponent($(element).val()),
+		url: 'index.php?route=tool/backup/delete&user_token={{ user_token }}&filename=' + encodeURIComponent($(element).val()),
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
@@ -260,7 +261,7 @@ $('#history').on('click', '.btn-danger', function() {
 			if (json['success']) {
 				$('#history').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$('#history').load('index.php?route=tool/backup/history&&user_token={{ user_token }}');
+				$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token }}');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

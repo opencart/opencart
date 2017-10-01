@@ -140,7 +140,7 @@
   <script type="text/javascript"><!--
   $('#button-send').on('click', function() {
 	  $.ajax({
-		  url: 'index.php?route=sale/voucher/send&&user_token={{ user_token }}',
+		  url: 'index.php?route=sale/voucher/send&user_token={{ user_token }}',
 		  type: 'post',
 		  dataType: 'json',
 		  data: 'voucher_id={{ voucher_id }}',
@@ -174,7 +174,7 @@
 	  $('#history').load(this.href);
   });
 
-  $('#history').load('index.php?route=sale/voucher/history&&user_token={{ user_token }}&voucher_id={{ voucher_id }}');
+  $('#history').load('index.php?route=sale/voucher/history&user_token={{ user_token }}&voucher_id={{ voucher_id }}');
   //--></script>
 {% endif %}
 {{ footer }}

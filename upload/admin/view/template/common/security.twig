@@ -88,7 +88,7 @@ $('#button-move').on('click', function() {
 	var element = this;
 	
 	$.ajax({
-		url: 'index.php?route=common/security/move&&user_token={{ user_token }}',
+		url: 'index.php?route=common/security/move&user_token={{ user_token }}',
 		type: 'post',
 		data: $('input[name=\'path\'], input[name=\'directory\']'),
 		dataType: 'json',

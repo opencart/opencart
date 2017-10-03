@@ -178,7 +178,7 @@ function next(url, backup) {
 
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="text-danger">' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
 
 				$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token }}');
 			}
@@ -186,7 +186,7 @@ function next(url, backup) {
 			if (json['success']) {
 				$('#progress-bar').css('width', '100%');
 				$('#progress-bar').addClass('progress-bar-success');
-				$('#progress-text').html('<div class="text-success">' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
 
 				$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token }}');
 			}
@@ -196,11 +196,6 @@ function next(url, backup) {
 			}
 
 			if (json['total']) {
-				console.log(backup.length);
-				console.log(json['total']);
-				console.log((((backup.length - json['total']) / backup.length) * 100));
-
-
 				$('#progress-bar').css('width', (((backup.length - json['total']) / backup.length) * 100) + '%');
 			}
 

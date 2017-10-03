@@ -92,37 +92,50 @@
   </tr>
   
   
-  {% if flp_status == 'review' %}
+  {% if flp_status|lower == 'review' %}
   <tr style="background-color: #eee;">
     <td id="flp_action" colspan="2">
       <form id="review-action" method="post">
-	<div align="center">
-	  <button type="button" id="button-flp-approve" class="btn btn-primary"><i class="fa fa-check"></i> Approve</button>
-	  <button type="button" id="button-flp-reject" class="btn btn-danger"><i class="fa fa-remove"></i> Reject</button>
-	</div>
-	<input type="hidden" id="flp_id" name="flp_id" value="{{ flp_id }}" />
-	<input type="hidden" id="new_status" name="new_status" value="" />
+    <div align="center">
+      <button type="button" id="button-flp-approve" class="btn btn-success"><i class="fa fa-check"></i> Approve</button>
+      <button type="button" id="button-flp-reject" class="btn btn-danger"><i class="fa fa-remove"></i> Reject</button>
+      <button type="button" id="button-flp-reject-blacklist" class="btn btn-default" title="Upon clicking the blacklist button, this order will be rejected and the records will be blacklisted."><i class="fa fa-exclamation-circle"></i> Blacklist</button>
+    </div>
+    <input type="hidden" id="flp_id" name="flp_id" value="{{ flp_id }}" />
+    <input type="hidden" id="new_status" name="new_status" value="" />
+    <input type="hidden" id="feedback_note" name="feedback_note" value="" />
       </form>
       
       <script>
-	$(document).ready(function(){
-		$("#button-flp-approve").click(function(){
-			$("#new_status").val("APPROVE");
-			$("#review-action").submit();
-		});
-	});
-	
-	$(document).ready(function(){
-		$("#button-flp-reject").click(function(){
-			$("#new_status").val("REJECT");
-			$("#review-action").submit();
-		});
-	});
+    $(document).ready(function(){
+        $("#button-flp-approve").click(function(){
+            $("#new_status").val("APPROVE");
+            $("#review-action").submit();
+        });
+    });
+    
+    $(document).ready(function(){
+        $("#button-flp-reject").click(function(){
+            $("#new_status").val("REJECT");
+            $("#review-action").submit();
+        });
+    });
+    
+    $(document).ready(function(){
+        $("#button-flp-reject-blacklist").click(function(){
+            var note = prompt("Please enter the reason(s) for blacklisting this order. (Optional)");
+            if(note !== null){
+                $("#feedback_note").val(note);
+                $("#new_status").val("REJECT_BLACKLIST");
+                $("#review-action").submit();
+            }
+        });
+    });
       </script>
     </td>
   </tr>
   {% endif %}
 </table>
 <div>
-	{{ text_flp_merchant_area }}
+    {{ text_flp_merchant_area }}
 </div>

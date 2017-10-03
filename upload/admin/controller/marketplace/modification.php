@@ -65,7 +65,7 @@ class ControllerMarketplaceModification extends Controller {
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->editSettingValue('config', 'config_maintenance', true);
-
+			
 			//Log
 			$log = array();
 
@@ -417,6 +417,10 @@ class ControllerMarketplaceModification extends Controller {
 					fclose($handle);
 				}
 			}
+			
+			//Clear twig & sass cache
+			$this->load->controller('common/developer/theme');
+			$this->load->controller('common/developer/sass');
 
 			// Maintance mode back to original settings
 			$this->model_setting_setting->editSettingValue('config', 'config_maintenance', $maintenance);
@@ -488,6 +492,10 @@ class ControllerMarketplaceModification extends Controller {
 					}
 				}
 			}
+			
+			//Clear twig & sass cache
+			$this->load->controller('common/developer/theme');
+			$this->load->controller('common/developer/sass');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

@@ -28,7 +28,6 @@
         <h3 class="panel-title"><i class="fa fa-exchange"></i> {{ heading_title }}</h3>
       </div>
       <div class="panel-body">
-        <div class="alert alert-info"><i class="fa fa fa-exclamation-circle"></i> {{ text_import }}</div>
         <form class="form-horizontal">
           <fieldset>
             <legend>{{ text_progress }}</legend>
@@ -36,9 +35,9 @@
               <label class="col-sm-2 control-label">{{ entry_progress }}</label>
               <div class="col-sm-10">
                 <div id="progress-backup" class="progress">
-                  <div class="progress-bar"></div>
+                  <div id="progress-bar" class="progress-bar"></div>
                 </div>
-				<div id="progress-text"></div>
+                <div id="progress-text"></div>
               </div>
             </div>
           </fieldset>
@@ -65,6 +64,7 @@
           </fieldset>
           <fieldset>
             <legend>Backup History</legend>
+            <div class="alert alert-info"><i class="fa fa fa-exclamation-circle"></i> {{ text_import }}</div>
             <div id="history"></div>
           </fieldset>
         </form>
@@ -111,6 +111,7 @@ $('#button-backup').on('click', function() {
 			}
 
 			if (json['success']) {
+				$('#progress-bar').css('width', '100%');
 				$('#progress-bar').addClass('progress-bar-success');
 				$('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
 
@@ -121,8 +122,12 @@ $('#button-backup').on('click', function() {
 				$('#progress-text').html(json['text']);
 			}
 
+			if (json['total']) {
+				$('#progress-bar').css('width', (((backup.length - json['total']) / backup.length) * 100) + '%');
+			}
+
 			if (json['next']) {
-				next(json['next'], 1);
+				next(json['next'], backup);
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -164,16 +169,12 @@ $('#history').on('click', '.btn-warning', function() {
 	});
 });
 
-function next(url, i) {
-	i = i + 1;
-
+function next(url, backup) {
 	$.ajax({
 		url: url,
 		dataType: 'json',
 		success: function(json) {
 			$('.alert-dismissible').remove();
-
-			//$('#progress-backup .progress-bar').css('width', json['total'] + '%');
 
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
@@ -183,6 +184,7 @@ function next(url, i) {
 			}
 
 			if (json['success']) {
+				$('#progress-bar').css('width', '100%');
 				$('#progress-bar').addClass('progress-bar-success');
 				$('#progress-text').html('<div class="text-success">' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
@@ -193,8 +195,17 @@ function next(url, i) {
 				$('#progress-text').html(json['text']);
 			}
 
+			if (json['total']) {
+				console.log(backup.length);
+				console.log(json['total']);
+				console.log((((backup.length - json['total']) / backup.length) * 100));
+
+
+				$('#progress-bar').css('width', (((backup.length - json['total']) / backup.length) * 100) + '%');
+			}
+
 			if (json['next']) {
-				next(json['next'], i);
+				next(json['next'], backup);
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

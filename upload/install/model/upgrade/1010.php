@@ -216,5 +216,23 @@ class ModelUpgrade1010 extends Model {
 		if (!$query->num_rows) {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "extension_install` ADD `extension_id` int NOT NULL AFTER `extension_install_id`");
 		}
+
+		// If backup storage directory does not exist
+		if (!is_dir(DIR_STORAGE . 'backup')) {
+			mkdir(DIR_STORAGE . 'backup', '0644');
+
+			$handle = fopen(DIR_STORAGE . 'backup/index.html', 'w');
+
+			fclose($handle);
+		}
+
+		// If backup storage directory does not exist
+		if (!is_dir(DIR_STORAGE . 'marketplace')) {
+			mkdir(DIR_STORAGE . 'marketplace', '0644');
+
+			$handle = fopen(DIR_STORAGE . 'marketplace/index.html', 'w');
+
+			fclose($handle);
+		}
 	}
 }

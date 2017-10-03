@@ -90,9 +90,9 @@ class ControllerToolBackup extends Controller {
 		$json = array();
 
 		if (isset($this->request->get['filename'])) {
-			$filename = $this->request->get['filename'];
+			$filename = basename(html_entity_decode($this->request->get['filename'], ENT_QUOTES, 'UTF-8'));
 		} else {
-			$filename = 'test1.sql'; //date('Y-m-d H:i:s') . '.sql';
+			$filename = date('Y-m-d H.i.s') . '.sql'; //;
 		}
 
 		if (isset($this->request->get['backup'])) {
@@ -109,15 +109,6 @@ class ControllerToolBackup extends Controller {
 
 		if (!$this->user->hasPermission('modify', 'tool/backup')) {
 			$json['error'] = $this->language->get('error_permission');
-		}
-
-		print_r($this->request->get);
-
-		$file = DIR_STORAGE . 'backup/' . $filename;
-
-		// Validate the directory
-		if (substr(str_replace('\\', '/', realpath($file)), 0, strlen(DIR_STORAGE . 'backup/')) != str_replace('\\', '/', DIR_STORAGE . 'backup/')) {
-			$json['error'] = $this->language->get('error_directory');
 		}
 
 		$this->load->model('tool/backup');
@@ -169,23 +160,27 @@ class ControllerToolBackup extends Controller {
 				$output .= 'INSERT INTO `' . $table . '` (' . preg_replace('/, $/', '', $fields) . ') VALUES (' . preg_replace('/, $/', '', $values) . ');' . "\n";
 			}
 
-			if ((($page - 1) * 200) >= $record_total) {
+			if (($page * 200) >= $record_total) {
 				$output .= "\n";
 
 				array_shift($backup);
 			}
 
-			$handle = fopen($file, 'a');
+			$handle = fopen(DIR_STORAGE . 'backup/' . $filename, 'a');
 
 			fwrite($handle, $output);
 
 			fclose($handle);
 
-			$json['success'] = sprintf('Backing up table %s record %s to %s of %s records', $table, ($page - 1) * 200, $page * 200, $record_total);
+			if (!$backup) {
+				$json['success'] = $this->language->get('text_success');
+			} elseif (($page * 200) >= $record_total) {
+				$json['text'] = sprintf($this->language->get('text_next'), $table, ($page - 1) * 200, $record_total);
 
-			if ((($page - 1) * 200) >= $record_total) {
 				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&backup=' . implode(',', $backup) . '&page=1', true));
-			} elseif ($backup) {
+			} else {
+				$json['text'] = sprintf($this->language->get('text_next'), $table, ($page - 1) * 200, ($page * 200));
+
 				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&backup=' . implode(',', $backup) . '&page=' . ($page + 1), true));
 			}
 		}
@@ -200,7 +195,7 @@ class ControllerToolBackup extends Controller {
 		$json = array();
 
 		if (isset($this->request->get['filename'])) {
-			$filename = $this->request->get['filename'];
+			$filename = basename(html_entity_decode($this->request->get['filename'], ENT_QUOTES, 'UTF-8'));
 		} else {
 			$filename = '';
 		}
@@ -213,11 +208,6 @@ class ControllerToolBackup extends Controller {
 
 		if (!is_file($file)) {
 			$json['error'] = $this->language->get('error_file');
-		}
-
-		// Validate the directory
-		if (substr(str_replace('\\', '/', realpath($file)), 0, strlen(DIR_STORAGE . 'backup/')) == str_replace('\\', '/', DIR_STORAGE . 'backup/')) {
-			$json['error'] = $this->language->get('error_directory');
 		}
 
 		if (isset($this->request->get['position'])) {
@@ -306,7 +296,7 @@ class ControllerToolBackup extends Controller {
 
 		if (!$json) {
 			// Sanitize the filename
-			$filename = html_entity_decode($this->request->files['upload']['name'], ENT_QUOTES, 'UTF-8');
+			$filename = basename(html_entity_decode($this->request->files['upload']['name'], ENT_QUOTES, 'UTF-8'));
 
 			if ((utf8_strlen($filename) < 3) || (utf8_strlen($filename) > 128)) {
 				$json['error'] = $this->language->get('error_filename');
@@ -334,7 +324,7 @@ class ControllerToolBackup extends Controller {
 		$json = array();
 
 		if (isset($this->request->get['filename'])) {
-			$filename = $this->request->get['filename'];
+			$filename = basename(html_entity_decode($this->request->get['filename'], ENT_QUOTES, 'UTF-8'));
 		} else {
 			$filename = '';
 		}
@@ -352,7 +342,7 @@ class ControllerToolBackup extends Controller {
 
 		if (!headers_sent()) {
 			header('Content-Type: application/octet-stream');
-			header('Content-Disposition: attachment; filename="' . ($mask ? $mask : basename($file)) . '"');
+			header('Content-Disposition: attachment; filename="' . $filename . '"');
 			header('Expires: 0');
 			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 			header('Pragma: public');
@@ -376,7 +366,7 @@ class ControllerToolBackup extends Controller {
 		$json = array();
 
 		if (isset($this->request->get['filename'])) {
-			$filename = $this->request->get['filename'];
+			$filename = basename(html_entity_decode($this->request->get['filename'], ENT_QUOTES, 'UTF-8'));
 		} else {
 			$filename = '';
 		}
@@ -390,11 +380,6 @@ class ControllerToolBackup extends Controller {
 
 		if (!is_file($file)) {
 			$json['error'] = $this->language->get('error_file');
-		}
-
-		// Validate the directory
-		if (substr(str_replace('\\', '/', realpath($file)), 0, strlen(DIR_STORAGE . 'backup/')) != str_replace('\\', '/', DIR_STORAGE . 'backup/')) {
-			$json['error'] = $this->language->get('error_directory');
 		}
 
 		if (!$json) {

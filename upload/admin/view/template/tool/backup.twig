@@ -38,6 +38,7 @@
                 <div id="progress-backup" class="progress">
                   <div class="progress-bar"></div>
                 </div>
+				<div id="progress-text"></div>
               </div>
             </div>
           </fieldset>
@@ -58,7 +59,7 @@
             </div>
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
-                <button type="button" id="button-backup" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_import }}" class="btn btn-success"><i class="fa fa-upload"></i> Backup</button>
+                <button type="button" id="button-backup" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_backup }}" class="btn btn-success"><i class="fa fa-upload"></i> Backup</button>
               </div>
             </div>
           </fieldset>
@@ -82,13 +83,12 @@ $('#history').load('index.php?route=tool/backup/history&user_token={{ user_token
 //--></script>
 <script type="text/javascript"><!--
 $('#button-backup').on('click', function() {
-	$('#progress-backup .progress-bar').css('width', '0%');
+	$('#progress-bar').css('width', '0%');
+	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
 
 	var backup = $('input[name^=\'backup\']:checked').map(function() {
 		return $(this).val();
 	}).get();
-
-	console.log('index.php?route=tool/backup/backup&user_token={{ user_token }}&backup=' + backup);
 
 	$.ajax({
 		url: 'index.php?route=tool/backup/backup&user_token={{ user_token }}&backup=' + backup,
@@ -101,16 +101,24 @@ $('#button-backup').on('click', function() {
 			$('#button-backup').button('reset');
 		},
 		success: function(json) {
-			console.log(json);
-
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#progress-bar').addClass('progress-bar-danger');
+				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+
+				$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token }}');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#progress-bar').addClass('progress-bar-success');
+				$('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
+
+				$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token }}');
+			}
+
+			if (json['text']) {
+				$('#progress-text').html(json['text']);
 			}
 
 			if (json['next']) {
@@ -138,8 +146,6 @@ $('#history').on('click', '.btn-warning', function() {
 			$(element).button('reset');
 		},
 		success: function(json) {
-			console.log(json);
-
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
@@ -147,7 +153,7 @@ $('#history').on('click', '.btn-warning', function() {
 			}
 
 			if (json['success']) {
-				$('#history').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#history').before('<div class="text-mute"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token }}');
 			}
@@ -170,11 +176,21 @@ function next(url, i) {
 			//$('#progress-backup .progress-bar').css('width', json['total'] + '%');
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#progress-bar').addClass('progress-bar-danger');
+				$('#progress-text').html('<div class="text-danger">' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+				$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token }}');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#progress-bar').addClass('progress-bar-success');
+				$('#progress-text').html('<div class="text-success">' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+				$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token }}');
+			}
+
+			if (json['text']) {
+				$('#progress-text').html(json['text']);
 			}
 
 			if (json['next']) {
@@ -220,11 +236,11 @@ $('#button-upload').on('click', function() {
 					$('.alert-dismissible').remove();
 
 					if (json['error']) {
-						$('#history').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+						$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 					}
 
 					if (json['success']) {
-						$('#history').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+						$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 						$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token }}');
 					}

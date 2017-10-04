@@ -202,6 +202,12 @@ class ControllerToolBackup extends Controller {
 			$filename = '';
 		}
 
+		if (isset($this->request->get['position'])) {
+			$position = $this->request->get['position'];
+		} else {
+			$position = 0;
+		}
+
 		if (!$this->user->hasPermission('modify', 'tool/backup')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
@@ -210,12 +216,6 @@ class ControllerToolBackup extends Controller {
 
 		if (!is_file($file)) {
 			$json['error'] = $this->language->get('error_file');
-		}
-
-		if (isset($this->request->get['position'])) {
-			$position = $this->request->get['position'];
-		} else {
-			$position = 0;
 		}
 
 		if (!$json) {
@@ -259,9 +259,9 @@ class ControllerToolBackup extends Controller {
 
 			$position = ftell($handle);
 
-			$size = filesize($filename);
+			$size = filesize($file);
 
-			//$json['total'] = round(($position / $size) * 100);
+			$json['progress'] = round(($position / $size) * 100);
 
 			if ($position && !feof($handle)) {
 				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/restore', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&position=' . $position, true));

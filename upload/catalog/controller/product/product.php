@@ -288,7 +288,10 @@ class ControllerProductProduct extends Controller {
 			}
 
 			if ($this->config->get('config_tax')) {
-				$data['tax'] = $this->currency->format((float)$product_info['special'] ? $product_info['special'] : $product_info['price'], $this->session->data['currency']);
+				$data['tax'] = (float)$product_info['special'] ? $product_info['special'] : $product_info['price'];
+				if((float)$product_info['special'] && $product_info['special'] != $data['special']) $data['tax'] = $this->currency->format($product_info['special'], $this->session->data['currency']);
+					elseif($product_info['price'] != $data['price']) $data['tax'] = $this->currency->format($product_info['price'], $this->session->data['currency']);
+						else $data['tax'] = false;
 			} else {
 				$data['tax'] = false;
 			}

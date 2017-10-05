@@ -13,7 +13,7 @@
       </ul>
     </div>
   </div>
-  <div class="container-fluid"> {% if error_warning %}
+  <div class="container-fluid">{% if error_warning %}
     <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
@@ -29,7 +29,7 @@
             <div class="col-sm-10">
               <select name="amazon_login_button_type" id="input-button-type" class="form-control">
                 
-				{% if amazon_login_button_type == 'Login' %}
+				{% if module_amazon_login_button_type == 'Login' %}
 					
                 <option value="LwA" >{{ text_lwa_button }}</option>
                 <option value="Login" selected="selected">{{ text_login_button }}</option>

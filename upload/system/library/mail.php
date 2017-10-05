@@ -15,6 +15,7 @@ class Mail {
 	protected $from;
 	protected $sender;
 	protected $reply_to;
+	protected $reply_to_name;
 	protected $subject;
 	protected $text;
 	protected $html;
@@ -44,6 +45,9 @@ class Mail {
      * @param	mixed	$to
      */
 	public function setTo($to) {
+		if (is_array($to)) {
+			$to = array_map('trim', $to);
+		}
 		$this->to = $to;
 	}
 	
@@ -72,6 +76,15 @@ class Mail {
      */
 	public function setReplyTo($reply_to) {
 		$this->reply_to = $reply_to;
+	}
+	
+	/**
+     * 
+     *
+     * @param	string	$reply_to_name
+     */
+	public function setReplyToName($reply_to_name) {
+		$this->reply_to_name = $reply_to_name;
 	}
 	
 	/**

@@ -19,10 +19,21 @@ class ControllerInformationContact extends Controller {
 			$mail->setTo($this->config->get('config_email'));
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setReplyTo($this->request->post['email']);
-			$mail->setSender(html_entity_decode($this->request->post['name'], ENT_QUOTES, 'UTF-8'));
+			$mail->setReplyToName(html_entity_decode($this->request->post['name'], ENT_QUOTES, 'UTF-8'));
+			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 			$mail->setSubject(html_entity_decode(sprintf($this->language->get('email_subject'), $this->request->post['name']), ENT_QUOTES, 'UTF-8'));
 			$mail->setText($this->request->post['enquiry']);
 			$mail->send();
+
+			// Send to additional alert emails
+			$emails = explode(',', $this->config->get('config_mail_alert_email'));
+
+			foreach ($emails as $email) {
+				if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+					$mail->setTo($email);
+					$mail->send();
+				}
+			}
 
 			$this->response->redirect($this->url->link('information/contact/success'));
 		}

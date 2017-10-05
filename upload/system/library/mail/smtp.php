@@ -19,15 +19,17 @@ class Smtp {
 		$boundary = '----=_NextPart_' . md5(time());
 
 		$header  = 'MIME-Version: 1.0' . PHP_EOL;
-		$header .= 'To: <' . $to . '>' . PHP_EOL;
+		$header .= 'To: ' . $to . '' . PHP_EOL;
 		$header .= 'Subject: =?UTF-8?B?' . base64_encode($this->subject) . '?=' . PHP_EOL;
 		$header .= 'Date: ' . date('D, d M Y H:i:s O') . PHP_EOL;
 		$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . PHP_EOL;
 		
 		if (!$this->reply_to) {
 			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . PHP_EOL;
+		} elseif ($this->reply_to_name) {
+			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->reply_to_name) . '?= <' . $this->reply_to . '>' . PHP_EOL;
 		} else {
-			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->reply_to) . '?= <' . $this->reply_to . '>' . PHP_EOL;
+			$header .= 'Reply-To: ' . $this->reply_to . '' . PHP_EOL;
 		}
 		
 		$header .= 'Return-Path: ' . $this->from . PHP_EOL;

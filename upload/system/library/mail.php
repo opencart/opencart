@@ -47,6 +47,8 @@ class Mail {
 	public function setTo($to) {
 		if (is_array($to)) {
 			$to = array_map('trim', $to);
+		} else {
+			$to = trim($to);
 		}
 		$this->to = $to;
 	}

@@ -95,8 +95,14 @@ class ControllerToolBackup extends Controller {
 			$filename = date('Y-m-d H.i.s') . '.sql';
 		}
 
-		if (isset($this->request->get['backup'])) {
-			$backup = explode(',', $this->request->get['backup']);
+		if (isset($this->request->get['table'])) {
+			$table = $this->request->get['table'];
+		} else {
+			$table = '';
+		}
+
+		if (isset($this->request->post['backup'])) {
+			$backup = $this->request->post['backup'];
 		} else {
 			$backup = array();
 		}
@@ -115,17 +121,11 @@ class ControllerToolBackup extends Controller {
 
 		$allowed = $this->model_tool_backup->getTables();
 
-		foreach ($backup as $table) {
-			if (!in_array($table, $allowed)) {
-				$json['error'] = sprintf($this->language->get('error_table'), $table);
-
-				break;
-			}
+		if (!in_array($table, $allowed)) {
+			$json['error'] = sprintf($this->language->get('error_table'), $table);
 		}
 
 		if (!$json) {
-			$table = current($backup);
-
 			$output = '';
 
 			if ($page == 1) {
@@ -160,13 +160,23 @@ class ControllerToolBackup extends Controller {
 				$output .= 'INSERT INTO `' . $table . '` (' . preg_replace('/, $/', '', $fields) . ') VALUES (' . preg_replace('/, $/', '', $values) . ');' . "\n";
 			}
 
+			$position = array_search($table, $backup);
+
 			if (($page * 200) >= $record_total) {
 				$output .= "\n";
 
-				array_shift($backup);
+				if (isset($backup[$position + 1])) {
+					$table = $backup[$position + 1];
+				} else {
+					$table = '';
+				}
 			}
 
-			$json['total'] = count($backup);
+			if ($position) {
+				$json['progress'] = round(($position / count($backup)) * 100);
+			} else {
+				$json['progress'] = 0;
+			}
 
 			$handle = fopen(DIR_STORAGE . 'backup/' . $filename, 'a');
 
@@ -174,16 +184,16 @@ class ControllerToolBackup extends Controller {
 
 			fclose($handle);
 
-			if (!$backup) {
+			if (!$table) {
 				$json['success'] = $this->language->get('text_success');
 			} elseif (($page * 200) >= $record_total) {
-				$json['text'] = sprintf($this->language->get('text_next'), $table, ($page - 1) * 200, $record_total);
+				$json['text'] = sprintf($this->language->get('text_backup'), $table, ($page - 1) * 200, $record_total);
 
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&backup=' . implode(',', $backup) . '&page=1', true));
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&table=' . $table . '&page=1', true));
 			} else {
-				$json['text'] = sprintf($this->language->get('text_next'), $table, ($page - 1) * 200, $page * 200);
+				$json['text'] = sprintf($this->language->get('text_backup'), $table, ($page - 1) * 200, $page * 200);
 
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&backup=' . implode(',', $backup) . '&page=' . ($page + 1), true));
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&table=' . $table . '&page=' . ($page + 1), true));
 			}
 		}
 
@@ -261,16 +271,20 @@ class ControllerToolBackup extends Controller {
 
 			$size = filesize($file);
 
-			$json['progress'] = round(($position / $size) * 100);
+			if ($position) {
+				$json['progress'] = round(($position / $size) * 100);
+			} else {
+				$json['progress'] = 0;
+			}
 
 			if ($position && !feof($handle)) {
+				$json['text'] = sprintf($this->language->get('text_restore'), $position, $size);
+
 				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/restore', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&position=' . $position, true));
 
 				fclose($handle);
 			} else {
 				fclose($handle);
-
-				unlink($file);
 
 				$json['success'] = $this->language->get('text_success');
 

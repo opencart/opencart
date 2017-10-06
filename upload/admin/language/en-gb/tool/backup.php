@@ -4,8 +4,10 @@ $_['heading_title']     = 'Backup &amp; Restore';
 
 // Text
 $_['text_success']      = 'Success: You have successfully modified your database!';
-$_['text_next']         = 'Backing up table %s records %s to %s records';
-$_['text_backup']       = 'Backup Options';
+
+$_['text_backup']       = 'Backing up table %s records %s to %s records';
+$_['text_restore']      = 'Restoring %s of %s';
+$_['text_option']       = 'Backup Options';
 $_['text_progress']     = 'Progress';
 $_['text_import']       = 'For large backup files its better to upload the sql file via ftp to the <strong>system/storage/backup/</strong> directory.';
 

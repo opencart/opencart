@@ -16,8 +16,10 @@ class Mail {
 		
 		if (!$this->reply_to) {
 			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . PHP_EOL;
+		} elseif ($this->reply_to_name) {
+			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->reply_to_name) . '?= <' . $this->reply_to . '>' . PHP_EOL;
 		} else {
-			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->reply_to) . '?= <' . $this->reply_to . '>' . PHP_EOL;
+			$header .= 'Reply-To: ' . $this->reply_to . '' . PHP_EOL;
 		}
 		
 		$header .= 'Return-Path: ' . $this->from . PHP_EOL;

@@ -189,7 +189,7 @@ function restore(url, element) {
 				$(element).button('reset');
 				$('#button-upload, #button-backup, #history .btn').not(element).prop('disabled', false);
 			}
-			
+
 			if (json['text']) {
 				$('#progress-text').html(json['text']);
 			}

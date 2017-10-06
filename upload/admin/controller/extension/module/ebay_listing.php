@@ -59,60 +59,60 @@ class ControllerExtensionModuleEbayListing extends Controller {
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true);
 
-		if (isset($this->request->post['ebay_listing_username'])) {
-			$data['ebay_listing_username'] = $this->request->post['ebay_listing_username'];
+		if (isset($this->request->post['module_ebay_listing_username'])) {
+			$data['module_ebay_listing_username'] = $this->request->post['module_ebay_listing_username'];
 		} else {
-			$data['ebay_listing_username'] = $this->config->get('ebay_listing_username');
+			$data['module_ebay_listing_username'] = $this->config->get('module_ebay_listing_username');
 		}
 
-		if (isset($this->request->post['ebay_listing_keywords'])) {
-			$data['ebay_listing_keywords'] = $this->request->post['ebay_listing_keywords'];
+		if (isset($this->request->post['module_ebay_listing_keywords'])) {
+			$data['module_ebay_listing_keywords'] = $this->request->post['module_ebay_listing_keywords'];
 		} else {
-			$data['ebay_listing_keywords'] = $this->config->get('ebay_listing_keywords');
+			$data['module_ebay_listing_keywords'] = $this->config->get('module_ebay_listing_keywords');
 		}
 
-		if (isset($this->request->post['ebay_listing_description'])) {
-			$data['ebay_listing_description'] = $this->request->post['ebay_listing_description'];
+		if (isset($this->request->post['module_ebay_listing_description'])) {
+			$data['module_ebay_listing_description'] = $this->request->post['module_ebay_listing_description'];
 		} else {
-			$data['ebay_listing_description'] = $this->config->get('ebay_listing_description');
+			$data['module_ebay_listing_description'] = $this->config->get('module_ebay_listing_description');
 		}
 
-		if (isset($this->request->post['ebay_listing_limit'])) {
-			$data['ebay_listing_limit'] = $this->request->post['ebay_listing_limit'];
-		} elseif ($this->config->has('ebay_listing_limit')) {
-			$data['ebay_listing_limit'] = $this->config->get('ebay_listing_limit');
+		if (isset($this->request->post['module_ebay_listing_limit'])) {
+			$data['module_ebay_listing_limit'] = $this->request->post['module_ebay_listing_limit'];
+		} elseif ($this->config->has('module_ebay_listing_limit')) {
+			$data['module_ebay_listing_limit'] = $this->config->get('module_ebay_listing_limit');
 		} else {
-			$data['ebay_listing_limit'] = 5;
+			$data['module_ebay_listing_limit'] = 5;
 		}
 
-		if (isset($this->request->post['ebay_listing_width'])) {
-			$data['ebay_listing_width'] = $this->request->post['width'];
-		} elseif ($this->config->has('ebay_listing_width')) {
-			$data['ebay_listing_width'] = $this->config->get('ebay_listing_width');
+		if (isset($this->request->post['module_ebay_listing_width'])) {
+			$data['module_ebay_listing_width'] = $this->request->post['module_ebay_listing_width'];
+		} elseif ($this->config->has('module_ebay_listing_width')) {
+			$data['module_ebay_listing_width'] = $this->config->get('module_ebay_listing_width');
 		} else {
-			$data['ebay_listing_width'] = 200;
+			$data['module_ebay_listing_width'] = 200;
 		}
 
-		if (isset($this->request->post['ebay_listing_height'])) {
-			$data['ebay_listing_height'] = $this->request->post['ebay_listing_height'];
-		} elseif ($this->config->has('ebay_listing_height')) {
-			$data['ebay_listing_height'] = $this->config->get('ebay_listing_height');
+		if (isset($this->request->post['module_ebay_listing_height'])) {
+			$data['module_ebay_listing_height'] = $this->request->post['module_ebay_listing_height'];
+		} elseif ($this->config->has('module_ebay_listing_height')) {
+			$data['module_ebay_listing_height'] = $this->config->get('module_ebay_listing_height');
 		} else {
-			$data['ebay_listing_height'] = 200;
+			$data['module_ebay_listing_height'] = 200;
 		}
 
-		if (isset($this->request->post['ebay_listing_sort'])) {
-			$data['ebay_listing_sort'] = $this->request->post['ebay_listing_sort'];
+		if (isset($this->request->post['module_ebay_listing_sort'])) {
+			$data['module_ebay_listing_sort'] = $this->request->post['module_ebay_listing_sort'];
 		} elseif ($this->config->has('ebay_listing_sort')) {
-			$data['ebay_listing_sort'] = $this->config->get('ebay_listing_sort');
+			$data['module_ebay_listing_sort'] = $this->config->get('module_ebay_listing_sort');
 		} else {
-			$data['ebay_listing_sort'] = 'StartTimeNewest';
+			$data['module_ebay_listing_sort'] = 'StartTimeNewest';
 		}
 
-		if (isset($this->request->post['ebay_listing_site'])) {
-			$data['ebay_listing_site'] = $this->request->post['ebay_listing_site'];
+		if (isset($this->request->post['module_ebay_listing_site'])) {
+			$data['module_ebay_listing_site'] = $this->request->post['module_ebay_listing_site'];
 		} else {
-			$data['ebay_listing_site'] = $this->config->get('ebay_listing_site');
+			$data['module_ebay_listing_site'] = $this->config->get('module_ebay_listing_site');
 		}
 
 		$data['sites'] = array();
@@ -177,10 +177,10 @@ class ControllerExtensionModuleEbayListing extends Controller {
 			'value' => 123
 		);
 
-		if (isset($this->request->post['ebay_listing_status'])) {
-			$data['ebay_listing_status'] = $this->request->post['ebay_listing_status'];
+		if (isset($this->request->post['module_ebay_listing_status'])) {
+			$data['module_ebay_listing_status'] = $this->request->post['module_ebay_listing_status'];
 		} else {
-			$data['ebay_listing_status'] = $this->config->get('ebay_listing_status');
+			$data['module_ebay_listing_status'] = $this->config->get('module_ebay_listing_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -195,11 +195,11 @@ class ControllerExtensionModuleEbayListing extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['ebay_listing_width']) {
+		if (!$this->request->post['module_ebay_listing_width']) {
 			$this->error['width'] = $this->language->get('error_width');
 		}
 
-		if (!$this->request->post['ebay_listing_height']) {
+		if (!$this->request->post['module_ebay_listing_height']) {
 			$this->error['height'] = $this->language->get('error_height');
 		}
 

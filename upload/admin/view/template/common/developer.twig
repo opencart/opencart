@@ -7,11 +7,11 @@
     <div class="modal-body">
       <table class="table table-bordered">
         <thead>
-        <tr>
-          <td>{{ column_component }}</td>
-          <td style="width: 150px;">{{ entry_cache }}</td>
-          <td class="text-right" style="width: 1px;">{{ column_action }}</td>
-        </tr>
+          <tr>
+            <td>{{ column_component }}</td>
+            <td style="width: 150px;">{{ entry_cache }}</td>
+            <td class="text-right" style="width: 1px;">{{ column_action }}</td>
+          </tr>
         </thead>
         <tr>
           <td>{{ entry_theme }}</td>
@@ -25,7 +25,6 @@
                   {{ button_on }}
                 </label>
               {% endif %}
-
               {% if not developer_theme %}
                 <label class="btn btn-danger active" {% if not eval %}disabled="disabled"{% endif %}> <input type="radio" name="developer_theme" value="0" autocomplete="off" {% if not eval %}disabled="disabled"{% endif %} checked/>
                   {{ button_off }}

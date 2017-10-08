@@ -26,15 +26,34 @@ class ControllerCommonColumnLeft extends Controller {
 					'children' => array()		
 				);
 			}
-			
+
+			// Products
+			$product = array();
+
 			if ($this->user->hasPermission('access', 'catalog/product')) {
-				$catalog[] = array(
+				$product[] = array(
 					'name'	   => $this->language->get('text_product'),
 					'href'     => $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'], true),
 					'children' => array()		
 				);
 			}
-			
+
+			if ($this->user->hasPermission('access', 'catalog/product_option')) {
+				$product[] = array(
+					'name'	   => $this->language->get('text_product_option'),
+					'href'     => $this->url->link('catalog/product_option', 'user_token=' . $this->session->data['user_token'], true) ,
+					'children' => array()
+				);
+			}
+
+			if ($product) {
+				$catalog[] = array(
+					'name'	   => $this->language->get('text_product'),
+					'href'     => '',
+					'children' => $product
+				);
+			}
+
 			if ($this->user->hasPermission('access', 'catalog/recurring')) {
 				$catalog[] = array(
 					'name'	   => $this->language->get('text_recurring'),

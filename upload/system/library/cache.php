@@ -42,7 +42,7 @@ class Cache {
 	}
 	
     /**
-     * 
+     * Sets a cache by key value.
      *
      * @param	string	$key	The cache key
 	 * @param	string	$value	The cache value
@@ -54,7 +54,7 @@ class Cache {
 	}
    
     /**
-     * 
+     * Deletes a cache by key name.
      *
      * @param	string	$key	The cache key
      */

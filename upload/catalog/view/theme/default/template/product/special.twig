@@ -30,19 +30,13 @@
           <div class="form-group input-group input-group-sm">
             <label class="input-group-addon" for="input-sort">{{ text_sort }}</label>
             <select id="input-sort" class="form-control" onchange="location = this.value;">
-              
               {% for sorts in sorts %}
               {% if sorts.value == '%s-%s'|format(sort, order) %}
-              
               <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
-              
               {% else %}
-              
               <option value="{{ sorts.href }}">{{ sorts.text }}</option>
-              
               {% endif %}
               {% endfor %}
-            
             </select>
           </div>
         </div>
@@ -50,19 +44,13 @@
           <div class="form-group input-group input-group-sm">
             <label class="input-group-addon" for="input-limit">{{ text_limit }}</label>
             <select id="input-limit" class="form-control" onchange="location = this.value;">
-              
               {% for limits in limits %}
               {% if limits.value == limit %}
-              
               <option value="{{ limits.href }}" selected="selected">{{ limits.text }}</option>
-              
               {% else %}
-              
               <option value="{{ limits.href }}">{{ limits.text }}</option>
-              
               {% endif %}
               {% endfor %}
-            
             </select>
           </div>
         </div>

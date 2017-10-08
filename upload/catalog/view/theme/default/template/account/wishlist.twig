@@ -34,7 +34,6 @@
             </tr>
           </thead>
           <tbody>
-          
           {% for product in products %}
           <tr>
             <td class="text-center">{% if product.thumb %}<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" /></a>{% endif %}</td>
@@ -51,7 +50,6 @@
           </tr>
           {% endfor %}
             </tbody>
-          
         </table>
       </div>
       {% else %}

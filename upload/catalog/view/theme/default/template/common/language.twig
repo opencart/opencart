@@ -4,7 +4,7 @@
     <div class="btn-group">
       <button class="btn btn-link dropdown-toggle" data-toggle="dropdown">
       {% for language in languages %}
-      {% if language.code == code %} 
+      {% if language.code == code %}
       <img src="catalog/language/{{ language.code }}/{{ language.code }}.png" alt="{{ language.name }}" title="{{ language.name }}">
       {% endif %}
       {% endfor %}

@@ -77,11 +77,11 @@
           <label class="col-sm-2 control-label" for="input-card-choice">{{ entry_card_choice }}</label>
           <div class="col-sm-8">
             <select name="card_choice" id="input-card-choice" class="form-control" {% if not cards %} disabled {% endif %}>
-          	  {% if cards %}
+              {% if cards %}
               <option value="">{{ text_select_card }}</option>
-               {% for card in cards %}
+              {% for card in cards %}
               <option value="{{ card.token }}">{{ card.type }}, &nbsp; {{ card.account }}, &nbsp; {{ card.expiry }}</option>
-                {% endfor %}
+              {% endfor %}
               {% else %}
               <option value="">{{ text_no_cards }}</option>
               {% endif %}

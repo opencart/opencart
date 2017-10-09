@@ -20,7 +20,7 @@ class ControllerCatalogProductOption extends Controller {
 		$this->load->model('catalog/product_option');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_product->addProductOption($this->request->post);
+			$this->model_catalog_product_option->addProductOption($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -68,7 +68,7 @@ class ControllerCatalogProductOption extends Controller {
 		$this->load->model('catalog/product_option');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_option->editProductOption($this->request->get['option_id'], $this->request->post);
+			$this->model_catalog_product_option->editProductOption($this->request->get['option_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -113,7 +113,7 @@ class ControllerCatalogProductOption extends Controller {
 
 		if (isset($this->request->post['selected']) && $this->validateDelete()) {
 			foreach ($this->request->post['selected'] as $option_id) {
-				$this->model_catalog_option->deleteProductOption($option_id);
+				$this->model_catalog_product_option->deleteProductOption($option_id);
 			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -441,23 +441,6 @@ class ControllerCatalogProductOption extends Controller {
 		} else {
 			$data['option'] = '';
 		}
-		$this->load->model('catalog/option');
-
-		$option_info = $this->model_catalog_option->getOption($data['option_id']);
-
-		if ($option_info) {
-			$data['type'] = $option_info['type'];
-		} else {
-			$data['type'] = 'value';
-		}
-
-		if (isset($this->request->post['value'])) {
-			$data['value'] = $this->request->post['value'];
-		} elseif (!empty($product_option_info)) {
-			$data['value'] = $product_option_info['value'];
-		} else {
-			$data['value'] = '';
-		}
 
 		if (isset($this->request->post['required'])) {
 			$data['required'] = $this->request->post['required'];
@@ -465,6 +448,26 @@ class ControllerCatalogProductOption extends Controller {
 			$data['required'] = $product_option_info['required'];
 		} else {
 			$data['required'] = '';
+		}
+
+		$this->load->model('catalog/option');
+
+		$option_info = $this->model_catalog_option->getOption($data['option_id']);
+
+		if ($option_info) {
+			$data['type'] = $option_info['type'];
+		} else {
+			$data['type'] = 'select';
+		}
+
+		$data['option_values'] = $this->model_catalog_option->getOptionValues($data['option_id']);
+
+		if (isset($this->request->post['value'])) {
+			$data['value'] = $this->request->post['value'];
+		} elseif (!empty($product_option_info)) {
+			$data['value'] = $product_option_info['value'];
+		} else {
+			$data['value'] = '';
 		}
 
 		// Options

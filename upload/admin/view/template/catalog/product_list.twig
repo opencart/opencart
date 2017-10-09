@@ -37,20 +37,100 @@
           <div class="panel-body">
             <div class="form-group">
               <label class="control-label" for="input-name">{{ entry_name }}</label>
+			  <div class="input-group">
               <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
-            </div>
+			  <div class="input-group-btn">
+                    <button type="button" id="button-clear-input-name" class="btn btn-default"><i class="fa fa-times"></i></button>
+			</div>
+			</div>
+			</div>
             <div class="form-group">
               <label class="control-label" for="input-model">{{ entry_model }}</label>
+			  <div class="input-group">
               <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control" />
-            </div>
-            <div class="form-group">
-              <label class="control-label" for="input-price">{{ entry_price }}</label>
-              <input type="text" name="filter_price" value="{{ filter_price }}" placeholder="{{ entry_price }}" id="input-price" class="form-control" />
-            </div>
-            <div class="form-group">
-              <label class="control-label" for="input-quantity">{{ entry_quantity }}</label>
-              <input type="text" name="filter_quantity" value="{{ filter_quantity }}" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control" />
-            </div>
+            <div class="input-group-btn">
+                    <button type="button" id="button-clear-input-model" class="btn btn-default"><i class="fa fa-times"></i></button>
+                  </div>
+				</div>
+				</div>
+			<div class="form-group">
+                 <label class="control-label" for="input-category-name">{{ entry_category }}</label> <label class="control-label pull-right" for="input-sub-category">{{ entry_sub_category }} <input type="checkbox" class="checkbox-inline" name="filter_sub_category" id="input-sub-category" class="form-control"{{ filter_sub_category}}    {% if filter_sub_category %} checked="checked" {% endif %} /></label>
+                <div class="clearfix"></div>
+				<div class="input-group">
+                  <input type="text" name="filter_category_name" value="{{ filter_category_name }}" placeholder="{{ entry_category }}" id="input-category-name" class="form-control" />
+                  <div class="input-group-btn">
+                    <button type="button" id="button-clear-input-category-name" class="btn btn-default"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <input type="hidden" name="filter_category" value="{{ filter_category }}" id="input-category" class="form-control" />
+              </div>
+			  
+			<div class="form-group">
+              <label class="control-label" for="input-manufacturer-name">{{ entry_manufacturer }}</label>
+			  <div class="input-group">
+				<input type="text" name="filter_manufacturer_name" value="{{ filter_manufacturer_name }}" placeholder="{{ entry_manufacturer }}" id="input-manufacturer" class="form-control" />
+				
+				<div class="input-group-btn">
+                    <button type="button" id="button-clear-input-manufacturer" class="btn btn-default"><i class="fa fa-times"></i></button>
+				</div>
+				  <input type="hidden" name="filter_manufacturer_id" value="{{ filter_manufacturer_id }}" id="input-manufacturer-id" class="form-control" />
+				</div>
+			</div>
+				
+			<!--
+			<div class="form-group">
+                <label class="control-label" for="input-manufacturer-name">{{ entry_manufacturer }}</label>
+                <div class="input-group">
+                  <input type="text" name="filter_manufacturer_name" value="{{ filter_manufacturer_name }}" placeholder="{{ entry_manufacturer }}" id="input-manufacturer-name" class="form-control" />
+                  <div class="input-group-btn">
+                    <button type="button" id="button-clear-input-manufacturer-name" class="btn btn-default"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <input type="hidden" name="filter_manufacturer" value="{{ filter_manufacturer_name }}" id="input-manufacturer" class="form-control" />
+              </div>
+			  -->
+			<div class="form-group">
+                <label class="control-label" for="input-price">{{ entry_price }}</label>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="input-group">
+                      <input type="text" name="filter_price_min" value="{{ filter_price_min }}" placeholder="{{ entry_min }}" id="input-price-min" class="form-control" />
+                      <div class="input-group-btn">
+                        <button type="button" id="button-clear-input-price-min" class="btn btn-default"><i class="fa fa-times"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 pull-right">
+                    <div class="input-group">
+                      <input type="text" name="filter_price_max" value="{{ filter_price_max }}" placeholder="{{ entry_max }}" id="input-price-max" class="form-control" />
+                      <div class="input-group-btn">
+                        <button type="button" id="button-clear-input-price-max" class="btn btn-default"><i class="fa fa-times"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+			</div>
+			<div class="form-group">
+                <label class="control-label" for="input-quantity">{{ entry_quantity }}</label>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="input-group">
+                      <input type="text" name="filter_quantity_min" value="{{ filter_quantity_min }}" placeholder="{{ entry_min }}" id="input-quantity-min" class="form-control" />
+                      <div class="input-group-btn">
+                        <button type="button" id="button-clear-input-quantity-min" class="btn btn-default"><i class="fa fa-times"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 pull-right">
+                    <div class="input-group">
+                      <input type="text" name="filter_quantity_max" value="{{ filter_quantity_max }}" placeholder="{{ entry_max }}" id="input-quantity-max" class="form-control" />
+                      <div class="input-group-btn">
+                        <button type="button" id="button-clear-input-quantity-max" class="btn btn-default"><i class="fa fa-times"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+			</div>
             <div class="form-group">
               <label class="control-label" for="input-status">{{ entry_status }}</label>
               <select name="filter_status" id="input-status" class="form-control">
@@ -146,6 +226,7 @@
 			</div>
             <div class="form-group text-right">
               <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+			  <button type="button" id="button-clear-filter" class="btn btn-default"><i class="fa fa-times"></i><span class="hidden-sm"> {{ button_clear }}</span></button>
             </div>
           </div>
         </div>
@@ -201,7 +282,7 @@
                   {% endfor %}
                   {% else %}
                   <tr>
-                    <td class="text-center" colspan="8">{{ text_no_results }}</td>
+                    <td class="text-center" colspan="9">{{ text_no_results }}</td>
                   </tr>
                   {% endif %}
                     </tbody>
@@ -234,16 +315,24 @@ $('#button-filter').on('click', function() {
 		url += '&filter_model=' + encodeURIComponent(filter_model);
 	}
 
-	var filter_price = $('input[name=\'filter_price\']').val();
-
-	if (filter_price) {
-		url += '&filter_price=' + encodeURIComponent(filter_price);
+	var filter_price_min = $('input[name=\'filter_price_min\']').val();
+	if (filter_price_min) {
+		url += '&filter_price_min=' + encodeURIComponent(filter_price_min);
+	}
+	
+	var filter_price_max = $('input[name=\'filter_price_max\']').val();
+	if (filter_price_max) {
+		url += '&filter_price_max=' + encodeURIComponent(filter_price_max);
 	}
 
-	var filter_quantity = $('input[name=\'filter_quantity\']').val();
-
-	if (filter_quantity) {
-		url += '&filter_quantity=' + encodeURIComponent(filter_quantity);
+	var filter_quantity_min = $('input[name=\'filter_quantity_min\']').val();
+	if (filter_quantity_min) {
+		url += '&filter_quantity_min=' + encodeURIComponent(filter_quantity_min);
+	}
+	
+	var filter_quantity_max = $('input[name=\'filter_quantity_max\']').val();
+	if (filter_quantity_max) {
+		url += '&filter_quantity_max=' + encodeURIComponent(filter_quantity_max);
 	}
 
 	var filter_status = $('select[name=\'filter_status\']').val();
@@ -252,12 +341,30 @@ $('#button-filter').on('click', function() {
 		url += '&filter_status=' + encodeURIComponent(filter_status);
 	}
 	
+	var filter_category = $('input[name=\'filter_category\']').val();
+	if (filter_category) {
+		url += '&filter_category=' + encodeURIComponent(filter_category);
+	}
+	
+	var filter_sub_category = $('input[name=\'filter_sub_category\']');
+	if (filter_sub_category.prop('checked')) {
+		url += '&filter_sub_category';
+	}
+	
+	var filter_manufacturer_id = $('input[name=\'filter_manufacturer_id\']').val();
+	if (filter_manufacturer_id) {
+		url += '&filter_manufacturer_id=' + encodeURIComponent(filter_manufacturer_id);
+	}
+	
 	var filter_noindex = $('select[name=\'filter_noindex\']').val();
 	if (filter_noindex !== '') {
 		url += '&filter_noindex=' + encodeURIComponent(filter_noindex);
 	}
 
 	location = 'index.php?route=catalog/product&user_token={{ user_token }}' + url;
+});
+$('#button-clear-filter').on('click', function() {
+	location = 'index.php?route=catalog/product&user_token={{ user_token }}';
 });
 //--></script> 
   <script type="text/javascript"><!--
@@ -285,6 +392,10 @@ $('input[name=\'filter_name\']').autocomplete({
 		$('input[name=\'filter_name\']').val(item['label']);
 	}
 });
+$('#button-clear-input-name').on('click',function(){
+	$('input[name=\'filter_name\']').val('');
+	$('#button-filter').trigger('click');
+});
 
 $('input[name=\'filter_model\']').autocomplete({
 	'source': function(request, response) {
@@ -303,6 +414,101 @@ $('input[name=\'filter_model\']').autocomplete({
 	},
 	'select': function(item) {
 		$('input[name=\'filter_model\']').val(item['label']);
+	}
+});
+$('#button-clear-input-model').on('click',function(){
+	$('input[name=\'filter_model\']').val('');
+	$('#button-filter').trigger('click');
+});
+$('input[name=\'filter_category_name\']').autocomplete({
+	'source': function(request, response) {
+		if ($('input[name=\'filter_category_name\']').val().length==0) {
+			$('input[name=\'filter_category\']').val(null);
+		}
+		$.ajax({
+			url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				if (json.length>0) {
+					json.unshift({'category_id':null,'name':'{{ text_all }}'},{'category_id':0,'name':'{{ text_none_category }}'});
+				}
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['category_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		if (item['label']!='{{ text_all }}') {
+			$('input[name=\'filter_category_name\']').val(item['label']);
+		} else {
+			$('input[name=\'filter_category_name\']').val('');
+		}
+		$('input[name=\'filter_category\']').val(item['value']);
+	}
+});
+$('#button-clear-input-category-name').on('click',function(){
+	$('input[name=\'filter_category_name\']').val('');
+	$('input[name=\'filter_category\']').val(null);
+	$('#button-filter').trigger('click');
+});
+
+// Manufacturer
+$('input[name=\'filter_manufacturer_name\']').autocomplete({
+	'source': function(request, response) {
+		if ($('input[name=\'filter_manufacturer_name\']').val().length==0) {
+			$('input[name=\'filter_manufacturer_id\']').val(null);
+		}
+		$.ajax({
+			url: 'index.php?route=catalog/manufacturer/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				if (json.length>0) {
+					json.unshift({'manufacturer_id':null,'name':'{{ text_all }}'},{'manufacturer_id':0,'name':'{{ text_none_manufacturer }}'});
+				}
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['manufacturer_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'filter_manufacturer_name\']').val(item['label']);
+		$('input[name=\'filter_manufacturer_id\']').val(item['value']);
+	}
+});
+
+$('#button-clear-input-manufacturer').on('click',function(){
+	$('input[name=\'filter_manufacturer_name\']').val('');
+	$('input[name=\'filter_manufacturer_id\']').val('');
+	$('#button-filter').trigger('click');
+});
+$('#button-clear-input-price-min').on('click',function(){
+	$('input[name=\'filter_price_min\']').val('');
+	$('#button-filter').trigger('click');
+});
+$('#button-clear-input-price-max').on('click',function(){
+	$('input[name=\'filter_price_max\']').val('');
+	$('#button-filter').trigger('click');
+});
+$('#button-clear-input-quantity-min').on('click',function(){
+	$('input[name=\'filter_quantity_min\']').val('');
+	$('#button-filter').trigger('click');
+});
+$('#button-clear-input-quantity-max').on('click',function(){
+	$('input[name=\'filter_quantity_max\']').val('');
+	$('#button-filter').trigger('click');
+});
+$('input[name=\'filter_name\'], input[name=\'filter_model\'], input[name=\'filter_category_name\'], input[name=\'filter_manufacturer_id\'], input[name=\'filter_price_min\'], input[name=\'filter_price_max\'], input[name=\'filter_quantity_min\'], input[name=\'filter_quantity_max\']').keypress(function (e) {
+	if (e.which == 13) {
+		$('#button-filter').trigger('click');
+		return false;
 	}
 });
 //--></script></div>

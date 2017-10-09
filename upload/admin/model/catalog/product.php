@@ -370,6 +370,15 @@ class ModelCatalogProduct extends Model {
 	public function getProducts($data = array()) {
 		$sql = "SELECT * FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
+		if (isset($data['filter_category']) && !is_null($data['filter_category'])) {
+			preg_match('/(.*)(WHERE pd\.language_id.*)/', $sql, $sql_crutch_matches);
+		if (isset($sql_crutch_matches[2])) {
+		$sql = $sql_crutch_matches[1] . " LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (p.product_id = p2c.product_id)" . $sql_crutch_matches[2];
+		} else {
+			$data['filter_category'] = null;
+			}
+		}
+		
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND pd.name LIKE '%" . $this->db->escape($data['filter_name']) . "%'";
 		}
@@ -377,13 +386,55 @@ class ModelCatalogProduct extends Model {
 		if (!empty($data['filter_model'])) {
 			$sql .= " AND p.model LIKE '%" . $this->db->escape($data['filter_model']) . "%'";
 		}
+		
+		if (isset($data['filter_category']) && !is_null($data['filter_category'])) {
+			if (!empty($data['filter_category']) && !empty($data['filter_sub_category'])) {
+				$implode_data = array();
+				
+				$this->load->model('catalog/category');
+				
+				$categories = $this->model_catalog_category->getCategoriesChildren($data['filter_category']);
+				
+				foreach ($categories as $category) {
+					$implode_data[] = "p2c.category_id = '" . (int)$category['category_id'] . "'";
+				}
+				
+				$sql .= " AND (" . implode(' OR ', $implode_data) . ")";
+			} else {
+				if ((int)$data['filter_category'] > 0) {
+					$sql .= " AND p2c.category_id = '" . (int)$data['filter_category'] . "'";
+				} else {
+					$sql .= " AND p2c.category_id IS NULL";
+				}
+			}
+		}
+	
+		if (isset($data['filter_manufacturer_id']) && !is_null($data['filter_manufacturer_id'])) {
+			$sql .= " AND p.manufacturer_id = '" . (int)$data['filter_manufacturer_id'] . "'";
+		}
 
 		if (!empty($data['filter_price'])) {
 			$sql .= " AND p.price LIKE '" . $this->db->escape($data['filter_price']) . "%'";
 		}
+		
+		if (isset($data['filter_price_min']) && !is_null($data['filter_price_min'])) {
+			$sql .= " AND p.price >= '" . (float)$data['filter_price_min'] . "'";
+		}
+		
+		if (isset($data['filter_price_max']) && !is_null($data['filter_price_max'])) {
+			$sql .= " AND p.price <= '" . (float)$data['filter_price_max'] . "'";
+		}
 
 		if (isset($data['filter_quantity']) && $data['filter_quantity'] !== '') {
 			$sql .= " AND p.quantity = '" . (int)$data['filter_quantity'] . "'";
+		}
+		
+		if (isset($data['filter_quantity_min']) && !is_null($data['filter_quantity_min'])) {
+			$sql .= " AND p.quantity >= '" . (int)$data['filter_quantity_min'] . "'";
+		}
+		
+		if (isset($data['filter_quantity_max']) && !is_null($data['filter_quantity_max'])) {
+			$sql .= " AND p.quantity <= '" . (int)$data['filter_quantity_max'] . "'";
 		}
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
@@ -652,6 +703,10 @@ class ModelCatalogProduct extends Model {
 	public function getTotalProducts($data = array()) {
 		$sql = "SELECT COUNT(DISTINCT p.product_id) AS total FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id)";
 
+		if (isset($data['filter_category']) && !is_null($data['filter_category'])) {
+			$sql .= " LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (p.product_id = p2c.product_id)";
+		}
+		
 		$sql .= " WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
@@ -661,13 +716,55 @@ class ModelCatalogProduct extends Model {
 		if (!empty($data['filter_model'])) {
 			$sql .= " AND p.model LIKE '%" . $this->db->escape($data['filter_model']) . "%'";
 		}
+		
+		if (isset($data['filter_category']) && !is_null($data['filter_category'])) {
+			if (!empty($data['filter_category']) && !empty($data['filter_sub_category'])) {
+				$implode_data = array();
+				
+				$this->load->model('catalog/category');
+				
+				$categories = $this->model_catalog_category->getCategoriesChildren($data['filter_category']);
+				
+				foreach ($categories as $category) {
+					$implode_data[] = "p2c.category_id = '" . (int)$category['category_id'] . "'";
+				}
+				
+				$sql .= " AND (" . implode(' OR ', $implode_data) . ")";
+			} else {
+				if ((int)$data['filter_category'] > 0) {
+					$sql .= " AND p2c.category_id = '" . (int)$data['filter_category'] . "'";
+				} else {
+					$sql .= " AND p2c.category_id IS NULL";
+				}
+			}
+		}
+		
+		if (isset($data['filter_manufacturer_id']) && !is_null($data['filter_manufacturer_id'])) {
+			$sql .= " AND p.manufacturer_id = '" . (int)$data['filter_manufacturer_id'] . "'";
+		}
 
 		if (isset($data['filter_price']) && !is_null($data['filter_price'])) {
 			$sql .= " AND p.price LIKE '" . $this->db->escape($data['filter_price']) . "%'";
 		}
+		
+		if (isset($data['filter_price_min']) && !is_null($data['filter_price_min'])) {
+			$sql .= " AND p.price >= '" . (float)$data['filter_price_min'] . "'";
+		}
+		
+		if (isset($data['filter_price_max']) && !is_null($data['filter_price_max'])) {
+			$sql .= " AND p.price <= '" . (float)$data['filter_price_max'] . "'";
+		}
 
 		if (isset($data['filter_quantity']) && $data['filter_quantity'] !== '') {
 			$sql .= " AND p.quantity = '" . (int)$data['filter_quantity'] . "'";
+		}
+		
+		if (isset($data['filter_quantity_min']) && !is_null($data['filter_quantity_min'])) {
+			$sql .= " AND p.quantity >= '" . (int)$data['filter_quantity_min'] . "'";
+		}
+		
+		if (isset($data['filter_quantity_max']) && !is_null($data['filter_quantity_max'])) {
+			$sql .= " AND p.quantity <= '" . (int)$data['filter_quantity_max'] . "'";
 		}
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {

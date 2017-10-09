@@ -33,69 +33,49 @@
           </div>
           <div class="panel-body">
             <div class="form-group">
-              <label class="control-label" for="input-name">{{ entry_name }}</label>
-              <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+              <label class="control-label" for="input-name">{{ entry_name }}</label> <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-email">{{ entry_email }}</label>
-              <input type="text" name="filter_email" value="{{ filter_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+              <label class="control-label" for="input-email">{{ entry_email }}</label> <input type="text" name="filter_email" value="{{ filter_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-customer-group">{{ entry_customer_group }}</label>
-              <select name="filter_customer_group_id" id="input-customer-group" class="form-control">
+              <label class="control-label" for="input-customer-group">{{ entry_customer_group }}</label> <select name="filter_customer_group_id" id="input-customer-group" class="form-control">
                 <option value=""></option>
-
                 {% for customer_group in customer_groups %}
                   {% if customer_group.customer_group_id == filter_customer_group_id %}
-
                     <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
-
                   {% else %}
-
                     <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
-
                   {% endif %}
                 {% endfor %}
-
               </select>
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-status">{{ entry_status }}</label>
-              <select name="filter_status" id="input-status" class="form-control">
+              <label class="control-label" for="input-status">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-control">
                 <option value=""></option>
-
                 {% if filter_status == '1' %}
-
                   <option value="1" selected="selected">{{ text_enabled }}</option>
-
                 {% else %}
-
                   <option value="1">{{ text_enabled }}</option>
-
                 {% endif %}
                 {% if filter_status == '0' %}
-
                   <option value="0" selected="selected">{{ text_disabled }}</option>
-
                 {% else %}
-
                   <option value="0">{{ text_disabled }}</option>
-
                 {% endif %}
-
               </select>
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-ip">{{ entry_ip }}</label>
-              <input type="text" name="filter_ip" value="{{ filter_ip }}" placeholder="{{ entry_ip }}" id="input-ip" class="form-control"/>
+              <label class="control-label" for="input-ip">{{ entry_ip }}</label> <input type="text" name="filter_ip" value="{{ filter_ip }}" placeholder="{{ entry_ip }}" id="input-ip" class="form-control"/>
             </div>
             <div class="form-group">
               <label class="control-label" for="input-date-added">{{ entry_date_added }}</label>
               <div class="input-group date">
                 <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control"/>
                 <div class="input-group-btn">
-                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                </div></div>
+                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                </div>
+              </div>
             </div>
             <div class="form-group text-right">
               <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
@@ -113,60 +93,58 @@
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                   <thead>
-                  <tr>
-                    <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');"/></td>
-                    <td class="text-left">{% if sort == 'name' %}<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>{% else %}<a href="{{ sort_name }}">{{ column_name }}</a>{% endif %}</td>
-                    <td class="text-left">{% if sort == 'c.email' %}<a href="{{ sort_email }}" class="{{ order|lower }}">{{ column_email }}</a>{% else %}<a href="{{ sort_email }}">{{ column_email }}</a>{% endif %}</td>
-                    <td class="text-left">{% if sort == 'customer_group' %}<a href="{{ sort_customer_group }}" class="{{ order|lower }}">{{ column_customer_group }}</a> {% else %} <a href="{{ sort_customer_group }}">{{ column_customer_group }}</a>{% endif %}</td>
-                    <td class="text-left">{% if sort == 'c.status' %}<a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>{% else %}<a href="{{ sort_status }}">{{ column_status }}</a>{% endif %}</td>
-                    <td class="text-left">{% if sort == 'c.ip' %}<a href="{{ sort_ip }}" class="{{ order|lower }}">{{ column_ip }}</a>{% else %}<a href="{{ sort_ip }}">{{ column_ip }}</a>{% endif %}</td>
-                    <td class="text-left">{% if sort == 'c.date_added' %}<a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>{% else %}<a href="{{ sort_date_added }}">{{ column_date_added }}</a>{% endif %}</td>
-                    <td class="text-right">{{ column_action }}</td>
-                  </tr>
+                    <tr>
+                      <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');"/></td>
+                      <td class="text-left">{% if sort == 'name' %}<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>{% else %}<a href="{{ sort_name }}">{{ column_name }}</a>{% endif %}</td>
+                      <td class="text-left">{% if sort == 'c.email' %}<a href="{{ sort_email }}" class="{{ order|lower }}">{{ column_email }}</a>{% else %}<a href="{{ sort_email }}">{{ column_email }}</a>{% endif %}</td>
+                      <td class="text-left">{% if sort == 'customer_group' %}<a href="{{ sort_customer_group }}" class="{{ order|lower }}">{{ column_customer_group }}</a> {% else %} <a href="{{ sort_customer_group }}">{{ column_customer_group }}</a>{% endif %}</td>
+                      <td class="text-left">{% if sort == 'c.status' %}<a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>{% else %}<a href="{{ sort_status }}">{{ column_status }}</a>{% endif %}</td>
+                      <td class="text-left">{% if sort == 'c.ip' %}<a href="{{ sort_ip }}" class="{{ order|lower }}">{{ column_ip }}</a>{% else %}<a href="{{ sort_ip }}">{{ column_ip }}</a>{% endif %}</td>
+                      <td class="text-left">{% if sort == 'c.date_added' %}<a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>{% else %}<a href="{{ sort_date_added }}">{{ column_date_added }}</a>{% endif %}</td>
+                      <td class="text-right">{{ column_action }}</td>
+                    </tr>
                   </thead>
                   <tbody>
-
-                  {% if customers %}
-                    {% for customer in customers %}
+                    {% if customers %}
+                      {% for customer in customers %}
+                        <tr>
+                          <td class="text-center">{% if customer.customer_id in selected %}
+                              <input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" checked="checked"/>
+                            {% else %}
+                              <input type="checkbox" name="selected[]" value="{{ customer.customer_id }}"/>
+                            {% endif %} </td>
+                          <td class="text-left">{{ customer.name }}</td>
+                          <td class="text-left">{{ customer.email }}</td>
+                          <td class="text-left">{{ customer.customer_group }}</td>
+                          <td class="text-left">{{ customer.status }}</td>
+                          <td class="text-left">{{ customer.ip }}</td>
+                          <td class="text-left">{{ customer.date_added }}</td>
+                          <td class="text-right">
+                            <div class="btn-group" style="min-width: 65px;"><a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                              <button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><span class="caret"></span></button>
+                              <ul class="dropdown-menu dropdown-menu-right">
+                                <li class="dropdown-header">{{ text_option }}</li>
+                                {% if customer.unlock %}
+                                  <li><a href="{{ customer.unlock }}"><i class="fa fa-unlock"></i> {{ text_unlock }}</a></li>
+                                {% else %}
+                                  <li class="disabled"><a><i class="fa fa-unlock"></i> {{ text_unlock }}</a></li>
+                                {% endif %}
+                                <li role="separator" class="divider"></li>
+                                <li class="dropdown-header">{{ text_login }}</li>
+                                {% for store in customer.store %}
+                                  <li><a href="{{ store.href }}" target="_blank"><i class="fa fa-lock"></i> {{ store.name }}</a></li>
+                                {% endfor %}
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
+                      {% endfor %}
+                    {% else %}
                       <tr>
-                        <td class="text-center">{% if customer.customer_id in selected %}
-                            <input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" checked="checked"/>
-                          {% else %}
-                            <input type="checkbox" name="selected[]" value="{{ customer.customer_id }}"/>
-                          {% endif %} </td>
-                        <td class="text-left">{{ customer.name }}</td>
-                        <td class="text-left">{{ customer.email }}</td>
-                        <td class="text-left">{{ customer.customer_group }}</td>
-                        <td class="text-left">{{ customer.status }}</td>
-                        <td class="text-left">{{ customer.ip }}</td>
-                        <td class="text-left">{{ customer.date_added }}</td>
-                        <td class="text-right">
-                          <div class="btn-group" style="min-width: 65px;"><a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
-                            <button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><span class="caret"></span></button>
-                            <ul class="dropdown-menu dropdown-menu-right">
-                              <li class="dropdown-header">{{ text_option }}</li>
-                              {% if customer.unlock %}
-                                <li><a href="{{ customer.unlock }}"><i class="fa fa-unlock"></i> {{ text_unlock }}</a></li>
-                              {% else %}
-                                <li class="disabled"><a><i class="fa fa-unlock"></i> {{ text_unlock }}</a></li>
-                              {% endif %}
-                              <li role="separator" class="divider"></li>
-                              <li class="dropdown-header">{{ text_login }}</li>
-                              {% for store in customer.store %}
-                                <li><a href="{{ store.href }}" target="_blank"><i class="fa fa-lock"></i> {{ store.name }}</a></li>
-                              {% endfor %}
-                            </ul>
-                          </div>
-                        </td>
+                        <td class="text-center" colspan="8">{{ text_no_results }}</td>
                       </tr>
-                    {% endfor %}
-                  {% else %}
-                    <tr>
-                      <td class="text-center" colspan="8">{{ text_no_results }}</td>
-                    </tr>
-                  {% endif %}
+                    {% endif %}
                   </tbody>
-
                 </table>
               </div>
             </form>

@@ -29,72 +29,36 @@
           </div>
           <div class="panel-body">
             <div class="form-group">
-              <label class="control-label" for="input-name">{{ entry_name }}</label>
-              <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+              <label class="control-label" for="input-name">{{ entry_name }}</label> <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-email">{{ entry_email }}</label>
-              <input type="text" name="filter_email" value="{{ filter_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+              <label class="control-label" for="input-email">{{ entry_email }}</label> <input type="text" name="filter_email" value="{{ filter_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-customer-group">{{ entry_customer_group }}</label>
-              <select name="filter_customer_group_id" id="input-customer-group" class="form-control">
+              <label class="control-label" for="input-customer-group">{{ entry_customer_group }}</label> <select name="filter_customer_group_id" id="input-customer-group" class="form-control">
                 <option value=""></option>
-
-
                 {% for customer_group in customer_groups %}
                   {% if customer_group.customer_group_id == filter_customer_group_id %}
-
-
                     <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
-
-
                   {% else %}
-
-
                     <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
-
-
                   {% endif %}
                 {% endfor %}
-
-
               </select>
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-type">{{ entry_type }}</label>
-              <select name="filter_type" id="input-type" class="form-control">
+              <label class="control-label" for="input-type">{{ entry_type }}</label> <select name="filter_type" id="input-type" class="form-control">
                 <option value=""></option>
-
-
                 {% if filter_type == 'customer' %}
-
-
                   <option value="customer" selected="selected">{{ text_customer }}</option>
-
-
                 {% else %}
-
-
                   <option value="customer">{{ text_customer }}</option>
-
-
                 {% endif %}
                 {% if filter_type == 'affiliate' %}
-
-
                   <option value="affiliate" selected="selected">{{ text_affiliate }}</option>
-
-
                 {% else %}
-
-
                   <option value="affiliate">{{ text_affiliate }}</option>
-
-
                 {% endif %}
-
-
               </select>
             </div>
             <div class="form-group">
@@ -102,8 +66,9 @@
               <div class="input-group date">
                 <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control"/>
                 <div class="input-group-btn">
-                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                </div></div>
+                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                </div>
+              </div>
             </div>
             <div class="form-group text-right">
               <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>

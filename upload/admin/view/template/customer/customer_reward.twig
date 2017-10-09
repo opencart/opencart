@@ -9,22 +9,22 @@
     </thead>
     <tbody>
       {% if rewards %}
-      {% for reward in rewards %}
-      <tr>
-        <td class="text-left">{{ reward.date_added }}</td>
-        <td class="text-left">{{ reward.description }}</td>
-        <td class="text-right">{{ reward.points }}</td>
-      </tr>
-      {% endfor %}
-      <tr>
-        <td></td>
-        <td class="text-right"><b>{{ text_balance }}</b></td>
-        <td class="text-right">{{ balance }}</td>
-      </tr>
+        {% for reward in rewards %}
+          <tr>
+            <td class="text-left">{{ reward.date_added }}</td>
+            <td class="text-left">{{ reward.description }}</td>
+            <td class="text-right">{{ reward.points }}</td>
+          </tr>
+        {% endfor %}
+        <tr>
+          <td></td>
+          <td class="text-right"><b>{{ text_balance }}</b></td>
+          <td class="text-right">{{ balance }}</td>
+        </tr>
       {% else %}
-      <tr>
-        <td class="text-center" colspan="3">{{ text_no_results }}</td>
-      </tr>
+        <tr>
+          <td class="text-center" colspan="3">{{ text_no_results }}</td>
+        </tr>
       {% endif %}
     </tbody>
   </table>

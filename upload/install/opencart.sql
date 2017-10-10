@@ -2086,7 +2086,7 @@ INSERT INTO `oc_option` (`option_id`, `type`, `sort_order`) VALUES
 (7, 'file', 6),
 (8, 'date', 7),
 (9, 'time', 8),
-(10, 'timestamp', 9),
+(10, 'datetime', 9),
 (11, 'select', 10),
 (12, 'date', 11);
 

@@ -457,7 +457,7 @@ class ControllerCatalogProductOption extends Controller {
 		if ($option_info) {
 			$data['type'] = $option_info['type'];
 		} else {
-			$data['type'] = 'select';
+			$data['type'] = 'text';
 		}
 
 		$data['option_values'] = $this->model_catalog_option->getOptionValues($data['option_id']);

@@ -1,7 +1,7 @@
 <?php
 class ModelCatalogProductOption extends Model {
 	public function addProductOption($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option` SET product_id = '" . (int)$data['product_id'] . "', option_id = '" . (int)$data['option_id'] . "', value = '" . $this->db->escape($data['value']) . "', required = '" . (int)$data['required'] . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option` SET product_id = '" . (int)$data['product_id'] . "', option_id = '" . (int)$data['option_id'] . "', value = '" . $this->db->escape(isset($data['value']) ? $data['value'] : '') . "', required = '" . (int)$data['required'] . "'");
 
 		$product_option_id = $this->db->getLastId();
 
@@ -15,7 +15,7 @@ class ModelCatalogProductOption extends Model {
 	}
 
 	public function editProductOption($product_option_id, $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "product_option` SET product_id = '" . (int)$data['product_id'] . "', option_id = '" . (int)$data['option_id'] . "', value = '" . $this->db->escape($data['value']) . "', required = '" . (int)$data['required'] . "' WHERE product_option_id = '" . (int)$product_option_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "product_option` SET product_id = '" . (int)$data['product_id'] . "', option_id = '" . (int)$data['option_id'] . "', value = '" . $this->db->escape(isset($data['value']) ? $data['value'] : '') . "', required = '" . (int)$data['required'] . "' WHERE product_option_id = '" . (int)$product_option_id . "'");
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_option_value WHERE product_option_id = '" . (int)$product_option_id . "'");
 
@@ -93,9 +93,7 @@ class ModelCatalogProductOption extends Model {
 	}
 
 	public function getTotalProductOptions($data = array()) {
-		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product_option p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id)";
-
-		$sql .= " WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product_option po LEFT JOIN " . DB_PREFIX . "product_description pd ON (po.product_id = pd.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_product_id'])) {
 			$sql .= " AND po.product_id = '" . $this->db->escape((string)$data['filter_product_id']) . "%'";

@@ -903,6 +903,15 @@ $('#attribute tbody tr').each(function(index, element) {
 });
 //--></script>
 <script type="text/javascript"><!--
+$('#tab-option').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
+
+	$('#tab-option').load(this.href);
+});
+
+$('#tab-option').load('index.php?route=catalog/product_option/productoption&user_token={{ user_token }}&product_id={{ product_id }}');
+//--></script>
+<script type="text/javascript"><!--
 var discount_row = {{ discount_row }};
 
 function addDiscount() {
@@ -1023,6 +1032,5 @@ $('.datetime').datetimepicker({
 //--></script>
 <script type="text/javascript"><!--
 $('#language a:first').tab('show');
-$('#option a:first').tab('show');
 //--></script>
 {{ footer }} 

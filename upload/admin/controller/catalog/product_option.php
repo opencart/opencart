@@ -396,7 +396,7 @@ class ControllerCatalogProductOption extends Controller {
 			'href' => $this->url->link('catalog/product_option', 'user_token=' . $this->session->data['user_token'] . $url, true)
 		);
 
-		if (!isset($this->request->get['option_id'])) {
+		if (!isset($this->request->get['product_option_id'])) {
 			$data['action'] = $this->url->link('catalog/product_option/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
 		} else {
 			$data['action'] = $this->url->link('catalog/product_option/edit', 'user_token=' . $this->session->data['user_token'] . '&product_option_id=' . $this->request->get['product_option_id'] . $url, true);
@@ -525,5 +525,58 @@ class ControllerCatalogProductOption extends Controller {
 		}
 
 		return !$this->error;
+	}
+
+	public function productoption() {
+		$this->load->language('catalog/product_option');
+
+		if (isset($this->request->get['product_id'])) {
+			$product_id = $this->request->get['product_id'];
+		} else {
+			$product_id = 0;
+		}
+
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		$data['product_options'] = array();
+
+		$this->load->model('catalog/product_option');
+
+		$filter_data = array(
+			'filter_product_id'	=> $product_id,
+			'sort'              => 'po.sort_order',
+			'order'             => 'ASC',
+			'start'             => ($page - 1) * $this->config->get('config_limit_admin'),
+			'limit'             => $this->config->get('config_limit_admin')
+		);
+
+		$results = $this->model_catalog_product_option->getProductOptions($filter_data);
+
+		foreach ($results as $result) {
+			$data['product_options'][] = array(
+				'option'     => $result['option'],
+				'type'       => $this->language->get('text_' . $result['type']),
+				'sort_order' => $result['sort_order'],
+				'edit'       => $this->url->link('catalog/product_option/edit', 'user_token=' . $this->session->data['user_token'] . '&product_option_id=' . $result['product_option_id'], true)
+			);
+		}
+
+		$product_option_total = $this->model_catalog_product_option->getTotalProductOptions($filter_data);
+
+		$pagination = new Pagination();
+		$pagination->total = $product_option_total;
+		$pagination->page = $page;
+		$pagination->limit = 10;
+		$pagination->url = $this->url->link('catalog/product_option/productoption', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product_id . '&page={page}', true);
+
+		$data['pagination'] = $pagination->render();
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($product_option_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($product_option_total - 10)) ? $product_option_total : ((($page - 1) * 10) + 10), $product_option_total, ceil($product_option_total / 10));
+
+		$this->response->setOutput($this->load->view('catalog/product_option', $data));
 	}
 }

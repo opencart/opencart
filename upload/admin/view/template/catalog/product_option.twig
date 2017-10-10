@@ -1,0 +1,32 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <td class="text-left">{{ column_option }}</td>
+        <td class="text-left">{{ column_type }}</td>
+        <td class="text-right">{{ column_sort_order }}</td>
+        <td class="text-right">{{ column_action }}</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% if product_options %}
+        {% for product_option in product_options %}
+          <tr>
+            <td class="text-left">{{ product_option.option }}</td>
+            <td class="text-left">{{ product_option.type }}</td>
+            <td class="text-right">{{ product_option.sort_order }}</td>
+            <td class="text-right"><a href="{{ product_option.edit }}" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="4">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-left">{{ pagination }}</div>
+  <div class="col-sm-6 text-right">{{ results }}</div>
+</div>

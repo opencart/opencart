@@ -39,7 +39,6 @@
                 </tr>
               {% endif %}
             </tbody>
-
           </table>
         </div>
       </div>
@@ -225,25 +224,13 @@
                   <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
                   <div class="col-sm-10">
                     <select name="order_status_id" id="input-order-status" class="form-control">
-
-
                       {% for order_statuses in order_statuses %}
                         {% if order_statuses.order_status_id == order_status_id %}
-
-
                           <option value="{{ order_statuses.order_status_id }}" selected="selected">{{ order_statuses.name }}</option>
-
-
                         {% else %}
-
-
                           <option value="{{ order_statuses.order_status_id }}">{{ order_statuses.name }}</option>
-
-
                         {% endif %}
                       {% endfor %}
-
-
                     </select>
                   </div>
                 </div>
@@ -284,7 +271,6 @@
                     </tr>
                   </thead>
                   <tbody>
-
                     {% for custom_field in account_custom_fields %}
                       <tr>
                         <td>{{ custom_field.name }}</td>
@@ -292,7 +278,6 @@
                       </tr>
                     {% endfor %}
                   </tbody>
-
                 </table>
               </div>
             {% endif %}
@@ -305,7 +290,6 @@
                     </tr>
                   </thead>
                   <tbody>
-
                     {% for custom_field in payment_custom_fields %}
                       <tr>
                         <td>{{ custom_field.name }}</td>
@@ -313,7 +297,6 @@
                       </tr>
                     {% endfor %}
                   </tbody>
-
                 </table>
               </div>
             {% endif %}
@@ -326,7 +309,6 @@
                     </tr>
                   </thead>
                   <tbody>
-
                     {% for custom_field in shipping_custom_fields %}
                       <tr>
                         <td>{{ custom_field.name }}</td>
@@ -334,7 +316,6 @@
                       </tr>
                     {% endfor %}
                   </tbody>
-
                 </table>
               </div>
             {% endif %}
@@ -365,13 +346,12 @@
                     <td>{{ accept_language }}</td>
                   </tr>
                 </tbody>
-
               </table>
             </div>
           </div>
           {% for tab in tabs %}
             <div class="tab-pane" id="tab-{{ tab.code }}">{{ tab.content }}</div>
-          {% endfor %} </div>
+          {% endfor %}</div>
       </div>
     </div>
   </div>

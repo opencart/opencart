@@ -585,6 +585,12 @@ class ControllerCatalogProduct extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
+		if (isset($this->request->get['product_id'])) {
+			$data['product_id'] = $this->request->get['product_id'];
+		} else {
+			$data['product_id'] = 0;
+		}
+
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

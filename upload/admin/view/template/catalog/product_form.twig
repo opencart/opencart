@@ -13,7 +13,7 @@
       </ul>
     </div>
   </div>
-  <div class="container-fluid"> {% if error_warning %}
+  <div class="container-fluid">{% if error_warning %}
       <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
@@ -29,7 +29,6 @@
             <li><a href="#tab-data" data-toggle="tab">{{ tab_data }}</a></li>
             <li><a href="#tab-links" data-toggle="tab">{{ tab_links }}</a></li>
             <li><a href="#tab-attribute" data-toggle="tab">{{ tab_attribute }}</a></li>
-            <li><a href="#tab-option" data-toggle="tab">{{ tab_option }}</a></li>
             <li><a href="#tab-recurring" data-toggle="tab">{{ tab_recurring }}</a></li>
             <li><a href="#tab-discount" data-toggle="tab">{{ tab_discount }}</a></li>
             <li><a href="#tab-special" data-toggle="tab">{{ tab_special }}</a></li>
@@ -403,7 +402,6 @@
                 </table>
               </div>
             </div>
-            <div class="tab-pane" id="tab-option"></div>
             <div class="tab-pane" id="tab-recurring">
               <div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover">
@@ -901,15 +899,6 @@ function attributeautocomplete(attribute_row) {
 $('#attribute tbody tr').each(function(index, element) {
 	attributeautocomplete(index);
 });
-//--></script>
-<script type="text/javascript"><!--
-$('#tab-option').delegate('.pagination a', 'click', function(e) {
-	e.preventDefault();
-
-	$('#tab-option').load(this.href);
-});
-
-$('#tab-option').load('index.php?route=catalog/product_option/productoption&user_token={{ user_token }}&product_id={{ product_id }}');
 //--></script>
 <script type="text/javascript"><!--
 var discount_row = {{ discount_row }};

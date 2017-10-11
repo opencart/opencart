@@ -93,7 +93,7 @@ class ModelCatalogProductOption extends Model {
 	}
 
 	public function getTotalProductOptions($data = array()) {
-		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product_option po LEFT JOIN " . DB_PREFIX . "product_description pd ON (po.product_id = pd.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "product_option` po LEFT JOIN `" . DB_PREFIX . "product_description` pd ON (po.product_id = pd.product_id) LEFT JOIN `" . DB_PREFIX . "option_description` od ON (po.option_id = od.option_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND od.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_product_id'])) {
 			$sql .= " AND po.product_id = '" . $this->db->escape((string)$data['filter_product_id']) . "%'";

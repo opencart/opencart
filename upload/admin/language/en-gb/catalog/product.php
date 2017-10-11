@@ -46,7 +46,6 @@ $_['entry_stock_status']     = 'Out Of Stock Status';
 $_['entry_price']            = 'Price';
 $_['entry_tax_class']        = 'Tax Class';
 $_['entry_points']           = 'Points';
-$_['entry_option_points']    = 'Points';
 $_['entry_subtract']         = 'Subtract Stock';
 $_['entry_weight_class']     = 'Weight Class';
 $_['entry_weight']           = 'Weight';

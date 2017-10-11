@@ -126,8 +126,8 @@ $('#button-filter').on('click', function() {
 
 	var filter_option = $('input[name=\'filter_option\']').val();
 
-	if (filter_option) {
-		url += '&filter_option=' + encodeURIComponent(filter_option);
+		if (filter_option) {
+			url += '&filter_option=' + encodeURIComponent(filter_option);
 	}
 
 	location = 'index.php?route=catalog/product_option&user_token={{ user_token }}' + url;

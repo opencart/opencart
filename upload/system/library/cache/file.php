@@ -10,17 +10,19 @@ class File {
 
 		if ($files) {
 			foreach ($files as $file) {
+				$filename = basename($file);
+
 				$time = substr(strrchr($file, '.'), 1);
 
 				if ($time < time()) {
-					unlink($file);
+					$this->delete(substr($filename, 6, strrpos($filename, '.') - 6));
 				}
 			}
 		}
 	}
 
 	public function get($key) {
-		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
+		$files = glob(DIR_CACHE . 'cache.' . basename($key) . '.*');
 
 		if ($files) {
 			$handle = fopen($files[0], 'r');
@@ -42,7 +44,7 @@ class File {
 	public function set($key, $value) {
 		$this->delete($key);
 
-		$file = DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.' . (time() + $this->expire);
+		$file = DIR_CACHE . 'cache.' . basename($key) . '.' . (time() + $this->expire);
 
 		$handle = fopen($file, 'w');
 
@@ -58,12 +60,6 @@ class File {
 	}
 
 	public function delete($key) {
-		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
-
-		if ($files) {
-			foreach ($files as $file) {
-				unlink($file);
-			}
-		}
+		array_map('unlink', glob(DIR_CACHE . 'cache.' . basename($key) . '.*'));
 	}
 }

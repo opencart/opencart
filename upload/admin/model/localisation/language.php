@@ -273,7 +273,7 @@ class ModelLocalisationLanguage extends Model {
 
 			return $query->rows;
 		} else {
-			$language_data = $this->cache->get('language');
+			$language_data = $this->cache->get('admin.language');
 
 			if (!$language_data) {
 				$language_data = array();

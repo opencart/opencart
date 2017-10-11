@@ -5,7 +5,7 @@ $_['heading_title']     = 'Account Downloads';
 // Text
 $_['text_account']      = 'Account';
 $_['text_downloads']    = 'Downloads';
-$_['text_empty']        = 'You have not made any previous downloadable orders!';
+$_['text_no_results']   = 'You have not made any previous downloadable orders!';
 
 // Column
 $_['column_order_id']   = 'Order ID';

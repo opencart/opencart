@@ -55,7 +55,7 @@
           </div>
         </div>
       </div>
-      <div class="row"> {% for product in products %}
+      <div class="row">{% for product in products %}
         <div class="product-layout product-list col-xs-12">
           <div class="product-thumb">
             <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
@@ -75,7 +75,7 @@
                   {% if product.rating < i %} <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> {% endif %}
                   {% endfor %}
                 </div>
-                {% endif %} </div>
+                {% endif %}</div>
               <div class="button-group">
                 <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
                 <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
@@ -84,13 +84,13 @@
             </div>
           </div>
         </div>
-        {% endfor %} </div>
+        {% endfor %}</div>
       <div class="row">
         <div class="col-sm-6 text-left">{{ pagination }}</div>
         <div class="col-sm-6 text-right">{{ results }}</div>
       </div>
       {% else %}
-      <p>{{ text_empty }}</p>
+      <p>{{ text_no_results }}</p>
       <div class="buttons">
         <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       </div>

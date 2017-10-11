@@ -28,6 +28,7 @@
               <td class="text-left">{{ column_type }}</td>
               <td class="text-left">{{ column_digits }}</td>
               <td class="text-right">{{ column_expiry }}</td>
+              <td></td>
             </tr>
           </thead>
           <tbody>
@@ -42,7 +43,7 @@
           {% endfor %}
           {% else %}
           <tr>
-            <td class="text-center" colspan="5">{{ text_empty }}</td>
+            <td class="text-center" colspan="4">{{ text_no_results }}</td>
           </tr>
           {% endif %}
           </tbody>

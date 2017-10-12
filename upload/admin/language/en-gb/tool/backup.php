@@ -8,6 +8,7 @@ $_['text_success']      = 'Success: You have successfully modified your database
 $_['text_backup']       = 'Backing up table %s records %s to %s records';
 $_['text_restore']      = 'Restoring %s of %s';
 $_['text_option']       = 'Backup Options';
+$_['text_history']      = 'Backup History';
 $_['text_progress']     = 'Progress';
 $_['text_import']       = 'For large backup files its better to upload the sql file via ftp to the <strong>system/storage/backup/</strong> directory.';
 

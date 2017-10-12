@@ -211,7 +211,6 @@ class ModelUpgrade1010 extends Model {
 		}
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `trigger` = 'admin/model/sale/return/addReturnHistory/after' WHERE `code` = 'admin_mail_return'");
-
 		// extension_install
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "extension_install' AND COLUMN_NAME = 'extension_id'");
 
@@ -235,6 +234,125 @@ class ModelUpgrade1010 extends Model {
 			$handle = fopen(DIR_STORAGE . 'marketplace/index.html', 'w');
 
 			fclose($handle);
+		}
+
+		// Changing from datetime to timestamp
+		$tables = array();
+		
+		$tables['api'] = array(
+			'date_added',
+			'date_modified'
+		);
+		$tables['api'] = array(
+			'date_added',
+			'date_modified'
+		);
+		$tables['api_session'] = array(
+			'date_added',
+			'date_modified'
+		);
+		$tables['cart'] = array('date_added');
+		$tables['category'] = array(
+			'date_added',
+			'date_modified'
+		);
+
+		$tables['coupon'] = array('date_added');
+		$tables['coupon_history'] = array('date_added');
+		$tables['cron'] = array(
+			'date_added',
+			'date_modified'
+		);
+		$tables['currency'] = array('date_modified');
+		$tables['customer'] = array(
+			'date_added',
+			'date_modified'
+		);
+		$tables['customer_activity'] = array(
+			'date_added',
+			'date_modified'
+		);
+		$tables['customer_affiliate'] = array('date_added');
+		$tables['customer_affiliate_report'] = array('date_added');
+		$tables['customer_approval'] = array('date_added');
+		$tables['customer_history'] = array('date_added');
+		$tables['customer_ip'] = array('date_added');
+		$tables['customer_login'] = array(
+			'date_added',
+			'date_modified'
+		);
+		$tables['customer_login'] = array(
+			'date_added',
+			'date_modified'
+		);
+		$tables['customer_online'] = array('date_added');
+		$tables['customer_reward'] = array('date_added');
+		$tables['customer_search'] = array('date_added');
+		$tables['customer_transaction'] = array('date_added');
+		$tables['customer_wishlist'] = array('date_added');
+		$tables['download'] = array('date_added');
+		$tables['download_report'] = array('date_added');
+		$tables['extension_install'] = array('date_added');
+		$tables['extension_path'] = array('date_added');
+		$tables['fraud_ip'] = array('date_added');
+		$tables['geo_zone'] = array(
+			'date_added',
+			'date_modified'
+		);
+		$tables['marketing'] = array('date_added');
+		$tables['modification'] = array('date_added');
+		$tables['order'] = array(
+			'date_added',
+			'date_modified'
+		);
+		$tables['order_history'] = array('date_added');
+		$tables['order_shipment'] = array('date_added');
+		$tables['product'] = array(
+			'date_added',
+			'date_modified'
+		);
+		$tables['product_discount'] = array(
+			'date_start',
+			'date_end'
+		);
+		$tables['product_special'] = array(
+			'date_start',
+			'date_end'
+		);
+		$tables['return'] = array(
+			'date_ordered',
+			'date_added',
+			'date_end'
+		);
+		$tables['return_history'] = array('date_added');
+		$tables['review'] = array(
+			'date_added',
+			'date_modified'
+		);
+		$tables['session'] = array('expire');
+		$tables['tax_class'] = array(
+			'date_added',
+			'date_modified'
+		);
+		$tables['tax_rate'] = array(
+			'date_added',
+			'date_modified'
+		);
+		$tables['theme'] = array('date_added');
+		$tables['translation'] = array('date_added');
+		$tables['upload'] = array('date_added');
+		$tables['user'] = array('date_added');
+		$tables['voucher'] = array('date_added');
+		$tables['voucher_history'] = array('date_added');
+
+		foreach ($tables as $table => $value) {
+			foreach ($value as $field) {
+				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $this->db->escape($table) . "' AND COLUMN_NAME = '" . $this->db->escape($field) . "'");
+
+				if (!$query->num_rows) {
+					$this->db->query("ALTER TABLE `" . DB_PREFIX . $this->db->escape($table) . "` MODIFY `" . $this->db->escape($field) . "` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'");
+				}
+			}
 		}
 	}
 }

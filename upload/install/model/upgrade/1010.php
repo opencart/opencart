@@ -238,7 +238,7 @@ class ModelUpgrade1010 extends Model {
 
 		// Changing from datetime to timestamp
 		$tables = array();
-		
+
 		$tables['api'] = array(
 			'date_added',
 			'date_modified'
@@ -256,7 +256,6 @@ class ModelUpgrade1010 extends Model {
 			'date_added',
 			'date_modified'
 		);
-
 		$tables['coupon'] = array('date_added');
 		$tables['coupon_history'] = array('date_added');
 		$tables['cron'] = array(

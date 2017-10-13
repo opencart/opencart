@@ -6,18 +6,47 @@
       </div>
       <div class="panel-body">
         <div class="form-group">
+          <label class="control-label" for="input-marketing">{{ entry_marketing }}</label>
+          <select name="filter_marketing_id" id="input-marketing" class="form-control">
+            <option value="0">{{ text_all_marketing }}</option>
+            {% for marketing in marketing_list %}
+              {% if marketing.marketing_id == filter_marketing_id %}
+                <option value="{{ marketing.marketing_id }}" selected="selected">{{ marketing.name }}</option>
+              {% else %}
+                <option value="{{ marketing.marketing_id }}">{{ marketing.name }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
           <label class="control-label" for="input-date-start">{{ entry_date_start }}</label>
           <div class="input-group date">
-            <input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control"/><div class="input-group-btn">
-            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-            </div></div>
+            <input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control"/>
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+            </div>
+          </div>
         </div>
         <div class="form-group">
           <label class="control-label" for="input-date-end">{{ entry_date_end }}</label>
           <div class="input-group date">
-            <input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control"/><div class="input-group-btn">
-            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-            </div></div>
+            <input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control"/>
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="input-status">{{ entry_country }}</label> <select name="filter_country_id" id="input-country" class="form-control">
+            <option value="0">{{ text_all_country }}</option>
+            {% for country in countries %}
+              {% if country.country_id == filter_country_id %}
+                <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
+              {% else %}
+                <option value="{{ country.country_id }}">{{ country.name }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
         </div>
         <div class="form-group">
           <label class="control-label" for="input-status">{{ entry_status }}</label> <select name="filter_order_status_id" id="input-status" class="form-control">
@@ -31,6 +60,17 @@
             {% endfor %}
           </select>
         </div>
+        <div class="form-group">
+          <label class="control-label" for="input-group">{{ entry_group }}</label> <select name="filter_group" id="input-group" class="form-control">
+            {% for group in groups %}
+              {% if group.value == filter_group %}
+                <option value="{{ group.value }}" selected="selected">{{ group.text }}</option>
+              {% else %}
+                <option value="{{ group.value }}">{{ group.text }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+        </div>
         <div class="form-group text-right">
           <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
         </div>
@@ -40,7 +80,7 @@
   <div class="col-md-9 col-md-pull-3 col-sm-12">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-bar-chart"></i> {{ heading_title }}</h3>
+        <h3 class="panel-title"><i class="fa fa-bar-chart"></i> {{ heading_clicks_title }}</h3>
       </div>
       <div class="panel-body">
         <div class="table-responsive">
@@ -49,20 +89,20 @@
             <tr>
               <td class="text-left">{{ column_campaign }}</td>
               <td class="text-left">{{ column_code }}</td>
+              <td class="text-left">{{ column_date_start }}</td>
+              <td class="text-left">{{ column_date_end }}</td>
               <td class="text-right">{{ column_clicks }}</td>
-              <td class="text-right">{{ column_orders }}</td>
-              <td class="text-right">{{ column_total }}</td>
             </tr>
             </thead>
             <tbody>
-            {% if marketings %}
-              {% for marketing in marketings %}
+            {% if marketing_clicks %}
+              {% for marketing in marketing_clicks %}
                 <tr>
                   <td class="text-left">{{ marketing.campaign }}</td>
                   <td class="text-left">{{ marketing.code }}</td>
+                  <td class="text-left">{{ marketing.date_start }}</td>
+                  <td class="text-left">{{ marketing.date_end }}</td>
                   <td class="text-right">{{ marketing.clicks }}</td>
-                  <td class="text-right">{{ marketing.orders }}</td>
-                  <td class="text-right">{{ marketing.total }}</td>
                 </tr>
               {% endfor %}
             {% else %}
@@ -74,16 +114,66 @@
           </table>
         </div>
         <div class="row">
-          <div class="col-sm-6 text-left">{{ pagination }}</div>
-          <div class="col-sm-6 text-right">{{ results }}</div>
+          <div class="col-sm-12 text-right">{{ clicks_results }}</div>
         </div>
       </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-bar-chart"></i> {{ heading_sales_title }}</h3>
+      </div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+            <tr>
+              <td class="text-left">{{ column_campaign }}</td>
+              <td class="text-left">{{ column_code }}</td>
+              <td class="text-left">{{ column_date_start }}</td>
+              <td class="text-left">{{ column_date_end }}</td>
+              <td class="text-right">{{ column_orders }}</td>
+              <td class="text-right">{{ column_total }}</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% if marketing_sales %}
+              {% for marketing in marketing_sales %}
+                <tr>
+                  <td class="text-left">{{ marketing.campaign }}</td>
+                  <td class="text-left">{{ marketing.code }}</td>
+                  <td class="text-left">{{ marketing.date_start }}</td>
+                  <td class="text-left">{{ marketing.date_end }}</td>
+                  <td class="text-right">{{ marketing.orders }}</td>
+                  <td class="text-right">{{ marketing.total }}</td>
+                </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td class="text-center" colspan="6">{{ text_no_results }}</td>
+              </tr>
+            {% endif %}
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 text-right">{{ sales_results }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 text-left">{{ pagination }}</div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
 	var url = '';
+
+  var filter_marketing_id = $('select[name=\'filter_marketing_id\']').val();
+
+	if (filter_marketing_id) {
+		url += '&filter_marketing_id=' + encodeURIComponent(filter_marketing_id);
+	}
 
 	var filter_date_start = $('input[name=\'filter_date_start\']').val();
 
@@ -103,7 +193,19 @@ $('#button-filter').on('click', function() {
 		url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
 	}
 
-	location = 'index.php?route=report/report&code=marketing&user_token={{ user_token }}' + url;
+  var filter_country_id = $('select[name=\'filter_country_id\']').val();
+
+  if (filter_country_id != 0) {
+    url += '&filter_country_id=' + encodeURIComponent(filter_country_id);
+  }
+
+  var filter_group = $('select[name=\'filter_group\']').val();
+
+  if (filter_group) {
+    url += '&filter_group=' + encodeURIComponent(filter_group);
+  }
+
+	location = 'index.php?route=report/report&code=marketing&&user_token={{ user_token }}' + url;
 });
 //--></script>
 <script type="text/javascript"><!--

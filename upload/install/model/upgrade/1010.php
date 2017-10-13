@@ -263,10 +263,7 @@ class ModelUpgrade1010 extends Model {
 			'date_modified'
 		);
 		$tables['currency'] = array('date_modified');
-		$tables['customer'] = array(
-			'date_added',
-			'date_modified'
-		);
+		$tables['customer'] = array('date_added');
 		$tables['customer_activity'] = array(
 			'date_added',
 			'date_modified'
@@ -293,7 +290,6 @@ class ModelUpgrade1010 extends Model {
 		$tables['download_report'] = array('date_added');
 		$tables['extension_install'] = array('date_added');
 		$tables['extension_path'] = array('date_added');
-		$tables['fraud_ip'] = array('date_added');
 		$tables['geo_zone'] = array(
 			'date_added',
 			'date_modified'
@@ -320,8 +316,7 @@ class ModelUpgrade1010 extends Model {
 		);
 		$tables['return'] = array(
 			'date_ordered',
-			'date_added',
-			'date_end'
+			'date_added'
 		);
 		$tables['return_history'] = array('date_added');
 		$tables['review'] = array(

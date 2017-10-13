@@ -264,10 +264,7 @@ class ModelUpgrade1010 extends Model {
 		);
 		$tables['currency'] = array('date_modified');
 		$tables['customer'] = array('date_added');
-		$tables['customer_activity'] = array(
-			'date_added',
-			'date_modified'
-		);
+		$tables['customer_activity'] = array('date_added');
 		$tables['customer_affiliate'] = array('date_added');
 		$tables['customer_affiliate_report'] = array('date_added');
 		$tables['customer_approval'] = array('date_added');
@@ -343,7 +340,7 @@ class ModelUpgrade1010 extends Model {
 			foreach ($value as $field) {
 				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $this->db->escape($table) . "' AND COLUMN_NAME = '" . $this->db->escape($field) . "'");
 
-				if (!$query->num_rows) {
+				if ($query->num_rows) {
 					$this->db->query("ALTER TABLE `" . DB_PREFIX . $this->db->escape($table) . "` MODIFY `" . $this->db->escape($field) . "` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'");
 				}
 			}

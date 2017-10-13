@@ -211,6 +211,7 @@ class ModelUpgrade1010 extends Model {
 		}
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `trigger` = 'admin/model/sale/return/addReturnHistory/after' WHERE `code` = 'admin_mail_return'");
+
 		// extension_install
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "extension_install' AND COLUMN_NAME = 'extension_id'");
 
@@ -303,18 +304,7 @@ class ModelUpgrade1010 extends Model {
 			'date_added',
 			'date_modified'
 		);
-		$tables['product_discount'] = array(
-			'date_start',
-			'date_end'
-		);
-		$tables['product_special'] = array(
-			'date_start',
-			'date_end'
-		);
-		$tables['return'] = array(
-			'date_ordered',
-			'date_added'
-		);
+		$tables['return'] = array('date_added');
 		$tables['return_history'] = array('date_added');
 		$tables['review'] = array(
 			'date_added',
@@ -345,5 +335,9 @@ class ModelUpgrade1010 extends Model {
 				}
 			}
 		}
+
+		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'payment_free_checkout_order_status_id' WHERE `key` = 'free_checkout_order_status_id'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'total_sub_total_sort_order' WHERE `key` = 'sub_total_sort_order'");
+
 	}
 }

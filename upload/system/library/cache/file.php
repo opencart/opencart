@@ -60,6 +60,12 @@ class File {
 	}
 
 	public function delete($key) {
-		array_map('unlink', glob(DIR_CACHE . 'cache.' . basename($key) . '.*'));
+		$files = glob(DIR_CACHE . 'cache.' . basename($key) . '.*');
+
+		if ($files) {
+			foreach ($files as $file) {
+				unlink($file);
+			}
+		}
 	}
 }

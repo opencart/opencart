@@ -240,5 +240,10 @@ class ModelUpgrade1010 extends Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'payment_free_checkout_order_status_id' WHERE `key` = 'free_checkout_order_status_id'");
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'total_sub_total_sort_order' WHERE `key` = 'sub_total_sort_order'");
 
+		$this->db->query("ALTER TABLE `" . DB_PREFIX . "address` CHANGE `payment_company` VARCHAR(60) NOT NULL");
+		$this->db->query("ALTER TABLE `" . DB_PREFIX . "order` CHANGE `payment_company` VARCHAR(60) NOT NULL");
+		$this->db->query("ALTER TABLE `" . DB_PREFIX . "order` CHANGE `shipping_company` VARCHAR(60) NOT NULL");
+		$this->db->query("ALTER TABLE `" . DB_PREFIX . "custom_field` CHANGE `location` VARCHAR(10) NOT NULL");
+		$this->db->query("ALTER TABLE `" . DB_PREFIX . "download` CHANGE `filename` VARCHAR(160) NOT NULL");
 	}
 }

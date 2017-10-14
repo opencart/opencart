@@ -87,5 +87,7 @@ class ModelUpgrade1000 extends Model {
 		$this->db->query("ALTER TABLE `" . DB_PREFIX . "address` CHANGE `payment_company` VARCHAR(60) NOT NULL");
 		$this->db->query("ALTER TABLE `" . DB_PREFIX . "order` CHANGE `payment_company` VARCHAR(60) NOT NULL");
 		$this->db->query("ALTER TABLE `" . DB_PREFIX . "order` CHANGE `shipping_company` VARCHAR(60) NOT NULL");
+		$this->db->query("ALTER TABLE `" . DB_PREFIX . "custom_field` CHANGE `location` VARCHAR(10) NOT NULL");
+		$this->db->query("ALTER TABLE `" . DB_PREFIX . "download` CHANGE `filename` VARCHAR(160) NOT NULL");
 	}
 }

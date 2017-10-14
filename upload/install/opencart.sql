@@ -42,8 +42,8 @@ CREATE TABLE `oc_api` (
   `username` varchar(64) NOT NULL,
   `key` text NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `date_added` timestamp NOT NULL,
-  `date_modified` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL,
   PRIMARY KEY (`api_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -73,8 +73,8 @@ CREATE TABLE `oc_api_session` (
   `api_id` int(11) NOT NULL,
   `session_id` varchar(32) NOT NULL,
   `ip` varchar(40) NOT NULL,
-  `date_added` timestamp NOT NULL,
-  `date_modified` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL,
   PRIMARY KEY (`api_session_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -264,7 +264,7 @@ CREATE TABLE `oc_cart` (
   `recurring_id` int(11) NOT NULL,
   `option` text NOT NULL,
   `quantity` int(5) NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`cart_id`),
   KEY `cart_id` (`api_id`,`customer_id`,`session_id`,`product_id`,`recurring_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -284,8 +284,8 @@ CREATE TABLE `oc_category` (
   `column` int(3) NOT NULL,
   `sort_order` int(3) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL,
-  `date_added` timestamp NOT NULL,
-  `date_modified` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL,
   PRIMARY KEY (`category_id`),
   KEY `parent_id` (`parent_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -870,7 +870,7 @@ CREATE TABLE `oc_coupon` (
   `uses_total` int(11) NOT NULL,
   `uses_customer` varchar(11) NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`coupon_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -909,7 +909,7 @@ CREATE TABLE `oc_coupon_history` (
   `order_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `amount` decimal(15,4) NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`coupon_history_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -940,8 +940,8 @@ CREATE TABLE `oc_cron` (
   `cycle` varchar(12) NOT NULL,
   `action` text NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `date_added` timestamp NOT NULL,
-  `date_modified` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL,
   PRIMARY KEY (`cron_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -961,7 +961,7 @@ CREATE TABLE `oc_currency` (
   `decimal_place` char(1) NOT NULL,
   `value` double(15,8) NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `date_modified` timestamp NOT NULL,
+  `date_modified` datetime NOT NULL,
   PRIMARY KEY (`currency_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1003,7 +1003,7 @@ CREATE TABLE `oc_customer` (
   `safe` tinyint(1) NOT NULL,
   `token` text NOT NULL,
   `code` varchar(40) NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1020,7 +1020,7 @@ CREATE TABLE `oc_customer_activity` (
   `key` varchar(64) NOT NULL,
   `data` text NOT NULL,
   `ip` varchar(40) NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_activity_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1048,7 +1048,7 @@ CREATE TABLE `oc_customer_affiliate` (
   `bank_account_number` varchar(64) NOT NULL,
   `custom_field` text NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1065,7 +1065,7 @@ CREATE TABLE `oc_customer_affiliate_report` (
   `store_id` int(11) NOT NULL,
   `ip` varchar(40) NOT NULL,
   `country` varchar(2) NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_affiliate_report_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1080,7 +1080,7 @@ CREATE TABLE `oc_customer_approval` (
   `customer_approval_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
   `type` varchar(9) NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_approval_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1138,7 +1138,7 @@ CREATE TABLE `oc_customer_history` (
   `customer_history_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
   `comment` text NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_history_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1154,8 +1154,8 @@ CREATE TABLE `oc_customer_login` (
   `email` varchar(96) NOT NULL,
   `ip` varchar(40) NOT NULL,
   `total` int(4) NOT NULL,
-  `date_added` timestamp NOT NULL,
-  `date_modified` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL,
   PRIMARY KEY (`customer_login_id`),
   KEY `email` (`email`),
   KEY `ip` (`ip`)
@@ -1174,7 +1174,7 @@ CREATE TABLE `oc_customer_ip` (
   `store_id` int(11) NOT NULL,
   `ip` varchar(40) NOT NULL,
   `country` varchar(2) NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_ip_id`),
   KEY `ip` (`ip`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -1191,7 +1191,7 @@ CREATE TABLE `oc_customer_online` (
   `customer_id` int(11) NOT NULL,
   `url` text NOT NULL,
   `referer` text NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`ip`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1208,7 +1208,7 @@ CREATE TABLE `oc_customer_reward` (
   `order_id` int(11) NOT NULL DEFAULT '0',
   `description` text NOT NULL,
   `points` int(8) NOT NULL DEFAULT '0',
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_reward_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1225,7 +1225,7 @@ CREATE TABLE `oc_customer_transaction` (
   `order_id` int(11) NOT NULL,
   `description` text NOT NULL,
   `amount` decimal(15,4) NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_transaction_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1247,7 +1247,7 @@ CREATE TABLE `oc_customer_search` (
   `description` tinyint(1) NOT NULL,
   `products` int(11) NOT NULL,
   `ip` varchar(40) NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_search_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1261,7 +1261,7 @@ DROP TABLE IF EXISTS `oc_customer_wishlist`;
 CREATE TABLE `oc_customer_wishlist` (
   `customer_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_id`,`product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1351,7 +1351,7 @@ CREATE TABLE `oc_download` (
   `download_id` int(11) NOT NULL AUTO_INCREMENT,
   `filename` varchar(160) NOT NULL,
   `mask` varchar(128) NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`download_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1382,7 +1382,7 @@ CREATE TABLE `oc_download_report` (
   `store_id` int(11) NOT NULL,
   `ip` varchar(40) NOT NULL,
   `country` varchar(2) NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`download_report_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1546,7 +1546,7 @@ CREATE TABLE `oc_extension_install` (
   `extension_id` int(11) NOT NULL,
   `extension_download_id` int(11) NOT NULL,
   `filename` varchar(255) NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`extension_install_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1561,7 +1561,7 @@ CREATE TABLE `oc_extension_path` (
   `extension_path_id` int(11) NOT NULL AUTO_INCREMENT,
   `extension_install_id` int(11) NOT NULL,
   `path` varchar(255) NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`extension_path_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1632,8 +1632,8 @@ CREATE TABLE `oc_geo_zone` (
   `geo_zone_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `description` varchar(255) NOT NULL,
-  `date_added` timestamp NOT NULL,
-  `date_modified` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL,
   PRIMARY KEY (`geo_zone_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1992,7 +1992,7 @@ CREATE TABLE `oc_marketing` (
   `description` text NOT NULL,
   `code` varchar(64) NOT NULL,
   `clicks` int(5) NOT NULL DEFAULT '0',
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`marketing_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -2009,7 +2009,7 @@ CREATE TABLE `oc_marketing_report` (
   `store_id` int(11) NOT NULL,
   `ip` varchar(40) NOT NULL,
   `country` varchar(2) NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`marketing_report_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -2031,7 +2031,7 @@ CREATE TABLE `oc_modification` (
   `link` varchar(255) NOT NULL,
   `xml` mediumtext NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`modification_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -2259,8 +2259,8 @@ CREATE TABLE `oc_order` (
   `forwarded_ip` varchar(40) NOT NULL,
   `user_agent` varchar(255) NOT NULL,
   `accept_language` varchar(255) NOT NULL,
-  `date_added` timestamp NOT NULL,
-  `date_modified` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL,
   PRIMARY KEY (`order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -2277,7 +2277,7 @@ CREATE TABLE `oc_order_history` (
   `order_status_id` int(11) NOT NULL,
   `notify` tinyint(1) NOT NULL DEFAULT '0',
   `comment` text NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`order_history_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -2349,7 +2349,7 @@ CREATE TABLE `oc_order_recurring` (
   `trial_duration` smallint(6) NOT NULL,
   `trial_price` decimal(10,4) NOT NULL,
   `status` tinyint(4) NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`order_recurring_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -2366,7 +2366,7 @@ CREATE TABLE `oc_order_recurring_transaction` (
   `reference` varchar(255) NOT NULL,
   `type` varchar(255) NOT NULL,
   `amount` decimal(10,4) NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`order_recurring_transaction_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -2380,7 +2380,7 @@ DROP TABLE IF EXISTS `oc_order_shipment`;
 CREATE TABLE `oc_order_shipment` (
   `order_shipment_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   `shipping_courier_id` varchar(255) NOT NULL DEFAULT '',
   `tracking_number` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`order_shipment_id`)
@@ -2525,8 +2525,8 @@ CREATE TABLE `oc_product` (
   `sort_order` int(11) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '0',
   `viewed` int(5) NOT NULL DEFAULT '0',
-  `date_added` timestamp NOT NULL,
-  `date_modified` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL,
   PRIMARY KEY (`product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -3113,8 +3113,8 @@ CREATE TABLE `oc_return` (
   `return_status_id` int(11) NOT NULL,
   `comment` text,
   `date_ordered` date NOT NULL DEFAULT '0000-00-00',
-  `date_added` timestamp NOT NULL,
-  `date_modified` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL,
   PRIMARY KEY (`return_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -3154,7 +3154,7 @@ CREATE TABLE `oc_return_history` (
   `return_status_id` int(11) NOT NULL,
   `notify` tinyint(1) NOT NULL,
   `comment` text NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`return_history_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -3221,8 +3221,8 @@ CREATE TABLE `oc_review` (
   `text` text NOT NULL,
   `rating` int(1) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',
-  `date_added` timestamp NOT NULL,
-  `date_modified` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL,
   PRIMARY KEY (`review_id`),
   KEY `product_id` (`product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -3265,7 +3265,7 @@ DROP TABLE IF EXISTS `oc_session`;
 CREATE TABLE `oc_session` (
   `session_id` varchar(32) NOT NULL,
   `data` text NOT NULL,
-  `expire` timestamp NOT NULL,
+  `expire` datetime NOT NULL,
   PRIMARY KEY (`session_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -3542,8 +3542,8 @@ CREATE TABLE `oc_tax_class` (
   `tax_class_id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(32) NOT NULL,
   `description` varchar(255) NOT NULL,
-  `date_added` timestamp NOT NULL,
-  `date_modified` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL,
   PRIMARY KEY (`tax_class_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -3568,8 +3568,8 @@ CREATE TABLE `oc_tax_rate` (
   `name` varchar(32) NOT NULL,
   `rate` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `type` char(1) NOT NULL,
-  `date_added` timestamp NOT NULL,
-  `date_modified` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL,
   PRIMARY KEY (`tax_rate_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -3641,7 +3641,7 @@ CREATE TABLE `oc_theme` (
   `theme` varchar(64) NOT NULL,
   `route` varchar(64) NOT NULL,
   `code` mediumtext NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`theme_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -3659,7 +3659,7 @@ CREATE TABLE `oc_translation` (
   `route` varchar(64) NOT NULL,
   `key` varchar(64) NOT NULL,
   `value` text NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`translation_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -3675,7 +3675,7 @@ CREATE TABLE `oc_upload` (
   `name` varchar(255) NOT NULL,
   `filename` varchar(255) NOT NULL,
   `code` varchar(255) NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`upload_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -3790,7 +3790,7 @@ CREATE TABLE `oc_user` (
   `code` varchar(40) NOT NULL,
   `ip` varchar(40) NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -3835,7 +3835,7 @@ CREATE TABLE `oc_voucher` (
   `message` text NOT NULL,
   `amount` decimal(15,4) NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`voucher_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -3851,7 +3851,7 @@ CREATE TABLE `oc_voucher_history` (
   `voucher_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `amount` decimal(15,4) NOT NULL,
-  `date_added` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`voucher_history_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -8092,8 +8092,8 @@ CREATE TABLE `oc_zone_to_geo_zone` (
   `country_id` int(11) NOT NULL,
   `zone_id` int(11) NOT NULL DEFAULT '0',
   `geo_zone_id` int(11) NOT NULL,
-  `date_added` timestamp NOT NULL,
-  `date_modified` timestamp NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL,
   PRIMARY KEY (`zone_to_geo_zone_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 

@@ -9,7 +9,7 @@ class ModelCheckoutRecurring extends Model {
 	public function addReference($order_recurring_id, $reference) {
 		$this->db->query("REPLACE INTO `" . DB_PREFIX . "order_recurring` SET `reference` = '" . $this->db->escape($reference) . "', `order_recurring_id` = '" . (int)$order_recurring_id . "', `date_added` = NOW()");
 	}
-	
+
 	public function editReference($order_recurring_id, $reference) {
 		$this->db->query("UPDATE " . DB_PREFIX . "order_recurring SET reference = '" . $this->db->escape($reference) . "' WHERE order_recurring_id = '" . (int)$order_recurring_id . "'");
 

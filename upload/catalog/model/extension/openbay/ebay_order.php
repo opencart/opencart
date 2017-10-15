@@ -501,7 +501,7 @@ class ModelExtensionOpenBayEbayOrder extends Model{
 			   `payment_address_format`   = '" . $address_format . "',
 			   `total`                    = '" . (double)$order->order->total . "',
 			   `date_modified`            = NOW()
-		   WHERE `order_id` = '" . $order_id . "'
+		   WHERE `order_id` = '" . (int)$order_id . "'
 		   ");
 
 		$total_tax = 0;

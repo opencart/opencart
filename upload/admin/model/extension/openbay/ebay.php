@@ -115,7 +115,7 @@ class ModelExtensionOpenBayEbay extends Model{
             `ebay_name` char(50) NOT NULL,
             `local_name` char(50) NOT NULL,
             PRIMARY KEY (`ebay_payment_method_id`)
-            ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=5;");
+            ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci");
 
 		$this->db->query("
             CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_transaction` (

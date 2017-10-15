@@ -775,13 +775,13 @@ $tables[] = array(
 			'name' => 'date_start',
 			'type' => 'date',
 			'not_null' => true,
-			'default' => '0000 - 00 - 00'
+			'default' => '0000-00-00'
 		),
 		array(
 			'name' => 'date_end',
 			'type' => 'date',
 			'not_null' => true,
-			'default' => '0000 - 00 - 00'
+			'default' => '0000-00-00'
 		),
 		array(
 			'name' => 'uses_total',
@@ -2353,19 +2353,19 @@ $tables[] = array(
 			'name' => 'bottom',
 			'type' => 'int(1)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'sort_order',
 			'type' => 'int(3)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'status',
 			'type' => 'tinyint(1)',
 			'not_null' => true,
-			'default' => 1
+			'default' => '1'
 		)
 	),
 	'primary' => array(
@@ -2513,7 +2513,7 @@ $tables[] = array(
 			'name' => 'sort_order',
 			'type' => 'int(3)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'status',
@@ -2837,7 +2837,7 @@ $tables[] = array(
 			'name' => 'clicks',
 			'type' => 'int(5)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'date_added',
@@ -3132,7 +3132,7 @@ $tables[] = array(
 			'name' => 'invoice_no',
 			'type' => 'int(11)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'invoice_prefix',
@@ -3143,7 +3143,7 @@ $tables[] = array(
 			'name' => 'store_id',
 			'type' => 'int(11)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'store_name',
@@ -3159,13 +3159,13 @@ $tables[] = array(
 			'name' => 'customer_id',
 			'type' => 'int(11)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'customer_group_id',
 			'type' => 'int(11)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'firstname',
@@ -3356,13 +3356,13 @@ $tables[] = array(
 			'name' => 'total',
 			'type' => 'decimal(15,4)',
 			'not_null' => true,
-			'default' => 0.0000
+			'default' => '0.0000'
 		),
 		array(
 			'name' => 'order_status_id',
 			'type' => 'int(11)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'affiliate_id',
@@ -3403,7 +3403,7 @@ $tables[] = array(
 			'name' => 'currency_value',
 			'type' => 'decimal(15,8)',
 			'not_null' => true,
-			'default' => 1.00000000
+			'default' => '1.00000000'
 		),
 		array(
 			'name' => 'ip',
@@ -3467,7 +3467,7 @@ $tables[] = array(
 			'name' => 'notify',
 			'type' => 'tinyint(1)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'comment',
@@ -3516,7 +3516,7 @@ $tables[] = array(
 			'name' => 'product_option_value_id',
 			'type' => 'int(11)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'name',
@@ -3580,19 +3580,19 @@ $tables[] = array(
 			'name' => 'price',
 			'type' => 'decimal(15,4)',
 			'not_null' => true,
-			'default' => 0.0000
+			'default' => '0.0000'
 		),
 		array(
 			'name' => 'total',
 			'type' => 'decimal(15,4)',
 			'not_null' => true,
-			'default' => 0.0000
+			'default' => '0.0000'
 		),
 		array(
 			'name' => 'tax',
 			'type' => 'decimal(15,4)',
 			'not_null' => true,
-			'default' => 0.0000
+			'default' => '0.0000'
 		),
 		array(
 			'name' => 'reward',
@@ -3894,7 +3894,7 @@ $tables[] = array(
 			'name' => 'value',
 			'type' => 'decimal(15,4)',
 			'not_null' => true,
-			'default' => 0.0000
+			'default' => '0.0000'
 		),
 		array(
 			'name' => 'sort_order',
@@ -4044,7 +4044,7 @@ $tables[] = array(
 			'name' => 'quantity',
 			'type' => 'int(4)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'stock_status_id',
@@ -4065,19 +4065,19 @@ $tables[] = array(
 			'name' => 'shipping',
 			'type' => 'tinyint(1)',
 			'not_null' => true,
-			'default' => 1
+			'default' => '1'
 		),
 		array(
 			'name' => 'price',
 			'type' => 'decimal(15,4)',
 			'not_null' => true,
-			'default' => 0.0000
+			'default' => '0.0000'
 		),
 		array(
 			'name' => 'points',
 			'type' => 'int(8)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'tax_class_id',
@@ -4088,73 +4088,73 @@ $tables[] = array(
 			'name' => 'date_available',
 			'type' => 'date',
 			'not_null' => true,
-			'default' => 0000 - 00 - 00
+			'default' => '0000-00-00'
 		),
 		array(
 			'name' => 'weight',
 			'type' => 'decimal(15,8)',
 			'not_null' => true,
-			'default' => 0.00000000
+			'default' => '0.00000000'
 		),
 		array(
 			'name' => 'weight_class_id',
 			'type' => 'int(11)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'length',
 			'type' => 'decimal(15,8)',
 			'not_null' => true,
-			'default' => 0.00000000
+			'default' => '0.00000000'
 		),
 		array(
 			'name' => 'width',
 			'type' => 'decimal(15,8)',
 			'not_null' => true,
-			'default' => 0.00000000
+			'default' => '0.00000000'
 		),
 		array(
 			'name' => 'height',
 			'type' => 'decimal(15,8)',
 			'not_null' => true,
-			'default' => 0.00000000
+			'default' => '0.00000000'
 		),
 		array(
 			'name' => 'length_class_id',
 			'type' => 'int(11)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'subtract',
 			'type' => 'tinyint(1)',
 			'not_null' => true,
-			'default' => 1
+			'default' => '1'
 		),
 		array(
 			'name' => 'minimum',
 			'type' => 'int(11)',
 			'not_null' => true,
-			'default' => 1
+			'default' => '1'
 		),
 		array(
 			'name' => 'sort_order',
 			'type' => 'int(11)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'status',
 			'type' => 'tinyint(1)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'viewed',
 			'type' => 'int(5)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'date_added',
@@ -4293,31 +4293,31 @@ $tables[] = array(
 			'name' => 'quantity',
 			'type' => 'int(4)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'priority',
 			'type' => 'int(5)',
 			'not_null' => true,
-			'default' => 1
+			'default' => '1'
 		),
 		array(
 			'name' => 'price',
 			'type' => 'decimal(15,4)',
 			'not_null' => true,
-			'default' => 0.0000
+			'default' => '0.0000'
 		),
 		array(
 			'name' => 'date_start',
 			'type' => 'date',
 			'not_null' => true,
-			'default' => 0000 - 00 - 00
+			'default' => '0000-00-00'
 		),
 		array(
 			'name' => 'date_end',
 			'type' => 'date',
 			'not_null' => true,
-			'default' => 0000 - 00 - 00
+			'default' => '0000-00-00'
 		)
 	),
 	'primary' => array(
@@ -4382,7 +4382,7 @@ $tables[] = array(
 			'name' => 'sort_order',
 			'type' => 'int(3)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		)
 	),
 	'primary' => array(
@@ -4588,13 +4588,13 @@ $tables[] = array(
 			'name' => 'customer_group_id',
 			'type' => 'int(11)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'points',
 			'type' => 'int(8)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		)
 	),
 	'primary' => array(
@@ -4628,25 +4628,25 @@ $tables[] = array(
 			'name' => 'priority',
 			'type' => 'int(5)',
 			'not_null' => true,
-			'default' => 1
+			'default' => '1'
 		),
 		array(
 			'name' => 'price',
 			'type' => 'decimal(15,4)',
 			'not_null' => true,
-			'default' => 0.0000
+			'default' => '0.0000'
 		),
 		array(
 			'name' => 'date_start',
 			'type' => 'date',
 			'not_null' => true,
-			'default' => 0000 - 00 - 00
+			'default' => '0000-00-00'
 		),
 		array(
 			'name' => 'date_end',
 			'type' => 'date',
 			'not_null' => true,
-			'default' => 0000 - 00 - 00
+			'default' => '0000-00-00'
 		)
 	),
 	'primary' => array(
@@ -4759,7 +4759,7 @@ $tables[] = array(
 			'name' => 'store_id',
 			'type' => 'int(11)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		)
 	),
 	'primary' => array(
@@ -4960,7 +4960,7 @@ $tables[] = array(
 			'name' => 'date_ordered',
 			'type' => 'date',
 			'not_null' => true,
-			'default' => 0000 - 00 - 00
+			'default' => '0000-00-00'
 		),
 		array(
 			'name' => 'date_added',
@@ -4994,7 +4994,7 @@ $tables[] = array(
 			'name' => 'language_id',
 			'type' => 'int(11)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'name',
@@ -5067,7 +5067,7 @@ $tables[] = array(
 			'name' => 'language_id',
 			'type' => 'int(11)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'name',
@@ -5097,7 +5097,7 @@ $tables[] = array(
 			'name' => 'language_id',
 			'type' => 'int(11)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'name',
@@ -5152,7 +5152,7 @@ $tables[] = array(
 			'name' => 'status',
 			'type' => 'tinyint(1)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'date_added',
@@ -5249,7 +5249,7 @@ $tables[] = array(
 			'name' => 'store_id',
 			'type' => 'int(11)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'code',
@@ -5393,7 +5393,7 @@ $tables[] = array(
 			'name' => 'geo_zone_id',
 			'type' => 'int(11)',
 			'not_null' => true,
-			'default' => 0
+			'default' => '0'
 		),
 		array(
 			'name' => 'name',
@@ -5404,7 +5404,7 @@ $tables[] = array(
 			'name' => 'rate',
 			'type' => 'decimal(15,4)',
 			'not_null' => true,
-			'default' => 0.0000
+			'default' => '0.0000'
 		),
 		array(
 			'name' => 'type',
@@ -5481,7 +5481,7 @@ $tables[] = array(
 			'name' => 'priority',
 			'type' => 'int(5)',
 			'not_null' => true,
-			'default' => 1
+			'default' => '1'
 		)
 	),
 	'primary' => array(

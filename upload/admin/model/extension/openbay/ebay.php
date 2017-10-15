@@ -412,11 +412,11 @@ class ModelExtensionOpenBayEbay extends Model{
 
 				foreach ($qry->rows as $row) {
 					$lev1 = $row['CategoryName'];
-					$qry2 = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_store_category` WHERE `parent_id` = '" . $row['ebay_store_category_id'] . "' ORDER BY `CategoryName` ASC");
+					$qry2 = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_store_category` WHERE `parent_id` = '" . (int)$row['ebay_store_category_id'] . "' ORDER BY `CategoryName` ASC");
 
 					if ($qry2->num_rows) {
 						foreach ($qry2->rows as $row2) {
-							$qry3 = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_store_category` WHERE `parent_id` = '" . $row2['ebay_store_category_id'] . "' ORDER BY `CategoryName` ASC");
+							$qry3 = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_store_category` WHERE `parent_id` = '" . (int)$row2['ebay_store_category_id'] . "' ORDER BY `CategoryName` ASC");
 
 							if ($qry3->num_rows) {
 								foreach ($qry3->rows as $row3) {
@@ -448,7 +448,7 @@ class ModelExtensionOpenBayEbay extends Model{
 		if (empty($parent)) {
 			$cat_qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_category` WHERE `CategoryID` = `CategoryParentID`");
 		} else {
-			$cat_qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_category` WHERE `CategoryParentID` = '" . $parent . "'");
+			$cat_qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_category` WHERE `CategoryParentID` = '" . (int)$parent . "'");
 		}
 
 		if ($cat_qry->num_rows) {
@@ -630,13 +630,13 @@ class ModelExtensionOpenBayEbay extends Model{
 		}
 
 		if ($err == false) {
-			$res = $this->db->query("SELECT `used` FROM `" . DB_PREFIX . "ebay_category_history` WHERE `CategoryID` = '" . $original_id . "' LIMIT 1");
+			$res = $this->db->query("SELECT `used` FROM `" . DB_PREFIX . "ebay_category_history` WHERE `CategoryID` = '" . (int)$original_id . "' LIMIT 1");
 
 			if ($res->num_rows) {
 				$new = $res->row['used'] + 1;
-				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_category_history` SET `used` = '" . $new . "' WHERE `CategoryID` = '" . $original_id . "' LIMIT 1");
+				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_category_history` SET `used` = '" . $new . "' WHERE `CategoryID` = '" . (int)$original_id . "' LIMIT 1");
 			} else {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_category_history` SET `CategoryID` = '" . $original_id . "', `breadcrumb` = '" .   $this->db->escape(implode(' > ', array_reverse($breadcrumb))) . "', `used` = '1'");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_category_history` SET `CategoryID` = '" . (int)$original_id . "', `breadcrumb` = '" .   $this->db->escape(implode(' > ', array_reverse($breadcrumb))) . "', `used` = '1'");
 			}
 		}
 	}

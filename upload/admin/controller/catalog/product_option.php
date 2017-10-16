@@ -68,7 +68,7 @@ class ControllerCatalogProductOption extends Controller {
 		$this->load->model('catalog/product_option');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_product_option->editProductOption($this->request->get['option_id'], $this->request->post);
+			$this->model_catalog_product_option->editProductOption($this->request->get['product_option_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

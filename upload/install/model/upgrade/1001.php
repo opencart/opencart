@@ -44,7 +44,7 @@ class ModelUpgrade1001 extends Model {
 			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_recurring' AND COLUMN_NAME = 'recurring_id'");
 
 			if ($query->num_rows) {
-				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `recurring_id` = `profile_id` WHERE `recurring_id` IS NULL or `recurring_id` = ''");
+				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `recurring_id` = `profile_id` WHERE `recurring_id` IS NULL OR `recurring_id` = ''");
 				$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring` DROP `profile_id`");
 			} else {
 				$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring` CHANGE `profile_id` `recurring_id` int(11) NOT NULL");

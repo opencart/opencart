@@ -48,9 +48,9 @@ class ModelUpgrade1011 extends Model {
 					$field_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $table['name'] . "' AND COLUMN_NAME = '" . $table['field'][$i]['name'] . "'");
 
 					if (!$field_query->num_rows) {
-						$sql .= " MODIFY";
-					} else {
 						$sql .= " ADD";
+					} else {
+						$sql .= " MODIFY";
 					}
 
 					$sql .= " `" . $table['field'][$i]['name'] . "` " . $table['field'][$i]['type'];
@@ -75,21 +75,20 @@ class ModelUpgrade1011 extends Model {
 						$sql .= " AFTER `" . $table['field'][$i - 1]['name'] . "`";
 					}
 
-					//$this->db->query(.  . (!empty($table['field'][$i]['auto_increment']) ? " AUTO_INCREMENT" : "") . $position);
-					//$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` MODIFY `" . $table['field'][$i]['name'] . "` " . $table['field'][$i]['type'] . (!empty($table['field'][$i]['not_null']) ? " NOT NULL" : "") . (isset($table['field'][$i]['default']) ? " DEFAULT '" . $table['field'][$i]['default'] . "'" : "") . (!empty($table['field'][$i]['auto_increment']) ? " AUTO_INCREMENT" : "") . $position);
-
-
-
-
-
-
-
-
-
-
+					$this->db->query($sql);
 				}
 
 				if (isset($table['primary'])) {
+					$primary_data = array();
+
+					foreach ($table['primary'] as $primary) {
+						$primary_data[] = "`" . $primary . "`";
+					}
+
+					$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP PRIMARY KEY, ADD PRIMARY KEY(" . implode(",", $primary_data) . ")");
+				}
+
+				if (isset($table['index'])) {
 					$primary_data = array();
 
 					foreach ($table['primary'] as $primary) {

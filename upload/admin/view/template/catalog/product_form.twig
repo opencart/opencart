@@ -978,7 +978,7 @@ var recurring_row = {{ recurring_row }};
 function addRecurring() {
 	html = '<tr id="recurring-row' + recurring_row + '">';
 	html += '  <td class="left">';
-	html += '    <select name="product_recurring[' + recurring_row + '][recurring_id]" class="form-control">>';
+	html += '    <select name="product_recurring[' + recurring_row + '][recurring_id]" class="form-control">';
   {% for recurring in recurrings %}
 	html += '      <option value="{{ recurring.recurring_id }}">{{ recurring.name }}</option>';
   {% endfor %}

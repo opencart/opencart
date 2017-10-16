@@ -8,10 +8,10 @@ class ModelUpgrade1007 extends Model {
 		$this->db->query("ALTER TABLE `" . DB_PREFIX . "modification` CHANGE `xml` `xml` mediumtext NOT NULL");
 		
 		// Extension
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = 'theme'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = 'theme_default'");
 		
 		if (!$query->num_rows) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `type` = 'theme', `code` = 'theme_default'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `type` = 'theme', `code` = 'default'");
 			
 			// Setting
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `code` = 'theme_default', `key` = 'theme_default_directory', `value` = 'default'");

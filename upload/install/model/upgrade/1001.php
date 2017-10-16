@@ -132,7 +132,7 @@ class ModelUpgrade1001 extends Model {
 				$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `code` = `group` WHERE `code` IS NULL or `code` = ''");
 				$this->db->query("ALTER TABLE `" . DB_PREFIX . "setting` DROP `group`");
 			} else {
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "setting` CHANGE `group` `code` varchar(32) NOT NULL");
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "setting` CHANGE `group` `code` varchar(128) NOT NULL");
 			}
 		}
 		

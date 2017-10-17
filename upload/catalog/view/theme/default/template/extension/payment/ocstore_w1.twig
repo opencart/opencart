@@ -1,0 +1,33 @@
+<form action="{{ action }}" method="post" id="checkout">
+    {% for key, value in params %}
+        {% if value is iterable %}
+            {% for val in value %}
+                <input type="hidden" name="{{ key }}" value="{{ val }}"/>
+            {% endfor %}
+        {% else %}
+            <input type="hidden" name="{{ key }}" value="{{ value }}"/>
+        {% endif %}
+    {% endfor %}
+</form>
+<div class="buttons">
+  <div class="pull-right">
+    <input type="button" value="{{ button_confirm }}" id="button-confirm" class="btn btn-primary" data-loading-text="{{ text_loading }}" />
+  </div>
+<script type="text/javascript"><!--
+    $(document).delegate('#button-confirm', 'click', function() {
+        $.ajax({
+            type: 'get',
+            url: '{{ confirm }}',
+            beforeSend: function() {
+                $('#button-confirm').button('loading');
+            },
+            complete: function() {
+                $('#button-confirm').button('reset');
+            },
+            success: function() {
+                document.forms['checkout'].submit();
+           }
+        });
+    });
+//--></script>
+</div>

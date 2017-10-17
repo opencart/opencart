@@ -1,0 +1,296 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    {% if success %}
+    <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab-general" data-toggle="tab"><i class="fa fa-power-off"></i> {{ tab_general }}</a></li>
+            <li><a href="#tab-log" data-toggle="tab"><i class="fa fa-eye"></i> {{ tab_log }}</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab-general">
+
+              <div class="form-group required">
+                <label class="col-sm-2 control-label" for="input-merch_r">{{ entry_merch_r }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="payment_webmoney_wmk_merch_r" value="{{ payment_webmoney_wmk_merch_r }}"
+                         placeholder="{{ entry_merch_r }}" id="input-merch_r" class="form-control" />
+                  <span class="help-block">{{ help_merch_r }}</span>
+                  {% if error_merch_r %}
+                  <div class="text-danger">{{ error_merch_r }}</div>
+                  {% endif %}
+                </div>
+              </div>
+
+              <div class="form-group required">
+                <label class="col-sm-2 control-label" for="input-secret_key">{{ entry_secret_key }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="payment_webmoney_wmk_secret_key" value="{{ payment_webmoney_wmk_secret_key }}"
+                         placeholder="{{ entry_secret_key }}" id="input-secret_key" class="form-control" />
+                  {% if error_secret_key %}
+                  <div class="text-danger">{{ error_secret_key }}</div>
+                  {% endif %}
+                </div>
+              </div>
+
+              <div class="form-group required">
+                <label class="col-sm-2 control-label" for="input-secret_key_x20">{{ entry_secret_key_x20 }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="payment_webmoney_wmk_secret_key_x20" value="{{ payment_webmoney_wmk_secret_key_x20 }}"
+                         placeholder="{{ entry_secret_key_x20 }}" id="input-secret_key_x20" class="form-control" />
+                  {% if error_secret_key_x20 %}
+                  <div class="text-danger">{{ error_secret_key_x20 }}</div>
+                  {% endif %}
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-result_url">{{ entry_result_url }}</label>
+                <div class="col-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-link"></i></span>
+                    <input type="text" readonly="readonly" value="{{ payment_webmoney_wmk_result_url }}" id="input-result_url" class="form-control">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-success_url">{{ entry_success_url }}</label>
+                <div class="col-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-link"></i></span>
+                    <input type="text" readonly="readonly" value="{{ payment_webmoney_wmk_success_url }}" id="input-success_url" class="form-control">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-fail_url">{{ entry_fail_url }}</label>
+                <div class="col-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-link"></i></span>
+                    <input type="text" readonly="readonly" value="{{ payment_webmoney_wmk_fail_url }}" id="input-fail_url" class="form-control">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-order_confirm_status">{{ entry_order_confirm_status }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_webmoney_wmk_order_confirm_status_id" id="input-order_confirm_status" class="form-control">
+                    {% for order_status in order_statuses if order_status.order_status_id is defined %}
+                    {% if order_status.order_status_id == payment_webmoney_wmk_order_confirm_status_id %}
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                  </select>
+                  <span class="help-block">{{ help_order_confirm_status }}</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-order_status">{{ entry_order_status }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_webmoney_wmk_order_status_id" id="input-order_status" class="form-control">
+                    {% for order_status in order_statuses if order_status.order_status_id is defined %}
+                    {% if order_status.order_status_id == payment_webmoney_wmk_order_status_id %}
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                  </select>
+                  <span class="help-block">{{ help_order_status }}</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-order_fail_status">{{ entry_order_fail_status }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_webmoney_wmk_order_fail_status_id" id="input-order_fail_status" class="form-control">
+                    {% for order_status in order_statuses if order_status.order_status_id is defined %}
+                    {% if order_status.order_status_id == payment_webmoney_wmk_order_fail_status_id %}
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                  </select>
+                  <span class="help-block">{{ help_order_fail_status }}</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-hide_mode">{{ entry_hide_mode }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_webmoney_wmk_hide_mode" id="input-hide_mode" class="form-control">
+                    {% if payment_webmoney_wmk_hide_mode %}
+                    <option value="1" selected="selected">{{ text_enabled }}</option>
+                    <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                    <option value="1">{{ text_enabled }}</option>
+                    <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                  <span class="help-block">{{ help_hide_mode }}</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-minimal_order">{{ entry_minimal_order }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="payment_webmoney_wmk_minimal_order" value="{{ payment_webmoney_wmk_minimal_order }}"
+                         placeholder="{{ entry_minimal_order }}" id="input-minimal_order" class="form-control" />
+                  <span class="help-block">{{ help_minimal_order }}</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-maximal_order">{{ entry_maximal_order }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="payment_webmoney_wmk_maximal_order" value="{{ payment_webmoney_wmk_maximal_order }}"
+                         placeholder="{{ entry_maximal_order }}" id="input-maximal_order" class="form-control" />
+                  <span class="help-block">{{ help_maximal_order }}</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-geo_zone">{{ entry_geo_zone }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_webmoney_wmk_geo_zone_id" id="input-geo_zone" class="form-control">
+                    <option value="0">{{ text_all_zones }}</option>
+                    {% for geo_zone in geo_zones %}
+                    {% if geo_zone.geo_zone_id == payment_webmoney_wmk_geo_zone_id %}
+                    <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                    {% else %}
+                    <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_webmoney_wmk_status" id="input-status" class="form-control">
+                    {% if payment_webmoney_wmk_status %}
+                    <option value="1" selected="selected">{{ text_enabled }}</option>
+                    <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                    <option value="1">{{ text_enabled }}</option>
+                    <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-sort_order">{{ entry_sort_order }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="payment_webmoney_wmk_sort_order" value="{{ payment_webmoney_wmk_sort_order }}"
+                         placeholder="{{ entry_sort_order }}" id="input-sort_order" class="form-control" />
+                </div>
+              </div>
+
+            </div><!-- </div id="tab-general"> -->
+            <div class="tab-pane" id="tab-log">
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-log">{{ entry_log }}</label>
+                <div class="col-sm-8">
+                  <input type="hidden" name="payment_webmoney_wmk_log_filename" value="{{ log_filename }}" />
+                  <select name="payment_webmoney_wmk_log" id="input-log" class="form-control">
+                    {% for key, value in logs %}
+                    {% if key == payment_webmoney_wmk_log %}
+                    <option value="{{ key }}"
+                            selected="selected">{{ value }}</option>
+                    {% else %}
+                    <option value="{{ key }}">{{ value }}</option>
+                    {% endif %}
+                    {% endfor %}
+                  </select>
+                  <span class="help-block">{{ help_log }}</span>
+                </div>
+                <div class="col-sm-2">
+                  <a data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger" id="button-clear"><i class="fa fa-eraser"></i> {{ button_clear }}</a>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_log_file }}</label>
+                <div class="col-sm-10">
+                  <div class="well well-sm" style="height: 300px; overflow: auto;">
+                    <pre id="pre-log" style="font-size:11px; min-height: 280px;">{% for log_line in log_lines %} {{ log_line }} {% endfor %}</pre>
+                  </div>
+                  <span class="help-block">{{ help_log_file }}</span>
+                </div>
+              </div>
+            </div><!-- </div id="tab-log"> -->
+          </div><!-- </div class="tab-content"> -->
+        </form>
+      </div><!-- </div class="panel-body"> -->
+    </div><!-- </div class="panel panel-default"> -->
+  </div><!-- </div class="container-fluid"> -->
+</div><!-- </div id="content"> -->
+<script type="text/javascript"><!--
+  $('#button-clear').on('click', function() {
+    if (confirm('{{ text_confirm }}')){
+      $.ajax({
+        url: '{{ clear_log }}',
+        type: 'post',
+        dataType: 'json',
+        beforeSend: function() {
+          $('#button-clear').button('loading');
+        },
+        complete: function() {
+          $('#button-clear').button('reset');
+        },
+        success: function(json) {
+          $('.alert-success, .alert-danger').remove();
+                
+          if (json['error']) {
+            $('#content > .container-fluid').before('<div class="alert alert-danger" style="display: none;"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+            $('.alert-danger').fadeIn('slow');
+          }
+          
+          if (json['success']) {
+                    $('#content > .container-fluid').before('<div class="alert alert-success" style="display: none;"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+            
+            $('#pre-log').empty();
+            $('.alert-success').fadeIn('slow');
+          }
+
+          $('html, body').animate({ scrollTop: 0 }, 'slow'); 
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+      });
+    }
+  });
+//--></script>

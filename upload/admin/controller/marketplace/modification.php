@@ -194,15 +194,15 @@ class ControllerMarketplaceModification extends Controller {
 										$key = 'system/' . substr($file, strlen(DIR_SYSTEM));
 									}
 
+									// Log
+									$log[] = PHP_EOL . 'FILE: ' . $key;
+									
 									// If file contents is not already in the modification array we need to load it.
 									if (!isset($modification[$key])) {
 										$content = file_get_contents($file);
 
 										$modification[$key] = preg_replace('~\r?\n~', "\n", $content);
 										$original[$key] = preg_replace('~\r?\n~', "\n", $content);
-
-										// Log
-										$log[] = PHP_EOL . 'FILE: ' . $key;
 									}
 
 									foreach ($operations as $operation) {

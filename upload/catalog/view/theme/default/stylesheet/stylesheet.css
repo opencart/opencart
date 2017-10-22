@@ -660,29 +660,24 @@ h2.price {
 	clear: both;
 	list-style: none;
 	padding: 0;
-	margin: 0;
+	margin-left: -20px;
 }
 .thumbnails > li {
 	margin-left: 20px;
 }
-.thumbnails {
-	margin-left: -20px;
-}
 .thumbnails > img {
 	width: 100%;
+}
+.image-additional {
+	float: left;
+	max-width: 78px;
+	margin-left: 20px;
 }
 .image-additional a {
 	margin-bottom: 20px;
 	padding: 5px;
 	display: block;
 	border: 1px solid #ddd;
-}
-.image-additional {
-	max-width: 78px;
-}
-.thumbnails .image-additional {
-	float: left;
-	margin-left: 20px;
 }
 
 @media (min-width: 1200px) {

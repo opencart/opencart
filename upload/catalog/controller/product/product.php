@@ -296,12 +296,13 @@ class ControllerProductProduct extends Controller {
 			$discounts = $this->model_catalog_product->getProductDiscounts($this->request->get['product_id']);
 
 			$data['discounts'] = array();
-
+			if($discounts && ($this->customer->isLogged() || !$this->config->get('config_customer_price'))){
 			foreach ($discounts as $discount) {
 				$data['discounts'][] = array(
 					'quantity' => $discount['quantity'],
 					'price'    => $this->currency->format($this->tax->calculate($discount['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])
 				);
+			}
 			}
 
 			$data['options'] = array();

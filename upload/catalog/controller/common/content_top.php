@@ -45,7 +45,8 @@ class ControllerCommonContentTop extends Controller {
 		if ($route == 'blog/category' && isset($this->request->get['blog_category_id'])) {
 			$this->load->model('blog/category');
 			
-			$layout_id = $this->model_blog_category->getCategoryLayoutId($this->request->get['blog_category_id']);
+			$path = explode('_', (string)$this->request->get['blog_category_id']);
+			$layout_id = $this->model_blog_category->getCategoryLayoutId(end($path));
 		}
 		
 		if ($route == 'blog/article' && isset($this->request->get['article_id'])) {

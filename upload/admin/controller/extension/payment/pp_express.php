@@ -315,21 +315,25 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 					$pp_express_settings['payment_pp_express_sandbox_password'] = $config_response['api_password'];
 					$pp_express_settings['payment_pp_express_sandbox_signature'] = $config_response['signature'];
 					$pp_express_settings['payment_pp_express_test'] = 1;
+					$pp_express_settings['payment_pp_express_status'] = 1;
 
 					$data['payment_pp_express_sandbox_username'] = $config_response['api_user_name'];
 					$data['payment_pp_express_sandbox_password'] = $config_response['api_password'];
 					$data['payment_pp_express_sandbox_signature'] = $config_response['signature'];
 					$data['payment_pp_express_test'] = 1;
+					$data['payment_pp_express_status'] = 1;
 				} else {
 					$pp_express_settings['payment_pp_express_username'] = $config_response['api_user_name'];
 					$pp_express_settings['payment_pp_express_password'] = $config_response['api_password'];
 					$pp_express_settings['payment_pp_express_signature'] = $config_response['signature'];
 					$pp_express_settings['payment_pp_express_test'] = 0;
+					$pp_express_settings['payment_pp_express_status'] = 1;
 
 					$data['payment_pp_express_username'] = $config_response['api_user_name'];
 					$data['payment_pp_express_password'] = $config_response['api_password'];
 					$data['payment_pp_express_signature'] = $config_response['signature'];
 					$data['payment_pp_express_test'] = 0;
+					$data['payment_pp_express_status'] = 1;
 				}
 
 				$data['retrieve_success'] = 1;

@@ -1747,7 +1747,6 @@ CREATE TABLE `oc_language` (
   `name` varchar(32) NOT NULL,
   `code` varchar(5) NOT NULL,
   `locale` varchar(255) NOT NULL,
-  `image` varchar(64) NOT NULL,
   `sort_order` int(3) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`language_id`),
@@ -1758,8 +1757,8 @@ CREATE TABLE `oc_language` (
 -- Dumping data for table `oc_language`
 --
 
-INSERT INTO `oc_language` (`language_id`, `name`, `code`, `locale`, `image`, `sort_order`, `status`) VALUES
-(1, 'English', 'en-gb', 'en-gb,en', 'gb.png', 1, 1);
+INSERT INTO `oc_language` (`language_id`, `name`, `code`, `locale`, `sort_order`, `status`) VALUES
+(1, 'English', 'en-gb', 'en-gb,en', 1, 1);
 
 -----------------------------------------------------------
 

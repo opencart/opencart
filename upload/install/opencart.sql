@@ -1748,7 +1748,6 @@ CREATE TABLE `oc_language` (
   `code` varchar(5) NOT NULL,
   `locale` varchar(255) NOT NULL,
   `image` varchar(64) NOT NULL,
-  `directory` varchar(32) NOT NULL,
   `sort_order` int(3) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`language_id`),
@@ -1759,8 +1758,8 @@ CREATE TABLE `oc_language` (
 -- Dumping data for table `oc_language`
 --
 
-INSERT INTO `oc_language` (`language_id`, `name`, `code`, `locale`, `image`, `directory`, `sort_order`, `status`) VALUES
-(1, 'English', 'en-gb', 'en-gb,en', 'gb.png', 'english', 1, 1);
+INSERT INTO `oc_language` (`language_id`, `name`, `code`, `locale`, `image`, `sort_order`, `status`) VALUES
+(1, 'English', 'en-gb', 'en-gb,en', 'gb.png', 1, 1);
 
 -----------------------------------------------------------
 
@@ -3689,7 +3688,7 @@ DROP TABLE IF EXISTS `oc_seo_url`;
 CREATE TABLE `oc_seo_url` (
   `seo_url_id` int(11) NOT NULL AUTO_INCREMENT,
   `store_id` int(11) NOT NULL,
-  `language_id` int(11) NOT NULL,  
+  `language_id` int(11) NOT NULL,
   `query` varchar(255) NOT NULL,
   `keyword` varchar(255) NOT NULL,
   PRIMARY KEY (`seo_url_id`),

@@ -46,17 +46,7 @@
               <label class="control-label" for="input-quantity">{{ entry_quantity }}</label> <input type="text" name="filter_quantity" value="{{ filter_quantity }}" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control"/>
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-category">{{ entry_category }}</label>
-              <select class="form-control" name="filter_category_id">
-                <option value=""></option>
-                {% for category in categories %}
-                <option value="{{ category['category_id'] }}" {{ filter_category == category['category_id'] ? 'selected="selected"' : null }}>{{ category['name'] }}</option>
-                {% endfor %}
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="control-label" for="input-status">{{ entry_status }}</label>
-              <select name="filter_status" id="input-status" class="form-control">
+              <label class="control-label" for="input-status">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-control">
                 <option value=""></option>
                 {% if filter_status == '1' %}
                   <option value="1" selected="selected">{{ text_enabled }}</option>
@@ -167,12 +157,6 @@ $('#button-filter').on('click', function() {
 		url += '&filter_quantity=' + encodeURIComponent(filter_quantity);
 	}
 
-  var filter_category = $('select[name=\'filter_category\']').val();
-
-  if (filter_category) {
-    url += '&filter_category=' + encodeURIComponent(filter_category);
-  }
-
 	var filter_status = $('select[name=\'filter_status\']').val();
 
 	if (filter_status !== '') {
@@ -191,7 +175,7 @@ $('button[form=\'form-product\']').on('click', function(e) {
 $('input[name=\'filter_name\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request) + '&filter_category='+ encodeURIComponent($('select[name=\'filter_category\']').val()),
+			url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {

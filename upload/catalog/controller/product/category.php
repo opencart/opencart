@@ -150,12 +150,13 @@ class ControllerProductCategory extends Controller {
 			$data['products'] = array();
 
 			$filter_data = array(
-				'filter_category_id' => $category_id,
-				'filter_filter'      => $filter,
-				'sort'               => $sort,
-				'order'              => $order,
-				'start'              => ($page - 1) * $limit,
-				'limit'              => $limit
+				'filter_category_id'  => $category_id,
+				'filter_sub_category' => $this->config->get('config_product_category') ? true : false,
+				'filter_filter'       => $filter,
+				'sort'                => $sort,
+				'order'               => $order,
+				'start'               => ($page - 1) * $limit,
+				'limit'               => $limit
 			);
 
 			$product_total = $this->model_catalog_product->getTotalProducts($filter_data);

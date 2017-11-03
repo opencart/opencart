@@ -13,13 +13,28 @@
       </tr>
     </thead>
     <tbody>
+      <tr>
+        <td style="text-align: center; border-bottom: 1px solid #ddd;"><h1>{{ text_welcome }}</h1></td>
+      </tr>
+      <tr>
+        <td style="line-height: 1.8;">
 
+          <p>{{ text_denied }}</p>
+          <p><br/></p>
 
-    {{ text_welcome }}
+          <p style="text-align: center; font-weight: bold;"><a href="{{ contact }}" style="border-radius:4px; color:#fff; text-decoration: none; background-color: #01b3e8; padding-left:18px; padding-right:18px; padding-top:10px; padding-bottom:10px; font-size:18px;">
+            {{ btn_contact }}
+            </a></p>
+          <p><br/></p>
 
-    {{ text_denied }}
+          <p>
+            {{ text_thanks }} <br/>
+            <strong>{{ store }}</strong>
+          </p>
+        </td>
+      </tr>
+    </tbody>
 
-    {{ contact }}
+  </table>
 
-    {{ text_thanks }}
-    {{ store }}
+</div>

@@ -79,14 +79,14 @@ $('#button-add-card').bind('click', function () {
 				html = '<form action="' + json['redirect'] + '" method="post" id="redirect">';
 				html += '  <input type="hidden" name="Status" value="' + json['Status'] + '" />';
 				html += '  <input type="hidden" name="StatusDetail" value="' + json['StatusDetail'] + '" />';
-				
+
 				html += '</form>';
-				
+
 				$('.breadcrumb').after(html);
-				
+
 				$('#redirect').submit();
 			}
-			
+
 			// if error
 			if (json['error']) {
 				$('.breadcrumb').after('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
@@ -94,5 +94,5 @@ $('#button-add-card').bind('click', function () {
 		}
 	});
 });
-//--></script> 
-{{ footer }} 
+//--></script>
+{{ footer }}

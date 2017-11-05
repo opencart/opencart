@@ -24,7 +24,7 @@ $('#button-confirm').on('click', function() {
 		},
 		success: function(json) {
 			if (json['redirect']) {
-				location = json['redirect'];	
+				location = json['redirect'];
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

@@ -52,26 +52,16 @@
                 <label class="col-sm-2 control-label" for="input-type"><span data-toggle="tooltip" title="{{ help_type }}">{{ entry_type }}</span></label>
                 <div class="col-sm-10">
                   <select name="type" id="input-type" class="form-control">
-
                     {% if type == 'P' %}
-
                       <option value="P" selected="selected">{{ text_percent }}</option>
-
                     {% else %}
-
                       <option value="P">{{ text_percent }}</option>
-
                     {% endif %}
                     {% if type == 'F' %}
-
                       <option value="F" selected="selected">{{ text_amount }}</option>
-
                     {% else %}
-
                       <option value="F">{{ text_amount }}</option>
-
                     {% endif %}
-
                   </select>
                 </div>
               </div>
@@ -179,19 +169,13 @@
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="status" id="input-status" class="form-control">
-
                     {% if status %}
-
                       <option value="1" selected="selected">{{ text_enabled }}</option>
                       <option value="0">{{ text_disabled }}</option>
-
                     {% else %}
-
                       <option value="1">{{ text_enabled }}</option>
                       <option value="0" selected="selected">{{ text_disabled }}</option>
-
                     {% endif %}
-
                   </select>
                 </div>
               </div>

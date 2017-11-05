@@ -111,7 +111,7 @@ $('#button-confirm').bind('click', function () {
 			if (json['error']) {
 				$('#payment').before('<div id="firstdata_message_error" class="alert alert-warning"><i class="fa fa-info-circle"></i> ' + json['error'] + '</div>');
 			}
-			
+
 			// if success
 			if (json['success']) {
 				location = json['success'];
@@ -133,7 +133,7 @@ $(document).ready(function(){
 	$('#card_info').show();
 	{% else %}
 	var stored_cards = {{ stored_cards|length }};
-	
+
 	if (stored_cards == 0) {
 		$('#card_info').show();
 	}

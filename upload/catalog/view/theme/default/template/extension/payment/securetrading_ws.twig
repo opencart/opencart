@@ -59,13 +59,13 @@ $('#button-confirm').bind('click', function() {
 			$('form.form-horizontal .alert').remove();
 			$('#payment').before('<div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_wait }}</div>');
 		},
-		
+
 		complete: function() {
 			$('#button-confirm').attr('disabled', false);
 		},
 		success: function(json) {
 			$('form.form-horizontal .alert').remove();
-		
+
 			if (json['status']) {
 				if (json['redirect']) {
 					location = json['redirect'];

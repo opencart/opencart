@@ -897,9 +897,9 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 
             $this->model_setting_setting->editSetting('openbay_amazonus', $settings);
 
-            $this->response->redirect($this->url->link('extension/openbay/amazonus/bulklinking', 'token=' . $this->session->data['token'], true));
+            $this->response->redirect($this->url->link('extension/openbay/amazonus/bulklinking', 'user_token=' . $this->session->data['user_token'], true));
         } else {
-            $data['cancel_report_link'] = $this->url->link('extension/openbay/amazonus/bulklinking', 'cancel_report=1&token=' . $this->session->data['token'], true);
+            $data['cancel_report_link'] = $this->url->link('extension/openbay/amazonus/bulklinking', 'cancel_report=1&user_token=' . $this->session->data['user_token'], true);
         }
 
 		$pagination = new Pagination();

@@ -699,7 +699,7 @@ class ModelExtensionOpenBayOpenbay extends Model {
 			CURLOPT_SSL_VERIFYHOST => 0,
 			CURLOPT_FORBID_REUSE => true,
 			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_URL => HTTPS_CATALOG . 'index.php?route=api/order/history&order_id=' . $order_id . '&token=' . $api_login['token'],
+			CURLOPT_URL => HTTPS_CATALOG . 'index.php?route=api/order/history&order_id=' . $order_id . '&token=' . $api_login['api_token'],
 			CURLOPT_POST => true,
 			CURLOPT_POSTFIELDS => http_build_query($data, '', "&"),
 			CURLOPT_TIMEOUT => 60,
@@ -759,7 +759,7 @@ class ModelExtensionOpenBayOpenbay extends Model {
 
 		if (isset($json['success']) && isset($header_cookies['PHPSESSID'])) {
 			$response = [
-				'token' => $json['token'],
+				'api_token' => $json['api_token'],
 				'session_id' => $header_cookies['PHPSESSID']
 			];
 		} else {

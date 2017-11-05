@@ -80,22 +80,22 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$data['breadcrumbs'] = array();
-		
+
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true),
 			'text' => $this->language->get('text_home'),
 		);
-		
+
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true),
 			'text' => $this->language->get('text_openbay'),
 		);
-		
+
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('extension/openbay/amazon', 'user_token=' . $this->session->data['user_token'], true),
 			'text' => $this->language->get('text_amazon'),
 		);
-		
+
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('extension/openbay/amazon/stockUpdates', 'user_token=' . $this->session->data['user_token'], true),
 			'text' => $this->language->get('heading_title'),
@@ -944,9 +944,9 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 
             $this->model_setting_setting->editSetting('openbay_amazon', $settings);
 
-            $this->response->redirect($this->url->link('extension/openbay/amazon/bulklinking', 'marketplace=' . $marketplace_code . '&token=' . $this->session->data['token'], true));
+            $this->response->redirect($this->url->link('extension/openbay/amazon/bulklinking', 'marketplace=' . $marketplace_code . '&user_token=' . $this->session->data['user_token'], true));
         } else {
-            $data['cancel_report_link'] = $this->url->link('extension/openbay/amazon/bulklinking', 'cancel_report=1&marketplace=uk&token=' . $this->session->data['token'], true);
+            $data['cancel_report_link'] = $this->url->link('extension/openbay/amazon/bulklinking', 'cancel_report=1&marketplace=uk&user_token=' . $this->session->data['user_token'], true);
         }
 
 		$marketplaces = array(

@@ -54,10 +54,10 @@
             <td class="text-left" rowspan="{{ row.data|length + 1 }}">{{ row.status }}</td>
             <td class="text-left" rowspan="{{ row.data|length + 1 }}">{{ row.date_requested }}</td>
             <td class="text-left" rowspan="{{ row.data|length + 1 }}">{{ row.date_updated }}</td>
-            {% for dataRow in row.data %}
+            {% for data_row in row.data %}
               <tr>
-                <td class="text-center">{{ dataRow.sku }}</td>
-                <td class="text-center">{{ dataRow.stock }}</td>
+                <td class="text-center">{{ data_row.sku }}</td>
+                <td class="text-center">{{ data_row.stock }}</td>
               </tr>
             {% endfor %}
           </tr>

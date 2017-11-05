@@ -58,7 +58,7 @@
               <td class="text-right">{{ product.search_status }}</td>
               <td class="text-right">{% if product.matches is not null %}{{ product.matches }}{% else %}-{% endif %}</td>
               <td class="text-left" id="result-{{ product.product_id }}">
-                {% if product.matches !== null %}
+                {% if product.matches is defined and product.matches is not null %}
                   {% set checked = false %}
                   {% if product.matches > 0 %}
                     <input class="amazon-listing" type="radio" name="products[{{ product.product_id }}]" value=""/> {{ text_dont_list }}<br/>

@@ -68,7 +68,6 @@ class ModelExtensionPaymentPPExpress extends Model {
 	}
 
 	public function paymentRequestInfo() {
-
 		$data['PAYMENTREQUEST_0_SHIPPINGAMT'] = '';
 		$data['PAYMENTREQUEST_0_CURRENCYCODE'] = $this->session->data['currency'];
 		$data['PAYMENTREQUEST_0_PAYMENTACTION'] = $this->config->get('payment_pp_express_transaction');
@@ -297,19 +296,19 @@ class ModelExtensionPaymentPPExpress extends Model {
 			CURLOPT_POSTFIELDS => http_build_query(array_merge($data, $settings), '', "&"),
 		);
 
-		$ch = curl_init();
+		$curl = curl_init();
 
-		curl_setopt_array($ch, $defaults);
+		curl_setopt_array($curl, $defaults);
 
-		if (!$result = curl_exec($ch)) {
-			$this->log(array('error' => curl_error($ch), 'errno' => curl_errno($ch)), 'cURL failed');
+		if (!$curl_response = curl_exec($curl)) {
+			$this->log(array('error' => curl_error($curl), 'errno' => curl_errno($curl)), 'cURL failed');
 		}
 
-		$this->log($result, 'Result');
+		$this->log($curl_response, 'Result');
 
-		curl_close($ch);
+		curl_close($curl);
 
-		return $this->cleanReturn($result);
+		return $this->cleanReturn($curl_response);
 	}
 
 	public function recurringPayments() {

@@ -1,5 +1,6 @@
 <?php
 // Text
+$_['text_affiliate']            = 'Affiliate';
 $_['text_api']                  = 'API';
 $_['text_attribute']            = 'Attributes';
 $_['text_attribute_group']      = 'Attribute Groups';
@@ -44,6 +45,7 @@ $_['text_order']                = 'Orders';
 $_['text_order_status']         = 'Order Statuses';
 $_['text_online']               = 'Who\'s Online';
 $_['text_product']              = 'Products';
+$_['text_product_option']       = 'Product Options';
 $_['text_reports']              = 'Reports';
 $_['text_review']               = 'Reviews';
 $_['text_return']               = 'Returns';

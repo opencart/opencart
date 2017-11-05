@@ -71,8 +71,7 @@
                 {% if key %}
                   <option value="{{ key }}" selected="selected">{{ key }}</option>
                 {% endif %}
-              </select>
-              <input type="text" name="key" value="{{ key }}" placeholder="{{ entry_key }}" class="form-control"/>
+              </select> <input type="text" name="key" value="{{ key }}" placeholder="{{ entry_key }}" class="form-control"/>
               {% if error_key %}
                 <div class="text-danger">{{ error_key }}</div>
               {% endif %}

@@ -5,7 +5,7 @@ use Cardinity\Exception as CardinityException;
 
 class ModelExtensionPaymentCardinity extends Model {
 	public function addOrder($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "cardinity_order` SET `order_id` = '" . (int)$data['order_id'] . "', `payment_id` = '" . $this->db->escape($data['payment_id']) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "cardinity_order` SET `order_id` = '" . (int)$data['order_id'] . "', `payment_id` = '" . $this->db->escape((string)$data['payment_id']) . "'");
 	}
 
 	public function getOrder($order_id) {

@@ -77,7 +77,7 @@ class ControllerCommonReset extends Controller {
 			$data['error_confirm'] = '';
 		}
 
-		$data['action'] = $this->url->link('common/reset', 'code=' . $code, true);
+		$data['action'] = $this->url->link('common/reset', 'email=' . urlencode($email) . '&code=' . $code, true);
 
 		$data['cancel'] = $this->url->link('common/login', '', true);
 

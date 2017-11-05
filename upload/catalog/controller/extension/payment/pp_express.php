@@ -2,7 +2,7 @@
 class ControllerExtensionPaymentPPExpress extends Controller {
 	public function index() {
 		$this->load->language('extension/payment/pp_express');
-		
+
 		$data['payment_pp_express_incontext_disable'] = $this->config->get('payment_pp_express_incontext_disable');
 
 		if ($this->config->get('payment_pp_express_test') == 1) {
@@ -1009,9 +1009,9 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				$subtotal = $this->cart->getSubTotal();
 
 				// Affiliate
-				$this->load->model('affiliate/affiliate');
+				$this->load->model('account/affiliate');
 
-				$affiliate_info = $this->model_affiliate_affiliate->getAffiliateByCode($this->request->cookie['tracking']);
+				$affiliate_info = $this->model_account_affiliate->getAffiliateByTracking($this->request->cookie['tracking']);
 
 				if ($affiliate_info) {
 					$data['affiliate_id'] = $affiliate_info['affiliate_id'];
@@ -1022,9 +1022,9 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				}
 
 				// Marketing
-				$this->load->model('checkout/marketing');
+				$this->load->model('marketing/marketing');
 
-				$marketing_info = $this->model_checkout_marketing->getMarketingByCode($this->request->cookie['tracking']);
+				$marketing_info = $this->model_marketing_marketing->getMarketingByCode($this->request->cookie['tracking']);
 
 				if ($marketing_info) {
 					$data['marketing_id'] = $marketing_info['marketing_id'];
@@ -1579,6 +1579,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		}
 	}
 
+
 	public function ipn() {
 		$this->load->model('extension/payment/pp_express');
 		$this->load->model('account/recurring');
@@ -1602,15 +1603,16 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
-		$response = trim(curl_exec($curl));
+		$curl_response = curl_exec($curl);
+		$curl_response = trim($curl_response);
 
-		if (!$response) {
-			$this->model_extension_payment_pp_express->log(array('error' => curl_error($curl),'error_no' => curl_errno($curl)), 'Curl failed');
+		if (!$curl_response) {
+			$this->model_extension_payment_pp_express->log(array('error' => curl_error($curl), 'error_no' => curl_errno($curl)), 'Curl failed');
 		}
 
-		$this->model_extension_payment_pp_express->log(array('request' => $request,'response' => $response), 'IPN data');
+		$this->model_extension_payment_pp_express->log(array('request' => $request, 'response' => $curl_response), 'IPN data');
 
-		if ((string)$response == "VERIFIED")  {
+		if ((string)$curl_response == "VERIFIED")  {
 			if (isset($this->request->post['transaction_entity'])) {
 				$this->log->write($this->request->post['transaction_entity']);
 			}
@@ -1834,10 +1836,10 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 					}
 				}
 			}
-		} elseif ((string)$response == "INVALID") {
+		} elseif ((string)$curl_response == "INVALID") {
 			$this->model_extension_payment_pp_express->log(array('IPN was invalid'), 'IPN fail');
 		} else {
-			$this->model_extension_payment_pp_express->log('Response string unknown: ' . (string)$response, 'IPN data');
+			$this->model_extension_payment_pp_express->log('Response string unknown: ' . (string)$curl_response, 'IPN data');
 		}
 
 		header("HTTP/1.1 200 Ok");

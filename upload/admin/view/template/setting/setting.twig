@@ -1250,7 +1250,7 @@
                     <textarea name="config_encryption" rows="5" placeholder="{{ entry_encryption }}" id="input-encryption" class="form-control">{{ config_encryption }}</textarea>
                     {% if error_encryption %}
                       <div class="text-danger">{{ error_encryption }}</div>
-                    {% endif %} </div>
+                    {% endif %}</div>
                 </div>
               </fieldset>
               <fieldset>
@@ -1265,12 +1265,18 @@
                   <label class="col-sm-2 control-label" for="input-file-ext-allowed"><span data-toggle="tooltip" title="{{ help_file_ext_allowed }}">{{ entry_file_ext_allowed }}</span></label>
                   <div class="col-sm-10">
                     <textarea name="config_file_ext_allowed" rows="5" placeholder="{{ entry_file_ext_allowed }}" id="input-file-ext-allowed" class="form-control">{{ config_file_ext_allowed }}</textarea>
+                    {% if error_extension %}
+                      <div class="text-danger">{{ error_extension }}</div>
+                    {% endif %}
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-file-mime-allowed"><span data-toggle="tooltip" title="{{ help_file_mime_allowed }}">{{ entry_file_mime_allowed }}</span></label>
                   <div class="col-sm-10">
                     <textarea name="config_file_mime_allowed" rows="5" placeholder="{{ entry_file_mime_allowed }}" id="input-file-mime-allowed" class="form-control">{{ config_file_mime_allowed }}</textarea>
+                    {% if error_mime %}
+                      <div class="text-danger">{{ error_mime }}</div>
+                    {% endif %}
                   </div>
                 </div>
               </fieldset>
@@ -1279,7 +1285,7 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label">{{ entry_error_display }}</label>
                   <div class="col-sm-10">
-                    <label class="radio-inline"> {% if config_error_display %}
+                    <label class="radio-inline">{% if config_error_display %}
                         <input type="radio" name="config_error_display" value="1" checked="checked"/>
                         {{ text_yes }}
                       {% else %}
@@ -1297,7 +1303,7 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label">{{ entry_error_log }}</label>
                   <div class="col-sm-10">
-                    <label class="radio-inline"> {% if config_error_log %}
+                    <label class="radio-inline">{% if config_error_log %}
                         <input type="radio" name="config_error_log" value="1" checked="checked"/>
                         {{ text_yes }}
                       {% else %}

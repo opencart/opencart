@@ -168,7 +168,7 @@ class ModelExtensionOpenBayAmazonus extends Model {
 			SET `product_id` = '" . (int)$product_id . "',
 				`sku` = '" . $this->db->escape($sku) . "',
 				`category` = '" . $this->db->escape($category) . "',
-				`data` = '" . $this->db->escape($data_encoded) . "',
+				`data` = '" . $this->db->escape((string)$data_encoded) . "',
 				`status` = 'saved',
 				`insertion_id` = '',
 				`price` = '" . $price . "',
@@ -554,7 +554,7 @@ class ModelExtensionOpenBayAmazonus extends Model {
 			WHERE apl.product_id IS NULL AND ap.product_id IS NULL ";
 
 		if (!empty($data['status'])) {
-			$sql .= " AND aps.status = '" . $this->db->escape($data['status']) . "'";
+			$sql .= " AND aps.status = '" . $this->db->escape((string)$data['status']) . "'";
 		}
 
 		return $this->db->query($sql)->row['product_total'];
@@ -570,7 +570,7 @@ class ModelExtensionOpenBayAmazonus extends Model {
 			WHERE apl.product_id IS NULL AND ap.product_id IS NULL ";
 
 		if (!empty($data['status'])) {
-			$sql .= " AND aps.status = '" . $this->db->escape($data['status']) . "'";
+			$sql .= " AND aps.status = '" . $this->db->escape((string)$data['status']) . "'";
 		}
 
 		$sql .= " LIMIT " . (int)$data['start'] . ", " . (int)$data['limit'];

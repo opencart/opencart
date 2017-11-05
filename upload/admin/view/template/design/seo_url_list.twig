@@ -60,12 +60,12 @@
                 <option value=""></option>
                 {% for language in languages %}
                   {% if language.language_id == filter_language_id %}
-                  <option value="{{ language.language_id }}" selected="selected">{{ language.name }}</option>
+                    <option value="{{ language.language_id }}" selected="selected">{{ language.name }}</option>
                   {% else %}
-                   <option value="{{ language.language_id }}">{{ language.name }}</option>
+                    <option value="{{ language.language_id }}">{{ language.name }}</option>
                   {% endif %}
                 {% endfor %}
-             </select>
+              </select>
             </div>
             <div class="text-right">
               <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
@@ -83,36 +83,36 @@
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                   <thead>
-                  <tr>
-                    <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');"/></td>
-                    <td class="text-left">{% if sort == 'query' %}<a href="{{ sort_query }}" class="{{ order|lower }}">{{ column_query }}</a>{% else %}<a href="{{ sort_query }}">{{ column_query }}</a>{% endif %}</td>
-                    <td class="text-left">{% if sort == 'keyword' %}<a href="{{ sort_keyword }}" class="{{ order|lower }}">{{ column_keyword }}</a> {% else %}<a href="{{ sort_keyword }}">{{ column_keyword }}</a>{% endif %}</td>
-                    <td class="text-left">{% if sort == 'store' %}<a href="{{ sort_store }}" class="{{ order|lower }}">{{ column_store }}</a>{% else %}<a href="{{ sort_store }}">{{ column_store }}</a>{% endif %}</td>
-                    <td class="text-left">{% if sort == 'language' %}<a href="{{ sort_language }}" class="{{ order|lower }}">{{ column_language }}</a>{% else %}<a href="{{ sort_language }}">{{ column_language }}</a>{% endif %}</td>
-                    <td class="text-right">{{ column_action }}</td>
-                  </tr>
+                    <tr>
+                      <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');"/></td>
+                      <td class="text-left">{% if sort == 'query' %}<a href="{{ sort_query }}" class="{{ order|lower }}">{{ column_query }}</a>{% else %}<a href="{{ sort_query }}">{{ column_query }}</a>{% endif %}</td>
+                      <td class="text-left">{% if sort == 'keyword' %}<a href="{{ sort_keyword }}" class="{{ order|lower }}">{{ column_keyword }}</a> {% else %}<a href="{{ sort_keyword }}">{{ column_keyword }}</a>{% endif %}</td>
+                      <td class="text-left">{% if sort == 'store' %}<a href="{{ sort_store }}" class="{{ order|lower }}">{{ column_store }}</a>{% else %}<a href="{{ sort_store }}">{{ column_store }}</a>{% endif %}</td>
+                      <td class="text-left">{% if sort == 'language' %}<a href="{{ sort_language }}" class="{{ order|lower }}">{{ column_language }}</a>{% else %}<a href="{{ sort_language }}">{{ column_language }}</a>{% endif %}</td>
+                      <td class="text-right">{{ column_action }}</td>
+                    </tr>
                   </thead>
                   <tbody>
-                  {% if seo_urls %}
-                    {% for seo_url in seo_urls %}
+                    {% if seo_urls %}
+                      {% for seo_url in seo_urls %}
+                        <tr>
+                          <td class="text-center">{% if seo_url.seo_url_id in selected %}
+                              <input type="checkbox" name="selected[]" value="{{ seo_url.seo_url_id }}" checked="checked"/>
+                            {% else %}
+                              <input type="checkbox" name="selected[]" value="{{ seo_url.seo_url_id }}"/>
+                            {% endif %}</td>
+                          <td class="text-left">{{ seo_url.query }}</td>
+                          <td class="text-left">{{ seo_url.keyword }}</td>
+                          <td class="text-left">{{ seo_url.store }}</td>
+                          <td class="text-left">{{ seo_url.language }}</td>
+                          <td class="text-right"><a href="{{ seo_url.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                        </tr>
+                      {% endfor %}
+                    {% else %}
                       <tr>
-                        <td class="text-center">{% if seo_url.seo_url_id in selected %}
-                            <input type="checkbox" name="selected[]" value="{{ seo_url.seo_url_id }}" checked="checked"/>
-                          {% else %}
-                            <input type="checkbox" name="selected[]" value="{{ seo_url.seo_url_id }}"/>
-                          {% endif %}</td>
-                        <td class="text-left">{{ seo_url.query }}</td>
-                        <td class="text-left">{{ seo_url.keyword }}</td>
-                        <td class="text-left">{{ seo_url.store }}</td>
-                        <td class="text-left">{{ seo_url.language }}</td>
-                        <td class="text-right"><a href="{{ seo_url.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                        <td class="text-center" colspan="6">{{ text_no_results }}</td>
                       </tr>
-                    {% endfor %}
-                  {% else %}
-                    <tr>
-                      <td class="text-center" colspan="6">{{ text_no_results }}</td>
-                    </tr>
-                  {% endif %}
+                    {% endif %}
                   </tbody>
                 </table>
               </div>
@@ -126,36 +126,36 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript"><!--
-  $('#button-filter').on('click', function() {
-	  var url = 'index.php?route=design/seo_url&user_token={{ user_token }}';
-
-	  var filter_query = $('input[name=\'filter_query\']').val();
-
-	  if (filter_query) {
-		  url += '&filter_query=' + encodeURIComponent(filter_query);
-	  }
-
-	  var filter_keyword = $('input[name=\'filter_keyword\']').val();
-
-	  if (filter_keyword) {
-		  url += '&filter_keyword=' + encodeURIComponent(filter_keyword);
-	  }
-
-	  var filter_store_id = $('select[name=\'filter_store_id\']').val();
-
-	  if (filter_store_id) {
-		  url += '&filter_store_id=' + encodeURIComponent(filter_store_id);
-	  }
-
-	  var filter_language_id = $('select[name=\'filter_language_id\']').val();
-
-	  if (filter_language_id) {
-		  url += '&filter_language_id=' + encodeURIComponent(filter_language_id);
-	  }
-
-	  location = url;
-  });
-  //--></script>
 </div>
+<script type="text/javascript"><!--
+$('#button-filter').on('click', function() {
+	var url = 'index.php?route=design/seo_url&user_token={{ user_token }}';
+
+	var filter_query = $('input[name=\'filter_query\']').val();
+
+	if (filter_query) {
+		url += '&filter_query=' + encodeURIComponent(filter_query);
+	}
+
+	var filter_keyword = $('input[name=\'filter_keyword\']').val();
+
+	if (filter_keyword) {
+		url += '&filter_keyword=' + encodeURIComponent(filter_keyword);
+	}
+
+	var filter_store_id = $('select[name=\'filter_store_id\']').val();
+
+	if (filter_store_id) {
+		url += '&filter_store_id=' + encodeURIComponent(filter_store_id);
+	}
+
+	var filter_language_id = $('select[name=\'filter_language_id\']').val();
+
+	if (filter_language_id) {
+		url += '&filter_language_id=' + encodeURIComponent(filter_language_id);
+	}
+
+	location = url;
+});
+//--></script>
 {{ footer }}

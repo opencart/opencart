@@ -18,7 +18,7 @@ class ControllerMarketplaceInstall extends Controller {
 		// Make sure the file name is stored in the session.
 		if (!isset($this->session->data['install'])) {
 			$json['error'] = $this->language->get('error_file');
-		} elseif (!is_file(DIR_UPLOAD . $this->session->data['install'] . '.tmp')) {
+		} elseif (!is_file(DIR_STORAGE . 'marketplace/' . $this->session->data['install'] . '.tmp')) {
 			$json['error'] = $this->language->get('error_file');
 		}
 
@@ -49,19 +49,19 @@ class ControllerMarketplaceInstall extends Controller {
 
 		if (!isset($this->session->data['install'])) {
 			$json['error'] = $this->language->get('error_file');
-		} elseif (!is_file(DIR_UPLOAD . $this->session->data['install'] . '.tmp')) {
+		} elseif (!is_file(DIR_STORAGE . 'marketplace/' . $this->session->data['install'] . '.tmp')) {
 			$json['error'] = $this->language->get('error_file');
 		}
 		
 		// Sanitize the filename
 		if (!$json) {
-			$file = DIR_UPLOAD . $this->session->data['install'] . '.tmp';
+			$file = DIR_STORAGE . 'marketplace/' . $this->session->data['install'] . '.tmp';
 					
 			// Unzip the files
 			$zip = new ZipArchive();
 
 			if ($zip->open($file)) {
-				$zip->extractTo(DIR_UPLOAD . 'tmp-' . $this->session->data['install']);
+				$zip->extractTo(DIR_STORAGE . 'marketplace/' . 'tmp-' . $this->session->data['install']);
 				$zip->close();
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
@@ -96,12 +96,12 @@ class ControllerMarketplaceInstall extends Controller {
 
 		if (!isset($this->session->data['install'])) {
 			$json['error'] = $this->language->get('error_directory');
-		} elseif (!is_dir(DIR_UPLOAD . 'tmp-' . $this->session->data['install'] . '/')) {
+		} elseif (!is_dir(DIR_STORAGE . 'marketplace/' . 'tmp-' . $this->session->data['install'] . '/')) {
 			$json['error'] = $this->language->get('error_directory');
 		}
 
 		if (!$json) {
-			$directory = DIR_UPLOAD . 'tmp-' . $this->session->data['install'] . '/';
+			$directory = DIR_STORAGE . 'marketplace/tmp-' . $this->session->data['install'] . '/';
 		
 			if (is_dir($directory . 'upload/')) {
 				$files = array();
@@ -251,12 +251,12 @@ class ControllerMarketplaceInstall extends Controller {
 
 		if (!isset($this->session->data['install'])) {
 			$json['error'] = $this->language->get('error_directory');
-		} elseif (!is_dir(DIR_UPLOAD . 'tmp-' . $this->session->data['install'] . '/')) {
+		} elseif (!is_dir(DIR_STORAGE . 'marketplace/' . 'tmp-' . $this->session->data['install'] . '/')) {
 			$json['error'] = $this->language->get('error_directory');
 		}
 
 		if (!$json) {
-			$file = DIR_UPLOAD . 'tmp-' . $this->session->data['install'] . '/install.xml';
+			$file = DIR_STORAGE . 'marketplace/' . 'tmp-' . $this->session->data['install'] . '/install.xml';
 
 			if (is_file($file)) {
 				$this->load->model('setting/modification');
@@ -361,7 +361,7 @@ class ControllerMarketplaceInstall extends Controller {
 		}
 
 		if (!$json) {
-			$directory = DIR_UPLOAD . 'tmp-' . $this->session->data['install'] . '/';
+			$directory = DIR_STORAGE . 'marketplace/tmp-' . $this->session->data['install'] . '/';
 			
 			if (is_dir($directory)) {
 				// Get a list of files ready to upload
@@ -399,7 +399,7 @@ class ControllerMarketplaceInstall extends Controller {
 				}
 			}
 			
-			$file = DIR_UPLOAD . $this->session->data['install'] . '.tmp';
+			$file = DIR_STORAGE . 'marketplace/' . $this->session->data['install'] . '.tmp';
 			
 			if (is_file($file)) {
 				unlink($file);

@@ -785,7 +785,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
 
         $data['url_list_transactions'] = html_entity_decode($this->url->link('extension/payment/squareup/transactions', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $this->request->get['order_id'] . '&page={PAGE}', true));
         $data['user_token'] = $this->session->data['user_token'];
-        $data['order_id'] = $this->request->get['order_id'];
+        $data['order_id'] = (int)$this->request->get['order_id'];
 
         $data['catalog'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
 

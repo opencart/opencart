@@ -24,6 +24,38 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
+		
+		if (isset($this->session->data['success'])) {
+			$data['success'] = $this->session->data['success'];
+
+			unset($this->session->data['success']);
+		} else {
+			$data['success'] = '';
+		}
+
+		if (isset($this->error['warning'])) {
+			$data['error_warning'] = $this->error['warning'];
+		} else {
+			$data['error_warning'] = '';
+		}
+
+		if (isset($this->error['pilibaba_merchant_number'])) {
+			$data['error_pilibaba_merchant_number'] = $this->error['pilibaba_merchant_number'];
+		} else {
+			$data['error_pilibaba_merchant_number'] = '';
+		}
+
+		if (isset($this->error['pilibaba_secret_key'])) {
+			$data['error_pilibaba_secret_key'] = $this->error['pilibaba_secret_key'];
+		} else {
+			$data['error_pilibaba_secret_key'] = '';
+		}
+
+		if (isset($this->error['pilibaba_shipping_fee'])) {
+			$data['error_pilibaba_shipping_fee'] = $this->error['pilibaba_shipping_fee'];
+		} else {
+			$data['error_pilibaba_shipping_fee'] = '';
+		}
 
 		$data['breadcrumbs'] = array();
 
@@ -102,38 +134,6 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 			$data['payment_pilibaba_email_address'] = $this->config->get('payment_pilibaba_email_address');
 		} else {
 			$data['payment_pilibaba_email_address'] = '';
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
-		if (isset($this->error['pilibaba_merchant_number'])) {
-			$data['error_pilibaba_merchant_number'] = $this->error['pilibaba_merchant_number'];
-		} else {
-			$data['error_pilibaba_merchant_number'] = '';
-		}
-
-		if (isset($this->error['pilibaba_secret_key'])) {
-			$data['error_pilibaba_secret_key'] = $this->error['pilibaba_secret_key'];
-		} else {
-			$data['error_pilibaba_secret_key'] = '';
-		}
-
-		if (isset($this->error['pilibaba_shipping_fee'])) {
-			$data['error_pilibaba_shipping_fee'] = $this->error['pilibaba_shipping_fee'];
-		} else {
-			$data['error_pilibaba_shipping_fee'] = '';
 		}
 
 		if ($data['pilibaba_merchant_number'] && $data['payment_pilibaba_secret_key']) {
@@ -220,7 +220,7 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 					if ($response['code'] == '0') {
 						$this->load->model('setting/setting');
 
-						$this->model_setting_setting->editSetting('payment_pilibaba', array('pilibaba_merchant_number' => $response['data']['merchantNo'], 'pilibaba_secret_key' => $response['data']['privateKey'], 'pilibaba_email_address' => $this->request->post['email_address'], 'payment_pilibaba_environment' => $this->request->post['environment']), 0);
+						$this->model_setting_setting->editSetting('payment_pilibaba', array('payment_pilibaba_merchant_number' => $response['data']['merchantNo'], 'payment_pilibaba_secret_key' => $response['data']['privateKey'], 'payment_pilibaba_email_address' => $this->request->post['email_address'], 'payment_pilibaba_environment' => $this->request->post['environment']), 0);
 
 						$this->session->data['success'] = $this->language->get('text_register_success');
 
@@ -267,9 +267,9 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 
 				$data['barcode'] = $this->url->link('extension/payment/pilibaba/barcode', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $this->request->get['order_id'], true);
 
-				$data['order_id'] = $this->request->get['order_id'];
+				$data['order_id'] = (int)$this->request->get['order_id'];
 
-				$data['user_token'] = $this->request->get['user_token'];
+				$data['user_token'] = $this->session->data['user_token'];
 
 				return $this->load->view('extension/payment/pilibaba_order', $data);
 			}

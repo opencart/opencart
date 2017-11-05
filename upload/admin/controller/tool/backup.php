@@ -19,11 +19,22 @@ class ControllerToolBackup extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		$data['export'] = $this->url->link('tool/backup/export', 'user_token=' . $this->session->data['user_token'], true);
-		
 		$this->load->model('tool/backup');
 
-		$data['tables'] = $this->model_tool_backup->getTables();
+		$ignore = array(
+			DB_PREFIX . 'user',
+			DB_PREFIX . 'user_group'
+		);
+
+		$data['tables'] = array();
+
+		$results = $this->model_tool_backup->getTables();
+
+		foreach ($results as $result) {
+			if (!in_array($result, $ignore)) {
+				$data['tables'][] = $result;
+			}
+		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -32,256 +43,157 @@ class ControllerToolBackup extends Controller {
 		$this->response->setOutput($this->load->view('tool/backup', $data));
 	}
 
-	public function zip() {
-		$this->load->language('upgrade/backup');
+	public function history() {
+		$this->load->language('tool/backup');
 
-		$json = array();
+		$data['histories'] = array();
 
-		if (!$this->user->hasPermission('modify', 'upgrade/backup')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
+		$files = glob(DIR_STORAGE . 'backup/*.sql');
 
-		if (!$json) {
+		foreach ($files as $file) {
+			$size = filesize($file);
 
-		}
+			$i = 0;
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
+			$suffix = array(
+				'B',
+				'KB',
+				'MB',
+				'GB',
+				'TB',
+				'PB',
+				'EB',
+				'ZB',
+				'YB'
+			);
 
-	public function modified() {
-		$this->load->language('upgrade/backup');
+			while (($size / 1024) > 1) {
+				$size = $size / 1024;
 
-		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'tool/backup')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			set_time_limit(0);
-
-			$curl = curl_init('https://www.opencart.com/index.php?route=api/modified/' . VERSION);
-
-			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
-			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
-
-			$response = curl_exec($curl);
-
-			curl_close($curl);
-
-			$response_info = json_decode($response, true);
-
-			if ($response_info) {
-				foreach ($response_info['file'] as $file) {
-					$destination = str_replace('\\', '/', substr($file, strlen($directory . '/')));
-
-					$path = str_replace('\\', '/', realpath(DIR_CATALOG . '../')) . '/' . $destination;
-
-					// Check if the copy location exists or not
-					if (substr($destination, 0, 5) == 'admin') {
-						$path = DIR_APPLICATION . substr($destination, 6);
-					}
-
-					if (substr($destination, 0, 7) == 'catalog') {
-						$path = DIR_CATALOG . substr($destination, 8);
-					}
-
-					if (substr($destination, 0, 7) == 'install') {
-						$path = DIR_IMAGE . substr($destination, 8);
-					}
-
-					if (substr($destination, 0, 5) == 'image') {
-						$path = DIR_IMAGE . substr($destination, 6);
-					}
-
-					if (substr($destination, 0, 6) == 'system') {
-						$path = DIR_SYSTEM . substr($destination, 7);
-					}
-
-					if (is_dir($file) && !is_dir($path)) {
-						if (!mkdir($path, 0777)) {
-							$json['error'] = sprintf($this->language->get('error_directory'), $destination);
-						}
-					}
-
-					if (is_file($file)) {
-						if (!rename($file, $path)) {
-							$json['error'] = sprintf($this->language->get('error_file'), $destination);
-						}
-					}
-				}
-			} else {
-				$json['error'] = $this->language->get('error_download');
+				$i++;
 			}
 
-
-
-
-
-
-
-			$json['text'] = $this->language->get('text_unzip');
-
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade/unzip', 'user_token=' . $this->session->data['user_token']));
+			$data['histories'][] = array(
+				'filename'   => basename($file),
+				'size'       => round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i],
+				'date_added' => date($this->language->get('datetime_format'), filemtime($file)),
+				'download'   => $this->url->link('tool/backup/download', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode(basename($file)), true),
+			);
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->setOutput($this->load->view('tool/backup_history', $data));
 	}
 
-	public function image() {
+	public function backup() {
 		$this->load->language('tool/backup');
 
 		$json = array();
 
+		if (isset($this->request->get['filename'])) {
+			$filename = basename(html_entity_decode($this->request->get['filename'], ENT_QUOTES, 'UTF-8'));
+		} else {
+			$filename = date('Y-m-d H.i.s') . '.sql';
+		}
+
+		if (isset($this->request->get['table'])) {
+			$table = $this->request->get['table'];
+		} else {
+			$table = '';
+		}
+
+		if (isset($this->request->post['backup'])) {
+			$backup = $this->request->post['backup'];
+		} else {
+			$backup = array();
+		}
+
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
 		if (!$this->user->hasPermission('modify', 'tool/backup')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		if (!isset($this->session->data['backup'])) {
-			$json['error'] = $this->language->get('error_file');
+		$this->load->model('tool/backup');
+
+		$allowed = $this->model_tool_backup->getTables();
+
+		if (!in_array($table, $allowed)) {
+			$json['error'] = sprintf($this->language->get('error_table'), $table);
 		}
 
 		if (!$json) {
-			$directory = rtrim(DIR_IMAGE, '/');
+			$output = '';
 
-			$files = array();
+			if ($page == 1) {
+				$output .= 'TRUNCATE TABLE `' . $this->db->escape($table) . '`;' . "\n\n";
+			}
 
-			// Make path into an array
-			$path = array($directory);
+			$record_total = $this->model_tool_backup->getTotalRecords($table);
 
-			// While the path array is still populated keep looping through
-			while (count($path) != 0) {
-				$next = array_shift($path);
+			$results = $this->model_tool_backup->getRecords($table, ($page - 1) * 200, 200);
 
-				foreach (glob($next) as $file) {
-					// If directory add to path array
-					if (is_dir($file)) {
-						$path[] = $file . '/*';
-					}
+			foreach ($results as $result) {
+				$fields = '';
 
-					// Add the file to the files to be deleted array
-					$files[] = $file;
+				foreach (array_keys($result) as $value) {
+					$fields .= '`' . $value . '`, ';
+				}
+
+				$values = '';
+
+				foreach (array_values($result) as $value) {
+					$value = str_replace(array("\x00", "\x0a", "\x0d", "\x1a"), array('\0', '\n', '\r', '\Z'), $value);
+					$value = str_replace(array("\n", "\r", "\t"), array('\n', '\r', '\t'), $value);
+					$value = str_replace('\\', '\\\\', $value);
+					$value = str_replace('\'', '\\\'', $value);
+					$value = str_replace('\\\n', '\n', $value);
+					$value = str_replace('\\\r', '\r', $value);
+					$value = str_replace('\\\t', '\t', $value);
+
+					$values .= '\'' . $value . '\', ';
+				}
+
+				$output .= 'INSERT INTO `' . $table . '` (' . preg_replace('/, $/', '', $fields) . ') VALUES (' . preg_replace('/, $/', '', $values) . ');' . "\n";
+			}
+
+			$position = array_search($table, $backup);
+
+			if (($page * 200) >= $record_total) {
+				$output .= "\n";
+
+				if (isset($backup[$position + 1])) {
+					$table = $backup[$position + 1];
+				} else {
+					$table = '';
 				}
 			}
 
-			foreach ($files as $file) {
-				$destination = str_replace('\\', '/', substr($file, strlen($directory . '/')));
-
-				//DIR_STORAGE . 'backup/image/'
-
-				if (is_dir($file) && !is_dir($path)) {
-					if (!mkdir($path, 0777)) {
-						$json['error'] = sprintf($this->language->get('error_directory'), $destination);
-					}
-				}
-
-				if (is_file($file)) {
-					if (!rename($file, $path)) {
-						$json['error'] = sprintf($this->language->get('error_file'), $destination);
-					}
-				}
-			}
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function download() {
-		$this->load->language('upgrade/backup');
-
-		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'upgrade/backup')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			//$files = glob(DIR_DOWNLOAD . );
-
-
-
-			//foreach ($files as $file) {
-
-
-
-			//}
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function upload() {
-		$this->load->language('upgrade/backup');
-
-		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'upgrade/backup')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function database() {
-		$this->load->language('upgrade/backup');
-
-		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'upgrade/backup')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function export() {
-		$this->load->language('upgrade/backup');
-
-		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'upgrade/backup')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$this->load->language('tool/backup');
-
-			if (!isset($this->request->post['backup'])) {
-				$this->session->data['error'] = $this->language->get('error_export');
-
-				$this->response->redirect($this->url->link('tool/backup', 'user_token=' . $this->session->data['user_token'], true));
-			} elseif (!$this->user->hasPermission('modify', 'tool/backup')) {
-				$this->session->data['error'] = $this->language->get('error_permission');
-
-				$this->response->redirect($this->url->link('tool/backup', 'user_token=' . $this->session->data['user_token'], true));
+			if ($position) {
+				$json['progress'] = round(($position / count($backup)) * 100);
 			} else {
-				$this->response->addheader('Pragma: public');
-				$this->response->addheader('Expires: 0');
-				$this->response->addheader('Content-Description: File Transfer');
-				$this->response->addheader('Content-Type: application/octet-stream');
-				$this->response->addheader('Content-Disposition: attachment; filename="' . DB_DATABASE . '_' . date('Y-m-d_H-i-s', time()) . '_backup.sql"');
-				$this->response->addheader('Content-Transfer-Encoding: binary');
+				$json['progress'] = 0;
+			}
 
-				$this->load->model('tool/backup');
+			$handle = fopen(DIR_STORAGE . 'backup/' . $filename, 'a');
 
-				$this->response->setOutput($this->model_tool_backup->backup($this->request->post['backup']));
+			fwrite($handle, $output);
+
+			fclose($handle);
+
+			if (!$table) {
+				$json['success'] = $this->language->get('text_success');
+			} elseif (($page * 200) >= $record_total) {
+				$json['text'] = sprintf($this->language->get('text_backup'), $table, ($page - 1) * 200, $record_total);
+
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&table=' . $table . '&page=1', true));
+			} else {
+				$json['text'] = sprintf($this->language->get('text_backup'), $table, ($page - 1) * 200, $page * 200);
+
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&table=' . $table . '&page=' . ($page + 1), true));
 			}
 		}
 
@@ -289,27 +201,15 @@ class ControllerToolBackup extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function import() {
+	public function restore() {
 		$this->load->language('tool/backup');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'tool/backup')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (isset($this->request->files['import']['tmp_name']) && is_uploaded_file($this->request->files['import']['tmp_name'])) {
-			$filename = tempnam(DIR_UPLOAD, 'bac');
-
-			move_uploaded_file($this->request->files['import']['tmp_name'], $filename);
-		} elseif (isset($this->request->get['import'])) {
-			$filename = html_entity_decode($this->request->get['import'], ENT_QUOTES, 'UTF-8');
+		if (isset($this->request->get['filename'])) {
+			$filename = basename(html_entity_decode($this->request->get['filename'], ENT_QUOTES, 'UTF-8'));
 		} else {
 			$filename = '';
-		}
-
-		if (!is_file($filename)) {
-			$json['error'] = $this->language->get('error_file');
 		}
 
 		if (isset($this->request->get['position'])) {
@@ -318,12 +218,22 @@ class ControllerToolBackup extends Controller {
 			$position = 0;
 		}
 
+		if (!$this->user->hasPermission('modify', 'tool/backup')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$file = DIR_STORAGE . 'backup/' . $filename;
+
+		if (!is_file($file)) {
+			$json['error'] = $this->language->get('error_file');
+		}
+
 		if (!$json) {
 			// We set $i so we can batch execute the queries rather than do them all at once.
 			$i = 0;
 			$start = false;
 
-			$handle = fopen($filename, 'r');
+			$handle = fopen($file, 'r');
 
 			fseek($handle, $position, SEEK_SET);
 
@@ -338,7 +248,7 @@ class ControllerToolBackup extends Controller {
 					$start = true;
 				}
 
-				if ($i > 0 && (substr($line, 0, 24) == 'TRUNCATE TABLE `oc_user`' || substr($line, 0, 30) == 'TRUNCATE TABLE `oc_user_group`')) {
+				if ($i > 0 && (substr($line, 0, strlen('TRUNCATE TABLE `' . DB_PREFIX . 'user`')) == 'TRUNCATE TABLE `' . DB_PREFIX . 'user`' || substr($line, 0, strlen('TRUNCATE TABLE `' . DB_PREFIX . 'user_group`')) == 'TRUNCATE TABLE `' . DB_PREFIX . 'user_group`')) {
 					fseek($handle, $position, SEEK_SET);
 
 					break;
@@ -359,23 +269,139 @@ class ControllerToolBackup extends Controller {
 
 			$position = ftell($handle);
 
-			$size = filesize($filename);
+			$size = filesize($file);
 
-			$json['total'] = round(($position / $size) * 100);
+			if ($position) {
+				$json['progress'] = round(($position / $size) * 100);
+			} else {
+				$json['progress'] = 0;
+			}
 
 			if ($position && !feof($handle)) {
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/import', 'user_token=' . $this->session->data['user_token'] . '&import=' . $filename . '&position=' . $position, true));
+				$json['text'] = sprintf($this->language->get('text_restore'), $position, $size);
+
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/restore', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&position=' . $position, true));
 
 				fclose($handle);
 			} else {
 				fclose($handle);
 
-				unlink($filename);
-
 				$json['success'] = $this->language->get('text_success');
 
 				$this->cache->delete('*');
 			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function upload() {
+		$this->load->language('tool/backup');
+
+		$json = array();
+
+		// Check user has permission
+		if (!$this->user->hasPermission('modify', 'tool/backup')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (empty($this->request->files['upload']['name']) || !is_file($this->request->files['upload']['tmp_name'])) {
+			$json['error'] = $this->language->get('error_upload');
+		}
+
+		if (!$json) {
+			// Sanitize the filename
+			$filename = basename(html_entity_decode($this->request->files['upload']['name'], ENT_QUOTES, 'UTF-8'));
+
+			if ((utf8_strlen($filename) < 3) || (utf8_strlen($filename) > 128)) {
+				$json['error'] = $this->language->get('error_filename');
+			}
+
+			// Allowed file extension types
+			if (strtolower(substr(strrchr($filename, '.'), 1)) != 'sql') {
+				$json['error'] = $this->language->get('error_filetype');
+			}
+		}
+
+		if (!$json) {
+			$json['success'] = $this->language->get('text_success');
+
+			move_uploaded_file($this->request->files['upload']['tmp_name'], DIR_STORAGE . 'backup/' . $filename);
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function download() {
+		$this->load->language('tool/backup');
+
+		$json = array();
+
+		if (isset($this->request->get['filename'])) {
+			$filename = basename(html_entity_decode($this->request->get['filename'], ENT_QUOTES, 'UTF-8'));
+		} else {
+			$filename = '';
+		}
+
+		// Check user has permission
+		if (!$this->user->hasPermission('modify', 'tool/backup')) {
+			$this->response->redirect($this->url->link('error/permission', '', true));
+		}
+
+		$file = DIR_STORAGE . 'backup/' . $filename;
+
+		if (!is_file($file)) {
+			$this->response->redirect($this->url->link('error/not_found', '', true));
+		}
+
+		if (!headers_sent()) {
+			header('Content-Type: application/octet-stream');
+			header('Content-Disposition: attachment; filename="' . $filename . '"');
+			header('Expires: 0');
+			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+			header('Pragma: public');
+			header('Content-Length: ' . filesize($file));
+
+			if (ob_get_level()) {
+				ob_end_clean();
+			}
+
+			readfile($file, 'rb');
+
+			exit();
+		} else {
+			exit('Error: Headers already sent out!');
+		}
+	}
+
+	public function delete() {
+		$this->load->language('tool/backup');
+
+		$json = array();
+
+		if (isset($this->request->get['filename'])) {
+			$filename = basename(html_entity_decode($this->request->get['filename'], ENT_QUOTES, 'UTF-8'));
+		} else {
+			$filename = '';
+		}
+
+		// Check user has permission
+		if (!$this->user->hasPermission('modify', 'tool/backup')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$file = DIR_STORAGE . 'backup/' . $filename;
+
+		if (!is_file($file)) {
+			$json['error'] = $this->language->get('error_file');
+		}
+
+		if (!$json) {
+			$json['success'] = $this->language->get('text_success');
+
+			unlink($file);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

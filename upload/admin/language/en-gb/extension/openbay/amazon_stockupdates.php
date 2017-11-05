@@ -4,9 +4,6 @@ $_['heading_title']        	= 'Stock updates';
 $_['text_openbay']			= 'OpenBay Pro';
 $_['text_amazon']			= 'Amazon EU';
 
-// Text
-$_['text_empty']            = 'No results!';
-
 // Entry
 $_['entry_date_start']      = 'Date Start';
 $_['entry_date_end']        = 'Date End';

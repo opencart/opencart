@@ -29,20 +29,17 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true),
-			'separator' => false
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true),
-			'separator' => ' :: '
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/module/amazon_pay', 'user_token=' . $this->session->data['user_token'], true),
-			'separator' => ' :: '
+			'href' => $this->url->link('extension/module/amazon_pay', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['action'] = $this->url->link('extension/module/amazon_pay', 'user_token=' . $this->session->data['user_token'], true);
@@ -51,34 +48,34 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		if (isset($this->request->post['amazon_pay_button_type'])) {
-			$data['amazon_pay_button_type'] = $this->request->post['amazon_pay_button_type'];
-		} elseif ($this->config->get('amazon_pay_button_type')) {
-			$data['amazon_pay_button_type'] = $this->config->get('amazon_pay_button_type');
+		if (isset($this->request->post['module_amazon_pay_button_type'])) {
+			$data['module_amazon_pay_button_type'] = $this->request->post['module_amazon_pay_button_type'];
+		} elseif ($this->config->get('module_amazon_pay_button_type')) {
+			$data['module_amazon_pay_button_type'] = $this->config->get('module_amazon_pay_button_type');
 		} else {
-			$data['amazon_pay_button_type'] = 'PwA';
+			$data['module_amazon_pay_button_type'] = 'PwA';
 		}
 
-		if (isset($this->request->post['amazon_pay_button_colour'])) {
-			$data['amazon_pay_button_colour'] = $this->request->post['amazon_pay_button_colour'];
-		} elseif ($this->config->get('amazon_pay_button_colour')) {
-			$data['amazon_pay_button_colour'] = $this->config->get('amazon_pay_button_colour');
+		if (isset($this->request->post['module_amazon_pay_button_colour'])) {
+			$data['module_amazon_pay_button_colour'] = $this->request->post['module_amazon_pay_button_colour'];
+		} elseif ($this->config->get('module_amazon_pay_button_colour')) {
+			$data['module_amazon_pay_button_colour'] = $this->config->get('module_amazon_pay_button_colour');
 		} else {
-			$data['amazon_pay_button_colour'] = 'gold';
+			$data['module_amazon_pay_button_colour'] = 'gold';
 		}
 
-		if (isset($this->request->post['amazon_pay_button_size'])) {
-			$data['amazon_pay_button_size'] = $this->request->post['amazon_pay_button_size'];
-		} elseif ($this->config->get('amazon_pay_button_size')) {
-			$data['amazon_pay_button_size'] = $this->config->get('amazon_pay_button_size');
+		if (isset($this->request->post['module_amazon_pay_button_size'])) {
+			$data['module_amazon_pay_button_size'] = $this->request->post['module_amazon_pay_button_size'];
+		} elseif ($this->config->get('module_amazon_pay_button_size')) {
+			$data['module_amazon_pay_button_size'] = $this->config->get('module_amazon_pay_button_size');
 		} else {
-			$data['amazon_pay_button_size'] = 'medium';
+			$data['module_amazon_pay_button_size'] = 'medium';
 		}
 
-		if (isset($this->request->post['amazon_pay_status'])) {
-			$data['amazon_pay_status'] = $this->request->post['amazon_pay_status'];
+		if (isset($this->request->post['module_amazon_pay_status'])) {
+			$data['module_amazon_pay_status'] = $this->request->post['module_amazon_pay_status'];
 		} else {
-			$data['amazon_pay_status'] = $this->config->get('amazon_pay_status');
+			$data['module_amazon_pay_status'] = $this->config->get('module_amazon_pay_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -98,12 +95,13 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 
 	public function install() {
 		$this->load->model('marketplace/event');
+
 		$this->model_setting_event->addEvent('amazon_pay', 'catalog/controller/account/logout/after', 'extension/module/amazon_pay/logout');
 	}
 
 	public function uninstall() {
 		$this->load->model('marketplace/event');
+
 		$this->model_setting_event->deleteEventByCode('amazon_pay');
 	}
-
 }

@@ -231,7 +231,7 @@ class ControllerExtensionOpenbayEtsyProduct extends Controller {
 		$data['listing'] = $this->openbay->etsy->getEtsyItem($links[0]['etsy_item_id']);
 
 		$data['etsy_item_id'] = $links[0]['etsy_item_id'];
-		$data['product_id'] = $this->request->get['product_id'];
+		$data['product_id'] = (int)$this->request->get['product_id'];
 
 		$setting['state'] = array('active', 'inactive', 'draft');
 

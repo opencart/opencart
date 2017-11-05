@@ -54,12 +54,12 @@ class ModelExtensionPaymentFirstdataRemote extends Model {
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: text/xml"));
 		curl_setopt($ch, CURLOPT_HTTPAUTH, 'CURLAUTH_BASIC');
-		curl_setopt($ch, CURLOPT_USERPWD, $this->config->get('firstdata_remote_user_id') . ':' . $this->config->get('firstdata_remote_password'));
+		curl_setopt($ch, CURLOPT_USERPWD, $this->config->get('payment_firstdata_remote_user_id') . ':' . $this->config->get('payment_firstdata_remote_password'));
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
-		curl_setopt($ch, CURLOPT_CAINFO, $this->config->get('firstdata_remote_ca'));
-		curl_setopt($ch, CURLOPT_SSLCERT, $this->config->get('firstdata_remote_certificate'));
-		curl_setopt($ch, CURLOPT_SSLKEY, $this->config->get('firstdata_remote_key'));
-		curl_setopt($ch, CURLOPT_SSLKEYPASSWD, $this->config->get('firstdata_remote_key_pw'));
+		curl_setopt($ch, CURLOPT_CAINFO, $this->config->get('payment_firstdata_remote_ca'));
+		curl_setopt($ch, CURLOPT_SSLCERT, $this->config->get('payment_firstdata_remote_certificate'));
+		curl_setopt($ch, CURLOPT_SSLKEY, $this->config->get('payment_firstdata_remote_key'));
+		curl_setopt($ch, CURLOPT_SSLKEYPASSWD, $this->config->get('payment_firstdata_remote_key_pw'));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 		//curl_setopt($ch, CURLOPT_STDERR, fopen(DIR_LOGS . "/headers.txt", "w+"));
@@ -244,7 +244,7 @@ class ModelExtensionPaymentFirstdataRemote extends Model {
 	}
 
 	public function logger($message) {
-		if ($this->config->get('firstdata_remote_debug') == 1) {
+		if ($this->config->get('payment_firstdata_remote_debug') == 1) {
 			$log = new Log('firstdata_remote.log');
 			$log->write($message);
 		}

@@ -1,4 +1,4 @@
-<?php
+   <?php
 class ControllerMarketplaceInstaller extends Controller {
 	public function index() {
 		$this->load->language('marketplace/installer');
@@ -75,7 +75,7 @@ class ControllerMarketplaceInstaller extends Controller {
 		}
 
 		// Check if there is a install zip already there
-		$files = glob(DIR_UPLOAD . '*.tmp');
+		$files = glob(DIR_STORAGE . 'marketplace/*.tmp');
 
 		foreach ($files as $file) {
 			if (is_file($file) && (filectime($file) < (time() - 5))) {
@@ -90,7 +90,7 @@ class ControllerMarketplaceInstaller extends Controller {
 		}
 
 		// Check for any install directories
-		$directories = glob(DIR_UPLOAD . 'tmp-*');
+		$directories = glob(DIR_STORAGE . 'marketplace/tmp-*');
 		
 		foreach ($directories as $directory) {
 			if (is_dir($directory) && (filectime($directory) < (time() - 5))) {
@@ -149,7 +149,7 @@ class ControllerMarketplaceInstaller extends Controller {
 		if (!$json) {
 			$this->session->data['install'] = token(10);
 			
-			$file = DIR_UPLOAD . $this->session->data['install'] . '.tmp';
+			$file = DIR_STORAGE . 'marketplace/' . $this->session->data['install'] . '.tmp';
 			
 			move_uploaded_file($this->request->files['file']['tmp_name'], $file);
 

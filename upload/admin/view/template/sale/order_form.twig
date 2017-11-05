@@ -871,9 +871,9 @@
                           <option value="{{ shipping_code }}" selected="selected">{{ shipping_method }}</option>
                         {% endif %}
                       </select>
-                      <span class="input-group-btn">
-                      <button type="button" id="button-shipping-method" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_apply }}</button>
-                    </span>
+                      <div class="input-group-btn">
+                        <button type="button" id="button-shipping-method" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_apply }}</button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -886,18 +886,22 @@
                         {% if payment_code %}
                           <option value="{{ payment_code }}" selected="selected">{{ payment_method }}</option>
                         {% endif %}
-                      </select> <span class="input-group-btn">
-                      <button type="button" id="button-payment-method" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_apply }}</button>
-                      </span></div>
+                      </select>
+                      <div class="input-group-btn">
+                        <button type="button" id="button-payment-method" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_apply }}</button>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-coupon">{{ entry_coupon }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
-                      <input type="text" name="coupon" value="{{ coupon }}" id="input-coupon" class="form-control"/> <span class="input-group-btn">
-                      <button type="button" id="button-coupon" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_apply }}</button>
-                      </span></div>
+                      <input type="text" name="coupon" value="{{ coupon }}" id="input-coupon" class="form-control"/>
+                      <div class="input-group-btn">
+                        <button type="button" id="button-coupon" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_apply }}</button>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="form-group">
@@ -933,8 +937,7 @@
                           <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                         {% endif %}
                       {% endfor %}
-                    </select>
-                    <input type="hidden" name="order_id" value="{{ order_id }}"/>
+                    </select> <input type="hidden" name="order_id" value="{{ order_id }}"/>
                   </div>
                 </div>
                 <div class="form-group">
@@ -1356,21 +1359,21 @@ $('#tab-product input[name=\'product\']').autocomplete({
 				if (option['type'] == 'date') {
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
-					html += '  <div class="col-sm-3"><div class="input-group date"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="YYYY-MM-DD" id="input-option' + option['product_option_id'] + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
+					html += '  <div class="col-sm-3"><div class="input-group date"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="YYYY-MM-DD" id="input-option' + option['product_option_id'] + '" class="form-control" /><div class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></div></div></div>';
 					html += '</div>';
 				}
 
 				if (option['type'] == 'datetime') {
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
-					html += '  <div class="col-sm-3"><div class="input-group datetime"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="YYYY-MM-DD HH:mm" id="input-option' + option['product_option_id'] + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
+					html += '  <div class="col-sm-3"><div class="input-group datetime"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="YYYY-MM-DD HH:mm" id="input-option' + option['product_option_id'] + '" class="form-control" /><div class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></div></div></div>';
 					html += '</div>';
 				}
 
 				if (option['type'] == 'time') {
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
-					html += '  <div class="col-sm-3"><div class="input-group time"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="HH:mm" id="input-option' + option['product_option_id'] + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
+					html += '  <div class="col-sm-3"><div class="input-group time"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="HH:mm" id="input-option' + option['product_option_id'] + '" class="form-control" /><div class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></div></div></div>';
 					html += '</div>';
 				}
 			}
@@ -1505,7 +1508,7 @@ $('#button-voucher-add').on('click', function() {
 });
 
 $('#cart').delegate('.btn-danger', 'click', function() {
-	var node = this;
+	var element = this;
 
 	$.ajax({
 		url: '{{ catalog }}index.php?route=api/cart/remove&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
@@ -1514,10 +1517,10 @@ $('#cart').delegate('.btn-danger', 'click', function() {
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {
-			$(node).button('loading');
+			$(element).button('loading');
 		},
 		complete: function() {
-			$(node).button('reset');
+			$(element).button('reset');
 		},
 		success: function(json) {
 			$('.alert-dismissible, .text-danger').remove();
@@ -1537,7 +1540,7 @@ $('#cart').delegate('.btn-danger', 'click', function() {
 });
 
 $('#cart').delegate('.btn-primary', 'click', function() {
-	var node = this;
+	var element = this;
 
 	// Refresh products, vouchers and totals
 	$.ajax({
@@ -1547,10 +1550,10 @@ $('#cart').delegate('.btn-primary', 'click', function() {
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {
-			$(node).button('loading');
+			$(element).button('loading');
 		},
 		complete: function() {
-			$(node).button('reset');
+			$(element).button('reset');
 		},
 		success: function(json) {
 			$('.alert-dismissible, .text-danger').remove();
@@ -2208,7 +2211,7 @@ $('#button-save').on('click', function() {
 });
 
 $('#content').delegate('button[id^=\'button-upload\'], button[id^=\'button-custom-field\'], button[id^=\'button-payment-custom-field\'], button[id^=\'button-shipping-custom-field\']', 'click', function() {
-	var node = this;
+	var element = this;
 
 	$('#form-upload').remove();
 
@@ -2233,16 +2236,16 @@ $('#content').delegate('button[id^=\'button-upload\'], button[id^=\'button-custo
 				contentType: false,
 				processData: false,
 				beforeSend: function() {
-					$(node).button('loading');
+					$(element).button('loading');
 				},
 				complete: function() {
-					$(node).button('reset');
+					$(element).button('reset');
 				},
 				success: function(json) {
-					$(node).parent().find('.text-danger').remove();
+					$(element).parent().find('.text-danger').remove();
 
 					if (json['error']) {
-						$(node).parent().find('input[type=\'hidden\']').after('<div class="text-danger">' + json['error'] + '</div>');
+						$(element).parent().find('input[type=\'hidden\']').after('<div class="text-danger">' + json['error'] + '</div>');
 					}
 
 					if (json['success']) {
@@ -2250,7 +2253,7 @@ $('#content').delegate('button[id^=\'button-upload\'], button[id^=\'button-custo
 					}
 
 					if (json['code']) {
-						$(node).parent().find('input[type=\'hidden\']').val(json['code']);
+						$(element).parent().find('input[type=\'hidden\']').val(json['code']);
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {
@@ -2388,7 +2391,7 @@ $('#button-refresh').on('click', function() {
 
 					html += '</td>';
 					html += '  <td class="text-left">' + product['model'] + '</td>';
-					html += '  <td class="text-right"><div class="input-group btn-block" style="max-width: 200px;"><input type="text" name="product[' + i + '][quantity]" value="' + product['quantity'] + '" class="form-control" /><span class="input-group-btn"><button type="button" data-toggle="tooltip" title="{{ button_refresh }}" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-refresh"></i></button></span></div></td>';
+					html += '  <td class="text-right"><div class="input-group btn-block" style="max-width: 200px;"><input type="text" name="product[' + i + '][quantity]" value="' + product['quantity'] + '" class="form-control" /><div class="input-group-btn"><button type="button" data-toggle="tooltip" title="{{ button_refresh }}" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-refresh"></i></button></div></div></td>';
 					html += '  <td class="text-right">' + product['price'] + '</td>';
 					html += '  <td class="text-right">' + product['total'] + '</td>';
 					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + product['cart_id'] + '" data-toggle="tooltip" title="{{ button_remove }}" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';

@@ -29,7 +29,8 @@ final class MySQLi {
 				$result->num_rows = $query->num_rows;
 				$result->row = isset($data[0]) ? $data[0] : array();
 				$result->rows = $data;
-
+				
+				$query->free();
 				$query->close();
 
 				return $result;

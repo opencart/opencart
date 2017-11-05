@@ -191,7 +191,7 @@ class ControllerExtensionOpenbayAmazonListing extends Controller {
 		$data['default_condition'] = $this->config->get('openbay_amazon_listing_default_condition');
 
 		$data['user_token'] = $this->session->data['user_token'];
-		
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(

@@ -74,6 +74,23 @@ class ControllerMailRegister extends Controller {
 			$data['firstname'] = $args[0]['firstname'];
 			$data['lastname'] = $args[0]['lastname'];
 
+			if ($this->request->server['HTTPS']) {
+				$data['store_url'] = HTTPS_SERVER;
+			} else {
+				$data['store_url'] = HTTP_SERVER;
+			}
+
+			$data['login'] = $this->url->link('account/login', '', true);
+			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+
+			$this->load->model('tool/image');
+
+			if (is_file(DIR_IMAGE . $this->config->get('config_logo'))) {
+				$data['logo'] = $this->model_tool_image->resize($this->config->get('config_logo'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
+			} else {
+				$data['logo'] = '';
+			}
+
 			$this->load->model('account/customer_group');
 
 			if (isset($args[0]['customer_group_id'])) {
@@ -105,7 +122,7 @@ class ControllerMailRegister extends Controller {
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 			$mail->setSubject(html_entity_decode($this->language->get('text_new_customer'), ENT_QUOTES, 'UTF-8'));
-			$mail->setText($this->load->view('mail/register_alert', $data));
+			$mail->setHtml($this->load->view('mail/register_alert', $data));
 			$mail->send();
 
 			// Send to additional alert emails if new account email is enabled

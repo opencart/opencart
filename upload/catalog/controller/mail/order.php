@@ -290,6 +290,22 @@ class ControllerMailOrder extends Controller {
 		$data['order_id'] = $order_info['order_id'];
 		$data['date_added'] = date($language->get('date_format_short'), strtotime($order_info['date_added']));
 
+		if ($this->request->server['HTTPS']) {
+			$data['store_url'] = HTTPS_SERVER;
+		} else {
+			$data['store_url'] = HTTP_SERVER;
+		}
+
+		$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+
+		$this->load->model('tool/image');
+
+		if (is_file(DIR_IMAGE . $this->config->get('config_logo'))) {
+			$data['logo'] = $this->model_tool_image->resize($this->config->get('config_logo'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
+		} else {
+			$data['logo'] = '';
+		}
+
 		$order_status_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "' AND language_id = '" . (int)$order_info['language_id'] . "'");
 
 		if ($order_status_query->num_rows) {

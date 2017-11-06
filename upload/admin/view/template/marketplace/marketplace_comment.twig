@@ -7,7 +7,6 @@
     <p>{{ comment.comment }}</p>
     <div class="reply">
       <div> {% if comment.reply %}
-        
         {% for reply in comment.reply %}
         <div class="media">
           <div class="media-left"><img src="{{ reply.image }}" alt="{{ reply.member }}" title="{{ reply.member }}" class="media-object" /></div>
@@ -17,11 +16,9 @@
           </div>
         </div>
         {% endfor %}
-        
         {% if comment.next %}
         <div class="text-center"><a href="{{ comment.next }}" class="btn btn-block">see more replies...</a></div>
         {% endif %}
-        
         {% endif %} <a href="{{ comment.refresh }}" class="reply-refresh hide">refresh</a> </div>
     </div>
     <p class="text-right">
@@ -43,4 +40,4 @@
 </div>
 {% endfor %} <br />
 <div class="text-center">{{ pagination }}</div>
-{% endif %} 
+{% endif %}

@@ -75,25 +75,25 @@ $('#button-confirm').bind('click', function() {
 			// if 3ds redirect instruction
 			if (json['ACSURL']) {
 				$('#3dauth').remove();
-				
+
 				html  = '<form action="' + json['ACSURL'] + '" method="post" id="3dauth">';
 				html += '  <input type="hidden" name="MD" value="' + json['MD'] + '" />';
 				html += '  <input type="hidden" name="PaReq" value="' + json['PaReq'] + '" />';
 				html += '  <input type="hidden" name="TermUrl" value="' + json['TermUrl'] + '" />';
 				html += '</form>';
-				
+
 				$('#payment').after(html);
-				
+
 				$('#3dauth').submit();
 			}
-	
+
 			// if error
 			if (json['error']) {
 				$('#payment').before('<div id="realex-message-error" class="alert alert-warning"><i class="fa fa-info-circle"></i> ' + json['error'] + '</div>');
 				$('#button-confirm').attr('disabled', false);
 				$('#realex-message-wait').remove();
 			}
-	
+
 			// if success
 			if (json['success']) {
 				location = json['success'];

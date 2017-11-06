@@ -22,19 +22,13 @@
         <div class="well">
           <div class="input-group">
             <select name="report" onchange="location = this.value;" class="form-control">
-              
               {% for report in reports %}
               {% if code == report.code %}
-              
               <option value="{{ report.href }}" selected="selected">{{ report.text }}</option>
-              
               {% else %}
-              
               <option value="{{ report.href }}">{{ report.text }}</option>
-              
               {% endif %}
               {% endfor %}
-            
             </select>
             <span class="input-group-addon"><i class="fa fa-filter"></i> {{ text_filter }}</span></div>
         </div>
@@ -43,4 +37,4 @@
     <div>{{ report }}</div>
   </div>
 </div>
-{{ footer }} 
+{{ footer }}

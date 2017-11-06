@@ -25,13 +25,9 @@
             <div class="col-sm-10">
               <select name="store_id" id="input-store" class="form-control">
                 <option value="0">{{ text_default }}</option>
-
                 {% for store in stores %}
-
                   <option value="{{ store.store_id }}">{{ store.name }}</option>
-
                 {% endfor %}
-
               </select>
             </div>
           </div>
@@ -53,13 +49,9 @@
             <label class="col-sm-2 control-label" for="input-customer-group">{{ entry_customer_group }}</label>
             <div class="col-sm-10">
               <select name="customer_group_id" id="input-customer-group" class="form-control">
-
                 {% for customer_group in customer_groups %}
-
                   <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
-
                 {% endfor %}
-
               </select>
             </div>
           </div>

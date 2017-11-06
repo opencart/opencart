@@ -284,7 +284,7 @@
 {% endif %}
 {% if text_agree %}
 <div class="buttons clearfix">
-  <div class="pull-right">{{ text_agree }} 
+  <div class="pull-right">{{ text_agree }}
     &nbsp;
     <input type="checkbox" name="agree" value="1" />
     <input type="button" value="{{ button_continue }}" id="button-register" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
@@ -296,7 +296,7 @@
     <input type="button" value="{{ button_continue }}" id="button-register" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
   </div>
 </div>
-{% endif %} 
+{% endif %}
 <script type="text/javascript"><!--
 // Sort the custom fields
 $('#account .form-group[data-sort]').detach().each(function() {
@@ -360,7 +360,7 @@ $('#collapse-payment-address input[name=\'customer_group_id\']').on('change', fu
 });
 
 $('#collapse-payment-address input[name=\'customer_group_id\']:checked').trigger('change');
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('click', function() {
 	var element = this;
@@ -413,7 +413,7 @@ $('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('c
 		}
 	}, 500);
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	language: '{{ datepicker }}',
@@ -430,7 +430,7 @@ $('.datetime').datetimepicker({
 	pickDate: true,
 	pickTime: true
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#collapse-payment-address select[name=\'country_id\']').on('change', function() {
 	$.ajax({
@@ -474,4 +474,4 @@ $('#collapse-payment-address select[name=\'country_id\']').on('change', function
 });
 
 $('#collapse-payment-address select[name=\'country_id\']').trigger('change');
-//--></script> 
+//--></script>

@@ -190,7 +190,7 @@ $('#button-delete').bind('click', function () {
 				if (json['error']) {
 					alert(json['error']);
 				}
-			
+
 				if (json['success']) {
 					$.ajax({
 						url: 'index.php?route=checkout/confirm',
@@ -203,7 +203,7 @@ $('#button-delete').bind('click', function () {
 						}
 					});
 				}
-			
+
 			}
 		});
 	}

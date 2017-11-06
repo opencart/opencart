@@ -1,8 +1,10 @@
 <?php
 class ControllerExtensionOpenbayAmazonProduct extends Controller {
 	public function index() {
-		$data = $this->load->language('catalog/product');
-		$data = $this->load->language('extension/openbay/amazon_listing', $data);
+		$this->load->language('catalog/product');
+		$this->load->language('extension/openbay/amazon_listing');
+
+		$data = $this->language->all();
 
 		$this->load->model('extension/openbay/amazon');
 		$this->load->model('catalog/product');
@@ -180,9 +182,9 @@ class ControllerExtensionOpenbayAmazonProduct extends Controller {
 		}
 
 		if ($listing_saved) {
-			$data['template_parser_url'] = $this->url->link('extension/openbay/amazon_product/parseTemplateAjax&edit_id=' . $product_id, 'user_token=' . $this->session->data['user_token'], true);
+			$data['template_parser_url'] = html_entity_decode($this->url->link('extension/openbay/amazon_product/parseTemplateAjax&edit_id=' . $product_id, 'user_token=' . $this->session->data['user_token'], true));
 		} else {
-			$data['template_parser_url'] = $this->url->link('extension/openbay/amazon_product/parseTemplateAjax&product_id=' . $product_id, 'user_token=' . $this->session->data['user_token'], true);
+			$data['template_parser_url'] = html_entity_decode($this->url->link('extension/openbay/amazon_product/parseTemplateAjax&product_id=' . $product_id, 'user_token=' . $this->session->data['user_token'], true));
 		}
 
 		$data['url_remove_errors'] = $this->url->link('extension/openbay/amazon_product/removeErrors', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product_id . $url, true);

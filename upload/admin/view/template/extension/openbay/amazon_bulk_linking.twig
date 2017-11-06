@@ -42,7 +42,7 @@
     </div>
     <form id="bulk-link-form" class="form-horizontal">
       <div id="text-{{ marketplace_code }}">
-        {% if marketplace_code is not marketplaces_processing|keys %}
+        {% if marketplace_code not in marketplaces_processing|keys %}
           {% if unlinked_products %}
             <table class="table table-bordered table-hover">
               <thead>

@@ -58,7 +58,7 @@ class ModelExtensionPaymentWorldpay extends Model {
 	}
 
 	public function deleteCard($token) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "worldpay_card WHERE customer_id = '" . $this->customer->isLogged() . "' AND token = '" . $this->db->escape($token) . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "worldpay_card WHERE customer_id = '" . (int)$this->customer->isLogged() . "' AND token = '" . $this->db->escape($token) . "'");
 
 		if ($this->db->countAffected() > 0) {
 			return true;

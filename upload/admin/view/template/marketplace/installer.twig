@@ -56,7 +56,7 @@ $('#history').delegate('.pagination a', 'click', function(e) {
 	$('#history').load(this.href);
 });
 
-$('#history').load('index.php?route=marketplace/installer/history&&user_token={{ user_token }}');
+$('#history').load('index.php?route=marketplace/installer/history&user_token={{ user_token }}');
 
 $('#button-upload').on('click', function() {
 	$('#form-upload').remove();
@@ -79,7 +79,7 @@ $('#button-upload').on('click', function() {
 			$('#progress-text').html('');
 
 			$.ajax({
-				url: 'index.php?route=marketplace/installer/upload&&user_token={{ user_token }}',
+				url: 'index.php?route=marketplace/installer/upload&user_token={{ user_token }}',
 				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),
@@ -136,7 +136,7 @@ function next(url, i) {
 
 				$('#button-upload').button('reset');
 
-				$('#history').load('index.php?route=marketplace/installer/history&&user_token={{ user_token }}');
+				$('#history').load('index.php?route=marketplace/installer/history&user_token={{ user_token }}');
 			}
 
 			if (json['text']) {
@@ -164,7 +164,7 @@ $('#history').on('click', '.btn-danger', function(e) {
 	$('#progress-text').html('');
 
 	$.ajax({
-		url: 'index.php?route=marketplace/install/uninstall&&user_token={{ user_token }}&extension_install_id=' + $(element).attr('value'),
+		url: 'index.php?route=marketplace/install/uninstall&user_token={{ user_token }}&extension_install_id=' + $(element).attr('value'),
 		dataType: 'json',
 		beforeSend: function() {
 			$(element).button('loading');
@@ -183,7 +183,7 @@ $('#history').on('click', '.btn-danger', function(e) {
 				$('#progress-bar').addClass('progress-bar-success');
 				$('#progress-text').html('<span class="text-success">' + json['success'] + '</div>');
 
-				$('#history').load('index.php?route=marketplace/installer/history&&user_token={{ user_token }}');
+				$('#history').load('index.php?route=marketplace/installer/history&user_token={{ user_token }}');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

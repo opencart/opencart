@@ -236,7 +236,7 @@
                   </td>
                   <td class="text-left">{{ product.status }}</td>
                   <td>
-                    {% for markets in product.markets %}
+                    {% for market in product.markets %}
                       {% if market.status == 1 %}
                         <a href="{{ market.href }}" data-toggle="tooltip" title="{{ market.text }}" class="btn btn-block btn-sm btn-success">{{ market.name }}</a>
                       {% elseif market.status == 2 %}
@@ -273,7 +273,7 @@
 </div>
 <script type="text/javascript"><!--
   function filter() {
-      url = 'index.php?route=marketplace/openbay/items&&user_token={{ user_token }}';
+      url = 'index.php?route=marketplace/openbay/items&user_token={{ user_token }}';
 
       var filter_name = $('input[name=\'filter_name\']').val();
 
@@ -354,7 +354,7 @@
     var request_data = $('input[name="selected[]"]:checked').serialize();
 
     if (request_data != '') {
-      $('#form').attr('action', 'index.php?route=extension/openbay/ebay/createBulk&&user_token={{ user_token }}').submit();
+      $('#form').attr('action', 'index.php?route=extension/openbay/ebay/createBulk&user_token={{ user_token }}').submit();
     } else {
       alert('{{ error_select_items }}');
     }

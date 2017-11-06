@@ -116,7 +116,7 @@ $('#zone-to-geo-zone').on('change', 'select[name$=\'[country_id]\']', function()
 
 	if (element.value) {
 		$.ajax({
-			url: 'index.php?route=localisation/country/country&&user_token={{ user_token }}&country_id=' + element.value,
+			url: 'index.php?route=localisation/country/country&user_token={{ user_token }}&country_id=' + element.value,
 			dataType: 'json',
 			beforeSend: function() {
 				$(element).prop('disabled', true);

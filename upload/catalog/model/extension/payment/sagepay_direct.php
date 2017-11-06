@@ -101,7 +101,7 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 	}
 
 	public function deleteOrder($vendor_tx_code) {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "sagepay_direct_order` WHERE order_id = '" . $vendor_tx_code . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "sagepay_direct_order` WHERE order_id = '" . (int)$vendor_tx_code . "'");
 	}
 
 	public function addTransaction($sagepay_direct_order_id, $type, $order_info) {

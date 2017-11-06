@@ -2,13 +2,13 @@
 class ModelUpgrade1001 extends Model {
 	public function upgrade() {
 		// address
-		$this->db->query("ALTER TABLE `" . DB_PREFIX . "address` CHANGE `company` `company` VARCHAR(40) NOT NULL");
+		$this->db->query("ALTER TABLE `" . DB_PREFIX . "address` CHANGE `company` `company` VARCHAR(60) NOT NULL");
 
 		// order
-		$this->db->query("ALTER TABLE `" . DB_PREFIX . "order` CHANGE `payment_company` `payment_company` VARCHAR(40) NOT NULL");
+		$this->db->query("ALTER TABLE `" . DB_PREFIX . "order` CHANGE `payment_company` `payment_company` VARCHAR(60) NOT NULL");
 
 		// order
-		$this->db->query("ALTER TABLE `" . DB_PREFIX . "order` CHANGE `shipping_company` `shipping_company` VARCHAR(40) NOT NULL");
+		$this->db->query("ALTER TABLE `" . DB_PREFIX . "order` CHANGE `shipping_company` `shipping_company` VARCHAR(60) NOT NULL");
 
 		// affiliate
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate'");
@@ -44,7 +44,7 @@ class ModelUpgrade1001 extends Model {
 			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_recurring' AND COLUMN_NAME = 'recurring_id'");
 
 			if ($query->num_rows) {
-				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `recurring_id` = `profile_id` WHERE `recurring_id` IS NULL or `recurring_id` = ''");
+				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `recurring_id` = `profile_id` WHERE `recurring_id` IS NULL OR `recurring_id` = ''");
 				$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring` DROP `profile_id`");
 			} else {
 				$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring` CHANGE `profile_id` `recurring_id` int(11) NOT NULL");
@@ -132,7 +132,7 @@ class ModelUpgrade1001 extends Model {
 				$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `code` = `group` WHERE `code` IS NULL or `code` = ''");
 				$this->db->query("ALTER TABLE `" . DB_PREFIX . "setting` DROP `group`");
 			} else {
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "setting` CHANGE `group` `code` varchar(32) NOT NULL");
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "setting` CHANGE `group` `code` varchar(128) NOT NULL");
 			}
 		}
 		

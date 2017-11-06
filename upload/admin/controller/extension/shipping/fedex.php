@@ -110,6 +110,12 @@ class ControllerExtensionShippingFedex extends Controller {
 			$data['shipping_fedex_postcode'] = $this->config->get('shipping_fedex_postcode');
 		}
 
+		if (isset($this->request->post['shipping_fedex_server'])) {
+			$data['shipping_fedex_server'] = $this->request->post['shipping_fedex_server'];
+		} else {
+			$data['shipping_fedex_server'] = $this->config->get('shipping_fedex_server');
+		}
+
 		if (isset($this->request->post['shipping_fedex_test'])) {
 			$data['shipping_fedex_test'] = $this->request->post['shipping_fedex_test'];
 		} else {

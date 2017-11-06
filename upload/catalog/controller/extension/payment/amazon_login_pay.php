@@ -2,6 +2,7 @@
 class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 	public function address() {
 		$this->load->language('extension/payment/amazon_login_pay');
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('extension/payment/amazon_login_pay');
@@ -9,6 +10,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		// capital L in Amazon cookie name is required, do not alter for coding standards
 		if (!isset($this->request->cookie['amazon_Login_state_cache'])) {
 			$this->session->data['lpa']['error'] = $this->language->get('error_login');
+
 			$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/failure', '', true));
 		}
 
@@ -26,11 +28,13 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		$data['payment_amazon_login_pay_merchant_id'] = $this->config->get('payment_amazon_login_pay_merchant_id');
 		$data['payment_amazon_login_pay_client_id'] = $this->config->get('payment_amazon_login_pay_client_id');
 		$data['payment_amazon_login_pay_client_secret'] = $this->config->get('payment_amazon_login_pay_client_secret');
+
 		if ($this->config->get('payment_amazon_login_pay_test') == 'sandbox') {
 			$data['payment_amazon_login_pay_test'] = true;
 		}
 
 		$amazon_payment_js = $this->model_extension_payment_amazon_login_pay->getWidgetJs();
+
 		$this->document->addScript($amazon_payment_js);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -45,6 +49,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 	public function paymentMethod() {
 		$this->load->language('extension/payment/amazon_login_pay');
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('extension/payment/amazon_login_pay');
@@ -62,12 +67,15 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		$data['payment_amazon_login_pay_merchant_id'] = $this->config->get('payment_amazon_login_pay_merchant_id');
 		$data['payment_amazon_login_pay_client_id'] = $this->config->get('payment_amazon_login_pay_client_id');
 		$data['payment_amazon_login_pay_client_secret'] = $this->config->get('payment_amazon_login_pay_client_secret');
+
 		if ($this->config->get('payment_amazon_login_pay_test') == 'sandbox') {
 			$data['payment_amazon_login_pay_test'] = true;
 		}
+
 		$data['confirm_order'] = $this->url->link('extension/payment/amazon_login_pay/confirm', '', true);
 
 		$amazon_payment_js = $this->model_extension_payment_amazon_login_pay->getWidgetJs();
+
 		$this->document->addScript($amazon_payment_js);
 
 		if ($this->customer->islogged() && isset($this->session->data['lpa']['address'])) {
@@ -75,6 +83,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		}
 
 		$data['continue'] = $this->url->link('extension/payment/amazon_login_pay/confirm', '', true);
+
 		$data['back'] = $this->url->link('extension/payment/amazon_login_pay/address', '', true);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -90,6 +99,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 	public function confirm() {
 		$this->load->language('extension/payment/amazon_login_pay');
 		$this->load->language('checkout/checkout');
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/extension');

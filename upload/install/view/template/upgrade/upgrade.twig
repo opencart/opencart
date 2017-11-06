@@ -39,7 +39,7 @@
       </fieldset>
       <div class="buttons">
         <div class="text-right">
-          <input type="submit" value="{{ button_continue }}" id="button-continue" class="btn btn-primary" />
+          <input type="submit" value="{{ button_continue }}" data-loading="{ text_loading }}" id="button-continue" class="btn btn-primary" />
         </div>
       </div>
     </div>
@@ -51,7 +51,7 @@ var step = 0;
 $('#button-continue').on('click', function() {
 	$('#progress-bar').addClass('progress-bar-success').css('width', '0%').removeClass('progress-bar-danger');
 	$('#progress-text').html('');
-	$('#button-continue').prop('disabled', true).before('<i class="fa fa-spinner fa-spin"></i> ');
+	$('#button-continue').button('loading');
 
 	start('index.php?route=upgrade/upgrade/next');
 });
@@ -68,7 +68,7 @@ function start(url) {
 					$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
 
 					$('#button-continue').prop('disabled', false);
-					$('.fa-spinner').remove();
+					$('#button-continue').button('reset');
 				}
 
 				if (json['success']) {
@@ -80,7 +80,7 @@ function start(url) {
 					start(json['next']);
 				} else if (!json['error']) {
 					$('#button-continue').replaceWith('<a href="{{ store }}" class="btn btn-primary">{{ button_continue }}</a>');
-					$('.fa-spinner').remove();
+					$('#button-continue').button('reset');
 				}
 
 				step++;
@@ -88,8 +88,8 @@ function start(url) {
 			error: function(xhr, ajaxOptions, thrownError) {
 				$('#progress-bar').addClass('progress-bar-danger');
 				$('#progress-text').html('<div class="text-danger">' + (thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText) + '</div>');
-				$('#button-continue').prop('disabled', false);
-				$('.fa-spinner').remove();
+				$('#button-continue').button('reset');
+
 			}
 		});
 	}, 1000);

@@ -56,7 +56,6 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">{{ text_general_private }}</label>
               <div class="col-sm-10">
-                {% if data.private_listing is empty %}{% set data.private_listing = 0 %}{% endif %}
                 <select name="data[private_listing]" class="form-control">
                   <option value="0"{% if data.private_listing == 0 %} selected{% endif %}>{{ text_no }}</option>
                   <option value="1"{% if data.private_listing == 1 %} selected{% endif %}>{{ text_yes }}</option>
@@ -66,8 +65,8 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="name">{{ text_general_price }}</label>
               <div class="col-sm-10">
-                <input type="text" name="data[price_modify]" id="price_modify" value="{{ data.price_modify }}" class="form-control" />
-                <span class="help-block">{{ text_general_price_help }}</span>
+                  <input type="text" name="data[price_modify]" id="price_modify" value="{% if data.price_modify == "" %}{{ '0' }}{% else %}{{ data.price_modify }}{% endif %}" class="form-control" />
+                  <span class="help-block">{{ text_general_price_help }}</span>
               </div>
             </div>
           </div>

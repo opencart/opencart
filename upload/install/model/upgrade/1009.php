@@ -104,7 +104,7 @@ class ModelUpgrade1009 extends Model {
 		if ($upgrade) {
 			$output = '';
 
-			foreach ($lines as $line_id => $line) {
+	   		foreach ($lines as $line_id => $line) {
 				if (strpos($line, 'DB_PREFIX') !== false) {
 					$output .= $line . "\n\n";
 					$output .= 'define(\'OPENCART_SERVER\', \'http://www.opencart.com/\');' . "\n";

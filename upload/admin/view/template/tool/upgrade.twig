@@ -141,8 +141,7 @@ $('#button-upgrade').on('click', function() {
 	$('#log').append('{{ text_download }}' + "\n");
 
 	$.ajax({
-		url: 'index.php?route=tool/upgrade/download&&user_token={{ user_token }}&version={{ version }}',
-		//url: 'index.php?route=tool/upgrade/unzip&&user_token={{ user_token }}&version={{ version }}',
+		url: 'index.php?route=tool/upgrade/download&user_token={{ user_token }}&version={{ version }}',
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-upgrade').button('loading');

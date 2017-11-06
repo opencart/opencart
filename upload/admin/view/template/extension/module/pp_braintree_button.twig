@@ -8,16 +8,16 @@
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
-        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
         {% endfor %}
       </ul>
     </div>
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
+      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
     {% endif %}
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -38,11 +38,11 @@
             <div class="col-sm-10">
               <select name="module_pp_braintree_button_status" id="input-status" class="form-control">
                 {% if module_pp_braintree_button_status %}
-                <option value="1" selected="selected">{{ text_enabled }}</option>
-                <option value="0">{{ text_disabled }}</option>
+                  <option value="1" selected="selected">{{ text_enabled }}</option>
+                  <option value="0">{{ text_disabled }}</option>
                 {% else %}
-                <option value="1">{{ text_enabled }}</option>
-                <option value="0" selected="selected">{{ text_disabled }}</option>
+                  <option value="1">{{ text_enabled }}</option>
+                  <option value="0" selected="selected">{{ text_disabled }}</option>
                 {% endif %}
               </select>
             </div>

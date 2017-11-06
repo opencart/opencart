@@ -505,8 +505,11 @@ class ControllerMarketplaceOpenbay extends Controller {
 
 	public function orderList() {
 		$this->load->model('extension/openbay/order');
-		$data = $this->load->language('sale/order');
-		$data = $this->load->language('extension/openbay/openbay_order', $data);
+
+		$this->load->language('sale/order');
+		$this->load->language('extension/openbay/openbay_order');
+
+		$data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
@@ -812,7 +815,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -969,7 +972,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 
 		if (isset($api_info['error']) || isset($api_login['error'])) {
 			$this->session->data['error'] = isset($api_info['error']) ? $api_info['error'] : $api_login['error'];
-			$this->response->redirect($this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/openbay/orderList', 'user_token=' . $this->session->data['user_token'], true));
 		} else {
 			//Amazon EU
 			if ($this->config->get('openbay_amazon_status') == 1) {
@@ -1106,17 +1109,18 @@ class ControllerMarketplaceOpenbay extends Controller {
 			$this->session->data['success'] = sprintf($this->language->get('text_confirmed'), $i);
 		}
 
-		$this->response->redirect($this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'], true));
+		$this->response->redirect($this->url->link('extension/openbay/orderList', 'user_token=' . $this->session->data['user_token'], true));
 	}
 
 	public function items() {
-		$this->document->addScript('view/javascript/openbay/js/openbay.js');
-		$this->document->addScript('view/javascript/openbay/js/faq.js');
+		$this->load->language('catalog/product');
+		$this->load->language('extension/openbay/openbay_itemlist');
 
-		$data = $this->load->language('catalog/product');
-		$data = $this->load->language('extension/openbay/openbay_itemlist', $data);
+		$data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
+        $this->document->addScript('view/javascript/openbay/js/openbay.js');
+        $this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$this->load->model('catalog/product');
 		$this->load->model('catalog/category');

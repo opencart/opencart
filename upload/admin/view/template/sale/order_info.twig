@@ -39,7 +39,6 @@
                 </tr>
               {% endif %}
             </tbody>
-
           </table>
         </div>
       </div>
@@ -225,25 +224,13 @@
                   <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
                   <div class="col-sm-10">
                     <select name="order_status_id" id="input-order-status" class="form-control">
-
-
                       {% for order_statuses in order_statuses %}
                         {% if order_statuses.order_status_id == order_status_id %}
-
-
                           <option value="{{ order_statuses.order_status_id }}" selected="selected">{{ order_statuses.name }}</option>
-
-
                         {% else %}
-
-
                           <option value="{{ order_statuses.order_status_id }}">{{ order_statuses.name }}</option>
-
-
                         {% endif %}
                       {% endfor %}
-
-
                     </select>
                   </div>
                 </div>
@@ -284,7 +271,6 @@
                     </tr>
                   </thead>
                   <tbody>
-
                     {% for custom_field in account_custom_fields %}
                       <tr>
                         <td>{{ custom_field.name }}</td>
@@ -292,7 +278,6 @@
                       </tr>
                     {% endfor %}
                   </tbody>
-
                 </table>
               </div>
             {% endif %}
@@ -305,7 +290,6 @@
                     </tr>
                   </thead>
                   <tbody>
-
                     {% for custom_field in payment_custom_fields %}
                       <tr>
                         <td>{{ custom_field.name }}</td>
@@ -313,7 +297,6 @@
                       </tr>
                     {% endfor %}
                   </tbody>
-
                 </table>
               </div>
             {% endif %}
@@ -326,7 +309,6 @@
                     </tr>
                   </thead>
                   <tbody>
-
                     {% for custom_field in shipping_custom_fields %}
                       <tr>
                         <td>{{ custom_field.name }}</td>
@@ -334,7 +316,6 @@
                       </tr>
                     {% endfor %}
                   </tbody>
-
                 </table>
               </div>
             {% endif %}
@@ -365,13 +346,12 @@
                     <td>{{ accept_language }}</td>
                   </tr>
                 </tbody>
-
               </table>
             </div>
           </div>
           {% for tab in tabs %}
             <div class="tab-pane" id="tab-{{ tab.code }}">{{ tab.content }}</div>
-          {% endfor %} </div>
+          {% endfor %}</div>
       </div>
     </div>
   </div>
@@ -379,7 +359,7 @@
 <script type="text/javascript"><!--
 $(document).delegate('#button-invoice', 'click', function() {
 	$.ajax({
-		url: 'index.php?route=sale/order/createinvoiceno&&user_token={{ user_token }}&order_id={{ order_id }}',
+		url: 'index.php?route=sale/order/createinvoiceno&user_token={{ user_token }}&order_id={{ order_id }}',
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-invoice').button('loading');
@@ -408,7 +388,7 @@ $(document).delegate('#button-invoice', 'click', function() {
 
 $(document).delegate('#button-reward-add', 'click', function() {
 	$.ajax({
-		url: 'index.php?route=sale/order/addreward&&user_token={{ user_token }}&order_id={{ order_id }}',
+		url: 'index.php?route=sale/order/addreward&user_token={{ user_token }}&order_id={{ order_id }}',
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
@@ -438,7 +418,7 @@ $(document).delegate('#button-reward-add', 'click', function() {
 
 $(document).delegate('#button-reward-remove', 'click', function() {
 	$.ajax({
-		url: 'index.php?route=sale/order/removereward&&user_token={{ user_token }}&order_id={{ order_id }}',
+		url: 'index.php?route=sale/order/removereward&user_token={{ user_token }}&order_id={{ order_id }}',
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
@@ -468,7 +448,7 @@ $(document).delegate('#button-reward-remove', 'click', function() {
 
 $(document).delegate('#button-commission-add', 'click', function() {
 	$.ajax({
-		url: 'index.php?route=sale/order/addcommission&&user_token={{ user_token }}&order_id={{ order_id }}',
+		url: 'index.php?route=sale/order/addcommission&user_token={{ user_token }}&order_id={{ order_id }}',
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
@@ -498,7 +478,7 @@ $(document).delegate('#button-commission-add', 'click', function() {
 
 $(document).delegate('#button-commission-remove', 'click', function() {
 	$.ajax({
-		url: 'index.php?route=sale/order/removecommission&&user_token={{ user_token }}&order_id={{ order_id }}',
+		url: 'index.php?route=sale/order/removecommission&user_token={{ user_token }}&order_id={{ order_id }}',
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
@@ -532,7 +512,7 @@ $('#history').delegate('.pagination a', 'click', function(e) {
 	$('#history').load(this.href);
 });
 
-$('#history').load('index.php?route=sale/order/history&&user_token={{ user_token }}&order_id={{ order_id }}');
+$('#history').load('index.php?route=sale/order/history&user_token={{ user_token }}&order_id={{ order_id }}');
 
 $('#button-history').on('click', function() {
 	$.ajax({
@@ -554,7 +534,7 @@ $('#button-history').on('click', function() {
 			}
 
 			if (json['success']) {
-				$('#history').load('index.php?route=sale/order/history&&user_token={{ user_token }}&order_id={{ order_id }}');
+				$('#history').load('index.php?route=sale/order/history&user_token={{ user_token }}&order_id={{ order_id }}');
 
 				$('#history').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 

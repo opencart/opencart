@@ -234,64 +234,64 @@
             <div class="table-responsive">
               <table class="table table-bordered">
                 <thead>
-                <tr>
-                  <td class="text-left">{{ column_product }}</td>
-                  <td class="text-left">{{ column_model }}</td>
-                  <td class="text-right">{{ column_quantity }}</td>
-                  <td class="text-right">{{ column_price }}</td>
-                  <td class="text-right">{{ column_total }}</td>
-                  <td>{{ column_action }}</td>
-                </tr>
+                  <tr>
+                    <td class="text-left">{{ column_product }}</td>
+                    <td class="text-left">{{ column_model }}</td>
+                    <td class="text-right">{{ column_quantity }}</td>
+                    <td class="text-right">{{ column_price }}</td>
+                    <td class="text-right">{{ column_total }}</td>
+                    <td>{{ column_action }}</td>
+                  </tr>
                 </thead>
                 <tbody id="cart">
-                {% if order_products or order_vouchers %}
-                {% set product_row = 0 %}
-                {% for order_product in order_products %}
-                  <tr>
-                    <td class="text-left">{{ order_product.name }}
-                      <br/>
-                      <input type="hidden" name="product[{{ product_row }}][product_id]" value="{{ order_product.product_id }}"/>
-                      {% for option in order_product.option %}
-                        -
-                        <small>{{ option.name }}: {{ option.value }}</small>
+                  {% if order_products or order_vouchers %}
+                  {% set product_row = 0 %}
+                  {% for order_product in order_products %}
+                    <tr>
+                      <td class="text-left">{{ order_product.name }}
                         <br/>
-                        {% if option.type == 'select' or option.type == 'radio' or option.type == 'image' %}
-                          <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/>
-                        {% endif %}
-                        {% if option.type == 'checkbox' %}
-                          <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}"/>
-                        {% endif %}
-                        {% if option.type == 'text' or option.type == 'textarea' or option.type == 'file' or option.type == 'date' or option.type == 'datetime' or option.type == 'time' %}
-                          <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}]" value="{{ option.value }}"/>
-                        {% endif %}
-                      {% endfor %}</td>
-                    <td class="text-left">{{ order_product.model }}</td>
-                    <td class="text-right">{{ order_product.quantity }}
-                      <input type="hidden" name="product[{{ product_row }}][quantity]" value="{{ order_product.quantity }}"/></td>
-                    <td class="text-right"></td>
-                    <td class="text-right"></td>
-                    <td class="text-center"></td>
-                  </tr>
-                  {% set product_row = product_row + 1 %}
-                {% endfor %}
-                {% set voucher_row = 0 %}
-                {% for order_voucher in order_vouchers %}
+                        <input type="hidden" name="product[{{ product_row }}][product_id]" value="{{ order_product.product_id }}"/>
+                        {% for option in order_product.option %}
+                          -
+                          <small>{{ option.name }}: {{ option.value }}</small>
+                          <br/>
+                          {% if option.type == 'select' or option.type == 'radio' or option.type == 'image' %}
+                            <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/>
+                          {% endif %}
+                          {% if option.type == 'checkbox' %}
+                            <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}"/>
+                          {% endif %}
+                          {% if option.type == 'text' or option.type == 'textarea' or option.type == 'file' or option.type == 'date' or option.type == 'datetime' or option.type == 'time' %}
+                            <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}]" value="{{ option.value }}"/>
+                          {% endif %}
+                        {% endfor %}</td>
+                      <td class="text-left">{{ order_product.model }}</td>
+                      <td class="text-right">{{ order_product.quantity }}
+                        <input type="hidden" name="product[{{ product_row }}][quantity]" value="{{ order_product.quantity }}"/></td>
+                      <td class="text-right"></td>
+                      <td class="text-right"></td>
+                      <td class="text-center"></td>
+                    </tr>
+                    {% set product_row = product_row + 1 %}
+                  {% endfor %}
+                  {% set voucher_row = 0 %}
+                  {% for order_voucher in order_vouchers %}
+                    <tr>
+                      <td class="text-left">{{ order_voucher.description }}
+                        <input type="hidden" name="voucher[{{ voucher_row }}][voucher_id]" value="{{ order_voucher.voucher_id }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][description]" value="{{ order_voucher.description }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][code]" value="{{ order_voucher.code }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][from_name]" value="{{ order_voucher.from_name }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][from_email]" value="{{ order_voucher.from_email }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][to_name]" value="{{ order_voucher.to_name }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][to_email]" value="{{ order_voucher.to_email }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][voucher_theme_id]" value="{{ order_voucher.voucher_theme_id }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][message]" value="{{ order_voucher.message }}"/>
+                        <input type="hidden" name="voucher[{{ voucher_row }}][amount]" value="{{ order_voucher.amount }}"/></td>
+                      <td class="text-left"></td>
+                      <td class="text-right">1</td>
+                      <td class="text-right"></td>
+                      <td class="text-right"></td>
+                      <td class="text-center"></td>
+                    </tr>
+                    {% set voucher_row = voucher_row + 1 %}
+                  {% endfor %}
+                  {% else %}
                   <tr>
-                    <td class="text-left">{{ order_voucher.description }}
-                      <input type="hidden" name="voucher[{{ voucher_row }}][voucher_id]" value="{{ order_voucher.voucher_id }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][description]" value="{{ order_voucher.description }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][code]" value="{{ order_voucher.code }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][from_name]" value="{{ order_voucher.from_name }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][from_email]" value="{{ order_voucher.from_email }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][to_name]" value="{{ order_voucher.to_name }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][to_email]" value="{{ order_voucher.to_email }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][voucher_theme_id]" value="{{ order_voucher.voucher_theme_id }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][message]" value="{{ order_voucher.message }}"/>
-                      <input type="hidden" name="voucher[{{ voucher_row }}][amount]" value="{{ order_voucher.amount }}"/></td>
-                    <td class="text-left"></td>
-                    <td class="text-right">1</td>
-                    <td class="text-right"></td>
-                    <td class="text-right"></td>
-                    <td class="text-center"></td>
+                    <td class="text-center" colspan="6">{{ text_no_results }}</td>
                   </tr>
-                  {% set voucher_row = voucher_row + 1 %}
-                {% endfor %}
-                {% else %}
-                <tr>
-                  <td class="text-center" colspan="6">{{ text_no_results }}</td>
-                </tr>
                 </tbody>
                 {% endif %}
               </table>
@@ -843,18 +843,18 @@
             <div class="table-responsive">
               <table class="table table-bordered">
                 <thead>
-                <tr>
-                  <td class="text-left">{{ column_product }}</td>
-                  <td class="text-left">{{ column_model }}</td>
-                  <td class="text-right">{{ column_quantity }}</td>
-                  <td class="text-right">{{ column_price }}</td>
-                  <td class="text-right">{{ column_total }}</td>
-                </tr>
+                  <tr>
+                    <td class="text-left">{{ column_product }}</td>
+                    <td class="text-left">{{ column_model }}</td>
+                    <td class="text-right">{{ column_quantity }}</td>
+                    <td class="text-right">{{ column_price }}</td>
+                    <td class="text-right">{{ column_total }}</td>
+                  </tr>
                 </thead>
                 <tbody id="total">
-                <tr>
-                  <td class="text-center" colspan="5">{{ text_no_results }}</td>
-                </tr>
+                  <tr>
+                    <td class="text-center" colspan="5">{{ text_no_results }}</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -886,18 +886,22 @@
                         {% if payment_code %}
                           <option value="{{ payment_code }}" selected="selected">{{ payment_method }}</option>
                         {% endif %}
-                      </select> <div class="input-group-btn">
-                      <button type="button" id="button-payment-method" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_apply }}</button>
-                      </div></div>
+                      </select>
+                      <div class="input-group-btn">
+                        <button type="button" id="button-payment-method" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_apply }}</button>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-coupon">{{ entry_coupon }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
-                      <input type="text" name="coupon" value="{{ coupon }}" id="input-coupon" class="form-control"/> <div class="input-group-btn">
-                      <button type="button" id="button-coupon" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_apply }}</button>
-                      </div></div>
+                      <input type="text" name="coupon" value="{{ coupon }}" id="input-coupon" class="form-control"/>
+                      <div class="input-group-btn">
+                        <button type="button" id="button-coupon" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_apply }}</button>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="form-group">
@@ -1003,7 +1007,7 @@ $('select[name=\'currency\']').trigger('change');
 $('input[name=\'customer\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=customer/customer/autocomplete&&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				json.unshift({
@@ -1080,7 +1084,7 @@ $('input[name=\'customer\']').autocomplete({
 // Custom Fields
 $('select[name=\'customer_group_id\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=customer/customer/customfield&&user_token={{ user_token }}&customer_group_id=' + this.value,
+		url: 'index.php?route=customer/customer/customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
 		dataType: 'json',
 		success: function(json) {
 			$('.custom-field').hide();
@@ -1204,7 +1208,7 @@ $('#button-customer').on('click', function() {
 $('#tab-product input[name=\'product\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+			url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
@@ -1578,7 +1582,7 @@ $('#button-cart').on('click', function() {
 // Payment Address
 $('select[name=\'payment_address\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=customer/customer/address&&user_token={{ user_token }}&address_id=' + this.value,
+		url: 'index.php?route=customer/customer/address&user_token={{ user_token }}&address_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'payment_address\']').prop('disabled', true);
@@ -1630,7 +1634,7 @@ var payment_zone_id = '{{ payment_zone_id }}';
 
 $('#collapse-payment select[name=\'country_id\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=localisation/country/country&&user_token={{ user_token }}&country_id=' + this.value,
+		url: 'index.php?route=localisation/country/country&user_token={{ user_token }}&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
 			$('#collapse-payment select[name=\'country_id\']').prop(' disabled', true);
@@ -1762,7 +1766,7 @@ $('#button-payment-address').on('click', function() {
 // Shipping Address
 $('select[name=\'shipping_address\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=customer/customer/address&&user_token={{ user_token }}&address_id=' + this.value,
+		url: 'index.php?route=customer/customer/address&user_token={{ user_token }}&address_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'shipping_address\']').prop('disabled', true);
@@ -1814,7 +1818,7 @@ var shipping_zone_id = '{{ shipping_zone_id }}';
 
 $('#collapse-shipping select[name=\'country_id\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=localisation/country/country&&user_token={{ user_token }}&country_id=' + this.value,
+		url: 'index.php?route=localisation/country/country&user_token={{ user_token }}&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
 			$('#collapse-shipping select[name=\'country_id\']').prop('disabled', true);
@@ -2142,7 +2146,7 @@ $('#button-reward').on('click', function() {
 $('input[name=\'affiliate\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=customer/customer/autocomplete&&user_token={{ user_token }}&filter_affiliate=1&filter_name=' + encodeURIComponent(request),
+			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token }}&filter_affiliate=1&filter_name=' + encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				json.unshift({
@@ -2224,7 +2228,7 @@ $('#content').delegate('button[id^=\'button-upload\'], button[id^=\'button-custo
 			clearInterval(timer);
 
 			$.ajax({
-				url: 'index.php?route=tool/upload/upload&&user_token={{ user_token }}',
+				url: 'index.php?route=tool/upload/upload&user_token={{ user_token }}',
 				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),

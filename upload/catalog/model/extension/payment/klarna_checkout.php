@@ -172,7 +172,7 @@ class ModelExtensionPaymentKlarnaCheckout extends Model {
 	}
 
 	public function log($data, $step = 6) {
-		if ($this->config->get('klarna_checkout_debug')) {
+		if ($this->config->get('payment_klarna_checkout_debug')) {
 			$backtrace = debug_backtrace();
 			$log = new Log('klarna_checkout.log');
 			$log->write('(' . $backtrace[$step]['class'] . '::' . $backtrace[$step]['function'] . ') - ' . print_r($data, true));

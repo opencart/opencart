@@ -89,7 +89,7 @@ $('#button-filter').on('click', function() {
 		url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
 	}
 
-	location = 'index.php?route=report/report&code=sale_coupon&&user_token={{ user_token }}' + url;
+	location = 'index.php?route=report/report&code=sale_coupon&user_token={{ user_token }}' + url;
 });
 //--></script> 
 <script type="text/javascript"><!--

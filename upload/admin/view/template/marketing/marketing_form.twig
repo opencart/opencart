@@ -95,7 +95,7 @@ $('#report').delegate('.pagination a', 'click', function(e) {
   $('#report').load(this.href);
 });
 
-$('#report').load('index.php?route=marketing/marketing/report&&user_token={{ user_token }}&marketing_id={{ marketing_id }}');
+$('#report').load('index.php?route=marketing/marketing/report&user_token={{ user_token }}&marketing_id={{ marketing_id }}');
 //--></script>
 {% endif %}
 {{ footer }}

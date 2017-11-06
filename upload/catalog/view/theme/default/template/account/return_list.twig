@@ -29,7 +29,6 @@
             </tr>
           </thead>
           <tbody>
-          
           {% for return in returns %}
           <tr>
             <td class="text-right">#{{ return.return_id }}</td>
@@ -41,7 +40,6 @@
           </tr>
           {% endfor %}
             </tbody>
-          
         </table>
       </div>
       <div class="row">
@@ -49,7 +47,7 @@
         <div class="col-sm-6 text-right">{{ results }}</div>
       </div>
       {% else %}
-      <p>{{ text_empty }}</p>
+      <p>{{ text_no_results }}</p>
       {% endif %}
       <div class="buttons clearfix">
         <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>

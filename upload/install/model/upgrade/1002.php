@@ -61,19 +61,6 @@ class ModelUpgrade1002 extends Model {
 		}
 
 		// category
-		$primary_data = array();
-
-		$query = $this->db->query("SHOW KEYS FROM `" . DB_PREFIX . "category` WHERE Key_name = 'PRIMARY'");
-
-		foreach ($query->rows as $result) {
-			$primary_data[] = $result['Column_name'];
-		}
-
-		if (!in_array('category_id', $primary_data) || !in_array('parent_id', $primary_data)) {
-			$this->db->query("ALTER TABLE `" . DB_PREFIX . "category` DROP PRIMARY KEY, ADD PRIMARY KEY(`category_id`, `parent_id`)");
-		}
-
-		// category
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "category_description' AND COLUMN_NAME = 'meta_title'");
 
 		if (!$query->num_rows) {

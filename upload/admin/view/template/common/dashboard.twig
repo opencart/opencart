@@ -33,7 +33,7 @@
 <script type="text/javascript"><!--
 $('#button-setting').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=common/developer&&user_token={{ user_token }}',
+		url: 'index.php?route=common/developer&user_token={{ user_token }}',
 		dataType: 'html',
 		beforeSend: function() {
 			$('#button-setting').button('loading');

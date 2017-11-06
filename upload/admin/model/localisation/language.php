@@ -201,18 +201,18 @@ class ModelLocalisationLanguage extends Model {
 
 	public function editLanguage($language_id, $data) {
 		$language_query = $this->db->query("SELECT `code` FROM " . DB_PREFIX . "language WHERE language_id = '" . (int)$language_id . "'");
-		
+
 		$this->db->query("UPDATE " . DB_PREFIX . "language SET name = '" . $this->db->escape((string)$data['name']) . "', code = '" . $this->db->escape((string)$data['code']) . "', locale = '" . $this->db->escape((string)$data['locale']) . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "' WHERE language_id = '" . (int)$language_id . "'");
 
 		if ($language_query->row['code'] != $data['code']) {
 			$this->db->query("UPDATE " . DB_PREFIX . "setting SET value = '" . $this->db->escape((string)$data['code']) . "' WHERE `key` = 'config_language' AND value = '" . $this->db->escape($language_query->row['code']) . "'");
 			$this->db->query("UPDATE " . DB_PREFIX . "setting SET value = '" . $this->db->escape((string)$data['code']) . "' WHERE `key` = 'config_admin_language' AND value = '" . $this->db->escape($language_query->row['code']) . "'");
 		}
-		
+
 		$this->cache->delete('catalog.language');
 		$this->cache->delete('admin.language');
 	}
-	
+
 	public function deleteLanguage($language_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "language WHERE language_id = '" . (int)$language_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "seo_url WHERE language_id = '" . (int)$language_id . "'");
@@ -222,9 +222,9 @@ class ModelLocalisationLanguage extends Model {
 
 		/*
 		Do not put any delete code for related tables for languages!!!!!!!!!
-		
+
 		It is not required as when ever you save to a multi language table then the entries for the deleted language will also be deleted!
-		
+
 		Wasting my time with people adding code here!
 		*/
 	}
@@ -286,8 +286,6 @@ class ModelLocalisationLanguage extends Model {
 						'name'        => $result['name'],
 						'code'        => $result['code'],
 						'locale'      => $result['locale'],
-						'image'       => $result['image'],
-						'directory'   => $result['directory'],
 						'sort_order'  => $result['sort_order'],
 						'status'      => $result['status']
 					);

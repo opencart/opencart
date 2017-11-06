@@ -77,6 +77,23 @@ class ControllerMailAffiliate extends Controller {
 			$data['text_email'] = $this->language->get('text_email');
 			$data['text_telephone'] = $this->language->get('text_telephone');
 
+			if ($this->request->server['HTTPS']) {
+				$data['store_url'] = HTTPS_SERVER;
+			} else {
+				$data['store_url'] = HTTP_SERVER;
+			}
+
+			$data['login'] = $this->url->link('affiliate/login', '', true);
+			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+
+			$this->load->model('tool/image');
+
+			if (is_file(DIR_IMAGE . $this->config->get('config_logo'))) {
+				$data['logo'] = $this->model_tool_image->resize($this->config->get('config_logo'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
+			} else {
+				$data['logo'] = '';
+			}
+			
 			if ($this->customer->isLogged()) {
 				$customer_group_id = $this->customer->getGroupId();
 
@@ -118,7 +135,7 @@ class ControllerMailAffiliate extends Controller {
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 			$mail->setSubject(html_entity_decode($this->language->get('text_new_affiliate'), ENT_QUOTES, 'UTF-8'));
-			$mail->setText($this->load->view('mail/affiliate_alert', $data));
+			$mail->setHtml($this->load->view('mail/affiliate_alert', $data));
 			$mail->send();
 
 			// Send to additional alert emails if new affiliate email is enabled

@@ -64,7 +64,6 @@ class ControllerExtensionOpenbayEbayTemplate extends Controller {
 
 		$data = $this->load->language('extension/openbay/ebay_template');
 
-		$data['page_title']   = $data['heading_title'];
 		$data['btn_save']     = $this->url->link('extension/openbay/ebay_template/add', 'user_token=' . $this->session->data['user_token'], true);
 		$data['cancel']       = $this->url->link('extension/openbay/ebay_template/listAll', 'user_token=' . $this->session->data['user_token'], true);
 
@@ -100,13 +99,10 @@ class ControllerExtensionOpenbayEbayTemplate extends Controller {
 
 		$data = $this->load->language('extension/openbay/ebay_template');
 
-		$this->document->setTitle($data['heading_title']);
-
 		$data['btn_save']     = $this->url->link('extension/openbay/ebay_template/edit', 'user_token=' . $this->session->data['user_token'], true);
 		$data['cancel']       = $this->url->link('extension/openbay/ebay_template/listAll', 'user_token=' . $this->session->data['user_token'], true);
 
 		if ($this->request->post && $this->templateValidate()) {
-
 			$this->session->data['success'] = $data['text_updated'];
 
 			$this->model_extension_openbay_ebay_template->edit($this->request->post['template_id'], $this->request->post);
@@ -131,18 +127,17 @@ class ControllerExtensionOpenbayEbayTemplate extends Controller {
 		if (isset($this->request->get['template_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$template_info = $this->model_extension_openbay_ebay_template->get($this->request->get['template_id']);
 			$data['text_manage'] = $this->language->get('text_edit');
+		    $this->document->setTitle($this->language->get('text_edit'));
 		} else {
 			$data['text_manage'] = $this->language->get('text_add');
+		    $this->document->setTitle($this->language->get('text_add'));
 		}
-
-		$this->document->setTitle($data['heading_title']);
 
         $this->document->addStyle('view/javascript/codemirror/lib/codemirror.css');
         $this->document->addStyle('view/javascript/codemirror/theme/monokai.css');
         $this->document->addScript('view/javascript/codemirror/lib/codemirror.js');
         $this->document->addScript('view/javascript/codemirror/lib/formatting.js');
         $this->document->addScript('view/javascript/codemirror/lib/xml.js');
-
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$data['breadcrumbs'] = array();

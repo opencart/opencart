@@ -211,14 +211,14 @@ class ModelExtensionOpenBayEbayOrder extends Model{
 				if ($this->config->get('ebay_confirmadmin_notify') == 1) {
 					$this->openbay->newOrderAdminNotify($order_id, $order_status_id);
 				}
-			}
 
-			if ($this->config->get('ebay_stock_allocate') == 0) {
-				$this->openbay->ebay->log('Stock allocation is set to allocate stock when an item is bought');
-				$this->addOrderLines($order, $order_id);
+                if ($this->config->get('ebay_stock_allocate') == 0) {
+                    $this->openbay->ebay->log('Stock allocation is set to allocate stock when an item is bought');
+                    $this->addOrderLines($order, $order_id);
 
-				$this->event->trigger('model/checkout/order/addOrderHistory/after', array('model/checkout/order/addOrderHistory/after', array($order_id, $order_status_id)));
-			}
+                    $this->event->trigger('model/checkout/order/addOrderHistory/after', array('model/checkout/order/addOrderHistory/after', array($order_id, $order_status_id)));
+                }
+            }
 		}
 
 		if (!empty($order->cancelled)) {

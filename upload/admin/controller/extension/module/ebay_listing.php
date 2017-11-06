@@ -86,7 +86,7 @@ class ControllerExtensionModuleEbayListing extends Controller {
 		}
 
 		if (isset($this->request->post['module_ebay_listing_width'])) {
-			$data['module_ebay_listing_width'] = $this->request->post['module_ebay_listing_width'];
+			$data['module_ebay_listing_width'] = $this->request->post['width'];
 		} elseif ($this->config->has('module_ebay_listing_width')) {
 			$data['module_ebay_listing_width'] = $this->config->get('module_ebay_listing_width');
 		} else {
@@ -103,7 +103,7 @@ class ControllerExtensionModuleEbayListing extends Controller {
 
 		if (isset($this->request->post['module_ebay_listing_sort'])) {
 			$data['module_ebay_listing_sort'] = $this->request->post['module_ebay_listing_sort'];
-		} elseif ($this->config->has('ebay_listing_sort')) {
+		} elseif ($this->config->has('module_ebay_listing_sort')) {
 			$data['module_ebay_listing_sort'] = $this->config->get('module_ebay_listing_sort');
 		} else {
 			$data['module_ebay_listing_sort'] = 'StartTimeNewest';

@@ -337,17 +337,6 @@ class ModelExtensionOpenBayEbayProduct extends Model {
 		$this->openbay->ebay->getImages();
 	}
 
-	public function getDisplayProducts() {
-		$data = array();
-		$data['search_keyword'] = $this->config->get('ebaydisplay_module_keywords');
-		$data['seller_id']      = $this->config->get('ebaydisplay_module_username');
-		$data['limit']          = $this->config->get('ebaydisplay_module_limit');
-		$data['sort']           = $this->config->get('ebaydisplay_module_sort');
-		$data['search_desc']    = $this->config->get('ebaydisplay_module_description');
-
-		return $this->openbay->ebay->call('item/searchListingsForDisplay', $data);
-	}
-
 	private function createVariants($product_id, $data) {
 		foreach ($data['variation']['vars'] as $variant_id => $variant) {
 			foreach ($variant['opt'] as $k_opt => $v_opt) {
@@ -589,45 +578,6 @@ class ModelExtensionOpenBayEbayProduct extends Model {
 		$orig = str_replace(' ', '%20', $orig);
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_image_import` SET `image_original` = '" . $this->db->escape($orig) . "', `image_new` = '" . $this->db->escape($new) . "', `name` = '" . $this->db->escape($name) . "', `product_id` = '" . (int)$product_id . "', `imgcount` = '" . (int)$img_count . "'");
-	}
-
-	public function resize($filename, $width, $height, $type = "") {
-		if (!file_exists(DIR_IMAGE . 'catalog/' . md5($filename) . '.jpg')) {
-			copy($filename, DIR_IMAGE . 'catalog/' . md5($filename) . '.jpg');
-		}
-
-		$image_old = DIR_IMAGE . 'catalog/' . md5($filename) . '.jpg';
-		$image_new = 'cache/ebaydisplay/' . md5($filename) . '-' . $width . 'x' . $height . $type  . '.jpg';
-
-		if (!file_exists(DIR_IMAGE . $image_new)) {
-			$path = '';
-
-			$directories = explode('/', dirname(str_replace(' . ./', '', $image_new)));
-
-			foreach ($directories as $directory) {
-				$path = $path . '/' . $directory;
-
-				if (!file_exists(DIR_IMAGE . $path)) {
-					@mkdir(DIR_IMAGE . $path, 0777);
-				}
-			}
-
-			list($width_orig, $height_orig) = getimagesize($filename);
-
-			if ($width_orig != $width || $height_orig != $height) {
-				$image = new Image($image_old);
-				$image->resize($width, $height, $type);
-				$image->save(DIR_IMAGE . $image_new);
-			} else {
-				copy($filename, DIR_IMAGE . $image_new);
-			}
-		}
-
-		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
-			return $this->config->get('config_ssl') . 'image/' . $image_new;
-		} else {
-			return $this->config->get('config_url') . 'image/' . $image_new;
-		}
 	}
 
 	private function repairCategories($parent_id = 0) {

@@ -8,16 +8,16 @@
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
-          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
         {% endfor %}
       </ul>
     </div>
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
     {% endif %}
     <div class="alert alert-info"><i class="fa fa-exclamation-circle"></i> {{ text_about }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -34,13 +34,13 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-username">{{ entry_username }}</label>
             <div class="col-sm-10">
-              <input type="text" name="module_ebay_listing_username" value="{{ module_ebay_listing_username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
+              <input type="text" name="module_ebay_listing_username" value="{{ module_ebay_listing_username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-keywords">{{ entry_keywords }}</label>
             <div class="col-sm-10">
-              <input type="text" name="module_ebay_listing_keywords" value="{{ module_ebay_listing_keywords }}" placeholder="{{ entry_keywords }}" id="input-keywords" class="form-control"/>
+              <input type="text" name="module_ebay_listing_keywords" value="{{ module_ebay_listing_keywords }}" placeholder="{{ entry_keywords }}" id="input-keywords" class="form-control" />
             </div>
           </div>
           <div class="form-group">
@@ -48,11 +48,11 @@
             <div class="col-sm-10">
               <select name="module_ebay_listing_description" id="input-description" class="form-control">
                 {% if module_ebay_listing_description %}
-                  <option value="1" selected="selected">{{ text_yes }}</option>
-                  <option value="0">{{ text_no }}</option>
+                <option value="1" selected="selected">{{ text_yes }}</option>
+                <option value="0">{{ text_no }}</option>
                 {% else %}
-                  <option value="1">{{ text_yes }}</option>
-                  <option value="0" selected="selected">{{ text_no }}</option>
+                <option value="1">{{ text_yes }}</option>
+                <option value="0" selected="selected">{{ text_no }}</option>
                 {% endif %}
               </select>
             </div>
@@ -60,24 +60,24 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-limit">{{ entry_limit }}</label>
             <div class="col-sm-10">
-              <input type="text" name="module_ebay_listing_limit" value="{{ module_ebay_listing_limit }}" placeholder="{{ entry_limit }}" id="input-limit" class="form-control"/>
+              <input type="text" name="module_ebay_listing_limit" value="{{ module_ebay_listing_limit }}" placeholder="{{ entry_limit }}" id="input-limit" class="form-control" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-width">{{ entry_width }}</label>
             <div class="col-sm-10">
-              <input type="text" name="module_ebay_listing_width" value="{{ module_ebay_listing_width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control"/>
+              <input type="text" name="module_ebay_listing_width" value="{{ module_ebay_listing_width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control" />
               {% if error_width %}
-                <div class="text-danger">{{ error_width }}</div>
+              <div class="text-danger">{{ error_width }}</div>
               {% endif %}
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-height">{{ entry_height }}</label>
             <div class="col-sm-10">
-              <input type="text" name="module_ebay_listing_height" value="{{ module_ebay_listing_height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control"/>
+              <input type="text" name="module_ebay_listing_height" value="{{ module_ebay_listing_height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control" />
               {% if error_height %}
-                <div class="text-danger">{{ error_height }}</div>
+              <div class="text-danger">{{ error_height }}</div>
               {% endif %}
             </div>
           </div>
@@ -86,14 +86,14 @@
             <div class="col-sm-10">
               <select name="module_ebay_listing_sort" id="input-sort" class="form-control">
                 {% if module_ebay_listing_sort == 'StartTimeNewest' %}
-                  <option value="StartTimeNewest" selected>{{ text_latest }}</option>
+                <option value="StartTimeNewest" selected>{{ text_latest }}</option>
                 {% else %}
-                  <option value="StartTimeNewest">{{ text_latest }}</option>
+                <option value="StartTimeNewest">{{ text_latest }}</option>
                 {% endif %}
                 {% if module_ebay_listing_sort == 'random' %}
-                  <option value="random" selected>{{ text_random }}</option>
+                <option value="random" selected>{{ text_random }}</option>
                 {% else %}
-                  <option value="random">{{ text_random }}</option>
+                <option value="random">{{ text_random }}</option>
                 {% endif %}
               </select>
             </div>
@@ -117,11 +117,11 @@
             <div class="col-sm-10">
               <select name="module_ebay_listing_status" id="input-status" class="form-control">
                 {% if module_ebay_listing_status %}
-                  <option value="1" selected="selected">{{ text_enabled }}</option>
-                  <option value="0">{{ text_disabled }}</option>
+                <option value="1" selected="selected">{{ text_enabled }}</option>
+                <option value="0">{{ text_disabled }}</option>
                 {% else %}
-                  <option value="1">{{ text_enabled }}</option>
-                  <option value="0" selected="selected">{{ text_disabled }}</option>
+                <option value="1">{{ text_enabled }}</option>
+                <option value="0" selected="selected">{{ text_disabled }}</option>
                 {% endif %}
               </select>
             </div>

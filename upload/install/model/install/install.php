@@ -3,13 +3,52 @@ class ModelInstallInstall extends Model {
 	public function database($data) {
 		$db = new DB($data['db_driver'], htmlspecialchars_decode($data['db_hostname']), htmlspecialchars_decode($data['db_username']), htmlspecialchars_decode($data['db_password']), htmlspecialchars_decode($data['db_database']), $data['db_port']);
 
-		$file = DIR_APPLICATION . 'opencart.sql';
+		// Structure
+		$this->load->helper('db_schema');
 
-		if (!file_exists($file)) {
-			exit('Could not load sql file: ' . $file);
+		$tables = db_schema();
+
+		foreach ($tables as $table) {
+			$table_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $data['db_database'] . "' AND TABLE_NAME = '" . $data['db_prefix'] . $table['name'] . "'");
+
+			if (!$table_query->num_rows) {
+				$sql = "CREATE TABLE `" . $data['db_prefix'] . $table['name'] . "` (" . "\n";
+
+				foreach ($table['field'] as $field) {
+					$sql .= "  `" . $field['name'] . "` " . $field['type'] . (!empty($field['not_null']) ? " NOT NULL" : "") . (isset($field['default']) ? " DEFAULT '" . $db->escape($field['default']) . "'" : "") . (!empty($field['auto_increment']) ? " AUTO_INCREMENT" : "") . ",\n";
+				}
+
+				if (isset($table['primary'])) {
+					$primary_data = array();
+
+					foreach ($table['primary'] as $primary) {
+						$primary_data[] = "`" . $primary . "`";
+					}
+
+					$sql .= "  PRIMARY KEY (" . implode(",", $primary_data) . "),\n";
+				}
+
+				if (isset($table['index'])) {
+					foreach ($table['index'] as $index) {
+						$index_data = array();
+
+						foreach ($index['key'] as $key) {
+							$index_data[] = "`" . $key . "`";
+						}
+
+						$sql .= "  KEY `" . $index['name'] . "` (" . implode(",", $index_data) . "),\n";
+					}
+				}
+
+				$sql = rtrim($sql, ",\n") . "\n";
+				$sql .= ") ENGINE=" . $table['engine'] . " CHARSET=" . $table['charset'] . " COLLATE=" . $table['collate'] . ";\n";
+
+				$this->db->query($sql);
+			 }
 		}
 
-		$lines = file($file);
+		// Data
+		$lines = file(DIR_APPLICATION . 'opencart.sql');
 
 		if ($lines) {
 			$sql = '';
@@ -19,13 +58,7 @@ class ModelInstallInstall extends Model {
 					$sql .= $line;
 
 					if (preg_match('/;\s*$/', $line)) {
-						$sql = str_replace("DROP TABLE IF EXISTS `oc_", "DROP TABLE IF EXISTS `" . $data['db_prefix'], $sql);
-						$sql = str_replace("CREATE TABLE `oc_", "CREATE TABLE `" . $data['db_prefix'], $sql);
-						$sql = str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $sql);
-
-						$db->query($sql);
-
-						$sql = '';
+						$db->query(str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $sql));
 					}
 				}
 			}

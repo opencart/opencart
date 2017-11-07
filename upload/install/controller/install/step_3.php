@@ -10,6 +10,7 @@ class ControllerInstallStep3 extends Controller {
 
 			$this->model_install_install->database($this->request->post);
 
+			// Catalog config.php
 			$output  = '<?php' . "\n";
 			$output .= '// HTTP' . "\n";
 			$output .= 'define(\'HTTP_SERVER\', \'' . HTTP_OPENCART . '\');' . "\n\n";
@@ -47,6 +48,7 @@ class ControllerInstallStep3 extends Controller {
 
 			fclose($file);
 
+			// Admin config.php
 			$output  = '<?php' . "\n";
 			$output .= '// HTTP' . "\n";
 			$output .= 'define(\'HTTP_SERVER\', \'' . HTTP_OPENCART . 'admin/\');' . "\n";

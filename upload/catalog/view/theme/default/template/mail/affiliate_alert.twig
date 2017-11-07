@@ -1,13 +1,55 @@
-{{ text_signup }}
+<div style="width:570px; border: 1px solid #e1e1e1; margin-left: auto; margin-right: auto; border-radius: 4px; padding-top: 5px; padding-bottom: 15px; padding-left: 25px; padding-right: 25px;">
+  <table style="width:100%; font-size:16px; border:0;">
+    <thead>
+      <tr>
+        <td style="text-align: center; border-bottom: 1px solid #ddd; padding-top: 15px; padding-bottom: 15px;">
+          {% if logo is empty %}
+            <a href="{{ store_url }}">{{ store }}</a>
+          {% else %}
+            <a href="{{ store_url }}"><img src="{{ logo }}" alt="{{ store }}" title="{{ store }}" style="margin-left: auto; margin-right: auto;" /></a>
+          {% endif %}
 
-{% if company %}
-{{ text_company }} {{ customer_group }}
-{% endif %}
-{{ text_website }} {{ website }}
-{{ text_firstname }} {{ firstname }}
-{{ text_lastname }} {{ lastname }}
-{% if customer_group %}
-{{ text_customer_group }} {{ customer_group }}
-{% endif %}
-{{ text_email }} {{ email }}
-{{ text_telephone }} {{ telephone }}
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="text-align: center; border-bottom: 1px solid #ddd;"><h1>{{ text_signup }}</h1></td>
+      </tr>
+      {% if company %}
+      <tr>
+        <td>{{ text_company }}</td>
+        <td>{{ customer_group }}</td>
+      </tr>
+      {% endif %}
+      <tr>
+        <td>{{ text_website }}</td>
+        <td>{{ website }}</td>
+      </tr>
+      <tr>
+        <td>{{ text_firstname }}</td>
+        <td>{{ firstname }}</td>
+      </tr>
+      <tr>
+        <td>{{ text_lastname }}</td>
+        <td>{{ lastname }}</td>
+      </tr>
+      {% if customer_group %}
+      <tr>
+        <td>{{ text_customer_group }}</td>
+        <td>{{ customer_group }}</td>
+      </tr>
+      {% endif %}
+      <tr>
+        <td>{{ text_email }}</td>
+        <td>{{ email }}</td>
+      </tr>
+      <tr>
+        <td>{{ text_telephone }}</td>
+        <td>{{ telephone }}</td>
+      </tr>
+    </tbody>
+
+  </table>
+
+</div>

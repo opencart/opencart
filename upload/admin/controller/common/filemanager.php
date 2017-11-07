@@ -197,7 +197,7 @@ class ControllerCommonFileManager extends Controller {
 		}
 
 		// Check its a directory
-		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_IMAGE . 'catalog/')) != str_replace('\\', '/', DIR_IMAGE . 'catalog/')) {
+		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_IMAGE . 'catalog')) != str_replace('\\', '/', DIR_IMAGE . 'catalog')) {
 			$json['error'] = $this->language->get('error_directory');
 		}
 
@@ -292,7 +292,7 @@ class ControllerCommonFileManager extends Controller {
 		}
 
 		// Check its a directory
-		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_IMAGE . 'catalog/')) != str_replace('\\', '/', DIR_IMAGE . 'catalog/')) {
+		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_IMAGE . 'catalog')) != str_replace('\\', '/', DIR_IMAGE . 'catalog')) {
 			$json['error'] = $this->language->get('error_directory');
 		}
 

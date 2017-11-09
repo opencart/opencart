@@ -9,57 +9,69 @@ class ModelInstallInstall extends Model {
 		$tables = db_schema();
 
 		foreach ($tables as $table) {
-			$table_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $data['db_database'] . "' AND TABLE_NAME = '" . $data['db_prefix'] . $table['name'] . "'");
+			$table_query = $db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $data['db_database'] . "' AND TABLE_NAME = '" . $data['db_prefix'] . $table['name'] . "'");
 
-			if (!$table_query->num_rows) {
-				$sql = "CREATE TABLE `" . $data['db_prefix'] . $table['name'] . "` (" . "\n";
+			if ($table_query->num_rows) {
+				$db->query("DROP TABLE `" . $data['db_prefix'] . $table['name'] . "`");
+			}
 
-				foreach ($table['field'] as $field) {
-					$sql .= "  `" . $field['name'] . "` " . $field['type'] . (!empty($field['not_null']) ? " NOT NULL" : "") . (isset($field['default']) ? " DEFAULT '" . $db->escape($field['default']) . "'" : "") . (!empty($field['auto_increment']) ? " AUTO_INCREMENT" : "") . ",\n";
+			$sql = "CREATE TABLE `" . $data['db_prefix'] . $table['name'] . "` (" . "\n";
+
+			foreach ($table['field'] as $field) {
+				$sql .= "  `" . $field['name'] . "` " . $field['type'] . (!empty($field['not_null']) ? " NOT NULL" : "") . (isset($field['default']) ? " DEFAULT '" . $db->escape($field['default']) . "'" : "") . (!empty($field['auto_increment']) ? " AUTO_INCREMENT" : "") . ",\n";
+			}
+
+			if (isset($table['primary'])) {
+				$primary_data = array();
+
+				foreach ($table['primary'] as $primary) {
+					$primary_data[] = "`" . $primary . "`";
 				}
 
-				if (isset($table['primary'])) {
-					$primary_data = array();
+				$sql .= "  PRIMARY KEY (" . implode(",", $primary_data) . "),\n";
+			}
 
-					foreach ($table['primary'] as $primary) {
-						$primary_data[] = "`" . $primary . "`";
+			if (isset($table['index'])) {
+				foreach ($table['index'] as $index) {
+					$index_data = array();
+
+					foreach ($index['key'] as $key) {
+						$index_data[] = "`" . $key . "`";
 					}
 
-					$sql .= "  PRIMARY KEY (" . implode(",", $primary_data) . "),\n";
+					$sql .= "  KEY `" . $index['name'] . "` (" . implode(",", $index_data) . "),\n";
 				}
+			}
 
-				if (isset($table['index'])) {
-					foreach ($table['index'] as $index) {
-						$index_data = array();
+			$sql = rtrim($sql, ",\n") . "\n";
+			$sql .= ") ENGINE=" . $table['engine'] . " CHARSET=" . $table['charset'] . " COLLATE=" . $table['collate'] . ";\n";
 
-						foreach ($index['key'] as $key) {
-							$index_data[] = "`" . $key . "`";
-						}
-
-						$sql .= "  KEY `" . $index['name'] . "` (" . implode(",", $index_data) . "),\n";
-					}
-				}
-
-				$sql = rtrim($sql, ",\n") . "\n";
-				$sql .= ") ENGINE=" . $table['engine'] . " CHARSET=" . $table['charset'] . " COLLATE=" . $table['collate'] . ";\n";
-
-				$this->db->query($sql);
-			 }
+			$db->query($sql);
 		}
 
 		// Data
-		$lines = file(DIR_APPLICATION . 'opencart.sql');
+		$lines = file(DIR_APPLICATION . 'opencart.sql', FILE_IGNORE_NEW_LINES);
 
 		if ($lines) {
 			$sql = '';
 
-			foreach($lines as $line) {
-				if ($line && (substr($line, 0, 2) != '--') && (substr($line, 0, 1) != '#')) {
-					$sql .= $line;
+			$start = false;
 
-					if (preg_match('/;\s*$/', $line)) {
-						$db->query(str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $sql));
-					}
+			foreach($lines as $line) {
+				if (substr($line, 0, 12) == 'INSERT INTO ') {
+					$start = true;
+				}
+
+				if ($start) {
+					$sql .= $line;
+				}
+
+				if (substr($line, -2) == ');') {
+					$db->query(str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $sql));
+
+					$sql = '';
+
+					$start = false;
 				}
 			}
 

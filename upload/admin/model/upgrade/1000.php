@@ -64,10 +64,6 @@ class ModelUpgrade1000 extends Model {
 						$sql .= " DEFAULT '" . $table['field'][$i]['default'] . "'";
 					}
 
-					if (isset($table['field'][$i]['auto_increment'])) {
-						$sql .= " AUTO_INCREMENT";
-					}
-
 					if (!isset($table['field'][$i - 1])) {
 						$sql .= " FIRST";
 					} else {
@@ -77,9 +73,15 @@ class ModelUpgrade1000 extends Model {
 					$this->db->query($sql);
 				}
 
-				// Primary Key
+				$query = $this->db->query("SHOW INDEXES FROM `" . DB_PREFIX . $table['name'] . "`");
+
+				foreach ($query->rows as $result) {
+					$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP INDEX `" . $result['Key_name'] . "`");
+				}
+
 				$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP PRIMARY KEY");
 
+				// Primary Key
 				if (isset($table['primary'])) {
 					$primary_data = array();
 
@@ -91,12 +93,6 @@ class ModelUpgrade1000 extends Model {
 				}
 
 				// Indexes
-				$query = $this->db->query("SHOW INDEXES FROM `" . DB_PREFIX . $table['name'] . "`");
-
-				foreach ($query->rows as $result) {
-					$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP INDEX `" . $result['Key_name'] . "`");
-				}
-
 				if (isset($table['index'])) {
 					foreach ($table['index'] as $index) {
 						$index_data = array();

@@ -69,25 +69,20 @@ class ModelUpgrade1000 extends Model {
 						$sql .= " DEFAULT '" . $table['field'][$i]['default'] . "'";
 					}
 
-					if (isset($table['field'][$i]['auto_increment'])) {
-						$sql .= " AUTO_INCREMENT";
-					}
-
 					if (!isset($table['field'][$i - 1])) {
 						$sql .= " FIRST";
 					} else {
 						$sql .= " AFTER `" . $table['field'][$i - 1]['name'] . "`";
 					}
 
-					//$this->log->write($sql);
 					$this->db->query($sql);
 				}
 
-				// Drop primary keys and indexes.
+				// Remove all primary keys and indexes
 				$query = $this->db->query("SHOW INDEXES FROM `" . DB_PREFIX . $table['name'] . "`");
 
 				foreach ($query->rows as $result) {
-					$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP INDEX `" . $result['Key_name'] . "`");
+					$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP INDEX IF EXISTS `" . $result['Key_name'] . "`");
 				}
 
 				// Primary Key
@@ -98,7 +93,13 @@ class ModelUpgrade1000 extends Model {
 						$primary_data[] = "`" . $primary . "`";
 					}
 
-					$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP PRIMARY KEY, ADD PRIMARY KEY(" . implode(",", $primary_data) . ")");
+					$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` ADD PRIMARY KEY(" . implode(",", $primary_data) . ")");
+				}
+
+				for ($i = 0; $i < count($table['field']); $i++) {
+					if (isset($table['field'][$i]['auto_increment'])) {
+						$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` MODIFY `" . $table['field'][$i]['name'] . "` " . $table['field'][$i]['type'] . " AUTO_INCREMENT");
+					}
 				}
 
 				// Indexes
@@ -113,7 +114,26 @@ class ModelUpgrade1000 extends Model {
 						$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` ADD INDEX `" . $index['name'] . "` (" . implode(",", $index_data) . ")");
 					}
 				}
+
+				// DB Engine
+				if (isset($table['engine'])) {
+					$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` ENGINE = `" . $table['engine'] . "`");
+				}
+
+				// Charset
+				if (isset($table['charset'])) {
+					$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DEFAULT CHARACTER SET `" . $table['charset'] . "` COLLATE `" . $table['collate'] . "`");
+				}
+
+				if (isset($table['charset'])) {
+					//$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DEFAULT CHARACTER SET `" . $table['charset'] . "` COLLATE `" . $table['collate'] . "`");
+				}
+
+
 			}
 		}
+
+		echo 'wroks';
+		exit();
 	}
 }

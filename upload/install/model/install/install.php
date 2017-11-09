@@ -9,7 +9,7 @@ class ModelInstallInstall extends Model {
 		$tables = db_schema();
 
 		foreach ($tables as $table) {
-			$table_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $data['db_database'] . "' AND TABLE_NAME = '" . $data['db_prefix'] . $table['name'] . "'");
+			$table_query = $db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $data['db_database'] . "' AND TABLE_NAME = '" . $data['db_prefix'] . $table['name'] . "'");
 
 			if (!$table_query->num_rows) {
 				$sql = "CREATE TABLE `" . $data['db_prefix'] . $table['name'] . "` (" . "\n";
@@ -43,7 +43,7 @@ class ModelInstallInstall extends Model {
 				$sql = rtrim($sql, ",\n") . "\n";
 				$sql .= ") ENGINE=" . $table['engine'] . " CHARSET=" . $table['charset'] . " COLLATE=" . $table['collate'] . ";\n";
 
-				$this->db->query($sql);
+				$db->query($sql);
 			 }
 		}
 
@@ -58,7 +58,10 @@ class ModelInstallInstall extends Model {
 					$sql .= $line;
 
 					if (preg_match('/;\s*$/', $line)) {
-						$db->query(str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $sql));
+                        $sql = str_replace("\n", "", $sql);
+                        $sql = str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $sql);
+                        $db->query($sql);
+                        unset($sql);
 					}
 				}
 			}

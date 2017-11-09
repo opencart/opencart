@@ -180,7 +180,7 @@ class ControllerInformationContact extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('information/contact')
+			'href' => $this->url->link('information/contact', '', true)
 		);
 
 		$data['continue'] = $this->url->link('common/home');

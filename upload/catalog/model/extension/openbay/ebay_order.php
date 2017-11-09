@@ -211,14 +211,14 @@ class ModelExtensionOpenBayEbayOrder extends Model{
 				if ($this->config->get('ebay_confirmadmin_notify') == 1) {
 					$this->openbay->newOrderAdminNotify($order_id, $order_status_id);
 				}
-			}
 
-			if ($this->config->get('ebay_stock_allocate') == 0) {
-				$this->openbay->ebay->log('Stock allocation is set to allocate stock when an item is bought');
-				$this->addOrderLines($order, $order_id);
+                if ($this->config->get('ebay_stock_allocate') == 0) {
+                    $this->openbay->ebay->log('Stock allocation is set to allocate stock when an item is bought');
+                    $this->addOrderLines($order, $order_id);
 
-				$this->event->trigger('model/checkout/order/addOrderHistory/after', array('model/checkout/order/addOrderHistory/after', array($order_id, $order_status_id)));
-			}
+                    $this->event->trigger('model/checkout/order/addOrderHistory/after', array('model/checkout/order/addOrderHistory/after', array($order_id, $order_status_id)));
+                }
+            }
 		}
 
 		if (!empty($order->cancelled)) {
@@ -501,7 +501,7 @@ class ModelExtensionOpenBayEbayOrder extends Model{
 			   `payment_address_format`   = '" . $address_format . "',
 			   `total`                    = '" . (double)$order->order->total . "',
 			   `date_modified`            = NOW()
-		   WHERE `order_id` = '" . $order_id . "'
+		   WHERE `order_id` = '" . (int)$order_id . "'
 		   ");
 
 		$total_tax = 0;
@@ -614,14 +614,14 @@ class ModelExtensionOpenBayEbayOrder extends Model{
 					INSERT INTO `" . DB_PREFIX . "ebay_transaction`
 					SET
 					`order_id`                  = '" . (int)$order_id . "',
-					`txn_id`                    = '" . $this->db->escape($data['txn_id']) . "',
-					`item_id`                   = '" . $this->db->escape($data['item_id']) . "',
+					`txn_id`                    = '" . $this->db->escape((string)$data['txn_id']) . "',
+					`item_id`                   = '" . $this->db->escape((string)$data['item_id']) . "',
 					`product_id`                = '" . (int)$product_id . "',
 					`containing_order_id`       = '" . $data['containing_order_id'] . "',
-					`order_line_id`             = '" . $this->db->escape($data['order_line_id']) . "',
+					`order_line_id`             = '" . $this->db->escape((string)$data['order_line_id']) . "',
 					`qty`                       = '" . (int)$data['qty'] . "',
 					`smp_id`                    = '" . (int)$data['smp_id'] . "',
-					`sku`                       = '" . $this->db->escape($data['sku']) . "',
+					`sku`                       = '" . $this->db->escape((string)$data['sku']) . "',
 					`created`                   = now(),
 					`modified`                  = now()
 				");
@@ -651,7 +651,7 @@ class ModelExtensionOpenBayEbayOrder extends Model{
 
 			if ($order_line['containing_order_id'] != $data['containing_order_id']) {
 				$this->openbay->ebay->log('addOrderLine() - Containing order ID for orderLine has changed from "' . $order_line['containing_order_id'] . '" to "' . $data['containing_order_id'] . '"');
-				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_transaction` SET `containing_order_id` = '" . $this->db->escape($data['containing_order_id']) . "', `modified` = now() WHERE `txn_id` = '" . $this->db->escape((string)$data['txn_id']) . "' AND `item_id` = '" . $this->db->escape((string)$data['item_id']) . "' LIMIT 1");
+				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_transaction` SET `containing_order_id` = '" . $this->db->escape((string)$data['containing_order_id']) . "', `modified` = now() WHERE `txn_id` = '" . $this->db->escape((string)$data['txn_id']) . "' AND `item_id` = '" . $this->db->escape((string)$data['item_id']) . "' LIMIT 1");
 			}
 		}
 		$this->openbay->ebay->log('addOrderLine() - Done');

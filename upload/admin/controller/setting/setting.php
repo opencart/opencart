@@ -131,6 +131,18 @@ class ControllerSettingSetting extends Controller {
 			$data['error_encryption'] = '';
 		}
 
+		if (isset($this->error['extension'])) {
+			$data['error_extension'] = $this->error['extension'];
+		} else {
+			$data['error_extension'] = '';
+		}
+
+		if (isset($this->error['mime'])) {
+			$data['error_mime'] = $this->error['mime'];
+		} else {
+			$data['error_mime'] = '';
+		}
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -199,7 +211,7 @@ class ControllerSettingSetting extends Controller {
 		$extensions = $this->model_setting_extension->getInstalled('theme');
 
 		foreach ($extensions as $code) {
-			$this->language->load('extension/theme/' . $code, 'extension');
+			$this->load->language('extension/theme/' . $code, 'extension');
 			
 			$data['themes'][] = array(
 				'text'  => $this->language->get('extension')->get('heading_title'),
@@ -635,7 +647,7 @@ class ControllerSettingSetting extends Controller {
 		$extensions = $this->model_setting_extension->getInstalled('captcha');
 
 		foreach ($extensions as $code) {
-			$this->language->load('extension/captcha/' . $code, 'extension');
+			$this->load->language('extension/captcha/' . $code, 'extension');
 
 			if ($this->config->get('captcha_' . $code . '_status')) {
 				$data['captchas'][] = array(
@@ -939,7 +951,39 @@ class ControllerSettingSetting extends Controller {
 		if (!isset($this->request->post['config_complete_status'])) {
 			$this->error['complete_status'] = $this->language->get('error_complete_status');
 		}
-		
+
+		$disallowed = array(
+			'php',
+			'php4',
+			'php3',
+		);
+
+		$extensions = explode("\n", $this->request->post['config_file_ext_allowed']);
+
+		foreach ($extensions as $extension) {
+			if (in_array(trim($extension), $disallowed)) {
+				$this->error['extension'] = $this->language->get('error_extension');
+
+				break;
+			}
+		}
+
+		$disallowed = array(
+			'php',
+			'php4',
+			'php3',
+		);
+
+		$mimes = explode("\n", $this->request->post['config_file_mime_allowed']);
+
+		foreach ($mimes as $mime) {
+			if (in_array(trim($mime), $disallowed)) {
+				$this->error['mime'] = $this->language->get('error_mime');
+
+				break;
+			}
+		}
+
 		if (!$this->request->post['config_error_filename']) {
 			$this->error['log'] = $this->language->get('error_log_required');
 		} elseif (preg_match('/\.\.[\/\\\]?/', $this->request->post['config_error_filename'])) {

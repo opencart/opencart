@@ -84,7 +84,7 @@ class ControllerExtensionExtensionDashboard extends Controller {
 				$extension = basename($file, '.php');
 				
 				// Compatibility code for old extension folders
-				$this->language->load('extension/dashboard/' . $extension, 'extension');
+				$this->load->language('extension/dashboard/' . $extension, 'extension');
 
 				$data['extensions'][] = array(
 					'name'       => $this->language->get('extension')->get('heading_title'),

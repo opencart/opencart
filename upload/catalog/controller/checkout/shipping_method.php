@@ -63,7 +63,6 @@ class ControllerCheckoutShippingMethod extends Controller {
 			$data['comment'] = '';
 		}
 		
-		//print_r($this->session->data);
 		$this->response->setOutput($this->load->view('checkout/shipping_method', $data));
 	}
 

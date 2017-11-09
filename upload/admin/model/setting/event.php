@@ -14,17 +14,25 @@ class ModelSettingEvent extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 
-	public function enableEvent($event_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `status` = '1' WHERE event_id = '" . (int)$event_id . "'");
-	}
-	
-	public function disableEvent($event_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `status` = '0' WHERE event_id = '" . (int)$event_id . "'");
+	public function editStatus($event_id, $status) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `status` = '" . (int)$status . "' WHERE event_id = '" . (int)$event_id . "'");
 	}
 	
 	public function uninstall($type, $code) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' AND `code` = '" . $this->db->escape($code) . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = '" . $this->db->escape($code) . "'");
+	}
+
+	public function getEvent($event_id) {
+		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "event` WHERE `event_id` = '" . (int)$event_id . "' LIMIT 1");
+
+		return $query->row;
+	}
+
+	public function getEventByCode($code) {
+		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "event` WHERE `code` = '" . $this->db->escape($code) . "' LIMIT 1");
+
+		return $query->row;
 	}
 		
 	public function getEvents($data = array()) {

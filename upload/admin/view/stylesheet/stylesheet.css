@@ -10,6 +10,13 @@ html, body {
 h1, h2, h3, h4, h5, h6, p {
 	margin-top: 0;
 }
+
+p {
+	margin-bottom: 40px;
+}
+fieldset {
+	margin-bottom: 10px;
+}
 .page-header {
 	vertical-align: middle;
 	margin: 20px 0 15px 0;
@@ -84,7 +91,7 @@ a:hover, a:focus {
 
 #header .navbar-nav > li {
 	display: inline-block;
-}	
+}
 #header .navbar-right > li {
 	border-left: 1px solid #eee;
 }
@@ -96,7 +103,7 @@ a:hover, a:focus {
 }
 #header #user-profile {
 	max-width: 30px;
-	margin-right: 15px;
+	margin-right: 10px;
 }
 
 #header .nav > li > a {
@@ -106,7 +113,7 @@ a:hover, a:focus {
 	color: #6D6D6D;
 	border-left: 0px solid #E1E1E1;
 }
-	
+
 #header .nav > li.dropdown > a {
 	padding-left: 10px;
 	padding-right: 10px;
@@ -120,11 +127,11 @@ a:hover, a:focus {
 	#header .navbar-header {
 		display: inline-block;
 	}
-	
+
 	#header #user-profile {
 		max-width: none;
-	}	
-	
+	}
+
 	#header .nav > li > a {
 		line-height: 60px;
 	}
@@ -132,14 +139,14 @@ a:hover, a:focus {
 
 #button-menu {
 	line-height: 30px;
-	font-size: 24px;	
+	font-size: 24px;
 	float: left;
 	padding: 10px 16px;
 	line-height: 25px;
 	display: inline-block;
 	cursor: pointer;
 	color: #6D6D6D;
-	border-right: 1px solid #eee;	
+	border-right: 1px solid #eee;
 }
 /* Desktop */
 @media (min-width: 768px){
@@ -239,16 +246,18 @@ a:hover, a:focus {
 	border-bottom: 1px solid #2b3642;
 }
 #menu > li > a {
+	font-size: 14px;
 	color: #b3cbdd;
 	padding-left: 20px;
 	border-bottom: 0px solid #585858;
 }
 #menu > li > a:hover {
-	background-color: #444444;
+	background-color: #1B2127;
 }
 #menu > li > a > i {
 	font-size: 16px;
 	width: 18px;
+	margin-right: 5px;
 }
 #menu > li.active > a {
 	color: #0b91d2;
@@ -637,7 +646,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	margin: 0 auto;
 }
 #extension-list .extension-name {
-	min-height: 100px;
+	min-height: 105px;
 }
 #extension-list .extension-name p {
 	color: #000;
@@ -755,6 +764,23 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	padding-bottom: 30px;
 }
 }
+
+#collapse-version p {
+	margin-bottom: 10px;
+}
+#collapse-version ol {
+	margin-bottom: 5px;
+	margin-left: -10px;
+}
+#collapse-version ol li {
+	line-height: 2;
+}
+#collapse-version .form-control[readonly],
+#collapse-upgrade .form-control[readonly] {
+	background-color: #fff;
+}
+
+
 .list-check {
 	list-style: none;
 }

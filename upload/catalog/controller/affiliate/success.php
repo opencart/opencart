@@ -18,7 +18,7 @@ class ControllerAffiliateSuccess extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_success'),
+			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('affiliate/success')
 		);
 
@@ -27,7 +27,7 @@ class ControllerAffiliateSuccess extends Controller {
 		$customer_group_info = $this->model_account_customer_group->getCustomerGroup($this->config->get('config_customer_group_id'));
 
 		if (!$this->config->get('config_affiliate_approval') && $this->customer->isLogged()) {
-			$data['text_message'] = sprintf($this->language->get('text_message'), $this->config->get('config_name'), $this->url->link('information/contact'));
+			$data['text_message'] = sprintf($this->language->get('text_success'), $this->config->get('config_name'), $this->url->link('information/contact'));
 		} else {
 			$data['text_message'] = sprintf($this->language->get('text_approval'), $this->config->get('config_name'), $this->url->link('information/contact'));
 		}

@@ -3,7 +3,7 @@
 $_['heading_title']         = 'Sagepay Server Cards';
 
 // Text
-$_['text_empty']		    = 'You have no saved cards';
+$_['text_no_results']		= 'You have no saved cards';
 $_['text_account']          = 'Account';
 $_['text_card']			    = 'SagePay Server Card Management';
 $_['text_fail_card']	    = 'There was an issue removing your SagePay card, Please contact the shop administrator for help.';

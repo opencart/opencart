@@ -1,7 +1,7 @@
 <?php
 class ControllerCommonColumnLeft extends Controller {
 	public function index() {
-		if (isset($this->request->get['user_token']) && isset($this->session->data['user_token']) && ($this->request->get['user_token'] == $this->session->data['user_token'])) {
+		if (isset($this->request->get['user_token']) && isset($this->session->data['user_token']) && ((string)$this->request->get['user_token'] == $this->session->data['user_token'])) {
 			$this->load->language('common/column_left');
 
 			// Create a 3 level menu array
@@ -26,15 +26,34 @@ class ControllerCommonColumnLeft extends Controller {
 					'children' => array()		
 				);
 			}
-			
+
+			// Products
+			$product = array();
+
 			if ($this->user->hasPermission('access', 'catalog/product')) {
-				$catalog[] = array(
+				$product[] = array(
 					'name'	   => $this->language->get('text_product'),
 					'href'     => $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'], true),
 					'children' => array()		
 				);
 			}
-			
+
+			if ($this->user->hasPermission('access', 'catalog/product_option')) {
+				$product[] = array(
+					'name'	   => $this->language->get('text_product_option'),
+					'href'     => $this->url->link('catalog/product_option', 'user_token=' . $this->session->data['user_token'], true) ,
+					'children' => array()
+				);
+			}
+
+			if ($product) {
+				$catalog[] = array(
+					'name'	   => $this->language->get('text_product'),
+					'href'     => '',
+					'children' => $product
+				);
+			}
+
 			if ($this->user->hasPermission('access', 'catalog/recurring')) {
 				$catalog[] = array(
 					'name'	   => $this->language->get('text_recurring'),
@@ -170,7 +189,15 @@ class ControllerCommonColumnLeft extends Controller {
 					'children' => array()		
 				);
 			}
-					
+
+			if ($this->user->hasPermission('access', 'marketplace/cron')) {
+				$marketplace[] = array(
+					'name'	   => $this->language->get('text_cron'),
+					'href'     => $this->url->link('marketplace/cron', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()
+				);
+			}
+
 			if ($marketplace) {					
 				$data['menus'][] = array(
 					'id'       => 'menu-extension',
@@ -247,7 +274,7 @@ class ControllerCommonColumnLeft extends Controller {
 			
 			if ($this->user->hasPermission('access', 'sale/recurring')) {	
 				$sale[] = array(
-					'name'	   => $this->language->get('text_recurring'),
+					'name'	   => $this->language->get('text_order_recurring'),
 					'href'     => $this->url->link('sale/recurring', 'user_token=' . $this->session->data['user_token'], true),
 					'children' => array()		
 				);	
@@ -345,7 +372,15 @@ class ControllerCommonColumnLeft extends Controller {
 			
 			// Marketing
 			$marketing = array();
-			
+
+			if ($this->user->hasPermission('access', 'marketing/affiliate')) {
+				$marketing[] = array(
+					'name'	   => $this->language->get('text_affiliate'),
+					'href'     => $this->url->link('marketing/affiliate', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()
+				);
+			}
+
 			if ($this->user->hasPermission('access', 'marketing/marketing')) {
 				$marketing[] = array(
 					'name'	   => $this->language->get('text_marketing'),
@@ -581,7 +616,15 @@ class ControllerCommonColumnLeft extends Controller {
 			
 			// Tools	
 			$maintenance = array();
-				
+			
+			if ($this->user->hasPermission('access', 'tool/upgrade')) {
+				$maintenance[] = array(
+					'name'	   => $this->language->get('text_upgrade'),
+					'href'     => $this->url->link('tool/upgrade', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}
+						
 			if ($this->user->hasPermission('access', 'tool/backup')) {
 				$maintenance[] = array(
 					'name'	   => $this->language->get('text_backup'),
@@ -614,8 +657,7 @@ class ControllerCommonColumnLeft extends Controller {
 					'href'     => '',
 					'children' => $maintenance
 				);
-			}		
-		
+			}
 		
 			if ($system) {
 				$data['menus'][] = array(

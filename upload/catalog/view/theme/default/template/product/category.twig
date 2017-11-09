@@ -21,7 +21,7 @@
         {% endif %}
         {% if description %}
         <div class="col-sm-10">{{ description }}</div>
-        {% endif %} </div>
+        {% endif %}</div>
       <hr>
       {% endif %}
       {% if categories %}
@@ -37,15 +37,15 @@
         </div>
       </div>
       {% else %}
-      <div class="row"> {% for category in categories|batch((categories|length / 4)|round(1, 'ceil')) %}
+      <div class="row">{% for category in categories|batch((categories|length / 4)|round(1, 'ceil')) %}
         <div class="col-sm-3">
           <ul>
-            {% for category in categories %}
-            <li><a href="{{ category.href }}">{{ category.name }}</a></li>
+            {% for child in category %}
+            <li><a href="{{ child.href }}">{{ child.name }}</a></li>
             {% endfor %}
           </ul>
         </div>
-        {% endfor %} </div>
+        {% endfor %}</div>
       <br />
       {% endif %}
       {% endif %}
@@ -64,31 +64,13 @@
           <div class="form-group input-group input-group-sm">
             <label class="input-group-addon" for="input-sort">{{ text_sort }}</label>
             <select id="input-sort" class="form-control" onchange="location = this.value;">
-              
-              
-              
               {% for sorts in sorts %}
               {% if sorts.value == '%s-%s'|format(sort, order) %}
-              
-              
-              
               <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
-              
-              
-              
               {% else %}
-              
-              
-              
               <option value="{{ sorts.href }}">{{ sorts.text }}</option>
-              
-              
-              
               {% endif %}
               {% endfor %}
-            
-            
-            
             </select>
           </div>
         </div>
@@ -96,36 +78,18 @@
           <div class="form-group input-group input-group-sm">
             <label class="input-group-addon" for="input-limit">{{ text_limit }}</label>
             <select id="input-limit" class="form-control" onchange="location = this.value;">
-              
-              
-              
               {% for limits in limits %}
               {% if limits.value == limit %}
-              
-              
-              
               <option value="{{ limits.href }}" selected="selected">{{ limits.text }}</option>
-              
-              
-              
               {% else %}
-              
-              
-              
               <option value="{{ limits.href }}">{{ limits.text }}</option>
-              
-              
-              
               {% endif %}
               {% endfor %}
-            
-            
-            
             </select>
           </div>
         </div>
       </div>
-      <div class="row"> {% for product in products %}
+      <div class="row">{% for product in products %}
         <div class="product-layout product-list col-xs-12">
           <div class="product-thumb">
             <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
@@ -159,7 +123,7 @@
       </div>
       {% endif %}
       {% if not categories and not products %}
-      <p>{{ text_empty }}</p>
+      <p>{{ text_no_results }}</p>
       <div class="buttons">
         <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       </div>
@@ -167,4 +131,4 @@
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>
-{{ footer }} 
+{{ footer }}

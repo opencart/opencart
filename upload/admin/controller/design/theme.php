@@ -121,8 +121,6 @@ class ControllerDesignTheme extends Controller {
 
 			// We grab the files from the default theme directory first as the custom themes drops back to the default theme if selected theme files can not be found.
 			$files = glob(rtrim(DIR_CATALOG . 'view/theme/{default,' . $theme . '}/template/' . $path, '/') . '/*', GLOB_BRACE);
-			
-			$this->log->write($files);
 
 			if ($files) {
 				foreach($files as $file) {

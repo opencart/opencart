@@ -6,6 +6,7 @@ class Smtp {
 	public $smtp_password;
 	public $smtp_port = 25;
 	public $smtp_timeout = 5;
+	public $max_attempts = 5;
 	public $verp = false;
 
 	public function send() {
@@ -123,19 +124,7 @@ class Smtp {
 			if (substr($this->smtp_hostname, 0, 3) == 'tls') {
 				fputs($handle, 'STARTTLS' . "\r\n");
 
-				$reply = '';
-
-				while ($line = fgets($handle, 515)) {
-					$reply .= $line;
-
-					if (substr($line, 3, 1) == ' ') {
-						break;
-					}
-				}
-
-				if (substr($reply, 0, 3) != 220) {
-					throw new \Exception('Error: STARTTLS not accepted from server!');
-				}
+				$this->handleReply($handle, 220, 'Error: STARTTLS not accepted from server!');
 
 				stream_socket_enable_crypto($handle, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
 			}
@@ -143,83 +132,24 @@ class Smtp {
 			if (!empty($this->smtp_username)  && !empty($this->smtp_password)) {
 				fputs($handle, 'EHLO ' . getenv('SERVER_NAME') . "\r\n");
 
-				$reply = '';
-
-				while ($line = fgets($handle, 515)) {
-					$reply .= $line;
-
-					if (substr($line, 3, 1) == ' ') {
-						break;
-					}
-				}
-
-				if (substr($reply, 0, 3) != 250) {
-					throw new \Exception('Error: EHLO not accepted from server!');
-				}
+				$this->handleReply($handle, 250, 'Error: EHLO not accepted from server!');
 
 				fputs($handle, 'AUTH LOGIN' . "\r\n");
 
-				$reply = '';
-
-				while ($line = fgets($handle, 515)) {
-					$reply .= $line;
-
-					if (substr($line, 3, 1) == ' ') {
-						break;
-					}
-				}
-
-				if (substr($reply, 0, 3) != 334) {
-					throw new \Exception('Error: AUTH LOGIN not accepted from server!');
-				}
+				$this->handleReply($handle, 334, 'Error: AUTH LOGIN not accepted from server!');
 
 				fputs($handle, base64_encode($this->smtp_username) . "\r\n");
 
-				$reply = '';
-
-				while ($line = fgets($handle, 515)) {
-					$reply .= $line;
-
-					if (substr($line, 3, 1) == ' ') {
-						break;
-					}
-				}
-
-				if (substr($reply, 0, 3) != 334) {
-					throw new \Exception('Error: Username not accepted from server!');
-				}
+				$this->handleReply($handle, 334, 'Error: Username not accepted from server!');
 
 				fputs($handle, base64_encode($this->smtp_password) . "\r\n");
 
-				$reply = '';
+				$this->handleReply($handle, 235, 'Error: Password not accepted from server!');
 
-				while ($line = fgets($handle, 515)) {
-					$reply .= $line;
-
-					if (substr($line, 3, 1) == ' ') {
-						break;
-					}
-				}
-
-				if (substr($reply, 0, 3) != 235) {
-					throw new \Exception('Error: Password not accepted from server!');
-				}
 			} else {
 				fputs($handle, 'HELO ' . getenv('SERVER_NAME') . "\r\n");
 
-				$reply = '';
-
-				while ($line = fgets($handle, 515)) {
-					$reply .= $line;
-
-					if (substr($line, 3, 1) == ' ') {
-						break;
-					}
-				}
-
-				if (substr($reply, 0, 3) != 250) {
-					throw new \Exception('Error: HELO not accepted from server!');
-				}
+				$this->handleReply($handle, 250, 'Error: HELO not accepted from server!');
 			}
 
 			if ($this->verp) {
@@ -228,32 +158,12 @@ class Smtp {
 				fputs($handle, 'MAIL FROM: <' . $this->from . '>' . "\r\n");
 			}
 
-			$reply = '';
-
-			while ($line = fgets($handle, 515)) {
-				$reply .= $line;
-
-				if (substr($line, 3, 1) == ' ') {
-					break;
-				}
-			}
-
-			if (substr($reply, 0, 3) != 250) {
-				throw new \Exception('Error: MAIL FROM not accepted from server!');
-			}
+			$this->handleReply($handle, 250, 'Error: MAIL FROM not accepted from server!');
 
 			if (!is_array($this->to)) {
 				fputs($handle, 'RCPT TO: <' . $this->to . '>' . "\r\n");
 
-				$reply = '';
-
-				while ($line = fgets($handle, 515)) {
-					$reply .= $line;
-
-					if (substr($line, 3, 1) == ' ') {
-						break;
-					}
-				}
+				$reply = $this->handleReply($handle, false, 'RCPT TO [!array]');
 
 				if ((substr($reply, 0, 3) != 250) && (substr($reply, 0, 3) != 251)) {
 					throw new \Exception('Error: RCPT TO not accepted from server!');
@@ -261,16 +171,8 @@ class Smtp {
 			} else {
 				foreach ($this->to as $recipient) {
 					fputs($handle, 'RCPT TO: <' . $recipient . '>' . "\r\n");
-
-					$reply = '';
-
-					while ($line = fgets($handle, 515)) {
-						$reply .= $line;
-
-						if (substr($line, 3, 1) == ' ') {
-							break;
-						}
-					}
+					
+					$reply = $this->handleReply($handle, false, 'RCPT TO [array]');
 
 					if ((substr($reply, 0, 3) != 250) && (substr($reply, 0, 3) != 251)) {
 						throw new \Exception('Error: RCPT TO not accepted from server!');
@@ -280,20 +182,8 @@ class Smtp {
 
 			fputs($handle, 'DATA' . "\r\n");
 
-			$reply = '';
-
-			while ($line = fgets($handle, 515)) {
-				$reply .= $line;
-
-				if (substr($line, 3, 1) == ' ') {
-					break;
-				}
-			}
-
-			if (substr($reply, 0, 3) != 354) {
-				throw new \Exception('Error: DATA not accepted from server!');
-			}
-
+			$this->handleReply($handle, 354, 'Error: DATA not accepted from server!');
+			
 			// According to rfc 821 we should not send more than 1000 including the CRLF
 			$message = str_replace("\r\n", "\n", $header . $message);
 			$message = str_replace("\r", "\n", $message);
@@ -314,37 +204,41 @@ class Smtp {
 
 			fputs($handle, '.' . "\r\n");
 
-			$reply = '';
-
-			while ($line = fgets($handle, 515)) {
-				$reply .= $line;
-
-				if (substr($line, 3, 1) == ' ') {
-					break;
-				}
-			}
-
-			if (substr($reply, 0, 3) != 250) {
-				throw new \Exception('Error: DATA not accepted from server!');
-			}
+			$this->handleReply($handle, 250, 'Error: DATA not accepted from server!');
 
 			fputs($handle, 'QUIT' . "\r\n");
 
-			$reply = '';
+			$this->handleReply($handle, 221, 'Error: QUIT not accepted from server!');
 
-			while ($line = fgets($handle, 515)) {
+			fclose($handle);
+		}
+	}
+	
+	private function handleReply($handle, $status_code = false, $error_text = false, $counter = 0) {
+		$reply = '';
+		
+		while (($line = fgets($handle, 515)) !== false) {
 				$reply .= $line;
 
 				if (substr($line, 3, 1) == ' ') {
 					break;
 				}
-			}
-
-			if (substr($reply, 0, 3) != 221) {
-				throw new \Exception('Error: QUIT not accepted from server!');
-			}
-
-			fclose($handle);
 		}
+		
+		// Handle slowish server responses (generally due to policy servers)
+		if (!$line && empty($reply) && $counter < $this->max_attempts) {
+			// sleep(1);
+			usleep(200000);
+			$counter++;
+			return $this->handleReply($handle,$status_code,$error_text,$counter);
+		}
+		
+		if ($status_code) {
+			if (substr($reply, 0, 3) != $status_code) {
+				throw new \Exception($error_text);	
+			}
+		}
+		
+		return $reply;
 	}
 }

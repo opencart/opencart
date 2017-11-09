@@ -87,11 +87,11 @@
                   <div class="col-sm-10">
                     <select name="condition" id="condition" class="form-control">
                       {% for value, title in conditions %}
-                      {% if value == default_condition %}
-                      <option selected="selected" value="{{ value }}">{{ title }}</option>
-                      {% else %}
-                      <option value="{{ value }}">{{ title }}</option>
-                      {% endif %}
+                        {% if value == default_condition %}
+                          <option selected="selected" value="{{ value }}">{{ title }}</option>
+                        {% else %}
+                          <option value="{{ value }}">{{ title }}</option>
+                        {% endif %}
                       {% endfor %}
                     </select>
                   </div>
@@ -130,16 +130,16 @@
                   <div class="col-sm-3">
                     <div class="input-group date">
                       <input type="text" class="form-control" id="sale_from" data-date-format="YYYY-MM-DD" placeholder="{{ entry_from }}" name="sale_from">
-                      <span class="input-group-btn">
+                      <div class="input-group-btn">
                       <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
-                      </span> </div>
+                      </div> </div>
                   </div>
                   <div class="col-sm-3">
                     <div class="input-group date">
                       <input type="text" class="form-control" id="sale_to" data-date-format="YYYY-MM-DD" placeholder="{{ entry_to }}" name="sale_to">
-                      <span class="input-group-btn">
+                      <div class="input-group-btn">
                       <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
-                      </span> </div>
+                      </div> </div>
                   </div>
                 </div>
                 <div class="form-group">
@@ -147,9 +147,9 @@
                   <div class="col-sm-3">
                     <div class="input-group date">
                       <input type="text" class="form-control" id="start_selling" data-date-format="YYYY-MM-DD" placeholder="{{ entry_start_selling }}" name="start_selling">
-                      <span class="input-group-btn">
+                      <div class="input-group-btn">
                       <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
-                      </span> </div>
+                      </div> </div>
                   </div>
                 </div>
                 <div class="form-group">
@@ -157,9 +157,9 @@
                   <div class="col-sm-3">
                     <div class="input-group date">
                       <input type="text" class="form-control" id="input-date-restock" data-date-format="YYYY-MM-DD" placeholder="{{ entry_restock_date }}" name="restock_date">
-                      <span class="input-group-btn">
+                      <div class="input-group-btn">
                       <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
-                      </span> </div>
+                      </div> </div>
                   </div>
                 </div>
               </div>

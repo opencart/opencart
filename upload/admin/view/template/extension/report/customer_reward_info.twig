@@ -9,9 +9,9 @@
           <label class="control-label" for="input-date-start">{{ entry_date_start }}</label>
           <div class="input-group date">
             <input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control" />
-            <span class="input-group-btn">
+            <div class="input-group-btn">
             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-            </span></div>
+            </div></div>
         </div>
         <div class="form-group">
           <label class="control-label" for="input-customer">{{ entry_customer }}</label>
@@ -21,9 +21,9 @@
           <label class="control-label" for="input-date-end">{{ entry_date_end }}</label>
           <div class="input-group date">
             <input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control" />
-            <span class="input-group-btn">
+            <div class="input-group-btn">
             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-            </span></div>
+            </div></div>
         </div>
         <div class="form-group text-right">
           <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
@@ -52,7 +52,6 @@
               </tr>
             </thead>
             <tbody>
-            
             {% if customers %}
             {% for customer in customers %}
             <tr>
@@ -72,7 +71,6 @@
             </tr>
             {% endif %}
             </tbody>
-            
           </table>
         </div>
         <div class="row">

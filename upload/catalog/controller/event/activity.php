@@ -115,7 +115,7 @@ class ControllerEventActivity extends Controller {
 		}
 	}	
 	
-	// model/account/customer/addAffiliate/after
+	// model/account/affiliate/addAffiliate/after
 	public function addAffiliate(&$route, &$args, &$output) {
 		if ($this->config->get('config_customer_activity')) {
 			$this->load->model('account/activity');
@@ -129,7 +129,7 @@ class ControllerEventActivity extends Controller {
 		}
 	}	
 	
-	// model/account/customer/editAffiliate/after
+	// model/account/affiliate/editAffiliate/after
 	public function editAffiliate(&$route, &$args, &$output) {
 		if ($this->config->get('config_customer_activity') && $output) {
 			$this->load->model('account/activity');

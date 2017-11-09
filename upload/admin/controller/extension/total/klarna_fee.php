@@ -12,7 +12,7 @@ class ControllerExtensionTotalKlarnaFee extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$status = false;
 
-			foreach ($this->request->post['klarna_fee'] as $klarna_account) {
+			foreach ($this->request->post['total_klarna_fee'] as $klarna_account) {
 				if ($klarna_account['status']) {
 					$status = true;
 
@@ -20,7 +20,7 @@ class ControllerExtensionTotalKlarnaFee extends Controller {
 				}
 			}
 
-			$this->model_setting_setting->editSetting('total_klarna_fee', array_merge($this->request->post, array('klarna_fee_status' => $status)));
+			$this->model_setting_setting->editSetting('total_klarna_fee', array_merge($this->request->post, array('total_klarna_fee_status' => $status)));
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

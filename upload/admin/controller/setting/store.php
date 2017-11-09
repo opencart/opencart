@@ -113,7 +113,7 @@ class ControllerSettingStore extends Controller {
 			'edit'     => $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$store_total = $this->model_setting_store->getTotalStores();
+		$data['store_total'] = $this->model_setting_store->getTotalStores();
 
 		$results = $this->model_setting_store->getStores();
 
@@ -316,7 +316,7 @@ class ControllerSettingStore extends Controller {
 		$extensions = $this->model_setting_extension->getInstalled('theme');
 
 		foreach ($extensions as $code) {
-			$this->language->load('extension/theme/' . $code, 'extension');
+			$this->load->language('extension/theme/' . $code, 'extension');
 
 			$data['themes'][] = array(
 				'text'  => $this->language->get('extension')->get('heading_title'),

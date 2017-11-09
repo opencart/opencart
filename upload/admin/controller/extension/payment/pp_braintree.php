@@ -410,6 +410,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 				$braintree_settings['payment_pp_braintree_environment'] = $config_response['environment'];
 				$braintree_settings['payment_pp_braintree_public_key'] = '';
 				$braintree_settings['payment_pp_braintree_private_key'] = '';
+				$braintree_settings['payment_pp_braintree_status'] = 1;
 
 				$this->model_setting_setting->editSetting('payment_pp_braintree', $braintree_settings);
 
@@ -419,6 +420,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 				$data['payment_pp_braintree_environment'] = $config_response['environment'];
 				$data['payment_pp_braintree_public_key'] = '';
 				$data['payment_pp_braintree_private_key'] = '';
+				$data['payment_pp_braintree_status'] = 1;
 
 				$data['success'] = $this->language->get('text_success_connect');
 			}
@@ -550,8 +552,8 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$this->load->language('extension/payment/pp_braintree');
 
 		$data['user_token'] = $this->session->data['user_token'];
-		
-		$data['order_id'] = $this->request->get['order_id'];
+
+		$data['order_id'] = (int)$this->request->get['order_id'];
 
 		return $this->load->view('extension/payment/pp_braintree_order', $data);
 	}
@@ -595,7 +597,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 		if ($transaction) {
 			$data['transaction_id'] = $transaction->id;
-			
+
 			$data['user_token'] = $this->session->data['user_token'];
 
 			$data['void_action'] = $data['settle_action'] = $data['refund_action'] = false;
@@ -1029,7 +1031,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$data['connect_link'] = '';
 		$data['module_link'] = '';
 
-		if ($this->config->get('payment_pp_braintree_status') != 0 || !empty($this->config->get('payment_pp_braintree_merchant_id')) || !empty($this->config->get('payment_pp_braintree_access_token'))) {
+		if ($this->config->get('payment_pp_braintree_status') || $this->config->get('payment_pp_braintree_merchant_id') || $this->config->get('payment_pp_braintree_access_token')) {
 			$data['module_link'] = $this->url->link('extension/payment/pp_braintree', 'user_token=' . $this->session->data['user_token'], true);
 		} else {
 			if ($this->user->hasPermission('modify', 'extension/extension/payment')) {

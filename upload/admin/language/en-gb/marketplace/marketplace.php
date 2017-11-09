@@ -24,11 +24,11 @@ $_['text_paid']          = 'Paid';
 $_['text_purchased']     = 'Purchased';
 $_['text_date_modified'] = 'Date Modified';
 $_['text_date_added']    = 'Date Added';
-$_['text_name']          = 'Name';
 $_['text_rating']        = 'Rating';
 $_['text_reviews']       = 'reviews';
 $_['text_compatibility'] = 'Compatibility';
 $_['text_downloaded']    = 'Downloaded';
+$_['text_member_since']  = 'Member since:';
 $_['text_price']         = 'Price';
 $_['text_partner']       = 'Developed by OpenCart Partner';
 $_['text_support']       = '12 Months free support';
@@ -42,6 +42,10 @@ $_['text_write']         = 'Write your comment here..';
 $_['text_purchase']      = 'Please confirm who you are!';
 $_['text_pin']           = 'Please enter your 4 digit PIN number. This PIN number is to protect your account.';
 $_['text_secure']        = 'Do not give your PIN to any one including developers. If you require an extension seller to install an extension for you then you should email them the required extension.';
+$_['text_name']          = 'Download Name';
+$_['text_progress']      = 'Progress';
+$_['text_available']     = 'Available Installs';
+$_['text_action']        = 'Action';
 
 // Entry
 $_['entry_pin']          = 'PIN';
@@ -55,8 +59,11 @@ $_['tab_comment']        = 'Comment';
 // Button
 $_['button_opencart']    = 'Marketplace API';
 $_['button_purchase']    = 'Purchase';
+$_['button_view_all']    = 'View all extensions';
+$_['button_get_support'] = 'Get Support';
 $_['button_comment']     = 'Comment';
 $_['button_reply']       = 'Reply';
+$_['button_forgot_pin']  = 'Forgot PIN?';
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify extensions!';

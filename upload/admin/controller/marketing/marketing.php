@@ -355,6 +355,14 @@ class ControllerMarketingMarketing extends Controller {
 	protected function getForm() {
 		$data['text_form'] = !isset($this->request->get['marketing_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
+		$data['user_token'] = $this->session->data['user_token'];
+
+		if (isset($this->request->get['marketing_id'])) {
+			$data['marketing_id'] = $this->request->get['marketing_id'];
+		} else {
+			$data['marketing_id'] = 0;
+		}
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -473,14 +481,8 @@ class ControllerMarketingMarketing extends Controller {
 
 		$marketing_info = $this->model_marketing_marketing->getMarketingByCode($this->request->post['code']);
 
-		if (!isset($this->request->get['marketing_id'])) {
-			if ($marketing_info) {
-				$this->error['code'] = $this->language->get('error_exists');
-			}
-		} else {
-			if ($marketing_info && ($this->request->get['marketing_id'] != $marketing_info['marketing_id'])) {
-				$this->error['code'] = $this->language->get('error_exists');
-			}
+		if ($marketing_info && (!isset($this->request->get['marketing_id']) || ($this->request->get['marketing_id'] != $marketing_info['marketing_id']))) {
+			$this->error['code'] = $this->language->get('error_exists');
 		}
 
 		return !$this->error;
@@ -492,5 +494,64 @@ class ControllerMarketingMarketing extends Controller {
 		}
 
 		return !$this->error;
+	}
+
+	public function report() {
+		$this->load->language('marketing/marketing');
+
+		if (isset($this->request->get['marketing_id'])) {
+			$marketing_id = (int)$this->request->get['marketing_id'];
+		} else {
+			$marketing_id = 0;
+		}
+
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		$data['reports'] = array();
+
+		$this->load->model('marketing/marketing');
+		$this->load->model('customer/customer');
+		$this->load->model('setting/store');
+
+		$results = $this->model_marketing_marketing->getReports($marketing_id, ($page - 1) * 10, 10);
+
+		foreach ($results as $result) {
+			$store_info = $this->model_setting_store->getStore($result['store_id']);
+
+			if ($store_info) {
+				$store = $store_info['name'];
+			} elseif (!$result['store_id']) {
+				$store = $this->config->get('config_name');
+			} else {
+				$store = '';
+			}
+
+			$data['reports'][] = array(
+				'ip'         => $result['ip'],
+				'account'    => $this->model_customer_customer->getTotalCustomersByIp($result['ip']),
+				'store'      => $store,
+				'country'    => $result['country'],
+				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
+				'filter_ip'  => $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . '&filter_ip=' . $result['ip'], true)
+			);
+		}
+
+		$report_total = $this->model_marketing_marketing->getTotalReports($marketing_id);
+
+		$pagination = new Pagination();
+		$pagination->total = $report_total;
+		$pagination->page = $page;
+		$pagination->limit = 10;
+		$pagination->url = $this->url->link('marketing/marketing/report', 'user_token=' . $this->session->data['user_token'] . '&marketing_id=' . $marketing_id . '&page={page}', true);
+
+		$data['pagination'] = $pagination->render();
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($report_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($report_total - 10)) ? $report_total : ((($page - 1) * 10) + 10), $report_total, ceil($report_total / 10));
+
+		$this->response->setOutput($this->load->view('marketing/marketing_report', $data));
 	}
 }

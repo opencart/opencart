@@ -3,11 +3,11 @@ class ModelExtensionPaymentCardConnect extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('extension/payment/cardconnect');
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$this->config->get('cardconnect_geo_zone') . "' AND `country_id` = '" . (int)$address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = '0')");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$this->config->get('payment_cardconnect_geo_zone') . "' AND `country_id` = '" . (int)$address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = '0')");
 
-		if ($this->config->get('cardconnect_total') > 0 && $this->config->get('cardconnect_total') > $total) {
+		if ($this->config->get('payment_cardconnect_total') > 0 && $this->config->get('payment_cardconnect_total') > $total) {
 			$status = false;
-		} elseif (!$this->config->get('cardconnect_geo_zone')) {
+		} elseif (!$this->config->get('payment_cardconnect_geo_zone')) {
 			$status = true;
 		} elseif ($query->num_rows) {
 			$status = true;
@@ -22,7 +22,7 @@ class ModelExtensionPaymentCardConnect extends Model {
 				'code'			=> 'cardconnect',
 				'title'			=> $this->language->get('text_title'),
 				'terms'			=> '',
-				'sort_order'	=> $this->config->get('cardconnect_sort_order')
+				'sort_order'	=> $this->config->get('payment_cardconnect_sort_order')
 			);
 		}
 
@@ -120,12 +120,12 @@ class ModelExtensionPaymentCardConnect extends Model {
 	public function getSettlementStatuses($merchant_id, $date) {
 		$this->log('Getting settlement statuses from CardConnect');
 
-		$url = 'https://' . $this->config->get('cardconnect_site') . '.cardconnect.com:' . (($this->config->get('cardconnect_environment') == 'live') ? 8443 : 6443) . '/cardconnect/rest/settlestat?merchid=' . $merchant_id . '&date=' . $date;
+		$url = 'https://' . $this->config->get('payment_cardconnect_site') . '.cardconnect.com:' . (($this->config->get('payment_cardconnect_environment') == 'live') ? 8443 : 6443) . '/cardconnect/rest/settlestat?merchid=' . $merchant_id . '&date=' . $date;
 
 		$header = array();
 
 		$header[] = 'Content-type: application/json';
-		$header[] = 'Authorization: Basic ' . base64_encode($this->config->get('cardconnect_api_username') . ':' . $this->config->get('cardconnect_api_password'));
+		$header[] = 'Authorization: Basic ' . base64_encode($this->config->get('payment_cardconnect_api_username') . ':' . $this->config->get('payment_cardconnect_api_password'));
 
 		$this->model_extension_payment_cardconnect->log('Header: ' . print_r($header, true));
 
@@ -162,7 +162,7 @@ class ModelExtensionPaymentCardConnect extends Model {
 	}
 
 	public function log($data) {
-		if ($this->config->get('cardconnect_logging')) {
+		if ($this->config->get('payment_cardconnect_logging')) {
 			$log = new Log('cardconnect.log');
 
 			$log->write($data);

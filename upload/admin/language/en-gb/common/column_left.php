@@ -1,11 +1,13 @@
 <?php
 // Text
+$_['text_affiliate']            = 'Affiliate';
 $_['text_api']                  = 'API';
 $_['text_attribute']            = 'Attributes';
 $_['text_attribute_group']      = 'Attribute Groups';
 $_['text_backup']               = 'Backup / Restore';
 $_['text_banner']               = 'Banners';
 $_['text_catalog']              = 'Catalog';
+$_['text_cron']                 = 'Cron Jobs';
 $_['text_category']             = 'Categories';
 $_['text_country']              = 'Countries';
 $_['text_coupon']               = 'Coupons';
@@ -43,6 +45,7 @@ $_['text_order']                = 'Orders';
 $_['text_order_status']         = 'Order Statuses';
 $_['text_online']               = 'Who\'s Online';
 $_['text_product']              = 'Products';
+$_['text_product_option']       = 'Product Options';
 $_['text_reports']              = 'Reports';
 $_['text_review']               = 'Reviews';
 $_['text_return']               = 'Returns';
@@ -60,6 +63,7 @@ $_['text_tax_class']            = 'Tax Classes';
 $_['text_tax_rate']             = 'Tax Rates';
 $_['text_translation']          = 'Translations';
 $_['text_theme']                = 'Theme Editor';
+$_['text_upgrade']              = 'Upgrade';
 $_['text_upload']               = 'Uploads';
 $_['text_user']                 = 'Users';
 $_['text_users']                = 'Users';

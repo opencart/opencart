@@ -30,15 +30,14 @@
 </div>
 <script type="text/javascript"><!--
   $('#button-confirm').bind('click', function() {
-	$('#button-confirm').button('loading');
-
+    $('#button-confirm').button('loading');
     $('#pilibaba-form').submit();
   });
-//--></script> 
+//--></script>
 {% endif %}
 
 {% if auto_submit %}
-  {{ text_redirecting }} 
+  {{ text_redirecting }}
 <script>
   document.getElementById('pilibaba-form').submit();
   </script>

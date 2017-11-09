@@ -83,6 +83,9 @@ class ControllerCheckoutLogin extends Controller {
 				}
 			}
 
+			// Log the IP info
+			$this->model_account_customer->addLogin($this->customer->getId(), $this->request->server['REMOTE_ADDR']);
+
 			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
 		}
 

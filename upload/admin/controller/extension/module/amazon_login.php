@@ -4,7 +4,6 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 	private $error = array();
 
 	public function index() {
-
 		$this->load->language('extension/module/amazon_login');
 
 		$this->load->model('setting/setting');
@@ -49,34 +48,34 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		if (isset($this->request->post['amazon_login_button_type'])) {
-			$data['amazon_login_button_type'] = $this->request->post['amazon_login_button_type'];
-		} elseif ($this->config->get('amazon_login_button_type')) {
-			$data['amazon_login_button_type'] = $this->config->get('amazon_login_button_type');
+		if (isset($this->request->post['module_amazon_login_button_type'])) {
+			$data['module_amazon_login_button_type'] = $this->request->post['module_amazon_login_button_type'];
+		} elseif ($this->config->get('module_amazon_login_button_type')) {
+			$data['module_amazon_login_button_type'] = $this->config->get('module_amazon_login_button_type');
 		} else {
-			$data['amazon_login_button_type'] = 'LwA';
+			$data['module_amazon_login_button_type'] = 'LwA';
 		}
 
-		if (isset($this->request->post['amazon_login_button_colour'])) {
-			$data['amazon_login_button_colour'] = $this->request->post['amazon_login_button_colour'];
-		} elseif ($this->config->get('amazon_login_button_colour')) {
-			$data['amazon_login_button_colour'] = $this->config->get('amazon_login_button_colour');
+		if (isset($this->request->post['module_amazon_login_button_colour'])) {
+			$data['module_amazon_login_button_colour'] = $this->request->post['module_amazon_login_button_colour'];
+		} elseif ($this->config->get('module_amazon_login_button_colour')) {
+			$data['module_amazon_login_button_colour'] = $this->config->get('module_amazon_login_button_colour');
 		} else {
-			$data['amazon_login_button_colour'] = 'gold';
+			$data['module_amazon_login_button_colour'] = 'gold';
 		}
 
-		if (isset($this->request->post['amazon_login_button_size'])) {
-			$data['amazon_login_button_size'] = $this->request->post['amazon_login_button_size'];
-		} elseif ($this->config->get('amazon_login_button_size')) {
-			$data['amazon_login_button_size'] = $this->config->get('amazon_login_button_size');
+		if (isset($this->request->post['module_amazon_login_button_size'])) {
+			$data['module_amazon_login_button_size'] = $this->request->post['module_amazon_login_button_size'];
+		} elseif ($this->config->get('module_amazon_login_button_size')) {
+			$data['module_amazon_login_button_size'] = $this->config->get('module_amazon_login_button_size');
 		} else {
-			$data['amazon_login_button_size'] = 'medium';
+			$data['module_amazon_login_button_size'] = 'medium';
 		}
 
-		if (isset($this->request->post['amazon_login_status'])) {
-			$data['amazon_login_status'] = $this->request->post['amazon_login_status'];
+		if (isset($this->request->post['module_amazon_login_status'])) {
+			$data['module_amazon_login_status'] = $this->request->post['module_amazon_login_status'];
 		} else {
-			$data['amazon_login_status'] = $this->config->get('amazon_login_status');
+			$data['module_amazon_login_status'] = $this->config->get('module_amazon_login_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -96,11 +95,13 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 
 	public function install() {
 		$this->load->model('setting/event');
-        $this->model_setting_event->addEvent('amazon_login', 'catalog/controller/account/logout/after', 'extension/module/amazon_login/logout');
+
+		$this->model_setting_event->addEvent('amazon_login', 'catalog/controller/account/logout/after', 'extension/module/amazon_login/logout');
 	}
 
 	public function uninstall() {
 		$this->load->model('setting/event');
+
 		$this->model_setting_event->deleteEventByCode('amazon_login');
 	}
 

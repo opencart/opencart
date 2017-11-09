@@ -5,8 +5,10 @@ class ControllerExtensionOpenbayAmazonusProduct extends Controller{
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
 
-		$data = $this->load->language('catalog/product');
-		$data = $this->load->language('extension/openbay/amazonus_listing', $data);
+		$this->load->language('catalog/product');
+		$this->load->language('extension/openbay/amazonus_listing');
+
+		$data = $this->language->all();
 
 		$this->document->addScript('view/javascript/openbay/js/openbay.js');
 		$this->document->setTitle($this->language->get('heading_title'));

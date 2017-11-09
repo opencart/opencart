@@ -121,7 +121,7 @@ class ModelExtensionOpenBayAmazonListing extends Model {
 				REPLACE INTO `" . DB_PREFIX . "amazon_product`
 				SET `product_id` = " . (int)$data['product_id'] . ",
 					`status` = 'uploaded',
-					`marketplaces` = '" . $this->db->escape($data['marketplace']) . "',
+					`marketplaces` = '" . $this->db->escape((string)$data['marketplace']) . "',
 					`version` = 3,
 					`var` = ''
 				");
@@ -216,7 +216,7 @@ class ModelExtensionOpenBayAmazonListing extends Model {
 						REPLACE INTO `" . DB_PREFIX . "amazon_product`
 						SET `product_id` = " . (int)$product['product_id'] . ",
 							`status` = 'uploaded',
-							`marketplaces` = '" . $this->db->escape($data['marketplace']) . "',
+							`marketplaces` = '" . $this->db->escape((string)$data['marketplace']) . "',
 							`version` = 3,
 							`var` = ''
 					");

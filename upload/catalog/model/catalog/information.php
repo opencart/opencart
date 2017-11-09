@@ -16,7 +16,7 @@ class ModelCatalogInformation extends Model {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "information_to_layout WHERE information_id = '" . (int)$information_id . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "'");
 
 		if ($query->num_rows) {
-			return $query->row['layout_id'];
+			return (int)$query->row['layout_id'];
 		} else {
 			return 0;
 		}

@@ -290,9 +290,9 @@
 	                  <label class="control-label" for="input-date-added">{{ entry_date_added }}</label>
 	                  <div class="input-group date">
 	                    <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
-	                    <span class="input-group-btn">
+	                    <div class="input-group-btn">
 	                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-	                    </span></div>
+	                    </div></div>
 	                </div>
 	                <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
 	              </div>
@@ -302,7 +302,7 @@
                 <table class="table table-bordered table-hover">
                   <thead>
                     <tr>
-                      <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                      <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');" /></td>
                       <td class="text-left">
                       	{% if sort == 'lt.order_id' %}
                         <a href="{{ sort_order_id }}" class="{{ order|lower }}">{{ column_order_id }}</a>

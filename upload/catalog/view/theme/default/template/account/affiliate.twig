@@ -7,7 +7,7 @@
   </ul>
   {% if error_warning %}
   <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
-  {% endif %}  
+  {% endif %}
   <div class="row">{{ column_left }}
     {% if column_left and column_right %}
     {% set class = 'col-sm-6' %}
@@ -33,9 +33,9 @@
               <input type="text" name="website" value="{{ website }}" placeholder="{{ entry_website }}" id="input-website" class="form-control" />
             </div>
           </div>
-       </fieldset>   
+       </fieldset>
        <fieldset>
-          <legend>{{ text_payment }}</legend>          
+          <legend>{{ text_payment }}</legend>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-tax">{{ entry_tax }}</label>
             <div class="col-sm-10">
@@ -77,7 +77,7 @@
               <input type="text" name="cheque" value="{{ cheque }}" placeholder="{{ entry_cheque }}" id="input-cheque" class="form-control" />
               {% if error_cheque %}
               <div class="text-danger">{{ error_cheque }}</div>
-              {% endif %}              
+              {% endif %}
             </div>
           </div>
           <div class="form-group payment" id="payment-paypal">
@@ -114,7 +114,7 @@
                 <input type="text" name="bank_account_name" value="{{ bank_account_name }}" placeholder="{{ entry_bank_account_name }}" id="input-bank-account-name" class="form-control" />
                 {% if error_bank_account_name %}
                 <div class="text-danger">{{ error_bank_account_name }}</div>
-                {% endif %}            
+                {% endif %}
               </div>
             </div>
             <div class="form-group">
@@ -123,7 +123,7 @@
                 <input type="text" name="bank_account_number" value="{{ bank_account_number }}" placeholder="{{ entry_bank_account_number }}" id="input-bank-account-number" class="form-control" />
                 {% if error_bank_account_number %}
                 <div class="text-danger">{{ error_bank_account_number }}</div>
-                {% endif %}              
+                {% endif %}
               </div>
             </div>
           </div>
@@ -239,9 +239,9 @@
             <div class="col-sm-10">
               <div class="input-group date">
                 <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if affiliate_custom_field[custom_field.custom_field_id] %}{{ affiliate_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
-                <span class="input-group-btn">
+                <div class="input-group-btn">
                 <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                </span></div>
+                </div></div>
               {% if error_custom_field[custom_field.custom_field_id] %}
               <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
               {% endif %}
@@ -254,9 +254,9 @@
             <div class="col-sm-10">
               <div class="input-group time">
                 <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if affiliate_custom_field[custom_field.custom_field_id] %}{{ affiliate_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" data-date-format="HH:mm" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
-                <span class="input-group-btn">
+                <div class="input-group-btn">
                 <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                </span></div>
+                </div></div>
               {% if error_custom_field[custom_field.custom_field_id] %}
               <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
               {% endif %}
@@ -269,9 +269,9 @@
             <div class="col-sm-10">
               <div class="input-group datetime">
                 <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if affiliate_custom_field[custom_field.custom_field_id] %}{{ affiliate_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
-                <span class="input-group-btn">
+                <div class="input-group-btn">
                 <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                </span></div>
+                </div></div>
               {% if error_custom_field[custom_field.custom_field_id] %}
               <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
               {% endif %}
@@ -279,12 +279,8 @@
           </div>
           {% endif %}
           {% endif %}
-          {% endfor %} 
-          
-
-                          
+          {% endfor %}
         </fieldset>
-        
         {% if text_agree %}
         <div class="buttons clearfix">
           <div class="pull-right">{{ text_agree }}
@@ -339,7 +335,7 @@ $('.form-group[data-sort]').detach().each(function() {
 //--></script>
 <script type="text/javascript"><!--
 $('button[id^=\'button-custom-field\']').on('click', function() {
-	var node = this;
+	var element = this;
 
 	$('#form-upload').remove();
 
@@ -364,22 +360,22 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 				contentType: false,
 				processData: false,
 				beforeSend: function() {
-					$(node).button('loading');
+					$(element).button('loading');
 				},
 				complete: function() {
-					$(node).button('reset');
+					$(element).button('reset');
 				},
 				success: function(json) {
-					$(node).parent().find('.text-danger').remove();
+					$(element).parent().find('.text-danger').remove();
 
 					if (json['error']) {
-						$(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
+						$(element).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
 					}
 
 					if (json['success']) {
 						alert(json['success']);
 
-						$(node).parent().find('input').val(json['code']);
+						$(element).parent().find('input').val(json['code']);
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {
@@ -406,5 +402,5 @@ $('.time').datetimepicker({
 	language: '{{ datepicker }}',
 	pickDate: false
 });
-//--></script> 
+//--></script>
 {{ footer }}

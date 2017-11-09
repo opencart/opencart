@@ -223,7 +223,7 @@ class ControllerExtensionOpenbayEbayProfile extends Controller {
 		}
 
 		if (isset($this->request->get['ebay_profile_id'])) {
-			$data['ebay_profile_id'] = $this->request->get['ebay_profile_id'];
+			$data['ebay_profile_id'] = (int)$this->request->get['ebay_profile_id'];
 		} else {
 			$data['ebay_profile_id'] = '';
 		}

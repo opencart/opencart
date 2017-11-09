@@ -49,11 +49,17 @@ class ControllerExtensionPaymentCardinity extends Controller {
 				$order_id = $order_info['order_id'];
 			}
 
+			if (!empty($order_info['payment_iso_code_2'])) {
+				$order_country = $order_info['payment_iso_code_2'];
+			} else {
+				$order_country = $order_info['shipping_iso_code_2'];
+			}
+
 			$payment_data = array(
 				'amount'			 => (float)$this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false),
 				'currency'			 => $order_info['currency_code'],
 				'order_id'			 => $order_id,
-				'country'            => $order_info['shipping_iso_code_2'],
+				'country'            => $order_country,
 				'payment_method'     => 'card',
 				'payment_instrument' => array(
 					'pan'		=> preg_replace('!\s+!', '', $this->request->post['pan']),

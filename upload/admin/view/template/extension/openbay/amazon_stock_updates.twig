@@ -17,16 +17,16 @@
         <div class="col-sm-5">
           <div class="input-group date">
             <input type="text" class="form-control" id="input-date-start" data-date-format="YYYY-MM-DD" placeholder="{{ entry_date_start }}" value="{{ date_start }}" name="filter_date_start">
-            <span class="input-group-btn">
+            <div class="input-group-btn">
             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-            </span> </div>
+            </div></div>
         </div>
         <div class="col-sm-5">
           <div class="input-group date">
             <input type="text" class="form-control" id="input-date-end" data-date-format="YYYY-MM-DD" placeholder="{{ entry_date_end }}" value="{{ date_end }}" name="filter_date_end">
-            <span class="input-group-btn">
+            <div class="input-group-btn">
             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-            </span> </div>
+            </div></div>
         </div>
         <div class="col-sm-2 text-right"> <a id="button-filter" class="btn btn-primary" data-toggle="tooltip" title="{{ button_filter }}"><i class="fa fa-filter"></i></a> </div>
       </div>
@@ -45,7 +45,7 @@
       <tbody>
         {% if not table_data %}
           <tr>
-            <td class="text-center" colspan="6">{{ text_empty }}</td>
+            <td class="text-center" colspan="6">{{ text_no_results }}</td>
           </tr>
         {% endif %}
         {% for ref, row in table_data %}
@@ -54,10 +54,10 @@
             <td class="text-left" rowspan="{{ row.data|length + 1 }}">{{ row.status }}</td>
             <td class="text-left" rowspan="{{ row.data|length + 1 }}">{{ row.date_requested }}</td>
             <td class="text-left" rowspan="{{ row.data|length + 1 }}">{{ row.date_updated }}</td>
-            {% for data in row.data %}
+            {% for data_row in row.data %}
               <tr>
-                <td class="text-center">{{ dataRow.sku }}</td>
-                <td class="text-center">{{ dataRow.stock }}</td>
+                <td class="text-center">{{ data_row.sku }}</td>
+                <td class="text-center">{{ data_row.stock }}</td>
               </tr>
             {% endfor %}
           </tr>
@@ -90,7 +90,7 @@
   });
 
   $('.date').datetimepicker({
-	language: '{{ datepicker }}',  
+	language: '{{ datepicker }}',
     pickTime: false
   });
 

@@ -259,7 +259,7 @@ class ControllerMarketingCoupon extends Controller {
 		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->request->get['coupon_id'])) {
-			$data['coupon_id'] = $this->request->get['coupon_id'];
+			$data['coupon_id'] = (int)$this->request->get['coupon_id'];
 		} else {
 			$data['coupon_id'] = 0;
 		}
@@ -518,7 +518,11 @@ class ControllerMarketingCoupon extends Controller {
 	public function history() {
 		$this->load->language('marketing/coupon');
 
-		$this->load->model('marketing/coupon');
+		if (isset($this->request->get['coupon_id'])) {
+			$coupon_id = $this->request->get['coupon_id'];
+		} else {
+			$coupon_id = 0;
+		}
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
@@ -526,9 +530,11 @@ class ControllerMarketingCoupon extends Controller {
 			$page = 1;
 		}
 
+		$this->load->model('marketing/coupon');
+
 		$data['histories'] = array();
 
-		$results = $this->model_marketing_coupon->getCouponHistories($this->request->get['coupon_id'], ($page - 1) * 10, 10);
+		$results = $this->model_marketing_coupon->getCouponHistories($coupon_id, ($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
 			$data['histories'][] = array(
@@ -539,13 +545,13 @@ class ControllerMarketingCoupon extends Controller {
 			);
 		}
 
-		$history_total = $this->model_marketing_coupon->getTotalCouponHistories($this->request->get['coupon_id']);
+		$history_total = $this->model_marketing_coupon->getTotalCouponHistories($coupon_id);
 
 		$pagination = new Pagination();
 		$pagination->total = $history_total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->link('marketing/coupon/history', 'user_token=' . $this->session->data['user_token'] . '&coupon_id=' . $this->request->get['coupon_id'] . '&page={page}', true);
+		$pagination->url = $this->url->link('marketing/coupon/history', 'user_token=' . $this->session->data['user_token'] . '&coupon_id=' . $coupon_id . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 

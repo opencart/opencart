@@ -14,32 +14,31 @@
         <div class="col-sm-7">
           <div class="input-group">
             <input type="text" name="search" value="{{ filter_name }}" placeholder="{{ entry_search }}" class="form-control">
-            <span class="input-group-btn">
-            <button type="button" data-toggle="tooltip" title="{{ button_search }}" id="button-search" class="btn btn-primary"><i class="fa fa-search"></i></button>
-            </span></div>
+            <div class="input-group-btn">
+              <button type="button" data-toggle="tooltip" title="{{ button_search }}" id="button-search" class="btn btn-primary"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
         </div>
       </div>
-      <hr />
+      <hr/>
       {% for image in images|batch(4) %}
-      <div class="row">
-        {% for image in image %}
-        <div class="col-sm-3 col-xs-6 text-center">
-          {% if image.type == 'directory' %}
-          <div class="text-center"><a href="{{ image.href }}" class="directory" style="vertical-align: middle;"><i class="fa fa-folder fa-5x"></i></a></div>
-          <label>
-            <input type="checkbox" name="path[]" value="{{ image.path }}" />
-            {{ image.name }}</label>
-          {% endif %}
-          {% if image.type == 'image' %}
-          <a href="{{ image.href }}" class="thumbnail"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" /></a>
-          <label>
-            <input type="checkbox" name="path[]" value="{{ image.path }}" />
-            {{ image.name }}</label>
-          {% endif %}
+        <div class="row">
+          {% for image in image %}
+            <div class="col-sm-3 col-xs-6 text-center">
+              {% if image.type == 'directory' %}
+                <div class="text-center"><a href="{{ image.href }}" class="directory" style="vertical-align: middle;"><i class="fa fa-folder fa-5x"></i></a></div>
+                <label><input type="checkbox" name="path[]" value="{{ image.path }}"/>
+                  {{ image.name }}</label>
+              {% endif %}
+              {% if image.type == 'image' %}
+                <a href="{{ image.href }}" class="thumbnail"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}"/></a>
+                <label><input type="checkbox" name="path[]" value="{{ image.path }}"/>
+                  {{ image.name }}</label>
+              {% endif %}
+            </div>
+          {% endfor %}
         </div>
-        {% endfor %}
-      </div>
-      <br />
+        <br/>
       {% endfor %}
     </div>
     <div class="modal-footer">{{ pagination }}</div>
@@ -50,11 +49,11 @@
 $('a.thumbnail').on('click', function(e) {
 	e.preventDefault();
 
-	{% if thumb %}
+  {% if thumb %}
 	$('#{{ thumb }}').find('img').attr('src', $(this).find('img').attr('src'));
-	{% endif %}
+  {% endif %}
 
-	$('#{{ target }}').val($(this).parent().find('input').val());
+	$('#{{ target|escape('js') }}').val($(this).parent().find('input').val());
 
 	$('#modal-image').modal('hide');
 });
@@ -91,7 +90,7 @@ $('input[name=\'search\']').on('keydown', function(e) {
 });
 
 $('#button-search').on('click', function(e) {
-	var url = 'index.php?route=common/filemanager&user_token={{ user_token }}&directory={{ directory }}';
+	var url = 'index.php?route=common/filemanager&user_token={{ user_token }}&directory={{ directory|escape('js') }}';
 
 	var filter_name = $('input[name=\'search\']').val();
 
@@ -99,13 +98,13 @@ $('#button-search').on('click', function(e) {
 		url += '&filter_name=' + encodeURIComponent(filter_name);
 	}
 
-	{% if thumb %}
+  {% if thumb %}
 	url += '&thumb=' + '{{ thumb }}';
-	{% endif %}
+  {% endif %}
 
-	{% if target %}
+  {% if target %}
 	url += '&target=' + '{{ target }}';
-	{% endif %}
+  {% endif %}
 
 	$('#modal-image').load(url);
 });
@@ -119,7 +118,7 @@ $('#button-upload').on('click', function() {
 	$('#form-upload input[name=\'file[]\']').trigger('click');
 
 	if (typeof timer != 'undefined') {
-    	clearInterval(timer);
+		clearInterval(timer);
 	}
 
 	timer = setInterval(function() {
@@ -127,7 +126,7 @@ $('#button-upload').on('click', function() {
 			clearInterval(timer);
 
 			$.ajax({
-				url: 'index.php?route=common/filemanager/upload&user_token={{ user_token }}&directory={{ directory }}',
+				url: 'index.php?route=common/filemanager/upload&user_token={{ user_token }}&directory={{ directory|escape('js') }}',
 				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),
@@ -167,9 +166,9 @@ $('#button-folder').popover({
 	trigger: 'click',
 	title: '{{ entry_folder }}',
 	content: function() {
-		html  = '<div class="input-group">';
+		html = '<div class="input-group">';
 		html += '  <input type="text" name="folder" value="" placeholder="{{ entry_folder }}" class="form-control">';
-		html += '  <span class="input-group-btn"><button type="button" title="{{ button_folder }}" id="button-create" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></span>';
+		html += '  <div class="input-group-btn"><button type="button" title="{{ button_folder }}" id="button-create" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></div>';
 		html += '</div>';
 
 		return html;
@@ -179,7 +178,7 @@ $('#button-folder').popover({
 $('#button-folder').on('shown.bs.popover', function() {
 	$('#button-create').on('click', function() {
 		$.ajax({
-			url: 'index.php?route=common/filemanager/folder&user_token={{ user_token }}&directory={{ directory }}',
+			url: 'index.php?route=common/filemanager/folder&user_token={{ user_token }}&directory={{ directory|escape('js') }}',
 			type: 'post',
 			dataType: 'json',
 			data: 'folder=' + encodeURIComponent($('input[name=\'folder\']').val()),

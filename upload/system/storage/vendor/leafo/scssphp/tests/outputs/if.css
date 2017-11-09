@@ -1,0 +1,21 @@
+div {
+  color: blue; }
+
+pre {
+  val-1: "red";
+  val-2: "blue";
+  val-3: "blue";
+  val-4: "red";
+  val-5: "red"; }
+
+span {
+  color: blue;
+  height: 10px;
+  width: 20px; }
+
+div {
+  color: blue;
+  border-color: green; }
+
+del {
+  thing: no; }

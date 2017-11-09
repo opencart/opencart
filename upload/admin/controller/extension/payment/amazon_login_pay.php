@@ -351,8 +351,8 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 				$data['amazon_login_pay_order'] = $amazon_login_pay_order;
 
-				$data['order_id'] = $this->request->get['order_id'];
-				$data['user_token'] = $this->request->get['user_token'];
+				$data['order_id'] = (int)$this->request->get['order_id'];
+				$data['user_token'] = $this->session->data['user_token'];
 
 				return $this->load->view('extension/payment/amazon_login_pay_order', $data);
 			}
@@ -445,6 +445,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 	public function refund() {
 		$this->load->language('extension/payment/amazon_login_pay');
+
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {
@@ -469,10 +470,13 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 					if ($total_captured <= 0 && $amazon_login_pay_order['capture_status'] == 1) {
 						$this->model_extension_payment_amazon_login_pay->updateRefundStatus($amazon_login_pay_order['amazon_login_pay_order_id'], 1);
+
 						$refund_status = 1;
+
 						$json['msg'][] = $this->language->get('text_refund_ok_order') . '<br />';
 					} else {
 						$refund_status = 0;
+
 						$json['msg'][] = $this->language->get('text_refund_ok') . '<br />';
 					}
 
@@ -490,6 +494,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 					$json['error_msg'][] = isset($response['status_detail']) && !empty($response['status_detail']) ? (string)$response['status_detail'] : 'Unable to refund';
 				}
 			}
+
 			$json['refund_status'] = $refund_status;
 			$json['total_captured'] = $this->currency->format($total_captured, $amazon_login_pay_order['currency_code'], true, true);
 			$json['total_refunded'] = $this->currency->format($total_refunded, $amazon_login_pay_order['currency_code'], true, true);

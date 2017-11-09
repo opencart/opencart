@@ -36,9 +36,9 @@
                 <label class="control-label" for="input-start-date">{{ entry_start_date }}</label>
                 <div class="input-group date">
                   <input type="text" name="filter_start" value="{{ filter_start }}" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" id="input-start-date" class="form-control" />
-                  <span class="input-group-btn">
+                  <div class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -47,9 +47,9 @@
                 <label class="control-label" for="input-end-date">{{ entry_end_date }}</label>
                 <div class="input-group date">
                   <input type="text" name="filter_end" value="{{ filter_end }}" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" id="input-end-date" class="form-control" />
-                  <span class="input-group-btn">
+                  <div class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -103,31 +103,29 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-  var url = 'index.php?route=extension/openbay/fba/orderlist&user_token={{ user_token }}';
+	var url = 'index.php?route=extension/openbay/fba/orderlist&user_token={{ user_token }}';
 
-  var filter_start = $('input[name=\'filter_start\']').val();
+	var filter_start = $('input[name=\'filter_start\']').val();
 
-  if (filter_start) {
-    url += '&filter_start=' + encodeURIComponent(filter_start);
-  }
+	if (filter_start) {
+		url += '&filter_start=' + encodeURIComponent(filter_start);
+	}
 
-  var filter_end = $('input[name=\'filter_end\']').val();
+	var filter_end = $('input[name=\'filter_end\']').val();
 
-  if (filter_end) {
-    url += '&filter_end=' + encodeURIComponent(filter_end);
-  }
+	if (filter_end) {
+		url += '&filter_end=' + encodeURIComponent(filter_end);
+	}
 
-  var filter_status = $('select[name=\'filter_status\']').val();
+	var filter_status = $('select[name=\'filter_status\']').val();
 
-  if (filter_status) {
-    url += '&filter_status=' + encodeURIComponent(filter_status);
-  }
-
-  location = url;
+	if (filter_status) {
+		url += '&filter_status=' + encodeURIComponent(filter_status);
+ 	}
+	
+	location = url;
 });
 //--></script>
-<script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
-<link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	language: '{{ datepicker }}',

@@ -11,7 +11,6 @@ class ControllerEventTranslation extends Controller {
 			} else {
 				$this->language->get($key)->set($result['key'], $result['value']);
 			}
-			
 		}	
 	}
 }

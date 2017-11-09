@@ -57,32 +57,16 @@
       <label class="col-sm-2 control-label" for="eway-card-expiry-month">{{ entry_cc_expire_date }}</label>
       <div class="col-sm-2">
         <select name="EWAY_CARDEXPIRYMONTH" id="eway-card-expiry-month" class="form-control">
-          
-          
-					% for month in months %}
-						
-          
+          {% for month in months %}
           <option value="{{ month.value }}">{{ month.text }}</option>
-          
-          
-					{% endfor %}
-				  
-        
+          {% endfor %}
         </select>
       </div>
       <div class="col-sm-2">
         <select name="EWAY_CARDEXPIRYYEAR" id="eway-card-expiry-year" class="form-control">
-          
-          
-					% for year in year_expire %}
-						
-          
+          {% for year in year_expire %}
           <option value="{{ year.value }}">{{ year.text }}</option>
-          
-          
-					{% endfor %}
-				  
-        
+          {% endfor %}
         </select>
         <div id="expiry-error" class="text-danger"></div>
       </div>

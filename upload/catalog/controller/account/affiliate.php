@@ -13,10 +13,10 @@ class ControllerAccountAffiliate extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('account/customer');
+		$this->load->model('account/affiliate');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_account_customer->addAffiliate($this->customer->getId(), $this->request->post);
+			$this->model_account_affiliate->addAffiliate($this->customer->getId(), $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -37,10 +37,10 @@ class ControllerAccountAffiliate extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('account/customer');
+		$this->load->model('account/affiliate');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_account_customer->editAffiliate($this->customer->getId(), $this->request->post);
+			$this->model_account_affiliate->editAffiliate($this->customer->getId(), $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -114,7 +114,7 @@ class ControllerAccountAffiliate extends Controller {
 		$data['action'] = $this->url->link($this->request->get['route'], '', true);
 		
 		if ($this->request->get['route'] == 'account/affiliate/edit' && $this->request->server['REQUEST_METHOD'] != 'POST') {
-			$affiliate_info = $this->model_account_customer->getAffiliate($this->customer->getId());
+			$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
 		}
 		
 		if (isset($this->request->post['company'])) {
@@ -218,7 +218,7 @@ class ControllerAccountAffiliate extends Controller {
 			$data['affiliate_custom_field'] = array();
 		}
 
-		$affiliate_info = $this->model_account_customer->getAffiliate($this->customer->getId());
+		$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
 
 		if (!$affiliate_info && $this->config->get('config_affiliate_id')) {
 			$this->load->model('catalog/information');
@@ -283,8 +283,8 @@ class ControllerAccountAffiliate extends Controller {
 		}			
 		
 		// Validate agree only if customer not already an affiliate
-		$affiliate_info = $this->model_account_customer->getAffiliate($this->customer->getId());
-				
+		$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
+
 		if (!$affiliate_info && $this->config->get('config_affiliate_id')) {
 			$this->load->model('catalog/information');
 

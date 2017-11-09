@@ -3,14 +3,14 @@ class Controller3rdPartyMaxmind extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('3rd_party/maxmind');
+		$this->load->language('3rd_party/maxmind');
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('3rd_party/maxmind');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_3rd_party_maxmind->editSetting($this->request->post);
+			$this->model_3rd_party_maxmind->editSetting('fraud_maxmind', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

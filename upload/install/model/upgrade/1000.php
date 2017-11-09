@@ -122,18 +122,15 @@ class ModelUpgrade1000 extends Model {
 
 				// Charset
 				if (isset($table['charset'])) {
-					$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DEFAULT CHARACTER SET `" . $table['charset'] . "` COLLATE `" . $table['collate'] . "`");
+					$sql = "ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DEFAULT CHARACTER SET `" . $table['charset'] . "`";
+
+					if (isset($table['collate'])) {
+						$sql .= " COLLATE `" . $table['collate'] . "`";
+					}
+
+					$this->db->query($sql);
 				}
-
-				if (isset($table['charset'])) {
-					//$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DEFAULT CHARACTER SET `" . $table['charset'] . "` COLLATE `" . $table['collate'] . "`");
-				}
-
-
 			}
 		}
-
-		echo 'wroks';
-		exit();
 	}
 }

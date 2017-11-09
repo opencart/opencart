@@ -59,6 +59,8 @@ class ModelInstallInstall extends Model {
 
 			foreach($lines as $line) {
 				if (substr($line, 0, 12) == 'INSERT INTO ') {
+					$sql = '';
+
 					$start = true;
 				}
 
@@ -68,8 +70,6 @@ class ModelInstallInstall extends Model {
 
 				if (substr($line, -2) == ');') {
 					$db->query(str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $sql));
-
-					$sql = '';
 
 					$start = false;
 				}

@@ -73,13 +73,12 @@ class ModelUpgrade1000 extends Model {
 					$this->db->query($sql);
 				}
 
+				// Remove all primary keys and indexes
 				$query = $this->db->query("SHOW INDEXES FROM `" . DB_PREFIX . $table['name'] . "`");
 
 				foreach ($query->rows as $result) {
-					$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP INDEX `" . $result['Key_name'] . "`");
+					$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP INDEX IF EXISTS `" . $result['Key_name'] . "`");
 				}
-
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP PRIMARY KEY");
 
 				// Primary Key
 				if (isset($table['primary'])) {
@@ -103,6 +102,22 @@ class ModelUpgrade1000 extends Model {
 
 						$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` ADD INDEX `" . $index['name'] . "` (" . implode(",", $index_data) . ")");
 					}
+				}
+
+				// DB Engine
+				if (isset($table['engine'])) {
+					$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` ENGINE = `" . $table['engine'] . "`");
+				}
+
+				// Charset
+				if (isset($table['charset'])) {
+					$sql = "ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DEFAULT CHARACTER SET `" . $table['charset'] . "`";
+
+					if (isset($table['collate'])) {
+						$sql .= " COLLATE `" . $table['collate'] . "`";
+					}
+
+					$this->db->query($sql);
 				}
 			}
 		}

@@ -105,51 +105,72 @@ class ModelLocalisationCurrency extends Model {
 		}
 	}
 
-	public function refresh($force = false) {
-		$currency_data = array();
-
-		if ($force) {
-			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency WHERE code != '" . $this->db->escape($this->config->get('config_currency')) . "'");
-		} else {
-			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency WHERE code != '" . $this->db->escape($this->config->get('config_currency')) . "' AND date_modified < '" .  $this->db->escape(date('Y-m-d H:i:s', strtotime('-1 day'))) . "'");
-		}
-
-		foreach ($query->rows as $result) {
-			$currency_data[] = $this->config->get('config_currency') . $result['code'] . '=X';
-			$currency_data[] = $result['code'] . $this->config->get('config_currency') . '=X';
-		}
-
-		$curl = curl_init();
-
-		curl_setopt($curl, CURLOPT_URL, 'http://download.finance.yahoo.com/d/quotes.csv?s=' . implode(',', $currency_data) . '&f=sl1&e=.json');
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($curl, CURLOPT_HEADER, false);
-		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
-		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-
-		$content = curl_exec($curl);
-		
-		curl_close($curl);
-
-		$line = explode("\n", trim($content));
-
-		for ($i = 0; $i < count($line); $i = $i + 2) {
-			$currency = utf8_substr($line[$i], 4, 3);
-			$value = utf8_substr($line[$i], 11, 6);
-			
-			if ((float)$value < 1 && isset($line[$i + 1])) {
-				$value = (1 / utf8_substr($line[$i + 1], 11, 6));
-			}	
-						
-			if ((float)$value) {
-				$this->db->query("UPDATE " . DB_PREFIX . "currency SET value = '" . (float)$value . "', date_modified = '" .  $this->db->escape(date('Y-m-d H:i:s')) . "' WHERE code = '" . $this->db->escape($currency) . "'");
-			}
-		}
-
-		$this->db->query("UPDATE " . DB_PREFIX . "currency SET value = '1.00000', date_modified = '" .  $this->db->escape(date('Y-m-d H:i:s')) . "' WHERE code = '" . $this->db->escape($this->config->get('config_currency')) . "'");
-
-		$this->cache->delete('currency');
+    public function refresh($force = false) {
+        if ($force) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency WHERE code != '" . $this->db->escape($this->config->get('config_currency')) . "'");
+	} else {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency WHERE code != '" . $this->db->escape($this->config->get('config_currency')) . "' AND date_modified < '" .  $this->db->escape(date('Y-m-d H:i:s', strtotime('-1 day'))) . "'");
 	}
+
+        if($query->num_rows == 0) {
+            // Already up to date
+            return true;
+        }
+	    
+        $zip = new \ZipArchive();
+        $ecb_source_url = 'http://www.ecb.europa.eu/stats/eurofxref/eurofxref.zip';
+        $path_to_zip = DIR_STORAGE . 'download/ecb-data.zip';
+        $path_to_csv = DIR_STORAGE . 'download/eurofxref.csv';
+
+        $compressed = file_get_contents($ecb_source_url);
+        file_put_contents($path_to_zip, $compressed);
+
+        $res = $zip->open($path_to_zip);
+
+        // Make sure that we downloaded a valid zip archive
+        if($res === TRUE) {
+
+            $zip->extractTo(DIR_STORAGE . 'download/');
+            $zip->close();
+            $data = file_get_contents($path_to_csv);
+
+            $explode = explode(PHP_EOL, $data);
+            $currencies = explode(', ', $explode[0]);
+            $values = explode(', ', $explode[1]);
+
+            // Combine currencies and values into a single array
+            $combined = array_combine($currencies, $values);
+
+            // Since we're getting values from the European Central Bank and their base currency is the Euro,
+            // the Euro should always be present in our array with a value of 1 initially
+            $combined['EUR'] = 1;
+
+            // Set the value of the base currrency relative to the Euro, so we can convert the rest of the currencies
+            // in the next step.
+            $base = $combined[$this->config->get('config_currency')];
+
+            // Now we need to convert the currency values from being relative to the Euro to being relative 
+            // to our stores base currency:
+            $normalized = [];
+            foreach ($combined as $key => $value) {
+                // ECB data often has a trailing comma, which creates an array key with no name or value.
+                // This if check is done to drop that value
+                if (!is_null($value) && $value != '') {
+                    $normalized[$key] = $value / $base;
+                }
+            }
+
+            // Finally, we need to update the currency table with the new values
+            foreach ($query->rows as $row) {
+                $this->db->query("UPDATE `" . DB_PREFIX . "currency` SET value = " . (float)$normalized[$row['code']] . ", date_modified = '" . $this->db->escape(date('Y-m-d H:i:s')) . "' WHERE code = '" . $this->db->escape($row['code']) . "'");
+            }
+
+            $this->cache->delete('currency');
+
+            return true;
+        }
+    }
+
 
 	public function getTotalCurrencies() {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "currency");

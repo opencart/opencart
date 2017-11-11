@@ -119,8 +119,8 @@ class ModelLocalisationCurrency extends Model {
 	    
         $zip = new \ZipArchive();
         $ecb_source_url = 'http://www.ecb.europa.eu/stats/eurofxref/eurofxref.zip';
-        $path_to_zip = DIR_STORAGE . 'download/ecb-data.zip';
-        $path_to_csv = DIR_STORAGE . 'download/eurofxref.csv';
+        $path_to_zip = DIR_DOWNLOAD . 'ecb-data.zip';
+        $path_to_csv = DIR_DOWNLOAD . 'eurofxref.csv';
 
         $compressed = file_get_contents($ecb_source_url);
         file_put_contents($path_to_zip, $compressed);
@@ -130,7 +130,7 @@ class ModelLocalisationCurrency extends Model {
         // Make sure that we downloaded a valid zip archive
         if($res === TRUE) {
 
-            $zip->extractTo(DIR_STORAGE . 'download/');
+            $zip->extractTo(DIR_DOWNLOAD);
             $zip->close();
             $data = file_get_contents($path_to_csv);
 

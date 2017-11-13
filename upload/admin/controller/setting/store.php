@@ -83,6 +83,12 @@ class ControllerSettingStore extends Controller {
 	}
 
 	protected function getList() {
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
 		$url = '';
 
 		if (isset($this->request->get['page'])) {
@@ -106,14 +112,21 @@ class ControllerSettingStore extends Controller {
 
 		$data['stores'] = array();
 
-		$data['stores'][] = array(
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name') . $this->language->get('text_default'),
-			'url'      => $this->config->get('config_secure') ? HTTPS_CATALOG : HTTP_CATALOG,
-			'edit'     => $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token'], true)
+		if ($page == 1) {
+			$data['stores'][] = array(
+				'store_id' => 0,
+				'name' => $this->config->get('config_name') . $this->language->get('text_default'),
+				'url' => $this->config->get('config_secure') ? HTTPS_CATALOG : HTTP_CATALOG,
+				'edit' => $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token'], true)
+			);
+		}
+
+		$filter_data = array(
+			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
+			'limit' => $this->config->get('config_limit_admin')
 		);
 
-		$data['store_total'] = $this->model_setting_store->getTotalStores();
+		$store_total = $this->model_setting_store->getTotalStores();
 
 		$results = $this->model_setting_store->getStores();
 
@@ -145,6 +158,16 @@ class ControllerSettingStore extends Controller {
 		} else {
 			$data['selected'] = array();
 		}
+
+		$pagination = new Pagination();
+		$pagination->total = $store_total;
+		$pagination->page = $page;
+		$pagination->limit = $this->config->get('config_limit_admin');
+		$pagination->url = $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
+
+		$data['pagination'] = $pagination->render();
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($store_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($store_total - $this->config->get('config_limit_admin'))) ? $store_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $store_total, ceil($store_total / $this->config->get('config_limit_admin')));
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

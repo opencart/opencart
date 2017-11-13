@@ -86,13 +86,6 @@ class ControllerCommonDashboard extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		// Run currency update
-		if ($this->config->get('config_currency_auto')) {
-			$this->load->model('localisation/currency');
-
-			$this->model_localisation_currency->refresh();
-		}
-
 		$this->response->setOutput($this->load->view('common/dashboard', $data));
 	}
 }

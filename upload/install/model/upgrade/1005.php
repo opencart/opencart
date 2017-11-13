@@ -70,32 +70,6 @@ class ModelUpgrade1005 extends Model {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "product_description` ADD `meta_title` varchar(255) NOT NULL AFTER `description`");
 		}
 
-		// product_image
-		$index_data = array();
-
-		$query = $this->db->query("SHOW INDEX FROM `" . DB_PREFIX . "product_image` WHERE Key_name != 'PRIMARY'");
-
-		foreach ($query->rows as $result) {
-			$index_data[] = $result['Column_name'];
-		}
-
-		if (!in_array('product_id', $index_data)) {
-			$this->db->query("ALTER TABLE `" . DB_PREFIX . "product_image` ADD INDEX `product_id` (`product_id`)");
-		}
-
-		// product_to_category
-		$index_data = array();
-
-		$query = $this->db->query("SHOW INDEX FROM `" . DB_PREFIX . "product_to_category` WHERE Key_name != 'PRIMARY'");
-
-		foreach ($query->rows as $result) {
-			$index_data[] = $result['Column_name'];
-		}
-
-		if (!in_array('category_id', $index_data)) {
-			$this->db->query("ALTER TABLE `" . DB_PREFIX . "product_to_category` ADD INDEX `category_id` (`category_id`)");
-		}
-
 		// product_recurring
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "product_recurring' AND COLUMN_NAME = 'recurring_id'");
 
@@ -199,9 +173,9 @@ class ModelUpgrade1005 extends Model {
 		}
 
 		// force some settings to prevent errors
-		$this->db->query("UPDATE " . DB_PREFIX . "setting set value = 'default' WHERE `key` = 'config_template'");
-		$this->db->query("UPDATE " . DB_PREFIX . "setting set value = '1' WHERE `key` = 'config_error_display'");
-		$this->db->query("UPDATE " . DB_PREFIX . "setting set value = '1' WHERE `key` = 'config_error_log'");
-		$this->db->query("UPDATE " . DB_PREFIX . "setting set value = '0' WHERE `key` = 'config_compression'");
+		$this->db->query("UPDATE " . DB_PREFIX . "setting SET value = 'default' WHERE `key` = 'config_template'");
+		$this->db->query("UPDATE " . DB_PREFIX . "setting SET value = '1' WHERE `key` = 'config_error_display'");
+		$this->db->query("UPDATE " . DB_PREFIX . "setting SET value = '1' WHERE `key` = 'config_error_log'");
+		$this->db->query("UPDATE " . DB_PREFIX . "setting SET value = '0' WHERE `key` = 'config_compression'");
 	}
 }

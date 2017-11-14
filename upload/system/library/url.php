@@ -11,8 +11,11 @@
  * URL class
  */
 class Url {
+	/** @var string */
 	private $url;
+	/** @var string */
 	private $ssl;
+	/** @var Controller[] */
 	private $rewrite = [];
 
 	/**
@@ -27,7 +30,9 @@ class Url {
 	}
 
 	/**
-	 * @param	object	$rewrite
+	 * @param	Controller	$rewrite
+	 *
+	 * @return	void
  	 */
 	public function addRewrite($rewrite) {
 		$this->rewrite[] = $rewrite;
@@ -35,7 +40,7 @@ class Url {
 
 	/**
 	 * @param	string		$route
-	 * @param	mixed		$args
+	 * @param	string|string[]	$args
 	 * @param	bool		$secure
 	 *
 	 * @return	string

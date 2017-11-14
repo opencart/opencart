@@ -339,12 +339,14 @@ class ControllerSettingStore extends Controller {
 		$extensions = $this->model_setting_extension->getInstalled('theme');
 
 		foreach ($extensions as $code) {
-			$this->load->language('extension/theme/' . $code, 'extension');
+			if ($this->config->get('theme_' . $code . '_status')) {
+				$this->load->language('extension/theme/' . $code, 'extension');
 
-			$data['themes'][] = array(
-				'text'  => $this->language->get('extension')->get('heading_title'),
-				'value' => $code
-			);
+				$data['themes'][] = array(
+					'text'  => $this->language->get('extension')->get('heading_title'),
+					'value' => $code
+				);
+			}
 		}
 
 		if (isset($this->request->post['config_layout_id'])) {

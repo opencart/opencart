@@ -5,11 +5,11 @@
  * @copyright	Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
  * @license		https://opensource.org/licenses/GPL-3.0
  * @link		https://www.opencart.com
-*/
+ */
 
 /**
-* URL class
-*/
+ * URL class
+ */
 class Url {
 	private $url;
 	private $ssl;
@@ -21,7 +21,7 @@ class Url {
 	 * @param	string	$url
 	 * @param	string	$ssl
 	 *
- 	*/
+ 	 */
 	public function __construct($url, $ssl = '') {
 		$this->url = $url;
 		$this->ssl = $ssl;
@@ -31,7 +31,7 @@ class Url {
 	 *
 	 *
 	 * @param	object	$rewrite
- 	*/	
+ 	 */
 	public function addRewrite($rewrite) {
 		$this->rewrite[] = $rewrite;
 	}
@@ -44,7 +44,7 @@ class Url {
 	 * @param	bool		$secure
 	 *
 	 * @return	string
- 	*/
+ 	 */
 	public function link($route, $args = '', $secure = false) {
 		if ($this->ssl && $secure) {
 			$url = $this->ssl . 'index.php?route=' . (string)$route;

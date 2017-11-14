@@ -14,7 +14,7 @@ class Url {
 	private $url;
 	private $ssl;
 	private $rewrite = array();
-	
+
 	/**
 	 * Constructor
 	 *
@@ -46,7 +46,7 @@ class Url {
 		} else {
 			$url = $this->url . 'index.php?route=' . (string)$route;
 		}
-		
+
 		if ($args) {
 			if (is_array($args)) {
 				$url .= '&amp;' . http_build_query($args);
@@ -54,11 +54,10 @@ class Url {
 				$url .= str_replace('&', '&amp;', '&' . ltrim($args, '&'));
 			}
 		}
-		
+
 		foreach ($this->rewrite as $rewrite) {
 			$url = $rewrite->rewrite($url);
 		}
-		
-		return $url; 
+		return $url;
 	}
 }

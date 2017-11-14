@@ -20,7 +20,6 @@ class Url {
 	 *
 	 * @param	string	$url
 	 * @param	string	$ssl
-	 *
  	 */
 	public function __construct($url, $ssl = '') {
 		$this->url = $url;
@@ -28,8 +27,6 @@ class Url {
 	}
 
 	/**
-	 *
-	 *
 	 * @param	object	$rewrite
  	 */
 	public function addRewrite($rewrite) {
@@ -37,8 +34,6 @@ class Url {
 	}
 
 	/**
-	 * 
-	 *
 	 * @param	string		$route
 	 * @param	mixed		$args
 	 * @param	bool		$secure

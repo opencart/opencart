@@ -276,15 +276,36 @@
                 </div>
               </div>
               <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-currency-engine">{{ entry_currency_engine }}</label>
+                <div class="col-sm-10">
+                  <select name="config_currency_engine" id="input-currency-engine" class="form-control">
+
+                    {% for currency_engine in currency_engines %}
+                      {% if currency_engine.value == config_currency_engine %}
+
+                        <option value="{{ currency_engine.value }}" selected="selected">{{ currency_engine.text }}</option>
+
+                      {% else %}
+
+                        <option value="{{ currency_engine.value }}">{{ currency_engine.text }}</option>
+
+                      {% endif %}
+                    {% endfor %}
+
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
                 <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_currency_auto }}">{{ entry_currency_auto }}</span></label>
                 <div class="col-sm-10">
-                  <label class="radio-inline"> {% if config_currency_auto %}
+                  <label class="radio-inline">{% if config_currency_auto %}
                       <input type="radio" name="config_currency_auto" value="1" checked="checked"/>
                       {{ text_yes }}
                     {% else %}
                       <input type="radio" name="config_currency_auto" value="1"/>
                       {{ text_yes }}
-                    {% endif %} </label> <label class="radio-inline"> {% if not config_currency_auto %}
+                    {% endif %}</label> <label class="radio-inline"> {% if not config_currency_auto %}
                       <input type="radio" name="config_currency_auto" value="0" checked="checked"/>
                       {{ text_no }}
                     {% else %}

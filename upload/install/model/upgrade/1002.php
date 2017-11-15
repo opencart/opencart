@@ -23,13 +23,6 @@ class ModelUpgrade1002 extends Model {
 		}
 
 		// customer
-		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer' AND COLUMN_NAME = 'safe'");
-
-		if (!$query->num_rows) {
-			$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer` ADD `safe` tinyint(1) NOT NULL AFTER `approved`");
-		}
-
-		// customer
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer_group' AND COLUMN_NAME = 'name'");
 
 		if ($query->num_rows) {

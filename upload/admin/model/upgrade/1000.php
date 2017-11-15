@@ -64,10 +64,6 @@ class ModelUpgrade1000 extends Model {
 						$sql .= " DEFAULT '" . $table['field'][$i]['default'] . "'";
 					}
 
-					if (isset($table['field'][$i]['auto_increment'])) {
-						$sql .= " AUTO_INCREMENT";
-					}
-
 					if (!isset($table['field'][$i - 1])) {
 						$sql .= " FIRST";
 					} else {
@@ -77,9 +73,14 @@ class ModelUpgrade1000 extends Model {
 					$this->db->query($sql);
 				}
 
-				// Primary Key
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP PRIMARY KEY");
+				// Remove all primary keys and indexes
+				$query = $this->db->query("SHOW INDEXES FROM `" . DB_PREFIX . $table['name'] . "`");
 
+				foreach ($query->rows as $result) {
+					$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP INDEX IF EXISTS `" . $result['Key_name'] . "`");
+				}
+
+				// Primary Key
 				if (isset($table['primary'])) {
 					$primary_data = array();
 
@@ -91,12 +92,6 @@ class ModelUpgrade1000 extends Model {
 				}
 
 				// Indexes
-				$query = $this->db->query("SHOW INDEXES FROM `" . DB_PREFIX . $table['name'] . "`");
-
-				foreach ($query->rows as $result) {
-					$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP INDEX `" . $result['Key_name'] . "`");
-				}
-
 				if (isset($table['index'])) {
 					foreach ($table['index'] as $index) {
 						$index_data = array();
@@ -107,6 +102,22 @@ class ModelUpgrade1000 extends Model {
 
 						$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` ADD INDEX `" . $index['name'] . "` (" . implode(",", $index_data) . ")");
 					}
+				}
+
+				// DB Engine
+				if (isset($table['engine'])) {
+					$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` ENGINE = `" . $table['engine'] . "`");
+				}
+
+				// Charset
+				if (isset($table['charset'])) {
+					$sql = "ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DEFAULT CHARACTER SET `" . $table['charset'] . "`";
+
+					if (isset($table['collate'])) {
+						$sql .= " COLLATE `" . $table['collate'] . "`";
+					}
+
+					$this->db->query($sql);
 				}
 			}
 		}

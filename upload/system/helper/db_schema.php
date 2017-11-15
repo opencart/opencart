@@ -74,7 +74,7 @@ function db_schema() {
 		),
 		'index' => array(
 			array(
-				'name' => 'index_customer_id',
+				'name' => 'customer_id',
 				'key' => array(
 					'customer_id'
 				)
@@ -438,7 +438,7 @@ function db_schema() {
 		),
 		'index' => array(
 			array(
-				'name' => 'index_cart_id',
+				'name' => 'cart_id',
 				'key' => array(
 					'api_id',
 					'customer_id',
@@ -510,7 +510,7 @@ function db_schema() {
 		),
 		'index' => array(
 			array(
-				'name' => 'index_parent_id',
+				'name' => 'parent_id',
 				'key' => array(
 					'parent_id'
 				)
@@ -566,7 +566,7 @@ function db_schema() {
 		),
 		'index' => array(
 			array(
-				'name' => 'index_name',
+				'name' => 'name',
 				'key' => array(
 					'name'
 				)
@@ -1490,13 +1490,13 @@ function db_schema() {
 		),
 		'index' => array(
 			array(
-				'name' => 'index_email',
+				'name' => 'email',
 				'key' => array(
 					'email'
 				)
 			),
 			array(
-				'name' => 'index_ip',
+				'name' => 'ip',
 				'key' => array(
 					'ip'
 				)
@@ -1547,7 +1547,7 @@ function db_schema() {
 		),
 		'index' => array(
 			array(
-				'name' => 'index_ip',
+				'name' => 'ip',
 				'key' => array(
 					'ip'
 				)
@@ -2506,11 +2506,6 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
-				'name' => 'directory',
-				'type' => 'varchar(32)',
-				'not_null' => true
-			),
-			array(
 				'name' => 'sort_order',
 				'type' => 'int(3)',
 				'not_null' => true,
@@ -2527,7 +2522,7 @@ function db_schema() {
 		),
 		'index' => array(
 			array(
-				'name' => 'index_name',
+				'name' => 'name',
 				'key' => array(
 					'name'
 				)
@@ -2743,7 +2738,7 @@ function db_schema() {
 		),
 		'index' => array(
 			array(
-				'name' => 'index_name',
+				'name' => 'name',
 				'key' => array(
 					'name'
 				)
@@ -3606,7 +3601,7 @@ function db_schema() {
 		),
 		'index' => array(
 			array(
-				'name' => 'index_order_id',
+				'name' => 'order_id',
 				'key' => array(
 					'order_id'
 				)
@@ -3908,7 +3903,7 @@ function db_schema() {
 		),
 		'index' => array(
 			array(
-				'name' => 'index_order_id',
+				'name' => 'order_id',
 				'key' => array(
 					'order_id'
 				)
@@ -4260,7 +4255,7 @@ function db_schema() {
 		),
 		'index' => array(
 			array(
-				'name' => 'index_name',
+				'name' => 'name',
 				'key' => array(
 					'name'
 				)
@@ -4326,7 +4321,7 @@ function db_schema() {
 		),
 		'index' => array(
 			array(
-				'name' => 'index_product_id',
+				'name' => 'product_id',
 				'key' => array(
 					'product_id'
 				)
@@ -4391,7 +4386,7 @@ function db_schema() {
 		),
 		'index' => array(
 			array(
-				'name' => 'index_product_id',
+				'name' => 'product_id',
 				'key' => array(
 					'product_id'
 				)
@@ -4655,7 +4650,7 @@ function db_schema() {
 		),
 		'index' => array(
 			array(
-				'name' => 'index_product_id',
+				'name' => 'product_id',
 				'key' => array(
 					'product_id'
 				)
@@ -4686,7 +4681,7 @@ function db_schema() {
 		),
 		'index' => array(
 			array(
-				'name' => 'index_category_id',
+				'name' => 'category_id',
 				'key' => array(
 					'category_id'
 				)
@@ -5171,7 +5166,7 @@ function db_schema() {
 		),
 		'index' => array(
 			array(
-				'name' => 'index_product_id',
+				'name' => 'product_id',
 				'key' => array(
 					'product_id'
 				)
@@ -5657,13 +5652,13 @@ function db_schema() {
 		),
 		'index' => array(
 			array(
-				'name' => 'index_query',
+				'name' => 'query',
 				'key' => array(
 					'query'
 				)
 			),
 			array(
-				'name' => 'index_keyword',
+				'name' => 'keyword',
 				'key' => array(
 					'keyword'
 				)

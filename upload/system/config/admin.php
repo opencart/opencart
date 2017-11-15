@@ -45,5 +45,14 @@ $_['action_event'] = array(
 	),
 	'view/*/before' => array(
 		'event/language'
-	)
+	),
+	//'model/localisation/currency/editCurrency' => array(
+	//	'event/currency'
+	//),
+	//'model/*/after' => array(
+	//	'event/debug/before'
+	//),
+	//'model/*/after'  => array(
+	//	'event/debug/after'
+	//)
 );

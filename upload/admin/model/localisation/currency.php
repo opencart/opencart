@@ -5,10 +5,6 @@ class ModelLocalisationCurrency extends Model {
 
 		$currency_id = $this->db->getLastId();
 
-		if ($this->config->get('config_currency_auto')) {
-			$this->refresh(true);
-		}
-
 		$this->cache->delete('currency');
 		
 		return $currency_id;
@@ -20,8 +16,8 @@ class ModelLocalisationCurrency extends Model {
 		$this->cache->delete('currency');
 	}
 
-	public function editRate($currency_id, $rate) {
-		$this->db->query("UPDATE " . DB_PREFIX . "currency SET value = '" . $this->db->escape((string)$data['value']) . "' WHERE currency_id = '" . (int)$currency_id . "'");
+	public function editValueByCode($code, $value) {
+		$this->db->query("UPDATE " . DB_PREFIX . "currency SET value = '" . $this->db->escape((string)$value) . "', date_modified = NOW() WHERE code = '" . $this->db->escape((string)$code) . "'");
 
 		$this->cache->delete('currency');
 	}

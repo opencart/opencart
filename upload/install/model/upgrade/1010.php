@@ -204,13 +204,13 @@ class ModelUpgrade1010 extends Model {
 
 		$events[] = array(
 			'code'    => 'admin_currency_add',
-			'trigger' => 'admin/model/currency/add/after',
+			'trigger' => 'admin/model/currency/addCurrency/after',
 			'action'  => 'event/currency'
 		);
 
 		$events[] = array(
 			'code'    => 'admin_currency_edit',
-			'trigger' => 'admin/model/currency/edit/after',
+			'trigger' => 'admin/model/currency/editCurrency/after',
 			'action'  => 'event/currency'
 		);
 

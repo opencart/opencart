@@ -2,13 +2,7 @@
 class ModelLocalisationCurrency extends Model {
 	public function addCurrency($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "currency SET title = '" . $this->db->escape((string)$data['title']) . "', code = '" . $this->db->escape((string)$data['code']) . "', symbol_left = '" . $this->db->escape((string)$data['symbol_left']) . "', symbol_right = '" . $this->db->escape((string)$data['symbol_right']) . "', decimal_place = '" . $this->db->escape((string)$data['decimal_place']) . "', value = '" . $this->db->escape((string)$data['value']) . "', status = '" . (int)$data['status'] . "', date_modified = NOW()");
-
 		$currency_id = $this->db->getLastId();
-
-		if ($this->config->get('config_currency_auto')) {
-			$this->refresh(true);
-		}
-
 		$this->cache->delete('currency');
 		
 		return $currency_id;

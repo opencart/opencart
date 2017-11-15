@@ -5,14 +5,12 @@ class ControllerEventCurrency extends Controller {
 	// model/localisation/currency/editCurrency
 	// CRON
 	public function index(&$route, &$args) {
+		$status = true;
 
-		if ($route == 'model/setting/setting/editSetting' && $args[0] == 'config') {
-
-			exit();
-		}
-
-		if ($this->config->get('config_currency_auto')) {
-			$this->load->controller('extension/currency/' . $this->config->get('config_currency_engine') . '/currency');
+		if ($route == 'model/setting/setting/editSetting' && $args[0] == 'config' && isset($args[1]['config_currency'])) {
+			$this->load->controller('extension/currency/' . $this->config->get('config_currency_engine') . '/currency', $args[1]['config_currency']);
+		} else {
+			$this->load->controller('extension/currency/' . $this->config->get('config_currency_engine') . '/currency', $this->config->get('config_currency'));
 		}
 	}
 }

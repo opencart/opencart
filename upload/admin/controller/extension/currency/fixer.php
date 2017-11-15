@@ -65,7 +65,7 @@ class ControllerExtensionCurrencyFixer extends Controller {
 		return !$this->error;
 	}
 
-	public function currency() {
+	public function currency($default) {
 		if ($this->config->get('currency_fixer_status')) {
 			$currencies = array();
 
@@ -74,15 +74,15 @@ class ControllerExtensionCurrencyFixer extends Controller {
 			$results = $this->model_localisation_currency->getCurrencies();
 
 			foreach ($results as $result) {
-			//	if (($result['code'] != $this->config->get('config_currency')) && (strtotime($result['date_modified']) < strtotime('-1 day'))) {
+				if (($result['code'] != $this->config->get('config_currency'))) {
 					$currencies[] = $result;
-			//	}
+				}
 			}
 
 			if ($currencies) {
 				$curl = curl_init();
 
-				curl_setopt($curl, CURLOPT_URL, 'https://api.fixer.io/latest?base=' . $this->config->get('config_currency'));
+				curl_setopt($curl, CURLOPT_URL, 'https://api.fixer.io/latest?base=' . $default);
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 				curl_setopt($curl, CURLOPT_HEADER, false);
 				curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
@@ -102,10 +102,10 @@ class ControllerExtensionCurrencyFixer extends Controller {
 					}
 				}
 
-				$this->model_localisation_currency->editValueByCode($this->config->get('config_currency'), '1.00000');
-
 				$this->cache->delete('currency');
 			}
+
+			$this->model_localisation_currency->editValueByCode($default), '1.00000');
 		}
 	}
 }

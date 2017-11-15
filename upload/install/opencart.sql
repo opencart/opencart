@@ -700,11 +700,11 @@ INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUE
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
 (33, 'admin_mail_forgotten', 'admin/model/user/user/editCode/after', 'mail/forgotten', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
-(34, 'admin_currency_add', 'admin/model/localisation/currency/addCurrency', 'event/currency', 1);
+(34, 'admin_currency_add', 'admin/model/localisation/currency/addCurrency/after', 'event/currency', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
-(35, 'admin_currency_edit', 'admin/model/localisation/currency/editCurrency', 'event/currency', 1);
+(35, 'admin_currency_edit', 'admin/model/localisation/currency/editCurrency/after', 'event/currency', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
-(36, 'admin_setting', 'admin/model/setting/setting/editConfig', 'event/currency', 1);
+(36, 'admin_setting', 'admin/model/setting/setting/editSetting/after', 'event/currency', 1);
 
 -----------------------------------------------------------
 

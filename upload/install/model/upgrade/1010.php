@@ -201,7 +201,25 @@ class ModelUpgrade1010 extends Model {
 			'trigger' => 'admin/model/user/user/editCode/after', 
 			'action'  => 'mail/forgotten'
 		);
-		
+
+		$events[] = array(
+			'code'    => 'admin_currency_add',
+			'trigger' => 'admin/model/currency/add/after',
+			'action'  => 'event/currency'
+		);
+
+		$events[] = array(
+			'code'    => 'admin_currency_edit',
+			'trigger' => 'admin/model/currency/edit/after',
+			'action'  => 'event/currency'
+		);
+
+		$events[] = array(
+			'code'    => 'admin_setting',
+			'trigger' => 'admin/model/setting/setting/editSetting/after',
+			'action'  => 'event/currency'
+		);
+
 		foreach ($events as $event) {
 			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `code` = '" . $this->db->escape($event['code']) . "'");
 			

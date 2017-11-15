@@ -8,6 +8,7 @@ class ControllerEventCurrency extends Controller {
 
 		if ($route == 'model/setting/setting/editSetting' && $args[0] == 'config') {
 
+			exit();
 		}
 
 		if ($this->config->get('config_currency_auto')) {

@@ -32,7 +32,7 @@ class ControllerMailRegister extends Controller {
 			$data['store_url'] = HTTP_SERVER;
 		}
 
-		$data['login'] = $this->url->link('account/login', '', true);
+		$data['login'] = $this->url->link('account/login', '');
 		$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 		$this->load->model('tool/image');
@@ -80,7 +80,7 @@ class ControllerMailRegister extends Controller {
 				$data['store_url'] = HTTP_SERVER;
 			}
 
-			$data['login'] = $this->url->link('account/login', '', true);
+			$data['login'] = $this->url->link('account/login', '');
 			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 			$this->load->model('tool/image');

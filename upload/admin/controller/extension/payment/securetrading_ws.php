@@ -17,7 +17,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment'));
 		}
 
 		if (isset($this->request->post['payment_securetrading_ws_site_reference'])) {
@@ -180,17 +180,17 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/securetrading_ws', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('extension/payment/securetrading_ws', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
@@ -216,9 +216,9 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 			'100' => $this->language->get('text_pending_settled'),
 		);
 
-		$data['action'] = $this->url->link('extension/payment/securetrading_ws', 'user_token=' . $this->session->data['user_token'], true);
+		$data['action'] = $this->url->link('extension/payment/securetrading_ws', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
 
 		$data['myst_status'] = !empty($data['securetrading_ws_csv_username']) && !empty($data['securetrading_ws_csv_password']);
 		$data['hours'] = array();
@@ -318,7 +318,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 			foreach ($csv as $row) {
 				$data['transactions'][] = array(
 					'order_id' => $row['orderreference'],
-					'order_href' => $this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $row['orderreference'], true),
+					'order_href' => $this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $row['orderreference']),
 					'transaction_reference' => $row['transactionreference'],
 					'customer' => $row['billingfirstname'] . ' ' . $row['billinglastname'],
 					'total' => $row['mainamount'],

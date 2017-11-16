@@ -8,7 +8,7 @@ class UrlTest extends OpenCartTest {
 	}
 
 	public function testSecureHomeUrl() {
-		$link = $this->url->link('common/home', '', true);
+		$link = $this->url->link('common/home', '');
 		$this->assertEquals(HTTPS_SERVER . 'index.php?route=common/home', $link, "Could not construct secure homepage's URL");
 	}
 

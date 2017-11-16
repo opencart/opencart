@@ -24,7 +24,7 @@ class Squareup {
     const ENDPOINT_TRANSACTIONS = 'locations/%s/transactions';
     const ENDPOINT_VOID_TRANSACTION = 'locations/%s/transactions/%s/void';
     const PAYMENT_FORM_URL = 'https://js.squareup.com/v2/paymentform';
-    const SCOPE = 'MERCHANT_PROFILE_READ PAYMENTS_READ SETTLEMENTS_READ CUSTOMERS_READ CUSTOMERS_WRITE';
+    const SCOPE = 'MERCHANT_PROFILE_READ PAYMENTS_READ PAYMENTS_WRITE SETTLEMENTS_READ CUSTOMERS_READ CUSTOMERS_WRITE';
     const VIEW_TRANSACTION_URL = 'https://squareup.com/dashboard/sales/transactions/%s/by-unit/%s';
     const SQUARE_INTEGRATION_ID = 'sqi_65a5ac54459940e3600a8561829fd970';
 
@@ -222,8 +222,8 @@ class Squareup {
             'endpoint' => self::ENDPOINT_TOKEN,
             'no_version' => true,
             'parameters' => array(
-                'client_id' => $this->config->get('payment_squareup_client_id'),
-                'client_secret' => $this->config->get('payment_squareup_client_secret'),
+                'client_id' => $this->session->data['square_connect']['payment_squareup_client_id'],
+                'client_secret' => $this->session->data['square_connect']['payment_squareup_client_secret'],
                 'redirect_uri' => $this->session->data['payment_squareup_oauth_redirect'],
                 'code' => $code
             )
@@ -374,9 +374,27 @@ class Squareup {
             )
         );
 
-        $this->api($request_data);
+        $refund_result = $this->api($request_data);
 
-        return $this->getTransaction($location_id, $transaction_id);
+        $transaction = $this->getTransaction($location_id, $transaction_id);
+
+        $refunds = !empty($transaction['refunds']) ? $transaction['refunds'] : array();
+        $found = false;
+
+        foreach ($refunds as $refund) {
+            if ($refund['id'] == $refund_result['refund']['id']) {
+                $found = true;
+                break;
+            }
+        }
+
+        if (!$found) {
+            $refunds[] = $refund_result['refund'];
+        }
+
+        $transaction['refunds'] = $refunds;
+
+        return $transaction;
     }
 
     public function lowestDenomination($value, $currency) {

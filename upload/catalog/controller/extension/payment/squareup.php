@@ -24,6 +24,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
         }
 
         $data['cards'] = array();
+        $data['has_selected_card'] = false;
 
         if ($this->customer->isLogged()) {
             $data['is_logged'] = true;
@@ -32,9 +33,18 @@ class ControllerExtensionPaymentSquareup extends Controller {
 
             $cards = $this->model_extension_credit_card_squareup->getCards($this->customer->getId(), $this->config->get('payment_squareup_enable_sandbox'));
 
+            $square_customer = $this->model_extension_credit_card_squareup->getCustomer($this->customer->getId(), $this->config->get('payment_squareup_enable_sandbox'));
+
             foreach ($cards as $card) {
+                $selected = $card['squareup_token_id'] == $square_customer['squareup_token_id'];
+
+                if ($selected) {
+                    $data['has_selected_card'] = true;
+                }
+
                 $data['cards'][] = array(
                     'id' => $card['squareup_token_id'],
+                    'selected' => $selected,
                     'text' => sprintf($this->language->get('text_card_ends_in'), $card['brand'], $card['ends_in'])
                 );
             }
@@ -140,6 +150,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
 
             // Prepare Transaction
             $transaction_data = array(
+                'note' => sprintf($this->language->get('text_order_id'), $order_info['order_id']),
                 'idempotency_key' => uniqid(),
                 'amount_money' => array(
                     'amount' => $this->squareup->lowestDenomination($order_info['total'], $order_info['currency_code']),
@@ -158,6 +169,9 @@ class ControllerExtensionPaymentSquareup extends Controller {
             if ($use_saved) {
                 $transaction_data['customer_card_id'] = $square_card_id;
                 $transaction_data['customer_id'] = $square_customer['square_customer_id'];
+
+                $square_token_id = $this->model_extension_credit_card_squareup->getTokenIdByCustomerAndToken($this->customer->getId(), $this->config->get('payment_squareup_enable_sandbox'), $square_card_id);
+                $this->model_extension_credit_card_squareup->updateDefaultCustomerToken($this->customer->getId(), $this->config->get('payment_squareup_enable_sandbox'), $square_token_id);
             } else {
                 $transaction_data['card_nonce'] = $this->request->post['squareup_nonce'];
             }
@@ -247,5 +261,29 @@ class ControllerExtensionPaymentSquareup extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    
+    public function info() {
+        if (!$this->validate()) {
+            $this->response->redirect($this->url->link($this->config->get('action_default'), '', true));
+        } else {
+            $append_token = !empty($this->session->data['user_token']) ? '&user_token=' . $this->session->data['user_token'] : '';
+
+            $this->response->redirect(sprintf($this->config->get('payment_squareup_admin_url'), (int)$this->request->get['squareup_transaction_id'], $append_token));
+        }
+    }
+
+    protected function validate() {
+        if (empty($this->request->get['cron_token']) || $this->request->get['cron_token'] != $this->config->get('payment_squareup_cron_token')) {
+            return false;
+        }
+
+        if (empty($this->request->get['squareup_transaction_id'])) {
+            return false;
+        }
+
+        if (!$this->config->get('payment_squareup_admin_url')) {
+            return false;
+        }
+
+        return true;
+    }
 }

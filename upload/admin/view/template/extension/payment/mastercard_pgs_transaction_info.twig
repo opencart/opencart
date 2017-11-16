@@ -1,0 +1,150 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+	  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i>&nbsp;{{ error_warning }}
+	    <button type="button" class="close" data-dismiss="alert">&times;</button>
+	  </div>
+	{% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-info-circle"></i>&nbsp;{{ text_edit }}</h3>
+      </div>
+      <div class="panel-body">
+      	<form class="form-horizontal" method="POST" id="transaction_form">
+	      	<div class="form-group">
+	      	  <label class="col-sm-2 control-label">{{ entry_transaction_id }}</label>
+	      	  <div class="col-sm-10">
+	      	    <div class="form-control-static">{{ transaction_id }}</div>
+	      	  </div>
+	      	</div>
+	      	<div class="form-group">
+	      	  <label class="col-sm-2 control-label">{{ entry_merchant }}</label>
+	      	  <div class="col-sm-10">
+	      	    <div class="form-control-static">{{ merchant }}</div>
+	      	  </div>
+	      	</div>
+	      	<div class="form-group">
+	      	  <label class="col-sm-2 control-label">{{ entry_order_id }}</label>
+	      	  <div class="col-sm-10">
+	      	    <div class="form-control-static"><a href="{{ url_order }}" target="_blank">{{ order_id }}</a></div>
+	      	  </div>
+	      	</div>
+	      	<div class="form-group">
+	      	  <label class="col-sm-2 control-label">{{ entry_status }}</label>
+	      	  <div class="col-sm-10">
+	      	    <div class="form-control-static">{{ status }}</div>
+	      	  </div>
+	      	</div>
+	      	<div class="form-group">
+	      	  <label class="col-sm-2 control-label">{{ entry_result }}</label>
+	      	  <div class="col-sm-10">
+	      	    <div class="form-control-static">{{ result }}</div>
+	      	  </div>
+	      	</div>
+	      	<div class="form-group">
+	      	  <label class="col-sm-2 control-label">{{ entry_type }}</label>
+	      	  <div class="col-sm-10">
+	      	    <div class="form-control-static">{{ type }}</div>
+	      	  </div>
+	      	</div>
+	      	<div class="form-group">
+	      	  <label class="col-sm-2 control-label">{{ entry_amount }}</label>
+	      	  <div class="col-sm-10">
+	      	    <div {{ (is_authorized or is_captured or is_payment) ? 'class="input-group"' }}>
+	      	      {% if is_authorized %}
+	      	      	<input type="text" class="form-control" name="transaction_amount" value="{{ amount }}" />
+	      	      	<a class="form-submit input-group-addon btn btn-success" href="{{ url_capture }}" data-toggle="tooltip" data-original-title="{{ text_capture }}" data-confirm-text="{{ text_confirm_capture }}"><i class="fa fa-check"></i>&nbsp;{{ button_capture }}</a>
+	      	      	<a class="form-submit input-group-addon btn btn-danger" href="{{ url_void }}" data-toggle="tooltip" data-original-title="{{ text_void }}" data-confirm-text="{{ text_confirm_void }}"><i class="fa fa-remove"></i>&nbsp;{{ button_void }}</a>
+	      	      {% elseif is_captured %}
+	      	      	<input type="text" class="form-control" name="transaction_amount" value="{{ amount }}" />
+	      	      	<a class="form-submit input-group-addon btn btn-danger" href="{{ url_refund }}" data-toggle="tooltip" data-original-title="{{ text_refund }}" data-confirm-text="{{ text_confirm_refund }}"><i class="fa fa-reply"></i>&nbsp;{{ button_refund }}</a>
+	      	      	<a class="form-submit input-group-addon btn btn-danger" href="{{ url_void }}" data-toggle="tooltip" data-original-title="{{ text_void }}" data-confirm-text="{{ text_confirm_void }}"><i class="fa fa-remove"></i>&nbsp;{{ button_void }}</a>
+	      	      {% elseif is_payment %}
+	      	      	<input type="text" class="form-control" name="transaction_amount" value="{{ amount }}" />
+	      	      	<a class="form-submit input-group-addon btn btn-danger" href="{{ url_refund }}" data-toggle="tooltip" data-original-title="{{ text_refund }}" data-confirm-text="{{ text_confirm_refund }}"><i class="fa fa-reply"></i>&nbsp;{{ button_refund }}</a>
+	      	      {% else %}
+	      	      	<div class="form-control-static">{{ amount }}</div>
+	      	      {% endif %}
+	      	    </div>
+	      	  </div>
+	      	</div>
+	      	<div class="form-group">
+	      	  <label class="col-sm-2 control-label">{{ entry_currency }}</label>
+	      	  <div class="col-sm-10">
+	      	    <div class="form-control-static">{{ currency }}</div>
+	      	  </div>
+	      	</div>
+	      	<div class="form-group">
+	      	  <label class="col-sm-2 control-label">{{ entry_risk_code }}</label>
+	      	  <div class="col-sm-10">
+	      	    <div class="form-control-static">{{ risk_code }}</div>
+	      	  </div>
+	      	</div>
+	      	<div class="form-group">
+	      	  <label class="col-sm-2 control-label">{{ entry_risk_score }}</label>
+	      	  <div class="col-sm-10">
+	      	    <div class="form-control-static">{{ risk_score }}</div>
+	      	  </div>
+	      	</div>
+	      	<div class="form-group">
+	      	  <label class="col-sm-2 control-label">{{ entry_api_version }}</label>
+	      	  <div class="col-sm-10">
+	      	    <div class="form-control-static">{{ api_version }}</div>
+	      	  </div>
+	      	</div>
+	      	<div class="form-group">
+	      	  <label class="col-sm-2 control-label">{{ entry_browser }}</label>
+	      	  <div class="col-sm-10">
+	      	    <div class="form-control-static">{{ browser }}</div>
+	      	  </div>
+	      	</div>
+	      	<div class="form-group">
+	      	  <label class="col-sm-2 control-label">{{ entry_ip }}</label>
+	      	  <div class="col-sm-10">
+	      	    <div class="form-control-static">{{ ip }}</div>
+	      	  </div>
+	      	</div>
+	      	<div class="form-group">
+	      	  <label class="col-sm-2 control-label">{{ entry_date_created }}</label>
+	      	  <div class="col-sm-10">
+	      	    <div class="form-control-static">{{ date_created }}</div>
+	      	  </div>
+	      	</div>
+      	</form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.form-submit').click(function(e) {
+		e.preventDefault();
+
+		var amount = $('input[name="transaction_amount"]').val();
+
+		if (confirm($(this).attr('data-confirm-text').replace('{AMOUNT}', amount))) {
+			var href = $(this).attr('href');
+			var input_group = $(this).closest('.input-group');
+
+			$(input_group).find('.input-group-addon').remove();
+			$(input_group).append('<span class="input-group-addon">{{ text_loading }}</span>');
+
+			$('#transaction_form').attr('action', href).submit();
+		}
+	});
+});
+</script>
+{{ footer }} 

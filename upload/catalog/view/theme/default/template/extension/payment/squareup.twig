@@ -65,6 +65,185 @@
   <input type="hidden" name="squareup_nonce" id="squareup_nonce"/>
 </form>
 <style>
+<<<<<<< HEAD
+    .control-label {
+        cursor: pointer;
+    }
+
+    .form-control--focus {
+        /* Indicates how form inputs should appear when they have focus */
+        outline: 5px auto rgb(59, 153, 252);
+    }
+    .form-control--error {
+        /* Indicates how form inputs should appear when they contain invalid values */
+        outline: 5px auto rgb(255, 97, 97);
+    }
+
+    #squareup_card_details_form .form-control {
+        border: 1px solid #CCCCCC;
+        padding: 0px 10px 0px 0px;
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-top: 5px;
+        min-height: 1.7em;
+    }
+
+    #squareup_save_card {
+        margin-top: 10px;
+        cursor: pointer;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var app_id = '{{ app_id }}';
+
+        var paymentFormSettings = {
+            applicationId: app_id,
+            inputClass: 'form-control',
+            inputStyles: [{
+                fontSize: '15px'
+            }],
+            cardNumber: {
+                elementId: 'id_card_number',
+                placeholder: '{{ text_card_placeholder }}'
+            },
+            cvv: {
+                elementId: 'id_cvc',
+                placeholder: '{{ text_cvv }}'
+            },
+            expirationDate: {
+                elementId: 'id_card_expiry',
+                placeholder: '{{ text_expiry }}'
+            },
+            postalCode: {
+                elementId: 'id_card_zip_code'
+            },
+            callbacks: {
+                // Called when the SqPaymentForm completes a request to generate a card
+                // nonce, even if the request failed because of an error.
+                cardNonceResponseReceived: function(errors, nonce, cardData) {
+                    if (errors) {
+                        var message = '';
+
+                        errors.forEach(function(error) {
+                            message += error.message + '. ';
+                        });
+
+                        squareupError(message);
+                    } else {
+                        // No errors occurred. Extract the card nonce.
+                        $('#squareup_nonce').val(nonce);
+                        submitForm();
+                    }
+                },
+
+                unsupportedBrowserDetected: function() {
+                    squareupError("{{ error_browser_not_supported }}");
+                    // Fill in this callback to alert buyers when their browser is not supported.
+                },
+
+                paymentFormLoaded: function() {
+                    // Fill in this callback to perform actions after the payment form is
+                    // done loading (such as setting the postal code field programmatically).
+                    paymentForm.setPostalCode('{{ payment_zip }}');
+
+                    $('#squareup-notification').empty();
+                    $('#squareup_card_details_form').slideDown();
+                }
+            }
+        };
+
+    function submitForm() {
+        var form = '#squareup_card_details_form';
+
+        $.ajax({
+            url : $(form).attr('action'),
+            dataType : 'json',
+            type : $(form).attr('method'),
+            data : $(form).serialize(),
+            beforeSend : function() {
+                $('#button-confirm-order').button('loading');
+            },
+            success : function(json) {
+                if (json.error) {
+                    squareupError(json.error);
+                } else if (json.redirect) {
+                    document.location = json.redirect;
+                }
+            },
+            error : function(jqXHR, ajaxSettings, thrownError) {
+                squareupError(thrownError);
+            },
+            complete : function() {
+                $('#button-confirm-order').button('reset');
+            }
+        });
+    }
+
+    function onScriptLoad() {
+        // paymentForm must be global
+        paymentForm = new SqPaymentForm(paymentFormSettings);
+        paymentForm.build();
+    }
+
+    function onConfirmCheckout() {
+        if ($('#squareup_select_card').val()) {
+            submitForm();
+        } else {
+            paymentForm.requestCardNonce();
+        }
+    }
+
+    function squareupError(error) {
+        $('#button-confirm-order').button('reset');
+
+        $('#squareup-notification').html('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-label="X"><span aria-hidden="true">&times;</span></button><i class="fa fa-exclamation-circle"></i>&nbsp;' + error + '</div>');
+    }
+
+    function toggleAjaxSetup(status) {
+        $.ajaxSetup({
+            cache: status
+        });
+    }
+
+    function initSquareup(init_ajax_setup) {
+        if (typeof paymentForm != 'undefined') {
+            paymentForm.destroy();
+            onScriptLoad();
+            return;
+        }
+
+        toggleAjaxSetup(false);
+        
+        var script = document.createElement('script');
+        script.type="text/javascript";
+        $("head").append(script);
+        script.onload = onScriptLoad;
+        script.src="{{ squareup_js_api }}";
+        script.async = true;
+        toggleAjaxSetup(init_ajax_setup);
+    }
+
+    $('#button-confirm-order').unbind().click(function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        $('#squareup-notification').empty();
+        $('#button-confirm-order').button('loading');
+
+        onConfirmCheckout();
+    });
+
+    $('#squareup_select_card').change(function() {
+        if ($(this).val()) {
+            $('#hide-card-details').slideUp();
+        } else {
+            $('#hide-card-details').slideDown();
+        }
+    });
+
+    initSquareup($.ajaxSetup().cache);
+=======
   .control-label {
     cursor: pointer;
   }
@@ -227,5 +406,6 @@ $(document).ready(function() {
 	});
 
 	initSquareup($.ajaxSetup().cache);
+>>>>>>> master
 });
 </script>

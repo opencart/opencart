@@ -1,0 +1,76 @@
+<div class="text-right form-control-static">
+  <a class="btn btn-warning" data-toggle="tooltip" data-original-title="{{ text_refresh }}" id="refresh_transactions"><i class="fa fa-refresh"></i>&nbsp;{{ button_refresh }}</a>
+</div>
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th class="text-left hidden-xs">{{ column_merchant }}</th>
+        <th class="text-left hidden-xs">{{ column_type }}</th>
+        <th class="text-left hidden-xs">{{ column_amount }}</th>
+        <th class="text-left hidden-xs">{{ column_risk }}</th>
+        <th class="text-left hidden-xs hidden-sm">{{ column_ip }}</th>
+        <th class="text-left">{{ column_date_created }}</th>
+        <th class="text-right">{{ column_action }}</th>
+      </tr>
+    </thead>
+    <tbody id="transactions">
+    </tbody>
+  </table>
+  <div id="transactions_pagination"></div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+    var list_transactions = function(page) {
+      $.ajax({
+        url : '{{ url_list_transactions }}'.replace('{PAGE}', page ? page : 1),
+        dataType : 'json',
+        beforeSend : function() {
+          $('#refresh_transactions').button('loading');
+          $('#transactions_pagination').empty();
+          $('#transactions').html('<tr><td colspan="7" class="text-center"><i class="fa fa-circle-o-notch fa-spin"></i>&nbsp;{{ text_loading }}</td></tr>');
+        },
+        success : function(data) {
+          var html = '';
+
+          if (data.transactions.length) {
+            for (var i in data.transactions) {
+              var row = data.transactions[i];
+
+              html += '<tr>';
+              html += '<td class="text-left hidden-xs">' + row.merchant + '</td>';
+              html += '<td class="text-left hidden-xs">' + row.type + '</td>';
+              html += '<td class="text-left hidden-xs">' + row.amount + '</td>';
+              html += '<td class="text-left hidden-xs">' + row.risk + '</td>';
+              html += '<td class="text-left hidden-xs hidden-sm">' + row.ip + '</td>';
+              html += '<td class="text-left">' + row.date_created + '</td>';
+              html += '<td class="text-right"><a class="btn btn-info" href="' + row.url_info + '" data-toggle="tooltip" data-original-title="{{ text_view }}"><i class="fa fa-eye"></i></a></td>';
+              html += '</tr>';
+            }
+          } else {
+            html += '<tr>';
+            html += '<td class="text-center" colspan="7">{{ text_no_transactions }}</td>';
+            html += '</tr>';
+          }
+
+          $('#transactions').html(html);
+          
+          $('#transactions_pagination').html(data.pagination).find('a[href]').each(function(index,element) {
+            $(this).click(function(e) {
+              e.preventDefault();
+              list_transactions(isNaN($(this).attr('href')) ? 1 : $(this).attr('href'));
+            })
+          });
+        },
+        complete : function() {
+          $('#refresh_transactions').button('reset');
+        }
+      });
+    }
+
+    $('#refresh_transactions').click(function(e) {
+      e.preventDefault();
+      list_transactions();
+    }).trigger('click');
+});
+</script>

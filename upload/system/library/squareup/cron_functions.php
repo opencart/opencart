@@ -1,8 +1,8 @@
 <?php
 
 function squareup_validate() {
-    if (php_sapi_name() != 'cli') {
-        die("Not in Command Line.");
+    if (!getenv("SQUARE_CRON")) {
+        die("Not in Command Line." . PHP_EOL);
     }
 }
 
@@ -21,21 +21,13 @@ function squareup_define_route() {
 }
 
 function squareup_init($current_dir) {
-    global $argc, $argv;
-
     // Validate environment
     squareup_validate();
 
     // Set up default server vars
-    if (isset($argc) && isset($argv) && $argc >= 3) {
-        $_SERVER["HTTP_HOST"] = $argv[1];
-        $_SERVER["SERVER_NAME"] = $argv[1];
-        $_SERVER["SERVER_PORT"] = $argv[2];
-    } else {
-        $_SERVER["HTTP_HOST"] = "localhost";
-        $_SERVER["SERVER_NAME"] = "localhost";
-        $_SERVER["SERVER_PORT"] = 80;
-    }
+    $_SERVER["HTTP_HOST"] = getenv("CUSTOM_SERVER_NAME");
+    $_SERVER["SERVER_NAME"] = getenv("CUSTOM_SERVER_NAME");
+    $_SERVER["SERVER_PORT"] = getenv("CUSTOM_SERVER_PORT");
 
     putenv("SERVER_NAME=" . $_SERVER["SERVER_NAME"]);
 

@@ -94,6 +94,10 @@ class ControllerExtensionCreditCardSquareup extends Controller {
                 
                 $this->model_extension_credit_card_squareup->deleteCard($squareup_token_id);
                 
+                // This card has been deleted. Set the default card to the first available one
+                $first_squareup_token_id = $this->model_extension_credit_card_squareup->getFirstTokenId($this->customer->getId(), $this->config->get('payment_squareup_enable_sandbox'));
+                $this->model_extension_credit_card_squareup->updateDefaultCustomerToken($this->customer->getId(), $this->config->get('payment_squareup_enable_sandbox'), $first_squareup_token_id);
+
                 $this->session->data['success'] = $this->language->get('text_success_card_delete');
             } catch (\Squareup\Exception $e) {
                 $this->session->data['error'] = $e->getMessage();

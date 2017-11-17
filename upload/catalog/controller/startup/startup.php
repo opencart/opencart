@@ -1,205 +1,212 @@
 <?php
+
 class ControllerStartupStartup extends Controller {
-	public function index() {
-		// Store
-		if ($this->request->server['HTTPS']) {
-			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "store WHERE REPLACE(`ssl`, 'www.', '') = '" . $this->db->escape('https://' . str_replace('www.', '', $_SERVER['HTTP_HOST']) . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . '/') . "'");
-		} else {
-			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "store WHERE REPLACE(`url`, 'www.', '') = '" . $this->db->escape('http://' . str_replace('www.', '', $_SERVER['HTTP_HOST']) . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . '/') . "'");
-		}
 
-		if (isset($this->request->get['store_id'])) {
-			$this->config->set('config_store_id', (int)$this->request->get['store_id']);
-		} else if ($query->num_rows) {
-			$this->config->set('config_store_id', $query->row['store_id']);
-		} else {
-			$this->config->set('config_store_id', 0);
-		}
+    public function index() {
+        // Store
+        if ($this->request->server['HTTPS']) {
+            $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "store WHERE REPLACE(`ssl`, 'www.', '') = '" . $this->db->escape('https://' . str_replace('www.', '', $_SERVER['HTTP_HOST']) . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . '/') . "'");
+        } else {
+            $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "store WHERE REPLACE(`url`, 'www.', '') = '" . $this->db->escape('http://' . str_replace('www.', '', $_SERVER['HTTP_HOST']) . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . '/') . "'");
+        }
 
-		if (!$query->num_rows) {
-			$this->config->set('config_url', HTTP_SERVER);
-			$this->config->set('config_ssl', HTTPS_SERVER);
-		}
+        if (isset($this->request->get['store_id'])) {
+            $this->config->set('config_store_id', (int) $this->request->get['store_id']);
+        } else if ($query->num_rows) {
+            $this->config->set('config_store_id', $query->row['store_id']);
+        } else {
+            $this->config->set('config_store_id', 0);
+        }
 
-		// Settings
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE store_id = '0' OR store_id = '" . (int)$this->config->get('config_store_id') . "' ORDER BY store_id ASC");
+        if (!$query->num_rows) {
+            $this->config->set('config_url', HTTP_SERVER);
+            $this->config->set('config_ssl', HTTPS_SERVER);
+        }
 
-		foreach ($query->rows as $result) {
-			if (!$result['serialized']) {
-				$this->config->set($result['key'], $result['value']);
-			} else {
-				$this->config->set($result['key'], json_decode($result['value'], true));
-			}
-		}
+        // Settings
+        $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE store_id = '0' OR store_id = '" . (int) $this->config->get('config_store_id') . "' ORDER BY store_id ASC");
 
-		// Theme
-		$this->config->set('template_cache', $this->config->get('developer_theme'));
+        foreach ($query->rows as $result) {
+            if (!$result['serialized']) {
+                $this->config->set($result['key'], $result['value']);
+            } else {
+                $this->config->set($result['key'], json_decode($result['value'], true));
+            }
+        }
 
-		// Url
-		$this->registry->set('url', new Url($this->config->get('config_url'), $this->config->get('config_ssl')));
+        // Theme
+        $this->config->set('template_cache', $this->config->get('developer_theme'));
 
-		// Language
-		$code = '';
+        // Url
+        if ($this->config->get('config_secure')) {
+            $this->registry->set('url', new Url($this->config->get('config_ssl')));
+        } else {
+            $this->registry->set('url', new Url($this->config->get('config_url')));
+        }
 
-		$this->load->model('localisation/language');
+        // Language
+        $code = '';
 
-		$languages = $this->model_localisation_language->getLanguages();
+        $this->load->model('localisation/language');
 
-		$language_codes = array_column($languages, 'language_id', 'code');
+        $languages = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->session->data['language'])) {
-			if (array_key_exists($this->session->data['language'], $language_codes)) {
-				$code = $this->session->data['language'];
-		 	}
-		}
+        $language_codes = array_column($languages, 'language_id', 'code');
 
-		if (empty($code) && isset($this->request->cookie['language'])) {
-			if (array_key_exists($this->request->cookie['language'], $language_codes)) {
-				$code = $this->request->cookie['language'];
-			}
-		}
+        if (isset($this->session->data['language'])) {
+            if (array_key_exists($this->session->data['language'], $language_codes)) {
+                $code = $this->session->data['language'];
+            }
+        }
 
-		// Language Detection
-		if (empty($code) && !empty($this->request->server['HTTP_ACCEPT_LANGUAGE'])) {
-			$detect = '';
+        if (empty($code) && isset($this->request->cookie['language'])) {
+            if (array_key_exists($this->request->cookie['language'], $language_codes)) {
+                $code = $this->request->cookie['language'];
+            }
+        }
 
-			$browser_codes = array();
+        // Language Detection
+        if (empty($code) && !empty($this->request->server['HTTP_ACCEPT_LANGUAGE'])) {
+            $detect = '';
 
-			$browser_languages = explode(',', strtolower($this->request->server['HTTP_ACCEPT_LANGUAGE']));
+            $browser_codes = array();
 
-			// Try using local to detect the language
-			foreach ($browser_languages as $browser_language) {
-				$position = strpos($browser_language, ';q=');
+            $browser_languages = explode(',', strtolower($this->request->server['HTTP_ACCEPT_LANGUAGE']));
 
-				if ($position !== false) {
-					$browser_codes[][substr($browser_language, 0, $position)] = (float)substr($browser_language, $position + 3);
-				} else {
-					$browser_codes[][$browser_language] = 1.0;
-				}
-			}
+            // Try using local to detect the language
+            foreach ($browser_languages as $browser_language) {
+                $position = strpos($browser_language, ';q=');
 
-			$sort_order = array();
+                if ($position !== false) {
+                    $browser_codes[][substr($browser_language, 0, $position)] = (float) substr($browser_language, $position + 3);
+                } else {
+                    $browser_codes[][$browser_language] = 1.0;
+                }
+            }
 
-			foreach ($browser_codes as $key => $value) {
-				$sort_order[$key] = $value[key($value)];
-			}
+            $sort_order = array();
 
-			array_multisort($sort_order, SORT_ASC, $browser_codes);
+            foreach ($browser_codes as $key => $value) {
+                $sort_order[$key] = $value[key($value)];
+            }
 
-			$browser_codes = array_reverse($browser_codes);
+            array_multisort($sort_order, SORT_ASC, $browser_codes);
 
-			foreach (array_values($browser_codes) as $browser_code) {
-				foreach ($languages as $key => $value) {
-					if ($value['status']) {
-						$locale = explode(',', $value['locale']);
+            $browser_codes = array_reverse($browser_codes);
 
-						if (in_array(key($browser_code), $locale)) {
-							$detect = $value['code'];
+            foreach (array_values($browser_codes) as $browser_code) {
+                foreach ($languages as $key => $value) {
+                    if ($value['status']) {
+                        $locale = explode(',', $value['locale']);
 
-							break 2;
-						}
-					}
-				}
-			}
+                        if (in_array(key($browser_code), $locale)) {
+                            $detect = $value['code'];
 
-			$code = ($detect) ? $detect : '';
-		}
+                            break 2;
+                        }
+                    }
+                }
+            }
 
-		if (!array_key_exists($code, $language_codes)) {
-			$code = $this->config->get('config_language');
-		}
+            $code = ($detect) ? $detect : '';
+        }
 
-		if (!isset($this->session->data['language']) || $this->session->data['language'] != $code) {
-			$this->session->data['language'] = $code;
-		}
+        if (!array_key_exists($code, $language_codes)) {
+            $code = $this->config->get('config_language');
+        }
 
-		if (!isset($this->request->cookie['language']) || $this->request->cookie['language'] != $code) {
-			setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
-		}
+        if (!isset($this->session->data['language']) || $this->session->data['language'] != $code) {
+            $this->session->data['language'] = $code;
+        }
 
-		// Overwrite the default language object
-		$language = new Language($code);
-		$language->load($code);
+        if (!isset($this->request->cookie['language']) || $this->request->cookie['language'] != $code) {
+            setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
+        }
 
-		$this->registry->set('language', $language);
+        // Overwrite the default language object
+        $language = new Language($code);
+        $language->load($code);
 
-		// Set the config language_id
-		$this->config->set('config_language_id', $language_codes[$code]);
+        $this->registry->set('language', $language);
 
-		// Customer
-		$customer = new Cart\Customer($this->registry);
-		$this->registry->set('customer', $customer);
+        // Set the config language_id
+        $this->config->set('config_language_id', $language_codes[$code]);
 
-		// Customer Group
-		if (isset($this->session->data['customer']) && isset($this->session->data['customer']['customer_group_id'])) {
-			// For API calls
-			$this->config->set('config_customer_group_id', $this->session->data['customer']['customer_group_id']);
-		} elseif ($this->customer->isLogged()) {
-			// Logged in customers
-			$this->config->set('config_customer_group_id', $this->customer->getGroupId());
-		} elseif (isset($this->session->data['guest']) && isset($this->session->data['guest']['customer_group_id'])) {
-			$this->config->set('config_customer_group_id', $this->session->data['guest']['customer_group_id']);
-		}
+        // Customer
+        $customer = new Cart\Customer($this->registry);
+        $this->registry->set('customer', $customer);
 
-		// Currency
-		$code = '';
+        // Customer Group
+        if (isset($this->session->data['customer']) && isset($this->session->data['customer']['customer_group_id'])) {
+            // For API calls
+            $this->config->set('config_customer_group_id', $this->session->data['customer']['customer_group_id']);
+        } elseif ($this->customer->isLogged()) {
+            // Logged in customers
+            $this->config->set('config_customer_group_id', $this->customer->getGroupId());
+        } elseif (isset($this->session->data['guest']) && isset($this->session->data['guest']['customer_group_id'])) {
+            $this->config->set('config_customer_group_id', $this->session->data['guest']['customer_group_id']);
+        }
 
-		$this->load->model('localisation/currency');
+        // Currency
+        $code = '';
 
-		$currencies = $this->model_localisation_currency->getCurrencies();
+        $this->load->model('localisation/currency');
 
-		if (isset($this->session->data['currency'])) {
-			$code = $this->session->data['currency'];
-		}
+        $currencies = $this->model_localisation_currency->getCurrencies();
 
-		if (isset($this->request->cookie['currency']) && !array_key_exists($code, $currencies)) {
-			$code = $this->request->cookie['currency'];
-		}
+        if (isset($this->session->data['currency'])) {
+            $code = $this->session->data['currency'];
+        }
 
-		if (!array_key_exists($code, $currencies)) {
-			$code = $this->config->get('config_currency');
-		}
+        if (isset($this->request->cookie['currency']) && !array_key_exists($code, $currencies)) {
+            $code = $this->request->cookie['currency'];
+        }
 
-		if (!isset($this->session->data['currency']) || $this->session->data['currency'] != $code) {
-			$this->session->data['currency'] = $code;
-		}
+        if (!array_key_exists($code, $currencies)) {
+            $code = $this->config->get('config_currency');
+        }
 
-		if (!isset($this->request->cookie['currency']) || $this->request->cookie['currency'] != $code) {
-			setcookie('currency', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
-		}
+        if (!isset($this->session->data['currency']) || $this->session->data['currency'] != $code) {
+            $this->session->data['currency'] = $code;
+        }
 
-		$this->registry->set('currency', new Cart\Currency($this->registry));
+        if (!isset($this->request->cookie['currency']) || $this->request->cookie['currency'] != $code) {
+            setcookie('currency', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
+        }
 
-		// Tax
-		$this->registry->set('tax', new Cart\Tax($this->registry));
+        $this->registry->set('currency', new Cart\Currency($this->registry));
 
-		if (isset($this->session->data['shipping_address'])) {
-			$this->tax->setShippingAddress($this->session->data['shipping_address']['country_id'], $this->session->data['shipping_address']['zone_id']);
-		} elseif ($this->config->get('config_tax_default') == 'shipping') {
-			$this->tax->setShippingAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
-		}
+        // Tax
+        $this->registry->set('tax', new Cart\Tax($this->registry));
 
-		if (isset($this->session->data['payment_address'])) {
-			$this->tax->setPaymentAddress($this->session->data['payment_address']['country_id'], $this->session->data['payment_address']['zone_id']);
-		} elseif ($this->config->get('config_tax_default') == 'payment') {
-			$this->tax->setPaymentAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
-		}
+        if (isset($this->session->data['shipping_address'])) {
+            $this->tax->setShippingAddress($this->session->data['shipping_address']['country_id'], $this->session->data['shipping_address']['zone_id']);
+        } elseif ($this->config->get('config_tax_default') == 'shipping') {
+            $this->tax->setShippingAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
+        }
 
-		$this->tax->setStoreAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
+        if (isset($this->session->data['payment_address'])) {
+            $this->tax->setPaymentAddress($this->session->data['payment_address']['country_id'], $this->session->data['payment_address']['zone_id']);
+        } elseif ($this->config->get('config_tax_default') == 'payment') {
+            $this->tax->setPaymentAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
+        }
 
-		// Weight
-		$this->registry->set('weight', new Cart\Weight($this->registry));
+        $this->tax->setStoreAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
 
-		// Length
-		$this->registry->set('length', new Cart\Length($this->registry));
+        // Weight
+        $this->registry->set('weight', new Cart\Weight($this->registry));
 
-		// Cart
-		$this->registry->set('cart', new Cart\Cart($this->registry));
+        // Length
+        $this->registry->set('length', new Cart\Length($this->registry));
 
-		// Encryption
-		$this->registry->set('encryption', new Encryption());
+        // Cart
+        $this->registry->set('cart', new Cart\Cart($this->registry));
 
-		// OpenBay Pro
-		$this->registry->set('openbay', new Openbay($this->registry));
-	}
+        // Encryption
+        $this->registry->set('encryption', new Encryption());
+
+        // OpenBay Pro
+        $this->registry->set('openbay', new Openbay($this->registry));
+    }
+
 }

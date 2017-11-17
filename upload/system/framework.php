@@ -1,4 +1,5 @@
 <?php
+
 // Registry
 $registry = new Registry();
 
@@ -88,16 +89,16 @@ $registry->set('session', $session);
 
 if ($config->get('session_autostart')) {
 	/*
-	We are adding the session cookie outside of the session class as I believe
-	PHP messed up in a big way handling sessions. Why in the hell is it so hard to
-	have more than one concurrent session using cookies!
+	  We are adding the session cookie outside of the session class as I believe
+	  PHP messed up in a big way handling sessions. Why in the hell is it so hard to
+	  have more than one concurrent session using cookies!
 
-	Is it not better to have multiple cookies when accessing parts of the system
-	that requires different cookie sessions for security reasons.
+	  Is it not better to have multiple cookies when accessing parts of the system
+	  that requires different cookie sessions for security reasons.
 
-	Also cookies can be accessed via the URL parameters. So why force only one cookie
-	for all sessions!
-	*/
+	  Also cookies can be accessed via the URL parameters. So why force only one cookie
+	  for all sessions!
+	 */
 
 	if (isset($_COOKIE[$config->get('session_name')])) {
 		$session_id = $_COOKIE[$config->get('session_name')];
@@ -115,7 +116,11 @@ $registry->set('cache', new Cache($config->get('cache_engine'), $config->get('ca
 
 // Url
 if ($config->get('url_autostart')) {
-	$registry->set('url', new Url($config->get('site_url'), $config->get('site_ssl')));
+	if ($config->get('config_secure')) {
+		$registry->set('url', new Url($config->get('site_ssl')));
+	} else {
+		$registry->set('url', new Url($config->get('site_url')));
+	}
 }
 
 // Language

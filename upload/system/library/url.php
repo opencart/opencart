@@ -13,7 +13,6 @@
 class Url {
 
     private $url;
-    private $ssl;
     private $rewrite = array();
 
     /**
@@ -23,9 +22,8 @@ class Url {
      * @param	string	$ssl
      *
      */
-    public function __construct($url, $ssl = '') {
+    public function __construct($url) {
         $this->url = $url;
-        $this->ssl = $ssl;
     }
 
     /**
@@ -47,11 +45,7 @@ class Url {
      * @return	string
      */
     public function link($route, $args = '') {
-        if ($this->ssl) {
-            $url = $this->ssl . 'index.php?route=' . (string) $route;
-        } else {
-            $url = $this->url . 'index.php?route=' . (string) $route;
-        }
+        $url = $this->url . 'index.php?route=' . (string) $route;
 
         if ($args) {
             if (is_array($args)) {

@@ -38,7 +38,7 @@ class ControllerUserUser extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			$this->response->redirect($this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerUserUser extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			$this->response->redirect($this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerUserUser extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			$this->response->redirect($this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
 		$this->getList();
@@ -147,16 +147,16 @@ class ControllerUserUser extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url, true)
+			'href' => $this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url)
 		);
 
-		$data['add'] = $this->url->link('user/user/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
-		$data['delete'] = $this->url->link('user/user/delete', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['add'] = $this->url->link('user/user/add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('user/user/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['users'] = array();
 
@@ -177,7 +177,7 @@ class ControllerUserUser extends Controller {
 				'username'   => $result['username'],
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'       => $this->url->link('user/user/edit', 'user_token=' . $this->session->data['user_token'] . '&user_id=' . $result['user_id'] . $url, true)
+				'edit'       => $this->url->link('user/user/edit', 'user_token=' . $this->session->data['user_token'] . '&user_id=' . $result['user_id'] . $url)
 			);
 		}
 
@@ -213,9 +213,9 @@ class ControllerUserUser extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_username'] = $this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . '&sort=username' . $url, true);
-		$data['sort_status'] = $this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url, true);
-		$data['sort_date_added'] = $this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url, true);
+		$data['sort_username'] = $this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . '&sort=username' . $url);
+		$data['sort_status'] = $this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
+		$data['sort_date_added'] = $this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
 
 		$url = '';
 
@@ -231,7 +231,7 @@ class ControllerUserUser extends Controller {
 		$pagination->total = $user_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
 
 		$data['pagination'] = $pagination->render();
 
@@ -310,21 +310,21 @@ class ControllerUserUser extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url, true)
+			'href' => $this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url)
 		);
 
 		if (!isset($this->request->get['user_id'])) {
-			$data['action'] = $this->url->link('user/user/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
+			$data['action'] = $this->url->link('user/user/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('user/user/edit', 'user_token=' . $this->session->data['user_token'] . '&user_id=' . $this->request->get['user_id'] . $url, true);
+			$data['action'] = $this->url->link('user/user/edit', 'user_token=' . $this->session->data['user_token'] . '&user_id=' . $this->request->get['user_id'] . $url);
 		}
 
-		$data['cancel'] = $this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['cancel'] = $this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['user_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$user_info = $this->model_user_user->getUser($this->request->get['user_id']);

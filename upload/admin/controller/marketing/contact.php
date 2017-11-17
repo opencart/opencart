@@ -13,15 +13,15 @@ class ControllerMarketingContact extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('marketing/contact', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('marketing/contact', 'user_token=' . $this->session->data['user_token'])
 		);
 
-		$data['cancel'] = $this->url->link('marketing/contact', 'user_token=' . $this->session->data['user_token'], true);
+		$data['cancel'] = $this->url->link('marketing/contact', 'user_token=' . $this->session->data['user_token']);
 
 		$this->load->model('setting/store');
 
@@ -191,7 +191,7 @@ class ControllerMarketingContact extends Controller {
 					$json['success'] = sprintf($this->language->get('text_sent'), $start, $email_total);
 
 					if ($end < $email_total) {
-						$json['next'] = str_replace('&amp;', '&', $this->url->link('marketing/contact/send', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true));
+						$json['next'] = str_replace('&amp;', '&', $this->url->link('marketing/contact/send', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1)));
 					} else {
 						$json['next'] = '';
 					}

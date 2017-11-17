@@ -60,3 +60,5 @@
 
 # IDE Project files
 /.idea
+/nbproject/*
+/nbproject/private/

@@ -65,12 +65,12 @@ class ControllerCustomerCustomerApproval extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('customer/customer_approval', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('customer/customer_approval', 'user_token=' . $this->session->data['user_token'])
 		);	
 				
 		$data['filter_name'] = $filter_name;
@@ -157,9 +157,9 @@ class ControllerCustomerCustomerApproval extends Controller {
 				'customer_group' => $result['customer_group'],
 				'type'           => $this->language->get('text_' . $result['type']),
 				'date_added'     => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'approve'        => $this->url->link('customer/customer_approval/approve', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&type=' . $result['type'], true),
-				'deny'           => $this->url->link('customer/customer_approval/deny', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&type=' . $result['type'], true),
-				'edit'           => $this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'], true)
+				'approve'        => $this->url->link('customer/customer_approval/approve', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&type=' . $result['type']),
+				'deny'           => $this->url->link('customer/customer_approval/deny', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&type=' . $result['type']),
+				'edit'           => $this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'])
 			);
 		}
 
@@ -189,7 +189,7 @@ class ControllerCustomerCustomerApproval extends Controller {
 		$pagination->total = $customer_approval_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('customer/customer_approval/customer_approval', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('customer/customer_approval/customer_approval', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
 
 		$data['pagination'] = $pagination->render();
 

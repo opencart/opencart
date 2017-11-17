@@ -32,7 +32,7 @@ class ControllerMailAffiliate extends Controller {
 			$data['store_url'] = HTTP_SERVER;
 		}
 
-		$data['login'] = $this->url->link('affiliate/login', '', true);
+		$data['login'] = $this->url->link('affiliate/login', '');
 		$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 		$this->load->model('tool/image');
@@ -83,7 +83,7 @@ class ControllerMailAffiliate extends Controller {
 				$data['store_url'] = HTTP_SERVER;
 			}
 
-			$data['login'] = $this->url->link('affiliate/login', '', true);
+			$data['login'] = $this->url->link('affiliate/login', '');
 			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 			$this->load->model('tool/image');

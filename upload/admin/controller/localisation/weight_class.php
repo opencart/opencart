@@ -38,7 +38,7 @@ class ControllerLocalisationWeightClass extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			$this->response->redirect($this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerLocalisationWeightClass extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			$this->response->redirect($this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerLocalisationWeightClass extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			$this->response->redirect($this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
 		$this->getList();
@@ -147,16 +147,16 @@ class ControllerLocalisationWeightClass extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . $url, true)
+			'href' => $this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . $url)
 		);
 
-		$data['add'] = $this->url->link('localisation/weight_class/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
-		$data['delete'] = $this->url->link('localisation/weight_class/delete', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['add'] = $this->url->link('localisation/weight_class/add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('localisation/weight_class/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['weight_classes'] = array();
 
@@ -177,7 +177,7 @@ class ControllerLocalisationWeightClass extends Controller {
 				'title'           => $result['title'] . (($result['weight_class_id'] == $this->config->get('config_weight_class_id')) ? $this->language->get('text_default') : null),
 				'unit'            => $result['unit'],
 				'value'           => $result['value'],
-				'edit'            => $this->url->link('localisation/weight_class/edit', 'user_token=' . $this->session->data['user_token'] . '&weight_class_id=' . $result['weight_class_id'] . $url, true)
+				'edit'            => $this->url->link('localisation/weight_class/edit', 'user_token=' . $this->session->data['user_token'] . '&weight_class_id=' . $result['weight_class_id'] . $url)
 			);
 		}
 
@@ -213,9 +213,9 @@ class ControllerLocalisationWeightClass extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_title'] = $this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . '&sort=title' . $url, true);
-		$data['sort_unit'] = $this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . '&sort=unit' . $url, true);
-		$data['sort_value'] = $this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . '&sort=value' . $url, true);
+		$data['sort_title'] = $this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . '&sort=title' . $url);
+		$data['sort_unit'] = $this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . '&sort=unit' . $url);
+		$data['sort_value'] = $this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . '&sort=value' . $url);
 
 		$url = '';
 
@@ -231,7 +231,7 @@ class ControllerLocalisationWeightClass extends Controller {
 		$pagination->total = $weight_class_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
 
 		$data['pagination'] = $pagination->render();
 
@@ -286,21 +286,21 @@ class ControllerLocalisationWeightClass extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . $url, true)
+			'href' => $this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . $url)
 		);
 
 		if (!isset($this->request->get['weight_class_id'])) {
-			$data['action'] = $this->url->link('localisation/weight_class/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
+			$data['action'] = $this->url->link('localisation/weight_class/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('localisation/weight_class/edit', 'user_token=' . $this->session->data['user_token'] . '&weight_class_id=' . $this->request->get['weight_class_id'] . $url, true);
+			$data['action'] = $this->url->link('localisation/weight_class/edit', 'user_token=' . $this->session->data['user_token'] . '&weight_class_id=' . $this->request->get['weight_class_id'] . $url);
 		}
 
-		$data['cancel'] = $this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['cancel'] = $this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['weight_class_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$weight_class_info = $this->model_localisation_weight_class->getWeightClass($this->request->get['weight_class_id']);

@@ -13,7 +13,7 @@ final class Twig {
 		$loader = new \Twig_Loader_Filesystem(DIR_TEMPLATE);
 
 		// initialize Twig environment
-		$config = array('autoescape' => false);
+		$config = array('autoescape' => false, 'auto_reload' => true);
 
 		if ($cache) {
 			$config['cache'] = DIR_CACHE;

@@ -118,7 +118,7 @@ class ControllerLocalisationCurrency extends Controller {
 		$this->load->model('localisation/currency');
 
 		if ($this->validateRefresh()) {
-			$this->model_localisation_currency->refresh(true);
+			$this->load->controller('extension/currency/' . $this->config->get('config_currency_engine') . '/currency', $this->config->get('config_currency'));
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

@@ -143,6 +143,7 @@ function install($options) {
 
 function check_requirements() {
 	$error = null;
+
 	if (phpversion() < '5.4') {
 		$error = 'Warning: You need to use PHP5.4+ or above for OpenCart to work!';
 	}
@@ -343,14 +344,19 @@ switch ($subcommand) {
 case "install":
 	try {
 		$options = get_options($argv);
+
 		define('HTTP_OPENCART', $options['http_server']);
+
 		$valid = valid($options);
+
 		if (!$valid[0]) {
 			echo "FAILED! Following inputs were missing or invalid: ";
 			echo implode(', ', $valid[1]) . "\n\n";
 			exit(1);
 		}
+
 		install($options);
+
 		echo "SUCCESS! Opencart successfully installed on your server\n";
 		echo "Store link: " . $options['http_server'] . "\n";
 		echo "Admin link: " . $options['http_server'] . "admin/\n\n";
@@ -358,6 +364,7 @@ case "install":
 		echo 'FAILED!: ' . $e->getMessage() . "\n";
 		exit(1);
 	}
+
 	break;
 case "usage":
 default:

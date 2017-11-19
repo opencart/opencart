@@ -10,5 +10,8 @@ class ControllerEventCurrency extends Controller {
 		} else {
 			$this->load->controller('extension/currency/' . $this->config->get('config_currency_engine') . '/currency', $this->config->get('config_currency'));
 		}
+
+		echo 'works';
+		exit();
 	}
 }

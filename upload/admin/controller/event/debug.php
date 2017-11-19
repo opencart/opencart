@@ -2,7 +2,7 @@
 class ControllerEventDebug extends Controller {
 	public function before(&$route, &$args) {
 		if ($route == 'common/home') { // add the route you want to test
-			$this->session->data['debug'][$route] = microtime();
+			//$this->session->data['debug'][$route] = microtime();
 		}
 	}
 	

@@ -24,7 +24,34 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
-    <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_cron }}</div>
+
+
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-question-circle"></i> CRON Instructions</h3>
+      </div>
+      <div class="panel-body">
+        <div class="text-info">{{ text_cron }}</div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="input-sort-order">CRON URL</label>
+          <div class="col-sm-10">
+
+            <div class="input-group">
+
+              <input type="text" value="{{ cron }}" id="input-cron" class="form-control" readonly/>
+              <div class="input-group-btn">
+                <button class="btn btn-default" type="button"><i class="fa fa-copy"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
@@ -58,8 +85,8 @@
                       <td class="text-left">{{ cron.cycle }}</td>
                       <td class="text-left">{{ cron.action }}</td>
                       <td class="text-left">{{ cron.status }}</td>
-                      <td class="text-right">{{ cron.date_added }}</td>
-                      <td class="text-right">{{ cron.date_modified }}</td>
+                      <td class="text-left">{{ cron.date_added }}</td>
+                      <td class="text-left">{{ cron.date_modified }}</td>
                       <td class="text-right">{% if not cron.enabled %}
                           <button type="button" value="{{ cron.cron_id }}" data-toggle="tooltip" data-title="{{ button_enable }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></button>
                         {% else %}

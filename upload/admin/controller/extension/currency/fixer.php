@@ -65,7 +65,7 @@ class ControllerExtensionCurrencyFixer extends Controller {
 		return !$this->error;
 	}
 
-	public function currency($default) {
+	public function currency($default = '') {
 		if ($this->config->get('currency_fixer_status')) {
 			$currencies = array();
 
@@ -74,7 +74,7 @@ class ControllerExtensionCurrencyFixer extends Controller {
 			$results = $this->model_localisation_currency->getCurrencies();
 
 			foreach ($results as $result) {
-				if (($result['code'] != $this->config->get('config_currency'))) {
+				if (($result['code'] != $default)) {
 					$currencies[] = $result;
 				}
 			}

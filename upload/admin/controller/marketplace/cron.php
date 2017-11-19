@@ -92,6 +92,7 @@ class ControllerMarketplaceCron extends Controller {
 		);
 
 		$data['delete'] = $this->url->link('marketplace/cron/delete', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['cron'] = $this->url->link('common/cron');
 
 		$data['crons'] = array();
 
@@ -113,8 +114,8 @@ class ControllerMarketplaceCron extends Controller {
 				'cycle'         => $this->language->get('text_' . $result['cycle']),
 				'action'        => $result['action'],
 				'status'        => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-				'date_added'    => $result['date_added'],
-				'date_modified' => $result['date_modified'],
+				'date_added'    => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
+				'date_modified' => date($this->language->get('datetime_format'), strtotime($result['date_modified'])),
 				'enabled'       => $result['status']
 			);
 		}

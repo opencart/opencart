@@ -595,6 +595,15 @@ INSERT INTO `oc_coupon` (`coupon_id`, `name`, `code`, `type`, `discount`, `logge
 -----------------------------------------------------------
 
 --
+-- Dumping data for table `oc_cron`
+--
+
+INSERT INTO `oc_cron` (`cron_id`, `code`, `cycle`, `action`, `status`, `date_added`, `date_modified`) VALUES
+(1, 'currency', 'day', 'cron/currency', 1, '2014-09-25 14:40:00', '2014-09-25 14:40:00');
+
+-----------------------------------------------------------
+
+--
 -- Dumping data for table `oc_currency`
 --
 
@@ -749,10 +758,11 @@ INSERT INTO `oc_extension` (`extension_id`, `type`, `code`) VALUES
 (35, 'report', 'sale_return'),
 (36, 'report', 'sale_order'),
 (37, 'report', 'sale_shipping'),
-(38, 'report', 'sale_tax'),
+(38, 'report', 'sale_tax'),,
 (39, 'report', 'customer_activity'),
 (40, 'report', 'customer_order'),
-(41, 'report', 'customer_reward');
+(41, 'report', 'customer_reward'),
+(42, 'currency', 'currency_fixer');
 
 -----------------------------------------------------------
 
@@ -1437,6 +1447,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_admin_language', 'en-gb', 0),
 (0, 'config', 'config_currency', 'USD', 0),
 (0, 'config', 'config_currency_auto', '1', 0),
+(0, 'config', 'config_currency_engine', 'fixer', 0),
 (0, 'config', 'config_length_class_id', '1', 0),
 (0, 'config', 'config_weight_class_id', '1', 0),
 (0, 'config', 'config_product_count', '1', 0),
@@ -1509,6 +1520,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_captcha', 'basic', 0),
 (0, 'config', 'config_captcha_page', '["review","return","contact"]', 1),
 (0, 'config', 'config_login_attempts', '5', 0),
+(0, 'currency', 'currency_fixer_status', '1', 0),
 (0, 'payment_free_checkout', 'payment_free_checkout_status', '1', 0),
 (0, 'payment_free_checkout', 'payment_free_checkout_order_status_id', '1', 0),
 (0, 'payment_free_checkout', 'payment_free_checkout_sort_order', '1', 0),

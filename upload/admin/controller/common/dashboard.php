@@ -5,8 +5,6 @@ class ControllerCommonDashboard extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['user_token'] = $this->session->data['user_token'];
-		
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -18,7 +16,9 @@ class ControllerCommonDashboard extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
-		
+
+		$data['user_token'] = $this->session->data['user_token'];
+
 		// Check install directory exists
 		if (is_dir(DIR_CATALOG . '../install')) {
 			$data['error_install'] = $this->language->get('error_install');

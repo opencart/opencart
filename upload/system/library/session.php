@@ -59,7 +59,7 @@ class Session {
 	
 	public function createId() {
 		if (version_compare(phpversion(), '5.5.4', '>') == true && method_exists($this->adaptor,'create_sid')) {
-			return $this->adaptor->create_sid();
+			return substr($this->adaptor->create_sid(), 0, 26);
 		} elseif (function_exists('random_bytes')) {
         	return substr(bin2hex(random_bytes(26)), 0, 26);
 		} elseif (function_exists('openssl_random_pseudo_bytes')) {

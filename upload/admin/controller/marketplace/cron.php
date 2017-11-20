@@ -199,6 +199,37 @@ class ControllerMarketplaceCron extends Controller {
 		return !$this->error;
 	}
 
+	public function run() {
+		$this->load->language('marketplace/cron');
+
+		$json = array();
+
+		if (isset($this->request->get['cron_id'])) {
+			$cron_id = $this->request->get['cron_id'];
+		} else {
+			$cron_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'marketplace/cron')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('setting/cron');
+
+			$cron_info = $this->model_setting_cron->getCron($cron_id);
+
+			if ($cron_info) {
+				$this->load->controller($cron_info['action'], $cron_id, $cron_info['code'], $cron_info['cycle'], $cron_info['date_added'], $cron_info['date_modified']);
+
+				//$this->model_setting_cron->editCron($result['cron_id']);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
 	public function enable() {
 		$this->load->language('marketplace/cron');
 

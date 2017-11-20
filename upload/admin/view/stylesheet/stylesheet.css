@@ -10,10 +10,6 @@ html, body {
 h1, h2, h3, h4, h5, h6, p {
 	margin-top: 0;
 }
-
-p {
-	margin-bottom: 40px;
-}
 fieldset {
 	margin-bottom: 10px;
 }

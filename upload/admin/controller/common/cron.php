@@ -7,9 +7,12 @@ class ControllerCommonCron extends Controller {
 
 		foreach ($results as $result) {
 			if ($result['status'] && (strtotime('+1 ' . $result['cycle'], strtotime($result['date_modified'])) < time())) {
-				$this->load->controller($result['action'], );
+				$this->load->controller($result['action'], $result['cron_id'], $result['code'], $result['cycle'], $result['date_added'], $result['date_modified']);
 
-				$this->model_setting_cron->editCron($result['cron_id']);
+				//$this->model_setting_cron->editCron($result['cron_id']);
+
+				echo 'works';
+				exit();
 			}
 		}
 	}

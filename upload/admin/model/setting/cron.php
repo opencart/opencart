@@ -15,7 +15,7 @@ class ModelSettingCron extends Model {
 	}
 
 	public function editCron($cron_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `date_added` = NOW() WHERE cron_id = '" . (int)$cron_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `date_modified` = NOW() WHERE cron_id = '" . (int)$cron_id . "'");
 	}
 
 	public function editStatus($cron_id, $status) {

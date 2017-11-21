@@ -181,7 +181,7 @@ class ControllerDesignTranslation extends Controller {
 				'language'       => $result['language'],
 				'key'            => $result['key'],
 				'value'          => $result['value'],
-				'edit'           => $this->url->link('design/translation/edit', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $result['translation_id'], true),
+				'edit'           => $this->url->link('design/translation/edit', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $result['translation_id']),
 			);
 		}
 
@@ -229,7 +229,7 @@ class ControllerDesignTranslation extends Controller {
 		$pagination->total = $translation_total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->link('design/translation/history', 'user_token=' . $this->session->data['user_token'] . '&page={page}', true);
+		$pagination->url = $this->url->link('design/translation/history', 'user_token=' . $this->session->data['user_token'] . '&page={page}');
 
 		$data['pagination'] = $pagination->render();
 

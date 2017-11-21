@@ -14,7 +14,7 @@ class ControllerExtensionCaptchaGoogle extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=captcha', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=captcha'));
 		}
 
 		if (isset($this->error['warning'])) {
@@ -44,7 +44,7 @@ class ControllerExtensionCaptchaGoogle extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=captcha', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=captcha')
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -54,7 +54,7 @@ class ControllerExtensionCaptchaGoogle extends Controller {
 
 		$data['action'] = $this->url->link('extension/captcha/google', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=captcha', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=captcha');
 
 		if (isset($this->request->post['captcha_google_key'])) {
 			$data['captcha_google_key'] = $this->request->post['captcha_google_key'];

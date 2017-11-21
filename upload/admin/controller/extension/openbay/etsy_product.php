@@ -222,7 +222,7 @@ class ControllerExtensionOpenbayEtsyProduct extends Controller {
 			'text' => $this->language->get('text_etsy'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay/etsy_product/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $this->request->get['product_id'], true),
+			'href' => $this->url->link('extension/openbay/etsy_product/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $this->request->get['product_id']),
 			'text' => $this->language->get('heading_title'),
 		);
 
@@ -514,7 +514,7 @@ class ControllerExtensionOpenbayEtsyProduct extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $limit;
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->link('extension/openbay/etsy/itemLinks', 'user_token=' . $this->session->data['user_token'] . '&page={page}', true);
+		$pagination->url = $this->url->link('extension/openbay/etsy/itemLinks', 'user_token=' . $this->session->data['user_token'] . '&page={page}');
 
 		$data['pagination'] = $pagination->render();
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($total_linked) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($total_linked - $limit)) ? $total_linked : ((($page - 1) * $limit) + $limit), $total_linked, ceil($total_linked / $limit));

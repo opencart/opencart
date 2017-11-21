@@ -1111,7 +1111,7 @@ class ControllerExtensionOpenbayEbay extends Controller {
 				);
 
 				$data['breadcrumbs'][] = array(
-					'href' => $this->url->link('extension/openbay/ebay/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $this->request->get['product_id'], true),
+					'href' => $this->url->link('extension/openbay/ebay/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $this->request->get['product_id']),
 					'text' => $this->language->get('heading_title'),
 				);
 
@@ -1290,7 +1290,7 @@ class ControllerExtensionOpenbayEbay extends Controller {
 				);
 
 				$data['breadcrumbs'][] = array(
-					'href'      => $this->url->link('extension/openbay/ebay/create', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $this->request->get['product_id'], true),
+					'href'      => $this->url->link('extension/openbay/ebay/create', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $this->request->get['product_id']),
 					'text'      => $this->language->get('heading_title'),
 				);
 
@@ -1320,12 +1320,12 @@ class ControllerExtensionOpenbayEbay extends Controller {
 
 				if (!isset($setting['product_details']['product_identifier_unavailable_text'])) {
 					$this->session->data['warning'] = $this->language->get('error_missing_settings');
-					$this->response->redirect($this->url->link('extension/openbay/ebay/syncronise&user_token=' . $this->session->data['user_token'], true));
+					$this->response->redirect($this->url->link('extension/openbay/ebay/syncronise&user_token=' . $this->session->data['user_token']));
 				}
 
 				if (empty($setting['dispatch_times']) || empty($setting['countries']) || empty($setting['returns'])){
 					$this->session->data['warning'] = $this->language->get('error_missing_settings');
-					$this->response->redirect($this->url->link('extension/openbay/ebay/syncronise&token=' . $this->session->data['user_token'], true));
+					$this->response->redirect($this->url->link('extension/openbay/ebay/syncronise&token=' . $this->session->data['user_token']));
 				}
 
 				$data['setting'] = $setting;
@@ -1392,7 +1392,7 @@ class ControllerExtensionOpenbayEbay extends Controller {
 				$product_info['attributes'] = base64_encode(json_encode($this->model_extension_openbay_ebay->getProductAttributes($this->request->get['product_id'])));
 
 				//post edit link
-				$product_info['edit_link'] = $this->url->link('extension/openbay/ebay/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $this->request->get['product_id'], true);
+				$product_info['edit_link'] = $this->url->link('extension/openbay/ebay/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $this->request->get['product_id']);
 
 				//images
 				$product_images = $this->model_catalog_product->getProductImages($this->request->get['product_id']);
@@ -1575,7 +1575,7 @@ class ControllerExtensionOpenbayEbay extends Controller {
 
 							if (!isset($setting['product_details']['product_identifier_unavailable_text'])) {
 								$this->session->data['warning'] = $this->language->get('error_missing_settings');
-								$this->response->redirect($this->url->link('extension/openbay/ebay/syncronise&token=' . $this->session->data['user_token'], true));
+								$this->response->redirect($this->url->link('extension/openbay/ebay/syncronise&token=' . $this->session->data['user_token']));
 							}
 
 							$setting['dispatch_times'] = $this->openbay->ebay->getSetting('dispatch_time_max');
@@ -1592,7 +1592,7 @@ class ControllerExtensionOpenbayEbay extends Controller {
 
 							if (empty($setting['dispatch_times']) || empty($setting['countries']) || empty($setting['returns'])){
 								$this->session->data['warning'] = $this->language->get('error_missing_settings');
-								$this->response->redirect($this->url->link('extension/openbay/ebay/syncronise&token=' . $this->session->data['user_token'], true));
+								$this->response->redirect($this->url->link('extension/openbay/ebay/syncronise&token=' . $this->session->data['user_token']));
 							}
 
 							$data['setting'] = $setting;

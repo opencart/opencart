@@ -470,7 +470,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 				'product_sku' => $saved_product['product_sku'],
 				'amazon_sku' => $saved_product['amazon_sku'],
 				'var' => $saved_product['var'],
-				'edit_link' => $this->url->link('extension/openbay/amazon_product', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $saved_product['product_id'] . '&sku=' . $saved_product['var'], true),
+				'edit_link' => $this->url->link('extension/openbay/amazon_product', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $saved_product['product_id'] . '&sku=' . $saved_product['var']),
 			);
 		}
 
@@ -832,7 +832,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 					$search_status = '-';
 				}
 
-				$href = $this->url->link('catalog/product/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'], true);
+				$href = $this->url->link('catalog/product/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id']);
 
 				$search_results = array();
 
@@ -944,41 +944,41 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 
             $this->model_setting_setting->editSetting('openbay_amazon', $settings);
 
-            $this->response->redirect($this->url->link('extension/openbay/amazon/bulklinking', 'marketplace=' . $marketplace_code . '&user_token=' . $this->session->data['user_token'], true));
+            $this->response->redirect($this->url->link('extension/openbay/amazon/bulklinking', 'marketplace=' . $marketplace_code . '&user_token=' . $this->session->data['user_token']));
         } else {
-            $data['cancel_report_link'] = $this->url->link('extension/openbay/amazon/bulklinking', 'cancel_report=1&marketplace=uk&user_token=' . $this->session->data['user_token'], true);
+            $data['cancel_report_link'] = $this->url->link('extension/openbay/amazon/bulklinking', 'cancel_report=1&marketplace=uk&user_token=' . $this->session->data['user_token']);
         }
 
 		$marketplaces = array(
 			'uk' => array(
 				'name' => $this->language->get('text_uk'),
 				'code' => 'uk',
-				'href_load_listings' => $this->url->link('extension/openbay/amazon/loadListingReport', 'user_token=' . $this->session->data['user_token'] . '&marketplace=uk', true),
-				'link' => $this->url->link('extension/openbay/amazon/bulklinking', 'user_token=' . $this->session->data['user_token'] . '&marketplace=uk', true),
+				'href_load_listings' => $this->url->link('extension/openbay/amazon/loadListingReport', 'user_token=' . $this->session->data['user_token'] . '&marketplace=uk'),
+				'link' => $this->url->link('extension/openbay/amazon/bulklinking', 'user_token=' . $this->session->data['user_token'] . '&marketplace=uk'),
 			),
 			'de' => array(
 				'name' => $this->language->get('text_de'),
 				'code' => 'de',
-				'href_load_listings' => $this->url->link('extension/openbay/amazon/loadListingReport', 'user_token=' . $this->session->data['user_token'] . '&marketplace=de', true),
-				'link' => $this->url->link('extension/openbay/amazon/bulklinking', 'user_token=' . $this->session->data['user_token'] . '&marketplace=de', true),
+				'href_load_listings' => $this->url->link('extension/openbay/amazon/loadListingReport', 'user_token=' . $this->session->data['user_token'] . '&marketplace=de'),
+				'link' => $this->url->link('extension/openbay/amazon/bulklinking', 'user_token=' . $this->session->data['user_token'] . '&marketplace=de'),
 			),
 			'fr' => array(
 				'name' => $this->language->get('text_fr'),
 				'code' => 'fr',
-				'href_load_listings' => $this->url->link('extension/openbay/amazon/loadListingReport', 'user_token=' . $this->session->data['user_token'] . '&marketplace=fr', true),
-				'link' => $this->url->link('extension/openbay/amazon/bulklinking', 'user_token=' . $this->session->data['user_token'] . '&marketplace=fr', true),
+				'href_load_listings' => $this->url->link('extension/openbay/amazon/loadListingReport', 'user_token=' . $this->session->data['user_token'] . '&marketplace=fr'),
+				'link' => $this->url->link('extension/openbay/amazon/bulklinking', 'user_token=' . $this->session->data['user_token'] . '&marketplace=fr'),
 			),
 			'it' => array(
 				'name' => $this->language->get('text_it'),
 				'code' => 'it',
-				'href_load_listings' => $this->url->link('extension/openbay/amazon/loadListingReport', 'user_token=' . $this->session->data['user_token'] . '&marketplace=it', true),
-				'link' => $this->url->link('extension/openbay/amazon/bulklinking', 'user_token=' . $this->session->data['user_token'] . '&marketplace=it', true),
+				'href_load_listings' => $this->url->link('extension/openbay/amazon/loadListingReport', 'user_token=' . $this->session->data['user_token'] . '&marketplace=it'),
+				'link' => $this->url->link('extension/openbay/amazon/bulklinking', 'user_token=' . $this->session->data['user_token'] . '&marketplace=it'),
 			),
 			'es' => array(
 				'name' => $this->language->get('text_es'),
 				'code' => 'es',
-				'href_load_listings' => $this->url->link('extension/openbay/amazon/loadListingReport', 'user_token=' . $this->session->data['user_token'] . '&marketplace=es', true),
-				'link' => $this->url->link('extension/openbay/amazon/bulklinking', 'user_token=' . $this->session->data['user_token'] . '&marketplace=es', true),
+				'href_load_listings' => $this->url->link('extension/openbay/amazon/loadListingReport', 'user_token=' . $this->session->data['user_token'] . '&marketplace=es'),
+				'link' => $this->url->link('extension/openbay/amazon/bulklinking', 'user_token=' . $this->session->data['user_token'] . '&marketplace=es'),
 			),
 		);
 
@@ -1009,7 +1009,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 				'combination' => $result['combination'],
 				'product_id' => $result['product_id'],
 				'var' => $result['var'],
-				'href_product' => $this->url->link('catalog/product/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'], true),
+				'href_product' => $this->url->link('catalog/product/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id']),
 			);
 		}
 

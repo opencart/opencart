@@ -740,7 +740,7 @@ class ControllerExtensionOpenbayFba extends Controller {
 
         if ($order_fba['status'] == 2 || $order_fba['status'] == 3 || $order_fba['status'] == 4) {
             $data['fulfillment_id'] = $order_fba['fba_order_fulfillment_ref'];
-            $data['fulfillment_link'] = $this->url->link('extension/openbay/fba/fulfillment', 'user_token=' . $this->session->data['user_token'] . '&fulfillment_id=' . $data['fulfillment_id'], true);
+            $data['fulfillment_link'] = $this->url->link('extension/openbay/fba/fulfillment', 'user_token=' . $this->session->data['user_token'] . '&fulfillment_id=' . $data['fulfillment_id']);
         } else {
             $data['fulfillment_id'] = '';
             $data['fulfillment_link'] = '';
@@ -748,10 +748,10 @@ class ControllerExtensionOpenbayFba extends Controller {
 
         $data['fba_order_status'] = $order_fba['status'];
         $data['order_id'] = $order_id;
-        $data['order_link'] = $this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id, true);
-        $data['resend_link'] = $this->url->link('extension/openbay/fba/resendfulfillment', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id, true);
-        $data['ship_link'] = $this->url->link('extension/openbay/fba/shipfulfillment', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id . '&fba_order_fulfillment_id=' . $order_fba['fba_order_fulfillment_id'], true);
-        $data['cancel_link'] = $this->url->link('extension/openbay/fba/cancelfulfillment', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id . '&fba_order_fulfillment_id=' . $order_fba['fba_order_fulfillment_id'], true);
+        $data['order_link'] = $this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id);
+        $data['resend_link'] = $this->url->link('extension/openbay/fba/resendfulfillment', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id);
+        $data['ship_link'] = $this->url->link('extension/openbay/fba/shipfulfillment', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id . '&fba_order_fulfillment_id=' . $order_fba['fba_order_fulfillment_id']);
+        $data['cancel_link'] = $this->url->link('extension/openbay/fba/cancelfulfillment', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id . '&fba_order_fulfillment_id=' . $order_fba['fba_order_fulfillment_id']);
 
         $data['cancel'] = $this->url->link('extension/openbay/fba/orderlist', 'user_token=' . $this->session->data['user_token']);
 
@@ -883,7 +883,7 @@ class ControllerExtensionOpenbayFba extends Controller {
                 'option'   		   => $option_data,
                 'quantity'		   => $product['quantity'],
                 'fba'		       => ($product_info['location'] == 'FBA' ? 1 : 0),
-                'href'     		   => $this->url->link('catalog/product/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'], true),
+                'href'     		   => $this->url->link('catalog/product/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id']),
             );
         }
 

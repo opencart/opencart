@@ -305,7 +305,7 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 			$this->session->data['void_success'] = $this->language->get('success_void');
 		}
 
-		$this->response->redirect($this->url->link('sale/order/info', 'order_id=' . $this->request->post['order_id'] . '&user_token=' . $this->session->data['user_token'], true));
+		$this->response->redirect($this->url->link('sale/order/info', 'order_id=' . $this->request->post['order_id'] . '&user_token=' . $this->session->data['user_token']));
 	}
 
 	public function capture() {
@@ -323,7 +323,7 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 			$this->session->data['capture_success'] = $this->language->get('success_capture');
 		}
 
-		$this->response->redirect($this->url->link('sale/order/info', 'order_id=' . $this->request->post['order_id'] . '&user_token=' . $this->session->data['user_token'], true));
+		$this->response->redirect($this->url->link('sale/order/info', 'order_id=' . $this->request->post['order_id'] . '&user_token=' . $this->session->data['user_token']));
 	}
 
 	protected function validate() {

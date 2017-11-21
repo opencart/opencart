@@ -318,7 +318,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 			foreach ($csv as $row) {
 				$data['transactions'][] = array(
 					'order_id' => $row['orderreference'],
-					'order_href' => $this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $row['orderreference'], true),
+					'order_href' => $this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $row['orderreference']),
 					'transaction_reference' => $row['transactionreference'],
 					'customer' => $row['billingfirstname'] . ' ' . $row['billinglastname'],
 					'total' => $row['mainamount'],

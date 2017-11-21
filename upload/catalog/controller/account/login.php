@@ -4,7 +4,7 @@ class ControllerAccountLogin extends Controller {
 
 	public function index() {
 		if ($this->customer->isLogged()) {
-			$this->response->redirect($this->url->link('account/account', '', true));
+			$this->response->redirect($this->url->link('account/account'));
 		}
 
 		$this->load->language('account/login');
@@ -43,10 +43,10 @@ class ControllerAccountLogin extends Controller {
 			$this->model_account_customer->addLogin($this->customer->getId(), $this->request->server['REMOTE_ADDR']);
 
 			// Added strpos check to pass McAfee PCI compliance test (http://forum.opencart.com/viewtopic.php?f=10&t=12043&p=151494#p151295)
-			if (isset($this->request->post['redirect']) && $this->request->post['redirect'] != $this->url->link('account/logout', '', true) && (strpos($this->request->post['redirect'], $this->config->get('config_url')) !== false || strpos($this->request->post['redirect'], $this->config->get('config_ssl')) !== false)) {
+			if (isset($this->request->post['redirect']) && $this->request->post['redirect'] != $this->url->link('account/logout') && (strpos($this->request->post['redirect'], $this->config->get('config_url')) !== false || strpos($this->request->post['redirect'], $this->config->get('config_ssl')) !== false)) {
 				$this->response->redirect(str_replace('&amp;', '&', $this->request->post['redirect']));
 			} else {
-				$this->response->redirect($this->url->link('account/account', '', true));
+				$this->response->redirect($this->url->link('account/account'));
 			}
 		}
 
@@ -59,12 +59,12 @@ class ControllerAccountLogin extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', true)
+			'href' => $this->url->link('account/account')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_login'),
-			'href' => $this->url->link('account/login', '', true)
+			'href' => $this->url->link('account/login')
 		);
 
 		if (isset($this->session->data['error'])) {
@@ -77,9 +77,9 @@ class ControllerAccountLogin extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['action'] = $this->url->link('account/login', '', true);
-		$data['register'] = $this->url->link('account/register', '', true);
-		$data['forgotten'] = $this->url->link('account/forgotten', '', true);
+		$data['action'] = $this->url->link('account/login');
+		$data['register'] = $this->url->link('account/register');
+		$data['forgotten'] = $this->url->link('account/forgotten');
 
 		// Added strpos check to pass McAfee PCI compliance test (http://forum.opencart.com/viewtopic.php?f=10&t=12043&p=151494#p151295)
 		if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], $this->config->get('config_url')) !== false || strpos($this->request->post['redirect'], $this->config->get('config_ssl')) !== false)) {
@@ -200,13 +200,13 @@ class ControllerAccountLogin extends Controller {
 
 			$this->model_account_customer->editToken($email, '');
 
-			$this->response->redirect($this->url->link('account/account', '', true));
+			$this->response->redirect($this->url->link('account/account'));
 		} else {
 			$this->session->data['error'] = $this->language->get('error_login');
 
 			$this->model_account_customer->editToken($email, '');
 
-			$this->response->redirect($this->url->link('account/login', '', true));
+			$this->response->redirect($this->url->link('account/login'));
 		}
 	}
 }

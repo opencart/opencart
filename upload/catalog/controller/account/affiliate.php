@@ -4,9 +4,9 @@ class ControllerAccountAffiliate extends Controller {
 
 	public function add() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/affiliate', '', true);
+			$this->session->data['redirect'] = $this->url->link('account/affiliate');
 
-			$this->response->redirect($this->url->link('affiliate/login', '', true));
+			$this->response->redirect($this->url->link('affiliate/login'));
 		}
 
 		$this->load->language('account/affiliate');
@@ -20,7 +20,7 @@ class ControllerAccountAffiliate extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('account/account', '', true));
+			$this->response->redirect($this->url->link('account/account'));
 		}
 		
 		$this->getForm();
@@ -28,9 +28,9 @@ class ControllerAccountAffiliate extends Controller {
 	
 	public function edit() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/affiliate', '', true);
+			$this->session->data['redirect'] = $this->url->link('account/affiliate');
 
-			$this->response->redirect($this->url->link('affiliate/login', '', true));
+			$this->response->redirect($this->url->link('affiliate/login'));
 		}
 
 		$this->load->language('account/affiliate');
@@ -44,7 +44,7 @@ class ControllerAccountAffiliate extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('account/account', '', true));
+			$this->response->redirect($this->url->link('account/account'));
 		}
 		
 		$this->getForm();
@@ -60,18 +60,18 @@ class ControllerAccountAffiliate extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', true)
+			'href' => $this->url->link('account/account')
 		);
 
 		if ($this->request->get['route'] == 'account/affiliate/add') {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_affiliate'),
-				'href' => $this->url->link('account/affiliate/add', '', true)
+				'href' => $this->url->link('account/affiliate/add')
 			);
 		} else {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_affiliate'),
-				'href' => $this->url->link('account/affiliate/edit', '', true)
+				'href' => $this->url->link('account/affiliate/edit')
 			);		
 		}
 	
@@ -111,7 +111,7 @@ class ControllerAccountAffiliate extends Controller {
 			$data['error_custom_field'] = array();
 		}
 				
-		$data['action'] = $this->url->link($this->request->get['route'], '', true);
+		$data['action'] = $this->url->link($this->request->get['route']);
 		
 		if ($this->request->get['route'] == 'account/affiliate/edit' && $this->request->server['REQUEST_METHOD'] != 'POST') {
 			$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
@@ -240,7 +240,7 @@ class ControllerAccountAffiliate extends Controller {
 			$data['agree'] = false;
 		}
 		
-		$data['back'] = $this->url->link('account/account', '', true);
+		$data['back'] = $this->url->link('account/account');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

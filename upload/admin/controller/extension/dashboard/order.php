@@ -14,7 +14,7 @@ class ControllerExtensionDashboardOrder extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard'));
 		}
 
 		if (isset($this->error['warning'])) {
@@ -32,7 +32,7 @@ class ControllerExtensionDashboardOrder extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard')
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -42,7 +42,7 @@ class ControllerExtensionDashboardOrder extends Controller {
 
 		$data['action'] = $this->url->link('extension/dashboard/order', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard');
 
 		if (isset($this->request->post['dashboard_order_width'])) {
 			$data['dashboard_order_width'] = $this->request->post['dashboard_order_width'];

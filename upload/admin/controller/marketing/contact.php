@@ -191,7 +191,7 @@ class ControllerMarketingContact extends Controller {
 					$json['success'] = sprintf($this->language->get('text_sent'), $start, $email_total);
 
 					if ($end < $email_total) {
-						$json['next'] = str_replace('&amp;', '&', $this->url->link('marketing/contact/send', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true));
+						$json['next'] = str_replace('&amp;', '&', $this->url->link('marketing/contact/send', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1)));
 					} else {
 						$json['next'] = '';
 					}

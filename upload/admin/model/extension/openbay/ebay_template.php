@@ -40,8 +40,8 @@ class ModelExtensionOpenBayEbayTemplate extends Model {
 
 		if($qry->num_rows) {
 			foreach($qry->rows as $row) {
-				$row['link_edit'] = $this->url->link('extension/openbay/ebay_template/edit&user_token=' . $this->session->data['user_token'] . '&template_id=' . $row['template_id'], true);
-				$row['link_delete'] = $this->url->link('extension/openbay/ebay_template/delete&user_token=' . $this->session->data['user_token'] . '&template_id=' . $row['template_id'], true);
+				$row['link_edit'] = $this->url->link('extension/openbay/ebay_template/edit&user_token=' . $this->session->data['user_token'] . '&template_id=' . $row['template_id']);
+				$row['link_delete'] = $this->url->link('extension/openbay/ebay_template/delete&user_token=' . $this->session->data['user_token'] . '&template_id=' . $row['template_id']);
 				$templates[] = $row;
 			}
 		}

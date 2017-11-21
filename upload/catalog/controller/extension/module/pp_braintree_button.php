@@ -32,7 +32,7 @@ class ControllerExtensionModulePPBraintreeButton extends Controller {
 				 */
 				$data['auth_total'] = $this->cart->getTotal() * 1.5;
 				$data['currency_code'] = $this->session->data['currency'];
-				$data['action'] = $this->url->link('extension/payment/pp_braintree/expressConfirm', '', true);
+				$data['action'] = $this->url->link('extension/payment/pp_braintree/expressConfirm');
 
 				return $this->load->view('extension/module/pp_braintree_button', $data);
 			}

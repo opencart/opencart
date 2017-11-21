@@ -942,7 +942,7 @@ class ControllerExtensionOpenbayEbay extends Controller {
 		);
 
 		$data['cancel']       = $this->url->link('extension/openbay/ebay', 'user_token=' . $this->session->data['user_token']);
-		$data['edit_url']     = $this->url->link('extension/openbay/ebay/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=', true);
+		$data['edit_url']     = $this->url->link('extension/openbay/ebay/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=');
 		$data['validation']   = $this->openbay->ebay->validate();
 		$data['user_token']        = $this->session->data['user_token'];
 
@@ -965,7 +965,7 @@ class ControllerExtensionOpenbayEbay extends Controller {
 		$pagination->page = $linked_item_page;
 		$pagination->limit = 100;
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->link('extension/openbay/ebay/viewItemLinks', 'user_token=' . $this->session->data['user_token'] . '&linked_item_page={page}', true);
+		$pagination->url = $this->url->link('extension/openbay/ebay/viewItemLinks', 'user_token=' . $this->session->data['user_token'] . '&linked_item_page={page}');
 
 		$data['pagination'] = $pagination->render();
 

@@ -17,7 +17,7 @@ class ControllerAccountLogout extends Controller {
 			unset($this->session->data['voucher']);
 			unset($this->session->data['vouchers']);
 
-			$this->response->redirect($this->url->link('account/logout', '', true));
+			$this->response->redirect($this->url->link('account/logout'));
 		}
 
 		$this->load->language('account/logout');
@@ -33,12 +33,12 @@ class ControllerAccountLogout extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', true)
+			'href' => $this->url->link('account/account')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_logout'),
-			'href' => $this->url->link('account/logout', '', true)
+			'href' => $this->url->link('account/logout')
 		);
 
 		$data['continue'] = $this->url->link('common/home');

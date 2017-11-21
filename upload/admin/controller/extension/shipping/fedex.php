@@ -14,7 +14,7 @@ class ControllerExtensionShippingFedex extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping'));
 		}
 
 		if (isset($this->error['warning'])) {
@@ -68,7 +68,7 @@ class ControllerExtensionShippingFedex extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping')
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -78,7 +78,7 @@ class ControllerExtensionShippingFedex extends Controller {
 
 		$data['action'] = $this->url->link('extension/shipping/fedex', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping');
 
 		if (isset($this->request->post['shipping_fedex_key'])) {
 			$data['shipping_fedex_key'] = $this->request->post['shipping_fedex_key'];

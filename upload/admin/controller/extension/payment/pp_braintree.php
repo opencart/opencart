@@ -23,7 +23,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment'));
 		}
 
 		$data['button_configure'] = $this->url->link('extension/module/pp_braintree_button/configure', 'user_token=' . $this->session->data['user_token']);
@@ -63,7 +63,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment')
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -73,7 +73,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 		$data['action'] = $this->url->link('extension/payment/pp_braintree', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
 
 		if (isset($this->request->post['payment_pp_braintree_merchant_id'])) {
 			$data['payment_pp_braintree_merchant_id'] = $this->request->post['payment_pp_braintree_merchant_id'];
@@ -945,7 +945,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 						$customer_info = $this->model_customer_customer->getCustomer($braintree_customer_id[2]);
 
 						if ($customer_info && $customer_info['email'] == $transaction->customer['email']) {
-							$customer_url = $this->url->link('sale/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . (int)$braintree_customer_id[2], true);
+							$customer_url = $this->url->link('sale/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . (int)$braintree_customer_id[2]);
 						}
 					}
 				}
@@ -956,7 +956,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 					$order_info = $this->model_sale_order->getOrder($transaction->orderId);
 
 					if ($order_info && $order_info['email'] == $transaction->customer['email']) {
-						$order = $this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . (int)$transaction->orderId, true);
+						$order = $this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . (int)$transaction->orderId);
 					}
 				}
 

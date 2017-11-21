@@ -495,7 +495,7 @@ class ControllerExtensionOpenbayEtsyProduct extends Controller {
 		);
 
 		$data['return']       = $this->url->link('extension/openbay/etsy', 'user_token=' . $this->session->data['user_token']);
-		//$data['edit_url']     = $this->url->link('extension/openbay/ebay/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=', true);
+		//$data['edit_url']     = $this->url->link('extension/openbay/ebay/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=');
 		//$data['validation']   = $this->openbay->ebay->validate();
 		$data['user_token']        = $this->session->data['user_token'];
 
@@ -629,7 +629,7 @@ class ControllerExtensionOpenbayEtsyProduct extends Controller {
 			$pagination->total = $response['data']['count'];
 			$pagination->page = $response['data']['pagination']['effective_page'];
 			$pagination->limit = $response['data']['pagination']['effective_limit'];
-			$pagination->url = $this->url->link('extension/openbay/etsy_product/listings', 'user_token=' . $this->session->data['user_token'] . '&page={page}&' . http_build_query($filter), true);
+			$pagination->url = $this->url->link('extension/openbay/etsy_product/listings', 'user_token=' . $this->session->data['user_token'] . '&page={page}&' . http_build_query($filter));
 
 			$data['pagination'] = $pagination->render();
 			$data['results'] = sprintf($this->language->get('text_pagination'), ($response['data']['count']) ? (($response['data']['pagination']['effective_page'] - 1) * $response['data']['pagination']['effective_limit']) + 1 : 0, ((($response['data']['pagination']['effective_page'] - 1) * $response['data']['pagination']['effective_limit']) > ($response['data']['count'] - $response['data']['pagination']['effective_limit'])) ? $response['data']['count'] : ((($response['data']['pagination']['effective_page'] - 1) * $response['data']['pagination']['effective_limit']) + $response['data']['pagination']['effective_limit']), $response['data']['count'], ceil($response['data']['count'] / $response['data']['pagination']['effective_limit']));

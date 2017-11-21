@@ -283,7 +283,7 @@ class ControllerExtensionOpenbayFba extends Controller {
         $this->document->addScript('view/javascript/openbay/js/faq.js');
 
         if (!isset($this->request->get['fulfillment_id'])) {
-            $this->response->redirect($this->url->link('extension/openbay/fba/fulfillmentlist', 'user_token=' . $this->session->data['user_token'] . (!empty($this->request->get['filter_date']) ? '&filter_date=' . $this->request->get['filter_date'] : ''), true));
+            $this->response->redirect($this->url->link('extension/openbay/fba/fulfillmentlist', 'user_token=' . $this->session->data['user_token'] . (!empty($this->request->get['filter_date']) ? '&filter_date=' . $this->request->get['filter_date'] : '')));
         }
 
         $data['breadcrumbs'] = array();
@@ -304,7 +304,7 @@ class ControllerExtensionOpenbayFba extends Controller {
         );
 
         $data['breadcrumbs'][] = array(
-            'href' => $this->url->link('extension/openbay/fba/fulfillmentlist', 'user_token=' . $this->session->data['user_token'] . (!empty($this->request->get['filter_date']) ? '&filter_date=' . $this->request->get['filter_date'] : ''), true),
+            'href' => $this->url->link('extension/openbay/fba/fulfillmentlist', 'user_token=' . $this->session->data['user_token'] . (!empty($this->request->get['filter_date']) ? '&filter_date=' . $this->request->get['filter_date'] : '')),
             'text' => $data['heading_title'],
         );
 
@@ -389,7 +389,7 @@ class ControllerExtensionOpenbayFba extends Controller {
                     'displayable_order_date_time' => $fulfillment_order['displayable_order_date_time'],
                     'shipping_speed_category' => $fulfillment_order['shipping_speed_category'],
                     'fulfillment_order_status' => $fulfillment_order['fulfillment_order_status'],
-                    'edit' => $this->url->link('extension/openbay/fba/fulfillment', 'user_token=' . $this->session->data['user_token'] . '&fulfillment_id=' . $fulfillment_order['seller_fulfillment_order_id'] . (!empty($data['filter_date']) ? '&filter_date=' . $data['filter_date'] : ''), true),
+                    'edit' => $this->url->link('extension/openbay/fba/fulfillment', 'user_token=' . $this->session->data['user_token'] . '&fulfillment_id=' . $fulfillment_order['seller_fulfillment_order_id'] . (!empty($data['filter_date']) ? '&filter_date=' . $data['filter_date'] : '')),
                 );
             }
         }
@@ -460,7 +460,7 @@ class ControllerExtensionOpenbayFba extends Controller {
             $this->session->data['error'] = $errors;
         }
 
-        $this->response->redirect($this->url->link('extension/openbay/fba/order', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id, true));
+        $this->response->redirect($this->url->link('extension/openbay/fba/order', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id));
     }
 
     public function cancelFulfillment() {
@@ -500,7 +500,7 @@ class ControllerExtensionOpenbayFba extends Controller {
             $this->session->data['error'] = $errors;
         }
 
-        $this->response->redirect($this->url->link('extension/openbay/fba/order', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id, true));
+        $this->response->redirect($this->url->link('extension/openbay/fba/order', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id));
     }
 
     public function resendFulfillment() {
@@ -610,7 +610,7 @@ class ControllerExtensionOpenbayFba extends Controller {
             $this->session->data['error'] = $errors;
         }
 
-        $this->response->redirect($this->url->link('extension/openbay/fba/order', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id, true));
+        $this->response->redirect($this->url->link('extension/openbay/fba/order', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id));
     }
 
     public function orderList() {

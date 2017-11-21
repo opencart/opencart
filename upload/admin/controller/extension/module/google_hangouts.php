@@ -14,7 +14,7 @@ class ControllerExtensionModuleGoogleHangouts extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module'));
 		}
 
 		if (isset($this->error['warning'])) {
@@ -38,7 +38,7 @@ class ControllerExtensionModuleGoogleHangouts extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module')
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -48,7 +48,7 @@ class ControllerExtensionModuleGoogleHangouts extends Controller {
 
 		$data['action'] = $this->url->link('extension/module/google_hangouts', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module');
 
 		if (isset($this->request->post['module_google_hangouts_code'])) {
 			$data['module_google_hangouts_code'] = $this->request->post['module_google_hangouts_code'];

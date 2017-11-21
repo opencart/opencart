@@ -27,7 +27,7 @@ class ControllerExtensionModulePPButton extends Controller {
 					$data['environment'] = 'live';
 				}
 
-				$data['payment_url'] = $this->url->link('extension/payment/pp_express/express', '', true);
+				$data['payment_url'] = $this->url->link('extension/payment/pp_express/express');
 
 				return $this->load->view('extension/module/pp_button', $data);
 			}

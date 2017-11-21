@@ -16,9 +16,9 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 		$data['orderNo']      = $order_info['order_id'];
 		$data['orderAmount']  = intval(round($order_info['total'], 2) * 100);
 		$data['orderTime']    = date('Y-m-d H:i:s');
-		$data['pageUrl']      = $this->url->link('checkout/checkout', '', true);
-		$data['serverUrl']    = $this->url->link('extension/payment/pilibaba/callback', '', true);
-		$data['redirectUrl']  = $this->url->link('checkout/success', '', true);
+		$data['pageUrl']      = $this->url->link('checkout/checkout');
+		$data['serverUrl']    = $this->url->link('extension/payment/pilibaba/callback');
+		$data['redirectUrl']  = $this->url->link('checkout/success');
 		$data['notifyType']   = 'json';
 		$data['shipper']      = 0;
 		$data['tax']          = ($this->config->get('config_tax')) ? 0 : $this->model_extension_payment_pilibaba->getOrderTaxAmount($order_info['order_id']);
@@ -308,9 +308,9 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 				$data['orderNo']      = $order_info['order_id'];
 				$data['orderAmount']  = intval(round($order_info['total'], 2) * 100);
 				$data['orderTime']    = date('Y-m-d H:i:s');
-				$data['pageUrl']      = $this->url->link('checkout/checkout', '', true);
-				$data['serverUrl']    = $this->url->link('extension/payment/pilibaba/callback', '', true);
-				$data['redirectUrl']  = $this->url->link('checkout/success', '', true);
+				$data['pageUrl']      = $this->url->link('checkout/checkout');
+				$data['serverUrl']    = $this->url->link('extension/payment/pilibaba/callback');
+				$data['redirectUrl']  = $this->url->link('checkout/success');
 				$data['notifyType']   = 'json';
 				$data['shipper']      = intval(round($this->config->get('payment_pilibaba_shipping_fee'), 2) * 100);
 				$data['tax']          = ($this->config->get('config_tax')) ? 0 : $this->model_extension_payment_pilibaba->getOrderTaxAmount($order_info['order_id']);

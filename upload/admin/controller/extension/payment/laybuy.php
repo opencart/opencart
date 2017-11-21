@@ -18,7 +18,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment'));
 		}
 
 		$data['breadcrumbs'] = array();
@@ -30,7 +30,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment')
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -40,9 +40,9 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 		$data['action'] = $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token']);
 
-		$data['fetch'] = $this->url->link('extension/payment/laybuy/fetch', 'user_token=' . $this->session->data['user_token'] . '#reportstab', true);
+		$data['fetch'] = $this->url->link('extension/payment/laybuy/fetch', 'user_token=' . $this->session->data['user_token'] . '#reportstab');
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
 
 		if (isset($this->request->post['payment_laybuys_membership_id'])) {
 			$data['payment_laybuys_membership_id'] = $this->request->post['payment_laybuys_membership_id'];
@@ -387,16 +387,16 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_order_id'] = $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . '&sort=lt.order_id' . $url . '#reportstab', true);
-		$data['sort_customer'] = $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . '&sort=customer' . $url . '#reportstab', true);
-		$data['sort_amount'] = $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . '&sort=lt.amount' . $url . '#reportstab', true);
-		$data['sort_dp_percent'] = $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . '&sort=lt.downpayment' . $url . '#reportstab', true);
-		$data['sort_months'] = $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . '&sort=lt.months' . $url . '#reportstab', true);
-		$data['sort_dp_amount'] = $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . '&sort=lt.downpayment_amount' . $url . '#reportstab', true);
-		$data['sort_first_payment'] = $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . '&sort=lt.first_payment_due' . $url . '#reportstab', true);
-		$data['sort_last_payment'] = $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . '&sort=lt.last_payment_due' . $url . '#reportstab', true);
-		$data['sort_status'] = $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . '&sort=lt.status' . $url . '#reportstab', true);
-		$data['sort_date_added'] = $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . '&sort=lt.date_added' . $url . '#reportstab', true);
+		$data['sort_order_id'] = $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . '&sort=lt.order_id' . $url . '#reportstab');
+		$data['sort_customer'] = $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . '&sort=customer' . $url . '#reportstab');
+		$data['sort_amount'] = $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . '&sort=lt.amount' . $url . '#reportstab');
+		$data['sort_dp_percent'] = $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . '&sort=lt.downpayment' . $url . '#reportstab');
+		$data['sort_months'] = $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . '&sort=lt.months' . $url . '#reportstab');
+		$data['sort_dp_amount'] = $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . '&sort=lt.downpayment_amount' . $url . '#reportstab');
+		$data['sort_first_payment'] = $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . '&sort=lt.first_payment_due' . $url . '#reportstab');
+		$data['sort_last_payment'] = $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . '&sort=lt.last_payment_due' . $url . '#reportstab');
+		$data['sort_status'] = $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . '&sort=lt.status' . $url . '#reportstab');
+		$data['sort_date_added'] = $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . '&sort=lt.date_added' . $url . '#reportstab');
 
 		$url = '';
 
@@ -436,7 +436,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 		$pagination->total = $report_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}#reportstab', true);
+		$pagination->url = $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}#reportstab');
 
 		$data['pagination'] = $pagination->render();
 
@@ -686,19 +686,19 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . '#reportstab', true)
+			'href' => $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . '#reportstab')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_transaction_title'),
-			'href' => $this->url->link('extension/payment/laybuy/transaction', 'user_token=' . $this->session->data['user_token'] . '&id=' . $id, true)
+			'href' => $this->url->link('extension/payment/laybuy/transaction', 'user_token=' . $this->session->data['user_token'] . '&id=' . $id)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_transaction_title');
 
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
-		$data['cancel'] = $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . '#reportstab', true);
+		$data['cancel'] = $this->url->link('extension/payment/laybuy', 'user_token=' . $this->session->data['user_token'] . '#reportstab');
 
 		$transaction_info = $this->model_extension_payment_laybuy->getTransaction($id);
 

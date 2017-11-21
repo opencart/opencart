@@ -608,7 +608,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 				$customer_info = $this->model_account_customer->getCustomer($klarna_checkout_order_data['customer_id']);
 
 				if ($customer_info) {
-					$this->customer->login($customer_info['email'], '', true);
+					$this->customer->login($customer_info['email']);
 				}
 			}
 
@@ -945,7 +945,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 				$customer_info = $this->model_account_customer->getCustomer($klarna_checkout_order_data['customer_id']);
 
 				if ($customer_info) {
-					$this->customer->login($customer_info['email'], '', true);
+					$this->customer->login($customer_info['email']);
 				}
 			}
 
@@ -1071,7 +1071,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			http_response_code(200);
 		} else {
 			http_response_code(303);
-			$this->response->addHeader('Location: ' . $this->url->link('checkout/failure', '', true));
+			$this->response->addHeader('Location: ' . $this->url->link('checkout/failure'));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -1121,7 +1121,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_checkout'),
-			'href' => $this->url->link('checkout/checkout', '', true)
+			'href' => $this->url->link('checkout/checkout')
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -1155,7 +1155,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 					if (!$klarna_account || !$connector) {
 						$this->model_extension_payment_klarna_checkout->log('Could not getConnector');
-						$this->response->redirect($this->url->link('checkout/failure', '', true));
+						$this->response->redirect($this->url->link('checkout/failure'));
 					}
 
 					$retrieve = $this->model_extension_payment_klarna_checkout->orderRetrieve($connector, $this->request->get['klarna_order_id']);
@@ -1167,16 +1167,16 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 							$html_snippet = $klarna_checkout['html_snippet'];
 						}
 					} else {
-						$this->response->redirect($this->url->link('checkout/cart', '', true));
+						$this->response->redirect($this->url->link('checkout/cart'));
 					}
 				}
 			} else {
 				$this->model_extension_payment_klarna_checkout->log('Could not find order id using ' . $this->request->get['klarna_order_id']);
-				$this->response->redirect($this->url->link('checkout/failure', '', true));
+				$this->response->redirect($this->url->link('checkout/failure'));
 			}
 		} else {
 			$this->model_extension_payment_klarna_checkout->log('$this->request->get[\'klarna_order_id\'] is not set');
-			$this->response->redirect($this->url->link('checkout/failure', '', true));
+			$this->response->redirect($this->url->link('checkout/failure'));
 		}
 
 		$data['klarna_checkout'] = $html_snippet;

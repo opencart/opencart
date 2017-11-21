@@ -14,7 +14,7 @@ class ControllerExtensionShippingPickup extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping'));
 		}
 
 		if (isset($this->error['warning'])) {
@@ -32,7 +32,7 @@ class ControllerExtensionShippingPickup extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping')
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -42,7 +42,7 @@ class ControllerExtensionShippingPickup extends Controller {
 
 		$data['action'] = $this->url->link('extension/shipping/pickup', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping');
 
 		if (isset($this->request->post['shipping_pickup_geo_zone_id'])) {
 			$data['shipping_pickup_geo_zone_id'] = $this->request->post['shipping_pickup_geo_zone_id'];

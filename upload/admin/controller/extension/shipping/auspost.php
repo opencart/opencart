@@ -44,7 +44,7 @@ class ControllerExtensionShippingAusPost extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping')
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -54,7 +54,7 @@ class ControllerExtensionShippingAusPost extends Controller {
 
 		$data['action'] = $this->url->link('extension/shipping/auspost', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping');
 
 		if (isset($this->request->post['shipping_auspost_postcode'])) {
 			$data['shipping_auspost_postcode'] = $this->request->post['shipping_auspost_postcode'];

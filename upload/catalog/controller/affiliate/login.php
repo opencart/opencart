@@ -4,7 +4,7 @@ class ControllerAffiliateLogin extends Controller {
 
 	public function index() {
 		if ($this->customer->isLogged()) {
-			$this->response->redirect($this->url->link('account/account', '', true));
+			$this->response->redirect($this->url->link('account/account'));
 		}
 
 		$this->load->language('affiliate/login');
@@ -46,7 +46,7 @@ class ControllerAffiliateLogin extends Controller {
 			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], $this->config->get('config_url')) !== false || strpos($this->request->post['redirect'], $this->config->get('config_ssl')) !== false)) {
 				$this->response->redirect(str_replace('&amp;', '&', $this->request->post['redirect']));
 			} else {
-				$this->response->redirect($this->url->link('account/account', '', true));
+				$this->response->redirect($this->url->link('account/account'));
 			}
 		}
 
@@ -59,12 +59,12 @@ class ControllerAffiliateLogin extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', true)
+			'href' => $this->url->link('account/account')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_login'),
-			'href' => $this->url->link('affiliate/login', '', true)
+			'href' => $this->url->link('affiliate/login')
 		);
 
 		$data['text_description'] = sprintf($this->language->get('text_description'), $this->config->get('config_name'), $this->config->get('config_name'), $this->config->get('config_affiliate_commission') . '%');
@@ -75,9 +75,9 @@ class ControllerAffiliateLogin extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['action'] = $this->url->link('affiliate/login', '', true);
-		$data['register'] = $this->url->link('affiliate/register', '', true);
-		$data['forgotten'] = $this->url->link('account/forgotten', '', true);
+		$data['action'] = $this->url->link('affiliate/login');
+		$data['register'] = $this->url->link('affiliate/register');
+		$data['forgotten'] = $this->url->link('account/forgotten');
 
 		if (isset($this->request->post['redirect'])) {
 			$data['redirect'] = $this->request->post['redirect'];

@@ -122,7 +122,7 @@ class ControllerToolUpgrade extends Controller {
 
 							$data['extensions'][] = array(
 								'name'       => $extension['name'],
-								'link'       => $this->url->link('marketplace/marketplace/info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id'], true),
+								'link'       => $this->url->link('marketplace/marketplace/info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id']),
 								'compatible' => $compatible,
 								'available'  => $available
 							);

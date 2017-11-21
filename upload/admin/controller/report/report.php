@@ -42,7 +42,7 @@ class ControllerReportReport extends Controller {
 					'text'       => $this->language->get('extension')->get('heading_title'),
 					'code'       => $code,
 					'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
-					'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true)
+					'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code)
 				);
 			}
 		}

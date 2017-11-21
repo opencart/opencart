@@ -76,7 +76,7 @@ class ControllerExtensionPaymentPaymate extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_checkout'),
-				'href' => $this->url->link('checkout/checkout', '', true)
+				'href' => $this->url->link('checkout/checkout')
 			);
 
 			$data['breadcrumbs'][] = array(

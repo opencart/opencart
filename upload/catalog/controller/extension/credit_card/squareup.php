@@ -3,9 +3,9 @@
 class ControllerExtensionCreditCardSquareup extends Controller {
     public function index() {
         if (!$this->customer->isLogged()) {
-            $this->session->data['redirect'] = $this->url->link('account/account', '', true);
+            $this->session->data['redirect'] = $this->url->link('account/account');
 
-            $this->response->redirect($this->url->link('account/login', '', true));
+            $this->response->redirect($this->url->link('account/login'));
         }
 
         $this->load->language('extension/credit_card/squareup');
@@ -23,12 +23,12 @@ class ControllerExtensionCreditCardSquareup extends Controller {
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_account'),
-            'href' => $this->url->link('account/account', '', true)
+            'href' => $this->url->link('account/account')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('extension/credit_card/squareup', '', true)
+            'href' => $this->url->link('extension/credit_card/squareup')
         );
 
         if (isset($this->session->data['success'])) {
@@ -47,7 +47,7 @@ class ControllerExtensionCreditCardSquareup extends Controller {
             $data['error'] = '';
         } 
 
-        $data['back'] = $this->url->link('account/account', '', true);
+        $data['back'] = $this->url->link('account/account');
 
         $data['cards'] = array();
 
@@ -70,9 +70,9 @@ class ControllerExtensionCreditCardSquareup extends Controller {
 
     public function forget() {
         if (!$this->customer->isLogged()) {
-            $this->session->data['redirect'] = $this->url->link('account/account', '', true);
+            $this->session->data['redirect'] = $this->url->link('account/account');
 
-            $this->response->redirect($this->url->link('account/login', '', true));
+            $this->response->redirect($this->url->link('account/login'));
         }
 
         $this->load->language('extension/credit_card/squareup');
@@ -100,6 +100,6 @@ class ControllerExtensionCreditCardSquareup extends Controller {
             }
         }
 
-        $this->response->redirect($this->url->link('extension/credit_card/squareup', '', true));
+        $this->response->redirect($this->url->link('extension/credit_card/squareup'));
     }
 }

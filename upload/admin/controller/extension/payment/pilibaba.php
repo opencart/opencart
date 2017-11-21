@@ -22,7 +22,7 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment'));
 		}
 		
 		if (isset($this->session->data['success'])) {
@@ -66,7 +66,7 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment')
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -76,7 +76,7 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 
 		$data['action'] = $this->url->link('extension/payment/pilibaba', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
 
 		if (isset($this->request->post['payment_pilibaba_merchant_number'])) {
 			$data['payment_pilibaba_merchant_number'] = $this->request->post['payment_pilibaba_merchant_number'];

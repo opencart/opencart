@@ -14,7 +14,7 @@ class ControllerExtensionTotalCredit extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total'));
 		}
 
 		if (isset($this->error['warning'])) {
@@ -32,7 +32,7 @@ class ControllerExtensionTotalCredit extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total')
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -42,7 +42,7 @@ class ControllerExtensionTotalCredit extends Controller {
 
 		$data['action'] = $this->url->link('extension/total/credit', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total');
 
 		if (isset($this->request->post['total_credit_status'])) {
 			$data['total_credit_status'] = $this->request->post['total_credit_status'];

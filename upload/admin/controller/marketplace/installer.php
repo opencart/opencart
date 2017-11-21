@@ -160,7 +160,7 @@ class ControllerMarketplaceInstaller extends Controller {
 				
 				$json['text'] = $this->language->get('text_install');
 
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $extension_install_id, true));		
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $extension_install_id));
 			} else {
 				$json['error'] = $this->language->get('error_file');
 			}

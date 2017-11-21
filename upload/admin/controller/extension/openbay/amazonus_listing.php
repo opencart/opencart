@@ -326,7 +326,7 @@ class ControllerExtensionOpenbayAmazonusListing extends Controller{
 			$data['has_saved_listings'] = false;
 		}
 
-		$data['url_saved_listings']  = $this->url->link('extension/openbay/amazonus/savedListings', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product_id, true);
+		$data['url_saved_listings']  = $this->url->link('extension/openbay/amazonus/savedListings', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product_id);
 
 		$data['user_token'] = $this->session->data['user_token'];
 

@@ -239,7 +239,7 @@ class ControllerProductSpecial extends Controller {
 
 		// http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
 		if ($page == 1) {
-		    $this->document->addLink($this->url->link('product/special', '', true), 'canonical');
+		    $this->document->addLink($this->url->link('product/special'), 'canonical');
 		} else {
 		    $this->document->addLink($this->url->link('product/special', 'page='. $page , true), 'canonical');
 		}		

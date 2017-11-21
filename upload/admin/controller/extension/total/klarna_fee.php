@@ -24,7 +24,7 @@ class ControllerExtensionTotalKlarnaFee extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total'));
 		}
 
 		if (isset($this->error['warning'])) {
@@ -42,7 +42,7 @@ class ControllerExtensionTotalKlarnaFee extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total')
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -52,7 +52,7 @@ class ControllerExtensionTotalKlarnaFee extends Controller {
 
 		$data['action'] = $this->url->link('extension/total/klarna_fee', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total');
 
 		$data['countries'] = array();
 

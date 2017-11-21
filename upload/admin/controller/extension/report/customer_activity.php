@@ -12,7 +12,7 @@ class ControllerExtensionReportCustomerActivity extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report'));
 		}
 
 		if (isset($this->error['warning'])) {
@@ -30,7 +30,7 @@ class ControllerExtensionReportCustomerActivity extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report')
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -40,7 +40,7 @@ class ControllerExtensionReportCustomerActivity extends Controller {
 
 		$data['action'] = $this->url->link('extension/report/customer_activity', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
 
 		if (isset($this->request->post['report_customer_activity_status'])) {
 			$data['report_customer_activity_status'] = $this->request->post['report_customer_activity_status'];
@@ -128,8 +128,8 @@ class ControllerExtensionReportCustomerActivity extends Controller {
 			);
 
 			$replace = array(
-				$this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=', true),
-				$this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=', true)
+				$this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id='),
+				$this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=')
 			);
 
 			$data['activities'][] = array(

@@ -3,7 +3,7 @@ class ControllerExtensionPaymentG2APay extends Controller {
 	public function index() {
 		$this->load->language('extension/payment/g2apay');
 
-		$data['action'] = $this->url->link('extension/payment/g2apay/checkout', '', true);
+		$data['action'] = $this->url->link('extension/payment/g2apay/checkout');
 
 		return $this->load->view('extension/payment/g2apay', $data);
 	}
@@ -50,7 +50,7 @@ class ControllerExtensionPaymentG2APay extends Controller {
 						$item->qty = 1;
 						$item->id = $order_data['totals'][$i]['code'];
 						$item->price = $order_data['totals'][$i]['value'];
-						$item->url = $this->url->link('common/home', '', true);
+						$item->url = $this->url->link('common/home');
 						$items[] = $item;
 					}
 
@@ -102,11 +102,11 @@ class ControllerExtensionPaymentG2APay extends Controller {
 		$this->model_extension_payment_g2apay->logger($fields);
 
 		if ($response_data === false) {
-			$this->response->redirect($this->url->link('extension/payment/failure', '', true));
+			$this->response->redirect($this->url->link('extension/payment/failure'));
 		}
 
 		if (strtolower($response_data->status) != 'ok') {
-			$this->response->redirect($this->url->link('extension/payment/failure', '', true));
+			$this->response->redirect($this->url->link('extension/payment/failure'));
 		}
 
 		$this->model_extension_payment_g2apay->addG2aOrder($order_info);

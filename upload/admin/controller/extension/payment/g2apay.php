@@ -16,7 +16,7 @@ class ControllerExtensionPaymentG2APay extends Controller {
 
 			$this->session->data['complete'] = $this->language->get('text_complete');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment'));
 		}
 
 		if (isset($this->error['warning'])) {
@@ -94,7 +94,7 @@ class ControllerExtensionPaymentG2APay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment')
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -107,7 +107,7 @@ class ControllerExtensionPaymentG2APay extends Controller {
 
 		$data['action'] = $this->url->link('extension/payment/g2apay', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
 
 		if (isset($this->request->post['payment_g2apay_username'])) {
 			$data['payment_g2apay_username'] = $this->request->post['payment_g2apay_username'];

@@ -14,7 +14,7 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=feed', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=feed'));
 		}
 
 		if (isset($this->error['warning'])) {
@@ -32,7 +32,7 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=feed', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=feed')
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -42,7 +42,7 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 
 		$data['action'] = $this->url->link('extension/feed/google_sitemap', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=feed', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=feed');
 
 		if (isset($this->request->post['feed_google_sitemap_status'])) {
 			$data['feed_google_sitemap_status'] = $this->request->post['feed_google_sitemap_status'];

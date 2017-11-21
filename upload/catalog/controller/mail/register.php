@@ -8,7 +8,7 @@ class ControllerMailRegister extends Controller {
 		$data['text_approval'] = $this->language->get('text_approval');
 		$data['text_service'] = $this->language->get('text_service');
 		$data['text_thanks'] = $this->language->get('text_thanks');
-		$data['btn_login'] = $this->language->get('btn_login');
+		$data['button_login'] = $this->language->get('button_login');
 
 		$this->load->model('account/customer_group');
 

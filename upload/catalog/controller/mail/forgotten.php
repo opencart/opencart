@@ -7,7 +7,7 @@ class ControllerMailForgotten extends Controller {
 			$data['text_greeting'] = sprintf($this->language->get('text_greeting'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 			$data['text_change'] = $this->language->get('text_change');
 			$data['text_ip'] = $this->language->get('text_ip');
-			$data['btn_reset'] = $this->language->get('btn_reset');
+			$data['button_reset'] = $this->language->get('button_reset');
 
 			$data['reset'] = str_replace('&amp;', '&', $this->url->link('account/reset', 'email=' . urlencode($args[0]) . '&code=' . $args[1], true));
 			$data['ip'] = $this->request->server['REMOTE_ADDR'];

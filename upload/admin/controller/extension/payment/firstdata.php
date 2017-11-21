@@ -61,7 +61,7 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -71,10 +71,10 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/firstdata', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('extension/payment/firstdata', 'user_token=' . $this->session->data['user_token'])
 		);
 
-		$data['action'] = $this->url->link('extension/payment/firstdata', 'user_token=' . $this->session->data['user_token'], true);
+		$data['action'] = $this->url->link('extension/payment/firstdata', 'user_token=' . $this->session->data['user_token']);
 		
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
 
@@ -223,8 +223,8 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 
 				$data['hash'] = sha1(bin2hex($data['merchant_id'] . $data['request_timestamp'] . $data['amount'] . $data['currency'] . $this->config->get('payment_firstdata_secret')));
 
-				$data['void_url'] = $this->url->link('extension/payment/firstdata/void', 'user_token=' . $this->session->data['user_token'], true);
-				$data['capture_url'] = $this->url->link('extension/payment/firstdata/capture', 'user_token=' . $this->session->data['user_token'], true);
+				$data['void_url'] = $this->url->link('extension/payment/firstdata/void', 'user_token=' . $this->session->data['user_token']);
+				$data['capture_url'] = $this->url->link('extension/payment/firstdata/capture', 'user_token=' . $this->session->data['user_token']);
 				$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/firstdata/notify';
 
 				if ($this->config->get('payment_firstdata_live_demo') == 1) {

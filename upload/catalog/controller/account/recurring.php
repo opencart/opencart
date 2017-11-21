@@ -132,7 +132,7 @@ class ControllerAccountRecurring extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_recurring'),
-				'href' => $this->url->link('account/recurring/info', 'order_recurring_id=' . $this->request->get['order_recurring_id'] . $url, true),
+				'href' => $this->url->link('account/recurring/info', 'order_recurring_id=' . $this->request->get['order_recurring_id'] . $url),
 			);
 
 			$data['order_recurring_id'] = (int)$this->request->get['order_recurring_id'];

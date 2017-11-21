@@ -77,12 +77,12 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -90,7 +90,7 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 			'href' => $this->url->link('extension/payment/firstdata_remote', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
 		);
 
-		$data['action'] = $this->url->link('extension/payment/firstdata_remote', 'user_token=' . $this->session->data['user_token'], true);
+		$data['action'] = $this->url->link('extension/payment/firstdata_remote', 'user_token=' . $this->session->data['user_token']);
 		
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
 

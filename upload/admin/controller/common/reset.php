@@ -4,7 +4,7 @@ class ControllerCommonReset extends Controller {
 
 	public function index() {
 		if ($this->user->isLogged() && isset($this->request->get['user_token']) && ($this->request->get['user_token'] == $this->session->data['user_token'])) {
-			$this->response->redirect($this->url->link('common/dashboard', '', true));
+			$this->response->redirect($this->url->link('common/dashboard'));
 		}
 
 		$this->load->language('common/reset');
@@ -12,7 +12,7 @@ class ControllerCommonReset extends Controller {
 		if (!$this->config->get('config_password')) {
 			$this->session->data['error'] = $this->language->get('error_disabled');
 
-			$this->response->redirect($this->url->link('common/login', '', true));
+			$this->response->redirect($this->url->link('common/login'));
 		}
 
 		if (isset($this->request->get['email'])) {
@@ -40,7 +40,7 @@ class ControllerCommonReset extends Controller {
 
 			$this->model_setting_setting->editSettingValue('config', 'config_password', '0');
 
-			$this->response->redirect($this->url->link('common/login', '', true));
+			$this->response->redirect($this->url->link('common/login'));
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -50,19 +50,19 @@ class ControllerCommonReset extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('common/login', '', true));
+			$this->response->redirect($this->url->link('common/login'));
 		}
 
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', '', true)
+			'href' => $this->url->link('common/dashboard')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('common/reset', '', true)
+			'href' => $this->url->link('common/reset')
 		);
 
 		if (isset($this->error['password'])) {
@@ -77,9 +77,9 @@ class ControllerCommonReset extends Controller {
 			$data['error_confirm'] = '';
 		}
 
-		$data['action'] = $this->url->link('common/reset', 'email=' . urlencode($email) . '&code=' . $code, true);
+		$data['action'] = $this->url->link('common/reset', 'email=' . urlencode($email) . '&code=' . $code);
 
-		$data['cancel'] = $this->url->link('common/login', '', true);
+		$data['cancel'] = $this->url->link('common/login');
 
 		if (isset($this->request->post['password'])) {
 			$data['password'] = $this->request->post['password'];

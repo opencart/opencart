@@ -92,7 +92,7 @@ class ControllerExtensionExtensionReport extends Controller {
 					'install'    => $this->url->link('extension/extension/report/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
 					'uninstall'  => $this->url->link('extension/extension/report/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
 					'installed'  => in_array($extension, $extensions),
-					'edit'       => $this->url->link('extension/report/' . $extension, 'user_token=' . $this->session->data['user_token'], true)
+					'edit'       => $this->url->link('extension/report/' . $extension, 'user_token=' . $this->session->data['user_token'])
 				);
 			}
 		}

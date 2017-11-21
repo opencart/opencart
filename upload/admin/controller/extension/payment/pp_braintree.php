@@ -26,7 +26,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
 
-		$data['button_configure'] = $this->url->link('extension/module/pp_braintree_button/configure', 'user_token=' . $this->session->data['user_token'], true);
+		$data['button_configure'] = $this->url->link('extension/module/pp_braintree_button/configure', 'user_token=' . $this->session->data['user_token']);
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -58,7 +58,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -68,10 +68,10 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/pp_braintree', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('extension/payment/pp_braintree', 'user_token=' . $this->session->data['user_token'])
 		);
 
-		$data['action'] = $this->url->link('extension/payment/pp_braintree', 'user_token=' . $this->session->data['user_token'], true);
+		$data['action'] = $this->url->link('extension/payment/pp_braintree', 'user_token=' . $this->session->data['user_token']);
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
 
@@ -386,7 +386,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			$curl = curl_init($this->opencart_retrieve_url);
 
 			$post_data = array(
-				'return_url' => $this->url->link('extension/payment/pp_braintree', 'user_token=' . $this->session->data['user_token'], true),
+				'return_url' => $this->url->link('extension/payment/pp_braintree', 'user_token=' . $this->session->data['user_token']),
 				'retrieve_code' => $this->request->get['retrieve_code'],
 				'store_version' => VERSION,
 			);
@@ -436,7 +436,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			$country = $this->model_localisation_country->getCountry($this->config->get('config_country_id'));
 
 			$post_data = array(
-				'return_url' => $this->url->link('extension/payment/pp_braintree', 'user_token=' . $this->session->data['user_token'], true),
+				'return_url' => $this->url->link('extension/payment/pp_braintree', 'user_token=' . $this->session->data['user_token']),
 				'store_url' => HTTPS_CATALOG,
 				'store_version' => VERSION,
 				'store_country' => (isset($country['iso_code_3']) ? $country['iso_code_3'] : ''),
@@ -996,7 +996,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			$country = $this->model_localisation_country->getCountry($this->config->get('config_country_id'));
 
 			$post_data = array(
-				'return_url' => $this->url->link('extension/payment/pp_braintree', 'user_token=' . $this->session->data['user_token'], true),
+				'return_url' => $this->url->link('extension/payment/pp_braintree', 'user_token=' . $this->session->data['user_token']),
 				'store_url' => HTTPS_CATALOG,
 				'store_version' => VERSION,
 				'store_country' => (isset($country['iso_code_3']) ? $country['iso_code_3'] : ''),
@@ -1018,10 +1018,10 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			if ($curl_response['url']) {
 				$this->response->redirect($curl_response['url']);
 			} else {
-				$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'], true));
+				$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token']));
 			}
 		} else {
-			$this->response->redirect($this->url->link('error/permission', 'user_token=' . $this->session->data['user_token'], true));
+			$this->response->redirect($this->url->link('error/permission', 'user_token=' . $this->session->data['user_token']));
 		}
 	}
 
@@ -1032,10 +1032,10 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$data['module_link'] = '';
 
 		if ($this->config->get('payment_pp_braintree_status') || $this->config->get('payment_pp_braintree_merchant_id') || $this->config->get('payment_pp_braintree_access_token')) {
-			$data['module_link'] = $this->url->link('extension/payment/pp_braintree', 'user_token=' . $this->session->data['user_token'], true);
+			$data['module_link'] = $this->url->link('extension/payment/pp_braintree', 'user_token=' . $this->session->data['user_token']);
 		} else {
 			if ($this->user->hasPermission('modify', 'extension/extension/payment')) {
-				$data['connect_link'] = $this->url->link('extension/payment/pp_braintree/connectRedirect', 'user_token=' . $this->session->data['user_token'], true);
+				$data['connect_link'] = $this->url->link('extension/payment/pp_braintree/connectRedirect', 'user_token=' . $this->session->data['user_token']);
 			}
 		}
 

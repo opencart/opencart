@@ -340,7 +340,7 @@ class ControllerMarketplaceInstall extends Controller {
 		if (!$json) {
 			$json['text'] = $this->language->get('text_clear');
 
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/clear', 'user_token=' . $this->session->data['user_token'], true));
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/clear', 'user_token=' . $this->session->data['user_token']));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

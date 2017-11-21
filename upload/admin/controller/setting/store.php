@@ -30,7 +30,7 @@ class ControllerSettingStore extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'], true));
+			$this->response->redirect($this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']));
 		}
 
 		$this->getForm();
@@ -76,7 +76,7 @@ class ControllerSettingStore extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'], true));
+			$this->response->redirect($this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']));
 		}
 
 		$this->getList();
@@ -99,16 +99,16 @@ class ControllerSettingStore extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'])
 		);
 
-		$data['add'] = $this->url->link('setting/store/add', 'user_token=' . $this->session->data['user_token'], true);
-		$data['delete'] = $this->url->link('setting/store/delete', 'user_token=' . $this->session->data['user_token'], true);
+		$data['add'] = $this->url->link('setting/store/add', 'user_token=' . $this->session->data['user_token']);
+		$data['delete'] = $this->url->link('setting/store/delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['stores'] = array();
 
@@ -117,7 +117,7 @@ class ControllerSettingStore extends Controller {
 				'store_id' => 0,
 				'name'     => $this->config->get('config_name') . $this->language->get('text_default'),
 				'url'      => HTTP_CATALOG,
-				'edit'     => $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token'], true)
+				'edit'     => $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token'])
 			);
 		}
 
@@ -237,18 +237,18 @@ class ControllerSettingStore extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		if (!isset($this->request->get['store_id'])) {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_settings'),
-				'href' => $this->url->link('setting/store/add', 'user_token=' . $this->session->data['user_token'], true)
+				'href' => $this->url->link('setting/store/add', 'user_token=' . $this->session->data['user_token'])
 			);
 		} else {
 			$data['breadcrumbs'][] = array(
@@ -266,12 +266,12 @@ class ControllerSettingStore extends Controller {
 		}
 
 		if (!isset($this->request->get['store_id'])) {
-			$data['action'] = $this->url->link('setting/store/add', 'user_token=' . $this->session->data['user_token'], true);
+			$data['action'] = $this->url->link('setting/store/add', 'user_token=' . $this->session->data['user_token']);
 		} else {
 			$data['action'] = $this->url->link('setting/store/edit', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $this->request->get['store_id'], true);
 		}
 
-		$data['cancel'] = $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'], true);
+		$data['cancel'] = $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']);
 
 		if (isset($this->request->get['store_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$this->load->model('setting/setting');

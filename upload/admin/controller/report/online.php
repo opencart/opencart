@@ -41,15 +41,15 @@ class ControllerReportOnline extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('report/online', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('report/online', 'user_token=' . $this->session->data['user_token'])
 		);
 		
-		$data['refresh'] = $this->url->link('report/online', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['refresh'] = $this->url->link('report/online', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$this->load->model('report/online');
 		$this->load->model('customer/customer');		

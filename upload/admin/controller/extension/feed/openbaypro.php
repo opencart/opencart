@@ -3,7 +3,7 @@ class ControllerExtensionFeedOpenbaypro extends Controller {
 	private $error = array();
 
 	public function index() {
-        $this->response->redirect($this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true));
+        $this->response->redirect($this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token']));
 	}
 
 	protected function validate() {

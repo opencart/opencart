@@ -57,7 +57,7 @@ class ControllerAccountReturn extends Controller {
 				'name'       => $result['firstname'] . ' ' . $result['lastname'],
 				'status'     => $result['status'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'href'       => $this->url->link('account/return/info', 'return_id=' . $result['return_id'] . $url, true)
+				'href'       => $this->url->link('account/return/info', 'return_id=' . $result['return_id'] . $url)
 			);
 		}
 
@@ -130,7 +130,7 @@ class ControllerAccountReturn extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_return'),
-				'href' => $this->url->link('account/return/info', 'return_id=' . $this->request->get['return_id'] . $url, true)
+				'href' => $this->url->link('account/return/info', 'return_id=' . $this->request->get['return_id'] . $url)
 			);
 
 			$data['return_id'] = $return_info['return_id'];
@@ -199,7 +199,7 @@ class ControllerAccountReturn extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_return'),
-				'href' => $this->url->link('account/return/info', 'return_id=' . $return_id . $url, true)
+				'href' => $this->url->link('account/return/info', 'return_id=' . $return_id . $url)
 			);
 
 			$data['continue'] = $this->url->link('account/return', '', true);

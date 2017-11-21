@@ -29,7 +29,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -39,10 +39,10 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/pp_pro_iframe', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('extension/payment/pp_pro_iframe', 'user_token=' . $this->session->data['user_token'])
 		);
 
-		$data['action'] = $this->url->link('extension/payment/pp_pro_iframe', 'user_token=' . $this->session->data['user_token'], true);
+		$data['action'] = $this->url->link('extension/payment/pp_pro_iframe', 'user_token=' . $this->session->data['user_token']);
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
 
@@ -242,9 +242,9 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 
 			$data['transactions'] = array();
 
-			$data['view_link'] = $this->url->link('extension/payment/pp_pro_iframe/info', 'user_token=' . $this->session->data['user_token'], true);
-			$data['refund_link'] = $this->url->link('extension/payment/pp_pro_iframe/refund', 'user_token=' . $this->session->data['user_token'], true);
-			$data['resend_link'] = $this->url->link('extension/payment/pp_pro_iframe/resend', 'user_token=' . $this->session->data['user_token'], true);
+			$data['view_link'] = $this->url->link('extension/payment/pp_pro_iframe/info', 'user_token=' . $this->session->data['user_token']);
+			$data['refund_link'] = $this->url->link('extension/payment/pp_pro_iframe/refund', 'user_token=' . $this->session->data['user_token']);
+			$data['resend_link'] = $this->url->link('extension/payment/pp_pro_iframe/resend', 'user_token=' . $this->session->data['user_token']);
 
 			$captured = number_format($this->model_extension_payment_pp_pro_iframe->getTotalCaptured($paypal_order['paypal_iframe_order_id']), 2);
 			$refunded = number_format($this->model_extension_payment_pp_pro_iframe->getTotalRefunded($paypal_order['paypal_iframe_order_id']), 2);
@@ -270,7 +270,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 				);
 			}
 
-			$data['reauthorise_link'] = $this->url->link('extension/payment/pp_pro_iframe/reauthorise', 'user_token=' . $this->session->data['user_token'], true);
+			$data['reauthorise_link'] = $this->url->link('extension/payment/pp_pro_iframe/reauthorise', 'user_token=' . $this->session->data['user_token']);
 
 			return $this->load->view('extension/payment/pp_pro_iframe_order', $data);
 		}
@@ -286,21 +286,21 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/pp_pro_iframe', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('extension/payment/pp_pro_iframe', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_refund'),
-			'href' => $this->url->link('extension/payment/pp_pro_iframe/refund', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('extension/payment/pp_pro_iframe/refund', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		//button actions
-		$data['action'] = $this->url->link('extension/payment/pp_pro_iframe/doRefund', 'user_token=' . $this->session->data['user_token'], true);
+		$data['action'] = $this->url->link('extension/payment/pp_pro_iframe/doRefund', 'user_token=' . $this->session->data['user_token']);
 
 		if (isset($this->request->get['order_id'])) {
 			$data['cancel'] = $this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $this->request->get['order_id'], true);
@@ -497,12 +497,12 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/pp_pro_iframe', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('extension/payment/pp_pro_iframe', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -514,7 +514,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 		$transaction = array_map('urldecode', $transaction);
 
 		$data['transaction'] = $transaction;
-		$data['view_link'] = $this->url->link('extension/payment/pp_pro_iframe/info', 'user_token=' . $this->session->data['user_token'], true);
+		$data['view_link'] = $this->url->link('extension/payment/pp_pro_iframe/info', 'user_token=' . $this->session->data['user_token']);
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->document->setTitle($this->language->get('text_transaction'));

@@ -132,7 +132,7 @@ class ControllerAccountOrder extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_order'),
-				'href' => $this->url->link('account/order/info', 'order_id=' . $this->request->get['order_id'] . $url, true)
+				'href' => $this->url->link('account/order/info', 'order_id=' . $this->request->get['order_id'] . $url)
 			);
 
 			if (isset($this->session->data['error'])) {

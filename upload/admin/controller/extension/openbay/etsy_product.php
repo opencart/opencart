@@ -11,25 +11,25 @@ class ControllerExtensionOpenbayEtsyProduct extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
-		$data['action']   = $this->url->link('extension/openbay/etsy_product/create', 'user_token=' . $this->session->data['user_token'], true);
-		$data['cancel']   = $this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token'], true);
+		$data['action']   = $this->url->link('extension/openbay/etsy_product/create', 'user_token=' . $this->session->data['user_token']);
+		$data['cancel']   = $this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token']);
 		$data['user_token']    = $this->session->data['user_token'];
 
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']),
 			'text' => $this->language->get('text_home'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true),
+			'href' => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token']),
 			'text' => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay/etsy', 'user_token=' . $this->session->data['user_token'], true),
+			'href' => $this->url->link('extension/openbay/etsy', 'user_token=' . $this->session->data['user_token']),
 			'text' => $this->language->get('text_etsy'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay/etsy_product/create', 'user_token=' . $this->session->data['user_token'], true),
+			'href' => $this->url->link('extension/openbay/etsy_product/create', 'user_token=' . $this->session->data['user_token']),
 			'text' => $this->language->get('heading_title'),
 		);
 
@@ -204,21 +204,21 @@ class ControllerExtensionOpenbayEtsyProduct extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
-		$data['action']   = $this->url->link('extension/openbay/etsy_product/editSubmit', 'user_token=' . $this->session->data['user_token'], true);
-		$data['cancel']   = $this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token'], true);
+		$data['action']   = $this->url->link('extension/openbay/etsy_product/editSubmit', 'user_token=' . $this->session->data['user_token']);
+		$data['cancel']   = $this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token']);
 		$data['user_token']    = $this->session->data['user_token'];
 
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']),
 			'text' => $this->language->get('text_home'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true),
+			'href' => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token']),
 			'text' => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay/etsy', 'user_token=' . $this->session->data['user_token'], true),
+			'href' => $this->url->link('extension/openbay/etsy', 'user_token=' . $this->session->data['user_token']),
 			'text' => $this->language->get('text_etsy'),
 		);
 		$data['breadcrumbs'][] = array(
@@ -467,7 +467,7 @@ class ControllerExtensionOpenbayEtsyProduct extends Controller {
 
 		$data = $this->load->language('extension/openbay/etsy_links');
 
-		$data['cancel'] = $this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token'], true);
+		$data['cancel'] = $this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token']);
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -475,26 +475,26 @@ class ControllerExtensionOpenbayEtsyProduct extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']),
 			'text' => $this->language->get('text_home'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true),
+			'href' => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token']),
 			'text' => $this->language->get('text_openbay'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay/etsy', 'user_token=' . $this->session->data['user_token'], true),
+			'href' => $this->url->link('extension/openbay/etsy', 'user_token=' . $this->session->data['user_token']),
 			'text' => $this->language->get('text_etsy'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay/etsy_product/itemLinks', 'user_token=' . $this->session->data['user_token'], true),
+			'href' => $this->url->link('extension/openbay/etsy_product/itemLinks', 'user_token=' . $this->session->data['user_token']),
 			'text' => $this->language->get('heading_title'),
 		);
 
-		$data['return']       = $this->url->link('extension/openbay/etsy', 'user_token=' . $this->session->data['user_token'], true);
+		$data['return']       = $this->url->link('extension/openbay/etsy', 'user_token=' . $this->session->data['user_token']);
 		//$data['edit_url']     = $this->url->link('extension/openbay/ebay/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=', true);
 		//$data['validation']   = $this->openbay->ebay->validate();
 		$data['user_token']        = $this->session->data['user_token'];
@@ -542,21 +542,21 @@ class ControllerExtensionOpenbayEtsyProduct extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token'], true),
+			'href' => $this->url->link('marketplace/openbay', 'user_token=' . $this->session->data['user_token']),
 			'text' => $this->language->get('text_openbay'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay/etsy', 'user_token=' . $this->session->data['user_token'], true),
+			'href' => $this->url->link('extension/openbay/etsy', 'user_token=' . $this->session->data['user_token']),
 			'text' => $this->language->get('text_etsy'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay/etsy_product/itemLinks', 'user_token=' . $this->session->data['user_token'], true),
+			'href' => $this->url->link('extension/openbay/etsy_product/itemLinks', 'user_token=' . $this->session->data['user_token']),
 			'text' => $this->language->get('heading_title'),
 		);
 

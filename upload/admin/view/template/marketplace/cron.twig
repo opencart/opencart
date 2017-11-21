@@ -26,19 +26,19 @@
     {% endif %}
     <div class="panel panel-info">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-question-circle"></i> CRON Instructions</h3>
+        <h3 class="panel-title"><i class="fa fa-question-circle"></i> {{ text_instruction }}</h3>
       </div>
       <div class="panel-body">
         <p>{{ text_cron_1 }}</p>
         <p>{{ text_cron_2 }}</p>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-cron">CRON URL</label>
-          <div class="col-sm-10">
-            <div class="input-group">
-              <input type="text" value="wget &quot;{{ cron }}&quot; --read-timeout=5400" id="input-cron" class="form-control" />
-              <div class="input-group-btn">
-                <button type="button" id="button-copy" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-default"><i class="fa fa-copy"></i></button>
-              </div>
+          <div class="input-group">
+            <div class="input-group-addon">
+              {{ entry_cron }}
+            </div>
+            <input type="text" value="wget &quot;{{ cron }}&quot; --read-timeout=5400" id="input-cron" class="form-control"/>
+            <div class="input-group-btn">
+              <button type="button" id="button-copy" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-default"><i class="fa fa-copy"></i></button>
             </div>
           </div>
         </div>

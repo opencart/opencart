@@ -69,7 +69,7 @@ class ControllerExtensionPaymentG2APay extends Controller {
 			$item->qty = $product['quantity'];
 			$item->id = $product['product_id'];
 			$item->price = $product['price'];
-			$item->url = $this->url->link('product/product', 'product_id=' . $product['product_id'], true);
+			$item->url = $this->url->link('product/product', 'product_id=' . $product['product_id']);
 			$items[] = $item;
 		}
 

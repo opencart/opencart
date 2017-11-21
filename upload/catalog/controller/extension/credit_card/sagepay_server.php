@@ -42,7 +42,7 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 
 		if ($this->config->get('payment_sagepay_server_card')) {
 			$data['cards'] = $this->model_extension_payment_sagepay_server->getCards($this->customer->getId());
-			$data['delete'] = $this->url->link('extension/credit_card/sagepay_server/delete', 'card_id=', true);
+			$data['delete'] = $this->url->link('extension/credit_card/sagepay_server/delete', 'card_id=');
 
 			if (isset($this->request->get['page'])) {
 				$page = $this->request->get['page'];
@@ -56,7 +56,7 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 			$pagination->total = $cards_total;
 			$pagination->page = $page;
 			$pagination->limit = 10;
-			$pagination->url = $this->url->link('extension/credit_card/sagepay_server', 'page={page}', true);
+			$pagination->url = $this->url->link('extension/credit_card/sagepay_server', 'page={page}');
 
 			$data['pagination'] = $pagination->render();
 

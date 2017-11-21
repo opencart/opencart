@@ -78,7 +78,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$this->session->data['payment_method'] = array(
 			'code'       => 'klarna_checkout',
 			'title'      => $text_title,
-			'terms'      => $this->url->link('information/information', 'information_id=' . $this->config->get('payment_klarna_checkout_terms'), true),
+			'terms'      => $this->url->link('information/information', 'information_id=' . $this->config->get('payment_klarna_checkout_terms')),
 			'sort_order' => '1'
 		);
 
@@ -1745,16 +1745,16 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		list($totals, $taxes, $total) = $this->model_extension_payment_klarna_checkout->getTotals();
 
 		$merchant_urls = array(
-			'checkout'	     => html_entity_decode($this->url->link('extension/payment/klarna_checkout', 'klarna_order_id={checkout.order.id}', true)),
-			'confirmation'   => html_entity_decode($this->url->link('extension/payment/klarna_checkout/confirmation', 'klarna_order_id={checkout.order.id}', true)),
-			'push'			 => html_entity_decode($this->url->link('extension/payment/klarna_checkout/push', 'klarna_order_id={checkout.order.id}', true)),
-			'validation'	 => html_entity_decode($this->url->link('extension/payment/klarna_checkout/validation', 'klarna_order_id={checkout.order.id}', true)),
-			'address_update' => html_entity_decode($this->url->link('extension/payment/klarna_checkout/addressUpdate', 'klarna_order_id={checkout.order.id}', true)),
-			'notification'	 => html_entity_decode($this->url->link('extension/payment/klarna_checkout/notification', 'klarna_order_id={checkout.order.id}', true)),
+			'checkout'	     => html_entity_decode($this->url->link('extension/payment/klarna_checkout', 'klarna_order_id={checkout.order.id}')),
+			'confirmation'   => html_entity_decode($this->url->link('extension/payment/klarna_checkout/confirmation', 'klarna_order_id={checkout.order.id}')),
+			'push'			 => html_entity_decode($this->url->link('extension/payment/klarna_checkout/push', 'klarna_order_id={checkout.order.id}')),
+			'validation'	 => html_entity_decode($this->url->link('extension/payment/klarna_checkout/validation', 'klarna_order_id={checkout.order.id}')),
+			'address_update' => html_entity_decode($this->url->link('extension/payment/klarna_checkout/addressUpdate', 'klarna_order_id={checkout.order.id}')),
+			'notification'	 => html_entity_decode($this->url->link('extension/payment/klarna_checkout/notification', 'klarna_order_id={checkout.order.id}')),
 		);
 
 		if ($this->config->get('payment_klarna_checkout_terms')) {
-			$merchant_urls['terms'] = html_entity_decode($this->url->link('information/information', 'information_id=' . $this->config->get('payment_klarna_checkout_terms'), true));
+			$merchant_urls['terms'] = html_entity_decode($this->url->link('information/information', 'information_id=' . $this->config->get('payment_klarna_checkout_terms')));
 		}
 
 		$country_info = $this->model_localisation_country->getCountry($klarna_account['country']);

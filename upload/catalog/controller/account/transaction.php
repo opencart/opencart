@@ -63,7 +63,7 @@ class ControllerAccountTransaction extends Controller {
 		$pagination->total = $transaction_total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->link('account/transaction', 'page={page}', true);
+		$pagination->url = $this->url->link('account/transaction', 'page={page}');
 
 		$data['pagination'] = $pagination->render();
 

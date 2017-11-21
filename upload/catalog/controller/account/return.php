@@ -33,7 +33,7 @@ class ControllerAccountReturn extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/return', $url, true)
+			'href' => $this->url->link('account/return', $url)
 		);
 
 		$this->load->model('account/return');
@@ -65,7 +65,7 @@ class ControllerAccountReturn extends Controller {
 		$pagination->total = $return_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit');
-		$pagination->url = $this->url->link('account/return', 'page={page}', true);
+		$pagination->url = $this->url->link('account/return', 'page={page}');
 
 		$data['pagination'] = $pagination->render();
 
@@ -93,7 +93,7 @@ class ControllerAccountReturn extends Controller {
 		}
 
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/return/info', 'return_id=' . $return_id, true);
+			$this->session->data['redirect'] = $this->url->link('account/return/info', 'return_id=' . $return_id);
 
 			$this->response->redirect($this->url->link('account/login'));
 		}
@@ -125,7 +125,7 @@ class ControllerAccountReturn extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('account/return', $url, true)
+				'href' => $this->url->link('account/return', $url)
 			);
 
 			$data['breadcrumbs'][] = array(
@@ -161,7 +161,7 @@ class ControllerAccountReturn extends Controller {
 				);
 			}
 
-			$data['continue'] = $this->url->link('account/return', $url, true);
+			$data['continue'] = $this->url->link('account/return', $url);
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
@@ -422,7 +422,7 @@ class ControllerAccountReturn extends Controller {
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_return_id'));
 
 			if ($information_info) {
-				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_return_id'), true), $information_info['title'], $information_info['title']);
+				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_return_id')), $information_info['title'], $information_info['title']);
 			} else {
 				$data['text_agree'] = '';
 			}

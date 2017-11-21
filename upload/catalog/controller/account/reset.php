@@ -72,7 +72,7 @@ class ControllerAccountReset extends Controller {
 			$data['error_confirm'] = '';
 		}
 
-		$data['action'] = $this->url->link('account/reset', 'email=' . urlencode($email) . '&code=' . $code, true);
+		$data['action'] = $this->url->link('account/reset', 'email=' . urlencode($email) . '&code=' . $code);
 
 		$data['back'] = $this->url->link('account/login');
 

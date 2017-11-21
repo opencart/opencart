@@ -70,7 +70,7 @@ class ControllerAccountDownload extends Controller {
 					'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 					'name'       => $result['name'],
 					'size'       => round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i],
-					'href'       => $this->url->link('account/download/download', 'download_id=' . $result['download_id'], true)
+					'href'       => $this->url->link('account/download/download', 'download_id=' . $result['download_id'])
 				);
 			}
 		}
@@ -79,7 +79,7 @@ class ControllerAccountDownload extends Controller {
 		$pagination->total = $download_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit');
-		$pagination->url = $this->url->link('account/download', 'page={page}', true);
+		$pagination->url = $this->url->link('account/download', 'page={page}');
 
 		$data['pagination'] = $pagination->render();
 

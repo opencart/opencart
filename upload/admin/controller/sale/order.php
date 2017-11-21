@@ -371,7 +371,7 @@ class ControllerSaleOrder extends Controller {
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
 		// API login
-		$data['catalog'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
+		$data['catalog'] = HTTP_CATALOG;
 		
 		// API login
 		$this->load->model('user/api');
@@ -469,7 +469,7 @@ class ControllerSaleOrder extends Controller {
 		if (!empty($order_info)) {
 			$data['order_id'] = (int)$this->request->get['order_id'];
 			$data['store_id'] = $order_info['store_id'];
-			$data['store_url'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
+			$data['store_url'] = HTTP_CATALOG;
 
 			$data['customer'] = $order_info['customer'];
 			$data['customer_id'] = $order_info['customer_id'];
@@ -557,7 +557,7 @@ class ControllerSaleOrder extends Controller {
 		} else {
 			$data['order_id'] = 0;
 			$data['store_id'] = 0;
-			$data['store_url'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
+			$data['store_url'] = HTTP_CATALOG;
 			
 			$data['customer'] = '';
 			$data['customer_id'] = '';
@@ -678,7 +678,7 @@ class ControllerSaleOrder extends Controller {
 		$data['voucher_themes'] = $this->model_sale_voucher_theme->getVoucherThemes();
 
 		// API login
-		$data['catalog'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
+		$data['catalog'] = HTTP_CATALOG;
 		
 		// API login
 		$this->load->model('user/api');
@@ -794,7 +794,7 @@ class ControllerSaleOrder extends Controller {
 			$data['store_name'] = $order_info['store_name'];
 			
 			if ($order_info['store_id'] == 0) {
-				$data['store_url'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
+				$data['store_url'] = HTTP_CATALOG;
 			} else {
 				$data['store_url'] = $order_info['store_url'];
 			}
@@ -1221,7 +1221,7 @@ class ControllerSaleOrder extends Controller {
 			}
 			
 			// The URL we send API requests to
-			$data['catalog'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
+			$data['catalog'] = HTTP_CATALOG;
 			
 			// API login
 			$this->load->model('user/api');
@@ -1473,12 +1473,7 @@ class ControllerSaleOrder extends Controller {
 
 		$data['title'] = $this->language->get('text_invoice');
 
-		if ($this->request->server['HTTPS']) {
-			$data['base'] = HTTPS_SERVER;
-		} else {
-			$data['base'] = HTTP_SERVER;
-		}
-
+		$data['base'] = HTTP_SERVER;
 		$data['direction'] = $this->language->get('direction');
 		$data['lang'] = $this->language->get('code');
 
@@ -1682,12 +1677,7 @@ class ControllerSaleOrder extends Controller {
 
 		$data['title'] = $this->language->get('text_shipping');
 
-		if ($this->request->server['HTTPS']) {
-			$data['base'] = HTTPS_SERVER;
-		} else {
-			$data['base'] = HTTP_SERVER;
-		}
-
+		$data['base'] = HTTP_SERVER;
 		$data['direction'] = $this->language->get('direction');
 		$data['lang'] = $this->language->get('code');
 

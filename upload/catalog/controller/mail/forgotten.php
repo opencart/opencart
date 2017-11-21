@@ -11,13 +11,7 @@ class ControllerMailForgotten extends Controller {
 
 			$data['reset'] = str_replace('&amp;', '&', $this->url->link('account/reset', 'email=' . urlencode($args[0]) . '&code=' . $args[1], true));
 			$data['ip'] = $this->request->server['REMOTE_ADDR'];
-
-			if ($this->request->server['HTTPS']) {
-				$data['store_url'] = HTTPS_SERVER;
-			} else {
-				$data['store_url'] = HTTP_SERVER;
-			}
-
+			$data['store_url'] = HTTP_SERVER;
 			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 			$this->load->model('tool/image');

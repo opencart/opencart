@@ -289,13 +289,7 @@ class ControllerMailOrder extends Controller {
 
 		$data['order_id'] = $order_info['order_id'];
 		$data['date_added'] = date($language->get('date_format_short'), strtotime($order_info['date_added']));
-
-		if ($this->request->server['HTTPS']) {
-			$data['store_url'] = HTTPS_SERVER;
-		} else {
-			$data['store_url'] = HTTP_SERVER;
-		}
-
+		$data['store_url'] = HTTP_SERVER;
 		$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 		$this->load->model('tool/image');
@@ -397,12 +391,7 @@ class ControllerMailOrder extends Controller {
 				$data['order_status'] = '';
 			}
 
-			if ($this->request->server['HTTPS']) {
-				$data['store_url'] = HTTPS_SERVER;
-			} else {
-				$data['store_url'] = HTTP_SERVER;
-			}
-
+			$data['store_url'] = HTTP_SERVER;
 			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 			$this->load->model('tool/image');

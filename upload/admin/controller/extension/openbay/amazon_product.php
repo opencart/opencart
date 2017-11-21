@@ -339,8 +339,7 @@ class ControllerExtensionOpenbayAmazonProduct extends Controller {
 		foreach($saved_products as $saved_product) {
 			$product_data_decoded = (array)json_decode($saved_product['data']);
 
-			$catalog = defined(HTTPS_CATALOG) ? HTTPS_CATALOG : HTTP_CATALOG;
-			$response_data = array("response_url" => $catalog . 'index.php?route=extension/openbay/amazon/product');
+			$response_data = array("response_url" => HTTP_CATALOG . 'index.php?route=extension/openbay/amazon/product');
 			$category_data = array('category' => (string)$saved_product['category']);
 			$fields_data = array('fields' => (array)$product_data_decoded['fields']);
 

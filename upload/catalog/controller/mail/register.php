@@ -26,13 +26,8 @@ class ControllerMailRegister extends Controller {
 			$data['approval'] = '';
 		}
 
-		if ($this->request->server['HTTPS']) {
-			$data['store_url'] = HTTPS_SERVER;
-		} else {
-			$data['store_url'] = HTTP_SERVER;
-		}
-
 		$data['login'] = $this->url->link('account/login', '', true);
+		$data['store_url'] = HTTP_SERVER;
 		$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 		$this->load->model('tool/image');
@@ -74,13 +69,8 @@ class ControllerMailRegister extends Controller {
 			$data['firstname'] = $args[0]['firstname'];
 			$data['lastname'] = $args[0]['lastname'];
 
-			if ($this->request->server['HTTPS']) {
-				$data['store_url'] = HTTPS_SERVER;
-			} else {
-				$data['store_url'] = HTTP_SERVER;
-			}
-
 			$data['login'] = $this->url->link('account/login', '', true);
+			$data['store_url'] = HTTP_SERVER;
 			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 			$this->load->model('tool/image');

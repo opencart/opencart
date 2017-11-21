@@ -88,9 +88,9 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 		$store_info = $this->model_setting_store->getStore($store_id);
 
 		if ($store_info) {
-			$url = $store_info['ssl'];
+			$url = $store_info['url'];
 		} else {
-			$url = HTTPS_CATALOG;
+			$url = HTTP_CATALOG;
 		}
 
 		if (isset($this->session->data['cookie'])) {

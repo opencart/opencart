@@ -26,13 +26,8 @@ class ControllerMailAffiliate extends Controller {
 			$data['approval'] = '';
 		}
 
-		if ($this->request->server['HTTPS']) {
-			$data['store_url'] = HTTPS_SERVER;
-		} else {
-			$data['store_url'] = HTTP_SERVER;
-		}
-
 		$data['login'] = $this->url->link('affiliate/login', '', true);
+		$data['store_url'] = HTTP_SERVER;
 		$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 		$this->load->model('tool/image');
@@ -77,13 +72,8 @@ class ControllerMailAffiliate extends Controller {
 			$data['text_email'] = $this->language->get('text_email');
 			$data['text_telephone'] = $this->language->get('text_telephone');
 
-			if ($this->request->server['HTTPS']) {
-				$data['store_url'] = HTTPS_SERVER;
-			} else {
-				$data['store_url'] = HTTP_SERVER;
-			}
-
 			$data['login'] = $this->url->link('affiliate/login', '', true);
+			$data['store_url'] = HTTP_SERVER;
 			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 			$this->load->model('tool/image');

@@ -38,10 +38,6 @@ class ModelToolImage extends Model {
 			}
 		}
 
-		if ($this->request->server['HTTPS']) {
-			return HTTPS_CATALOG . 'image/' . $image_new;
-		} else {
-			return HTTP_CATALOG . 'image/' . $image_new;
-		}
+		return HTTP_CATALOG . 'image/' . $image_new;
 	}
 }

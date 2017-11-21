@@ -4,12 +4,6 @@ class ControllerCommonFileManager extends Controller {
 		$this->load->language('common/filemanager');
 
 		// Find which protocol to use to pass the full image link back
-		if ($this->request->server['HTTPS']) {
-			$server = HTTPS_CATALOG;
-		} else {
-			$server = HTTP_CATALOG;
-		}
-
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = basename(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		} else {
@@ -77,7 +71,7 @@ class ControllerCommonFileManager extends Controller {
 						'name'  => implode(' ', $name),
 						'path'  => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
 						'type'  => 'image',
-						'href'  => $server . 'image/' . utf8_substr($image, utf8_strlen(DIR_IMAGE))
+						'href'  => HTTP_CATALOG . 'image/' . utf8_substr($image, utf8_strlen(DIR_IMAGE))
 					);
 				}
 			}

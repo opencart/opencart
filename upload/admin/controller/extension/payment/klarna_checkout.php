@@ -802,7 +802,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->config->get('config_secure')) {
+		if (!$this->request->server['HTTPS']) {
 			$this->error['warning'] = $this->language->get('error_ssl');
 		}
 

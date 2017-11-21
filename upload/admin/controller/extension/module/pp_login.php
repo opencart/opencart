@@ -250,7 +250,7 @@ class ControllerExtensionModulePPLogin extends Controller {
 			$data['module_pp_login_locale'] = $this->config->get('module_pp_login_locale');
 		}
 
-		$data['return_url'] = HTTPS_CATALOG . 'index.php?route=extension/module/pp_login/login';
+		$data['return_url'] = HTTP_CATALOG . 'index.php?route=extension/module/pp_login/login';
 
 		if (isset($this->request->post['module_pp_login_status'])) {
 			$data['module_pp_login_status'] = $this->request->post['module_pp_login_status'];

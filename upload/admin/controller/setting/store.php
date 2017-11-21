@@ -115,9 +115,9 @@ class ControllerSettingStore extends Controller {
 		if ($page == 1) {
 			$data['stores'][] = array(
 				'store_id' => 0,
-				'name' => $this->config->get('config_name') . $this->language->get('text_default'),
-				'url' => $this->config->get('config_secure') ? HTTPS_CATALOG : HTTP_CATALOG,
-				'edit' => $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token'], true)
+				'name'     => $this->config->get('config_name') . $this->language->get('text_default'),
+				'url'      => HTTP_CATALOG,
+				'edit'     => $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token'], true)
 			);
 		}
 
@@ -657,14 +657,6 @@ class ControllerSettingStore extends Controller {
 			$data['icon'] = $this->model_tool_image->resize($store_info['config_icon'], 100, 100);
 		} else {
 			$data['icon'] = $this->model_tool_image->resize('no_image.png', 100, 100);
-		}
-
-		if (isset($this->request->post['config_secure'])) {
-			$data['config_secure'] = $this->request->post['config_secure'];
-		} elseif (isset($store_info['config_secure'])) {
-			$data['config_secure'] = $store_info['config_secure'];
-		} else {
-			$data['config_secure'] = '';
 		}
 
 		$data['header'] = $this->load->controller('common/header');

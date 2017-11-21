@@ -80,7 +80,7 @@
                       <td class="text-left">{{ cron.date_added }}</td>
                       <td class="text-left">{{ cron.date_modified }}</td>
                       <td class="text-right">
-                        <button type="button" value="{{ cron.cron_id }}" data-toggle="tooltip" data-title="{{ button_run }}" class="btn btn-warning"><i class="fa fa-play-circle"></i></button>
+                        <button type="button" value="{{ cron.cron_id }}" data-toggle="tooltip" data-title="{{ button_run }}" class="btn btn-warning"><i class="fa fa-play"></i></button>
                         {% if not cron.enabled %}
                           <button type="button" value="{{ cron.cron_id }}" data-toggle="tooltip" data-title="{{ button_enable }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></button>
                         {% else %}

@@ -1,7 +1,7 @@
 <?php
 class ModelSettingEvent extends Model {
 	public function addEvent($code, $trigger, $action, $status = 1, $sort_order = 0) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "event` SET `code` = '" . $this->db->escape($code) . "', `trigger` = '" . $this->db->escape($trigger) . "', `action` = '" . $this->db->escape($action) . "', `sort_order` = '" . (int)$sort_order . "', `status` = '" . (int)$status . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "event` SET `code` = '" . $this->db->escape($code) . "', `trigger` = '" . $this->db->escape($trigger) . "', `action` = '" . $this->db->escape($action) . "', `status` = '" . (int)$status . "', `sort_order` = '" . (int)$sort_order . "'");
 	
 		return $this->db->getLastId();
 	}
@@ -15,7 +15,7 @@ class ModelSettingEvent extends Model {
 	}
 
 	public function editStatus($event_id, $status) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `status` = '" . (int)$status . "' WHERE event_id = '" . (int)$event_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `status` = '" . (int)$status . "' WHERE `event_id` = '" . (int)$event_id . "'");
 	}
 	
 	public function uninstall($type, $code) {

@@ -48,7 +48,7 @@
 				<tr>
 					<td>{{ product.model }}</td>
 					<td>{{ product.name }}
-						{% if option %}<br/>
+						{% if product.option %}<br/>
 							{% for option in product.option %}
 								- {{ option.name }} {{ option.value }}
 							{% endfor %}

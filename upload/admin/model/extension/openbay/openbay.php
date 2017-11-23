@@ -699,7 +699,7 @@ class ModelExtensionOpenBayOpenbay extends Model {
 			CURLOPT_SSL_VERIFYHOST => 0,
 			CURLOPT_FORBID_REUSE => true,
 			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_URL => HTTPS_CATALOG . 'index.php?route=api/order/history&order_id=' . $order_id . '&token=' . $api_login['api_token'],
+			CURLOPT_URL => HTTP_CATALOG . 'index.php?route=api/order/history&order_id=' . $order_id . '&token=' . $api_login['api_token'],
 			CURLOPT_POST => true,
 			CURLOPT_POSTFIELDS => http_build_query($data, '', "&"),
 			CURLOPT_TIMEOUT => 60,
@@ -707,7 +707,7 @@ class ModelExtensionOpenBayOpenbay extends Model {
 		);
 
 		// Set SSL if required
-		if (substr(HTTPS_CATALOG, 0, 5) == 'https') {
+		if (substr(HTTP_CATALOG, 0, 5) == 'https') {
 			$defaults[CURLOPT_PORT] = 443;
 		}
 
@@ -729,14 +729,14 @@ class ModelExtensionOpenBayOpenbay extends Model {
 			CURLOPT_SSL_VERIFYPEER => 0,
 			CURLOPT_SSL_VERIFYHOST => 0,
 			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_URL => HTTPS_CATALOG . 'index.php?route=api/login',
+			CURLOPT_URL => HTTP_CATALOG . 'index.php?route=api/login',
 			CURLOPT_POST => true,
 			CURLOPT_POSTFIELDS => http_build_query(array('key' => $key)),
 			CURLOPT_TIMEOUT => 60,
 		);
 
 		// Set SSL if required
-		if (substr(HTTPS_CATALOG, 0, 5) == 'https') {
+		if (substr(HTTP_CATALOG, 0, 5) == 'https') {
 			$defaults[CURLOPT_PORT] = 443;
 		}
 
@@ -819,10 +819,6 @@ class ModelExtensionOpenBayOpenbay extends Model {
 			}
 		}
 
-		if ($this->request->server['HTTPS']) {
-			return HTTPS_CATALOG . 'image/' . $image_new;
-		} else {
-			return HTTP_CATALOG . 'image/' . $image_new;
-		}
+		return HTTP_CATALOG . 'image/' . $image_new;
 	}
 }

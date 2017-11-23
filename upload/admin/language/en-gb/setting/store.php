@@ -23,7 +23,6 @@ $_['column_action']                = 'Action';
 
 // Entry
 $_['entry_url']                    = 'Store URL';
-$_['entry_ssl']                    = 'SSL URL';
 $_['entry_meta_title']             = 'Meta Title';
 $_['entry_meta_description']       = 'Meta Tag Description';
 $_['entry_meta_keyword']           = 'Meta Tag Keywords';
@@ -59,11 +58,9 @@ $_['entry_stock_display']          = 'Display Stock';
 $_['entry_stock_checkout']         = 'Stock Checkout';
 $_['entry_logo']                   = 'Store Logo';
 $_['entry_icon']                   = 'Icon';
-$_['entry_secure']                 = 'Use SSL';
 
 // Help
 $_['help_url']                     = 'Include the full URL to your store. Make sure to add \'/\' at the end. Example: http://www.yourdomain.com/path/<br /><br />Don\'t use directories to create a new store. You should always point another domain or sub domain to your hosting.';
-$_['help_ssl']                     = 'SSL URL to your store. Make sure to add \'/\' at the end. Example: http://www.yourdomain.com/path/<br /><br />Don\'t use directories to create a new store. You should always point another domain or sub domain to your hosting.';
 $_['help_geocode']                 = 'Please enter your store location geocode manually.';
 $_['help_open']                    = 'Fill in your stores opening times.';
 $_['help_comment']                 = 'This field is for any special notes you would like to tell the customer i.e. Store does not accept cheques.';
@@ -81,7 +78,6 @@ $_['help_order_status']            = 'Set the default order status when an order
 $_['help_stock_display']           = 'Display stock quantity on the product page.';
 $_['help_stock_checkout']          = 'Allow customers to still checkout if the products they are ordering are not in stock.';
 $_['help_icon']                    = 'The icon should be a PNG that is 16px x 16px.';
-$_['help_secure']                  = 'To use SSL check with your host if a SSL certificate is installed.';
 
 // Error
 $_['error_warning']                = 'Warning: Please check the form carefully for errors!';

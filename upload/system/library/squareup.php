@@ -177,7 +177,7 @@ class Squareup {
     public function authLink($client_id) {
         $state = $this->authState();
 
-        $redirect_uri = str_replace('&amp;', '&', $this->url->link('extension/payment/squareup/oauth_callback', 'user_token=' . $this->session->data['user_token'], true));
+        $redirect_uri = str_replace('&amp;', '&', $this->url->link('extension/payment/squareup/oauth_callback', 'user_token=' . $this->session->data['user_token']));
 
         $this->session->data['payment_squareup_oauth_redirect'] = $redirect_uri;
 

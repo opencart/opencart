@@ -115,7 +115,7 @@ $registry->set('cache', new Cache($config->get('cache_engine'), $config->get('ca
 
 // Url
 if ($config->get('url_autostart')) {
-	$registry->set('url', new Url($config->get('site_url'), $config->get('site_ssl')));
+	$registry->set('url', new Url($config->get('site_url')));
 }
 
 // Language

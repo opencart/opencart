@@ -1,5 +1,4 @@
 <?php
-
 //
 // Command line tool for installing opencart
 // Author: Vineet Naik <vineet.naik@kodeplay.com> <naikvin@gmail.com>
@@ -34,7 +33,12 @@ define('DIR_DATABASE', DIR_SYSTEM . 'database/');
 define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');
 define('DIR_TEMPLATE', DIR_APPLICATION . 'view/template/');
 define('DIR_CONFIG', DIR_SYSTEM . 'config/');
-define('DIR_MODIFICATION', DIR_SYSTEM . 'modification/');
+define('DIR_CACHE', DIR_SYSTEM . 'storage/cache/');
+define('DIR_LOGS', DIR_SYSTEM . 'storage/logs/');
+define('DIR_MODIFICATION', DIR_SYSTEM . 'storage/modification/');
+define('DIR_DOWNLOAD', DIR_SYSTEM . 'storage/download/');
+define('DIR_SESSION', DIR_SYSTEM . 'storage/session/');
+define('DIR_UPLOAD', DIR_SYSTEM . 'storage/upload/');
 
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
@@ -47,59 +51,71 @@ $loader = new Loader($registry);
 $registry->set('load', $loader);
 
 
-function handleError($errno, $errstr, $errfile, $errline, array $errcontext) {
+set_error_handler(function($errno, $errstr, $errfile, $errline, array $errcontext) {
 	// error was suppressed with the @-operator
 	if (0 === error_reporting()) {
 		return false;
 	}
+
 	throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
-}
-
-set_error_handler('handleError');
-
+});
 
 function usage() {
-	echo "Usage:\n";
-	echo "======\n";
-	echo "\n";
-	$options = implode(" ", array(
-		'--db_hostname', 'localhost',
-		'--db_username', 'root',
-		'--db_password', 'pass',
-		'--db_database', 'opencart',
-		'--db_driver', 'mysqli',
-		'--db_port', '3306',
-		'--username', 'admin',
-		'--password', 'admin',
-		'--email', 'youremail@example.com',
-		'--http_server', 'http://localhost/opencart/'
+	echo 'Usage:' . "\n";
+	echo '======' . "\n\n";
+
+	$option = implode(' ', array(
+		'--db_hostname',
+		'localhost',
+		'--db_username',
+		'root',
+		'--db_password',
+		'pass',
+		'--db_database',
+		'opencart',
+		'--db_driver',
+		'mysqli',
+		'--db_port',
+		'3306',
+		'--username',
+		'admin',
+		'--password',
+		'admin',
+		'--email',
+		'youremail@example.com',
+		'--http_server',
+		'http://localhost/opencart/'
 	));
-	echo 'php cli_install.php install ' . $options . "\n\n";
+
+	echo 'php cli_install.php install ' . $option . "\n\n";
 }
 
-
 function get_options($argv) {
-	$defaults = array(
+	$default = array(
 		'db_hostname' => 'localhost',
 		'db_database' => 'opencart',
-		'db_prefix' => 'oc_',
-		'db_driver' => 'mysqli',
-		'db_port' => '3306',
-		'username' => 'admin',
+		'db_prefix'   => 'oc_',
+		'db_driver'   => 'mysqli',
+		'db_port'     => '3306',
+		'username'    => 'admin',
 	);
 
-	$options = array();
+	$option = array();
+
 	$total = count($argv);
-	for ($i=0; $i < $total; $i=$i+2) {
+
+	for ($i = 0; $i < $total; $i = $i + 2) {
 		$is_flag = preg_match('/^--(.*)$/', $argv[$i], $match);
+
 		if (!$is_flag) {
 			throw new Exception($argv[$i] . ' found in command line args instead of a valid option name starting with \'--\'');
 		}
-		$options[$match[1]] = $argv[$i+1];
-	}
-	return array_merge($defaults, $options);
-}
 
+		$option[$match[1]] = $argv[$i + 1];
+	}
+
+	return array_merge($default, $option);
+}
 
 function valid($options) {
 	$required = array(
@@ -114,25 +130,32 @@ function valid($options) {
 		'email',
 		'http_server',
 	);
+
 	$missing = array();
+
 	foreach ($required as $r) {
 		if (!array_key_exists($r, $options)) {
 			$missing[] = $r;
 		}
 	}
+
 	if (!preg_match('#/$#', $options['http_server'])) {
 		$options['http_server'] = $options['http_server'] . '/';
 	}
+
 	$valid = count($missing) === 0;
+
 	return array($valid, $missing);
 }
 
-
 function install($options) {
 	$check = check_requirements();
+
 	if ($check[0]) {
 		setup_db($options);
+
 		write_config_files($options);
+
 		dir_permissions();
 	} else {
 		echo 'FAILED! Pre-installation check failed: ' . $check[1] . "\n\n";
@@ -179,7 +202,6 @@ function check_requirements() {
 	return array($error === null, $error);
 }
 
-
 function setup_db($data) {
 	$db = new DB($data['db_driver'], htmlspecialchars_decode($data['db_hostname']), htmlspecialchars_decode($data['db_username']), htmlspecialchars_decode($data['db_password']), htmlspecialchars_decode($data['db_database']), $data['db_port']);
 
@@ -189,24 +211,44 @@ function setup_db($data) {
 		exit('Could not load sql file: ' . $file);
 	}
 
-	$lines = file($file);
+	// Structure
+	$this->load->helper('db_schema');
+
+	$tables = db_schema();
+
+
+
+
+
+
+
+
+
+
+
+
+	$lines = file($file, FILE_IGNORE_NEW_LINES);
 
 	if ($lines) {
 		$sql = '';
 
+		$start = false;
+
 		foreach ($lines as $line) {
-			if ($line && (substr($line, 0, 2) != '--') && (substr($line, 0, 1) != '#')) {
+			if (substr($line, 0, 12) == 'INSERT INTO ') {
+				$sql = '';
+
+				$start = true;
+			}
+
+			if ($start) {
 				$sql .= $line;
+			}
 
-				if (preg_match('/;\s*$/', $line)) {
-					$sql = str_replace("DROP TABLE IF EXISTS `oc_", "DROP TABLE IF EXISTS `" . $data['db_prefix'], $sql);
-					$sql = str_replace("CREATE TABLE `oc_", "CREATE TABLE `" . $data['db_prefix'], $sql);
-					$sql = str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $sql);
+			if (substr($line, -2) == ');') {
+				$db->query(str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $sql));
 
-					$db->query($sql);
-
-					$sql = '';
-				}
+				$start = false;
 			}
 		}
 
@@ -216,7 +258,7 @@ function setup_db($data) {
 
 		$db->query("DELETE FROM `" . $data['db_prefix'] . "user` WHERE user_id = '1'");
 
-		$db->query("INSERT INTO `" . $data['db_prefix'] . "user` SET user_id = '1', user_group_id = '1', username = '" . $db->escape($data['username']) . "', salt = '" . $db->escape($salt = token(9)) . "', password = '" . $db->escape(sha1($salt . sha1($salt . sha1($data['password'])))) . "', firstname = 'John', lastname = 'Doe', email = '" . $db->escape($data['email']) . "', status = '1', date_added = NOW()");
+		$db->query("INSERT INTO `" . $data['db_prefix'] . "user` SET user_id = '1', user_group_id = '1', username = '" . $db->escape($data['username']) . "', salt = '', password = '" . $db->escape(password_hash($data['password'], PASSWORD_DEFAULT)) . "', firstname = 'John', lastname = 'Doe', email = '" . $db->escape($data['email']) . "', status = '1', date_added = NOW()");
 
 		$db->query("DELETE FROM `" . $data['db_prefix'] . "setting` WHERE `key` = 'config_email'");
 		$db->query("INSERT INTO `" . $data['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_email', value = '" . $db->escape($data['email']) . "'");
@@ -232,12 +274,14 @@ function setup_db($data) {
 
 		$db->query("DELETE FROM `" . $data['db_prefix'] . "setting` WHERE `key` = 'config_api_id'");
 		$db->query("INSERT INTO `" . $data['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_api_id', value = '" . (int)$api_id . "'");
+
+		// set the current years prefix
+		$db->query("UPDATE `" . $data['db_prefix'] . "setting` SET `value` = 'INV-" . date('Y') . "-00' WHERE `key` = 'config_invoice_prefix'");
 	}
 }
 
-
 function write_config_files($options) {
-	$output  = '<?php' . "\n";
+	$output = '<?php' . "\n";
 	$output .= '// HTTP' . "\n";
 	$output .= 'define(\'HTTP_SERVER\', \'' . $options['http_server'] . '\');' . "\n";
 
@@ -248,7 +292,7 @@ function write_config_files($options) {
 	$output .= 'define(\'DIR_APPLICATION\', \'' . addslashes(DIR_OPENCART) . 'catalog/\');' . "\n";
 	$output .= 'define(\'DIR_SYSTEM\', \'' . addslashes(DIR_OPENCART) . 'system/\');' . "\n";
 	$output .= 'define(\'DIR_IMAGE\', \'' . addslashes(DIR_OPENCART) . 'image/\');' . "\n";
-	$output .= 'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');' . "\n";			
+	$output .= 'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');' . "\n";
 	$output .= 'define(\'DIR_LANGUAGE\', DIR_APPLICATION . \'language/\');' . "\n";
 	$output .= 'define(\'DIR_TEMPLATE\', DIR_APPLICATION . \'view/theme/\');' . "\n";
 	$output .= 'define(\'DIR_CONFIG\', DIR_SYSTEM . \'config/\');' . "\n";
@@ -275,7 +319,7 @@ function write_config_files($options) {
 
 	fclose($file);
 
-	$output  = '<?php' . "\n";
+	$output = '<?php' . "\n";
 	$output .= '// HTTP' . "\n";
 	$output .= 'define(\'HTTP_SERVER\', \'' . $options['http_server'] . 'admin/\');' . "\n";
 	$output .= 'define(\'HTTP_CATALOG\', \'' . $options['http_server'] . '\');' . "\n";
@@ -287,7 +331,7 @@ function write_config_files($options) {
 	$output .= '// DIR' . "\n";
 	$output .= 'define(\'DIR_APPLICATION\', \'' . addslashes(DIR_OPENCART) . 'admin/\');' . "\n";
 	$output .= 'define(\'DIR_SYSTEM\', \'' . addslashes(DIR_OPENCART) . 'system/\');' . "\n";
-	$output .= 'define(\'DIR_IMAGE\', \'' . addslashes(DIR_OPENCART) . 'image/\');' . "\n";	
+	$output .= 'define(\'DIR_IMAGE\', \'' . addslashes(DIR_OPENCART) . 'image/\');' . "\n";
 	$output .= 'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');' . "\n";
 	$output .= 'define(\'DIR_CATALOG\', \'' . addslashes(DIR_OPENCART) . 'catalog/\');' . "\n";
 	$output .= 'define(\'DIR_LANGUAGE\', DIR_APPLICATION . \'language/\');' . "\n";
@@ -320,53 +364,53 @@ function write_config_files($options) {
 	fclose($file);
 }
 
-
 function dir_permissions() {
 	$dirs = array(
 		DIR_OPENCART . 'image/',
-		DIR_OPENCART . 'system/storage/download/',
-		DIR_OPENCART . 'system/storage/upload/',
 		DIR_OPENCART . 'system/storage/cache/',
+		DIR_OPENCART . 'system/storage/download/',
 		DIR_OPENCART . 'system/storage/logs/',
 		DIR_OPENCART . 'system/storage/modification/',
+		DIR_OPENCART . 'system/storage/session/',
+		DIR_OPENCART . 'system/storage/upload/'
 	);
+
 	exec('chmod o+w -R ' . implode(' ', $dirs));
 }
 
-
 $argv = $_SERVER['argv'];
+
 $script = array_shift($argv);
+
 $subcommand = array_shift($argv);
 
-
 switch ($subcommand) {
+	case 'install':
+		try {
+			$options = get_options($argv);
 
-case "install":
-	try {
-		$options = get_options($argv);
+			define('HTTP_OPENCART', $options['http_server']);
 
-		define('HTTP_OPENCART', $options['http_server']);
+			$valid = valid($options);
 
-		$valid = valid($options);
+			if (!$valid[0]) {
+				echo 'FAILED! Following inputs were missing or invalid: ';
+				echo implode(', ', $valid[1]) . "\n\n";
+				exit(1);
+			}
 
-		if (!$valid[0]) {
-			echo "FAILED! Following inputs were missing or invalid: ";
-			echo implode(', ', $valid[1]) . "\n\n";
+			install($options);
+
+			echo 'SUCCESS! Opencart successfully installed on your server' . "\n";
+			echo 'Store link: ' . $options['http_server'] . "\n";
+			echo 'Admin link: ' . $options['http_server'] . 'admin/' . "\n\n";
+		} catch (ErrorException $e) {
+			echo 'FAILED!: ' . $e->getMessage() . "\n";
 			exit(1);
 		}
 
-		install($options);
-
-		echo "SUCCESS! Opencart successfully installed on your server\n";
-		echo "Store link: " . $options['http_server'] . "\n";
-		echo "Admin link: " . $options['http_server'] . "admin/\n\n";
-	} catch (ErrorException $e) {
-		echo 'FAILED!: ' . $e->getMessage() . "\n";
-		exit(1);
-	}
-
-	break;
-case "usage":
-default:
-	echo usage();
+		break;
+	case 'usage':
+	default:
+		echo usage();
 }

@@ -38,7 +38,7 @@ class ControllerLocalisationTaxRate extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			$this->response->redirect($this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerLocalisationTaxRate extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			$this->response->redirect($this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerLocalisationTaxRate extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			$this->response->redirect($this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
 		$this->getList();
@@ -147,16 +147,16 @@ class ControllerLocalisationTaxRate extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . $url, true)
+			'href' => $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . $url)
 		);
 
-		$data['add'] = $this->url->link('localisation/tax_rate/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
-		$data['delete'] = $this->url->link('localisation/tax_rate/delete', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['add'] = $this->url->link('localisation/tax_rate/add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('localisation/tax_rate/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['tax_rates'] = array();
 
@@ -180,7 +180,7 @@ class ControllerLocalisationTaxRate extends Controller {
 				'geo_zone'      => $result['geo_zone'],
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
-				'edit'          => $this->url->link('localisation/tax_rate/edit', 'user_token=' . $this->session->data['user_token'] . '&tax_rate_id=' . $result['tax_rate_id'] . $url, true)
+				'edit'          => $this->url->link('localisation/tax_rate/edit', 'user_token=' . $this->session->data['user_token'] . '&tax_rate_id=' . $result['tax_rate_id'] . $url)
 			);
 		}
 
@@ -216,12 +216,12 @@ class ControllerLocalisationTaxRate extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . '&sort=tr.name' . $url, true);
-		$data['sort_rate'] = $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . '&sort=tr.rate' . $url, true);
-		$data['sort_type'] = $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . '&sort=tr.type' . $url, true);
-		$data['sort_geo_zone'] = $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . '&sort=gz.name' . $url, true);
-		$data['sort_date_added'] = $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . '&sort=tr.date_added' . $url, true);
-		$data['sort_date_modified'] = $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . '&sort=tr.date_modified' . $url, true);
+		$data['sort_name'] = $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . '&sort=tr.name' . $url);
+		$data['sort_rate'] = $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . '&sort=tr.rate' . $url);
+		$data['sort_type'] = $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . '&sort=tr.type' . $url);
+		$data['sort_geo_zone'] = $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . '&sort=gz.name' . $url);
+		$data['sort_date_added'] = $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . '&sort=tr.date_added' . $url);
+		$data['sort_date_modified'] = $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . '&sort=tr.date_modified' . $url);
 
 		$url = '';
 
@@ -237,7 +237,7 @@ class ControllerLocalisationTaxRate extends Controller {
 		$pagination->total = $tax_rate_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
 
 		$data['pagination'] = $pagination->render();
 
@@ -292,21 +292,21 @@ class ControllerLocalisationTaxRate extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . $url, true)
+			'href' => $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . $url)
 		);
 
 		if (!isset($this->request->get['tax_rate_id'])) {
-			$data['action'] = $this->url->link('localisation/tax_rate/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
+			$data['action'] = $this->url->link('localisation/tax_rate/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('localisation/tax_rate/edit', 'user_token=' . $this->session->data['user_token'] . '&tax_rate_id=' . $this->request->get['tax_rate_id'] . $url, true);
+			$data['action'] = $this->url->link('localisation/tax_rate/edit', 'user_token=' . $this->session->data['user_token'] . '&tax_rate_id=' . $this->request->get['tax_rate_id'] . $url);
 		}
 
-		$data['cancel'] = $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['cancel'] = $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['tax_rate_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$tax_rate_info = $this->model_localisation_tax_rate->getTaxRate($this->request->get['tax_rate_id']);

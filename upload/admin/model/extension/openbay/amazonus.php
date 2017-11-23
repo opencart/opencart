@@ -113,7 +113,7 @@ class ModelExtensionOpenBayAmazonus extends Model {
 		$log = new Log('amazonus.log');
 
 		$request_xml = '<Request>
-  <ResponseURL>' . HTTPS_CATALOG . 'index.php?route=extension/openbay/amazonus/order</ResponseURL>
+  <ResponseURL>' . HTTP_CATALOG . 'index.php?route=extension/openbay/amazonus/order</ResponseURL>
   <MarketplaceIDs>';
 		foreach ($data['openbay_amazonus_orders_marketplace_ids'] as $marketplace_id) {
 			$request_xml .= '    <MarketplaceID>' . $marketplace_id . '</MarketplaceID>';

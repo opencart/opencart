@@ -39,7 +39,6 @@ class Url {
 	 *
 	 * @param    string $route
 	 * @param    mixed $args
-	 * @param    bool $secure
 	 *
 	 * @return    string
 	 */

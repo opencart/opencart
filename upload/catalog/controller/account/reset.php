@@ -4,7 +4,7 @@ class ControllerAccountReset extends Controller {
 
 	public function index() {
 		if ($this->customer->isLogged()) {
-			$this->response->redirect($this->url->link('account/account', '', true));
+			$this->response->redirect($this->url->link('account/account'));
 		}
 
 		$this->load->language('account/reset');
@@ -30,7 +30,7 @@ class ControllerAccountReset extends Controller {
 
 			$this->session->data['error'] = $this->language->get('error_code');
 
-			$this->response->redirect($this->url->link('account/login', '', true));
+			$this->response->redirect($this->url->link('account/login'));
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -40,7 +40,7 @@ class ControllerAccountReset extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('account/login', '', true));
+			$this->response->redirect($this->url->link('account/login'));
 		}
 
 		$data['breadcrumbs'] = array();
@@ -52,12 +52,12 @@ class ControllerAccountReset extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', true)
+			'href' => $this->url->link('account/account')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/reset', '', true)
+			'href' => $this->url->link('account/reset')
 		);
 
 		if (isset($this->error['password'])) {
@@ -72,9 +72,9 @@ class ControllerAccountReset extends Controller {
 			$data['error_confirm'] = '';
 		}
 
-		$data['action'] = $this->url->link('account/reset', 'email=' . urlencode($email) . '&code=' . $code, true);
+		$data['action'] = $this->url->link('account/reset', 'email=' . urlencode($email) . '&code=' . $code);
 
-		$data['back'] = $this->url->link('account/login', '', true);
+		$data['back'] = $this->url->link('account/login');
 
 		if (isset($this->request->post['password'])) {
 			$data['password'] = $this->request->post['password'];

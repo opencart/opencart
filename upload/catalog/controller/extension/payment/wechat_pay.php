@@ -31,7 +31,7 @@ class ControllerExtensionPaymentWechatPay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_checkout'),
-			'href' => $this->url->link('checkout/checkout', '', true)
+			'href' => $this->url->link('checkout/checkout')
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -48,7 +48,7 @@ class ControllerExtensionPaymentWechatPay extends Controller {
 		$subject = trim($this->config->get('config_name'));
 		$currency = $this->config->get('payment_wechat_pay_currency');
 		$total_amount = trim($this->currency->format($order_info['total'], $currency, '', false));
-		$notify_url = HTTPS_SERVER . "payment_callback/wechat_pay"; //$this->url->link('wechat_pay/callback');
+		$notify_url = HTTP_SERVER . "payment_callback/wechat_pay"; //$this->url->link('wechat_pay/callback');
 
 		$options = array(
 			'appid'			 =>  $this->config->get('payment_wechat_pay_app_id'),

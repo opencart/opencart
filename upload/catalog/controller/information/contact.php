@@ -59,7 +59,7 @@ class ControllerInformationContact extends Controller {
 
 		$data['button_submit'] = $this->language->get('button_submit');
 
-		$data['action'] = $this->url->link('information/contact', '', true);
+		$data['action'] = $this->url->link('information/contact');
 
 		$this->load->model('tool/image');
 
@@ -180,7 +180,7 @@ class ControllerInformationContact extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('information/contact', '', true)
+			'href' => $this->url->link('information/contact')
 		);
 
 		$data['continue'] = $this->url->link('common/home');

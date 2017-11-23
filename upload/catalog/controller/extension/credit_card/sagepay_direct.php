@@ -2,9 +2,9 @@
 class ControllerExtensionCreditCardSagepayDirect extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/account', '', true);
+			$this->session->data['redirect'] = $this->url->link('account/account');
 
-			$this->response->redirect($this->url->link('account/login', '', true));
+			$this->response->redirect($this->url->link('account/login'));
 		}
 
 		$this->load->language('extension/credit_card/sagepay_direct');
@@ -22,7 +22,7 @@ class ControllerExtensionCreditCardSagepayDirect extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', true)
+			'href' => $this->url->link('account/account')
 		);
 
 
@@ -42,7 +42,7 @@ class ControllerExtensionCreditCardSagepayDirect extends Controller {
 
 		if ($this->config->get('payment_sagepay_direct_card')) {
 			$data['cards'] = $this->model_extension_payment_sagepay_direct->getCards($this->customer->getId());
-			$data['delete'] = $this->url->link('extension/credit_card/sagepay_direct/delete', 'card_id=', true);
+			$data['delete'] = $this->url->link('extension/credit_card/sagepay_direct/delete', 'card_id=');
 
 			if (isset($this->request->get['page'])) {
 				$page = $this->request->get['page'];
@@ -56,7 +56,7 @@ class ControllerExtensionCreditCardSagepayDirect extends Controller {
 			$pagination->total = $cards_total;
 			$pagination->page = $page;
 			$pagination->limit = 10;
-			$pagination->url = $this->url->link('extension/credit_card/sagepay_direct', 'page={page}', true);
+			$pagination->url = $this->url->link('extension/credit_card/sagepay_direct', 'page={page}');
 
 			$data['pagination'] = $pagination->render();
 
@@ -67,8 +67,8 @@ class ControllerExtensionCreditCardSagepayDirect extends Controller {
 			$data['results'] = false;
 		}
 
-		$data['back'] = $this->url->link('account/account', '', true);
-		$data['add'] = $this->url->link('extension/credit_card/sagepay_direct/add', '', true);
+		$data['back'] = $this->url->link('account/account');
+		$data['add'] = $this->url->link('extension/credit_card/sagepay_direct/add');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -82,9 +82,9 @@ class ControllerExtensionCreditCardSagepayDirect extends Controller {
 
 	public function add() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/account', '', true);
+			$this->session->data['redirect'] = $this->url->link('account/account');
 
-			$this->response->redirect($this->url->link('account/login', '', true));
+			$this->response->redirect($this->url->link('account/login'));
 		}
 
 		$this->load->language('extension/credit_card/sagepay_direct');
@@ -102,11 +102,11 @@ class ControllerExtensionCreditCardSagepayDirect extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', true)
+			'href' => $this->url->link('account/account')
 		);
 		
-		$data['add'] = $this->url->link('extension/credit_card/sagepay_direct/addCard', '', true);
-		$data['back'] = $this->url->link('extension/credit_card/sagepay_direct', '', true);
+		$data['add'] = $this->url->link('extension/credit_card/sagepay_direct/addCard');
+		$data['back'] = $this->url->link('extension/credit_card/sagepay_direct');
 
 		$data['cards'] = array();
 
@@ -225,7 +225,7 @@ class ControllerExtensionCreditCardSagepayDirect extends Controller {
 			$this->session->data['error_warning'] = $this->language->get('text_fail_card');
 		}
 		
-		$this->response->redirect($this->url->link('acredit_card/sagepay_direct', '', true));
+		$this->response->redirect($this->url->link('acredit_card/sagepay_direct'));
 	}
 
 	public function addCard() {
@@ -268,6 +268,6 @@ class ControllerExtensionCreditCardSagepayDirect extends Controller {
 			$this->model_extension_payment_sagepay_direct->logger('Response data: ', $this->session->data['error_warning']);
 		}
 
-		$this->response->redirect($this->url->link('extension/credit_card/sagepay_direct', '', true));
+		$this->response->redirect($this->url->link('extension/credit_card/sagepay_direct'));
 	}
 }

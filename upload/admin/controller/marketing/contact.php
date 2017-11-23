@@ -141,6 +141,8 @@ class ControllerMarketingContact extends Controller {
 									$emails[] = $customer_info['email'];
 								}
 							}
+
+							$email_total = count($this->request->post['customer']);
 						}
 						break;
 					case 'affiliate_all':
@@ -168,6 +170,8 @@ class ControllerMarketingContact extends Controller {
 								}
 							}
 						}
+
+						$email_total = count($this->request->post['affiliate']);
 						break;
 					case 'product':
 						if (isset($this->request->post['product'])) {

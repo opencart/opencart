@@ -12,10 +12,10 @@ class ControllerMailCustomer extends Controller {
 
 			if ($store_info) {
 				$store_name = html_entity_decode($store_info['name'], ENT_QUOTES, 'UTF-8');
-				$store_url = $store_info['url'] . 'index.php?route=account/login';
+				$store_url = $store_info['url'];
 			} else {
 				$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
-				$store_url = HTTP_CATALOG . 'index.php?route=account/login';
+				$store_url = HTTP_CATALOG;
 			}
 
 			$this->load->model('localisation/language');
@@ -38,11 +38,12 @@ class ControllerMailCustomer extends Controller {
 			$data['text_login'] = $language->get('text_login');
 			$data['text_service'] = $language->get('text_service');
 			$data['text_thanks'] = $language->get('text_thanks');
+
 			$data['btn_login'] = $language->get('btn_login');
 
-			$data['login'] = $store_url;
+			$data['login'] = $store_url . 'index.php?route=account/login';
 			$data['store'] = $store_name;
-			$data['store_url'] = HTTP_SERVER;
+			$data['store_url'] = $store_url;
 
 			$this->load->model('tool/image');
 
@@ -106,16 +107,12 @@ class ControllerMailCustomer extends Controller {
 			$data['text_welcome'] = sprintf($language->get('text_welcome'), $store_name);
 			$data['text_denied'] = $language->get('text_denied');
 			$data['text_thanks'] = $language->get('text_thanks');
+
 			$data['btn_contact'] = $language->get('btn_contact');
 
 			$data['contact'] = $store_url . 'index.php?route=information/contact';
 			$data['store'] = $store_name;
-
-			if ($this->request->server['HTTPS']) {
-				$data['store_url'] = HTTPS_SERVER;
-			} else {
-				$data['store_url'] = HTTP_SERVER;
-			}
+			$data['store_url'] = $store_url;
 
 			$this->load->model('tool/image');
 

@@ -80,7 +80,7 @@ class ControllerExtensionPaymentRealex extends Controller {
 			$data['shipping_country'] = $order_info['payment_iso_code_2'];
 		}
 
-		$data['response_url'] = HTTPS_SERVER . 'index.php?route=extension/payment/realex/notify';
+		$data['response_url'] = HTTP_SERVER . 'index.php?route=extension/payment/realex/notify';
 
 		return $this->load->view('extension/payment/realex', $data);
 	}

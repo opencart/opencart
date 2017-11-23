@@ -58,8 +58,8 @@ final class Ebay {
 				$this->log('call(' . $call . ') - Data: ' .  json_encode($post));
 			}
 
-			if (defined("HTTPS_CATALOG")) {
-				$domain = HTTPS_CATALOG;
+			if (defined("HTTP_CATALOG")) {
+				$domain = HTTP_CATALOG;
 			} else {
 				$domain = $this->config->get('config_url');
 			}
@@ -131,8 +131,8 @@ final class Ebay {
 		if ($this->config->get('ebay_status') == 1) {
 			$this->log('openbay_noresponse_call(' . $call . ') - Data :' .  json_encode($post));
 
-			if (defined("HTTPS_CATALOG")) {
-				$domain = HTTPS_CATALOG;
+			if (defined("HTTP_CATALOG")) {
+				$domain = HTTP_CATALOG;
 			} else {
 				$domain = $this->config->get('config_url');
 			}

@@ -25,7 +25,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 			}
 		}
 
-		$data['create'] = HTTPS_SERVER.'index.php?route=extension/payment/pp_pro_iframe/create';
+		$data['create'] = HTTP_SERVER.'index.php?route=extension/payment/pp_pro_iframe/create';
 
 		$data['checkout_method'] = $this->config->get('payment_pp_pro_iframe_checkout_method');
 

@@ -74,7 +74,7 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 			$data['shipping_country'] = $order_info['payment_iso_code_2'];
 		}
 
-		$data['response_url'] = HTTPS_SERVER . 'index.php?route=extension/payment/globalpay/notify';
+		$data['response_url'] = HTTP_SERVER . 'index.php?route=extension/payment/globalpay/notify';
 
 		return $this->load->view('extension/payment/globalpay', $data);
 	}

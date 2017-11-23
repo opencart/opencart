@@ -33,7 +33,12 @@ define('DIR_DATABASE', DIR_SYSTEM . 'database/');
 define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');
 define('DIR_TEMPLATE', DIR_APPLICATION . 'view/template/');
 define('DIR_CONFIG', DIR_SYSTEM . 'config/');
-define('DIR_MODIFICATION', DIR_SYSTEM . 'modification/');
+define('DIR_CACHE', DIR_SYSTEM . 'storage/cache/');
+define('DIR_LOGS', DIR_SYSTEM . 'storage/logs/');
+define('DIR_MODIFICATION', DIR_SYSTEM . 'storage/modification/');
+define('DIR_DOWNLOAD', DIR_SYSTEM . 'storage/download/');
+define('DIR_SESSION', DIR_SYSTEM . 'storage/session/');
+define('DIR_UPLOAD', DIR_SYSTEM . 'storage/upload/');
 
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
@@ -72,17 +77,21 @@ function usage() {
 		'mysqli',
 		'--db_port',
 		'3306',
-		'--username', 'admin',
-		'--password', 'admin',
-		'--email', 'youremail@example.com',
-		'--http_server', 'http://localhost/opencart/'
+		'--username',
+		'admin',
+		'--password',
+		'admin',
+		'--email',
+		'youremail@example.com',
+		'--http_server',
+		'http://localhost/opencart/'
 	));
 
 	echo 'php cli_install.php install ' . $option . "\n\n";
 }
 
 function get_options($argv) {
-	$defaults = array(
+	$default = array(
 		'db_hostname' => 'localhost',
 		'db_database' => 'opencart',
 		'db_prefix'   => 'oc_',
@@ -91,7 +100,7 @@ function get_options($argv) {
 		'username'    => 'admin',
 	);
 
-	$options = array();
+	$option = array();
 
 	$total = count($argv);
 
@@ -102,10 +111,10 @@ function get_options($argv) {
 			throw new Exception($argv[$i] . ' found in command line args instead of a valid option name starting with \'--\'');
 		}
 
-		$options[$match[1]] = $argv[$i + 1];
+		$option[$match[1]] = $argv[$i + 1];
 	}
 
-	return array_merge($defaults, $options);
+	return array_merge($default, $option);
 }
 
 function valid($options) {

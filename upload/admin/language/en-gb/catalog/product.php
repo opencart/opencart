@@ -91,6 +91,7 @@ $_['entry_tag']              = 'Product Tags';
 $_['entry_reward']           = 'Reward Points';
 $_['entry_layout']           = 'Layout Override';
 $_['entry_recurring']        = 'Recurring Profile';
+$_['entry_main_category']    = 'Main Category';
 $_['entry_noindex']          = 'Index';
 
 // Help
@@ -109,6 +110,8 @@ $_['help_filter']            = '(Autocomplete)';
 $_['help_download']          = '(Autocomplete)';
 $_['help_related']           = '(Autocomplete)';
 $_['help_tag']               = 'Comma separated';
+$_['help_main_category']     = 'Select main category';
+$_['help_noindex']           = 'Indexing in the search engines Google, Yandex, Bing and others';
 
 // Error
 $_['error_warning']          = 'Warning: Please check the form carefully for errors!';

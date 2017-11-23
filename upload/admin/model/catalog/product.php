@@ -90,6 +90,13 @@ class ModelCatalogProduct extends Model {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "product_to_category SET product_id = '" . (int)$product_id . "', category_id = '" . (int)$category_id . "'");
 			}
 		}
+		
+		if (isset($data['main_category_id']) && $data['main_category_id'] > 0) {
+			$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_category WHERE product_id = '" . (int)$product_id . "' AND category_id = '" . (int)$data['main_category_id'] . "'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "product_to_category SET product_id = '" . (int)$product_id . "', category_id = '" . (int)$data['main_category_id'] . "', main_category = 1");
+				} elseif (isset($data['product_category'][0])) {
+			$this->db->query("UPDATE " . DB_PREFIX . "product_to_category SET main_category = 1 WHERE product_id = '" . (int)$product_id . "' AND category_id = '" . (int)$data['product_category'][0] . "'");
+		}
 
 		if (isset($data['product_filter'])) {
 			foreach ($data['product_filter'] as $filter_id) {
@@ -133,6 +140,10 @@ class ModelCatalogProduct extends Model {
 
 
 		$this->cache->delete('product');
+		
+		if($this->config->get('config_seo_pro')){		
+		$this->cache->delete('seopro');
+		}
 
 		return $product_id;
 	}
@@ -244,6 +255,13 @@ class ModelCatalogProduct extends Model {
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_filter WHERE product_id = '" . (int)$product_id . "'");
 
+		if (isset($data['main_category_id']) && $data['main_category_id'] > 0) {
+			$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_category WHERE product_id = '" . (int)$product_id . "' AND category_id = '" . (int)$data['main_category_id'] . "'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "product_to_category SET product_id = '" . (int)$product_id . "', category_id = '" . (int)$data['main_category_id'] . "', main_category = 1");
+		} elseif (isset($data['product_category'][0])) {
+			$this->db->query("UPDATE " . DB_PREFIX . "product_to_category SET main_category = 1 WHERE product_id = '" . (int)$product_id . "' AND category_id = '" . (int)$data['product_category'][0] . "'");
+		}
+		
 		if (isset($data['product_filter'])) {
 			foreach ($data['product_filter'] as $filter_id) {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "product_filter SET product_id = '" . (int)$product_id . "', filter_id = '" . (int)$filter_id . "'");
@@ -294,12 +312,20 @@ class ModelCatalogProduct extends Model {
 		}
 
 		$this->cache->delete('product');
+		
+		if($this->config->get('config_seo_pro')){		
+		$this->cache->delete('seopro');
+		}
 	}
 	
 	public function editProductStatus($product_id, $status) {
         $this->db->query("UPDATE " . DB_PREFIX . "product SET status = '" . (int)$status . "', date_modified = NOW() WHERE product_id = '" . (int)$product_id . "'");
         
 		$this->cache->delete('product');
+		
+		if($this->config->get('config_seo_pro')){		
+		$this->cache->delete('seopro');
+		}
 		
 		return $product_id;
     }
@@ -359,6 +385,10 @@ class ModelCatalogProduct extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_product WHERE product_id = '" . (int)$product_id . "'");
 
 		$this->cache->delete('product');
+		
+		if($this->config->get('config_seo_pro')){		
+		$this->cache->delete('seopro');
+		}
 	}
 
 	public function getProduct($product_id) {
@@ -522,6 +552,12 @@ class ModelCatalogProduct extends Model {
 		}
 
 		return $product_category_data;
+	}
+	
+	public function getProductMainCategoryId($product_id) {
+		$query = $this->db->query("SELECT category_id FROM " . DB_PREFIX . "product_to_category WHERE product_id = '" . (int)$product_id . "' AND main_category = '1' LIMIT 1");
+		
+		return ($query->num_rows ? (int)$query->row['category_id'] : 0);
 	}
 
 	public function getProductFilters($product_id) {

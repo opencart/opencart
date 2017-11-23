@@ -875,6 +875,30 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['config_error_filename'] = $this->config->get('config_error_filename');
 		}
+		
+		if (isset($this->request->post['config_seo_pro'])) {
+			$data['config_seo_pro'] = $this->request->post['config_seo_pro'];
+		} else {
+			$data['config_seo_pro'] = $this->config->get('config_seo_pro');
+		}			
+	
+		if (isset($this->request->post['config_seo_url_include_path'])) {
+			$data['config_seo_url_include_path'] = $this->request->post['config_seo_url_include_path'];
+		} else {
+			$data['config_seo_url_include_path'] = $this->config->get('config_seo_url_include_path');
+		}		
+	
+		if (isset($this->request->post['config_seo_url_cache'])) {
+			$data['config_seo_url_cache'] = $this->request->post['config_seo_url_cache'];
+		} else {
+			$data['config_seo_url_cache'] = $this->config->get('config_seo_url_cache');
+		}		
+	
+		if (isset($this->request->post['config_page_postfix'])) {
+			$data['config_page_postfix'] = $this->request->post['config_page_postfix'];
+		} else {
+			$data['config_page_postfix'] = $this->config->get('config_page_postfix');
+		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

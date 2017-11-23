@@ -126,6 +126,7 @@ $_['tab_log']                       = 'Log';
 $_['tab_image']                     = 'Image';
 $_['tab_option']                    = 'Option';
 $_['tab_server']                    = 'Server';
+$_['tab_seopro']       				= 'SeoPro';
 $_['tab_seo']                       = 'SEO';
 $_['tab_store']                     = 'Store';
 $_['tab_special']                   = 'Special';

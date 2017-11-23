@@ -117,6 +117,7 @@ $_['help_filter']            = '(Автозаполнение)';
 $_['help_download']          = '(Автозаполнение)';
 $_['help_related']           = '(Автозаполнение)';
 $_['help_tag']          	 = 'разделяются запятой';
+$_['help_main_category']     = 'Select main category';
 $_['help_noindex']           = 'Индексация в поисковых системах Google, Yandex, Bing и других';
 
 //Stickers

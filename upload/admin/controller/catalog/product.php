@@ -433,6 +433,9 @@ class ControllerCatalogProduct extends Controller {
 		if (isset($filter_category)) {
 			if ($filter_category>0) {
 				$this->load->model('catalog/category');
+				
+
+				
 				$category = $this->model_catalog_category->getCategory($filter_category);
 				if ($category) {
 					$filter_category_name = ($category['path']) ? $category['path'] . ' &gt; ' . $category['name'] : $category['name'];
@@ -1274,6 +1277,16 @@ class ControllerCatalogProduct extends Controller {
 
 		// Categories
 		$this->load->model('catalog/category');
+		
+		$data['categories'] = $this->model_catalog_category->getAllCategories();
+		
+		if (isset($this->request->post['main_category_id'])) {
+			$data['main_category_id'] = $this->request->post['main_category_id'];
+				} elseif (isset($product_info)) {
+			$data['main_category_id'] = $this->model_catalog_product->getProductMainCategoryId($this->request->get['product_id']);
+				} else {
+			$data['main_category_id'] = 0;
+		}			
 
 		if (isset($this->request->post['product_category'])) {
 			$categories = $this->request->post['product_category'];

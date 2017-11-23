@@ -397,6 +397,21 @@
                     {% endfor %}</div>
                 </div>
               </div>
+			  <div class="form-group">
+			<label class="col-sm-2 control-label" for="select-main_category_id"><span data-toggle="tooltip" title="{{ help_main_category }}">{{ entry_main_category }}</span></label>
+			<div class="col-sm-10">
+			<select name="main_category_id" class="form-control">
+				<option value="0" selected="selected">{{ text_none }}</option>
+				{% for category in categories %}
+				  {% if category.category_id == main_category_id %}
+					<option value="{{ category.category_id }}" selected="selected">{{ category.name }}</option>
+					{% else %}
+					<option value="{{ category.category_id }}">{{ category.name }}</option>
+				  {% endif %}
+				{% endfor %}
+			</select>
+			</div>
+			</div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-filter"><span data-toggle="tooltip" title="{{ help_filter }}">{{ entry_filter }}</span></label>
                 <div class="col-sm-10">

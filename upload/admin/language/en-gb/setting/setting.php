@@ -122,6 +122,10 @@ $_['entry_error_display']            = 'Display Errors';
 $_['entry_error_log']                = 'Log Errors';
 $_['entry_error_filename']           = 'Error Log Filename';
 $_['entry_status']                   = 'Status';
+$_['entry_seo_pro']                   	= 'Enable SeoPro';
+$_['entry_page_postfix']               	= 'Page postfix (like .html)';
+$_['entry_config_seo_url_include_path']	= 'Product url with categories';
+$_['entry_config_seo_url_cache']         		= 'Enable seo pro cache';
 
 // Help
 $_['help_geocode']                   = 'Please enter your store location geocode manually.';
@@ -182,6 +186,7 @@ $_['help_maintenance']               = 'Prevents customers from browsing your st
 $_['help_password']                  = 'Allow forgotten password to be used for the admin. This will be disabled automatically if the system detects a hack attempt.';
 $_['help_encryption']                = 'Please provide a secret key that will be used to encrypt private information when processing orders.';
 $_['help_compression']               = 'GZIP for more efficient transfer to requesting clients. Compression level must be between 0 - 9.';
+$_['help_seo_pro']     				 = "Let's make seo great again!";
 
 // Error
 $_['error_warning']                  = 'Warning: Please check the form carefully for errors!';

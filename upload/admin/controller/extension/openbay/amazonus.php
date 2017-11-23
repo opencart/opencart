@@ -955,7 +955,7 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 
 		$this->model_extension_openbay_amazonus->deleteListingReports();
 
-		$request_data = array('response_url' => HTTPS_CATALOG . 'index.php?route=extension/openbay/amazonus/listingreport');
+		$request_data = array('response_url' => HTTP_CATALOG . 'index.php?route=extension/openbay/amazonus/listingreport');
 
 		$response = $this->openbay->amazonus->call('report/listing', $request_data);
 
@@ -968,6 +968,7 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 			$json['message'] = $this->language->get('text_report_requested');
 
 			$settings = $this->model_setting_setting->getSetting('openbay_amazonus');
+
 			$settings['openbay_amazonus_processing_listing_reports'] = true;
 
 			$this->model_setting_setting->editSetting('openbay_amazonus', $settings);

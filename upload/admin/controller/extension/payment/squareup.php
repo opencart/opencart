@@ -11,11 +11,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
 
         $this->load->library('squareup');
 
-        if ($this->request->server['HTTPS']) {
-            $server = HTTPS_SERVER;
-        } else {
-            $server = HTTP_SERVER;
-        }
+		$server = HTTP_SERVER;
 
         $previous_setting = $this->model_setting_setting->getSetting('payment_squareup');
 
@@ -260,7 +256,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
 
         $data['payment_squareup_cron_url'] = 'https://' . parse_url($server, PHP_URL_HOST) . dirname(parse_url($server, PHP_URL_PATH)) . '/index.php?route=extension/recurring/squareup/recurring&cron_token={CRON_TOKEN}';
 
-        $data['catalog'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
+        $data['catalog'] = HTTP_CATALOG;
 
         // API login
         $this->load->model('user/api');
@@ -419,7 +415,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
             'href' => $this->url->link('extension/payment/squareup/transaction_info', 'user_token=' . $this->session->data['user_token'] . '&squareup_transaction_id=' . $squareup_transaction_id)
         );
 
-        $data['catalog'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
+        $data['catalog'] = HTTP_CATALOG;
 
         // API login
         $this->load->model('user/api');
@@ -787,7 +783,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
         $data['user_token'] = $this->session->data['user_token'];
         $data['order_id'] = (int)$this->request->get['order_id'];
 
-        $data['catalog'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
+        $data['catalog'] = HTTP_CATALOG;
 
         // API login
         $this->load->model('user/api');
@@ -860,7 +856,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
         $data['comment'] = $this->language->get('text_order_history_cancel');
         $data['notify'] = 1;
 
-        $data['catalog'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
+        $data['catalog'] = HTTP_CATALOG;
 
         // API login
         $this->load->model('user/api');

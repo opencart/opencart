@@ -124,7 +124,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			$data['payment_pp_express_sandbox_signature'] = $this->config->get('payment_pp_express_sandbox_signature');
 		}
 
-		$data['ipn_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/pp_express/ipn';
+		$data['ipn_url'] = HTTP_CATALOG . 'index.php?route=extension/payment/pp_express/ipn';
 
 		if (isset($this->request->post['payment_pp_express_test'])) {
 			$data['payment_pp_express_test'] = $this->request->post['payment_pp_express_test'];
@@ -349,7 +349,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 		$post_data = array(
 			'return_url' => $this->url->link('extension/payment/pp_express', 'user_token=' . $this->session->data['user_token']),
-			'store_url' => HTTPS_CATALOG,
+			'store_url' => HTTP_CATALOG,
 			'store_version' => VERSION,
 			'store_country' => (isset($country['iso_code_3']) ? $country['iso_code_3'] : ''),
 		);
@@ -1245,7 +1245,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 			$post_data = array(
 				'return_url' => $this->url->link('extension/payment/pp_express', 'user_token=' . $this->session->data['user_token']),
-				'store_url' => HTTPS_CATALOG,
+				'store_url' => HTTP_CATALOG,
 				'store_version' => VERSION,
 				'store_country' => (isset($country['iso_code_3']) ? $country['iso_code_3'] : ''),
 			);

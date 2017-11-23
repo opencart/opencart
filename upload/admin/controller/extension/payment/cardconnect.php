@@ -172,7 +172,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 			$data['payment_cardconnect_sort_order'] = $this->config->get('payment_cardconnect_sort_order');
 		}
 
-		$data['cron_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/cardconnect/cron&token=' . $data['payment_cardconnect_token'];
+		$data['cron_url'] = HTTP_CATALOG . 'index.php?route=extension/payment/cardconnect/cron&token=' . $data['payment_cardconnect_token'];
 
 		if ($this->config->get('payment_cardconnect_cron_time')) {
 			$data['payment_cardconnect_cron_time'] = date($this->language->get('datetime_format'), strtotime($this->config->get('payment_cardconnect_cron_time')));

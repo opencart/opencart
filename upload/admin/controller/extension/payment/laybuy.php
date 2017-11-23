@@ -204,7 +204,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 			$data['payment_laybuy_sort_order'] = $this->config->get('payment_laybuy_sort_order');
 		}
 
-		$data['laybuy_cron_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/laybuy/cron&token=' . $data['payment_laybuy_token'];
+		$data['laybuy_cron_url'] = HTTP_CATALOG . 'index.php?route=extension/payment/laybuy/cron&token=' . $data['payment_laybuy_token'];
 
 		if ($this->config->get('laybuy_cron_time')) {
 			$data['laybuy_cron_time'] = date($this->language->get('datetime_format'), strtotime($this->config->get('laybuy_cron_time')));
@@ -711,7 +711,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 			$data['currency_symbol_right'] = $this->currency->getSymbolRight($transaction_info['currency']);
 
-			$data['store_url'] = HTTPS_CATALOG;
+			$data['store_url'] = HTTP_CATALOG;
 
 			$data['api_key'] = $this->getApiKey();
 
@@ -978,8 +978,8 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 				$data['mnth']      = $months;
 				$data['convrate']  = '1';
 				$data['id']        = $revised_transaction['laybuy_revise_request_id'] . '-' . $revised_transaction['order_id'] . ':' . md5($this->config->get('payment_laybuy_token'));
-				$data['RETURNURL'] = HTTPS_CATALOG . 'index.php?route=extension/payment/laybuy/reviseCallback';
-				$data['CANCELURL'] = HTTPS_CATALOG . 'index.php?route=extension/payment/laybuy/reviseCancel';
+				$data['RETURNURL'] = HTTP_CATALOG . 'index.php?route=extension/payment/laybuy/reviseCallback';
+				$data['CANCELURL'] = HTTP_CATALOG . 'index.php?route=extension/payment/laybuy/reviseCancel';
 
 				$data_string = '';
 
@@ -1071,7 +1071,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 			$data = $this->transaction(true);
 
-			$data['store_url'] = HTTPS_CATALOG;
+			$data['store_url'] = HTTP_CATALOG;
 
 			$data['api_key'] = $this->getApiKey();
 

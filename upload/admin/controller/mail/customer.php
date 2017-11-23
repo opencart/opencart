@@ -42,12 +42,7 @@ class ControllerMailCustomer extends Controller {
 
 			$data['login'] = $store_url;
 			$data['store'] = $store_name;
-
-			if ($this->request->server['HTTPS']) {
-				$data['store_url'] = HTTPS_SERVER;
-			} else {
-				$data['store_url'] = HTTP_SERVER;
-			}
+			$data['store_url'] = HTTP_SERVER;
 
 			$this->load->model('tool/image');
 

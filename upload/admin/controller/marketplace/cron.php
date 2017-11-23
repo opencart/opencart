@@ -1,4 +1,4 @@
- <?php
+<?php
 class ControllerMarketplaceCron extends Controller {
 	private $error = array();
 	

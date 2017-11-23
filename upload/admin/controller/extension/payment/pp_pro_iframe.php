@@ -179,7 +179,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 			$data['payment_pp_pro_iframe_debug'] = $this->config->get('payment_pp_pro_iframe_debug');
 		}
 
-		$data['ipn_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/pp_pro_iframe/notify';
+		$data['ipn_url'] = HTTP_CATALOG . 'index.php?route=extension/payment/pp_pro_iframe/notify';
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

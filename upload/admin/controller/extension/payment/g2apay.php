@@ -147,7 +147,7 @@ class ControllerExtensionPaymentG2APay extends Controller {
 			$data['payment_g2apay_secret_token'] = sha1(uniqid(mt_rand(), 1));
 		}
 
-		$data['g2apay_ipn_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/g2apay/ipn&token=' . $data['payment_g2apay_secret_token'];
+		$data['g2apay_ipn_url'] = HTTP_CATALOG . 'index.php?route=extension/payment/g2apay/ipn&token=' . $data['payment_g2apay_secret_token'];
 
 		if (isset($this->request->post['payment_g2apay_ipn_uri'])) {
 			$data['payment_g2apay_ipn_uri'] = $this->request->post['payment_g2apay_ipn_uri'];

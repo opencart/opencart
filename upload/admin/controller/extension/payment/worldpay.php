@@ -126,9 +126,9 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 			$data['payment_worldpay_secret_token'] = sha1(uniqid(mt_rand(), 1));
 		}
 
-		$data['webhook_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/worldpay/webhook&token=' . $data['payment_worldpay_secret_token'];
+		$data['webhook_url'] = HTTP_CATALOG . 'index.php?route=extension/payment/worldpay/webhook&token=' . $data['payment_worldpay_secret_token'];
 
-		$data['cron_job_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/worldpay/cron&token=' . $data['payment_worldpay_secret_token'];
+		$data['cron_job_url'] = HTTP_CATALOG . 'index.php?route=extension/payment/worldpay/cron&token=' . $data['payment_worldpay_secret_token'];
 
 		if ($this->config->get('payment_worldpay_last_cron_job_run')) {
 			$data['payment_worldpay_last_cron_job_run'] = $this->config->get('payment_worldpay_last_cron_job_run');

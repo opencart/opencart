@@ -154,10 +154,10 @@ class ControllerExtensionPaymentPPPayflowIframe extends Controller {
 			$data['payment_pp_payflow_iframe_debug'] = $this->config->get('payment_pp_payflow_iframe_debug');
 		}
 
-		$data['post_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/pp_payflow_iframe/paymentipn';
-		$data['cancel_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/pp_payflow_iframe/paymentcancel';
-		$data['error_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/pp_payflow_iframe/paymenterror';
-		$data['return_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/pp_payflow_iframe/paymentreturn';
+		$data['post_url'] = HTTP_CATALOG . 'index.php?route=extension/payment/pp_payflow_iframe/paymentipn';
+		$data['cancel_url'] = HTTP_CATALOG . 'index.php?route=extension/payment/pp_payflow_iframe/paymentcancel';
+		$data['error_url'] = HTTP_CATALOG . 'index.php?route=extension/payment/pp_payflow_iframe/paymenterror';
+		$data['return_url'] = HTTP_CATALOG . 'index.php?route=extension/payment/pp_payflow_iframe/paymentreturn';
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

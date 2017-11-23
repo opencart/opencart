@@ -397,7 +397,7 @@ class ControllerExtensionOpenbayAmazonProduct extends Controller {
 							if (empty($field['value'])) {
 								$template['fields'][$key]['thumb'] = '';
 							} else {
-								$template['fields'][$key]['thumb'] = $this->model_tool_image->resize(str_replace(HTTPS_CATALOG . 'image/', '', $field['value']), 100, 100);
+								$template['fields'][$key]['thumb'] = $this->model_tool_image->resize(str_replace(HTTP_CATALOG . 'image/', '', $field['value']), 100, 100);
 							}
 						}
 					}
@@ -434,7 +434,7 @@ class ControllerExtensionOpenbayAmazonProduct extends Controller {
 
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 		$product_info['description'] = trim(utf8_encode(strip_tags(html_entity_decode($product_info['description']), "<br>")));
-		$product_info['image'] = HTTPS_CATALOG . 'image/' . $product_info['image'];
+		$product_info['image'] = HTTP_CATALOG . 'image/' . $product_info['image'];
 
 		$tax_added = isset($openbay_settings['openbay_amazon_listing_tax_added']) ? $openbay_settings['openbay_amazon_listing_tax_added'] : 0;
 		$default_condition =  isset($openbay_settings['openbay_amazon_listing_default_condition']) ? $openbay_settings['openbay_amazon_listing_default_condition'] : '';
@@ -468,7 +468,7 @@ class ControllerExtensionOpenbayAmazonProduct extends Controller {
 		$product_images = $this->model_catalog_product->getProductImages($product_id);
 		$image_index = 1;
 		foreach($product_images as $product_image) {
-			$defaults['pt' . $image_index] = HTTPS_CATALOG . 'image/' . $product_image['image'];
+			$defaults['pt' . $image_index] = HTTP_CATALOG . 'image/' . $product_image['image'];
 			$image_index ++;
 		}
 
@@ -506,7 +506,7 @@ class ControllerExtensionOpenbayAmazonProduct extends Controller {
 				$defaults['shippingweight'] = number_format($option['weight'], 2, '.', '');
 
 				if (!empty($option['image'])) {
-					$defaults['mainimage'] = HTTPS_CATALOG . 'image/' . $option['image'];
+					$defaults['mainimage'] = HTTP_CATALOG . 'image/' . $option['image'];
 				}
 			}
 		}

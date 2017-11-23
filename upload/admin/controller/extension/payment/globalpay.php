@@ -17,7 +17,7 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment'));
 		}
 
-		$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/globalpay/notify';
+		$data['notify_url'] = HTTP_CATALOG . 'index.php?route=extension/payment/globalpay/notify';
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];

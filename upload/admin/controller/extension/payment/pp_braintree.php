@@ -437,7 +437,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 			$post_data = array(
 				'return_url' => $this->url->link('extension/payment/pp_braintree', 'user_token=' . $this->session->data['user_token']),
-				'store_url' => HTTPS_CATALOG,
+				'store_url' => HTTP_CATALOG,
 				'store_version' => VERSION,
 				'store_country' => (isset($country['iso_code_3']) ? $country['iso_code_3'] : ''),
 			);
@@ -997,7 +997,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 			$post_data = array(
 				'return_url' => $this->url->link('extension/payment/pp_braintree', 'user_token=' . $this->session->data['user_token']),
-				'store_url' => HTTPS_CATALOG,
+				'store_url' => HTTP_CATALOG,
 				'store_version' => VERSION,
 				'store_country' => (isset($country['iso_code_3']) ? $country['iso_code_3'] : ''),
 			);

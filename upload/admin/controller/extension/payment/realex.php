@@ -17,7 +17,7 @@ class ControllerExtensionPaymentRealex extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment'));
 		}
 
-		$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/realex/notify';
+		$data['notify_url'] = HTTP_CATALOG . 'index.php?route=extension/payment/realex/notify';
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];

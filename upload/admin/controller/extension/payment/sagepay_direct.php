@@ -132,7 +132,7 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 			$data['payment_sagepay_direct_cron_job_token'] = sha1(uniqid(mt_rand(), 1));
 		}
 
-		$data['sagepay_direct_cron_job_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/sagepay_direct/cron&token=' . $data['payment_sagepay_direct_cron_job_token'];
+		$data['sagepay_direct_cron_job_url'] = HTTP_CATALOG . 'index.php?route=extension/payment/sagepay_direct/cron&token=' . $data['payment_sagepay_direct_cron_job_token'];
 
 		if ($this->config->get('payment_sagepay_direct_last_cron_job_run')) {
 			$data['payment_sagepay_direct_last_cron_job_run'] = $this->config->get('payment_sagepay_direct_last_cron_job_run');

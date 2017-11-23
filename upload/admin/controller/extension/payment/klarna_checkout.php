@@ -278,7 +278,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			$data['payment_klarna_checkout_settlement_order_status_id'] = $this->config->get('payment_klarna_checkout_settlement_order_status_id');
 		}
 
-		$data['store_url'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
+		$data['store_url'] = HTTP_CATALOG;
 
 		// API login
 		$this->load->model('user/api');
@@ -354,7 +354,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		
 		$data['order_id'] = (int)$this->request->get['order_id'];
 		
-		$data['store_url'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
+		$data['store_url'] = HTTP_CATALOG;
 
 		$extend_authorization_action = $cancel_action = $capture_action = $refund_action = $merchant_reference_action = $address_action = $release_authorization_action = false;
 

@@ -17,7 +17,7 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment'));
 		}
 
-		$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/firstdata/notify';
+		$data['notify_url'] = HTTP_CATALOG . 'index.php?route=extension/payment/firstdata/notify';
 
 		$this->load->model('localisation/order_status');
 
@@ -225,7 +225,7 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 
 				$data['void_url'] = $this->url->link('extension/payment/firstdata/void', 'user_token=' . $this->session->data['user_token']);
 				$data['capture_url'] = $this->url->link('extension/payment/firstdata/capture', 'user_token=' . $this->session->data['user_token']);
-				$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/firstdata/notify';
+				$data['notify_url'] = HTTP_CATALOG . 'index.php?route=extension/payment/firstdata/notify';
 
 				if ($this->config->get('payment_firstdata_live_demo') == 1) {
 					$data['action_url'] = $this->config->get('payment_firstdata_live_url');

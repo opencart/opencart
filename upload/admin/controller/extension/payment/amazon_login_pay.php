@@ -218,7 +218,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			$data['payment_amazon_login_pay_ipn_token'] = sha1(uniqid(mt_rand(), 1));
 		}
 
-		$data['ipn_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/amazon_login_pay/ipn&token=' . $data['payment_amazon_login_pay_ipn_token'];
+		$data['ipn_url'] = HTTP_CATALOG . 'index.php?route=extension/payment/amazon_login_pay/ipn&token=' . $data['payment_amazon_login_pay_ipn_token'];
 
 		if (isset($this->request->post['payment_amazon_login_pay_minimum_total'])) {
 			$data['payment_amazon_login_pay_minimum_total'] = $this->request->post['payment_amazon_login_pay_minimum_total'];
@@ -279,9 +279,9 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		$data['declined_codes'] = array($this->language->get('text_amazon_invalid'), $this->language->get('text_amazon_rejected'), $this->language->get('text_amazon_timeout'));
 
 		$data['unique_id'] = 'oc-' . str_replace(' ', '-', strtolower($this->config->get('config_name'))) . '_' . mt_rand();
-		$data['allowed_login_domain'] = html_entity_decode(HTTPS_CATALOG);
-		$data['login_redirect_urls'][] = HTTPS_CATALOG . 'index.php?route=payment/amazon_login/login';
-		$data['login_redirect_urls'][] = HTTPS_CATALOG . 'index.php?route=payment/amazon_pay/login';
+		$data['allowed_login_domain'] = html_entity_decode(HTTP_CATALOG);
+		$data['login_redirect_urls'][] = HTTP_CATALOG . 'index.php?route=payment/amazon_login/login';
+		$data['login_redirect_urls'][] = HTTP_CATALOG . 'index.php?route=payment/amazon_pay/login';
 		$data['store_name'] = $this->config->get('config_name');
 		$data['simple_path_language'] = str_replace('-', '_', $data['payment_amazon_login_pay_language']);
 

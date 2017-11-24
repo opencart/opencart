@@ -64,7 +64,7 @@ class ModelExtensionPaymentRealexRemote extends Model {
 		curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
 		$response = curl_exec ($ch);
 		curl_close ($ch);
 
@@ -112,7 +112,7 @@ class ModelExtensionPaymentRealexRemote extends Model {
 		curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
 		$response = curl_exec ($ch);
 		curl_close ($ch);
 
@@ -151,8 +151,8 @@ class ModelExtensionPaymentRealexRemote extends Model {
 				$xml .= '<type>' . $type . '</type>';
 				$xml .= '<chname>' . $name . '</chname>';
 				$xml .= '<cvn>';
-					$xml .= '<number>' . (int)$cvv . '</number>';
-					$xml .= '<presind>2</presind>';
+					$xml .= '<number>' . $cvv . '</number>';
+					$xml .= '<presind>1</presind>';
 				$xml .= '</cvn>';
 				if (!empty($issue)) {
 					$xml .= '<issueno>' . (int)$issue . '</issueno>';
@@ -226,7 +226,7 @@ class ModelExtensionPaymentRealexRemote extends Model {
 		curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
 		$response = curl_exec ($ch);
 		curl_close ($ch);
 

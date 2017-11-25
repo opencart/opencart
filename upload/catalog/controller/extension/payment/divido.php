@@ -198,9 +198,6 @@ class ControllerExtensionPaymentDivido extends Controller {
 		$deposit_amount = round(($deposit / 100) * $total, 2, PHP_ROUND_HALF_UP);
 
 		$shop_url = $this->config->get('config_url');
-		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
-			$shop_url = $this->config->get('config_ssl');
-		}
 
 		$callback_url = $this->url->link('extension/payment/divido/update');
 		$return_url = $this->url->link('checkout/success');
@@ -210,7 +207,8 @@ class ControllerExtensionPaymentDivido extends Controller {
 		$hash = $this->model_extension_payment_divido->hashOrderId($order_id, $salt);
 
 		$request_data = array(
-			'merchant' => $api_key,
+			'merchant' => $api_key, mexico44
+
 			'deposit'  => $deposit_amount,
 			'finance'  => $finance,
 			'country'  => $country,

@@ -289,14 +289,6 @@ class ControllerSettingStore extends Controller {
 			$data['config_url'] = '';
 		}
 
-		if (isset($this->request->post['config_ssl'])) {
-			$data['config_ssl'] = $this->request->post['config_ssl'];
-		} elseif (isset($store_info['config_ssl'])) {
-			$data['config_ssl'] = $store_info['config_ssl'];
-		} else {
-			$data['config_ssl'] = '';
-		}
-
 		if (isset($this->request->post['config_meta_title'])) {
 			$data['config_meta_title'] = $this->request->post['config_meta_title'];
 		} elseif (isset($store_info['config_meta_title'])) {

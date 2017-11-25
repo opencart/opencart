@@ -11,6 +11,8 @@ $_['text_authorisation']		= 'Authorisation';
 $_['text_sale']					= 'Sale';
 $_['text_transparent']			= 'Transparent Redirect (payment form on site)';
 $_['text_iframe']				= 'IFrame (payment form in window)';
+$_['text_connect_eway']	        = 'To start accepting real-time credit card payments via OpenCart, Click Connect with eWAY to get started.';
+$_['text_eway_image']	    	= '<a target="_BLANK" href="https://myeway.force.com/success/accelerator-signup?pid=4382&pa=0012000000ivcWf"><img width="428" height="57" src="view/image/payment/eway_connect.png" alt="eWAY" title="eWAY" style="border: 1px solid #EEEEEE;" /></a>';
 
 // Entry
 $_['entry_paymode']				= 'Payment Mode';

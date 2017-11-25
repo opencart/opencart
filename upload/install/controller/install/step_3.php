@@ -83,6 +83,7 @@ class ControllerInstallStep3 extends Controller {
 			
 			$output .= '// OpenCart API' . "\n";
 			$output .= 'define(\'OPENCART_SERVER\', \'https://www.opencart.com/\');' . "\n";
+            $output .= 'define(\'OPENCARTFORUM_SERVER\', \'https://opencartforum.com/\');' . "\n";
 
 			$file = fopen(DIR_OPENCART . 'admin/config.php', 'w');
 

@@ -108,6 +108,7 @@ class ModelUpgrade1009 extends Model {
 				if (strpos($line, 'DB_PREFIX') !== false) {
 					$output .= $line . "\n\n";
 					$output .= 'define(\'OPENCART_SERVER\', \'http://www.opencart.com/\');' . "\n";
+                    $output .= 'define(\'OPENCARTFORUM_SERVER\', \'https://opencartforum.com/\');' . "\n";
 				} else {
 					$output .= $line;
 				}

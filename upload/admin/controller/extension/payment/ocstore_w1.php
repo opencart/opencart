@@ -6,7 +6,7 @@
  * @author    OcTeam
  * @support   https://opencartforum.com/profile/3463-shoputils/
  * @version   1.0
- * @copyright  Copyright (c) 2017 OcStore Team (http://myopencart.com , http://opencartforum.com)
+ * @copyright  Copyright (c) 2017 OcStore Team (https://ocstore.com , https://opencartforum.com)
  */
 class ControllerExtensionPaymentOcstoreW1 extends Controller {
 	private $error = array();

@@ -758,7 +758,7 @@ INSERT INTO `oc_extension` (`extension_id`, `type`, `code`) VALUES
 (35, 'report', 'sale_return'),
 (36, 'report', 'sale_order'),
 (37, 'report', 'sale_shipping'),
-(38, 'report', 'sale_tax'),,
+(38, 'report', 'sale_tax'),
 (39, 'report', 'customer_activity'),
 (40, 'report', 'customer_order'),
 (41, 'report', 'customer_reward'),

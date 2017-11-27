@@ -12,7 +12,9 @@
  * URL class.
  */
 class Url {
+	/** @var string */
 	private $url;
+	/** @var Controller[] */
 	private $rewrite = array();
 
 	/**
@@ -28,7 +30,9 @@ class Url {
 	/**
 	 *
 	 *
-	 * @param    object $rewrite
+	 * @param Controller $rewrite
+	 *
+	 * @return void
 	 */
 	public function addRewrite($rewrite) {
 		$this->rewrite[] = $rewrite;
@@ -39,6 +43,8 @@ class Url {
 	 *
 	 * @param string          $route
 	 * @param string|string[] $args
+	 *
+	 * @return string
 	 */
 	public function link($route, $args = '') {
 		$url = $this->url . 'index.php?route=' . (string)$route;

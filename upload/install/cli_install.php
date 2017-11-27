@@ -117,7 +117,7 @@ function get_options($argv) {
 	return array_merge($default, $option);
 }
 
-function valid($options) {
+function valid($option) {
 	$required = array(
 		'db_hostname',
 		'db_username',
@@ -133,14 +133,14 @@ function valid($options) {
 
 	$missing = array();
 
-	foreach ($required as $r) {
-		if (!array_key_exists($r, $options)) {
-			$missing[] = $r;
+	foreach ($required as $value) {
+		if (!array_key_exists($value, $option)) {
+			$missing[] = $value;
 		}
 	}
 
-	if (!preg_match('#/$#', $options['http_server'])) {
-		$options['http_server'] = $options['http_server'] . '/';
+	if (!preg_match('#/$#', $option['http_server'])) {
+		$option['http_server'] = $option['http_server'] . '/';
 	}
 
 	$valid = count($missing) === 0;
@@ -148,13 +148,13 @@ function valid($options) {
 	return array($valid, $missing);
 }
 
-function install($options) {
+function install($option) {
 	$check = check_requirements();
 
 	if ($check[0]) {
-		setup_db($options);
+		setup_db($option);
 
-		write_config_files($options);
+		write_config_files($option);
 
 		dir_permissions();
 	} else {
@@ -384,14 +384,57 @@ $script = array_shift($argv);
 
 $subcommand = array_shift($argv);
 
+class ControllerCliInstall extends Controller {
+	public function index() {
+
+
+		switch ($subcommand) {
+			case 'install':
+				try {
+					$option = get_options($argv);
+
+					define('HTTP_OPENCART', $option['http_server']);
+
+					$valid = valid($option);
+
+					if (!$valid[0]) {
+						echo 'FAILED! Following inputs were missing or invalid: ';
+						echo implode(', ', $valid[1]) . "\n\n";
+						exit(1);
+					}
+
+					install($options);
+
+					echo 'SUCCESS! Opencart successfully installed on your server' . "\n";
+					echo 'Store link: ' . $option['http_server'] . "\n";
+					echo 'Admin link: ' . $option['http_server'] . 'admin/' . "\n\n";
+				} catch (ErrorException $e) {
+					echo 'FAILED!: ' . $e->getMessage() . "\n";
+					exit(1);
+				}
+
+				break;
+			case 'usage':
+			default:
+				echo usage();
+		}
+
+	}
+}
+
+$action = new Action();
+
+
+
+
 switch ($subcommand) {
 	case 'install':
 		try {
-			$options = get_options($argv);
+			$option = get_options($argv);
 
-			define('HTTP_OPENCART', $options['http_server']);
+			define('HTTP_OPENCART', $option['http_server']);
 
-			$valid = valid($options);
+			$valid = valid($option);
 
 			if (!$valid[0]) {
 				echo 'FAILED! Following inputs were missing or invalid: ';
@@ -402,8 +445,8 @@ switch ($subcommand) {
 			install($options);
 
 			echo 'SUCCESS! Opencart successfully installed on your server' . "\n";
-			echo 'Store link: ' . $options['http_server'] . "\n";
-			echo 'Admin link: ' . $options['http_server'] . 'admin/' . "\n\n";
+			echo 'Store link: ' . $option['http_server'] . "\n";
+			echo 'Admin link: ' . $option['http_server'] . 'admin/' . "\n\n";
 		} catch (ErrorException $e) {
 			echo 'FAILED!: ' . $e->getMessage() . "\n";
 			exit(1);

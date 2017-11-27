@@ -57,21 +57,13 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-route">{{ entry_route }}</label>
             <div class="col-sm-10">
-              <select name="route" id="input-route" class="form-control">
-                {% if route %}
-                  <option value="{{ route }}" selected="selected">{{ route }}</option>
-                {% endif %}
-              </select>
+              <select name="route" id="input-route" class="form-control"></select>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-key">{{ entry_key }}</label>
             <div class="col-sm-10">
-              <select name="key" id="input-key" class="form-control">
-                {% if key %}
-                  <option value="{{ key }}" selected="selected">{{ key }}</option>
-                {% endif %}
-              </select> <input type="text" name="key" value="{{ key }}" placeholder="{{ entry_key }}" class="form-control"/>
+              <select id="input-key" class="form-control"></select><input type="text" name="key" value="{{ key }}" placeholder="{{ entry_key }}" class="form-control"/>
               {% if error_key %}
                 <div class="text-danger">{{ error_key }}</div>
               {% endif %}
@@ -95,18 +87,6 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-{% if key %}
-$('select[name="store_id"]').prop('disabled', true);
-$('select[name="language_id"]').prop('disabled', true);
-$('select[name="route"]').prop('disabled', true);
-$('select[name="key"]').prop('disabled', true);
-$('input[name="key"]').prop('disabled', true);
-
-$('form').bind('submit', function() {
-	$(this).find(':disabled').prop('disabled', false);
-});
-
-{% else %}
 $('select[name="language_id"]').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=design/translation/path&user_token={{ user_token }}&language_id=' + $('select[name="language_id"]').val(),
@@ -115,25 +95,25 @@ $('select[name="language_id"]').on('change', function() {
 			$('select[name="route"]').html('');
 			$('select[name="key"]').html('');
 			$('input[name="key"]').val('');
-			$('textarea[name="default"]').val('');
-			$('select[name="store_id"]').prop('disabled', true);
-			$('select[name="language_id"]').prop('disabled', true);
-			$('select[name="route"]').prop('disabled', true);
-			$('select[name="key"]').prop('disabled', true);
-			$('input[name="key"]').prop('disabled', true);
-			$('textarea[name="value"]').prop('disabled', true);
+
+			//$('select[name="store_id"]').prop('disabled', true);
+			//$('select[name="language_id"]').prop('disabled', true);
+			//$('select[name="route"]').prop('disabled', true);
+			//$('select[name="key"]').prop('disabled', true);
+			//$('input[name="key"]').prop('disabled', true);
+			//$('textarea[name="value"]').prop('disabled', true);
 		},
 		complete: function() {
-			$('select[name="store_id"]').prop('disabled', false);
-			$('select[name="language_id"]').prop('disabled', false);
-			$('select[name="route"]').prop('disabled', false);
+			//$('select[name="store_id"]').prop('disabled', false);
+			//$('select[name="language_id"]').prop('disabled', false);
+			//$('select[name="route"]').prop('disabled', false);
 		},
 		success: function(json) {
-			html = '<option value=""></option>';
+			html = '';
 
 			if (json) {
 				for (i = 0; i < json.length; i++) {
-					if (i == 0) {
+					if (json[i] == '{{ route }}') {
 						html += '<option value="' + json[i] + '" selected="selected">' + json[i] + '</option>';
 					} else {
 						html += '<option value="' + json[i] + '">' + json[i] + '</option>';
@@ -157,12 +137,12 @@ $('select[name="route"]').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=design/translation/translation&user_token={{ user_token }}&language_id=' + $('select[name="language_id"]').val() + '&path=' + $('select[name="route"]').val(),
 		dataType: 'json',
-      {% if not key %}
 		beforeSend: function() {
 			$('select[name="key"]').html('');
 			$('input[name="key"]').val('');
 			$('textarea[name="default"]').val('');
 			$('textarea[name="value"]').val('');
+
 			$('select[name="store_id"]').prop('disabled', true);
 			$('select[name="language_id"]').prop('disabled', true);
 			$('select[name="route"]').prop('disabled', true);
@@ -176,7 +156,7 @@ $('select[name="route"]').on('change', function() {
 			$('select[name="key"]').prop('disabled', false);
 			$('textarea[name="value"]').prop('disabled', false);
 		},
-      {% endif %}
+
 		success: function(json) {
 			translation = [];
 
@@ -184,9 +164,7 @@ $('select[name="route"]').on('change', function() {
 
 			if (json) {
 				for (i = 0; i < json.length; i++) {
-					translation[json[i]['key']] = json[i]['value'];
-
-					if (i == 0) {
+					if (json[i]['key'] == '{{ key }}') {
 						html += '<option value="' + json[i]['key'] + '" selected="selected">' + json[i]['key'] + '</option>';
 					} else {
 						html += '<option value="' + json[i]['key'] + '">' + json[i]['key'] + '</option>';
@@ -194,9 +172,9 @@ $('select[name="route"]').on('change', function() {
 				}
 			}
 
-			$('select[name="key"]').html(html);
+			$('#input-key').html(html);
 
-			$('select[name="key"]').trigger('change');
+			$('#input-key').trigger('change');
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -206,18 +184,18 @@ $('select[name="route"]').on('change', function() {
 
 $('select[name="language_id"]').trigger('change');
 
-$('select[name="key"]').on('change', function() {
+$('#input-key').on('change', function() {
 	if ($(this).val()) {
-		$('textarea[name="default"]').val(translation[$('select[name="key"]').val()]);
-		$('input[name="key"]').val($('select[name="key"]').val());
+		$('textarea[name="default"]').val(translation[$('#input-key').val()]);
 
-		$('input[name="key"]').prop('disabled', true);
+		$('input[name="key"]').val($('#input-key').val());
+
+		//$('input[name="key"]').prop('disabled', true);
 	} else {
 		$('textarea[name="default"]').val('');
 
-		$('input[name="key"]').prop('disabled', false);
+		//$('input[name="key"]').prop('disabled', false);
 	}
 });
-{% endif %}
 //--></script>
 {{ footer }} 

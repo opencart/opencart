@@ -570,7 +570,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	z-index: 999;
 }
 .alert {
-	overflow: auto;
+	overflow: visible;
 }
 
 /* Fix form-group margin inside the modal */

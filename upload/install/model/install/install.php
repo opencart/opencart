@@ -45,7 +45,6 @@ class ModelInstallInstall extends Model {
 
 			$sql = rtrim($sql, ",\n") . "\n";
 			$sql .= ") ENGINE=" . $table['engine'] . " CHARSET=" . $table['charset'] . " COLLATE=" . $table['collate'] . ";\n";
-
 			$db->query($sql);
 		}
 
@@ -54,25 +53,14 @@ class ModelInstallInstall extends Model {
 
 		if ($lines) {
 			$sql = '';
-
-			$start = false;
-
 			foreach($lines as $line) {
-				if (substr($line, 0, 12) == 'INSERT INTO ') {
-					$sql = '';
-
-					$start = true;
-				}
-
-				if ($start) {
 					$sql .= $line;
-				}
-
-				if (substr($line, -2) == ');') {
-					$db->query(str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $sql));
-
-					$start = false;
-				}
+					if (preg_match('/;\s*$/', $line)) {
+              $sql = str_replace("\n", "", $sql);
+              $sql = str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $sql);
+              $db->query($sql);
+              unset($sql);
+					}
 			}
 		}
 

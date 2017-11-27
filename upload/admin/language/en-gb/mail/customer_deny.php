@@ -5,4 +5,4 @@ $_['text_welcome'] = 'Welcome and thank you for registering at %s!';
 $_['text_denied']  = 'Unfortunately your request has been denied. For more information you can contact the store owner here:';
 $_['text_thanks']  = 'Thanks,';
 
-$_['btn_contact']    = 'Contact Us';
+$_['button_contact']    = 'Contact Us';

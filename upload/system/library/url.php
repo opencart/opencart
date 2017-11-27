@@ -1,25 +1,27 @@
 <?php
 /**
- * @package        OpenCart
- * @author        Daniel Kerr
- * @copyright    Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
- * @license        https://opensource.org/licenses/GPL-3.0
- * @link        https://www.opencart.com
+ * @package   OpenCart
+ * @author    Daniel Kerr
+ * @copyright Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
+ * @license   https://opensource.org/licenses/GPL-3.0
+ * @author    Daniel Kerr
+ * @see       https://www.opencart.com
  */
 
 /**
- * URL class
+ * URL class.
  */
 class Url {
+	/** @var string */
 	private $url;
+	/** @var Controller[] */
 	private $rewrite = array();
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 *
-	 * @param    string $url
-	 * @param    string $ssl
-	 *
+	 * @param string $url
+	 * @param string $ssl Unused
 	 */
 	public function __construct($url, $ssl = '') {
 		$this->url = $url;
@@ -28,7 +30,9 @@ class Url {
 	/**
 	 *
 	 *
-	 * @param    object $rewrite
+	 * @param Controller $rewrite
+	 *
+	 * @return void
 	 */
 	public function addRewrite($rewrite) {
 		$this->rewrite[] = $rewrite;
@@ -37,10 +41,10 @@ class Url {
 	/**
 	 *
 	 *
-	 * @param    string $route
-	 * @param    mixed $args
+	 * @param string          $route
+	 * @param string|string[] $args
 	 *
-	 * @return    string
+	 * @return string
 	 */
 	public function link($route, $args = '') {
 		$url = $this->url . 'index.php?route=' . (string)$route;

@@ -92,21 +92,14 @@ $('select[name="language_id"]').on('change', function() {
 		url: 'index.php?route=design/translation/path&user_token={{ user_token }}&language_id=' + $('select[name="language_id"]').val(),
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name="route"]').html('');
-			$('select[name="key"]').html('');
-			$('input[name="key"]').val('');
-
-			//$('select[name="store_id"]').prop('disabled', true);
-			//$('select[name="language_id"]').prop('disabled', true);
-			//$('select[name="route"]').prop('disabled', true);
-			//$('select[name="key"]').prop('disabled', true);
-			//$('input[name="key"]').prop('disabled', true);
-			//$('textarea[name="value"]').prop('disabled', true);
+			$('select[name=\'language_id\']').prop('disabled', true);
+			$('select[name=\'route\']').prop('disabled', true);
+			$('#input-key').prop('disabled', true);
 		},
 		complete: function() {
-			//$('select[name="store_id"]').prop('disabled', false);
-			//$('select[name="language_id"]').prop('disabled', false);
-			//$('select[name="route"]').prop('disabled', false);
+			$('select[name="\'language_id\']').prop('disabled', false);
+			$('select[name=\'route\']').prop('disabled', false);
+			$('#input-key').prop('disabled', false);
 		},
 		success: function(json) {
 			html = '';
@@ -131,32 +124,20 @@ $('select[name="language_id"]').on('change', function() {
 	});
 });
 
-var translation = [];
-
-$('select[name="route"]').on('change', function() {
+$('select[name=\'route\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=design/translation/translation&user_token={{ user_token }}&language_id=' + $('select[name="language_id"]').val() + '&path=' + $('select[name="route"]').val(),
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name="key"]').html('');
-			$('input[name="key"]').val('');
-			$('textarea[name="default"]').val('');
-			$('textarea[name="value"]').val('');
-
-			$('select[name="store_id"]').prop('disabled', true);
-			$('select[name="language_id"]').prop('disabled', true);
-			$('select[name="route"]').prop('disabled', true);
-			$('select[name="key"]').prop('disabled', true);
-			$('textarea[name="value"]').prop('disabled', true);
+			$('select[name=\'language_id\']').prop('disabled', true);
+			$('select[name=\'route\']').prop('disabled', true);
+			$('#input-key').prop('disabled', true);
 		},
 		complete: function() {
-			$('select[name="store_id"]').prop('disabled', false);
-			$('select[name="language_id"]').prop('disabled', false);
-			$('select[name="route"]').prop('disabled', false);
-			$('select[name="key"]').prop('disabled', false);
-			$('textarea[name="value"]').prop('disabled', false);
+			$('select[name=\'language_id\']').prop('disabled', false);
+			$('select[name=\'route\']').prop('disabled', false);
+			$('#input-key').prop('disabled', false);
 		},
-
 		success: function(json) {
 			translation = [];
 
@@ -164,11 +145,13 @@ $('select[name="route"]').on('change', function() {
 
 			if (json) {
 				for (i = 0; i < json.length; i++) {
-					if (json[i]['key'] == '{{ key }}') {
+					if (json[i]['key'] == $('input[name=\'key\']').val()) {
 						html += '<option value="' + json[i]['key'] + '" selected="selected">' + json[i]['key'] + '</option>';
 					} else {
 						html += '<option value="' + json[i]['key'] + '">' + json[i]['key'] + '</option>';
 					}
+
+					translation[json[i]['key']] = json[i]['value'];
 				}
 			}
 
@@ -182,20 +165,16 @@ $('select[name="route"]').on('change', function() {
 	});
 });
 
-$('select[name="language_id"]').trigger('change');
-
 $('#input-key').on('change', function() {
-	if ($(this).val()) {
+	if (translation[$('#input-key').val()]) {
 		$('textarea[name="default"]').val(translation[$('#input-key').val()]);
 
 		$('input[name="key"]').val($('#input-key').val());
-
-		//$('input[name="key"]').prop('disabled', true);
 	} else {
 		$('textarea[name="default"]').val('');
-
-		//$('input[name="key"]').prop('disabled', false);
 	}
 });
+
+$('select[name="language_id"]').trigger('change');
 //--></script>
-{{ footer }} 
+{{ footer }}

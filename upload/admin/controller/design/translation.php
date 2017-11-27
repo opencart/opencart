@@ -322,7 +322,7 @@ class ControllerDesignTranslation extends Controller {
 		} elseif (!empty($translation_info)) {
 			$data['language_id'] = $translation_info['language_id'];
 		} else {
-			$data['language_id'] = $language['language_id'];
+			$data['language_id'] = '';
 		}
 
 		if (isset($this->request->post['route'])) {

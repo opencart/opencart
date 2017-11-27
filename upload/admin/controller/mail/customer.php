@@ -39,7 +39,7 @@ class ControllerMailCustomer extends Controller {
 			$data['text_service'] = $language->get('text_service');
 			$data['text_thanks'] = $language->get('text_thanks');
 
-			$data['btn_login'] = $language->get('btn_login');
+			$data['button_login'] = $language->get('button_login');
 
 			$data['login'] = $store_url . 'index.php?route=account/login';
 			$data['store'] = $store_name;
@@ -108,7 +108,7 @@ class ControllerMailCustomer extends Controller {
 			$data['text_denied'] = $language->get('text_denied');
 			$data['text_thanks'] = $language->get('text_thanks');
 
-			$data['btn_contact'] = $language->get('btn_contact');
+			$data['button_contact'] = $language->get('button_contact');
 
 			$data['contact'] = $store_url . 'index.php?route=information/contact';
 			$data['store'] = $store_name;

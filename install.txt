@@ -1,26 +1,27 @@
 /////////////////////////////////
-///       OpenCart V2.x     ///
-///    Install Instructions   ///
-///  http://www.opencart.com  ///
+///       OpenCart V3.x     ///
+///  Инструкция по установке  ///
+///  https://ocstore.com  ///
 /////////////////////////////////
 
 
-NOTE: THIS IS FOR NEW INSTALL ONLY!
-IF UPGRADING YOUR EXISTING CART, BE SURE TO READ THE UPGRADE.TXT FILE INSTEAD
+ПРИМЕЧАНИЕ: ТОЛЬКО ДЛЯ НОВОЙ УСТАНОВКИ!
+ЕСЛИ ОБНОВЛЕНИЕ В СУЩЕСТВУЮЩИЙ МАГАЗИН, НЕ ЗАБУДЬТЕ ПРОЧИТАТЬ UPGRADE.TXT
 
 
 -------
-INSTALL
+Установка
 -------
 These instructions are for a manual installation using FTP, cPanel or other web hosting Control Panel.
 
-- Linux Install -
+- Установка на Linux -
 
-1. Upload all of the files and folders to your server from the "Upload" folder, place them in your web root. The web root is different on some servers, cPanel it should be public_html/ and on Plesk it should be httpdocs/.
+1. Загрузите все ваши файлы и папки на ваш сервер из папки «Upload». Можно разархивировать в любое место на Ваш выбор.
+   Например: В cPanel должно быть в папке public_html/ и в Plesk должно быть в httpdocs/.
 
-2. Rename config-dist.php to config.php and admin/config-dist.php to admin/config.php
+2. Переименуйте config-dist.php в config.php и admin/config-dist.php в admin/config.php
 
-3. For Linux/Unix make sure the following folders and files are writable.
+3. Для Linux/Unix убедитесь, что папки и файлы доступны для записи.
 
 		chmod 0755 or 0777 system/storage/cache/
 		chmod 0755 or 0777 system/storage/download/
@@ -35,27 +36,26 @@ These instructions are for a manual installation using FTP, cPanel or other web 
 		chmod 0755 or 0777 config.php
 		chmod 0755 or 0777 admin/config.php
 
-		If 0755 does not work try 0777.
+		Если при правах 0755 не работает, попробуйте 0777.
 
-4. Make sure you have installed a MySQL Database which has a user assigned to it
-	DO NOT USE YOUR ROOT USERNAME AND ROOT PASSWORD
+4. Убедитесь, что у Вас установлена база данных MySQL и Вы имеете к ней доступ. НИ В КОЕМ СЛУЧАЕ НЕ ИСПОЛЬЗУЙТЕ ROOT ЛОГИН И ПАРОЛЬ.
 
-5. Visit the store homepage e.g. http://www.example.com or http://www.example.com/store/
+5. Посетите домашнюю страницу Вашего магазина.
+   Например: http://www.example.com или http://www.examle.com/store/
 
-6. You should be taken to the installer page. Follow the on screen instructions.
+6. Следуйте инструкциям на экране.
 
-7. After successful install, delete the /install/ directory from ftp.
+7. Удалите установочную директорию.
 
-8. If you have downloaded the compiled version with a folder called "vendor" - this should be uploaded above the webroot (so the same folder where the public_html or httpdocs is)
+8. Если вы загрузили скомпилированную версию с папкой «vendor» - она должна быть загружена выше корневой директории (в той же папке, где public_html или httpdocs)
 
+- Установка на Windows -
 
-- Windows Install -
+1. Загрузите все ваши файлы и папки на ваш сервер из папки «Upload». Можно разархивировать в любое место на Ваш выбор. Наприммер /wwwroot/store или /wwwroot
 
-1. Upload all the files and folders to your server from the "Upload" folder. This can be to anywhere of your choice. e.g. /wwwroot/store or /wwwroot
+2. Переименуйте config-dist.php в config.php и admin/config-dist.php в admin/config.php
 
-2. Rename config-dist.php to config.php and admin/config-dist.php to admin/config.php
-
-3. For Windows make sure the following folders and files permissions allow Read and Write.
+3. Для Windows убедитесь, что папки и файлы доступны для записи
 
 		system/storage/cache/
 		system/storage/download/
@@ -70,29 +70,29 @@ These instructions are for a manual installation using FTP, cPanel or other web 
 		config.php
 		admin/config.php
 
-4. Make sure you have installed a MySQL Database which has a user assigned to it
-	DO NOT USE YOUR ROOT USERNAME AND ROOT PASSWORD
+4. Убедитесь, что у Вас установлена база данных MySQL и Вы имеете к ней доступ. НИ В КОЕМ СЛУЧАЕ НЕ ИСПОЛЬЗУЙТЕ ROOT ЛОГИН И ПАРОЛЬ.
 
-5. You should be taken to the installer page. Follow the on screen instructions.
+5. Посетите домашнюю страницу Вашего магазина.
+   Например: http://www.example.com или http://www.examle.com/store/
 
-6. After successful install, delete the /install/ directory.
+6. Следуйте инструкциям на экране.
 
-- Local Install -
+7. Удалите установочную директорию.
 
-There are many all-in-one web servers out there and most of them should work with OpenCart out of the box. Some examples...
+- Локальная установка -
+
+Есть много веб-серверов для локальной установки, и большинство из них должны работать с ocStore из коробки. Например...
 
 http://www.apachefriends.org/en/xampp.html
 http://www.ampps.com/
 http://www.usbwebserver.net
-http://www.wampserver.com/en/
+http://www.wampserver.com/
+http://www.denwer.ru/
+Видеоурок по установке denwer https://www.youtube.com/watch?v=wQUjBVJGTnk
 
- - Notes -
 
-Godaddy Issues
 
-If your hosting on godaddy you might need to rename the php.ini to user.ini
 
-It seems godadddy has started changing the industry standard names of files.
 
 ----------------------------
 COMPOSER OR NOT TO COMPOSER

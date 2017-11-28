@@ -2074,7 +2074,7 @@ output {
 .form-control {
   display: block;
   width: 100%;
-  height: 37px;
+  height: 36px;
   padding: 8px 13px;
   font-size: 13px;
   line-height: 1.42857;
@@ -2117,7 +2117,7 @@ input[type="search"] {
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   input[type="date"].form-control, input[type="time"].form-control, input[type="datetime-local"].form-control, input[type="month"].form-control {
-    line-height: 37px; }
+    line-height: 36px; }
     input[type="date"].input-sm, .input-group-sm > input.form-control[type="date"], .input-group-sm > input.input-group-addon[type="date"], .input-group-sm > .input-group-btn > input.btn[type="date"], input[type="time"].input-sm, .input-group-sm > input.form-control[type="time"], .input-group-sm > input.input-group-addon[type="time"], .input-group-sm > .input-group-btn > input.btn[type="time"], input[type="datetime-local"].input-sm, .input-group-sm > input.form-control[type="datetime-local"], .input-group-sm > input.input-group-addon[type="datetime-local"], .input-group-sm > .input-group-btn > input.btn[type="datetime-local"], input[type="month"].input-sm, .input-group-sm > input.form-control[type="month"], .input-group-sm > input.input-group-addon[type="month"], .input-group-sm > .input-group-btn > input.btn[type="month"], .input-group-sm input[type="date"], .input-group-sm input[type="time"], .input-group-sm input[type="datetime-local"], .input-group-sm input[type="month"] {
       line-height: 28px; }
     input[type="date"].input-lg, .input-group-lg > input.form-control[type="date"], .input-group-lg > input.input-group-addon[type="date"], .input-group-lg > .input-group-btn > input.btn[type="date"], input[type="time"].input-lg, .input-group-lg > input.form-control[type="time"], .input-group-lg > input.input-group-addon[type="time"], .input-group-lg > .input-group-btn > input.btn[type="time"], input[type="datetime-local"].input-lg, .input-group-lg > input.form-control[type="datetime-local"], .input-group-lg > input.input-group-addon[type="datetime-local"], .input-group-lg > .input-group-btn > input.btn[type="datetime-local"], input[type="month"].input-lg, .input-group-lg > input.form-control[type="month"], .input-group-lg > input.input-group-addon[type="month"], .input-group-lg > .input-group-btn > input.btn[type="month"], .input-group-lg input[type="date"], .input-group-lg input[type="time"], .input-group-lg input[type="datetime-local"], .input-group-lg input[type="month"] {
@@ -2244,7 +2244,7 @@ textarea.input-lg, .input-group-lg > textarea.form-control, .input-group-lg > te
 .has-feedback {
   position: relative; }
   .has-feedback .form-control {
-    padding-right: 46.25px; }
+    padding-right: 45px; }
 
 .form-control-feedback {
   position: absolute;
@@ -2252,9 +2252,9 @@ textarea.input-lg, .input-group-lg > textarea.form-control, .input-group-lg > te
   right: 0;
   z-index: 2;
   display: block;
-  width: 37px;
-  height: 37px;
-  line-height: 37px;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
   text-align: center;
   pointer-events: none; }
 
@@ -3318,8 +3318,8 @@ tbody.collapse.in {
   border-bottom: 1px solid transparent;
   -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1), 0 1px 0 rgba(255, 255, 255, .1);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1), 0 1px 0 rgba(255, 255, 255, .1);
-  margin-top: 11.5px;
-  margin-bottom: 11.5px; }
+  margin-top: 12px;
+  margin-bottom: 12px; }
   @media (min-width: 768px) {
   .navbar-form .form-group {
     display: inline-block;
@@ -3382,8 +3382,8 @@ tbody.collapse.in {
   border-bottom-left-radius: 0; }
 
 .navbar-btn {
-  margin-top: 11.5px;
-  margin-bottom: 11.5px; }
+  margin-top: 12px;
+  margin-bottom: 12px; }
   .navbar-btn.btn-sm, .btn-group-sm > .btn.navbar-btn {
     margin-top: 16px;
     margin-bottom: 16px; }

@@ -77,12 +77,11 @@ class ControllerCliInstall extends Controller {
 					$valid = valid($option);
 
 					if (!$valid[0]) {
-						echo 'FAILED! Following inputs were missing or invalid: ';
-						echo implode(', ', $valid[1]) . "\n\n";
+						echo 'FAILED! Following inputs were missing or invalid: ' . implode(', ', $valid[1]) . "\n\n";
 						exit(1);
 					}
 
-					install($option);
+					$this->install($option);
 
 					echo 'SUCCESS! Opencart successfully installed on your server' . "\n";
 					echo 'Store link: ' . $option['http_server'] . "\n";
@@ -91,7 +90,6 @@ class ControllerCliInstall extends Controller {
 					echo 'FAILED!: ' . $e->getMessage() . "\n";
 					exit(1);
 				}
-
 				break;
 			case 'usage':
 			default:
@@ -404,7 +402,7 @@ class ControllerCliInstall extends Controller {
 	}
 
 	function dir_permissions() {
-		$dirs = array(
+		$directories = array(
 			DIR_OPENCART . 'image/',
 			DIR_OPENCART . 'system/storage/cache/',
 			DIR_OPENCART . 'system/storage/download/',
@@ -414,43 +412,9 @@ class ControllerCliInstall extends Controller {
 			DIR_OPENCART . 'system/storage/upload/'
 		);
 
-		exec('chmod o+w -R ' . implode(' ', $dirs));
+		exec('chmod o+w -R ' . implode(' ', $directories));
 	}
 }
-
-
-
-
-
+echo 'hi';
 $action = new Action();
-
-switch ($subcommand) {
-	case 'install':
-		try {
-			$option = get_options($argv);
-
-			define('HTTP_OPENCART', $option['http_server']);
-
-			$valid = valid($option);
-
-			if (!$valid[0]) {
-				echo 'FAILED! Following inputs were missing or invalid: ';
-				echo implode(', ', $valid[1]) . "\n\n";
-				exit(1);
-			}
-
-			install($options);
-
-			echo 'SUCCESS! Opencart successfully installed on your server' . "\n";
-			echo 'Store link: ' . $option['http_server'] . "\n";
-			echo 'Admin link: ' . $option['http_server'] . 'admin/' . "\n\n";
-		} catch (ErrorException $e) {
-			echo 'FAILED!: ' . $e->getMessage() . "\n";
-			exit(1);
-		}
-
-		break;
-	case 'usage':
-	default:
-		echo usage();
-}
+$action->execute();

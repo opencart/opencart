@@ -207,8 +207,7 @@ class ControllerExtensionPaymentDivido extends Controller {
 		$hash = $this->model_extension_payment_divido->hashOrderId($order_id, $salt);
 
 		$request_data = array(
-			'merchant' => $api_key, mexico44
-
+			'merchant' => $api_key,
 			'deposit'  => $deposit_amount,
 			'finance'  => $finance,
 			'country'  => $country,

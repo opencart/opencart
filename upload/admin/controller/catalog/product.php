@@ -1199,6 +1199,7 @@ class ControllerCatalogProduct extends Controller {
 		if (isset($this->request->get['filter_name']) || isset($this->request->get['filter_model'])) {
 			$this->load->model('catalog/product');
 			$this->load->model('catalog/option');
+			$this->load->model('catalog/product_option');
 
 			if (isset($this->request->get['filter_name'])) {
 				$filter_name = $this->request->get['filter_name'];
@@ -1230,7 +1231,7 @@ class ControllerCatalogProduct extends Controller {
 			foreach ($results as $result) {
 				$option_data = array();
 
-				$product_options = $this->model_catalog_product->getProductOptions($result['product_id']);
+				$product_options = $this->model_catalog_product_option->getProductOptionsByProductId($result['product_id']);
 
 				foreach ($product_options as $product_option) {
 					$option_info = $this->model_catalog_option->getOption($product_option['option_id']);

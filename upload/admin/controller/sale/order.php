@@ -1684,6 +1684,7 @@ class ControllerSaleOrder extends Controller {
 		$this->load->model('sale/order');
 
 		$this->load->model('catalog/product');
+		$this->load->model('catalog/product_option');
 
 		$this->load->model('setting/setting');
 
@@ -1788,7 +1789,7 @@ class ControllerSaleOrder extends Controller {
 								'value' => $value
 							);
 
-							$product_option_value_info = $this->model_catalog_product->getProductOptionValue($product['product_id'], $option['product_option_value_id']);
+							$product_option_value_info = $this->model_catalog_product_option->getProductOptionValue($product['product_id'], $option['product_option_value_id']);
 
 							if ($product_option_value_info) {
 								if ($product_option_value_info['weight_prefix'] == '+') {

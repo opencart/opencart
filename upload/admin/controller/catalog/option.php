@@ -406,10 +406,10 @@ class ControllerCatalogOption extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/product_option');
 
 		foreach ($this->request->post['selected'] as $option_id) {
-			$product_total = $this->model_catalog_product->getTotalProductsByOptionId($option_id);
+			$product_total = $this->model_catalog_product_option->getTotalProductsByOptionId($option_id);
 
 			if ($product_total) {
 				$this->error['warning'] = sprintf($this->language->get('error_product'), $product_total);

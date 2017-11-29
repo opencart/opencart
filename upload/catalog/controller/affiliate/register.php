@@ -4,7 +4,7 @@ class ControllerAffiliateRegister extends Controller {
 
 	public function index() {
 		if ($this->customer->isLogged()) {
-			$this->response->redirect($this->url->link('account/account', '', true));
+			$this->response->redirect($this->url->link('account/account'));
 		}
 
 		$this->load->language('affiliate/register');
@@ -47,15 +47,15 @@ class ControllerAffiliateRegister extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', true)
+			'href' => $this->url->link('account/account')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_register'),
-			'href' => $this->url->link('affiliate/register', '', true)
+			'href' => $this->url->link('affiliate/register')
 		);
 
-		$data['text_account_already'] = sprintf($this->language->get('text_account_already'), $this->url->link('affiliate/login', '', true));
+		$data['text_account_already'] = sprintf($this->language->get('text_account_already'), $this->url->link('affiliate/login'));
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -129,7 +129,7 @@ class ControllerAffiliateRegister extends Controller {
 			$data['error_bank_account_number'] = '';
 		}
 				
-		$data['action'] = $this->url->link('affiliate/register', '', true);
+		$data['action'] = $this->url->link('affiliate/register');
 
 		$data['customer_groups'] = array();
 
@@ -289,7 +289,7 @@ class ControllerAffiliateRegister extends Controller {
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_affiliate_id'));
 
 			if ($information_info) {
-				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_affiliate_id'), true), $information_info['title'], $information_info['title']);
+				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_affiliate_id')), $information_info['title'], $information_info['title']);
 			} else {
 				$data['text_agree'] = '';
 			}

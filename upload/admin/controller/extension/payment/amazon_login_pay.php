@@ -19,9 +19,9 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			if (isset($this->request->post['language_reload'])) {
-				$this->response->redirect($this->url->link('payment/amazon_login_pay', 'user_token=' . $this->session->data['user_token'], true));
+				$this->response->redirect($this->url->link('payment/amazon_login_pay', 'user_token=' . $this->session->data['user_token']));
 			} else {
-				$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
+				$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment'));
 			}
 		}
 
@@ -77,22 +77,22 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/amazon_login_pay', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('extension/payment/amazon_login_pay', 'user_token=' . $this->session->data['user_token'])
 		);
 
-		$data['action'] = $this->url->link('extension/payment/amazon_login_pay', 'user_token=' . $this->session->data['user_token'], true);
+		$data['action'] = $this->url->link('extension/payment/amazon_login_pay', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
 
 		if (isset($this->request->post['payment_amazon_login_pay_merchant_id'])) {
 			$data['payment_amazon_login_pay_merchant_id'] = $this->request->post['payment_amazon_login_pay_merchant_id'];
@@ -218,7 +218,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			$data['payment_amazon_login_pay_ipn_token'] = sha1(uniqid(mt_rand(), 1));
 		}
 
-		$data['ipn_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/amazon_login_pay/ipn&token=' . $data['payment_amazon_login_pay_ipn_token'];
+		$data['ipn_url'] = HTTP_CATALOG . 'index.php?route=extension/payment/amazon_login_pay/ipn&token=' . $data['payment_amazon_login_pay_ipn_token'];
 
 		if (isset($this->request->post['payment_amazon_login_pay_minimum_total'])) {
 			$data['payment_amazon_login_pay_minimum_total'] = $this->request->post['payment_amazon_login_pay_minimum_total'];
@@ -279,9 +279,9 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		$data['declined_codes'] = array($this->language->get('text_amazon_invalid'), $this->language->get('text_amazon_rejected'), $this->language->get('text_amazon_timeout'));
 
 		$data['unique_id'] = 'oc-' . str_replace(' ', '-', strtolower($this->config->get('config_name'))) . '_' . mt_rand();
-		$data['allowed_login_domain'] = html_entity_decode(HTTPS_CATALOG);
-		$data['login_redirect_urls'][] = HTTPS_CATALOG . 'index.php?route=payment/amazon_login/login';
-		$data['login_redirect_urls'][] = HTTPS_CATALOG . 'index.php?route=payment/amazon_pay/login';
+		$data['allowed_login_domain'] = html_entity_decode(HTTP_CATALOG);
+		$data['login_redirect_urls'][] = HTTP_CATALOG . 'index.php?route=payment/amazon_login/login';
+		$data['login_redirect_urls'][] = HTTP_CATALOG . 'index.php?route=payment/amazon_pay/login';
 		$data['store_name'] = $this->config->get('config_name');
 		$data['simple_path_language'] = str_replace('-', '_', $data['payment_amazon_login_pay_language']);
 

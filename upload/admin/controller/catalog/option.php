@@ -38,7 +38,7 @@ class ControllerCatalogOption extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			$this->response->redirect($this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerCatalogOption extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			$this->response->redirect($this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerCatalogOption extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			$this->response->redirect($this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
 		$this->getList();
@@ -147,16 +147,16 @@ class ControllerCatalogOption extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url, true)
+			'href' => $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url)
 		);
 
-		$data['add'] = $this->url->link('catalog/option/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
-		$data['delete'] = $this->url->link('catalog/option/delete', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['add'] = $this->url->link('catalog/option/add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('catalog/option/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['options'] = array();
 
@@ -176,7 +176,7 @@ class ControllerCatalogOption extends Controller {
 				'option_id'  => $result['option_id'],
 				'name'       => $result['name'],
 				'sort_order' => $result['sort_order'],
-				'edit'       => $this->url->link('catalog/option/edit', 'user_token=' . $this->session->data['user_token'] . '&option_id=' . $result['option_id'] . $url, true)
+				'edit'       => $this->url->link('catalog/option/edit', 'user_token=' . $this->session->data['user_token'] . '&option_id=' . $result['option_id'] . $url)
 			);
 		}
 
@@ -212,8 +212,8 @@ class ControllerCatalogOption extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . '&sort=od.name' . $url, true);
-		$data['sort_sort_order'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . '&sort=o.sort_order' . $url, true);
+		$data['sort_name'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . '&sort=od.name' . $url);
+		$data['sort_sort_order'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . '&sort=o.sort_order' . $url);
 
 		$url = '';
 
@@ -229,7 +229,7 @@ class ControllerCatalogOption extends Controller {
 		$pagination->total = $option_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
 
 		$data['pagination'] = $pagination->render();
 
@@ -284,21 +284,21 @@ class ControllerCatalogOption extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url, true)
+			'href' => $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url)
 		);
 
 		if (!isset($this->request->get['option_id'])) {
-			$data['action'] = $this->url->link('catalog/option/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
+			$data['action'] = $this->url->link('catalog/option/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('catalog/option/edit', 'user_token=' . $this->session->data['user_token'] . '&option_id=' . $this->request->get['option_id'] . $url, true);
+			$data['action'] = $this->url->link('catalog/option/edit', 'user_token=' . $this->session->data['user_token'] . '&option_id=' . $this->request->get['option_id'] . $url);
 		}
 
-		$data['cancel'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['cancel'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['option_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$option_info = $this->model_catalog_option->getOption($this->request->get['option_id']);
@@ -406,10 +406,10 @@ class ControllerCatalogOption extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/product_option');
 
 		foreach ($this->request->post['selected'] as $option_id) {
-			$product_total = $this->model_catalog_product->getTotalProductsByOptionId($option_id);
+			$product_total = $this->model_catalog_product_option->getTotalProductsByOptionId($option_id);
 
 			if ($product_total) {
 				$this->error['warning'] = sprintf($this->language->get('error_product'), $product_total);

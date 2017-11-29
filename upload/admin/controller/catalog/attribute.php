@@ -38,7 +38,7 @@ class ControllerCatalogAttribute extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			$this->response->redirect($this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerCatalogAttribute extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			$this->response->redirect($this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerCatalogAttribute extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			$this->response->redirect($this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
 		$this->getList();
@@ -147,16 +147,16 @@ class ControllerCatalogAttribute extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url, true)
+			'href' => $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url)
 		);
 
-		$data['add'] = $this->url->link('catalog/attribute/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
-		$data['delete'] = $this->url->link('catalog/attribute/delete', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['add'] = $this->url->link('catalog/attribute/add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('catalog/attribute/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['attributes'] = array();
 
@@ -177,7 +177,7 @@ class ControllerCatalogAttribute extends Controller {
 				'name'            => $result['name'],
 				'attribute_group' => $result['attribute_group'],
 				'sort_order'      => $result['sort_order'],
-				'edit'            => $this->url->link('catalog/attribute/edit', 'user_token=' . $this->session->data['user_token'] . '&attribute_id=' . $result['attribute_id'] . $url, true)
+				'edit'            => $this->url->link('catalog/attribute/edit', 'user_token=' . $this->session->data['user_token'] . '&attribute_id=' . $result['attribute_id'] . $url)
 			);
 		}
 		
@@ -213,9 +213,9 @@ class ControllerCatalogAttribute extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . '&sort=ad.name' . $url, true);
-		$data['sort_attribute_group'] = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . '&sort=attribute_group' . $url, true);
-		$data['sort_sort_order'] = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . '&sort=a.sort_order' . $url, true);
+		$data['sort_name'] = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . '&sort=ad.name' . $url);
+		$data['sort_attribute_group'] = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . '&sort=attribute_group' . $url);
+		$data['sort_sort_order'] = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . '&sort=a.sort_order' . $url);
 
 		$url = '';
 
@@ -231,7 +231,7 @@ class ControllerCatalogAttribute extends Controller {
 		$pagination->total = $attribute_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
 
 		$data['pagination'] = $pagination->render();
 
@@ -286,21 +286,21 @@ class ControllerCatalogAttribute extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url, true)
+			'href' => $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url)
 		);
 
 		if (!isset($this->request->get['attribute_id'])) {
-			$data['action'] = $this->url->link('catalog/attribute/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
+			$data['action'] = $this->url->link('catalog/attribute/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('catalog/attribute/edit', 'user_token=' . $this->session->data['user_token'] . '&attribute_id=' . $this->request->get['attribute_id'] . $url, true);
+			$data['action'] = $this->url->link('catalog/attribute/edit', 'user_token=' . $this->session->data['user_token'] . '&attribute_id=' . $this->request->get['attribute_id'] . $url);
 		}
 
-		$data['cancel'] = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['cancel'] = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['attribute_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$attribute_info = $this->model_catalog_attribute->getAttribute($this->request->get['attribute_id']);

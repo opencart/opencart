@@ -6,12 +6,12 @@ class ControllerCheckoutConfirm extends Controller {
 		if ($this->cart->hasShipping()) {
 			// Validate if shipping address has been set.
 			if (!isset($this->session->data['shipping_address'])) {
-				$redirect = $this->url->link('checkout/checkout', '', true);
+				$redirect = $this->url->link('checkout/checkout');
 			}
 
 			// Validate if shipping method has been set.
 			if (!isset($this->session->data['shipping_method'])) {
-				$redirect = $this->url->link('checkout/checkout', '', true);
+				$redirect = $this->url->link('checkout/checkout');
 			}
 		} else {
 			unset($this->session->data['shipping_address']);
@@ -21,12 +21,12 @@ class ControllerCheckoutConfirm extends Controller {
 
 		// Validate if payment address has been set.
 		if (!isset($this->session->data['payment_address'])) {
-			$redirect = $this->url->link('checkout/checkout', '', true);
+			$redirect = $this->url->link('checkout/checkout');
 		}
 
 		// Validate if payment method has been set.
 		if (!isset($this->session->data['payment_method'])) {
-			$redirect = $this->url->link('checkout/checkout', '', true);
+			$redirect = $this->url->link('checkout/checkout');
 		}
 
 		// Validate cart has products and has stock.
@@ -107,11 +107,7 @@ class ControllerCheckoutConfirm extends Controller {
 			if ($order_data['store_id']) {
 				$order_data['store_url'] = $this->config->get('config_url');
 			} else {
-				if ($this->request->server['HTTPS']) {
-					$order_data['store_url'] = HTTPS_SERVER;
-				} else {
-					$order_data['store_url'] = HTTP_SERVER;
-				}
+				$order_data['store_url'] = HTTP_SERVER;
 			}
 			
 			$this->load->model('account/customer');

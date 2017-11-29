@@ -10,10 +10,6 @@ html, body {
 h1, h2, h3, h4, h5, h6, p {
 	margin-top: 0;
 }
-
-p {
-	margin-bottom: 40px;
-}
 fieldset {
 	margin-bottom: 10px;
 }
@@ -574,7 +570,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	z-index: 999;
 }
 .alert {
-	overflow: auto;
+	overflow: visible;
 }
 
 /* Fix form-group margin inside the modal */

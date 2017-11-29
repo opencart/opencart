@@ -10,6 +10,7 @@ class ControllerInstallStep3 extends Controller {
 
 			$this->model_install_install->database($this->request->post);
 
+			// Catalog config.php
 			$output  = '<?php' . "\n";
 			$output .= '// HTTP' . "\n";
 			$output .= 'define(\'HTTP_SERVER\', \'' . HTTP_OPENCART . '\');' . "\n\n";
@@ -47,6 +48,7 @@ class ControllerInstallStep3 extends Controller {
 
 			fclose($file);
 
+			// Admin config.php
 			$output  = '<?php' . "\n";
 			$output .= '// HTTP' . "\n";
 			$output .= 'define(\'HTTP_SERVER\', \'' . HTTP_OPENCART . 'admin/\');' . "\n";
@@ -263,9 +265,9 @@ class ControllerInstallStep3 extends Controller {
 
 		if (!$this->request->post['db_port']) {
 			$this->error['db_port'] = $this->language->get('error_db_port');
-		}		
+		}
 
-		if ($this->request->post['db_prefix'] && preg_match('/[^a-z0-9_]/', $this->request->post['db_prefix'])) {
+        if ($this->request->post['db_prefix'] && preg_match('/[^a-z0-9_]/', $this->request->post['db_prefix'])) {
 			$this->error['db_prefix'] = $this->language->get('error_db_prefix');
 		}
 

@@ -17,7 +17,7 @@ class ControllerExtensionModuleEbayListing extends Controller {
 
 			$this->cache->delete('ebay');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module'));
 		}
 
 		if (isset($this->error['warning'])) {
@@ -42,22 +42,22 @@ class ControllerExtensionModuleEbayListing extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true),
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module'),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/module/ebay_listing', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('extension/module/ebay_listing', 'user_token=' . $this->session->data['user_token'])
 		);
 
-		$data['action'] = $this->url->link('extension/module/ebay_listing', 'user_token=' . $this->session->data['user_token'], true);
+		$data['action'] = $this->url->link('extension/module/ebay_listing', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module');
 
 		if (isset($this->request->post['module_ebay_listing_username'])) {
 			$data['module_ebay_listing_username'] = $this->request->post['module_ebay_listing_username'];
@@ -86,7 +86,7 @@ class ControllerExtensionModuleEbayListing extends Controller {
 		}
 
 		if (isset($this->request->post['module_ebay_listing_width'])) {
-			$data['module_ebay_listing_width'] = $this->request->post['module_ebay_listing_width'];
+			$data['module_ebay_listing_width'] = $this->request->post['width'];
 		} elseif ($this->config->has('module_ebay_listing_width')) {
 			$data['module_ebay_listing_width'] = $this->config->get('module_ebay_listing_width');
 		} else {
@@ -103,7 +103,7 @@ class ControllerExtensionModuleEbayListing extends Controller {
 
 		if (isset($this->request->post['module_ebay_listing_sort'])) {
 			$data['module_ebay_listing_sort'] = $this->request->post['module_ebay_listing_sort'];
-		} elseif ($this->config->has('ebay_listing_sort')) {
+		} elseif ($this->config->has('module_ebay_listing_sort')) {
 			$data['module_ebay_listing_sort'] = $this->config->get('module_ebay_listing_sort');
 		} else {
 			$data['module_ebay_listing_sort'] = 'StartTimeNewest';

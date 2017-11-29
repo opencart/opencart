@@ -11,12 +11,12 @@ class ControllerMarketplaceExtension extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -43,7 +43,7 @@ class ControllerMarketplaceExtension extends Controller {
 				$data['categories'][] = array(
 					'code' => $extension,
 					'text' => $this->language->get('extension')->get('heading_title') . ' (' . count($files) .')',
-					'href' => $this->url->link('extension/extension/' . $extension, 'user_token=' . $this->session->data['user_token'], true)
+					'href' => $this->url->link('extension/extension/' . $extension, 'user_token=' . $this->session->data['user_token'])
 				);
 			}			
 		}

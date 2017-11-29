@@ -13,6 +13,9 @@ $_['text_move']        = 'Move';
 $_['text_to']          = 'to';
 $_['text_config']      = 'Edit config.php change';
 
+// Entry
+$_['entry_directory']  = 'Directory';
+
 // Button
 $_['button_move']      = 'Move';
 $_['button_manual']    = 'Manual';

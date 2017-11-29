@@ -273,7 +273,7 @@
                     <div class="input-group"> <span class="input-group-addon" id="profile-theme-icon"><i class="fa fa-lg fa-file-text"></i></span>
                       <select name="profile_theme" id="profile-theme-input" class="form-control">
                         <option value="def">{{ text_select }}</option>
-                        {% for profiles_theme in product.profiles_theme %}
+                        {% for profile in product.profiles_theme %}
                           <option value="{{ profile.ebay_profile_id }}">{{ profile.name }}</option>
                         {% endfor %}
                       </select>
@@ -287,7 +287,7 @@
                   <select name="template" id="template_id" class="form-control">
                     <option value="None">None</option>
                     {% if product.templates is not empty %}
-                      {% for templates in product.templates %}
+                      {% for template in product.templates %}
                         <option value="{{ template.template_id }}">{{ template.name }}</option>
                       {% endfor %}
                     {% endif %}
@@ -364,14 +364,14 @@
                     <tbody>
                       {% set i = 0 %}
                       {% set i_valid = null %}
-                      {% for product_images in product.product_images %}
+                      {% for img in product.product_images %}
                       <tr>
                         <td class="text-center"><img src="{{ img.preview }}" class="img-thumbnail" /></td>
                         <td class="text-center">
                           {% if img.width < 500 and img.height < 500 %}
                             <span class="label label-danger" data-toggle="tooltip" data-original-title="{{ error_ebay_imagesize }}">{{ img.width }} x {{ img.height }}</span>
                           {% else %}
-                            {% if i_valid == null %}{% set i_valid = i %}{% endif %}
+                            {% if i_valid is null %}{% set i_valid = i %}{% endif %}
                             <span class="label label-success" data-toggle="tooltip" data-original-title="{{ text_ebay_imagesize_ok }}">{{ img.width }} x {{ img.height }}</span>
                           {% endif %}
                         </td>
@@ -385,7 +385,7 @@
                         </td>
                         <td class="text-center">
                           {% if img.width >= 500 or img.height >= 500 %}
-                            <input type="radio" name="main_image"{% if i_valid !== null and i == i_valid %} checked{% endif %} value="{{ i }}" id="image-radio-{{ i }}" {% if i != 0 %}disabled="disabled"{% endif %} />
+                            <input type="radio" name="main_image"{% if i_valid is not null and i == i_valid %} checked{% endif %} value="{{ i }}" id="image-radio-{{ i }}" {% if i != 0 %}disabled="disabled"{% endif %} />
                           {% else %}
                             -
                           {% endif %}
@@ -584,7 +584,7 @@
                 <label class="col-sm-2 control-label">{{ entry_payment }}</label>
                 <div class="col-sm-10">
                   {% set paypal = false %}
-                  {% for payments in product.payments %}
+                  {% for payment in product.payments %}
                     {% if payment.ebay_name == 'PayPal' %}
                       {% set paypal = true %}
                     {% else %}
@@ -644,7 +644,7 @@
                 <label class="col-sm-2 control-label">{{ entry_despatch_country }}</label>
                 <div class="col-sm-10">
                   <select name="country" id="country" class="form-control">
-                    {% for countries in setting.countries %}
+                    {% for country in setting.countries %}
                       <option value="{{ country.code }}">{{ country.name }}</option>
                     {% endfor %}
                   </select>
@@ -1047,10 +1047,10 @@
 </div>
   <link href="view/javascript/codemirror/lib/codemirror.css" rel="stylesheet" />
   <link href="view/javascript/codemirror/theme/monokai.css" rel="stylesheet" />
-  <script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script> 
-  <script type="text/javascript" src="view/javascript/codemirror/lib/xml.js"></script> 
-  <script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script> 
-  
+  <script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script>
+  <script type="text/javascript" src="view/javascript/codemirror/lib/xml.js"></script>
+  <script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script>
+
 <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
 <link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
 <script type="text/javascript" src="view/javascript/summernote/summernote-image-attributes.js"></script>

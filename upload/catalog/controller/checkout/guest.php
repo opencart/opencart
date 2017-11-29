@@ -147,7 +147,7 @@ class ControllerCheckoutGuest extends Controller {
 
 		// Validate if customer is logged in.
 		if ($this->customer->isLogged()) {
-			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
+			$json['redirect'] = $this->url->link('checkout/checkout');
 		}
 
 		// Validate cart has products and has stock.
@@ -157,7 +157,7 @@ class ControllerCheckoutGuest extends Controller {
 
 		// Check if guest checkout is available.
 		if (!$this->config->get('config_checkout_guest') || $this->config->get('config_customer_price') || $this->cart->hasDownload()) {
-			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
+			$json['redirect'] = $this->url->link('checkout/checkout');
 		}
 
 		if (!$json) {

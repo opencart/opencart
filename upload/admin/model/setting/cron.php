@@ -14,6 +14,10 @@ class ModelSettingCron extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "cron` WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 
+	public function editCron($cron_id) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `date_modified` = NOW() WHERE cron_id = '" . (int)$cron_id . "'");
+	}
+
 	public function editStatus($cron_id, $status) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `status` = '" . (int)$status . "' WHERE cron_id = '" . (int)$cron_id . "'");
 	}

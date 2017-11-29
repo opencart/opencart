@@ -58,7 +58,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
 
 		// Validate if customer is logged in.
 		if (!$this->customer->isLogged()) {
-			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
+			$json['redirect'] = $this->url->link('checkout/checkout');
 		}
 
 		// Validate cart has products and has stock.

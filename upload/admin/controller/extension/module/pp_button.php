@@ -12,7 +12,7 @@ class ControllerExtensionModulePPButton extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module'));
 		}
 
 		if (isset($this->error['warning'])) {
@@ -25,23 +25,23 @@ class ControllerExtensionModulePPButton extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/module/pp_button', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('extension/module/pp_button', 'user_token=' . $this->session->data['user_token'])
 		);
 
-		$data['action'] = $this->url->link('extension/module/pp_button', 'user_token=' . $this->session->data['user_token'], true);
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true);
+		$data['action'] = $this->url->link('extension/module/pp_button', 'user_token=' . $this->session->data['user_token']);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module');
 
-		$data['layouts'] = $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'], true);
+		$data['layouts'] = $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token']);
 
 		if (isset($this->request->post['module_pp_button_status'])) {
 			$data['module_pp_button_status'] = $this->request->post['module_pp_button_status'];
@@ -68,7 +68,7 @@ class ControllerExtensionModulePPButton extends Controller {
 		$this->load->language('extension/extension/module');
 
 		if (!$this->user->hasPermission('modify', 'extension/extension/module')) {
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'], true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token']));
 		} else {
 			$this->load->model('setting/extension');
 			$this->load->model('user/user_group');
@@ -80,7 +80,7 @@ class ControllerExtensionModulePPButton extends Controller {
 
 			$this->install();
 
-			$this->response->redirect($this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'], true));
+			$this->response->redirect($this->url->link('design/layout', 'user_token=' . $this->session->data['user_token']));
 		}
 	}
 

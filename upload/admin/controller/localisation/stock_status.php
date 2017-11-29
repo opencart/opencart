@@ -38,7 +38,7 @@ class ControllerLocalisationStockStatus extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			$this->response->redirect($this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerLocalisationStockStatus extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			$this->response->redirect($this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerLocalisationStockStatus extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			$this->response->redirect($this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
 		$this->getList();
@@ -147,16 +147,16 @@ class ControllerLocalisationStockStatus extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token'] . $url, true)
+			'href' => $this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token'] . $url)
 		);
 
-		$data['add'] = $this->url->link('localisation/stock_status/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
-		$data['delete'] = $this->url->link('localisation/stock_status/delete', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['add'] = $this->url->link('localisation/stock_status/add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('localisation/stock_status/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['stock_statuses'] = array();
 
@@ -175,7 +175,7 @@ class ControllerLocalisationStockStatus extends Controller {
 			$data['stock_statuses'][] = array(
 				'stock_status_id' => $result['stock_status_id'],
 				'name'            => $result['name'],
-				'edit'            => $this->url->link('localisation/stock_status/edit', 'user_token=' . $this->session->data['user_token'] . '&stock_status_id=' . $result['stock_status_id'] . $url, true)
+				'edit'            => $this->url->link('localisation/stock_status/edit', 'user_token=' . $this->session->data['user_token'] . '&stock_status_id=' . $result['stock_status_id'] . $url)
 			);
 		}
 
@@ -211,7 +211,7 @@ class ControllerLocalisationStockStatus extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url, true);
+		$data['sort_name'] = $this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 
 		$url = '';
 
@@ -227,7 +227,7 @@ class ControllerLocalisationStockStatus extends Controller {
 		$pagination->total = $stock_status_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
 
 		$data['pagination'] = $pagination->render();
 
@@ -276,21 +276,21 @@ class ControllerLocalisationStockStatus extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token'] . $url, true)
+			'href' => $this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token'] . $url)
 		);
 
 		if (!isset($this->request->get['stock_status_id'])) {
-			$data['action'] = $this->url->link('localisation/stock_status/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
+			$data['action'] = $this->url->link('localisation/stock_status/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('localisation/stock_status/edit', 'user_token=' . $this->session->data['user_token'] . '&stock_status_id=' . $this->request->get['stock_status_id'] . $url, true);
+			$data['action'] = $this->url->link('localisation/stock_status/edit', 'user_token=' . $this->session->data['user_token'] . '&stock_status_id=' . $this->request->get['stock_status_id'] . $url);
 		}
 
-		$data['cancel'] = $this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['cancel'] = $this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$this->load->model('localisation/language');
 

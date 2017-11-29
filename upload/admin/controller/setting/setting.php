@@ -12,15 +12,9 @@ class ControllerSettingSetting extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('config', $this->request->post);
 
-			if ($this->config->get('config_currency_auto')) {
-				$this->load->model('localisation/currency');
-
-				$this->model_localisation_currency->refresh();
-			}
-
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'], true));
+			$this->response->redirect($this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']));
 		}
 		
 		if (isset($this->error['warning'])) {
@@ -147,17 +141,17 @@ class ControllerSettingSetting extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_stores'),
-			'href' => $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		if (isset($this->session->data['success'])) {
@@ -168,9 +162,9 @@ class ControllerSettingSetting extends Controller {
 			$data['success'] = '';
 		}
 
-		$data['action'] = $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token'], true);
+		$data['action'] = $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'], true);
+		$data['cancel'] = $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']);
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -198,11 +192,7 @@ class ControllerSettingSetting extends Controller {
 			$data['config_theme'] = $this->config->get('config_theme');
 		}
 
-		if ($this->request->server['HTTPS']) {
-			$data['store_url'] = HTTPS_CATALOG;
-		} else {
-			$data['store_url'] = HTTP_CATALOG;
-		}
+		$data['store_url'] = HTTP_CATALOG;
 
 		$data['themes'] = array();
 
@@ -211,12 +201,14 @@ class ControllerSettingSetting extends Controller {
 		$extensions = $this->model_setting_extension->getInstalled('theme');
 
 		foreach ($extensions as $code) {
-			$this->load->language('extension/theme/' . $code, 'extension');
-			
-			$data['themes'][] = array(
-				'text'  => $this->language->get('extension')->get('heading_title'),
-				'value' => $code
-			);
+			if ($this->config->get('theme_' . $code . '_status')) {
+				$this->load->language('extension/theme/' . $code, 'extension');
+
+				$data['themes'][] = array(
+					'text'  => $this->language->get('extension')->get('heading_title'),
+					'value' => $code
+				);
+			}
 		}
 			
 		if (isset($this->request->post['config_layout_id'])) {
@@ -349,6 +341,29 @@ class ControllerSettingSetting extends Controller {
 			$data['config_currency'] = $this->request->post['config_currency'];
 		} else {
 			$data['config_currency'] = $this->config->get('config_currency');
+		}
+
+		$data['currency_engines'] = array();
+
+		$this->load->model('setting/extension');
+
+		$extensions = $this->model_setting_extension->getInstalled('currency');
+
+		foreach ($extensions as $code) {
+			if ($this->config->get('currency_' . $code . '_status')) {
+				$this->load->language('extension/currency/' . $code, 'extension');
+
+				$data['currency_engines'][] = array(
+					'text'  => $this->language->get('extension')->get('heading_title'),
+					'value' => $code
+				);
+			}
+		}
+
+		if (isset($this->request->post['config_currency_engine'])) {
+			$data['config_currency_engine'] = $this->request->post['config_currency_engine'];
+		} else {
+			$data['config_currency_engine'] = $this->config->get('config_currency_engine');
 		}
 
 		if (isset($this->request->post['config_currency_auto'])) {
@@ -801,12 +816,6 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['config_mail_alert_email'] = $this->config->get('config_mail_alert_email');
 		}
-		
-		if (isset($this->request->post['config_secure'])) {
-			$data['config_secure'] = $this->request->post['config_secure'];
-		} else {
-			$data['config_secure'] = $this->config->get('config_secure');
-		}
 
 		if (isset($this->request->post['config_shared'])) {
 			$data['config_shared'] = $this->request->post['config_shared'];
@@ -1004,12 +1013,6 @@ class ControllerSettingSetting extends Controller {
 	}
 	
 	public function theme() {
-		if ($this->request->server['HTTPS']) {
-			$server = HTTPS_CATALOG;
-		} else {
-			$server = HTTP_CATALOG;
-		}
-		
 		// This is only here for compatibility with old themes.
 		if ($this->request->get['theme'] == 'theme_default') {
 			$theme = $this->config->get('theme_default_directory');
@@ -1018,9 +1021,9 @@ class ControllerSettingSetting extends Controller {
 		}
 		
 		if (is_file(DIR_CATALOG . 'view/theme/' . $theme . '/image/' . $theme . '.png')) {
-			$this->response->setOutput($server . 'catalog/view/theme/' . $theme . '/image/' . $theme . '.png');
+			$this->response->setOutput(HTTP_CATALOG . 'catalog/view/theme/' . $theme . '/image/' . $theme . '.png');
 		} else {
-			$this->response->setOutput($server . 'image/no_image.png');
+			$this->response->setOutput(HTTP_CATALOG . 'image/no_image.png');
 		}
 	}	
 }

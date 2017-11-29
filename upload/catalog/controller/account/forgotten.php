@@ -4,7 +4,7 @@ class ControllerAccountForgotten extends Controller {
 
 	public function index() {
 		if ($this->customer->isLogged()) {
-			$this->response->redirect($this->url->link('account/account', '', true));
+			$this->response->redirect($this->url->link('account/account'));
 		}
 
 		$this->load->language('account/forgotten');
@@ -18,7 +18,7 @@ class ControllerAccountForgotten extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('account/login', '', true));
+			$this->response->redirect($this->url->link('account/login'));
 		}
 
 		$data['breadcrumbs'] = array();
@@ -30,12 +30,12 @@ class ControllerAccountForgotten extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', true)
+			'href' => $this->url->link('account/account')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_forgotten'),
-			'href' => $this->url->link('account/forgotten', '', true)
+			'href' => $this->url->link('account/forgotten')
 		);
 
 		if (isset($this->error['warning'])) {
@@ -44,9 +44,9 @@ class ControllerAccountForgotten extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['action'] = $this->url->link('account/forgotten', '', true);
+		$data['action'] = $this->url->link('account/forgotten');
 
-		$data['back'] = $this->url->link('account/login', '', true);
+		$data['back'] = $this->url->link('account/login');
 
 		if (isset($this->request->post['email'])) {
 			$data['email'] = $this->request->post['email'];

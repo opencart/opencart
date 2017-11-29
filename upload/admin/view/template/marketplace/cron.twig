@@ -24,7 +24,26 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
-    <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_cron }}</div>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-question-circle"></i> {{ text_instruction }}</h3>
+      </div>
+      <div class="panel-body">
+        <p>{{ text_cron_1 }}</p>
+        <p>{{ text_cron_2 }}</p>
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon">
+              {{ entry_cron }}
+            </div>
+            <input type="text" value="wget &quot;{{ cron }}&quot; --read-timeout=5400" id="input-cron" class="form-control"/>
+            <div class="input-group-btn">
+              <button type="button" id="button-copy" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-default"><i class="fa fa-copy"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
@@ -58,9 +77,11 @@
                       <td class="text-left">{{ cron.cycle }}</td>
                       <td class="text-left">{{ cron.action }}</td>
                       <td class="text-left">{{ cron.status }}</td>
-                      <td class="text-right">{{ cron.date_added }}</td>
-                      <td class="text-right">{{ cron.date_modified }}</td>
-                      <td class="text-right">{% if not cron.enabled %}
+                      <td class="text-left">{{ cron.date_added }}</td>
+                      <td class="text-left">{{ cron.date_modified }}</td>
+                      <td class="text-right">
+                        <button type="button" value="{{ cron.cron_id }}" data-toggle="tooltip" data-title="{{ button_run }}" class="btn btn-warning"><i class="fa fa-play"></i></button>
+                        {% if not cron.enabled %}
                           <button type="button" value="{{ cron.cron_id }}" data-toggle="tooltip" data-title="{{ button_enable }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></button>
                         {% else %}
                           <button type="button" value="{{ cron.cron_id }}" data-toggle="tooltip" data-title="{{ button_disable }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
@@ -85,6 +106,41 @@
   </div>
 </div>
 <script type="text/javascript"><!--
+$('#button-copy').on('click', function() {
+	$('#input-cron').select();
+
+	document.execCommand('copy');
+});
+
+$('#form-cron .btn-warning').on('click', function() {
+	var element = this;
+
+	$.ajax({
+		url: 'index.php?route=marketplace/cron/run&user_token={{ user_token }}&cron_id=' + $(element).val(),
+		dataType: 'json',
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(json) {
+			$('.alert-dismissible').remove();
+
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
 $('#form-cron').on('click', '.btn-success', function() {
 	var element = this;
 
@@ -101,11 +157,11 @@ $('#form-cron').on('click', '.btn-success', function() {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#content > .container-fluid').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$(element).replaceWith('<button type="button" value="' + $(element).val() + '" data-toggle="tooltip" data-title="{{ button_disable }}"  class="btn btn-success"><i class="fa fa-minus-circle"></i></button>');
 			}
@@ -132,11 +188,11 @@ $('#form-cron').on('click', '.btn-danger', function() {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#content > .container-fluid').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$(element).replaceWith('<button type="button" value="' + $(element).val() + '" data-toggle="tooltip" data-title="{{ button_enable }}"  class="btn btn-success"><i class="fa fa-plus-circle"></i></button>');
 			}

@@ -2,9 +2,9 @@
 class ControllerAccountRecurring extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/recurring', '', true);
+			$this->session->data['redirect'] = $this->url->link('account/recurring');
 
-			$this->response->redirect($this->url->link('account/login', '', true));
+			$this->response->redirect($this->url->link('account/login'));
 		}
 
 		$this->load->language('account/recurring');
@@ -26,12 +26,12 @@ class ControllerAccountRecurring extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', true)
+			'href' => $this->url->link('account/account')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/recurring', $url, true)
+			'href' => $this->url->link('account/recurring', $url)
 		);
 
 		if (isset($this->request->get['page'])) {
@@ -60,7 +60,7 @@ class ControllerAccountRecurring extends Controller {
 				'product'            => $result['product_name'],
 				'status'             => $status,
 				'date_added'         => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'view'               => $this->url->link('account/recurring/info', 'order_recurring_id=' . $result['order_recurring_id'], true),
+				'view'               => $this->url->link('account/recurring/info', 'order_recurring_id=' . $result['order_recurring_id']),
 			);
 		}
 
@@ -69,11 +69,11 @@ class ControllerAccountRecurring extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = 10;
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->link('account/recurring', 'page={page}', true);
+		$pagination->url = $this->url->link('account/recurring', 'page={page}');
 
 		$data['pagination'] = $pagination->render();
 
-		$data['continue'] = $this->url->link('account/account', '', true);
+		$data['continue'] = $this->url->link('account/account');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -95,9 +95,9 @@ class ControllerAccountRecurring extends Controller {
 		}
 
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/recurring/info', 'order_recurring_id=' . $order_recurring_id, true);
+			$this->session->data['redirect'] = $this->url->link('account/recurring/info', 'order_recurring_id=' . $order_recurring_id);
 
-			$this->response->redirect($this->url->link('account/login', '', true));
+			$this->response->redirect($this->url->link('account/login'));
 		}
 
 		$this->load->model('account/recurring');
@@ -117,22 +117,22 @@ class ControllerAccountRecurring extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/home'),
+				'href' => $this->url->link('common/home')
 			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_account'),
-				'href' => $this->url->link('account/account', '', true),
+				'href' => $this->url->link('account/account')
 			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('account/recurring', $url, true),
+				'href' => $this->url->link('account/recurring', $url)
 			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_recurring'),
-				'href' => $this->url->link('account/recurring/info', 'order_recurring_id=' . $this->request->get['order_recurring_id'] . $url, true),
+				'href' => $this->url->link('account/recurring/info', 'order_recurring_id=' . $this->request->get['order_recurring_id'] . $url)
 			);
 
 			$data['order_recurring_id'] = (int)$this->request->get['order_recurring_id'];
@@ -165,8 +165,8 @@ class ControllerAccountRecurring extends Controller {
 				);
 			}
 
-			$data['order'] = $this->url->link('account/order/info', 'order_id=' . $recurring_info['order_id'], true);
-			$data['product'] = $this->url->link('product/product', 'product_id=' . $recurring_info['product_id'], true);
+			$data['order'] = $this->url->link('account/order/info', 'order_id=' . $recurring_info['order_id']);
+			$data['product'] = $this->url->link('product/product', 'product_id=' . $recurring_info['product_id']);
 
 			$data['recurring'] = $this->load->controller('extension/recurring/' . $recurring_info['payment_code']);
 
@@ -190,20 +190,20 @@ class ControllerAccountRecurring extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_account'),
-				'href' => $this->url->link('account/account', '', true)
+				'href' => $this->url->link('account/account')
 			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('account/recurring', '', true)
+				'href' => $this->url->link('account/recurring')
 			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_recurring'),
-				'href' => $this->url->link('account/recurring/info', 'order_recurring_id=' . $order_recurring_id, true)
+				'href' => $this->url->link('account/recurring/info', 'order_recurring_id=' . $order_recurring_id)
 			);
 
-			$data['continue'] = $this->url->link('account/recurring', '', true);
+			$data['continue'] = $this->url->link('account/recurring');
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');

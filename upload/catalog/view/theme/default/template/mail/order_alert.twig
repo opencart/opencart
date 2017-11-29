@@ -1,34 +1,103 @@
-{{ text_received }}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	</head>
+	<body style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #000000;">
+		<div style="width: 680px;">
 
-{{ text_order_id }} {{ order_id }}
-{{ text_date_added }} {{ date_added }}
-{{ text_order_status }} {{ order_status }}
+			<p style="margin-top: 0px; margin-bottom: 20px;">{{ text_received }}</p>
 
-{{ text_product }}
+			<table style="width: 100%;">
+				<tr>
+					<td>
 
-{% for product in products %}
-{{ product.quantity }}x {{ product.name }} ({{ product.model }}) {{ product.total }}
-{% if option %}
-{% for option in product.option %}
-	- {{ option.name }} {{ option.value }}
-{% endfor %}
-{% endif %}
-{% endfor %} 
-{% if vouchers %}
+						{% if logo is empty %}
+	            <a href="{{ store_url }}">{{ store }}</a>
+	          {% else %}
+	            <a href="{{ store_url }}"><img src="{{ logo }}" alt="{{ store }}" title="{{ store }}" style="margin-left: auto; margin-right: auto;" /></a>
+	          {% endif %}
 
-{% for voucher in vouchers %}
-1x {{ voucher.description }} {{ voucher.amount }}
-{% endfor %} 
-{% endif %}
-{{ text_total }}
+					</td>
+					<td>
+						<table style="width: 100%;">
+							<tr>
+								<td>{{ text_order_id }}</td>
+								<td>{{ order_id }}</td>
+							</tr>
+							<tr>
+								<td>{{ text_date_added }}</td>
+								<td>{{ date_added }}</td>
+							</tr>
+							<tr>
+								<td>{{ text_order_status }}</td>
+								<td>{{ order_status }}</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
 
-{% for total in totals %}
-{{ total.title }}: {{ total.value }}
-{% endfor %} 
-  
-{% if comment %}
-{{ text_comment }}
+			<table style="width: 100%;">
+				<tr>
+					<td colspan="4">
+						{{ text_product }}
+					</td>
+				</tr>
+				{% for product in products %}
+				<tr>
+					<td>{{ product.model }}</td>
+					<td>{{ product.name }}
+						{% if product.option %}<br/>
+							{% for option in product.option %}
+								- {{ option.name }} {{ option.value }}
+							{% endfor %}
+						{% endif %}
+					</td>
+					<td>{{ product.quantity }} </td>
+					<td>{{ product.total }} </td>
+					</td>
+				</tr>
+				{% endfor %}
+			</table>
+			{% if vouchers %}
+			<table style="width: 100%;">
+				{% for voucher in vouchers %}
+				<tr>
+					<td>
+						{{ voucher }}
+					</td>
+				</tr>
+				{% endfor %}
+			</table>
+			{% endif %}
+			<table style="width: 100%;">
+				<tr>
+					<th>
+						{{ text_total }}
+					</th>
+				</tr>
+				{% for total in totals %}
+				<tr>
+					<td>{{ total.title }}</td>
+					<td>{{ total.value }}</td>
+				</tr>
+				{% endfor %}
+			</table>
 
-{{ comment }}
-{% endif %}
+			{% if comment %}
+			<table style="width: 100%;">
+				<tr>
+					<th>{{ text_comment }}</th>
+				</tr>
+				<tr>
+					<td>{{ comment }}</td>
+				</tr>
+			</table>
+			{% endif %}
 
+		</div>
+
+	</body>
+
+</html>

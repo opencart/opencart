@@ -29,7 +29,7 @@ class ControllerExtensionPaymentPaymate extends Controller {
 		$data['regindi_state'] = html_entity_decode($order_info['payment_zone'], ENT_QUOTES, 'UTF-8');
 		$data['regindi_pcode'] = html_entity_decode($order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');
 
-		$data['return'] = $this->url->link('extension/payment/paymate/callback', 'hash=' . md5($order_info['order_id'] . $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) . $order_info['currency_code'] . $this->config->get('payment_paymate_password')), true);
+		$data['return'] = $this->url->link('extension/payment/paymate/callback', 'hash=' . md5($order_info['order_id'] . $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) . $order_info['currency_code'] . $this->config->get('payment_paymate_password')));
 
 		return $this->load->view('extension/payment/paymate', $data);
 	}
@@ -76,7 +76,7 @@ class ControllerExtensionPaymentPaymate extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_checkout'),
-				'href' => $this->url->link('checkout/checkout', '', true)
+				'href' => $this->url->link('checkout/checkout')
 			);
 
 			$data['breadcrumbs'][] = array(

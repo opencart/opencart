@@ -22,7 +22,7 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment'));
 		}
 		
 		if (isset($this->session->data['success'])) {
@@ -61,22 +61,22 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/pilibaba', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('extension/payment/pilibaba', 'user_token=' . $this->session->data['user_token'])
 		);
 
-		$data['action'] = $this->url->link('extension/payment/pilibaba', 'user_token=' . $this->session->data['user_token'], true);
+		$data['action'] = $this->url->link('extension/payment/pilibaba', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
 
 		if (isset($this->request->post['payment_pilibaba_merchant_number'])) {
 			$data['payment_pilibaba_merchant_number'] = $this->request->post['payment_pilibaba_merchant_number'];
@@ -157,7 +157,7 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
 		if ($this->config->get('config_weight_class_id') != '2') {
-			$data['error_weight'] = sprintf($this->language->get('error_weight'), $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token'], true));
+			$data['error_weight'] = sprintf($this->language->get('error_weight'), $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token']));
 		} else {
 			$data['error_weight'] = '';
 		}
@@ -224,7 +224,7 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 
 						$this->session->data['success'] = $this->language->get('text_register_success');
 
-						$json['redirect'] = $this->url->link('extension/payment/pilibaba', 'user_token=' . $this->session->data['user_token'], true);
+						$json['redirect'] = $this->url->link('extension/payment/pilibaba', 'user_token=' . $this->session->data['user_token']);
 					} else {
 						$json['error'] = $response['message'];
 					}
@@ -265,7 +265,7 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 
 				$data['pilibaba_order'] = $order_info;
 
-				$data['barcode'] = $this->url->link('extension/payment/pilibaba/barcode', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $this->request->get['order_id'], true);
+				$data['barcode'] = $this->url->link('extension/payment/pilibaba/barcode', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $this->request->get['order_id']);
 
 				$data['order_id'] = (int)$this->request->get['order_id'];
 

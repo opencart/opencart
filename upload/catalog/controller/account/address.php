@@ -4,9 +4,9 @@ class ControllerAccountAddress extends Controller {
 
 	public function index() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/address', '', true);
+			$this->session->data['redirect'] = $this->url->link('account/address');
 
-			$this->response->redirect($this->url->link('account/login', '', true));
+			$this->response->redirect($this->url->link('account/login'));
 		}
 
 		$this->load->language('account/address');
@@ -20,9 +20,9 @@ class ControllerAccountAddress extends Controller {
 
 	public function add() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/address', '', true);
+			$this->session->data['redirect'] = $this->url->link('account/address');
 
-			$this->response->redirect($this->url->link('account/login', '', true));
+			$this->response->redirect($this->url->link('account/login'));
 		}
 
 		$this->load->language('account/address');
@@ -41,7 +41,7 @@ class ControllerAccountAddress extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_add');
 
-			$this->response->redirect($this->url->link('account/address', '', true));
+			$this->response->redirect($this->url->link('account/address'));
 		}
 
 		$this->getForm();
@@ -49,9 +49,9 @@ class ControllerAccountAddress extends Controller {
 
 	public function edit() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/address', '', true);
+			$this->session->data['redirect'] = $this->url->link('account/address');
 
-			$this->response->redirect($this->url->link('account/login', '', true));
+			$this->response->redirect($this->url->link('account/login'));
 		}
 
 		$this->load->language('account/address');
@@ -86,7 +86,7 @@ class ControllerAccountAddress extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_edit');
 
-			$this->response->redirect($this->url->link('account/address', '', true));
+			$this->response->redirect($this->url->link('account/address'));
 		}
 
 		$this->getForm();
@@ -94,9 +94,9 @@ class ControllerAccountAddress extends Controller {
 
 	public function delete() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/address', '', true);
+			$this->session->data['redirect'] = $this->url->link('account/address');
 
-			$this->response->redirect($this->url->link('account/login', '', true));
+			$this->response->redirect($this->url->link('account/login'));
 		}
 
 		$this->load->language('account/address');
@@ -124,7 +124,7 @@ class ControllerAccountAddress extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_delete');
 
-			$this->response->redirect($this->url->link('account/address', '', true));
+			$this->response->redirect($this->url->link('account/address'));
 		}
 
 		$this->getList();
@@ -138,12 +138,12 @@ class ControllerAccountAddress extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', true)
+			'href' => $this->url->link('account/account')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/address', '', true)
+			'href' => $this->url->link('account/address')
 		);
 
 		if (isset($this->error['warning'])) {
@@ -200,13 +200,13 @@ class ControllerAccountAddress extends Controller {
 			$data['addresses'][] = array(
 				'address_id' => $result['address_id'],
 				'address'    => str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format)))),
-				'update'     => $this->url->link('account/address/edit', 'address_id=' . $result['address_id'], true),
-				'delete'     => $this->url->link('account/address/delete', 'address_id=' . $result['address_id'], true)
+				'update'     => $this->url->link('account/address/edit', 'address_id=' . $result['address_id']),
+				'delete'     => $this->url->link('account/address/delete', 'address_id=' . $result['address_id'])
 			);
 		}
 
-		$data['add'] = $this->url->link('account/address/add', '', true);
-		$data['back'] = $this->url->link('account/account', '', true);
+		$data['add'] = $this->url->link('account/address/add');
+		$data['back'] = $this->url->link('account/account');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -228,23 +228,23 @@ class ControllerAccountAddress extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', true)
+			'href' => $this->url->link('account/account')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/address', '', true)
+			'href' => $this->url->link('account/address')
 		);
 
 		if (!isset($this->request->get['address_id'])) {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_address_add'),
-				'href' => $this->url->link('account/address/add', '', true)
+				'href' => $this->url->link('account/address/add')
 			);
 		} else {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_address_edit'),
-				'href' => $this->url->link('account/address/edit', 'address_id=' . $this->request->get['address_id'], true)
+				'href' => $this->url->link('account/address/edit', 'address_id=' . $this->request->get['address_id'])
 			);
 		}
 
@@ -299,9 +299,9 @@ class ControllerAccountAddress extends Controller {
 		}
 		
 		if (!isset($this->request->get['address_id'])) {
-			$data['action'] = $this->url->link('account/address/add', '', true);
+			$data['action'] = $this->url->link('account/address/add');
 		} else {
-			$data['action'] = $this->url->link('account/address/edit', 'address_id=' . $this->request->get['address_id'], true);
+			$data['action'] = $this->url->link('account/address/edit', 'address_id=' . $this->request->get['address_id']);
 		}
 
 		if (isset($this->request->get['address_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
@@ -413,7 +413,7 @@ class ControllerAccountAddress extends Controller {
 			$data['default'] = false;
 		}
 
-		$data['back'] = $this->url->link('account/address', '', true);
+		$data['back'] = $this->url->link('account/address');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

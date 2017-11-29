@@ -4,11 +4,11 @@ class ControllerCommonForgotten extends Controller {
 
 	public function index() {
 		if ($this->user->isLogged() && isset($this->request->get['user_token']) && ($this->request->get['user_token'] == $this->session->data['user_token'])) {
-			$this->response->redirect($this->url->link('common/dashboard', '', true));
+			$this->response->redirect($this->url->link('common/dashboard'));
 		}
 
 		if (!$this->config->get('config_password')) {
-			$this->response->redirect($this->url->link('common/login', '', true));
+			$this->response->redirect($this->url->link('common/login'));
 		}
 
 		$this->load->language('common/forgotten');
@@ -22,7 +22,7 @@ class ControllerCommonForgotten extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('common/login', '', true));
+			$this->response->redirect($this->url->link('common/login'));
 		}
 
 		if (isset($this->error['warning'])) {
@@ -35,17 +35,17 @@ class ControllerCommonForgotten extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', '', true)
+			'href' => $this->url->link('common/dashboard')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('common/forgotten', 'user_token=' . '', true)
+			'href' => $this->url->link('common/forgotten')
 		);
 
-		$data['action'] = $this->url->link('common/forgotten', '', true);
+		$data['action'] = $this->url->link('common/forgotten');
 
-		$data['cancel'] = $this->url->link('common/login', '', true);
+		$data['cancel'] = $this->url->link('common/login');
 
 		if (isset($this->request->post['email'])) {
 			$data['email'] = $this->request->post['email'];

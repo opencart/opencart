@@ -4,22 +4,22 @@ class ControllerExtensionModuleAccount extends Controller {
 		$this->load->language('extension/module/account');
 
 		$data['logged'] = $this->customer->isLogged();
-		$data['register'] = $this->url->link('account/register', '', true);
-		$data['login'] = $this->url->link('account/login', '', true);
-		$data['logout'] = $this->url->link('account/logout', '', true);
-		$data['forgotten'] = $this->url->link('account/forgotten', '', true);
-		$data['account'] = $this->url->link('account/account', '', true);
-		$data['edit'] = $this->url->link('account/edit', '', true);
-		$data['password'] = $this->url->link('account/password', '', true);
-		$data['address'] = $this->url->link('account/address', '', true);
+		$data['register'] = $this->url->link('account/register');
+		$data['login'] = $this->url->link('account/login');
+		$data['logout'] = $this->url->link('account/logout');
+		$data['forgotten'] = $this->url->link('account/forgotten');
+		$data['account'] = $this->url->link('account/account');
+		$data['edit'] = $this->url->link('account/edit');
+		$data['password'] = $this->url->link('account/password');
+		$data['address'] = $this->url->link('account/address');
 		$data['wishlist'] = $this->url->link('account/wishlist');
-		$data['order'] = $this->url->link('account/order', '', true);
-		$data['download'] = $this->url->link('account/download', '', true);
-		$data['reward'] = $this->url->link('account/reward', '', true);
-		$data['return'] = $this->url->link('account/return', '', true);
-		$data['transaction'] = $this->url->link('account/transaction', '', true);
-		$data['newsletter'] = $this->url->link('account/newsletter', '', true);
-		$data['recurring'] = $this->url->link('account/recurring', '', true);
+		$data['order'] = $this->url->link('account/order');
+		$data['download'] = $this->url->link('account/download');
+		$data['reward'] = $this->url->link('account/reward');
+		$data['return'] = $this->url->link('account/return');
+		$data['transaction'] = $this->url->link('account/transaction');
+		$data['newsletter'] = $this->url->link('account/newsletter');
+		$data['recurring'] = $this->url->link('account/recurring');
 
 		return $this->load->view('extension/module/account', $data);
 	}

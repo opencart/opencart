@@ -2,9 +2,9 @@
 class ControllerAccountTracking extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/tracking', '', true);
+			$this->session->data['redirect'] = $this->url->link('account/tracking');
 
-			$this->response->redirect($this->url->link('account/login', '', true));
+			$this->response->redirect($this->url->link('account/login'));
 		}
 
 		$this->load->model('account/affiliate');
@@ -25,19 +25,19 @@ class ControllerAccountTracking extends Controller {
 	
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_account'),
-				'href' => $this->url->link('account/account', '', true)
+				'href' => $this->url->link('account/account')
 			);
 	
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('account/tracking', '', true)
+				'href' => $this->url->link('account/tracking')
 			);
 	
 			$data['text_description'] = sprintf($this->language->get('text_description'), $this->config->get('config_name'));
 	
 			$data['code'] = $affiliate_info['tracking'];
 	
-			$data['continue'] = $this->url->link('account/account', '', true);
+			$data['continue'] = $this->url->link('account/account');
 	
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');

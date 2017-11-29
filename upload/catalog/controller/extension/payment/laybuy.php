@@ -7,7 +7,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 		$this->load->model('checkout/order');
 
-		$data['action'] = $this->url->link('extension/payment/laybuy/postToLaybuy', '', true);
+		$data['action'] = $this->url->link('extension/payment/laybuy/postToLaybuy');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
@@ -43,8 +43,8 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 				$data['VERSION']      = '0.2';
 				$data['MEMBER']       = $this->config->get('payment_laybuys_membership_id');
-				$data['RETURNURL']    = $this->url->link('extension/payment/laybuy/callback', '', true);
-				$data['CANCELURL']    = $this->url->link('extension/payment/laybuy/cancel', '', true);
+				$data['RETURNURL']    = $this->url->link('extension/payment/laybuy/callback');
+				$data['CANCELURL']    = $this->url->link('extension/payment/laybuy/cancel');
 				$data['AMOUNT']       = round(floatval($order_info['total']), 2, PHP_ROUND_HALF_DOWN);
 				$data['CURRENCY']     = $order_info['currency_code'];
 				$data['INIT']         = (int)$this->request->post['INIT'];
@@ -91,17 +91,17 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 				} else {
 					$this->model_extension_payment_laybuy->log('Failure response. Redirecting to checkout/failure.');
 
-					$this->response->redirect($this->url->link('checkout/failure', '', true));
+					$this->response->redirect($this->url->link('checkout/failure'));
 				}
 			} else {
 				$this->model_extension_payment_laybuy->log('No matching order. Redirecting to checkout/failure.');
 
-				$this->response->redirect($this->url->link('checkout/failure', '', true));
+				$this->response->redirect($this->url->link('checkout/failure'));
 			}
 		} else {
 			$this->model_extension_payment_laybuy->log('No $_POST data. Redirecting to checkout/failure.');
 
-			$this->response->redirect($this->url->link('checkout/failure', '', true));
+			$this->response->redirect($this->url->link('checkout/failure'));
 		}
 	}
 
@@ -139,27 +139,27 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 					$this->model_extension_payment_laybuy->log('Success. Redirecting to checkout/success.');
 
-					$this->response->redirect($this->url->link('checkout/success', '', true));
+					$this->response->redirect($this->url->link('checkout/success'));
 				} else {
 					$this->model_extension_payment_laybuy->log('No matching order. Redirecting to checkout/failure.');
 
-					$this->response->redirect($this->url->link('checkout/failure', '', true));
+					$this->response->redirect($this->url->link('checkout/failure'));
 				}
 			} else {
 				$this->model_extension_payment_laybuy->log('Token does not match. Redirecting to checkout/failure.');
 
-				$this->response->redirect($this->url->link('checkout/failure', '', true));
+				$this->response->redirect($this->url->link('checkout/failure'));
 			}
 		} elseif ($this->request->server['REQUEST_METHOD'] == 'POST' && isset($this->request->post['RESULT']) && $this->request->post['RESULT'] == 'FAILURE') {
 			$this->model_extension_payment_laybuy->log('Failure Response: ' . $this->request->post);
 
 			$this->model_extension_payment_laybuy->log('Redirecting to checkout/failure.');
 
-			$this->response->redirect($this->url->link('checkout/failure', '', true));
+			$this->response->redirect($this->url->link('checkout/failure'));
 		} else {
 			$this->model_extension_payment_laybuy->log('Either no $_POST data or unknown response. Redirecting to checkout/failure.');
 
-			$this->response->redirect($this->url->link('checkout/failure', '', true));
+			$this->response->redirect($this->url->link('checkout/failure'));
 		}
 	}
 
@@ -168,7 +168,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 		$this->model_extension_payment_laybuy->log('Transaction canceled by user. Redirecting to checkout/checkout.');
 
-		$this->response->redirect($this->url->link('checkout/checkout', '', true));
+		$this->response->redirect($this->url->link('checkout/checkout'));
 	}
 
 	public function reviseCallback() {
@@ -287,26 +287,26 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 						$this->model_extension_payment_laybuy->deleteRevisedTransaction($revised_transaction['laybuy_revise_request_id']);
 
-						$this->response->redirect($this->url->link('checkout/success', '', true));
+						$this->response->redirect($this->url->link('checkout/success'));
 					} else {
 						$this->model_extension_payment_laybuy->log('No matching order. Redirecting to checkout/failure.');
 
-						$this->response->redirect($this->url->link('checkout/failure', '', true));
+						$this->response->redirect($this->url->link('checkout/failure'));
 					}
 				} else {
 					$this->model_extension_payment_laybuy->log('Token does not match. Redirecting to checkout/failure.');
 
-					$this->response->redirect($this->url->link('checkout/failure', '', true));
+					$this->response->redirect($this->url->link('checkout/failure'));
 				}
 			} else {
 				$this->model_extension_payment_laybuy->log('No success response');
 
-				$this->response->redirect($this->url->link('checkout/failure', '', true));
+				$this->response->redirect($this->url->link('checkout/failure'));
 			}
 		} else {
 			$this->model_extension_payment_laybuy->log('No $_POST data');
 
-			$this->response->redirect($this->url->link('checkout/failure', '', true));
+			$this->response->redirect($this->url->link('checkout/failure'));
 		}
 	}
 
@@ -315,7 +315,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 		$this->model_extension_payment_laybuy->log('Revise canceled. Redirecting to checkout/checkout.');
 
-		$this->response->redirect($this->url->link('checkout/checkout', '', true));
+		$this->response->redirect($this->url->link('checkout/checkout'));
 	}
 
 	public function deleteOrder($route = '', $output = '', $order_id = 0, $order_status_id = 0) {

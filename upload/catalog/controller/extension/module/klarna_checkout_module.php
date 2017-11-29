@@ -59,7 +59,7 @@ class ControllerExtensionModuleKlarnaCheckoutModule extends Controller {
 			return false;
 		}
 
-		$data['klarna_checkout'] = $this->url->link('extension/payment/klarna_checkout', '', true);
+		$data['klarna_checkout'] = $this->url->link('extension/payment/klarna_checkout');
 
 		return $this->load->view('extension/module/klarna_checkout_module', $data);
 	}

@@ -201,7 +201,25 @@ class ModelUpgrade1010 extends Model {
 			'trigger' => 'admin/model/user/user/editCode/after', 
 			'action'  => 'mail/forgotten'
 		);
-		
+
+		$events[] = array(
+			'code'    => 'admin_currency_add',
+			'trigger' => 'admin/model/currency/addCurrency/after',
+			'action'  => 'event/currency'
+		);
+
+		$events[] = array(
+			'code'    => 'admin_currency_edit',
+			'trigger' => 'admin/model/currency/editCurrency/after',
+			'action'  => 'event/currency'
+		);
+
+		$events[] = array(
+			'code'    => 'admin_setting',
+			'trigger' => 'admin/model/setting/setting/editSetting/after',
+			'action'  => 'event/currency'
+		);
+
 		foreach ($events as $event) {
 			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `code` = '" . $this->db->escape($event['code']) . "'");
 			
@@ -239,8 +257,5 @@ class ModelUpgrade1010 extends Model {
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'payment_free_checkout_order_status_id' WHERE `key` = 'free_checkout_order_status_id'");
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'total_sub_total_sort_order' WHERE `key` = 'sub_total_sort_order'");
-
-		$this->db->query("ALTER TABLE `" . DB_PREFIX . "custom_field` MODIFY `location` VARCHAR(10) NOT NULL");
-		$this->db->query("ALTER TABLE `" . DB_PREFIX . "download` MODIFY `filename` VARCHAR(160) NOT NULL");
 	}
 }

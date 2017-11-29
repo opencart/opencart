@@ -59,10 +59,10 @@ class ControllerExtensionPaymentNochex extends Controller {
 		$data['email_address'] = $order_info['email'];
 		$data['customer_phone_number']= $order_info['telephone'];
 		$data['test'] = $this->config->get('payment_nochex_test');
-		$data['success_url'] = $this->url->link('checkout/success', '', true);
-		$data['cancel_url'] = $this->url->link('checkout/payment', '', true);
-		$data['declined_url'] = $this->url->link('extension/payment/nochex/callback', 'method=decline', true);
-		$data['callback_url'] = $this->url->link('extension/payment/nochex/callback', 'order=' . $this->session->data['order_id'], true);
+		$data['success_url'] = $this->url->link('checkout/success');
+		$data['cancel_url'] = $this->url->link('checkout/payment');
+		$data['declined_url'] = $this->url->link('extension/payment/nochex/callback', 'method=decline');
+		$data['callback_url'] = $this->url->link('extension/payment/nochex/callback', 'order=' . $this->session->data['order_id']);
 
 		return $this->load->view('extension/payment/nochex', $data);
 	}
@@ -120,6 +120,6 @@ class ControllerExtensionPaymentNochex extends Controller {
 
 		// Since it returned, the customer should see success.
 		// It's up to the store owner to manually verify payment.
-		$this->response->redirect($this->url->link('checkout/success', '', true));
+		$this->response->redirect($this->url->link('checkout/success'));
 	}
 }

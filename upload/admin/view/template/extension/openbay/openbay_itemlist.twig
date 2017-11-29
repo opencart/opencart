@@ -236,7 +236,7 @@
                   </td>
                   <td class="text-left">{{ product.status }}</td>
                   <td>
-                    {% for markets in product.markets %}
+                    {% for market in product.markets %}
                       {% if market.status == 1 %}
                         <a href="{{ market.href }}" data-toggle="tooltip" title="{{ market.text }}" class="btn btn-block btn-sm btn-success">{{ market.name }}</a>
                       {% elseif market.status == 2 %}

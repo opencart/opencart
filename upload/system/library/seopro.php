@@ -110,8 +110,11 @@ class SeoPro {
 			$this->cat_tree = $this->cache->get('seopro.cat_tree');
 		}
 
-		if(!$this->cat_tree && !is_array($this->cat_tree)) {
-				
+		$this->cat_tree = [];
+
+		if(!$this->cat_tree || empty($this->cat_tree)) {
+			
+		
 			$this->cat_tree = [];
 			
 			$all_cat_query = $this->db->query("SELECT category_id, parent_id FROM " . DB_PREFIX . "category ORDER BY parent_id");
@@ -133,7 +136,7 @@ class SeoPro {
 				$this->cat_tree[$category_id]['path'] = $path;
 					
 			};
-			
+	
 			if($this->config->get('config_seo_url_cache')){		
 				$this->cache->set('seopro.cat_tree', $this->cat_tree);
 			};
@@ -149,8 +152,8 @@ class SeoPro {
 			$this->keywords = $this->cache->get($cache_keyword);
 			$this->queries = $this->cache->get($cache_queries);
 
-			if((!$this->keywords && !is_array($this->keywords)) || (!$this->queries && !is_array($this->queries))) {
-
+			if((!$this->keywords || empty($this->keywords) || !$this->queries || empty($this->queries))) {
+				
 				$sql = "SELECT * FROM " . DB_PREFIX . "seo_url WHERE 1";
 				$query = $this->db->query($sql);
 				if($query->num_rows) {
@@ -169,8 +172,7 @@ class SeoPro {
 		}
 		
 		//end_keyword_data		
-		
-			
+				
 	}
 	
 	public function detectpostfix() {

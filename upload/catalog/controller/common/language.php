@@ -88,7 +88,6 @@ class ControllerCommonLanguage extends Controller {
 		if (isset($this->request->post['redirect'])) {
 			$redirect = $this->request->post['redirect'];
 			$redirect_data = json_decode(base64_decode($redirect), true);
-			var_dump($redirect_data);
 			extract($redirect_data);
 			if(isset($route)&& isset($url) && isset($protocol)) {
 				$redirect_url = $this->url->link($route, $url, $protocol);

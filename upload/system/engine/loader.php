@@ -120,7 +120,11 @@ final class Loader {
 		if ($result && !$result instanceof Exception) {
 			$output = $result;
 		} else {
-			$template = new Template($this->registry->get('config')->get('template_engine'));
+			if (is_file(DIR_TEMPLATE . $this->registry->get('config')->get('template_directory') . $route . '.tpl')) {
+				$template = new Template('template');
+			} else {
+				$template = new Template('twig');
+			}
 
 			foreach ($data as $key => $value) {
 				$template->set($key, $value);

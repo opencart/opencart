@@ -18,7 +18,7 @@ $_['text_move']          = 'Copying files!';
 $_['text_remove']        = 'Removing unnecessary files';
 $_['text_db']            = 'Modifying database!';
 $_['text_clear']         = 'Clearing temporary files!';
-$_['text_update']        = 'Upgrade instruction';
+$_['text_update']        = 'Upgrade Instructions';
 
 // Column
 $_['column_name']        = 'Extension Name';

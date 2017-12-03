@@ -82,7 +82,7 @@ class ModelUpgrade1000 extends Model {
 				$query = $this->db->query("SHOW INDEXES FROM `" . DB_PREFIX . $table['name'] . "`");
 
 				foreach ($query->rows as $result) {
-					$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP INDEX IF EXISTS `" . $result['Key_name'] . "`");
+					$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP INDEX `" . $result['Key_name'] . "`");
 				}
 
 				// Primary Key

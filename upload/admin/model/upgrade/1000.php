@@ -74,11 +74,21 @@ class ModelUpgrade1000 extends Model {
 				}
 
 				// Remove all primary keys and indexes
+				$keys = array();
+
 				$query = $this->db->query("SHOW INDEXES FROM `" . DB_PREFIX . $table['name'] . "`");
 
 				foreach ($query->rows as $result) {
-					if ($result['Key_name'] != 'PRIMARY') {
-						$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP INDEX `" . $result['Key_name'] . "`");
+					if (!in_array($result['Key_name'], $keys)) {
+						$keys[] = $result['Key_name'];
+					}
+				}
+
+				foreach ($keys as $key) {
+					if ($key == 'PRIMARY') {
+						$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP PRIMARY KEY");
+					} else {
+						$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP INDEX `" . $key . "`");
 					}
 				}
 

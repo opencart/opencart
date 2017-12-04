@@ -2,7 +2,7 @@
 class ControllerUpgradeUpgrade extends Controller {
 	public function index() {
 		$this->load->language('upgrade/upgrade');
-		
+
 		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$data['heading_title'] = $this->language->get('heading_title');

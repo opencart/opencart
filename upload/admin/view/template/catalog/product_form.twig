@@ -388,7 +388,7 @@
                             <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span> <textarea name="product_attribute[{{ attribute_row }}][product_attribute_description][{{ language.language_id }}][text]" rows="5" placeholder="{{ entry_text }}" class="form-control">{{ product_attribute.product_attribute_description[language.language_id] ? product_attribute.product_attribute_description[language.language_id].text }}</textarea>
                             </div>
                           {% endfor %}</td>
-                        <td class="text-right"><button type="button" onclick="$('#attribute-row{{ attribute_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                        <td class="text-left"><button type="button" onclick="$('#attribute-row{{ attribute_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                       </tr>
                       {% set attribute_row = attribute_row + 1 %}
                     {% endfor %}
@@ -396,7 +396,7 @@
                   <tfoot>
                     <tr>
                       <td colspan="2"></td>
-                      <td class="text-right"><button type="button" onclick="addAttribute();" data-toggle="tooltip" title="{{ button_attribute_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                      <td class="text-left"><button type="button" onclick="addAttribute();" data-toggle="tooltip" title="{{ button_attribute_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                     </tr>
                   </tfoot>
                 </table>
@@ -862,7 +862,7 @@ function addAttribute() {
 	html += '<div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span><textarea name="product_attribute[' + attribute_row + '][product_attribute_description][{{ language.language_id }}][text]" rows="5" placeholder="{{ entry_text }}" class="form-control"></textarea></div>';
   {% endfor %}
 	html += '  </td>';
-	html += '  <td class="text-right"><button type="button" onclick="$(\'#attribute-row' + attribute_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#attribute-row' + attribute_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 
 	$('#attribute tbody').append(html);
@@ -974,21 +974,21 @@ var recurring_row = {{ recurring_row }};
 
 function addRecurring() {
 	html = '<tr id="recurring-row' + recurring_row + '">';
-	html += '  <td class="left">';
+	html += '  <td class="text-left">';
 	html += '    <select name="product_recurring[' + recurring_row + '][recurring_id]" class="form-control">';
   {% for recurring in recurrings %}
 	html += '      <option value="{{ recurring.recurring_id }}">{{ recurring.name }}</option>';
   {% endfor %}
 	html += '    </select>';
 	html += '  </td>';
-	html += '  <td class="left">';
+	html += '  <td class="text-left">';
 	html += '    <select name="product_recurring[' + recurring_row + '][customer_group_id]" class="form-control">>';
   {% for customer_group in customer_groups %}
 	html += '      <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>';
   {% endfor %}
 	html += '    <select>';
 	html += '  </td>';
-	html += '  <td class="left">';
+	html += '  <td class="text-left">';
 	html += '    <a onclick="$(\'#recurring-row' + recurring_row + '\').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>';
 	html += '  </td>';
 	html += '</tr>';

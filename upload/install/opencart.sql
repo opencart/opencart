@@ -762,7 +762,7 @@ INSERT INTO `oc_extension` (`extension_id`, `type`, `code`) VALUES
 (39, 'report', 'customer_activity'),
 (40, 'report', 'customer_order'),
 (41, 'report', 'customer_reward'),
-(42, 'currency', 'currency_fixer');
+(42, 'currency', 'fixer');
 
 -----------------------------------------------------------
 

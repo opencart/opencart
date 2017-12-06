@@ -30,6 +30,8 @@ class ControllerExtensionPaymentEway extends Controller {
 
 		$amount = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
 
+		$data['text_testing'] = '';
+
 		if ($this->config->get('payment_eway_test')) {
 			$data['text_testing'] = $this->language->get('text_testing');
 			$data['Endpoint'] = 'Sandbox';

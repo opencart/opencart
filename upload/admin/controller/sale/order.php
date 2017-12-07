@@ -641,6 +641,7 @@ class ControllerSaleOrder extends Controller {
 		$data['custom_fields'] = array();
 
 		$filter_data = array(
+			'filter_status'  => 1,
 			'sort'  => 'cf.sort_order',
 			'order' => 'ASC'
 		);

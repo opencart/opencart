@@ -578,7 +578,8 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	margin: 0;
 }
 /* Fixed Sumernote Button Height */
-.note-toolbar.panel-heading i {
+.note-toolbar.panel-heading i,
+.note-toolbar.panel-heading .note-icon-caret {
 	font-size: 14px;
 }
 /* Filemanager Folder Size */

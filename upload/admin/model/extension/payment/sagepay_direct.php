@@ -76,19 +76,19 @@ class ModelExtensionPaymentSagepayDirect extends Model {
 
 			$void_data = array();
 
-			if ($this->config->get('sagepay_direct_test') == 'live') {
+			if ($this->config->get('payment_sagepay_direct_test') == 'live') {
 				$url = 'https://live.sagepay.com/gateway/service/void.vsp';
 				$void_data['VPSProtocol'] = '3.00';
-			} elseif ($this->config->get('sagepay_direct_test') == 'test') {
+			} elseif ($this->config->get('payment_sagepay_direct_test') == 'test') {
 				$url = 'https://test.sagepay.com/gateway/service/void.vsp';
 				$void_data['VPSProtocol'] = '3.00';
-			} elseif ($this->config->get('sagepay_direct_test') == 'sim') {
+			} elseif ($this->config->get('payment_sagepay_direct_test') == 'sim') {
 				$url = 'https://test.sagepay.com/Simulator/VSPServerGateway.asp?Service=VendorVoidTx';
 				$void_data['VPSProtocol'] = '2.23';
 			}
 
 			$void_data['TxType'] = 'VOID';
-			$void_data['Vendor'] = $this->config->get('sagepay_direct_vendor');
+			$void_data['Vendor'] = $this->config->get('payment_sagepay_direct_vendor');
 			$void_data['VendorTxCode'] = $sagepay_direct_order['VendorTxCode'];
 			$void_data['VPSTxId'] = $sagepay_direct_order['VPSTxId'];
 			$void_data['SecurityKey'] = $sagepay_direct_order['SecurityKey'];
@@ -113,19 +113,19 @@ class ModelExtensionPaymentSagepayDirect extends Model {
 		if (!empty($sagepay_direct_order) && $sagepay_direct_order['release_status'] == 0 && ($total_released + $amount <= $sagepay_direct_order['total'])) {
 			$release_data = array();
 
-			if ($this->config->get('sagepay_direct_test') == 'live') {
+			if ($this->config->get('payment_sagepay_direct_test') == 'live') {
 				$url = 'https://live.sagepay.com/gateway/service/release.vsp';
 				$release_data['VPSProtocol'] = '3.00';
-			} elseif ($this->config->get('sagepay_direct_test') == 'test') {
+			} elseif ($this->config->get('payment_sagepay_direct_test') == 'test') {
 				$url = 'https://test.sagepay.com/gateway/service/release.vsp';
 				$release_data['VPSProtocol'] = '3.00';
-			} elseif ($this->config->get('sagepay_direct_test') == 'sim') {
+			} elseif ($this->config->get('payment_sagepay_direct_test') == 'sim') {
 				$url = 'https://test.sagepay.com/Simulator/VSPServerGateway.asp?Service=VendorReleaseTx';
 				$release_data['VPSProtocol'] = '2.23';
 			}
 
 			$release_data['TxType'] = 'RELEASE';
-			$release_data['Vendor'] = $this->config->get('sagepay_direct_vendor');
+			$release_data['Vendor'] = $this->config->get('payment_sagepay_direct_vendor');
 			$release_data['VendorTxCode'] = $sagepay_direct_order['VendorTxCode'];
 			$release_data['VPSTxId'] = $sagepay_direct_order['VPSTxId'];
 			$release_data['SecurityKey'] = $sagepay_direct_order['SecurityKey'];
@@ -151,19 +151,19 @@ class ModelExtensionPaymentSagepayDirect extends Model {
 
 			$refund_data = array();
 
-			if ($this->config->get('sagepay_direct_test') == 'live') {
+			if ($this->config->get('payment_sagepay_direct_test') == 'live') {
 				$url = 'https://live.sagepay.com/gateway/service/refund.vsp';
 				$refund_data['VPSProtocol'] = '3.00';
-			} elseif ($this->config->get('sagepay_direct_test') == 'test') {
+			} elseif ($this->config->get('payment_sagepay_direct_test') == 'test') {
 				$url = 'https://test.sagepay.com/gateway/service/refund.vsp';
 				$refund_data['VPSProtocol'] = '3.00';
-			} elseif ($this->config->get('sagepay_direct_test') == 'sim') {
+			} elseif ($this->config->get('payment_sagepay_direct_test') == 'sim') {
 				$url = 'https://test.sagepay.com/Simulator/VSPServerGateway.asp?Service=VendorRefundTx';
 				$refund_data['VPSProtocol'] = '2.23';
 			}
 
 			$refund_data['TxType'] = 'REFUND';
-			$refund_data['Vendor'] = $this->config->get('sagepay_direct_vendor');
+			$refund_data['Vendor'] = $this->config->get('payment_sagepay_direct_vendor');
 			$refund_data['VendorTxCode'] = $sagepay_direct_order['sagepay_direct_order_id'] . rand();
 			$refund_data['Amount'] = $amount;
 			$refund_data['Currency'] = $sagepay_direct_order['currency_code'];
@@ -257,7 +257,7 @@ class ModelExtensionPaymentSagepayDirect extends Model {
 	}
 
 	public function logger($title, $data) {
-		if ($this->config->get('sagepay_direct_debug')) {
+		if ($this->config->get('payment_sagepay_direct_debug')) {
 			$log = new Log('sagepay_direct.log');
 			$log->write($title . ': ' . print_r($data, 1));
 		}

@@ -19,7 +19,7 @@ class ControllerCheckoutFailure extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_checkout'),
-			'href' => $this->url->link('checkout/checkout', '', true)
+			'href' => $this->url->link('checkout/checkout')
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -27,11 +27,7 @@ class ControllerCheckoutFailure extends Controller {
 			'href' => $this->url->link('checkout/failure')
 		);
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
 		$data['text_message'] = sprintf($this->language->get('text_message'), $this->url->link('information/contact'));
-
-		$data['button_continue'] = $this->language->get('button_continue');
 
 		$data['continue'] = $this->url->link('common/home');
 

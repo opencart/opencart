@@ -41,13 +41,13 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 
 			$requestblock_xml = new SimpleXMLElement('<requestblock></requestblock>');
 			$requestblock_xml->addAttribute('version', '3.67');
-			$requestblock_xml->addChild('alias', $this->config->get('securetrading_ws_username'));
+			$requestblock_xml->addChild('alias', $this->config->get('payment_securetrading_ws_username'));
 
 			$request_node = $requestblock_xml->addChild('request');
 			$request_node->addAttribute('type', 'TRANSACTIONUPDATE');
 
 			$filter_node = $request_node->addChild('filter');
-			$filter_node->addChild('sitereference', $this->config->get('securetrading_ws_site_reference'));
+			$filter_node->addChild('sitereference', $this->config->get('payment_securetrading_ws_site_reference'));
 			$filter_node->addChild('transactionreference', $securetrading_ws_order['transaction_reference']);
 
 			$request_node->addChild('updates')->addChild('settlement')->addChild('settlestatus', 3);
@@ -70,13 +70,13 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 
 			$requestblock_xml = new SimpleXMLElement('<requestblock></requestblock>');
 			$requestblock_xml->addAttribute('version', '3.67');
-			$requestblock_xml->addChild('alias', $this->config->get('securetrading_ws_username'));
+			$requestblock_xml->addChild('alias', $this->config->get('payment_securetrading_ws_username'));
 
 			$request_node = $requestblock_xml->addChild('request');
 			$request_node->addAttribute('type', 'TRANSACTIONUPDATE');
 
 			$filter_node = $request_node->addChild('filter');
-			$filter_node->addChild('sitereference', $this->config->get('securetrading_ws_site_reference'));
+			$filter_node->addChild('sitereference', $this->config->get('payment_securetrading_ws_site_reference'));
 			$filter_node->addChild('transactionreference', $securetrading_ws_order['transaction_reference']);
 
 			$settlement_node = $request_node->addChild('updates')->addChild('settlement');
@@ -104,7 +104,7 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 
 			$requestblock_xml = new SimpleXMLElement('<requestblock></requestblock>');
 			$requestblock_xml->addAttribute('version', '3.67');
-			$requestblock_xml->addChild('alias', $this->config->get('securetrading_ws_username'));
+			$requestblock_xml->addChild('alias', $this->config->get('payment_securetrading_ws_username'));
 
 			$request_node = $requestblock_xml->addChild('request');
 			$request_node->addAttribute('type', 'REFUND');
@@ -114,7 +114,7 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 			$operation_node = $request_node->addChild('operation');
 			$operation_node->addChild('accounttypedescription', 'ECOM');
 			$operation_node->addChild('parenttransactionreference', $securetrading_ws_order['transaction_reference']);
-			$operation_node->addChild('sitereference', $this->config->get('securetrading_ws_site_reference'));
+			$operation_node->addChild('sitereference', $this->config->get('payment_securetrading_ws_site_reference'));
 
 			$billing_node = $request_node->addChild('billing');
 			$billing_node->addAttribute('currencycode', $securetrading_ws_order['currency_code']);
@@ -173,7 +173,7 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 		$ch = curl_init();
 
 		$post_data = array();
-		$post_data['sitereferences'] = $this->config->get('securetrading_ws_site_reference');
+		$post_data['sitereferences'] = $this->config->get('payment_securetrading_ws_site_reference');
 		$post_data['startdate'] = $data['date_from'];
 		$post_data['enddate'] = $data['date_to'];
 		$post_data['accounttypedescriptions'] = 'ECOM';
@@ -269,7 +269,7 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 			CURLOPT_TIMEOUT => 15,
 			CURLOPT_HTTPHEADER => array(
 				'User-Agent: OpenCart - Secure Trading WS',
-				'Authorization: Basic ' . base64_encode($this->config->get('securetrading_ws_csv_username') . ':' . $this->config->get('securetrading_ws_csv_password')),
+				'Authorization: Basic ' . base64_encode($this->config->get('payment_securetrading_ws_csv_username') . ':' . $this->config->get('payment_securetrading_ws_csv_password')),
 			),
 			CURLOPT_POSTFIELDS => $this->encodePost($post_data),
 		);
@@ -326,7 +326,7 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 			CURLOPT_HTTPHEADER => array(
 				'User-Agent: OpenCart - Secure Trading WS',
 				'Content-Length: ' . strlen($data),
-				'Authorization: Basic ' . base64_encode($this->config->get('securetrading_ws_username') . ':' . $this->config->get('securetrading_ws_password')),
+				'Authorization: Basic ' . base64_encode($this->config->get('payment_securetrading_ws_username') . ':' . $this->config->get('payment_securetrading_ws_password')),
 			),
 			CURLOPT_POSTFIELDS => $data,
 		);

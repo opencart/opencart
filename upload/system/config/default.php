@@ -1,26 +1,29 @@
 <?php
 // Site
-$_['site_base']            = '';
+$_['site_url']             = '';
 $_['site_ssl']             = false;
 
 // Url
 $_['url_autostart']        = true;
 
 // Language
-$_['language_default']     = 'en-gb';
+$_['language_directory']   = 'en-gb';
 $_['language_autoload']    = array('en-gb');
 
+// Date
+$_['date_timezone']        = 'UTC';
+
 // Database
-$_['db_autostart']         = false;
-$_['db_type']              = 'mysqli'; // mpdo, mssql, mysql, mysqli or postgre
+$_['db_engine']            = 'mysqli'; // mpdo, mssql, mysql, mysqli or postgre
 $_['db_hostname']          = 'localhost';
 $_['db_username']          = 'root';
 $_['db_password']          = '';
 $_['db_database']          = '';
 $_['db_port']              = 3306;
+$_['db_autostart']         = false;
 
 // Mail
-$_['mail_protocol']        = 'mail'; // mail or smtp
+$_['mail_engine']          = 'mail'; // mail or smtp
 $_['mail_from']            = ''; // Your E-Mail
 $_['mail_sender']          = ''; // Your name or company name
 $_['mail_reply_to']        = ''; // Reply to E-Mail
@@ -33,18 +36,21 @@ $_['mail_verp']            = false;
 $_['mail_parameter']       = '';
 
 // Cache
-$_['cache_type']           = 'file'; // apc, file or mem
+$_['cache_engine']         = 'file'; // apc, file, mem or memcached
 $_['cache_expire']         = 3600;
 
 // Session
+$_['session_engine']       = 'db';
 $_['session_autostart']    = true;
-$_['session_name']         = 'PHPSESSID';
+$_['session_name']         = 'OCSESSID';
 
 // Template
-$_['template_type']        = 'php';
+$_['template_engine']      = 'twig';
+$_['template_directory']   = '';
+$_['template_cache']       = false;
 
 // Error
-$_['error_display']        = false;
+$_['error_display']        = true;
 $_['error_log']            = true;
 $_['error_filename']       = 'error.log';
 
@@ -67,3 +73,4 @@ $_['action_router']        = 'startup/router';
 $_['action_error']         = 'error/not_found';
 $_['action_pre_action']    = array();
 $_['action_event']         = array();
+$_['action_cron']          = array();

@@ -1,0 +1,125 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right"> <a href="{{ link_overview }}" data-toggle="tooltip" title="{{ button_back }}" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if not user_plan %}
+    <div class="row">
+      <p>{{ text_register_invite }}</p>
+      <p><a href="{{ link_register }}" class="btn btn-primary" target="_blank">{{ button_register }}</a></p>
+    </div>
+    {% else %}
+    <div class="row">
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h1 class="panel-title"><i class="fa fa-user"></i> {{ text_current_plan }}</h1>
+          </div>
+          <div class="panel-body">
+            <table class="table table-bordered table-hover">
+              <tbody>
+                <tr>
+                  <td class="text-right"><b>{{ text_merchantid }}:</b></td>
+                  <td class="text-left">{{ user_plan.merchant_id }} [ <a href="{{ link_change_seller }}" target="_blank">{{ text_change_merchantid }}</a> ]</td>
+                </tr>
+                <tr>
+                  <td class="text-right"><b>{{ text_account_status }}:</b></td>
+                  <td class="text-left">{{ user_plan.user_status }}</td>
+                </tr>
+                <tr>
+                  <td class="text-right"><b>{{ text_name }}:</b></td>
+                  <td class="text-left">{{ user_plan.title }}</td>
+                </tr>
+                <tr>
+                  <td class="text-right"><b>{{ text_description }}:</b></td>
+                  <td class="text-left">{{ user_plan.description }}</td>
+                </tr>
+                <tr>
+                  <td class="text-right"><b>{{ text_order_frequency }}:</b></td>
+                  <td class="text-left">{{ user_plan.order_frequency }}</td>
+                </tr>
+                <tr>
+                  <td class="text-right"><b>{{ text_product_listings }}:</b></td>
+                  <td class="text-left">{{ user_plan.product_listings }}</td>
+                </tr>
+                <tr>
+                  <td class="text-right"><b>{{ text_listings_remaining }}:</b></td>
+                  <td class="text-left">{{ user_plan.listings_remain }}</td>
+                </tr>
+                <tr>
+                  <td class="text-right"><b>{{ text_listings_reserved }}:</b></td>
+                  <td class="text-left">{{ user_plan.listings_reserved }}</td>
+                </tr>
+                <tr>
+                  <td class="text-right"><b>{{ text_bulk_listing }}:</b></td>
+                  <td class="text-left">
+                    {% if user_plan.bulk_listing %}
+                    {{ text_allowed }}
+                    {% else %}
+                    {{ text_not_allowed }}
+                    {% endif %}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-right"><b>{{ text_price }}:</b></td>
+                  <td class="text-left">&pound;{{ user_plan.price }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h1 class="panel-title"><i class="fa fa-list"></i> {{ text_available_plans }}</h1>
+          </div>
+          <div class="panel-body">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <td class="text-right">{{ column_name }}</td>
+                  <td class="text-left">{{ column_description }}</td>
+                  <td class="text-left">{{ column_order_frequency }}</td>
+                  <td class="text-left">{{ column_product_listings }}</td>
+                  <td class="text-left">{{ column_bulk_listing }}</td>
+                  <td class="text-left">{{ column_price }}</td>
+                </tr>
+              </thead>
+              <tbody>
+                {% for plan in plans %}
+                <tr>
+                  <td class="text-right">{{ plan.title }}</td>
+                  <td class="text-left">{{ plan.description }}</td>
+                  <td class="text-left">{{ plan.order_frequency }}</td>
+                  <td class="text-left">{{ plan.product_listings }}</td>
+                  <td class="text-left">{% if plan.bulk_listing %}
+                    {{ text_allowed }}
+                    {% else %}
+                    {{ text_not_allowed }}
+                    {% endif %}</td>
+                  <td class="text-left">&pound;{{ plan.price }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            {% if link_change_plan %}
+            <div class="pull-right"> <a href="{{ link_change_plan }}" class="btn btn-primary" target="_blank"><i class="fa fa-arrow-right fa-lg"></i> {{ button_change_plan }}</a> </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{{ footer }}

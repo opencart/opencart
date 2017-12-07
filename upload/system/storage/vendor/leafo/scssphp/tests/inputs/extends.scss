@@ -1,0 +1,184 @@
+
+error, other {
+  border: 1px #f00;
+  background-color: #fdd;
+}
+
+pre, span {
+    seriousError {
+        @extend error;
+        font-size: 20px;
+    }
+}
+
+hello {
+    @extend other;
+    color: green;
+    div {
+        margin: 10px;
+    }
+}
+
+.cool {
+    color: red;
+}
+
+.blue {
+    color: purple;
+}
+
+.me {
+    @extend .cool, .blue;
+}
+
+.hoverlink { @extend a:hover }
+a:hover { text-decoration: underline }
+
+
+// partial matching and selector merging:
+
+div.hello.world.hmm {
+    color: blue;
+}
+
+pre, code  {
+    .okay.span {
+        @extend .hello;
+    }
+}
+
+// multiple matches per selector
+.xxxxx .xxxxx .xxxxx {
+    color: green;
+}
+
+code {
+    @extend .xxxxx;
+    color: red;
+}
+
+
+// chained 
+
+.alpha {
+    color: red;
+}
+
+.beta {
+    @extend .alpha;
+    color: white;
+}
+
+.gama {
+    @extend .beta;
+    color: blue;
+}
+
+// merging selector sequences
+
+#admin .tabbar a {font-weight: bold}
+#demo .overview .fakelink {@extend a}
+
+a1 b1 c1 d1 { color: red; }
+x1 y1 z1 w1 { @extend a1; }
+
+a2 b2 c2 d2 { color: red; }
+x2 y2 z2 w2 { @extend b2; }
+
+
+a3 b3 c3 d3 { color: red; }
+x3 y3 z3 w3 { @extend c3; }
+
+
+a4 b4 c4 d4 { color: red; }
+x4 y4 z4 w4 { @extend d4; }
+
+// removing common prefix
+
+#butt .yeah .okay { font-weight: bold }
+#butt .umm .sure { @extend .okay }
+
+a9 b9 s9 t9 v9 { color: red; }
+
+a9 b9 x9 y9 z9 {
+    @extend v9;
+}
+
+// extends & media
+
+@media print {
+    horse {
+        color: blue;
+    }
+}
+
+man {
+    color: red;
+    @extend horse;
+}
+
+
+// result == match
+
+wassup {
+    color: blue;
+    @extend wassup;
+}
+
+.foo {
+    .wassup {
+        @extend .wassup;
+        color: blue;
+    }
+}
+
+// multi-extend
+
+#something {
+    color: red;
+}
+
+.x {
+    @extend #something;
+}
+
+.y {
+    @extend #something;
+}
+
+// twitter-sass-bootstrap infinite loop
+
+.nav-tabs {
+  &.nav-justified {
+    @extend .nav-justified;
+  }
+}
+.nav-justified {
+  text-align: justify;
+}
+
+// multi-extend with nesting
+
+.btn:hover,
+.btn:active,
+.btn.active,
+.btn.disabled,
+.btn[disabled] {
+  color: red;
+}
+.edit .actions {
+  button {
+    float: right;
+    @extend .btn;
+  }
+}  
+.edit {
+  .new {
+   .actions {
+      padding: 0;
+   }
+   .actions button {
+      @extend .btn;
+   }
+ }
+}

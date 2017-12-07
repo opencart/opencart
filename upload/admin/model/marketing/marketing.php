@@ -1,13 +1,13 @@
 <?php
 class ModelMarketingMarketing extends Model {
 	public function addMarketing($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "marketing SET name = '" . $this->db->escape($data['name']) . "', description = '" . $this->db->escape($data['description']) . "', code = '" . $this->db->escape($data['code']) . "', date_added = NOW()");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "marketing SET name = '" . $this->db->escape((string)$data['name']) . "', description = '" . $this->db->escape((string)$data['description']) . "', code = '" . $this->db->escape((string)$data['code']) . "', date_added = NOW()");
 
 		return $this->db->getLastId();
 	}
 
 	public function editMarketing($marketing_id, $data) {
-		$this->db->query("UPDATE " . DB_PREFIX . "marketing SET name = '" . $this->db->escape($data['name']) . "', description = '" . $this->db->escape($data['description']) . "', code = '" . $this->db->escape($data['code']) . "' WHERE marketing_id = '" . (int)$marketing_id . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "marketing SET name = '" . $this->db->escape((string)$data['name']) . "', description = '" . $this->db->escape((string)$data['description']) . "', code = '" . $this->db->escape((string)$data['code']) . "' WHERE marketing_id = '" . (int)$marketing_id . "'");
 	}
 
 	public function deleteMarketing($marketing_id) {
@@ -40,15 +40,15 @@ class ModelMarketingMarketing extends Model {
 		$implode = array();
 
 		if (!empty($data['filter_name'])) {
-			$implode[] = "m.name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
+			$implode[] = "m.name LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
 		}
 
 		if (!empty($data['filter_code'])) {
-			$implode[] = "m.code = '" . $this->db->escape($data['filter_code']) . "'";
+			$implode[] = "m.code = '" . $this->db->escape((string)$data['filter_code']) . "'";
 		}
 
 		if (!empty($data['filter_date_added'])) {
-			$implode[] = "DATE(m.date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
+			$implode[] = "DATE(m.date_added) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
 		}
 
 		if ($implode) {
@@ -96,15 +96,15 @@ class ModelMarketingMarketing extends Model {
 		$implode = array();
 
 		if (!empty($data['filter_name'])) {
-			$implode[] = "name LIKE '" . $this->db->escape($data['filter_name']) . "'";
+			$implode[] = "name LIKE '" . $this->db->escape((string)$data['filter_name']) . "'";
 		}
 
 		if (!empty($data['filter_code'])) {
-			$implode[] = "code = '" . $this->db->escape($data['filter_code']) . "'";
+			$implode[] = "code = '" . $this->db->escape((string)$data['filter_code']) . "'";
 		}
 
 		if (!empty($data['filter_date_added'])) {
-			$implode[] = "DATE(date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
+			$implode[] = "DATE(date_added) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
 		}
 
 		if ($implode) {
@@ -112,6 +112,26 @@ class ModelMarketingMarketing extends Model {
 		}
 
 		$query = $this->db->query($sql);
+
+		return $query->row['total'];
+	}
+
+	public function getReports($marketing_id, $start = 0, $limit = 10) {
+		if ($start < 0) {
+			$start = 0;
+		}
+
+		if ($limit < 1) {
+			$limit = 10;
+		}
+
+		$query = $this->db->query("SELECT ip, store_id, country, date_added FROM " . DB_PREFIX . "marketing_report WHERE marketing_id = '" . (int)$marketing_id . "' ORDER BY date_added ASC LIMIT " . (int)$start . "," . (int)$limit);
+
+		return $query->rows;
+	}
+
+	public function getTotalReports($marketing_id) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "marketing_report WHERE marketing_id = '" . (int)$marketing_id . "'");
 
 		return $query->row['total'];
 	}

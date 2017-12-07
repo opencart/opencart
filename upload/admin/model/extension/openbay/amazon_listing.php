@@ -100,7 +100,7 @@ class ModelExtensionOpenBayAmazonListing extends Model {
 			'start_selling' => $data['start_selling'],
 			'restock_date' => $data['restock_date'],
 			'marketplace' => $data['marketplace'],
-			'response_url' => HTTPS_CATALOG . 'index.php?route=extension/openbay/amazon/listing',
+			'response_url' => HTTP_CATALOG . 'index.php?route=extension/openbay/amazon/listing',
 			'product_id' => $data['product_id'],
 		);
 
@@ -121,7 +121,7 @@ class ModelExtensionOpenBayAmazonListing extends Model {
 				REPLACE INTO `" . DB_PREFIX . "amazon_product`
 				SET `product_id` = " . (int)$data['product_id'] . ",
 					`status` = 'uploaded',
-					`marketplaces` = '" . $this->db->escape($data['marketplace']) . "',
+					`marketplaces` = '" . $this->db->escape((string)$data['marketplace']) . "',
 					`version` = 3,
 					`var` = ''
 				");
@@ -145,7 +145,7 @@ class ModelExtensionOpenBayAmazonListing extends Model {
 
 		$request_data = array(
 			'search' => $search_data,
-			'response_url' => HTTPS_CATALOG . 'index.php?route=extension/openbay/amazon/search'
+			'response_url' => HTTP_CATALOG . 'index.php?route=extension/openbay/amazon/search'
 		);
 
 		$this->openbay->amazon->call('productv3/bulkSearch', $request_data);
@@ -199,7 +199,7 @@ class ModelExtensionOpenBayAmazonListing extends Model {
 					'start_selling' => (isset($data['start_selling']) ? $data['start_selling'] : ''),
 					'restock_date' => '',
 					'marketplace' => $data['marketplace'],
-					'response_url' => HTTPS_CATALOG . 'index.php?route=extension/openbay/amazon/listing',
+					'response_url' => HTTP_CATALOG . 'index.php?route=extension/openbay/amazon/listing',
 					'product_id' => $product['product_id'],
 				);
 			}
@@ -216,7 +216,7 @@ class ModelExtensionOpenBayAmazonListing extends Model {
 						REPLACE INTO `" . DB_PREFIX . "amazon_product`
 						SET `product_id` = " . (int)$product['product_id'] . ",
 							`status` = 'uploaded',
-							`marketplaces` = '" . $this->db->escape($data['marketplace']) . "',
+							`marketplaces` = '" . $this->db->escape((string)$data['marketplace']) . "',
 							`version` = 3,
 							`var` = ''
 					");

@@ -16,7 +16,7 @@ class ModelExtensionPaymentPilibaba extends Model {
 				'code'			=> 'pilibaba',
 				'title'			=> $this->language->get('text_title'),
 				'terms'			=> '',
-				'sort_order'	=> $this->config->get('pilibaba_sort_order')
+				'sort_order'	=> $this->config->get('payment_pilibaba_sort_order')
 			);
 		}
 
@@ -38,15 +38,15 @@ class ModelExtensionPaymentPilibaba extends Model {
 	}
 
 	public function getConsumerInfo($order_id) {
-		$sign_msg = strtoupper(md5($this->config->get('pilibaba_merchant_number') . $order_id . 'MD5' . $this->config->get('pilibaba_secret_key')));
+		$sign_msg = strtoupper(md5($this->config->get('payment_pilibaba_merchant_number') . $order_id . 'MD5' . $this->config->get('payment_pilibaba_secret_key')));
 
-		if ($this->config->get('pilibaba_environment') == 'live') {
+		if ($this->config->get('payment_pilibaba_environment') == 'live') {
 			$url = 'https://www.pilibaba.com/pilipay/consumerInfo';
 		} else {
 			$url = 'http://pre.pilibaba.com/pilipay/consumerInfo';
 		}
 
-		$url .= '?merchantNo=' . $this->config->get('pilibaba_merchant_number') . '&orderNo=' . $order_id . '&signType=' . 'MD5' . '&signMsg=' . $sign_msg;
+		$url .= '?merchantNo=' . $this->config->get('payment_pilibaba_merchant_number') . '&orderNo=' . $order_id . '&signType=' . 'MD5' . '&signMsg=' . $sign_msg;
 
 		$this->log('URL: ' . $url);
 
@@ -75,11 +75,11 @@ class ModelExtensionPaymentPilibaba extends Model {
 
 		$data['firstname'] = implode(' ', $parts);
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `firstname` = '" . $this->db->escape($data['firstname']) . "', `lastname` = '" . $this->db->escape($data['lastname']) . "', `email` = '" . $this->db->escape($data['email']) . "', `telephone` = '" . $this->db->escape($data['mobile']) . "', `payment_firstname` = '" . $this->db->escape($data['firstname']) . "', `payment_lastname` = '" . $this->db->escape($data['lastname']) . "', `payment_address_1` = '" . $this->db->escape($data['address']) . "', `payment_city` = '" . $this->db->escape($data['city']) . "', `payment_postcode` = '" . $this->db->escape($data['zipcode']) . "', `payment_country` = '" . $this->db->escape($data['country']) . "', `payment_zone` = '" . $this->db->escape($data['district']) . "', `shipping_firstname` = '" . $this->db->escape($data['firstname']) . "', `shipping_lastname` = '" . $this->db->escape($data['lastname']) . "', `shipping_address_1` = '" . $this->db->escape($data['address']) . "', `shipping_city` = '" . $this->db->escape($data['city']) . "', `shipping_postcode` = '" . $this->db->escape($data['zipcode']) . "', `shipping_country` = '" . $this->db->escape($data['country']) . "', `shipping_zone` = '" . $this->db->escape($data['district']) . "', `date_modified` = NOW() WHERE `order_id` = '" . (int)$order_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `firstname` = '" . $this->db->escape((string)$data['firstname']) . "', `lastname` = '" . $this->db->escape((string)$data['lastname']) . "', `email` = '" . $this->db->escape((string)$data['email']) . "', `telephone` = '" . $this->db->escape((string)$data['mobile']) . "', `payment_firstname` = '" . $this->db->escape((string)$data['firstname']) . "', `payment_lastname` = '" . $this->db->escape((string)$data['lastname']) . "', `payment_address_1` = '" . $this->db->escape((string)$data['address']) . "', `payment_city` = '" . $this->db->escape((string)$data['city']) . "', `payment_postcode` = '" . $this->db->escape((string)$data['zipcode']) . "', `payment_country` = '" . $this->db->escape((string)$data['country']) . "', `payment_zone` = '" . $this->db->escape((string)$data['district']) . "', `shipping_firstname` = '" . $this->db->escape((string)$data['firstname']) . "', `shipping_lastname` = '" . $this->db->escape((string)$data['lastname']) . "', `shipping_address_1` = '" . $this->db->escape((string)$data['address']) . "', `shipping_city` = '" . $this->db->escape((string)$data['city']) . "', `shipping_postcode` = '" . $this->db->escape((string)$data['zipcode']) . "', `shipping_country` = '" . $this->db->escape((string)$data['country']) . "', `shipping_zone` = '" . $this->db->escape((string)$data['district']) . "', `date_modified` = NOW() WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 
 	public function log($data) {
-		if ($this->config->get('pilibaba_logging')) {
+		if ($this->config->get('payment_pilibaba_logging')) {
 			$log = new Log('pilibaba.log');
 
 			$log->write($data);

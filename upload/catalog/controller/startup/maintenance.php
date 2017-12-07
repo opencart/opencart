@@ -17,7 +17,7 @@ class ControllerStartupMaintenance extends Controller {
 			// Show site if logged in as admin
 			$this->user = new Cart\User($this->registry);
 
-			if ((substr($route, 0, 7) != 'payment' && substr($route, 0, 3) != 'api') && !in_array($route, $ignore) && !$this->user->isLogged()) {
+			if ((substr($route, 0, 17) != 'extension/payment' && substr($route, 0, 3) != 'api') && !in_array($route, $ignore) && !$this->user->isLogged()) {
 				return new Action('common/maintenance');
 			}
 		}

@@ -6,8 +6,8 @@ class CatalogModelCheckoutOrderTest extends OpenCartTest {
 	 * @before
 	 */
 	public function setupTest() {
-		$this->loadModel('checkout/order');
-		$this->loadModel('account/custom_field');
+		$this->loadModelByRoute('checkout/order');
+		$this->loadModelByRoute('account/custom_field');
 		
 		$this->emptyTables();
 	}
@@ -22,6 +22,7 @@ class CatalogModelCheckoutOrderTest extends OpenCartTest {
 	private function emptyTables() {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_custom_field");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "order_fraud");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_history");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_option");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_product");

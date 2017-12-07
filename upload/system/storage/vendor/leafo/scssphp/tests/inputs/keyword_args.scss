@@ -1,0 +1,24 @@
+
+// mixins
+
+@mixin hello($a: one, $b:two, $c:three, $d: four) {
+    out: $a $b $c $d;
+}
+
+pre {
+    @include hello(alpha, $d: palace, $b: fort);
+}
+
+
+// functions
+
+@function cool($a, $b) {
+    @return $a - $b;
+}
+
+div {
+    hello: cool($b: 5, $a: 10);
+    world: cool(5, 10);
+}
+
+

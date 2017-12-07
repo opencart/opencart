@@ -6,7 +6,7 @@ class CatalogModelCatalogReviewTest extends OpenCartTest {
 	 * @before
 	 */
 	public function setupTest() {
-		$this->loadModel('catalog/review');
+		$this->loadModelByRoute('catalog/review');
 		$this->db->query("DELETE FROM " . DB_PREFIX . "review");
 	}
 	
@@ -14,7 +14,7 @@ class CatalogModelCatalogReviewTest extends OpenCartTest {
 	 * @after
 	 */
 	public function completeTest() {
-		$this->loadModel('catalog/review');
+		$this->loadModelByRoute('catalog/review');
 		$this->db->query("DELETE FROM " . DB_PREFIX . "review");
 	}
 	

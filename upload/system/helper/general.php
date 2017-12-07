@@ -1,17 +1,18 @@
 <?php
 function token($length = 32) {
-	// Create random token
-	$string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-	
-	$max = strlen($string) - 1;
-	
-	$token = '';
-	
-	for ($i = 0; $i < $length; $i++) {
-		$token .= $string[mt_rand(0, $max)];
+	if(!isset($length) || intval($length) <= 8 ){
+		$length = 32;
 	}	
-	
-	return $token;
+	if (function_exists('random_bytes')) {
+		$token = bin2hex(random_bytes($length));
+	}
+	if (function_exists('mcrypt_create_iv') && phpversion() < '7.1') {
+		$token = bin2hex(mcrypt_create_iv($length, MCRYPT_DEV_URANDOM));
+	}
+	if (function_exists('openssl_random_pseudo_bytes')) {
+		$token = bin2hex(openssl_random_pseudo_bytes($length));
+	}
+	return substr($token, -$length, $length);
 }
 
 /**

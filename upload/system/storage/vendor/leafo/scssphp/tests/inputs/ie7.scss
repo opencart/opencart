@@ -1,0 +1,12 @@
+// http://jes.st/2013/ie7s-css-breaking-content-counter-bug/
+#foo:before {
+    content: counter(item, ".") ": ";
+}
+
+#bar:before {
+    content: counter(item,".");
+}
+
+#fu:before {
+    content: counter(item);
+}

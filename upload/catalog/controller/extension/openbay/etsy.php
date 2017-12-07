@@ -16,10 +16,9 @@ class ControllerExtensionOpenbayEtsy extends Controller {
 		}
 
 		$incoming_token = isset($body['auth']['token']) ? $body['auth']['token'] : '';
-		$incoming_secret = isset($body['auth']['secret']) ? $body['auth']['secret'] : '';
 
-		if (!hash_equals($this->config->get('etsy_token'), $incoming_token) || !hash_equals($this->config->get('etsy_enc1'), $incoming_secret)) {
-			$this->openbay->etsy->log('etsy/inbound - Auth failed (401): ' . $incoming_token . '/' . $incoming_secret);
+		if (!hash_equals($this->config->get('etsy_token'), $incoming_token)) {
+			$this->openbay->etsy->log('etsy/inbound - Auth failed (401): ' . $incoming_token);
 			http_response_code(401);
 			exit();
 		}
@@ -27,7 +26,7 @@ class ControllerExtensionOpenbayEtsy extends Controller {
 		$data = array();
 
 		if (isset($body['data']) && !empty($body['data'])) {
-			$decrypted = $this->openbay->etsy->decryptArgs($body['data'], true);
+            $decrypted = $this->openbay->decrypt($body['data'], $this->openbay->etsy->getEncryptionKey(), $this->openbay->etsy->getEncryptionIv());
 
 			if (!$decrypted) {
 				$this->openbay->etsy->log('etsy/inbound Failed to decrypt data');
@@ -58,7 +57,7 @@ class ControllerExtensionOpenbayEtsy extends Controller {
 
 	public function eventAddOrderHistory($route, $data) {
 		$this->openbay->etsy->log('eventAddOrderHistory Event fired: ' . $route);
-		
+
 		if (isset($data[0]) && !empty($data[0])) {
 			$this->load->model('extension/openbay/etsy_order');
 

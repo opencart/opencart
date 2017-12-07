@@ -14,32 +14,24 @@ class ControllerAccountSuccess extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', true)
+			'href' => $this->url->link('account/account')
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_success'),
+			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('account/success')
 		);
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$this->load->model('account/customer_group');
-
-		$customer_group_info = $this->model_account_customer_group->getCustomerGroup($this->config->get('config_customer_group_id'));
-
-		if ($customer_group_info && !$customer_group_info['approval']) {
-			$data['text_message'] = sprintf($this->language->get('text_message'), $this->url->link('information/contact'));
+		if ($this->customer->isLogged()) {
+			$data['text_message'] = sprintf($this->language->get('text_success'), $this->url->link('information/contact'));
 		} else {
 			$data['text_message'] = sprintf($this->language->get('text_approval'), $this->config->get('config_name'), $this->url->link('information/contact'));
 		}
 
-		$data['button_continue'] = $this->language->get('button_continue');
-
 		if ($this->cart->hasProducts()) {
 			$data['continue'] = $this->url->link('checkout/cart');
 		} else {
-			$data['continue'] = $this->url->link('account/account', '', true);
+			$data['continue'] = $this->url->link('account/account');
 		}
 
 		$data['column_left'] = $this->load->controller('common/column_left');

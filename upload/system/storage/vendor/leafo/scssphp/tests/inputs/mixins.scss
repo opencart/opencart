@@ -1,0 +1,158 @@
+
+@mixin something {
+    color: red;
+    pre {
+        height: 200px;
+    }
+}
+
+div {
+    color: blue;
+    @include something;
+}
+
+@mixin something($color) {
+    color: $color;
+
+    div {
+        height: 20px;
+    }
+}
+
+@mixin cool($a, $b, $c) {
+    height: $a + $b + $c;
+}
+
+span {
+    @include something(blue);
+}
+
+html {
+    @include cool(10px, 12px, 21px);
+}
+
+
+@mixin hello_world {
+    height: 20px;
+}
+
+del {
+    @include hello-world;
+}
+
+
+// variable shadowing
+
+
+$color: white;
+@mixin colors($color: blue) {
+    color: $color;
+}
+
+div {
+    color: $color;
+    @include colors();
+    color: $color;
+}
+
+@mixin linear-gradient($from, $to, $pos: left top) {
+  background-image: linear-gradient($pos, $from, $to);
+}
+
+div {
+    @include linear-gradient(red, green);
+}
+
+@mixin box-shadow($shadows...) {
+  -moz-box-shadow: $shadows;
+  -webkit-box-shadow: $shadows;
+  box-shadow: $shadows;
+}
+
+div {
+    @include box-shadow(10px 10px 5px #888);
+    @include box-shadow(inset 10px 10px #888, -10px -10px #f4f4f4);
+}
+
+@mixin nested {
+    @include something(red);
+}
+
+div {
+    p  {
+        .class {
+            @include nested;
+        }
+
+        @include nested;
+
+        .top {
+            top: 0;
+            
+            div {
+                color: red;
+            }
+        }
+
+        color: blue;
+    }
+}
+
+// mixin content (http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#mixin-content)
+@mixin content-simple {
+    div.mixin-content-simple {
+        @content;
+    }
+}
+
+@mixin content-with-arg ( $background ) {
+    div.mixin-content-with-arg {
+        background: $background;
+        @content;
+    }
+}
+
+@include content-simple {
+    color: red;
+}
+
+@include content-with-arg($background: blue) {
+    color: red;
+}
+
+@include content-with-arg($background: purple) { 
+    @include hello_world;
+}
+
+@include content-simple {
+    @include cool(10px, 12px, 21px);
+}
+
+@include content-simple {
+    @include something(orange);
+}
+
+@include content-with-arg($background: purple) { 
+    @include cool(10px, 12px, 21px);
+}
+
+@include content-with-arg($background: purple) { 
+    @include something(orange);
+}
+
+@mixin wallpaper($image, $top: 0, $right: 0, $bottom: 0, $left: 0) {
+  background: $image;
+  position: absolute;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+@mixin logo($offsets...) {
+  @include wallpaper(url(/images/logo.png), $offsets...);
+}
+
+#please-wait {
+  @include logo(1em, $left: 4em, $bottom: 3em);
+}

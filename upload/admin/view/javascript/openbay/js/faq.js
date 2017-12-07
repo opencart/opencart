@@ -17,10 +17,10 @@ $.extend({
 
 function faq(){
     var route = $.getUrlVar('route');
-    var token = $.getUrlVar('token');
+    var user_token = $.getUrlVar('user_token');
 
     $.ajax({
-        url: 'index.php?route=extension/openbay/faq&token='+token+'&qry_route='+route,
+        url: 'index.php?route=marketplace/openbay/faq&user_token=' + user_token + '&qry_route=' + route,
         type: 'GET',
         dataType: 'json',
         success: function(data) {
@@ -50,12 +50,12 @@ function faq(){
 
 function faqclose() {
     var route = $.getUrlVar('route');
-    var token = $.getUrlVar('token');
+    var user_token = $.getUrlVar('user_token');
 
     $('#faq').slideUp();
 
     $.ajax({
-        url: 'index.php?route=extension/openbay/faqdismiss&token='+token+'&qry_route='+route,
+        url: 'index.php?route=marketplace/openbay/faqdismiss&user_token=' + user_token + '&qry_route=' + route,
         type: 'GET',
         dataType: 'json',
         success: function(data) {}

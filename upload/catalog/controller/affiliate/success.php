@@ -14,25 +14,27 @@ class ControllerAffiliateSuccess extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('affiliate/account', '', true)
+			'href' => $this->url->link('account/account')
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_success'),
+			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('affiliate/success')
 		);
 
-		$data['heading_title'] = $this->language->get('heading_title');
+		$this->load->model('account/customer_group');
 
-		if (!$this->config->get('config_affiliate_approval')) {
-			$data['text_message'] = sprintf($this->language->get('text_message'), $this->config->get('config_name'), $this->url->link('information/contact'));
+		$customer_group_info = $this->model_account_customer_group->getCustomerGroup($this->config->get('config_customer_group_id'));
+
+		if (!$this->config->get('config_affiliate_approval') && $this->customer->isLogged()) {
+			$data['text_message'] = sprintf($this->language->get('text_success'), $this->config->get('config_name'), $this->url->link('information/contact'));
 		} else {
 			$data['text_message'] = sprintf($this->language->get('text_approval'), $this->config->get('config_name'), $this->url->link('information/contact'));
 		}
-
+		
 		$data['button_continue'] = $this->language->get('button_continue');
 
-		$data['continue'] = $this->url->link('affiliate/account', '', true);
+		$data['continue'] = $this->url->link('account/account');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

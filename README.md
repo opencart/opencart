@@ -4,7 +4,7 @@
 
 OpenCart is a free open source ecommerce platform for online merchants. OpenCart provides a professional and reliable foundation from which to build a successful online store.
 
-## Reporting a bug and security issues
+## Reporting a bug
 
 Read the instructions below before you create a bug report.
 
@@ -14,15 +14,12 @@ Read the instructions below before you create a bug report.
  4. READ the [changelog for the master branch](https://github.com/opencart/opencart/blob/master/changelog.md)
  5. Use [Google](http://www.google.com) to search for your issue.
  6. Make sure that your bug/issue is not related to your hosting environment.
- 7. We now offer limited free support through our [support site](http://support.opencart.com/)
 
 If you are not sure about your issue, it is always best to ask the community on our [bug forum thread](http://forum.opencart.com/viewforum.php?f=191)
 
 **Important!**
 - If your bug report is not related to the core code (such as a 3rd party module or your server configuration) then the issue will be closed without a reason. You must contact the extension developer, use the forum or find a commercial partner to resolve a 3rd party code issue.
-- If you would like to report a security bug please do one of the following; PM an OpenCart moderator (Daniel or James) on the forum, send an email to the support desk at &nbsp;&nbsp;&nbsp;![Support Email image](http://img4me.com/ZHj.png "Type our email into your mail client")or use the contact form on the [OpenCart website](https://www.opencart.com/index.php?route=support/contact). 
-- Please do not report concept/ideas/unproven security flaws - all security reports are taken seriously but you must include the EXACT details steps to reproduce it otherwise it is a huge drain on resources. Please DO NOT post security flaws in a public location like forums, twitter, Reddit
-- If you have found a bug / security issue it is very important to check if it is present in the latest version of OpenCart before reporting it, please check commit the history of the file(s) where the bug is to see if it is resolved.
+- If you would like to report a serious security bug please PM an OpenCart moderator/administrator on the forum. Please do not report concept/ideas/unproven security flaws - all security reports are taken seriously but you must include the EXACT details steps to reproduce it. Please DO NOT post security flaws in a public location.
 
 ## Making a suggestion
 

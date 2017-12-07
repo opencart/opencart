@@ -11,7 +11,10 @@ class ControllerStartupStartup extends Controller {
 				$this->config->set($setting['key'], json_decode($setting['value'], true));
 			}
 		}
-		
+
+		// Theme
+		$this->config->set('template_cache', $this->config->get('developer_theme'));
+				
 		// Language
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE code = '" . $this->db->escape($this->config->get('config_admin_language')) . "'");
 		
@@ -26,9 +29,6 @@ class ControllerStartupStartup extends Controller {
 		
 		// Customer
 		$this->registry->set('customer', new Cart\Customer($this->registry));
-		
-		// Affiliate
-		$this->registry->set('affiliate', new Cart\Affiliate($this->registry));
 
 		// Currency
 		$this->registry->set('currency', new Cart\Currency($this->registry));
@@ -59,6 +59,6 @@ class ControllerStartupStartup extends Controller {
 		$this->registry->set('encryption', new Encryption($this->config->get('config_encryption')));
 		
 		// OpenBay Pro
-		$this->registry->set('openbay', new Openbay($this->registry));					
+		$this->registry->set('openbay', new Openbay($this->registry));
 	}
 }

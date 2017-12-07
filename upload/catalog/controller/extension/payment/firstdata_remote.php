@@ -4,21 +4,7 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 		$this->load->language('extension/payment/firstdata_remote');
 		$this->load->model('extension/payment/firstdata_remote');
 
-		$data['text_credit_card'] = $this->language->get('text_credit_card');
-		$data['text_loading'] = $this->language->get('text_loading');
-		$data['text_wait'] = $this->language->get('text_wait');
-
-		$data['entry_cc_number'] = $this->language->get('entry_cc_number');
-		$data['entry_cc_name'] = $this->language->get('entry_cc_name');
-		$data['entry_cc_expire_date'] = $this->language->get('entry_cc_expire_date');
-		$data['entry_cc_cvv2'] = $this->language->get('entry_cc_cvv2');
-
-		$data['help_start_date'] = $this->language->get('help_start_date');
-		$data['help_issue'] = $this->language->get('help_issue');
-
-		$data['button_confirm'] = $this->language->get('button_confirm');
-
-		if ($this->config->get('firstdata_remote_card_storage') == 1 && $this->customer->isLogged()) {
+		if ($this->config->get('payment_firstdata_remote_card_storage') == 1 && $this->customer->isLogged()) {
 			$data['card_storage'] = 1;
 			$data['stored_cards'] = $this->model_extension_payment_firstdata_remote->getStoredCards();
 		} else {
@@ -26,14 +12,7 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 			$data['stored_cards'] = array();
 		}
 
-		$data['accepted_cards'] = $this->config->get('firstdata_remote_cards_accepted');
-		$data['text_card_accepted'] = $this->language->get('text_card_accepted');
-		$data['text_card_type_m'] = $this->language->get('text_card_type_m');
-		$data['text_card_type_v'] = $this->language->get('text_card_type_v');
-		$data['text_card_type_c'] = $this->language->get('text_card_type_c');
-		$data['text_card_type_a'] = $this->language->get('text_card_type_a');
-		$data['text_card_type_ma'] = $this->language->get('text_card_type_ma');
-		$data['text_card_new'] = $this->language->get('text_card_new');
+		$data['accepted_cards'] = $this->config->get('payment_firstdata_remote_cards_accepted');
 
 		$data['months'] = array();
 
@@ -124,14 +103,14 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 
 				$fd_order_id = $this->model_extension_payment_firstdata_remote->addOrder($order_info, $capture_result);
 
-				if ($this->config->get('firstdata_remote_auto_settle') == 1) {
+				if ($this->config->get('payment_firstdata_remote_auto_settle') == 1) {
 					$this->model_extension_payment_firstdata_remote->addTransaction($fd_order_id, 'payment', $order_info);
 
-					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('firstdata_remote_order_status_success_settled_id'), $message, false);
+					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_firstdata_remote_order_status_success_settled_id'), $message, false);
 				} else {
 					$this->model_extension_payment_firstdata_remote->addTransaction($fd_order_id, 'auth');
 
-					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('firstdata_remote_order_status_success_unsettled_id'), $message, false);
+					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_firstdata_remote_order_status_success_unsettled_id'), $message, false);
 				}
 			} else {
 				if (isset($capture_result['error']) && !empty($capture_result['error'])) {
@@ -149,7 +128,7 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 				$message .= $this->language->get('text_card_brand') . $capture_result['brand'] . '<br />';
 				$message .= $this->language->get('text_card_number_ref') . $capture_result['card_number_ref'] . '<br />';
 
-				$this->model_extension_payment_firstdata_remote->addHistory($order_id, $this->config->get('firstdata_remote_order_status_decline_id'), $message);
+				$this->model_extension_payment_firstdata_remote->addHistory($order_id, $this->config->get('payment_firstdata_remote_order_status_decline_id'), $message);
 			}
 		}
 

@@ -3,7 +3,7 @@
 $_['heading_title']    = 'Taxes';
 
 // Text
-$_['text_total']       = 'Order Totals';
+$_['text_extension']   = 'Extensions';
 $_['text_success']     = 'Success: You have modified taxes total!';
 $_['text_edit']        = 'Edit Tax Total';
 

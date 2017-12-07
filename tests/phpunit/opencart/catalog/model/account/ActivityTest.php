@@ -6,7 +6,7 @@ class CatalogModelAccountActivityTest extends OpenCartTest {
 	 * @before
 	 */
 	public function setupTest() {		
-		$this->loadModel('account/activity');
+		$this->loadModelByRoute('account/activity');
 		
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_activity");
 	}
@@ -31,6 +31,6 @@ class CatalogModelAccountActivityTest extends OpenCartTest {
 		$result = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_activity")->row;
 		
 		$this->assertEquals($key, $result['key']);
-		$this->assertEquals($data, json_decode($result['data'], true));
+		$this->assertEquals($data, unserialize($result['data']));
 	}
 }

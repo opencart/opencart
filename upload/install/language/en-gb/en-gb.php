@@ -1,4 +1,7 @@
 <?php
+// Text
+$_['text_loading']    = 'Loading...';
+
 // Button
 $_['button_continue'] = 'Continue';
 $_['button_back']     = 'Back';

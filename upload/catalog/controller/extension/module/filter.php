@@ -16,10 +16,6 @@ class ControllerExtensionModuleFilter extends Controller {
 		if ($category_info) {
 			$this->load->language('extension/module/filter');
 
-			$data['heading_title'] = $this->language->get('heading_title');
-
-			$data['button_filter'] = $this->language->get('button_filter');
-
 			$url = '';
 
 			if (isset($this->request->get['sort'])) {

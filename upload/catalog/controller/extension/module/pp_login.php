@@ -4,22 +4,22 @@ class ControllerExtensionModulePPLogin extends Controller {
 
 	public function index() {
 		if (!$this->customer->isLogged()) {
-			$data['client_id'] = $this->config->get('pp_login_client_id');
-			$data['return_url'] = $this->url->link('extension/module/pp_login/login', '', true);
+			$data['client_id'] = $this->config->get('module_pp_login_client_id');
+			$data['return_url'] = $this->url->link('extension/module/pp_login/login');
 
-			if ($this->config->get('pp_login_sandbox')) {
+			if ($this->config->get('module_pp_login_sandbox')) {
 				$data['sandbox'] = 'sandbox';
 			} else {
 				$data['sandbox'] = '';
 			}
 
-			if ($this->config->get('pp_login_button_colour') == 'grey') {
+			if ($this->config->get('module_pp_login_button_colour') == 'grey') {
 				$data['button_colour'] = 'neutral';
 			} else {
 				$data['button_colour'] = '';
 			}
 
-			$locale = $this->config->get('pp_login_locale');
+			$locale = $this->config->get('module_pp_login_locale');
 
 			$this->load->model('localisation/language');
 
@@ -42,7 +42,7 @@ class ControllerExtensionModulePPLogin extends Controller {
 				'phone'
 			);
 
-			if ($this->config->get('pp_login_seamless')) {
+			if ($this->config->get('module_pp_login_seamless')) {
 				$scopes[] = 'https://uri.paypal.com/services/expresscheckout';
 			}
 
@@ -58,7 +58,7 @@ class ControllerExtensionModulePPLogin extends Controller {
 		$this->load->model('account/customer_group');
 
 		if ($this->customer->isLogged()) {
-			echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/account', '', true) . '"; window.close();</script>';
+			echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/account') . '"; window.close();</script>';
 		}
 
 		if (!isset($this->request->get['code'])) {
@@ -66,7 +66,7 @@ class ControllerExtensionModulePPLogin extends Controller {
 				$this->model_extension_module_pp_login->log('No code returned. Error: ' . $this->request->get['error'] . ', Error Description: ' . $this->request->get['error_description']);
 			}
 
-			echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/login', '', true) . '"; window.close();</script>';
+			echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/login') . '"; window.close();</script>';
 		} else {
 			$tokens = $this->model_extension_module_pp_login->getTokens($this->request->get['code']);
 		}
@@ -83,7 +83,7 @@ class ControllerExtensionModulePPLogin extends Controller {
 					$this->completeLogin($customer_info['customer_id'], $customer_info['email'], $tokens->access_token);
 				} else {
 					$this->model_extension_module_pp_login->log('Could not login to - ID: ' . $customer_info['customer_id'] . ', Email: ' . $customer_info['email']);
-					echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/login', '', true) . '"; window.close();</script>';
+					echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/login') . '"; window.close();</script>';
 				}
 			} else {
 				$country = $this->db->query("SELECT `country_id` FROM `" . DB_PREFIX . "country` WHERE iso_code_2 = '" . $this->db->escape($user->address->country) . "'");
@@ -103,8 +103,8 @@ class ControllerExtensionModulePPLogin extends Controller {
 					$zone_id = 0;
 				}
 
-				if ($this->config->get('pp_login_customer_group_id')) {
-					$customer_group_id = $this->config->get('pp_login_customer_group_id');
+				if ($this->config->get('module_pp_login_customer_group_id')) {
+					$customer_group_id = $this->config->get('module_pp_login_customer_group_id');
 				} else {
 					$customer_group_id = $this->config->get('config_customer_group_id');
 				}
@@ -115,7 +115,6 @@ class ControllerExtensionModulePPLogin extends Controller {
 					'lastname'          => $user->family_name,
 					'email'             => $user->email,
 					'telephone'         => $user->phone_number,
-					'fax'               => '',
 					'password'          => uniqid(rand(), true),
 					'company'           => '',
 					'address_1'         => $user->address->street_address,
@@ -134,7 +133,7 @@ class ControllerExtensionModulePPLogin extends Controller {
 					$this->completeLogin($customer_id, $user->email, $tokens->access_token);
 				} else {
 					$this->model_extension_module_pp_login->log('Could not login to - ID: ' . $customer_id . ', Email: ' . $user->email);
-					echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/login', '', true) . '"; window.close();</script>';
+					echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/login') . '"; window.close();</script>';
 				}
 			}
 		}
@@ -160,19 +159,7 @@ class ControllerExtensionModulePPLogin extends Controller {
 			$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 		}
 
-		// Add to activity log
-		if ($this->config->get('config_customer_activity')) {
-			$this->load->model('account/activity');
-
-			$activity_data = array(
-				'customer_id' => $this->customer->getId(),
-				'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-			);
-
-			$this->model_account_activity->addActivity('login', $activity_data);
-		}
-
-		if ($this->config->get('pp_login_seamless')) {
+		if ($this->config->get('module_pp_login_seamless')) {
 			$this->session->data['pp_login']['seamless']['customer_id'] = $this->customer->getId();
 			$this->session->data['pp_login']['seamless']['access_token'] = $access_token;
 		} else {
@@ -182,7 +169,7 @@ class ControllerExtensionModulePPLogin extends Controller {
 		}
 
 		$this->model_extension_module_pp_login->log('Customer logged in - ID: ' . $customer_id . ', Email: ' . $email);
-		echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/account', '', true) . '"; window.close();</script>';
+		echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/account') . '"; window.close();</script>';
 	}
 
 	protected function validate($email) {
@@ -196,7 +183,7 @@ class ControllerExtensionModulePPLogin extends Controller {
 		// Check if customer has been approved.
 		$customer_info = $this->model_account_customer->getCustomerByEmail($email);
 
-		if ($customer_info && !$customer_info['approved']) {
+		if ($customer_info && !$customer_info['status']) {
 			$this->error['warning'] = $this->language->get('error_approved');
 		}
 

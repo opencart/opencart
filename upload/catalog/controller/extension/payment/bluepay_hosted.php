@@ -20,33 +20,33 @@ class ControllerExtensionPaymentBluePayHosted extends Controller {
 		$data['EMAIL'] = $order_info['email'];
 
 		$data['SHPF_FORM_ID'] = 'opencart01';
-		$data['DBA'] = $this->config->get('bluepay_hosted_account_name');
-		$data['MERCHANT'] = $this->config->get('bluepay_hosted_account_id');
-		$data['SHPF_ACCOUNT_ID'] = $this->config->get('bluepay_hosted_account_id');
-		$data["TRANSACTION_TYPE"] = $this->config->get('bluepay_hosted_transaction');
-		$data["MODE"] = strtoupper($this->config->get('bluepay_hosted_test'));
+		$data['DBA'] = $this->config->get('payment_bluepay_hosted_account_name');
+		$data['MERCHANT'] = $this->config->get('payment_bluepay_hosted_account_id');
+		$data['SHPF_ACCOUNT_ID'] = $this->config->get('payment_bluepay_hosted_account_id');
+		$data["TRANSACTION_TYPE"] = $this->config->get('payment_bluepay_hosted_transaction');
+		$data["MODE"] = strtoupper($this->config->get('payment_bluepay_hosted_test'));
 
 		$data['CARD_TYPES'] = 'vi-mc';
 
-		if ($this->config->get('bluepay_hosted_discover') == 1) {
+		if ($this->config->get('payment_bluepay_hosted_discover') == 1) {
 			$data['CARD_TYPES'] .= '-di';
 		}
 
-		if ($this->config->get('bluepay_hosted_amex') == 1) {
+		if ($this->config->get('payment_bluepay_hosted_amex') == 1) {
 			$data['CARD_TYPES'] .= '-am';
 		}
 
 		$data["AMOUNT"] = $this->currency->format($order_info['total'], $order_info['currency_code'], false, false);
-		$data['APPROVED_URL'] = $this->url->link('extension/payment/bluepay_hosted/callback', '', true);
-		$data['DECLINED_URL'] = $this->url->link('extension/payment/bluepay_hosted/callback', '', true);
-		$data['MISSING_URL'] = $this->url->link('extension/payment/bluepay_hosted/callback', '', true);
-		$data['REDIRECT_URL'] = $this->url->link('extension/payment/bluepay_hosted/callback', '', true);
+		$data['APPROVED_URL'] = $this->url->link('extension/payment/bluepay_hosted/callback');
+		$data['DECLINED_URL'] = $this->url->link('extension/payment/bluepay_hosted/callback');
+		$data['MISSING_URL'] = $this->url->link('extension/payment/bluepay_hosted/callback');
+		$data['REDIRECT_URL'] = $this->url->link('extension/payment/bluepay_hosted/callback');
 
 		$data['TPS_DEF'] = "MERCHANT APPROVED_URL DECLINED_URL MISSING_URL MODE TRANSACTION_TYPE TPS_DEF AMOUNT";
-		$data['TAMPER_PROOF_SEAL'] = md5($this->config->get('bluepay_hosted_secret_key') . $data['MERCHANT'] . $data['APPROVED_URL'] . $data['DECLINED_URL'] . $data['MISSING_URL'] . $data['MODE'] . $data['TRANSACTION_TYPE'] . $data['TPS_DEF'] . $data['AMOUNT']);
+		$data['TAMPER_PROOF_SEAL'] = md5($this->config->get('payment_bluepay_hosted_secret_key') . $data['MERCHANT'] . $data['APPROVED_URL'] . $data['DECLINED_URL'] . $data['MISSING_URL'] . $data['MODE'] . $data['TRANSACTION_TYPE'] . $data['TPS_DEF'] . $data['AMOUNT']);
 
 		$data['SHPF_TPS_DEF'] = "SHPF_FORM_ID SHPF_ACCOUNT_ID DBA TAMPER_PROOF_SEAL CARD_TYPES TPS_DEF SHPF_TPS_DEF AMOUNT";
-		$data['SHPF_TPS'] = md5($this->config->get('bluepay_hosted_secret_key') . $data['SHPF_FORM_ID'] . $data['SHPF_ACCOUNT_ID'] . $data['DBA'] . $data['TAMPER_PROOF_SEAL'] . $data['CARD_TYPES'] . $data['TPS_DEF'] . $data['SHPF_TPS_DEF'] . $data['AMOUNT']);
+		$data['SHPF_TPS'] = md5($this->config->get('payment_bluepay_hosted_secret_key') . $data['SHPF_FORM_ID'] . $data['SHPF_ACCOUNT_ID'] . $data['DBA'] . $data['TAMPER_PROOF_SEAL'] . $data['CARD_TYPES'] . $data['TPS_DEF'] . $data['SHPF_TPS_DEF'] . $data['AMOUNT']);
 
 		$data['button_confirm'] = $this->language->get('button_confirm');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -69,22 +69,22 @@ class ControllerExtensionPaymentBluePayHosted extends Controller {
 			if ($response_data['Result'] == 'APPROVED') {
 				$bluepay_hosted_order_id = $this->model_extension_payment_bluepay_hosted->addOrder($order_info, $response_data);
 
-				if ($this->config->get('bluepay_hosted_transaction') == 'SALE') {
+				if ($this->config->get('payment_bluepay_hosted_transaction') == 'SALE') {
 					$this->model_extension_payment_bluepay_hosted->addTransaction($bluepay_hosted_order_id, 'payment', $order_info);
 				} else {
 					$this->model_extension_payment_bluepay_hosted->addTransaction($bluepay_hosted_order_id, 'auth', $order_info);
 				}
 
-				$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('bluepay_hosted_order_status_id'));
+				$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_bluepay_hosted_order_status_id'));
 
-				$this->response->redirect($this->url->link('checkout/success', '', true));
+				$this->response->redirect($this->url->link('checkout/success'));
 			} else {
 				$this->session->data['error'] = $response_data['Result'] . ' : ' . $response_data['MESSAGE'];
 
-				$this->response->redirect($this->url->link('checkout/checkout', '', true));
+				$this->response->redirect($this->url->link('checkout/checkout'));
 			}
 		} else {
-			$this->response->redirect($this->url->link('account/login', '', true));
+			$this->response->redirect($this->url->link('account/login'));
 		}
 	}
 

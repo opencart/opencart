@@ -17,21 +17,6 @@ class ControllerInformationSitemap extends Controller {
 			'href' => $this->url->link('information/sitemap')
 		);
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_special'] = $this->language->get('text_special');
-		$data['text_account'] = $this->language->get('text_account');
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_password'] = $this->language->get('text_password');
-		$data['text_address'] = $this->language->get('text_address');
-		$data['text_history'] = $this->language->get('text_history');
-		$data['text_download'] = $this->language->get('text_download');
-		$data['text_cart'] = $this->language->get('text_cart');
-		$data['text_checkout'] = $this->language->get('text_checkout');
-		$data['text_search'] = $this->language->get('text_search');
-		$data['text_information'] = $this->language->get('text_information');
-		$data['text_contact'] = $this->language->get('text_contact');
-
 		$this->load->model('catalog/category');
 		$this->load->model('catalog/product');
 
@@ -71,14 +56,14 @@ class ControllerInformationSitemap extends Controller {
 		}
 
 		$data['special'] = $this->url->link('product/special');
-		$data['account'] = $this->url->link('account/account', '', true);
-		$data['edit'] = $this->url->link('account/edit', '', true);
-		$data['password'] = $this->url->link('account/password', '', true);
-		$data['address'] = $this->url->link('account/address', '', true);
-		$data['history'] = $this->url->link('account/order', '', true);
-		$data['download'] = $this->url->link('account/download', '', true);
+		$data['account'] = $this->url->link('account/account');
+		$data['edit'] = $this->url->link('account/edit');
+		$data['password'] = $this->url->link('account/password');
+		$data['address'] = $this->url->link('account/address');
+		$data['history'] = $this->url->link('account/order');
+		$data['download'] = $this->url->link('account/download');
 		$data['cart'] = $this->url->link('checkout/cart');
-		$data['checkout'] = $this->url->link('checkout/checkout', '', true);
+		$data['checkout'] = $this->url->link('checkout/checkout');
 		$data['search'] = $this->url->link('product/search');
 		$data['contact'] = $this->url->link('information/contact');
 

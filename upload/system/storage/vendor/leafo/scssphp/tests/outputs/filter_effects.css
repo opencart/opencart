@@ -1,0 +1,20 @@
+#number {
+  -webkit-filter: grayscale(1) sepia(0.5) saturate(0.1) invert(1) opacity(0.5) brightness(0.5) contrast(0.5); }
+
+#percentage {
+  -webkit-filter: grayscale(100%) sepia(50%) saturate(10%) invert(100%) opacity(50%) brightness(50%) contrast(50%); }
+
+#misc {
+  -webkit-filter: hue-rotate(90deg) blur(10px) drop-shadow(10px -16px 30px purple); }
+
+#decimal {
+  opacity: 0.5;
+  filter: alpha(opacity=50, style=1); }
+
+#percent {
+  opacity: 0.5;
+  filter: alpha(opacity=50); }
+
+.row {
+  background-color: #071c23;
+  color: #2284a1; }

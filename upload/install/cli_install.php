@@ -58,7 +58,7 @@ $response = new Response();
 $response->addHeader('Content-Type: text/plain; charset=utf-8');
 $registry->set('response', $response);
 
-set_error_handler(function($code, $message, $file, $line, array $errcontext) {
+set_error_handler(function ($code, $message, $file, $line, array $errcontext) {
 	// error was suppressed with the @-operator
 	if (error_reporting() === 0) {
 		return false;
@@ -173,60 +173,145 @@ class ControllerCliInstall extends Controller {
 		}
 
 		if ($error) {
-			$output  = 'FAILED! Pre-installation check failed: ' . "\n\n";
+			$output = 'FAILED! Pre-installation check failed: ' . "\n\n";
 			$output .= $error . "\n\n";
 
 			return $output;
 		}
 
 		// Permissions
-		$error = '';
+		$paths = array();
 
-		/*
+		// Admin Controller
+		$directories = glob(DIR_OPENCART . 'admin/controller/extension/*', GLOB_ONLYDIR);
 
-				define('DIR_OPENCART', str_replace('\\', '/', realpath(dirname(__FILE__) . '/../')) . '/');
+		foreach ($directories as $directory) {
+			$paths[] = array(
+				'path'       => $directory,
+				'permission' => '0777'
+			);
+		}
+
+		// Admin Language
+		$directories = glob(DIR_OPENCART . 'admin/controller/language/*', GLOB_ONLYDIR);
+		
+		foreach ($directories as $directory) {
+			$paths[] = array(
+				'path'       => $directory,
+				'permission' => '0777'
+			);
+		}
+
+		// Admin Model
+		$directories = glob(DIR_OPENCART . 'admin/model/extension/*', GLOB_ONLYDIR);
+
+		foreach ($directories as $directory) {
+			$paths[] = array(
+				'path'       => $directory,
+				'permission' => '0777'
+			);
+		}
+
+		$directories = glob(DIR_OPENCART . 'admin/view/*', GLOB_ONLYDIR);
+
+		foreach ($directories as $directory) {
+			$paths[] = array(
+				'path'       => $directory,
+				'permission' => '0777'
+			);
+		}
+
+		// Catalog
+		$directories = glob(DIR_OPENCART . 'catalog/controller/extension/*', GLOB_ONLYDIR);
+
+		foreach ($directories as $directory) {
+			$paths[] = array(
+				'path'       => $directory,
+				'permission' => '0777'
+			);
+		}
 
 
-				define('DIR_APPLICATION', DIR_OPENCART . 'install/');
-				define('DIR_SYSTEM', DIR_OPENCART . '/system/');
-				define('DIR_IMAGE', DIR_OPENCART . '/image/');
-
-				define('DIR_STORAGE', DIR_SYSTEM . 'storage/');
-				define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');
-				define('DIR_TEMPLATE', DIR_APPLICATION . 'view/template/');
-				define('DIR_CONFIG', DIR_SYSTEM . 'config/');
-				define('DIR_CACHE', DIR_SYSTEM . 'storage/cache/');
-				define('DIR_DOWNLOAD', DIR_SYSTEM . 'storage/download/');
-				define('DIR_LOGS', DIR_SYSTEM . 'storage/logs/');
-				define('DIR_MODIFICATION', DIR_SYSTEM . 'storage/modification/');
-				define('DIR_SESSION', DIR_SYSTEM . 'storage/session/');
-				define('DIR_UPLOAD', DIR_SYSTEM . 'storage/upload/');
-		*/
 		$directories = array(
-			DIR_OPENCART . 'admin/',
-			DIR_OPENCART . 'catalog/',
+			DIR_OPENCART . 'catalog/controller/extension/',
+			DIR_OPENCART . 'catalog/controller/language/',
+			DIR_OPENCART . 'catalog/model/extension/',
+			DIR_OPENCART . 'catalog/view/',
 			DIR_IMAGE,
+			DIR_SYSTEM . 'config/',
+			DIR_SYSTEM . 'helper/',
+			DIR_SYSTEM . 'library/',
 
 
+
+			DIR_STORAGE . 'backup/',
 			DIR_STORAGE . 'cache/',
 			DIR_STORAGE . 'download/',
 			DIR_STORAGE . 'logs/',
+			DIR_STORAGE . 'marketplace/',
 			DIR_STORAGE . 'modification/',
 			DIR_STORAGE . 'session/',
-			DIR_STORAGE . 'upload/'
+			DIR_STORAGE . 'upload/',
+			DIR_STORAGE . 'vendor/'
 		);
 
+		// Loop through each path
+		foreach ($paths as $path) {
+			$path = rtrim(DIR_IMAGE . $path, '/');
 
+			if (is_dir($path)) {
+				$files = array();
 
-		foreach ($directories as $directory) {
-			if (!chmod($directory, '0755')) {
-				return 'not work';
+				// Make path into an array
+				$path = array($path);
+
+				// While the path array is still populated keep looping through
+				while (count($path) != 0) {
+					$next = array_shift($path);
+
+					foreach (glob($next) as $file) {
+						// If directory add to path array
+						if (is_dir($file)) {
+							$path[] = $file . '/*';
+						}
+
+						// Add the file to the files to be deleted array
+						$files[] = $file;
+					}
+				}
+
+				// Reverse sort the file array
+				rsort($files);
+
+				foreach ($files as $file) {
+					// If file just delete
+					if (is_file($file)) {
+						unlink($file);
+
+						// If directory use the remove directory function
+					} elseif (is_dir($file)) {
+						rmdir($file);
+					}
+				}
 			}
 		}
 
 
 
+		$error = '';
 
+		foreach ($directories as $directory) {
+			if (is_file($directory) && !chmod($directory, '0755')) {
+				$error[] = 'Could not set permissions on directories';
+			}
+		}
+
+		if ($error) {
+			$output  = 'FAILED! Pre-installation check failed: ' . "\n\n";
+			$output .= $error . "\n\n";
+
+			return $output;
+		}
 
 		try {
 			// Database

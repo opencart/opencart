@@ -152,6 +152,74 @@ class ControllerInstallStep2 extends Controller {
 		$data['upload'] = DIR_SYSTEM . 'storage/upload';
 		$data['modification'] = DIR_SYSTEM . 'storage/modification';
 
+
+		// Permissions
+		$paths = array();
+
+		$directories = glob(DIR_OPENCART . 'admin/controller/extension/*', GLOB_ONLYDIR);
+
+		foreach ($directories as $directory) {
+			$paths[] = array(
+				'path'       => $directory,
+				'permission' => '0777'
+			);
+		}
+
+		$directories = glob(DIR_OPENCART . 'admin/controller/language/*', GLOB_ONLYDIR);
+
+		foreach ($directories as $directory) {
+			$paths[] = array(
+				'path'       => $directory,
+				'permission' => '0777'
+			);
+		}
+
+		$directories = glob(DIR_OPENCART . 'admin/model/extension/*', GLOB_ONLYDIR);
+
+		foreach ($directories as $directory) {
+			$paths[] = array(
+				'path'       => $directory,
+				'permission' => '0777'
+			);
+		}
+
+		$directories = glob(DIR_OPENCART . 'admin/view/*', GLOB_ONLYDIR);
+
+		foreach ($directories as $directory) {
+			$paths[] = array(
+				'path'       => $directory,
+				'permission' => '0777'
+			);
+		}
+
+		// Image
+		$directories = glob(DIR_IMAGE . '*', GLOB_ONLYDIR);
+
+		foreach ($directories as $directory) {
+			$paths[] = array(
+				'path'       => $directory,
+				'permission' => '0777'
+			);
+		}
+
+		// Library
+		$directories = glob(DIR_SYSTEM . 'config/*', GLOB_ONLYDIR);
+
+		foreach ($directories as $directory) {
+			$paths[] = array(
+				'path'       => $directory,
+				'permission' => '0777'
+			);
+		}
+
+
+
+
+
+
+		print_r($paths);
+
+
 		$data['back'] = $this->url->link('install/step_1');
 
 		$data['footer'] = $this->load->controller('common/footer');

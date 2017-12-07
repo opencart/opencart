@@ -1,34 +1,36 @@
 <?php
 // Heading
-$_['heading_title']               = 'Installation complete';
+$_['heading_title']          = 'Configuration';
 
 // Text
-$_['text_step_4']                 = 'Ready to start selling!';
-$_['text_catalog']                = 'Go to your Online Shop';
-$_['text_admin']                  = 'Login to your Administration';
-$_['text_loading']                = 'Loading modules...';
-$_['text_extension']              = 'visit the extensions store';
-$_['text_mail']                   = 'Join the mailing list';
-$_['text_mail_description']       = 'Stay informed of OpenCart updates and events.';
-$_['text_openbay']                = 'OpenBay Pro gives merchants the ability to link their store with 3rd party markets like eBay and Amazon. Import orders, list items and handle shipping information direct from OpenCart...<a href="http://www.openbaypro.com/?utm_source=opencart_install&utm_medium=referral&utm_campaign=opencart_install">More information</a>';
-$_['text_maxmind']                = 'MaxMind provides merchants the ability to identify risky transactions quickly, reducing the risk of fraud and minimises the time spent reviewing orders by giving a risk score for each one...<a href="http://www.maxmind.com/?utm_source=opencart_install&utm_medium=referral&utm_campaign=opencart_install">More information</a>';
-$_['text_facebook']               = 'Like us on Facebook';
-$_['text_facebook_description']   = 'Tell us how much you like OpenCart!';
-$_['text_facebook_visit']         = 'Visit our Facebook page';
-$_['text_forum']                  = 'Community forums';
-$_['text_forum_description']      = 'Get help from other OpenCart users';
-$_['text_forum_visit']            = 'Visit our forums';
-$_['text_commercial']             = 'Commercial support';
-$_['text_commercial_description'] = 'Development services from OpenCart partners';
-$_['text_commercial_visit']       = 'Visit our partner page';
-$_['text_price']                  = 'Price';
-$_['text_view']                   = 'View details';
-$_['text_download']               = 'Download';
-$_['text_downloads']              = 'Downloads';
+$_['text_step_3']            = 'Enter your database and administration details';
+$_['text_db_connection']     = '1. Please enter your database connection details.';
+$_['text_db_administration'] = '2. Please enter a username and password for the administration.';
+$_['text_mysqli']            = 'MySQLi';
+$_['text_mysql']             = 'MySQL';
+$_['text_mpdo']              = 'mPDO';
+$_['text_pgsql']             = 'PostgreSQL';
 
-// Button
-$_['button_mail']                 = 'Join here';
-$_['button_setup']                = 'Set-up now';
+// Entry
+$_['entry_db_driver']        = 'DB Driver';
+$_['entry_db_hostname']      = 'Hostname';
+$_['entry_db_username']      = 'Username';
+$_['entry_db_password']      = 'Password';
+$_['entry_db_database']      = 'Database';
+$_['entry_db_port']          = 'Port';
+$_['entry_db_prefix']        = 'Prefix';
+$_['entry_username']         = 'Username';
+$_['entry_password']         = 'Password';
+$_['entry_email']            = 'E-Mail';
 
 // Error
-$_['error_warning']               = 'Don\'t forget to delete your installation directory!';
+$_['error_db_hostname']      = 'Hostname required!';
+$_['error_db_username']      = 'Username required!';
+$_['error_db_database']      = 'Database Name required!';
+$_['error_db_port']          = 'Database Port required!';
+$_['error_db_prefix']        = 'DB Prefix can only contain lowercase characters in the a-z range, 0-9 and underscores';
+$_['error_db_connect']       = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
+$_['error_username']         = 'Username required!';
+$_['error_password']         = 'Password required!';
+$_['error_email']            = 'Invalid E-Mail!';
+$_['error_config']           = 'Error: Could not write to config.php please check you have set the correct permissions on: ';

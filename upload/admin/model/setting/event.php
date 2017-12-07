@@ -24,7 +24,7 @@ class ModelSettingEvent extends Model {
 	}
 
 	public function getEvent($event_id) {
-		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "event` WHERE `event_id` = '" . (int)$event_id . "' LIMIT 1");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `event_id` = " . (int)$event_id);
 
 		return $query->row;
 	}

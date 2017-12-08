@@ -181,6 +181,6 @@ class Document {
 	 * @return	string
 		 */
 	public function getUrl() {
-		return $this->$url;
+		return $this->url;
 	}
 }

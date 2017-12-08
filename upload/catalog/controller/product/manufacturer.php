@@ -8,6 +8,8 @@ class ControllerProductManufacturer extends Controller {
 		$this->load->model('tool/image');
 
 		$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->setUrl(($this->request->server['HTTPS'] ? 'https://' : 'http://') . $this->request->server['HTTP_HOST'] . $this->request->server['REQUEST_URI']);
+		$this->document->setImage($this->model_tool_image->resize($this->config->get('config_image'), 600, 315));
 
 		$data['breadcrumbs'] = array();
 
@@ -109,6 +111,13 @@ class ControllerProductManufacturer extends Controller {
 
 		if ($manufacturer_info) {
 			$this->document->setTitle($manufacturer_info['name']);
+			$this->document->setUrl(($this->request->server['HTTPS'] ? 'https://' : 'http://') . $this->request->server['HTTP_HOST'] . $this->request->server['REQUEST_URI']);
+			if($manufacturer_info['image']){
+				$share_image = $this->model_tool_image->resize($manufacturer_info['image'], 600, 315);
+			} else {
+				$share_image = $this->model_tool_image->resize($this->config->get('config_image'), 600, 315);
+			}
+			$this->document->setImage($share_image);
 
 			$url = '';
 
@@ -316,7 +325,7 @@ class ControllerProductManufacturer extends Controller {
 			} else {
 				$this->document->addLink($this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&page='. $page), 'canonical');
 			}
-			
+
 			if ($page > 1) {
 			    $this->document->addLink($this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&page='. (($page - 2) ? '&page='. ($page - 1) : '')), 'prev');
 			}

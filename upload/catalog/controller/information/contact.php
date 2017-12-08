@@ -4,8 +4,11 @@ class ControllerInformationContact extends Controller {
 
 	public function index() {
 		$this->load->language('information/contact');
-
+		$this->load->model('tool/image');
+		
 		$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->setUrl(($this->request->server['HTTPS'] ? 'https://' : 'http://') . $this->request->server['HTTP_HOST'] . $this->request->server['REQUEST_URI']);
+		$this->document->setImage($this->model_tool_image->resize($this->config->get('config_image'), 600, 315));
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$mail = new Mail($this->config->get('config_mail_engine'));

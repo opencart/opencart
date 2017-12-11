@@ -149,6 +149,7 @@ class ModelExtensionPaymentPPExpress extends Model {
 			'THB',
 			'TRY',
 			'USD',
+			'INR',
 		);
 	}
 

@@ -1,13 +1,10 @@
 <?php
 class ControllerCommonHome extends Controller {
 	public function index() {
-		$this->load->model('tool/image');
 
 		$this->document->setTitle($this->config->get('config_meta_title'));
 		$this->document->setDescription($this->config->get('config_meta_description'));
 		$this->document->setKeywords($this->config->get('config_meta_keyword'));
-		$this->document->setUrl(($this->request->server['HTTPS'] ? 'https://' : 'http://') . $this->request->server['HTTP_HOST'] . $this->request->server['REQUEST_URI']);
-		$this->document->setImage($this->model_tool_image->resize($this->config->get('config_image'), 600, 315));
 
 		if (isset($this->request->get['route'])) {
 			$this->document->addLink($this->config->get('config_url'), 'canonical');

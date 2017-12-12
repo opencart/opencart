@@ -7,7 +7,7 @@ $_['heading_refund']				 = 'Refund';
 $_['text_extension']				 = 'Extensions';
 $_['text_success']					 = 'Success: You have modified PayPal Payflow Pro iFrame account details!';
 $_['text_edit']                      = 'Edit PayPal Payflow Pro iFrame';
-$_['text_pp_payflow_iframe']		 = '<a target="_BLANK" href="https://www.paypal.com/uk/mrb/pal=V4T754QB63XXL"><img src="view/image/payment/paypal.png" alt="PayPal Website Payment Pro" title="PayPal Website Payment Pro iFrame" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_pp_payflow_iframe']		 = '<a target="_BLANK" href="https://www.paypal.com/uk/mrb/pal=V4T754QB63XXL"><img src="view/image/payment/paypal.png" alt="PayPal Payflow Pro iFrame" title="PayPal Payflow Pro iFrame" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_authorization']			 = 'Authorization';
 $_['text_sale']						 = 'Sale';
 $_['text_authorise']				 = 'Authorise';

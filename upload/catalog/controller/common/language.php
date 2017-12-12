@@ -9,7 +9,11 @@ class ControllerCommonLanguage extends Controller {
 
 		unset($url_data['_route_']);
 
-		$route = $url_data['route'];
+		if (isset($url_data['route'])) {
+			$route = $url_data['route'];
+		} else {
+			$route = 'common/home';
+		}
 
 		unset($url_data['route']);
 

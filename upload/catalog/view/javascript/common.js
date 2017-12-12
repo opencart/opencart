@@ -166,7 +166,7 @@ var cart = {
 
 					$('html, body').animate({ scrollTop: 0 }, 'slow');
 
-					$('#cart > ul').load('index.php?route=common/cart/info ul li');
+					//$('#cart > ul').load('index.php?route=common/cart/info ul li');
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {

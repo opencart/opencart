@@ -4,8 +4,7 @@ class ControllerInformationInformation extends Controller {
 		$this->load->language('information/information');
 
 		$this->load->model('catalog/information');
-		$this->load->model('tool/image');
-		
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -25,8 +24,6 @@ class ControllerInformationInformation extends Controller {
 			$this->document->setTitle($information_info['meta_title']);
 			$this->document->setDescription($information_info['meta_description']);
 			$this->document->setKeywords($information_info['meta_keyword']);
-			$this->document->setUrl(($this->request->server['HTTPS'] ? 'https://' : 'http://') . $this->request->server['HTTP_HOST'] . $this->request->server['REQUEST_URI']);
-			$this->document->setImage($this->model_tool_image->resize($this->config->get('config_image'), 600, 315));
 
 			$data['breadcrumbs'][] = array(
 				'text' => $information_info['title'],

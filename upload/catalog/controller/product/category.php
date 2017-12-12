@@ -93,7 +93,7 @@ class ControllerProductCategory extends Controller {
 			$this->document->setTitle($category_info['meta_title']);
 			$this->document->setDescription($category_info['meta_description']);
 			$this->document->setKeywords($category_info['meta_keyword']);
-			$this->document->setUrl(($this->request->server['HTTPS'] ? 'https://' : 'http://') . $this->request->server['HTTP_HOST'] . $this->request->server['REQUEST_URI']);
+			$this->document->setImage($category_info['image']);
 
 			if($category_info['image']){
 				$share_image = $this->model_tool_image->resize($category_info['image'], 600, 315);

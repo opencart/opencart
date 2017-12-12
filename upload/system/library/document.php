@@ -19,6 +19,8 @@ class Document {
 	private $scripts = array();
 	private $image;
 	private $url;
+	private $type;
+	private $price;
 
 	/**
      *
@@ -182,5 +184,43 @@ class Document {
 		 */
 	public function getUrl() {
 		return $this->url;
+	}
+
+	/**
+		 *
+		 *
+		 * @param	string	$type
+		 */
+	public function setType($type) {
+
+
+		$this->type = $type;
+	}
+
+	/**
+		 *
+	 *
+	 * @return	string
+		 */
+	public function getType() {
+		return $this->type;
+	}
+
+	/**
+		 *
+		 *
+		 * @param	string	$price
+		 */
+	public function setPrice($price) {
+		$this->price = $price;
+	}
+
+	/**
+		 *
+	 *
+	 * @return	string
+		 */
+	public function getPrice() {
+		return $this->price;
 	}
 }

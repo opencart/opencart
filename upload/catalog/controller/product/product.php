@@ -217,7 +217,9 @@ class ControllerProductProduct extends Controller {
 			$this->document->setTitle($product_info['meta_title']);
 			$this->document->setDescription($product_info['meta_description']);
 			$this->document->setKeywords($product_info['meta_keyword']);
-			$this->document->setUrl(($this->request->server['HTTPS'] ? 'https://' : 'http://') . $this->request->server['HTTP_HOST'] . $this->request->server['REQUEST_URI']);
+			$this->document->setType('product');
+			$this->document->setImage($product_info['image']);
+			$this->document->setPrice($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')));
 			$this->document->addLink($this->url->link('product/product', 'product_id=' . $this->request->get['product_id']), 'canonical');
 			$this->document->addScript('catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js');
 			$this->document->addStyle('catalog/view/javascript/jquery/magnific/magnific-popup.css');

@@ -32,8 +32,6 @@ class ControllerProductSpecial extends Controller {
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->setUrl(($this->request->server['HTTPS'] ? 'https://' : 'http://') . $this->request->server['HTTP_HOST'] . $this->request->server['REQUEST_URI']);
-		$this->document->setImage($this->model_tool_image->resize($this->config->get('config_image'), 600, 315));
 
 		$data['breadcrumbs'] = array();
 

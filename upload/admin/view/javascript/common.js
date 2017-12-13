@@ -174,7 +174,7 @@ $(document).ready(function() {
 		$(this).css({'padding-bottom': '', 'overflow': ''});
 	});
 
-	// Autocomplete seo url for products, categories and informations
+	// Autogenerate seo url for product, category and information
 	$('.seo-url-autocomplete').on('keyup', function() {
 		var name = this.value.trim().toLowerCase(),
 			language_id = this.name.match(/\[(.*?)]/i)[1],
@@ -182,7 +182,7 @@ $(document).ready(function() {
 			stores = this.getAttribute('data-stores').split(','),
 			i = 0;
 
-		// Replace multibyte characters like á, é, ô TO a, e, o...
+		// Replace characters like á, é, ô TO a, e, o...
 		name = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 		// Replace spaces with -
 		name = name.replace(/ +/g, '-').replace(/[^a-z0-9-_]/g, '');

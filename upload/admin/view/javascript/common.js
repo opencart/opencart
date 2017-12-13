@@ -173,6 +173,24 @@ $(document).ready(function() {
 	}).on('hidden.bs.dropdown', function() {
 		$(this).css({'padding-bottom': '', 'overflow': ''});
 	});
+
+	// Autocomplete seo url for products, categories and informations
+	$('.seo-url-autocomplete').on('keyup', function() {
+		var name = this.value.trim().toLowerCase(),
+			language_id = this.name.match(/\[(.*?)]/i)[1],
+			type = this.name.match(/(.*?)_/i)[1],
+			stores = this.getAttribute('data-stores').split(','),
+			i = 0;
+
+		// Replace multibyte characters like á, é, ô TO a, e, o...
+		name = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+		// Replace spaces with -
+		name = name.replace(/ +/g, '-').replace(/[^a-z0-9-_]/g, '');
+
+		for (; i < stores.length; i++) {
+			$('input[name="'+ type +'_seo_url['+ stores[i] +']['+ language_id +']"]').val(name);
+		}
+	});
 });
 
 // Autocomplete */

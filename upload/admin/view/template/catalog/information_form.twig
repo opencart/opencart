@@ -42,7 +42,7 @@
                     <div class="form-group required">
                       <label class="col-sm-2 control-label" for="input-title{{ language.language_id }}">{{ entry_title }}</label>
                       <div class="col-sm-10">
-                        <input type="text" name="information_description[{{ language.language_id }}][title]" value="{{ information_description[language.language_id] ? information_description[language.language_id].title }}" placeholder="{{ entry_title }}" id="input-title{{ language.language_id }}" class="form-control"/>
+                        <input type="text" name="information_description[{{ language.language_id }}][title]" value="{{ information_description[language.language_id] ? information_description[language.language_id].title }}" placeholder="{{ entry_title }}" id="input-title{{ language.language_id }}" class="form-control seo-url-autocomplete" data-stores="{{ stores.store_id|join(',') }}"/>
                         {% if error_title[language.language_id] %}
                           <div class="text-danger">{{ error_title[language.language_id] }}</div>
                         {% endif %} </div>

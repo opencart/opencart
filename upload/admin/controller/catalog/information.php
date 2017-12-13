@@ -398,6 +398,8 @@ class ControllerCatalogInformation extends Controller {
 		} else {
 			$data['information_seo_url'] = array();
 		}
+
+		$data['information_seo_autocomplete'] = count($data['information_seo_url']) == 0;
 		
 		if (isset($this->request->post['information_layout'])) {
 			$data['information_layout'] = $this->request->post['information_layout'];

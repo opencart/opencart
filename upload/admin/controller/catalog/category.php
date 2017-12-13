@@ -499,6 +499,8 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['category_seo_url'] = array();
 		}
+
+		$data['category_seo_autocomplete'] = count($data['category_seo_url']) == 0;
 				
 		if (isset($this->request->post['category_layout'])) {
 			$data['category_layout'] = $this->request->post['category_layout'];

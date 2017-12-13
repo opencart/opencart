@@ -44,7 +44,7 @@
                     <div class="form-group required">
                       <label class="col-sm-2 control-label" for="input-name{{ language.language_id }}">{{ entry_name }}</label>
                       <div class="col-sm-10">
-                        <input type="text" name="category_description[{{ language.language_id }}][name]" value="{{ category_description[language.language_id] ? category_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name{{ language.language_id }}" class="form-control seo-url-autocomplete" data-stores="{{ stores.store_id|join(',') }}"/>
+                        <input type="text" name="category_description[{{ language.language_id }}][name]" value="{{ category_description[language.language_id] ? category_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name{{ language.language_id }}" class="form-control {% if category_seo_autocomplete %}seo-url-autocomplete{% endif %}" data-stores="{{ stores.store_id|join(',') }}"/>
                         {% if error_name[language.language_id] %}
                           <div class="text-danger">{{ error_name[language.language_id] }}</div>
                         {% endif %}

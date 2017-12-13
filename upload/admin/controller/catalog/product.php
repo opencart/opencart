@@ -1119,6 +1119,8 @@ class ControllerCatalogProduct extends Controller {
 			$data['product_seo_url'] = array();
 		}
 
+		$data['product_seo_autocomplete'] = count($data['product_seo_url']) == 0;
+
 		if (isset($this->request->post['product_layout'])) {
 			$data['product_layout'] = $this->request->post['product_layout'];
 		} elseif (isset($this->request->get['product_id'])) {

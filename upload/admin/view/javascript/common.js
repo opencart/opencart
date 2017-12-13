@@ -185,7 +185,7 @@ $(document).ready(function() {
 		// Replace characters like á, é, ô TO a, e, o...
 		name = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 		// Replace spaces with -
-		name = name.replace(/ +/g, '-').replace(/[^a-z0-9-_]/g, '');
+		name = name.replace(/ +/g, '-').replace(/[^a-z0-9-_\u0400-\u04FF]/g, '');
 
 		for (; i < stores.length; i++) {
 			$('input[name="'+ type +'_seo_url['+ stores[i] +']['+ language_id +']"]').val(name);

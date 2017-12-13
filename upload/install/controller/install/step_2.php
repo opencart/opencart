@@ -83,14 +83,6 @@ class ControllerInstallStep2 extends Controller {
 
 		$data['catalog_config'] = DIR_OPENCART . 'config.php';
 		$data['admin_config'] = DIR_OPENCART . 'admin/config.php';
-		$data['image'] = DIR_OPENCART . 'image';
-		$data['image_cache'] = DIR_OPENCART . 'image/cache';
-		$data['image_catalog'] = DIR_OPENCART . 'image/catalog';
-		$data['cache'] = DIR_SYSTEM . 'storage/cache';
-		$data['logs'] = DIR_SYSTEM . 'storage/logs';
-		$data['download'] = DIR_SYSTEM . 'storage/download';
-		$data['upload'] = DIR_SYSTEM . 'storage/upload';
-		$data['modification'] = DIR_SYSTEM . 'storage/modification';
 
 		// catalog config
 		if (!is_file(DIR_OPENCART . 'config.php')) {

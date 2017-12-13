@@ -141,107 +141,49 @@ class ControllerCliInstall extends Controller {
 		$error = '';
 
 		if (phpversion() < '5.4') {
-			$error = 'You need to use PHP 5.4+ or above for OpenCart to work!';
+			$error .= 'You need to use PHP 5.4+ or above for OpenCart to work!';
 		}
 
 		if (!ini_get('file_uploads')) {
-			$error = 'file_uploads needs to be enabled!';
+			$error .= 'file_uploads needs to be enabled!';
 		}
 
 		if (ini_get('session.auto_start')) {
-			$error = 'OpenCart will not work with session.auto_start enabled!';
+			$error .= 'OpenCart will not work with session.auto_start enabled!';
 		}
 
 		if (!extension_loaded('mysqli')) {
-			$error = 'MySQLi extension needs to be loaded for OpenCart to work!';
+			$error .= 'MySQLi extension needs to be loaded for OpenCart to work!';
 		}
 
 		if (!extension_loaded('gd')) {
-			$error = 'GD extension needs to be loaded for OpenCart to work!';
+			$error .= 'GD extension needs to be loaded for OpenCart to work!';
 		}
 
 		if (!extension_loaded('curl')) {
-			$error = 'CURL extension needs to be loaded for OpenCart to work!';
+			$error .= 'CURL extension needs to be loaded for OpenCart to work!';
 		}
 
 		if (!function_exists('openssl_encrypt')) {
-			$error = 'OpenSSL extension needs to be loaded for OpenCart to work!';
+			$error .= 'OpenSSL extension needs to be loaded for OpenCart to work!';
 		}
 
 		if (!extension_loaded('zlib')) {
-			$error = 'ZLIB extension needs to be loaded for OpenCart to work!';
+			$error .= 'ZLIB extension needs to be loaded for OpenCart to work!';
+		}
+
+		if (!is_file(DIR_OPENCART . 'config.php')) {
+			$error .= 'config.php does not exist. You need to rename config-dist.php to config.php!';
+		} elseif (!is_writable(DIR_OPENCART . 'config.php')) {
+			$error .= 'config.php needs to be writable for OpenCart to be installed!';
+		} elseif (!is_file(DIR_OPENCART . 'admin/config.php')) {
+			$error .= 'admin/config.php does not exist. You need to rename admin/config-dist.php to admin/config.php!';
+		} elseif (!is_writable(DIR_OPENCART . 'admin/config.php')) {
+			$error .= 'admin/config.php needs to be writable for OpenCart to be installed!';
 		}
 
 		if ($error) {
 			$output = 'FAILED! Pre-installation check failed: ' . "\n\n";
-			$output .= $error . "\n\n";
-
-			return $output;
-		}
-
-		// Permissions
-		$paths = array(
-			DIR_OPENCART . 'admin/controller/extension/',
-			DIR_OPENCART . 'admin/controller/language/',
-			DIR_OPENCART . 'admin/model/extension/',
-			DIR_OPENCART . 'admin/view/',
-			DIR_OPENCART . 'catalog/controller/extension/',
-			DIR_OPENCART . 'catalog/controller/language/',
-			DIR_OPENCART . 'catalog/model/extension/',
-			DIR_OPENCART . 'catalog/view/',
-			DIR_IMAGE,
-			DIR_SYSTEM . 'config/',
-			DIR_SYSTEM . 'helper/',
-			DIR_SYSTEM . 'library/',
-			DIR_STORAGE . 'backup/',
-			DIR_STORAGE . 'cache/',
-			DIR_STORAGE . 'download/',
-			DIR_STORAGE . 'logs/',
-			DIR_STORAGE . 'marketplace/',
-			DIR_STORAGE . 'modification/',
-			DIR_STORAGE . 'session/',
-			DIR_STORAGE . 'upload/',
-			DIR_STORAGE . 'vendor/'
-		);
-
-		// Loop through each path
-		foreach ($paths as $path) {
-			if (is_dir($path)) {
-				// Make path into an array
-				$path = array($path);
-
-				// While the path array is still populated keep looping through
-				while (count($path) != 0) {
-					$next = array_shift($path);
-
-					foreach (glob($next) as $directory) {
-						// If directory add to path array
-						if (is_dir($directory)) {
-							$path[] = $directory . '/*';
-						}
-
-						if (!is_writable($directory) && !chmod($directory, '')) {
-							$directories[] = $path;
-						}
-					}
-				}
-			}
-
-			rsort($files);
-		}
-
-		print_r($paths);
-
-		$error = '';
-
-		foreach ($directories as $directory) {
-			if (is_file($directory) && !chmod($directory, '0755')) {
-				$error[] = 'Could not set permissions on directories';
-			}
-		}
-
-		if ($error) {
-			$output  = 'FAILED! Pre-installation check failed: ' . "\n\n";
 			$output .= $error . "\n\n";
 
 			return $output;

@@ -3,144 +3,103 @@
   <header>
     <div class="row">
       <div class="col-sm-6">
-        <h1 class="pull-left">3<small>/4</small></h1>
+        <h1 class="pull-left">4<small>/4</small></h1>
         <h3>{{ heading_title }}<br>
-          <small>{{ text_step_3 }}</small></h3>
+          <small>{{ text_step_4 }}</small></h3>
       </div>
       <div class="col-sm-6">
-        <div id="logo" class="pull-right hidden-xs"> <img src="view/image/logo.png" alt="OpenCart" title="OpenCart" /></div>
+        <div id="logo" class="pull-right hidden-xs"><img src="view/image/logo.png" alt="OpenCart" title="OpenCart" /></div>
       </div>
     </div>
   </header>
-  {% if error_warning %}
+  {% if success %}
+  <div class="alert alert-success alert-dismissible">{{ success }}</div>
+  {% endif %}
   <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
-  {% endif %}
-  <div class="row">
-    <div class="col-sm-9">
-      <form action="{{ action }}" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <p>{{ text_db_connection }}</p>
-        <fieldset>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-db-driver">{{ entry_db_driver }}</label>
-            <div class="col-sm-10">
-              <select name="db_driver" id="input-db-driver" class="form-control">
-                {% if mysqli %}
-                {% if db_driver == 'mysqli' %}
-                <option value="mysqli" selected="selected">{{ text_mysqli }}</option>
-                {% else %}
-                <option value="mysqli">{{ text_mysqli }}</option>
-                {% endif %}
-                {% endif %}
-                {% if pdo %}
-                {% if db_driver == 'mpdo' %}
-                <option value="mpdo" selected="selected">{{ text_mpdo }}</option>
-                {% else %}
-                <option value="mpdo">{{ text_mpdo }}</option>
-                {% endif %}
-                {% endif %}
-                {% if pgsql %}
-                {% if db_driver == 'pgsql' %}
-                <option value="pgsql" selected="selected">{{ text_pgsql }}</option>
-                {% else %}
-                <option value="pgsql">{{ text_pgsql }}</option>
-                {% endif %}
-                {% endif %}
-              </select>
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-db-hostname">{{ entry_db_hostname }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="db_hostname" value="{{ db_hostname }}" id="input-db-hostname" class="form-control" />
-              {% if error_db_hostname %}
-              <div class="text-danger">{{ error_db_hostname }}</div>
-              {% endif %}
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-db-username">{{ entry_db_username }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="db_username" value="{{ db_username }}" id="input-db-username" class="form-control" />
-              {% if error_db_username %}
-              <div class="text-danger">{{ error_db_username }}</div>
-              {% endif %}
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-db-password">{{ entry_db_password }}</label>
-            <div class="col-sm-10">
-              <input type="password" name="db_password" value="{{ db_password }}" id="input-db-password" class="form-control" />
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-db-database">{{ entry_db_database }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="db_database" value="{{ db_database }}" id="input-db-database" class="form-control" />
-              {% if error_db_database %}
-              <div class="text-danger">{{ error_db_database }}</div>
-              {% endif %}
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-db-port">{{ entry_db_port }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="db_port" value="{{ db_port }}" id="input-db-port" class="form-control" />
-              {% if error_db_port %}
-              <div class="text-danger">{{ error_db_port }}</div>
-              {% endif %}
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-db-prefix">{{ entry_db_prefix }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="db_prefix" value="{{ db_prefix }}" id="input-db-prefix" class="form-control" />
-              {% if error_db_prefix %}
-              <div class="text-danger">{{ error_db_prefix }}</div>
-              {% endif %}
-            </div>
-          </div>
-        </fieldset>
-        <p>{{ text_db_administration }}</p>
-        <fieldset>
-          <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-username">{{ entry_username }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="username" value="{{ username }}" id="input-username" class="form-control" />
-              {% if error_username %}
-              <div class="text-danger">{{ error_username }}</div>
-              {% endif %}
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-password">{{ entry_password }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="password" value="{{ password }}" id="input-password" class="form-control" />
-              {% if error_password %}
-              <div class="text-danger">{{ error_password }}</div>
-              {% endif %}
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-email">{{ entry_email }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="email" value="{{ email }}" id="input-email" class="form-control" />
-              {% if error_email %}
-              <div class="text-danger">{{ error_email }}</div>
-              {% endif %}
-            </div>
-          </div>
-        </fieldset>
-        <div class="buttons">
-          <div class="pull-left"><a href="{{ back }}" class="btn btn-default">{{ button_back }}</a></div>
-          <div class="pull-right">
-            <input type="submit" value="{{ button_continue }}" class="btn btn-primary" />
-          </div>
-        </div>
-      </form>
+  <div class="visit">
+    <div class="row">
+      <div class="col-sm-5 col-sm-offset-1 text-center">
+        <p><i class="fa fa-shopping-cart fa-5x"></i></p>
+        <a href="../" class="btn btn-secondary">{{ text_catalog }}</a></div>
+      <div class="col-sm-5 text-center">
+        <p><i class="fa fa-cog fa-5x white"></i></p>
+        <a href="../admin/" class="btn btn-secondary">{{ text_admin }}</a></div>
     </div>
-    <div class="col-sm-3">{{ column_left }}</div>
+  </div>
+  <div class="modules">
+    <div class="row" id="extension">
+      <h2 class="text-center"><i class="fa fa-circle-o-notch fa-spin"></i> {{ text_loading }}</h2>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 text-center"><a href="http://www.opencart.com/index.php?route=extension/extension&utm_source=opencart_install&utm_medium=store_link&utm_campaign=opencart_install" target="_BLANK" class="btn btn-default">{{ text_extension }}</a></div>
+    </div>
+  </div>
+  <div class="mailing">
+    <div class="row">
+      <div class="col-sm-12"><i class="fa fa-envelope-o fa-5x"></i>
+        <h3>{{ text_mail }}<br>
+          <small>{{ text_mail_description }}</small></h3>
+        <a href="http://newsletter.opencart.com/h/r/B660EBBE4980C85C" target="_BLANK" class="btn btn-secondary">{{ button_mail }}</a></div>
+    </div>
+  </div>
+  <div class="core-modules">
+    <div class="row">
+      <div class="col-sm-6 text-center"><img src="view/image/openbay_pro.gif" />
+        <p>{{ text_openbay }}</p>
+        <a class="btn btn-primary" href="{{ openbay }}">{{ button_setup }}</a></div>
+      <div class="col-sm-6 text-center"><img src="view/image/maxmind.gif" />
+        <p>{{ text_maxmind }}</p>
+        <a class="btn btn-primary" href="{{ maxmind }}">{{ button_setup }}</a></div>
+    </div>
+  </div>
+  <div class="support text-center">
+    <div class="row">
+      <div class="col-sm-4"><a href="https://www.facebook.com/pages/OpenCart/477182382328323" class="icon transition"><i class="fa fa-facebook fa-4x"></i></a>
+        <h3>{{ text_facebook }}</h3>
+        <p>{{ text_facebook_description }}</p>
+        <a href="https://www.facebook.com/pages/OpenCart/477182382328323">{{ text_facebook_visit }}</a></div>
+      <div class="col-sm-4"><a href="http://forum.opencart.com/?utm_source=opencart_install&utm_medium=forum_link&utm_campaign=opencart_install" class="icon transition"><i class="fa fa-comments fa-4x"></i></a>
+        <h3>{{ text_forum }}</h3>
+        <p>{{ text_forum_description }}</p>
+        <a href="http://forum.opencart.com/?utm_source=opencart_install&utm_medium=forum_link&utm_campaign=opencart_install">{{ text_forum_visit }}</a></div>
+      <div class="col-sm-4"><a href="http://www.opencart.com/index.php?route=partner/partner&utm_source=opencart_install&utm_medium=partner_link&utm_campaign=opencart_install" class="icon transition"><i class="fa fa-user fa-4x"></i></a>
+        <h3>{{ text_commercial }}</h3>
+        <p>{{ text_commercial_description }}</p>
+        <a href="http://www.opencart.com/index.php?route=partner/partner&utm_source=opencart_install&utm_medium=partner_link&utm_campaign=opencart_install" target="_BLANK">{{ text_commercial_visit }}</a></div>
+    </div>
   </div>
 </div>
 {{ footer }}
+<script type="text/javascript"><!--
+$(document).ready(function() {
+	$.ajax({
+		url: '{{ extension }}',
+		type: 'post',
+		dataType: 'json',
+		success: function(json) {
+			if (json['extensions']) {
+				html  = '';
+
+				for (i = 0; i < json['extensions'].length; i++) {
+					extension = json['extensions'][i];
+
+					html += '<div class="col-sm-6 module">';
+					html += '  <a class="thumbnail pull-left" href="' + extension['href'] + '"><img src="' + extension['image'] + '" alt="' + extension['name'] + '" /></a>';
+					html += '  <h5>' + extension['name'] + '</h5>';
+					html += '  <p>' + extension['price'] + ' <a target="_BLANK" href="' + extension['href'] + '">{{ text_view }}</a></p>';
+					html += '  <div class="clearfix"></div>';
+					html += '</div>';
+
+					i++;
+				}
+
+				$('#extension').html(html);
+			} else {
+				$('#extension').fadeOut();
+			}
+		}
+	});
+});
+//--></script>

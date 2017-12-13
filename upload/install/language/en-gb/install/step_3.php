@@ -1,62 +1,36 @@
 <?php
 // Heading
-$_['heading_title']          = 'Pre-Installation';
+$_['heading_title']          = 'Configuration';
 
 // Text
-$_['text_step_2']            = 'Check your server is set-up correctly';
-$_['text_install_php']       = '1. Please configure your PHP settings to match requirements listed below.';
-$_['text_install_extension'] = '2. Please make sure the PHP extensions listed below are installed.';
-$_['text_install_db']        = '3. Please ensure you have at least one available database driver.';
-$_['text_install_file']      = '4. Please make sure you have set the correct permissions on the files list below.';
-$_['text_install_directory'] = '5. Please make sure you have set the correct permissions on the directories list below.';
-$_['text_setting']           = 'PHP Settings';
-$_['text_current']           = 'Current Settings';
-$_['text_required']          = 'Required Settings';
-$_['text_extension']         = 'Extension Settings';
-$_['text_db']                = 'Database';
-$_['text_db_driver']         = 'Database Driver';
-$_['text_file']              = 'Files';
-$_['text_directory']         = 'Directories';
-$_['text_status']            = 'Status';
-$_['text_version']           = 'PHP Version';
-$_['text_global']            = 'Register Globals';
-$_['text_magic']             = 'Magic Quotes GPC';
-$_['text_file_upload']       = 'File Uploads';
-$_['text_session']           = 'Session Auto Start';
-$_['text_gd']                = 'GD';
-$_['text_curl']              = 'cURL';
-$_['text_openssl']           = 'OpenSSL';
-$_['text_zlib']              = 'ZLIB';
-$_['text_zip']               = 'ZIP';
-$_['text_mbstring']          = 'mbstring';
-$_['text_on']                = 'On';
-$_['text_off']               = 'Off';
-$_['text_writable']          = 'Writable';
-$_['text_unwritable']        = 'Unwritable';
-$_['text_missing']           = 'Missing';
+$_['text_step_3']            = 'Enter your database and administration details';
+$_['text_db_connection']     = '1. Please enter your database connection details.';
+$_['text_db_administration'] = '2. Please enter a username and password for the administration.';
+$_['text_mysqli']            = 'MySQLi';
+$_['text_mysql']             = 'MySQL';
+$_['text_mpdo']              = 'mPDO';
+$_['text_pgsql']             = 'PostgreSQL';
+
+// Entry
+$_['entry_db_driver']        = 'DB Driver';
+$_['entry_db_hostname']      = 'Hostname';
+$_['entry_db_username']      = 'Username';
+$_['entry_db_password']      = 'Password';
+$_['entry_db_database']      = 'Database';
+$_['entry_db_port']          = 'Port';
+$_['entry_db_prefix']        = 'Prefix';
+$_['entry_username']         = 'Username';
+$_['entry_password']         = 'Password';
+$_['entry_email']            = 'E-Mail';
 
 // Error
-$_['error_missing']          = 'Missing';
-$_['error_unwritable']       = 'Unwritable';
-$_['error_version']          = 'Warning: You need to use PHP 5.4 or above for OpenCart to work!';
-$_['error_file_upload']      = 'Warning: file_uploads needs to be enabled!';
-$_['error_session']          = 'Warning: OpenCart will not work with session.auto_start enabled!';
-$_['error_db']               = 'Warning: A database extension needs to be loaded in the php.ini for OpenCart to work!';
-$_['error_gd']               = 'Warning: GD extension needs to be loaded for OpenCart to work!';
-$_['error_curl']             = 'Warning: CURL extension needs to be loaded for OpenCart to work!';
-$_['error_openssl']          = 'Warning: OpenSSL extension needs to be loaded for OpenCart to work!';
-$_['error_zlib']             = 'Warning: ZLIB extension needs to be loaded for OpenCart to work!';
-$_['error_zip']              = 'Warning: ZIP extension needs to be loaded for OpenCart to work!';
-$_['error_mbstring']         = 'Warning: mbstring extension needs to be loaded for OpenCart to work!';
-$_['error_catalog_exist']    = 'Warning: config.php does not exist. You need to rename config-dist.php to config.php!';
-$_['error_catalog_writable'] = 'Warning: config.php needs to be writable for OpenCart to be installed!';
-$_['error_admin_exist']      = 'Warning: admin/config.php does not exist. You need to rename admin/config-dist.php to admin/config.php!';
-$_['error_admin_writable']   = 'Warning: admin/config.php needs to be writable for OpenCart to be installed!';
-$_['error_image']            = 'Warning: Image directory needs to be writable for OpenCart to work!';
-$_['error_image_cache']      = 'Warning: Image cache directory needs to be writable for OpenCart to work!';
-$_['error_image_catalog']    = 'Warning: Image catalog directory needs to be writable for OpenCart to work!';
-$_['error_cache']            = 'Warning: Cache directory needs to be writable for OpenCart to work!';
-$_['error_log']              = 'Warning: Logs directory needs to be writable for OpenCart to work!';
-$_['error_download']         = 'Warning: Download directory needs to be writable for OpenCart to work!';
-$_['error_upload']           = 'Warning: Upload directory needs to be writable for OpenCart to work!';
-$_['error_modification']     = 'Warning: Modification directory needs to be writable for OpenCart to work!';
+$_['error_db_hostname']      = 'Hostname required!';
+$_['error_db_username']      = 'Username required!';
+$_['error_db_database']      = 'Database Name required!';
+$_['error_db_port']          = 'Database Port required!';
+$_['error_db_prefix']        = 'DB Prefix can only contain lowercase characters in the a-z range, 0-9 and underscores';
+$_['error_db_connect']       = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
+$_['error_username']         = 'Username required!';
+$_['error_password']         = 'Password required!';
+$_['error_email']            = 'Invalid E-Mail!';
+$_['error_config']           = 'Error: Could not write to config.php please check you have set the correct permissions on: ';

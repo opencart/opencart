@@ -180,59 +180,11 @@ class ControllerCliInstall extends Controller {
 		}
 
 		// Permissions
-		$paths = array();
-
-		// Admin Controller
-		$directories = glob(DIR_OPENCART . 'admin/controller/extension/*', GLOB_ONLYDIR);
-
-		foreach ($directories as $directory) {
-			$paths[] = array(
-				'path'       => $directory,
-				'permission' => '0777'
-			);
-		}
-
-		// Admin Language
-		$directories = glob(DIR_OPENCART . 'admin/controller/language/*', GLOB_ONLYDIR);
-		
-		foreach ($directories as $directory) {
-			$paths[] = array(
-				'path'       => $directory,
-				'permission' => '0777'
-			);
-		}
-
-		// Admin Model
-		$directories = glob(DIR_OPENCART . 'admin/model/extension/*', GLOB_ONLYDIR);
-
-		foreach ($directories as $directory) {
-			$paths[] = array(
-				'path'       => $directory,
-				'permission' => '0777'
-			);
-		}
-
-		$directories = glob(DIR_OPENCART . 'admin/view/*', GLOB_ONLYDIR);
-
-		foreach ($directories as $directory) {
-			$paths[] = array(
-				'path'       => $directory,
-				'permission' => '0777'
-			);
-		}
-
-		// Catalog
-		$directories = glob(DIR_OPENCART . 'catalog/controller/extension/*', GLOB_ONLYDIR);
-
-		foreach ($directories as $directory) {
-			$paths[] = array(
-				'path'       => $directory,
-				'permission' => '0777'
-			);
-		}
-
-
-		$directories = array(
+		$paths = array(
+			DIR_OPENCART . 'admin/controller/extension/',
+			DIR_OPENCART . 'admin/controller/language/',
+			DIR_OPENCART . 'admin/model/extension/',
+			DIR_OPENCART . 'admin/view/',
 			DIR_OPENCART . 'catalog/controller/extension/',
 			DIR_OPENCART . 'catalog/controller/language/',
 			DIR_OPENCART . 'catalog/model/extension/',
@@ -241,9 +193,6 @@ class ControllerCliInstall extends Controller {
 			DIR_SYSTEM . 'config/',
 			DIR_SYSTEM . 'helper/',
 			DIR_SYSTEM . 'library/',
-
-
-
 			DIR_STORAGE . 'backup/',
 			DIR_STORAGE . 'cache/',
 			DIR_STORAGE . 'download/',
@@ -257,11 +206,7 @@ class ControllerCliInstall extends Controller {
 
 		// Loop through each path
 		foreach ($paths as $path) {
-			$path = rtrim(DIR_IMAGE . $path, '/');
-
 			if (is_dir($path)) {
-				$files = array();
-
 				// Make path into an array
 				$path = array($path);
 
@@ -269,34 +214,23 @@ class ControllerCliInstall extends Controller {
 				while (count($path) != 0) {
 					$next = array_shift($path);
 
-					foreach (glob($next) as $file) {
+					foreach (glob($next) as $directory) {
 						// If directory add to path array
-						if (is_dir($file)) {
-							$path[] = $file . '/*';
+						if (is_dir($directory)) {
+							$path[] = $directory . '/*';
 						}
 
-						// Add the file to the files to be deleted array
-						$files[] = $file;
-					}
-				}
-
-				// Reverse sort the file array
-				rsort($files);
-
-				foreach ($files as $file) {
-					// If file just delete
-					if (is_file($file)) {
-						unlink($file);
-
-						// If directory use the remove directory function
-					} elseif (is_dir($file)) {
-						rmdir($file);
+						if (!is_writable($directory) && !chmod($directory, '')) {
+							$directories[] = $path;
+						}
 					}
 				}
 			}
+
+			rsort($files);
 		}
 
-
+		print_r($paths);
 
 		$error = '';
 

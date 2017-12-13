@@ -14,7 +14,7 @@ $_['session_name']       = 'OCSESSID';
 
 // Template
 $_['template_engine']   = 'twig';
-$_['template_cache']    = true;
+$_['template_cache']    = false;
 
 // Error
 $_['error_display']     = false;

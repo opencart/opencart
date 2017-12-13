@@ -75,10 +75,12 @@
 <script type="text/javascript"><!--
 $(document).ready(function() {
 	$.ajax({
-		url: '{{ extension }}',
+		url: 'index.php?route=3rd_party/extension',
 		type: 'post',
 		dataType: 'json',
 		success: function(json) {
+			console.log(json);
+
 			if (json['extensions']) {
 				html  = '';
 

@@ -175,7 +175,7 @@ $(document).ready(function() {
 	});
 
 	// Autogenerate seo url for product, category and information
-	$('.seo-url-autocomplete').on('keyup', function() {
+	$('.seo-url-autocomplete').on('blur', function() {
 		var name = this.value.trim().toLowerCase(),
 			language_id = this.name.match(/\[(.*?)]/i)[1],
 			type = this.name.match(/(.*?)_/i)[1],

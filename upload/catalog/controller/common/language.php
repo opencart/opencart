@@ -7,13 +7,13 @@ class ControllerCommonLanguage extends Controller {
 
 		$url_data = $this->request->get;
 
-		unset($url_data['_route_']);
-
 		if (isset($url_data['route'])) {
 			$route = $url_data['route'];
 		} else {
 			$route = 'common/home';
 		}
+
+		unset($url_data['_route_']);
 
 		unset($url_data['route']);
 
@@ -36,7 +36,7 @@ class ControllerCommonLanguage extends Controller {
 				$data['languages'][] = array(
 					'name' => $result['name'],
 					'code' => $result['code'],
-					'href' => $this->url->link($route, rtrim('language=' . $result['code'] . '&' . $url, '&'))
+					'href' => $this->url->link($route, ltrim('language=' . $result['code'] . '&' . $url, '&'))
 				);
 			}
 		}

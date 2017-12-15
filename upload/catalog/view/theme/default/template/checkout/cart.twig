@@ -91,7 +91,7 @@
       {% if modules %}
       <h2>{{ text_next }}</h2>
       <p>{{ text_next_choice }}</p>
-      <div class="panel-group" id="accordion"> {% for module in modules %}
+      <div class="panel-group" id="accordion">{% for module in modules %}
         {{ module }}
         {% endfor %} </div>
       {% endif %} <br />
@@ -100,7 +100,7 @@
           <table class="table table-bordered">
             {% for total in totals %}
             <tr>
-              <td class="text-right"><strong>{{ total.title }}:</strong></td>
+              <td class="text-right"><strong>{{ total.title }}</strong></td>
               <td class="text-right">{{ total.text }}</td>
             </tr>
             {% endfor %}

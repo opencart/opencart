@@ -524,7 +524,7 @@ footer h5 {
 .product-thumb {
 	border: 1px solid #ddd;
 	margin-bottom: 20px;
-	overflow: auto;
+	overflow: hidden;
 }
 .product-thumb .image {
 	text-align: center;
@@ -613,7 +613,7 @@ h2.price {
 .product-thumb .button-group {
 	border-top: 1px solid #ddd;
 	background-color: #eee;
-	overflow: auto;
+	overflow: hidden;
 }
 .product-list .product-thumb .button-group {
 	border-left: 1px solid #ddd;

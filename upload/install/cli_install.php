@@ -58,7 +58,7 @@ $response = new Response();
 $response->addHeader('Content-Type: text/plain; charset=utf-8');
 $registry->set('response', $response);
 
-set_error_handler(function($code, $message, $file, $line, array $errcontext) {
+set_error_handler(function ($code, $message, $file, $line, array $errcontext) {
 	// error was suppressed with the @-operator
 	if (error_reporting() === 0) {
 		return false;
@@ -141,92 +141,53 @@ class ControllerCliInstall extends Controller {
 		$error = '';
 
 		if (phpversion() < '5.4') {
-			$error = 'You need to use PHP 5.4+ or above for OpenCart to work!';
+			$error .= 'You need to use PHP 5.4+ or above for OpenCart to work!';
 		}
 
 		if (!ini_get('file_uploads')) {
-			$error = 'file_uploads needs to be enabled!';
+			$error .= 'file_uploads needs to be enabled!';
 		}
 
 		if (ini_get('session.auto_start')) {
-			$error = 'OpenCart will not work with session.auto_start enabled!';
+			$error .= 'OpenCart will not work with session.auto_start enabled!';
 		}
 
 		if (!extension_loaded('mysqli')) {
-			$error = 'MySQLi extension needs to be loaded for OpenCart to work!';
+			$error .= 'MySQLi extension needs to be loaded for OpenCart to work!';
 		}
 
 		if (!extension_loaded('gd')) {
-			$error = 'GD extension needs to be loaded for OpenCart to work!';
+			$error .= 'GD extension needs to be loaded for OpenCart to work!';
 		}
 
 		if (!extension_loaded('curl')) {
-			$error = 'CURL extension needs to be loaded for OpenCart to work!';
+			$error .= 'CURL extension needs to be loaded for OpenCart to work!';
 		}
 
 		if (!function_exists('openssl_encrypt')) {
-			$error = 'OpenSSL extension needs to be loaded for OpenCart to work!';
+			$error .= 'OpenSSL extension needs to be loaded for OpenCart to work!';
 		}
 
 		if (!extension_loaded('zlib')) {
-			$error = 'ZLIB extension needs to be loaded for OpenCart to work!';
+			$error .= 'ZLIB extension needs to be loaded for OpenCart to work!';
+		}
+
+		if (!is_file(DIR_OPENCART . 'config.php')) {
+			$error .= 'config.php does not exist. You need to rename config-dist.php to config.php!';
+		} elseif (!is_writable(DIR_OPENCART . 'config.php')) {
+			$error .= 'config.php needs to be writable for OpenCart to be installed!';
+		} elseif (!is_file(DIR_OPENCART . 'admin/config.php')) {
+			$error .= 'admin/config.php does not exist. You need to rename admin/config-dist.php to admin/config.php!';
+		} elseif (!is_writable(DIR_OPENCART . 'admin/config.php')) {
+			$error .= 'admin/config.php needs to be writable for OpenCart to be installed!';
 		}
 
 		if ($error) {
-			$output  = 'FAILED! Pre-installation check failed: ' . "\n\n";
+			$output = 'FAILED! Pre-installation check failed: ' . "\n\n";
 			$output .= $error . "\n\n";
 
 			return $output;
 		}
-
-		// Permissions
-		$error = '';
-
-		/*
-
-				define('DIR_OPENCART', str_replace('\\', '/', realpath(dirname(__FILE__) . '/../')) . '/');
-
-
-				define('DIR_APPLICATION', DIR_OPENCART . 'install/');
-				define('DIR_SYSTEM', DIR_OPENCART . '/system/');
-				define('DIR_IMAGE', DIR_OPENCART . '/image/');
-
-				define('DIR_STORAGE', DIR_SYSTEM . 'storage/');
-				define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');
-				define('DIR_TEMPLATE', DIR_APPLICATION . 'view/template/');
-				define('DIR_CONFIG', DIR_SYSTEM . 'config/');
-				define('DIR_CACHE', DIR_SYSTEM . 'storage/cache/');
-				define('DIR_DOWNLOAD', DIR_SYSTEM . 'storage/download/');
-				define('DIR_LOGS', DIR_SYSTEM . 'storage/logs/');
-				define('DIR_MODIFICATION', DIR_SYSTEM . 'storage/modification/');
-				define('DIR_SESSION', DIR_SYSTEM . 'storage/session/');
-				define('DIR_UPLOAD', DIR_SYSTEM . 'storage/upload/');
-		*/
-		$directories = array(
-			DIR_OPENCART . 'admin/',
-			DIR_OPENCART . 'catalog/',
-			DIR_IMAGE,
-
-
-			DIR_STORAGE . 'cache/',
-			DIR_STORAGE . 'download/',
-			DIR_STORAGE . 'logs/',
-			DIR_STORAGE . 'modification/',
-			DIR_STORAGE . 'session/',
-			DIR_STORAGE . 'upload/'
-		);
-
-
-
-		foreach ($directories as $directory) {
-			if (!chmod($directory, '0755')) {
-				return 'not work';
-			}
-		}
-
-
-
-
 
 		try {
 			// Database

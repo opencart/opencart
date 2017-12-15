@@ -6,7 +6,7 @@ $_['heading_title']					 = 'PayPal Express Checkout';
 $_['text_extension']				 = 'Extensions';
 $_['text_success']				 	 = 'Success: You have modified PayPal Express Checkout account details!';
 $_['text_edit']                      = 'Edit PayPal Express Checkout';
-$_['text_pp_express']				 = '<a target="_BLANK" href="https://www.paypal.com/uk/mrb/pal=V4T754QB63XXL"><img src="view/image/payment/paypal.png" alt="PayPal Website Payment Pro" title="PayPal Website Payment Pro iFrame" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_pp_express']				 = '<a target="_BLANK" href="https://www.paypal.com/uk/mrb/pal=V4T754QB63XXL"><img src="view/image/payment/paypal.png" alt="PayPal Express Checkout" title="PayPal Express Checkout" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_authorization']			 = 'Authorization';
 $_['text_sale']						 = 'Sale';
 $_['text_signup']                    = 'Sign up for PayPal - save your settings first as this page will be refreshed';

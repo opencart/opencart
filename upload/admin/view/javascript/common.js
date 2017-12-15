@@ -125,6 +125,7 @@ $(document).ready(function() {
 				dataType: 'html',
 				beforeSend: function() {
 					$button.prop('disabled', true);
+
 					if ($icon.length) {
 						$icon.attr('class', 'fa fa-circle-o-notch fa-spin');
 					}

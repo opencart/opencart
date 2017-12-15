@@ -14,8 +14,8 @@ class ControllerStartupSession extends Controller {
 				$this->db->query("UPDATE `" . DB_PREFIX . "api_session` SET `date_modified` = NOW() WHERE `api_session_id` = '" . (int)$api_query->row['api_session_id'] . "'");
 			}
 		} else {
-			if (isset($_COOKIE[$this->config->get('session_name')])) {
-				$session_id = $_COOKIE[$this->config->get('session_name')];
+			if (isset($this->request->cookie[$this->config->get('session_name')])) {
+				$session_id = $this->request->cookie[$this->config->get('session_name')];
 			} else {
 				$session_id = '';
 			}

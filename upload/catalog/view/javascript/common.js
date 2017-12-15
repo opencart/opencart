@@ -23,6 +23,10 @@ function getURLVar(key) {
 }
 
 $(document).ready(function() {
+
+	// Add new div on each page
+	$('body').append('<div id="alert-box"></div>');
+
 	// Highlight any found errors
 	$('.text-danger').each(function() {
 		var element = $(this).parent().parent();
@@ -133,6 +137,10 @@ $(document).ready(function() {
 	$(document).ajaxStop(function() {
 		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 	});
+
+	$('#alert-box').on('click', '.close', function(){
+			$('#alert-box').removeClass('open');
+	});
 });
 
 // Cart add remove functions
@@ -157,7 +165,9 @@ var cart = {
 				}
 
 				if (json['success']) {
-					$('#content').parent().before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#alert-box').append('<div class="alert alert-success alert-dismissible">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+					$('#alert-box').addClass('open');
 
 					// Need to set timeout otherwise it wont update the total
 					setTimeout(function () {
@@ -284,7 +294,9 @@ var wishlist = {
 				}
 
 				if (json['success']) {
-					$('#content').parent().before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#alert-box').append('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+					$('#alert-box').addClass('open');
 				}
 
 				$('#wishlist-total span').html(json['total']);
@@ -313,7 +325,9 @@ var compare = {
 				$('.alert-dismissible').remove();
 
 				if (json['success']) {
-					$('#content').parent().before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#alert-box').append('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+					$('#alert-box').addClass('open');
 
 					$('#compare-total').html(json['total']);
 

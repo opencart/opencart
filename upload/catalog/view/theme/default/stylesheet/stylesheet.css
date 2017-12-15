@@ -744,3 +744,31 @@ h2.price {
     background-image: none;
     background-color: #df5c39;
 }
+
+/* Animate alert box */
+#alert-box {
+	position: fixed;
+	top: 15px;
+	transition: all 0.5s;
+	z-index: 99;
+	right: -50%;
+}
+
+#alert-box.open {
+	right: 15px;
+}
+
+@media screen and (max-width: 767px){
+	#alert-box {
+		padding: 15px;
+	}
+	#alert-box.open {
+		right: 0px;
+	}
+}
+
+/* fixed alert-dismissable close position */
+.alert-dismissable .close,
+.alert-dismissible .close {
+	right: -4px;
+}

@@ -242,8 +242,8 @@ class ControllerProductSpecial extends Controller {
 		    $this->document->addLink($this->url->link('product/special'), 'canonical');
 		} else {
 		    $this->document->addLink($this->url->link('product/special', 'page='. $page), 'canonical');
-		}		
-		
+		}
+
 		if ($page > 1) {
 			$this->document->addLink($this->url->link('product/special', (($page - 2) ? '&page='. ($page - 1) : '')), 'prev');
 		}

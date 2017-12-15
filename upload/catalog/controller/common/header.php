@@ -27,9 +27,32 @@ class ControllerCommonHeader extends Controller {
 		$data['styles'] = $this->document->getStyles();
 		$data['scripts'] = $this->document->getScripts('header');
 		$data['lang'] = $this->language->get('code');
-		$data[ 'direction'] = $this->language->get('direction');
+		$data['direction'] = $this->language->get('direction');
 
 		$data['name'] = $this->config->get('config_name');
+
+		// Facebook share meta tag
+		$this->load->model('tool/image');
+
+		$facebook_share_image_width = 600;
+		$facebook_share_image_height = 315;
+
+		if($this->document->getImage()){
+			$facebook_share_image = $this->model_tool_image->resize($this->document->getImage(), $facebook_share_image_width, $facebook_share_image_height);
+		} else {
+			$facebook_share_image = $this->model_tool_image->resize($this->config->get('config_logo'), $facebook_share_image_width, $facebook_share_image_height);
+		}
+
+		$data['facebook_site_name'] = $data['name'];
+		$data['facebook_share_url'] = ($this->request->server['HTTPS'] ? 'https://' : 'http://') . $this->request->server['HTTP_HOST'] . $this->request->server['REQUEST_URI'];
+		$data['facebook_share_type'] = ($this->document->getType()) ? $this->document->getType() : 'website';
+		$data['facebook_share_title'] = $this->document->getTitle();
+		$data['facebook_share_description'] = $this->document->getDescription();
+		$data['facebook_share_image'] = $facebook_share_image;
+		$data['facebook_share_image_width'] = $facebook_share_image_width;
+		$data['facebook_share_image_height'] = $facebook_share_image_height;
+		$data['facebook_product_price_amount'] = $this->document->getPrice();
+		$data['facebook_product_price_currency'] = $this->config->get('config_currency');
 
 		if (is_file(DIR_IMAGE . $this->config->get('config_logo'))) {
 			$data['logo'] = $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
@@ -49,7 +72,7 @@ class ControllerCommonHeader extends Controller {
 		}
 
 		$data['text_logged'] = sprintf($this->language->get('text_logged'), $this->url->link('account/account'), $this->customer->getFirstName(), $this->url->link('account/logout'));
-		
+
 		$data['home'] = $this->url->link('common/home');
 		$data['wishlist'] = $this->url->link('account/wishlist');
 		$data['logged'] = $this->customer->isLogged();
@@ -64,7 +87,7 @@ class ControllerCommonHeader extends Controller {
 		$data['checkout'] = $this->url->link('checkout/checkout');
 		$data['contact'] = $this->url->link('information/contact');
 		$data['telephone'] = $this->config->get('config_telephone');
-		
+
 		$data['language'] = $this->load->controller('common/language');
 		$data['currency'] = $this->load->controller('common/currency');
 		$data['search'] = $this->load->controller('common/search');

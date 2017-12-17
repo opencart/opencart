@@ -228,7 +228,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 
 		if ($paypal_order) {
 			$data['paypal_order'] = $paypal_order;
-			
+
 			$data['user_token'] = $this->session->data['user_token'];
 
 			$data['order_id'] = (int)$this->request->get['order_id'];
@@ -265,7 +265,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 					'payment_status' => $transaction['payment_status'],
 					'pending_reason' => $transaction['pending_reason'],
 					'view' => $this->url->link('extension/payment/pp_pro_iframe/info', 'user_token=' . $this->session->data['user_token'] . "&transaction_id=" . $transaction['transaction_id'] . '&order_id=' . $this->request->get['order_id']),
-					'refund' => $this->url->link('extension/payment/pp_pro_iframe/refund', 'user_token=' . $this->session->data['user_token'] . "&transaction_id=" . $transaction['transaction_id'] . "&order_id=" . $this->request->get['order_id'],),
+					'refund' => $this->url->link('extension/payment/pp_pro_iframe/refund', 'user_token=' . $this->session->data['user_token'] . "&transaction_id=" . $transaction['transaction_id'] . "&order_id=" . $this->request->get['order_id']),
 					'resend' => $this->url->link('extension/payment/pp_pro_iframe/resend', 'user_token=' . $this->session->data['user_token'] . "&paypal_iframe_order_transaction_id=" . $transaction['paypal_iframe_order_transaction_id']),
 				);
 			}
@@ -492,7 +492,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 	public function info() {
 		$this->load->model('extension/payment/pp_pro_iframe');
 		$this->load->language('extension/payment/pp_pro_iframe');
- 
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(

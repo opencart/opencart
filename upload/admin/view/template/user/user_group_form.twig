@@ -37,7 +37,10 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">{{ entry_access }}</label>
             <div class="col-sm-10">
-              <div class="well well-sm" style="height: 150px; overflow: auto;">
+              <div class="well well-sm">
+                <input type="text" id="access-permission-filter" class="form-control" placeholder="{{ entry_access_filter }}">
+              </div>
+              <div class="well well-sm" style="height: 150px; overflow: auto;" id="access-permission-items">
                 {% for permission in permissions %}
                 <div class="checkbox">
                   <label>
@@ -57,7 +60,10 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">{{ entry_modify }}</label>
             <div class="col-sm-10">
-              <div class="well well-sm" style="height: 150px; overflow: auto;">
+              <div class="well well-sm">
+                <input type="text" id="modify-permission-filter" class="form-control" placeholder="{{ entry_modify_filter }}">
+              </div>
+              <div class="well well-sm" style="height: 150px; overflow: auto;" id="modify-permission-items">
                 {% for permission in permissions %}
                 <div class="checkbox">
                   <label>
@@ -79,4 +85,32 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(function(){
+    $('#access-permission-filter').on('input', function(){
+      var key = $(this).val();
+
+      $('#access-permission-items label').each(function(){
+        if($(this).text().trim().indexOf(key) == -1 && key != ''){
+          $(this).parent().hide();
+        }else{
+          $(this).parent().show();
+        }
+      });
+    });
+
+    $('#modify-permission-filter').on('input', function(){
+      var key = $(this).val();
+
+      $('#modify-permission-items label').each(function(){
+        if($(this).text().trim().indexOf(key) == -1 && key != ''){
+          $(this).parent().hide();
+        }else{
+          $(this).parent().show();
+        }
+      });
+    });
+  });
+</script>
 {{ footer }} 

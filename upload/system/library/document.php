@@ -17,9 +17,13 @@ class Document {
 	private $links = array();
 	private $styles = array();
 	private $scripts = array();
+	private $image;
+	private $url;
+	private $type;
+	private $price;
 
 	/**
-     * 
+     *
      *
      * @param	string	$title
      */
@@ -28,8 +32,8 @@ class Document {
 	}
 
 	/**
-     * 
-	 * 
+     *
+	 *
 	 * @return	string
      */
 	public function getTitle() {
@@ -37,7 +41,7 @@ class Document {
 	}
 
 	/**
-     * 
+     *
      *
      * @param	string	$description
      */
@@ -46,10 +50,10 @@ class Document {
 	}
 
 	/**
-     * 
+     *
      *
      * @param	string	$description
-	 * 
+	 *
 	 * @return	string
      */
 	public function getDescription() {
@@ -57,7 +61,7 @@ class Document {
 	}
 
 	/**
-     * 
+     *
      *
      * @param	string	$keywords
      */
@@ -67,15 +71,15 @@ class Document {
 
 	/**
      *
-	 * 
+	 *
 	 * @return	string
      */
 	public function getKeywords() {
 		return $this->keywords;
 	}
-	
+
 	/**
-     * 
+     *
      *
      * @param	string	$href
 	 * @param	string	$rel
@@ -88,8 +92,8 @@ class Document {
 	}
 
 	/**
-     * 
-	 * 
+     *
+	 *
 	 * @return	array
      */
 	public function getLinks() {
@@ -97,7 +101,7 @@ class Document {
 	}
 
 	/**
-     * 
+     *
      *
      * @param	string	$href
 	 * @param	string	$rel
@@ -112,8 +116,8 @@ class Document {
 	}
 
 	/**
-     * 
-	 * 
+     *
+	 *
 	 * @return	array
      */
 	public function getStyles() {
@@ -121,7 +125,7 @@ class Document {
 	}
 
 	/**
-     * 
+     *
      *
      * @param	string	$href
 	 * @param	string	$postion
@@ -131,10 +135,10 @@ class Document {
 	}
 
 	/**
-     * 
+     *
      *
      * @param	string	$postion
-	 * 
+	 *
 	 * @return	array
      */
 	public function getScripts($postion = 'header') {
@@ -143,5 +147,80 @@ class Document {
 		} else {
 			return array();
 		}
+	}
+
+	/**
+		 *
+		 *
+		 * @param	string	$image
+		 */
+	public function setImage($image) {
+		$this->image = $image;
+	}
+
+	/**
+		 *
+	 *
+	 * @return	string
+		 */
+	public function getImage() {
+		return $this->image;
+	}
+
+
+	/**
+		 *
+		 *
+		 * @param	string	$url
+		 */
+	public function setUrl($url) {
+		$this->url = $url;
+	}
+
+	/**
+		 *
+	 *
+	 * @return	string
+		 */
+	public function getUrl() {
+		return $this->url;
+	}
+
+	/**
+		 *
+		 *
+		 * @param	string	$type
+		 */
+	public function setType($type) {
+
+
+		$this->type = $type;
+	}
+
+	/**
+		 *
+	 *
+	 * @return	string
+		 */
+	public function getType() {
+		return $this->type;
+	}
+
+	/**
+		 *
+		 *
+		 * @param	string	$price
+		 */
+	public function setPrice($price) {
+		$this->price = $price;
+	}
+
+	/**
+		 *
+	 *
+	 * @return	string
+		 */
+	public function getPrice() {
+		return $this->price;
 	}
 }

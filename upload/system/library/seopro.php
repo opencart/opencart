@@ -561,10 +561,13 @@ class SeoPro {
 
 	private function getPathByCategory($category_id) {
 		
+		$path = '';
 
-		if ($category_id < 1 && !empty($this->cat_tree[$category_id])) return false;
-
-		$path = implode('_', $this->cat_tree[$category_id]['path']);
+		if ($category_id < 1 && !isset($this->cat_tree[$category_id])) return false;
+		
+		if(!empty($this->cat_tree[$category_id]['path'] && is_array($this->cat_tree[$category_id]['path']))) {
+			$path = implode('_', $this->cat_tree[$category_id]['path']);
+		}
 
 		return $path;
 			

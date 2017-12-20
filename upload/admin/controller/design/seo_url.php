@@ -478,8 +478,6 @@ class ControllerDesignSeoUrl extends Controller {
 		} else {
 			$data['keyword'] = '';
 		}
-				
-		$this->load->model('setting/store');
 
 		$data['stores'] = array();
 		
@@ -487,7 +485,9 @@ class ControllerDesignSeoUrl extends Controller {
 			'store_id' => 0,
 			'name'     => $this->language->get('text_default')
 		);
-		
+
+		$this->load->model('setting/store');
+
 		$stores = $this->model_setting_store->getStores();
 
 		foreach ($stores as $store) {

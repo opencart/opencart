@@ -1,5 +1,5 @@
 <?php
-class ModelExtensionPaymentG2APay extends Model {
+class ModelExtensionPaymentG2apay extends Model {
 
 	public function getMethod($address, $total) {
 		$this->load->language('extension/payment/g2apay');

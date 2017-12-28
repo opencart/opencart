@@ -1,5 +1,5 @@
 <?php
-class ControllerExtensionPaymentBluePayRedirect extends Controller {
+class ControllerExtensionPaymentBluepayRedirect extends Controller {
 	public function index() {
 		$this->load->language('extension/payment/bluepay_redirect');
 

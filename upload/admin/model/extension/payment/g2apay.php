@@ -1,6 +1,6 @@
 <?php
 
-class ModelExtensionPaymentG2aPay extends Model {
+class ModelExtensionPaymentG2apay extends Model {
 
 	public function install() {
 		$this->db->query("

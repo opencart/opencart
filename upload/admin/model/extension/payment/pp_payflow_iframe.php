@@ -1,5 +1,5 @@
 <?php
-class ModelExtensionPaymentPPPayflowIFrame extends Model {
+class ModelExtensionPaymentPPPayflowIframe extends Model {
 	public function install() {
 		$this->db->query("
 			CREATE TABLE `" . DB_PREFIX . "paypal_payflow_iframe_order` (

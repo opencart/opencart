@@ -11,7 +11,7 @@ class ModelDesignSeoUrl extends Model {
 	public function deleteSeoUrl($seo_url_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE seo_url_id = '" . (int)$seo_url_id . "'");
 	}
-	
+
 	public function getSeoUrl($seo_url_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE seo_url_id = '" . (int)$seo_url_id . "'");
 
@@ -26,23 +26,23 @@ class ModelDesignSeoUrl extends Model {
 		if (!empty($data['filter_query'])) {
 			$implode[] = "`query` LIKE '" . $this->db->escape((string)$data['filter_query']) . "'";
 		}
-		
+
 		if (!empty($data['filter_keyword'])) {
 			$implode[] = "`keyword` LIKE '" . $this->db->escape((string)$data['filter_keyword']) . "'";
 		}
-		
+
 		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
 			$implode[] = "`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
-				
+
 		if (!empty($data['filter_language_id']) && $data['filter_language_id'] !== '') {
 			$implode[] = "`language_id` = '" . (int)$data['filter_language_id'] . "'";
 		}
-		
+
 		if ($implode) {
 			$sql .= " WHERE " . implode(" AND ", $implode);
-		}	
-		
+		}
+
 		$sort_data = array(
 			'query',
 			'keyword',
@@ -81,43 +81,43 @@ class ModelDesignSeoUrl extends Model {
 
 	public function getTotalSeoUrls($data = array()) {
 		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "seo_url`";
-		
+
 		$implode = array();
 
 		if (!empty($data['filter_query'])) {
 			$implode[] = "query LIKE '" . $this->db->escape((string)$data['filter_query']) . "'";
 		}
-		
+
 		if (!empty($data['filter_keyword'])) {
 			$implode[] = "keyword LIKE '" . $this->db->escape((string)$data['filter_keyword']) . "'";
 		}
-		
+
 		if (!empty($data['filter_store_id']) && $data['filter_store_id'] !== '') {
 			$implode[] = "store_id = '" . (int)$data['filter_store_id'] . "'";
 		}
-				
+
 		if (!empty($data['filter_language_id']) && $data['filter_language_id'] !== '') {
 			$implode[] = "language_id = '" . (int)$data['filter_language_id'] . "'";
 		}
-		
+
 		if ($implode) {
 			$sql .= " WHERE " . implode(" AND ", $implode);
-		}		
-		
+		}
+
 		$query = $this->db->query($sql);
 
 		return $query->row['total'];
 	}
-	
+
 	public function getSeoUrlsByKeyword($keyword) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE keyword = '" . $this->db->escape($keyword) . "'");
 
 		return $query->rows;
-	}	
+	}
 	
 	public function getSeoUrlsByQuery($keyword) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE keyword = '" . $this->db->escape($keyword) . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE query = '" . $this->db->escape($keyword) . "'");
 
 		return $query->rows;
-	}	
+	}
 }

@@ -37,7 +37,11 @@ class ControllerProductManufacturer extends Controller {
 			}
 
 			if($result['image']){
-				$image = $this->model_tool_image->resize($result['image'], 150, 80);
+				if($this->config->get('theme_white_eighteen_image_manufacturer_width') && $this->config->get('theme_white_eighteen_image_manufacturer_height')){
+					$image = $this->model_tool_image->resize($result['image'], $this->config->get('theme_white_eighteen_image_manufacturer_width'), $this->config->get('theme_white_eighteen_image_manufacturer_height'));
+				} else {
+					$image = $this->model_tool_image->resize($result['image'], 150, 80);
+				}
 			} else {
 				$image = '';
 			}

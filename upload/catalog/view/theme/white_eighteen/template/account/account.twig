@@ -1,0 +1,148 @@
+{{ header }}
+<div id="account-account" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  {% if success %}
+  <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}</div>
+  {% endif %}
+  <div class="row">{{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}">{{ content_top }}
+
+        <h2>{{ text_my_account }}</h2>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="border-theme">
+              <p class="h3"><a href="{{ edit }}"><i class="fa fa-user"></i></a></p>
+              <p><a href="{{ edit }}">{{ text_edit }}</a></p>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="border-theme">
+              <p class="h3"><a href="{{ password }}"><i class="fa fa-lock"></i></a></p>
+              <p><a href="{{ password }}">{{ text_password }}</a></p>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="border-theme">
+              <p class="h3"><a href="{{ address }}"><i class="fa fa-map-marker"></i></a></p>
+              <p><a href="{{ address }}">{{ text_address }}</a></p>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="border-theme">
+              <p class="h3"><a href="{{ wishlist }}"><i class="fa fa-heart"></i></a></p>
+              <p><a href="{{ wishlist }}">{{ text_wishlist }}</a></p>
+            </div>
+          </div>
+        </div>
+
+        {% if credit_cards %}
+
+        <h2>{{ text_credit_card }}</h2>
+        <div class="row">
+          {% for credit_card in credit_cards %}
+          <div class="col-sm-4">
+            <div class="border-theme">
+              <p class="h3"><a href="{{ credit_card.href }}"><i class="fa fa-paper-plane"></i></a></p>
+              <p><a href="{{ credit_card.href }}">{{ credit_card.name }}</a></p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        {% endif %}
+
+
+        <h2>{{ text_my_orders }}</h2>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="border-theme">
+              <p class="h3"><a href="{{ order }}"><i class="fa fa-history"></i></a></p>
+              <p><a href="{{ order }}">{{ text_order }}</a></p>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="border-theme">
+              <p class="h3"><a href="{{ download }}"><i class="fa fa-download"></i></a></p>
+              <p><a href="{{ download }}">{{ text_download }}</a></p>
+            </div>
+          </div>
+          {% if reward %}
+          <div class="col-sm-4">
+            <div class="border-theme">
+              <p class="h3"><a href="{{ reward }}"><i class="fa fa-diamond"></i></a></p>
+              <p><a href="{{ reward }}">{{ text_reward }}</a></p>
+            </div>
+          </div>
+          {% endif %}
+          <div class="col-sm-4">
+            <div class="border-theme">
+              <p class="h3"><a href="{{ return }}"><i class="fa fa-mail-reply"></i></a></p>
+              <p><a href="{{ return }}">{{ text_return }}</a></p>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="border-theme">
+              <p class="h3"><a href="{{ transaction }}"><i class="fa fa-bank"></i></a></p>
+              <p><a href="{{ transaction }}">{{ text_transaction }}</a></p>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="border-theme">
+              <p class="h3"><a href="{{ recurring }}"><i class="fa fa-refresh"></i></a></p>
+              <p><a href="{{ recurring }}">{{ text_recurring }}</a></p>
+            </div>
+          </div>
+        </div>
+
+
+        <h2>{{ text_my_affiliate }}</h2>
+        <div class="row">
+          {% if not tracking %}
+          <div class="col-sm-12">
+            <div class="border-theme">
+              <p class="h3"><a href="{{ affiliate }}"><i class="fa fa-handshake-o"></i></a></p>
+              <p><a href="{{ affiliate }}">{{ text_affiliate_add }}</a></p>
+            </div>
+          </div>
+          {% else %}
+          <div class="col-sm-6">
+            <div class="border-theme">
+              <p class="h3"><a href="{{ affiliate }}"><i class="fa fa-edit"></i></a></p>
+              <p><a href="{{ affiliate }}">{{ text_affiliate_edit }}</a></p>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="border-theme">
+              <p class="h3"><a href="{{ tracking }}"><i class="fa fa-search"></i></a></p>
+              <p><a href="{{ tracking }}">{{ text_tracking }}</a></p>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+
+
+        <h2>{{ text_my_newsletter }}</h2>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="border-theme">
+              <p class="h3"><a href="{{ newsletter }}"><i class="fa fa-paper-plane"></i></a></p>
+              <p><a href="{{ newsletter }}">{{ text_newsletter }}</a></p>
+            </div>
+          </div>
+        </div>
+
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+{{ footer }}

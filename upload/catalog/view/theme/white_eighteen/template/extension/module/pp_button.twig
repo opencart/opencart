@@ -1,0 +1,32 @@
+{% if payment_pp_express_incontext_disable != 1 %}
+<div class="panel panel-default">
+  <div class="panel-body" style="text-align: right;">
+    <div class="buttons">
+      <div class="pull-right">
+        <a id="button-confirm" href="{{ payment_url }}"></a>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+window.paypalCheckoutReady = function () {
+  paypal.checkout.setup('{{ username }}', {
+    container: 'button-confirm',
+    environment: '{{ environment }}'
+  });
+};
+//--></script>
+<script src="//www.paypalobjects.com/api/checkout.js" async></script>
+{% else %}
+<div class="panel panel-default">
+  <div class="panel-body" style="text-align: right;">
+    <a href="{{ payment_url }}" title="PayPal Express Checkout" style="text-decoration:none;" class="pp-express-button">
+      {% if mobile %}
+        <img src="catalog/view/theme/default/image/paypal_express_mobile.png" style="margin:10px; float:right;" alt="PayPal Express Checkout" title="PayPal Express Checkout" />
+      {% else %}
+        <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/checkout-logo-medium.png" alt="Check out with PayPal" />
+      {% endif %}
+    </a>
+  </div>
+</div>
+{% endif %}

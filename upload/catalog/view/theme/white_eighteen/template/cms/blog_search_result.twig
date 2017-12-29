@@ -1,0 +1,92 @@
+{{ header }}
+
+<div id="cms-blog" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="row">
+    {{ column_left }}
+
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+
+    <div id="content" class="{{ class }}">
+      {{ content_top }}
+      {{ menu }}
+      <h1>{{ text_search }} : {{ keywords }}</h1>
+
+
+      {% if blogs is not empty %}
+      <div id="blog-list" class="row">
+        {% for blog in blogs %}
+
+        {% if display == 1 %}
+        <div class="col-xs-12">
+          <figure>
+            <a href="{{ blog.href }}"><img src="{{ blog.image }}" class="img-responsive" alt="{{ blog.title }}" title="{{ blog.title }}" /></a>
+          </figure>
+          <article>
+          <h3 class="list"><a href="{{ blog.href }}">{{ blog.title }}</a></h3>
+          <ul class="article-info">
+            <li><i class="fa fa-pencil fa-fw"></i> {{ text_author }} <span>{{ blog.author }}</span></li>
+            {% if blog.category.title != '' %}
+            <li><i class="fa fa-th-large fa-fw"></i> <a href="{{ blog.category.href }}">{{ blog.category.title }}</a></li>
+            {% endif %}
+            <li><i class="fa fa-clock-o fa-fw"></i> {{ text_date }} {{ blog.date }}</li>
+          </ul>
+          <p>{{ blog.description }}</p>
+          </article>
+          <hr />
+          <p><a href="{{ blog.href }}" class="btn btn-primary">{{ button_read }}</a></p>
+        </div>
+        {% else %}
+        <div class="col-sm-6 col-md-4">
+          <figure>
+            <a href="{{ blog.href }}"><img src="{{ blog.image }}" class="img-responsive" alt="{{ blog.title }}" title="{{ blog.title }}" /></a>
+          </figure>
+          <article>
+          <h3 class="grid"><a href="{{ blog.href }}">{{ blog.title }}</a></h3>
+          <p>{{ blog.description }}</p>
+          </article>
+          <hr />
+          <p><a href="{{ blog.href }}" class="btn btn-primary">{{ button_read }}</a></p>
+        </div>
+        {% endif %}
+
+        {% endfor %}
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          {{ pagination }}
+        </div>
+        <div class="col-sm-6">
+          <p class="text-right hidden-xs">{{ results }}</p>
+          <p class="text-center visible-xs">{{ results }}</p>
+        </div>
+      </div>
+      {% else %}
+
+      <div class="well">
+        <p class="text-center">{{ text_empty }}</p>
+      </div>
+
+      <hr/>
+      <p class="text-center"><a href="{{ continue }}">{{ button_back }}</a></p>
+      {% endif %}
+    </div>
+
+    {{ column_right }}
+
+  </div>
+</div>
+
+
+
+{{ footer }}

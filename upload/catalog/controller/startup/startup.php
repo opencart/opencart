@@ -27,6 +27,9 @@ class ControllerStartupStartup extends Controller {
 			}
 		}
 
+		// Set time zone
+		date_default_timezone_set($this->config->get('config_timezone'));
+
 		// Theme
 		$this->config->set('template_cache', $this->config->get('developer_theme'));
 
@@ -37,7 +40,6 @@ class ControllerStartupStartup extends Controller {
 		$code = '';
 
 		if (isset($this->request->get['language'])) {
-
 
 		}
 

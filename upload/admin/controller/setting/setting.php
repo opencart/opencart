@@ -9,8 +9,6 @@ class ControllerSettingSetting extends Controller {
 
 		$this->load->model('setting/setting');
 
-		$data['timezones'] = $this->timezone();
-
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('config', $this->request->post);
 
@@ -325,8 +323,36 @@ class ControllerSettingSetting extends Controller {
 
 		if (isset($this->request->post['config_timezone'])) {
 			$data['config_timezone'] = $this->request->post['config_timezone'];
-		} else {
+		} elseif ($this->config->has('config_timezone')) {
 			$data['config_timezone'] = $this->config->get('config_timezone');
+		} else {
+			$data['config_timezone'] = 'UTC';
+		}
+
+		// Set Time Zone
+		$data['timezones'] = array();
+
+		$timezones = timezone_identifiers_list();
+
+		foreach($timezones as $timezone) {
+			$datetimezone = new DateTimeZone($timezone);
+
+			$datetime = new DateTime('now', $datetimezone);
+
+			$offset = $datetimezone->getOffset($datetime);
+
+			if (!$offset) {
+				$hour = ' (+0:00)';
+			} elseif ($offset >= 0) {
+				$hour = ' (+' . date('g:i', $offset) . ')';
+			} else {
+				$hour = ' (-' . date('g:i', $offset) . ')';
+			}
+
+			$data['timezones'][] = array(
+				'text'  => $timezone . $hour,
+				'value' => $timezone
+			);
 		}
 
 		if (isset($this->request->post['config_language'])) {
@@ -1033,31 +1059,5 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->response->setOutput(HTTP_CATALOG . 'image/no_image.png');
 		}
-	}
-
-	public function timezone() {
-		// Set Time Zone
-		$timezones = DateTimeZone::listIdentifiers();
-
-	  $results = [];
-
-	  foreach($timezones as $timezone){
-	    date_default_timezone_set($timezone);
-	    $timezone = str_replace('_', ' ', $timezone);
-	    $results[] = array(
-	      'timezone' => $timezone,
-	      'date_time' => date('r'),
-	      'value' => strtolower(date('e'))
-	    );
-	  }
-
-		// Resorting the array record by UTC time ASC
-	  $utc_time_list = [];
-	  foreach ($results as $key => $row) {
-	    $utc_time_list[$key] = $row['date_time'];
-	  }
-	  array_multisort($utc_time_list, SORT_ASC, $results);
-
-		return $results;
 	}
 }

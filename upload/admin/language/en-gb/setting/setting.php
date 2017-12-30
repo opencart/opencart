@@ -52,6 +52,7 @@ $_['entry_comment']                  = 'Comment';
 $_['entry_location']                 = 'Store Location';
 $_['entry_country']                  = 'Country';
 $_['entry_zone']                     = 'Region / State';
+$_['entry_timezone']                 = 'Time Zone';
 $_['entry_language']                 = 'Language';
 $_['entry_admin_language']           = 'Administration Language';
 $_['entry_currency']                 = 'Currency';

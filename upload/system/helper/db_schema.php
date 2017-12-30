@@ -5627,6 +5627,21 @@ function db_schema() {
 				'auto_increment' => true
 			),
 			array(
+				'name' => 'keyword',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'regex',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'query',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			),
+			array(
 				'name' => 'store_id',
 				'type' => 'int(11)',
 				'not_null' => true
@@ -5637,13 +5652,8 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
-				'name' => 'query',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'keyword',
-				'type' => 'varchar(255)',
+				'name' => 'sort_order',
+				'type' => 'int(3)',
 				'not_null' => true
 			)
 		),

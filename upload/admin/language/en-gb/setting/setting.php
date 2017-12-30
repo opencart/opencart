@@ -61,7 +61,6 @@ $_['entry_length_class']             = 'Length Class';
 $_['entry_weight_class']             = 'Weight Class';
 $_['entry_limit_admin']              = 'Default Items Per Page (Admin)';
 $_['entry_product_count']            = 'Category Product Count';
-$_['entry_product_category']         = 'Display product in parent category/ies';
 $_['entry_review']                   = 'Allow Reviews';
 $_['entry_review_guest']             = 'Allow Guest Reviews';
 $_['entry_voucher_min']              = 'Voucher Min';

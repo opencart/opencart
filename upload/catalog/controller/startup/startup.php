@@ -36,6 +36,11 @@ class ControllerStartupStartup extends Controller {
 		// Language
 		$code = '';
 
+		if (isset($this->request->get['language'])) {
+
+
+		}
+
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();
@@ -120,6 +125,7 @@ class ControllerStartupStartup extends Controller {
 
 		// Set the config language_id
 		$this->config->set('config_language_id', $language_codes[$code]);
+		$this->config->set('config_language', $code);
 
 		// Customer
 		$customer = new Cart\Customer($this->registry);

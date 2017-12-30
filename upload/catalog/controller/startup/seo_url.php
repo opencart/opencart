@@ -16,10 +16,18 @@ class ControllerStartupSeoUrl extends Controller {
 			}
 
 			foreach ($parts as $part) {
-				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE keyword = '" . $this->db->escape($part) . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "'");
+$query = $this->db->query("
+SELECT * 
+FROM " . DB_PREFIX . "seo_url 
+WHERE keyword = '" . $this->db->escape($part) . "' 
+AND store_id = '" . (int)$this->config->get('config_store_id') . "'");
 
 				if ($query->num_rows) {
 					$url = explode('=', $query->row['query']);
+
+					if ($url[0] == 'product_id') {
+						$this->request->get['product_id'] = $url[1];
+					}
 
 					if ($url[0] == 'product_id') {
 						$this->request->get['product_id'] = $url[1];
@@ -68,48 +76,32 @@ class ControllerStartupSeoUrl extends Controller {
 	public function rewrite($link) {
 		$url_info = parse_url(str_replace('&amp;', '&', $link));
 
-		$url = '';
+		echo $url_info['query'] . "\n";
 
-		$data = array();
+		$string = '';
 
-		parse_str($url_info['query'], $data);
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `regex` != '' AND '" . $this->db->escape($url_info['query']) . "' REGEXP `regex` AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY sort_order ASC");
 
-		foreach ($data as $key => $value) {
-			if (isset($data['route'])) {
-				if (($data['route'] == 'product/product' && $key == 'product_id') || (($data['route'] == 'product/manufacturer/info' || $data['route'] == 'product/product') && $key == 'manufacturer_id') || ($data['route'] == 'information/information' && $key == 'information_id')) {
-					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = '" . $this->db->escape($key . '=' . (int)$value) . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		foreach ($query->rows as $result) {
+			$string .= '/' . $result['keyword'];
 
-					if ($query->num_rows && $query->row['keyword']) {
-						$url .= '/' . $query->row['keyword'];
+			if (preg_match('/' . $result['regex'] . '/', $url_info['query'], $matches)) {
+				print_r($matches);
 
-						unset($data[$key]);
-					}
-				} elseif ($data['route'] == 'common/home') {
-					
-					$url .= '/'; 					
-					
-					unset($data[$key]);
-					
-				} elseif ($key == 'path') {
-					$categories = explode('_', $value);
-
-					foreach ($categories as $category) {
-						$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = 'category_id=" . (int)$category . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
-
-						if ($query->num_rows && $query->row['keyword']) {
-							$url .= '/' . $query->row['keyword'];
-						} else {
-							$url = '';
-
-							break;
-						}
-					}
-
-					unset($data[$key]);
-				}
+				//unset();
 			}
 		}
 
+
+		if ($string) {
+
+
+			echo $string . "\n";
+		}
+
+
+
+/*
 		if ($url) {
 			unset($data['route']);
 
@@ -129,5 +121,6 @@ class ControllerStartupSeoUrl extends Controller {
 		} else {
 			return $link;
 		}
+*/
 	}
 }

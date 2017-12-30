@@ -2,9 +2,9 @@
 class ControllerAccountAccount extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/account');
+			$this->session->data['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 
-			$this->response->redirect($this->url->link('account/login'));
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->load->language('account/account');
@@ -15,12 +15,12 @@ class ControllerAccountAccount extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
+			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account')
+			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
 		);
 
 		if (isset($this->session->data['success'])) {
@@ -31,9 +31,9 @@ class ControllerAccountAccount extends Controller {
 			$data['success'] = '';
 		} 
 		
-		$data['edit'] = $this->url->link('account/edit');
-		$data['password'] = $this->url->link('account/password');
-		$data['address'] = $this->url->link('account/address');
+		$data['edit'] = $this->url->link('account/edit', 'language=' . $this->config->get('config_language'));
+		$data['password'] = $this->url->link('account/password', 'language=' . $this->config->get('config_language'));
+		$data['address'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
 		
 		$data['credit_cards'] = array();
 		
@@ -47,38 +47,38 @@ class ControllerAccountAccount extends Controller {
 
 				$data['credit_cards'][] = array(
 					'name' => $this->language->get('extension')->get('heading_title'),
-					'href' => $this->url->link('extension/credit_card/' . $code)
+					'href' => $this->url->link('extension/credit_card/' . $code, 'language=' . $this->config->get('config_language'))
 				);
 			}
 		}
 		
-		$data['wishlist'] = $this->url->link('account/wishlist');
-		$data['order'] = $this->url->link('account/order');
-		$data['download'] = $this->url->link('account/download');
+		$data['wishlist'] = $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language'));
+		$data['order'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language'));
+		$data['download'] = $this->url->link('account/download', 'language=' . $this->config->get('config_language'));
 		
 		if ($this->config->get('total_reward_status')) {
-			$data['reward'] = $this->url->link('account/reward');
+			$data['reward'] = $this->url->link('account/reward', 'language=' . $this->config->get('config_language'));
 		} else {
 			$data['reward'] = '';
 		}		
 		
-		$data['return'] = $this->url->link('account/return');
-		$data['transaction'] = $this->url->link('account/transaction');
-		$data['newsletter'] = $this->url->link('account/newsletter');
-		$data['recurring'] = $this->url->link('account/recurring');
+		$data['return'] = $this->url->link('account/return', 'language=' . $this->config->get('config_language'));
+		$data['transaction'] = $this->url->link('account/transaction', 'language=' . $this->config->get('config_language'));
+		$data['newsletter'] = $this->url->link('account/newsletter', 'language=' . $this->config->get('config_language'));
+		$data['recurring'] = $this->url->link('account/recurring', 'language=' . $this->config->get('config_language'));
 		
 		$this->load->model('account/affiliate');
 		
 		$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
 		
 		if (!$affiliate_info) {	
-			$data['affiliate'] = $this->url->link('account/affiliate/add');
+			$data['affiliate'] = $this->url->link('account/affiliate/add', 'language=' . $this->config->get('config_language'));
 		} else {
-			$data['affiliate'] = $this->url->link('account/affiliate/edit');
+			$data['affiliate'] = $this->url->link('account/affiliate/edit', 'language=' . $this->config->get('config_language'));
 		}
 		
 		if ($affiliate_info) {		
-			$data['tracking'] = $this->url->link('account/tracking');
+			$data['tracking'] = $this->url->link('account/tracking', 'language=' . $this->config->get('config_language'));
 		} else {
 			$data['tracking'] = '';
 		}

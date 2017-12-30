@@ -408,12 +408,6 @@ class ControllerSettingSetting extends Controller {
 			$data['config_product_count'] = $this->config->get('config_product_count');
 		}
 
-		if (isset($this->request->post['config_product_category'])) {
-			$data['config_product_category'] = $this->request->post['config_product_category'];
-		} else {
-			$data['config_product_category'] = $this->config->get('config_product_category');
-		}
-
 		if (isset($this->request->post['config_review_status'])) {
 			$data['config_review_status'] = $this->request->post['config_review_status'];
 		} else {

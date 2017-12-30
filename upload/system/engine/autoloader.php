@@ -8,10 +8,11 @@ Class Autoloader {
 
 	public function load($class) {
 		foreach ($this->data as $key => $value) {
+			if (substr($class, 0, strlen($key)) == $key) {
+				include_once($value);
 
-
-
-			return true;
+				return true;
+			}
 		}
 
 		return false;

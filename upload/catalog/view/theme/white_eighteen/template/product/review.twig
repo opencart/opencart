@@ -1,0 +1,26 @@
+{% if reviews %}
+{% for review in reviews %}
+<div class="row">
+  <div class="col-sm-6">
+    <ul class="info">
+      <li><strong>{{ review.author }}</strong></li>
+      <li><i class="fa fa-calendar"></i> {{ review.date_added }}</li>
+    </ul>
+  </div>
+  <div class="col-sm-6 text-right">
+    {% for i in 1..5 %}
+    {% if review.rating < i %}
+    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+    {% else %}
+    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+<p class="review-text">{{ review.text }}</p>
+
+{% endfor %}
+<div class="text-right">{{ pagination }}</div>
+{% else %}
+<p class="review-text text-center"><strong>{{ text_no_reviews }}</strong></p>
+{% endif %}

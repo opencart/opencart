@@ -100,7 +100,7 @@
             <label class="col-sm-2 control-label" for="securetrading_ws_settle_due_date">{{ entry_settle_due_date }}</label>
             <div class="col-sm-10">
               <select name="payment_securetrading_ws_settle_due_date" id="securetrading_ws_settle_due_date" class="form-control">
-                {%if payment_securetrading_ws_settle_due_date == 0 %}
+                {% if payment_securetrading_ws_settle_due_date == 0 %}
                 <option value="0" selected="selected">{{ text_process_immediately }}</option>
                 
 								{% else %}

@@ -1,5 +1,5 @@
 <?php
-class ModelExtensionPaymentSagePayServer extends Model {
+class ModelExtensionPaymentSagepayServer extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('extension/payment/sagepay_server');
 

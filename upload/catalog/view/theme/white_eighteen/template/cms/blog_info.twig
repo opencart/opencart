@@ -1,0 +1,108 @@
+{{ header }}
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/zh_HK/sdk.js#xfbml=1&version=v2.10";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+<script>window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));</script>
+
+
+
+
+<div id="cms-blog-info" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="row">
+    {{ column_left }}
+
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-8 col-sm-offset-2' %}
+    {% endif %}
+
+    <div id="content" class="{{ class }}">
+      {{ content_top }}
+      {{ menu }}
+      <h1>{{ heading_title }}</h1>
+
+      <ul class="article-info">
+        <li><i class="fa fa-pencil fa-fw"></i> {{ text_author }} <span>{{ author }}</span></li>
+        {% if category is defined %}
+        <li><i class="fa fa-th-large fa-fw"></i> <a href="{{ href }}">{{ category }}</a></li>
+        {% endif %}
+        <li><i class="fa fa-clock-o fa-fw"></i> {{ text_date }} {{ date }}</li>
+      </ul>
+
+      <figure><img src="{{ image }}" class="img-responsive" alt="{{ heading_title }}" title="{{ heading_title }}" /></figure>
+
+      <article>
+        {{ description }}
+
+        <hr />
+
+        <ul class="list-inline">
+          <li><div class="fb-share-button" data-href="{{ current_url }}" data-layout="button" data-size="large" data-mobile-iframe="true">
+            <a class="fb-xfbml-parse-ignore" target="_blank" href="{{ current_url }}">{{ text_facebook }}</a>
+          </div></li>
+          <li><a href="https://twitter.com/intent/tweet" data-size="large" class="twitter-share-button">{{ text_twitter }}</a></li>
+          <li><a href="https://plus.google.com/share?url={{ current_url }}" class="gplus-share-button" target="_blank"><i class="fa fa-google-plus fa-fw"></i> {{ text_google_plus }}</a></li>
+        </ul>
+
+        <hr />
+        <div class="row">
+          <div class="col-sm-6 col-md-4">
+            {% if previous is defined %}
+            <a href="{{ previous.href }}" class="btn btn-link"><i class="fa fa-angle-left fa-fw"></i> {{ previous.title }}</a>
+            {% endif %}
+          </div>
+
+          <div class="col-md-4 text-center hidden-xs hidden-sm">
+            <a href="{{ back }}" class="btn btn-link">{{ button_back }}</a>
+          </div>
+
+          <div class="col-sm-6 col-md-4 text-right">
+            {% if next is defined %}
+            <a href="{{ next.href }}" class="btn btn-link">{{ next.title }} <i class="fa fa-angle-right fa-fw"></i></a>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="visible-xs visible-sm"><p class="text-center"><a href="{{ back }}" class="btn btn-primary">{{ button_back }}</a></p></div>
+      </article>
+
+    </div>
+
+    {{ column_right }}
+
+  </div>
+</div>
+
+
+
+{{ footer }}

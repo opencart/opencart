@@ -1,0 +1,10 @@
+<div class="category">
+
+  <h4>{{ category_name }}</h4>
+  <ul>
+    {% for category in categories %}
+    <li><a href="{{ category.href }}">{{ category.title }} ({{ category.total }})</a></li>
+    {% endfor %}
+  </ul>
+
+</div>

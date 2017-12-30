@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<!--[if IE 8 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie8"><![endif]-->
+<!--[if IE 9 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html dir="{{ direction }}" lang="{{ lang }}">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>{{ title }}</title>
+<base href="{{ base }}" />
+{% if description %}
+<meta name="description" content="{{ description }}" />
+{% endif %}
+{% if keywords %}
+<meta name="keywords" content="{{ keywords }}" />
+{% endif %}
+
+<!-- Facebook share -->
+<meta property="og:site_name" content="{{ facebook_site_name }}" />
+<meta property="og:url" content="{{ facebook_share_url }}" />
+<meta property="og:type" content="{{ facebook_share_type }}" />
+<meta property="og:title" content="{{ facebook_share_title }}" />
+<meta property="og:description" content="{{ facebook_share_description }}" />
+<meta property="og:image" content="{{ facebook_share_image }}" />
+<meta property="og:image:width" content="{{ facebook_share_image_width }}" />
+<meta property="og:image:height" content="{{ facebook_share_image_height }}" />
+{% if facebook_share_type == 'product' %}
+<meta property="product:price:amount" content="{{ facebook_product_price_amount }}" />
+<meta property="product:price:currency" content="{{ facebook_product_price_currency }}" />
+{% endif %}
+
+<script src="catalog/view/javascript/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
+<link href="catalog/view/javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" rel="stylesheet" type="text/css" />
+<link href="catalog/view/theme/white_eighteen/stylesheet/stylesheet.css" rel="stylesheet">
+{% for style in styles %}
+<link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}" />
+{% endfor %}
+{% for script in scripts %}
+<script src="{{ script }}" type="text/javascript"></script>
+{% endfor %}
+<script src="catalog/view/theme/white_eighteen/common.js" type="text/javascript"></script>
+{% for link in links %}
+<link href="{{ link.href }}" rel="{{ link.rel }}" />
+{% endfor %}
+{% for analytic in analytics %}
+{{ analytic }}
+{% endfor %}
+</head>
+<body>
+
+<header>
+  <nav id="top" class="tool">
+    <div class="container">
+      <div class="navbar-header">
+        <h1><a href="{{ home }}">{{ name }}</a></h1>
+      </div>
+
+      <div id="top-links" class="nav pull-right">
+        <ul class="list-inline">
+          <li class="dropdown"><a href="{{ account }}" title="{{ text_account }}" class="btn btn-tran-white btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_account }}</span> <span class="caret"></span></a>
+            <ul class="dropdown-menu dropdown-menu-right">
+              {% if logged %}
+              <li><a href="{{ account }}">{{ text_account }}</a></li>
+              <li><a href="{{ order }}">{{ text_order }}</a></li>
+              <li><a href="{{ transaction }}">{{ text_transaction }}</a></li>
+              <li><a href="{{ download }}">{{ text_download }}</a></li>
+              <li><a href="{{ logout }}">{{ text_logout }}</a></li>
+              {% else %}
+              <li><a href="{{ register }}">{{ text_register }}</a></li>
+              <li><a href="{{ login }}">{{ text_login }}</a></li>
+              {% endif %}
+            </ul>
+          </li>
+          <li><a href="{{ wishlist }}" id="wishlist-total" title="{{ text_wishlist }}"><i class="fa fa-heart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_wishlist }}</span></a></li>
+          <li><a role="button" data-toggle="modal" data-target="#modal-cart"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_shopping_cart }}</span></a></li>
+          <li><a href="{{ checkout }}" title="{{ text_checkout }}"><i class="fa fa-share"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_checkout }}</span></a></li>
+          <li><a role="button" data-toggle="collapse" href="#search-bar" aria-expanded="false" aria-controls="search-bar"><i class="fa fa-search"></i></a></li>
+          <li><a role="button" data-toggle="modal" data-target="#modal-setting"><i class="fa fa-cog"></i></a></li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div id="search-bar" class="collapse in">
+    <div class="container">
+      {{ search }}
+    </div>
+  </div>
+  <div id="store-info" class="container">
+
+    <div id="logo">
+      {% if logo %}
+        <a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" /></a>
+      {% else %}
+        <h1><a href="{{ home }}">{{ name }}</a></h1>
+      {% endif %}
+    </div>
+
+  </div>
+
+
+  <div id="modal-cart" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-cart-label">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="modal-cart-label">{{ text_cart }}</h4>
+        </div>
+        <div class="modal-body">
+          {{ cart }}
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div id="modal-setting" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-setting-label">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="modal-setting-label">{{ text_setting }}</h4>
+        </div>
+        <div class="modal-body">
+            {{ currency }}
+            {{ language }}
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</header>
+
+{{ menu }}

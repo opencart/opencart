@@ -5,6 +5,8 @@ class ControllerProductManufacturer extends Controller {
 
 		$this->load->model('catalog/manufacturer');
 
+		$this->load->model('tool/image');
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['breadcrumbs'] = array();
@@ -34,8 +36,19 @@ class ControllerProductManufacturer extends Controller {
 				$data['categories'][$key]['name'] = $key;
 			}
 
+			if($result['image']){
+				if($this->config->get('theme_white_eighteen_image_manufacturer_width') && $this->config->get('theme_white_eighteen_image_manufacturer_height')){
+					$image = $this->model_tool_image->resize($result['image'], $this->config->get('theme_white_eighteen_image_manufacturer_width'), $this->config->get('theme_white_eighteen_image_manufacturer_height'));
+				} else {
+					$image = $this->model_tool_image->resize($result['image'], 150, 80);
+				}
+			} else {
+				$image = '';
+			}
+
 			$data['categories'][$key]['manufacturer'][] = array(
 				'name' => $result['name'],
+				'image' => $image,
 				'href' => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $result['manufacturer_id'])
 			);
 		}

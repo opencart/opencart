@@ -242,15 +242,33 @@ class ControllerCommonColumnLeft extends Controller {
 					'children' => array()		
 				);
 			}
-			
+
+			$seo = array();
+
+			if ($this->user->hasPermission('access', 'design/seo_regex')) {
+				$seo[] = array(
+					'name'	   => $this->language->get('text_seo_regex'),
+					'href'     => $this->url->link('design/seo_regex', 'user_token=' . $this->session->data['user_token']),
+					'children' => array()
+				);
+			}
+
 			if ($this->user->hasPermission('access', 'design/seo_url')) {
-				$design[] = array(
+				$seo[] = array(
 					'name'	   => $this->language->get('text_seo_url'),
 					'href'     => $this->url->link('design/seo_url', 'user_token=' . $this->session->data['user_token']),
 					'children' => array()		
 				);
 			}
-						
+
+			if ($seo) {
+				$design[] = array(
+					'name'	   => $this->language->get('text_seo'),
+					'href'     => '',
+					'children' => $seo
+				);
+			}
+
 			if ($design) {
 				$data['menus'][] = array(
 					'id'       => 'menu-design',

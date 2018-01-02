@@ -165,12 +165,6 @@ class ControllerDesignSeoUrl extends Controller {
 			$filter_keyword = '';
 		}
 
-		if (isset($this->request->get['filter_regex'])) {
-			$filter_regex = (string)$this->request->get['filter_regex'];
-		} else {
-			$filter_regex = '';
-		}
-
 		if (isset($this->request->get['filter_query'])) {
 			$filter_query = (string)$this->request->get['filter_query'];
 		} else {
@@ -256,7 +250,6 @@ class ControllerDesignSeoUrl extends Controller {
 
 		$filter_data = array(
 			'filter_keyword'	 => $filter_keyword,
-			'filter_regex'	     => $filter_regex,
 			'filter_query'	     => $filter_query,
 			'filter_store_id'	 => $filter_store_id,
 			'filter_language_id' => $filter_language_id,
@@ -274,10 +267,10 @@ class ControllerDesignSeoUrl extends Controller {
 			$data['seo_urls'][] = array(
 				'seo_url_id' => $result['seo_url_id'],
 				'keyword'    => $result['keyword'],
-				'regex'      => htmlspecialchars($result['regex'], ENT_COMPAT, 'UTF-8'),
 				'query'      => $result['query'],
 				'store'      => $result['store_id'] ? $result['store'] : $this->language->get('text_default'),
 				'language'   => $result['language'],
+				'sort_order' => $result['sort_order'],
 				'edit'       => $this->url->link('design/seo_url/edit', 'user_token=' . $this->session->data['user_token'] . '&seo_url_id=' . $result['seo_url_id'] . $url)
 			);
 		}
@@ -334,10 +327,10 @@ class ControllerDesignSeoUrl extends Controller {
 		}
 
 		$data['sort_keyword'] = $this->url->link('design/seo_url', 'user_token=' . $this->session->data['user_token'] . '&sort=keyword' . $url);
-		$data['sort_regex'] = $this->url->link('design/seo_url', 'user_token=' . $this->session->data['user_token'] . '&sort=regex' . $url);
 		$data['sort_query'] = $this->url->link('design/seo_url', 'user_token=' . $this->session->data['user_token'] . '&sort=query' . $url);
 		$data['sort_store'] = $this->url->link('design/seo_url', 'user_token=' . $this->session->data['user_token'] . '&sort=store' . $url);
 		$data['sort_language'] = $this->url->link('design/seo_url', 'user_token=' . $this->session->data['user_token'] . '&sort=language' . $url);
+		$data['sort_sort_order'] = $this->url->link('design/seo_url', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
 
 		$url = '';
 
@@ -481,14 +474,6 @@ class ControllerDesignSeoUrl extends Controller {
 			$data['keyword'] = '';
 		}
 
-		if (isset($this->request->post['regex'])) {
-			$data['regex'] = $this->request->post['regex'];
-		} elseif (!empty($seo_url_info)) {
-			$data['regex'] = htmlspecialchars($seo_url_info['regex'], ENT_COMPAT, 'UTF-8');
-		} else {
-			$data['regex'] = '';
-		}
-
 		if (isset($this->request->post['query'])) {
 			$data['query'] = $this->request->post['query'];
 		} elseif (!empty($seo_url_info)) {
@@ -535,6 +520,14 @@ class ControllerDesignSeoUrl extends Controller {
 			$data['language_id'] = '';
 		}
 
+		if (isset($this->request->post['sort_order'])) {
+			$data['sort_order'] = $this->request->post['sort_order'];
+		} elseif (!empty($seo_url_info)) {
+			$data['sort_order'] = $seo_url_info['sort_order'];
+		} else {
+			$data['sort_order'] = '';
+		}
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -554,15 +547,11 @@ class ControllerDesignSeoUrl extends Controller {
 		$seo_urls = $this->model_design_seo_url->getSeoUrlsByKeyword($this->request->post['keyword']);
 
 		foreach ($seo_urls as $seo_url) {
-			if ($seo_url['store_id'] == $this->request->post['store_id'] && $seo_url['query'] != $this->request->post['query']) {
-				//$this->error['keyword'] = $this->language->get('error_exists');
+			if ($seo_url['store_id'] == $this->request->post['store_id'] && $seo_url['language_id'] == $this->request->post['language_id'] && $seo_url['query'] != $this->request->post['query']) {
+				$this->error['keyword'] = $this->language->get('error_exists');
 
 				break;
 			}
-		}
-
-		if (!$this->request->post['regex']) {
-			$this->error['regex'] = $this->language->get('error_regex');
 		}
 
 		if (!$this->request->post['query']) {

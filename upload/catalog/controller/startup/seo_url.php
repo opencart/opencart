@@ -74,37 +74,37 @@ AND store_id = '" . (int)$this->config->get('config_store_id') . "'");
 	}
 
 	public function rewrite($link) {
+		$url = '';
+
 		$url_info = parse_url(str_replace('&amp;', '&', $link));
 
-		echo $url_info['query'] . "\n";
+		parse_str($url_info['query'], $data);
 
-		$string = '';
-
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `regex` != '' AND '" . $this->db->escape($url_info['query']) . "' REGEXP `regex` AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY sort_order ASC");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_regex WHERE `regex` != '' AND '" . $this->db->escape($url_info['query']) . "' REGEXP `regex`");
 
 		foreach ($query->rows as $result) {
-			$string .= '/' . $result['keyword'];
-
 			if (preg_match('/' . $result['regex'] . '/', $url_info['query'], $matches)) {
-				print_r($matches);
+				array_shift($matches);
 
-				//unset();
+				foreach ($matches as $match) {
+					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = '" . $this->db->escape($match) . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY sort_order ASC");
+
+					foreach ($query->rows as $result) {
+						$url .= '/' . $result['keyword'];
+					}
+
+					$key = substr($match, 0, strpos($match, '='));
+
+					if (isset($data[$key])) {
+
+						echo $data[$key] . "\n";
+						unset($data[$key]);
+					}
+				}
 			}
 		}
 
-
-		if ($string) {
-
-
-			echo $string . "\n";
-		}
-
-
-
-/*
 		if ($url) {
-			unset($data['route']);
-
 			$query = '';
 
 			if ($data) {
@@ -121,6 +121,5 @@ AND store_id = '" . (int)$this->config->get('config_store_id') . "'");
 		} else {
 			return $link;
 		}
-*/
 	}
 }

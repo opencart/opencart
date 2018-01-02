@@ -17,11 +17,12 @@ class Config {
      * 
      *
      * @param	string	$key
-	 * 
+	 * @param mixed $default
+	 *
 	 * @return	mixed
      */
-	public function get($key) {
-		return (isset($this->data[$key]) ? $this->data[$key] : null);
+	public function get($key, $default = null) {
+		return (isset($this->data[$key]) ? $this->data[$key] : $default);
 	}
 	
     /**

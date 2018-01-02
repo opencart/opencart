@@ -22,6 +22,11 @@ FROM " . DB_PREFIX . "seo_url
 WHERE keyword = '" . $this->db->escape($part) . "' 
 AND store_id = '" . (int)$this->config->get('config_store_id') . "'");
 
+
+
+
+
+
 				if ($query->num_rows) {
 					$url = explode('=', $query->row['query']);
 
@@ -96,8 +101,6 @@ AND store_id = '" . (int)$this->config->get('config_store_id') . "'");
 					$key = substr($match, 0, strpos($match, '='));
 
 					if (isset($data[$key])) {
-
-						echo $data[$key] . "\n";
 						unset($data[$key]);
 					}
 				}
@@ -109,7 +112,7 @@ AND store_id = '" . (int)$this->config->get('config_store_id') . "'");
 
 			if ($data) {
 				foreach ($data as $key => $value) {
-					$query .= '&' . rawurlencode((string)$key) . '=' . rawurlencode((is_array($value) ? http_build_query($value) : (string)$value));
+					$query .= '&' . rawurlencode((string)$key) . '=' . rawurlencode(is_array($value) ? http_build_query($value) : (string)$value);
 				}
 
 				if ($query) {

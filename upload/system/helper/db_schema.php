@@ -5663,6 +5663,16 @@ function db_schema() {
 				'auto_increment' => true
 			),
 			array(
+				'name' => 'store_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'language_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			),
+			array(
 				'name' => 'keyword',
 				'type' => 'varchar(255)',
 				'not_null' => true
@@ -5673,13 +5683,8 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
-				'name' => 'store_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'language_id',
-				'type' => 'int(11)',
+				'name' => 'push',
+				'type' => 'varchar(255)',
 				'not_null' => true
 			),
 			array(

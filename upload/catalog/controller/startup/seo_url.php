@@ -19,7 +19,7 @@ class ControllerStartupSeoUrl extends Controller {
 				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE keyword = '" . $this->db->escape($part) . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "'");
 
 				if ($query->num_rows) {
-					parse_str($query->row['query'], $data);
+					parse_str($query->row['push'], $data);
 
 					foreach ($data as $key => $value) {
 						$this->request->get[$key] = $value;

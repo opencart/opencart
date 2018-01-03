@@ -1688,7 +1688,7 @@ INSERT INTO `oc_tax_rule` (`tax_rule_id`, `tax_class_id`, `tax_rate_id`, `based`
 -- Dumping data for table `oc_seo_url`
 --
 
-INSERT INTO `oc_seo_url` (`seo_url_id`, `keyword`, `query`, `store_id`, `language_id`) VALUES
+INSERT INTO `oc_seo_url` (`seo_url_id`, `keyword`, `route`, `query`, `store_id`, `language_id`) VALUES
 (824, 0, 1, 'product_id=48', 'ipod-classic'),
 (836, 0, 1, 'category_id=20', 'desktops'),
 (834, 0, 1, 'category_id=26', 'pc'),

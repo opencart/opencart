@@ -332,28 +332,22 @@ class ControllerSettingSetting extends Controller {
 		// Set Time Zone
 		$data['timezones'] = array();
 
+		$timestamp = time();
+
 		$timezones = timezone_identifiers_list();
 
 		foreach($timezones as $timezone) {
-			$datetimezone = new DateTimeZone($timezone);
+			date_default_timezone_set($timezone);
 
-			$datetime = new DateTime('now', $datetimezone);
-
-			$offset = $datetimezone->getOffset($datetime);
-
-			if (!$offset) {
-				$hour = ' (+0:00)';
-			} elseif ($offset >= 0) {
-				$hour = ' (+' . date('g:i', $offset) . ')';
-			} else {
-				$hour = ' (-' . date('g:i', $offset) . ')';
-			}
+			$hour = ' (' . date('P', $timestamp) . ')';
 
 			$data['timezones'][] = array(
 				'text'  => $timezone . $hour,
 				'value' => $timezone
 			);
 		}
+
+		date_default_timezone_set($this->config->get('config_timezone'));
 
 		if (isset($this->request->post['config_language'])) {
 			$data['config_language'] = $this->request->post['config_language'];

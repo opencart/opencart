@@ -1,11 +1,11 @@
 <?php
 class ModelDesignSeoUrl extends Model {
 	public function addSeoUrl($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET store_id = '" . (int)$data['store_id'] . "', language_id = '" . (int)$data['language_id'] . "', keyword = '" . $this->db->escape((string)$data['keyword']) . "', query = '" . $this->db->escape((string)$data['query']) . "', push = '" . $this->db->escape((string)$data['push']) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET store_id = '" . (int)$data['store_id'] . "', language_id = '" . (int)$data['language_id'] . "', keyword = '" . $this->db->escape((string)$data['keyword']) . "', query = '" . $this->db->escape((string)$data['query']) . "', push = '" . $this->db->escape((string)$data['push']) . "', sort_order = '" . (int)$data['sort_order'] . "'");
 	}
 
 	public function editSeoUrl($seo_url_id, $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET store_id = '" . (int)$data['store_id'] . "', language_id = '" . (int)$data['language_id'] . "', keyword = '" . $this->db->escape((string)$data['keyword']) . "', query = '" . $this->db->escape((string)$data['query']) . "', push = '" . $this->db->escape((string)$data['push']) . "' WHERE seo_url_id = '" . (int)$seo_url_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET store_id = '" . (int)$data['store_id'] . "', language_id = '" . (int)$data['language_id'] . "', keyword = '" . $this->db->escape((string)$data['keyword']) . "', query = '" . $this->db->escape((string)$data['query']) . "', push = '" . $this->db->escape((string)$data['push']) . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE seo_url_id = '" . (int)$seo_url_id . "'");
 	}
 
 	public function deleteSeoUrl($seo_url_id) {

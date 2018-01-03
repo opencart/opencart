@@ -186,7 +186,7 @@ class ControllerDesignSeoUrl extends Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
 		} else {
-			$sort = 'keyword';
+			$sort = 'query';
 		}
 
 		if (isset($this->request->get['order'])) {
@@ -562,7 +562,7 @@ class ControllerDesignSeoUrl extends Controller {
 		foreach ($seo_urls as $seo_url) {
 			//&& $seo_url['query'] != $this->request->post['query']
 			if ($seo_url['store_id'] == $this->request->post['store_id'] && $seo_url['language_id'] == $this->request->post['language_id']) {
-				$this->error['keyword'] = $this->language->get('error_exists');
+			//	$this->error['keyword'] = $this->language->get('error_exists');
 
 				break;
 			}

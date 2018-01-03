@@ -29,11 +29,11 @@ $_['entry_sort_order']  = 'Sort Order';
 // Help
 $_['help_keyword']      = 'Make sure you only use characters in the a-z or 0-9 use and - or _ for spaces.';
 $_['help_query']        = 'The URL query to replace.';
-$_['help_push']         = 'The push URL permaters.';
+$_['help_push']         = 'The URL permaters to be pushed into the GET request after being loaded from the keyword used.';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify SEO URL!';
 $_['error_keyword']     = 'Keyword must be between 3 and 64 characters!';
 $_['error_exists']      = 'Keyword already in use!';
 $_['error_query']       = 'Query must be between 3 and 255 characters!';
-$_['error_push']        = 'Route required!';
+$_['error_push']        = 'Push permaters required!';

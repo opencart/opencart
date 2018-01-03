@@ -19,7 +19,7 @@ class ControllerStartupSeoUrl extends Controller {
 				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE keyword = '" . $this->db->escape($part) . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "'");
 
 				if ($query->num_rows) {
-					parse_str($query->row['push'], $data);
+					parse_str(html_entity_decode($query->row['push'], ENT_QUOTES, 'UTF-8'), $data);
 
 					foreach ($data as $key => $value) {
 						$this->request->get[$key] = $value;
@@ -34,7 +34,7 @@ class ControllerStartupSeoUrl extends Controller {
 	}
 
 	public function rewrite($link) {
-		$url = '';
+		$parts = array();
 
 		$url_info = parse_url(str_replace('&amp;', '&', $link));
 
@@ -47,10 +47,10 @@ class ControllerStartupSeoUrl extends Controller {
 				array_shift($matches);
 
 				foreach ($matches as $match) {
-					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = '" . $this->db->escape($match) . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY sort_order ASC");
+					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = '" . $this->db->escape($match) . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 					foreach ($query->rows as $result) {
-						$url .= '/' . $result['keyword'];
+						$parts[] = $result;
 					}
 
 					$key = substr($match, 0, strpos($match, '='));
@@ -60,6 +60,22 @@ class ControllerStartupSeoUrl extends Controller {
 					}
 				}
 			}
+		}
+
+		// Sort the URL
+		$sort_order = array();
+
+		foreach ($parts as $key => $value) {
+			$sort_order[$key] = $value['sort_order'];
+		}
+
+		array_multisort($sort_order, SORT_ASC, $parts);
+
+		// Build the URL
+		$url = '';
+
+		foreach ($parts as $result) {
+			$url .= '/' . $result['keyword'];
 		}
 
 		if ($url) {

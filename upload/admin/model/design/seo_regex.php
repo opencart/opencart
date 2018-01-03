@@ -19,7 +19,7 @@ class ModelDesignSeoRegex extends Model {
 	}
 
 	public function getSeoRegexes($data = array()) {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "seo_regex` ORDER BY regex";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "seo_regex` ORDER BY name";
 
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {

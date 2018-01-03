@@ -1703,7 +1703,7 @@ INSERT INTO `oc_seo_regex` (`seo_regex_id`, `name`, `regex`) VALUES
 -- Dumping data for table `oc_seo_url`
 --
 
-INSERT INTO `oc_seo_url` (`seo_url_id`, `store_id`, `language_id`, `query`, `keyword`, `sort_order`) VALUES
+INSERT INTO `oc_seo_url` (`seo_url_id`, `store_id`, `language_id`, `query`, `keyword`) VALUES
 (824, 0, 1, 'product_id=48', 'ipod-classic'),
 (836, 0, 1, 'category_id=20', 'desktops'),
 (834, 0, 1, 'category_id=26', 'pc'),

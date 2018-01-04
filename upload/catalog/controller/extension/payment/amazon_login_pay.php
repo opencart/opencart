@@ -552,9 +552,10 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		$response = $this->model_extension_payment_amazon_login_pay->sendOrder($order_info['order_id'], $total, $currency_code);
 		$this->model_extension_payment_amazon_login_pay->logger($response);
 
-		if (isset($response['redirect'])) {
-			$this->$response['redirect']($this->language->get('error_process_order'));
+		if (isset($response['redirect']) && ($response['redirect'] == 'paymentMethod' || $response['redirect'] == 'failure')) {
 			$this->session->data['lpa']['error'] = $this->language->get('error_process_order');
+
+			// if $response is returned and set it is either failure or paymentMethod (both methods to redirect to
 			$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/' . $response['redirect']));
 		}
 

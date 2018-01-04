@@ -24,7 +24,7 @@ class ControllerExtensionModulePPButton extends Controller {
 					$data['paypal_environment'] = 'sandbox';
 				} else {
 					$data['username'] = $this->config->get('payment_pp_express_username');
-					$data['paypal_environment'] = 'live';
+					$data['paypal_environment'] = 'production';
 				}
 
 				$data['payment_url'] = $this->url->link('extension/payment/pp_express/express');

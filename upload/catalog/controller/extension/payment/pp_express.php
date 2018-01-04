@@ -1331,7 +1331,20 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		 * If a failed PayPal setup happens, handle it.
 		 */
 		if (!isset($result['TOKEN'])) {
-			$this->session->data['error'] = $result['L_LONGMESSAGE0'];
+			$this->session->data['error'] = "PayPal request failed, please contact the store owner";
+
+			if (isset($result['L_ERRORCODE0'])) {
+				$this->session->data['error'] = "[Error code: " . (string)$result['L_ERRORCODE0'] . "]";
+			}
+
+			if (isset($result['L_SHORTMESSAGE0'])) {
+				$this->session->data['error'] .= " " . (string)$result['L_SHORTMESSAGE0'] . "\r\n";
+			}
+
+			if (isset($result['L_LONGMESSAGE0'])) {
+				$this->session->data['error'] .= (string)$result['L_LONGMESSAGE0'];
+			}
+
 			/**
 			 * Unable to add error message to user as the session errors/success are not
 			 * used on the cart or checkout pages - need to be added?

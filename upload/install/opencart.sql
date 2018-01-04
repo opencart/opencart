@@ -1689,13 +1689,16 @@ INSERT INTO `oc_tax_rule` (`tax_rule_id`, `tax_class_id`, `tax_rate_id`, `based`
 --
 
 INSERT INTO `oc_seo_regex` (`seo_regex_id`, `name`, `regex`, `sort_order`) VALUES
-(3, 'Products', '(route=product\\/product).+(product_id=\\d+)(?:[&]|$)'),
-(4, 'Categories Level 1', '(route=product\\/product|route=product\\/category).+(path=\\d+)(?:[_&]|$)'),
-(5, 'Categories Level 2', '(route=product\\/product|route=product\\/category).+(path=\\d+_\\d+)(?:[_&]|$)'),
-(6, 'Categories Level 3', '(route=product\\/product|route=product\\/category).+(path=\\d+_\\d+_\\d+)(?:[_&]|$)'),
-(7, 'Information', '(route=information\\/information).+(information_id=\\d+)(?:[&]|$)'),
-(8, 'Manufacturer', '(route=product\\/manufacturer\\/info).+(manufacturer_id=\\d+)(?:[&]|$)'),
-(9, 'Language', '(language=[a-z-]+)(?:[&]|$)');
+(1, 'Product', '(product_id=\\d+)(?:[&]|$)', 100),
+(2, 'Category Level 1', '(path=\\d+)(?:[_&]|$)', 1),
+(3, 'Category Level 2', '(path=\\d+_\\d+)(?:[_&]|$)', 2),
+(4, 'Category Level 3', '(path=\\d+_\\d+_\\d+)(?:[_&]|$)', 3),
+(5, 'Category Level 4', '(path=\\d+_\\d+_\\d+_\\d+)(?:[_&]|$)', 4),
+(6, 'Category Level 5', '(path=\\d+_\\d+_\\d+_\\d+_\\d+)(?:[_&]|$)', 5),
+(7, 'Information', '(information_id=\\d+)(?:[&]|$)', 1),
+(8, 'Manufacturer', '(manufacturer_id=\\d+)(?:[&]|$)', 2),
+(9, 'Language', '(language=[a-z-]+)(?:[&]|$)', -1),
+(10, 'Route', '(route=[a-zA-Z0-9\\/]+)(?:[&]|$)', 0);
 
 -----------------------------------------------------------
 

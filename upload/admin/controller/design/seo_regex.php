@@ -114,7 +114,7 @@ class ControllerDesignSeoRegex extends Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
 		} else {
-			$sort = 'sort_order';
+			$sort = 'name';
 		}
 
 		if (isset($this->request->get['order'])) {
@@ -161,6 +161,8 @@ class ControllerDesignSeoRegex extends Controller {
 		$data['seo_regexes'] = array();
 
 		$filter_data = array(
+			'sort'  => $sort,
+			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
 			'limit' => $this->config->get('config_limit_admin')
 		);

@@ -565,7 +565,7 @@ class ControllerDesignSeoUrl extends Controller {
 		}
 
 		if (!$this->request->post['push']) {
-			$this->error['push'] = $this->language->get('error_push');
+		//	$this->error['push'] = $this->language->get('error_push');
 		}
 
 		return !$this->error;

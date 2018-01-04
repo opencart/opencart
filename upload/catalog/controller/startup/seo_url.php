@@ -47,7 +47,7 @@ class ControllerStartupSeoUrl extends Controller {
 				array_shift($matches);
 
 				foreach ($matches as $match) {
-					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = '" . $this->db->escape($match) . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = '" . $this->db->escape($match) . "' AND keyword != '' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 					foreach ($query->rows as $part) {
 						$url .= '/' . $part['keyword'];

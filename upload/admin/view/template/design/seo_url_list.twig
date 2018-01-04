@@ -85,11 +85,10 @@
                   <thead>
                     <tr>
                       <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');"/></td>
-                      <td class="text-left">{% if sort == 'keyword' %}<a href="{{ sort_keyword }}" class="{{ order|lower }}">{{ column_keyword }}</a> {% else %}<a href="{{ sort_keyword }}">{{ column_keyword }}</a>{% endif %}</td>
                       <td class="text-left">{% if sort == 'query' %}<a href="{{ sort_query }}" class="{{ order|lower }}">{{ column_query }}</a> {% else %}<a href="{{ sort_query }}">{{ column_query }}</a>{% endif %}</td>
+                      <td class="text-left">{% if sort == 'keyword' %}<a href="{{ sort_keyword }}" class="{{ order|lower }}">{{ column_keyword }}</a> {% else %}<a href="{{ sort_keyword }}">{{ column_keyword }}</a>{% endif %}</td>
                       <td class="text-left">{% if sort == 'store' %}<a href="{{ sort_store }}" class="{{ order|lower }}">{{ column_store }}</a>{% else %}<a href="{{ sort_store }}">{{ column_store }}</a>{% endif %}</td>
                       <td class="text-left">{% if sort == 'language' %}<a href="{{ sort_language }}" class="{{ order|lower }}">{{ column_language }}</a>{% else %}<a href="{{ sort_language }}">{{ column_language }}</a>{% endif %}</td>
-                      <td class="text-right">{% if sort == 'sort_order' %}<a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a>{% else %}<a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>{% endif %}</td>
                       <td class="text-right">{{ column_action }}</td>
                     </tr>
                   </thead>
@@ -102,11 +101,10 @@
                             {% else %}
                               <input type="checkbox" name="selected[]" value="{{ seo_url.seo_url_id }}"/>
                             {% endif %}</td>
-                          <td class="text-left">{{ seo_url.keyword }}</td>
                           <td class="text-left">{{ seo_url.query }}</td>
+                          <td class="text-left">{{ seo_url.keyword }}</td>
                           <td class="text-left">{{ seo_url.store }}</td>
                           <td class="text-left">{{ seo_url.language }}</td>
-                          <td class="text-right">{{ seo_url.sort_order }}</td>
                           <td class="text-right"><a href="{{ seo_url.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                         </tr>
                       {% endfor %}
@@ -133,16 +131,16 @@
 $('#button-filter').on('click', function() {
 	var url = 'index.php?route=design/seo_url&user_token={{ user_token }}';
 
-	var filter_keyword = $('input[name=\'filter_keyword\']').val();
-
-	if (filter_keyword) {
-		url += '&filter_keyword=' + encodeURIComponent(filter_keyword);
-	}
-
 	var filter_query = $('input[name=\'filter_query\']').val();
 
 	if (filter_query) {
 		url += '&filter_query=' + encodeURIComponent(filter_query);
+	}
+
+	var filter_keyword = $('input[name=\'filter_keyword\']').val();
+
+	if (filter_keyword) {
+		url += '&filter_keyword=' + encodeURIComponent(filter_keyword);
 	}
 
 	var filter_store_id = $('select[name=\'filter_store_id\']').val();

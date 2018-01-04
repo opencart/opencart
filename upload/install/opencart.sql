@@ -1688,22 +1688,22 @@ INSERT INTO `oc_tax_rule` (`tax_rule_id`, `tax_class_id`, `tax_rate_id`, `based`
 -- Dumping data for table `oc_seo_regex`
 --
 
-INSERT INTO `oc_seo_regex` (`seo_regex_id`, `name`, `regex`) VALUES
+INSERT INTO `oc_seo_regex` (`seo_regex_id`, `name`, `regex`, `sort_order`) VALUES
 (3, 'Products', '(route=product\\/product).+(product_id=\\d+)(?:[&]|$)'),
 (4, 'Categories Level 1', '(route=product\\/product|route=product\\/category).+(path=\\d+)(?:[_&]|$)'),
 (5, 'Categories Level 2', '(route=product\\/product|route=product\\/category).+(path=\\d+_\\d+)(?:[_&]|$)'),
 (6, 'Categories Level 3', '(route=product\\/product|route=product\\/category).+(path=\\d+_\\d+_\\d+)(?:[_&]|$)'),
 (7, 'Information', '(route=information\\/information).+(information_id=\\d+)(?:[&]|$)'),
-(8, 'Manufacturer', '(route=product\\/manufacturer\\/info).+(manufacturer_id=\\d+)(?:[&]|$)');
+(8, 'Manufacturer', '(route=product\\/manufacturer\\/info).+(manufacturer_id=\\d+)(?:[&]|$)'),
+(9, 'Language', '(language=[a-z-]+)(?:[&]|$)');
 
 -----------------------------------------------------------
-
 
 --
 -- Dumping data for table `oc_seo_url`
 --
 
-INSERT INTO `oc_seo_url` (`seo_url_id`, `store_id`, `language_id`, `query`, `keyword`, `sort_order`) VALUES
+INSERT INTO `oc_seo_url` (`seo_url_id`, `store_id`, `language_id`, `query`, `keyword`) VALUES
 (824, 0, 1, 'product_id=48', 'ipod-classic'),
 (836, 0, 1, 'category_id=20', 'desktops'),
 (834, 0, 1, 'category_id=26', 'pc'),

@@ -5635,6 +5635,11 @@ function db_schema() {
 				'name' => 'regex',
 				'type' => 'varchar(255)',
 				'not_null' => true
+			),
+			array(
+				'name' => 'sort_order',
+				'type' => 'int(3)',
+				'not_null' => true
 			)
 		),
 		'primary' => array(
@@ -5673,23 +5678,18 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
-				'name' => 'keyword',
+				'name' => 'query',
 				'type' => 'varchar(255)',
 				'not_null' => true
 			),
 			array(
-				'name' => 'query',
+				'name' => 'keyword',
 				'type' => 'varchar(255)',
 				'not_null' => true
 			),
 			array(
 				'name' => 'push',
 				'type' => 'varchar(255)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'sort_order',
-				'type' => 'int(3)',
 				'not_null' => true
 			)
 		),

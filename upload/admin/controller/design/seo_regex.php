@@ -26,6 +26,14 @@ class ControllerDesignSeoRegex extends Controller {
 
 			$url = '';
 
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . (string)$this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . (string)$this->request->get['order'];
+			}
+
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . (int)$this->request->get['page'];
 			}
@@ -49,6 +57,14 @@ class ControllerDesignSeoRegex extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';
+
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . (string)$this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . (string)$this->request->get['order'];
+			}
 
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . (int)$this->request->get['page'];
@@ -76,6 +92,14 @@ class ControllerDesignSeoRegex extends Controller {
 
 			$url = '';
 
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . (string)$this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . (string)$this->request->get['order'];
+			}
+
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . (int)$this->request->get['page'];
 			}
@@ -87,6 +111,18 @@ class ControllerDesignSeoRegex extends Controller {
 	}
 
 	protected function getList() {
+		if (isset($this->request->get['sort'])) {
+			$sort = (string)$this->request->get['sort'];
+		} else {
+			$sort = 'sort_order';
+		}
+
+		if (isset($this->request->get['order'])) {
+			$order = (string)$this->request->get['order'];
+		} else {
+			$order = 'ASC';
+		}
+
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
@@ -94,6 +130,14 @@ class ControllerDesignSeoRegex extends Controller {
 		}
 
 		$url = '';
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . (string)$this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . (string)$this->request->get['order'];
+		}
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . (int)$this->request->get['page'];
@@ -130,6 +174,7 @@ class ControllerDesignSeoRegex extends Controller {
 				'seo_regex_id' => $result['seo_regex_id'],
 				'name'         => $result['name'],
 				'regex'        => htmlspecialchars($result['regex'], ENT_COMPAT, 'UTF-8'),
+				'sort_order'   => $result['sort_order'],
 				'edit'         => $this->url->link('design/seo_regex/edit', 'user_token=' . $this->session->data['user_token'] . '&seo_regex_id=' . $result['seo_regex_id'] . $url)
 			);
 		}
@@ -156,6 +201,22 @@ class ControllerDesignSeoRegex extends Controller {
 			$data['selected'] = array();
 		}
 
+		$url = '';
+
+		if ($order == 'ASC') {
+			$url .= '&order=DESC';
+		} else {
+			$url .= '&order=ASC';
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . (int)$this->request->get['page'];
+		}
+
+		$data['sort_name'] = $this->url->link('design/seo_regex', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_regex'] = $this->url->link('design/seo_regex', 'user_token=' . $this->session->data['user_token'] . '&sort=regex' . $url);
+		$data['sort_sort_order'] = $this->url->link('design/seo_regex', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
+
 		$pagination = new Pagination();
 		$pagination->total = $seo_regex_total;
 		$pagination->page = $page;
@@ -165,6 +226,9 @@ class ControllerDesignSeoRegex extends Controller {
 		$data['pagination'] = $pagination->render();
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($seo_regex_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($seo_regex_total - $this->config->get('config_limit_admin'))) ? $seo_regex_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $seo_regex_total, ceil($seo_regex_total / $this->config->get('config_limit_admin')));
+
+		$data['sort'] = $sort;
+		$data['order'] = $order;
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -195,6 +259,14 @@ class ControllerDesignSeoRegex extends Controller {
 		}
 
 		$url = '';
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . (string)$this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . (string)$this->request->get['order'];
+		}
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . (int)$this->request->get['page'];
@@ -238,6 +310,14 @@ class ControllerDesignSeoRegex extends Controller {
 			$data['regex'] = htmlspecialchars($seo_regex_info['regex'], ENT_COMPAT, 'UTF-8');
 		} else {
 			$data['regex'] = '';
+		}
+
+		if (isset($this->request->post['sort_order'])) {
+			$data['sort_order'] = $this->request->post['sort_order'];
+		} elseif (!empty($seo_regex_info)) {
+			$data['sort_order'] = $seo_regex_info['sort_order'];
+		} else {
+			$data['sort_order'] = '';
 		}
 
 		$data['header'] = $this->load->controller('common/header');

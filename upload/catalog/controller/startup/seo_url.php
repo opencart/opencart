@@ -34,13 +34,13 @@ class ControllerStartupSeoUrl extends Controller {
 	}
 
 	public function rewrite($link) {
-		$parts = array();
+		$url = '';
 
 		$url_info = parse_url(str_replace('&amp;', '&', $link));
 
 		parse_str($url_info['query'], $data);
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_regex WHERE `regex` != '' AND '" . $this->db->escape($url_info['query']) . "' REGEXP `regex`");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_regex WHERE '" . $this->db->escape($url_info['query']) . "' REGEXP `regex` ORDER BY sort_order ASC");
 
 		foreach ($query->rows as $result) {
 			if (preg_match('/' . $result['regex'] . '/', $url_info['query'], $matches)) {
@@ -49,8 +49,8 @@ class ControllerStartupSeoUrl extends Controller {
 				foreach ($matches as $match) {
 					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = '" . $this->db->escape($match) . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
-					foreach ($query->rows as $result) {
-						$parts[] = $result;
+					foreach ($query->rows as $part) {
+						$url .= '/' . $part['keyword'];
 					}
 
 					$key = substr($match, 0, strpos($match, '='));
@@ -60,22 +60,6 @@ class ControllerStartupSeoUrl extends Controller {
 					}
 				}
 			}
-		}
-
-		// Sort the URL
-		$sort_order = array();
-
-		foreach ($parts as $key => $value) {
-			$sort_order[$key] = $value['sort_order'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $parts);
-
-		// Build the URL
-		$url = '';
-
-		foreach ($parts as $result) {
-			$url .= '/' . $result['keyword'];
 		}
 
 		if ($url) {

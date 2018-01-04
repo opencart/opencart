@@ -12,7 +12,7 @@
 window.paypalCheckoutReady = function () {
   paypal.checkout.setup('{{ username }}', {
     container: 'button-confirm',
-    environment: '{{ environment }}'
+    environment: '{{ paypal_environment }}'
   });
 };
 //--></script>

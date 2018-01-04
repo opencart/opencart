@@ -21,10 +21,10 @@ class ControllerExtensionModulePPButton extends Controller {
 
 				if ($this->config->get('payment_pp_express_test') == 1) {
 					$data['username'] = $this->config->get('payment_pp_express_sandbox_username');
-					$data['environment'] = 'sandbox';
+					$data['paypal_environment'] = 'sandbox';
 				} else {
 					$data['username'] = $this->config->get('payment_pp_express_username');
-					$data['environment'] = 'live';
+					$data['paypal_environment'] = 'production';
 				}
 
 				$data['payment_url'] = $this->url->link('extension/payment/pp_express/express');

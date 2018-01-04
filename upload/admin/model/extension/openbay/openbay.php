@@ -706,11 +706,6 @@ class ModelExtensionOpenBayOpenbay extends Model {
 			CURLOPT_COOKIE => "PHPSESSID=" . $api_login['session_id'],
 		);
 
-		// Set SSL if required
-		if (substr(HTTP_CATALOG, 0, 5) == 'https') {
-			$defaults[CURLOPT_PORT] = 443;
-		}
-
 		$curl = curl_init();
 		curl_setopt_array($curl, $defaults);
 		$result = curl_exec($curl);
@@ -734,11 +729,6 @@ class ModelExtensionOpenBayOpenbay extends Model {
 			CURLOPT_POSTFIELDS => http_build_query(array('key' => $key)),
 			CURLOPT_TIMEOUT => 60,
 		);
-
-		// Set SSL if required
-		if (substr(HTTP_CATALOG, 0, 5) == 'https') {
-			$defaults[CURLOPT_PORT] = 443;
-		}
 
 		$curl = curl_init();
 		curl_setopt_array($curl, $defaults);

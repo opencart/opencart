@@ -31,8 +31,10 @@ $_['text_file']              = 'Files';
 $_['text_status']            = 'Status';
 $_['text_writable']          = 'Writable';
 $_['text_unwritable']        = 'Unwritable';
+$_['text_missing']        	 = 'Missing';
 
 // Error
+$_['error_version']          = 'Warning: You need to use PHP 5.4 or above for OpenCart to work!';
 $_['error_version']          = 'Warning: You need to use PHP 5.4 or above for OpenCart to work!';
 $_['error_file_upload']      = 'Warning: file_uploads needs to be enabled!';
 $_['error_session']          = 'Warning: OpenCart will not work with session.auto_start enabled!';

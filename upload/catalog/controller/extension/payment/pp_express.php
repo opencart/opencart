@@ -7,8 +7,10 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 		if ($this->config->get('payment_pp_express_test') == 1) {
 			$data['username'] = $this->config->get('payment_pp_express_sandbox_username');
+			$data['paypal_environment'] = "sandbox";
 		} else {
 			$data['username'] = $this->config->get('payment_pp_express_username');
+			$data['paypal_environment'] = "production";
 		}
 
 		$data['continue'] = $this->url->link('extension/payment/pp_express/checkout');
@@ -1331,7 +1333,20 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		 * If a failed PayPal setup happens, handle it.
 		 */
 		if (!isset($result['TOKEN'])) {
-			$this->session->data['error'] = $result['L_LONGMESSAGE0'];
+			$this->session->data['error'] = "PayPal request failed, please contact the store owner";
+
+			if (isset($result['L_ERRORCODE0'])) {
+				$this->session->data['error'] = "[Error code: " . (string)$result['L_ERRORCODE0'] . "]";
+			}
+
+			if (isset($result['L_SHORTMESSAGE0'])) {
+				$this->session->data['error'] .= " " . (string)$result['L_SHORTMESSAGE0'] . "\r\n";
+			}
+
+			if (isset($result['L_LONGMESSAGE0'])) {
+				$this->session->data['error'] .= (string)$result['L_LONGMESSAGE0'];
+			}
+
 			/**
 			 * Unable to add error message to user as the session errors/success are not
 			 * used on the cart or checkout pages - need to be added?

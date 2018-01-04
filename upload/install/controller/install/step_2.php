@@ -4,7 +4,7 @@ class ControllerInstallStep2 extends Controller {
 
 	public function index() {
 		$this->load->language('install/step_2');
-		
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->response->redirect($this->url->link('install/step_3'));
 		}
@@ -12,7 +12,7 @@ class ControllerInstallStep2 extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_step_2'] = $this->language->get('text_step_2');
 		$data['text_install_php'] = $this->language->get('text_install_php');
 		$data['text_install_extension'] = $this->language->get('text_install_extension');
@@ -61,9 +61,9 @@ class ControllerInstallStep2 extends Controller {
 		$data['session_auto_start'] = ini_get('session_auto_start');
 
 		$db = array(
-			'mysql', 
-			'mysqli', 
-			'pgsql', 
+			'mysql',
+			'mysqli',
+			'pgsql',
 			'pdo'
 		);
 
@@ -86,18 +86,18 @@ class ControllerInstallStep2 extends Controller {
 
 		// catalog config
 		if (!is_file(DIR_OPENCART . 'config.php')) {
-			$data['error_catalog_config'] = $this->language->get('error_missing');
+			$data['error_catalog_config'] = $this->language->get('text_missing');
 		} elseif (!is_writable(DIR_OPENCART . 'config.php')) {
-			$data['error_catalog_config'] = $this->language->get('error_unwritable');
+			$data['error_catalog_config'] = $this->language->get('text_unwritable');
 		} else {
 			$data['error_catalog_config'] = '';
 		}
 
 		// admin configs
 		if (!is_file(DIR_OPENCART . 'admin/config.php')) {
-			$data['error_admin_config'] = $this->language->get('error_missing');
+			$data['error_admin_config'] = $this->language->get('text_missing');
 		} elseif (!is_writable(DIR_OPENCART . 'admin/config.php')) {
-			$data['error_admin_config'] = $this->language->get('error_unwritable');
+			$data['error_admin_config'] = $this->language->get('text_unwritable');
 		} else {
 			$data['error_admin_config'] = '';
 		}
@@ -128,9 +128,9 @@ class ControllerInstallStep2 extends Controller {
 		}
 
 		$db = array(
-			'mysql', 
-			'mysqli', 
-			'pdo', 
+			'mysql',
+			'mysqli',
+			'pdo',
 			'pgsql'
 		);
 
@@ -157,7 +157,7 @@ class ControllerInstallStep2 extends Controller {
 		if (!extension_loaded('zip')) {
 			$this->error['warning'] = $this->language->get('error_zip');
 		}
-		
+
 		if (!function_exists('iconv') && !extension_loaded('mbstring')) {
 			$this->error['warning'] = $this->language->get('error_mbstring');
 		}

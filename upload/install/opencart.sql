@@ -1688,18 +1688,18 @@ INSERT INTO `oc_tax_rule` (`tax_rule_id`, `tax_class_id`, `tax_rate_id`, `based`
 -- Dumping data for table `oc_seo_regex`
 --
 
-INSERT INTO `oc_seo_regex` (`seo_regex_id`, `name`, `regex`, `sort_order`) VALUES
-(3, ''Product'', ''(product_id=\\d+)(?:[&]|$)'', 100),
-(4, ''Category Level 1'', ''(path=\\d+)(?:[_&]|$)'', 1),
-(5, ''Category Level 2'', ''(path=\\d+_\\d+)(?:[_&]|$)'', 2),
-(6, ''Category Level 3'', ''(path=\\d+_\\d+_\\d+)(?:[_&]|$)'', 3),
-(7, ''Information'', ''(information_id=\\d+)(?:[&]|$)'', 1),
-(8, ''Manufacturer'', ''(manufacturer_id=\\d+)(?:[&]|$)'', 2),
-(9, ''Language'', ''(language=[a-z-]+)(?:[&]|$)'', -1),
-(10, ''Route'', ''(route=[a-zA-Z0-9\\/]+)(?:[&]|$)'', 0),
-(12, ''Category Level 4'', ''(path=\\d+_\\d+_\\d+_\\d+)(?:[_&]|$)'', 4),
-(13, ''Category Level 5'', ''(path=\\d+_\\d+_\\d+_\\d+_\\d+)(?:[_&]|$)'', 5),
-(14, ''Manufacturer'', ''(route=product\\/product&manufacturer_id=)'', 1);
+INSERT INTO `oc_seo_regex` (`name`, `regex`, `sort_order`) VALUES
+('Product', '(product_id=\\d+)(?:[&]|$)', 100),
+('Category Level 1', '(path=\\d+)(?:[_&]|$)', 1),
+('Category Level 2', '(path=\\d+_\\d+)(?:[_&]|$)', 2),
+('Category Level 3', '(path=\\d+_\\d+_\\d+)(?:[_&]|$)', 3),
+('Information', '(information_id=\\d+)(?:[&]|$)', 1),
+('Manufacturer', '(manufacturer_id=\\d+)(?:[&]|$)', 2),
+('Language', '(language=[a-z-]+)(?:[&]|$)', -1),
+('Route', '(route=[a-zA-Z0-9\\/]+)(?:[&]|$)', 0),
+('Category Level 4', '(path=\\d+_\\d+_\\d+_\\d+)(?:[_&]|$)', 4),
+('Category Level 5', '(path=\\d+_\\d+_\\d+_\\d+_\\d+)(?:[_&]|$)', 5),
+('Manufacturer', '(route=product\\/product&manufacturer_id=)', 1);
 
 -----------------------------------------------------------
 

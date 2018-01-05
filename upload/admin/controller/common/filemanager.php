@@ -3,7 +3,6 @@ class ControllerCommonFileManager extends Controller {
 	public function index() {
 		$this->load->language('common/filemanager');
 
-		// Find which protocol to use to pass the full image link back
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = basename(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		} else {
@@ -12,7 +11,7 @@ class ControllerCommonFileManager extends Controller {
 
 		// Make sure we have the correct directory
 		if (isset($this->request->get['directory'])) {
-			$directory = rtrim(DIR_IMAGE . 'catalog/' . $this->request->get['directory'], '/');
+			$directory = rtrim(DIR_IMAGE . 'catalog' . $this->request->get['directory'], '/');
 		} else {
 			$directory = DIR_IMAGE . 'catalog';
 		}
@@ -162,7 +161,7 @@ class ControllerCommonFileManager extends Controller {
 
 			// Get total number of files and directories
 			$pagination = new Pagination();
-			$pagination->total = count(array_merge((array)$directories, (array)$files));
+			$pagination->total = count(array_merge((array)$images, (array)$files));
 			$pagination->page = $page;
 			$pagination->limit = 16;
 			$pagination->url = $this->url->link('common/filemanager', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');

@@ -472,7 +472,7 @@ class ControllerDesignSeoUrl extends Controller {
 		if (isset($this->request->post['query'])) {
 			$data['query'] = $this->request->post['query'];
 		} elseif (!empty($seo_url_info)) {
-			$data['query'] = $seo_url_info['query'];
+			$data['query'] = htmlspecialchars($seo_url_info['query'], ENT_COMPAT, 'UTF-8');
 		} else {
 			$data['query'] = '';
 		}
@@ -488,7 +488,7 @@ class ControllerDesignSeoUrl extends Controller {
 		if (isset($this->request->post['push'])) {
 			$data['push'] = $this->request->post['push'];
 		} elseif (!empty($seo_url_info)) {
-			$data['push'] = $seo_url_info['push'];
+			$data['push'] = htmlspecialchars($seo_url_info['push'], ENT_COMPAT, 'UTF-8');
 		} else {
 			$data['push'] = '';
 		}

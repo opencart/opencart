@@ -137,7 +137,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		}
 
 		if (isset($this->request->get['filter_member'])) {
-			$url .= '&filter_member=' . $this->request->get['filter_member'];
+			$url .= '&filter_member=' . urlencode($this->request->get['filter_member']);
 		}
 
 		if (isset($this->request->get['sort'])) {

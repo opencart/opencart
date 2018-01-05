@@ -54,13 +54,11 @@ class ControllerStartupSeoUrl extends Controller {
 				foreach ($matches as $match) {
 					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = '" . $this->db->escape(html_entity_decode($match, ENT_QUOTES, 'UTF-8')) . "' AND keyword != '' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
-					foreach ($query->rows as $part) {
-						$url .= '/' . $part['keyword'];
+					foreach ($query->rows as $seo) {
+						$url .= '/' . $seo['keyword'];
 					}
 
 					parse_str(html_entity_decode($match, ENT_QUOTES, 'UTF-8'), $remove);
-
-					print_r($remove);
 
 					// Remove all the matched url elements
 					foreach (array_keys($remove) as $key) {

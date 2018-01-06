@@ -1994,7 +1994,8 @@ INSERT INTO `oc_manufacturer` (`manufacturer_id`, `name`, `image`, `sort_order`,
 -- Table structure for table `oc_manufacturer_description`
 --
 
-CREATE TABLE IF NOT EXISTS `oc_manufacturer_description` (
+DROP TABLE IF EXISTS `oc_manufacturer_description`;
+CREATE TABLE `oc_manufacturer_description` (
   `manufacturer_id` int(11) NOT NULL DEFAULT '0',
   `language_id` int(11) NOT NULL DEFAULT '0',
   `description` text NOT NULL,

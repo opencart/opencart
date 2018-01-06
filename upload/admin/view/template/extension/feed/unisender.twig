@@ -1,0 +1,120 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+	    {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+			{% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+	{% if error_warning %}
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><img src="https://www.unisender.com/favicon.ico" alt="" /> </i> {{ text_edit }}</h3>
+      </div>
+      <div class="panel-body">
+	  
+      <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="unisender_key"><span data-toggle="tooltip" title="{{ entry_unisender_key_help }}">{{ entry_unisender_key }}</span></label>
+            <div class="col-sm-10">
+				<input id="unisender_key" type="text" class="form-control" name="feed_unisender_key" value="{{ feed_unisender_key }}" required/>
+				<a href="https://www.unisender.com/?a=opencart" target="_blank">{{ text_get_key }}</a>
+				<div id="key_td" style="width:100%;">
+			  {% if _error.feed_unisender_key %}
+              <span class="error alert alert-danger col-sm-12" id="key_error">{{ _error.feed_unisender_key }}</span>
+              {% endif %}			
+			    </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="subscribtion_selector"><span data-toggle="tooltip" title="{{ entry_unisender_subscribtion_help }}">{{ entry_unisender_subscribtion }}</span></label>
+            <div class="col-sm-10">
+              <select name="feed_unisender_subscribtion[]" id="subscribtion_selector" size="10" class="form-control" multiple>
+              </select>
+			  <br/><a id="unselect_subscribtions" href="javascript:void(0);">{{ text_unselect }}</a>
+            </div>
+          </div>
+		  
+          <div class="form-group">
+			<div class="col-sm-2"></div>
+            <div class="col-sm-10">
+			<input type="checkbox" id="input-ignore" name="feed_unisender_ignore" value="1" {% if feed_unisender_ignore %}checked{% endif %} />
+			<label class="control-label" for="input-ignore">{{ entry_unisender_ignore }}</label>
+            </div>
+          </div>
+		  
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-status">{{ entry_unisender_status }}</label>
+            <div class="col-sm-10">
+              <select name="feed_unisender_status" id="input-status" class="form-control">
+				{% if feed_unisender_status %}
+                <option value="1" selected="selected">{{ text_enabled }}</option>
+                <option value="0">{{ text_disabled }}</option>
+				{% else %}
+                <option value="1">{{ text_enabled }}</option>
+                <option value="0" selected="selected">{{ text_disabled }}</option>
+                {% endif %}
+              </select>
+			  <a href="{{ export }}">{{ text_export }}</a>
+            </div>
+          </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$(document).ready(function() {
+	$('#unselect_subscribtions').click(function() {
+		$('#subscribtion_selector option').removeAttr('selected');
+		return false;
+	})
+	var subscribtions = {};
+{% for s in feed_unisender_subscribtion %}
+	subscribtions['{{ s }}'] = true;
+{% endfor %}
+	$('#unisender_key').change(function() {
+		$('#subscribtion_selector').html('');
+		$('#key_error').remove();
+		$('#subscribtion_selector').removeAttr('readonly');
+		$('#unisender_key').removeAttr('readonly');
+		var err_codes = {
+			invalid_api_key: 'Указан неправильный ключ доступа к API. Проверьте, совпадает ли значение ключа со значением, указанным в личном кабинете.',
+			access_denied: 'Доступ запрещён. Проверьте, включён ли доступ к API в личном кабинете Unisender.'
+		};
+		if ($(this).val()) {
+			$('#subscribtion_selector').attr('readonly', 'readonly');
+			$('#unisender_key').attr('readonly', 'readonly');
+			$.getJSON('index.php?route=extension/feed/unisender/subscribtions&key='+$(this).val()+'&user_token={{ user_token }}', function(data) {
+				$('#subscribtion_selector').removeAttr('readonly');
+				$('#unisender_key').removeAttr('readonly');
+				if (data.error) {
+					var err_text = (err_codes[data.code] ? err_codes[data.code] : 'Ошибка взаимодействия с Unisender API');
+					$('#key_td').html('<span class="error alert alert-danger col-sm-12" id="key_error">'+err_text+'</span>');
+				}
+				else {
+					$.each(data.result, function() {
+						var itm = $(this)[0];
+						$('#subscribtion_selector').append('<option value="' + itm.id + '"' + (subscribtions[itm.id.toString()] ? ' selected' : '') + '>' + itm.title + '</option>');
+					})
+				}
+			})
+		}
+	})
+	$('#unisender_key').trigger('change');
+})
+//--></script> 
+{{ footer }}

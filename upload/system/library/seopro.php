@@ -565,7 +565,7 @@ class SeoPro {
 
 		if ($category_id < 1 && !isset($this->cat_tree[$category_id])) return false;
 		
-		if(!empty($this->cat_tree[$category_id]['path'] && is_array($this->cat_tree[$category_id]['path']))) {
+		if(!empty($this->cat_tree[$category_id]['path']) && is_array($this->cat_tree[$category_id]['path'])) {
 			$path = implode('_', $this->cat_tree[$category_id]['path']);
 		}
 

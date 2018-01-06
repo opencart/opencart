@@ -161,7 +161,7 @@ class ControllerCommonFileManager extends Controller {
 
 			// Get total number of files and directories
 			$pagination = new Pagination();
-			$pagination->total = count(array_merge((array)$images, (array)$files));
+			$pagination->total = count(array_merge((array)$directories, (array)$files));
 			$pagination->page = $page;
 			$pagination->limit = 16;
 			$pagination->url = $this->url->link('common/filemanager', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');

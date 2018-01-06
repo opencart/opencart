@@ -338,8 +338,8 @@ class ControllerDesignSeoRegex extends Controller {
 			$this->error['name'] = $this->language->get('error_name');
 		}
 
-		if (!$this->request->post['regex']) {
-			$this->error['regex'] = $this->language->get('error_regex');
+		if (@preg_match('/' . html_entity_decode($this->request->post['regex'], ENT_QUOTES, 'UTF-8') . '/', null) === false) {
+			$this->error['regex'] = $this->language->get('error_invalid');
 		}
 
 		return !$this->error;

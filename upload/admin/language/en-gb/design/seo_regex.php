@@ -26,3 +26,4 @@ $_['help_regex']        = 'Regular expression to match the parts of the URL.';
 $_['error_permission']  = 'Warning: You do not have permission to modify SEO URL!';
 $_['error_name']        = 'Regex Name required!';
 $_['error_regex']       = 'Regex required!';
+$_['error_invalid']     = 'Invalid regex!';

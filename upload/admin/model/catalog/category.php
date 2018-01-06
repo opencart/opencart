@@ -60,6 +60,20 @@ class ModelCatalogCategory extends Model {
 		return $category_id;
 	}
 
+	public function editSeo($query, $data) {
+
+		foreach ($data['category_seo_url'] as $store_id => $language) {
+
+
+			foreach ($language as $language_id => $keyword) {
+				if (!empty($keyword)) {
+					$this->db->query("INSERT INTO " . DB_PREFIX . "seo_url SET store_id = '" . (int)$store_id . "', language_id = '" . (int)$language_id . "', query = 'category_id=" . (int)$category_id . "', keyword = '" . $this->db->escape($keyword) . "'");
+				}
+			}
+		}
+
+	}
+
 	public function editCategory($category_id, $data) {
 		$this->db->query("UPDATE " . DB_PREFIX . "category SET parent_id = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE category_id = '" . (int)$category_id . "'");
 

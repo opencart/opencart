@@ -266,7 +266,7 @@ class ControllerDesignSeoUrl extends Controller {
 		foreach ($results as $result) {
 			$data['seo_urls'][] = array(
 				'seo_url_id' => $result['seo_url_id'],
-				'query'      => $result['query'],
+				'query'      => htmlspecialchars($result['query'], ENT_COMPAT, 'UTF-8'),
 				'keyword'    => $result['keyword'],
 				'store'      => $result['store_id'] ? $result['store'] : $this->language->get('text_default'),
 				'language'   => $result['language'],

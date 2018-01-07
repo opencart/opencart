@@ -548,7 +548,7 @@ class ControllerDesignSeoUrl extends Controller {
 		}
 
 		if ($this->request->post['keyword']) {
-			if (preg_match('/[^a-Z0-9_-]+/', $this->request->post['keyword'])) {
+			if (preg_match('/[^a-zA-Z0-9_-]+/', $this->request->post['keyword'])) {
 				$this->error['keyword'] = $this->language->get('error_keyword');
 			}
 

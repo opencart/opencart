@@ -61,6 +61,6 @@ class Url {
 			$url = $rewrite->rewrite($url);
 		}
 
-		return $url;
+		return rtrim($url, '&amp;');
 	}
 }

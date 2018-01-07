@@ -2,9 +2,9 @@
 class ControllerAccountTracking extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/tracking');
+			$this->session->data['redirect'] = $this->url->link('account/tracking', 'language=' . $this->config->get('config_language'));
 
-			$this->response->redirect($this->url->link('account/login'));
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->load->model('account/affiliate');
@@ -20,24 +20,24 @@ class ControllerAccountTracking extends Controller {
 	
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/home')
+				'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 			);
 	
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_account'),
-				'href' => $this->url->link('account/account')
+				'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
 			);
 	
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('account/tracking')
+				'href' => $this->url->link('account/tracking', 'language=' . $this->config->get('config_language'))
 			);
 	
 			$data['text_description'] = sprintf($this->language->get('text_description'), $this->config->get('config_name'));
 	
 			$data['code'] = $affiliate_info['tracking'];
 	
-			$data['continue'] = $this->url->link('account/account');
+			$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 	
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
@@ -75,7 +75,7 @@ class ControllerAccountTracking extends Controller {
 			foreach ($results as $result) {
 				$json[] = array(
 					'name' => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
-					'link' => str_replace('&amp;', '&', $this->url->link('product/product', 'product_id=' . $result['product_id'] . '&tracking=' . $tracking))
+					'link' => str_replace('&amp;', '&', $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $result['product_id'] . '&tracking=' . $tracking))
 				);
 			}
 		}

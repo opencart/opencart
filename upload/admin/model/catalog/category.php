@@ -60,7 +60,8 @@ class ModelCatalogCategory extends Model {
 		return $category_id;
 	}
 
-	public function editSeo($query, $data) {
+	public function editSeo($language_id, $store_id, $query, $keyword) {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE store_id = '" . (int)$store_id . "', language_id = '" . (int)$language_id . "', query = '" . $this->db->escape($query) . "'");
 
 		foreach ($data['category_seo_url'] as $store_id => $language) {
 
@@ -72,6 +73,18 @@ class ModelCatalogCategory extends Model {
 			}
 		}
 
+	}
+
+	public function getCategorySeoUrls($category_id) {
+		$category_seo_url_data = array();
+
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE query = 'category_id=" . (int)$category_id . "'");
+
+		foreach ($query->rows as $result) {
+			$category_seo_url_data[$result['store_id']][$result['language_id']] = $result['keyword'];
+		}
+
+		return $category_seo_url_data;
 	}
 
 	public function editCategory($category_id, $data) {
@@ -318,18 +331,6 @@ class ModelCatalogCategory extends Model {
 		}
 
 		return $category_store_data;
-	}
-	
-	public function getCategorySeoUrls($category_id) {
-		$category_seo_url_data = array();
-		
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE query = 'category_id=" . (int)$category_id . "'");
-
-		foreach ($query->rows as $result) {
-			$category_seo_url_data[$result['store_id']][$result['language_id']] = $result['keyword'];
-		}
-
-		return $category_seo_url_data;
 	}
 	
 	public function getCategoryLayouts($category_id) {

@@ -8,13 +8,13 @@ class ControllerCheckoutCart extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/home'),
-			'text' => $this->language->get('text_home')
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('checkout/cart'),
-			'text' => $this->language->get('heading_title')
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'))
 		);
 
 		if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
@@ -29,7 +29,7 @@ class ControllerCheckoutCart extends Controller {
 			}
 
 			if ($this->config->get('config_customer_price') && !$this->customer->isLogged()) {
-				$data['attention'] = sprintf($this->language->get('text_login'), $this->url->link('account/login'), $this->url->link('account/register'));
+				$data['attention'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language')), $this->url->link('account/register', 'language=' . $this->config->get('config_language')));
 			} else {
 				$data['attention'] = '';
 			}

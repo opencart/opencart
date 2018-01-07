@@ -4,7 +4,7 @@ class ControllerAccountForgotten extends Controller {
 
 	public function index() {
 		if ($this->customer->isLogged()) {
-			$this->response->redirect($this->url->link('account/account'));
+			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->load->language('account/forgotten');
@@ -18,24 +18,24 @@ class ControllerAccountForgotten extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('account/login'));
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
+			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account')
+			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_forgotten'),
-			'href' => $this->url->link('account/forgotten')
+			'href' => $this->url->link('account/forgotten', 'language=' . $this->config->get('config_language'))
 		);
 
 		if (isset($this->error['warning'])) {
@@ -44,9 +44,9 @@ class ControllerAccountForgotten extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['action'] = $this->url->link('account/forgotten');
+		$data['action'] = $this->url->link('account/forgotten', 'language=' . $this->config->get('config_language'));
 
-		$data['back'] = $this->url->link('account/login');
+		$data['back'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
 
 		if (isset($this->request->post['email'])) {
 			$data['email'] = $this->request->post['email'];

@@ -23,24 +23,24 @@ class ControllerAccountVoucher extends Controller {
 				'amount'           => $this->currency->convert($this->request->post['amount'], $this->session->data['currency'], $this->config->get('config_currency'))
 			);
 
-			$this->response->redirect($this->url->link('account/voucher/success'));
+			$this->response->redirect($this->url->link('account/voucher/success', 'language=' . $this->config->get('config_language')));
 		}
 
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
+			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account')
+			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_voucher'),
-			'href' => $this->url->link('account/voucher')
+			'href' => $this->url->link('account/voucher', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['help_amount'] = sprintf($this->language->get('help_amount'), $this->currency->format($this->config->get('config_voucher_min'), $this->session->data['currency']), $this->currency->format($this->config->get('config_voucher_max'), $this->session->data['currency']));
@@ -87,7 +87,7 @@ class ControllerAccountVoucher extends Controller {
 			$data['error_amount'] = '';
 		}
 
-		$data['action'] = $this->url->link('account/voucher');
+		$data['action'] = $this->url->link('account/voucher', 'language=' . $this->config->get('config_language'));
 
 		if (isset($this->request->post['to_name'])) {
 			$data['to_name'] = $this->request->post['to_name'];
@@ -164,15 +164,15 @@ class ControllerAccountVoucher extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
+			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/voucher')
+			'href' => $this->url->link('account/voucher', 'language=' . $this->config->get('config_language'))
 		);
 
-		$data['continue'] = $this->url->link('checkout/cart');
+		$data['continue'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

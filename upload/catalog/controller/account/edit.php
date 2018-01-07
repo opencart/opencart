@@ -4,9 +4,9 @@ class ControllerAccountEdit extends Controller {
 
 	public function index() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/edit');
+			$this->session->data['redirect'] = $this->url->link('account/edit', 'language=' . $this->config->get('config_language'));
 
-			$this->response->redirect($this->url->link('account/login'));
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->load->language('account/edit');
@@ -25,24 +25,24 @@ class ControllerAccountEdit extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('account/account'));
+			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
 
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
+			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account')
+			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_edit'),
-			'href' => $this->url->link('account/edit')
+			'href' => $this->url->link('account/edit', 'language=' . $this->config->get('config_language'))
 		);
 
 		if (isset($this->error['warning'])) {
@@ -81,7 +81,7 @@ class ControllerAccountEdit extends Controller {
 			$data['error_custom_field'] = array();
 		}
 
-		$data['action'] = $this->url->link('account/edit');
+		$data['action'] = $this->url->link('account/edit', 'language=' . $this->config->get('config_language'));
 
 		if ($this->request->server['REQUEST_METHOD'] != 'POST') {
 			$customer_info = $this->model_account_customer->getCustomer($this->customer->getId());
@@ -140,7 +140,7 @@ class ControllerAccountEdit extends Controller {
 			$data['account_custom_field'] = array();
 		}
 
-		$data['back'] = $this->url->link('account/account');
+		$data['back'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

@@ -4,7 +4,7 @@ class ControllerAffiliateRegister extends Controller {
 
 	public function index() {
 		if ($this->customer->isLogged()) {
-			$this->response->redirect($this->url->link('account/account'));
+			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->load->language('affiliate/register');
@@ -35,27 +35,27 @@ class ControllerAffiliateRegister extends Controller {
 			// Log the IP info
 			$this->model_account_customer->addLogin($this->customer->getId(), $this->request->server['REMOTE_ADDR']);
 
-			$this->response->redirect($this->url->link('affiliate/success'));
+			$this->response->redirect($this->url->link('affiliate/success', 'language=' . $this->config->get('config_language')));
 		}
 
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
+			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account')
+			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_register'),
-			'href' => $this->url->link('affiliate/register')
+			'href' => $this->url->link('affiliate/register', 'language=' . $this->config->get('config_language'))
 		);
 
-		$data['text_account_already'] = sprintf($this->language->get('text_account_already'), $this->url->link('affiliate/login'));
+		$data['text_account_already'] = sprintf($this->language->get('text_account_already'), $this->url->link('affiliate/login', 'language=' . $this->config->get('config_language')));
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -129,7 +129,7 @@ class ControllerAffiliateRegister extends Controller {
 			$data['error_bank_account_number'] = '';
 		}
 				
-		$data['action'] = $this->url->link('affiliate/register');
+		$data['action'] = $this->url->link('affiliate/register', 'language=' . $this->config->get('config_language'));
 
 		$data['customer_groups'] = array();
 
@@ -289,7 +289,7 @@ class ControllerAffiliateRegister extends Controller {
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_affiliate_id'));
 
 			if ($information_info) {
-				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_affiliate_id')), $information_info['title'], $information_info['title']);
+				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_affiliate_id')), $information_info['title'], $information_info['title']);
 			} else {
 				$data['text_agree'] = '';
 			}

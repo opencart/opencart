@@ -4,9 +4,9 @@ class ControllerAccountAffiliate extends Controller {
 
 	public function add() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/affiliate');
+			$this->session->data['redirect'] = $this->url->link('account/affiliate', 'language=' . $this->config->get('config_language'));
 
-			$this->response->redirect($this->url->link('affiliate/login'));
+			$this->response->redirect($this->url->link('affiliate/login', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->load->language('account/affiliate');
@@ -20,7 +20,7 @@ class ControllerAccountAffiliate extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('account/account'));
+			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
 		
 		$this->getForm();
@@ -28,9 +28,9 @@ class ControllerAccountAffiliate extends Controller {
 	
 	public function edit() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/affiliate');
+			$this->session->data['redirect'] = $this->url->link('account/affiliate', 'language=' . $this->config->get('config_language'));
 
-			$this->response->redirect($this->url->link('affiliate/login'));
+			$this->response->redirect($this->url->link('affiliate/login', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->load->language('account/affiliate');
@@ -44,7 +44,7 @@ class ControllerAccountAffiliate extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('account/account'));
+			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
 		
 		$this->getForm();
@@ -55,23 +55,23 @@ class ControllerAccountAffiliate extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
+			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account')
+			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
 		);
 
 		if ($this->request->get['route'] == 'account/affiliate/add') {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_affiliate'),
-				'href' => $this->url->link('account/affiliate/add')
+				'href' => $this->url->link('account/affiliate/add', 'language=' . $this->config->get('config_language'))
 			);
 		} else {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_affiliate'),
-				'href' => $this->url->link('account/affiliate/edit')
+				'href' => $this->url->link('account/affiliate/edit', 'language=' . $this->config->get('config_language'))
 			);		
 		}
 	
@@ -111,7 +111,7 @@ class ControllerAccountAffiliate extends Controller {
 			$data['error_custom_field'] = array();
 		}
 				
-		$data['action'] = $this->url->link($this->request->get['route']);
+		$data['action'] = $this->url->link($this->request->get['route'], 'language=' . $this->config->get('config_language'));
 		
 		if ($this->request->get['route'] == 'account/affiliate/edit' && $this->request->server['REQUEST_METHOD'] != 'POST') {
 			$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
@@ -226,7 +226,7 @@ class ControllerAccountAffiliate extends Controller {
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_affiliate_id'));
 
 			if ($information_info) {
-				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_affiliate_id')), $information_info['title'], $information_info['title']);
+				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_affiliate_id')), $information_info['title'], $information_info['title']);
 			} else {
 				$data['text_agree'] = '';
 			}
@@ -240,7 +240,7 @@ class ControllerAccountAffiliate extends Controller {
 			$data['agree'] = false;
 		}
 		
-		$data['back'] = $this->url->link('account/account');
+		$data['back'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

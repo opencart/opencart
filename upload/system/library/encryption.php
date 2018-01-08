@@ -1,7 +1,7 @@
 <?php
 /**
  * @package		OpenCart
- * @author		Daniel Kerr
+ * @author		Daniel Kerr, Billy Noah
  * @copyright	Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
  * @license		https://opensource.org/licenses/GPL-3.0
  * @link		https://www.opencart.com
@@ -11,27 +11,39 @@
 * Encryption class
 */
 final class Encryption {
-	/**
+	
+	private $cipher = 'aes-256-ctr';
+	private $digest = 'sha256';
+	
+    /**
      * 
      *
      * @param	string	$key
-	 * @param	string	$value
-	 * 
-	 * @return	string
+     * @param	string	$value
+     * 
+     * @return	string
      */	
 	public function encrypt($key, $value) {
-		return strtr(base64_encode(openssl_encrypt($value, 'aes-128-cbc', hash('sha256', $key, true))), '+/=', '-_,');
+		$key       = openssl_digest($key, $this->digest, true);
+		$iv_length = openssl_cipher_iv_length($this->cipher);
+		$iv        = openssl_random_pseudo_bytes($iv_length);
+		return base64_encode($iv . openssl_encrypt($value, $this->cipher, $key, OPENSSL_RAW_DATA, $iv));
 	}
 	
-	/**
+    /**
      * 
      *
      * @param	string	$key
-	 * @param	string	$value
-	 * 
-	 * @return	string
+     * @param	string	$value
+     * 
+     * @return	string
      */
 	public function decrypt($key, $value) {
-		return trim(openssl_decrypt(base64_decode(strtr($value, '-_,', '+/=')), 'aes-128-cbc', hash('sha256', $key, true)));
+		$key       = openssl_digest($key, $this->digest, true);
+		$iv_length = openssl_cipher_iv_length($this->cipher);
+		$value     = base64_decode($value);
+		$iv        = substr($value, 0, $iv_length);
+		$value     = substr($value, $iv_length);
+		return openssl_decrypt($value, $this->cipher, $key, OPENSSL_RAW_DATA, $iv);
 	}
 }

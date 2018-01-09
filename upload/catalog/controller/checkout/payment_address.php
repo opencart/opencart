@@ -58,12 +58,12 @@ class ControllerCheckoutPaymentAddress extends Controller {
 
 		// Validate if customer is logged in.
 		if (!$this->customer->isLogged()) {
-			$json['redirect'] = $this->url->link('checkout/checkout');
+			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 		}
 
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$json['redirect'] = $this->url->link('checkout/cart');
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 		}
 
 		// Validate minimum quantity requirements.
@@ -79,7 +79,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
 			}
 
 			if ($product['minimum'] > $product_total) {
-				$json['redirect'] = $this->url->link('checkout/cart');
+				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 
 				break;
 			}

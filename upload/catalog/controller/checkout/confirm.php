@@ -6,12 +6,12 @@ class ControllerCheckoutConfirm extends Controller {
 		if ($this->cart->hasShipping()) {
 			// Validate if shipping address has been set.
 			if (!isset($this->session->data['shipping_address'])) {
-				$redirect = $this->url->link('checkout/checkout');
+				$redirect = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 			}
 
 			// Validate if shipping method has been set.
 			if (!isset($this->session->data['shipping_method'])) {
-				$redirect = $this->url->link('checkout/checkout');
+				$redirect = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 			}
 		} else {
 			unset($this->session->data['shipping_address']);
@@ -21,17 +21,17 @@ class ControllerCheckoutConfirm extends Controller {
 
 		// Validate if payment address has been set.
 		if (!isset($this->session->data['payment_address'])) {
-			$redirect = $this->url->link('checkout/checkout');
+			$redirect = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 		}
 
 		// Validate if payment method has been set.
 		if (!isset($this->session->data['payment_method'])) {
-			$redirect = $this->url->link('checkout/checkout');
+			$redirect = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 		}
 
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$redirect = $this->url->link('checkout/cart');
+			$redirect = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 		}
 
 		// Validate minimum quantity requirements.
@@ -47,7 +47,7 @@ class ControllerCheckoutConfirm extends Controller {
 			}
 
 			if ($product['minimum'] > $product_total) {
-				$redirect = $this->url->link('checkout/cart');
+				$redirect = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 
 				break;
 			}
@@ -380,7 +380,7 @@ class ControllerCheckoutConfirm extends Controller {
 					'subtract'   => $product['subtract'],
 					'price'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
 					'total'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']),
-					'href'       => $this->url->link('product/product', 'product_id=' . $product['product_id'])
+					'href'       => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
 				);
 			}
 

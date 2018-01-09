@@ -37,6 +37,9 @@ class ControllerStartupSeoUrl extends Controller {
 					break;
 				}
 			}
+
+
+		//	print_r($this->request->get);
 		}
 	}
 
@@ -47,23 +50,33 @@ class ControllerStartupSeoUrl extends Controller {
 
 		parse_str($url_info['query'], $data);
 
+		//echo str_replace('&amp;', '&', $link) . "\n";
+
+		//print_r($data);
+
 		foreach ($this->regex as $result) {
 			if (preg_match('/' . $result['regex'] . '/', $url_info['query'], $matches)) {
 				array_shift($matches);
 
 				foreach ($matches as $match) {
-					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = '" . $this->db->escape($match) . "' AND keyword != '' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = '" . $this->db->escape($match) . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
-					foreach ($query->rows as $seo) {
-						$url .= '/' . $seo['keyword'];
-					}
+					if ($query->num_rows) {
+						foreach ($query->rows as $seo) {
+							if ($seo['keyword']) {
+								$url .= '/' . $seo['keyword'];
+							}
+						}
 
-					parse_str($match, $remove);
+						parse_str($match, $remove);
 
-					// Remove all the matched url elements
-					foreach (array_keys($remove) as $key) {
-						if (isset($data[$key])) {
-							unset($data[$key]);
+						// Remove all the matched url elements
+						foreach (array_keys($remove) as $key) {
+							if (isset($data[$key])) {
+								//echo $key . "\n";
+
+								unset($data[$key]);
+							}
 						}
 					}
 				}

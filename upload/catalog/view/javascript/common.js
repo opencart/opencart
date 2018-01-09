@@ -45,15 +45,6 @@ $(document).ready(function() {
 		$('#form-currency').submit();
 	});
 
-	// Language
-	$('#form-language .language-select').on('click', function(e) {
-		e.preventDefault();
-
-		$('#form-language input[name=\'code\']').val($(this).attr('name'));
-
-		$('#form-language').submit();
-	});
-
 	/* Search */
 	$('#search input[name=\'search\']').parent().find('button').on('click', function() {
 		var url = $('base').attr('href') + 'index.php?route=product/search';

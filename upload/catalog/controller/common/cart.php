@@ -104,7 +104,7 @@ class ControllerCommonCart extends Controller {
 				'quantity'  => $product['quantity'],
 				'price'     => $price,
 				'total'     => $total,
-				'href'      => $this->url->link('product/product', 'product_id=' . $product['product_id'])
+				'href'      => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
 			);
 		}
 
@@ -130,8 +130,8 @@ class ControllerCommonCart extends Controller {
 			);
 		}
 
-		$data['cart'] = $this->url->link('checkout/cart');
-		$data['checkout'] = $this->url->link('checkout/checkout');
+		$data['cart'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
+		$data['checkout'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 
 		return $this->load->view('common/cart', $data);
 	}

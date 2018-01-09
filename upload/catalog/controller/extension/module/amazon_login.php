@@ -16,7 +16,7 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 
 			$data['payment_amazon_login_pay_client_id'] = $this->config->get('payment_amazon_login_pay_client_id');
 
-			$data['return_url'] = $this->url->link('extension/module/amazon_login/login');
+			$data['return_url'] = $this->url->link('extension/module/amazon_login/login', 'language=' . $this->config->get('config_language'));
 			
 			if ($this->config->get('payment_amazon_login_pay_test') == 'sandbox') {
 				$data['payment_amazon_login_pay_test'] = true;

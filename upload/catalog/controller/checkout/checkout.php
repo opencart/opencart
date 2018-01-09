@@ -3,7 +3,7 @@ class ControllerCheckoutCheckout extends Controller {
 	public function index() {
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$this->response->redirect($this->url->link('checkout/cart'));
+			$this->response->redirect($this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 		}
 
 		// Validate minimum quantity requirements.
@@ -19,7 +19,7 @@ class ControllerCheckoutCheckout extends Controller {
 			}
 
 			if ($product['minimum'] > $product_total) {
-				$this->response->redirect($this->url->link('checkout/cart'));
+				$this->response->redirect($this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 			}
 		}
 
@@ -41,17 +41,17 @@ class ControllerCheckoutCheckout extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
+			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_cart'),
-			'href' => $this->url->link('checkout/cart')
+			'href' => $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('checkout/checkout')
+			'href' => $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['text_checkout_option'] = sprintf($this->language->get('text_checkout_option'), 1);

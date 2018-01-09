@@ -42,7 +42,7 @@ class ControllerCheckoutCart extends Controller {
 				$data['success'] = '';
 			}
 
-			$data['action'] = $this->url->link('checkout/cart/edit');
+			$data['action'] = $this->url->link('checkout/cart/edit', 'language=' . $this->config->get('config_language'));
 
 			if ($this->config->get('config_cart_weight')) {
 				$data['weight'] = $this->weight->format($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->language->get('decimal_point'), $this->language->get('thousand_point'));
@@ -142,7 +142,7 @@ class ControllerCheckoutCart extends Controller {
 					'reward'    => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
 					'price'     => $price,
 					'total'     => $total,
-					'href'      => $this->url->link('product/product', 'product_id=' . $product['product_id'])
+					'href'      => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
 				);
 			}
 
@@ -155,7 +155,7 @@ class ControllerCheckoutCart extends Controller {
 						'key'         => $key,
 						'description' => $voucher['description'],
 						'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency']),
-						'remove'      => $this->url->link('checkout/cart', 'remove=' . $key)
+						'remove'      => $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language') . '&remove=' . $key)
 					);
 				}
 			}
@@ -213,9 +213,9 @@ class ControllerCheckoutCart extends Controller {
 				);
 			}
 
-			$data['continue'] = $this->url->link('common/home');
+			$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
 
-			$data['checkout'] = $this->url->link('checkout/checkout');
+			$data['checkout'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 
 			$this->load->model('setting/extension');
 
@@ -244,7 +244,7 @@ class ControllerCheckoutCart extends Controller {
 		} else {
 			$data['text_error'] = $this->language->get('text_empty');
 			
-			$data['continue'] = $this->url->link('common/home');
+			$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
 
 			unset($this->session->data['success']);
 
@@ -318,7 +318,7 @@ class ControllerCheckoutCart extends Controller {
 			if (!$json) {
 				$this->cart->add($this->request->post['product_id'], $quantity, $option, $recurring_id);
 
-				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('checkout/cart'));
+				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 
 				// Unset all shipping and payment methods
 				unset($this->session->data['shipping_method']);
@@ -372,7 +372,7 @@ class ControllerCheckoutCart extends Controller {
 					
 				$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total, $this->session->data['currency']));
 			} else {
-				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']));
+				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->post['product_id']));
 			}
 		}
 
@@ -399,7 +399,7 @@ class ControllerCheckoutCart extends Controller {
 			unset($this->session->data['payment_methods']);
 			unset($this->session->data['reward']);
 
-			$this->response->redirect($this->url->link('checkout/cart'));
+			$this->response->redirect($this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -577,7 +577,7 @@ class ControllerCheckoutCart extends Controller {
 				'reward'    => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
 				'price'     => $price,
 				'total'     => $total,
-				'href'      => $this->url->link('product/product', 'product_id=' . $product['product_id'])
+				'href'      => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
 			);
 		}
 
@@ -590,7 +590,7 @@ class ControllerCheckoutCart extends Controller {
 					'key'         => $key,
 					'description' => $voucher['description'],
 					'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency']),
-					'remove'      => $this->url->link('checkout/cart', 'remove=' . $key)
+					'remove'      => $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language') . '&remove=' . $key)
 				);
 			}
 		}

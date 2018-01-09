@@ -38,7 +38,7 @@ class ModelToolImage extends Model {
 			}
 		}
 		
-		$image_new = str_replace(' ', '%20', $image_new);  // fix bug when attach image on email (gmail.com). it is automatic changing space " " to +
+		$image_new = implode('/', array_map('rawurlencode', explode('/', $image_new)));  // Fix bug when attach image on email (gmail.com). It is automatic urlencode spaces AND nonASCII-symbols
 		
 		if ($this->request->server['HTTPS']) {
 			return $this->config->get('config_ssl') . 'image/' . $image_new;

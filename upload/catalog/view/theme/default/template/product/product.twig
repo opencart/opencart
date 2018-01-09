@@ -71,12 +71,12 @@
                   {% if review_guest %}
                     <div class="form-group required">
                       <div class="col-sm-12">
-                        <label class="control-label" for="input-name">{{ entry_name }}</label> <input type="text" name="name" value="{{ customer_name }}" id="input-name" class="form-control"/>
+                        <label class="control-label" for="input-name">{{ entry_name }}</label> <input type="text" name="name" value="{{ customer_name }}" id="input-name" class="form-control" required/>
                       </div>
                     </div>
                     <div class="form-group required">
                       <div class="col-sm-12">
-                        <label class="control-label" for="input-review">{{ entry_review }}</label> <textarea name="text" rows="5" id="input-review" class="form-control"></textarea>
+                        <label class="control-label" for="input-review">{{ entry_review }}</label> <textarea name="text" rows="5" id="input-review" class="form-control" required></textarea>
                         <div class="help-block">{{ text_note }}</div>
                       </div>
                     </div>
@@ -84,15 +84,15 @@
                       <div class="col-sm-12">
                         <label class="control-label">{{ entry_rating }}</label>
                         &nbsp;&nbsp;&nbsp; {{ entry_bad }}&nbsp;
-                        <input type="radio" name="rating" value="1"/>
+                        <input type="radio" name="rating" value="1" required/>
                         &nbsp;
-                        <input type="radio" name="rating" value="2"/>
+                        <input type="radio" name="rating" value="2" required/>
                         &nbsp;
-                        <input type="radio" name="rating" value="3"/>
+                        <input type="radio" name="rating" value="3" required/>
                         &nbsp;
-                        <input type="radio" name="rating" value="4"/>
+                        <input type="radio" name="rating" value="4" required/>
                         &nbsp;
-                        <input type="radio" name="rating" value="5"/>
+                        <input type="radio" name="rating" value="5" required/>
                         &nbsp;{{ entry_good }}</div>
                     </div>
                     {{ captcha }}
@@ -549,6 +549,11 @@ $('#button-review').on('click', function() {
 			}
 		}
 	});
+});
+
+$('#form-review').on('submit', function() {
+	$('#button-review').click();
+	return false;
 });
 
 $(document).ready(function() {

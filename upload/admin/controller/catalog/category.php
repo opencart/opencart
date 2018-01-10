@@ -547,6 +547,9 @@ class ControllerCatalogCategory extends Controller {
 		}
 
 		if ($this->request->post['category_seo_url']) {
+			$this->load->model('catalog/category');
+			$path = $this->model_catalog_category->getCategoryFullPath($this->request->get['category_id']);
+			
 			$this->load->model('design/seo_url');
 			
 			foreach ($this->request->post['category_seo_url'] as $store_id => $language) {
@@ -559,7 +562,7 @@ class ControllerCatalogCategory extends Controller {
 						$seo_urls = $this->model_design_seo_url->getSeoUrlsByKeyword($keyword);
 	
 						foreach ($seo_urls as $seo_url) {
-							if (($seo_url['store_id'] == $store_id) && (!isset($this->request->get['category_id']) || ($seo_url['query'] != 'category_id=' . $this->request->get['category_id']))) {		
+							if (($seo_url['store_id'] == $store_id) && (!isset($this->request->get['category_id']) || ($seo_url['query'] != 'path=' . $path))) {		
 								$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
 				
 								break;

@@ -1,4 +1,12 @@
 <?php
+/**
+ * @package		OpenCart
+ * @author		Meng Wenbin
+ * @copyright	Copyright (c) 2010 - 2017, Chengdu Guangda Network Technology Co. Ltd. (https://www.opencart.cn/)
+ * @license		https://opensource.org/licenses/GPL-3.0
+ * @link		https://www.opencart.cn
+ */
+
 class ControllerExtensionPaymentAlipayCross extends Controller {
 	var $alipay_gateway = 'https://mapi.alipay.com/gateway.do?';
 	var $alipay_gateway_test = 'https://openapi.alipaydev.com/gateway.do?';
@@ -20,7 +28,7 @@ class ControllerExtensionPaymentAlipayCross extends Controller {
 		$alipay_config = array (
 			'partner'              => $this->config->get('payment_alipay_cross_app_id'),
 			'key'                  => $this->config->get('payment_alipay_cross_merchant_private_key'),
-			'notify_url'           => HTTP_SERVER . "payment_callback/alipay_cross",
+			'notify_url'           => HTTP_SERVER . "controller/extension/payment/alipay_cross_callback.php",
 			'return_url'           => $this->url->link('checkout/success'),
 			'sign_type'            => strtoupper('MD5'),
 			'input_charset'        => strtolower('utf-8'),

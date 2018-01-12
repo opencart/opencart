@@ -1,4 +1,12 @@
 <?php
+/**
+ * @package		OpenCart
+ * @author		Meng Wenbin
+ * @copyright	Copyright (c) 2010 - 2017, Chengdu Guangda Network Technology Co. Ltd. (https://www.opencart.cn/)
+ * @license		https://opensource.org/licenses/GPL-3.0
+ * @link		https://www.opencart.cn
+ */
+
 class ControllerExtensionPaymentAlipay extends Controller {
 	public function index() {
 		$data['button_confirm'] = $this->language->get('button_confirm');
@@ -45,7 +53,7 @@ class ControllerExtensionPaymentAlipay extends Controller {
 		$config = array (
 			'app_id'               => $this->config->get('payment_alipay_app_id'),
 			'merchant_private_key' => $this->config->get('payment_alipay_merchant_private_key'),
-			'notify_url'           => HTTP_SERVER . "payment_callback/alipay",
+			'notify_url'           => HTTP_SERVER . "controller/extension/payment/alipay_callback.php",
 			'return_url'           => $this->url->link('checkout/success'),
 			'charset'              => "UTF-8",
 			'sign_type'            => "RSA2",

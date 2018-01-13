@@ -3746,7 +3746,7 @@ function db_schema() {
 			),
 			array(
 				'name' => 'type',
-				'type' => 'varchar(255)',
+				'type' => 'int(11)',
 				'not_null' => true
 			),
 			array(

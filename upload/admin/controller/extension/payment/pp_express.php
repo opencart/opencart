@@ -825,7 +825,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$this->load->language('extension/recurring/pp_express');
 
 		//cancel an active recurring
-		$this->load->model('account/recurring');
+		$this->load->model('sale/recurring');
 
 		if (isset($this->request->get['order_recurring_id'])) {
 			$order_recurring_id = $this->request->get['order_recurring_id'];
@@ -833,7 +833,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			$order_recurring_id = 0;
 		}
 
-		$recurring_info = $this->model_account_recurring->getOrderRecurring($order_recurring_id);
+		$recurring_info = $this->model_sale_recurring->getOrderRecurring($order_recurring_id);
 
 		if ($recurring_info && $recurring_info['reference']) {
 			if ($this->config->get('payment_pp_express_test')) {
@@ -882,8 +882,8 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			parse_str($curl_response, $response);
 
 			if (isset($response['PROFILEID'])) {
-				$this->model_account_recurring->editOrderRecurringStatus($order_recurring_id, 4);
-				$this->model_account_recurring->addOrderRecurringTransaction($order_recurring_id, 5);
+				$this->model_sale_recurring->editOrderRecurringStatus($order_recurring_id, 4);
+				$this->model_sale_recurring->addOrderRecurringTransaction($order_recurring_id, 5);
 
 				$json['success'] = $this->language->get('text_cancelled');
 			} else {

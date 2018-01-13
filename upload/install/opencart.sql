@@ -1693,13 +1693,16 @@ INSERT INTO `oc_seo_regex` (`name`, `regex`, `sort_order`) VALUES
 ('Category Level 1', '(path=\\d+)(?:[_&]|$)', 1),
 ('Category Level 2', '(path=\\d+_\\d+)(?:[_&]|$)', 2),
 ('Category Level 3', '(path=\\d+_\\d+_\\d+)(?:[_&]|$)', 3),
-('Category Level 4', '(path=\\d+_\\d+_\\d+_\\d+)(?:[_&]|$)', 4),
-('Category Level 5', '(path=\\d+_\\d+_\\d+_\\d+_\\d+)(?:[_&]|$)', 5),
 ('Information', '(information_id=\\d+)(?:[&]|$)', 1),
-('Manufacturer', '(manufacturer_id=)', 1),
 ('Manufacturer', '(manufacturer_id=\\d+)(?:[&]|$)', 2),
 ('Language', '(language=[a-z-]+)(?:[&]|$)', -1),
-('Route', '(route=[a-zA-Z0-9\\/]+)(?:[&]|$)', 0);
+('Route', '(route=[a-zA-Z0-9\\/]+)(?:[&]|$)', 0),
+('Category Level 4', '(path=\\d+_\\d+_\\d+_\\d+)(?:[_&]|$)', 4),
+('Category Level 5', '(path=\\d+_\\d+_\\d+_\\d+_\\d+)(?:[_&]|$)', 5),
+('Manufacturer', '(manufacturer_id=)', 1),
+('Information', '(information_id=)', 1),
+('Category', '(path=)', 1),
+('Product', '(product_id=)', 99);
 
 -----------------------------------------------------------
 
@@ -1712,13 +1715,15 @@ INSERT INTO `oc_seo_url` (`store_id`, `language_id`, `query`, `keyword`, `push`)
 (0, 1, 'path=20', 'desktops', 'route=product/category&path=20'),
 (0, 1, 'path=20_26', 'pc', 'route=product/category&path=20_26'),
 (0, 1, 'path=20_27', 'mac', 'route=product/category&path=20_27'),
+(0, 1, 'manufacturer_id=8', 'apple', 'route=product/manufacturer/info&manufacturer_id=8'),
+(0, 1, 'information_id=4', 'about-us', 'route=information/information&information_id=4'),
 (0, 1, 'path=34', 'mp3-players', 'route=product/category&path=34'),
 (0, 1, 'path=18', 'laptop-notebook', 'route=product/category&path=18'),
 (0, 1, 'path=18_46', 'macs', 'route=product/category&path=18_46'),
 (0, 1, 'path=18_45', 'windows', 'route=product/category&path=18_45'),
 (0, 1, 'path=25', 'component', 'route=product/category&path=25'),
 (0, 1, 'path=25_29', 'mouse', 'route=product/category&path=25_29'),
-(0, 1, 'path=25_28', 'monitor', 'route=product/category&path=33'),
+(0, 1, 'path=25_28', 'monitor', 'route=product/category&path=25_28'),
 (0, 1, 'path=25_30', 'printer', 'route=product/category&path=25_30'),
 (0, 1, 'path=25_31', 'scanner', 'route=product/category&path=25_31'),
 (0, 1, 'path=25_32', 'web-camera', 'route=product/category&path=25_32'),
@@ -1762,14 +1767,11 @@ INSERT INTO `oc_seo_url` (`store_id`, `language_id`, `query`, `keyword`, `push`)
 (0, 1, 'product_id=36', 'ipod-nano', 'route=product/product&product_id=36'),
 (0, 1, 'product_id=34', 'ipod-shuffle', 'route=product/product&product_id=34'),
 (0, 1, 'product_id=32', 'ipod-touch', 'route=product/product&product_id=32'),
-(0, 1, 'manufacturer_id=', 'brands', 'route=product/manufacturer'),
-(0, 1, 'manufacturer_id=8', 'apple', 'route=product/manufacturer/info&manufacturer_id=8'),
 (0, 1, 'manufacturer_id=9', 'canon', 'route=product/manufacturer/info&manufacturer_id=9'),
 (0, 1, 'manufacturer_id=5', 'htc', 'route=product/manufacturer/info&manufacturer_id=5'),
 (0, 1, 'manufacturer_id=7', 'hewlett-packard', 'route=product/manufacturer/info&manufacturer_id=7'),
 (0, 1, 'manufacturer_id=6', 'palm', 'route=product/manufacturer/info&manufacturer_id=6'),
 (0, 1, 'manufacturer_id=10', 'sony', 'route=product/manufacturer/info&manufacturer_id=10'),
-(0, 1, 'information_id=4', 'about-us', 'route=information/information&information_id=4'),
 (0, 1, 'information_id=6', 'delivery', 'route=information/information&information_id=6'),
 (0, 1, 'information_id=3', 'privacy', 'route=information/information&information_id=3'),
 (0, 1, 'information_id=5', 'terms', 'route=information/information&information_id=5'),
@@ -1777,7 +1779,9 @@ INSERT INTO `oc_seo_url` (`store_id`, `language_id`, `query`, `keyword`, `push`)
 (0, 1, 'route=information/information', '', ''),
 (0, 1, 'route=product/category', '', ''),
 (0, 1, 'route=product/product', '', ''),
-(0, 1, 'route=product/manufacturer', 'brands', 'route=product/manufacturer');
+(0, 1, 'route=product/manufacturer', 'brands', 'route=product/manufacturer'),
+(0, 1, 'route=product/manufacturer/info', '', ''),
+(0, 1, 'manufacturer_id=', 'brands', '');
 
 -----------------------------------------------------------
 

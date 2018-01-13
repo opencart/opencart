@@ -705,7 +705,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 					$result = $this->model_extension_payment_pp_express->call($call_data);
 
 					$transaction = array(
-						'paypal_order_id' => $paypal_order['paypal_order_id'],
+						'paypal_order_id' => (int)$paypal_order['paypal_order_id'],
 						'transaction_id' => '',
 						'parent_transaction_id' => $this->request->post['transaction_id'],
 						'note' => $this->request->post['refund_message'],
@@ -722,9 +722,8 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 					if ($result == false) {
 						$transaction['payment_status'] = 'Failed';
 						$this->model_extension_payment_pp_express->addTransaction($transaction, $call_data);
-						$this->response->redirect($this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $paypal_order['order_id']));
+						$this->response->redirect($this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . (int)$paypal_order['order_id']));
 					} else if ($result['ACK'] != 'Failure' && $result['ACK'] != 'FailureWithWarning') {
-
 						$transaction['transaction_id'] = $result['REFUNDTRANSACTIONID'];
 						$transaction['payment_type'] = $result['REFUNDSTATUS'];
 						$transaction['pending_reason'] = $result['PENDINGREASON'];
@@ -740,7 +739,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 						}
 
 						//redirect back to the order
-						$this->response->redirect($this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $paypal_order['order_id']));
+						$this->response->redirect($this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . (int)$paypal_order['order_id']));
 					} else {
 						$this->model_extension_payment_pp_express->log(json_encode($result));
 						$this->session->data['error'] = (isset($result['L_SHORTMESSAGE0']) ? $result['L_SHORTMESSAGE0'] : 'There was an error') . (isset($result['L_LONGMESSAGE0']) ? '<br />' . $result['L_LONGMESSAGE0'] : '');

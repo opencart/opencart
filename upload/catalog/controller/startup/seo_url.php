@@ -26,10 +26,12 @@ class ControllerStartupSeoUrl extends Controller {
 				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE keyword = '" . $this->db->escape($part) . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 				if ($query->num_rows) {
-					parse_str($query->row['push'], $data);
+					foreach ($query->rows as $result) {
+						parse_str($result['push'], $data);
 
-					foreach ($data as $key => $value) {
-						$this->request->get[$key] = $value;
+						foreach ($data as $key => $value) {
+							$this->request->get[$key] = $value;
+						}
 					}
 				} else {
 					$this->request->get['route'] = 'error/not_found';
@@ -37,9 +39,6 @@ class ControllerStartupSeoUrl extends Controller {
 					break;
 				}
 			}
-
-
-		//	print_r($this->request->get);
 		}
 	}
 

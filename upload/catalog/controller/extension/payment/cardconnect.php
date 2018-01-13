@@ -23,7 +23,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 
 		$data['echeck'] = $this->config->get('payment_cardconnect_echeck');
 
-		$data['action'] = $this->url->link('extension/payment/cardconnect/send');
+		$data['action'] = $this->url->link('extension/payment/cardconnect/send', 'language=' . $this->config->get('config_language'));
 
 		return $this->load->view('extension/payment/cardconnect', $data);
 	}
@@ -197,7 +197,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 
 							$this->model_extension_payment_cardconnect->log('Success');
 
-							$json['success'] = $this->url->link('checkout/success');
+							$json['success'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'));
 						} else {
 							$this->model_extension_payment_cardconnect->log($response_data['resptext']);
 

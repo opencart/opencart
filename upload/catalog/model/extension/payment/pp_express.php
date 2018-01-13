@@ -314,7 +314,7 @@ class ModelExtensionPaymentPPExpress extends Model {
 	public function recurringPayments() {
 		/*
 		 * Used by the checkout to state the module
-		 * supports recurring recurrings.
+		 * supports recurring payments.
 		 */
 		return true;
 	}

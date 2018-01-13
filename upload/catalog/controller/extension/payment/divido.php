@@ -199,9 +199,9 @@ class ControllerExtensionPaymentDivido extends Controller {
 
 		$shop_url = $this->config->get('config_url');
 
-		$callback_url = $this->url->link('extension/payment/divido/update');
-		$return_url = $this->url->link('checkout/success');
-		$checkout_url = $this->url->link('checkout/checkout');
+		$callback_url = $this->url->link('extension/payment/divido/update', 'language=' . $this->config->get('config_language'));
+		$return_url = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'));
+		$checkout_url = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 
 		$salt = uniqid('', true);
 		$hash = $this->model_extension_payment_divido->hashOrderId($order_id, $salt);

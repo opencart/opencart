@@ -71,9 +71,9 @@ class ControllerExtensionPaymentBluepayRedirect extends Controller {
 		$post_data["ORDER_ID"] = $this->session->data['order_id'];
 		$post_data['ZIPCODE'] = substr($order_info['payment_postcode'], 0, 10);
 
-		$post_data['APPROVED_URL'] = $this->url->link('extension/payment/bluepay_redirect/callback');
-		$post_data['DECLINED_URL'] = $this->url->link('extension/payment/bluepay_redirect/callback');
-		$post_data['MISSING_URL'] = $this->url->link('extension/payment/bluepay_redirect/callback');
+		$post_data['APPROVED_URL'] = $this->url->link('extension/payment/bluepay_redirect/callback', 'language=' . $this->config->get('config_language'));
+		$post_data['DECLINED_URL'] = $this->url->link('extension/payment/bluepay_redirect/callback', 'language=' . $this->config->get('config_language'));
+		$post_data['MISSING_URL'] = $this->url->link('extension/payment/bluepay_redirect/callback', 'language=' . $this->config->get('config_language'));
 
 		if (isset($this->request->server["REMOTE_ADDR"])) {
 			$post_data["REMOTE_IP"] = $this->request->server["REMOTE_ADDR"];
@@ -96,7 +96,7 @@ class ControllerExtensionPaymentBluepayRedirect extends Controller {
 
 			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_bluepay_redirect_order_status_id'));
 
-			$json['redirect'] = $this->url->link('checkout/success');
+			$json['redirect'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'));
 		} else {
 			$json['error'] = $response_data['Result'] . ' : ' . $response_data['MESSAGE'];
 		}

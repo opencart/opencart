@@ -49,10 +49,6 @@ class ControllerStartupSeoUrl extends Controller {
 
 		parse_str($url_info['query'], $data);
 
-		//echo str_replace('&amp;', '&', $link) . "\n";
-
-		//print_r($data);
-
 		foreach ($this->regex as $result) {
 			if (preg_match('/' . $result['regex'] . '/', $url_info['query'], $matches)) {
 				array_shift($matches);
@@ -72,8 +68,6 @@ class ControllerStartupSeoUrl extends Controller {
 						// Remove all the matched url elements
 						foreach (array_keys($remove) as $key) {
 							if (isset($data[$key])) {
-								//echo $key . "\n";
-
 								unset($data[$key]);
 							}
 						}

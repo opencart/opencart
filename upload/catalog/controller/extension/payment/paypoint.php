@@ -46,7 +46,7 @@ class ControllerExtensionPaymentPaypoint extends Controller {
 		}
 
 		$data['currency'] = $this->session->data['currency'];
-		$data['callback'] = $this->url->link('extension/payment/paypoint/callback');
+		$data['callback'] = $this->url->link('extension/payment/paypoint/callback', 'language=' . $this->config->get('config_language'));
 
 		switch ($this->config->get('payment_paypoint_test')) {
 			case 'live':

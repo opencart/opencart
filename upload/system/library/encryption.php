@@ -39,11 +39,15 @@ final class Encryption {
      * @return	string
      */
 	public function decrypt($key, $value) {
+		$result    = NULL;
 		$key       = openssl_digest($key, $this->digest, true);
 		$iv_length = openssl_cipher_iv_length($this->cipher);
 		$value     = base64_decode($value);
 		$iv        = substr($value, 0, $iv_length);
 		$value     = substr($value, $iv_length);
-		return openssl_decrypt($value, $this->cipher, $key, OPENSSL_RAW_DATA, $iv);
+		if (strlen($iv) == $iv_length) {
+			$result = openssl_decrypt($value, $this->cipher, $key, OPENSSL_RAW_DATA, $iv);
+		}
+		return $result;
 	}
 }

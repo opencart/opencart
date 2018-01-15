@@ -7,7 +7,7 @@ class ControllerInformationTracking extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
+			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 		);
 		
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -26,6 +26,5 @@ class ControllerInformationTracking extends Controller {
 		$this->load->model('account/shipping');
 		
 		$this->model_account_shipping->getShippingByCode($this->request->get['code']);
-		
 	}
 }

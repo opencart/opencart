@@ -262,7 +262,7 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 			$this->model_extension_payment_sagepay_direct->logger('$payment_data', $payment_data);
 			$this->model_extension_payment_sagepay_direct->logger('order_id', $this->session->data['order_id']);
 
-			$json['TermUrl'] = $this->url->link('extension/payment/sagepay_direct/callback');
+			$json['TermUrl'] = $this->url->link('extension/payment/sagepay_direct/callback', 'language=' . $this->config->get('config_language'));
 		} elseif ($response_data['Status'] == 'OK' || $response_data['Status'] == 'AUTHENTICATED' || $response_data['Status'] == 'REGISTERED') {
 			$message = '';
 
@@ -327,7 +327,7 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 				}
 			}
 
-			$json['redirect'] = $this->url->link('checkout/success');
+			$json['redirect'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'));
 		} else {
 			$json['error'] = $response_data['Status'] . ': ' . $response_data['StatusDetail'];
 			$this->model_extension_payment_sagepay_direct->logger('Response data', $json['error']);
@@ -411,14 +411,14 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 					}
 				}
 
-				$this->response->redirect($this->url->link('checkout/success'));
+				$this->response->redirect($this->url->link('checkout/success', 'language=' . $this->config->get('config_language')));
 			} else {
 				$this->session->data['error'] = $response_data['StatusDetail'];
 
-				$this->response->redirect($this->url->link('checkout/checkout'));
+				$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 			}
 		} else {
-			$this->response->redirect($this->url->link('account/login'));
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 	}
 

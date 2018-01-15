@@ -238,8 +238,8 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 		$s_data['L_BUTTONVAR18'] = 'billing_zip=' . urlencode($order_info['payment_postcode']);
 		$s_data['L_BUTTONVAR19'] = 'billing_country=' . urlencode($order_info['payment_iso_code_2']);
 
-		$s_data['L_BUTTONVAR20'] = 'notify_url=' . $this->url->link('extension/payment/pp_pro_iframe/notify');
-		$s_data['L_BUTTONVAR21'] = 'cancel_return=' . $this->url->link('checkout/checkout');
+		$s_data['L_BUTTONVAR20'] = 'notify_url=' . $this->url->link('extension/payment/pp_pro_iframe/notify', 'language=' . $this->config->get('config_language'));
+		$s_data['L_BUTTONVAR21'] = 'cancel_return=' . $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 		$s_data['L_BUTTONVAR22'] = 'paymentaction=' . $this->config->get('payment_pp_pro_iframe_transaction_method');
 		$s_data['L_BUTTONVAR23'] = 'currency_code=' . urlencode($order_info['currency_code']);
 		$s_data['L_BUTTONVAR26'] = 'showBillingAddress=false';
@@ -259,7 +259,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 		$s_data['L_BUTTONVAR50'] = 'PageButtonBgColor=#AEAEAE';
 		$s_data['L_BUTTONVAR51'] = 'orderSummaryBgColor=#AEAEAE';
 		$s_data['L_BUTTONVAR55'] = 'template=templateD';
-		$s_data['L_BUTTONVAR56'] = 'return=' . $this->url->link('checkout/success');
+		$s_data['L_BUTTONVAR56'] = 'return=' . $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'));
 		$s_data['L_BUTTONVAR57'] = 'custom=' . $this->encryption->encrypt($this->config->get('config_encryption'), $order_info['order_id']);
 
 		if ($this->config->get('payment_pp_pro_iframe_test')) {

@@ -14,7 +14,7 @@ class ControllerExtensionRecurringPPExpress extends Controller {
 		$recurring_info = $this->model_account_recurring->getOrderRecurring($order_recurring_id);
 
 		if ($recurring_info) {
-			$data['continue'] = $this->url->link('account/recurring');
+			$data['continue'] = $this->url->link('account/recurring', 'language=' . $this->config->get('config_language'));
 
 			// If the profile is active, suspended or pending teh cancel option can be used.
 			if ($recurring_info['status'] == 1 || $recurring_info['status'] == 4 || $recurring_info['status'] == 6) {

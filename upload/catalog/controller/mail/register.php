@@ -26,7 +26,7 @@ class ControllerMailRegister extends Controller {
 			$data['approval'] = '';
 		}
 
-		$data['login'] = $this->url->link('account/login');
+		$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
 		$data['store_url'] = HTTP_SERVER;
 		$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
@@ -69,7 +69,7 @@ class ControllerMailRegister extends Controller {
 			$data['firstname'] = $args[0]['firstname'];
 			$data['lastname'] = $args[0]['lastname'];
 
-			$data['login'] = $this->url->link('account/login');
+			$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
 			$data['store_url'] = HTTP_SERVER;
 			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 

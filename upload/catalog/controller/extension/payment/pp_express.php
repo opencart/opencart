@@ -13,7 +13,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			$data['paypal_environment'] = "production";
 		}
 
-		$data['continue'] = $this->url->link('extension/payment/pp_express/checkout');
+		$data['continue'] = $this->url->link('extension/payment/pp_express/checkout', 'language=' . $this->config->get('config_language'));
 
 		unset($this->session->data['paypal']);
 
@@ -24,7 +24,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$this->load->model('extension/payment/pp_express');
 
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$this->response->redirect($this->url->link('checkout/cart'));
+			$this->response->redirect($this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 		}
 
 		if ($this->customer->isLogged()) {
@@ -48,7 +48,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				 */
 				unset($this->session->data['guest']);
 
-				$this->response->redirect($this->url->link('checkout/checkout'));
+				$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 			}
 		}
 
@@ -71,8 +71,8 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$data = array(
 			'METHOD'             => 'SetExpressCheckout',
 			'MAXAMT'             => $max_amount,
-			'RETURNURL'          => $this->url->link('extension/payment/pp_express/expressReturn'),
-			'CANCELURL'          => $this->url->link('checkout/cart'),
+			'RETURNURL'          => $this->url->link('extension/payment/pp_express/expressReturn', 'language=' . $this->config->get('config_language')),
+			'CANCELURL'          => $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')),
 			'REQCONFIRMSHIPPING' => 0,
 			'NOSHIPPING'         => $shipping,
 			'ALLOWNOTE'          => $this->config->get('payment_pp_express_allow_note'),
@@ -104,7 +104,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 			$this->log->write('Unable to create PayPal call: ' . json_encode($result));
 
-			$this->response->redirect($this->url->link('checkout/checkout'));
+			$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->session->data['paypal']['token'] = $result['TOKEN'];
@@ -348,7 +348,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			}
 		}
 
-		$this->response->redirect($this->url->link('extension/payment/pp_express/expressConfirm'));
+		$this->response->redirect($this->url->link('extension/payment/pp_express/expressConfirm', 'language=' . $this->config->get('config_language')));
 	}
 
 	public function expressConfirm() {
@@ -363,7 +363,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_coupon');
 
-			$this->response->redirect($this->url->link('extension/payment/pp_express/expressConfirm'));
+			$this->response->redirect($this->url->link('extension/payment/pp_express/expressConfirm', 'language=' . $this->config->get('config_language')));
 		}
 
 		// Voucher
@@ -372,7 +372,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_voucher');
 
-			$this->response->redirect($this->url->link('extension/payment/pp_express/expressConfirm'));
+			$this->response->redirect($this->url->link('extension/payment/pp_express/expressConfirm', 'language=' . $this->config->get('config_language')));
 		}
 
 		// Reward
@@ -381,7 +381,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_reward');
 
-			$this->response->redirect($this->url->link('extension/payment/pp_express/expressConfirm'));
+			$this->response->redirect($this->url->link('extension/payment/pp_express/expressConfirm', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->document->setTitle($this->language->get('express_text_title'));
@@ -389,17 +389,17 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/home'),
+			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language')),
 			'text' => $this->language->get('text_home')
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/payment/pp_express/express'),
+			'href' => $this->url->link('extension/payment/pp_express/express', 'language=' . $this->config->get('config_language')),
 			'text' => $this->language->get('text_title')
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/payment/pp_express/expressConfirm'),
+			'href' => $this->url->link('extension/payment/pp_express/expressConfirm', 'language=' . $this->config->get('config_language')),
 			'text' => $this->language->get('express_text_title')
 		);
 
@@ -422,7 +422,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			$data['next'] = '';
 		}
 
-		$data['action'] = $this->url->link('extension/payment/pp_express/expressConfirm');
+		$data['action'] = $this->url->link('extension/payment/pp_express/expressConfirm', 'language=' . $this->config->get('config_language'));
 
 		$this->load->model('tool/upload');
 
@@ -515,8 +515,8 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				'reward'                => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
 				'price'                 => $price,
 				'total'                 => $total,
-				'href'                  => $this->url->link('product/product', 'product_id=' . $product['product_id']),
-				'remove'                => $this->url->link('checkout/cart', 'remove=' . $product['cart_id']),
+				'href'                  => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id']),
+				'remove'                => $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language') . '&remove=' . $product['cart_id']),
 				'recurring'             => $product['recurring'],
 				'recurring_name'        => (isset($product['recurring']['recurring_name']) ? $product['recurring']['recurring_name'] : ''),
 				'recurring_description' => $recurring_description
@@ -584,7 +584,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 						}
 
 						$data['code'] = $this->session->data['shipping_method']['code'];
-						$data['action_shipping'] = $this->url->link('extension/payment/pp_express/shipping');
+						$data['action_shipping'] = $this->url->link('extension/payment/pp_express/shipping', 'language=' . $this->config->get('config_language'));
 					} else {
 						unset($this->session->data['shipping_methods']);
 						unset($this->session->data['shipping_method']);
@@ -691,13 +691,13 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 		if (!isset($method_data['pp_express'])) {
 			$this->session->data['error_warning'] = $this->language->get('error_unavailable');
-			$this->response->redirect($this->url->link('checkout/checkout'));
+			$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->session->data['payment_methods'] = $method_data;
 		$this->session->data['payment_method'] = $method_data['pp_express'];
 
-		$data['action_confirm'] = $this->url->link('extension/payment/pp_express/expressComplete');
+		$data['action_confirm'] = $this->url->link('extension/payment/pp_express/expressComplete', 'language=' . $this->config->get('config_language'));
 
 		if (isset($this->session->data['error_warning'])) {
 			$data['error_warning'] = $this->session->data['error_warning'];
@@ -748,12 +748,12 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			}
 
 			if (empty($shipping_address)) {
-				$redirect = $this->url->link('checkout/checkout');
+				$redirect = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 			}
 
 			// Validate if shipping method has been set.
 			if (!isset($this->session->data['shipping_method'])) {
-				$redirect = $this->url->link('checkout/checkout');
+				$redirect = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 			}
 		} else {
 			unset($this->session->data['shipping_method']);
@@ -771,12 +771,12 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 		// Validate if payment method has been set.
 		if (!isset($this->session->data['payment_method'])) {
-			$redirect = $this->url->link('checkout/checkout');
+			$redirect = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 		}
 
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$redirect = $this->url->link('checkout/cart');
+			$redirect = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 		}
 
 		// Validate minimum quantity requirements.
@@ -792,7 +792,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			}
 
 			if ($product['minimum'] > $product_total) {
-				$redirect = $this->url->link('checkout/cart');
+				$redirect = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 
 				break;
 			}
@@ -1078,7 +1078,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				'TOKEN'                      => $this->session->data['paypal']['token'],
 				'PAYERID'                    => $this->session->data['paypal']['payerid'],
 				'METHOD'                     => 'DoExpressCheckoutPayment',
-				'PAYMENTREQUEST_0_NOTIFYURL' => $this->url->link('extension/payment/pp_express/ipn'),
+				'PAYMENTREQUEST_0_NOTIFYURL' => $this->url->link('extension/payment/pp_express/ipn', 'language=' . $this->config->get('config_language')),
 				'RETURNFMFDETAILS'           => 1
 			);
 
@@ -1221,7 +1221,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 					}
 				}
 
-				$this->response->redirect($this->url->link('checkout/success'));
+				$this->response->redirect($this->url->link('checkout/success', 'language=' . $this->config->get('config_language')));
 
 				if (isset($result['REDIRECTREQUIRED']) && $result['REDIRECTREQUIRED'] == true) {
 					//- handle german redirect here
@@ -1234,7 +1234,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 						if ($this->session->data['paypal_redirect_count'] == 2) {
 							$this->session->data['paypal_redirect_count'] = 0;
 							$this->session->data['error'] = $this->language->get('error_too_many_failures');
-							$this->response->redirect($this->url->link('checkout/checkout'));
+							$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 						} else {
 							$this->session->data['paypal_redirect_count']++;
 						}
@@ -1250,7 +1250,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				}
 
 				$this->session->data['error_warning'] = $result['L_LONGMESSAGE0'];
-				$this->response->redirect($this->url->link('extension/payment/pp_express/expressConfirm'));
+				$this->response->redirect($this->url->link('extension/payment/pp_express/expressConfirm', 'language=' . $this->config->get('config_language')));
 			}
 		} else {
 			$this->response->redirect($redirect);
@@ -1259,7 +1259,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 	public function checkout() {
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$this->response->redirect($this->url->link('checkout/cart'));
+			$this->response->redirect($this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->load->model('extension/payment/pp_express');
@@ -1307,8 +1307,8 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$data = array(
 			'METHOD'             => 'SetExpressCheckout',
 			'MAXAMT'             => $max_amount,
-			'RETURNURL'          => $this->url->link('extension/payment/pp_express/checkoutReturn'),
-			'CANCELURL'          => $this->url->link('checkout/checkout'),
+			'RETURNURL'          => $this->url->link('extension/payment/pp_express/checkoutReturn', 'language=' . $this->config->get('config_language')),
+			'CANCELURL'          => $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')),
 			'REQCONFIRMSHIPPING' => 0,
 			'NOSHIPPING'         => $shipping,
 			'LOCALECODE'         => 'EN',
@@ -1354,7 +1354,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			 */
 			$this->log->write('Unable to create Paypal session' . json_encode($result));
 
-			$this->response->redirect($this->url->link('checkout/checkout'));
+			$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->session->data['paypal']['token'] = $result['TOKEN'];
@@ -1388,7 +1388,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			'TOKEN'                      => $this->session->data['paypal']['token'],
 			'PAYERID'                    => $this->session->data['paypal']['payerid'],
 			'METHOD'                     => 'DoExpressCheckoutPayment',
-			'PAYMENTREQUEST_0_NOTIFYURL' => $this->url->link('extension/payment/pp_express/ipn'),
+			'PAYMENTREQUEST_0_NOTIFYURL' => $this->url->link('extension/payment/pp_express/ipn', 'language=' . $this->config->get('config_language')),
 			'RETURNFMFDETAILS'           => 1
 		);
 
@@ -1532,7 +1532,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				//- handle german redirect here
 				$this->response->redirect('https://www.paypal.com/cgi-bin/webscr?cmd=_complete-express-checkout&token=' . $this->session->data['paypal']['token']);
 			} else {
-				$this->response->redirect($this->url->link('checkout/success'));
+				$this->response->redirect($this->url->link('checkout/success', 'language=' . $this->config->get('config_language')));
 			}
 		} else {
 			if ($result['L_ERRORCODE0'] == '10486') {
@@ -1542,7 +1542,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 						$this->session->data['paypal_redirect_count'] = 0;
 						$this->session->data['error'] = $this->language->get('error_too_many_failures');
 
-						$this->response->redirect($this->url->link('checkout/checkout'));
+						$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 					} else {
 						$this->session->data['paypal_redirect_count']++;
 					}
@@ -1562,13 +1562,13 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			$data['breadcrumbs'] = array();
 
 			$data['breadcrumbs'][] = array(
-				'href' => $this->url->link('common/home'),
-				'text' => $this->language->get('text_home')
+				'text' => $this->language->get('text_home'),
+				'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 			);
 
 			$data['breadcrumbs'][] = array(
-				'href' => $this->url->link('checkout/cart'),
-				'text' => $this->language->get('text_cart')
+				'text' => $this->language->get('text_cart'),
+				'href' => $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'))
 			);
 
 			$data['heading_title'] = $this->language->get('error_heading_title');
@@ -1577,7 +1577,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 			$data['button_continue'] = $this->language->get('button_continue');
 
-			$data['continue'] = $this->url->link('checkout/cart');
+			$data['continue'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 
 			unset($this->session->data['success']);
 
@@ -1863,7 +1863,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 	public function shipping() {
 		$this->shippingValidate($this->request->post['shipping_method']);
 
-		$this->response->redirect($this->url->link('extension/payment/pp_express/expressConfirm'));
+		$this->response->redirect($this->url->link('extension/payment/pp_express/expressConfirm', 'language=' . $this->config->get('config_language')));
 	}
 
 	protected function shippingValidate($code) {

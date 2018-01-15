@@ -99,8 +99,8 @@ class ControllerExtensionPaymentPaypoint extends Controller {
 
 			$data['heading_title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_name'));
 
-			$data['text_success_wait'] = sprintf($this->language->get('text_success_wait'), $this->url->link('checkout/success'));
-			$data['text_failure_wait'] = sprintf($this->language->get('text_failure_wait'), $this->url->link('checkout/cart'));
+			$data['text_success_wait'] = sprintf($this->language->get('text_success_wait'), $this->url->link('checkout/success', 'language=' . $this->config->get('config_language')));
+			$data['text_failure_wait'] = sprintf($this->language->get('text_failure_wait'), $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 
 			if (isset($this->request->get['code']) && $this->request->get['code'] == 'A' && $status) {
 				$message = '';
@@ -129,7 +129,7 @@ class ControllerExtensionPaymentPaypoint extends Controller {
 
 				$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_paypoint_order_status_id'), $message, false);
 
-				$data['continue'] = $this->url->link('checkout/success');
+				$data['continue'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'));
 
 				$data['column_left'] = $this->load->controller('common/column_left');
 				$data['column_right'] = $this->load->controller('common/column_right');
@@ -140,7 +140,7 @@ class ControllerExtensionPaymentPaypoint extends Controller {
 
 				$this->response->setOutput($this->load->view('extension/payment/paypoint_success', $data));
 			} else {
-				$data['continue'] = $this->url->link('checkout/cart');
+				$data['continue'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 
 				$data['column_left'] = $this->load->controller('common/column_left');
 				$data['column_right'] = $this->load->controller('common/column_right');

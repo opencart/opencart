@@ -81,19 +81,19 @@ class ControllerExtensionPaymentPPPayflowIframe extends Controller {
 	}
 
 	public function paymentReturn() {
-		$data['url'] = $this->url->link('checkout/success');
+		$data['url'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'));
 
 		$this->response->setOutput($this->load->view('extension/payment/pp_payflow_iframe_return', $data));
 	}
 
 	public function paymentCancel() {
-		$data['url'] = $this->url->link('checkout/checkout');
+		$data['url'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 
 		$this->response->setOutput($this->load->view('extension/payment/pp_payflow_iframe_return', $data));
 	}
 
 	public function paymentError() {
-		$data['url'] = $this->url->link('checkout/checkout');
+		$data['url'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 
 		$this->response->setOutput($this->load->view('extension/payment/pp_payflow_iframe_return', $data));
 	}

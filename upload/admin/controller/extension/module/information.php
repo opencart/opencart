@@ -10,7 +10,11 @@ class ControllerExtensionModuleInformation extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('module_information', $this->request->post);
+			if (!isset($this->request->get['module_id'])) {
+				$this->model_setting_module->addModule('information', $this->request->post);
+			} else {
+				$this->model_setting_module->editModule($this->request->get['module_id'], $this->request->post);
+			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -21,6 +25,12 @@ class ControllerExtensionModuleInformation extends Controller {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
 			$data['error_warning'] = '';
+		}
+
+		if (isset($this->error['name'])) {
+			$data['error_name'] = $this->error['name'];
+		} else {
+			$data['error_name'] = '';
 		}
 
 		$data['breadcrumbs'] = array();
@@ -35,19 +45,44 @@ class ControllerExtensionModuleInformation extends Controller {
 			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module')
 		);
 
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/module/information', 'user_token=' . $this->session->data['user_token'])
-		);
+		if (!isset($this->request->get['module_id'])) {
+			$data['breadcrumbs'][] = array(
+				'text' => $this->language->get('heading_title'),
+				'href' => $this->url->link('extension/module/information', 'user_token=' . $this->session->data['user_token'])
+			);
+		} else {
+			$data['breadcrumbs'][] = array(
+				'text' => $this->language->get('heading_title'),
+				'href' => $this->url->link('extension/module/information', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $this->request->get['module_id'])
+			);
+		}
 
-		$data['action'] = $this->url->link('extension/module/information', 'user_token=' . $this->session->data['user_token']);
+		if (!isset($this->request->get['module_id'])) {
+			$data['action'] = $this->url->link('extension/module/information', 'user_token=' . $this->session->data['user_token']);
+		} else {
+			$data['action'] = $this->url->link('extension/module/information', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $this->request->get['module_id']);
+		}
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module');
 
-		if (isset($this->request->post['module_information_status'])) {
-			$data['module_information_status'] = $this->request->post['module_information_status'];
+		if (isset($this->request->get['module_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+			$module_info = $this->model_setting_module->getModule($this->request->get['module_id']);
+		}
+
+		if (isset($this->request->post['name'])) {
+			$data['name'] = $this->request->post['name'];
+		} elseif (!empty($module_info)) {
+			$data['name'] = $module_info['name'];
 		} else {
-			$data['module_information_status'] = $this->config->get('module_information_status');
+			$data['name'] = '';
+		}
+
+		if (isset($this->request->post['status'])) {
+			$data['status'] = $this->request->post['status'];
+		} elseif (!empty($module_info)) {
+			$data['status'] = $module_info['status'];
+		} else {
+			$data['status'] = '';
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -60,6 +95,10 @@ class ControllerExtensionModuleInformation extends Controller {
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'extension/module/information')) {
 			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 64)) {
+			$this->error['name'] = $this->language->get('error_name');
 		}
 
 		return !$this->error;

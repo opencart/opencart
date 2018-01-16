@@ -8,8 +8,8 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 		$this->load->language('extension/payment/pp_braintree');
 
-		$data['payment_url'] = $this->url->link('extension/payment/pp_braintree/payment');
-		$data['vaulted_url'] = $this->url->link('extension/payment/pp_braintree/vaulted');
+		$data['payment_url'] = $this->url->link('extension/payment/pp_braintree/payment', 'language=' . $this->config->get('config_language'));
+		$data['vaulted_url'] = $this->url->link('extension/payment/pp_braintree/vaulted', 'language=' . $this->config->get('config_language'));
 
 		$data['payment_pp_braintree_3ds_status'] = $this->config->get('payment_pp_braintree_3ds_status');
 		$data['payment_pp_braintree_vault_cvv_3ds'] = $this->config->get('payment_pp_braintree_vault_cvv_3ds');
@@ -395,13 +395,13 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 				$this->model_extension_payment_pp_braintree->log('Transaction success, details below');
 				$this->model_extension_payment_pp_braintree->log($transaction);
 
-				$this->response->redirect($this->url->link('checkout/success'));
+				$this->response->redirect($this->url->link('checkout/success', 'language=' . $this->config->get('config_language')));
 			} else {
 				$this->model_extension_payment_pp_braintree->log('Transaction failed, details below');
 				$this->model_extension_payment_pp_braintree->log($transaction);
 
 				$this->session->data['error'] = $this->language->get('error_process_order');
-				$this->response->redirect($this->url->link('checkout/checkout'));
+				$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 			}
 		}
 
@@ -412,7 +412,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_pp_braintree_failed_id'));
 		}
 
-		$this->response->redirect($this->url->link('checkout/failure'));
+		$this->response->redirect($this->url->link('checkout/failure', 'language=' . $this->config->get('config_language')));
 	}
 
 	public function nonce() {
@@ -503,7 +503,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$json = array();
 			$json['error'] = true;
-			$json['url'] = $this->url->link('checkout/cart');
+			$json['url'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 
 			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode($json));
@@ -513,7 +513,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		if (!$this->customer->isLogged() && (!$this->config->get('config_checkout_guest') || $this->config->get('config_customer_price') || $this->cart->hasDownload() || $this->cart->hasRecurringProducts())) {
 			$json = array();
 			$json['error'] = true;
-			$json['url'] = $this->url->link('checkout/checkout');
+			$json['url'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 
 			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode($json));
@@ -750,7 +750,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 	public function expressConfirm() {
 		if (!isset($this->session->data['paypal_braintree']) || !isset($this->session->data['paypal_braintree']['nonce'])) {
-			$this->response->redirect($this->url->link('checkout/cart'));
+			$this->response->redirect($this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->load->language('extension/payment/pp_braintree');
@@ -765,7 +765,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_coupon');
 
-			$this->response->redirect($this->url->link('extension/payment/pp_braintree/expressConfirm'));
+			$this->response->redirect($this->url->link('extension/payment/pp_braintree/expressConfirm', 'language=' . $this->config->get('config_language')));
 		}
 
 		// Voucher
@@ -774,7 +774,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_voucher');
 
-			$this->response->redirect($this->url->link('extension/payment/pp_braintree/expressConfirm'));
+			$this->response->redirect($this->url->link('extension/payment/pp_braintree/expressConfirm', 'language=' . $this->config->get('config_language')));
 		}
 
 		// Reward
@@ -783,7 +783,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_reward');
 
-			$this->response->redirect($this->url->link('extension/payment/pp_braintree/expressConfirm'));
+			$this->response->redirect($this->url->link('extension/payment/pp_braintree/expressConfirm', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->document->setTitle($this->language->get('text_express_title'));
@@ -793,18 +793,18 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/home'),
-			'text' => $this->language->get('text_home')
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_cart'),
-			'href' => $this->url->link('checkout/cart')
+			'href' => $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/payment/pp_braintree/expressConfirm'),
-			'text' => $this->language->get('text_express_title')
+			'text' => $this->language->get('text_express_title'),
+			'href' => $this->url->link('extension/payment/pp_braintree/expressConfirm', 'language=' . $this->config->get('config_language'))
 		);
 
 		$points_total = 0;
@@ -830,14 +830,14 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			$data['next'] = '';
 		}
 
-		$data['action'] = $this->url->link('extension/payment/pp_braintree/expressConfirm');
+		$data['action'] = $this->url->link('extension/payment/pp_braintree/expressConfirm', 'language=' . $this->config->get('config_language'));
 
 		$this->load->model('tool/upload');
 
 		$products = $this->cart->getProducts();
 
 		if (empty($products)) {
-			$this->response->redirect($this->url->link('checkout/cart'));
+			$this->response->redirect($this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 		}
 
 		foreach ($products as $product) {
@@ -902,8 +902,8 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 				'reward'                => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
 				'price'                 => $price,
 				'total'                 => $total,
-				'href'                  => $this->url->link('product/product', 'product_id=' . $product['product_id']),
-				'remove'                => $this->url->link('checkout/cart', 'remove=' . $product['cart_id']),
+				'href'                  => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id']),
+				'remove'                => $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language') . '&remove=' . $product['cart_id']),
 			);
 		}
 
@@ -967,7 +967,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 						}
 
 						$data['code'] = $this->session->data['shipping_method']['code'];
-						$data['action_shipping'] = $this->url->link('extension/payment/pp_braintree/shipping');
+						$data['action_shipping'] = $this->url->link('extension/payment/pp_braintree/shipping', 'language=' . $this->config->get('config_language'));
 					} else {
 						unset($this->session->data['shipping_methods']);
 						unset($this->session->data['shipping_method']);
@@ -1081,13 +1081,13 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		if (!isset($method_data['pp_braintree'])) {
 			$this->model_extension_payment_pp_braintree->log("Braintree module was no longer an option. Check configured zones or minimum order amount based on user address info");
 			$this->session->data['error_warning'] = $this->language->get('error_unavailable');
-			$this->response->redirect($this->url->link('checkout/checkout'));
+			$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->session->data['payment_methods'] = $method_data;
 		$this->session->data['payment_method'] = $method_data['pp_braintree'];
 
-		$data['action_confirm'] = $this->url->link('extension/payment/pp_braintree/expressComplete');
+		$data['action_confirm'] = $this->url->link('extension/payment/pp_braintree/expressComplete', 'language=' . $this->config->get('config_language');
 
 		if (isset($this->session->data['error_warning'])) {
 			$data['error_warning'] = $this->session->data['error_warning'];
@@ -1125,7 +1125,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 	public function expressComplete() {
 		if (!isset($this->session->data['paypal_braintree']) || !isset($this->session->data['paypal_braintree']['nonce'])) {
-			$this->response->redirect($this->url->link('checkout/cart'));
+			$this->response->redirect($this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->load->language('extension/payment/pp_braintree');
@@ -1142,12 +1142,12 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			}
 
 			if (empty($shipping_address)) {
-				$redirect = $this->url->link('checkout/checkout');
+				$redirect = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 			}
 
 			// Validate if shipping method has been set.
 			if (!isset($this->session->data['shipping_method'])) {
-				$redirect = $this->url->link('checkout/checkout');
+				$redirect = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 			}
 		} else {
 			unset($this->session->data['shipping_method']);
@@ -1165,12 +1165,12 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 		// Validate if payment method has been set.
 		if (!isset($this->session->data['payment_method'])) {
-			$redirect = $this->url->link('checkout/checkout');
+			$redirect = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 		}
 
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$redirect = $this->url->link('checkout/cart');
+			$redirect = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 		}
 
 		// Validate minimum quantity requirements.
@@ -1186,7 +1186,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			}
 
 			if ($product['minimum'] > $product_total) {
-				$redirect = $this->url->link('checkout/cart');
+				$redirect = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 
 				break;
 			}
@@ -1524,13 +1524,13 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 				$this->model_extension_payment_pp_braintree->log('Transaction success, details below');
 				$this->model_extension_payment_pp_braintree->log($transaction);
 
-				$this->response->redirect($this->url->link('checkout/success'));
+				$this->response->redirect($this->url->link('checkout/success', 'language=' . $this->config->get('config_language')));
 			} else {
 				$this->model_extension_payment_pp_braintree->log('Transaction failed, details below');
 				$this->model_extension_payment_pp_braintree->log($transaction);
 
 				$this->session->data['error'] = $this->language->get('error_process_order');
-				$this->response->redirect($this->url->link('checkout/checkout'));
+				$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 			}
 		} else {
 			$this->response->redirect($redirect);
@@ -1550,7 +1550,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 	public function shipping() {
 		$this->shippingValidate($this->request->post['shipping_method']);
 
-		$this->response->redirect($this->url->link('extension/payment/pp_braintree/expressConfirm'));
+		$this->response->redirect($this->url->link('extension/payment/pp_braintree/expressConfirm', 'language=' . $this->config->get('config_language')));
 	}
 
 	protected function shippingValidate($code) {

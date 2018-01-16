@@ -26,7 +26,7 @@ class ControllerMailAffiliate extends Controller {
 			$data['approval'] = '';
 		}
 
-		$data['login'] = $this->url->link('affiliate/login');
+		$data['login'] = $this->url->link('affiliate/login', 'language=' . $this->config->get('config_language'));
 		$data['store_url'] = HTTP_SERVER;
 		$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
@@ -72,7 +72,7 @@ class ControllerMailAffiliate extends Controller {
 			$data['text_email'] = $this->language->get('text_email');
 			$data['text_telephone'] = $this->language->get('text_telephone');
 
-			$data['login'] = $this->url->link('affiliate/login');
+			$data['login'] = $this->url->link('affiliate/login', 'language=' . $this->config->get('config_language'));
 			$data['store_url'] = HTTP_SERVER;
 			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 

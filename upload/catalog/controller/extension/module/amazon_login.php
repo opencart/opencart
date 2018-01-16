@@ -73,7 +73,7 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 
 				$this->session->data['lpa']['error'] = $this->language->get('error_login');
 
-				$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/loginFailure'));
+				$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/loginFailure', 'language=' . $this->config->get('config_language')));
 			}
 
 			$customer_info = $this->model_account_customer->getCustomerByEmail($user->email);
@@ -107,10 +107,10 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 
 					$this->session->data['lpa']['error'] = $this->language->get('error_login');
 
-					$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/loginFailure'));
+					$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/loginFailure', 'language=' . $this->config->get('config_language')));
 				}
 
-				$this->response->redirect($this->url->link('account/account'));
+				$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 			} else {
 				$country_id = 0;
 				$zone_id = 0;
@@ -160,17 +160,17 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 
 					$this->model_extension_payment_amazon_login_pay->logger('Customer logged in - ID: ' . $customer_id . ', Email: ' . $user->email);
 
-					$this->response->redirect($this->url->link('account/account'));
+					$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 				} else {
 					$this->model_extension_payment_amazon_login_pay->logger('Could not login to - ID: ' . $customer_id . ', Email: ' . $user->email);
 
 					$this->session->data['lpa']['error'] = $this->language->get('error_login');
-					$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/loginFailure'));
+					$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/loginFailure', 'language=' . $this->config->get('config_language')));
 				}
 			}
 		} else {
 			$this->session->data['lpa']['error'] = $this->language->get('error_login');
-			$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/loginFailure'));
+			$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/loginFailure', 'language=' . $this->config->get('config_language')));
 		}
 	}
 

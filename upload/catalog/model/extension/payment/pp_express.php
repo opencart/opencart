@@ -76,33 +76,15 @@ class ModelExtensionPaymentPPExpress extends Model {
 		$item_total = 0;
 
 		foreach ($this->cart->getProducts() as $item) {
-			$data['L_PAYMENTREQUEST_0_DESC' . $i] = '';
-
-			$option_count = 0;
-			foreach ($item['option'] as $option) {
-				if ($option['type'] != 'file') {
-					$value = $option['value'];
-				} else {
-					$filename = $this->encryption->decrypt($this->config->get('config_encryption'), $option['value']);
-					$value = utf8_substr($filename, 0, utf8_strrpos($filename, '.'));
-				}
-
-				$data['L_PAYMENTREQUEST_0_DESC' . $i] .= ($option_count > 0 ? ', ' : '') . $option['name'] . ':' . (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value);
-
-				$option_count++;
-			}
-
-			$data['L_PAYMENTREQUEST_0_DESC' . $i] = substr($data['L_PAYMENTREQUEST_0_DESC' . $i], 0, 126);
-
 			$item_price = $this->currency->format($item['price'], $this->session->data['currency'], false, false);
 
-			$data['L_PAYMENTREQUEST_0_NAME' . $i] = $item['name'];
+			$data['L_PAYMENTREQUEST_0_NAME' . $i] = substr($item['name'], 0, 126);
 			$data['L_PAYMENTREQUEST_0_NUMBER' . $i] = $item['model'];
 			$data['L_PAYMENTREQUEST_0_AMT' . $i] = $item_price;
 
 			$item_total += number_format($item_price * $item['quantity'], 2, '.', '');
 
-			$data['L_PAYMENTREQUEST_0_QTY' . $i] = $item['quantity'];
+			$data['L_PAYMENTREQUEST_0_QTY' . $i] = (int)$item['quantity'];
 
 			$data['L_PAYMENTREQUEST_0_ITEMURL' . $i] = $this->url->link('product/product', 'product_id=' . $item['product_id']);
 
@@ -129,8 +111,7 @@ class ModelExtensionPaymentPPExpress extends Model {
 			foreach ($this->session->data['vouchers'] as $voucher) {
 				$item_total += $this->currency->format($voucher['amount'], $this->session->data['currency'], false, false);
 
-				$data['L_PAYMENTREQUEST_0_DESC' . $i] = '';
-				$data['L_PAYMENTREQUEST_0_NAME' . $i] = $voucher['description'];
+				$data['L_PAYMENTREQUEST_0_NAME' . $i] = substr($voucher['description'], 0, 126);
 				$data['L_PAYMENTREQUEST_0_NUMBER' . $i] = 'VOUCHER';
 				$data['L_PAYMENTREQUEST_0_QTY' . $i] = 1;
 				$data['L_PAYMENTREQUEST_0_AMT' . $i] = $this->currency->format($voucher['amount'], $this->session->data['currency'], false, false);
@@ -187,8 +168,8 @@ class ModelExtensionPaymentPPExpress extends Model {
 				if ($total_row['value'] != 0) {
 					$item_price = $this->currency->format($total_row['value'], $this->session->data['currency'], false, false);
 
+                    $data['L_PAYMENTREQUEST_0_NAME' . $i] = substr($total_row['title'], 0, 126);
 					$data['L_PAYMENTREQUEST_0_NUMBER' . $i] = $total_row['code'];
-					$data['L_PAYMENTREQUEST_0_NAME' . $i] = $total_row['title'];
 					$data['L_PAYMENTREQUEST_0_AMT' . $i] = $this->currency->format($total_row['value'], $this->session->data['currency'], false, false);
 					$data['L_PAYMENTREQUEST_0_QTY' . $i] = 1;
 
@@ -212,13 +193,13 @@ class ModelExtensionPaymentPPExpress extends Model {
 				$data['L_BILLINGTYPE' . $z] = 'RecurringPayments';
 
 				if ($item['recurring']['trial']) {
-					$trial_amt = $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
+					$trial_amt = $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * (int)$item['quantity'] . ' ' . $this->session->data['currency'];
 					$trial_text =  sprintf($this->language->get('text_trial'), $trial_amt, $item['recurring']['trial_cycle'], $item['recurring']['trial_frequency'], $item['recurring']['trial_duration']);
 				} else {
 					$trial_text = '';
 				}
 
-				$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false)  * $item['quantity'] . ' ' . $this->session->data['currency'];
+				$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false)  * (int)$item['quantity'] . ' ' . $this->session->data['currency'];
 				$recurring_description = $trial_text . sprintf($this->language->get('text_recurring'), $recurring_amt, $item['recurring']['cycle'], $item['recurring']['frequency']);
 
 				if ($item['recurring']['duration'] > 0) {
@@ -314,7 +295,7 @@ class ModelExtensionPaymentPPExpress extends Model {
 	public function recurringPayments() {
 		/*
 		 * Used by the checkout to state the module
-		 * supports recurring recurrings.
+		 * supports recurring payments.
 		 */
 		return true;
 	}

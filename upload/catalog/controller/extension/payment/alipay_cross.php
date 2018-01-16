@@ -29,7 +29,7 @@ class ControllerExtensionPaymentAlipayCross extends Controller {
 			'partner'              => $this->config->get('payment_alipay_cross_app_id'),
 			'key'                  => $this->config->get('payment_alipay_cross_merchant_private_key'),
 			'notify_url'           => HTTP_SERVER . "controller/extension/payment/alipay_cross_callback.php",
-			'return_url'           => $this->url->link('checkout/success'),
+			'return_url'           => $this->url->link('checkout/success', 'language=' . $this->config->get('config_language')),
 			'sign_type'            => strtoupper('MD5'),
 			'input_charset'        => strtolower('utf-8'),
 			'cacert'               => getcwd().'/cacert.pem',

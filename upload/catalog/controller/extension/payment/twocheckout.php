@@ -70,7 +70,7 @@ class ControllerExtensionPaymentTwoCheckout extends Controller {
 
 		$data['lang'] = $this->session->data['language'];
 
-		$data['return_url'] = $this->url->link('extension/payment/twocheckout/callback');
+		$data['return_url'] = $this->url->link('extension/payment/twocheckout/callback', 'language=' . $this->config->get('config_language'));
 
 		return $this->load->view('extension/payment/twocheckout', $data);
 	}
@@ -100,10 +100,10 @@ class ControllerExtensionPaymentTwoCheckout extends Controller {
 
 			echo '<html>' . "\n";
 			echo '<head>' . "\n";
-			echo '  <meta http-equiv="Refresh" content="0; url=' . $this->url->link('checkout/success') . '">' . "\n";
+			echo '  <meta http-equiv="Refresh" content="0; url=' . $this->url->link('checkout/success', 'language=' . $this->config->get('config_language')) . '">' . "\n";
 			echo '</head>' . "\n";
 			echo '<body>' . "\n";
-			echo '  <p>Please follow <a href="' . $this->url->link('checkout/success') . '">link</a>!</p>' . "\n";
+			echo '  <p>Please follow <a href="' . $this->url->link('checkout/success', 'language=' . $this->config->get('config_language')) . '">link</a>!</p>' . "\n";
 			echo '</body>' . "\n";
 			echo '</html>' . "\n";
 			exit();

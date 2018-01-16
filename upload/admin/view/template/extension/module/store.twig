@@ -26,22 +26,31 @@
       <div class="panel-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-module" class="form-horizontal">
           <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+              {% if error_name %}
+                <div class="text-danger">{{ error_name }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group">
             <label class="col-sm-2 control-label">{{ entry_admin }}</label>
             <div class="col-sm-10">
               <label class="radio-inline">
-                {% if module_store_admin %}
-                  <input type="radio" name="module_store_admin" value="1" checked="checked"/>
+                {% if admin %}
+                  <input type="radio" name="admin" value="1" checked="checked"/>
                   {{ text_yes }}
                 {% else %}
-                  <input type="radio" name="module_store_admin" value="1"/>
+                  <input type="radio" name="admin" value="1"/>
                   {{ text_yes }}
                 {% endif %}
               </label> <label class="radio-inline">
-                {% if not module_store_admin %}
-                  <input type="radio" name="module_store_admin" value="0" checked="checked"/>
+                {% if not admin %}
+                  <input type="radio" name="admin" value="0" checked="checked"/>
                   {{ text_no }}
                 {% else %}
-                  <input type="radio" name="module_store_admin" value="0"/>
+                  <input type="radio" name="admin" value="0"/>
                   {{ text_no }}
                 {% endif %}
               </label>
@@ -50,8 +59,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
-              <select name="module_store_status" id="input-status" class="form-control">
-                {% if module_store_status %}
+              <select name="status" id="input-status" class="form-control">
+                {% if status %}
                   <option value="1" selected="selected">{{ text_enabled }}</option>
                   <option value="0">{{ text_disabled }}</option>
                 {% else %}

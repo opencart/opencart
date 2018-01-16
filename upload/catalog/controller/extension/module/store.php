@@ -1,9 +1,9 @@
 <?php
 class ControllerExtensionModuleStore extends Controller {
-	public function index() {
+	public function index($setting) {
 		$status = true;
 
-		if ($this->config->get('module_store_admin')) {
+		if ($setting['admin']) {
 			$this->user = new Cart\User($this->registry);
 
 			$status = $this->user->isLogged();

@@ -8,8 +8,10 @@ $_['text_success']     = 'Success: You have modified store module!';
 $_['text_edit']        = 'Edit Store Module';
 
 // Entry
+$_['entry_name']       = 'Module Name';
 $_['entry_admin']      = 'Admin Users Only';
 $_['entry_status']     = 'Status';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify store module!';
+$_['error_name']       = 'Module Name must be between 3 and 64 characters!';

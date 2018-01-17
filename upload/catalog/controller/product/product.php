@@ -252,13 +252,6 @@ class ControllerProductProduct extends Controller {
 
 			$this->load->model('tool/image');
 
-			if ($product_info['image']){
-				$share_image = $this->model_tool_image->resize($product_info['image'], 600, 315);
-			} else {
-				$share_image = $this->model_tool_image->resize($this->config->get('config_image'), 600, 315);
-			}
-			$this->document->setImage($share_image);
-
 			if ($product_info['image']) {
 				$data['popup'] = $this->model_tool_image->resize($product_info['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_height'));
 			} else {

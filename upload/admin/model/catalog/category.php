@@ -14,6 +14,8 @@ class ModelCatalogCategory extends Model {
 		}
 
 		// MySQL Hierarchical Data Closure Table Pattern
+		$path = array();
+
 		$level = 0;
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE category_id = '" . (int)$data['parent_id'] . "' ORDER BY `level` ASC");
@@ -22,6 +24,8 @@ class ModelCatalogCategory extends Model {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category_id . "', `path_id` = '" . (int)$result['path_id'] . "', `level` = '" . (int)$level . "'");
 
 			$level++;
+
+			$path[] = $result['category_id'];
 		}
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category_id . "', `path_id` = '" . (int)$category_id . "', `level` = '" . (int)$level . "'");
@@ -37,17 +41,17 @@ class ModelCatalogCategory extends Model {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "category_to_store SET category_id = '" . (int)$category_id . "', store_id = '" . (int)$store_id . "'");
 			}
 		}
-		
-		if (isset($data['category_seo_url'])) {
-			foreach ($data['category_seo_url'] as $store_id => $language) {
-				foreach ($language as $language_id => $keyword) {
-					if (!empty($keyword)) {
-						$this->db->query("INSERT INTO " . DB_PREFIX . "seo_url SET store_id = '" . (int)$store_id . "', language_id = '" . (int)$language_id . "', query = 'category_id=" . (int)$category_id . "', keyword = '" . $this->db->escape($keyword) . "'");
-					}
+
+		$path = implode('_', $path);
+
+		foreach ($data['category_seo_url'] as $store_id => $language) {
+			foreach ($language as $language_id => $keyword) {
+				if (!empty($keyword)) {
+					$this->db->query("INSERT INTO " . DB_PREFIX . "seo_url SET store_id = '" . (int)$store_id . "', language_id = '" . (int)$language_id . "', query = 'path=" . $this->db->escape($path) . "', keyword = '" . $this->db->escape($keyword) . "', push = '" . $this->db->escape('route=product/category&path=' . $path) . "'");
 				}
 			}
 		}
-		
+
 		// Set which layout to use with this category
 		if (isset($data['category_layout'])) {
 			foreach ($data['category_layout'] as $store_id => $layout_id) {
@@ -58,33 +62,6 @@ class ModelCatalogCategory extends Model {
 		$this->cache->delete('category');
 
 		return $category_id;
-	}
-
-	public function editSeo($language_id, $store_id, $query, $keyword) {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE store_id = '" . (int)$store_id . "', language_id = '" . (int)$language_id . "', query = '" . $this->db->escape($query) . "'");
-
-		foreach ($data['category_seo_url'] as $store_id => $language) {
-
-
-			foreach ($language as $language_id => $keyword) {
-				if (!empty($keyword)) {
-					$this->db->query("INSERT INTO " . DB_PREFIX . "seo_url SET store_id = '" . (int)$store_id . "', language_id = '" . (int)$language_id . "', query = 'category_id=" . (int)$category_id . "', keyword = '" . $this->db->escape($keyword) . "'");
-				}
-			}
-		}
-
-	}
-
-	public function getCategorySeoUrls($category_id) {
-		$category_seo_url_data = array();
-
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE query = 'category_id=" . (int)$category_id . "'");
-
-		foreach ($query->rows as $result) {
-			$category_seo_url_data[$result['store_id']][$result['language_id']] = $result['keyword'];
-		}
-
-		return $category_seo_url_data;
 	}
 
 	public function editCategory($category_id, $data) {
@@ -167,19 +144,29 @@ class ModelCatalogCategory extends Model {
 			}
 		}
 
+
+
+
 		// SEO URL
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE query = 'category_id=" . (int)$category_id . "'");
+		// Delete the path below the current one
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "path` WHERE category_id = '" . (int)$category_path['category_id'] . "'");
+
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE query = 'path=" . (int)$category_id . "'");
 
 		if (isset($data['category_seo_url'])) {
 			foreach ($data['category_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
+
 					if (!empty($keyword)) {
+
 						$this->db->query("INSERT INTO " . DB_PREFIX . "seo_url SET store_id = '" . (int)$store_id . "', language_id = '" . (int)$language_id . "', query = 'category_id=" . (int)$category_id . "', keyword = '" . $this->db->escape($keyword) . "'");
 					}
 				}
 			}
 		}
-		
+
+
+
 		$this->db->query("DELETE FROM " . DB_PREFIX . "category_to_layout WHERE category_id = '" . (int)$category_id . "'");
 
 		if (isset($data['category_layout'])) {
@@ -319,6 +306,18 @@ class ModelCatalogCategory extends Model {
 		}
 
 		return $category_filter_data;
+	}
+
+	public function getCategorySeoUrls($category_id) {
+		$category_seo_url_data = array();
+
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE query = 'category_id=" . (int)$category_id . "'");
+
+		foreach ($query->rows as $result) {
+			$category_seo_url_data[$result['store_id']][$result['language_id']] = $result['keyword'];
+		}
+
+		return $category_seo_url_data;
 	}
 
 	public function getCategoryStores($category_id) {

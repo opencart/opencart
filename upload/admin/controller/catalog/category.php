@@ -205,6 +205,15 @@ class ControllerCatalogCategory extends Controller {
 		$results = $this->model_catalog_category->getCategories($filter_data);
 
 		foreach ($results as $result) {
+			echo (int)$result['category_id'] . "\n";
+
+
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE query LIKE 'path=" . (int)$result['category_id'] . "_%'");
+
+			print_r($query->rows);
+
+
+
 			$data['categories'][] = array(
 				'category_id' => $result['category_id'],
 				'name'        => $result['name'],

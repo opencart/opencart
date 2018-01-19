@@ -6,7 +6,7 @@
           {% if logo is empty %}
             <a href="{{ store_url }}">{{ store }}</a>
           {% else %}
-            <a href="{{ store_url }}"><img src="{{ logo }}" alt="{{ store }}" title="{{ store }}" style="margin-left: auto; margin-right: auto;" /></a>
+            <a href="{{ store_url }}"><img src="{{ logo }}" alt="{{ store }}" title="{{ store }}" style="margin-left: auto; margin-right: auto;"/></a>
           {% endif %}
 
         </td>
@@ -19,29 +19,33 @@
       <tr>
         <td style="line-height: 1.8;">
           {% if not approval %}
-
-          <p>{{ text_login }}</p>
-          <p><br/></p>
-
-          <p style="text-align: center; font-weight: bold;"><a href="{{ login }}" style="border-radius:4px; color:#fff; text-decoration: none; background-color: #01b3e8; padding-left:18px; padding-right:18px; padding-top:10px; padding-bottom:10px; font-size:18px;">
-              {{ button_login }}
-            </a></p>
-          <p><br/></p>
-
-          <p>{{ text_service }}</p>
-
+            <p>{{ text_login }}</p>
+            <p>
+              <br/>
+            </p>
+            <p style="text-align: center; font-weight: bold;"><a href="{{ login }}" style="border-radius:4px; color:#fff; text-decoration: none; background-color: #01b3e8; padding-left:18px; padding-right:18px; padding-top:10px; padding-bottom:10px; font-size:18px;">
+                {{ button_login }}
+              </a></p>
+            <p>
+              <br/>
+            </p>
+            <p>{{ text_service }}</p>
           {% else %}
-          <p>{{ text_approval }}</p>
-          <p><br/></p>
-
-          <p style="text-align: center; font-weight: bold;"><a href="{{ login }}" style="border-radius:4px; color:#fff; text-decoration: none; background-color: #01b3e8; padding-left:18px; padding-right:18px; padding-top:10px; padding-bottom:10px; font-size:18px;">
-              {{ button_login }}
-            </a></p>
-          <p><br/></p>
+            <p>{{ text_approval }}</p>
+            <p>
+              <br/>
+            </p>
+            <p style="text-align: center; font-weight: bold;"><a href="{{ login }}" style="border-radius:4px; color:#fff; text-decoration: none; background-color: #01b3e8; padding-left:18px; padding-right:18px; padding-top:10px; padding-bottom:10px; font-size:18px;">
+                {{ button_login }}
+              </a></p>
+            <p>
+              <br/>
+            </p>
 
           {% endif %}
           <p>
-            {{ text_thanks }} <br/>
+            {{ text_thanks }}
+            <br/>
             <strong>{{ store }}</strong>
           </p>
         </td>

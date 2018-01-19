@@ -84,7 +84,7 @@
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/payment/sagepay_server/send',
+		url: 'index.php?route=extension/payment/sagepay_server/send&language={{ language }}',
 		type: 'post',
 		data: $('#card-existing :input:checked, #card-save :input:enabled, #payment select:enabled'),
 		dataType: 'json',
@@ -121,7 +121,7 @@ $('#button-confirm').bind('click', function() {
 $('#button-delete').bind('click', function () {
   if (confirm('{{ text_confirm_delete }}')) {
 	$.ajax({
-	  url: 'index.php?route=extension/payment/sagepay_server/delete',
+	  url: 'index.php?route=extension/payment/sagepay_server/delete&language={{ language }}',
 	  type: 'post',
 	  data: $('#card-existing :input[name=\'Token\']'),
 	  dataType: 'json',
@@ -138,7 +138,7 @@ $('#button-delete').bind('click', function () {
 
 		if (json['success']) {
 		  $.ajax({
-			url: 'index.php?route=checkout/confirm',
+			url: 'index.php?route=checkout/confirm&language={{ language }}',
 			dataType: 'html',
 			success: function (html) {
 			  $('#collapse-checkout-confirm .panel-body').html(html);

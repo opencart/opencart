@@ -39,7 +39,7 @@
       <script type="text/javascript"><!--
 $('#button-quote').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/total/shipping/quote',
+		url: 'index.php?route=extension/total/shipping/quote&language={{ language }}',
 		type: 'post',
 		data: 'country_id=' + $('select[name=\'country_id\']').val() + '&zone_id=' + $('select[name=\'zone_id\']').val() + '&postcode=' + encodeURIComponent($('input[name=\'postcode\']').val()),
 		dataType: 'json',
@@ -136,7 +136,7 @@ $('#button-quote').on('click', function() {
 
 $(document).delegate('#button-shipping', 'click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/total/shipping/shipping',
+		url: 'index.php?route=extension/total/shipping/shipping&language={{ language }}',
 		type: 'post',
 		data: 'shipping_method=' + encodeURIComponent($('input[name=\'shipping_method\']:checked').val()),
 		dataType: 'json',
@@ -168,7 +168,7 @@ $(document).delegate('#button-shipping', 'click', function() {
 <script type="text/javascript"><!--
 $('select[name=\'country_id\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=extension/total/shipping/country&country_id=' + this.value,
+		url: 'index.php?route=extension/total/shipping/country&language={{ language }}&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'country_id\']').prop('disabled', true);

@@ -42,26 +42,6 @@
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>
-<script type="text/javascript"><!--
-$('input[name=\'product\']').autocomplete({
-	'source': function(request, response) {
-		$.ajax({
-			url: 'index.php?route=account/tracking/autocomplete&language={{ language }}&filter_name=' +  encodeURIComponent(request) + '&tracking=' + encodeURIComponent($('#input-code').val()),
-			dataType: 'json',
-			success: function(json) {
-				response($.map(json, function(item) {
-					return {
-						label: item['name'],
-						value: item['link']
-					}
-				}));
-			}
-		});
-	},
-	'select': function(item) {
-		$('input[name=\'product\']').val(item['label']);
-		$('textarea[name=\'link\']').val(item['value']);
-	}
-});
-//--></script>
+<script src="catalog/view/javascript/opencart/affiliate.js" type="text/javascript"></script>
+<script src="catalog/view/javascript/opencart/datetime.js" type="text/javascript"></script>
 {{ footer }}

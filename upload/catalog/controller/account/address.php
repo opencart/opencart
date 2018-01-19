@@ -146,6 +146,8 @@ class ControllerAccountAddress extends Controller {
 			'href' => $this->url->link('account/address', 'language=' . $this->config->get('config_language'))
 		);
 
+		$data['language'] = $this->config->get('language');
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {

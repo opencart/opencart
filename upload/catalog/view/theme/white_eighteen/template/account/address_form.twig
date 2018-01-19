@@ -138,7 +138,7 @@
                 <label>
                   <input type="radio" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" />
                   {{ custom_field_value.name }}</label>
-                {% endif %} </div>
+                {% endif %}</div>
               {% endfor %} </div>
               {% if error_custom_field[custom_field.custom_field_id] %}
               <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
@@ -157,7 +157,7 @@
                 <label>
                   <input type="checkbox" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" />
                   {{ custom_field_value.name }}</label>
-                {% endif %} </div>
+                {% endif %}</div>
               {% endfor %} </div>
             {% if error_custom_field[custom_field.custom_field_id] %}
             <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>

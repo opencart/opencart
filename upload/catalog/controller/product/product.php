@@ -218,8 +218,10 @@ class ControllerProductProduct extends Controller {
 			$this->document->setDescription($product_info['meta_description']);
 			$this->document->setKeywords($product_info['meta_keyword']);
 			$this->document->addLink($this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->get['product_id']), 'canonical');
+
 			$this->document->addScript('catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js');
 			$this->document->addStyle('catalog/view/javascript/jquery/magnific/magnific-popup.css');
+
 			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment.min.js');
 			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js');
 			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
@@ -233,6 +235,8 @@ class ControllerProductProduct extends Controller {
 			$this->load->model('catalog/review');
 
 			$data['tab_review'] = sprintf($this->language->get('tab_review'), $product_info['reviews']);
+
+			$data['language'] = $this->config->get('language');
 
 			$data['product_id'] = (int)$this->request->get['product_id'];
 			$data['manufacturer'] = $product_info['manufacturer'];

@@ -351,7 +351,7 @@
             <div class="fb-like" data-href="{{ current_link }}" data-layout="button_count" data-action="like" data-size="large" data-show-faces="false" data-share="true"></div>
             <!-- Facebook button END -->
           </div>
-          {% endif %} </div>
+          {% endif %}</div>
       </div>
       {% if products %}
       <h3>{{ text_related }}</h3>
@@ -380,7 +380,7 @@
                 {{ product.price }}
                 {% else %} <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span> {% endif %}
                 {% if product.tax %} <span class="price-tax">{{ text_tax }} {{ product.tax }}</span> {% endif %} </p>
-              {% endif %} </div>
+              {% endif %}</div>
             <div class="button-group">
               <ul class="list-inline">
                 <li><a role="button" class="short-add" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></a></li>

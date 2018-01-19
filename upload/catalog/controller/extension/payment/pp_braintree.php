@@ -1087,7 +1087,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$this->session->data['payment_methods'] = $method_data;
 		$this->session->data['payment_method'] = $method_data['pp_braintree'];
 
-		$data['action_confirm'] = $this->url->link('extension/payment/pp_braintree/expressComplete', 'language=' . $this->config->get('config_language');
+		$data['action_confirm'] = $this->url->link('extension/payment/pp_braintree/expressComplete', 'language=' . $this->config->get('config_language'));
 
 		if (isset($this->session->data['error_warning'])) {
 			$data['error_warning'] = $this->session->data['error_warning'];

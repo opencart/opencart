@@ -120,7 +120,7 @@ class ControllerProductSearch extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('product/search', , 'language=' . $this->config->get('config_language') . $url)
+			'href' => $this->url->link('product/search', 'language=' . $this->config->get('config_language') . $url)
 		);
 
 		if (isset($this->request->get['search'])) {

@@ -165,7 +165,7 @@ class ControllerProductCompare extends Controller {
 				$this->session->data['compare'][] = $this->request->post['product_id'];
 			}
 
-			$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product',, 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('product/compare', 'language=' . $this->config->get('config_language')));
+			$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('product/compare', 'language=' . $this->config->get('config_language')));
 
 			$json['total'] = sprintf($this->language->get('text_compare'), (isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0));
 		}

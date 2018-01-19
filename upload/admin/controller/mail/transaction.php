@@ -42,8 +42,22 @@ class ControllerMailTransaction extends Controller {
 				$store_name = $this->config->get('config_name');
 			}
 
-			$data['text_received'] = sprintf($this->language->get('text_received'), $this->currency->format($amount, $this->config->get('config_currency')));
-			$data['text_total'] = sprintf($this->language->get('text_total'), $this->currency->format($this->model_customer_customer->getTransactionTotal($customer_id), $this->config->get('config_currency')));
+			$this->load->model('localisation/language');
+
+			$language_info = $this->model_localisation_language->getLanguage($customer_info['language_id']);
+
+			if ($language_info) {
+				$language_code = $language_info['code'];
+			} else {
+				$language_code = $this->config->get('config_language');
+			}
+
+			$language = new Language($language_code);
+			$language->load($language_code);
+			$language->load('mail/transaction');
+
+			$data['text_received'] = sprintf($language->get('text_received'), $this->currency->format($amount, $this->config->get('config_currency')));
+			$data['text_total'] = sprintf($language->get('text_total'), $this->currency->format($this->model_customer_customer->getTransactionTotal($customer_id), $this->config->get('config_currency')));
 			
 			$mail = new Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
@@ -56,7 +70,7 @@ class ControllerMailTransaction extends Controller {
 			$mail->setTo($customer_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject(sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')));
+			$mail->setSubject(sprintf($language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')));
 			$mail->setText($this->load->view('mail/transaction', $data));
 			$mail->send();
 		}

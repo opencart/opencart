@@ -69,7 +69,9 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 		
 		$data['add'] = $this->url->link('extension/credit_card/sagepay_server/add', 'language=' . $this->config->get('config_language'));
 		$data['back'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
-		
+
+		$data['language'] = $this->config->get('config_language');
+
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');
@@ -229,11 +231,12 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 
 		/** We can now compare our MD5 Hash signature with that from Sage Pay Server * */
 		if ($str_my_signature != $str_vps_signature) {
-
 			echo "Status=INVALID" . $end_ln;
 			echo "StatusDetail= Cannot match the MD5 Hash. Order might be tampered with." . $end_ln;
 			echo "RedirectURL=" . $error_page . $end_ln;
+
 			$this->model_extension_payment_sagepay_server->logger('StatusDetail', 'Cannot match the MD5 Hash. Order might be tampered with.');
+
 			exit;
 		}
 

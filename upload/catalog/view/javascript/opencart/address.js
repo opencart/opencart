@@ -1,7 +1,7 @@
 // Sort the custom fields
 $('.form-group[data-sort]').detach().each(function() {
 	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('.form-group').length-2) {
-		$('.form-group').eq(parseInt($(this).attr('data-sort'))+2).before(this);
+		$('.form-group').eq(parseInt($(this).attr('data-sort')) +2 ).before(this);
 	}
 
 	if ($(this).attr('data-sort') > $('.form-group').length-2) {

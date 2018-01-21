@@ -165,5 +165,10 @@
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>
-<script src="catalog/view/javascript/opencart/return.js" type="text/javascript"></script>
+<script type="text/javascript"><!--
+$('.date').datetimepicker({
+	language: '{{ datepicker }}',
+	pickTime: false
+});
+//--></script>
 {{ footer }} 

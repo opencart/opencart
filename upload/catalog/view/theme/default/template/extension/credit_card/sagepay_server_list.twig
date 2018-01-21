@@ -62,7 +62,7 @@
     {{ column_right }}</div>
 </div>
 <script type="text/javascript"><!--
-$('#button-add-card').bind('click', function () {
+$('#button-add-card').on('click', function () {
 	$.ajax({
 		url: 'index.php?route=extension/credit_card/sagepay_server_cards/addCard&language={{ language }}',
 		dataType: 'json',
@@ -79,7 +79,6 @@ $('#button-add-card').bind('click', function () {
 				html = '<form action="' + json['redirect'] + '" method="post" id="redirect">';
 				html += '  <input type="hidden" name="Status" value="' + json['Status'] + '" />';
 				html += '  <input type="hidden" name="StatusDetail" value="' + json['StatusDetail'] + '" />';
-				
 				html += '</form>';
 				
 				$('.breadcrumb').after(html);

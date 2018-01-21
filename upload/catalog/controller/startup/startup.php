@@ -38,12 +38,17 @@ class ControllerStartupStartup extends Controller {
 		// Url
 		$this->registry->set('url', new Url($this->config->get('config_url')));
 
+
+
+
+
+
+
+
+
+
 		// Language
 		$code = '';
-
-		if (isset($this->request->get['language'])) {
-
-		}
 
 		$this->load->model('localisation/language');
 
@@ -51,20 +56,26 @@ class ControllerStartupStartup extends Controller {
 
 		$language_codes = array_column($languages, 'language_id', 'code');
 
+		if (isset($this->request->get['language']) && in_array($this->request->get['language'], array_keys($language_codes))) {
+			$code = $this->request->get['language'];
+		}
+
+		//$code = $this->request->get['language'];
+
 		if (isset($this->session->data['language'])) {
 			if (array_key_exists($this->session->data['language'], $language_codes)) {
 				$code = $this->session->data['language'];
 		 	}
 		}
 
-		if (empty($code) && isset($this->request->cookie['language'])) {
+		if (!$code && isset($this->request->cookie['language'])) {
 			if (array_key_exists($this->request->cookie['language'], $language_codes)) {
 				$code = $this->request->cookie['language'];
 			}
 		}
 
 		// Language Detection
-		if (empty($code) && !empty($this->request->server['HTTP_ACCEPT_LANGUAGE'])) {
+		if (!$code && !empty($this->request->server['HTTP_ACCEPT_LANGUAGE'])) {
 			$detect = '';
 
 			$browser_codes = array();
@@ -121,15 +132,25 @@ class ControllerStartupStartup extends Controller {
 			setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
 		}
 
+
+
 		// Overwrite the default language object
 		$language = new Language($code);
 		$language->load($code);
-
 		$this->registry->set('language', $language);
 
 		// Set the config language_id
 		$this->config->set('config_language_id', $language_codes[$code]);
 		$this->config->set('config_language', $code);
+
+
+
+
+
+
+
+
+
 
 		// Customer
 		$customer = new Cart\Customer($this->registry);

@@ -35,7 +35,7 @@ class ControllerProductManufacturer extends Controller {
 			if (!isset($data['categories'][$key])) {
 				$data['categories'][$key]['name'] = $key;
 			}
-			
+
 			$data['categories'][$key]['manufacturer'][] = array(
 				'name'  => $result['name'],
 				'image' => $image,

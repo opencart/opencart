@@ -36,7 +36,7 @@ class ControllerCommonLanguage extends Controller {
 				$data['languages'][] = array(
 					'name' => $result['name'],
 					'code' => $result['code'],
-					'href' => $this->url->link($route, 'language=' . $result['code'] . ltrim($url, '&'))
+					'href' => $this->url->link($route, 'language=' . $result['code'] . $url)
 				);
 			}
 		}

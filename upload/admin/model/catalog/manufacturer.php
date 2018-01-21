@@ -5,6 +5,12 @@ class ModelCatalogManufacturer extends Model {
 
 		$manufacturer_id = $this->db->getLastId();
 
+		if (isset($data['manufacturer_description'])) {
+			foreach ($data['manufacturer_description'] as $language_id => $value) {
+                $this->db->query("INSERT INTO " . DB_PREFIX . "manufacturer_description SET manufacturer_id = '" . (int)$manufacturer_id . "', language_id = '" . (int)$language_id . "', description = '" . $this->db->escape($value['description']) . "'");
+            }
+		}
+		
 		if (isset($data['image'])) {
 			$this->db->query("UPDATE " . DB_PREFIX . "manufacturer SET image = '" . $this->db->escape((string)$data['image']) . "' WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
 		}
@@ -34,6 +40,14 @@ class ModelCatalogManufacturer extends Model {
 	public function editManufacturer($manufacturer_id, $data) {
 		$this->db->query("UPDATE " . DB_PREFIX . "manufacturer SET name = '" . $this->db->escape((string)$data['name']) . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
 
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_description` WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
+		
+		if (isset($data['manufacturer_description'])) {
+			foreach ($data['manufacturer_description'] as $language_id => $value) {
+                $this->db->query("INSERT INTO " . DB_PREFIX . "manufacturer_description SET manufacturer_id = '" . (int)$manufacturer_id . "', language_id = '" . (int)$language_id . "', description = '" . $this->db->escape($value['description']) . "'");
+            }
+		}		
+		
 		if (isset($data['image'])) {
 			$this->db->query("UPDATE " . DB_PREFIX . "manufacturer SET image = '" . $this->db->escape((string)$data['image']) . "' WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
 		}
@@ -63,6 +77,7 @@ class ModelCatalogManufacturer extends Model {
 
 	public function deleteManufacturer($manufacturer_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer` WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_description` WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_store` WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE query = 'manufacturer_id=" . (int)$manufacturer_id . "'");
 
@@ -115,6 +130,20 @@ class ModelCatalogManufacturer extends Model {
 
 		return $query->rows;
 	}
+	
+	public function getManufacturerDescriptions($manufacturer_id) {
+		$manufacturer_description_data = array();
+
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "manufacturer_description WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
+
+		foreach ($query->rows as $result) {
+			$manufacturer_description_data[$result['language_id']] = array(
+				'description'      => $result['description']
+			);
+		}
+
+		return $manufacturer_description_data;
+	}	
 
 	public function getManufacturerStores($manufacturer_id) {
 		$manufacturer_store_data = array();

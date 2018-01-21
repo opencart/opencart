@@ -2783,6 +2783,34 @@ function db_schema() {
 	);
 
 	$tables[] = array(
+		'name' => 'manufacturer_description',
+		'field' => array(
+			array(
+				'name' => 'manufacturer_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'language_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'description',
+				'type' => 'text',
+				'not_null' => false
+			)
+		),
+		'primary' => array(
+			'manufacturer_id',
+			'language_id'
+		),
+		'engine' => 'MyISAM',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	);	
+	
+	$tables[] = array(
 		'name' => 'manufacturer_to_store',
 		'field' => array(
 			array(

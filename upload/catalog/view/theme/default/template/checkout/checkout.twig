@@ -2,21 +2,21 @@
 <div id="checkout-checkout" class="container">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
-    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+      <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
   {% if error_warning %}
-  <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
   {% endif %}
   <div class="row">{{ column_left }}
     {% if column_left and column_right %}
-    {% set class = 'col-sm-6' %}
+      {% set class = 'col-sm-6' %}
     {% elseif column_left or column_right %}
-    {% set class = 'col-sm-9' %}
+      {% set class = 'col-sm-9' %}
     {% else %}
-    {% set class = 'col-sm-12' %}
+      {% set class = 'col-sm-12' %}
     {% endif %}
     <div id="content" class="{{ class }}">{{ content_top }}
       <h1>{{ heading_title }}</h1>
@@ -30,41 +30,41 @@
           </div>
         </div>
         {% if not logged and account != 'guest' %}
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">{{ text_checkout_account }}</h4>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">{{ text_checkout_account }}</h4>
+            </div>
+            <div class="panel-collapse collapse" id="collapse-payment-address">
+              <div class="panel-body"></div>
+            </div>
           </div>
-          <div class="panel-collapse collapse" id="collapse-payment-address">
-            <div class="panel-body"></div>
-          </div>
-        </div>
         {% else %}
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">{{ text_checkout_payment_address }}</h4>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">{{ text_checkout_payment_address }}</h4>
+            </div>
+            <div class="panel-collapse collapse" id="collapse-payment-address">
+              <div class="panel-body"></div>
+            </div>
           </div>
-          <div class="panel-collapse collapse" id="collapse-payment-address">
-            <div class="panel-body"></div>
-          </div>
-        </div>
         {% endif %}
         {% if shipping_required %}
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">{{ text_checkout_shipping_address }}</h4>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">{{ text_checkout_shipping_address }}</h4>
+            </div>
+            <div class="panel-collapse collapse" id="collapse-shipping-address">
+              <div class="panel-body"></div>
+            </div>
           </div>
-          <div class="panel-collapse collapse" id="collapse-shipping-address">
-            <div class="panel-body"></div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">{{ text_checkout_shipping_method }}</h4>
+            </div>
+            <div class="panel-collapse collapse" id="collapse-shipping-method">
+              <div class="panel-body"></div>
+            </div>
           </div>
-        </div>
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">{{ text_checkout_shipping_method }}</h4>
-          </div>
-          <div class="panel-collapse collapse" id="collapse-shipping-method">
-            <div class="panel-body"></div>
-          </div>
-        </div>
         {% endif %}
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -87,7 +87,7 @@
     {{ column_right }}</div>
 </div>
 <script type="text/javascript"><!--
-$(document).on('change', 'input[name=\'account\']', function() {
+$('#collapse-checkout-option').on('change', 'input[name=\'account\']', function() {
 	if ($('#collapse-payment-address').parent().find('.panel-heading .panel-title > *').is('a')) {
 		if (this.value == 'register') {
 			$('#collapse-payment-address').parent().find('.panel-heading .panel-title').html('<a href="#collapse-payment-address" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle">{{ text_checkout_account }} <i class="fa fa-caret-down"></i></a>');
@@ -140,38 +140,38 @@ $(document).ready(function() {
 {% endif %}
 
 // Checkout
-$(document).delegate('#button-account', 'click', function() {
+$('#collapse-checkout-option').on('click', '#button-account', function() {
 	$.ajax({
-		url: 'index.php?route=checkout/' + $('input[name=\'account\']:checked').val() " '&language={{ language }}',
+		url: 'index.php?route=checkout/' + $('input[name=\'account\']:checked').val() + '&language={{ language }}',
 		dataType: 'html',
 		beforeSend: function() {
-		$('#button-account').button('loading');
-	},
-	complete: function() {
-		$('#button-account').button('reset');
-	},
-	success: function(html) {
-		$('.alert-dismissible, .text-danger').remove();
-		$('.form-group').removeClass('has-error');
+			$('#button-account').button('loading');
+		},
+		complete: function() {
+			$('#button-account').button('reset');
+		},
+		success: function(html) {
+			$('.alert-dismissible, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
 
-		$('#collapse-payment-address .panel-body').html(html);
+			$('#collapse-payment-address .panel-body').html(html);
 
-		if ($('input[name=\'account\']:checked').val() == 'register') {
-			$('#collapse-payment-address').parent().find('.panel-heading .panel-title').html('<a href="#collapse-payment-address" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle">{{ text_checkout_account }} <i class="fa fa-caret-down"></i></a>');
-		} else {
-			$('#collapse-payment-address').parent().find('.panel-heading .panel-title').html('<a href="#collapse-payment-address" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle">{{ text_checkout_payment_address }} <i class="fa fa-caret-down"></i></a>');
+			if ($('input[name=\'account\']:checked').val() == 'register') {
+				$('#collapse-payment-address').parent().find('.panel-heading .panel-title').html('<a href="#collapse-payment-address" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle">{{ text_checkout_account }} <i class="fa fa-caret-down"></i></a>');
+			} else {
+				$('#collapse-payment-address').parent().find('.panel-heading .panel-title').html('<a href="#collapse-payment-address" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle">{{ text_checkout_payment_address }} <i class="fa fa-caret-down"></i></a>');
+			}
+
+			$('a[href=\'#collapse-payment-address\']').trigger('click');
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
-
-		$('a[href=\'#collapse-payment-address\']').trigger('click');
-	},
-	error: function(xhr, ajaxOptions, thrownError) {
-		alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-	}
-});
+	});
 });
 
 // Login
-$(document).delegate('#button-login', 'click', function() {
+$('#collapse-checkout-option').on('click', '#button-login', 'click', function() {
 	$.ajax({
 		url: 'index.php?route=checkout/login/save&language={{ language }}',
 		type: 'post',
@@ -204,7 +204,7 @@ $(document).delegate('#button-login', 'click', function() {
 });
 
 // Register
-$(document).delegate('#button-register', 'click', function() {
+$('#collapse-payment-address').on('click', '#button-register', function() {
 	$.ajax({
 		url: 'index.php?route=checkout/register/save&language={{ language }}',
 		type: 'post',
@@ -338,7 +338,7 @@ $(document).delegate('#button-register', 'click', function() {
 });
 
 // Payment Address
-$(document).delegate('#button-payment-address', 'click', function() {
+$('#collapse-payment-address').on('click', '#button-payment-address', function() {
 	$.ajax({
 		url: 'index.php?route=checkout/payment_address/save',
 		type: 'post',
@@ -442,7 +442,7 @@ $(document).delegate('#button-payment-address', 'click', function() {
 });
 
 // Shipping Address
-$(document).delegate('#button-shipping-address', 'click', function() {
+$('#collapse-shipping-address').on('click', '#button-shipping-address', function() {
 	$.ajax({
 		url: 'index.php?route=checkout/shipping_address/save',
 		type: 'post',
@@ -528,7 +528,7 @@ $(document).delegate('#button-shipping-address', 'click', function() {
 });
 
 // Guest
-$(document).delegate('#button-guest', 'click', function() {
+$('#collapse-payment-address').on('click', '#button-guest', function() {
 	$.ajax({
 		url: 'index.php?route=checkout/guest/save',
 		type: 'post',
@@ -654,7 +654,7 @@ $(document).delegate('#button-guest', 'click', function() {
 });
 
 // Guest Shipping
-$(document).delegate('#button-guest-shipping', 'click', function() {
+$('#collapse-shipping-address').on('click', '#button-guest-shipping', function() {
 	$.ajax({
 		url: 'index.php?route=checkout/guest_shipping/save',
 		type: 'post',
@@ -717,7 +717,7 @@ $(document).delegate('#button-guest-shipping', 'click', function() {
 	});
 });
 
-$(document).delegate('#button-shipping-method', 'click', function() {
+$('#collapse-shipping-method').on('click', '#button-shipping-method', function() {
 	$.ajax({
 		url: 'index.php?route=checkout/shipping_method/save',
 		type: 'post',
@@ -765,7 +765,7 @@ $(document).delegate('#button-shipping-method', 'click', function() {
 	});
 });
 
-$(document).delegate('#button-payment-method', 'click', function() {
+$('#collapse-payment-method').on('click', '#button-payment-method', function() {
 	$.ajax({
 		url: 'index.php?route=checkout/payment_method/save',
 		type: 'post',

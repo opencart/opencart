@@ -136,6 +136,8 @@ class ControllerCheckoutGuest extends Controller {
 		} else {
 			$data['captcha'] = '';
 		}
+
+		$data['language'] = $this->config->get('config_language');
 		
 		$this->response->setOutput($this->load->view('checkout/guest', $data));
 	}

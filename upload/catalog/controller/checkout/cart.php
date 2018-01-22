@@ -53,6 +53,14 @@ class ControllerCheckoutCart extends Controller {
 			$this->load->model('tool/image');
 			$this->load->model('tool/upload');
 
+			$frequencies = array(
+				'day'        => $this->language->get('text_day'),
+				'week'       => $this->language->get('text_week'),
+				'semi_month' => $this->language->get('text_semi_month'),
+				'month'      => $this->language->get('text_month'),
+				'year'       => $this->language->get('text_year')
+			);
+
 			$data['products'] = array();
 
 			$products = $this->cart->getProducts();
@@ -111,14 +119,6 @@ class ControllerCheckoutCart extends Controller {
 				$recurring = '';
 
 				if ($product['recurring']) {
-					$frequencies = array(
-						'day'        => $this->language->get('text_day'),
-						'week'       => $this->language->get('text_week'),
-						'semi_month' => $this->language->get('text_semi_month'),
-						'month'      => $this->language->get('text_month'),
-						'year'       => $this->language->get('text_year')
-					);
-
 					if ($product['recurring']['trial']) {
 						$recurring = sprintf($this->language->get('text_trial_description'), $this->currency->format($this->tax->calculate($product['recurring']['trial_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['trial_cycle'], $frequencies[$product['recurring']['trial_frequency']], $product['recurring']['trial_duration']) . ' ';
 					}

@@ -8,6 +8,8 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		$data['language'] = $this->config->get('config_language');
+
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');
@@ -408,6 +410,8 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 				'text'  => $this->currency->format($total['value'], $this->session->data['currency'])
 			);
 		}
+
+		$data['language'] = $this->config->get('config_language');
 
 		$this->response->setOutput($this->load->view('extension/payment/klarna_checkout_sidebar', $data));
 	}

@@ -108,7 +108,7 @@
                   </div>
                 {% else %}
                   <div class="radio">
-                    <label> <input type="radio" name="return_reason_id" value="{{ return_reason.return_reason_id }}"/>
+                    <label><input type="radio" name="return_reason_id" value="{{ return_reason.return_reason_id }}"/>
                       {{ return_reason.name }}</label>
                   </div>
                 {% endif %}
@@ -120,12 +120,12 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label">{{ entry_opened }}</label>
             <div class="col-sm-10">
-              <label class="radio-inline"> {% if opened %}
+              <label class="radio-inline">{% if opened %}
                   <input type="radio" name="opened" value="1" checked="checked"/>
                 {% else %}
                   <input type="radio" name="opened" value="1"/>
                 {% endif %}
-                {{ text_yes }}</label> <label class="radio-inline"> {% if not opened %}
+                {{ text_yes }}</label> <label class="radio-inline">{% if not opened %}
                   <input type="radio" name="opened" value="0" checked="checked"/>
                 {% else %}
                   <input type="radio" name="opened" value="0"/>
@@ -167,8 +167,9 @@
 </div>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	language: '{{ datepicker }}',
-	pickTime: false
+	locale: '{{ datepicker }}',
+	viewMode: 'years'
+	//pickTime: false
 });
 //--></script>
 {{ footer }} 

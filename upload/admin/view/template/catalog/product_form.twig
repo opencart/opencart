@@ -938,7 +938,7 @@ function addSpecial() {
 	$('#special tbody').append(html);
 
 	$('.date').datetimepicker({
-		language: '{{ datepicker }}',
+		locale: '{{ datepicker }}',
 		pickTime: false
 	});
 
@@ -992,17 +992,17 @@ function addRecurring() {
 //--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	language: '{{ datepicker }}',
+	locale: '{{ datepicker }}',
 	pickTime: false
 });
 
 $('.time').datetimepicker({
-	language: '{{ datepicker }}',
+	locale: '{{ datepicker }}',
 	pickDate: false
 });
 
 $('.datetime').datetimepicker({
-	language: '{{ datepicker }}',
+	locale: '{{ datepicker }}',
 	pickDate: true,
 	pickTime: true
 });

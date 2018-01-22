@@ -146,8 +146,6 @@ class ControllerAccountAddress extends Controller {
 			'href' => $this->url->link('account/address', 'language=' . $this->config->get('config_language'))
 		);
 
-		$data['language'] = $this->config->get('language');
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -209,6 +207,8 @@ class ControllerAccountAddress extends Controller {
 
 		$data['add'] = $this->url->link('account/address/add', 'language=' . $this->config->get('config_language'));
 		$data['back'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
+
+		$data['language'] = $this->config->get('config_language');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

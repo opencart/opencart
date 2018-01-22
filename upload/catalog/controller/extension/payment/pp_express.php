@@ -17,6 +17,8 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 		unset($this->session->data['paypal']);
 
+		$data['language'] = $this->config->get('config_language');
+
 		return $this->load->view('extension/payment/pp_express', $data);
 	}
 

@@ -39,7 +39,7 @@
     {% if payment_type.masterpass == 1 %}
     <p id="tip-masterpass" style="display:none;">{{ text_type_help }}{{ text_card_type_mp }}</p>
     {% endif %}
-    {% if payment_type.visa == 1 and payment_type.mastercard == 1 and payment_type.diners == 1 or payment_type.jcb == 1 or payment_type.amex == 1 %}
+    {% if payment_type.visa == 1 or payment_type.mastercard == 1 or payment_type.diners == 1 or payment_type.jcb == 1 or payment_type.amex == 1 %}
     <div id="creditcard-info">
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="eway-cardname">{{ entry_cc_name }}</label>

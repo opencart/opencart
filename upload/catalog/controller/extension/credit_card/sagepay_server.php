@@ -42,7 +42,7 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 
 		if ($this->config->get('payment_sagepay_server_card')) {
 			$data['cards'] = $this->model_extension_payment_sagepay_server->getCards($this->customer->getId());
-			$data['delete'] = $this->url->link('extension/credit_card/sagepay_server/delete', , 'language=' . $this->config->get('config_language') . '&card_id=');
+			$data['delete'] = $this->url->link('extension/credit_card/sagepay_server/delete', 'language=' . $this->config->get('config_language') . '&card_id=');
 
 			if (isset($this->request->get['page'])) {
 				$page = $this->request->get['page'];

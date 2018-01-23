@@ -36,11 +36,23 @@ class ControllerCommonLanguage extends Controller {
 				$data['languages'][] = array(
 					'name' => $result['name'],
 					'code' => $result['code'],
-					'href' => $this->url->link($route, 'language=' . $result['code'] . $url)
+					'href' => $this->url->link('common/language/language', 'language=' . $result['code'] . '&redirect=' . urlencode($this->url->link($route, 'language=' . $result['code'] . $url)))
 				);
 			}
 		}
 
 		return $this->load->view('common/language', $data);
+	}
+
+	public function language() {
+		if (isset($this->request->get['code'])) {
+			//$this->session->data['language'] = $this->request->get['code'];
+		}
+
+		if (isset($this->request->get['redirect'])) {
+			$this->response->redirect($this->request->get['redirect']);
+		} else {
+			$this->response->redirect($this->url->link('common/home', 'language=' . $this->request->get['code']));
+		}
 	}
 }

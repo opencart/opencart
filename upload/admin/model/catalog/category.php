@@ -14,17 +14,17 @@ class ModelCatalogCategory extends Model {
 		}
 
 		// MySQL Hierarchical Data Closure Table Pattern
-		$path = array();
+		$level = 0;
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE category_id = '" . (int)$data['parent_id'] . "' ORDER BY `level` ASC");
 
 		foreach ($query->rows as $result) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category_id . "', `path_id` = '" . (int)$result['path_id'] . "', `level` = '" . (int)count($path) . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category_id . "', `path_id` = '" . (int)$result['path_id'] . "', `level` = '" . (int)$level . "'");
 
-			$path[] = $result['category_id'];
+			$level++;
 		}
 
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category_id . "', `path_id` = '" . (int)$category_id . "', `level` = '" . (int)count($path). "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category_id . "', `path_id` = '" . (int)$category_id . "', `level` = '" . (int)$level. "'");
 
 		if (isset($data['category_filter'])) {
 			foreach ($data['category_filter'] as $filter_id) {
@@ -38,10 +38,12 @@ class ModelCatalogCategory extends Model {
 			}
 		}
 
+		$path = $this->getPath($category_id);
+
 		foreach ($data['category_seo_url'] as $store_id => $language) {
 			foreach ($language as $language_id => $keyword) {
 				if (!empty($keyword)) {
-					$this->db->query("INSERT INTO " . DB_PREFIX . "seo_url SET store_id = '" . (int)$store_id . "', language_id = '" . (int)$language_id . "', query = 'path=" . $this->db->escape(implode('_', $path)) . "', keyword = '" . $this->db->escape($keyword) . "', push = '" . $this->db->escape('route=product/category&path=' . implode('_', $path)) . "'");
+					$this->db->query("INSERT INTO " . DB_PREFIX . "seo_url SET store_id = '" . (int)$store_id . "', language_id = '" . (int)$language_id . "', query = 'path=" . $this->db->escape($path) . "', keyword = '" . $this->db->escape($keyword) . "', push = '" . $this->db->escape('route=product/category&path=' . $path) . "'");
 				}
 			}
 		}
@@ -70,6 +72,9 @@ class ModelCatalogCategory extends Model {
 		foreach ($data['category_description'] as $language_id => $value) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "category_description SET category_id = '" . (int)$category_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
 		}
+
+		// Old path
+		$path_old = $this->getPath($category_id);
 
 		// MySQL Hierarchical Data Closure Table Pattern
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE path_id = '" . (int)$category_id . "' ORDER BY level ASC");
@@ -138,40 +143,25 @@ class ModelCatalogCategory extends Model {
 			}
 		}
 
-
-
-
 		// SEO URL
-		// UPDATE all the previous paths to the new one
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE query LIKE 'path=" . (int)$category_id . "_%'");
+		$path = $this->getPath($category_id);
 
-		foreach ($query->rows as $store_id => $language) {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE query = 'path=" . $this->db->escape($path_old) . "'");
 
-			$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE query = 'path=" . (int)$category_id . "'");
-
-			if (isset($data['category_seo_url'])) {
-				foreach ($data['category_seo_url'] as $store_id => $language) {
-					foreach ($language as $language_id => $keyword) {
-
-						if (!empty($keyword)) {
-
-							$this->db->query("INSERT INTO " . DB_PREFIX . "seo_url SET store_id = '" . (int)$store_id . "', language_id = '" . (int)$language_id . "', query = 'category_id=" . (int)$category_id . "', keyword = '" . $this->db->escape($keyword) . "'");
-						}
+		if (isset($data['category_seo_url'])) {
+			foreach ($data['category_seo_url'] as $store_id => $language) {
+				foreach ($language as $language_id => $keyword) {
+					if (!empty($keyword)) {
+						$this->db->query("INSERT INTO " . DB_PREFIX . "seo_url SET store_id = '" . (int)$store_id . "', language_id = '" . (int)$language_id . "', query = 'path=" . $this->db->escape($path) . "', keyword = '" . $this->db->escape($keyword) . "'");
 					}
 				}
 			}
 		}
 
+		// Update all the previous paths to the new one
+		$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `query` = REPLACE(query, 'path=" . $this->db->escape($path_old) . "', 'path=" . $this->db->escape($path) . "') WHERE `query` LIKE 'path=" . $this->db->escape($path_old) . "_%'");
 
-
-
-
-
-
-
-
-
-
+		// Layouts
 		$this->db->query("DELETE FROM " . DB_PREFIX . "category_to_layout WHERE category_id = '" . (int)$category_id . "'");
 
 		if (isset($data['category_layout'])) {
@@ -198,8 +188,9 @@ class ModelCatalogCategory extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "category_to_store WHERE category_id = '" . (int)$category_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "category_to_layout WHERE category_id = '" . (int)$category_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_category WHERE category_id = '" . (int)$category_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "seo_url WHERE query = 'category_id=" . (int)$category_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_category WHERE category_id = '" . (int)$category_id . "'");
+
+		$this->db->query("DELETE FROM " . DB_PREFIX . "seo_url WHERE query = 'category_id=" . (int)$category_id . "'");
 
 		$this->cache->delete('category');
 	}
@@ -232,6 +223,10 @@ class ModelCatalogCategory extends Model {
 		$query = $this->db->query("SELECT DISTINCT *, (SELECT GROUP_CONCAT(cd1.name ORDER BY level SEPARATOR '&nbsp;&nbsp;&gt;&nbsp;&nbsp;') FROM " . DB_PREFIX . "category_path cp LEFT JOIN " . DB_PREFIX . "category_description cd1 ON (cp.path_id = cd1.category_id AND cp.category_id != cp.path_id) WHERE cp.category_id = c.category_id AND cd1.language_id = '" . (int)$this->config->get('config_language_id') . "' GROUP BY cp.category_id) AS path FROM " . DB_PREFIX . "category c LEFT JOIN " . DB_PREFIX . "category_description cd2 ON (c.category_id = cd2.category_id) WHERE c.category_id = '" . (int)$category_id . "' AND cd2.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 		
 		return $query->row;
+	}
+
+	public function getPath($category_id) {
+		return implode('_', array_column($this->getCategoryPath($category_id), 'path_id'));
 	}
 
 	public function getCategories($data = array()) {
@@ -300,7 +295,7 @@ class ModelCatalogCategory extends Model {
 
 		return $query->rows;
 	}
-	
+
 	public function getCategoryFilters($category_id) {
 		$category_filter_data = array();
 

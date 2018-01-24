@@ -23,6 +23,8 @@ class ControllerExtensionPaymentWebPaymentSoftware extends Controller {
 			);
 		}
 
+		$data['language'] = $this->config->get('config_language');
+
 		return $this->load->view('extension/payment/web_payment_software', $data);
 	}
 

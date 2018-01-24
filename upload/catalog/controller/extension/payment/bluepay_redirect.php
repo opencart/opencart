@@ -38,6 +38,8 @@ class ControllerExtensionPaymentBluepayRedirect extends Controller {
 			$data['existing_cards'] = $cards;
 		}
 
+		$data['language'] = $this->config->get('config_language');
+
 		return $this->load->view('extension/payment/bluepay_redirect', $data);
 	}
 

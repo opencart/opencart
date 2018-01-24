@@ -10,6 +10,8 @@ class ControllerExtensionTotalCoupon extends Controller {
 				$data['coupon'] = '';
 			}
 
+			$data['language'] = $this->config->get('config_language');
+
 			return $this->load->view('extension/total/coupon', $data);
 		}
 	}

@@ -27,6 +27,8 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 			$data['recurring_products'] = true;
 		}
 
+		$data['language'] = $this->config->get('config_language');
+
 		return $this->load->view('extension/payment/worldpay', $data);
 	}
 

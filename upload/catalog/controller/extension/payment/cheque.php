@@ -6,6 +6,8 @@ class ControllerExtensionPaymentCheque extends Controller {
 		$data['payable'] = $this->config->get('payment_cheque_payable');
 		$data['address'] = nl2br($this->config->get('config_address'));
 
+		$data['language'] = $this->config->get('config_language');
+
 		return $this->load->view('extension/payment/cheque', $data);
 	}
 

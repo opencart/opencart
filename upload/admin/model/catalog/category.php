@@ -311,7 +311,7 @@ class ModelCatalogCategory extends Model {
 	public function getCategorySeoUrls($category_id) {
 		$category_seo_url_data = array();
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE query = 'category_id=" . (int)$category_id . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE query = 'path=" . $this->db->escape($this->getPath($category_id)) . "'");
 
 		foreach ($query->rows as $result) {
 			$category_seo_url_data[$result['store_id']][$result['language_id']] = $result['keyword'];

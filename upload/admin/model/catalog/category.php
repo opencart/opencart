@@ -152,7 +152,7 @@ class ModelCatalogCategory extends Model {
 			foreach ($data['category_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
 					if (!empty($keyword)) {
-						$this->db->query("INSERT INTO " . DB_PREFIX . "seo_url SET store_id = '" . (int)$store_id . "', language_id = '" . (int)$language_id . "', query = 'path=" . $this->db->escape($path) . "', keyword = '" . $this->db->escape($keyword) . "'");
+						$this->db->query("INSERT INTO " . DB_PREFIX . "seo_url SET store_id = '" . (int)$store_id . "', language_id = '" . (int)$language_id . "', query = 'path=" . $this->db->escape($path) . "', keyword = '" . $this->db->escape($keyword) . "', push = '" . $this->db->escape('route=product/category&path=' . $path) . "'");
 					}
 				}
 			}
@@ -290,7 +290,7 @@ class ModelCatalogCategory extends Model {
 	}
 	
 	public function getCategoryPath($category_id) {
-		$query = $this->db->query("SELECT category_id, path_id, level FROM " . DB_PREFIX . "category_path WHERE category_id = '" . (int)$category_id . "'");
+		$query = $this->db->query("SELECT category_id, path_id, level FROM " . DB_PREFIX . "category_path WHERE category_id = '" . (int)$category_id . "' ORDER BY level ASC");
 
 		return $query->rows;
 	}

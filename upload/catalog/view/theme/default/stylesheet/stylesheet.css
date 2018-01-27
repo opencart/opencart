@@ -143,6 +143,11 @@ div.required .control-label:before {
 	padding: 10px 35px;
 	text-shadow: 0 1px 0 #FFF;
 }
+@media (max-width: 767px) {
+    input[name='search'] {
+        margin-bottom: 15px;
+    }
+}
 /* cart */
 #cart {
 	margin-bottom: 10px;

@@ -46,13 +46,18 @@ class ControllerCommonLanguage extends Controller {
 
 	public function language() {
 		if (isset($this->request->get['code'])) {
-			//$this->session->data['language'] = $this->request->get['code'];
+			$code = $this->request->get['code'];
+		} else {
+			$code = $this->config->get('config_language');
 		}
 
-		if (isset($this->request->get['redirect'])) {
+		if (isset($this->request->get['redirect']) && substr($this->request->get['redirect'], 0, strlen($this->config->get('config_url'))) == $this->config->get('config_url')) {
+
+
+
 			$this->response->redirect($this->request->get['redirect']);
 		} else {
-			$this->response->redirect($this->url->link('common/home', 'language=' . $this->request->get['code']));
+			$this->response->redirect($this->url->link('common/home', 'language=' . $code));
 		}
 	}
 }

@@ -407,21 +407,15 @@ $('#button-cart').on('click', function() {
 			if (json['success']) {
 
 				$.ajax({
-					url: 'index.php?route=checkout/cart/info',
+					url: 'index.php?route=common/cart/info',
 					dataType: 'html',
 					success: function(html) {
-						/*
-                        $('#alert-box').append('<div class="alert alert-success alert-dismissible">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-                        $('#alert-box').addClass('open');
-                        */
+						$('#alert-box').append('<div class="alert alert-success alert-dismissible">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+						$('#alert-box').addClass('open');
 
-						$('#modal-cart').remove();
-
-						$('body').append('<div id="modal-cart" class="modal">' + html + '</div>');
-
-						$('#modal-cart .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-
-						$('#modal-cart').modal('show');
+						$('#cart').parent().html(html);
+						
+						$('html, body').animate({ scrollTop: 0 }, 'slow');
 					},
 					error: function(xhr, ajaxOptions, thrownError) {
 						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

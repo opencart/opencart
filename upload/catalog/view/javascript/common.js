@@ -129,7 +129,7 @@ $(document).ready(function() {
 	});
 
 	$('#alert-box').on('click', '.close', function(){
-			$('#alert-box').removeClass('open');
+		$('#alert-box').removeClass('open');
 	});
 });
 
@@ -160,11 +160,7 @@ var cart = {
 					$('#alert-box').addClass('open');
 
 					// Need to set timeout otherwise it wont update the total
-					setTimeout(function () {
-						$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
-					}, 100);
-
-					$('html, body').animate({ scrollTop: 0 }, 'slow');
+					//$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
 
 					$('#cart > ul').load('index.php?route=common/cart/info ul li');
 				}
@@ -488,7 +484,6 @@ $(document).delegate('.agree', 'click', function(e) {
 
 			$(this).after('<ul class="dropdown-menu"></ul>');
 			$(this).siblings('ul.dropdown-menu').delegate('a', 'click', $.proxy(this.click, this));
-
 		});
 	};
 })(window.jQuery);

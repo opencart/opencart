@@ -26,7 +26,7 @@ class ControllerExtensionModulePPLogin extends Controller {
 			$languages = $this->model_localisation_language->getLanguages();
 
 			foreach ($languages as $language) {
-				if ($language['status'] && ($language['code'] == $this->session->data['language']) && isset($locale[$language['language_id']])) {
+				if ($language['status'] && ($language['code'] == $this->config->get('config_language')) && isset($locale[$language['language_id']])) {
 					$data['locale'] = $locale[$language['language_id']];
 				}
 			}

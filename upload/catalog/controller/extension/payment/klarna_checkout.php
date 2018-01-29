@@ -626,7 +626,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 			// Set more session data from the order
 			$this->session->data['currency'] = $order_info['currency_code'];
-			$this->session->data['language'] = $order_info['language_code'];
+			$this->config->set('config_language', $order_info['language_code']);
 
 			$country_info = $this->model_extension_payment_klarna_checkout->getCountryByIsoCode2($request->shipping_address->country);
 

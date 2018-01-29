@@ -60,17 +60,23 @@ class ControllerStartupStartup extends Controller {
 			$code = $this->request->get['language'];
 		}
 
+
+
+
+
+		//$this->config->get('config_language')
+
 		//$code = $this->request->get['language'];
 
 		if (isset($this->session->data['language'])) {
 			if (array_key_exists($this->session->data['language'], $language_codes)) {
-				$code = $this->session->data['language'];
+		//		$code = $this->session->data['language'];
 		 	}
 		}
 
 		if (!$code && isset($this->request->cookie['language'])) {
 			if (array_key_exists($this->request->cookie['language'], $language_codes)) {
-				$code = $this->request->cookie['language'];
+		//		$code = $this->request->cookie['language'];
 			}
 		}
 

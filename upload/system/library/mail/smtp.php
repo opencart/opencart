@@ -48,7 +48,7 @@ class Smtp {
 			$header .= 'Cc: ' . $cc . PHP_EOL;
 		}
 		
-		$header .= 'Return-Path: ' . $this->from . PHP_EOL;
+		$header .= 'Return-Path: ' . $return_path . PHP_EOL;
 		$header .= 'X-Mailer: PHP/' . phpversion() . PHP_EOL;
 		$header .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"' . PHP_EOL . PHP_EOL;
 

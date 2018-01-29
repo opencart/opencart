@@ -246,6 +246,17 @@ class ControllerCatalogManufacturer extends Controller {
 	}
 
 	protected function getForm() {
+		$this->document->addStyle('view/javascript/codemirror/lib/codemirror.css');
+		$this->document->addStyle('view/javascript/codemirror/theme/monokai.css');
+		$this->document->addStyle('view/javascript/summernote/summernote.css');
+
+		$this->document->addScript('view/javascript/codemirror/lib/codemirror.js');
+		$this->document->addScript('view/javascript/codemirror/lib/xml.js');
+		$this->document->addScript('view/javascript/codemirror/lib/formatting.js');
+		$this->document->addScript('view/javascript/summernote/summernote.js');
+		$this->document->addScript('view/javascript/summernote/summernote-image-attributes.js');
+		$this->document->addScript('view/javascript/summernote/opencart.js');
+	
 		$data['text_form'] = !isset($this->request->get['manufacturer_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		if (isset($this->error['warning'])) {
@@ -313,7 +324,7 @@ class ControllerCatalogManufacturer extends Controller {
 		} else {
 			$data['name'] = '';
 		}
-
+		
 		$this->load->model('setting/store');
 
 		$data['stores'] = array();
@@ -371,6 +382,14 @@ class ControllerCatalogManufacturer extends Controller {
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
+		
+		if (isset($this->request->post['manufacturer_description'])) {
+			$data['manufacturer_description'] = $this->request->post['manufacturer_description'];
+		} elseif (isset($this->request->get['manufacturer_id'])) {
+			$data['manufacturer_description'] = $this->model_catalog_manufacturer->getManufacturerDescriptions($this->request->get['manufacturer_id']);
+		} else {
+			$data['manufacturer_description'] = array();
+		}		
 		
 		if (isset($this->request->post['manufacturer_seo_url'])) {
 			$data['manufacturer_seo_url'] = $this->request->post['manufacturer_seo_url'];

@@ -11,7 +11,7 @@ Read the instructions below before you create a bug report.
  1. Search the [OpenCart forum](http://forum.opencart.com/viewforum.php?f=191), ask the community if they have seen the bug or know how to fix it.
  2. Check all open and closed issues on the [GitHub bug tracker](https://github.com/opencart/opencart/issues).
  3. If your bug is related to the OpenCart core code then please create a bug report on GitHub.
- 4. READ the [changelog for the master branch](https://github.com/opencart/opencart/blob/master/changelog.md)
+ 4. READ the [changelog for the master branch](https://github.com/opencart/opencart/blob/master/CHANGELOG.md)
  5. Use [Google](http://www.google.com) to search for your issue.
  6. Make sure that your bug/issue is not related to your hosting environment.
 

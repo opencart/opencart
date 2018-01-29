@@ -26,22 +26,26 @@ class Smtp {
 		$header .= 'To: <' . $to . '>' . PHP_EOL;
 		$header .= 'Subject: =?UTF-8?B?' . base64_encode($this->subject) . '?=' . PHP_EOL;
 		$header .= 'Date: ' . date('D, d M Y H:i:s O') . PHP_EOL;
-		$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . PHP_EOL;
 		
+		$return_path = $this->from;
+			
+		if (strstr($this->smtp_username,'@') && filter_var($this->smtp_username, FILTER_VALIDATE_EMAIL)) {
+			// Presume username is the fully qualified email address that we are actually sending the email from
+			$from = $this->smtp_username;
+			$this->reply_to = $this->from;
+			$return_path = $from;
+		}
+			
 		if (!$this->reply_to) {
-			$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . $this->newline;
-			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . $this->newline;
+			$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . PHP_EOL;
+			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . PHP_EOL;
 		} else {
-			if (strstr($this->smtp_username,'@') && filter_var($this->smtp_username, FILTER_VALIDATE_EMAIL)) {
-				// Presume username is the fully qualified email address that we are actually sending the email from
-				$to = $this->smtp_username;
-			}
-			$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $to . '>' . $this->newline;
-			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->reply_to) . '?=' . ' <' . $this->reply_to . '>' . $this->newline;
+			$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $from . '>' . PHP_EOL;
+			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->reply_to) . '?=' . ' <' . $this->reply_to . '>' . PHP_EOL;
 		}
 		
 		if ($cc) {
-			$header .= 'Cc: ' . $to . $this->newline;
+			$header .= 'Cc: ' . $cc . PHP_EOL;
 		}
 		
 		$header .= 'Return-Path: ' . $this->from . PHP_EOL;

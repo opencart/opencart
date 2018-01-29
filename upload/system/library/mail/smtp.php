@@ -11,9 +11,13 @@ class Smtp {
 
 	public function send() {
 		if (is_array($this->to)) {
-			$to = implode(',', $this->to);
+			$cc = $this->to;
+			$to = $cc[0];
+			array_shift($cc);
+			$cc = implode(',', $cc);
 		} else {
 			$to = $this->to;
+			$cc = false;
 		}
 
 		$boundary = '----=_NextPart_' . md5(time());
@@ -25,9 +29,19 @@ class Smtp {
 		$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . PHP_EOL;
 		
 		if (!$this->reply_to) {
-			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . PHP_EOL;
+			$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . $this->newline;
+			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . $this->newline;
 		} else {
-			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->reply_to) . '?= <' . $this->reply_to . '>' . PHP_EOL;
+			if (strstr($this->smtp_username,'@') && filter_var($this->smtp_username, FILTER_VALIDATE_EMAIL)) {
+				// Presume username is the fully qualified email address that we are actually sending the email from
+				$to = $this->smtp_username;
+			}
+			$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $to . '>' . $this->newline;
+			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->reply_to) . '?=' . ' <' . $this->reply_to . '>' . $this->newline;
+		}
+		
+		if ($cc) {
+			$header .= 'Cc: ' . $to . $this->newline;
 		}
 		
 		$header .= 'Return-Path: ' . $this->from . PHP_EOL;

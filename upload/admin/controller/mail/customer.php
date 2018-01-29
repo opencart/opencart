@@ -32,8 +32,6 @@ class ControllerMailCustomer extends Controller {
 			$language->load($language_code);
 			$language->load('mail/customer_approve');
 
-			$subject = sprintf($language->get('text_subject'), $store_name);
-
 			$data['text_welcome'] = sprintf($language->get('text_welcome'), $store_name);
 			$data['text_login'] = $language->get('text_login');
 			$data['text_service'] = $language->get('text_service');
@@ -52,21 +50,17 @@ class ControllerMailCustomer extends Controller {
 			} else {
 				$data['logo'] = '';
 			}
-
-			$mail = new Mail($this->config->get('config_mail_engine'));
-			$mail->parameter = $this->config->get('config_mail_parameter');
-			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-
-			$mail->setTo($customer_info['email']);
-			$mail->setFrom($this->config->get('config_email'));
-			$mail->setSender($store_name);
-			$mail->setSubject($subject);
-			$mail->setHtml($this->load->view('mail/customer_approve', $data));
-			$mail->send();
+		
+			$this->load->model('tool/mail');
+			
+			$mail_data = array(
+				'to'		=> $customer_info['email'],
+				'sender'	=> $store_name,
+				'subject'	=> sprintf($language->get('text_subject'), $store_name),
+				'text'		=> $this->load->view('mail/customer_approve', $data)
+			);
+			
+			$this->model_tool_mail->sendMail($mail_data);
 		}
 	}
 

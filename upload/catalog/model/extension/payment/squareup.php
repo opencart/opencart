@@ -70,75 +70,37 @@ class ModelExtensionPaymentSquareup extends Model {
         if (!$this->mailResendPeriodExpired('token_expired')) {
             return;
         }
-
-        $mail = new Mail();
-
-        $mail->protocol = $this->config->get('config_mail_protocol');
-        $mail->parameter = $this->config->get('config_mail_parameter');
-
-        $mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-        $mail->smtp_username = $this->config->get('config_mail_smtp_username');
-        $mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-        $mail->smtp_port = $this->config->get('config_mail_smtp_port');
-        $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-
-        $subject = $this->language->get('text_token_expired_subject');
-        $message = $this->language->get('text_token_expired_message');
-
-        $mail->setTo($this->config->get('config_email'));
-        $mail->setFrom($this->config->get('config_email'));
-        $mail->setSender($this->config->get('config_name'));
-        $mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
-        $mail->setText(strip_tags($message));
-        $mail->setHtml($message);
-
-        $mail->send();
+		
+		$this->load->model('tool/mail');
+		
+		$mail_data = array(
+			'subject'	=> $this->language->get('text_token_expired_subject'),
+			'text'		=> strip_tags($this->language->get('text_token_expired_message')),
+			'html'		=> $this->language->get('text_token_expired_message')
+		);
+		
+		$this->model_tool_mail->sendMail($mail_data);
     }
 
     public function tokenRevokedEmail() {
         if (!$this->mailResendPeriodExpired('token_revoked')) {
             return;
         }
-
-        $mail = new Mail();
-
-        $mail->protocol = $this->config->get('config_mail_protocol');
-        $mail->parameter = $this->config->get('config_mail_parameter');
-
-        $mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-        $mail->smtp_username = $this->config->get('config_mail_smtp_username');
-        $mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-        $mail->smtp_port = $this->config->get('config_mail_smtp_port');
-        $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-
-        $subject = $this->language->get('text_token_revoked_subject');
-        $message = $this->language->get('text_token_revoked_message');
-
-        $mail->setTo($this->config->get('config_email'));
-        $mail->setFrom($this->config->get('config_email'));
-        $mail->setSender($this->config->get('config_name'));
-        $mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
-        $mail->setText(strip_tags($message));
-        $mail->setHtml($message);
-        
-        $mail->send();
+		
+		$this->load->model('tool/mail');
+		
+		$mail_data = array(
+			'subject'	=> $this->language->get('text_token_revoked_subject'),
+			'text'		=> strip_tags($this->language->get('text_token_revoked_message')),
+			'html'		=> $this->language->get('text_token_revoked_message')
+		);
+		
+		$this->model_tool_mail->sendMail($mail_data);
     }
 
     public function cronEmail($result) {
-        $mail = new Mail();
-        
-        $mail->protocol = $this->config->get('config_mail_protocol');
-        $mail->parameter = $this->config->get('config_mail_parameter');
-
-        $mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-        $mail->smtp_username = $this->config->get('config_mail_smtp_username');
-        $mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-        $mail->smtp_port = $this->config->get('config_mail_smtp_port');
-        $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 
         $br = '<br />';
-
-        $subject = $this->language->get('text_cron_subject');
 
         $message = $this->language->get('text_cron_message') . $br . $br;
 
@@ -171,14 +133,17 @@ class ModelExtensionPaymentSquareup extends Model {
                 $message .= sprintf($this->language->get('text_cron_success_charge'), $order_recurring_id, $amount) . $br;
             }
         }
-
-        $mail->setTo($this->config->get('payment_squareup_cron_email'));
-        $mail->setFrom($this->config->get('config_email'));
-        $mail->setSender($this->config->get('config_name'));
-        $mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
-        $mail->setText(strip_tags($message));
-        $mail->setHtml($message);
-        $mail->send();
+		
+		$this->load->model('tool/mail');
+		
+		$mail_data = array(
+			'to'		=> $this->config->get('payment_squareup_cron_email'),
+			'subject'	=> $this->language->get('text_cron_subject'),
+			'text'		=> strip_tags($message),
+			'html'		=> $message
+		);
+		
+		$this->model_tool_mail->sendMail($mail_data);
     }
 
     public function recurringPayments() {

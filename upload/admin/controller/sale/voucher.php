@@ -611,21 +611,16 @@ class ControllerSaleVoucher extends Controller {
 							$data['store_name'] = $order_info['store_name'];
 							$data['store_url'] = $order_info['store_url'];
 							$data['message'] = nl2br($voucher_info['message']);
-			
-							$mail = new Mail($this->config->get('config_mail_engine'));
-							$mail->parameter = $this->config->get('config_mail_parameter');
-							$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-							$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-							$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-							$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-							$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-			
-							$mail->setTo($voucher_info['to_email']);
-							$mail->setFrom($this->config->get('config_email'));
-							$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
-							$mail->setSubject(sprintf($language->get('text_subject'), html_entity_decode($voucher_info['from_name'], ENT_QUOTES, 'UTF-8')));
-							$mail->setHtml($this->load->view('mail/voucher', $data));
-							$mail->send();
+
+							$this->load->model('tool/mail');
+							
+							$mail_data = array(
+								'to'		=> $voucher_info['to_email'],
+								'subject'	=> sprintf($language->get('text_subject'), html_entity_decode($voucher_info['from_name'], ENT_QUOTES, 'UTF-8')),
+								'text'		=> $this->load->view('mail/voucher', $data)
+							);
+							
+							$this->model_tool_mail->sendMail($mail_data);
 			
 						// If voucher does not belong to an order
 						}  else {
@@ -650,21 +645,16 @@ class ControllerSaleVoucher extends Controller {
 							$data['store_name'] = $this->config->get('config_name');
 							$data['store_url'] = HTTP_CATALOG;
 							$data['message'] = nl2br($voucher_info['message']);
-			
-							$mail = new Mail($this->config->get('config_mail_engine'));
-							$mail->parameter = $this->config->get('config_mail_parameter');
-							$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-							$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-							$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-							$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-							$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-			
-							$mail->setTo($voucher_info['to_email']);
-							$mail->setFrom($this->config->get('config_email'));
-							$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-							$mail->setSubject(html_entity_decode(sprintf($this->language->get('text_subject'), $voucher_info['from_name']), ENT_QUOTES, 'UTF-8'));
-							$mail->setHtml($this->load->view('mail/voucher', $data));
-							$mail->send();
+							
+							$this->load->model('tool/mail');
+							
+							$mail_data = array(
+								'to'		=> $voucher_info['to_email'],
+								'subject'	=> sprintf($language->get('text_subject'), html_entity_decode($voucher_info['from_name'], ENT_QUOTES, 'UTF-8')),
+								'text'		=> $this->load->view('mail/voucher', $data)
+							);
+							
+							$this->model_tool_mail->sendMail($mail_data);
 						}
 					}
 				}

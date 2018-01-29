@@ -218,23 +218,21 @@ class ControllerMarketingContact extends Controller {
 					$message .= '  </head>' . "\n";
 					$message .= '  <body>' . html_entity_decode($this->request->post['message'], ENT_QUOTES, 'UTF-8') . '</body>' . "\n";
 					$message .= '</html>' . "\n";
+		
+					$this->load->model('tool/mail');
 
 					foreach ($emails as $email) {
 						if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-							$mail = new Mail($this->config->get('config_mail_engine'));
-							$mail->parameter = $this->config->get('config_mail_parameter');
-							$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-							$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-							$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-							$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-							$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-
-							$mail->setTo($email);
-							$mail->setFrom($store_email);
-							$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
-							$mail->setSubject(html_entity_decode($this->request->post['subject'], ENT_QUOTES, 'UTF-8'));
-							$mail->setHtml($message);
-							$mail->send();
+							
+							$mail_data = array(
+								'to'		=> $email,
+								'from'		=> $store_email,
+								'sender'	=> $store_name,
+								'subject'	=> $this->request->post['subject'],
+								'html'		=> $message
+							);
+							
+							$this->model_tool_mail->sendMail($mail_data);
 						}
 					}
 				} else {

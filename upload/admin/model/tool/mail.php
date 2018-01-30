@@ -27,8 +27,8 @@ class ModelToolMail extends Model {
 			}
 		}
 		
-		if (strstr($this->config->get('config_mail_smtp_hostname'),'@') && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-			$data['from'] = $this->config->get('config_mail_smtp_hostname');
+		if (strstr($this->config->get('config_mail_smtp_username'),'@') && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			$data['from'] = $this->config->get('config_mail_smtp_username');
 			if (!$data['reply_to']) {
 				$data['reply_to'] = $data['from'];
 			}

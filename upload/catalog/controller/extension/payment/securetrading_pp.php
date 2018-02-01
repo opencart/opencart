@@ -14,7 +14,7 @@ class ControllerExtensionPaymentSecureTradingPp extends Controller {
 			$data['parent_css'] = $this->config->get('payment_securetrading_pp_parent_css');
 			$data['child_css'] = $this->config->get('payment_securetrading_pp_child_css');
 			$data['currency'] = $order_info['currency_code'];
-			$data['total'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
+            $data['total'] = str_replace(array('.', ','), '', $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false));
 			$data['settle_due_date'] = date('Y-m-d', strtotime(date('Y-m-d') . ' +' . $this->config->get('payment_securetrading_pp_settle_due_date') . ' days'));
 			$data['settle_status'] = $this->config->get('payment_securetrading_pp_settle_status');
 

@@ -39,7 +39,7 @@
 </div>
 <script type="text/javascript"><!--
 // Checkout
-$('#collapse-checkout-option input[name=\'email\'], #collapse-checkout-option input[name=\'password\']').on('keydown', function(e) {
+$('#collapse-checkout-option input').on('keydown', function(e) {
 	if (e.keyCode == 13) {
 		$('#collapse-checkout-option #button-login').trigger('click');
 	}

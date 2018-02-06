@@ -14,7 +14,9 @@ class ControllerAccountForgotten extends Controller {
 		$this->load->model('account/customer');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_account_customer->editCode($this->request->post['email'], token(40));
+			if ($this->validateEmail()) {
+				$this->model_account_customer->editCode($this->request->post['email'], token(40));
+			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -64,18 +66,26 @@ class ControllerAccountForgotten extends Controller {
 		$this->response->setOutput($this->load->view('account/forgotten', $data));
 	}
 
-	protected function validate() {
-		if (!isset($this->request->post['email'])) {
-			$this->error['warning'] = $this->language->get('error_email');
-		} elseif (!$this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
-			$this->error['warning'] = $this->language->get('error_email');
+	protected function validateEmail() {
+		$this->error['status'] = TRUE;
+		
+		if (!$this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
+			$this->error['status'] = FALSE;
 		}
 		
 		// Check if customer has been approved.
 		$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
 
 		if ($customer_info && !$customer_info['status']) {
-			$this->error['warning'] = $this->language->get('error_approved');
+			$this->error['status'] = FALSE;
+		}
+
+		return $this->error['status'];
+	}
+
+	protected function validate() {
+		if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+			$this->error['warning'] = $this->language->get('error_email');
 		}
 
 		return !$this->error;

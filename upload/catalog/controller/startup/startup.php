@@ -56,6 +56,18 @@ class ControllerStartupStartup extends Controller {
 
 		$language_codes = array_column($languages, 'language_id', 'code');
 
+		if (!isset($this->request->cookie['language'])) {
+
+
+
+
+		}
+
+
+
+
+
+
 		if (isset($this->request->get['language']) && in_array($this->request->get['language'], array_keys($language_codes))) {
 			$code = $this->request->get['language'];
 		}
@@ -67,12 +79,6 @@ class ControllerStartupStartup extends Controller {
 		//$this->config->get('config_language')
 
 		//$code = $this->request->get['language'];
-
-		if (isset($this->session->data['language'])) {
-			if (array_key_exists($this->session->data['language'], $language_codes)) {
-		//		$code = $this->session->data['language'];
-		 	}
-		}
 
 		if (!$code && isset($this->request->cookie['language'])) {
 			if (array_key_exists($this->request->cookie['language'], $language_codes)) {
@@ -125,6 +131,10 @@ class ControllerStartupStartup extends Controller {
 
 			$code = ($detect) ? $detect : '';
 		}
+
+
+
+
 
 		if (!array_key_exists($code, $language_codes)) {
 			$code = $this->config->get('config_language');

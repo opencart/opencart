@@ -157,7 +157,7 @@
               {% endif %}
             </ul>
           {% endif %}
-          <div id="product"> {% if options %}
+          <div id="product">{% if options %}
               <hr>
               <h3>{{ text_option }}</h3>
               {% for option in options %}
@@ -272,7 +272,7 @@
             <div class="form-group">
               <label class="control-label" for="input-quantity">{{ entry_qty }}</label> <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="form-control"/> <input type="hidden" name="product_id" value="{{ product_id }}"/>
               <br/>
-              <button type="button" id="button-cart" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
+              <button type="button" id="button-cart" data-loading-text="{{ text_loading }}" data-cart="add" data-option="add" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
             </div>
             {% if minimum > 1 %}
               <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_minimum }}</div>
@@ -320,7 +320,7 @@
                       {% if product.tax %} <span class="price-tax">{{ text_tax }} {{ product.tax }}</span> {% endif %} </p>
                   {% endif %}</div>
                 <div class="button-group">
-                  <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span> <i class="fa fa-shopping-cart"></i></button>
+                  <button type="button" data-event="cart" data-cart="add" data-product="{{ product.product_id }}" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span> <i class="fa fa-shopping-cart"></i></button>
                   <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
                   <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
                 </div>
@@ -347,9 +347,9 @@
     {{ column_right }}</div>
 </div>
 <script type="text/javascript"><!--
-$('select[name=\'recurring_id\'], input[name="quantity"]').change(function() {
+$('select[name=\'recurring_id\'], input[name="quantity"]').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=product/product/getRecurringDescription',
+		url: 'index.php?route=product/product/getRecurringDescription&language={{ language }}',
 		type: 'post',
 		data: $('input[name=\'product_id\'], input[name=\'quantity\'], select[name=\'recurring_id\']'),
 		dataType: 'json',
@@ -369,7 +369,7 @@ $('select[name=\'recurring_id\'], input[name="quantity"]').change(function() {
 <script type="text/javascript"><!--
 $('#button-cart').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=checkout/cart/add',
+		url: 'index.php?route=checkout/cart/add&language={{ language }}',
 		type: 'post',
 		data: $('#product input[type=\'text\'], #product input[type=\'hidden\'], #product input[type=\'radio\']:checked, #product input[type=\'checkbox\']:checked, #product select, #product textarea'),
 		dataType: 'json',
@@ -406,6 +406,8 @@ $('#button-cart').on('click', function() {
 
 			if (json['success']) {
 				$('#alert-box').append('<div class="alert alert-success alert-dismissible">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+				$('#cart').parent().load('index.php?route=common/cart/info&language={{ language }}');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -449,7 +451,7 @@ $('button[id^=\'button-upload\']').on('click', function() {
 			clearInterval(timer);
 
 			$.ajax({
-				url: 'index.php?route=tool/upload',
+				url: 'index.php?route=tool/upload&language={{ language }}',
 				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),
@@ -494,11 +496,11 @@ $('#review').delegate('.pagination a', 'click', function(e) {
 	$('#review').fadeIn('slow');
 });
 
-$('#review').load('index.php?route=product/product/review&product_id={{ product_id }}');
+$('#review').load('index.php?route=product/product/review&language={{ language }}&product_id={{ product_id }}');
 
 $('#button-review').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=product/product/write&product_id={{ product_id }}',
+		url: 'index.php?route=product/product/write&language={{ language }}&product_id={{ product_id }}',
 		type: 'post',
 		dataType: 'json',
 		data: $("#form-review").serialize(),

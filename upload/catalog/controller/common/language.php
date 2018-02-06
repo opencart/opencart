@@ -22,7 +22,7 @@ class ControllerCommonLanguage extends Controller {
 		$url = '';
 
 		if ($url_data) {
-			$url = '&' . urldecode(http_build_query($url_data, '', '&'));
+			$url = '&' . urldecode(http_build_query($url_data));
 		}
 
 		$data['languages'] = array();
@@ -52,9 +52,6 @@ class ControllerCommonLanguage extends Controller {
 		}
 
 		setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
-
-	///	echo html_entity_decode($this->request->get['redirect'], ENT_QUOTES, 'UTF-8');
-	//	exit();
 
 		if (isset($this->request->get['redirect']) && substr($this->request->get['redirect'], 0, strlen($this->config->get('config_url'))) == $this->config->get('config_url')) {
 			$this->response->redirect(html_entity_decode($this->request->get['redirect'], ENT_QUOTES, 'UTF-8'));

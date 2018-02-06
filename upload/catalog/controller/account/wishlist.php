@@ -93,6 +93,7 @@ class ControllerAccountWishList extends Controller {
 					'stock'      => $stock,
 					'price'      => $price,
 					'special'    => $special,
+					'minimum'    => $result['minimum'] > 0 ? $result['minimum'] : 1,
 					'href'       => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_info['product_id']),
 					'remove'     => $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language') . '&remove=' . $product_info['product_id'])
 				);
@@ -100,6 +101,8 @@ class ControllerAccountWishList extends Controller {
 				$this->model_account_wishlist->deleteWishlist($result['product_id']);
 			}
 		}
+
+		$data['language'] = $this->config->get('config_language');
 
 		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 

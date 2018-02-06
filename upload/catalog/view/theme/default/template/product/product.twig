@@ -320,7 +320,7 @@
                       {% if product.tax %} <span class="price-tax">{{ text_tax }} {{ product.tax }}</span> {% endif %} </p>
                   {% endif %}</div>
                 <div class="button-group">
-                  <button type="button" data-event="cart" data-cart="add" data-product="{{ product.product_id }}" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span> <i class="fa fa-shopping-cart"></i></button>
+                  <button type="button" data-event="cart" data-cart="add" data-product="{{ product.product_id }}" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}', '{{ language }}');"><span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span> <i class="fa fa-shopping-cart"></i></button>
                   <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
                   <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
                 </div>

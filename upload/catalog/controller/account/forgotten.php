@@ -67,17 +67,17 @@ class ControllerAccountForgotten extends Controller {
 	}
 
 	protected function validateEmail() {
-		$this->error['status'] = TRUE;
+		$this->error['status'] = true;
 		
 		if (!$this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
-			$this->error['status'] = FALSE;
+			$this->error['status'] = false;
 		}
 		
 		// Check if customer has been approved.
 		$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
 
 		if ($customer_info && !$customer_info['status']) {
-			$this->error['status'] = FALSE;
+			$this->error['status'] = false;
 		}
 
 		return $this->error['status'];

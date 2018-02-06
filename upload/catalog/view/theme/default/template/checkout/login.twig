@@ -37,3 +37,11 @@
     <input type="button" value="{{ button_login }}" id="button-login" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
   </div>
 </div>
+<script type="text/javascript"><!--
+// Checkout
+$('#collapse-checkout-option input[name=\'email\'], #collapse-checkout-option input[name=\'password\']').on('keydown', function(e) {
+	if (e.keyCode == 13) {
+		$('#collapse-checkout-option #button-login').trigger('click');
+	}
+});
+//--></script>

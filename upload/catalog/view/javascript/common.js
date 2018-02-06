@@ -26,6 +26,10 @@ $(document).ready(function() {
 	// Add new div on each page
 	$('body').append('<div id="alert-box"></div>');
 
+	$('#alert-box').on('click', '.close', function(){
+		$('#alert-box').removeClass('open');
+	});
+
 	// Highlight any found errors
 	$('.text-danger').each(function() {
 		var element = $(this).parent().parent();
@@ -33,6 +37,14 @@ $(document).ready(function() {
 		if (element.hasClass('form-group')) {
 			element.addClass('has-error');
 		}
+	});
+
+	// tooltips on hover
+	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
+
+	// Makes tooltips work on ajax generated content
+	$(document).ajaxStop(function() {
+		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 	});
 
 	// Currency
@@ -113,25 +125,6 @@ $(document).ready(function() {
 		$('#grid-view').trigger('click');
 		$('#grid-view').addClass('active');
 	}
-
-	// Checkout
-	$(document).on('keydown', '#collapse-checkout-option input[name=\'email\'], #collapse-checkout-option input[name=\'password\']', function(e) {
-		if (e.keyCode == 13) {
-			$('#collapse-checkout-option #button-login').trigger('click');
-		}
-	});
-
-	// tooltips on hover
-	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
-
-	// Makes tooltips work on ajax generated content
-	$(document).ajaxStop(function() {
-		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
-	});
-
-	$('#alert-box').on('click', '.close', function(){
-		$('#alert-box').removeClass('open');
-	});
 });
 
 // Cart add remove functions

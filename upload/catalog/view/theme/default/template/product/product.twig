@@ -334,7 +334,7 @@
               <div class="clearfix visible-md"></div>
             {% endif %}
             {% set i = i + 1 %}
-          {% endfor %} </div>
+          {% endfor %}</div>
       {% endif %}
       {% if tags %}
         <p>{{ text_tags }}
@@ -420,19 +420,21 @@ $('#button-cart').on('click', function() {
 //--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	locale: '{{ datepicker }}',
-	pickTime: false
+//	locale: '{{ datepicker }}',
+    viewMode: 'years',
+	format: 'MM/YYYY'
+	//pickTime: false
 });
 
 $('.datetime').datetimepicker({
 	locale: '{{ datepicker }}',
-	pickDate: true,
-	pickTime: true
+	//pickDate: true,
+	//pickTime: true
 });
 
 $('.time').datetimepicker({
 	locale: '{{ datepicker }}',
-	pickDate: false
+	//pickDate: false
 });
 
 $('button[id^=\'button-upload\']').on('click', function() {

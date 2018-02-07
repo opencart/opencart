@@ -87,7 +87,8 @@
             </div>
           </div>
         </div>
-        <div class="row">{% for product in products %}
+        <div class="row">
+          {% for product in products %}
             <div class="product-layout product-list col-xs-12">
               <div class="product-thumb">
                 <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive"/></a></div>
@@ -107,14 +108,15 @@
                         {% endfor %}</div>
                     {% endif %}</div>
                   <div class="button-group">
-                    <button type="button" data-cart="" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}', '{{ language }}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
+                    <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}', '{{ language }}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
                     <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}', '{{ language }}');"><i class="fa fa-heart"></i></button>
                     <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}', '{{ language }}');"><i class="fa fa-exchange"></i></button>
                   </div>
                 </div>
               </div>
             </div>
-          {% endfor %} </div>
+          {% endfor %}
+        </div>
         <div class="row">
           <div class="col-sm-6 text-left">{{ pagination }}</div>
           <div class="col-sm-6 text-right">{{ results }}</div>

@@ -162,7 +162,7 @@
               <h3>{{ text_option }}</h3>
               {% for option in options %}
                 {% if option.type == 'select' %}
-                  <div class="form-group{% if option.required %} required {% endif %}">
+                  <div class="form-group{% if option.required %} required{% endif %}">
                     <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label> <select name="option[{{ option.product_option_id }}]" id="input-option{{ option.product_option_id }}" class="form-control">
                       <option value="">{{ text_select }}</option>
                       {% for option_value in option.product_option_value %}
@@ -175,7 +175,7 @@
                   </div>
                 {% endif %}
                 {% if option.type == 'radio' %}
-                  <div class="form-group{% if option.required %} required {% endif %}">
+                  <div class="form-group{% if option.required %} required{% endif %}">
                     <label class="control-label">{{ option.name }}</label>
                     <div id="input-option{{ option.product_option_id }}"> {% for option_value in option.product_option_value %}
                         <div class="radio">
@@ -190,7 +190,7 @@
                   </div>
                 {% endif %}
                 {% if option.type == 'checkbox' %}
-                  <div class="form-group{% if option.required %} required {% endif %}">
+                  <div class="form-group{% if option.required %} required{% endif %}">
                     <label class="control-label">{{ option.name }}</label>
                     <div id="input-option{{ option.product_option_id }}"> {% for option_value in option.product_option_value %}
                         <div class="checkbox">
@@ -205,24 +205,24 @@
                   </div>
                 {% endif %}
                 {% if option.type == 'text' %}
-                  <div class="form-group{% if option.required %} required {% endif %}">
+                  <div class="form-group{% if option.required %} required{% endif %}">
                     <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label> <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
                   </div>
                 {% endif %}
                 {% if option.type == 'textarea' %}
-                  <div class="form-group{% if option.required %} required {% endif %}">
+                  <div class="form-group{% if option.required %} required{% endif %}">
                     <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label> <textarea name="option[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control">{{ option.value }}</textarea>
                   </div>
                 {% endif %}
                 {% if option.type == 'file' %}
-                  <div class="form-group{% if option.required %} required {% endif %}">
+                  <div class="form-group{% if option.required %} required{% endif %}">
                     <label class="control-label">{{ option.name }}</label>
                     <button type="button" id="button-upload{{ option.product_option_id }}" data-loading-text="{{ text_loading }}" class="btn btn-default btn-block"><i class="fa fa-upload"></i> {{ button_upload }}</button>
                     <input type="hidden" name="option[{{ option.product_option_id }}]" value="" id="input-option{{ option.product_option_id }}"/>
                   </div>
                 {% endif %}
                 {% if option.type == 'date' %}
-                  <div class="form-group{% if option.required %} required {% endif %}">
+                  <div class="form-group{% if option.required %} required{% endif %}">
                     <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
                     <div class="input-group date">
                       <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="YYYY-MM-DD" id="input-option{{ option.product_option_id }}" class="form-control"/>
@@ -233,7 +233,7 @@
                   </div>
                 {% endif %}
                 {% if option.type == 'datetime' %}
-                  <div class="form-group{% if option.required %} required {% endif %}">
+                  <div class="form-group{% if option.required %} required{% endif %}">
                     <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
                     <div class="input-group datetime">
                       <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="YYYY-MM-DD HH:mm" id="input-option{{ option.product_option_id }}" class="form-control"/>
@@ -244,7 +244,7 @@
                   </div>
                 {% endif %}
                 {% if option.type == 'time' %}
-                  <div class="form-group{% if option.required %} required {% endif %}">
+                  <div class="form-group{% if option.required %} required{% endif %}">
                     <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
                     <div class="input-group time">
                       <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="HH:mm" id="input-option{{ option.product_option_id }}" class="form-control"/>
@@ -320,7 +320,7 @@
                       {% if product.tax %} <span class="price-tax">{{ text_tax }} {{ product.tax }}</span> {% endif %} </p>
                   {% endif %}</div>
                 <div class="button-group">
-                  <button type="button" data-event="cart" data-cart="add" data-product="{{ product.product_id }}" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}', '{{ language }}');"><span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span> <i class="fa fa-shopping-cart"></i></button>
+                  <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}', '{{ language }}');"><span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span> <i class="fa fa-shopping-cart"></i></button>
                   <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}', '{{ language }}');"><i class="fa fa-heart"></i></button>
                   <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}', '{{ language }}');"><i class="fa fa-exchange"></i></button>
                 </div>

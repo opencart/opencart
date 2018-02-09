@@ -164,7 +164,7 @@ var cart = {
 	},
 	'update': function(key, quantity, language) {
 		$.ajax({
-			url: 'index.php?route=checkout/cart/edit' + language,
+			url: 'index.php?route=checkout/cart/edit&language=' + language,
 			type: 'post',
 			data: 'key=' + key + '&quantity=' + (typeof(quantity) != 'undefined' ? quantity : 1),
 			dataType: 'json',
@@ -183,7 +183,7 @@ var cart = {
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
 					location = 'index.php?route=checkout/cart';
 				} else {
-					$('#cart').parent().load('index.php?route=common/cart/info&language={{ language }}');
+					$('#cart').parent().load('index.php?route=common/cart/info');
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
@@ -193,7 +193,7 @@ var cart = {
 	},
 	'remove': function(key, language) {
 		$.ajax({
-			url: 'index.php?route=checkout/cart/remove' + language,
+			url: 'index.php?route=checkout/cart/remove&language=' + language,
 			type: 'post',
 			data: 'key=' + key,
 			dataType: 'json',
@@ -205,9 +205,9 @@ var cart = {
 			},
 			success: function(json) {
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
-					location = 'index.php?route=checkout/cart&language={{ language }}';
+					location = 'index.php?route=checkout/cart';
 				} else {
-					$('#cart').parent().load('index.php?route=common/cart/info&language={{ language }}');
+					$('#cart').parent().load('index.php?route=common/cart/info');
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {

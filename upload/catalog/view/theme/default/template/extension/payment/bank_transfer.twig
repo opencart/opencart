@@ -12,7 +12,7 @@
 <script type="text/javascript"><!--
 $('#button-confirm').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/payment/bank_transfer/confirm',
+		url: 'index.php?route=extension/payment/bank_transfer/confirm&language={{ language }}',
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-confirm').button('loading');

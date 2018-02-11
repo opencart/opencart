@@ -370,6 +370,7 @@
             var deposit      = $('[name="divido_deposit"]').val();
 
             var finance;
+
             if (finance_elem.length > 0) {
                 finance = finance_elem.val();
             } else {
@@ -383,7 +384,7 @@
 
             $.ajax({
                 type     : 'post',
-                url      : 'index.php?route=extension/payment/divido/confirm',
+                url      : 'index.php?route=extension/payment/divido/confirm&language={{ language }}',
                 data     : data,
                 dataType : 'json',
                 cache    : false,

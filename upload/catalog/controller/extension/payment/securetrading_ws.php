@@ -54,6 +54,8 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 				$data['cards'][$card_type] = $cards[$card_type];
 			}
 
+			$data['language'] = $this->config->get('config_language');
+
 			return $this->load->view('extension/payment/securetrading_ws', $data);
 		}
 	}

@@ -71,7 +71,7 @@
               return;
             } else {
               $.ajax({
-                url: 'index.php?route=extension/payment/pp_braintree/expressSetup',
+                url: 'index.php?route=extension/payment/pp_braintree/expressSetup&language={{ language }}',
                 type: 'post',
                 data: payload,
                 dataType: 'json',

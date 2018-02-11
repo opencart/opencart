@@ -17,6 +17,8 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 		unset($this->session->data['paypal']);
 
+		$data['language'] = $this->config->get('config_language');
+
 		return $this->load->view('extension/payment/pp_express', $data);
 	}
 
@@ -426,6 +428,14 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 		$this->load->model('tool/upload');
 
+		$frequencies = array(
+			'day'        => $this->language->get('text_day'),
+			'week'       => $this->language->get('text_week'),
+			'semi_month' => $this->language->get('text_semi_month'),
+			'month'      => $this->language->get('text_month'),
+			'year'       => $this->language->get('text_year'),
+		);
+
 		$products = $this->cart->getProducts();
 
 		foreach ($products as $product) {
@@ -482,14 +492,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			$recurring_description = '';
 
 			if ($product['recurring']) {
-				$frequencies = array(
-					'day'        => $this->language->get('text_day'),
-					'week'       => $this->language->get('text_week'),
-					'semi_month' => $this->language->get('text_semi_month'),
-					'month'      => $this->language->get('text_month'),
-					'year'       => $this->language->get('text_year'),
-				);
-
 				if ($product['recurring']['trial']) {
 					$recurring_price = $this->currency->format($this->tax->calculate($product['recurring']['trial_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 					$recurring_description = sprintf($this->language->get('text_trial_description'), $recurring_price, $product['recurring']['trial_cycle'], $frequencies[$product['recurring']['trial_frequency']], $product['recurring']['trial_duration']) . ' ';

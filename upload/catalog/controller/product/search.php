@@ -120,7 +120,7 @@ class ControllerProductSearch extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('product/search', , 'language=' . $this->config->get('config_language') . $url)
+			'href' => $this->url->link('product/search', 'language=' . $this->config->get('config_language') . $url)
 		);
 
 		if (isset($this->request->get['search'])) {
@@ -444,6 +444,8 @@ class ControllerProductSearch extends Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 		$data['limit'] = $limit;
+
+		$data['language'] = $this->config->get('config_language');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

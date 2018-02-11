@@ -511,7 +511,7 @@
 
     if (confirm('{{ text_remove_confirm }}')) {
       $.ajax({
-        url: 'index.php?route=extension/payment/pp_braintree/remove',
+        url: 'index.php?route=extension/payment/pp_braintree/remove&language={{ language }}',
         type: 'post',
         data: { vaulted_payment_method: vaulted_payment_token },
         dataType: 'json',
@@ -575,7 +575,7 @@
         });
       {% elseif payment_pp_braintree_vault_cvv_3ds == '3ds' %}
         $.ajax({
-          url: 'index.php?route=extension/payment/pp_braintree/nonce',
+          url: 'index.php?route=extension/payment/pp_braintree/nonce&language={{ language }}',
           type: 'post',
           data: { vaulted_payment_token: vaulted_payment_token },
           dataType: 'json',

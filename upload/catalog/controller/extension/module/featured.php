@@ -65,11 +65,14 @@ class ControllerExtensionModuleFeatured extends Controller {
 					'price'       => $price,
 					'special'     => $special,
 					'tax'         => $tax,
+					'minimum'     => $product['minimum'] > 0 ? $product['minimum'] : 1,
 					'rating'      => $rating,
 					'href'        => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
 				);
 			}
 		}
+
+		$data['language'] = $this->config->get('config_language');
 
 		if ($data['products']) {
 			return $this->load->view('extension/module/featured', $data);

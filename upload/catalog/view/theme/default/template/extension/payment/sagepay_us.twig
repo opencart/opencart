@@ -46,7 +46,7 @@
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/payment/sagepay_us/send',
+		url: 'index.php?route=extension/payment/sagepay_us/send&language={{ language }}',
 		type: 'post',
 		data: $('#payment :input'),
 		dataType: 'json',

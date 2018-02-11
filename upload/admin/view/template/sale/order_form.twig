@@ -1383,18 +1383,18 @@ $('#tab-product input[name=\'product\']').autocomplete({
 			$('#option').html(html);
 
 			$('.date').datetimepicker({
-				language: '{{ datepicker }}',
+				locale: '{{ datepicker }}',
 				pickTime: false
 			});
 
 			$('.datetime').datetimepicker({
-				language: '{{ datepicker }}',
+				locale: '{{ datepicker }}',
 				pickDate: true,
 				pickTime: true
 			});
 
 			$('.time').datetimepicker({
-				language: '{{ datepicker }}',
+				locale: '{{ datepicker }}',
 				pickDate: false
 			});
 		} else {
@@ -2265,18 +2265,18 @@ $('#content').delegate('button[id^=\'button-upload\'], button[id^=\'button-custo
 });
 
 $('.date').datetimepicker({
-	language: '{{ datepicker }}',
+	locale: '{{ datepicker }}',
 	pickTime: false
 });
 
 $('.datetime').datetimepicker({
-	language: '{{ datepicker }}',
+	locale: '{{ datepicker }}',
 	pickDate: true,
 	pickTime: true
 });
 
 $('.time').datetimepicker({
-	language: '{{ datepicker }}',
+	locale: '{{ datepicker }}',
 	pickDate: false
 });
 //--></script>

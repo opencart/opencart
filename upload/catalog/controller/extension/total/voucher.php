@@ -10,6 +10,8 @@ class ControllerExtensionTotalVoucher extends Controller {
 				$data['voucher'] = '';
 			}
 
+			$data['language'] = $this->config->get('config_language');
+
 			return $this->load->view('extension/total/voucher', $data);
 		}
 	}

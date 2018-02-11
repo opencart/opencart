@@ -8,6 +8,8 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		$data['language'] = $this->config->get('config_language');
+
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');
@@ -409,6 +411,8 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			);
 		}
 
+		$data['language'] = $this->config->get('config_language');
+
 		$this->response->setOutput($this->load->view('extension/payment/klarna_checkout_sidebar', $data));
 	}
 
@@ -622,7 +626,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 			// Set more session data from the order
 			$this->session->data['currency'] = $order_info['currency_code'];
-			$this->session->data['language'] = $order_info['language_code'];
+			$this->config->set('config_language', $order_info['language_code']);
 
 			$country_info = $this->model_extension_payment_klarna_checkout->getCountryByIsoCode2($request->shipping_address->country);
 

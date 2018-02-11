@@ -36,24 +36,15 @@ class ControllerProductManufacturer extends Controller {
 				$data['categories'][$key]['name'] = $key;
 			}
 
-			if($result['image']){
-				if($this->config->get('theme_white_eighteen_image_manufacturer_width') && $this->config->get('theme_white_eighteen_image_manufacturer_height')){
-					$image = $this->model_tool_image->resize($result['image'], $this->config->get('theme_white_eighteen_image_manufacturer_width'), $this->config->get('theme_white_eighteen_image_manufacturer_height'));
-				} else {
-					$image = $this->model_tool_image->resize($result['image'], 150, 80);
-				}
-			} else {
-				$image = '';
-			}
-
 			$data['categories'][$key]['manufacturer'][] = array(
-				'name' => $result['name'],
-				'image' => $image,
-				'href' => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $result['manufacturer_id'])
+				'name'  => $result['name'],
+				'href'  => $this->url->link('product/manufacturer/info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $result['manufacturer_id'])
 			);
 		}
 
 		$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
+
+		$data['language'] = $this->config->get('config_language');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -120,7 +111,6 @@ class ControllerProductManufacturer extends Controller {
 
 		if ($manufacturer_info) {
 			$this->document->setTitle($manufacturer_info['name']);
-			$this->document->setImage($manufacturer_info['image']);
 
 			$url = '';
 
@@ -342,6 +332,8 @@ class ControllerProductManufacturer extends Controller {
 			$data['limit'] = $limit;
 
 			$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
+
+			$data['language'] = $this->config->get('config_language');
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');

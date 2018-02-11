@@ -22,7 +22,7 @@ class ControllerCommonLanguage extends Controller {
 		$url = '';
 
 		if ($url_data) {
-			$url = '&' . urldecode(http_build_query($url_data, '', '&'));
+			$url = '&' . urldecode(http_build_query($url_data));
 		}
 
 		$data['languages'] = array();
@@ -36,11 +36,27 @@ class ControllerCommonLanguage extends Controller {
 				$data['languages'][] = array(
 					'name' => $result['name'],
 					'code' => $result['code'],
-					'href' => $this->url->link($route, 'language=' . $result['code'] . ltrim($url, '&'))
+					'href' => $this->url->link('common/language/language', 'language=' . $result['code'] . '&redirect=' . urlencode($this->url->link($route, 'language=' . $result['code'] . $url)))
 				);
 			}
 		}
 
 		return $this->load->view('common/language', $data);
+	}
+
+	public function language() {
+		if (isset($this->request->get['code'])) {
+			$code = $this->request->get['code'];
+		} else {
+			$code = $this->config->get('config_language');
+		}
+
+		setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
+
+		if (isset($this->request->get['redirect']) && substr($this->request->get['redirect'], 0, strlen($this->config->get('config_url'))) == $this->config->get('config_url')) {
+			$this->response->redirect(html_entity_decode($this->request->get['redirect'], ENT_QUOTES, 'UTF-8'));
+		} else {
+			$this->response->redirect($this->url->link('common/home', 'language=' . $code));
+		}
 	}
 }

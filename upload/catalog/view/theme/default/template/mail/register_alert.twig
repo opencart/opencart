@@ -6,13 +6,11 @@
           {% if logo is empty %}
             <a href="{{ store_url }}">{{ store }}</a>
           {% else %}
-            <a href="{{ store_url }}"><img src="{{ logo }}" alt="{{ store }}" title="{{ store }}" style="margin-left: auto; margin-right: auto;" /></a>
+            <a href="{{ store_url }}"><img src="{{ logo }}" alt="{{ store }}" title="{{ store }}" style="margin-left: auto; margin-right: auto;"/></a>
           {% endif %}
-
         </td>
       </tr>
     </thead>
-
     <tbody>
       <tr>
         <td style="text-align: center; border-bottom: 1px solid #ddd;"><h1>{{ text_signup }}</h1></td>
@@ -21,31 +19,24 @@
         <td>{{ text_firstname }}</td>
         <td>{{ firstname }}</td>
       </tr>
-
       <tr>
         <td>{{ text_lastname }}</td>
         <td>{{ lastname }}</td>
       </tr>
-
       {% if customer_group %}
-      <tr>
-        <td>{{ text_customer_group }}</td>
-        <td>{{ customer_group }}</td>
-      </tr>
+        <tr>
+          <td>{{ text_customer_group }}</td>
+          <td>{{ customer_group }}</td>
+        </tr>
       {% endif %}
-
       <tr>
         <td>{{ text_email }}</td>
         <td>{{ email }}</td>
       </tr>
-
       <tr>
         <td>{{ text_telephone }}</td>
         <td>{{ telephone }}</td>
       </tr>
-
     </tbody>
-
   </table>
-
 </div>

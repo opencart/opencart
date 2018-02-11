@@ -73,6 +73,8 @@ class ControllerExtensionPaymentPPPayflow extends Controller {
 			);
 		}
 
+		$data['language'] = $this->config->get('config_language');
+
 		return $this->load->view('extension/payment/pp_payflow', $data);
 	}
 

@@ -827,18 +827,18 @@ function addAddress() {
 	$('#address a[href=\'#tab-address' + address_row + '\']').tab('show');
 
 	$('.date').datetimepicker({
-		language: '{{ datepicker }}',
+		locale: '{{ datepicker }}',
 		pickTime: false
 	});
 
 	$('.datetime').datetimepicker({
-		language: '{{ datepicker }}',
+		locale: '{{ datepicker }}',
 		pickDate: true,
 		pickTime: true
 	});
 
 	$('.time').datetimepicker({
-		language: '{{ datepicker }}',
+		locale: '{{ datepicker }}',
 		pickDate: false
 	});
 
@@ -1101,18 +1101,18 @@ $('#content').delegate('button[id^=\'button-custom-field\'], button[id^=\'button
 });
 
 $('.date').datetimepicker({
-	language: '{{ datepicker }}',
+	locale: '{{ datepicker }}',
 	pickTime: false
 });
 
 $('.datetime').datetimepicker({
-	language: '{{ datepicker }}',
+	locale: '{{ datepicker }}',
 	pickDate: true,
 	pickTime: true
 });
 
 $('.time').datetimepicker({
-	language: '{{ datepicker }}',
+	locale: '{{ datepicker }}',
 	pickDate: false
 });
 

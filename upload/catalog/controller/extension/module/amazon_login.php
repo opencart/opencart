@@ -160,7 +160,7 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 
 					$this->model_extension_payment_amazon_login_pay->logger('Customer logged in - ID: ' . $customer_id . ', Email: ' . $user->email);
 
-					$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language'));
+					$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 				} else {
 					$this->model_extension_payment_amazon_login_pay->logger('Could not login to - ID: ' . $customer_id . ', Email: ' . $user->email);
 

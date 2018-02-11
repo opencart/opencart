@@ -64,7 +64,9 @@ class File {
 
 		if ($files) {
 			foreach ($files as $file) {
-				unlink($file);
+				if (!@unlink($file)) {
+					clearstatcache(false, $file);
+				}
 			}
 		}
 	}

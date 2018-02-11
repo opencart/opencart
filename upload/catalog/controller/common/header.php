@@ -31,29 +31,6 @@ class ControllerCommonHeader extends Controller {
 
 		$data['name'] = $this->config->get('config_name');
 
-		// Facebook share meta tag
-		$this->load->model('tool/image');
-
-		$facebook_share_image_width = 600;
-		$facebook_share_image_height = 315;
-
-		if($this->document->getImage()){
-			$facebook_share_image = $this->model_tool_image->resize($this->document->getImage(), $facebook_share_image_width, $facebook_share_image_height);
-		} else {
-			$facebook_share_image = $this->model_tool_image->resize($this->config->get('config_logo'), $facebook_share_image_width, $facebook_share_image_height);
-		}
-
-		$data['facebook_site_name'] = $data['name'];
-		$data['facebook_share_url'] = ($this->request->server['HTTPS'] ? 'https://' : 'http://') . $this->request->server['HTTP_HOST'] . $this->request->server['REQUEST_URI'];
-		$data['facebook_share_type'] = ($this->document->getType()) ? $this->document->getType() : 'website';
-		$data['facebook_share_title'] = $this->document->getTitle();
-		$data['facebook_share_description'] = $this->document->getDescription();
-		$data['facebook_share_image'] = $facebook_share_image;
-		$data['facebook_share_image_width'] = $facebook_share_image_width;
-		$data['facebook_share_image_height'] = $facebook_share_image_height;
-		$data['facebook_product_price_amount'] = $this->document->getPrice();
-		$data['facebook_product_price_currency'] = $this->config->get('config_currency');
-
 		if (is_file(DIR_IMAGE . $this->config->get('config_logo'))) {
 			$data['logo'] = $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
 		} else {

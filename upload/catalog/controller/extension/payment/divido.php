@@ -52,8 +52,10 @@ class ControllerExtensionPaymentDivido extends Controller {
 		$this->model_extension_payment_divido->setMerchant($this->config->get('payment_divido_api_key'));
 
 		$plans = $this->model_extension_payment_divido->getCartPlans($this->cart);
+
 		foreach ($plans as $key => $plan) {
 			$planMinTotal = $total - ($total * ($plan->min_deposit / 100));
+
 			if ($plan->min_amount > $planMinTotal) {
 				unset($plans[$key]);
 			}
@@ -72,6 +74,8 @@ class ControllerExtensionPaymentDivido extends Controller {
 			'plan_list'                => $plans_list,
 			'generic_credit_req_error' => 'Credit request could not be initiated',
 		);
+
+		$data['language'] = $this->config->get('config_language');
 
 		return $this->load->view('extension/payment/divido', $data);
 	}

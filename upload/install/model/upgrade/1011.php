@@ -24,7 +24,7 @@ class ModelUpgrade1011 extends Model {
 				foreach ($query->rows as $result) {
 					//update old column name to adding prefix before the name
 					if ($result['code'] == $extension['code'] && $result['code'] !=  $extension['type'] . "_" . $extension['code'] && $extension['type'] != "theme") {
-						$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `code` = '" . $extension['type'] . "_" . $extension['code'] . "', `key` = '" . $extension['type'] . "_" . $result['key'] . "', `value` = '" . $result['value'] . "' WHERE `setting_id` = '" . $result['setting_id'] . "'");
+						$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `code` = '" . $this->db->escape($extension['type'] . "_" . $extension['code']) . "', `key` = '" . $this->db->escape($extension['type'] . "_" . $result['key']) . "', `value` = '" . $this->db->escape($result['value']) . "' WHERE `setting_id` = '" . (int)$result['setting_id'] . "'");
 					}
 				}
 			}	

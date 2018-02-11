@@ -139,7 +139,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 					$this->model_extension_payment_laybuy->log('Success. Redirecting to checkout/success.');
 
-					$this->response->redirect($this->url->link('checkout/success', 'language=' . $this->config->get('config_language'));
+					$this->response->redirect($this->url->link('checkout/success', 'language=' . $this->config->get('config_language')));
 				} else {
 					$this->model_extension_payment_laybuy->log('No matching order. Redirecting to checkout/failure.');
 

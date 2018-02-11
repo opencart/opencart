@@ -93,7 +93,7 @@
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function () {
 	$.ajax({
-		url: 'index.php?route=extension/payment/firstdata_remote/send',
+		url: 'index.php?route=extension/payment/firstdata_remote/send&language={{ language }}',
 		type: 'post',
 		data: $('#payment_form').serialize(),
 		dataType: 'json',

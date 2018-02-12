@@ -371,7 +371,7 @@ class ControllerSaleOrder extends Controller {
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
 		// API login
-		$data['catalog'] = HTTP_CATALOG;
+		$data['catalog'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
 		
 		// API login
 		$this->load->model('user/api');
@@ -679,7 +679,7 @@ class ControllerSaleOrder extends Controller {
 		$data['voucher_themes'] = $this->model_sale_voucher_theme->getVoucherThemes();
 
 		// API login
-		$data['catalog'] = HTTP_CATALOG;
+		$data['catalog'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
 		
 		// API login
 		$this->load->model('user/api');
@@ -1222,7 +1222,7 @@ class ControllerSaleOrder extends Controller {
 			}
 			
 			// The URL we send API requests to
-			$data['catalog'] = HTTP_CATALOG;
+			$data['catalog'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
 			
 			// API login
 			$this->load->model('user/api');

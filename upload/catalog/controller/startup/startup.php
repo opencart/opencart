@@ -38,17 +38,16 @@ class ControllerStartupStartup extends Controller {
 		// Url
 		$this->registry->set('url', new Url($this->config->get('config_url')));
 
-
-
-
-
-
-
-
-
-
 		// Language
+		// 1. Get all the available languages
+		// 2. Check for language cookie
+		// 3. if no language cookie then detect language
+		// 4. if not detected
+		// use the language in url
+		// 5. if not available
+
 		$code = '';
+
 
 		$this->load->model('localisation/language');
 
@@ -56,34 +55,10 @@ class ControllerStartupStartup extends Controller {
 
 		$language_codes = array_column($languages, 'language_id', 'code');
 
-		if (!isset($this->request->cookie['language'])) {
 
 
-
-
-		}
-
-
-
-
-
-
-		if (isset($this->request->get['language']) && in_array($this->request->get['language'], array_keys($language_codes))) {
-			$code = $this->request->get['language'];
-		}
-
-
-
-
-
-		//$this->config->get('config_language')
-
-		//$code = $this->request->get['language'];
-
-		if (!$code && isset($this->request->cookie['language'])) {
-			if (array_key_exists($this->request->cookie['language'], $language_codes)) {
-		//		$code = $this->request->cookie['language'];
-			}
+		if (isset($this->request->cookie['language']) && array_key_exists($this->request->cookie['language'], $language_codes)) {
+			$code = $this->request->cookie['language'];
 		}
 
 		// Language Detection
@@ -131,6 +106,32 @@ class ControllerStartupStartup extends Controller {
 
 			$code = ($detect) ? $detect : '';
 		}
+
+
+
+
+
+
+
+		if (isset($this->request->get['language']) && in_array($this->request->get['language'], array_keys($language_codes))) {
+			$code = $this->request->get['language'];
+		}
+
+
+
+
+
+		//$this->config->get('config_language')
+
+		//$code = $this->request->get['language'];
+
+		if (!$code && isset($this->request->cookie['language'])) {
+		//	if () {
+		//		$code = $this->request->cookie['language'];
+		//	}
+		}
+
+
 
 
 

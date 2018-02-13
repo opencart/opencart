@@ -47,6 +47,10 @@ $(document).ready(function() {
 		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 	});
 
+	$('.date, .datetime, .time').find('button').on('click', function() {
+		$(this).parent().parent().find('input').focus();
+	});
+
 	// Currency
 	$('#form-currency .currency-select').on('click', function(e) {
 		e.preventDefault();
@@ -58,7 +62,7 @@ $(document).ready(function() {
 
 	/* Search */
 	$('#search input[name=\'search\']').parent().find('button').on('click', function() {
-		var url = $('base').attr('href') + 'index.php?route=product/search';
+		var url = $('base').attr('href') + 'index.php?route=product/search&language=' + language;
 
 		var value = $('header #search input[name=\'search\']').val();
 
@@ -154,7 +158,7 @@ var cart = {
 					$('#alert-box').addClass('open');
 
 					// Need to set timeout otherwise it wont update the total
-					$('#cart').parent().load('index.php?route=common/cart/info');
+					$('#cart').parent().load('index.php?route=common/cart/info&language=' + language);
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
@@ -164,7 +168,7 @@ var cart = {
 	},
 	'update': function(key, quantity, language) {
 		$.ajax({
-			url: 'index.php?route=checkout/cart/edit' + language,
+			url: 'index.php?route=checkout/cart/edit&language=' + language,
 			type: 'post',
 			data: 'key=' + key + '&quantity=' + (typeof(quantity) != 'undefined' ? quantity : 1),
 			dataType: 'json',
@@ -193,7 +197,7 @@ var cart = {
 	},
 	'remove': function(key, language) {
 		$.ajax({
-			url: 'index.php?route=checkout/cart/remove' + language,
+			url: 'index.php?route=checkout/cart/remove&language=' + language,
 			type: 'post',
 			data: 'key=' + key,
 			dataType: 'json',
@@ -205,9 +209,9 @@ var cart = {
 			},
 			success: function(json) {
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
-					location = 'index.php?route=checkout/cart&language={{ language }}';
+					location = 'index.php?route=checkout/cart&&language=' + language;
 				} else {
-					$('#cart').parent().load('index.php?route=common/cart/info&language={{ language }}');
+					$('#cart').parent().load('index.php?route=common/cart/info&language=' + language);
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {

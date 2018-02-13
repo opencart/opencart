@@ -68,13 +68,42 @@ class ControllerApiCustomer extends Controller {
 
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['location'] == 'account') { 
+
 					if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
 						$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($this->request->post['custom_field'][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $custom_field['validation'])))) {
+					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var(html_entity_decode($this->request->post['custom_field'][$custom_field['custom_field_id']], ENT_QUOTES, 'UTF-8'), FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $custom_field['validation'])))) {
+
+						//echo $this->request->post['custom_field'][$custom_field['custom_field_id']];
+						echo $custom_field['validation'];
+						echo filter_var(html_entity_decode($this->request->post['custom_field'][$custom_field['custom_field_id']], ENT_QUOTES, 'UTF-8'), FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $custom_field['validation'])));
+
+
+
 						$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 					}
 				}
 			}
+
+
+			foreach ($custom_fields as $custom_field) {
+				if ($custom_field['location'] == 'account') {
+
+					foreach ($this->request->post['custom_field'] as $posted_key => $posted_value) {
+
+						if ((int)$posted_key == (int)$custom_field['custom_field_id']) {
+
+							if (empty($posted_value) && $custom_field['required']) {
+								$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+							} elseif ((html_entity_decode(trim(strtolower($custom_field['type'])), ENT_QUOTES, 'UTF-8') == 'text') && !empty($custom_field['validation']) && !filter_var($posted_value, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $custom_field['validation'])))) {
+								$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+							}
+
+						}
+					}
+				}
+			}
+
+
 
 			if (!$json) {
 				$this->session->data['customer'] = array(

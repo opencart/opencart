@@ -250,7 +250,7 @@
                     <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
                     <div class="input-group time">
                       <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="HH:mm" id="input-option{{ option.product_option_id }}" class="form-control"/>
-                      <div class="input-group-btn">
+                        <div class="input-group-btn">
                         <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                       </div>
                     </div>
@@ -431,15 +431,11 @@ $('.date').datetimepicker({
 });
 
 $('.datetime').datetimepicker({
-	locale: '{{ datepicker }}'
+  locale: '{{ datepicker }}'
 });
 
 $('.time').datetimepicker({
-	locale: '{{ datepicker }}'
-});
-
-$('.date, .datetime, .time').find('button').on('click', function() {
-  $(this).parent().parent().datetimepicker('toggle');
+  locale: '{{ datepicker }}'
 });
 
 $('button[id^=\'button-upload\']').on('click', function() {

@@ -12,7 +12,7 @@
         "wiki": "https://github.com/opencart/opencart/wiki",
         "source": "https://github.com/opencart/opencart/releases",
         "docs": "http://docs.opencart.com/"
-    }
+    },
     "config": {
         "vendor-dir": "./upload/system/storage/vendor/"
     },

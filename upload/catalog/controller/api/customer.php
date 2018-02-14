@@ -67,7 +67,7 @@ class ControllerApiCustomer extends Controller {
 			$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
 
 			foreach ($custom_fields as $custom_field) {
-				if ($custom_field['location'] == 'account') { 
+				if ($custom_field['location'] == 'account') {
 
 					if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
 						$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
@@ -75,7 +75,7 @@ class ControllerApiCustomer extends Controller {
 
 						//echo $this->request->post['custom_field'][$custom_field['custom_field_id']];
 						echo $custom_field['validation'];
-						echo filter_var(html_entity_decode($this->request->post['custom_field'][$custom_field['custom_field_id']], ENT_QUOTES, 'UTF-8'), FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $custom_field['validation'])));
+						echo filter_var(html_entity_decode('/' . $this->request->post['custom_field'][$custom_field['custom_field_id']], ENT_QUOTES, 'UTF-8'), FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $custom_field['validation'])). '/');
 
 
 

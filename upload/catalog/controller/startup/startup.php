@@ -45,9 +45,7 @@ class ControllerStartupStartup extends Controller {
 		// 4. if not detected
 		// use the language in url
 		// 5. if not available
-
 		$code = '';
-
 
 		$this->load->model('localisation/language');
 
@@ -55,8 +53,7 @@ class ControllerStartupStartup extends Controller {
 
 		$language_codes = array_column($languages, 'language_id', 'code');
 
-
-
+		// Cookies
 		if (isset($this->request->cookie['language']) && array_key_exists($this->request->cookie['language'], $language_codes)) {
 			$code = $this->request->cookie['language'];
 		}
@@ -141,10 +138,6 @@ class ControllerStartupStartup extends Controller {
 			$code = $this->config->get('config_language');
 		}
 
-		if (!isset($this->session->data['language']) || $this->session->data['language'] != $code) {
-			$this->session->data['language'] = $code;
-		}
-
 		if (!isset($this->request->cookie['language']) || $this->request->cookie['language'] != $code) {
 			setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
 		}
@@ -159,10 +152,6 @@ class ControllerStartupStartup extends Controller {
 		// Set the config language_id
 		$this->config->set('config_language_id', $language_codes[$code]);
 		$this->config->set('config_language', $code);
-
-
-
-
 
 
 

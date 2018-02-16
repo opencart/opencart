@@ -58,7 +58,7 @@ class ControllerCommonCurrency extends Controller {
 		if (isset($this->request->post['redirect'])) {
 			$this->response->redirect($this->request->post['redirect']);
 		} else {
-			$this->response->redirect($this->url->link('common/home', 'language=' . $this->config->get('config_language')));
+			$this->response->redirect($this->url->link($this->config->get('action_default'), 'language=' . $this->config->get('config_language')));
 		}
 	}
 }

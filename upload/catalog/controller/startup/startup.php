@@ -134,7 +134,7 @@ class ControllerStartupStartup extends Controller {
 			setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
 		}
 
-		// Overwrite the default language object
+		// Replace the default language object
 		$language = new Language($code);
 		$language->load($code);
 		$this->registry->set('language', $language);

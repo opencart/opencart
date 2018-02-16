@@ -61,6 +61,9 @@ class ControllerApiCustomer extends Controller {
 				$customer_group_id = $this->config->get('config_customer_group_id');
 			}
 
+
+
+
 			// Custom field validation
 			$this->load->model('account/custom_field');
 
@@ -85,23 +88,7 @@ class ControllerApiCustomer extends Controller {
 			}
 
 
-			foreach ($custom_fields as $custom_field) {
-				if ($custom_field['location'] == 'account') {
 
-					foreach ($this->request->post['custom_field'] as $posted_key => $posted_value) {
-
-						if ((int)$posted_key == (int)$custom_field['custom_field_id']) {
-
-							if (empty($posted_value) && $custom_field['required']) {
-								$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-							} elseif ((html_entity_decode(trim(strtolower($custom_field['type'])), ENT_QUOTES, 'UTF-8') == 'text') && !empty($custom_field['validation']) && !filter_var($posted_value, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $custom_field['validation'])))) {
-								$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-							}
-
-						}
-					}
-				}
-			}
 
 
 

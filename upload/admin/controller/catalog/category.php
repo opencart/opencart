@@ -534,8 +534,6 @@ class ControllerCatalogCategory extends Controller {
 			}
 		}
 
-
-
 		if (isset($this->request->get['category_id']) && $this->request->post['parent_id']) {
 			$results = $this->model_catalog_category->getCategoryPath($this->request->post['parent_id']);
 			

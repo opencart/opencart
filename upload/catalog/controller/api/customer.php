@@ -61,9 +61,6 @@ class ControllerApiCustomer extends Controller {
 				$customer_group_id = $this->config->get('config_customer_group_id');
 			}
 
-
-
-
 			// Custom field validation
 			$this->load->model('account/custom_field');
 
@@ -71,26 +68,13 @@ class ControllerApiCustomer extends Controller {
 
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['location'] == 'account') {
-
 					if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
 						$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var(html_entity_decode($this->request->post['custom_field'][$custom_field['custom_field_id']], ENT_QUOTES, 'UTF-8'), FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $custom_field['validation'])))) {
-
-						//echo $this->request->post['custom_field'][$custom_field['custom_field_id']];
-						echo $custom_field['validation'];
-						echo filter_var(html_entity_decode('/' . $this->request->post['custom_field'][$custom_field['custom_field_id']], ENT_QUOTES, 'UTF-8'), FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $custom_field['validation'])). '/');
-
-
-
+					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($this->request->post['custom_field'][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/' . html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8') . '/')))) {
 						$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 					}
 				}
 			}
-
-
-
-
-
 
 			if (!$json) {
 				$this->session->data['customer'] = array(

@@ -26,7 +26,7 @@ $_['entry_language']       = 'Language';
 
 // Help
 $_['help_query']           = 'The URL query to replace.';
-$_['help_keyword']         = 'Make sure you only use characters in the a-z or 0-9 use and - or _ for spaces. Leave blank if you just want the ';
+$_['help_keyword']         = 'Make sure you only use characters in the a-z or 0-9 use and - or _ for spaces. Leave blank if you just want to remove the perimeter.';
 $_['help_push']            = 'The URL permaters to be pushed into the GET request after being loaded from the keyword used.';
 
 // Error

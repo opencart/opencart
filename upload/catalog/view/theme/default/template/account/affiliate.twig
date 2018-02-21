@@ -349,7 +349,7 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 		if ($('#form-upload input[name=\'file\']').val() != '') {
 			clearInterval(timer);
 			$.ajax({
-				url: 'index.php?route=tool/upload&language={{ language }}',
+				url: 'index.php?route=tool/upload&language=' + getCookie('language'),
 				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),

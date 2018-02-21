@@ -102,9 +102,8 @@ $('#klarna-shipping-method input[type=\'radio\'], #confirm-shipping input[type=\
 		api.suspend();
 	});
 
-
 	$.ajax({
-		url: 'index.php?route=checkout/shipping_method/save&language={{ language }}',
+		url: 'index.php?route=checkout/shipping_method/save&language=' + getCookie('language'),
 		type: 'post',
 		data: $('#klarna-shipping-method input[type=\'radio\']:checked, #klarna-shipping-method input[type=\'hidden\']'),
 		dataType: 'json',
@@ -114,20 +113,16 @@ $('#klarna-shipping-method input[type=\'radio\'], #confirm-shipping input[type=\
 			} else if (json['error']) {
 				console.log(json['error']);
 			} else {
-				$.post('index.php?route=extension/payment/klarna_checkout/main&language={{ language }}', {response: 'json'}, function() {
-					$('.klarna-checkout-sidebar').load('index.php?route=extension/payment/klarna_checkout/sidebar&language={{ language }}', function() {
+				$.post('index.php?route=extension/payment/klarna_checkout/main&language=' + getCookie('language'), {response: 'json'}, function() {
+					$('.klarna-checkout-sidebar').load('index.php?route=extension/payment/klarna_checkout/sidebar&language=' + getCookie('language'), function() {
 						window._klarnaCheckout(function(api) {
 							api.resume();
 							removeSidebarOverlay();
 						});
 					});
 
-					$.get('index.php?route=extension/payment/klarna_checkout/cartTotal&language={{ language }}', function(total) {
-						setTimeout(function() {
-							$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + total + '</span>');
-						}, 100);
-
-						$('#cart > ul').load('index.php?route=common/cart/info&language={{ language }} ul li');
+					$.get('index.php?route=extension/payment/klarna_checkout/cartTotal&language=' + getCookie('language'), function(total) {
+						$('#cart').parent().load('index.php?route=common/cart/info&language=' + getCookie('language'));
 					});
 				});
 			}
@@ -146,7 +141,7 @@ var kc = {
 		});
 
 		$.ajax({
-			url: 'index.php?route=checkout/cart/remove&language={{ language }}',
+			url: 'index.php?route=checkout/cart/remove&language=' + getCookie('language'),
 			type: 'post',
 			data: 'key=' + key,
 			dataType: 'json',
@@ -157,23 +152,18 @@ var kc = {
 				});
 			},
 			success: function(json) {
-				$.post('index.php?route=extension/payment/klarna_checkout/main&language={{ language }}', {response: 'json'}, function(data) {
+				$.post('index.php?route=extension/payment/klarna_checkout/main&language=' + getCookie('language'), {response: 'json'}, function(data) {
 					if (data['redirect']) {
 						location = data['redirect'];
 					} else {
-						$('.klarna-checkout-sidebar').load('index.php?route=extension/payment/klarna_checkout/sidebar&language={{ language }}', function() {
+						$('.klarna-checkout-sidebar').load('index.php?route=extension/payment/klarna_checkout/sidebar&language=' + getCookie('language'), function() {
 							window._klarnaCheckout(function(api) {
 								api.resume();
 								removeSidebarOverlay();
 							});
 						});
 
-						// Need to set timeout otherwise it wont update the total
-						setTimeout(function() {
-							$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
-						}, 100);
-
-						$('#cart > ul').load('index.php?route=common/cart/info&language={{ language }} ul li');
+						$('#cart').parent().load('index.php?route=common/cart/info&language=' + getCookie('language'));
 					}
 				});
 			},
@@ -189,7 +179,7 @@ var kc = {
 		});
 
 		$.ajax({
-			url: 'index.php?route=checkout/cart/remove&language={{ language }}',
+			url: 'index.php?route=checkout/cart/remove&language=' + getCookie('language'),
 			type: 'post',
 			data: 'key=' + key,
 			dataType: 'json',
@@ -200,23 +190,18 @@ var kc = {
 				});
 			},
 			success: function(json) {
-				$.post('index.php?route=extension/payment/klarna_checkout/main&language={{ language }}', {response: 'json'}, function() {
+				$.post('index.php?route=extension/payment/klarna_checkout/main&language=' + getCookie('language'), {response: 'json'}, function() {
 					if (data['redirect']) {
 						location = data['redirect'];
 					} else {
-						$('.klarna-checkout-sidebar').load('index.php?route=extension/payment/klarna_checkout/sidebar&language={{ language }}', function() {
+						$('.klarna-checkout-sidebar').load('index.php?route=extension/payment/klarna_checkout/sidebar&language=' + getCookie('language'), function() {
 							window._klarnaCheckout(function(api) {
 								api.resume();
 								removeSidebarOverlay();
 							});
 						});
 
-						// Need to set timeout otherwise it wont update the total
-						setTimeout(function() {
-							$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
-						}, 100);
-
-						$('#cart > ul').load('index.php?route=common/cart/info&language={{ language }} ul li');
+						$('#cart').parent().load('index.php?route=common/cart/info&language=' + getCookie('language'));
 					}
 				});
 			},

@@ -115,8 +115,8 @@
         {% endif %}
         <div class="{{ class }}">
           <div class="btn-group">
-            <button type="button" data-toggle="tooltip" class="btn btn-default" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}', '{{ language }}');"><i class="fa fa-heart"></i></button>
-            <button type="button" data-toggle="tooltip" class="btn btn-default" title="{{ button_compare }}" onclick="compare.add('{{ product_id }}', '{{ language }}');"><i class="fa fa-exchange"></i></button>
+            <button type="button" data-toggle="tooltip" class="btn btn-default" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');"><i class="fa fa-heart"></i></button>
+            <button type="button" data-toggle="tooltip" class="btn btn-default" title="{{ button_compare }}" onclick="compare.add('{{ product_id }}');"><i class="fa fa-exchange"></i></button>
           </div>
           <h1>{{ heading_title }}</h1>
           <ul class="list-unstyled">
@@ -250,7 +250,7 @@
                     <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
                     <div class="input-group time">
                       <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="HH:mm" id="input-option{{ option.product_option_id }}" class="form-control"/>
-                        <div class="input-group-btn">
+                      <div class="input-group-btn">
                         <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                       </div>
                     </div>
@@ -258,11 +258,6 @@
                 {% endif %}
               {% endfor %}
             {% endif %}
-
-
-
-
-
             {% if recurrings %}
               <hr>
               <h3>{{ text_payment_recurring }}</h3>
@@ -327,9 +322,9 @@
                       {% if product.tax %} <span class="price-tax">{{ text_tax }} {{ product.tax }}</span> {% endif %} </p>
                   {% endif %}</div>
                 <div class="button-group">
-                  <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}', '{{ language }}');"><span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span> <i class="fa fa-shopping-cart"></i></button>
-                  <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}', '{{ language }}');"><i class="fa fa-heart"></i></button>
-                  <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}', '{{ language }}');"><i class="fa fa-exchange"></i></button>
+                  <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span> <i class="fa fa-shopping-cart"></i></button>
+                  <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
+                  <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
                 </div>
               </div>
             </div>
@@ -356,7 +351,7 @@
 <script type="text/javascript"><!--
 $('select[name=\'recurring_id\'], input[name="quantity"]').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=product/product/getRecurringDescription&language={{ language }}',
+		url: 'index.php?route=product/product/getRecurringDescription&language=' + getCookie('language'),
 		type: 'post',
 		data: $('input[name=\'product_id\'], input[name=\'quantity\'], select[name=\'recurring_id\']'),
 		dataType: 'json',
@@ -376,7 +371,7 @@ $('select[name=\'recurring_id\'], input[name="quantity"]').on('change', function
 <script type="text/javascript"><!--
 $('#button-cart').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=checkout/cart/add&language={{ language }}',
+		url: 'index.php?route=checkout/cart/add&language=' + getCookie('language'),
 		type: 'post',
 		data: $('#product input[type=\'text\'], #product input[type=\'hidden\'], #product input[type=\'radio\']:checked, #product input[type=\'checkbox\']:checked, #product select, #product textarea'),
 		dataType: 'json',
@@ -416,7 +411,7 @@ $('#button-cart').on('click', function() {
 
 				$('#alert-box').addClass('open');
 
-				$('#cart').parent().load('index.php?route=common/cart/info&language={{ language }}');
+				$('#cart').parent().load('index.php?route=common/cart/info&language=' + getCookie('language'));
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -427,15 +422,15 @@ $('#button-cart').on('click', function() {
 //--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
-  locale: '{{ datepicker }}'
+	locale: '{{ datepicker }}'
 });
 
 $('.datetime').datetimepicker({
-  locale: '{{ datepicker }}'
+	locale: '{{ datepicker }}'
 });
 
 $('.time').datetimepicker({
-  locale: '{{ datepicker }}'
+	locale: '{{ datepicker }}'
 });
 
 $('button[id^=\'button-upload\']').on('click', function() {
@@ -456,7 +451,7 @@ $('button[id^=\'button-upload\']').on('click', function() {
 			clearInterval(timer);
 
 			$.ajax({
-				url: 'index.php?route=tool/upload&language={{ language }}',
+				url: 'index.php?route=tool/upload&language=' + getCookie('language'),
 				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),
@@ -501,11 +496,11 @@ $('#review').delegate('.pagination a', 'click', function(e) {
 	$('#review').fadeIn('slow');
 });
 
-$('#review').load('index.php?route=product/product/review&language={{ language }}&product_id={{ product_id }}');
+$('#review').load('index.php?route=product/product/review&language=' + getCookie('language') + '&product_id={{ product_id }}');
 
 $('#button-review').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=product/product/write&language={{ language }}&product_id={{ product_id }}',
+		url: 'index.php?route=product/product/write&language=' + getCookie('language') + '&product_id={{ product_id }}',
 		type: 'post',
 		dataType: 'json',
 		data: $('form-review').serialize(),

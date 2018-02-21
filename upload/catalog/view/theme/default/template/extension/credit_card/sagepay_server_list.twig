@@ -64,7 +64,7 @@
 <script type="text/javascript"><!--
 $('#button-add-card').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/credit_card/sagepay_server_cards/addCard&language={{ language }}',
+		url: 'index.php?route=extension/credit_card/sagepay_server_cards/addCard&language=' + getCookie('language'),
 		dataType: 'json',
 		cache: false,
 		beforeSend: function() {
@@ -76,7 +76,7 @@ $('#button-add-card').on('click', function() {
 		success: function(json) {
 			// if success
 			if (json['redirect']) {
-				html = '<form action="' + json['redirect'] + '" method="post" id="redirect">';
+				html  = '<form action="' + json['redirect'] + '" method="post" id="redirect">';
 				html += '  <input type="hidden" name="Status" value="' + json['Status'] + '" />';
 				html += '  <input type="hidden" name="StatusDetail" value="' + json['StatusDetail'] + '" />';
 				html += '</form>';

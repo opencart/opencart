@@ -28,7 +28,7 @@
 <script type="text/javascript"><!--
 $('#button-tracking').on('click', function() {
     $.ajax({
-        url: 'index.php?route=information/tracking/tracking&language={{ language }}&code=' + $('input[name="code"]').val(),
+        url: 'index.php?route=information/tracking/tracking&language=' + getCookie('language') + '&code=' + $('input[name="code"]').val(),
         dataType: 'json',
         beforeSend: function() {
             $('#button-login').button('loading');

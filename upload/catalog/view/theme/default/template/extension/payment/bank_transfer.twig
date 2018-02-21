@@ -6,7 +6,7 @@
 </div>
 <div class="buttons">
   <div class="pull-right">
-    <input type="button" value="{{ button_confirm }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
+    <input type="button" value="{{ button_confirm }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary"/>
   </div>
 </div>
 <script type="text/javascript"><!--
@@ -22,7 +22,7 @@ $('#button-confirm').on('click', function() {
 		},
 		success: function(json) {
 			if (json['redirect']) {
-				location = json['redirect'];	
+				location = json['redirect'];
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

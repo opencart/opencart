@@ -70,8 +70,6 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 		$data['add'] = $this->url->link('extension/credit_card/sagepay_server/add', 'language=' . $this->config->get('config_language'));
 		$data['back'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 
-		$data['language'] = $this->config->get('config_language');
-
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');

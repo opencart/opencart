@@ -23,8 +23,6 @@ class ControllerExtensionRecurringPPExpress extends Controller {
 				$data['order_recurring_id'] = '';
 			}
 
-			$data['language'] = $this->config->get('config_language');
-
 			return $this->load->view('extension/recurring/pp_express', $data);
 		}
 	}

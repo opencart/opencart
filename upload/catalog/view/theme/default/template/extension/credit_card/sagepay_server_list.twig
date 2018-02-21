@@ -11,7 +11,8 @@
   {% if error_warning %}
     <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
   {% endif %}
-  <div class="row">{{ column_left }}    {% if column_left and column_right %}
+  <div class="row">{{ column_left }}
+    {% if column_left and column_right %}
       {% set class = 'col-sm-6' %}
     {% elseif column_left or column_right %}
       {% set class = 'col-sm-9' %}
@@ -76,7 +77,7 @@ $('#button-add-card').on('click', function() {
 		success: function(json) {
 			// if success
 			if (json['redirect']) {
-				html  = '<form action="' + json['redirect'] + '" method="post" id="redirect">';
+				html = '<form action="' + json['redirect'] + '" method="post" id="redirect">';
 				html += '  <input type="hidden" name="Status" value="' + json['Status'] + '" />';
 				html += '  <input type="hidden" name="StatusDetail" value="' + json['StatusDetail'] + '" />';
 				html += '</form>';

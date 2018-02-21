@@ -25,8 +25,6 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 
 		$data['action'] = $this->url->link('extension/payment/cardconnect/send', 'language=' . $this->config->get('config_language'));
 
-		$data['language'] = $this->config->get('config_language');
-
 		return $this->load->view('extension/payment/cardconnect', $data);
 	}
 

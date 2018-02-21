@@ -24,8 +24,6 @@ class ControllerExtensionTotalReward extends Controller {
 				$data['reward'] = '';
 			}
 
-			$data['language'] = $this->config->get('config_language');
-
 			return $this->load->view('extension/total/reward', $data);
 		}
 	}

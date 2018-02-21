@@ -1,8 +1,6 @@
 <?php
 class ControllerExtensionPaymentCod extends Controller {
 	public function index() {
-		$data['language'] = $this->config->get('config_language');
-
 		return $this->load->view('extension/payment/cod', $data);
 	}
 

@@ -64,8 +64,6 @@ class ControllerExtensionPaymentPPPro extends Controller {
 			);
 		}
 
-		$data['language'] = $this->config->get('config_language');
-
 		return $this->load->view('extension/payment/pp_pro', $data);
 	}
 

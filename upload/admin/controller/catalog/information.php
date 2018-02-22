@@ -442,18 +442,18 @@ class ControllerCatalogInformation extends Controller {
 			
 			foreach ($this->request->post['information_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
-					if (!empty($keyword)) {
-						if (count(array_keys($language, $keyword)) > 1) {
-							$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_unique');
-						}						
-						
+					if ($keyword) {
 						$seo_urls = $this->model_design_seo_url->getSeoUrlsByKeyword($keyword);
 						
 						foreach ($seo_urls as $seo_url) {
-							if (($seo_url['store_id'] == $store_id) && (!isset($this->request->get['information_id']) || ($seo_url['query'] != 'information_id=' . $this->request->get['information_id']))) {
+							if (($seo_url['store_id'] == $store_id) && ($seo_url['language_id'] == $language_id) && (!isset($this->request->get['information_id']) || ($seo_url['query'] != 'information_id=' . $this->request->get['information_id']))) {
 								$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
+
+								break;
 							}
 						}
+					} else {
+						$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_seo');
 					}
 				}
 			}

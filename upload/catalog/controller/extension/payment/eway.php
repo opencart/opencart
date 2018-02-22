@@ -76,8 +76,8 @@ class ControllerExtensionPaymentEway extends Controller {
 			$item->SKU = (string)substr($product['product_id'], 0, 12);
 			$item->Description = (string)substr($product['name'], 0, 26);
 			$item->Quantity = strval($product['quantity']);
-			$item->UnitCost = strval($item_price * 100);
-			$item->Total = strval($item_total * 100);
+			$item->UnitCost = $this->lowestDenomination($item_price, $order_info['currency_code']);
+			$item->Total = $this->lowestDenomination($item_total, $order_info['currency_code']);
 			$request->Items[] = $item;
 			$invoice_desc .= $product['name'] . ', ';
 		}
@@ -93,8 +93,8 @@ class ControllerExtensionPaymentEway extends Controller {
 			$item->SKU = '';
 			$item->Description = (string)substr($this->language->get('text_shipping'), 0, 26);
 			$item->Quantity = 1;
-			$item->UnitCost = $shipping * 100;
-			$item->Total = $shipping * 100;
+			$item->UnitCost = $this->lowestDenomination($shipping, $order_info['currency_code']);
+			$item->Total = $this->lowestDenomination($shipping, $order_info['currency_code']);
 			$request->Items[] = $item;
 		}
 
@@ -103,7 +103,7 @@ class ControllerExtensionPaymentEway extends Controller {
 		$request->Options = array($opt1);
 
 		$request->Payment = new stdClass();
-		$request->Payment->TotalAmount = number_format($amount, 2, '.', '') * 100;
+		$request->Payment->TotalAmount = $this->lowestDenomination($amount, $order_info['currency_code']);
 		$request->Payment->InvoiceNumber = $this->session->data['order_id'];
 		$request->Payment->InvoiceDescription = $invoice_desc;
 		$request->Payment->InvoiceReference = (string)substr($this->config->get('config_name'), 0, 40) . ' - #' . $order_info['order_id'];
@@ -224,7 +224,7 @@ class ControllerExtensionPaymentEway extends Controller {
 				$eway_order_data = array(
 					'order_id' => $order_id,
 					'transaction_id' => $result->TransactionID,
-					'amount' => $result->TotalAmount / 100,
+					'amount' => $this->ValidateDenomination($result->TotalAmount, $order_info['currency_code']),
 					'currency_code' => $order_info['currency_code'],
 					'debug_data' => json_encode($result)
 				);
@@ -273,5 +273,20 @@ class ControllerExtensionPaymentEway extends Controller {
 			}
 		}
 	}
+	
+	public function lowestDenomination($value, $currency) {
+        $power = $this->currency->getDecimalPlace($currency);
 
+        $value = (float)$value;
+
+        return (int)($value * pow(10, $power));
+    }
+	
+	public function validateDenomination($value, $currency) {
+        $power = $this->currency->getDecimalPlace($currency);
+
+        $value = (float)$value;
+
+        return (int)($value * pow(10, '-' . $power));
+    }
 }

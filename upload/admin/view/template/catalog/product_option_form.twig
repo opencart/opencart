@@ -156,7 +156,7 @@
                             </select><input type="hidden" name="product_option_value[{{ option_value_row }}][product_option_value_id]" value="{{ product_option_value.product_option_value_id }}"/></td>
                           <td class="text-right"><input type="text" name="product_option_value[{{ option_value_row }}][quantity]" value="{{ product_option_value.quantity }}" placeholder="{{ entry_quantity }}" class="form-control"/></td>
                           <td class="text-left"><select name="product_option_value[{{ option_value_row }}][subtract]" class="form-control">
-                              {% if product_option_value.subtract %}
+                              {% if product_option_value.subtract == '1' %}
                                 <option value="1" selected="selected">{{ text_yes }}</option>
                                 <option value="0">{{ text_no }}</option>
                               {% else %}

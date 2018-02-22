@@ -12,11 +12,11 @@
             <select name="country_id" id="input-country" class="form-control">
               <option value="">{{ text_select }}</option>
               {% for country in countries %}
-              {% if country.country_id == country_id %}
-              <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
-              {% else %}
-              <option value="{{ country.country_id }}">{{ country.name }}</option>
-              {% endif %}
+                {% if country.country_id == country_id %}
+                  <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
+                {% else %}
+                  <option value="{{ country.country_id }}">{{ country.name }}</option>
+                {% endif %}
               {% endfor %}
             </select>
           </div>
@@ -24,22 +24,24 @@
         <div class="form-group required">
           <label class="col-sm-2 control-label" for="input-zone">{{ entry_zone }}</label>
           <div class="col-sm-10">
-            <select name="zone_id" id="input-zone" class="form-control">
-            </select>
+            <select name="zone_id" id="input-zone" class="form-control"> </select>
           </div>
         </div>
         <div class="form-group required">
           <label class="col-sm-2 control-label" for="input-postcode">{{ entry_postcode }}</label>
           <div class="col-sm-10">
-            <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" />
+            <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control"/>
           </div>
         </div>
         <button type="button" id="button-quote" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_quote }}</button>
       </div>
-      <script type="text/javascript"><!--
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
 $('#button-quote').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/total/shipping/quote&language={{ language }}',
+		url: 'index.php?route=extension/total/shipping/quote&language=' + getCookie('language'),
 		type: 'post',
 		data: 'country_id=' + $('select[name=\'country_id\']').val() + '&zone_id=' + $('select[name=\'zone_id\']').val() + '&postcode=' + encodeURIComponent($('input[name=\'postcode\']').val()),
 		dataType: 'json',
@@ -56,7 +58,7 @@ $('#button-quote').on('click', function() {
 				if (json['error']['warning']) {
 					$('.breadcrumb').after('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-					$('html, body').animate({ scrollTop: 0 }, 'slow');
+					$('html, body').animate({scrollTop: 0}, 'slow');
 				}
 
 				if (json['error']['country']) {
@@ -75,7 +77,7 @@ $('#button-quote').on('click', function() {
 			if (json['shipping_method']) {
 				$('#modal-shipping').remove();
 
-				html  = '<div id="modal-shipping" class="modal">';
+				html = '<div id="modal-shipping" class="modal">';
 				html += '  <div class="modal-dialog">';
 				html += '    <div class="modal-content">';
 				html += '      <div class="modal-header">';
@@ -108,11 +110,11 @@ $('#button-quote').on('click', function() {
 				html += '      <div class="modal-footer">';
 				html += '        <button type="button" class="btn btn-default" data-dismiss="modal">{{ button_cancel }}</button>';
 
-				{% if shipping_method %}
+              {% if shipping_method %}
 				html += '        <input type="button" value="{{ button_shipping }}" id="button-shipping" data-loading-text="{{ text_loading }}" class="btn btn-primary" />';
-				{% else %}
+              {% else %}
 				html += '        <input type="button" value="{{ button_shipping }}" id="button-shipping" data-loading-text="{{ text_loading }}" class="btn btn-primary" disabled="disabled" />';
-				{% endif %}
+              {% endif %}
 
 				html += '      </div>';
 				html += '    </div>';
@@ -136,7 +138,7 @@ $('#button-quote').on('click', function() {
 
 $(document).delegate('#button-shipping', 'click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/total/shipping/shipping&language={{ language }}',
+		url: 'index.php?route=extension/total/shipping/shipping&language=' + getCookie('language'),
 		type: 'post',
 		data: 'shipping_method=' + encodeURIComponent($('input[name=\'shipping_method\']:checked').val()),
 		dataType: 'json',
@@ -152,7 +154,7 @@ $(document).delegate('#button-shipping', 'click', function() {
 			if (json['error']) {
 				$('.breadcrumb').after('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$('html, body').animate({ scrollTop: 0 }, 'slow');
+				$('html, body').animate({scrollTop: 0}, 'slow');
 			}
 
 			if (json['redirect']) {
@@ -168,7 +170,7 @@ $(document).delegate('#button-shipping', 'click', function() {
 <script type="text/javascript"><!--
 $('select[name=\'country_id\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=extension/total/shipping/country&language={{ language }}&country_id=' + this.value,
+		url: 'index.php?route=extension/total/shipping/country&language=' + getCookie('language') + '&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'country_id\']').prop('disabled', true);
@@ -209,6 +211,3 @@ $('select[name=\'country_id\']').on('change', function() {
 
 $('select[name=\'country_id\']').trigger('change');
 //--></script>
-    </div>
-  </div>
-</div>

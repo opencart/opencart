@@ -142,7 +142,7 @@ $('input[name="card_new"]').on('change', function() {
 $('#button-delete').bind('click', function() {
 	if (confirm('{{ text_confirm_delete }}')) {
 		$.ajax({
-			url: 'index.php?route=extension/payment/cardconnect/delete&language={{ language }}',
+			url: 'index.php?route=extension/payment/cardconnect/delete&language=' + getCookie('language'),
 			type: 'post',
 			data: $('#input-card-choice'),
 			dataType: 'json',
@@ -162,7 +162,7 @@ $('#button-delete').bind('click', function() {
 					$('.cardconnect_message').fadeIn();
 				} else {
 					$.ajax({
-						url: 'index.php?route=checkout/confirm&language={{ language }}',
+						url: 'index.php?route=checkout/confirm&language=' + getCookie('language'),
 						dataType: 'html',
 						success: function (html) {
 							$('#collapse-checkout-confirm .panel-body').html(html);
@@ -180,7 +180,7 @@ $('#button-delete').bind('click', function() {
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/payment/cardconnect/send&language={{ language }}',
+		url: 'index.php?route=extension/payment/cardconnect/send&language=' + getCookie('language'),
 		type: 'post',
 		data: $('#cardconnect-form').serialize(),
 		dataType: 'json',

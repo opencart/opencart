@@ -75,8 +75,6 @@ class ControllerExtensionPaymentDivido extends Controller {
 			'generic_credit_req_error' => 'Credit request could not be initiated',
 		);
 
-		$data['language'] = $this->config->get('config_language');
-
 		return $this->load->view('extension/payment/divido', $data);
 	}
 

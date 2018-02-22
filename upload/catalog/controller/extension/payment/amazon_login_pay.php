@@ -37,8 +37,6 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 		$this->document->addScript($amazon_payment_js);
 
-		$data['language'] = $this->config->get('config_language');
-
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');
@@ -137,12 +135,15 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		}
 
 		$data['heading_confirm'] = $this->language->get('heading_confirm');
+
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_model'] = $this->language->get('column_model');
 		$data['column_quantity'] = $this->language->get('column_quantity');
 		$data['column_price'] = $this->language->get('column_price');
 		$data['column_total'] = $this->language->get('column_total');
+
 		$data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_back'] = $this->language->get('text_back');
 
 		$products = $this->cart->getProducts();
 
@@ -492,7 +493,6 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		}
 
 		$data['back'] = $this->url->link('extension/payment/amazon_login_pay/paymentMethod', 'language=' . $this->config->get('config_language'));
-		$data['text_back'] = $this->language->get('text_back');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

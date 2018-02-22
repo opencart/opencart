@@ -10,13 +10,11 @@ class ControllerCommonLanguage extends Controller {
 		if (isset($url_data['route'])) {
 			$route = $url_data['route'];
 		} else {
-			$route = 'common/home';
+			$route = $this->config->get('action_default');
 		}
 
 		unset($url_data['_route_']);
-
 		unset($url_data['route']);
-
 		unset($url_data['language']);
 
 		$url = '';
@@ -36,7 +34,7 @@ class ControllerCommonLanguage extends Controller {
 				$data['languages'][] = array(
 					'name' => $result['name'],
 					'code' => $result['code'],
-					'href' => $this->url->link('common/language/language', 'language=' . $result['code'] . '&redirect=' . urlencode($this->url->link($route, 'language=' . $result['code'] . $url)))
+					'href' => $this->url->link('common/language/language', 'language=' . $this->config->get('config_language') . '&code=' . $result['code'] . '&redirect=' . htmlspecialchars($this->url->link($route, 'language=' . $result['code'] . $url), ENT_COMPAT, 'UTF-8'))
 				);
 			}
 		}
@@ -51,12 +49,18 @@ class ControllerCommonLanguage extends Controller {
 			$code = $this->config->get('config_language');
 		}
 
+		if (isset($this->request->get['redirect'])) {
+			$redirect = htmlspecialchars_decode($this->request->get['redirect'], ENT_COMPAT, 'UTF-8');
+		} else {
+			$redirect = '';
+		}
+
 		setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
 
-		if (isset($this->request->get['redirect']) && substr($this->request->get['redirect'], 0, strlen($this->config->get('config_url'))) == $this->config->get('config_url')) {
-			$this->response->redirect(html_entity_decode($this->request->get['redirect'], ENT_QUOTES, 'UTF-8'));
+		if ($redirect && substr($redirect, 0, strlen($this->config->get('config_url'))) == $this->config->get('config_url')) {
+			$this->response->redirect($redirect);
 		} else {
-			$this->response->redirect($this->url->link('common/home', 'language=' . $code));
+			$this->response->redirect($this->url->link($this->config->get('action_default'), 'language=' . $code));
 		}
 	}
 }

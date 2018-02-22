@@ -443,8 +443,6 @@ class ControllerProductProduct extends Controller {
 
 			$this->model_catalog_product->updateViewed($this->request->get['product_id']);
 
-			$data['language'] = $this->config->get('config_language');
-
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');
@@ -607,7 +605,6 @@ class ControllerProductProduct extends Controller {
 
 	public function getRecurringDescription() {
 		$this->load->language('product/product');
-		$this->load->model('catalog/product');
 
 		if (isset($this->request->post['product_id'])) {
 			$product_id = $this->request->post['product_id'];

@@ -543,21 +543,30 @@ class ControllerDesignSeoUrl extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['query']) {
+		if ($this->request->post['query']) {
+			$seo_urls = $this->model_design_seo_url->getSeoUrlsByQuery($this->request->post['query']);
+
+			foreach ($seo_urls as $seo_url) {
+				if (($seo_url['store_id'] == $this->request->post['store_id'] && $seo_url['language_id'] == $this->request->post['language_id']) && (!isset($this->request->get['seo_url_id']) || (($seo_url['query'] != 'seo_url_id=' . $this->request->get['seo_url_id'])))) {
+					$this->error['query'] = $this->language->get('error_query_exists');
+
+					break;
+				}
+			}
+		} else {
 			$this->error['query'] = $this->language->get('error_query');
 		}
 
 		if ($this->request->post['keyword']) {
-			if (preg_match('/[^a-Z0-9_-]+/', $this->request->post['keyword'])) {
+			if (preg_match('/[^a-zA-Z0-9_\-]+/', $this->request->post['keyword'])) {
 				$this->error['keyword'] = $this->language->get('error_keyword');
 			}
 
 			$seo_urls = $this->model_design_seo_url->getSeoUrlsByKeyword($this->request->post['keyword']);
 
 			foreach ($seo_urls as $seo_url) {
-				//&& $seo_url['query'] != $this->request->post['query']
-				if ($seo_url['store_id'] == $this->request->post['store_id'] && $seo_url['language_id'] == $this->request->post['language_id']) {
-					//	$this->error['keyword'] = $this->language->get('error_exists');
+				if (($seo_url['store_id'] == $this->request->post['store_id'] && $seo_url['language_id'] == $this->request->post['language_id']) && (!isset($this->request->get['seo_url_id']) || (($seo_url['query'] != 'seo_url_id=' . $this->request->get['seo_url_id'])))) {
+					$this->error['keyword'] = $this->language->get('error_keyword_exists');
 
 					break;
 				}
@@ -565,7 +574,7 @@ class ControllerDesignSeoUrl extends Controller {
 		}
 
 		if (!$this->request->post['push']) {
-		//	$this->error['push'] = $this->language->get('error_push');
+			$this->error['push'] = $this->language->get('error_push');
 		}
 
 		return !$this->error;

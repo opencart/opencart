@@ -638,7 +638,6 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	font-size: 12.5px;
 	padding: 6px;
 }
-}
 #extension-list .extension-preview img {
 	margin: 0 auto;
 }

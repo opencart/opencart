@@ -224,7 +224,7 @@ var cart = {
 			},
 			success: function(json) {
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
-					location = 'index.php?route=checkout/cart&&language=' + getCookie('language');
+					location = 'index.php?route=checkout/cart&language=' + getCookie('language');
 				} else {
 					$('#cart').parent().load('index.php?route=common/cart/info&language=' + getCookie('language'));
 				}

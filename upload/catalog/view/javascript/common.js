@@ -27,7 +27,7 @@ function getCookie(cname) {
 	var decodedCookie = decodeURIComponent(document.cookie);
 	var ca = decodedCookie.split(';');
 
-	for(var i = 0; i <ca.length; i++) {
+	for(var i = 0; i < ca.length; i++) {
 		var c = ca[i];
 
 		while (c.charAt(0) == ' ') {
@@ -68,7 +68,7 @@ $(document).ready(function() {
 	});
 
 	$('.date, .datetime, .time').find('button').on('click', function() {
-		$(this).parent().parent().find('input').focus();
+		$(this).parent().parent().datetimepicker('toggle');
 	});
 
 	// Currency
@@ -224,7 +224,7 @@ var cart = {
 			},
 			success: function(json) {
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
-					location = 'index.php?route=checkout/cart&&language=' + getCookie('language');
+					location = 'index.php?route=checkout/cart&language=' + getCookie('language');
 				} else {
 					$('#cart').parent().load('index.php?route=common/cart/info&language=' + getCookie('language'));
 				}

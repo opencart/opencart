@@ -221,24 +221,11 @@
                     <input type="hidden" name="option[{{ option.product_option_id }}]" value="" id="input-option{{ option.product_option_id }}"/>
                   </div>
                 {% endif %}
-
                 {% if option.type == 'date' %}
                   <div class="form-group{% if option.required %} required{% endif %}">
                     <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
                     <div class="input-group date">
-                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="YYYY-MM-DD" id="input-option{{ option.product_option_id }}" class="form-control"/>
-                      <div class="input-group-btn">
-                        <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                {% endif %}
-
-                {% if option.type == 'datetime' %}
-                  <div class="form-group{% if option.required %} required{% endif %}">
-                    <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
-                    <div class="input-group datetime">
-                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="YYYY-MM-DD HH:mm" id="input-option{{ option.product_option_id }}" class="form-control"/>
+                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
                       <div class="input-group-btn">
                         <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                       </div>
@@ -249,7 +236,18 @@
                   <div class="form-group{% if option.required %} required{% endif %}">
                     <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
                     <div class="input-group time">
-                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="HH:mm" id="input-option{{ option.product_option_id }}" class="form-control"/>
+                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="HH:mm" data-locale="{{ datepicker }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
+                      <div class="input-group-btn">
+                        <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+                {% if option.type == 'datetime' %}
+                  <div class="form-group{% if option.required %} required{% endif %}">
+                    <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
+                    <div class="input-group datetime">
+                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="YYYY-MM-DD HH:mm"  data-locale="{{ datepicker }}"id="input-option{{ option.product_option_id }}" class="form-control"/>
                       <div class="input-group-btn">
                         <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                       </div>
@@ -259,7 +257,7 @@
               {% endfor %}
             {% endif %}
             {% if recurrings %}
-              <hr>
+              <hr/>
               <h3>{{ text_payment_recurring }}</h3>
               <div class="form-group required">
                 <select name="recurring_id" class="form-control">
@@ -421,17 +419,9 @@ $('#button-cart').on('click', function() {
 });
 //--></script>
 <script type="text/javascript"><!--
-$('.date').datetimepicker({
-	locale: '{{ datepicker }}'
-});
-
-$('.datetime').datetimepicker({
-	locale: '{{ datepicker }}'
-});
-
-$('.time').datetimepicker({
-	locale: '{{ datepicker }}'
-});
+$('.date').datetimepicker();
+$('.datetime').datetimepicker();
+$('.time').datetimepicker();
 
 $('button[id^=\'button-upload\']').on('click', function() {
 	var element = this;

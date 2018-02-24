@@ -71,7 +71,7 @@
             <div class="form-group">
               <label class="control-label" for="input-date-added">{{ entry_date_added }}</label>
               <div class="input-group date">
-                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control"/>
+                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-added" class="form-control"/>
                 <div class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                 </div>
@@ -80,7 +80,7 @@
             <div class="form-group">
               <label class="control-label" for="input-date-modified">{{ entry_date_modified }}</label>
               <div class="input-group date">
-                <input type="text" name="filter_date_modified" value="{{ filter_date_modified }}" placeholder="{{ entry_date_modified }}" data-date-format="YYYY-MM-DD" id="input-date-modified" class="form-control"/>
+                <input type="text" name="filter_date_modified" value="{{ filter_date_modified }}" placeholder="{{ entry_date_modified }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-modified" class="form-control"/>
                 <div class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                 </div>
@@ -102,54 +102,52 @@
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                   <thead>
-                  <tr>
-                    <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');"/></td>
-                    <td class="text-right">{% if sort == 'o.order_id' %} <a href="{{ sort_order }}" class="{{ order|lower }}">{{ column_order_id }}</a> {% else %} <a href="{{ sort_order }}">{{ column_order_id }}</a> {% endif %}</td>
-                    <td class="text-left">{% if sort == 'customer' %} <a href="{{ sort_customer }}" class="{{ order|lower }}">{{ column_customer }}</a> {% else %} <a href="{{ sort_customer }}">{{ column_customer }}</a> {% endif %}</td>
-                    <td class="text-left">{% if sort == 'order_status' %} <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a> {% else %} <a href="{{ sort_status }}">{{ column_status }}</a> {% endif %}</td>
-                    <td class="text-right">{% if sort == 'o.total' %} <a href="{{ sort_total }}" class="{{ order|lower }}">{{ column_total }}</a> {% else %} <a href="{{ sort_total }}">{{ column_total }}</a> {% endif %}</td>
-                    <td class="text-left">{% if sort == 'o.date_added' %} <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a> {% else %} <a href="{{ sort_date_added }}">{{ column_date_added }}</a> {% endif %}</td>
-                    <td class="text-left">{% if sort == 'o.date_modified' %} <a href="{{ sort_date_modified }}" class="{{ order|lower }}">{{ column_date_modified }}</a> {% else %} <a href="{{ sort_date_modified }}">{{ column_date_modified }}</a> {% endif %}</td>
-                    <td class="text-right">{{ column_action }}</td>
-                  </tr>
+                    <tr>
+                      <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');"/></td>
+                      <td class="text-right">{% if sort == 'o.order_id' %} <a href="{{ sort_order }}" class="{{ order|lower }}">{{ column_order_id }}</a> {% else %} <a href="{{ sort_order }}">{{ column_order_id }}</a> {% endif %}</td>
+                      <td class="text-left">{% if sort == 'customer' %} <a href="{{ sort_customer }}" class="{{ order|lower }}">{{ column_customer }}</a> {% else %} <a href="{{ sort_customer }}">{{ column_customer }}</a> {% endif %}</td>
+                      <td class="text-left">{% if sort == 'order_status' %} <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a> {% else %} <a href="{{ sort_status }}">{{ column_status }}</a> {% endif %}</td>
+                      <td class="text-right">{% if sort == 'o.total' %} <a href="{{ sort_total }}" class="{{ order|lower }}">{{ column_total }}</a> {% else %} <a href="{{ sort_total }}">{{ column_total }}</a> {% endif %}</td>
+                      <td class="text-left">{% if sort == 'o.date_added' %} <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a> {% else %} <a href="{{ sort_date_added }}">{{ column_date_added }}</a> {% endif %}</td>
+                      <td class="text-left">{% if sort == 'o.date_modified' %} <a href="{{ sort_date_modified }}" class="{{ order|lower }}">{{ column_date_modified }}</a> {% else %} <a href="{{ sort_date_modified }}">{{ column_date_modified }}</a> {% endif %}</td>
+                      <td class="text-right">{{ column_action }}</td>
+                    </tr>
                   </thead>
                   <tbody>
-
-                  {% if orders %}
-                    {% for order in orders %}
-                      <tr>
-                        <td class="text-center">{% if order.order_id in selected %}
-                            <input type="checkbox" name="selected[]" value="{{ order.order_id }}" checked="checked"/>
-                          {% else %}
-                            <input type="checkbox" name="selected[]" value="{{ order.order_id }}"/>
-                          {% endif %}
-                          <input type="hidden" name="shipping_code[]" value="{{ order.shipping_code }}"/></td>
-                        <td class="text-right">{{ order.order_id }}</td>
-                        <td class="text-left">{{ order.customer }}</td>
-                        <td class="text-left">{{ order.order_status }}</td>
-                        <td class="text-right">{{ order.total }}</td>
-                        <td class="text-left">{{ order.date_added }}</td>
-                        <td class="text-left">{{ order.date_modified }}</td>
-                        <td class="text-right">
-                          <div style="min-width: 120px;">
-                            <div class="btn-group"><a href="{{ order.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
-                              <button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><span class="caret"></span></button>
-                              <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a href="{{ order.edit }}"><i class="fa fa-pencil"></i> {{ button_edit }}</a></li>
-                                <li><a href="{{ order.order_id }}"><i class="fa fa-trash-o"></i> {{ button_delete }}</a></li>
-                              </ul>
+                    {% if orders %}
+                      {% for order in orders %}
+                        <tr>
+                          <td class="text-center">{% if order.order_id in selected %}
+                              <input type="checkbox" name="selected[]" value="{{ order.order_id }}" checked="checked"/>
+                            {% else %}
+                              <input type="checkbox" name="selected[]" value="{{ order.order_id }}"/>
+                            {% endif %}
+                            <input type="hidden" name="shipping_code[]" value="{{ order.shipping_code }}"/></td>
+                          <td class="text-right">{{ order.order_id }}</td>
+                          <td class="text-left">{{ order.customer }}</td>
+                          <td class="text-left">{{ order.order_status }}</td>
+                          <td class="text-right">{{ order.total }}</td>
+                          <td class="text-left">{{ order.date_added }}</td>
+                          <td class="text-left">{{ order.date_modified }}</td>
+                          <td class="text-right">
+                            <div style="min-width: 120px;">
+                              <div class="btn-group"><a href="{{ order.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                                <button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><span class="caret"></span></button>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                  <li><a href="{{ order.edit }}"><i class="fa fa-pencil"></i> {{ button_edit }}</a></li>
+                                  <li><a href="{{ order.order_id }}"><i class="fa fa-trash-o"></i> {{ button_delete }}</a></li>
+                                </ul>
+                              </div>
                             </div>
-                          </div>
-                        </td>
+                          </td>
+                        </tr>
+                      {% endfor %}
+                    {% else %}
+                      <tr>
+                        <td class="text-center" colspan="8">{{ text_no_results }}</td>
                       </tr>
-                    {% endfor %}
-                  {% else %}
-                    <tr>
-                      <td class="text-center" colspan="8">{{ text_no_results }}</td>
-                    </tr>
-                  {% endif %}
+                    {% endif %}
                   </tbody>
-
                 </table>
               </div>
             </form>
@@ -291,9 +289,6 @@ $('#form-order li:last-child a').on('click', function(e) {
 <script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 <link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen"/>
 <script type="text/javascript"><!--
-$('.date').datetimepicker({
-	locale: '{{ datepicker }}',
-	pickTime: false
-});
+$('.date').datetimepicker();
 //--></script>
 {{ footer }}

@@ -90,7 +90,7 @@
             <label class="col-sm-2 control-label" for="input-date-added">{{ entry_date_added }}</label>
             <div class="col-sm-3">
               <div class="input-group datetime">
-                <input type="text" name="date_added" value="{{ date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD HH:mm:ss" id="input-date-added" class="form-control"/>
+                <input type="text" name="date_added" value="{{ date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD HH:mm:ss" data-locale="{{ datepicker }}" id="input-date-added" class="form-control"/>
                 <div class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                 </div>

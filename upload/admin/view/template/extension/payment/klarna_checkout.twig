@@ -526,10 +526,7 @@ $(document).on('click', '#button-process-settlement', function() {
 
 $('#tabs a:first').tab('show');
 
-$('.date').datetimepicker({
-	locale: '{{ datepicker }}',
-	pickTime: false
-});
+$('.date').datetimepicker();
 
 {% if not klarna_checkout_account %}
 $(document).ready(function() {
@@ -577,5 +574,6 @@ function addAccount() {
 
 	account_row++;
 }
+
 //--></script>
 {{ footer }}

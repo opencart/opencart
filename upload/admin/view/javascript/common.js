@@ -45,15 +45,10 @@ $(document).ready(function() {
 		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 	});
 
-	// https://github.com/opencart/opencart/issues/2595
-	$.event.special.remove = {
-		remove: function(o) {
-			if (o.handler) {
-				o.handler.apply(this, arguments);
-			}
-		}
-	}
-	
+	$('.date, .datetime, .time').find('button').on('click', function() {
+		$(this).parent().parent().datetimepicker('toggle');
+	});
+
 	// tooltip remove
 	$('[data-toggle=\'tooltip\']').on('remove', function() {
 		$(this).tooltip('destroy');
@@ -63,7 +58,16 @@ $(document).ready(function() {
 	$(document).on('click', '[data-toggle=\'tooltip\']', function(e) {
 		$('body > .tooltip').remove();
 	});
-	
+
+	// https://github.com/opencart/opencart/issues/2595
+	$.event.special.remove = {
+		remove: function(o) {
+			if (o.handler) {
+				o.handler.apply(this, arguments);
+			}
+		}
+	}
+
 	$('#button-menu').on('click', function(e) {
 		e.preventDefault();
 		

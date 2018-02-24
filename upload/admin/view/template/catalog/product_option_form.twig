@@ -89,7 +89,7 @@
                   <label class="col-sm-2 control-label" for="input-value">{{ entry_option_value }}</label>
                   <div class="col-sm-3">
                     <div class="input-group date">
-                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" data-date-format="YYYY-MM-DD" id="input-value" class="form-control"/>
+                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-value" class="form-control"/>
                       <div class="input-group-btn">
                         <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                       </div>
@@ -103,7 +103,7 @@
                   <label class="col-sm-2 control-label" for="input-value">{{ entry_option_value }}</label>
                   <div class="col-sm-10">
                     <div class="input-group time">
-                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" data-date-format="HH:mm" id="input-value" class="form-control"/>
+                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" data-date-format="HH:mm" data-locale="{{ datepicker }}" id="input-value" class="form-control"/>
                       <div class="input-group-btn">
                         <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                       </div>
@@ -117,7 +117,7 @@
                   <label class="col-sm-2 control-label" for="input-value">{{ entry_option_value }}</label>
                   <div class="col-sm-10">
                     <div class="input-group datetime">
-                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" data-date-format="YYYY-MM-DD HH:mm" id="input-value" class="form-control"/>
+                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" data-date-format="YYYY-MM-DD HH:mm" data-locale="{{ datepicker }}" id="input-value" class="form-control"/>
                       <div class="input-group-btn">
                         <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                       </div>
@@ -361,21 +361,9 @@ $('input[name=\'option\']').autocomplete({
 			html: true
 		});
 
-		$('.date').datetimepicker({
-			locale: '{{ datepicker }}',
-			pickTime: false
-		});
-
-		$('.time').datetimepicker({
-			locale: '{{ datepicker }}',
-			pickDate: false
-		});
-
-		$('.datetime').datetimepicker({
-			locale: '{{ datepicker }}',
-			pickDate: true,
-			pickTime: true
-		});
+		$('.date').datetimepicker();
+		$('.time').datetimepicker();
+		$('.datetime').datetimepicker();
 	}
 });
 
@@ -416,20 +404,8 @@ $('#product-option-value').on('click', '#button-option-value', function() {
 });
 //--></script>
 <script type="text/javascript"><!--
-$('.date').datetimepicker({
-	locale: '{{ datepicker }}',
-	pickTime: false
-});
-
-$('.time').datetimepicker({
-	locale: '{{ datepicker }}',
-	pickDate: false
-});
-
-$('.datetime').datetimepicker({
-	locale: '{{ datepicker }}',
-	pickDate: true,
-	pickTime: true
-});
+$('.date').datetimepicker();
+$('.time').datetimepicker();
+$('.datetime').datetimepicker();
 //--></script>
 {{ footer }}

@@ -46,7 +46,6 @@
                     <option value="{{ recurring_status.value }}" selected="selected">{{ recurring_status.text }}</option>
                   {% else %}
                     <option value="{{ recurring_status.value }}">{{ recurring_status.text }}</option>
-
                   {% endif %}
                 {% endfor %}
               </select>
@@ -57,7 +56,7 @@
             <div class="form-group">
               <label class="control-label" for="input-date-date_added">{{ entry_date_added }}</label>
               <div class="input-group date">
-                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" id="input-date-date_added" class="form-control"/> <div class="input-group-btn">
+                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-date_added" class="form-control"/> <div class="input-group-btn">
                 <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                 </div></div>
             </div>
@@ -170,10 +169,7 @@ $('#form input').keydown(function(e) {
 	}
 });
 
-$('.date').datetimepicker({
-	locale: '{{ datepicker }}',
-	pickTime: false
-});
+$('.date').datetimepicker();
 //--></script>
 <script type="text/javascript"><!--
 $('input[name=\'filter_customer\']').autocomplete({

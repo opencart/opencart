@@ -2,11 +2,11 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"> <a href="{{ link_overview }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
+      <div class="pull-right"><a href="{{ link_overview }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
-        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
         {% endfor %}
       </ul>
     </div>
@@ -16,19 +16,21 @@
       <div class="row">
         <div class="col-sm-5">
           <div class="input-group date">
-            <input type="text" class="form-control" id="input-date-start" data-date-format="YYYY-MM-DD" placeholder="{{ entry_date_start }}" value="{{ date_start }}" name="filter_date_start">
+            <input type="text" class="form-control" id="input-date-start" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" placeholder="{{ entry_date_start }}" value="{{ date_start }}" name="filter_date_start">
             <div class="input-group-btn">
-            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-            </div> </div>
+              <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+            </div>
+          </div>
         </div>
         <div class="col-sm-5">
           <div class="input-group date">
-            <input type="text" class="form-control" id="input-date-end" data-date-format="YYYY-MM-DD" placeholder="{{ entry_date_end }}" value="{{ date_end }}" name="filter_date_end">
+            <input type="text" class="form-control" id="input-date-end" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" placeholder="{{ entry_date_end }}" value="{{ date_end }}" name="filter_date_end">
             <div class="input-group-btn">
-            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-            </div> </div>
+              <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+            </div>
+          </div>
         </div>
-        <div class="col-sm-2 text-right"> <a id="button-filter" class="btn btn-primary" data-toggle="tooltip" title="{{ button_filter }}"><i class="fa fa-filter"></i></a> </div>
+        <div class="col-sm-2 text-right"><a id="button-filter" class="btn btn-primary" data-toggle="tooltip" title="{{ button_filter }}"><i class="fa fa-filter"></i></a></div>
       </div>
     </div>
     <table class="table table-bordered table-hover">
@@ -49,18 +51,18 @@
           </tr>
         {% endif %}
         {% for ref, row in table_data %}
-          <tr>
-            <td class="text-left" rowspan="{{ row.data|length + 1 }}">{{ ref }}</td>
-            <td class="text-left" rowspan="{{ row.data|length + 1 }}">{{ row.status }}</td>
-            <td class="text-left" rowspan="{{ row.data|length + 1 }}">{{ row.date_requested }}</td>
-            <td class="text-left" rowspan="{{ row.data|length + 1 }}">{{ row.date_updated }}</td>
-            {% for data_row in row.data %}
-              <tr>
-                <td class="text-center">{{ data_row.sku }}</td>
-                <td class="text-center">{{ data_row.stock }}</td>
-              </tr>
-            {% endfor %}
-          </tr>
+        <tr>
+          <td class="text-left" rowspan="{{ row.data|length + 1 }}">{{ ref }}</td>
+          <td class="text-left" rowspan="{{ row.data|length + 1 }}">{{ row.status }}</td>
+          <td class="text-left" rowspan="{{ row.data|length + 1 }}">{{ row.date_requested }}</td>
+          <td class="text-left" rowspan="{{ row.data|length + 1 }}">{{ row.date_updated }}</td>
+          {% for data_row in row.data %}
+        <tr>
+          <td class="text-center">{{ data_row.sku }}</td>
+          <td class="text-center">{{ data_row.stock }}</td>
+        </tr>
+        {% endfor %}
+        </tr>
         {% endif %}
       </tbody>
     </table>
@@ -68,41 +70,29 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-  url = 'index.php?route=extension/openbay/amazonus/stockUpdates&user_token={{ user_token }}';
+	url = 'index.php?route=extension/openbay/amazonus/stockUpdates&user_token={{ user_token }}';
 
-  var filter_date_start = $('#input-date-start').val();
+	var filter_date_start = $('#input-date-start').val();
 
-  if (filter_date_start) {
-    url += '&filter_date_start=' + encodeURIComponent(filter_date_start);
-  }
+	if (filter_date_start) {
+		url += '&filter_date_start=' + encodeURIComponent(filter_date_start);
+	}
 
-  var filter_date_end = $('#input-date-end').val();
+	var filter_date_end = $('#input-date-end').val();
 
-  if (filter_date_end) {
-    url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
-  }
-  location = url;
+	if (filter_date_end) {
+		url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
+	}
+	location = url;
 });
 
 $(document).ready(function() {
-  $('#input-date-start').datepicker({dateFormat: 'yy-mm-dd'});
-  $('#input-date-end').datepicker({dateFormat: 'yy-mm-dd'});
+	$('#input-date-start').datepicker({dateFormat: 'yy-mm-dd'});
+	$('#input-date-end').datepicker({dateFormat: 'yy-mm-dd'});
 });
 
-$('.date').datetimepicker({
-	locale: '{{ datepicker }}',
-	pickTime: false
-});
-
-$('.datetime').datetimepicker({
-	locale: '{{ datepicker }}',
-	pickDate: true,
-	pickTime: true
-});
-
-$('.time').datetimepicker({
-	locale: '{{ datepicker }}',
-	pickDate: false
-});
+$('.date').datetimepicker();
+$('.time').datetimepicker();
+$('.datetime').datetimepicker();
 //--></script>
 {{ footer }}

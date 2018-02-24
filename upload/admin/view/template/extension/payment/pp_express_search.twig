@@ -6,7 +6,7 @@
       <h1><i class="fa fa-search"></i> {{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
-        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
         {% endfor %}
       </ul>
     </div>
@@ -24,20 +24,22 @@
               <label class="col-sm-2 control-label" for="input-date-start">{{ entry_date_start }}</label>
               <div class="col-sm-10">
                 <div class="input-group date">
-                  <input type="text" name="date_start" value="{{ date_start }}" placeholder="{{ text_format }}: yy-mm-dd" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control" />
+                  <input type="text" name="date_start" value="{{ date_start }}" placeholder="{{ text_format }}: yy-mm-dd" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-start" class="form-control"/>
                   <div class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </div></div>
+                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-date-end">{{ entry_date_end }}</label>
               <div class="col-sm-10">
                 <div class="input-group date">
-                  <input type="text" name="date_end" value="{{ date_end }}" placeholder="{{ text_format }}: yy-mm-dd" data-date-format="YYYY-MM-DD" class="form-control" />
+                  <input type="text" name="date_end" value="{{ date_end }}" placeholder="{{ text_format }}: yy-mm-dd" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" class="form-control"/>
                   <div class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </div></div>
+                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                  </div>
+                </div>
               </div>
             </div>
             <h3>{{ entry_transaction }}</h3>
@@ -70,47 +72,47 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">{{ entry_email }} ({{ entry_email_buyer }})</label>
               <div class="col-sm-10">
-                <input type="text" name="buyer_email" value="" placeholder="{{ entry_email_buyer }}" class="form-control" />
+                <input type="text" name="buyer_email" value="" placeholder="{{ entry_email_buyer }}" class="form-control"/>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">{{ entry_email }} ({{ entry_email_merchant }})</label>
               <div class="col-sm-10">
-                <input type="text" name="merchant_email" value="" placeholder="{{ entry_email_merchant }}" class="form-control" />
+                <input type="text" name="merchant_email" value="" placeholder="{{ entry_email_merchant }}" class="form-control"/>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">{{ entry_receipt }}</label>
               <div class="col-sm-10">
-                <input type="text" name="receipt_id" value="" placeholder="{{ entry_receipt }}" class="form-control" />
+                <input type="text" name="receipt_id" value="" placeholder="{{ entry_receipt }}" class="form-control"/>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">{{ entry_transaction_id }}</label>
               <div class="col-sm-10">
-                <input type="text" name="transaction_id" value="" placeholder="{{ entry_transaction_id }}" class="form-control" />
+                <input type="text" name="transaction_id" value="" placeholder="{{ entry_transaction_id }}" class="form-control"/>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">{{ entry_invoice_no }}</label>
               <div class="col-sm-10">
-                <input type="text" name="invoice_number" value="" placeholder="{{ entry_invoice_no }}" class="form-control" />
+                <input type="text" name="invoice_number" value="" placeholder="{{ entry_invoice_no }}" class="form-control"/>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">{{ entry_auction }}</label>
               <div class="col-sm-10">
-                <input type="text" name="auction_item_number" value="" placeholder="{{ entry_auction }}" class="form-control" />
+                <input type="text" name="auction_item_number" value="" placeholder="{{ entry_auction }}" class="form-control"/>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">{{ entry_amount }}</label>
               <div class="col-sm-10">
-                <input type="text" name="amount" value="" placeholder="{{ entry_amount }}" class="form-control" />
-                <br />
+                <input type="text" name="amount" value="" placeholder="{{ entry_amount }}" class="form-control"/>
+                <br/>
                 <select name="currency_code" class="form-control">
                   {% for code in currency_codes %}
-                  <option {% if code == default_currency  %} 'selected' {% endif %}>{{ code }}</option>
+                    <option {% if code == default_currency %} 'selected' {% endif %}>{{ code }}</option>
                   {% endfor %}
                 </select>
               </div>
@@ -118,38 +120,38 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">{{ entry_recurring_id }}</label>
               <div class="col-sm-10">
-                <input type="text" name="recurring_id" value="" placeholder="{{ entry_recurring_id }}" class="form-control" />
+                <input type="text" name="recurring_id" value="" placeholder="{{ entry_recurring_id }}" class="form-control"/>
               </div>
             </div>
             <h3>{{ text_buyer_info }}</h3>
             <div class="form-group">
               <label class="col-sm-2 control-label">{{ entry_salutation }}</label>
               <div class="col-sm-10">
-                <input type="text" name="name_salutation" value="" placeholder="{{ entry_salutation }}" class="form-control" />
+                <input type="text" name="name_salutation" value="" placeholder="{{ entry_salutation }}" class="form-control"/>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">{{ entry_firstname }}</label>
               <div class="col-sm-10">
-                <input type="text" name="name_first" value="" placeholder="{{ entry_firstname }}" class="form-control" />
+                <input type="text" name="name_first" value="" placeholder="{{ entry_firstname }}" class="form-control"/>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">{{ entry_middlename }}</label>
               <div class="col-sm-10">
-                <input type="text" name="name_middle" value="" placeholder="{{ entry_middlename }}" class="form-control" />
+                <input type="text" name="name_middle" value="" placeholder="{{ entry_middlename }}" class="form-control"/>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">{{ entry_lastname }}</label>
               <div class="col-sm-10">
-                <input type="text" name="name_last" value="" placeholder="{{ entry_lastname }}" class="form-control" />
+                <input type="text" name="name_last" value="" placeholder="{{ entry_lastname }}" class="form-control"/>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">{{ entry_suffix }}</label>
               <div class="col-sm-10">
-                <input type="text" name="name_suffix" value="" placeholder="{{ entry_suffix }}" class="form-control" />
+                <input type="text" name="name_suffix" value="" placeholder="{{ entry_suffix }}" class="form-control"/>
               </div>
             </div>
           </form>
@@ -157,108 +159,99 @@
         <div id="search-box" style="display:none;">
           <div id="searching"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i> {{ text_searching }}</div>
           <div style="display:none;" id="error" class="alert alert-danger"></div>
-          <table id="search_results" style="display:none;" class="table table-striped table-bordered" >
+          <table id="search_results" style="display:none;" class="table table-striped table-bordered">
           </table>
         </div>
       </div>
     </div>
   </div>
   <script type="text/javascript"><!--
-$('#button-search').on('click', function() {
-  var html = '';
+  $('#button-search').on('click', function() {
+	  var html = '';
 
-	$.ajax({
-		url: 'index.php?route=extension/payment/pp_express/doSearch&user_token={{ user_token }}',
-		type: 'POST',
-		dataType: 'json',
-		data: $('#form').serialize(),
-		beforeSend: function () {
-			$('#search-input').hide();
-			$('#search-box').show();
-			$('#button-search').hide();
-			$('#button-edit').show();
-		},
-		success: function (data) {
-			if (data.error == true) {
-				$('#searching').hide();
-				$('#error').html('<i class="fa fa-exclamation-circle"></i> ' + data.error_msg).fadeIn();
-			} else {
-				if (data.result != '') {
-					html += '<thead><tr>';
-					html += '<td class="left">{{ column_date }}</td>';
-					html += '<td class="left">{{ column_type }}</td>';
-					html += '<td class="left">{{ column_email }}</td>';
-					html += '<td class="left">{{ column_name }}</td>';
-					html += '<td class="left">{{ column_transid }}</td>';
-					html += '<td class="left">{{ column_status }}</td>';
-					html += '<td class="left">{{ column_currency }}</td>';
-					html += '<td class="right">{{ column_amount }}</td>';
-					html += '<td class="right">{{ column_fee }}</td>';
-					html += '<td class="right">{{ column_netamt }}</td>';
-					html += '<td class="center">{{ column_action }}</td>';
-					html += '</tr></thead>';
-				
-          $.each(data.result, function (k, v) {
-            if ("L_LONGMESSAGE" in v) {
-              $('#error').text(v.L_LONGMESSAGE).fadeIn();
-            } else {
-              if (!("L_EMAIL" in v)) {
-                v.L_EMAIL = '';
-              }
+	  $.ajax({
+		  url: 'index.php?route=extension/payment/pp_express/doSearch&user_token={{ user_token }}',
+		  type: 'POST',
+		  dataType: 'json',
+		  data: $('#form').serialize(),
+		  beforeSend: function() {
+			  $('#search-input').hide();
+			  $('#search-box').show();
+			  $('#button-search').hide();
+			  $('#button-edit').show();
+		  },
+		  success: function(data) {
+			  if (data.error == true) {
+				  $('#searching').hide();
+				  $('#error').html('<i class="fa fa-exclamation-circle"></i> ' + data.error_msg).fadeIn();
+			  } else {
+				  if (data.result != '') {
+					  html += '<thead>';
+					  html += '  <tr>';
+					  html += '    <td class="left">{{ column_date }}</td>';
+					  html += '    <td class="left">{{ column_type }}</td>';
+					  html += '    <td class="left">{{ column_email }}</td>';
+					  html += '    <td class="left">{{ column_name }}</td>';
+					  html += '    <td class="left">{{ column_transid }}</td>';
+					  html += '    <td class="left">{{ column_status }}</td>';
+					  html += '    <td class="left">{{ column_currency }}</td>';
+					  html += '    <td class="right">{{ column_amount }}</td>';
+					  html += '    <td class="right">{{ column_fee }}</td>';
+					  html += '    <td class="right">{{ column_netamt }}</td>';
+					  html += '    <td class="center">{{ column_action }}</td>';
+					  html += '  </tr>';
+					  html += '</thead>';
 
-              html += '<tr>';
-              html += '<td class="left">' + v.L_TIMESTAMP + '</td>';
-              html += '<td class="left">' + v.L_TYPE + '</td>';
-              html += '<td class="left">' + v.L_EMAIL + '</td>';
-              html += '<td class="left">' + v.L_NAME + '</td>';
-              html += '<td class="left">' + v.L_TRANSACTIONID + '</td>';
-              html += '<td class="left">' + v.L_STATUS + '</td>';
-              html += '<td class="left">' + v.L_CURRENCYCODE + '</td>';
-              html += '<td class="right">' + v.L_AMT + '</td>';
-              html += '<td class="right">' + v.L_FEEAMT + '</td>';
-              html += '<td class="right">' + v.L_NETAMT + '</td>';
-              html += '<td class="center">';
-              html += '<a href="{{ view_link }}&transaction_id=' + v.L_TRANSACTIONID + '">{{ text_view }}</a>';
-              html += '</td>';
-              html += '</tr>';
-            }
-          });
-	
-          $('#searching').hide();
-          $('#search_results').append(html).fadeIn();
-	      } else {
-	        $('#searching').hide();
-	        $('#error').html('<i class="fa fa-exclamation-circle"></i> {{ text_no_results }}').fadeIn();
-	      }
-	    }
-	  }
-	});
-});
+					  $.each(data.result, function(k, v) {
+						  if ("L_LONGMESSAGE" in v) {
+							  $('#error').text(v.L_LONGMESSAGE).fadeIn();
+						  } else {
+							  if (!("L_EMAIL" in v)) {
+								  v.L_EMAIL = '';
+							  }
 
-$('#button-edit').on('click', function() {
-  $('#search-box').hide();
-  $('#search-input').show();
-  $('#button-edit').hide();
-  $('#button-search').show();
-  $('#searching').show();
-  $('#search_results').empty().hide();
-  $('#error').empty().hide();
-});
+							  html += '<tr>';
+							  html += '<td class="left">' + v.L_TIMESTAMP + '</td>';
+							  html += '<td class="left">' + v.L_TYPE + '</td>';
+							  html += '<td class="left">' + v.L_EMAIL + '</td>';
+							  html += '<td class="left">' + v.L_NAME + '</td>';
+							  html += '<td class="left">' + v.L_TRANSACTIONID + '</td>';
+							  html += '<td class="left">' + v.L_STATUS + '</td>';
+							  html += '<td class="left">' + v.L_CURRENCYCODE + '</td>';
+							  html += '<td class="right">' + v.L_AMT + '</td>';
+							  html += '<td class="right">' + v.L_FEEAMT + '</td>';
+							  html += '<td class="right">' + v.L_NETAMT + '</td>';
+							  html += '<td class="center">';
+							  html += '<a href="{{ view_link }}&transaction_id=' + v.L_TRANSACTIONID + '">{{ text_view }}</a>';
+							  html += '</td>';
+							  html += '</tr>';
+						  }
+					  });
 
-$('.date').datetimepicker({
-	locale: '{{ datepicker }}',
-	pickTime: false
-});
+					  $('#searching').hide();
+					  $('#search_results').append(html).fadeIn();
+				  } else {
+					  $('#searching').hide();
+					  $('#error').html('<i class="fa fa-exclamation-circle"></i> {{ text_no_results }}').fadeIn();
+				  }
+			  }
+		  }
+	  });
+  });
 
-$('.time').datetimepicker({
-	locale: '{{ datepicker }}',
-	pickDate: false
-});
+  $('#button-edit').on('click', function() {
+	  $('#search-box').hide();
+	  $('#search-input').show();
+	  $('#button-edit').hide();
+	  $('#button-search').show();
+	  $('#searching').show();
+	  $('#search_results').empty().hide();
+	  $('#error').empty().hide();
+  });
 
-$('.datetime').datetimepicker({
-	locale: '{{ datepicker }}',
-	pickDate: true,
-	pickTime: true
-});
-//--></script></div>
+  $('.date').datetimepicker();
+  $('.time').datetimepicker();
+  $('.datetime').datetimepicker();
+  //--></script>
+</div>
 {{ footer }}

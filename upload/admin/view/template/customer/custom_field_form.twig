@@ -250,21 +250,9 @@ $('select[name=\'type\']').on('change', function() {
 		$('#display-value > div').html('<input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" id="input-value" class="form-control" />');
 	}
 
-	$('.date').datetimepicker({
-		locale: '{{ datepicker }}',
-		pickTime: false
-	});
-
-	$('.time').datetimepicker({
-		locale: '{{ datepicker }}',
-		pickDate: false
-	});
-
-	$('.datetime').datetimepicker({
-		locale: '{{ datepicker }}',
-		pickDate: true,
-		pickTime: true
-	});
+	$('.date').datetimepicker();
+	$('.time').datetimepicker();
+	$('.datetime').datetimepicker();
 });
 
 $('select[name=\'type\']').trigger('change');

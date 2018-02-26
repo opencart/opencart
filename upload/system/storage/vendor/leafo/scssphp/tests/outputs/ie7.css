@@ -1,8 +1,0 @@
-#foo:before {
-  content: counter(item,".") ": "; }
-
-#bar:before {
-  content: counter(item,"."); }
-
-#fu:before {
-  content: counter(item); }

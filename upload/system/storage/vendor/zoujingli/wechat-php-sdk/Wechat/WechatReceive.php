@@ -1,9 +1,20 @@
 <?php
 
+// +----------------------------------------------------------------------
+// | wechat-php-sdk
+// +----------------------------------------------------------------------
+// | 版权所有 2014~2017 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// +----------------------------------------------------------------------
+// | 官方文档: https://www.kancloud.cn/zoujingli/wechat-php-sdk
+// +----------------------------------------------------------------------
+// | 开源协议 ( https://mit-license.org )
+// +----------------------------------------------------------------------
+// | github开源项目：https://github.com/zoujingli/wechat-php-sdk
+// +----------------------------------------------------------------------
+
 namespace Wechat;
 
 use Prpcrypt;
-use Wechat\Lib\Common;
 use Wechat\Lib\Tools;
 
 /**
@@ -12,32 +23,21 @@ use Wechat\Lib\Tools;
  * @author Anyon <zoujingli@qq.com>
  * @date 2016/06/28 11:29
  */
-class WechatReceive extends Common
+class WechatReceive extends WechatMessage
 {
-
-    /** 消息推送地址 */
-    const CUSTOM_SEND_URL = '/message/custom/send?';
-    const MASS_SEND_URL = '/message/mass/send?';
-    const TEMPLATE_SET_INDUSTRY_URL = '/message/template/api_set_industry?';
-    const TEMPLATE_ADD_TPL_URL = '/message/template/api_add_template?';
-    const TEMPLATE_SEND_URL = '/message/template/send?';
-    const MASS_SEND_GROUP_URL = '/message/mass/sendall?';
-    const MASS_DELETE_URL = '/message/mass/delete?';
-    const MASS_PREVIEW_URL = '/message/mass/preview?';
-    const MASS_QUERY_URL = '/message/mass/get?';
 
     /** 消息回复类型 */
     const MSGTYPE_TEXT = 'text';
-    const MSGTYPE_IMAGE = 'image';
-    const MSGTYPE_LOCATION = 'location';
     const MSGTYPE_LINK = 'link';
+    const MSGTYPE_NEWS = 'news';
+    const MSGTYPE_IMAGE = 'image';
+    const MSGTYPE_VOICE = 'voice';
     const MSGTYPE_EVENT = 'event';
     const MSGTYPE_MUSIC = 'music';
-    const MSGTYPE_NEWS = 'news';
-    const MSGTYPE_VOICE = 'voice';
     const MSGTYPE_VIDEO = 'video';
+    const MSGTYPE_LOCATION = 'location';
 
-    /** 文件过滤 */
+    /** 文本过滤 */
     protected $_text_filter = true;
 
     /** 消息对象 */
@@ -157,15 +157,12 @@ class WechatReceive extends Common
         if (isset($this->_receive['UserCardCode']) && !empty($this->_receive['UserCardCode'])) {
             $array['UserCardCode'] = $this->_receive['UserCardCode'];
         }
-        if (isset($array) && count($array) > 0) {
-            return $array;
-        }
-        return false;
+        return (isset($array) && count($array) > 0) ? $array : false;
     }
 
     /**
      * 获取卡券事件推送 - 删除卡券
-     * 当Event为 user_del_card(用户删除卡券)
+     * 当Event为 user_del_card (用户删除卡券)
      * @return bool|array
      */
     public function getRevCardDel()
@@ -176,10 +173,7 @@ class WechatReceive extends Common
         if (isset($this->_receive['UserCardCode']) && !empty($this->_receive['UserCardCode'])) {
             $array['UserCardCode'] = $this->_receive['UserCardCode'];
         }
-        if (isset($array) && count($array) > 0) {
-            return $array;
-        }
-        return false;
+        return (isset($array) && count($array) > 0) ? $array : false;
     }
 
     /**
@@ -190,7 +184,7 @@ class WechatReceive extends Common
     {
         if (isset($this->_receive['Content'])) {
             return $this->_receive['Content'];
-        } else if (isset($this->_receive['Recognition'])) { //获取语音识别文字内容，需申请开通
+        } else if (isset($this->_receive['Recognition'])) {
             return $this->_receive['Recognition'];
         }
         return false;
@@ -205,7 +199,7 @@ class WechatReceive extends Common
         if (isset($this->_receive['PicUrl'])) {
             return array(
                 'mediaid' => $this->_receive['MediaId'],
-                'picurl'  => (string)$this->_receive['PicUrl'], //防止picurl为空导致解析出错
+                'picurl'  => (string)$this->_receive['PicUrl'],
             );
         }
         return false;
@@ -272,18 +266,15 @@ class WechatReceive extends Common
         if (isset($this->_receive['EventKey'])) {
             $array['key'] = $this->_receive['EventKey'];
         }
-        if (isset($array) && count($array) > 0) {
-            return $array;
-        }
-        return false;
+        return (isset($array) && count($array) > 0) ? $array : false;
     }
 
     /**
      * 获取自定义菜单的扫码推事件信息
      *
      * 事件类型为以下两种时则调用此方法有效
-     * Event     事件类型，scancode_push
-     * Event     事件类型，scancode_waitmsg
+     * Event    事件类型, scancode_push
+     * Event    事件类型, scancode_waitmsg
      * @return bool|array
      */
     public function getRevScanInfo()
@@ -296,10 +287,7 @@ class WechatReceive extends Common
                 $array = $this->_receive['ScanCodeInfo'];
             }
         }
-        if (isset($array) && count($array) > 0) {
-            return $array;
-        }
-        return false;
+        return (isset($array) && count($array) > 0) ? $array : false;
     }
 
     /**
@@ -340,10 +328,7 @@ class WechatReceive extends Common
                 $array = $this->_receive['SendPicsInfo'];
             }
         }
-        if (isset($array) && count($array) > 0) {
-            return $array;
-        }
-        return false;
+        return (isset($array) && count($array) > 0) ? $array : false;
     }
 
     /**
@@ -378,10 +363,7 @@ class WechatReceive extends Common
                 $array = $this->_receive['SendLocationInfo'];
             }
         }
-        if (isset($array) && count($array) > 0) {
-            return $array;
-        }
-        return false;
+        return (isset($array) && count($array) > 0) ? $array : false;
     }
 
     /**
@@ -535,10 +517,7 @@ class WechatReceive extends Common
         if (isset($this->_receive['ToKfAccount'])) { //转接到客服
             $array['ToKfAccount'] = $this->_receive['ToKfAccount'];
         }
-        if (isset($array) && count($array) > 0) {
-            return $array;
-        }
-        return false;
+        return (isset($array) && count($array) > 0) ? $array : false;
     }
 
     /**
@@ -551,113 +530,12 @@ class WechatReceive extends Common
         if (!$this->access_token && !$this->getAccessToken()) {
             return false;
         }
-        $result = Tools::httpPost(self::API_URL_PREFIX . self::CUSTOM_SEND_URL . "access_token={$this->access_token}", Tools::json_encode($data));
+        $result = Tools::httpPost(self::API_URL_PREFIX . "/message/custom/send?access_token={$this->access_token}", Tools::json_encode($data));
         if ($result) {
             $json = json_decode($result, true);
-            if (!$json || !empty($json['errcode'])) {
-                $this->errCode = $json['errcode'];
-                $this->errMsg = $json['errmsg'];
-                return $this->checkRetry(__FUNCTION__, func_get_args());
-            }
-            return $json;
-        }
-        return false;
-    }
-
-    /**
-     * 模板消息 设置所属行业
-     * @param string $id1 公众号模板消息所属行业编号，参看官方开发文档 行业代码
-     * @param string $id2 同$id1。但如果只有一个行业，此参数可省略
-     * @return bool|mixed
-     */
-    public function setTMIndustry($id1, $id2 = '')
-    {
-        if ($id1) {
-            $data['industry_id1'] = $id1;
-        }
-        if ($id2) {
-            $data['industry_id2'] = $id2;
-        }
-        if (!$this->access_token && !$this->getAccessToken()) {
-            return false;
-        }
-        $result = Tools::httpPost(self::API_URL_PREFIX . self::TEMPLATE_SET_INDUSTRY_URL . "access_token={$this->access_token}", Tools::json_encode($data));
-        if ($result) {
-            $json = json_decode($result, true);
-            if (!$json || !empty($json['errcode'])) {
-                $this->errCode = $json['errcode'];
-                $this->errMsg = $json['errmsg'];
-                return $this->checkRetry(__FUNCTION__, func_get_args());
-            }
-            return $json;
-        }
-        return false;
-    }
-
-    /**
-     * 模板消息 添加消息模板
-     * 成功返回消息模板的调用id
-     * @param string $tpl_id 模板库中模板的编号，有“TM**”和“OPENTMTM**”等形式
-     * @return bool|string
-     */
-    public function addTemplateMessage($tpl_id)
-    {
-        $data = array('template_id_short' => $tpl_id);
-        if (!$this->access_token && !$this->getAccessToken())
-            return false;
-        $result = Tools::httpPost(self::API_URL_PREFIX . self::TEMPLATE_ADD_TPL_URL . "access_token={$this->access_token}", Tools::json_encode($data));
-        if ($result) {
-            $json = json_decode($result, true);
-            if (!$json || !empty($json['errcode'])) {
-                $this->errCode = $json['errcode'];
-                $this->errMsg = $json['errmsg'];
-                return $this->checkRetry(__FUNCTION__, func_get_args());
-            }
-            return $json['template_id'];
-        }
-        return false;
-    }
-
-    /**
-     * 发送模板消息
-     * @param array $data 消息结构
-     * {
-     *      "touser":"OPENID",
-     *       "template_id":"ngqIpbwh8bUfcSsECmogfXcV14J0tQlEpBO27izEYtY",
-     *       "url":"http://weixin.qq.com/download",
-     *       "topcolor":"#FF0000",
-     *       "data":{
-     *           "参数名1": {
-     *           "value":"参数",
-     *           "color":"#173177"     //参数颜色
-     *       },
-     *       "Date":{
-     *           "value":"06月07日 19时24分",
-     *           "color":"#173177"
-     *       },
-     *       "CardNumber":{
-     *           "value":"0426",
-     *           "color":"#173177"
-     *      },
-     *      "Type":{
-     *          "value":"消费",
-     *          "color":"#173177"
-     *       }
-     *   }
-     * }
-     * @return bool|array
-     */
-    public function sendTemplateMessage($data)
-    {
-        if (!$this->access_token && !$this->getAccessToken()) {
-            return false;
-        }
-        $result = Tools::httpPost(self::API_URL_PREFIX . self::TEMPLATE_SEND_URL . "access_token={$this->access_token}", Tools::json_encode($data));
-        if ($result) {
-            $json = json_decode($result, true);
-            if (!$json || !empty($json['errcode'])) {
-                $this->errCode = $json['errcode'];
-                $this->errMsg = $json['errmsg'];
+            if (empty($json) || !empty($json['errcode'])) {
+                $this->errCode = isset($json['errcode']) ? $json['errcode'] : '505';
+                $this->errMsg = isset($json['errmsg']) ? $json['errmsg'] : '无法解析接口返回内容！';
                 return $this->checkRetry(__FUNCTION__, func_get_args());
             }
             return $json;
@@ -683,159 +561,6 @@ class WechatReceive extends Common
         }
         $this->Message($msg);
         return $this;
-    }
-
-    /**
-     * 高级群发消息, 根据OpenID列表群发图文消息(订阅号不可用)
-     *       注意：视频需要在调用uploadMedia()方法后，再使用 uploadMpVideo() 方法生成，
-     *           然后获得的 mediaid 才能用于群发，且消息类型为 mpvideo 类型。
-     * @param array $data 消息结构
-     * {
-     *     "touser"=>array(
-     *         "OPENID1",
-     *         "OPENID2"
-     *     ),
-     *      "msgtype"=>"mpvideo",
-     *      // 在下面5种类型中选择对应的参数内容
-     *      // mpnews | voice | image | mpvideo => array( "media_id"=>"MediaId")
-     *      // text => array ( "content" => "hello")
-     * }
-     * @return bool|array
-     */
-    public function sendMassMessage($data)
-    {
-        if (!$this->access_token && !$this->getAccessToken()) {
-            return false;
-        }
-        $result = Tools::httpPost(self::API_URL_PREFIX . self::MASS_SEND_URL . "access_token={$this->access_token}", Tools::json_encode($data));
-        if ($result) {
-            $json = json_decode($result, true);
-            if (!$json || !empty($json['errcode'])) {
-                $this->errCode = $json['errcode'];
-                $this->errMsg = $json['errmsg'];
-                return $this->checkRetry(__FUNCTION__, func_get_args());
-            }
-            return $json;
-        }
-        return false;
-    }
-
-    /**
-     * 高级群发消息, 根据群组id群发图文消息(认证后的订阅号可用)
-     *       注意：视频需要在调用uploadMedia()方法后，再使用 uploadMpVideo() 方法生成，
-     *           然后获得的 mediaid 才能用于群发，且消息类型为 mpvideo 类型。
-     * @param array $data 消息结构
-     * {
-     *     "filter"=>array(
-     *         "is_to_all"=>False,     //是否群发给所有用户.True不用分组id，False需填写分组id
-     *         "group_id"=>"2"     //群发的分组id
-     *     ),
-     *      "msgtype"=>"mpvideo",
-     *      // 在下面5种类型中选择对应的参数内容
-     *      // mpnews | voice | image | mpvideo => array( "media_id"=>"MediaId")
-     *      // text => array ( "content" => "hello")
-     * }
-     * @return bool|array
-     */
-    public function sendGroupMassMessage($data)
-    {
-        if (!$this->access_token && !$this->getAccessToken()) {
-            return false;
-        }
-        $result = Tools::httpPost(self::API_URL_PREFIX . self::MASS_SEND_GROUP_URL . "access_token={$this->access_token}", Tools::json_encode($data));
-        if ($result) {
-            $json = json_decode($result, true);
-            if (!$json || !empty($json['errcode'])) {
-                $this->errCode = $json['errcode'];
-                $this->errMsg = $json['errmsg'];
-                return $this->checkRetry(__FUNCTION__, func_get_args());
-            }
-            return $json;
-        }
-        return false;
-    }
-
-    /**
-     *  高级群发消息, 删除群发图文消息(认证后的订阅号可用)
-     * @param string $msg_id 消息ID
-     * @return bool
-     */
-    public function deleteMassMessage($msg_id)
-    {
-        if (!$this->access_token && !$this->getAccessToken()) {
-            return false;
-        }
-        $result = Tools::httpPost(self::API_URL_PREFIX . self::MASS_DELETE_URL . "access_token={$this->access_token}", Tools::json_encode(array('msg_id' => $msg_id)));
-        if ($result) {
-            $json = json_decode($result, true);
-            if (!$json || !empty($json['errcode'])) {
-                $this->errCode = $json['errcode'];
-                $this->errMsg = $json['errmsg'];
-                return $this->checkRetry(__FUNCTION__, func_get_args());
-            }
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * 高级群发消息, 预览群发消息(认证后的订阅号可用)
-     *     注意：视频需要在调用uploadMedia()方法后，再使用 uploadMpVideo() 方法生成，
-     *           然后获得的 mediaid 才能用于群发，且消息类型为 mpvideo 类型。
-     * @param type $data
-     * @消息结构
-     * {
-     *     "touser"=>"OPENID",
-     *      "msgtype"=>"mpvideo",
-     *      // 在下面5种类型中选择对应的参数内容
-     *      // mpnews | voice | image | mpvideo => array( "media_id"=>"MediaId")
-     *      // text => array ( "content" => "hello")
-     * }
-     * @return bool|array
-     */
-    public function previewMassMessage($data)
-    {
-        if (!$this->access_token && !$this->getAccessToken()) {
-            return false;
-        }
-        $result = Tools::httpPost(self::API_URL_PREFIX . self::MASS_PREVIEW_URL . "access_token={$this->access_token}", Tools::json_encode($data));
-        if ($result) {
-            $json = json_decode($result, true);
-            if (!$json || !empty($json['errcode'])) {
-                $this->errCode = $json['errcode'];
-                $this->errMsg = $json['errmsg'];
-                return $this->checkRetry(__FUNCTION__, func_get_args());
-            }
-            return $json;
-        }
-        return false;
-    }
-
-    /**
-     * 高级群发消息, 查询群发消息发送状态(认证后的订阅号可用)
-     * @param string $msg_id 消息ID
-     * @return bool|array
-     * {
-     *     "msg_id":201053012,     //群发消息后返回的消息id
-     *     "msg_status":"SEND_SUCCESS" //消息发送后的状态，SENDING表示正在发送 SEND_SUCCESS表示发送成功
-     * }
-     */
-    public function queryMassMessage($msg_id)
-    {
-        if (!$this->access_token && !$this->getAccessToken()) {
-            return false;
-        }
-        $result = Tools::httpPost(self::API_URL_PREFIX . self::MASS_QUERY_URL . "access_token={$this->access_token}", Tools::json_encode(array('msg_id' => $msg_id)));
-        if ($result) {
-            $json = json_decode($result, true);
-            if (!$json || !empty($json['errcode'])) {
-                $this->errCode = $json['errcode'];
-                $this->errMsg = $json['errmsg'];
-                return $this->checkRetry(__FUNCTION__, func_get_args());
-            }
-            return $json;
-        }
-        return false;
     }
 
     /**
@@ -1008,13 +733,13 @@ class WechatReceive extends Common
             $array = $pc->encrypt($xmldata, empty($this->config['component_appid']) ? $this->appid : $this->config['component_appid']);
             $ret = $array[0];
             if ($ret != 0) {
-                Tools::log('encrypt err!');
+                Tools::log('Encrypt Error!', "ERR - {$this->appid}");
                 return false;
             }
             $timestamp = time();
             $nonce = rand(77, 999) * rand(605, 888) * rand(11, 99);
             $encrypt = $array[1];
-            $tmpArr = array($this->token, $timestamp, $nonce, $encrypt); //比普通公众平台多了一个加密的密文
+            $tmpArr = array($this->token, $timestamp, $nonce, $encrypt);
             sort($tmpArr, SORT_STRING);
             $signature = sha1(implode($tmpArr));
             $format = "<xml><Encrypt><![CDATA[%s]]></Encrypt><MsgSignature><![CDATA[%s]]></MsgSignature><TimeStamp>%s</TimeStamp><Nonce><![CDATA[%s]]></Nonce></xml>";

@@ -1,5 +1,17 @@
 <?php
 
+// +----------------------------------------------------------------------
+// | wechat-php-sdk
+// +----------------------------------------------------------------------
+// | 版权所有 2014~2017 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// +----------------------------------------------------------------------
+// | 官方文档: https://www.kancloud.cn/zoujingli/wechat-php-sdk
+// +----------------------------------------------------------------------
+// | 开源协议 ( https://mit-license.org )
+// +----------------------------------------------------------------------
+// | github开源项目：https://github.com/zoujingli/wechat-php-sdk
+// +----------------------------------------------------------------------
+
 /**
  * PKCS7算法 加解密
  * @category WechatSDK
@@ -66,7 +78,7 @@ class Prpcrypt
      * 对明文进行加密
      * @param string $text 需要加密的明文
      * @param string $appid 公众号APPID
-     * @return string 加密后的密文
+     * @return array
      */
     public function encrypt($text, $appid)
     {
@@ -88,7 +100,7 @@ class Prpcrypt
      * 对密文进行解密
      * @param string $encrypted 需要解密的密文
      * @param string $appid 公众号APPID
-     * @return string 解密得到的明文
+     * @return array
      */
     public function decrypt($encrypted, $appid)
     {
@@ -102,20 +114,18 @@ class Prpcrypt
             $pkc_encoder = new PKCS7Encoder;
             $result = $pkc_encoder->decode($decrypted);
             if (strlen($result) < 16) {
-                return "";
+                return array(ErrorCode::$DecryptAESError, null);
             }
             $content = substr($result, 16, strlen($result));
             $len_list = unpack("N", substr($content, 0, 4));
             $xml_len = $len_list[1];
             $xml_content = substr($content, 4, $xml_len);
             $from_appid = substr($content, $xml_len + 4);
-            if (!$appid) {
-                $appid = $from_appid;
-            }
+            return array(0, $xml_content, $from_appid);
         } catch (Exception $e) {
             return array(ErrorCode::$IllegalBuffer, null);
         }
-        return array(0, $xml_content, $from_appid);
+
     }
 
     /**

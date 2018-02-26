@@ -25,15 +25,11 @@ abstract class ConstraintValidator implements ConstraintValidatorInterface
     /**
      * Whether to format {@link \DateTime} objects as RFC-3339 dates
      * ("Y-m-d H:i:s").
-     *
-     * @var int
      */
     const PRETTY_DATE = 1;
 
     /**
      * Whether to cast objects with a "__toString()" method to strings.
-     *
-     * @var int
      */
     const OBJECT_TO_STRING = 2;
 
@@ -63,7 +59,7 @@ abstract class ConstraintValidator implements ConstraintValidatorInterface
      */
     protected function buildViolation($message, array $parameters = array())
     {
-        @trigger_error('The '.__METHOD__.' is deprecated since version 2.5 and will be removed in 3.0.', E_USER_DEPRECATED);
+        @trigger_error('The '.__METHOD__.' is deprecated since Symfony 2.5 and will be removed in 3.0.', E_USER_DEPRECATED);
 
         if ($this->context instanceof ExecutionContextInterface2Dot5) {
             return $this->context->buildViolation($message, $parameters);
@@ -86,7 +82,7 @@ abstract class ConstraintValidator implements ConstraintValidatorInterface
      */
     protected function buildViolationInContext(ExecutionContextInterface $context, $message, array $parameters = array())
     {
-        @trigger_error('The '.__METHOD__.' is deprecated since version 2.5 and will be removed in 3.0.', E_USER_DEPRECATED);
+        @trigger_error('The '.__METHOD__.' is deprecated since Symfony 2.5 and will be removed in 3.0.', E_USER_DEPRECATED);
 
         if ($context instanceof ExecutionContextInterface2Dot5) {
             return $context->buildViolation($message, $parameters);

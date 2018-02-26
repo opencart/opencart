@@ -1,7 +1,0 @@
-p a.notice span, p a.error span, #context a.notice span, #context a.error span {
-  color: blue;
-  font-weight: bold;
-  font-size: 2em; }
-
-p {
-  padding: 2em; }

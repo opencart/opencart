@@ -39,24 +39,9 @@ use Symfony\Component\Validator\Validator\RecursiveValidator;
  */
 class ValidatorBuilder implements ValidatorBuilderInterface
 {
-    /**
-     * @var array
-     */
     private $initializers = array();
-
-    /**
-     * @var array
-     */
     private $xmlMappings = array();
-
-    /**
-     * @var array
-     */
     private $yamlMappings = array();
-
-    /**
-     * @var array
-     */
     private $methodMappings = array();
 
     /**
@@ -300,7 +285,7 @@ class ValidatorBuilder implements ValidatorBuilderInterface
      */
     public function setPropertyAccessor(PropertyAccessorInterface $propertyAccessor)
     {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 2.5 and will be removed in 3.0. The validator will function without a property accessor.', E_USER_DEPRECATED);
+        @trigger_error('The '.__METHOD__.' method is deprecated since Symfony 2.5 and will be removed in 3.0. The validator will function without a property accessor.', E_USER_DEPRECATED);
 
         if (null !== $this->validatorFactory) {
             throw new ValidatorException('You cannot set a property accessor after setting a custom validator factory. Configure your validator factory instead.');

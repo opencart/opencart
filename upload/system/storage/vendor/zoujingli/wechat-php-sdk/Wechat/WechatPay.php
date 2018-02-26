@@ -1,5 +1,17 @@
 <?php
 
+// +----------------------------------------------------------------------
+// | wechat-php-sdk
+// +----------------------------------------------------------------------
+// | 版权所有 2014~2017 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// +----------------------------------------------------------------------
+// | 官方文档: https://www.kancloud.cn/zoujingli/wechat-php-sdk
+// +----------------------------------------------------------------------
+// | 开源协议 ( https://mit-license.org )
+// +----------------------------------------------------------------------
+// | github开源项目：https://github.com/zoujingli/wechat-php-sdk
+// +----------------------------------------------------------------------
+
 namespace Wechat;
 
 use Wechat\Lib\Tools;
@@ -17,6 +29,9 @@ class WechatPay
 
     /** 公众号appid */
     public $appid;
+
+    /** 公众号配置 */
+    public $config;
 
     /** 商户身份ID */
     public $mch_id;
@@ -38,12 +53,48 @@ class WechatPay
      */
     public function __construct($options = array())
     {
-        $config = Loader::config($options);
-        $this->appid = isset($config['appid']) ? $config['appid'] : '';
-        $this->mch_id = isset($config['mch_id']) ? $config['mch_id'] : '';
-        $this->partnerKey = isset($config['partnerkey']) ? $config['partnerkey'] : '';
-        $this->ssl_cer = isset($config['ssl_cer']) ? $config['ssl_cer'] : '';
-        $this->ssl_key = isset($config['ssl_key']) ? $config['ssl_key'] : '';
+        $this->config = Loader::config($options);
+        $this->appid = isset($this->config['appid']) ? $this->config['appid'] : '';
+        $this->mch_id = isset($this->config['mch_id']) ? $this->config['mch_id'] : '';
+        $this->partnerKey = isset($this->config['partnerkey']) ? $this->config['partnerkey'] : '';
+        $this->ssl_cer = isset($this->config['ssl_cer']) ? $this->config['ssl_cer'] : '';
+        $this->ssl_key = isset($this->config['ssl_key']) ? $this->config['ssl_key'] : '';
+    }
+
+    /**
+     * 获取当前错误内容
+     * @return string
+     */
+    public function getError()
+    {
+        return $this->errMsg;
+    }
+
+    /**
+     * 当前当前错误代码
+     * @return int
+     */
+    public function getErrorCode()
+    {
+        return $this->errCode;
+    }
+
+    /**
+     * 获取当前操作公众号APPID
+     * @return string
+     */
+    public function getAppid()
+    {
+        return $this->appid;
+    }
+
+    /**
+     * 获取SDK配置参数
+     * @return array
+     */
+    public function getConfig()
+    {
+        return $this->config;
     }
 
     /**
@@ -159,13 +210,13 @@ class WechatPay
     {
         $notifyInfo = (array)simplexml_load_string(file_get_contents("php://input"), 'SimpleXMLElement', LIBXML_NOCDATA);
         if (empty($notifyInfo)) {
-            Tools::log('Payment notification forbidden access.', 'ERR');
+            Tools::log('Payment notification forbidden access.', "ERR - {$this->appid}");
             $this->errCode = '404';
             $this->errMsg = 'Payment notification forbidden access.';
             return false;
         }
         if (empty($notifyInfo['sign'])) {
-            Tools::log('Payment notification signature is missing.' . var_export($notifyInfo, true), 'ERR');
+            Tools::log('Payment notification signature is missing.' . var_export($notifyInfo, true), "ERR - {$this->appid}");
             $this->errCode = '403';
             $this->errMsg = 'Payment notification signature is missing.';
             return false;
@@ -173,12 +224,12 @@ class WechatPay
         $data = $notifyInfo;
         unset($data['sign']);
         if ($notifyInfo['sign'] !== Tools::getPaySign($data, $this->partnerKey)) {
-            Tools::log('Payment notification signature verification failed.' . var_export($notifyInfo, true), 'ERR');
+            Tools::log('Payment notification signature verification failed.' . var_export($notifyInfo, true), "ERR - {$this->appid}");
             $this->errCode = '403';
             $this->errMsg = 'Payment signature verification failed.';
             return false;
         }
-        Tools::log('Payment notification signature verification success.' . var_export($notifyInfo, true), 'MSG');
+        Tools::log('Payment notification signature verification success.' . var_export($notifyInfo, true), "MSG - {$this->appid}");
         $this->errCode = '0';
         $this->errMsg = '';
         return $notifyInfo;
@@ -230,7 +281,7 @@ class WechatPay
         if (false === $this->_parseResult($result)) {
             return false;
         }
-        return in_array($trade_type, array('JSAPI', 'APP')) ? $result['prepay_id'] : $result['code_url'];
+        return in_array($trade_type, array('JSAPI', 'APP')) ? $result['prepay_id'] : ($trade_type === 'MWEB' ? $result['mweb_url'] : $result['code_url']);
     }
 
     /**
@@ -334,27 +385,31 @@ class WechatPay
     /**
      * 订单退款接口
      * @param string $out_trade_no 商户订单号
-     * @param string $transaction_id 微信订单号
-     * @param string $out_refund_no 商户退款订单号
+     * @param string $transaction_id 微信订单号，与 out_refund_no 二选一（不选时传0或false）
+     * @param string $out_refund_no 商户退款订单号，与 transaction_id 二选一（不选时传0或false）
      * @param int $total_fee 商户订单总金额
-     * @param int $refund_fee 退款金额
+     * @param int $refund_fee 退款金额，不可大于订单总金额
      * @param int|null $op_user_id 操作员ID，默认商户ID
      * @param string $refund_account 退款资金来源
-     *      仅针对老资金流商户使用
-     *          REFUND_SOURCE_UNSETTLED_FUNDS --- 未结算资金退款（默认使用未结算资金退款）
-     *          REFUND_SOURCE_RECHARGE_FUNDS --- 可用余额退款
+     *        仅针对老资金流商户使用
+     *        REFUND_SOURCE_UNSETTLED_FUNDS --- 未结算资金退款（默认使用未结算资金退款）
+     *        REFUND_SOURCE_RECHARGE_FUNDS  --- 可用余额退款
+     * @param string $refund_desc 退款原因
+     * @param string $refund_fee_type 退款货币种类
      * @return bool
      */
-    public function refund($out_trade_no, $transaction_id, $out_refund_no, $total_fee, $refund_fee, $op_user_id = null, $refund_account = '')
+    public function refund($out_trade_no, $transaction_id, $out_refund_no, $total_fee, $refund_fee, $op_user_id = null, $refund_account = '', $refund_desc = '', $refund_fee_type = 'CNY')
     {
         $data = array();
         $data['out_trade_no'] = $out_trade_no;
-        $data['transaction_id'] = $transaction_id;
-        $data['out_refund_no'] = $out_refund_no;
         $data['total_fee'] = $total_fee;
         $data['refund_fee'] = $refund_fee;
+        $data['refund_fee_type'] = $refund_fee_type;
         $data['op_user_id'] = empty($op_user_id) ? $this->mch_id : $op_user_id;
+        !empty($out_refund_no) && $data['out_refund_no'] = $out_refund_no;
+        !empty($transaction_id) && $data['transaction_id'] = $transaction_id;
         !empty($refund_account) && $data['refund_account'] = $refund_account;
+        !empty($refund_desc) && $data['refund_desc'] = $refund_desc;
         $result = $this->getArrayResult($data, self::MCH_BASE_URL . '/secapi/pay/refund', 'postXmlSSL');
         if (false === $this->_parseResult($result)) {
             return false;

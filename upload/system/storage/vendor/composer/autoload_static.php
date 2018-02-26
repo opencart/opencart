@@ -30,6 +30,10 @@ class ComposerStaticInit167789ffe806ec460a83d9e4acc6ff30
         array (
             'Psr\\Log\\' => 8,
         ),
+        'L' => 
+        array (
+            'Leafo\\ScssPhp\\' => 14,
+        ),
         'G' => 
         array (
             'GuzzleHttp\\Subscriber\\Oauth\\' => 28,
@@ -68,6 +72,10 @@ class ComposerStaticInit167789ffe806ec460a83d9e4acc6ff30
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
+        'Leafo\\ScssPhp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/leafo/scssphp/src',
         ),
         'GuzzleHttp\\Subscriber\\Oauth\\' => 
         array (
@@ -123,15 +131,6 @@ class ComposerStaticInit167789ffe806ec460a83d9e4acc6ff30
         ),
     );
 
-    public static $classMap = array (
-        'scss_formatter' => __DIR__ . '/..' . '/leafo/scssphp/scss.inc.php',
-        'scss_formatter_compressed' => __DIR__ . '/..' . '/leafo/scssphp/scss.inc.php',
-        'scss_formatter_nested' => __DIR__ . '/..' . '/leafo/scssphp/scss.inc.php',
-        'scss_parser' => __DIR__ . '/..' . '/leafo/scssphp/scss.inc.php',
-        'scss_server' => __DIR__ . '/..' . '/leafo/scssphp/scss.inc.php',
-        'scssc' => __DIR__ . '/..' . '/leafo/scssphp/scss.inc.php',
-    );
-
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
@@ -139,7 +138,6 @@ class ComposerStaticInit167789ffe806ec460a83d9e4acc6ff30
             $loader->prefixDirsPsr4 = ComposerStaticInit167789ffe806ec460a83d9e4acc6ff30::$prefixDirsPsr4;
             $loader->fallbackDirsPsr4 = ComposerStaticInit167789ffe806ec460a83d9e4acc6ff30::$fallbackDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInit167789ffe806ec460a83d9e4acc6ff30::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit167789ffe806ec460a83d9e4acc6ff30::$classMap;
 
         }, null, ClassLoader::class);
     }

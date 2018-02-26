@@ -45,7 +45,7 @@ $(document).ready(function() {
 		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 	});
 
-	$('.date, .datetime, .time').find('button').on('click', function() {
+	$('.date button, .time button, .datetime button').on('click', function() {
 		$(this).parent().parent().datetimepicker('toggle');
 	});
 
@@ -167,6 +167,7 @@ $(document).ready(function() {
 			tb = t.offset().top + t.height(),
 			mb = m.offset().top + m.outerHeight(true),
 			d = 20;
+
 		if (t[0].scrollWidth > t.innerWidth()) {
 			if (mb + d > tb) {
 				t.css('padding-bottom', ((mb + d) - tb));

@@ -67,7 +67,7 @@ $(document).ready(function() {
 		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 	});
 
-	$('.date, .datetime, .time').find('button').on('click', function() {
+	$(document).on('click', '.date button, .time button, .datetime button', function() {
 		$(this).parent().parent().datetimepicker('toggle');
 	});
 

@@ -188,6 +188,10 @@ class ModelSaleOrder extends Model {
 			$sql .= " AND o.total = '" . (float)$data['filter_total'] . "'";
 		}
 
+		if (isset($data['filter_email']) && !empty($data['filter_email'])) {
+			$sql .= " AND o.email LIKE '%" . $this->db->escape((string)$data['filter_email']) . "%'";
+		}
+
 		$sort_data = array(
 			'o.order_id',
 			'customer',
@@ -297,6 +301,10 @@ class ModelSaleOrder extends Model {
 			$sql .= " AND total = '" . (float)$data['filter_total'] . "'";
 		}
 
+		if (isset($data['filter_email']) && !empty($data['filter_email'])) {
+			$sql .= " AND o.email LIKE '%" . $this->db->escape((string)$data['filter_email']) . "%'";
+		}
+
 		$query = $this->db->query($sql);
 
 		return $query->row['total'];
@@ -401,6 +409,10 @@ class ModelSaleOrder extends Model {
 
 		if (!empty($data['filter_total'])) {
 			$sql .= " AND total = '" . (float)$data['filter_total'] . "'";
+		}
+
+		if (isset($data['filter_email']) && !empty($data['filter_email'])) {
+			$sql .= " AND email LIKE '%" . $this->db->escape((string)$data['filter_email']) . "%'";
 		}
 
 		$query = $this->db->query($sql);

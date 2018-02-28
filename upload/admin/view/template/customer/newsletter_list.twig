@@ -1,0 +1,215 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-customer').toggleClass('hidden-sm hidden-xs');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
+        <button type="button" id="button-upload" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-upload"></i></button>
+        <button type="submit" form="form-customer" formaction="{{ download }}" data-toggle="tooltip" title="Download CSV" class="btn btn-info"><i class="fa fa-download"></i></button>
+        <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-customer').submit() : false;"><i class="fa fa-trash-o"></i></button>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">{% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    {% if success %}
+      <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="row">
+      <div id="filter-customer" class="col-md-3 col-md-push-9 col-sm-12 hidden-sm hidden-xs">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
+          </div>
+          <div class="panel-body">
+            <div class="form-group">
+              <label class="control-label" for="input-email">{{ entry_email }}</label> <input type="text" name="filter_email" value="{{ filter_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="input-ip">{{ entry_country }}</label> <input type="text" name="filter_country" value="{{ filter_country }}" placeholder="{{ entry_country }}" id="input-country" class="form-control"/>
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="input-ip">{{ entry_ip }}</label> <input type="text" name="filter_ip" value="{{ filter_ip }}" placeholder="{{ entry_ip }}" id="input-ip" class="form-control"/>
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="input-date-added">{{ entry_date_added }}</label>
+              <div class="input-group date">
+                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-added" class="form-control"/>
+                <div class="input-group-btn">
+                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="form-group text-right">
+              <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9 col-md-pull-3 col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
+          </div>
+          <div class="panel-body">
+            <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-customer">
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');"/></td>
+                      <td class="text-left">{% if sort == 'email' %}<a href="{{ sort_email }}" class="{{ order|lower }}">{{ column_email }}</a>{% else %}<a href="{{ sort_email }}">{{ column_email }}</a>{% endif %}</td>
+                      <td class="text-left">{% if sort == 'country' %}<a href="{{ sort_country }}" class="{{ order|lower }}">{{ column_country }}</a>{% else %}<a href="{{ sort_country }}">{{ column_country }}</a>{% endif %}</td>
+                      <td class="text-left">{% if sort == 'ip' %}<a href="{{ sort_ip }}" class="{{ order|lower }}">{{ column_ip }}</a>{% else %}<a href="{{ sort_ip }}">{{ column_ip }}</a>{% endif %}</td>
+                      <td class="text-left">{% if sort == 'date_added' %}<a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>{% else %}<a href="{{ sort_date_added }}">{{ column_date_added }}</a>{% endif %}</td>
+                      <td class="text-right">{{ column_action }}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% if newsletters %}
+                      {% for newsletter in newsletters %}
+                        <tr>
+                          <td class="text-center">{% if newsletter.newsletter_id in selected %}
+                              <input type="checkbox" name="selected[]" value="{{ newsletter.newsletter_id }}" checked="checked"/>
+                            {% else %}
+                              <input type="checkbox" name="selected[]" value="{{ newsletter.newsletter_id }}"/>
+                            {% endif %} </td>
+                          <td class="text-left">{{ newsletter.email }}</td>
+                          <td class="text-left">{{ newsletter.country }}</td>
+                          <td class="text-left">{{ newsletter.ip }}</td>
+                          <td class="text-left">{{ newsletter.date_added }}</td>
+                          <td class="text-right"><a href="{{ newsletter.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                        </tr>
+                      {% endfor %}
+                    {% else %}
+                      <tr>
+                        <td class="text-center" colspan="8">{{ text_no_results }}</td>
+                      </tr>
+                    {% endif %}
+                  </tbody>
+                </table>
+              </div>
+            </form>
+            <div class="row">
+              <div class="col-sm-6 text-left">{{ pagination }}</div>
+              <div class="col-sm-6 text-right">{{ results }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#button-filter').on('click', function() {
+	url = 'index.php?route=customer/newsletter&user_token={{ user_token }}';
+
+	var filter_email = $('input[name=\'filter_email\']').val();
+
+	if (filter_email) {
+		url += '&filter_email=' + encodeURIComponent(filter_email);
+	}
+
+	var filter_country = $('input[name=\'filter_country\']').val();
+
+	if (filter_country) {
+		url += '&filter_country=' + encodeURIComponent(filter_country);
+	}
+
+	var filter_ip = $('input[name=\'filter_ip\']').val();
+
+	if (filter_ip) {
+		url += '&filter_ip=' + encodeURIComponent(filter_ip);
+	}
+
+	var filter_date_added = $('input[name=\'filter_date_added\']').val();
+
+	if (filter_date_added) {
+		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
+	}
+
+	location = url;
+});
+//--></script>
+<script type="text/javascript"><!--
+$('input[name=\'filter_email\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=customer/newsletter/autocomplete&user_token={{ user_token }}&filter_email=' + encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['email'],
+						value: item['newsletter_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'filter_email\']').val(item['label']);
+	}
+});
+//--></script>
+<script type="text/javascript">
+$('#button-upload').on('click', function() {
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
+
+	$('#form-upload input[name=\'file\']').trigger('click');
+
+	if (typeof timer != 'undefined') {
+		clearInterval(timer);
+	}
+
+	timer = setInterval(function() {
+		if ($('#form-upload input[name=\'file\']').val() != '') {
+			clearInterval(timer);
+            
+			$.ajax({
+				url: 'index.php?route=customer/newsletter/import&user_token={{ user_token }}',
+				type: 'post',
+				dataType: 'json',
+				data: new FormData($('#form-upload')[0]),
+				cache: false,
+				contentType: false,
+				processData: false,
+				beforeSend: function() {
+					$('#button-upload').button('loading');
+				},
+				success: function(json) {
+					if (json['error']) {
+						$('#button-upload').button('reset');
+					}
+            
+                    if (json['success']) {
+                        $('#button-upload').button('reset');
+                        
+                        location = json['url'];
+                    }
+				},
+				error: function(xhr, ajaxOptions, thrownError) {
+					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+				}
+			});
+
+		}
+	}, 500);
+});
+</script>
+<script type="text/javascript"><!--
+$('.date').datetimepicker();
+//--></script>
+{{ footer }} 

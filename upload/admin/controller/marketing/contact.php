@@ -106,9 +106,9 @@ class ControllerMarketingContact extends Controller {
 							'limit'             => 10
 						);
 
-						$email_total = $this->model_customer_customer->getTotalCustomers($customer_data);
+						$email_total = $this->model_customer_customer->getTotalNewsletters($customer_data);
 
-						$results = $this->model_customer_customer->getCustomers($customer_data);
+						$results = $this->model_customer_customer->getNewsletters($customer_data);
 
 						foreach ($results as $result) {
 							$emails[] = $result['email'];

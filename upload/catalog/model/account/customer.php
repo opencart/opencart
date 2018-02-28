@@ -11,9 +11,15 @@ class ModelAccountCustomer extends Model {
 
 		$customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
 
-		$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET customer_group_id = '" . (int)$customer_group_id . "', store_id = '" . (int)$this->config->get('config_store_id') . "', language_id = '" . (int)$this->config->get('config_language_id') . "', firstname = '" . $this->db->escape((string)$data['firstname']) . "', lastname = '" . $this->db->escape((string)$data['lastname']) . "', email = '" . $this->db->escape((string)$data['email']) . "', telephone = '" . $this->db->escape((string)$data['telephone']) . "', custom_field = '" . $this->db->escape(isset($data['custom_field']['account']) ? json_encode($data['custom_field']['account']) : '') . "', salt = '', password = '" . $this->db->escape(password_hash($data['password'], PASSWORD_DEFAULT)) . "', newsletter = '" . (isset($data['newsletter']) ? (int)$data['newsletter'] : 0) . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', status = '" . (int)!$customer_group_info['approval'] . "', date_added = NOW()");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET customer_group_id = '" . (int)$customer_group_id . "', store_id = '" . (int)$this->config->get('config_store_id') . "', language_id = '" . (int)$this->config->get('config_language_id') . "', firstname = '" . $this->db->escape((string)$data['firstname']) . "', lastname = '" . $this->db->escape((string)$data['lastname']) . "', email = '" . $this->db->escape((string)$data['email']) . "', telephone = '" . $this->db->escape((string)$data['telephone']) . "', custom_field = '" . $this->db->escape(isset($data['custom_field']['account']) ? json_encode($data['custom_field']['account']) : '') . "', salt = '', password = '" . $this->db->escape(password_hash($data['password'], PASSWORD_DEFAULT)) . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', status = '" . (int)!$customer_group_info['approval'] . "', date_added = NOW()");
 
 		$customer_id = $this->db->getLastId();
+
+		if (isset($data['newsletter'])) {
+			if ($data['newsletter']) {
+				$this->addNewsletter($data['email']);
+			}
+		}
 
 		if ($customer_group_info['approval']) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_approval` SET customer_id = '" . (int)$customer_id . "', type = 'customer', date_added = NOW()");
@@ -42,8 +48,40 @@ class ModelAccountCustomer extends Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET token = '" . $this->db->escape($token) . "' WHERE LCASE(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 	}
 
+	public function addNewsletter($email) {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "newsletter` SET email = '" . $this->db->escape((string)$email) . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', country = '', date_added = NOW()");
+	}
+
 	public function editNewsletter($newsletter) {
-		$this->db->query("UPDATE " . DB_PREFIX . "customer SET newsletter = '" . (int)$newsletter . "' WHERE customer_id = '" . (int)$this->customer->getId() . "'");
+		$newsletter_total = $this->getTotalNewsletterByEmail($this->customer->getEmail());
+		
+		if ($newsletter) {
+			if (!$newsletter_total) {
+				$this->addNewsletter($this->customer->getEmail());
+			}
+		} else {
+			$newsletter_info = $this->getNewsletterByEmail($this->customer->getEmail());
+			
+			if ($newsletter_info) {
+				$this->deleteNewsletter($newsletter_info['newsletter_id']);
+			}
+		}
+	}
+
+	public function deleteNewsletter($newsletter_id) {
+		$this->db->query("DELETE FROM " . DB_PREFIX . "newsletter WHERE newsletter_id = '" . (int)$newsletter_id . "'");
+	}
+
+	public function getNewsletterByEmail($email) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "newsletter WHERE LCASE(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
+
+		return $query->row;
+	}
+
+	public function getTotalNewsletterByEmail($email) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "newsletter WHERE LCASE(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
+
+		return $query->row['total'];
 	}
 
 	public function getCustomer($customer_id) {

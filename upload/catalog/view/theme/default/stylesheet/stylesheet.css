@@ -772,3 +772,36 @@ h2.price {
 .alert-dismissible .close {
 	right: -4px;
 }
+
+#newsletter {
+	background-color: #37383d;
+	padding: 60px 0;
+	color: #fff;
+}
+
+#newsletter h3 {
+	color: #fff;
+	margin-top: 0;
+	margin-bottom: 60px;
+	position: relative;
+}
+#newsletter h3::after {
+	content: ' ';
+	background-color: #fff;
+	width: 80px;
+	height: 2px;
+	position: absolute;
+	left: 50%;
+	margin-left: -40px;
+	bottom: -10px;
+}
+
+#newsletter p {
+	font-size: 1.2em;
+	line-height: 2;
+}
+
+#newsletter + footer {
+	margin-top: 0;
+	border-top: 0;
+}

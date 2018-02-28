@@ -2994,6 +2994,44 @@ function db_schema() {
 	);
 
 	$tables[] = array(
+		'name' => 'newsletter',
+		'field' => array(
+			array(
+				'name' => 'newsletter_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			),
+			array(
+				'name' => 'email',
+				'type' => 'varchar(96)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'ip',
+				'type' => 'varchar(40)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'country',
+				'type' => 'varchar(2)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			)
+		),
+		'primary' => array(
+			'newsletter_id'
+		),
+		'engine' => 'MyISAM',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	);
+
+	$tables[] = array(
 		'name' => 'option',
 		'field' => array(
 			array(

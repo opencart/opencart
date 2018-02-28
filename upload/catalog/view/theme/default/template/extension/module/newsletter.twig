@@ -1,0 +1,75 @@
+<div id="newsletter">
+  <div class="container">
+    <h3 class="text-center">{{ heading_title }}</h3>
+    <div class="row">
+      <div class="col-sm-5">
+        <p>{{ text_subscribe }}</p>
+      </div>
+      <div class="col-sm-offset-2 col-sm-5">
+        <section class="text-center">
+            <div class="input-group input-group-lg newsletter">
+              <input type="text" name="newsletter" value="" placeholder="{{ text_enter }}" class="form-control">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-primary btn-lg subscribe"><i class="fa fa-paper-plane"></i></button>
+              </div>
+            </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+<script type="text/javascript">
+  $('.subscribe').on('click', function() {
+      var element = this;
+
+      var url = '';
+      
+      var email = $(this).parent().parent().find('input[name="newsletter"]').val();
+      
+      if (email != undefined) {
+          url += '&email=' + encodeURIComponent(email);
+      }
+
+      $.ajax({
+          url: 'index.php?route=extension/module/newsletter/subscribe' + url,
+          beforeSend: function() {
+              $(element).prop('disabled', true);
+          },
+          complete: function() {
+              $(element).prop('disabled', false);
+          },
+          dataType: 'html',
+          success: function(data) {
+              $('#modal-newsletter').remove();
+
+              message = JSON.parse(data);
+
+              if (message['error']) {
+                  content = message['error'];
+              } else if (message['success']) {
+                  content = message['success'];
+              }
+
+              html  = '<div id="modal-newsletter" class="modal">';
+              html += '  <div class="modal-dialog">';
+              html += '    <div class="modal-content">';
+              html += '      <div class="modal-header">';
+              html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
+              html += '        <h4 class="modal-title">Sign up to our newsletter</h4>';
+              html += '      </div>';
+              html += '      <div class="modal-body">' + content + '</div>';
+              html += '    </div>';
+              html += '  </div>';
+              html += '</div>';
+
+              $('body').append(html);
+
+              $('#modal-newsletter').modal('show');
+          },
+          error: function(xhr, ajaxOptions, thrownError) {
+              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          }
+      });
+  });
+</script>
+</div>

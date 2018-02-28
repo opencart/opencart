@@ -378,6 +378,14 @@ class ControllerCommonColumnLeft extends Controller {
 				);	
 			}
 			
+			if ($this->user->hasPermission('access', 'customer/newsletter')) {
+				$customer[] = array(
+					'name'	   => $this->language->get('text_newsletter'),
+					'href'     => $this->url->link('customer/newsletter', 'user_token=' . $this->session->data['user_token']),
+					'children' => array()		
+				);
+			}
+			
 			if ($customer) {
 				$data['menus'][] = array(
 					'id'       => 'menu-customer',

@@ -29,5 +29,22 @@ class ModelUpgrade1011 extends Model {
 				}
 			}	
 		}
+		
+		//newsletter
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "newsletter`");
+		
+		//get newsletter data from customer table if newsletter table exist but empty 
+		if (!$query->num_rows) {
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer`");
+			
+			if ($query->num_rows) {
+				foreach ($query->rows as $result) {
+					//make sure newsletter field exist before insert
+					if (isset($result['newsletter'])) {
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "newsletter` SET email = '" . $result['email'] . "', ip = '" . $result['ip'] . "', country = '', date_added = '" . $result['date_added'] . "'");
+					}
+				}
+			}
+		}
 	}
 }

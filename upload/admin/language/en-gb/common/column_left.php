@@ -14,6 +14,7 @@ $_['text_coupon']               = 'Coupons';
 $_['text_currency']             = 'Currencies';
 $_['text_customer']             = 'Customers';
 $_['text_customer_group']       = 'Customer Groups';
+$_['text_newsletter']           = 'Newsletter';
 $_['text_customer_online']      = 'Customer Online';
 $_['text_customer_approval']    = 'Customer Approvals';
 $_['text_custom_field']         = 'Custom Fields';

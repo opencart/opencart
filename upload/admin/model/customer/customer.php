@@ -1,7 +1,7 @@
 <?php
 class ModelCustomerCustomer extends Model {
 	public function addCustomer($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET customer_group_id = '" . (int)$data['customer_group_id'] . "', firstname = '" . $this->db->escape((string)$data['firstname']) . "', lastname = '" . $this->db->escape((string)$data['lastname']) . "', email = '" . $this->db->escape((string)$data['email']) . "', telephone = '" . $this->db->escape((string)$data['telephone']) . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : json_encode(array())) . "', newsletter = '" . (int)$data['newsletter'] . "', salt = '', password = '" . $this->db->escape(password_hash($data['password'], PASSWORD_DEFAULT)) . "', status = '" . (int)$data['status'] . "', safe = '" . (int)$data['safe'] . "', date_added = NOW()");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET customer_group_id = '" . (int)$data['customer_group_id'] . "', firstname = '" . $this->db->escape((string)$data['firstname']) . "', lastname = '" . $this->db->escape((string)$data['lastname']) . "', email = '" . $this->db->escape((string)$data['email']) . "', telephone = '" . $this->db->escape((string)$data['telephone']) . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : json_encode(array())) . "', salt = '', password = '" . $this->db->escape(password_hash($data['password'], PASSWORD_DEFAULT)) . "', status = '" . (int)$data['status'] . "', safe = '" . (int)$data['safe'] . "', date_added = NOW()");
 
 		$customer_id = $this->db->getLastId();
 
@@ -17,11 +17,17 @@ class ModelCustomerCustomer extends Model {
 			}
 		}
 
+		if (isset($data['newsletter'])) {
+			if ($data['newsletter']) {
+				$this->addNewsletter($data['email']);
+			}
+		}
+
 		return $customer_id;
 	}
 
 	public function editCustomer($customer_id, $data) {
-		$this->db->query("UPDATE " . DB_PREFIX . "customer SET customer_group_id = '" . (int)$data['customer_group_id'] . "', firstname = '" . $this->db->escape((string)$data['firstname']) . "', lastname = '" . $this->db->escape((string)$data['lastname']) . "', email = '" . $this->db->escape((string)$data['email']) . "', telephone = '" . $this->db->escape((string)$data['telephone']) . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : json_encode(array())) . "', newsletter = '" . (int)$data['newsletter'] . "', status = '" . (int)$data['status'] . "', safe = '" . (int)$data['safe'] . "' WHERE customer_id = '" . (int)$customer_id . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "customer SET customer_group_id = '" . (int)$data['customer_group_id'] . "', firstname = '" . $this->db->escape((string)$data['firstname']) . "', lastname = '" . $this->db->escape((string)$data['lastname']) . "', email = '" . $this->db->escape((string)$data['email']) . "', telephone = '" . $this->db->escape((string)$data['telephone']) . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : json_encode(array())) . "', status = '" . (int)$data['status'] . "', safe = '" . (int)$data['safe'] . "' WHERE customer_id = '" . (int)$customer_id . "'");
 
 		if ($data['password']) {
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET salt = '', password = '" . $this->db->escape(password_hash($data['password'], PASSWORD_DEFAULT)) . "' WHERE customer_id = '" . (int)$customer_id . "'");
@@ -39,6 +45,10 @@ class ModelCustomerCustomer extends Model {
 					$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$customer_id . "'");
 				}
 			}
+		}
+		
+		if (isset($data['newsletter'])) {
+			$this->editNewsletter($data);
 		}
 	}
 
@@ -61,6 +71,14 @@ class ModelCustomerCustomer extends Model {
 	public function getCustomer($customer_id) {
 		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "customer WHERE customer_id = '" . (int)$customer_id . "'");
 
+		$newsletter_total = $this->getTotalNewsletterByEmail($query->row['email']);
+
+		if ($newsletter_total) {
+			$query->row['newsletter'] = 1;
+		} else {
+			$query->row['newsletter'] = 0;
+		}
+
 		return $query->row;
 	}
 
@@ -79,10 +97,6 @@ class ModelCustomerCustomer extends Model {
 
 		if (!empty($data['filter_email'])) {
 			$sql .= " AND c.email LIKE '" . $this->db->escape((string)$data['filter_email']) . "%'";
-		}
-
-		if (isset($data['filter_newsletter']) && !is_null($data['filter_newsletter'])) {
-			$sql .= " AND c.newsletter = '" . (int)$data['filter_newsletter'] . "'";
 		}
 
 		if (!empty($data['filter_customer_group_id'])) {
@@ -217,10 +231,6 @@ class ModelCustomerCustomer extends Model {
 
 		if (!empty($data['filter_email'])) {
 			$implode[] = "email LIKE '" . $this->db->escape((string)$data['filter_email']) . "%'";
-		}
-
-		if (isset($data['filter_newsletter']) && !is_null($data['filter_newsletter'])) {
-			$implode[] = "newsletter = '" . (int)$data['filter_newsletter'] . "'";
 		}
 
 		if (!empty($data['filter_customer_group_id'])) {
@@ -410,5 +420,81 @@ class ModelCustomerCustomer extends Model {
 
 	public function deleteLoginAttempts($email) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_login` WHERE `email` = '" . $this->db->escape(utf8_strtolower($email)) . "'");
+	}
+	
+	public function addNewsletter($email) {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "newsletter` SET email = '" . $this->db->escape((string)$email) . "', ip = '', country = '', date_added = NOW()");
+	}
+
+	public function editNewsletter($data) {
+		$newsletter_total = $this->getTotalNewsletterByEmail($this->db->escape((string)$data['email']));
+		
+		if ($data['newsletter']) {
+			if (!$newsletter_total) {
+				$this->addNewsletter($this->db->escape((string)$data['email']));
+			}
+		} else {
+			$newsletter_info = $this->getNewsletterByEmail($this->db->escape((string)$data['email']));
+			
+			if ($newsletter_info) {
+				$this->deleteNewsletter($newsletter_info['newsletter_id']);
+			}
+		}
+	}
+
+	public function deleteNewsletter($newsletter_id) {
+		$this->db->query("DELETE FROM " . DB_PREFIX . "newsletter WHERE newsletter_id = '" . (int)$newsletter_id . "'");
+	}
+
+	public function getNewsletters($data = array()) {
+		$sql = "SELECT * AS total FROM " . DB_PREFIX . "newsletter";
+
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}
+
+			if ($data['limit'] < 1) {
+				$data['limit'] = 10;
+			}
+
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
+
+		$query = $this->db->query($sql);
+
+		return $query->rows;
+	}
+
+	public function getTotalNewsletters($data = array()) {
+		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "newsletter";
+
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}
+
+			if ($data['limit'] < 1) {
+				$data['limit'] = 10;
+			}
+
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
+
+		$query = $this->db->query($sql);
+
+		return $query->row['total'];
+	}
+
+	public function getNewsletterByEmail($email) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "newsletter WHERE LCASE(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
+
+		return $query->row;
+	}
+
+	public function getTotalNewsletterByEmail($email) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "newsletter WHERE LCASE(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
+
+		return $query->row['total'];
 	}
 }

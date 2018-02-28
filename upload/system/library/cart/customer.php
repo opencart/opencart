@@ -20,16 +20,22 @@ class Customer {
 			$customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE customer_id = '" . (int)$this->session->data['customer_id'] . "' AND status = '1'");
 
 			if ($customer_query->num_rows) {
+				$newsletter_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "newsletter WHERE LCASE(email) = '" . utf8_strtolower($customer_query->row['email']) . "'");				
+				
 				$this->customer_id = $customer_query->row['customer_id'];
 				$this->firstname = $customer_query->row['firstname'];
 				$this->lastname = $customer_query->row['lastname'];
 				$this->customer_group_id = $customer_query->row['customer_group_id'];
 				$this->email = $customer_query->row['email'];
 				$this->telephone = $customer_query->row['telephone'];
-				$this->newsletter = $customer_query->row['newsletter'];
+				$this->newsletter = $newsletter_query->num_rows ? 1 : 0;
 				$this->address_id = $customer_query->row['address_id'];
 
 				$this->db->query("UPDATE " . DB_PREFIX . "customer SET language_id = '" . (int)$this->config->get('config_language_id') . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE customer_id = '" . (int)$this->customer_id . "'");
+				
+				if ($newsletter_query->num_rows) {
+					$this->db->query("UPDATE " . DB_PREFIX . "newsletter SET ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE newsletter_id = '" . (int)$newsletter_query->row['newsletter_id'] . "'");
+				}
 			} else {
 				$this->logout();
 			}
@@ -52,6 +58,8 @@ class Customer {
 				}
 			}
 			
+			$newsletter_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "newsletter WHERE LCASE(email) = '" . utf8_strtolower($customer_query->row['email']) . "'");			
+			
 			$this->session->data['customer_id'] = $customer_query->row['customer_id'];
 
 			$this->customer_id = $customer_query->row['customer_id'];
@@ -60,10 +68,14 @@ class Customer {
 			$this->customer_group_id = $customer_query->row['customer_group_id'];
 			$this->email = $customer_query->row['email'];
 			$this->telephone = $customer_query->row['telephone'];
-			$this->newsletter = $customer_query->row['newsletter'];
+			$this->newsletter = $newsletter_query->num_rows ? 1 : 0;
 			$this->address_id = $customer_query->row['address_id'];
 
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET " . ((isset($new_password_hashed)) ? "salt = '', password = '" . $this->db->escape($new_password_hashed) . "', " : "") . "language_id = '" . (int)$this->config->get('config_language_id') . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE customer_id = '" . (int)$this->customer_id . "'");
+
+			if ($newsletter_query->num_rows) {
+				$this->db->query("UPDATE " . DB_PREFIX . "newsletter SET ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE newsletter_id = '" . (int)$newsletter_query->row['newsletter_id'] . "'");
+			}
 
 			return true;
 		} else {

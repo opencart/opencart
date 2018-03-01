@@ -282,13 +282,13 @@ class ControllerExtensionModulePPLogin extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('marketplace/event');
+		$this->load->model('setting/event');
 
 		$this->model_setting_event->addEvent('pp_login', 'catalog/controller/account/logout/after', 'extension/module/pp_login/logout');
 	}
 
 	public function uninstall() {
-		$this->load->model('marketplace/event');
+		$this->load->model('setting/event');
 
 		$this->model_setting_event->deleteEventByCode('pp_login');
 	}

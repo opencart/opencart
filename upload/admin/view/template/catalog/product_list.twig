@@ -30,7 +30,7 @@
       <div id="filter-product" class="col-md-3 col-md-push-9 col-sm-12 hidden-sm hidden-xs">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
+            <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3> <a id="minimize-filter" class="bws-float-right" href="javascript:void(0)"><i class="fa fa-window-minimize"></i></a>
           </div>
           <div class="panel-body">
             <div class="form-group">
@@ -71,7 +71,7 @@
       <div class="col-md-9 col-md-pull-3 col-sm-12">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
+            <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3> <a hidden="hidden" id="maximize-filter" class="bws-float-right" href="javascript:void(0);"><i class="fa fa-filter"></i></a>
           </div>
           <div class="panel-body">
             <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-product">
@@ -172,6 +172,23 @@ $("#button-clear").on("click",function(){
     $("#filter-product input").val("");
     location = 'index.php?route=catalog/product&user_token={{ user_token }}';
 });
+
+$("#minimize-filter").on("click",function(){
+  $("#filter-product").toggle();
+  $("#filter-product+div").toggleClass('col-md-pull-3');
+  $("#filter-product+div").toggleClass('col-md-9');
+  $("#filter-product+div").toggleClass('col-md-12');
+  $("#maximize-filter").toggle();
+});
+
+$("#maximize-filter").on("click",function(){
+  $("#filter-product").toggle();
+  $("#filter-product+div").toggleClass('col-md-pull-3');
+  $("#filter-product+div").toggleClass('col-md-9');
+  $("#filter-product+div").toggleClass('col-md-12');
+  $("#maximize-filter").toggle();
+});
+
 //--></script>
 <script type="text/javascript"><!--
 // IE and Edge fix!

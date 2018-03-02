@@ -289,7 +289,7 @@
 				    <div class="form-group">
 	                  <label class="control-label" for="input-date-added">{{ entry_date_added }}</label>
 	                  <div class="input-group date">
-	                    <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
+	                    <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-added" class="form-control" />
 	                    <div class="input-group-btn">
 	                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
 	                    </div></div>
@@ -501,7 +501,6 @@ $('input[name=\'filter_customer\']').autocomplete({
 	}
 });
 //--></script>
-
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
 	url = 'index.php?route=extension/payment/laybuy&user_token={{ user_token }}';
@@ -545,15 +544,9 @@ $('#button-filter').on('click', function() {
 	location = url + '#reportstab';
 });
 //--></script>
-
 <script type="text/javascript"><!--
-$('.date').datetimepicker({
-	locale: '{{ datepicker }}',
-	pickTime: false,
-	format: 'YYYY-MM-DD'
-});
+$('.date').datetimepicker();
 //--></script>
-
 <script type="text/javascript"><!--
 if (document.location.hash != '') {
 	var hash = window.location.hash.substring(1);

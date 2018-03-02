@@ -30,8 +30,6 @@ use Symfony\Component\Validator\ValidationVisitorInterface;
 abstract class MemberMetadata extends ElementMetadata implements PropertyMetadataInterface
 {
     /**
-     * @var string
-     *
      * @internal This property is public in order to reduce the size of the
      *           class' serialized representation. Do not access it. Use
      *           {@link getClassName()} instead.
@@ -39,8 +37,6 @@ abstract class MemberMetadata extends ElementMetadata implements PropertyMetadat
     public $class;
 
     /**
-     * @var string
-     *
      * @internal This property is public in order to reduce the size of the
      *           class' serialized representation. Do not access it. Use
      *           {@link getName()} instead.
@@ -48,8 +44,6 @@ abstract class MemberMetadata extends ElementMetadata implements PropertyMetadat
     public $name;
 
     /**
-     * @var string
-     *
      * @internal This property is public in order to reduce the size of the
      *           class' serialized representation. Do not access it. Use
      *           {@link getPropertyName()} instead.
@@ -62,8 +56,6 @@ abstract class MemberMetadata extends ElementMetadata implements PropertyMetadat
     private $reflMember = array();
 
     /**
-     * Constructor.
-     *
      * @param string $class    The name of the class this member is defined on
      * @param string $name     The name of the member
      * @param string $property The property the member belongs to
@@ -82,7 +74,7 @@ abstract class MemberMetadata extends ElementMetadata implements PropertyMetadat
      */
     public function accept(ValidationVisitorInterface $visitor, $value, $group, $propertyPath, $propagatedGroup = null)
     {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 2.5 and will be removed in 3.0.', E_USER_DEPRECATED);
+        @trigger_error('The '.__METHOD__.' method is deprecated since Symfony 2.5 and will be removed in 3.0.', E_USER_DEPRECATED);
 
         $visitor->visit($this, $value, $group, $propertyPath);
 
@@ -192,7 +184,7 @@ abstract class MemberMetadata extends ElementMetadata implements PropertyMetadat
      */
     public function isCascaded()
     {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 2.5 and will be removed in 3.0. Use the getCascadingStrategy() method instead.', E_USER_DEPRECATED);
+        @trigger_error('The '.__METHOD__.' method is deprecated since Symfony 2.5 and will be removed in 3.0. Use the getCascadingStrategy() method instead.', E_USER_DEPRECATED);
 
         return (bool) ($this->cascadingStrategy & CascadingStrategy::CASCADE);
     }
@@ -208,7 +200,7 @@ abstract class MemberMetadata extends ElementMetadata implements PropertyMetadat
      */
     public function isCollectionCascaded()
     {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 2.5 and will be removed in 3.0. Use the getTraversalStrategy() method instead.', E_USER_DEPRECATED);
+        @trigger_error('The '.__METHOD__.' method is deprecated since Symfony 2.5 and will be removed in 3.0. Use the getTraversalStrategy() method instead.', E_USER_DEPRECATED);
 
         return (bool) ($this->traversalStrategy & (TraversalStrategy::IMPLICIT | TraversalStrategy::TRAVERSE));
     }
@@ -224,7 +216,7 @@ abstract class MemberMetadata extends ElementMetadata implements PropertyMetadat
      */
     public function isCollectionCascadedDeeply()
     {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 2.5 and will be removed in 3.0. Use the getTraversalStrategy() method instead.', E_USER_DEPRECATED);
+        @trigger_error('The '.__METHOD__.' method is deprecated since Symfony 2.5 and will be removed in 3.0. Use the getTraversalStrategy() method instead.', E_USER_DEPRECATED);
 
         return !($this->traversalStrategy & TraversalStrategy::STOP_RECURSION);
     }

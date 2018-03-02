@@ -18,54 +18,15 @@ namespace Symfony\Component\Validator;
  */
 class ConstraintViolation implements ConstraintViolationInterface
 {
-    /**
-     * @var string
-     */
     private $message;
-
-    /**
-     * @var string
-     */
     private $messageTemplate;
-
-    /**
-     * @var array
-     */
     private $parameters;
-
-    /**
-     * @var int|null
-     */
     private $plural;
-
-    /**
-     * @var mixed
-     */
     private $root;
-
-    /**
-     * @var string
-     */
     private $propertyPath;
-
-    /**
-     * @var mixed
-     */
     private $invalidValue;
-
-    /**
-     * @var Constraint|null
-     */
     private $constraint;
-
-    /**
-     * @var mixed
-     */
     private $code;
-
-    /**
-     * @var mixed
-     */
     private $cause;
 
     /**
@@ -147,7 +108,7 @@ class ConstraintViolation implements ConstraintViolationInterface
      */
     public function getMessageParameters()
     {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 2.7, to be removed in 3.0. Use the ConstraintViolation::getParameters() method instead.', E_USER_DEPRECATED);
+        @trigger_error('The '.__METHOD__.' method is deprecated since Symfony 2.7, to be removed in 3.0. Use the ConstraintViolation::getParameters() method instead.', E_USER_DEPRECATED);
 
         return $this->parameters;
     }
@@ -168,7 +129,7 @@ class ConstraintViolation implements ConstraintViolationInterface
      */
     public function getMessagePluralization()
     {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 2.7, to be removed in 3.0. Use the ConstraintViolation::getPlural() method instead.', E_USER_DEPRECATED);
+        @trigger_error('The '.__METHOD__.' method is deprecated since Symfony 2.7, to be removed in 3.0. Use the ConstraintViolation::getPlural() method instead.', E_USER_DEPRECATED);
 
         return $this->plural;
     }

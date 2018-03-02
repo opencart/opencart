@@ -129,14 +129,14 @@
                   <label class="col-sm-2 control-label" for="sale_price">{{ entry_sale_date }}</label>
                   <div class="col-sm-3">
                     <div class="input-group date">
-                      <input type="text" class="form-control" id="sale_from" data-date-format="YYYY-MM-DD" placeholder="{{ entry_from }}" name="sale_from">
+                      <input type="text" class="form-control" id="sale_from" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" placeholder="{{ entry_from }}" name="sale_from">
                       <div class="input-group-btn">
                       <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
                       </div> </div>
                   </div>
                   <div class="col-sm-3">
                     <div class="input-group date">
-                      <input type="text" class="form-control" id="sale_to" data-date-format="YYYY-MM-DD" placeholder="{{ entry_to }}" name="sale_to">
+                      <input type="text" class="form-control" id="sale_to" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" placeholder="{{ entry_to }}" name="sale_to">
                       <div class="input-group-btn">
                       <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
                       </div> </div>
@@ -146,7 +146,7 @@
                   <label class="col-sm-2 control-label" for="start_selling">{{ entry_start_selling }}</label>
                   <div class="col-sm-3">
                     <div class="input-group date">
-                      <input type="text" class="form-control" id="start_selling" data-date-format="YYYY-MM-DD" placeholder="{{ entry_start_selling }}" name="start_selling">
+                      <input type="text" class="form-control" id="start_selling" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" placeholder="{{ entry_start_selling }}" name="start_selling">
                       <div class="input-group-btn">
                       <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
                       </div> </div>
@@ -156,7 +156,7 @@
                   <label class="col-sm-2 control-label" for="input-date-restock">{{ entry_restock_date }}</label>
                   <div class="col-sm-3">
                     <div class="input-group date">
-                      <input type="text" class="form-control" id="input-date-restock" data-date-format="YYYY-MM-DD" placeholder="{{ entry_restock_date }}" name="restock_date">
+                      <input type="text" class="form-control" id="input-date-restock" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" placeholder="{{ entry_restock_date }}" name="restock_date">
                       <div class="input-group-btn">
                       <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
                       </div> </div>
@@ -340,20 +340,8 @@
   });
 </script>
 <script type="text/javascript"><!--
-$('.date').datetimepicker({
-	locale: '{{ datepicker }}',
-	pickTime: false
-});
-
-$('.datetime').datetimepicker({
-	locale: '{{ datepicker }}',
-	pickDate: true,
-	pickTime: true
-});
-
-$('.time').datetimepicker({
-	locale: '{{ datepicker }}',
-	pickDate: false
-});
+$('.date').datetimepicker();
+$('.time').datetimepicker();
+$('.datetime').datetimepicker();
 //--></script>
 {{ footer }}

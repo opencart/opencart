@@ -38,15 +38,6 @@ class ControllerStartupStartup extends Controller {
 		// Url
 		$this->registry->set('url', new Url($this->config->get('config_url')));
 
-
-
-
-
-
-
-
-
-
 		// Language
 		$code = '';
 
@@ -56,34 +47,9 @@ class ControllerStartupStartup extends Controller {
 
 		$language_codes = array_column($languages, 'language_id', 'code');
 
-		if (!isset($this->request->cookie['language'])) {
-
-
-
-
-		}
-
-
-
-
-
-
-		if (isset($this->request->get['language']) && in_array($this->request->get['language'], array_keys($language_codes))) {
-			$code = $this->request->get['language'];
-		}
-
-
-
-
-
-		//$this->config->get('config_language')
-
-		//$code = $this->request->get['language'];
-
-		if (!$code && isset($this->request->cookie['language'])) {
-			if (array_key_exists($this->request->cookie['language'], $language_codes)) {
-		//		$code = $this->request->cookie['language'];
-			}
+		// Language Cookie
+		if (isset($this->request->cookie['language']) && array_key_exists($this->request->cookie['language'], $language_codes)) {
+			$code = $this->request->cookie['language'];
 		}
 
 		// Language Detection
@@ -132,25 +98,43 @@ class ControllerStartupStartup extends Controller {
 			$code = ($detect) ? $detect : '';
 		}
 
+		// No cookie then use the language in the url
+		if (!$code && isset($this->request->get['language']) && array_key_exists($this->request->get['language'], $language_codes)) {
+			$code = $this->request->get['language'];
+		}
 
-
-
-
+		// Language not avaliable then use default
 		if (!array_key_exists($code, $language_codes)) {
 			$code = $this->config->get('config_language');
 		}
 
-		if (!isset($this->session->data['language']) || $this->session->data['language'] != $code) {
-			$this->session->data['language'] = $code;
+		// Redirect to the new language
+		if (isset($this->request->get['language']) && $this->request->get['language'] != $code) {
+			if (isset($this->request->get['route'])) {
+				$route = $this->request->get['route'];
+			} else {
+				$route = $this->config->get('action_default');
+			}
+
+			unset($this->request->get['_route_']);
+			unset($this->request->get['route']);
+			unset($this->request->get['language']);
+
+			$url = '';
+
+			if ($this->request->get) {
+				$url = '&' . urldecode(http_build_query($this->request->get));
+			}
+
+			$this->response->redirect($this->url->link($route, 'language=' . $code . $url));
 		}
 
+		// Set a new language cookie if the code does not match the current one
 		if (!isset($this->request->cookie['language']) || $this->request->cookie['language'] != $code) {
 			setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
 		}
 
-
-
-		// Overwrite the default language object
+		// Replace the default language object
 		$language = new Language($code);
 		$language->load($code);
 		$this->registry->set('language', $language);
@@ -158,15 +142,6 @@ class ControllerStartupStartup extends Controller {
 		// Set the config language_id
 		$this->config->set('config_language_id', $language_codes[$code]);
 		$this->config->set('config_language', $code);
-
-
-
-
-
-
-
-
-
 
 		// Customer
 		$customer = new Cart\Customer($this->registry);
@@ -206,6 +181,7 @@ class ControllerStartupStartup extends Controller {
 			$this->session->data['currency'] = $code;
 		}
 
+		// Set a new currency cookie if the code does not match the current one
 		if (!isset($this->request->cookie['currency']) || $this->request->cookie['currency'] != $code) {
 			setcookie('currency', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
 		}

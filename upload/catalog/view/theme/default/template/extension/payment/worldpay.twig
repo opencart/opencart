@@ -132,7 +132,7 @@
 
         if (confirm('{{ text_confirm_delete }}\n' + token.text())) {
           $.ajax({
-            url: 'index.php?route=extension/payment/worldpay/deleteCard&language={{ language }}',
+            url: 'index.php?route=extension/payment/worldpay/deleteCard&language=' + getCookie('language'),
             type: 'post',
             data: {token: token.val()},
             dataType: 'json',

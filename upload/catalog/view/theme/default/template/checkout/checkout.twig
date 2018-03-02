@@ -106,7 +106,7 @@ $('#collapse-checkout-option').on('change', 'input[name=\'account\']', function(
 {% if not logged %}
 $(document).ready(function() {
 	$.ajax({
-		url: 'index.php?route=checkout/login&language={{ language }}',
+		url: 'index.php?route=checkout/login&language=' + getCookie('language'),
 		dataType: 'html',
 		success: function(html) {
 			$('#collapse-checkout-option .panel-body').html(html);
@@ -123,7 +123,7 @@ $(document).ready(function() {
 {% else %}
 $(document).ready(function() {
 	$.ajax({
-		url: 'index.php?route=checkout/payment_address&language={{ language }}',
+		url: 'index.php?route=checkout/payment_address&language=' + getCookie('language'),
 		dataType: 'html',
 		success: function(html) {
 			$('#collapse-payment-address .panel-body').html(html);
@@ -142,7 +142,7 @@ $(document).ready(function() {
 // Checkout
 $('#collapse-checkout-option').on('click', '#button-account', function() {
 	$.ajax({
-		url: 'index.php?route=checkout/' + $('input[name=\'account\']:checked').val() + '&language={{ language }}',
+		url: 'index.php?route=checkout/' + $('input[name=\'account\']:checked').val() + '&language=' + getCookie('language'),
 		dataType: 'html',
 		beforeSend: function() {
 			$('#button-account').button('loading');
@@ -173,7 +173,7 @@ $('#collapse-checkout-option').on('click', '#button-account', function() {
 // Login
 $('#collapse-checkout-option').on('click', '#button-login', 'click', function() {
 	$.ajax({
-		url: 'index.php?route=checkout/login/save&language={{ language }}',
+		url: 'index.php?route=checkout/login/save&language=' + getCookie('language'),
 		type: 'post',
 		data: $('#collapse-checkout-option :input'),
 		dataType: 'json',
@@ -206,7 +206,7 @@ $('#collapse-checkout-option').on('click', '#button-login', 'click', function() 
 // Register
 $('#collapse-payment-address').on('click', '#button-register', function() {
 	$.ajax({
-		url: 'index.php?route=checkout/register/save&language={{ language }}',
+		url: 'index.php?route=checkout/register/save&language=' + getCookie('language'),
 		type: 'post',
 		data: $('#collapse-payment-address input[type=\'text\'], #collapse-payment-address input[type=\'date\'], #collapse-payment-address input[type=\'datetime-local\'], #collapse-payment-address input[type=\'time\'], #collapse-payment-address input[type=\'password\'], #collapse-payment-address input[type=\'hidden\'], #collapse-payment-address input[type=\'checkbox\']:checked, #collapse-payment-address input[type=\'radio\']:checked, #collapse-payment-address textarea, #collapse-payment-address select'),
 		dataType: 'json',
@@ -244,12 +244,12 @@ $('#collapse-payment-address').on('click', '#button-register', function() {
 
 				if (shipping_address) {
 					$.ajax({
-						url: 'index.php?route=checkout/shipping_method&language={{ language }}',
+						url: 'index.php?route=checkout/shipping_method&language=' + getCookie('language'),
 						dataType: 'html',
 						success: function(html) {
 							// Add the shipping address
 							$.ajax({
-								url: 'index.php?route=checkout/shipping_address&language={{ language }}',
+								url: 'index.php?route=checkout/shipping_address&language=' + getCookie('language'),
 								dataType: 'html',
 								success: function(html) {
 									$('#collapse-shipping-address .panel-body').html(html);
@@ -277,7 +277,7 @@ $('#collapse-payment-address').on('click', '#button-register', function() {
 					});
 				} else {
 					$.ajax({
-						url: 'index.php?route=checkout/shipping_address&language={{ language }}',
+						url: 'index.php?route=checkout/shipping_address&language=' + getCookie('language'),
 						dataType: 'html',
 						success: function(html) {
 							$('#collapse-shipping-address .panel-body').html(html);

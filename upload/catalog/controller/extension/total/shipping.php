@@ -32,8 +32,6 @@ class ControllerExtensionTotalShipping extends Controller {
 				$data['shipping_method'] = '';
 			}
 
-			$data['language'] = $this->config->get('config_language');
-
 			return $this->load->view('extension/total/shipping', $data);
 		}
 	}

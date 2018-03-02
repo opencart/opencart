@@ -151,9 +151,9 @@ interface ExecutionContextInterface
      *                                       groups here, the current group of the context
      *                                       will be used.
      * @param bool                 $traverse Whether to traverse the value if it is an array
-     *                                       or an instance of <tt>\Traversable</tt>.
+     *                                       or an instance of <tt>\Traversable</tt>
      * @param bool                 $deep     Whether to traverse the value recursively if
-     *                                       it is a collection of collections.
+     *                                       it is a collection of collections
      *
      * @deprecated since version 2.5, to be removed in 3.0.
      *             Use {@link Context\ExecutionContextInterface::getValidator()}
@@ -237,8 +237,8 @@ interface ExecutionContextInterface
      * has been called with a plain value and constraint, this method returns
      * null.
      *
-     * @return MetadataInterface|null The metadata of the currently validated
-     *                                value.
+     * @return MetadataInterface|null the metadata of the currently validated
+     *                                value
      */
     public function getMetadata();
 

@@ -33,8 +33,6 @@ class ControllerExtensionPaymentSagepayUS extends Controller {
 			);
 		}
 
-		$data['language'] = $this->config->get('config_language');
-
 		return $this->load->view('extension/payment/sagepay_us', $data);
 	}
 

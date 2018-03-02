@@ -100,8 +100,6 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 			$data['existing_cards'] = $this->model_extension_payment_sagepay_direct->getCards($this->customer->getId());
 		}
 
-		$data['language'] = $this->config->get('config_language');
-
 		return $this->load->view('extension/payment/sagepay_direct', $data);
 	}
 

@@ -11,7 +11,8 @@
   {% if error_warning %}
     <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
   {% endif %}
-  <div class="row">{{ column_left }}    {% if column_left and column_right %}
+  <div class="row">{{ column_left }}
+    {% if column_left and column_right %}
       {% set class = 'col-sm-6' %}
     {% elseif column_left or column_right %}
       {% set class = 'col-sm-9' %}
@@ -64,7 +65,7 @@
 <script type="text/javascript"><!--
 $('#button-add-card').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/credit_card/sagepay_server_cards/addCard&language={{ language }}',
+		url: 'index.php?route=extension/credit_card/sagepay_server_cards/addCard&language=' + getCookie('language'),
 		dataType: 'json',
 		cache: false,
 		beforeSend: function() {

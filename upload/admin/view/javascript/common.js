@@ -45,15 +45,10 @@ $(document).ready(function() {
 		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 	});
 
-	// https://github.com/opencart/opencart/issues/2595
-	$.event.special.remove = {
-		remove: function(o) {
-			if (o.handler) {
-				o.handler.apply(this, arguments);
-			}
-		}
-	}
-	
+	$('.date button, .time button, .datetime button').on('click', function() {
+		$(this).parent().parent().datetimepicker('toggle');
+	});
+
 	// tooltip remove
 	$('[data-toggle=\'tooltip\']').on('remove', function() {
 		$(this).tooltip('destroy');
@@ -63,7 +58,16 @@ $(document).ready(function() {
 	$(document).on('click', '[data-toggle=\'tooltip\']', function(e) {
 		$('body > .tooltip').remove();
 	});
-	
+
+	// https://github.com/opencart/opencart/issues/2595
+	$.event.special.remove = {
+		remove: function(o) {
+			if (o.handler) {
+				o.handler.apply(this, arguments);
+			}
+		}
+	}
+
 	$('#button-menu').on('click', function(e) {
 		e.preventDefault();
 		
@@ -163,6 +167,7 @@ $(document).ready(function() {
 			tb = t.offset().top + t.height(),
 			mb = m.offset().top + m.outerHeight(true),
 			d = 20;
+
 		if (t[0].scrollWidth > t.innerWidth()) {
 			if (mb + d > tb) {
 				t.css('padding-bottom', ((mb + d) - tb));

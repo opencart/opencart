@@ -149,18 +149,22 @@
                 <label class="col-sm-2 control-label" for="input-date-start">{{ entry_date_start }}</label>
                 <div class="col-sm-3">
                   <div class="input-group date">
-                    <input type="text" name="date_start" value="{{ date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control"/> <div class="input-group-btn">
-                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                    </div></div>
+                    <input type="text" name="date_start" value="{{ date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-start" class="form-control"/>
+                    <div class="input-group-btn">
+                      <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-date-end">{{ entry_date_end }}</label>
                 <div class="col-sm-3">
                   <div class="input-group date">
-                    <input type="text" name="date_end" value="{{ date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control"/> <div class="input-group-btn">
-                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                    </div></div>
+                    <input type="text" name="date_end" value="{{ date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-end" class="form-control"/>
+                    <div class="input-group-btn">
+                      <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="form-group">
@@ -279,9 +283,6 @@ $('#coupon-category').delegate('.fa-minus-circle', 'click', function() {
   //--></script>
 {% endif %}
 <script type="text/javascript"><!--
-$('.date').datetimepicker({
-	locale: '{{ datepicker }}',
-	pickTime: false
-});
+$('.date').datetimepicker();
 //--></script>
 {{ footer }}

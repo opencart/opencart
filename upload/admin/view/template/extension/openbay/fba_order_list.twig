@@ -35,7 +35,7 @@
               <div class="form-group">
                 <label class="control-label" for="input-start-date">{{ entry_start_date }}</label>
                 <div class="input-group date">
-                  <input type="text" name="filter_start" value="{{ filter_start }}" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" id="input-start-date" class="form-control" />
+                  <input type="text" name="filter_start" value="{{ filter_start }}" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-start-date" class="form-control" />
                   <div class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                   </div>
@@ -46,7 +46,7 @@
               <div class="form-group">
                 <label class="control-label" for="input-end-date">{{ entry_end_date }}</label>
                 <div class="input-group date">
-                  <input type="text" name="filter_end" value="{{ filter_end }}" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" id="input-end-date" class="form-control" />
+                  <input type="text" name="filter_end" value="{{ filter_end }}" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-end-date" class="form-control" />
                   <div class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                   </div>
@@ -127,9 +127,6 @@ $('#button-filter').on('click', function() {
 });
 //--></script>
 <script type="text/javascript"><!--
-$('.date').datetimepicker({
-	locale: '{{ datepicker }}',
-	pickTime: false
-});
+$('.date').datetimepicker();
 //--></script>
 {{ footer }}

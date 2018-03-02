@@ -16,14 +16,14 @@
       <div class="row">
         <div class="col-sm-5">
           <div class="input-group date">
-            <input type="text" class="form-control" id="input-date-start" data-date-format="YYYY-MM-DD" placeholder="{{ entry_date_start }}" value="{{ date_start }}" name="filter_date_start">
+            <input type="text" name="filter_date_start" id="input-date-start" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" value="{{ date_start }}" class="form-control"/>
             <div class="input-group-btn">
             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
             </div></div>
         </div>
         <div class="col-sm-5">
           <div class="input-group date">
-            <input type="text" class="form-control" id="input-date-end" data-date-format="YYYY-MM-DD" placeholder="{{ entry_date_end }}" value="{{ date_end }}" name="filter_date_end">
+            <input type="text" name="filter_date_end" id="input-date-end" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" value="{{ date_end }}" class="form-control"/>
             <div class="input-group-btn">
             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
             </div></div>
@@ -89,20 +89,8 @@
     $('#input-date-end').datepicker({dateFormat: 'yy-mm-dd'});
   });
 
-  $('.date').datetimepicker({
-	locale: '{{ datepicker }}',
-    pickTime: false
-  });
-
-  $('.datetime').datetimepicker({
-	locale: '{{ datepicker }}',
-    pickDate: true,
-    pickTime: true
-  });
-
-  $('.time').datetimepicker({
-	locale: '{{ datepicker }}',
-    pickDate: false
-  });
+$('.date').datetimepicker();
+$('.time').datetimepicker();
+$('.datetime').datetimepicker();
 //--></script>
 {{ footer }}

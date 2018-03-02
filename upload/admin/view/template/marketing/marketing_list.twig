@@ -41,9 +41,11 @@
             <div class="form-group">
               <label class="control-label" for="input-date-added">{{ entry_date_added }}</label>
               <div class="input-group date">
-                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" class="form-control"/> <div class="input-group-btn">
-                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                </div></div>
+                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" class="form-control"/>
+                <div class="input-group-btn">
+                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                </div>
+              </div>
             </div>
             <div class="form-group text-right">
               <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
@@ -61,41 +63,39 @@
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                   <thead>
-                  <tr>
-                    <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');"/></td>
-                    <td class="text-left">{% if sort == 'm.name' %} <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a> {% else %} <a href="{{ sort_name }}">{{ column_name }}</a> {% endif %}</td>
-                    <td class="text-left">{% if sort == 'm.code' %} <a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a> {% else %} <a href="{{ sort_code }}">{{ column_code }}</a> {% endif %}</td>
-                    <td class="text-right">{{ column_clicks }}</td>
-                    <td class="text-right">{{ column_orders }}</td>
-                    <td class="text-left">{% if sort == 'm.date_added' %} <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a> {% else %} <a href="{{ sort_date_added }}">{{ column_date_added }}</a> {% endif %}</td>
-                    <td class="text-right">{{ column_action }}</td>
-                  </tr>
+                    <tr>
+                      <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');"/></td>
+                      <td class="text-left">{% if sort == 'm.name' %} <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a> {% else %} <a href="{{ sort_name }}">{{ column_name }}</a> {% endif %}</td>
+                      <td class="text-left">{% if sort == 'm.code' %} <a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a> {% else %} <a href="{{ sort_code }}">{{ column_code }}</a> {% endif %}</td>
+                      <td class="text-right">{{ column_clicks }}</td>
+                      <td class="text-right">{{ column_orders }}</td>
+                      <td class="text-left">{% if sort == 'm.date_added' %} <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a> {% else %} <a href="{{ sort_date_added }}">{{ column_date_added }}</a> {% endif %}</td>
+                      <td class="text-right">{{ column_action }}</td>
+                    </tr>
                   </thead>
                   <tbody>
-
-                  {% if marketings %}
-                    {% for marketing in marketings %}
+                    {% if marketings %}
+                      {% for marketing in marketings %}
+                        <tr>
+                          <td class="text-center">{% if marketing.marketing_id in selected %}
+                              <input type="checkbox" name="selected[]" value="{{ marketing.marketing_id }}" checked="checked"/>
+                            {% else %}
+                              <input type="checkbox" name="selected[]" value="{{ marketing.marketing_id }}"/>
+                            {% endif %}</td>
+                          <td class="text-left">{{ marketing.name }}</td>
+                          <td class="text-left">{{ marketing.code }}</td>
+                          <td class="text-right">{{ marketing.clicks }}</td>
+                          <td class="text-right">{{ marketing.orders }}</td>
+                          <td class="text-left">{{ marketing.date_added }}</td>
+                          <td class="text-right"><a href="{{ marketing.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                        </tr>
+                      {% endfor %}
+                    {% else %}
                       <tr>
-                        <td class="text-center">{% if marketing.marketing_id in selected %}
-                            <input type="checkbox" name="selected[]" value="{{ marketing.marketing_id }}" checked="checked"/>
-                          {% else %}
-                            <input type="checkbox" name="selected[]" value="{{ marketing.marketing_id }}"/>
-                          {% endif %}</td>
-                        <td class="text-left">{{ marketing.name }}</td>
-                        <td class="text-left">{{ marketing.code }}</td>
-                        <td class="text-right">{{ marketing.clicks }}</td>
-                        <td class="text-right">{{ marketing.orders }}</td>
-                        <td class="text-left">{{ marketing.date_added }}</td>
-                        <td class="text-right"><a href="{{ marketing.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                        <td class="text-center" colspan="8">{{ text_no_results }}</td>
                       </tr>
-                    {% endfor %}
-                  {% else %}
-                    <tr>
-                      <td class="text-center" colspan="8">{{ text_no_results }}</td>
-                    </tr>
-                  {% endif %}
+                    {% endif %}
                   </tbody>
-
                 </table>
               </div>
             </form>
@@ -135,10 +135,6 @@ $('#button-filter').on('click', function() {
 });
 //--></script>
 <script type="text/javascript"><!--
-$('.date').datetimepicker({
-	locale: '{{ datepicker }}',
-	pickTime: false
-});
+$('.date').datetimepicker();
 //--></script>
-
 {{ footer }}

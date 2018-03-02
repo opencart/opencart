@@ -129,8 +129,6 @@ class ControllerExtensionPaymentKlarnaInvoice extends Controller {
 				$data['klarna_fee'] = '';
 			}
 
-			$data['language'] = $this->config->get('config_language');
-
 			return $this->load->view('extension/payment/klarna_invoice', $data);
 		}
 	}

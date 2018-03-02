@@ -8,7 +8,7 @@
         <div class="form-group">
           <label class="control-label" for="input-date-start">{{ entry_date_start }}</label>
           <div class="input-group date">
-            <input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control"/>
+            <input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-start" class="form-control"/>
             <div class="input-group-btn">
               <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
             </div>
@@ -17,14 +17,14 @@
         <div class="form-group">
           <label class="control-label" for="input-date-end">{{ entry_date_end }}</label>
           <div class="input-group date">
-            <input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control"/>
+            <input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-end" class="form-control"/>
             <div class="input-group-btn">
               <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
             </div>
           </div>
         </div>
         <div class="form-group">
-          <label class="control-label" for="input-group">{{ entry_group }}</label> <select name="filter_group" id="input-group" class="form-control">
+          <label class="control-label" for="input-group">{{ entry_group }}</label><select name="filter_group" id="input-group" class="form-control">
             {% for group in groups %}
               {% if group.value == filter_group %}
                 <option value="{{ group.value }}" selected="selected">{{ group.text }}</option>
@@ -61,33 +61,31 @@
         <div class="table-responsive">
           <table class="table table-bordered">
             <thead>
-            <tr>
-              <td class="text-left">{{ column_date_start }}</td>
-              <td class="text-left">{{ column_date_end }}</td>
-              <td class="text-left">{{ column_title }}</td>
-              <td class="text-right">{{ column_orders }}</td>
-              <td class="text-right">{{ column_total }}</td>
-            </tr>
+              <tr>
+                <td class="text-left">{{ column_date_start }}</td>
+                <td class="text-left">{{ column_date_end }}</td>
+                <td class="text-left">{{ column_title }}</td>
+                <td class="text-right">{{ column_orders }}</td>
+                <td class="text-right">{{ column_total }}</td>
+              </tr>
             </thead>
             <tbody>
-
-            {% if orders %}
-              {% for order in orders %}
+              {% if orders %}
+                {% for order in orders %}
+                  <tr>
+                    <td class="text-left">{{ order.date_start }}</td>
+                    <td class="text-left">{{ order.date_end }}</td>
+                    <td class="text-left">{{ order.title }}</td>
+                    <td class="text-right">{{ order.orders }}</td>
+                    <td class="text-right">{{ order.total }}</td>
+                  </tr>
+                {% endfor %}
+              {% else %}
                 <tr>
-                  <td class="text-left">{{ order.date_start }}</td>
-                  <td class="text-left">{{ order.date_end }}</td>
-                  <td class="text-left">{{ order.title }}</td>
-                  <td class="text-right">{{ order.orders }}</td>
-                  <td class="text-right">{{ order.total }}</td>
+                  <td class="text-center" colspan="5">{{ text_no_results }}</td>
                 </tr>
-              {% endfor %}
-            {% else %}
-              <tr>
-                <td class="text-center" colspan="5">{{ text_no_results }}</td>
-              </tr>
-            {% endif %}
+              {% endif %}
             </tbody>
-
           </table>
         </div>
         <div class="row">
@@ -130,8 +128,5 @@ $('#button-filter').on('click', function() {
 });
 //--></script>
 <script type="text/javascript"><!--
-$('.date').datetimepicker({
-	locale: '{{ datepicker }}',
-	pickTime: false
-});
+$('.date').datetimepicker();
 //--></script>

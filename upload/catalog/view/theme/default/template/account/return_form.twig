@@ -66,7 +66,7 @@
             <label class="col-sm-2 control-label" for="input-date-ordered">{{ entry_date_ordered }}</label>
             <div class="col-sm-3">
               <div class="input-group date">
-                <input type="text" name="date_ordered" value="{{ date_ordered }}" placeholder="{{ entry_date_ordered }}" data-date-format="YYYY-MM-DD" id="input-date-ordered" class="form-control"/>
+                <input type="text" name="date_ordered" value="{{ date_ordered }}" placeholder="{{ entry_date_ordered }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-ordered" class="form-control"/>
                 <div class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                 </div>
@@ -166,10 +166,6 @@
     {{ column_right }}</div>
 </div>
 <script type="text/javascript"><!--
-$('.date').datetimepicker({
-	locale: '{{ datepicker }}',
-	viewMode: 'years'
-	//pickTime: false
-});
+$('.date').datetimepicker();
 //--></script>
 {{ footer }} 

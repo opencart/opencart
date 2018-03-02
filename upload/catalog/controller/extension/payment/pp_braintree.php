@@ -137,8 +137,6 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			$data['guest'] = true;
 		}
 
-		$data['language'] = $this->config->get('config_language');
-
 		return $this->load->view('extension/payment/pp_braintree', $data);
 	}
 

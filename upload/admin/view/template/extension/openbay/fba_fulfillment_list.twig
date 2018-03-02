@@ -32,7 +32,7 @@
               <div class="form-group">
                 <label class="control-label" for="input-date">{{ entry_start_date }}</label>
                 <div class="input-group date">
-                  <input type="text" name="filter_date" value="{{ filter_date }}" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" id="input-date" class="form-control" />
+                  <input type="text" name="filter_date" value="{{ filter_date }}" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date" class="form-control" />
                   <div class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                   </div> </div>
@@ -100,9 +100,8 @@ $('#button-filter').on('click', function() {
 //--></script> 
 </script>
 <script type="text/javascript"><!--
-$('.date').datetimepicker({
-	locale: '{{ datepicker }}',
-	pickTime: false
-});
+	$('.date').datetimepicker();
+$('.time').datetimepicker();
+$('.datetime').datetimepicker();
 //--></script> 
 {{ footer }}

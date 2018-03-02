@@ -11,7 +11,7 @@
 
 namespace Symfony\Component\Validator;
 
-@trigger_error('The '.__NAMESPACE__.'\ExecutionContext class is deprecated since version 2.5 and will be removed in 3.0. Use the Symfony\Component\Validator\Context\ExecutionContext class instead.', E_USER_DEPRECATED);
+@trigger_error('The '.__NAMESPACE__.'\ExecutionContext class is deprecated since Symfony 2.5 and will be removed in 3.0. Use the Symfony\Component\Validator\Context\ExecutionContext class instead.', E_USER_DEPRECATED);
 
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -28,39 +28,12 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class ExecutionContext implements ExecutionContextInterface
 {
-    /**
-     * @var GlobalExecutionContextInterface
-     */
     private $globalContext;
-
-    /**
-     * @var TranslatorInterface
-     */
     private $translator;
-
-    /**
-     * @var null|string
-     */
     private $translationDomain;
-
-    /**
-     * @var MetadataInterface
-     */
     private $metadata;
-
-    /**
-     * @var mixed
-     */
     private $value;
-
-    /**
-     * @var string
-     */
     private $group;
-
-    /**
-     * @var string
-     */
     private $propertyPath;
 
     /**
@@ -224,8 +197,9 @@ class ExecutionContext implements ExecutionContextInterface
     {
         $propertyPath = $this->getPropertyPath($subPath);
 
+        $visitor = $this->globalContext->getVisitor();
         foreach ($this->resolveGroups($groups) as $group) {
-            $this->globalContext->getVisitor()->validate($value, $group, $propertyPath, $traverse, $deep);
+            $visitor->validate($value, $group, $propertyPath, $traverse, $deep);
         }
     }
 

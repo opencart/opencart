@@ -822,3 +822,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .opencart-icon-cart-mini:before {
 	content: "\e91c";
 }
+
+.bws-float-right{
+	float:right;
+}

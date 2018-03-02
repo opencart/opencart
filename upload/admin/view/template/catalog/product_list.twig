@@ -62,7 +62,9 @@
             </div>
             <div class="form-group text-right">
               <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
-            </div>
+        &nbsp;<button type="button" id="button-clear" class="btn btn-default ml-2"><i class="fa fa-times"></i> {{ button_clear}}</button>
+
+	    </div>
           </div>
         </div>
       </div>
@@ -164,6 +166,11 @@ $('#button-filter').on('click', function() {
 	}
 
 	location = 'index.php?route=catalog/product&user_token={{ user_token }}' + url;
+});
+
+$("#button-clear").on("click",function(){
+    $("#filter-product input").val("");
+    location = 'index.php?route=catalog/product&user_token={{ user_token }}';
 });
 //--></script>
 <script type="text/javascript"><!--

@@ -13,21 +13,20 @@
       </ul>
     </div>
   </div>
-  <div class="container-fluid"> {% if error_warning %}
+  <div class="container-fluid">
+    {% if error_warning %}
       <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
-      </div>
-      <div class="panel-body">
-        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-coupon" class="form-horizontal">
+    <div class="card">
+      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-coupon">
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
             {% if coupon_id %}
-              <li><a href="#tab-history" data-toggle="tab">{{ tab_history }}</a></li>
+              <li class="nav-item"><a href="#tab-history" data-toggle="tab">{{ tab_history }}</a></li>
             {% endif %}
           </ul>
           <div class="tab-content">
@@ -168,15 +167,17 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-uses-total"><span data-toggle="tooltip" title="{{ help_uses_total }}">{{ entry_uses_total }}</span></label>
+                <label class="col-sm-2 control-label" for="input-uses-total">{{ entry_uses_total }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="uses_total" value="{{ uses_total }}" placeholder="{{ entry_uses_total }}" id="input-uses-total" class="form-control"/>
+                  <small class="form-text text-muted">{{ help_uses_total }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-uses-customer"><span data-toggle="tooltip" title="{{ help_uses_customer }}">{{ entry_uses_customer }}</span></label>
+                <label class="col-sm-2 control-label" for="input-uses-customer">{{ entry_uses_customer }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="uses_customer" value="{{ uses_customer }}" placeholder="{{ entry_uses_customer }}" id="input-uses-customer" class="form-control"/>
+                  <small class="form-text text-muted">{{ help_uses_customer }}</small>
                 </div>
               </div>
               <div class="form-group">

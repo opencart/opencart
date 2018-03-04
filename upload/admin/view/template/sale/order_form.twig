@@ -13,13 +13,11 @@
   </div>
   <div class="container-fluid">
     <div id="collapse" class="panel-group">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title"><i class="fa fa-user fa-fw"></i> {{ text_customer_detail }}</h3>
-        </div>
+      <div class="card">
+        <div class="card-header"><i class="fa fa-user fa-fw"></i> {{ text_customer_detail }}</div>
         <div id="collapse-customer" class="panel-collapse collapse in">
-          <div class="panel-body">
-            <form class="form-horizontal">
+          <div class="card-body">
+            <form>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-store">{{ entry_store }}</label>
                 <div class="col-sm-10">
@@ -224,12 +222,10 @@
           </div>
         </div>
       </div>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title"><i class="fa fa-shopping-cart fa-fw"></i> {{ text_cart }}</h3>
-        </div>
+      <div class="card">
+        <div class="card-header"><i class="fa fa-shopping-cart fa-fw"></i> {{ text_cart }}</div>
         <div id="collapse-cart" data-parent="#collapse" class="panel-collapse collapse">
-          <div class="panel-body">
+          <div class="card-body">
 
             <div class="table-responsive">
               <table class="table table-bordered">
@@ -296,7 +292,7 @@
                 {% endif %}
               </table>
             </div>
-            <form class="form-horizontal">
+            <form>
               <ul class="nav nav-tabs nav-justified">
                 <li class="active"><a href="#tab-product" data-toggle="tab">{{ tab_product }}</a></li>
                 <li><a href="#tab-voucher" data-toggle="tab">{{ tab_voucher }}</a></li>
@@ -392,14 +388,12 @@
         </div>
       </div>
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title"><i class="fa fa-credit-card fa-fw"></i> {{ text_payment_detail }}</h3>
-        </div>
+      <div class="card">
+        <div class="card-header"><i class="fa fa-credit-card fa-fw"></i> {{ text_payment_detail }}</div>
         <div id="collapse-payment" data-parent="#collapse" class="panel-collapse collapse">
-          <div class="panel-body">
+          <div class="card-body">
 
-            <form class="form-horizontal">
+            <form>
 
 
               <div class="form-group">
@@ -615,13 +609,11 @@
         </div>
       </div>
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title"><i class="fa fa-truck fa-fw"></i> {{ text_shipping_detail }}</h3>
-        </div>
+      <div class="card">
+        <div class="card-header"><i class="fa fa-truck fa-fw"></i> {{ text_shipping_detail }}</div>
         <div id="collapse-shipping" data-parent="#collapse" class="panel-collapse collapse">
-          <div class="panel-body">
-            <form class="form-horizontal">
+          <div class="card-body">
+            <form>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-shipping-address">{{ entry_address }}</label>
                 <div class="col-sm-10">
@@ -834,12 +826,10 @@
           </div>
         </div>
       </div>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title"><i class="fa fa-usd fa-fw"></i> {{ text_total_detail }}</h3>
-        </div>
+      <div class="card">
+        <div class="card-header"><i class="fa fa-usd fa-fw"></i> {{ text_total_detail }}</div>
         <div id="collapse-total" data-parent="#collapse" class="panel-collapse collapse">
-          <div class="panel-body">
+          <div class="card-body">
             <div class="table-responsive">
               <table class="table table-bordered">
                 <thead>
@@ -858,7 +848,7 @@
                 </tbody>
               </table>
             </div>
-            <form class="form-horizontal">
+            <form>
               <fieldset>
                 <legend>{{ text_order_detail }}</legend>
                 <div class="form-group required">

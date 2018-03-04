@@ -19,12 +19,10 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
-      </div>
-      <div class="panel-body">
-        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment" class="form-horizontal">
+    <div class="card">
+      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment">
           <div class="tab-content">
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="entry-app-id">{{ entry_app_id }}</label>
@@ -63,15 +61,17 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="{{ help_total }}">{{ entry_total }}</span></label>
+              <label class="col-sm-2 control-label" for="input-total">{{ entry_total }}</label>
               <div class="col-sm-10">
                 <input type="text" name="payment_wechat_pay_total" value="{{ payment_wechat_pay_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
+                <small class="form-text text-muted">{{ help_total }}</small>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-currency"><span data-toggle="tooltip" title="{{ help_currency }}">{{ entry_currency }}</span></label>
+              <label class="col-sm-2 control-label" for="input-currency">{{ entry_currency }}</label>
               <div class="col-sm-10">
                 <input type="text" name="payment_wechat_pay_currency" value="{{ payment_wechat_pay_currency }}" placeholder="{{ entry_currency }}" id="input-currency" class="form-control"/>
+                <small class="form-text text-muted">{{ help_currency }}</small>
               </div>
             </div>
             <div class="form-group">

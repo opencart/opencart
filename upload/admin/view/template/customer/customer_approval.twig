@@ -11,7 +11,8 @@
       </ul>
     </div>
   </div>
-  <div class="container-fluid">{% if error_warning %}
+  <div class="container-fluid">
+    {% if error_warning %}
       <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
@@ -23,11 +24,9 @@
     {% endif %}
     <div class="row">
       <div id="filter-customer" class="col-md-3 col-md-push-9 col-sm-12 hidden-sm hidden-xs">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
-          </div>
-          <div class="panel-body">
+        <div class="card">
+          <div class="card-header"><i class="fa fa-filter"></i> {{ text_filter }}</div>
+          <div class="card-body">
             <div class="form-group">
               <label class="control-label" for="input-name">{{ entry_name }}</label> <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
             </div>
@@ -77,11 +76,9 @@
         </div>
       </div>
       <div class="col-md-9 col-md-pull-3 col-sm-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
-          </div>
-          <div class="panel-body">
+        <div class="card">
+          <div class="card-header"><i class="fa fa-list"></i> {{ text_list }}</div>
+          <div class="card-body">
             <div id="customer-approval"></div>
           </div>
         </div>

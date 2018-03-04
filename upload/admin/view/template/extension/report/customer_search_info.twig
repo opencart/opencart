@@ -1,10 +1,8 @@
 <div class="row">
   <div id="filter-report" class="col-md-3 col-md-push-9 col-sm-12 hidden-sm hidden-xs">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
-      </div>
-      <div class="panel-body">
+    <div class="card">
+      <div class="card-header"><i class="fa fa-filter"></i> {{ text_filter }}</div>
+      <div class="card-body">
         <div class="form-group">
           <label class="control-label" for="input-date-start">{{ entry_date_start }}</label>
           <div class="input-group date">
@@ -39,41 +37,39 @@
     </div>
   </div>
   <div class="col-md-9 col-md-pull-3 col-sm-12">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-bar-chart"></i> {{ heading_title }}</h3>
-      </div>
-      <div class="panel-body">
+    <div class="card">
+      <div class="card-header"><i class="fa fa-bar-chart"></i> {{ heading_title }}</div>
+      <div class="card-body">
         <div class="table-responsive">
           <table class="table table-bordered">
             <thead>
-            <tr>
-              <td class="text-left">{{ column_keyword }}</td>
-              <td class="text-left">{{ column_products }}</td>
-              <td class="text-left">{{ column_category }}</td>
-              <td class="text-left">{{ column_customer }}</td>
-              <td class="text-left">{{ column_ip }}</td>
-              <td class="text-left">{{ column_date_added }}</td>
-            </tr>
+              <tr>
+                <td class="text-left">{{ column_keyword }}</td>
+                <td class="text-left">{{ column_products }}</td>
+                <td class="text-left">{{ column_category }}</td>
+                <td class="text-left">{{ column_customer }}</td>
+                <td class="text-left">{{ column_ip }}</td>
+                <td class="text-left">{{ column_date_added }}</td>
+              </tr>
             </thead>
             <tbody>
 
-            {% if searches %}
-              {% for search in searches %}
+              {% if searches %}
+                {% for search in searches %}
+                  <tr>
+                    <td class="text-left">{{ search.keyword }}</td>
+                    <td class="text-left">{{ search.products }}</td>
+                    <td class="text-left">{{ search.category }}</td>
+                    <td class="text-left">{{ search.customer }}</td>
+                    <td class="text-left">{{ search.ip }}</td>
+                    <td class="text-left">{{ search.date_added }}</td>
+                  </tr>
+                {% endfor %}
+              {% else %}
                 <tr>
-                  <td class="text-left">{{ search.keyword }}</td>
-                  <td class="text-left">{{ search.products }}</td>
-                  <td class="text-left">{{ search.category }}</td>
-                  <td class="text-left">{{ search.customer }}</td>
-                  <td class="text-left">{{ search.ip }}</td>
-                  <td class="text-left">{{ search.date_added }}</td>
+                  <td class="text-center" colspan="6">{{ text_no_results }}</td>
                 </tr>
-              {% endfor %}
-            {% else %}
-              <tr>
-                <td class="text-center" colspan="6">{{ text_no_results }}</td>
-              </tr>
-            {% endif %}
+              {% endif %}
             </tbody>
 
           </table>

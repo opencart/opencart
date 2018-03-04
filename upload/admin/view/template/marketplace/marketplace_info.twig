@@ -20,23 +20,21 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> {{ name }}</h3>
-      </div>
-      <div class="panel-body">
+    <div class="card">
+      <div class="card-header"><i class="fa fa-puzzle-piece"></i> {{ name }}</div>
+      <div class="card-body">
         <div class="row extension-info">
           <div class="col-sm-8">{% if banner %}
               <div id="banner" class="text-center thumbnail"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-responsive"/></div>
             {% endif %}
             <div class="row thumbnails">{% for image in images %}
                 <div class="col-xs-4 col-sm-2"><a href="{{ image.popup }}" class="thumbnail"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="img-responsive"/></a></div>
-              {% endfor %} </div>
+              {% endfor %}</div>
             <ul class="nav nav-tabs">
               <li class="active"><a href="#tab-description" data-toggle="tab">{{ tab_general }}</a></li>
-              <li><a href="#tab-documentation" data-toggle="tab">{{ tab_documentation }}</a></li>
-              <li><a href="#tab-download" data-toggle="tab">{{ tab_download }}</a></li>
-              <li><a href="#tab-comment" data-toggle="tab">{{ tab_comment }} ({{ comment_total }})</a></li>
+              <li class="nav-item"><a href="#tab-documentation" data-toggle="tab">{{ tab_documentation }}</a></li>
+              <li class="nav-item"><a href="#tab-download" data-toggle="tab">{{ tab_download }}</a></li>
+              <li class="nav-item"><a href="#tab-comment" data-toggle="tab">{{ tab_comment }} ({{ comment_total }})</a></li>
             </ul>
             <div class="tab-content">
               <div id="tab-description" class="tab-pane active">{{ description }}</div>

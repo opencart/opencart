@@ -11,18 +11,17 @@
     </div>
   </div>
   <div class="container-fluid">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> {{ text_upload }}</h3>
-      </div>
-      <div class="panel-body">
-        <form class="form-horizontal">
+    <div class="card">
+      <div class="card-header"><i class="fa fa-puzzle-piece"></i> {{ text_upload }}</div>
+      <div class="card-body">
+        <form>
           <fieldset>
             <legend>{{ text_upload }}</legend>
             <div class="form-group required">
-              <label class="col-sm-2 control-label" for="button-upload"><span data-toggle="tooltip" title="{{ help_upload }}">{{ entry_upload }}</span></label>
+              <label class="col-sm-2 control-label" for="button-upload">{{ entry_upload }}</label>
               <div class="col-sm-10">
                 <button type="button" id="button-upload" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-upload"></i> {{ button_upload }}</button>
+                <small class="form-text text-muted">{{ help_upload }}</small>
               </div>
             </div>
           </fieldset>

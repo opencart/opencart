@@ -5,11 +5,9 @@
     <br/>
     <div class="row">
       <div class="col-sm-offset-4 col-sm-4">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h1 class="panel-title"><i class="fa fa-lock"></i> {{ text_login }}</h1>
-          </div>
-          <div class="panel-body">
+        <div class="card">
+          <div class="card-header"><i class="fa fa-lock"></i> {{ text_login }}</div>
+          <div class="card-body">
             {% if success %}
               <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
                 <button type="button" class="close" data-dismiss="alert">&times;</button>

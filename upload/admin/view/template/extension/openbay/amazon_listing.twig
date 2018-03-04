@@ -24,7 +24,7 @@
         </ul>
       </div>
     {% endif %}
-    <div class="panel-body" id="search-container">
+    <div class="card-body" id="search-container">
       <div class="alert alert-danger" id="search-error" style="display:none;"></div>
       <div class="well">
         <div class="row">
@@ -55,7 +55,7 @@
       </div>
       <div class="well"> {{ text_not_in_catalog }}<a href="{{ url_advanced }}" id="create_new" class="btn btn-primary"><i class="fa fa-plus-circle"></i> {{ button_new }}</a></div>
     </div>
-    <div class="panel-body" id="search-result-container" style="display:none;">
+    <div class="card-body" id="search-result-container" style="display:none;">
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
@@ -70,15 +70,15 @@
         </tbody>
       </table>
     </div>
-    <div class="panel-body" id="chosen-product" style="display:none;">
+    <div class="card-body" id="chosen-product" style="display:none;">
       <div id="chosen-product-preview" class="well" style="display:none;"></div>
       <div class="panel">
-        <div class="panel-body">
-          <form method="POST" action="{{ form_action }}" class="form-horizontal">
+        <div class="card-body">
+          <form method="POST" action="{{ form_action }}">
             <input type="hidden" name="asin" value=""/> <input type="hidden" name="marketplace" value="{{ default_marketplace }}"/> <input type="hidden" name="product_id" value="{{ product_id }}"/> <input type="hidden" name="quantity" value="{{ quantity }}" id="quantity"/>
             <ul class="nav nav-tabs">
               <li class="active"><a href="#required-info" data-toggle="tab">{{ tab_required }}</a></li>
-              <li><a href="#additional-info" data-toggle="tab">{{ tab_additional }}</a></li>
+              <li class="nav-item"><a href="#additional-info" data-toggle="tab">{{ tab_additional }}</a></li>
             </ul>
             <div class="tab-content">
               <div class="tab-pane active" id="required-info">

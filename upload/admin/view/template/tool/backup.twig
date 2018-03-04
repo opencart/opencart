@@ -23,12 +23,10 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-exchange"></i> {{ heading_title }}</h3>
-      </div>
-      <div class="panel-body">
-        <form class="form-horizontal">
+    <div class="card">
+      <div class="card-header"><i class="fa fa-exchange"></i> {{ heading_title }}</div>
+      <div class="card-body">
+        <form>
           <fieldset>
             <legend>{{ text_progress }}</legend>
             <div class="form-group">

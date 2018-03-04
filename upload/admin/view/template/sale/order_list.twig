@@ -27,11 +27,9 @@
     {% endif %}
     <div class="row">
       <div id="filter-order" class="col-md-3 col-md-push-9 col-sm-12 hidden-sm hidden-xs">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
-          </div>
-          <div class="panel-body">
+        <div class="card">
+          <div class="card-header"><i class="fa fa-filter"></i> {{ text_filter }}</div>
+          <div class="card-body">
             <div class="form-group">
               <label class="control-label" for="input-order-id">{{ entry_order_id }}</label> <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
             </div>
@@ -93,11 +91,9 @@
         </div>
       </div>
       <div class="col-md-9 col-md-pull-3 col-sm-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
-          </div>
-          <div class="panel-body">
+        <div class="card">
+          <div class="card-header"><i class="fa fa-list"></i> {{ text_list }}</div>
+          <div class="card-body">
             <form method="post" action="" enctype="multipart/form-data" id="form-order">
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">

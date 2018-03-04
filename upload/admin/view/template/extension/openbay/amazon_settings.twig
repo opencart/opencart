@@ -15,19 +15,17 @@
     </div>
   </div>
   <div class="container-fluid">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-amazon"></i> {{ text_edit }}</h3>
-      </div>
-      <div class="panel-body">
-        <form action="" method="post" enctype="multipart/form-data" id="settings-form" class="form-horizontal">
+    <div class="card">
+      <div class="card-header"><i class="fa fa-amazon"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        <form action="" method="post" enctype="multipart/form-data" id="settings-form">
           {% if openbay_amazon_token is empty %}
           <a href="{{ link_signup }}" target="_blank"><div class="alert alert-info"><h5 style="font-size: 14px;"><i class="fa fa-user-plus fa-2x"></i>&nbsp;&nbsp;{{ text_register_banner }}</h5></div></a>
           {% endif %}
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-settings" data-toggle="tab">{{ tab_settings }}</a></li>
-            <li><a href="#tab-product" data-toggle="tab">{{ tab_listing }}</a></li>
-            <li><a href="#tab-orders" data-toggle="tab">{{ tab_orders }}</a></li>
+            <li class="nav-item"><a href="#tab-product" data-toggle="tab">{{ tab_listing }}</a></li>
+            <li class="nav-item"><a href="#tab-orders" data-toggle="tab">{{ tab_orders }}</a></li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-settings">
@@ -80,15 +78,16 @@
             </div>
             <div class="tab-pane" id="tab-product">
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="entry-tax-percentage"><span data-toggle="tooltip" data-container="#tab-product" title="{{ help_tax_percentage }}">{{ entry_tax_percentage }}</span></label>
+                <label class="col-sm-2 control-label" for="entry-tax-percentage">{{ entry_tax_percentage }}</label>
                 <div class="col-sm-10">
                   <div class="input-group col-xs-2">
                     <input type="text" name="openbay_amazon_listing_tax_added" value="{{ openbay_amazon_listing_tax_added }}" placeholder="{{ entry_tax_percentage }}" id="entry-tax-percentage" class="form-control" />
-                    <span class="input-group-addon">%</span> </div>
+                    <span class="input-group-addon">%</span></div>
+                  <small class="form-text text-muted">{{ help_tax_percentage }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label"><span data-toggle="tooltip" data-container="#tab-product" title="{{ help_entry_marketplace_default }}">{{ entry_marketplace_default }}</span></label>
+                <label class="col-sm-2 control-label">{{ entry_marketplace_default }}</label>
                 <div class="col-sm-10">
                   {% for marketplace in marketplaces %}
                     {% if marketplace.code == openbay_amazon_default_listing_marketplace %}
@@ -99,6 +98,7 @@
                       <label for="p_code_{{ marketplace.code }}">{{ marketplace.name }}</label>
                     <br />
                   {% endfor %}
+                  <small class="form-text text-muted">{{ help_entry_marketplace_default }}</small>
                 </div>
               </div>
               <div class="form-group">
@@ -155,15 +155,16 @@
               <fieldset>
                 <legend>{{ text_other }}</legend>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="entry-import-tax"><span data-toggle="tooltip" data-container="#tab-orders" title="{{ help_import_tax }}">{{ entry_import_tax }}</span></label>
+                  <label class="col-sm-2 control-label" for="entry-import-tax">{{ entry_import_tax }}</label>
                   <div class="col-sm-10">
                     <div class="input-group col-xs-2">
                       <input type="text" name="openbay_amazon_order_tax" value="{{ openbay_amazon_order_tax }}" id="entry-import-tax" class="form-control" placeholder="{{ entry_import_tax }}" />
-                      <span class="input-group-addon">%</span> </div>
+                      <span class="input-group-addon">%</span></div>
+                    <small class="form-text text-muted">{{ help_import_tax }}</small>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="entry-customer-group"><span data-toggle="tooltip" data-container="#tab-orders" title="{{ help_customer_group }}">{{ entry_customer_group }}</span></label>
+                  <label class="col-sm-2 control-label" for="entry-customer-group">{{ entry_customer_group }}</label>
                   <div class="col-sm-10">
                     <select name="openbay_amazon_order_customer_group" id="entry-customer-group" class="form-control">
                       {% for customer_group in customer_groups %}
@@ -174,6 +175,7 @@
                         {% endif %}
                       {% endfor %}
                     </select>
+                    <small class="form-text text-muted">{{ help_customer_group }}</small>
                   </div>
                 </div>
                 <div class="form-group">
@@ -191,13 +193,14 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="entry-default-shipping"><span data-toggle="tooltip" data-container="#tab-orders" title="{{ help_default_shipping }}">{{ entry_default_shipping }}</span></label>
+                  <label class="col-sm-2 control-label" for="entry-default-shipping">{{ entry_default_shipping }}</label>
                   <div class="col-sm-10">
                     <select name="openbay_amazon_default_carrier" id="entry-default-shipping" class="form-control">
                       {% for carrier in carriers %}
                         <option{% if carrier == openbay_amazon_default_carrier %} selected{% endif %}>{{ carrier }}</option>
                       {% endfor %}
                     </select>
+                    <small class="form-text text-muted">{{ help_default_shipping }}</small>
                   </div>
                 </div>
               </fieldset>

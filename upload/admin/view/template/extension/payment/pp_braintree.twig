@@ -24,22 +24,20 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
-      </div>
-      <div class="panel-body">
-        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-braintree" class="form-horizontal">
+    <div class="card">
+      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-braintree">
           <ul class="nav nav-tabs" id="tabs">
             <li class="active"><a href="#tab-setting" data-toggle="tab">{{ tab_setting }}</a></li>
             {% if payment_pp_braintree_access_token is empty %}
-              <li><a href="#tab-currency" data-toggle="tab">{{ tab_currency }}</a></li>
+              <li class="nav-item"><a href="#tab-currency" data-toggle="tab">{{ tab_currency }}</a></li>
             {% endif %}
-            <li><a href="#tab-order-status" data-toggle="tab">{{ tab_order_status }}</a></li>
-            <li><a href="#tab-3ds" data-toggle="tab">{{ tab_3ds }}</a></li>
-            <li><a href="#tab-vault" data-toggle="tab">{{ tab_vault }}</a></li>
-            <li><a href="#tab-paypal" data-toggle="tab">{{ tab_paypal }}</a></li>
-            <li><a href="#tab-transaction" data-toggle="tab">{{ tab_transaction }}</a></li>
+            <li class="nav-item"><a href="#tab-order-status" data-toggle="tab">{{ tab_order_status }}</a></li>
+            <li class="nav-item"><a href="#tab-3ds" data-toggle="tab">{{ tab_3ds }}</a></li>
+            <li class="nav-item"><a href="#tab-vault" data-toggle="tab">{{ tab_vault }}</a></li>
+            <li class="nav-item"><a href="#tab-paypal" data-toggle="tab">{{ tab_paypal }}</a></li>
+            <li class="nav-item"><a href="#tab-transaction" data-toggle="tab">{{ tab_transaction }}</a></li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-setting">
@@ -106,7 +104,7 @@
               </div>
 
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-settlement-immediate"><span data-toggle="tooltip" title="{{ help_settlement_type }}">{{ entry_settlement_type }}</span></label>
+                <label class="col-sm-2 control-label" for="input-settlement-immediate">{{ entry_settlement_type }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_braintree_settlement_immediate" id="input-settlement-immediate" class="form-control">
                     {% if payment_pp_braintree_settlement_immediate == 1 %}
@@ -117,10 +115,11 @@
                       <option value="0" selected="selected">{{ text_deferred }}</option>
                     {% endif %}
                   </select>
+                  <small class="form-text text-muted">{{ help_settlement_type }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="{{ help_debug }}">{{ entry_debug }}</span></label>
+                <label class="col-sm-2 control-label" for="input-debug">{{ entry_debug }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_braintree_debug" id="input-debug" class="form-control">
                     {% if payment_pp_braintree_debug %}
@@ -131,12 +130,14 @@
                       <option value="0" selected="selected">{{ text_disabled }}</option>
                     {% endif %}
                   </select>
+                  <small class="form-text text-muted">{{ help_debug }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="{{ help_total }}">{{ entry_total }}</span></label>
+                <label class="col-sm-2 control-label" for="input-total">{{ entry_total }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_pp_braintree_total" value="{{ payment_pp_braintree_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
+                  <small class="form-text text-muted">{{ help_total }}</small>
                 </div>
               </div>
               <div class="form-group">
@@ -556,7 +557,7 @@
             </div>
             <div class="tab-pane" id="tab-vault">
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-card-vault"><span data-toggle="tooltip" title="{{ help_card_vault }}">{{ entry_card_vault }}</span></label>
+                <label class="col-sm-2 control-label" for="input-card-vault">{{ entry_card_vault }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_braintree_card_vault" id="input-card-vault" class="form-control">
                     {% if payment_pp_braintree_card_vault %}
@@ -567,10 +568,11 @@
                       <option value="0" selected="selected">{{ text_disabled }}</option>
                     {% endif %}
                   </select>
+                  <small class="form-text text-muted">{{ help_card_vault }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-card-check-vault"><span data-toggle="tooltip" title="{{ help_card_check_vault }}">{{ entry_card_check_vault }}</span></label>
+                <label class="col-sm-2 control-label" for="input-card-check-vault">{{ entry_card_check_vault }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_braintree_card_check_vault" id="input-card-check-vault" class="form-control">
                     {% if payment_pp_braintree_card_check_vault %}
@@ -581,10 +583,11 @@
                       <option value="0" selected="selected">{{ text_disabled }}</option>
                     {% endif %}
                   </select>
+                  <small class="form-text text-muted">{{ help_card_check_vault }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-vault-cvv-3ds"><span data-toggle="tooltip" title="{{ help_vault_cvv_3ds }}">{{ entry_vault_cvv_3ds }}</span></label>
+                <label class="col-sm-2 control-label" for="input-vault-cvv-3ds">{{ entry_vault_cvv_3ds }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_braintree_vault_cvv_3ds" id="input-vault-cvv-3ds" class="form-control">
                     {% if payment_pp_braintree_vault_cvv_3ds == "cvv" %}
@@ -601,12 +604,12 @@
                       <option value="3ds">{{ text_3ds }}</option>
                     {% endif %}
                   </select>
+                  <small class="form-text text-muted">{{ help_vault_cvv_3ds }}</small>
                 </div>
               </div>
-
               {% if braintree_config.paypal_enabled == 1 %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-paypal-vault"><span data-toggle="tooltip" title="{{ help_paypal_vault }}">{{ entry_paypal_vault }}</span></label>
+                  <label class="col-sm-2 control-label" for="input-paypal-vault">{{ entry_paypal_vault }}</label>
                   <div class="col-sm-10">
                     <select name="payment_pp_braintree_paypal_vault" id="input-paypal-vault" class="form-control">
                       {% if payment_pp_braintree_paypal_vault %}
@@ -617,10 +620,11 @@
                         <option value="0" selected="selected">{{ text_disabled }}</option>
                       {% endif %}
                     </select>
+                    <small class="form-text text-muted">{{ help_paypal_vault }}</small>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-paypal-check-vault"><span data-toggle="tooltip" title="{{ help_paypal_check_vault }}">{{ entry_paypal_check_vault }}</span></label>
+                  <label class="col-sm-2 control-label" for="input-paypal-check-vault">{{ entry_paypal_check_vault }}</label>
                   <div class="col-sm-10">
                     <select name="payment_pp_braintree_paypal_check_vault" id="input-paypal-check-vault" class="form-control">
                       {% if payment_pp_braintree_paypal_check_vault %}
@@ -631,6 +635,7 @@
                         <option value="0" selected="selected">{{ text_disabled }}</option>
                       {% endif %}
                     </select>
+                    <small class="form-text text-muted">{{ help_paypal_check_vault }}</small>
                   </div>
                 </div>
               {% else %}
@@ -644,7 +649,7 @@
                 <input type="hidden" name="payment_pp_braintree_paypal_option" value="0"/>
               {% else %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-paypal-option"><span data-toggle="tooltip" title="{{ help_paypal_option }}">{{ entry_paypal_option }}</span></label>
+                  <label class="col-sm-2 control-label" for="input-paypal-option">{{ entry_paypal_option }}</label>
                   <div class="col-sm-10">
                     <select name="payment_pp_braintree_paypal_option" id="input-vault" class="form-control">
                       {% if payment_pp_braintree_paypal_option %}
@@ -655,6 +660,7 @@
                         <option value="0" selected="selected">{{ text_disabled }}</option>
                       {% endif %}
                     </select>
+                    <small class="form-text text-muted">{{ help_paypal_option }}</small>
                   </div>
                 </div>
 

@@ -20,11 +20,9 @@
     {% else %}
     <div class="row">
       <div class="col-md-4">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h1 class="panel-title"><i class="fa fa-user"></i> {{ text_current_plan }}</h1>
-          </div>
-          <div class="panel-body">
+        <div class="card">
+          <div class="card-header"><i class="fa fa-user"></i> {{ text_current_plan }}</div>
+          <div class="card-body">
             <table class="table table-bordered table-hover">
               <tbody>
                 <tr>
@@ -79,11 +77,9 @@
         </div>
       </div>
       <div class="col-md-8">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h1 class="panel-title"><i class="fa fa-list"></i> {{ text_available_plans }}</h1>
-          </div>
-          <div class="panel-body">
+        <div class="card">
+          <div class="card-header"><i class="fa fa-list"></i> {{ text_available_plans }}</div>
+          <div class="card-body">
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>

@@ -8,38 +8,36 @@
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
-        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
         {% endfor %}
       </ul>
     </div>
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
-    {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
-      <div class="panel-body">
-        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-shipping" class="form-horizontal">
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-shipping">
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-user-id">{{ entry_user_id }}</label>
             <div class="col-sm-10">
-              <input type="text" name="shipping_usps_user_id" value="{{ shipping_usps_user_id }}" placeholder="{{ entry_user_id }}" id="input-user-id" class="form-control" />
+              <input type="text" name="shipping_usps_user_id" value="{{ shipping_usps_user_id }}" placeholder="{{ entry_user_id }}" id="input-user-id" class="form-control"/>
               {% if error_user_id %}
-              <div class="text-danger">{{ error_user_id }}</div>
+                <div class="text-danger">{{ error_user_id }}</div>
               {% endif %}
             </div>
           </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-postcode">{{ entry_postcode }}</label>
             <div class="col-sm-10">
-              <input type="text" name="shipping_usps_postcode" value="{{ shipping_usps_postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" />
+              <input type="text" name="shipping_usps_postcode" value="{{ shipping_usps_postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control"/>
               {% if error_postcode %}
-              <div class="text-danger">{{ error_postcode }}</div>
+                <div class="text-danger">{{ error_postcode }}</div>
               {% endif %}
             </div>
           </div>
@@ -50,242 +48,242 @@
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_domestic_00 %}
-                    <input type="checkbox" name="shipping_usps_domestic_00" value="1" checked="checked" />
-                    {{ text_domestic_00 }}
+                      <input type="checkbox" name="shipping_usps_domestic_00" value="1" checked="checked"/>
+                      {{ text_domestic_00 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_domestic_00" value="1" />
-                    {{ text_domestic_00 }}
+                      <input type="checkbox" name="shipping_usps_domestic_00" value="1"/>
+                      {{ text_domestic_00 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_domestic_01 %}
-                    <input type="checkbox" name="shipping_usps_domestic_01" value="1" checked="checked" />
-                    {{ text_domestic_01 }}
+                      <input type="checkbox" name="shipping_usps_domestic_01" value="1" checked="checked"/>
+                      {{ text_domestic_01 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_domestic_01" value="1" />
-                    {{ text_domestic_01 }}
+                      <input type="checkbox" name="shipping_usps_domestic_01" value="1"/>
+                      {{ text_domestic_01 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_domestic_02 %}
-                    <input type="checkbox" name="shipping_usps_domestic_02" value="1" checked="checked" />
-                    {{ text_domestic_02 }}
+                      <input type="checkbox" name="shipping_usps_domestic_02" value="1" checked="checked"/>
+                      {{ text_domestic_02 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_domestic_02" value="1" />
-                    {{ text_domestic_02 }}
+                      <input type="checkbox" name="shipping_usps_domestic_02" value="1"/>
+                      {{ text_domestic_02 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_domestic_03 %}
-                    <input type="checkbox" name="shipping_usps_domestic_03" value="1" checked="checked" />
-                    {{ text_domestic_03 }}
+                      <input type="checkbox" name="shipping_usps_domestic_03" value="1" checked="checked"/>
+                      {{ text_domestic_03 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_domestic_03" value="1" />
-                    {{ text_domestic_03 }}
+                      <input type="checkbox" name="shipping_usps_domestic_03" value="1"/>
+                      {{ text_domestic_03 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_domestic_1 %}
-                    <input type="checkbox" name="shipping_usps_domestic_1" value="1" checked="checked" />
-                    {{ text_domestic_1 }}
+                      <input type="checkbox" name="shipping_usps_domestic_1" value="1" checked="checked"/>
+                      {{ text_domestic_1 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_domestic_1" value="1" />
-                    {{ text_domestic_1 }}
+                      <input type="checkbox" name="shipping_usps_domestic_1" value="1"/>
+                      {{ text_domestic_1 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_domestic_2 %}
-                    <input type="checkbox" name="shipping_usps_domestic_2" value="1" checked="checked" />
-                    {{ text_domestic_2 }}
+                      <input type="checkbox" name="shipping_usps_domestic_2" value="1" checked="checked"/>
+                      {{ text_domestic_2 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_domestic_2" value="1" />
-                    {{ text_domestic_2 }}
+                      <input type="checkbox" name="shipping_usps_domestic_2" value="1"/>
+                      {{ text_domestic_2 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_domestic_3 %}
-                    <input type="checkbox" name="shipping_usps_domestic_3" value="1" checked="checked" />
-                    {{ text_domestic_3 }}
+                      <input type="checkbox" name="shipping_usps_domestic_3" value="1" checked="checked"/>
+                      {{ text_domestic_3 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_domestic_3" value="1" />
-                    {{ text_domestic_3 }}
+                      <input type="checkbox" name="shipping_usps_domestic_3" value="1"/>
+                      {{ text_domestic_3 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_domestic_4 %}
-                    <input type="checkbox" name="shipping_usps_domestic_4" value="1" checked="checked" />
-                    {{ text_domestic_4 }}
+                      <input type="checkbox" name="shipping_usps_domestic_4" value="1" checked="checked"/>
+                      {{ text_domestic_4 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_domestic_4" value="1" />
-                    {{ text_domestic_4 }}
+                      <input type="checkbox" name="shipping_usps_domestic_4" value="1"/>
+                      {{ text_domestic_4 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_domestic_5 %}
-                    <input type="checkbox" name="shipping_usps_domestic_5" value="1" checked="checked" />
-                    {{ text_domestic_5 }}
+                      <input type="checkbox" name="shipping_usps_domestic_5" value="1" checked="checked"/>
+                      {{ text_domestic_5 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_domestic_5" value="1" />
-                    {{ text_domestic_5 }}
+                      <input type="checkbox" name="shipping_usps_domestic_5" value="1"/>
+                      {{ text_domestic_5 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_domestic_6 %}
-                    <input type="checkbox" name="shipping_usps_domestic_6" value="1" checked="checked" />
-                    {{ text_domestic_6 }}
+                      <input type="checkbox" name="shipping_usps_domestic_6" value="1" checked="checked"/>
+                      {{ text_domestic_6 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_domestic_6" value="1" />
-                    {{ text_domestic_6 }}
+                      <input type="checkbox" name="shipping_usps_domestic_6" value="1"/>
+                      {{ text_domestic_6 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_domestic_7 %}
-                    <input type="checkbox" name="shipping_usps_domestic_7" value="1" checked="checked" />
-                    {{ text_domestic_7 }}
+                      <input type="checkbox" name="shipping_usps_domestic_7" value="1" checked="checked"/>
+                      {{ text_domestic_7 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_domestic_7" value="1" />
-                    {{ text_domestic_7 }}
+                      <input type="checkbox" name="shipping_usps_domestic_7" value="1"/>
+                      {{ text_domestic_7 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_domestic_12 %}
-                    <input type="checkbox" name="shipping_usps_domestic_12" value="1" checked="checked" />
-                    {{ text_domestic_12 }}
+                      <input type="checkbox" name="shipping_usps_domestic_12" value="1" checked="checked"/>
+                      {{ text_domestic_12 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_domestic_12" value="1" />
-                    {{ text_domestic_12 }}
+                      <input type="checkbox" name="shipping_usps_domestic_12" value="1"/>
+                      {{ text_domestic_12 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_domestic_13 %}
-                    <input type="checkbox" name="shipping_usps_domestic_13" value="1" checked="checked" />
-                    {{ text_domestic_13 }}
+                      <input type="checkbox" name="shipping_usps_domestic_13" value="1" checked="checked"/>
+                      {{ text_domestic_13 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_domestic_13" value="1" />
-                    {{ text_domestic_13 }}
+                      <input type="checkbox" name="shipping_usps_domestic_13" value="1"/>
+                      {{ text_domestic_13 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_domestic_16 %}
-                    <input type="checkbox" name="shipping_usps_domestic_16" value="1" checked="checked" />
-                    {{ text_domestic_16 }}
+                      <input type="checkbox" name="shipping_usps_domestic_16" value="1" checked="checked"/>
+                      {{ text_domestic_16 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_domestic_16" value="1" />
-                    {{ text_domestic_16 }}
+                      <input type="checkbox" name="shipping_usps_domestic_16" value="1"/>
+                      {{ text_domestic_16 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_domestic_17 %}
-                    <input type="checkbox" name="shipping_usps_domestic_17" value="1" checked="checked" />
-                    {{ text_domestic_17 }}
+                      <input type="checkbox" name="shipping_usps_domestic_17" value="1" checked="checked"/>
+                      {{ text_domestic_17 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_domestic_17" value="1" />
-                    {{ text_domestic_17 }}
+                      <input type="checkbox" name="shipping_usps_domestic_17" value="1"/>
+                      {{ text_domestic_17 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_domestic_18 %}
-                    <input type="checkbox" name="shipping_usps_domestic_18" value="1" checked="checked" />
-                    {{ text_domestic_18 }}
+                      <input type="checkbox" name="shipping_usps_domestic_18" value="1" checked="checked"/>
+                      {{ text_domestic_18 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_domestic_18" value="1" />
-                    {{ text_domestic_18 }}
+                      <input type="checkbox" name="shipping_usps_domestic_18" value="1"/>
+                      {{ text_domestic_18 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_domestic_19 %}
-                    <input type="checkbox" name="shipping_usps_domestic_19" value="1" checked="checked" />
-                    {{ text_domestic_19 }}
+                      <input type="checkbox" name="shipping_usps_domestic_19" value="1" checked="checked"/>
+                      {{ text_domestic_19 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_domestic_19" value="1" />
-                    {{ text_domestic_19 }}
+                      <input type="checkbox" name="shipping_usps_domestic_19" value="1"/>
+                      {{ text_domestic_19 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_domestic_22 %}
-                    <input type="checkbox" name="shipping_usps_domestic_22" value="1" checked="checked" />
-                    {{ text_domestic_22 }}
+                      <input type="checkbox" name="shipping_usps_domestic_22" value="1" checked="checked"/>
+                      {{ text_domestic_22 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_domestic_22" value="1" />
-                    {{ text_domestic_22 }}
-                   {% endif %}
+                      <input type="checkbox" name="shipping_usps_domestic_22" value="1"/>
+                      {{ text_domestic_22 }}
+                    {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_domestic_23 %}
-                    <input type="checkbox" name="shipping_usps_domestic_23" value="1" checked="checked" />
-                    {{ text_domestic_23 }}
+                      <input type="checkbox" name="shipping_usps_domestic_23" value="1" checked="checked"/>
+                      {{ text_domestic_23 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_domestic_23" value="1" />
-                    {{ text_domestic_23 }}
+                      <input type="checkbox" name="shipping_usps_domestic_23" value="1"/>
+                      {{ text_domestic_23 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_domestic_25 %}
-                    <input type="checkbox" name="shipping_usps_domestic_25" value="1" checked="checked" />
-                    {{ text_domestic_25 }}
+                      <input type="checkbox" name="shipping_usps_domestic_25" value="1" checked="checked"/>
+                      {{ text_domestic_25 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_domestic_25" value="1" />
-                    {{ text_domestic_25 }}
+                      <input type="checkbox" name="shipping_usps_domestic_25" value="1"/>
+                      {{ text_domestic_25 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_domestic_27 %}
-                    <input type="checkbox" name="shipping_usps_domestic_27" value="1" checked="checked" />
-                    {{ text_domestic_27 }}
+                      <input type="checkbox" name="shipping_usps_domestic_27" value="1" checked="checked"/>
+                      {{ text_domestic_27 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_domestic_27" value="1" />
-                    {{ text_domestic_27 }}
+                      <input type="checkbox" name="shipping_usps_domestic_27" value="1"/>
+                      {{ text_domestic_27 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_domestic_28 %}
-                    <input type="checkbox" name="shipping_usps_domestic_28" value="1" checked="checked" />
-                    {{ text_domestic_28 }}
+                      <input type="checkbox" name="shipping_usps_domestic_28" value="1" checked="checked"/>
+                      {{ text_domestic_28 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_domestic_28" value="1" />
-                    {{ text_domestic_28 }}
+                      <input type="checkbox" name="shipping_usps_domestic_28" value="1"/>
+                      {{ text_domestic_28 }}
                     {% endif %}
                   </label>
                 </div>
@@ -299,176 +297,176 @@
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_international_1 %}
-                    <input type="checkbox" name="shipping_usps_international_1" value="1" checked="checked" />
-                    {{ text_international_1 }}
+                      <input type="checkbox" name="shipping_usps_international_1" value="1" checked="checked"/>
+                      {{ text_international_1 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_international_1" value="1" />
-                    {{ text_international_1 }}
+                      <input type="checkbox" name="shipping_usps_international_1" value="1"/>
+                      {{ text_international_1 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_international_2 %}
-                    <input type="checkbox" name="shipping_usps_international_2" value="1" checked="checked" />
-                    {{ text_international_2 }}
+                      <input type="checkbox" name="shipping_usps_international_2" value="1" checked="checked"/>
+                      {{ text_international_2 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_international_2" value="1" />
-                    {{ text_international_2 }}
+                      <input type="checkbox" name="shipping_usps_international_2" value="1"/>
+                      {{ text_international_2 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_international_4 %}
-                    <input type="checkbox" name="shipping_usps_international_4" value="1" checked="checked" />
-                    {{ text_international_4 }}
+                      <input type="checkbox" name="shipping_usps_international_4" value="1" checked="checked"/>
+                      {{ text_international_4 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_international_4" value="1" />
-                    {{ text_international_4 }}
+                      <input type="checkbox" name="shipping_usps_international_4" value="1"/>
+                      {{ text_international_4 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_international_5 %}
-                    <input type="checkbox" name="shipping_usps_international_5" value="1" checked="checked" />
-                    {{ text_international_5 }}
+                      <input type="checkbox" name="shipping_usps_international_5" value="1" checked="checked"/>
+                      {{ text_international_5 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_international_5" value="1" />
-                    {{ text_international_5 }}
+                      <input type="checkbox" name="shipping_usps_international_5" value="1"/>
+                      {{ text_international_5 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_international_6 %}
-                    <input type="checkbox" name="shipping_usps_international_6" value="1" checked="checked" />
-                    {{ text_international_6 }}
+                      <input type="checkbox" name="shipping_usps_international_6" value="1" checked="checked"/>
+                      {{ text_international_6 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_international_6" value="1" />
-                    {{ text_international_6 }}
+                      <input type="checkbox" name="shipping_usps_international_6" value="1"/>
+                      {{ text_international_6 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_international_7 %}
-                    <input type="checkbox" name="shipping_usps_international_7" value="1" checked="checked" />
-                    {{ text_international_7 }}
+                      <input type="checkbox" name="shipping_usps_international_7" value="1" checked="checked"/>
+                      {{ text_international_7 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_international_7" value="1" />
-                    {{ text_international_7 }}
+                      <input type="checkbox" name="shipping_usps_international_7" value="1"/>
+                      {{ text_international_7 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_international_8 %}
-                    <input type="checkbox" name="shipping_usps_international_8" value="1" checked="checked" />
-                    {{ text_international_8 }}
+                      <input type="checkbox" name="shipping_usps_international_8" value="1" checked="checked"/>
+                      {{ text_international_8 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_international_8" value="1" />
-                    {{ text_international_8 }}
+                      <input type="checkbox" name="shipping_usps_international_8" value="1"/>
+                      {{ text_international_8 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_international_9 %}
-                    <input type="checkbox" name="shipping_usps_international_9" value="1" checked="checked" />
-                    {{ text_international_9 }}
+                      <input type="checkbox" name="shipping_usps_international_9" value="1" checked="checked"/>
+                      {{ text_international_9 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_international_9" value="1" />
-                    {{ text_international_9 }}
+                      <input type="checkbox" name="shipping_usps_international_9" value="1"/>
+                      {{ text_international_9 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_international_10 %}
-                    <input type="checkbox" name="shipping_usps_international_10" value="1" checked="checked" />
-                    {{ text_international_10 }}
+                      <input type="checkbox" name="shipping_usps_international_10" value="1" checked="checked"/>
+                      {{ text_international_10 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_international_10" value="1" />
-                    {{ text_international_10 }}
+                      <input type="checkbox" name="shipping_usps_international_10" value="1"/>
+                      {{ text_international_10 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_international_11 %}
-                    <input type="checkbox" name="shipping_usps_international_11" value="1" checked="checked" />
-                    {{ text_international_11 }}
+                      <input type="checkbox" name="shipping_usps_international_11" value="1" checked="checked"/>
+                      {{ text_international_11 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_international_11" value="1" />
-                    {{ text_international_11 }}
+                      <input type="checkbox" name="shipping_usps_international_11" value="1"/>
+                      {{ text_international_11 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_international_12 %}
-                    <input type="checkbox" name="shipping_usps_international_12" value="1" checked="checked" />
-                    {{ text_international_12 }}
+                      <input type="checkbox" name="shipping_usps_international_12" value="1" checked="checked"/>
+                      {{ text_international_12 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_international_12" value="1" />
-                    {{ text_international_12 }}
+                      <input type="checkbox" name="shipping_usps_international_12" value="1"/>
+                      {{ text_international_12 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_international_13 %}
-                    <input type="checkbox" name="shipping_usps_international_13" value="1" checked="checked" />
-                    {{ text_international_13 }}
+                      <input type="checkbox" name="shipping_usps_international_13" value="1" checked="checked"/>
+                      {{ text_international_13 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_international_13" value="1" />
-                    {{ text_international_13 }}
+                      <input type="checkbox" name="shipping_usps_international_13" value="1"/>
+                      {{ text_international_13 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_international_14 %}
-                    <input type="checkbox" name="shipping_usps_international_14" value="1" checked="checked" />
-                    {{ text_international_14 }}
+                      <input type="checkbox" name="shipping_usps_international_14" value="1" checked="checked"/>
+                      {{ text_international_14 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_international_14" value="1" />
-                    {{ text_international_14 }}
+                      <input type="checkbox" name="shipping_usps_international_14" value="1"/>
+                      {{ text_international_14 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_international_15 %}
-                    <input type="checkbox" name="shipping_usps_international_15" value="1" checked="checked" />
-                    {{ text_international_15 }}
+                      <input type="checkbox" name="shipping_usps_international_15" value="1" checked="checked"/>
+                      {{ text_international_15 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_international_15" value="1" />
-                    {{ text_international_15 }}
+                      <input type="checkbox" name="shipping_usps_international_15" value="1"/>
+                      {{ text_international_15 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_international_16 %}
-                    <input type="checkbox" name="shipping_usps_international_16" value="1" checked="checked" />
-                    {{ text_international_16 }}
+                      <input type="checkbox" name="shipping_usps_international_16" value="1" checked="checked"/>
+                      {{ text_international_16 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_international_16" value="1" />
-                    {{ text_international_16 }}
+                      <input type="checkbox" name="shipping_usps_international_16" value="1"/>
+                      {{ text_international_16 }}
                     {% endif %}
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     {% if shipping_usps_international_21 %}
-                    <input type="checkbox" name="shipping_usps_international_21" value="1" checked="checked" />
-                    {{ text_international_21 }}
+                      <input type="checkbox" name="shipping_usps_international_21" value="1" checked="checked"/>
+                      {{ text_international_21 }}
                     {% else %}
-                    <input type="checkbox" name="shipping_usps_international_21" value="1" />
-                    {{ text_international_21 }}
+                      <input type="checkbox" name="shipping_usps_international_21" value="1"/>
+                      {{ text_international_21 }}
                     {% endif %}
                   </label>
                 </div>
@@ -480,11 +478,11 @@
             <div class="col-sm-10">
               <select name="shipping_usps_size" id="input-size" class="form-control">
                 {% for size in sizes %}
-                {% if size.value == shipping_usps_size %}
-                <option value="{{ size.value }}" selected="selected">{{ size.text }}</option>
-                {% else %}
-                <option value="{{ size.value }}">{{ size.text }}</option>
-               {% endif %}
+                  {% if size.value == shipping_usps_size %}
+                    <option value="{{ size.value }}" selected="selected">{{ size.text }}</option>
+                  {% else %}
+                    <option value="{{ size.value }}">{{ size.text }}</option>
+                  {% endif %}
                 {% endfor %}
               </select>
             </div>
@@ -494,11 +492,11 @@
             <div class="col-sm-10">
               <select name="shipping_usps_container" id="input-container" class="form-control">
                 {% for container in containers %}
-                {% if container.value == shipping_usps_container %}
-                <option value="{{ container.value }}" selected="selected">{{ container.text }}</option>
-                {% else %}
-                <option value="{{ container.value }}">{{ container.text }}</option>
-                {% endif %}
+                  {% if container.value == shipping_usps_container %}
+                    <option value="{{ container.value }}" selected="selected">{{ container.text }}</option>
+                  {% else %}
+                    <option value="{{ container.value }}">{{ container.text }}</option>
+                  {% endif %}
                 {% endfor %}
               </select>
             </div>
@@ -508,11 +506,11 @@
             <div class="col-sm-10">
               <select name="shipping_usps_machinable" id="input-machinable" class="form-control">
                 {% if shipping_usps_machinable %}
-                <option value="1" selected="selected">{{ text_yes }}</option>
-                <option value="0">{{ text_no }}</option>
+                  <option value="1" selected="selected">{{ text_yes }}</option>
+                  <option value="0">{{ text_no }}</option>
                 {% else %}
-                <option value="1">{{ text_yes }}</option>
-                <option value="0" selected="selected">{{ text_no }}</option>
+                  <option value="1">{{ text_yes }}</option>
+                  <option value="0" selected="selected">{{ text_no }}</option>
                 {% endif %}
               </select>
             </div>
@@ -522,17 +520,17 @@
             <div class="col-sm-10">
               <div class="row">
                 <div class="col-sm-4">
-                  <input type="text" name="shipping_usps_length" value="{{ shipping_usps_length }}" placeholder="{{ entry_length }}" id="input-length" class="form-control" />
+                  <input type="text" name="shipping_usps_length" value="{{ shipping_usps_length }}" placeholder="{{ entry_length }}" id="input-length" class="form-control"/>
                 </div>
                 <div class="col-sm-4">
-                  <input type="text" name="shipping_usps_width" value="{{ shipping_usps_width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control" />
+                  <input type="text" name="shipping_usps_width" value="{{ shipping_usps_width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control"/>
                 </div>
                 <div class="col-sm-4">
-                  <input type="text" name="shipping_usps_height" value="{{ shipping_usps_height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control" />
+                  <input type="text" name="shipping_usps_height" value="{{ shipping_usps_height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control"/>
                 </div>
               </div>
               {% if error_dimension %}
-              <div class="text-danger">{{ error_dimension }}</div>
+                <div class="text-danger">{{ error_dimension }}</div>
               {% endif %}
             </div>
           </div>
@@ -541,20 +539,19 @@
             <div class="col-sm-10">
               <label class="radio-inline">
                 {% if shipping_usps_display_time %}
-                <input type="radio" name="shipping_usps_display_time" value="1" checked="checked" />
-                {{ text_yes }}
+                  <input type="radio" name="shipping_usps_display_time" value="1" checked="checked"/>
+                  {{ text_yes }}
                 {% else %}
-                <input type="radio" name="shipping_usps_display_time" value="1" />
-                {{ text_yes }}
+                  <input type="radio" name="shipping_usps_display_time" value="1"/>
+                  {{ text_yes }}
                 {% endif %}
-              </label>
-              <label class="radio-inline">
+              </label> <label class="radio-inline">
                 {% if not shipping_usps_display_time %}
-                <input type="radio" name="shipping_usps_display_time" value="0" checked="checked" />
-                {{ text_no }}
+                  <input type="radio" name="shipping_usps_display_time" value="0" checked="checked"/>
+                  {{ text_no }}
                 {% else %}
-                <input type="radio" name="shipping_usps_display_time" value="0" />
-                {{ text_no }}
+                  <input type="radio" name="shipping_usps_display_time" value="0"/>
+                  {{ text_no }}
                 {% endif %}
               </label>
             </div>
@@ -564,20 +561,19 @@
             <div class="col-sm-10">
               <label class="radio-inline">
                 {% if shipping_usps_display_weight %}
-                <input type="radio" name="shipping_usps_display_weight" value="1" checked="checked" />
-                {{ text_yes }}
+                  <input type="radio" name="shipping_usps_display_weight" value="1" checked="checked"/>
+                  {{ text_yes }}
                 {% else %}
-                <input type="radio" name="shipping_usps_display_weight" value="1" />
-                {{ text_yes }}
+                  <input type="radio" name="shipping_usps_display_weight" value="1"/>
+                  {{ text_yes }}
                 {% endif %}
-              </label>
-              <label class="radio-inline">
+              </label> <label class="radio-inline">
                 {% if not shipping_usps_display_weight %}
-                <input type="radio" name="shipping_usps_display_weight" value="0" checked="checked" />
-                {{ text_no }}
+                  <input type="radio" name="shipping_usps_display_weight" value="0" checked="checked"/>
+                  {{ text_no }}
                 {% else %}
-                <input type="radio" name="shipping_usps_display_weight" value="0" />
-                {{ text_no }}
+                  <input type="radio" name="shipping_usps_display_weight" value="0"/>
+                  {{ text_no }}
                 {% endif %}
               </label>
             </div>
@@ -587,11 +583,11 @@
             <div class="col-sm-10">
               <select name="shipping_usps_weight_class_id" id="input-weight-class" class="form-control">
                 {% for weight_class in weight_classes %}
-                {% if weight_class.weight_class_id == shipping_usps_weight_class_id %}
-                <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
-                {% else %}
-                <option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
-                {% endif %}
+                  {% if weight_class.weight_class_id == shipping_usps_weight_class_id %}
+                    <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
+                  {% else %}
+                    <option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
+                  {% endif %}
                 {% endfor %}
               </select>
             </div>
@@ -602,11 +598,11 @@
               <select name="shipping_usps_tax_class_id" id="input-tax-class" class="form-control">
                 <option value="0">{{ text_none }}</option>
                 {% for tax_class in tax_classes %}
-                {% if tax_class.tax_class_id == shipping_usps_tax_class_id %}
-                <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
-                {% else %}
-                <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
-                {% endif %}
+                  {% if tax_class.tax_class_id == shipping_usps_tax_class_id %}
+                    <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
+                  {% else %}
+                    <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
+                  {% endif %}
                 {% endfor %}
               </select>
             </div>
@@ -617,11 +613,11 @@
               <select name="shipping_usps_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
                 {% for geo_zone in geo_zones %}
-                {% if geo_zone.geo_zone_id == shipping_usps_geo_zone_id %}
-                <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
-                {% else %}
-                <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
-                {% endif %}
+                  {% if geo_zone.geo_zone_id == shipping_usps_geo_zone_id %}
+                    <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                  {% else %}
+                    <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
+                  {% endif %}
                 {% endfor %}
               </select>
             </div>
@@ -631,11 +627,11 @@
             <div class="col-sm-10">
               <select name="shipping_usps_status" id="input-status" class="form-control">
                 {% if shipping_usps_status %}
-                <option value="1" selected="selected">{{ text_enabled }}</option>
-                <option value="0">{{ text_disabled }}</option>
+                  <option value="1" selected="selected">{{ text_enabled }}</option>
+                  <option value="0">{{ text_disabled }}</option>
                 {% else %}
-                <option value="1">{{ text_enabled }}</option>
-                <option value="0" selected="selected">{{ text_disabled }}</option>
+                  <option value="1">{{ text_enabled }}</option>
+                  <option value="0" selected="selected">{{ text_disabled }}</option>
                 {% endif %}
               </select>
             </div>
@@ -643,7 +639,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
-              <input type="text" name="shipping_usps_sort_order" value="{{ shipping_usps_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+              <input type="text" name="shipping_usps_sort_order" value="{{ shipping_usps_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
             </div>
           </div>
           <div class="form-group">
@@ -651,11 +647,11 @@
             <div class="col-sm-10">
               <select name="shipping_usps_debug" id="input-debug" class="form-control">
                 {% if shipping_usps_debug %}
-                <option value="1" selected="selected">{{ text_enabled }}</option>
-                <option value="0">{{ text_disabled }}</option>
+                  <option value="1" selected="selected">{{ text_enabled }}</option>
+                  <option value="0">{{ text_disabled }}</option>
                 {% else %}
-                <option value="1">{{ text_enabled }}</option>
-                <option value="0" selected="selected">{{ text_disabled }}</option>
+                  <option value="1">{{ text_enabled }}</option>
+                  <option value="0" selected="selected">{{ text_disabled }}</option>
                 {% endif %}
               </select>
             </div>

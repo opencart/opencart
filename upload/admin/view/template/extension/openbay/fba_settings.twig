@@ -9,7 +9,7 @@
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
-        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
         {% endfor %}
       </ul>
     </div>
@@ -18,39 +18,43 @@
     {% if error_warning %}
       <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-amazon"></i> {{ text_edit }}</h3>
-      </div>
-      <div class="panel-body">
-        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-fba-settings" class="form-horizontal">
+    <div class="card">
+      <div class="card-header"><i class="fa fa-amazon"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-fba-settings">
           {% if openbay_fba_api_key is empty %}
-          <a href="{{ link_signup }}" target="_blank"><div class="alert alert-info"><h5 style="font-size: 14px;"><i class="fa fa-user-plus fa-2x"></i>&nbsp;&nbsp;{{ text_register_banner }}</h5></div></a>
+            <a href="{{ link_signup }}" target="_blank">
+              <div class="alert alert-info"><h5 style="font-size: 14px;"><i class="fa fa-user-plus fa-2x"></i>&nbsp;&nbsp;{{ text_register_banner }}</h5></div>
+            </a>
           {% endif %}
           <div class="tab-pane active" id="tab-general">
             <div class="well" id="credential-container">
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="openbay_fba_api_key"><span data-toggle="tooltip" data-container="#tab-content" title="{{ help_api_key }}">{{ entry_api_key }}</span></label>
+                <label class="col-sm-2 control-label" for="openbay_fba_api_key">{{ entry_api_key }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="openbay_fba_api_key" value="{{ openbay_fba_api_key }}" placeholder="{{ entry_api_key }}" id="openbay_fba_api_key" class="form-control credentials" />
+                  <input type="text" name="openbay_fba_api_key" value="{{ openbay_fba_api_key }}" placeholder="{{ entry_api_key }}" id="openbay_fba_api_key" class="form-control credentials"/>
+                  <small class="form-text text-muted">{{ help_api_key }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="openbay_fba_encryption_key"><span data-toggle="tooltip" data-container="#tab-content" title="{{ help_encryption_key }}">{{ entry_encryption_key }}</span></label>
+                <label class="col-sm-2 control-label" for="openbay_fba_encryption_key">{{ entry_encryption_key }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="openbay_fba_encryption_key" value="{{ openbay_fba_encryption_key }}" placeholder="{{ entry_encryption_key }}" id="openbay_fba_encryption_key" class="form-control credentials" />
+                  <input type="text" name="openbay_fba_encryption_key" value="{{ openbay_fba_encryption_key }}" placeholder="{{ entry_encryption_key }}" id="openbay_fba_encryption_key" class="form-control credentials"/>
+                  <small class="form-text text-muted">{{ help_encryption_key }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="openbay_fba_encryption_iv"><span data-toggle="tooltip" data-container="#tab-content" title="{{ help_encryption_iv }}">{{ entry_encryption_iv }}</span></label>
+                <label class="col-sm-2 control-label" for="openbay_fba_encryption_iv">{{ entry_encryption_iv }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="openbay_fba_encryption_iv" value="{{ openbay_fba_encryption_iv }}" placeholder="{{ entry_encryption_iv }}" id="openbay_fba_encryption_iv" class="form-control credentials" />
+                  <input type="text" name="openbay_fba_encryption_iv" value="{{ openbay_fba_encryption_iv }}" placeholder="{{ entry_encryption_iv }}" id="openbay_fba_encryption_iv" class="form-control credentials"/>
+                  <small class="form-text text-muted">{{ help_encryption_iv }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="openbay_fba_api_account_id"><span data-toggle="tooltip" data-container="#tab-content" title="{{ help_account_id }}">{{ entry_account_id }}</span></label>
+                <label class="col-sm-2 control-label" for="openbay_fba_api_account_id">{{ entry_account_id }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="openbay_fba_api_account_id" value="{{ openbay_fba_api_account_id }}" placeholder="{{ entry_account_id }}" id="openbay_fba_api_account_id" class="form-control credentials" />
+                  <input type="text" name="openbay_fba_api_account_id" value="{{ openbay_fba_api_account_id }}" placeholder="{{ entry_account_id }}" id="openbay_fba_api_account_id" class="form-control credentials"/>
+                  <small class="form-text text-muted">{{ help_account_id }}</small>
                 </div>
               </div>
               <div class="form-group">
@@ -64,92 +68,99 @@
               <div class="col-sm-10">
                 <select name="openbay_fba_status" id="openbay_fba_status" class="form-control">
                   {% if openbay_fba_status %}
-                  <option value="1" selected="selected">{{ text_enabled }}</option>
-                  <option value="0">{{ text_disabled }}</option>
+                    <option value="1" selected="selected">{{ text_enabled }}</option>
+                    <option value="0">{{ text_disabled }}</option>
                   {% else %}
-                  <option value="1">{{ text_enabled }}</option>
-                  <option value="0" selected="selected">{{ text_disabled }}</option>
+                    <option value="1">{{ text_enabled }}</option>
+                    <option value="0" selected="selected">{{ text_disabled }}</option>
                   {% endif %}
                 </select>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_fba_debug_log"><span data-toggle="tooltip" data-container="#tab-content" title="{{ help_debug_log }}">{{ entry_debug_log }}</span></label>
+              <label class="col-sm-2 control-label" for="openbay_fba_debug_log">{{ entry_debug_log }}</label>
               <div class="col-sm-10">
                 <select name="openbay_fba_debug_log" id="openbay_fba_debug_log" class="form-control">
                   {% if openbay_fba_debug_log %}
-                  <option value="1" selected="selected">{{ text_yes }}</option>
-                  <option value="0">{{ text_no }}</option>
+                    <option value="1" selected="selected">{{ text_yes }}</option>
+                    <option value="0">{{ text_no }}</option>
                   {% else %}
-                  <option value="1">{{ text_yes }}</option>
-                  <option value="0" selected="selected">{{ text_no }}</option>
+                    <option value="1">{{ text_yes }}</option>
+                    <option value="0" selected="selected">{{ text_no }}</option>
                   {% endif %}
                 </select>
+                <small class="form-text text-muted">{{ help_debug_log }}</small>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_fba_send_orders"><span data-toggle="tooltip" data-container="#tab-content" title="{{ help_send_orders }}">{{ entry_send_orders }}</span></label>
+              <label class="col-sm-2 control-label" for="openbay_fba_send_orders">{{ entry_send_orders }}</label>
               <div class="col-sm-10">
                 <select name="openbay_fba_send_orders" id="openbay_fba_send_orders" class="form-control">
                   {% if openbay_fba_send_orders %}
-                  <option value="1" selected="selected">{{ text_yes }}</option>
-                  <option value="0">{{ text_no }}</option>
+                    <option value="1" selected="selected">{{ text_yes }}</option>
+                    <option value="0">{{ text_no }}</option>
                   {% else %}
-                  <option value="1">{{ text_yes }}</option>
-                  <option value="0" selected="selected">{{ text_no }}</option>
+                    <option value="1">{{ text_yes }}</option>
+                    <option value="0" selected="selected">{{ text_no }}</option>
                   {% endif %}
                 </select>
+                <small class="form-text text-muted">{{ help_send_orders }}</small>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_fba_only_fill_complete"><span data-toggle="tooltip" data-container="#tab-content" title="{{ help_only_fill_complete }}">{{ entry_only_fill_complete }}</span></label>
+              <label class="col-sm-2 control-label" for="openbay_fba_only_fill_complete">{{ entry_only_fill_complete }}</label>
               <div class="col-sm-10">
                 <select name="openbay_fba_only_fill_complete" id="openbay_fba_only_fill_complete" class="form-control">
                   {% if openbay_fba_only_fill_complete %}
-                  <option value="1" selected="selected">{{ text_yes }}</option>
-                  <option value="0">{{ text_no }}</option>
+                    <option value="1" selected="selected">{{ text_yes }}</option>
+                    <option value="0">{{ text_no }}</option>
                   {% else %}
-                  <option value="1">{{ text_yes }}</option>
-                  <option value="0" selected="selected">{{ text_no }}</option>
+                    <option value="1">{{ text_yes }}</option>
+                    <option value="0" selected="selected">{{ text_no }}</option>
                   {% endif %}
                 </select>
+                <small class="form-text text-muted">{{ help_only_fill_complete }}</small>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_fba_order_prefix"><span data-toggle="tooltip" data-container="#tab-content" title="{{ help_order_id_prefix }}">{{ entry_order_id_prefix }}</span></label>
+              <label class="col-sm-2 control-label" for="openbay_fba_order_prefix">{{ entry_order_id_prefix }}</label>
               <div class="col-sm-10">
                 <p class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> {{ text_prefix_warning }}</p>
-                <input{% if prefix_can_edit == false %} disabled{% endif %} type="text" name="openbay_fba_order_prefix" value="{{ openbay_fba_order_prefix }}" placeholder="{{ entry_order_id_prefix }}" id="openbay_fba_order_prefix" class="form-control" />
+                <input{% if prefix_can_edit == false %} disabled{% endif %} type="text" name="openbay_fba_order_prefix" value="{{ openbay_fba_order_prefix }}" placeholder="{{ entry_order_id_prefix }}" id="openbay_fba_order_prefix" class="form-control"/>
+                <small class="form-text text-muted">{{ help_order_id_prefix }}</small>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_fba_fulfill_policy"><span data-toggle="tooltip" data-container="#tab-content" title="{{ help_fulfill_policy }}">{{ entry_fulfill_policy }}</span></label>
+              <label class="col-sm-2 control-label" for="openbay_fba_fulfill_policy">{{ entry_fulfill_policy }}</label>
               <div class="col-sm-10">
                 <select name="openbay_fba_fulfill_policy" id="openbay_fba_fulfill_policy" class="form-control ftpsetting">
                   {% for code,text in fulfillment_policy %}
                     <option value="{{ code }}" {% if openbay_fba_fulfill_policy == code %} selected{% endif %}>{{ text }}</option>
                   {% endfor %}
                 </select>
+                <small class="form-text text-muted">{{ help_fulfill_policy }}</small>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_fba_shipping_speed"><span data-toggle="tooltip" data-container="#tab-content" title="{{ help_shipping_speed }}">{{ entry_shipping_speed }}</span></label>
+              <label class="col-sm-2 control-label" for="openbay_fba_shipping_speed">{{ entry_shipping_speed }}</label>
               <div class="col-sm-10">
                 <select name="openbay_fba_shipping_speed" id="openbay_fba_shipping_speed" class="form-control ftpsetting">
                   {% for code,text in shipping_speed %}
                     <option value="{{ code }}" {% if openbay_fba_shipping_speed == code %} selected{% endif %}>{{ text }}</option>
                   {% endfor %}
                 </select>
+                <small class="form-text text-muted">{{ help_shipping_speed }}</small>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_fba_order_trigger_status"><span data-toggle="tooltip" data-container="#tab-content" title="{{ help_new_order_status }}">{{ entry_new_order_status }}</span></label>
+              <label class="col-sm-2 control-label" for="openbay_fba_order_trigger_status">{{ entry_new_order_status }}</label>
               <div class="col-sm-10">
                 <select name="openbay_fba_order_trigger_status" id="openbay_fba_order_trigger_status" class="form-control">
                   {% for status in order_statuses %}
                     <option value="{{ status.order_status_id }}" {% if openbay_fba_order_trigger_status == status.order_status_id %} selected{% endif %}>{{ status.name }}</option>
                   {% endfor %}
                 </select>
+                <small class="form-text text-muted">{{ help_new_order_status }}</small>
               </div>
             </div>
           </div>
@@ -160,34 +171,34 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-verify').click(function() {
-  $.ajax({
-    url: 'index.php?route=extension/openbay/fba/verifycredentials&user_token={{ user_token }}',
-    dataType: 'json',
-    method: 'POST',
-    data: { 'openbay_fba_api_key' : $('#openbay_fba_api_key').val(), 'openbay_fba_api_account_id' : $('#openbay_fba_api_account_id').val(), 'openbay_fba_encryption_key' : $('#openbay_fba_encryption_key').val() },
-    beforeSend: function() {
-      $('#button-verify').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
-      $('.alert-dismissible').remove();
-    },
-    success: function(json) {
-      if (json.error === false) {
-        $('#credential-container').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ text_validate_success }}</div>');
-      } else {
-        if (json.error_messages) {
-          $.each(json.error_messages, function(error_key, error_message) {
-            $('#credential-container').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + error_message.message + '</div>');
-          });
-        } else {
-          $('#credential-container').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_validation }}</div>');
-          $('#button-verify').html('{{ button_verify }}');
-        }
-      }
-      $('#button-verify').empty().html('{{ button_verify }}').removeAttr('disabled');
-    },
-    failure: function() {
-      $('#button-verify').empty().html('{{ button_verify }}').removeAttr('disabled');
-    }
-  });
+	$.ajax({
+		url: 'index.php?route=extension/openbay/fba/verifycredentials&user_token={{ user_token }}',
+		dataType: 'json',
+		method: 'POST',
+		data: {'openbay_fba_api_key': $('#openbay_fba_api_key').val(), 'openbay_fba_api_account_id': $('#openbay_fba_api_account_id').val(), 'openbay_fba_encryption_key': $('#openbay_fba_encryption_key').val()},
+		beforeSend: function() {
+			$('#button-verify').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled', 'disabled');
+			$('.alert-dismissible').remove();
+		},
+		success: function(json) {
+			if (json.error === false) {
+				$('#credential-container').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ text_validate_success }}</div>');
+			} else {
+				if (json.error_messages) {
+					$.each(json.error_messages, function(error_key, error_message) {
+						$('#credential-container').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + error_message.message + '</div>');
+					});
+				} else {
+					$('#credential-container').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_validation }}</div>');
+					$('#button-verify').html('{{ button_verify }}');
+				}
+			}
+			$('#button-verify').empty().html('{{ button_verify }}').removeAttr('disabled');
+		},
+		failure: function() {
+			$('#button-verify').empty().html('{{ button_verify }}').removeAttr('disabled');
+		}
+	});
 });
 //--></script>
 {{ footer }}

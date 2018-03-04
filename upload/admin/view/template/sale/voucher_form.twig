@@ -22,24 +22,23 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
-      </div>
-      <div class="panel-body">
-        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-voucher" class="form-horizontal">
+    <div class="card">
+      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-voucher">
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
             {% if voucher_id %}
-              <li><a href="#tab-history" data-toggle="tab">{{ tab_history }}</a></li>
+              <li class="nav-item"><a href="#tab-history" data-toggle="tab">{{ tab_history }}</a></li>
             {% endif %}
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-code"><span data-toggle="tooltip" title="{{ help_code }}">{{ entry_code }}</span></label>
+                <label class="col-sm-2 control-label" for="input-code">{{ entry_code }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
+                  <small class="form-text text-muted">{{ help_code }}</small>
                   {% if error_code %}
                     <div class="text-danger">{{ error_code }}</div>
                   {% endif %}

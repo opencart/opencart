@@ -19,12 +19,10 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ heading_title }}</h3>
-      </div>
-      <div class="panel-body">
-        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-module" class="form-horizontal">
+    <div class="card">
+      <div class="card-header"><i class="fa fa-pencil"></i> {{ heading_title }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-module">
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="entry-client_id">{{ entry_client_id }}</label>
             <div class="col-sm-10">
@@ -44,7 +42,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="entry-sandbox"><span data-toggle="tooltip" title="{{ help_sandbox }}">{{ entry_sandbox }}</span></label>
+            <label class="col-sm-2 control-label" for="entry-sandbox">{{ entry_sandbox }}</label>
             <div class="col-sm-10">
               <select name="module_pp_login_sandbox" id="entry-sandbox" class="form-control">
                 {% if module_pp_login_sandbox %}
@@ -55,10 +53,11 @@
                 <option value="0" selected="selected">{{ text_no }}</option>
                 {% endif %}
               </select>
+              <small class="form-text text-muted">{{ help_sandbox }}</small>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-loggin"><span data-toggle="tooltip" title="{{ help_debug_logging }}">{{ entry_debug }}</span></label>
+            <label class="col-sm-2 control-label" for="input-loggin">{{ entry_debug }}</label>
             <div class="col-sm-10">
               <select name="module_pp_login_debug" id="input-logging" class="form-control">
                 {% if module_pp_login_debug %}
@@ -69,10 +68,11 @@
                 <option value="0" selected="selected">{{ text_no }}</option>
                 {% endif %}
               </select>
+              <small class="form-text text-muted">{{ help_debug_logging }}</small>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-customer-group"><span data-toggle="tooltip" title="{{ help_customer_group }}">{{ entry_customer_group }}</span></label>
+            <label class="col-sm-2 control-label" for="input-customer-group">{{ entry_customer_group }}</label>
             <div class="col-sm-10">
               <select name="module_pp_login_customer_group_id" id="input-customer-group" class="form-control">
                 {% for customer_group in customer_groups %}
@@ -83,6 +83,7 @@
                 {% endif %}
                 {% endfor %}
               </select>
+              <small class="form-text text-muted">{{ help_customer_group }}</small>
             </div>
           </div>
           <div class="form-group">
@@ -100,7 +101,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-seamless"><span data-toggle="tooltip" title="{{ help_seamless }}">{{ entry_seamless }}</span></label>
+            <label class="col-sm-2 control-label" for="input-seamless">{{ entry_seamless }}</label>
             <div class="col-sm-10">
               <select name="module_pp_login_seamless" id="input-logging" class="form-control">
                 {% if module_pp_login_seamless %}
@@ -111,10 +112,11 @@
                 <option value="0" selected="selected">{{ text_no }}</option>
                 {% endif %}
               </select>
+              <small class="form-text text-muted">{{ help_seamless }}</small>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_locale }}">{{ entry_locale }}</span></label>
+            <label class="col-sm-2 control-label">{{ entry_locale }}</label>
             <div class="col-sm-10">
               {% for language in languages %}
               <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
@@ -129,12 +131,14 @@
                 </select>
               </div>
               {% endfor %}
+              <small class="form-text text-muted">{{ help_locale }}</small>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_return_url }}">{{ entry_return_url }}</span></label>
+            <label class="col-sm-2 control-label">{{ entry_return_url }}</label>
             <div class="col-sm-10">
               <input type="text" readonly id="return-url" value="{{ return_url }}" class="form-control" />
+              <small class="form-text text-muted">{{ help_return_url }}</small>
             </div>
           </div>
           <div class="form-group">

@@ -19,20 +19,18 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
-      </div>
-      <div class="panel-body">
+    <div class="card">
+      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-body">
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
+          <li class="nav-item"><a href="#tab-general" data-toggle="tab" class="active">{{ tab_general }}</a></li>
           {% if download_id %}
-            <li><a href="#tab-report" data-toggle="tab">{{ tab_report }}</a></li>
+            <li class="nav-item"><a href="#tab-report" data-toggle="tab">{{ tab_report }}</a></li>
           {% endif %}
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="tab-general">
-            <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-download" class="form-horizontal">
+            <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-download">
               <div class="form-group required">
                 <label class="col-sm-2 control-label">{{ entry_name }}</label>
                 <div class="col-sm-10">
@@ -46,7 +44,7 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-filename"><span data-toggle="tooltip" title="{{ help_filename }}">{{ entry_filename }}</span></label>
+                <label class="col-sm-2 control-label" for="input-filename">{{ entry_filename }}</label>
                 <div class="col-sm-10">
                   <div class="input-group">
                     <input type="text" name="filename" value="{{ filename }}" placeholder="{{ entry_filename }}" id="input-filename" class="form-control"/>
@@ -54,15 +52,17 @@
                       <button type="button" id="button-upload" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-upload"></i> {{ button_upload }}</button>
                     </div>
                   </div>
+                  <small class="form-text text-muted">{{ help_filename }}</small>
                   {% if error_filename %}
                     <div class="text-danger">{{ error_filename }}</div>
                   {% endif %}
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-mask"><span data-toggle="tooltip" title="{{ help_mask }}">{{ entry_mask }}</span></label>
+                <label class="col-sm-2 control-label" for="input-mask">{{ entry_mask }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="mask" value="{{ mask }}" placeholder="{{ entry_mask }}" id="input-mask" class="form-control"/>
+                  <small class="form-text text-muted">{{ help_mask }}</small>
                   {% if error_mask %}
                     <div class="text-danger">{{ error_mask }}</div>
                   {% endif %}

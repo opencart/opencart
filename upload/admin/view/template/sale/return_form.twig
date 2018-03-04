@@ -19,20 +19,18 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
-      </div>
-      <div class="panel-body">
+    <div class="card">
+      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-body">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
           {% if return_id %}
-            <li><a href="#tab-history" data-toggle="tab">{{ tab_history }}</a></li>
+            <li class="nav-item"><a href="#tab-history" data-toggle="tab">{{ tab_history }}</a></li>
           {% endif %}
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="tab-general">
-            <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-return" class="form-horizontal">
+            <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-return">
               <fieldset>
                 <legend>{{ text_order }}</legend>
                 <div class="form-group required">
@@ -101,9 +99,10 @@
               <fieldset>
                 <legend>{{ text_product }}</legend>
                 <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-product"><span data-toggle="tooltip" title="{{ help_product }}">{{ entry_product }}</span></label>
+                  <label class="col-sm-2 control-label" for="input-product">{{ entry_product }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control"/> <input type="hidden" name="product_id" value="{{ product_id }}"/>
+                    <small class="form-text text-muted">{{ help_product }}</small>
                     {% if error_product %}
                       <div class="text-danger">{{ error_product }}</div>
                     {% endif %}
@@ -201,7 +200,7 @@
               <br/>
               <fieldset>
                 <legend>{{ text_history_add }}</legend>
-                <form class="form-horizontal">
+                <form>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-return-status">{{ entry_return_status }}</label>
                     <div class="col-sm-10">

@@ -18,30 +18,28 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
-      </div>
-      <div class="panel-body">
-        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-product" class="form-horizontal">
+    <div class="card">
+      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-product">
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
-            <li><a href="#tab-data" data-toggle="tab">{{ tab_data }}</a></li>
-            <li><a href="#tab-links" data-toggle="tab">{{ tab_links }}</a></li>
-            <li><a href="#tab-attribute" data-toggle="tab">{{ tab_attribute }}</a></li>
-            <li><a href="#tab-recurring" data-toggle="tab">{{ tab_recurring }}</a></li>
-            <li><a href="#tab-discount" data-toggle="tab">{{ tab_discount }}</a></li>
-            <li><a href="#tab-special" data-toggle="tab">{{ tab_special }}</a></li>
-            <li><a href="#tab-image" data-toggle="tab">{{ tab_image }}</a></li>
-            <li><a href="#tab-reward" data-toggle="tab">{{ tab_reward }}</a></li>
-            <li><a href="#tab-seo" data-toggle="tab">{{ tab_seo }}</a></li>
-            <li><a href="#tab-design" data-toggle="tab">{{ tab_design }}</a></li>
+            <li class="nav-item"><a href="#tab-data" data-toggle="tab" class="nav-link">{{ tab_data }}</a></li>
+            <li class="nav-item"><a href="#tab-links" data-toggle="tab" class="nav-link">{{ tab_links }}</a></li>
+            <li class="nav-item"><a href="#tab-attribute" data-toggle="tab" class="nav-link">{{ tab_attribute }}</a></li>
+            <li class="nav-item"><a href="#tab-recurring" data-toggle="tab" class="nav-link">{{ tab_recurring }}</a></li>
+            <li class="nav-item"><a href="#tab-discount" data-toggle="tab" class="nav-link">{{ tab_discount }}</a></li>
+            <li class="nav-item"><a href="#tab-special" data-toggle="tab" class="nav-link">{{ tab_special }}</a></li>
+            <li class="nav-item"><a href="#tab-image" data-toggle="tab" class="nav-link">{{ tab_image }}</a></li>
+            <li class="nav-item"><a href="#tab-reward" data-toggle="tab" class="nav-link">{{ tab_reward }}</a></li>
+            <li class="nav-item"><a href="#tab-seo" data-toggle="tab" class="nav-link">{{ tab_seo }}</a></li>
+            <li class="nav-item"><a href="#tab-design" data-toggle="tab">{{ tab_design }}</a></li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
               <ul class="nav nav-tabs" id="language">
                 {% for language in languages %}
-                  <li><a href="#language{{ language.language_id }}" data-toggle="tab"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/> {{ language.name }}</a></li>
+                  <li class="nav-item"><a href="#language{{ language.language_id }}" data-toggle="tab"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/> {{ language.name }}</a></li>
                 {% endfor %}
               </ul>
               <div class="tab-content">{% for language in languages %}
@@ -81,11 +79,12 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="col-sm-2 control-label" for="input-tag{{ language.language_id }}"><span data-toggle="tooltip" title="{{ help_tag }}">{{ entry_tag }}</span></label>
+                      <label class="col-sm-2 control-label" for="input-tag{{ language.language_id }}">{{ entry_tag }}</label>
                       <div class="col-sm-10">
                         <input type="text" name="product_description[{{ language.language_id }}][tag]" value="{{ product_description[language.language_id] ? product_description[language.language_id].tag }}" placeholder="{{ entry_tag }}" id="input-tag{{ language.language_id }}" class="form-control"/>
                       </div>
                     </div>
+                    <small class="form-text text-muted">{{ help_tag }}</small>
                   </div>
                 {% endfor %}</div>
             </div>
@@ -99,39 +98,45 @@
                   {% endif %}</div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-sku"><span data-toggle="tooltip" title="{{ help_sku }}">{{ entry_sku }}</span></label>
+                <label class="col-sm-2 control-label" for="input-sku">{{ entry_sku }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="sku" value="{{ sku }}" placeholder="{{ entry_sku }}" id="input-sku" class="form-control"/>
+                  <small class="form-text text-muted">{{ help_sku }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-upc"><span data-toggle="tooltip" title="{{ help_upc }}">{{ entry_upc }}</span></label>
+                <label class="col-sm-2 control-label" for="input-upc">{{ entry_upc }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="upc" value="{{ upc }}" placeholder="{{ entry_upc }}" id="input-upc" class="form-control"/>
+                  <small class="form-text text-muted">{{ help_upc }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-ean"><span data-toggle="tooltip" title="{{ help_ean }}">{{ entry_ean }}</span></label>
+                <label class="col-sm-2 control-label" for="input-ean">{{ entry_ean }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="ean" value="{{ ean }}" placeholder="{{ entry_ean }}" id="input-ean" class="form-control"/>
+                  <small class="form-text text-muted">{{ help_ean }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-jan"><span data-toggle="tooltip" title="{{ help_jan }}">{{ entry_jan }}</span></label>
+                <label class="col-sm-2 control-label" for="input-jan">{{ entry_jan }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="jan" value="{{ jan }}" placeholder="{{ entry_jan }}" id="input-jan" class="form-control"/>
+                  <small class="form-text text-muted">{{ help_jan }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-isbn"><span data-toggle="tooltip" title="{{ help_isbn }}">{{ entry_isbn }}</span></label>
+                <label class="col-sm-2 control-label" for="input-isbn">{{ entry_isbn }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="isbn" value="{{ isbn }}" placeholder="{{ entry_isbn }}" id="input-isbn" class="form-control"/>
+                  <small class="form-text text-muted">{{ help_isbn }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-mpn"><span data-toggle="tooltip" title="{{ help_mpn }}">{{ entry_mpn }}</span></label>
+                <label class="col-sm-2 control-label" for="input-mpn">{{ entry_mpn }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="mpn" value="{{ mpn }}" placeholder="{{ entry_mpn }}" id="input-mpn" class="form-control"/>
+                  <small class="form-text text-muted">{{ help_mpn }}</small>
                 </div>
               </div>
               <div class="form-group">
@@ -168,9 +173,10 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-minimum"><span data-toggle="tooltip" title="{{ help_minimum }}">{{ entry_minimum }}</span></label>
+                <label class="col-sm-2 control-label" for="input-minimum">{{ entry_minimum }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="minimum" value="{{ minimum }}" placeholder="{{ entry_minimum }}" id="input-minimum" class="form-control"/>
+                  <small class="form-text text-muted">{{ help_minimum }}</small>
                 </div>
               </div>
               <div class="form-group">
@@ -188,7 +194,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-stock-status"><span data-toggle="tooltip" title="{{ help_stock_status }}">{{ entry_stock_status }}</span></label>
+                <label class="col-sm-2 control-label" for="input-stock-status">{{ entry_stock_status }}</label>
                 <div class="col-sm-10">
                   <select name="stock_status_id" id="input-stock-status" class="form-control">
                     {% for stock_status in stock_statuses %}
@@ -199,6 +205,7 @@
                       {% endif %}
                     {% endfor %}
                   </select>
+                  <small class="form-text text-muted">{{ help_stock_status }}</small>
                 </div>
               </div>
               <div class="form-group">
@@ -303,13 +310,14 @@
             </div>
             <div class="tab-pane" id="tab-links">
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-manufacturer"><span data-toggle="tooltip" title="{{ help_manufacturer }}">{{ entry_manufacturer }}</span></label>
+                <label class="col-sm-2 control-label" for="input-manufacturer">{{ entry_manufacturer }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="manufacturer" value="{{ manufacturer }}" placeholder="{{ entry_manufacturer }}" id="input-manufacturer" class="form-control"/> <input type="hidden" name="manufacturer_id" value="{{ manufacturer_id }}"/>
+                  <small class="form-text text-muted">{{ help_manufacturer }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-category"><span data-toggle="tooltip" title="{{ help_category }}">{{ entry_category }}</span></label>
+                <label class="col-sm-2 control-label" for="input-category">{{ entry_category }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" class="form-control"/>
                   <div id="product-category" class="well well-sm" style="height: 150px; overflow: auto;"> {% for product_category in product_categories %}
@@ -318,9 +326,10 @@
                       </div>
                     {% endfor %}</div>
                 </div>
+                <small class="form-text text-muted">{{ help_category }}</small>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-filter"><span data-toggle="tooltip" title="{{ help_filter }}">{{ entry_filter }}</span></label>
+                <label class="col-sm-2 control-label" for="input-filter">{{ entry_filter }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="filter" value="" placeholder="{{ entry_filter }}" id="input-filter" class="form-control"/>
                   <div id="product-filter" class="well well-sm" style="height: 150px; overflow: auto;"> {% for product_filter in product_filters %}
@@ -329,6 +338,7 @@
                       </div>
                     {% endfor %}</div>
                 </div>
+                <small class="form-text text-muted">{{ help_filter }}</small>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_store }}</label>
@@ -347,7 +357,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-download"><span data-toggle="tooltip" title="{{ help_download }}">{{ entry_download }}</span></label>
+                <label class="col-sm-2 control-label" for="input-download">{{ entry_download }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="download" value="" placeholder="{{ entry_download }}" id="input-download" class="form-control"/>
                   <div id="product-download" class="well well-sm" style="height: 150px; overflow: auto;"> {% for product_download in product_downloads %}
@@ -356,9 +366,10 @@
                       </div>
                     {% endfor %}</div>
                 </div>
+                <small class="form-text text-muted">{{ help_download }}</small>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-related"><span data-toggle="tooltip" title="{{ help_related }}">{{ entry_related }}</span></label>
+                <label class="col-sm-2 control-label" for="input-related">{{ entry_related }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="related" value="" placeholder="{{ entry_related }}" id="input-related" class="form-control"/>
                   <div id="product-related" class="well well-sm" style="height: 150px; overflow: auto;"> {% for product_related in product_relateds %}
@@ -367,6 +378,7 @@
                       </div>
                     {% endfor %}</div>
                 </div>
+                <small class="form-text text-muted">{{ help_related }}</small>
               </div>
             </div>
             <div class="tab-pane" id="tab-attribute">
@@ -612,9 +624,10 @@
             </div>
             <div class="tab-pane" id="tab-reward">
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-points"><span data-toggle="tooltip" title="{{ help_points }}">{{ entry_points }}</span></label>
+                <label class="col-sm-2 control-label" for="input-points">{{ entry_points }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="points" value="{{ points }}" placeholder="{{ entry_points }}" id="input-points" class="form-control"/>
+                  <small class="form-text text-muted">{{ help_points }}</small>
                 </div>
               </div>
               <div class="table-responsive">

@@ -19,16 +19,14 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
-      </div>
-      <div class="panel-body">
-        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-marketing" class="form-horizontal">
+    <div class="card">
+      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-marketing">
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
             {% if marketing_id %}
-              <li><a href="#tab-report" data-toggle="tab">{{ tab_report }}</a></li>
+              <li class="nav-item"><a href="#tab-report" data-toggle="tab">{{ tab_report }}</a></li>
             {% endif %}
           </ul>
           <div class="tab-content">
@@ -49,20 +47,22 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-code"><span data-toggle="tooltip" title="{{ help_code }}">{{ entry_code }}</span></label>
+                <label class="col-sm-2 control-label" for="input-code">{{ entry_code }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
+                  <small class="form-text text-muted">{{ help_code }}</small>
                   {% if error_code %}
                     <div class="text-danger">{{ error_code }}</div>
                   {% endif %}
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-example"><span data-toggle="tooltip" title="{{ help_example }}">{{ entry_example }}</span></label>
+                <label class="col-sm-2 control-label" for="input-example">{{ entry_example }}</label>
                 <div class="col-sm-10">
                   <input type="text" placeholder="{{ entry_example }}" id="input-example1" class="form-control"/>
                   <br/>
                   <input type="text" placeholder="{{ entry_example }}" id="input-example2" class="form-control"/>
+                  <small class="form-text text-muted">{{ help_example }}</small>
                 </div>
               </div>
             </div>
@@ -80,22 +80,22 @@
 </div>
 <script type="text/javascript"><!--
 $('#input-code').on('keyup', function() {
-  $('#input-example1').val('{{ store }}?tracking=' + $('#input-code').val());
+	$('#input-example1').val('{{ store }}?tracking=' + $('#input-code').val());
 
-  $('#input-example2').val('{{ store }}index.php?route=common/home&tracking=' + $('#input-code').val());
+	$('#input-example2').val('{{ store }}index.php?route=common/home&tracking=' + $('#input-code').val());
 });
 
 $('#input-code').trigger('keyup');
 //--></script>
 {% if marketing_id %}
-<script type="text/javascript"><!--
-$('#report').delegate('.pagination a', 'click', function(e) {
-  e.preventDefault();
+  <script type="text/javascript"><!--
+  $('#report').delegate('.pagination a', 'click', function(e) {
+	  e.preventDefault();
 
-  $('#report').load(this.href);
-});
+	  $('#report').load(this.href);
+  });
 
-$('#report').load('index.php?route=marketing/marketing/report&user_token={{ user_token }}&marketing_id={{ marketing_id }}');
-//--></script>
+  $('#report').load('index.php?route=marketing/marketing/report&user_token={{ user_token }}&marketing_id={{ marketing_id }}');
+  //--></script>
 {% endif %}
 {{ footer }}

@@ -8,23 +8,21 @@
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
-        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
         {% endfor %}
       </ul>
     </div>
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
-    {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
-      <div class="panel-body">
-        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-shipping" class="form-horizontal">
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-shipping">
           <div class="row">
             <div class="col-sm-2">
               <ul class="nav nav-pills nav-stacked">
@@ -51,20 +49,19 @@
                     <div class="col-sm-10">
                       <label class="radio-inline">
                         {% if shipping_royal_mail_display_weight %}
-                        <input type="radio" name="shipping_royal_mail_display_weight" value="1" checked="checked" />
-                        {{ text_yes }}
+                          <input type="radio" name="shipping_royal_mail_display_weight" value="1" checked="checked"/>
+                          {{ text_yes }}
                         {% else %}
-                        <input type="radio" name="shipping_royal_mail_display_weight" value="1" />
-                        {{ text_yes }}
+                          <input type="radio" name="shipping_royal_mail_display_weight" value="1"/>
+                          {{ text_yes }}
                         {% endif %}
-                      </label>
-                      <label class="radio-inline">
+                      </label> <label class="radio-inline">
                         {% if not shipping_royal_mail_display_weight %}
-                        <input type="radio" name="shipping_royal_mail_display_weight" value="0" checked="checked" />
-                        {{ text_no }}
+                          <input type="radio" name="shipping_royal_mail_display_weight" value="0" checked="checked"/>
+                          {{ text_no }}
                         {% else %}
-                        <input type="radio" name="shipping_royal_mail_display_weight" value="0" />
-                        {{ text_no }}
+                          <input type="radio" name="shipping_royal_mail_display_weight" value="0"/>
+                          {{ text_no }}
                         {% endif %}
                       </label>
                     </div>
@@ -74,20 +71,19 @@
                     <div class="col-sm-10">
                       <label class="radio-inline">
                         {% if shipping_royal_mail_display_insurance %}
-                        <input type="radio" name="shipping_royal_mail_display_insurance" value="1" checked="checked" />
-                        {{ text_yes }}
+                          <input type="radio" name="shipping_royal_mail_display_insurance" value="1" checked="checked"/>
+                          {{ text_yes }}
                         {% else %}
-                        <input type="radio" name="shipping_royal_mail_display_insurance" value="1" />
-                        {{ text_yes }}
+                          <input type="radio" name="shipping_royal_mail_display_insurance" value="1"/>
+                          {{ text_yes }}
                         {% endif %}
-                      </label>
-                      <label class="radio-inline">
+                      </label> <label class="radio-inline">
                         {% if not shipping_royal_mail_display_insurance %}
-                        <input type="radio" name="shipping_royal_mail_display_insurance" value="0" checked="checked" />
-                        {{ text_no }}
+                          <input type="radio" name="shipping_royal_mail_display_insurance" value="0" checked="checked"/>
+                          {{ text_no }}
                         {% else %}
-                        <input type="radio" name="shipping_royal_mail_display_insurance" value="0" />
-                        {{ text_no }}
+                          <input type="radio" name="shipping_royal_mail_display_insurance" value="0"/>
+                          {{ text_no }}
                         {% endif %}
                       </label>
                     </div>
@@ -97,11 +93,11 @@
                     <div class="col-sm-10">
                       <select name="shipping_royal_mail_weight_class_id" id="input-weight-class" class="form-control">
                         {% for weight_class in weight_classes %}
-                        {% if weight_class.weight_class_id == shipping_royal_mail_weight_class_id %}
-                        <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
-                        {% else %}
-                        <option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
-                        {% endif %}
+                          {% if weight_class.weight_class_id == shipping_royal_mail_weight_class_id %}
+                            <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
+                          {% else %}
+                            <option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
+                          {% endif %}
                         {% endfor %}
                       </select>
                     </div>
@@ -112,11 +108,11 @@
                       <select name="shipping_royal_mail_tax_class_id" id="input-tax-class" class="form-control">
                         <option value="0">{{ text_none }}</option>
                         {% for tax_class in tax_classes %}
-                        {% if tax_class.tax_class_id == shipping_royal_mail_tax_class_id %}
-                        <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
-                        {% else %}
-                        <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
-                        {% endif %}
+                          {% if tax_class.tax_class_id == shipping_royal_mail_tax_class_id %}
+                            <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
+                          {% else %}
+                            <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
+                          {% endif %}
                         {% endfor %}
                       </select>
                     </div>
@@ -127,11 +123,11 @@
                       <select name="shipping_royal_mail_geo_zone_id" id="input-geo-zone" class="form-control">
                         <option value="0">{{ text_all_zones }}</option>
                         {% for geo_zone in geo_zones %}
-                        {% if geo_zone.geo_zone_id == shipping_royal_mail_geo_zone_id %}
-                        <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
-                        {% else %}
-                        <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
-                        {% endif %}
+                          {% if geo_zone.geo_zone_id == shipping_royal_mail_geo_zone_id %}
+                            <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                          {% else %}
+                            <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
+                          {% endif %}
                         {% endfor %}
                       </select>
                     </div>
@@ -141,11 +137,11 @@
                     <div class="col-sm-10">
                       <select name="shipping_royal_mail_status" id="input-status" class="form-control">
                         {% if shipping_royal_mail_status %}
-                        <option value="1" selected="selected">{{ text_enabled }}</option>
-                        <option value="0">{{ text_disabled }}</option>
+                          <option value="1" selected="selected">{{ text_enabled }}</option>
+                          <option value="0">{{ text_disabled }}</option>
                         {% else %}
-                        <option value="1">{{ text_enabled }}</option>
-                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                          <option value="1">{{ text_enabled }}</option>
+                          <option value="0" selected="selected">{{ text_disabled }}</option>
                         {% endif %}
                       </select>
                     </div>
@@ -153,7 +149,7 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
                     <div class="col-sm-10">
-                      <input type="text" name="shipping_royal_mail_sort_order" value="{{ shipping_royal_mail_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+                      <input type="text" name="shipping_royal_mail_sort_order" value="{{ shipping_royal_mail_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
                     </div>
                   </div>
                 </div>
@@ -175,11 +171,11 @@
                     <div class="col-sm-10">
                       <select name="shipping_royal_mail_special_delivery_500_status" id="input-special-delivery-500-status" class="form-control">
                         {% if shipping_royal_mail_special_delivery_500_status %}
-                        <option value="1" selected="selected">{{ text_enabled }}</option>
-                        <option value="0">{{ text_disabled }}</option>
+                          <option value="1" selected="selected">{{ text_enabled }}</option>
+                          <option value="0">{{ text_disabled }}</option>
                         {% else %}
-                        <option value="1">{{ text_enabled }}</option>
-                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                          <option value="1">{{ text_enabled }}</option>
+                          <option value="0" selected="selected">{{ text_disabled }}</option>
                         {% endif %}
                       </select>
                     </div>
@@ -203,11 +199,11 @@
                     <div class="col-sm-10">
                       <select name="shipping_royal_mail_special_delivery_1000_status" id="input-special-delivery-1000-status" class="form-control">
                         {% if shipping_royal_mail_special_delivery_1000_status %}
-                        <option value="1" selected="selected">{{ text_enabled }}</option>
-                        <option value="0">{{ text_disabled }}</option>
+                          <option value="1" selected="selected">{{ text_enabled }}</option>
+                          <option value="0">{{ text_disabled }}</option>
                         {% else %}
-                        <option value="1">{{ text_enabled }}</option>
-                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                          <option value="1">{{ text_enabled }}</option>
+                          <option value="0" selected="selected">{{ text_disabled }}</option>
                         {% endif %}
                       </select>
                     </div>
@@ -231,11 +227,11 @@
                     <div class="col-sm-10">
                       <select name="shipping_royal_mail_special_delivery_2500_status" id="input-special-delivery-2500-status" class="form-control">
                         {% if shipping_royal_mail_special_delivery_2500_status %}
-                        <option value="1" selected="selected">{{ text_enabled }}</option>
-                        <option value="0">{{ text_disabled }}</option>
+                          <option value="1" selected="selected">{{ text_enabled }}</option>
+                          <option value="0">{{ text_disabled }}</option>
                         {% else %}
-                        <option value="1">{{ text_enabled }}</option>
-                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                          <option value="1">{{ text_enabled }}</option>
+                          <option value="0" selected="selected">{{ text_disabled }}</option>
                         {% endif %}
                       </select>
                     </div>
@@ -253,11 +249,11 @@
                     <div class="col-sm-10">
                       <select name="shipping_royal_mail_1st_class_signed_status" id="input-1st-class-signed-status" class="form-control">
                         {% if shipping_royal_mail_1st_class_signed_status %}
-                        <option value="1" selected="selected">{{ text_enabled }}</option>
-                        <option value="0">{{ text_disabled }}</option>
+                          <option value="1" selected="selected">{{ text_enabled }}</option>
+                          <option value="0">{{ text_disabled }}</option>
                         {% else %}
-                        <option value="1">{{ text_enabled }}</option>
-                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                          <option value="1">{{ text_enabled }}</option>
+                          <option value="0" selected="selected">{{ text_disabled }}</option>
                         {% endif %}
                       </select>
                     </div>
@@ -275,11 +271,11 @@
                     <div class="col-sm-10">
                       <select name="shipping_royal_mail_2nd_class_signed_status" id="input-2nd-class-signed-status" class="form-control">
                         {% if shipping_royal_mail_2nd_class_signed_status %}
-                        <option value="1" selected="selected">{{ text_enabled }}</option>
-                        <option value="0">{{ text_disabled }}</option>
+                          <option value="1" selected="selected">{{ text_enabled }}</option>
+                          <option value="0">{{ text_disabled }}</option>
                         {% else %}
-                        <option value="1">{{ text_enabled }}</option>
-                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                          <option value="1">{{ text_enabled }}</option>
+                          <option value="0" selected="selected">{{ text_disabled }}</option>
                         {% endif %}
                       </select>
                     </div>
@@ -297,11 +293,11 @@
                     <div class="col-sm-10">
                       <select name="shipping_royal_mail_1st_class_standard_status" id="input-input-1st-class-standard-status" class="form-control">
                         {% if shipping_royal_mail_1st_class_standard_status %}
-                        <option value="1" selected="selected">{{ text_enabled }}</option>
-                        <option value="0">{{ text_disabled }}</option>
+                          <option value="1" selected="selected">{{ text_enabled }}</option>
+                          <option value="0">{{ text_disabled }}</option>
                         {% else %}
-                        <option value="1">{{ text_enabled }}</option>
-                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                          <option value="1">{{ text_enabled }}</option>
+                          <option value="0" selected="selected">{{ text_disabled }}</option>
                         {% endif %}
                       </select>
                     </div>
@@ -319,11 +315,11 @@
                     <div class="col-sm-10">
                       <select name="shipping_royal_mail_2nd_class_standard_status" id="input-2nd-class-standard-status" class="form-control">
                         {% if shipping_royal_mail_2nd_class_standard_status %}
-                        <option value="1" selected="selected">{{ text_enabled }}</option>
-                        <option value="0">{{ text_disabled }}</option>
+                          <option value="1" selected="selected">{{ text_enabled }}</option>
+                          <option value="0">{{ text_disabled }}</option>
                         {% else %}
-                        <option value="1">{{ text_enabled }}</option>
-                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                          <option value="1">{{ text_enabled }}</option>
+                          <option value="0" selected="selected">{{ text_disabled }}</option>
                         {% endif %}
                       </select>
                     </div>
@@ -347,17 +343,17 @@
                     <div class="col-sm-10">
                       <textarea name="shipping_royal_mail_international_standard_zone_2_rate" rows="5" placeholder="{{ entry_rate_zone_2 }}" id="input-international-standard-zone-2-rate" class="form-control">{{ shipping_royal_mail_international_standard_zone_2_rate }}</textarea>
                     </div>
-                  </div>             
+                  </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-standard-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
                       <select name="shipping_royal_mail_international_standard_status" id="input-international-standard-status" class="form-control">
                         {% if shipping_royal_mail_international_standard_status %}
-                        <option value="1" selected="selected">{{ text_enabled }}</option>
-                        <option value="0">{{ text_disabled }}</option>
+                          <option value="1" selected="selected">{{ text_enabled }}</option>
+                          <option value="0">{{ text_disabled }}</option>
                         {% else %}
-                        <option value="1">{{ text_enabled }}</option>
-                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                          <option value="1">{{ text_enabled }}</option>
+                          <option value="0" selected="selected">{{ text_disabled }}</option>
                         {% endif %}
                       </select>
                     </div>
@@ -382,17 +378,17 @@
                     <div class="col-sm-10">
                       <textarea name="shipping_royal_mail_international_tracked_signed_zone_2_rate" rows="5" placeholder="{{ entry_rate_zone_2 }}" id="input-international-tracked-signed-zone-2-rate" class="form-control">{{ shipping_royal_mail_international_tracked_signed_zone_2_rate }}</textarea>
                     </div>
-                  </div>                     
+                  </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-tracked-signed-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
                       <select name="shipping_royal_mail_international_tracked_signed_status" id="input-international-tracked-signed-status" class="form-control">
                         {% if shipping_royal_mail_international_tracked_signed_status %}
-                        <option value="1" selected="selected">{{ text_enabled }}</option>
-                        <option value="0">{{ text_disabled }}</option>
+                          <option value="1" selected="selected">{{ text_enabled }}</option>
+                          <option value="0">{{ text_disabled }}</option>
                         {% else %}
-                        <option value="1">{{ text_enabled }}</option>
-                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                          <option value="1">{{ text_enabled }}</option>
+                          <option value="0" selected="selected">{{ text_disabled }}</option>
                         {% endif %}
                       </select>
                     </div>
@@ -423,17 +419,17 @@
                     <div class="col-sm-10">
                       <textarea name="shipping_royal_mail_international_tracked_zone_2_rate" rows="5" placeholder="{{ entry_rate_zone_2 }}" id="input-international-tracked-zone-2-rate" class="form-control">{{ shipping_royal_mail_international_tracked_zone_2_rate }}</textarea>
                     </div>
-                  </div>                   
+                  </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-tracked-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
                       <select name="shipping_royal_mail_international_tracked_status" id="input-international-tracked-status" class="form-control">
                         {% if shipping_royal_mail_international_tracked_status %}
-                        <option value="1" selected="selected">{{ text_enabled }}</option>
-                        <option value="0">{{ text_disabled }}</option>
+                          <option value="1" selected="selected">{{ text_enabled }}</option>
+                          <option value="0">{{ text_disabled }}</option>
                         {% else %}
-                        <option value="1">{{ text_enabled }}</option>
-                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                          <option value="1">{{ text_enabled }}</option>
+                          <option value="0" selected="selected">{{ text_disabled }}</option>
                         {% endif %}
                       </select>
                     </div>
@@ -458,17 +454,17 @@
                     <div class="col-sm-10">
                       <textarea name="shipping_royal_mail_international_signed_zone_2_rate" rows="5" placeholder="{{ entry_rate }}" id="input-international-signed-zone-2-rate" class="form-control">{{ shipping_royal_mail_international_signed_zone_2_rate }}</textarea>
                     </div>
-                  </div>                   
+                  </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-signed-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
                       <select name="shipping_royal_mail_international_signed_status" id="input-international-signed-status" class="form-control">
                         {% if shipping_royal_mail_international_signed_status %}
-                        <option value="1" selected="selected">{{ text_enabled }}</option>
-                        <option value="0">{{ text_disabled }}</option>
+                          <option value="1" selected="selected">{{ text_enabled }}</option>
+                          <option value="0">{{ text_disabled }}</option>
                         {% else %}
-                        <option value="1">{{ text_enabled }}</option>
-                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                          <option value="1">{{ text_enabled }}</option>
+                          <option value="0" selected="selected">{{ text_disabled }}</option>
                         {% endif %}
                       </select>
                     </div>
@@ -480,17 +476,17 @@
                     <div class="col-sm-10">
                       <textarea name="shipping_royal_mail_international_economy_rate" rows="5" placeholder="{{ entry_rate }}" id="input-international-economy-rate" class="form-control">{{ shipping_royal_mail_international_economy_rate }}</textarea>
                     </div>
-                  </div>                 
+                  </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-economy-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
                       <select name="shipping_royal_mail_international_economy_status" id="input-international-economy-status" class="form-control">
                         {% if shipping_royal_mail_international_economy_status %}
-                        <option value="1" selected="selected">{{ text_enabled }}</option>
-                        <option value="0">{{ text_disabled }}</option>
+                          <option value="1" selected="selected">{{ text_enabled }}</option>
+                          <option value="0">{{ text_disabled }}</option>
                         {% else %}
-                        <option value="1">{{ text_enabled }}</option>
-                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                          <option value="1">{{ text_enabled }}</option>
+                          <option value="0" selected="selected">{{ text_disabled }}</option>
                         {% endif %}
                       </select>
                     </div>

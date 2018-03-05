@@ -30,7 +30,7 @@
           <div class="tab-content">
             <div class="tab-pane active" id="tab-settings">
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="amazon-status">{{ entry_status }}</label>
+                <label class="col-sm-2 col-form-label" for="amazon-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="openbay_amazon_status" id="amazon-status" class="form-control">
                     {% if openbay_amazon_status %}
@@ -44,26 +44,26 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="entry-token">{{ entry_token }}</label>
+                <label class="col-sm-2 col-form-label" for="entry-token">{{ entry_token }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="openbay_amazon_token" value="{{ openbay_amazon_token }}" placeholder="{{ entry_token }}" id="entry-token" class="form-control" />
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="entry-encryption-key">{{ entry_encryption_key }}</label>
+                <label class="col-sm-2 col-form-label" for="entry-encryption-key">{{ entry_encryption_key }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="openbay_amazon_encryption_key" value="{{ openbay_amazon_encryption_key }}" placeholder="{{ entry_encryption_key }}" id="entry-encryption-key" class="form-control" />
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="entry-encryption-iv">{{ entry_encryption_iv }}</label>
+                <label class="col-sm-2 col-form-label" for="entry-encryption-iv">{{ entry_encryption_iv }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="openbay_amazon_encryption_iv" value="{{ openbay_amazon_encryption_iv }}" placeholder="{{ entry_encryption_iv }}" id="entry-encryption-iv" class="form-control" />
                 </div>
               </div>
               {% if api_checked == true %}
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ text_api_status }}</label>
+                <label class="col-sm-2 col-form-label">{{ text_api_status }}</label>
                 <div class="col-sm-10">
                   {% if api_status == false %}
                     <h4><span class="label label-danger"><i class="fa fa-minus-square"></i> {{ text_api_error }}</span></h4>
@@ -78,7 +78,7 @@
             </div>
             <div class="tab-pane" id="tab-product">
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="entry-tax-percentage">{{ entry_tax_percentage }}</label>
+                <label class="col-sm-2 col-form-label" for="entry-tax-percentage">{{ entry_tax_percentage }}</label>
                 <div class="col-sm-10">
                   <div class="input-group col-xs-2">
                     <input type="text" name="openbay_amazon_listing_tax_added" value="{{ openbay_amazon_listing_tax_added }}" placeholder="{{ entry_tax_percentage }}" id="entry-tax-percentage" class="form-control" />
@@ -87,7 +87,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_marketplace_default }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_marketplace_default }}</label>
                 <div class="col-sm-10">
                   {% for marketplace in marketplaces %}
                     {% if marketplace.code == openbay_amazon_default_listing_marketplace %}
@@ -102,7 +102,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="entry-default-condition">{{ entry_default_condition }}</label>
+                <label class="col-sm-2 col-form-label" for="entry-default-condition">{{ entry_default_condition }}</label>
                 <div class="col-sm-10">
                   <select name="openbay_amazon_listing_default_condition" id="entry-default-condition" class="form-control">
                     <option></option>
@@ -122,7 +122,7 @@
                 <legend>{{ text_order_statuses }}</legend>
                 {% for key,amazon_order_status in amazon_order_statuses %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ amazon_order_status.name }}</label>
+                  <label class="col-sm-2 col-form-label">{{ amazon_order_status.name }}</label>
                   <div class="col-sm-10">
                     <select name="openbay_amazon_order_status_{{ key }}" class="form-control">
                       {% for order_status in order_statuses %}
@@ -141,7 +141,7 @@
                 <legend>{{ text_marketplaces }}</legend>
                 {% for marketplace in marketplaces %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="code-{{ marketplace.code }}">{{ marketplace.name }}</label>
+                  <label class="col-sm-2 col-form-label" for="code-{{ marketplace.code }}">{{ marketplace.name }}</label>
                   <div class="col-sm-10">
                     {% if marketplace.id in marketplace_ids %}
                       <input id="code-{{ marketplace.code }}" type="checkbox" name="openbay_amazon_orders_marketplace_ids[]" value="{{ marketplace.id }}" checked="checked" />
@@ -155,7 +155,7 @@
               <fieldset>
                 <legend>{{ text_other }}</legend>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="entry-import-tax">{{ entry_import_tax }}</label>
+                  <label class="col-sm-2 col-form-label" for="entry-import-tax">{{ entry_import_tax }}</label>
                   <div class="col-sm-10">
                     <div class="input-group col-xs-2">
                       <input type="text" name="openbay_amazon_order_tax" value="{{ openbay_amazon_order_tax }}" id="entry-import-tax" class="form-control" placeholder="{{ entry_import_tax }}" />
@@ -164,7 +164,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="entry-customer-group">{{ entry_customer_group }}</label>
+                  <label class="col-sm-2 col-form-label" for="entry-customer-group">{{ entry_customer_group }}</label>
                   <div class="col-sm-10">
                     <select name="openbay_amazon_order_customer_group" id="entry-customer-group" class="form-control">
                       {% for customer_group in customer_groups %}
@@ -179,7 +179,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="entry-notify-admin">{{ entry_notify_admin }}</label>
+                  <label class="col-sm-2 col-form-label" for="entry-notify-admin">{{ entry_notify_admin }}</label>
                   <div class="col-sm-10">
                     <select name="openbay_amazon_notify_admin" id="entry-notify-admin" class="form-control">
                       {% if openbay_amazon_notify_admin %}
@@ -193,7 +193,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="entry-default-shipping">{{ entry_default_shipping }}</label>
+                  <label class="col-sm-2 col-form-label" for="entry-default-shipping">{{ entry_default_shipping }}</label>
                   <div class="col-sm-10">
                     <select name="openbay_amazon_default_carrier" id="entry-default-shipping" class="form-control">
                       {% for carrier in carriers %}

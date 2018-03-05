@@ -36,7 +36,7 @@
       <div class="tab-content" id="tab-content">
         <div class="tab-pane active" id="page-main">
           <div class="form-group">
-            <label class="col-sm-2 control-label">{{ entry_product }}</label>
+            <label class="col-sm-2 col-form-label">{{ entry_product }}</label>
             <div class="col-sm-10">
               <p><a href="{{ listing_url }}">{{ listing_name }}{% if options is not empty %} : {% endif %}</a>
                 {% if options %}
@@ -56,7 +56,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label">{{ entry_marketplace }}</label>
+            <label class="col-sm-2 col-form-label">{{ entry_marketplace }}</label>
             <div class="col-sm-10" id="marketplaces">
               {% for mp in marketplaces %}
                 <label class="radio-inline">
@@ -70,7 +70,7 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="category_selector" id="category_selector_label">{{ entry_category }}</label>
+            <label class="col-sm-2 col-form-label" for="category_selector" id="category_selector_label">{{ entry_category }}</label>
             <div class="col-sm-4">
               <select name="category_selector" id="category_selector" class="form-control">
                 <option value=""></option>
@@ -240,7 +240,7 @@ function show_form(xml, formType) {
                   row += '">';
               }
 
-              row += '<label class="col-sm-2 control-label">'+fieldsArray[formType][i]['title']+'</label>';
+              row += '<label class="col-sm-2 col-form-label">'+fieldsArray[formType][i]['title']+'</label>';
               row += '<div class="col-sm-10">';
 
               row += '<div class="alert alert-danger" id="error_' + fieldsArray[formType][i]['name'] + '" style="display:none;"></div>'

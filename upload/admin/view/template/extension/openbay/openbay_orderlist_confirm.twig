@@ -45,7 +45,7 @@
                 {% if order.channel == 'eBay' %}
                   {% if change_order_status_id == ebay_status_shipped_id %}
                     <div class="form-group">
-                      <label class="control-label">{{ entry_carrier }}</label>
+                      <label class="col-form-label">{{ entry_carrier }}</label>
                       <select name="carrier[{{ order.order_id }}]" class="form-control">
                         {% for carrier in market_options.ebay.carriers %}
                           <option{% if carrier.description == order.shipping_method %} selected{% endif %}>{{ carrier.description }}</option>
@@ -53,7 +53,7 @@
                       </select>
                     </div>
                     <div class="form-group">
-                      <label class="control-label">{{ entry_tracking_no }}</label>
+                      <label class="col-form-label">{{ entry_tracking_no }}</label>
                       <input type="text" name="tracking[{{ order.order_id }}]" value="" placeholder="{{ entry_tracking_no }}" class="form-control" />
                     </div>
                   {% endif %}
@@ -61,7 +61,7 @@
                 {% if order.channel == 'Amazon EU' %}
                   {% if change_order_status_id == openbay_amazon_order_status_shipped %}
                     <div class="form-group">
-                      <label class="control-label">{{ entry_carrier }}</label>
+                      <label class="col-form-label">{{ entry_carrier }}</label>
                       <select name="carrier[{{ order.order_id }}]" class="form-control amazon_carrier" id="amazon_carrier_{{ order.order_id }}">
                         {% for carrier in market_options.amazon.carriers %}
                           <option{% if carrier == market_options.amazon.default_carrier %} selected{% endif %}>{{ carrier }}</option>
@@ -70,11 +70,11 @@
                       </select>
                     </div>
                     <div class="form-group">
-                      <label class="control-label">{{ entry_other }}</label>
+                      <label class="col-form-label">{{ entry_other }}</label>
                       <input type="text" name="carrier_other[{{ order.order_id }}]" value="" placeholder="{{ entry_other }}" class="form-control" id="amazon_carrier_{{ order.order_id }}_other" />
                     </div>
                     <div class="form-group">
-                      <label class="control-label">{{ entry_tracking_no }}</label>
+                      <label class="col-form-label">{{ entry_tracking_no }}</label>
                       <input type="text" name="tracking[{{ order.order_id }}]" value="" placeholder="{{ entry_tracking_no }}" class="form-control" />
                     </div>
                   {% endif %}
@@ -82,7 +82,7 @@
                 {% if order.channel == 'Amazon US' %}
                   {% if change_order_status_id == openbay_amazonus_order_status_shipped %}
                   <div class="form-group">
-                    <label class="control-label">{{ entry_carrier }}</label>
+                    <label class="col-form-label">{{ entry_carrier }}</label>
                     <select name="carrier[{{ order.order_id }}]" class="form-control amazonus_carrier" id="amazonus_carrier_{{ order.order_id }}">
                       {% for carrier in market_options.amazonus.carriers %}
                         <option{% if carrier == market_options.amazonus.default_carrier %} selected{% endif %}>{{ carrier }}</option>
@@ -91,11 +91,11 @@
                     </select>
                   </div>
                   <div class="form-group">
-                    <label class="control-label">{{ entry_other }}</label>
+                    <label class="col-form-label">{{ entry_other }}</label>
                     <input type="text" name="carrier_other[{{ order.order_id }}]" value="" placeholder="{{ entry_other }}" class="form-control" id="amazonus_carrier_{{ order.order_id }}_other" />
                   </div>
                   <div class="form-group">
-                    <label class="control-label">{{ entry_tracking_no }}</label>
+                    <label class="col-form-label">{{ entry_tracking_no }}</label>
                     <input type="text" name="tracking[{{ order.order_id }}]" value="" placeholder="{{ entry_tracking_no }}" class="form-control" />
                   </div>
                   {% endif %}

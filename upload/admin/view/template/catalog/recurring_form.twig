@@ -25,7 +25,7 @@
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-recurring">
           <div class="form-group required">
-            <label class="col-sm-2 control-label">{{ entry_name }}</label>
+            <label class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
               {% for language in languages %}
                 <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span> <input type="text" name="recurring_description[{{ language.language_id }}][name]" value="{{ recurring_description[language.language_id] ? recurring_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control"/>
@@ -39,25 +39,25 @@
           <fieldset>
             <legend>{{ text_profile }}</legend>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-price">{{ entry_price }}</label>
+              <label class="col-sm-2 col-form-label" for="input-price">{{ entry_price }}</label>
               <div class="col-sm-10">
                 <input type="text" name="price" value="{{ price }}" placeholder="{{ entry_price }}" id="input-price" class="form-control"/>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-duration">{{ entry_duration }}</label>
+              <label class="col-sm-2 col-form-label" for="input-duration">{{ entry_duration }}</label>
               <div class="col-sm-10">
                 <input type="text" name="duration" value="{{ duration }}" placeholder="{{ entry_duration }}" id="input-duration" class="form-control"/>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-cycle">{{ entry_cycle }}</label>
+              <label class="col-sm-2 col-form-label" for="input-cycle">{{ entry_cycle }}</label>
               <div class="col-sm-10">
                 <input type="text" name="cycle" value="{{ cycle }}" placeholder="{{ entry_cycle }}" id="input-cycle" class="form-control"/>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-frequency">{{ entry_frequency }}</label>
+              <label class="col-sm-2 col-form-label" for="input-frequency">{{ entry_frequency }}</label>
               <div class="col-sm-10">
                 <select name="frequency" id="input-frequency" class="form-control">
                   {% for frequency_option in frequencies %}
@@ -71,7 +71,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+              <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
               <div class="col-sm-10">
                 <select name="status" id="input-status" class="form-control">
                   {% if status %}
@@ -88,25 +88,25 @@
           <fieldset>
             <legend>{{ text_trial }}</legend>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-trial-price">{{ entry_trial_price }}</label>
+              <label class="col-sm-2 col-form-label" for="input-trial-price">{{ entry_trial_price }}</label>
               <div class="col-sm-10">
                 <input type="text" name="trial_price" value="{{ trial_price }}" placeholder="{{ entry_trial_price }}" id="input-trial-price" class="form-control"/>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-trial-duration">{{ entry_trial_duration }}</label>
+              <label class="col-sm-2 col-form-label" for="input-trial-duration">{{ entry_trial_duration }}</label>
               <div class="col-sm-10">
                 <input type="text" name="trial_duration" value="{{ trial_duration }}" placeholder="{{ entry_trial_duration }}" id="input-trial-duration" class="form-control"/>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-trial-cycle">{{ entry_trial_cycle }}</label>
+              <label class="col-sm-2 col-form-label" for="input-trial-cycle">{{ entry_trial_cycle }}</label>
               <div class="col-sm-10">
                 <input type="text" name="trial_cycle" value="{{ trial_cycle }}" placeholder="{{ entry_trial_cycle }}" id="input-trial-cycle" class="form-control"/>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-trial-frequency">{{ entry_trial_frequency }}</label>
+              <label class="col-sm-2 col-form-label" for="input-trial-frequency">{{ entry_trial_frequency }}</label>
               <div class="col-sm-10">
                 <select name="trial_frequency" id="input-trial-frequency" class="form-control">
                   {% for frequency_option in frequencies %}
@@ -120,7 +120,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-trial-status">{{ entry_trial_status }}</label>
+              <label class="col-sm-2 col-form-label" for="input-trial-status">{{ entry_trial_status }}</label>
               <div class="col-sm-10">
                 <select name="trial_status" id="input-trial-status" class="form-control">
                   {% if trial_status %}
@@ -135,7 +135,7 @@
             </div>
           </fieldset>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+            <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
               <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
             </div>

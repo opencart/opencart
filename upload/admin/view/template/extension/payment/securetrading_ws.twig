@@ -24,7 +24,7 @@
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment">
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="securetrading_ws_site_reference">{{ entry_site_reference }}</label>
+            <label class="col-sm-2 col-form-label" for="securetrading_ws_site_reference">{{ entry_site_reference }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_securetrading_ws_site_reference" value="{{ payment_securetrading_ws_site_reference }}" placeholder="{{ entry_site_reference }}" id="securetrading_ws_site_reference" class="form-control"/>
               {% if error_site_reference %}
@@ -32,7 +32,7 @@
               {% endif %} </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="securetrading_ws_username">{{ entry_username }}</label>
+            <label class="col-sm-2 col-form-label" for="securetrading_ws_username">{{ entry_username }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_securetrading_ws_username" value="{{ payment_securetrading_ws_username }}" placeholder="{{ entry_username }}" id="securetrading_ws_username" class="form-control"/>
               {% if error_username %}
@@ -40,7 +40,7 @@
               {% endif %} </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="securetrading_ws_password">{{ entry_password }}</label>
+            <label class="col-sm-2 col-form-label" for="securetrading_ws_password">{{ entry_password }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_securetrading_ws_password" value="{{ payment_securetrading_ws_password }}" placeholder="{{ entry_password }}" id="securetrading_ws_password" class="form-control"/>
               {% if error_password %}
@@ -48,17 +48,17 @@
               {% endif %} </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="securetrading_ws_csv_username">{{ entry_csv_username }}</label>
+            <label class="col-sm-2 col-form-label" for="securetrading_ws_csv_username">{{ entry_csv_username }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_securetrading_ws_csv_username" value="{{ payment_securetrading_ws_csv_username }}" placeholder="{{ entry_csv_username }}" id="securetrading_ws_csv_username" class="form-control"/> <span class="help-block">{{ help_csv_username }}</span></div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="securetrading_ws_csv_password">{{ entry_csv_password }}</label>
+            <label class="col-sm-2 col-form-label" for="securetrading_ws_csv_password">{{ entry_csv_password }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_securetrading_ws_csv_password" value="{{ payment_securetrading_ws_csv_password }}" placeholder="{{ entry_csv_password }}" id="securetrading_ws_csv_password" class="form-control"/> <span class="help-block">{{ help_csv_password }}</span></div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="securetrading_ws_cards_accepted">{{ entry_cards_accepted }}</label>
+            <label class="col-sm-2 col-form-label" for="securetrading_ws_cards_accepted">{{ entry_cards_accepted }}</label>
             <div class="col-sm-10"> {% for key, value in cards %}
                 <div class="checkbox">
                   <label> {% for key in payment_securetrading_ws_cards_accepted %}
@@ -74,7 +74,7 @@
               {% endif %} </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="securetrading_ws_settle_status">{{ entry_settle_status }}</label>
+            <label class="col-sm-2 col-form-label" for="securetrading_ws_settle_status">{{ entry_settle_status }}</label>
             <div class="col-sm-10">
               <select name="payment_securetrading_ws_settle_status" id="payment_securetrading_ws_settle_status" class="form-control">
                 {% for key, value in settlement_statuses %}
@@ -88,7 +88,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="securetrading_ws_settle_due_date">{{ entry_settle_due_date }}</label>
+            <label class="col-sm-2 col-form-label" for="securetrading_ws_settle_due_date">{{ entry_settle_due_date }}</label>
             <div class="col-sm-10">
               <select name="payment_securetrading_ws_settle_due_date" id="securetrading_ws_settle_due_date" class="form-control">
                 {% if payment_securetrading_ws_settle_due_date == 0 %}
@@ -107,12 +107,12 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="securetrading_ws_total">{{ entry_total }}</label>
+            <label class="col-sm-2 col-form-label" for="securetrading_ws_total">{{ entry_total }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_securetrading_ws_total" value="{{ payment_securetrading_ws_total }}" placeholder="{{ entry_total }}" id="securetrading_ws_total" class="form-control"/> <span class="help-block">{{ help_total }}</span></div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="securetrading_ws_order_status_id">{{ entry_order_status }}</label>
+            <label class="col-sm-2 col-form-label" for="securetrading_ws_order_status_id">{{ entry_order_status }}</label>
             <div class="col-sm-10">
               <select name="payment_securetrading_ws_order_status_id" id="securetrading_ws_order_status_id" class="form-control">
                 {% for order_status in order_statuses %}
@@ -126,7 +126,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="securetrading_ws_failed_order_status_id">{{ entry_failed_order_status }}</label>
+            <label class="col-sm-2 col-form-label" for="securetrading_ws_failed_order_status_id">{{ entry_failed_order_status }}</label>
             <div class="col-sm-10">
               <select name="payment_securetrading_ws_failed_order_status_id" id="securetrading_ws_failed_order_status_id" class="form-control">
                 {% for order_status in order_statuses %}
@@ -140,7 +140,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="securetrading_ws_declined_order_status_id">{{ entry_declined_order_status }}</label>
+            <label class="col-sm-2 col-form-label" for="securetrading_ws_declined_order_status_id">{{ entry_declined_order_status }}</label>
             <div class="col-sm-10">
               <select name="payment_securetrading_ws_declined_order_status_id" id="securetrading_ws_declined_order_status_id" class="form-control">
                 {% for order_status in order_statuses %}
@@ -154,7 +154,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="securetrading_ws_refunded_order_status_id">{{ entry_refunded_order_status }}</label>
+            <label class="col-sm-2 col-form-label" for="securetrading_ws_refunded_order_status_id">{{ entry_refunded_order_status }}</label>
             <div class="col-sm-10">
               <select name="payment_securetrading_ws_refunded_order_status_id" id="securetrading_ws_refunded_order_status_id" class="form-control">
                 {% for order_status in order_statuses %}
@@ -168,7 +168,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="securetrading_ws_authorisation_reversed_order_status_id">{{ entry_authorisation_reversed_order_status }}</label>
+            <label class="col-sm-2 col-form-label" for="securetrading_ws_authorisation_reversed_order_status_id">{{ entry_authorisation_reversed_order_status }}</label>
             <div class="col-sm-10">
               <select name="payment_securetrading_ws_authorisation_reversed_order_status_id" id="securetrading_ws_authorisation_reversed_order_status_id" class="form-control">
                 {% for order_status in order_statuses %}
@@ -182,7 +182,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="securetrading_ws_geo_zone_id">{{ entry_geo_zone }}</label>
+            <label class="col-sm-2 col-form-label" for="securetrading_ws_geo_zone_id">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
               <select name="payment_securetrading_ws_geo_zone_id" id="securetrading_ws_geo_zone_id" class="form-control">
                 {% if payment_securetrading_ws_geo_zone_id == 0 %}
@@ -201,7 +201,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="securetrading_ws_status">{{ entry_status }}</label>
+            <label class="col-sm-2 col-form-label" for="securetrading_ws_status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="payment_securetrading_ws_status" id="securetrading_ws_status" class="form-control">
                 {% if payment_securetrading_ws_status == 1 %}
@@ -218,7 +218,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="securetrading_ws_sort_order">{{ entry_sort_order }}</label>
+            <label class="col-sm-2 col-form-label" for="securetrading_ws_sort_order">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_securetrading_ws_sort_order" value="{{ payment_securetrading_ws_sort_order }}" placeholder="{{ entry_sort_order }}" id="securetrading_ws_sort_order" class="form-control"/>
             </div>
@@ -232,7 +232,7 @@
               <div class="row">
                 <div class="col-sm-1">
                   <div class="form-group">
-                    <label class="control-label" for="hour-from">{{ entry_hour }}</label>
+                    <label class="col-form-label" for="hour-from">{{ entry_hour }}</label>
                     <div class="input-group">
                       <select name="hour_from" id="hour-from" class="form-control">
                         {% for hour in hours %}
@@ -244,7 +244,7 @@
                 </div>
                 <div class="col-sm-1">
                   <div class="form-group">
-                    <label class="control-label" for="minute-from">{{ entry_minute }}</label>
+                    <label class="col-form-label" for="minute-from">{{ entry_minute }}</label>
                     <div class="input-group">
                       <select name="minute_from" id="minute-from" class="form-control">
                         {% for minute in minutes %}
@@ -256,7 +256,7 @@
                 </div>
                 <div class="col-sm-3">
                   <div class="form-group">
-                    <label class="control-label" for="date-from">{{ entry_date_from }}</label>
+                    <label class="col-form-label" for="date-from">{{ entry_date_from }}</label>
                     <div class="input-group date">
                       <input type="text" name="date_from" value="<?php echo date('Y-m-d'); ?>" placeholder="{{ entry_date_from }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="date-from" class="form-control"/>
                       <div class="input-group-btn">
@@ -267,7 +267,7 @@
                 </div>
                 <div class="col-sm-1 col-sm-offset-2">
                   <div class="form-group">
-                    <label class="control-label" for="hour-to">{{ entry_hour }}</label>
+                    <label class="col-form-label" for="hour-to">{{ entry_hour }}</label>
                     <div class="input-group">
                       <select name="hour_to" id="hour-to" class="form-control">
                         {% for hour in hours %}
@@ -279,7 +279,7 @@
                 </div>
                 <div class="col-sm-1">
                   <div class="form-group">
-                    <label class="control-label" for="minute-to">{{ entry_minute }}</label>
+                    <label class="col-form-label" for="minute-to">{{ entry_minute }}</label>
                     <div class="input-group">
                       <select name="minute_to" id="minute-to" class="form-control">
                         {% for minute in minutes %}
@@ -291,7 +291,7 @@
                 </div>
                 <div class="col-sm-3">
                   <div class="form-group">
-                    <label class="control-label" for="date-to">{{ entry_date_to }}</label>
+                    <label class="col-form-label" for="date-to">{{ entry_date_to }}</label>
                     <div class="input-group date">
                       <input type="text" name="date_to" value="<?php echo date('Y-m-d'); ?>" placeholder="{{ entry_date_to }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="date-to" class="form-control"/>
                       <div class="input-group-btn">
@@ -304,7 +304,7 @@
               <div class="row">
                 <div class="col-sm-4">
                   <div class="form-group">
-                    <label class="control-label" for="request">{{ entry_request }}</label> <select name="request[]" id="request" multiple class="form-control" style="height: 150px">
+                    <label class="col-form-label" for="request">{{ entry_request }}</label> <select name="request[]" id="request" multiple class="form-control" style="height: 150px">
                       <option selected="selected">ACCOUNTCHECK</option>
                       <option selected="selected">AUTH</option>
                       <option selected="selected">FRAUDSCORE</option>
@@ -317,7 +317,7 @@
                 </div>
                 <div class="col-sm-4">
                   <div class="form-group">
-                    <label class="control-label" for="currency">{{ entry_currency }}</label> <select name="currency[]" id="currency" multiple class="form-control" style="height: 150px">
+                    <label class="col-form-label" for="currency">{{ entry_currency }}</label> <select name="currency[]" id="currency" multiple class="form-control" style="height: 150px">
                       {% for currency in currencies %}
                         <option selected="selected" value="{{ currency.code }}">{{ currency.title }}</option>
                       {% endfor %}
@@ -326,7 +326,7 @@
                 </div>
                 <div class="col-sm-4">
                   <div class="form-group">
-                    <label class="control-label" for="payment-type">{{ entry_payment_type }}</label> <select name="payment_type[]" id="payment-type" multiple class="form-control" style="height: 150px">
+                    <label class="col-form-label" for="payment-type">{{ entry_payment_type }}</label> <select name="payment_type[]" id="payment-type" multiple class="form-control" style="height: 150px">
                       <option selected="selected">AMEX</option>
                       <option selected="selected">DELTA</option>
                       <option selected="selected">ELECTRON</option>
@@ -344,7 +344,7 @@
               <div class="row">
                 <div class="col-sm-4">
                   <div class="form-group">
-                    <label class="control-label" for="status">{{ entry_status_code }}</label> <select name="status[]" id="status" multiple class="form-control" style="height: 150px">
+                    <label class="col-form-label" for="status">{{ entry_status_code }}</label> <select name="status[]" id="status" multiple class="form-control" style="height: 150px">
                       <option selected="selected" value="0">0 - Ok</option>
                       <option selected="selected" value="70000">70000 - Decline</option>
                     </select>
@@ -352,7 +352,7 @@
                 </div>
                 <div class="col-sm-4">
                   <div class="form-group">
-                    <label class="control-label" for="settle-status">{{ entry_settle_status }}</label> <select name="settle_status[]" id="settle-status" multiple class="form-control" style="height: 150px">
+                    <label class="col-form-label" for="settle-status">{{ entry_settle_status }}</label> <select name="settle_status[]" id="settle-status" multiple class="form-control" style="height: 150px">
                       <option selected="selected" value="0">0 - {{ text_pending_settlement }}</option>
                       <option selected="selected" value="1">1 - {{ text_manual_settlement }}</option>
                       <option selected="selected" value="2">2 - {{ text_suspended }}</option>

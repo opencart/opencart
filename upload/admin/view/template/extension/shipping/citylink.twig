@@ -24,14 +24,14 @@
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-shipping">
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-rate">{{ entry_rate }}</label>
+            <label class="col-sm-2 col-form-label" for="input-rate">{{ entry_rate }}</label>
             <div class="col-sm-10">
               <textarea name="shipping_citylink_rate" rows="5" placeholder="{{ entry_rate }}" id="input-rate" class="form-control">{{ shipping_citylink_rate }}</textarea>
               <small class="form-text text-muted">{{ help_rate }}</small>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-tax-class">{{ entry_tax_class }}</label>
+            <label class="col-sm-2 col-form-label" for="input-tax-class">{{ entry_tax_class }}</label>
             <div class="col-sm-10">
               <select name="shipping_citylink_tax_class_id" id="input-tax-class" class="form-control">
                 <option value="0">{{ text_none }}</option>
@@ -46,7 +46,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+            <label class="col-sm-2 col-form-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
               <select name="shipping_citylink_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
@@ -61,7 +61,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+            <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="shipping_citylink_status" id="input-status" class="form-control">
                 {% if shipping_citylink_status %}
@@ -75,7 +75,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+            <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
               <input type="text" name="shipping_citylink_sort_order" value="{{ shipping_citylink_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
             </div>

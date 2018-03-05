@@ -30,28 +30,28 @@
           <div class="tab-pane active" id="tab-general">
             <div class="well" id="credential-container">
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="openbay_fba_api_key">{{ entry_api_key }}</label>
+                <label class="col-sm-2 col-form-label" for="openbay_fba_api_key">{{ entry_api_key }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="openbay_fba_api_key" value="{{ openbay_fba_api_key }}" placeholder="{{ entry_api_key }}" id="openbay_fba_api_key" class="form-control credentials"/>
                   <small class="form-text text-muted">{{ help_api_key }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="openbay_fba_encryption_key">{{ entry_encryption_key }}</label>
+                <label class="col-sm-2 col-form-label" for="openbay_fba_encryption_key">{{ entry_encryption_key }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="openbay_fba_encryption_key" value="{{ openbay_fba_encryption_key }}" placeholder="{{ entry_encryption_key }}" id="openbay_fba_encryption_key" class="form-control credentials"/>
                   <small class="form-text text-muted">{{ help_encryption_key }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="openbay_fba_encryption_iv">{{ entry_encryption_iv }}</label>
+                <label class="col-sm-2 col-form-label" for="openbay_fba_encryption_iv">{{ entry_encryption_iv }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="openbay_fba_encryption_iv" value="{{ openbay_fba_encryption_iv }}" placeholder="{{ entry_encryption_iv }}" id="openbay_fba_encryption_iv" class="form-control credentials"/>
                   <small class="form-text text-muted">{{ help_encryption_iv }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="openbay_fba_api_account_id">{{ entry_account_id }}</label>
+                <label class="col-sm-2 col-form-label" for="openbay_fba_api_account_id">{{ entry_account_id }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="openbay_fba_api_account_id" value="{{ openbay_fba_api_account_id }}" placeholder="{{ entry_account_id }}" id="openbay_fba_api_account_id" class="form-control credentials"/>
                   <small class="form-text text-muted">{{ help_account_id }}</small>
@@ -64,7 +64,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_fba_status">{{ text_status }}</label>
+              <label class="col-sm-2 col-form-label" for="openbay_fba_status">{{ text_status }}</label>
               <div class="col-sm-10">
                 <select name="openbay_fba_status" id="openbay_fba_status" class="form-control">
                   {% if openbay_fba_status %}
@@ -78,7 +78,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_fba_debug_log">{{ entry_debug_log }}</label>
+              <label class="col-sm-2 col-form-label" for="openbay_fba_debug_log">{{ entry_debug_log }}</label>
               <div class="col-sm-10">
                 <select name="openbay_fba_debug_log" id="openbay_fba_debug_log" class="form-control">
                   {% if openbay_fba_debug_log %}
@@ -93,7 +93,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_fba_send_orders">{{ entry_send_orders }}</label>
+              <label class="col-sm-2 col-form-label" for="openbay_fba_send_orders">{{ entry_send_orders }}</label>
               <div class="col-sm-10">
                 <select name="openbay_fba_send_orders" id="openbay_fba_send_orders" class="form-control">
                   {% if openbay_fba_send_orders %}
@@ -108,7 +108,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_fba_only_fill_complete">{{ entry_only_fill_complete }}</label>
+              <label class="col-sm-2 col-form-label" for="openbay_fba_only_fill_complete">{{ entry_only_fill_complete }}</label>
               <div class="col-sm-10">
                 <select name="openbay_fba_only_fill_complete" id="openbay_fba_only_fill_complete" class="form-control">
                   {% if openbay_fba_only_fill_complete %}
@@ -123,7 +123,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_fba_order_prefix">{{ entry_order_id_prefix }}</label>
+              <label class="col-sm-2 col-form-label" for="openbay_fba_order_prefix">{{ entry_order_id_prefix }}</label>
               <div class="col-sm-10">
                 <p class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> {{ text_prefix_warning }}</p>
                 <input{% if prefix_can_edit == false %} disabled{% endif %} type="text" name="openbay_fba_order_prefix" value="{{ openbay_fba_order_prefix }}" placeholder="{{ entry_order_id_prefix }}" id="openbay_fba_order_prefix" class="form-control"/>
@@ -131,7 +131,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_fba_fulfill_policy">{{ entry_fulfill_policy }}</label>
+              <label class="col-sm-2 col-form-label" for="openbay_fba_fulfill_policy">{{ entry_fulfill_policy }}</label>
               <div class="col-sm-10">
                 <select name="openbay_fba_fulfill_policy" id="openbay_fba_fulfill_policy" class="form-control ftpsetting">
                   {% for code,text in fulfillment_policy %}
@@ -142,7 +142,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_fba_shipping_speed">{{ entry_shipping_speed }}</label>
+              <label class="col-sm-2 col-form-label" for="openbay_fba_shipping_speed">{{ entry_shipping_speed }}</label>
               <div class="col-sm-10">
                 <select name="openbay_fba_shipping_speed" id="openbay_fba_shipping_speed" class="form-control ftpsetting">
                   {% for code,text in shipping_speed %}
@@ -153,7 +153,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_fba_order_trigger_status">{{ entry_new_order_status }}</label>
+              <label class="col-sm-2 col-form-label" for="openbay_fba_order_trigger_status">{{ entry_new_order_status }}</label>
               <div class="col-sm-10">
                 <select name="openbay_fba_order_trigger_status" id="openbay_fba_order_trigger_status" class="form-control">
                   {% for status in order_statuses %}

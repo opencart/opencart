@@ -38,7 +38,7 @@
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-url">{{ entry_url }}</label>
+                <label class="col-sm-2 col-form-label" for="input-url">{{ entry_url }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_url" value="{{ config_url }}" placeholder="{{ entry_url }}" id="input-url" class="form-control"/>
                   <small class="form-text text-muted">{{ help_url|escape('html') }}</small>
@@ -48,7 +48,7 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-meta-title">{{ entry_meta_title }}</label>
+                <label class="col-sm-2 col-form-label" for="input-meta-title">{{ entry_meta_title }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_meta_title" value="{{ config_meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title" class="form-control"/>
                   {% if error_meta_title %}
@@ -57,19 +57,19 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-meta-description">{{ entry_meta_description }}</label>
+                <label class="col-sm-2 col-form-label" for="input-meta-description">{{ entry_meta_description }}</label>
                 <div class="col-sm-10">
                   <textarea name="config_meta_description" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description" class="form-control">{{ config_meta_description }}</textarea>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-meta-keyword">{{ entry_meta_keyword }}</label>
+                <label class="col-sm-2 col-form-label" for="input-meta-keyword">{{ entry_meta_keyword }}</label>
                 <div class="col-sm-10">
                   <textarea name="config_meta_keyword" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword" class="form-control">{{ config_meta_keyword }}</textarea>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-theme">{{ entry_theme }}</label>
+                <label class="col-sm-2 col-form-label" for="input-theme">{{ entry_theme }}</label>
                 <div class="col-sm-10">
                   <select name="config_theme" id="input-theme" class="form-control">
                     {% for theme in themes %}
@@ -84,7 +84,7 @@
                   <img src="" alt="" id="theme" class="img-thumbnail"/></div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-layout">{{ entry_layout }}</label>
+                <label class="col-sm-2 col-form-label" for="input-layout">{{ entry_layout }}</label>
                 <div class="col-sm-10">
                   <select name="config_layout_id" id="input-layout" class="form-control">
                     {% for layout in layouts %}
@@ -100,7 +100,7 @@
             </div>
             <div class="tab-pane" id="tab-store">
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
+                <label class="col-sm-2 col-form-label" for="input-name">{{ entry_name }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_name" value="{{ config_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
                   {% if error_name %}
@@ -109,7 +109,7 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-owner">{{ entry_owner }}</label>
+                <label class="col-sm-2 col-form-label" for="input-owner">{{ entry_owner }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_owner" value="{{ config_owner }}" placeholder="{{ entry_owner }}" id="input-owner" class="form-control"/>
                   {% if error_owner %}
@@ -118,7 +118,7 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-address">{{ entry_address }}</label>
+                <label class="col-sm-2 col-form-label" for="input-address">{{ entry_address }}</label>
                 <div class="col-sm-10">
                   <textarea name="config_address" rows="5" placeholder="{{ entry_address }}" id="input-address" class="form-control">{{ config_address }}</textarea>
                   {% if error_address %}
@@ -127,14 +127,14 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-geocode">{{ entry_geocode }}</label>
+                <label class="col-sm-2 col-form-label" for="input-geocode">{{ entry_geocode }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_geocode" value="{{ config_geocode }}" placeholder="{{ entry_geocode }}" id="input-geocode" class="form-control"/>
                   <small class="form-text text-muted">{{ help_geocode }}</small>
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-email">{{ entry_email }}</label>
+                <label class="col-sm-2 col-form-label" for="input-email">{{ entry_email }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_email" value="{{ config_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
                   {% if error_email %}
@@ -143,7 +143,7 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-telephone">{{ entry_telephone }}</label>
+                <label class="col-sm-2 col-form-label" for="input-telephone">{{ entry_telephone }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_telephone" value="{{ config_telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
                   {% if error_telephone %}
@@ -152,25 +152,25 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-fax">{{ entry_fax }}</label>
+                <label class="col-sm-2 col-form-label" for="input-fax">{{ entry_fax }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_fax" value="{{ config_fax }}" placeholder="{{ entry_fax }}" id="input-fax" class="form-control"/>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-image">{{ entry_image }}</label>
+                <label class="col-sm-2 col-form-label" for="input-image">{{ entry_image }}</label>
                 <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ thumb }}" alt="" title="" data-placeholder="{{ placeholder }}"/></a> <input type="hidden" name="config_image" value="{{ config_image }}" id="input-image"/>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-open">{{ entry_open }}</label>
+                <label class="col-sm-2 col-form-label" for="input-open">{{ entry_open }}</label>
                 <div class="col-sm-10">
                   <textarea name="config_open" rows="5" placeholder="{{ entry_open }}" id="input-open" class="form-control">{{ config_open }}</textarea>
                   <small class="form-text text-muted">{{ help_open }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-comment">{{ entry_comment }}</label>
+                <label class="col-sm-2 col-form-label" for="input-comment">{{ entry_comment }}</label>
                 <div class="col-sm-10">
                   <textarea name="config_comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ config_comment }}</textarea>
                   <small class="form-text text-muted">{{ help_comment }}</small>
@@ -178,7 +178,7 @@
               </div>
               {% if locations %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ entry_location }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_location }}</label>
                   <div class="col-sm-10">
                     {% for location in locations %}
                       <div class="checkbox">
@@ -200,7 +200,7 @@
             </div>
             <div class="tab-pane" id="tab-local">
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-country">{{ entry_country }}</label>
+                <label class="col-sm-2 col-form-label" for="input-country">{{ entry_country }}</label>
                 <div class="col-sm-10">
                   <select name="config_country_id" id="input-country" class="form-control">
                     {% for country in countries %}
@@ -214,13 +214,13 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-zone">{{ entry_zone }}</label>
+                <label class="col-sm-2 col-form-label" for="input-zone">{{ entry_zone }}</label>
                 <div class="col-sm-10">
                   <select name="config_zone_id" id="input-zone" class="form-control"> </select>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-language">{{ entry_language }}</label>
+                <label class="col-sm-2 col-form-label" for="input-language">{{ entry_language }}</label>
                 <div class="col-sm-10">
                   <select name="config_language" id="input-language" class="form-control">
                     {% for language in languages %}
@@ -234,7 +234,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-currency">{{ entry_currency }}</label>
+                <label class="col-sm-2 col-form-label" for="input-currency">{{ entry_currency }}</label>
                 <div class="col-sm-10">
                   <select name="config_currency" id="input-currency" class="form-control">
                     {% for currency in currencies %}
@@ -253,7 +253,7 @@
               <fieldset>
                 <legend>{{ text_tax }}</legend>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ entry_tax }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_tax }}</label>
                   <div class="col-sm-10">
                     <label class="radio-inline">
                       {% if config_tax %}
@@ -275,7 +275,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-tax-default">{{ entry_tax_default }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-tax-default">{{ entry_tax_default }}</label>
                   <div class="col-sm-10">
                     <select name="config_tax_default" id="input-tax-default" class="form-control">
                       <option value="">{{ text_none }}</option>
@@ -294,7 +294,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-tax-customer">{{ entry_tax_customer }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-tax-customer">{{ entry_tax_customer }}</label>
                   <div class="col-sm-10">
                     <select name="config_tax_customer" id="input-tax-customer" class="form-control">
                       <option value="">{{ text_none }}</option>
@@ -316,7 +316,7 @@
               <fieldset>
                 <legend>{{ text_account }}</legend>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-customer-group">{{ entry_customer_group }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-customer-group">{{ entry_customer_group }}</label>
                   <div class="col-sm-10">
                     <select name="config_customer_group_id" id="input-customer-group" class="form-control">
                       {% for customer_group in customer_groups %}
@@ -331,7 +331,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ entry_customer_group_display }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_customer_group_display }}</label>
                   <div class="col-sm-10">
                     {% for customer_group in customer_groups %}
                       <div class="checkbox">
@@ -353,7 +353,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ entry_customer_price }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_customer_price }}</label>
                   <div class="col-sm-10">
                     <label class="radio-inline">
                       {% if config_customer_price %}
@@ -376,7 +376,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-account">{{ entry_account }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-account">{{ entry_account }}</label>
                   <div class="col-sm-10">
                     <select name="config_account_id" id="input-account" class="form-control">
                       <option value="0">{{ text_none }}</option>
@@ -395,7 +395,7 @@
               <fieldset>
                 <legend>{{ text_checkout }}</legend>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ entry_cart_weight }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_cart_weight }}</label>
                   <div class="col-sm-10">
                     <label class="radio-inline">
                       {% if config_cart_weight %}
@@ -417,7 +417,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ entry_checkout_guest }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_checkout_guest }}</label>
                   <div class="col-sm-10">
                     <label class="radio-inline">
                       {% if config_checkout_guest %}
@@ -440,7 +440,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-checkout">{{ entry_checkout }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-checkout">{{ entry_checkout }}</label>
                   <div class="col-sm-10">
                     <select name="config_checkout_id" id="input-checkout" class="form-control">
                       <option value="0">{{ text_none }}</option>
@@ -456,7 +456,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-order-status">{{ entry_order_status }}</label>
                   <div class="col-sm-10">
                     <select name="config_order_status_id" id="input-order-status" class="form-control">
                       {% for order_status in order_statuses %}
@@ -474,7 +474,7 @@
               <fieldset>
                 <legend>{{ text_stock }}</legend>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ entry_stock_display }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_stock_display }}</label>
                   <div class="col-sm-10">
                     <label class="radio-inline">
                       {% if config_stock_display %}
@@ -497,7 +497,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ entry_stock_checkout }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_stock_checkout }}</label>
                   <div class="col-sm-10">
                     <label class="radio-inline">
                       {% if config_stock_checkout %}
@@ -523,12 +523,12 @@
             </div>
             <div class="tab-pane" id="tab-image">
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-logo">{{ entry_logo }}</label>
+                <label class="col-sm-2 col-form-label" for="input-logo">{{ entry_logo }}</label>
                 <div class="col-sm-10"><a href="" id="thumb-logo" data-toggle="image" class="img-thumbnail"><img src="{{ logo }}" alt="" title="" data-placeholder="{{ placeholder }}"/></a> <input type="hidden" name="config_logo" value="{{ config_logo }}" id="input-logo"/>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-icon">{{ entry_icon }}</label>
+                <label class="col-sm-2 col-form-label" for="input-icon">{{ entry_icon }}</label>
                 <div class="col-sm-10"><a href="" id="thumb-icon" data-toggle="image" class="img-thumbnail"><img src="{{ icon }}" alt="" title="" data-placeholder="{{ placeholder }}"/></a>
                   <input type="hidden" name="config_icon" value="{{ config_icon }}" id="input-icon"/>
                   <small class="form-text text-muted">{{ help_icon }}</small>

@@ -24,7 +24,7 @@
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-shipping">
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-postcode">{{ entry_api }}</label>
+            <label class="col-sm-2 col-form-label" for="input-postcode">{{ entry_api }}</label>
             <div class="col-sm-10">
               <input type="text" name="shipping_auspost_api" value="{{ shipping_auspost_api }}" placeholder="{{ entry_api }}" id="input-api" class="form-control" maxlength="40"/>
               {% if error_api %}
@@ -33,7 +33,7 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-postcode">{{ entry_postcode }}</label>
+            <label class="col-sm-2 col-form-label" for="input-postcode">{{ entry_postcode }}</label>
             <div class="col-sm-10">
               <input type="text" name="shipping_auspost_postcode" value="{{ shipping_auspost_postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" maxlength="4"/>
               {% if error_postcode %}
@@ -42,7 +42,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-weight-class">{{ entry_weight_class }}</label>
+            <label class="col-sm-2 col-form-label" for="input-weight-class">{{ entry_weight_class }}</label>
             <div class="col-sm-10">
               <select name="shipping_auspost_weight_class_id" id="input-weight-class" class="form-control">
                 {% for weight_class in weight_classes %}
@@ -57,7 +57,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-tax-class">{{ entry_tax_class }}</label>
+            <label class="col-sm-2 col-form-label" for="input-tax-class">{{ entry_tax_class }}</label>
             <div class="col-sm-10">
               <select name="shipping_auspost_tax_class_id" id="input-tax-class" class="form-control">
                 <option value="0">{{ text_none }}</option>
@@ -72,7 +72,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+            <label class="col-sm-2 col-form-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
               <select name="shipping_auspost_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
@@ -87,7 +87,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+            <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="shipping_auspost_status" id="input-status" class="form-control">
                 {% if shipping_auspost_status %}
@@ -101,7 +101,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+            <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
               <input type="text" name="shipping_auspost_sort_order" value="{{ shipping_auspost_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
             </div>

@@ -23,7 +23,7 @@
       <div class="card-body">
         <form action="{{ action }}" method="post"  enctype="multipart/form-data" id="form-fraud">
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
+            <label class="col-sm-2 col-form-label" for="input-order-status">{{ entry_order_status }}</label>
             <div class="col-sm-10">
               <select name="fraud_ip_order_status_id" id="input-order-status" class="form-control">
                 {% for order_status in order_statuses %}
@@ -38,7 +38,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-status"> {{ entry_status }} </label>
+            <label class="col-sm-2 col-form-label" for="input-status"> {{ entry_status }} </label>
             <div class="col-sm-10">
               <select name="fraud_ip_status" id="input-status" class="form-control">
                 {% if fraud_ip_status %}
@@ -54,7 +54,7 @@
           <fieldset>
             <legend> {{ text_ip_add }} </legend>
             <div class="form-group required">
-              <label class="col-sm-2 control-label" for="input-ip">{{ entry_ip }}</label>
+              <label class="col-sm-2 col-form-label" for="input-ip">{{ entry_ip }}</label>
               <div class="col-sm-10">
                 <div class="input-group">
                   <input type="text" value="" id="input-ip" placeholder="{{ entry_ip }}" class="form-control"/>

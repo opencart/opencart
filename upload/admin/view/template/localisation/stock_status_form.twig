@@ -24,7 +24,7 @@
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-stock-status">
           <div class="form-group required">
-            <label class="col-sm-2 control-label">{{ entry_name }}</label>
+            <label class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
               {% for language in languages %}
                 <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span> <input type="text" name="stock_status[{{ language.language_id }}][name]" value="{{ stock_status[language.language_id] ? stock_status[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control"/>

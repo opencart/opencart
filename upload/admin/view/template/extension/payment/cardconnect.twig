@@ -34,7 +34,7 @@
           <div class="tab-content">
             <div class="tab-pane active" id="tab-settings">
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
+                <label class="col-sm-2 col-form-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_cardconnect_merchant_id" value="{{ payment_cardconnect_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="input-merchant-id" class="form-control"/>
                   <small class="form-text text-muted">{{ help_merchant_id }}</small>
@@ -43,7 +43,7 @@
                   {% endif %}</div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-api-username">{{ entry_api_username }}</label>
+                <label class="col-sm-2 col-form-label" for="input-api-username">{{ entry_api_username }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_cardconnect_api_username" value="{{ payment_cardconnect_api_username }}" placeholder="{{ entry_api_username }}" id="input-api-username" class="form-control"/>
                   <small class="form-text text-muted">{{ help_api_username }}</small>
@@ -52,7 +52,7 @@
                   {% endif %}</div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-api-password">{{ entry_api_password }}</label>
+                <label class="col-sm-2 col-form-label" for="input-api-password">{{ entry_api_password }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_cardconnect_api_password" value="{{ payment_cardconnect_api_password }}" placeholder="{{ entry_api_password }}" id="input-api-password" class="form-control"/>
                   <small class="form-text text-muted">{{ help_api_password }}</small>
@@ -61,7 +61,7 @@
                   {% endif %}</div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-token">{{ entry_token }}</label>
+                <label class="col-sm-2 col-form-label" for="input-token">{{ entry_token }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_cardconnect_token" value="{{ payment_cardconnect_token }}" placeholder="{{ entry_token }}" id="input-token" class="form-control"/>
                   <small class="form-text text-muted">{{ help_token }}</small>
@@ -70,7 +70,7 @@
                   {% endif %}</div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-transaction">{{ entry_transaction }}</label>
+                <label class="col-sm-2 col-form-label" for="input-transaction">{{ entry_transaction }}</label>
                 <div class="col-sm-10">
                   <select name="payment_cardconnect_transaction" id="input-transaction" class="form-control">
                     {% if payment_cardconnect_transaction == 'payment' %}
@@ -88,7 +88,7 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-site">{{ entry_site }}</label>
+                <label class="col-sm-2 col-form-label" for="input-site">{{ entry_site }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_cardconnect_site" value="{{ payment_cardconnect_site }}" placeholder="{{ entry_site }}" id="input-site" class="form-control"/>
                   <small class="form-text text-muted">{{ help_site }}</small>
@@ -97,7 +97,7 @@
                   {% endif %}</div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-environment">{{ entry_environment }}</label>
+                <label class="col-sm-2 col-form-label" for="input-environment">{{ entry_environment }}</label>
                 <div class="col-sm-10">
                   <select name="payment_cardconnect_environment" id="input-environment" class="form-control">
                     {% if payment_cardconnect_environment == 'live' %}
@@ -114,7 +114,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-store-cards">{{ entry_store_cards }}</label>
+                <label class="col-sm-2 col-form-label" for="input-store-cards">{{ entry_store_cards }}</label>
                 <div class="col-sm-10">
                   <select name="payment_cardconnect_store_cards" id="input-store-cards" class="form-control">
                     {% if payment_cardconnect_store_cards %}
@@ -129,7 +129,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-echeck">{{ entry_echeck }}</label>
+                <label class="col-sm-2 col-form-label" for="input-echeck">{{ entry_echeck }}</label>
                 <div class="col-sm-10">
                   <select name="payment_cardconnect_echeck" id="input-echeck" class="form-control">
                     {% if payment_cardconnect_echeck %}
@@ -144,14 +144,14 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-total">{{ entry_total }}</label>
+                <label class="col-sm-2 col-form-label" for="input-total">{{ entry_total }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_cardconnect_total" value="{{ cardconnect_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
                   <small class="form-text text-muted">{{ help_total }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+                <label class="col-sm-2 col-form-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
                 <div class="col-sm-10">
                   <select name="payment_cardconnect_geo_zone" id="input-geo-zone" class="form-control">
                     <option value="0">{{ text_all_zones }}</option>
@@ -166,7 +166,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="payment_cardconnect_status" id="input-status" class="form-control">
                     {% if payment_cardconnect_status %}
@@ -180,7 +180,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-logging">{{ entry_logging }}</label>
+                <label class="col-sm-2 col-form-label" for="input-logging">{{ entry_logging }}</label>
                 <div class="col-sm-10">
                   <select name="payment_cardconnect_logging" id="input-logging" class="form-control">
                     {% if payment_cardconnect_logging %}
@@ -195,20 +195,20 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+                <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_cardconnect_sort_order" value="{{ payment_cardconnect_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-cron-url">{{ entry_cron_url }}</label>
+                <label class="col-sm-2 col-form-label" for="input-cron-url">{{ entry_cron_url }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="cron_url" value="{{ cron_url }}" readonly placeholder="{{ entry_cron_url }}" id="input-cron-url" class="form-control"/>
                   <small class="form-text text-muted">{{ help_cron_url }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-cron-time">{{ entry_cron_time }}</label>
+                <label class="col-sm-2 col-form-label" for="input-cron-time">{{ entry_cron_time }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_cardconnect_cron_time" value="{{ payment_cardconnect_cron_time }}" readonly disabled placeholder="{{ entry_cron_time }}" id="input-cron-time" class="form-control"/>
                   <small class="form-text text-muted">{{ help_cron_time }}</small>
@@ -217,7 +217,7 @@
             </div>
             <div class="tab-pane" id="tab-order-status">
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-pending">{{ entry_order_status_pending }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-pending">{{ entry_order_status_pending }}</label>
                 <div class="col-sm-10">
                   <select name="payment_cardconnect_order_status_id_pending" id="input-order-status-pending" class="form-control">
                     {% for order_status in order_statuses %}
@@ -232,7 +232,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-processing">{{ entry_order_status_processing }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-processing">{{ entry_order_status_processing }}</label>
                 <div class="col-sm-10">
                   <select name="payment_cardconnect_order_status_id_processing" id="input-order-status-processing" class="form-control">
                     {% for order_status in order_statuses %}

@@ -18,7 +18,7 @@
       <div class="row">
         <div class="col-sm-12">
           <div class="form-group">
-            <label class="control-label" for="marketplace-select">{{ text_choose_marketplace }}</label>
+            <label class="col-form-label" for="marketplace-select">{{ text_choose_marketplace }}</label>
             <select name="marketplace_select" id="marketplace-select" class="form-control">
               {% for marketplace in marketplaces %}
               <option value="{{ marketplace.link }}" {% if marketplace.code == marketplace_code %} selected{% endif %}>{{ marketplace.name }}</option>

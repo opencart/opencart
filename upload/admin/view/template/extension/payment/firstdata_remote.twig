@@ -31,7 +31,7 @@
           <div class="tab-content">
             <div class="tab-pane active" id="tab-account">
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
+                <label class="col-sm-2 col-form-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_firstdata_remote_merchant_id" value="{{ payment_firstdata_remote_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="input-merchant-id" class="form-control"/>
                   {% if error_merchant_id %}
@@ -40,7 +40,7 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-user-id">{{ entry_user_id }}</label>
+                <label class="col-sm-2 col-form-label" for="input-user-id">{{ entry_user_id }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_firstdata_remote_user_id" value="{{ payment_firstdata_remote_user_id }}" placeholder="{{ entry_user_id }}" id="input-user-id" class="form-control"/>
                   {% if error_user_id %}
@@ -49,7 +49,7 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-password">{{ entry_password }}</label>
+                <label class="col-sm-2 col-form-label" for="input-password">{{ entry_password }}</label>
                 <div class="col-sm-10">
                   <input type="password" name="payment_firstdata_remote_password" value="{{ payment_firstdata_remote_password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control"/>
                   {% if error_password %}
@@ -58,7 +58,7 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-certificate-path">{{ entry_certificate_path }}</label>
+                <label class="col-sm-2 col-form-label" for="input-certificate-path">{{ entry_certificate_path }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_firstdata_remote_certificate" value="{{ payment_firstdata_remote_certificate }}" placeholder="{{ entry_certificate_path }}" id="input-certificate-path" class="form-control"/>
                   <small class="form-text text-muted">{{ help_certificate }}</small>
@@ -68,7 +68,7 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-key-path">{{ entry_certificate_key_path }}</label>
+                <label class="col-sm-2 col-form-label" for="input-key-path">{{ entry_certificate_key_path }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_firstdata_remote_key" value="{{ payment_firstdata_remote_key }}" placeholder="{{ entry_certificate_key_path }}" id="input-key-path" class="form-control"/>
                   {% if error_key %}
@@ -77,7 +77,7 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-key-pw">{{ entry_certificate_key_pw }}</label>
+                <label class="col-sm-2 col-form-label" for="input-key-pw">{{ entry_certificate_key_pw }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_firstdata_remote_key_pw" value="{{ payment_firstdata_remote_key_pw }}" placeholder="{{ entry_certificate_key_pw }}" id="input-key-pw" class="form-control"/>
                   {% if error_key_pw %}
@@ -86,7 +86,7 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-ca-path">{{ entry_certificate_ca_path }}</label>
+                <label class="col-sm-2 col-form-label" for="input-ca-path">{{ entry_certificate_ca_path }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_firstdata_remote_ca" value="{{ payment_firstdata_remote_ca }}" placeholder="{{ entry_certificate_ca_path }}" id="input-ca-path" class="form-control"/>
                   {% if error_ca %}
@@ -95,7 +95,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-debug">{{ entry_debug }}</label>
+                <label class="col-sm-2 col-form-label" for="input-debug">{{ entry_debug }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_remote_debug" id="input-debug" class="form-control">
                     {% if payment_firstdata_remote_debug %}
@@ -110,14 +110,14 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-total">{{ entry_total }}</label>
+                <label class="col-sm-2 col-form-label" for="input-total">{{ entry_total }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_firstdata_remote_total" value="{{ payment_firstdata_remote_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
                   <small class="form-text text-muted">{{ help_total }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+                <label class="col-sm-2 col-form-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_remote_geo_zone_id" id="input-geo-zone" class="form-control">
                     <option value="0">{{ text_all_zones }}</option>
@@ -132,7 +132,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_remote_status" id="input-status" class="form-control">
                     {% if payment_firstdata_remote_status %}
@@ -146,7 +146,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+                <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_firstdata_remote_sort_order" value="{{ payment_firstdata_remote_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
                 </div>
@@ -154,7 +154,7 @@
             </div>
             <div class="tab-pane" id="tab-order-status">
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-success-settled">{{ entry_status_success_settled }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-success-settled">{{ entry_status_success_settled }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_remote_order_status_success_settled_id" id="input-order-status-success-settled" class="form-control">
                     {% for order_status in order_statuses %}
@@ -168,7 +168,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-success-unsettled">{{ entry_status_success_unsettled }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-success-unsettled">{{ entry_status_success_unsettled }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_remote_order_status_success_unsettled_id" id="input-order-status-success-unsettled" class="form-control">
                     {% for order_status in order_statuses %}
@@ -182,7 +182,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-decline">{{ entry_status_decline }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-decline">{{ entry_status_decline }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_remote_order_status_decline_id" id="input-order-status-decline" class="form-control">
                     {% for order_status in order_statuses %}
@@ -198,7 +198,7 @@
             </div>
             <div class="tab-pane" id="tab-payment">
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-auto-settle">{{ entry_auto_settle }}</label>
+                <label class="col-sm-2 col-form-label" for="input-auto-settle">{{ entry_auto_settle }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_remote_auto_settle" id="input-auto-settle" class="form-control">
                     {% if not payment_firstdata_remote_auto_settle %}
@@ -214,7 +214,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-card-store">{{ entry_enable_card_store }}</label>
+                <label class="col-sm-2 col-form-label" for="input-card-store">{{ entry_enable_card_store }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_remote_card_storage" id="input-card-store" class="form-control">
                     {% if payment_firstdata_remote_card_storage %}
@@ -228,7 +228,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_cards_accepted }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_cards_accepted }}</label>
                 <div class="col-sm-10">
                   {% for card in cards %}
                     <div class="checkbox">

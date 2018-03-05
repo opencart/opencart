@@ -17,8 +17,10 @@
     <td><img class="img-responsive" alt="" src="//fraudlabspro.hexa-soft.com/images/fraudscore/fraudlabsproscore{{ flp_score }}.png"/></td>
   </tr>
   <tr>
-    <td>{{ text_status }}<br/>
-      <small class="form-text text-muted">{{ help_status }}</small></td>
+    <td>{{ text_status }}
+      <br/>
+      <small class="form-text text-muted">{{ help_status }}</small>
+    </td>
     <td id="flp_status"><span style="font-weight:bold; color: {% if flp_status|lower == 'approve' %} #5cb85c {% elseif flp_status|lower == 'review' %} #f0ad4e {% else %} #d9534f {% endif %};">{{ flp_status }}</span></td>
   </tr>
   <tr>
@@ -36,88 +38,122 @@
     <td>{{ flp_ip_net_speed }}</td>
   </tr>
   <tr>
-    <td>{{ text_ip_isp_name }}<br/>
-      <small class="form-text text-muted">{{ help_ip_isp_name }}</small></td>
+    <td>{{ text_ip_isp_name }}
+      <br/>
+      <small class="form-text text-muted">{{ help_ip_isp_name }}</small>
+    </td>
     <td>{{ flp_ip_isp_name }}</td>
   </tr>
   <tr>
-    <td>>{{ text_ip_usage_type }}<br/>
-      <small class="form-text text-muted">{{ help_ip_usage_type }}</small></td>
+    <td>>{{ text_ip_usage_type }}
+      <br/>
+      <small class="form-text text-muted">{{ help_ip_usage_type }}</small>
+    </td>
     <td>{{ flp_ip_usage_type }}</td>
   </tr>
   <tr>
-    <td>{{ text_ip_domain }}<br/>
-      <small class="form-text text-muted">{{ help_ip_domain }}</small></td>
+    <td>{{ text_ip_domain }}
+      <br/>
+      <small class="form-text text-muted">{{ help_ip_domain }}</small>
+    </td>
     <td>{{ flp_ip_domain }}</td>
   </tr>
   <tr>
-    <td>{{ text_ip_time_zone }}<br/>
-      <small class="form-text text-muted">{{ help_ip_time_zone }}</small></td>
+    <td>{{ text_ip_time_zone }}
+      <br/>
+      <small class="form-text text-muted">{{ help_ip_time_zone }}</small>
+    </td>
     <td>{{ flp_ip_time_zone }}</td>
   </tr>
   <tr>
-    <td>{{ text_ip_location }}<br/>
-      <small class="form-text text-muted">{{ help_ip_location }}</small></td>
+    <td>{{ text_ip_location }}
+      <br/>
+      <small class="form-text text-muted">{{ help_ip_location }}</small>
+    </td>
     <td>{{ flp_ip_location }}</td>
   </tr>
   <tr>
-    <td>{{ text_ip_distance }}<br/>
-      <small class="form-text text-muted">{{ help_ip_distance }}</small></td>
+    <td>{{ text_ip_distance }}
+      <br/>
+      <small class="form-text text-muted">{{ help_ip_distance }}</small>
+    </td>
     <td>{{ flp_ip_distance }}</td>
   </tr>
   <tr>
-    <td>{{ text_ip_latitude }}<br/>
-      <small class="form-text text-muted">{{ help_ip_latitude }}</small></td>
+    <td>{{ text_ip_latitude }}
+      <br/>
+      <small class="form-text text-muted">{{ help_ip_latitude }}</small>
+    </td>
     <td>{{ flp_ip_latitude }}</td>
   </tr>
   <tr>
-    <td>{{ text_ip_longitude }}<br/>
-      <small class="form-text text-muted">{{ help_ip_longitude }}</small></td>
+    <td>{{ text_ip_longitude }}
+      <br/>
+      <small class="form-text text-muted">{{ help_ip_longitude }}</small>
+    </td>
     <td>{{ flp_ip_longitude }}</td>
   </tr>
   <tr>
-    <td>{{ text_risk_country }}<br/>
-      <small class="form-text text-muted">{{ help_risk_country }}</small></td>
+    <td>{{ text_risk_country }}
+      <br/>
+      <small class="form-text text-muted">{{ help_risk_country }}</small>
+    </td>
     <td>{{ flp_risk_country }}</td>
   </tr>
   <tr>
-    <td>{{ text_free_email }}<br/>
-      <small class="form-text text-muted">{{ help_free_email }}</small></td>
+    <td>{{ text_free_email }}
+      <br/>
+      <small class="form-text text-muted">{{ help_free_email }}</small>
+    </td>
     <td>{{ flp_free_email }}</td>
   </tr>
   <tr>
-    <td>{{ text_ship_forward }}<br/>
-      <small class="form-text text-muted">{{ help_ship_forward }}</small></td>
+    <td>{{ text_ship_forward }}
+      <br/>
+      <small class="form-text text-muted">{{ help_ship_forward }}</small>
+    </td>
     <td>{{ flp_ship_forward }}</td>
   </tr>
   <tr>
-    <td>{{ text_using_proxy }}<br/>
-      <small class="form-text text-muted">{{ help_using_proxy }}</small></td>
+    <td>{{ text_using_proxy }}
+      <br/>
+      <small class="form-text text-muted">{{ help_using_proxy }}</small>
+    </td>
     <td>{{ flp_using_proxy }}</td>
   </tr>
   <tr>
-    <td>{{ text_bin_found }}<br/>
-      <small class="form-text text-muted">{{ help_bin_found }}</small></td>
+    <td>{{ text_bin_found }}
+      <br/>
+      <small class="form-text text-muted">{{ help_bin_found }}</small>
+    </td>
     <td>{{ flp_bin_found }}</td>
   </tr>
   <tr>
-    <td>{{ text_email_blacklist }}<br/>
-      <small class="form-text text-muted">{{ help_email_blacklist }}</small></td>
+    <td>{{ text_email_blacklist }}
+      <br/>
+      <small class="form-text text-muted">{{ help_email_blacklist }}</small>
+    </td>
     <td>{{ flp_email_blacklist }}</td>
   </tr>
   <tr>
-    <td>{{ text_credit_card_blacklist }}<br/>
-      <small class="form-text text-muted">{{ help_credit_card_blacklist }}</small></td>
+    <td>{{ text_credit_card_blacklist }}
+      <br/>
+      <small class="form-text text-muted">{{ help_credit_card_blacklist }}</small>
+    </td>
     <td>{{ flp_credit_card_blacklist }}</td>
   </tr>
   <tr>
-    <td>{{ text_credits }}<br/>
-      <small class="form-text text-muted">{{ help_credits }}</small></td>
+    <td>{{ text_credits }}
+      <br/>
+      <small class="form-text text-muted">{{ help_credits }}</small>
+    </td>
     <td>{{ flp_credits }} {{ text_flp_upgrade }}</td>
   </tr>
   <tr>
-    <td>{{ text_message }}<br/>
-      <small class="form-text text-muted">{{ help_message }}</small></td>
+    <td>{{ text_message }}
+      <br/>
+      <small class="form-text text-muted">{{ help_message }}</small>
+    </td>
     <td>{{ flp_message }}</td>
   </tr>
   {% if flp_status|lower == 'review' %}

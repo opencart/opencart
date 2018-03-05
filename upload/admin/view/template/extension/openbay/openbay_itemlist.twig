@@ -35,13 +35,13 @@
           <div class="row">
             <div class="col-sm-4">
               <div class="form-group">
-                <label class="control-label" for="filter_name">{{ entry_title }}</label> <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_title }}" id="filter_name" class="form-control"/>
+                <label class="col-form-label" for="filter_name">{{ entry_title }}</label> <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_title }}" id="filter_name" class="form-control"/>
               </div>
               <div class="form-group">
-                <label class="control-label" for="filter_model">{{ entry_model }}</label> <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="filter_model" class="form-control"/>
+                <label class="col-form-label" for="filter_model">{{ entry_model }}</label> <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="filter_model" class="form-control"/>
               </div>
               <div class="form-group">
-                <label class="control-label" for="filter_manufacturer">{{ entry_manufacturer }}</label> <select name="filter_manufacturer" id="filter_manufacturer" class="form-control">
+                <label class="col-form-label" for="filter_manufacturer">{{ entry_manufacturer }}</label> <select name="filter_manufacturer" id="filter_manufacturer" class="form-control">
                   <option value=""></option>
                   {% for manufacturer in manufacturer_list %}
                     <option value="{{ manufacturer.manufacturer_id }}"{% if filter_manufacturer == manufacturer.manufacturer_id %} selected{% endif %}>{{ manufacturer.name }}</option>
@@ -51,7 +51,7 @@
             </div>
             <div class="col-sm-4">
               <div class="form-group">
-                <label class="control-label" for="filter_marketplace">{{ entry_status_marketplace }}</label> <select name="filter_marketplace" id="filter_marketplace" class="form-control">
+                <label class="col-form-label" for="filter_marketplace">{{ entry_status_marketplace }}</label> <select name="filter_marketplace" id="filter_marketplace" class="form-control">
                   <option value="all"{% if filter_marketplace is empty or filter_marketplace == "all" %} selected{% endif %}>{{ text_status_all }}</option>
                   {% if marketplace_statuses.ebay %}
                     <option value="ebay_active"{% if filter_marketplace == "ebay_active" %} selected{% endif %}>{{ text_status_ebay_active }}</option>
@@ -78,7 +78,7 @@
                 </select>
               </div>
               <div class="form-group">
-                <label class="control-label">{{ entry_status }}</label> <select name="filter_status" class="form-control">
+                <label class="col-form-label">{{ entry_status }}</label> <select name="filter_status" class="form-control">
                   <option value=""></option>
                   {% if filter_status == '1' %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
@@ -93,7 +93,7 @@
                 </select>
               </div>
               <div class="form-group">
-                <label class="control-label" for="filter_category">{{ entry_category }}</label> <select name="filter_category" id="filter_category" class="form-control">
+                <label class="col-form-label" for="filter_category">{{ entry_category }}</label> <select name="filter_category" id="filter_category" class="form-control">
                   <option value=""></option>
                   <option value="none">{{ text_category_missing }}</option>
                   {% for category in category_list %}
@@ -106,7 +106,7 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-12">
-                    <label class="control-label">{{ entry_stock_range }}</label>
+                    <label class="col-form-label">{{ entry_stock_range }}</label>
                   </div>
                 </div>
                 <div class="row">
@@ -121,18 +121,18 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-12">
-                    <label class="control-label">{{ entry_populated }}</label>
+                    <label class="col-form-label">{{ entry_populated }}</label>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-sm-3">
-                    <label class="control-label">{{ entry_sku }}</label>
+                    <label class="col-form-label">{{ entry_sku }}</label>
                   </div>
                   <div class="col-sm-3">
                     <input type="checkbox" name="filter_sku" id="filter_sku" value="1"{% if filter_sku == 1 %} checked="checked"{% endif %} />
                   </div>
                   <div class="col-sm-3">
-                    <label class="control-label">{{ entry_description }}</label>
+                    <label class="col-form-label">{{ entry_description }}</label>
                   </div>
                   <div class="col-sm-3">
                     <input type="checkbox" name="filter_desc" id="filter_desc" value="1"{% if filter_desc == 1 %} checked="checked"{% endif %}/>

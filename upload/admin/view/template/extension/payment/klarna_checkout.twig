@@ -37,13 +37,13 @@
           <div class="tab-content">
             <div class="tab-pane active" id="tab-setting">
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_version }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_version }}</label>
                 <div class="col-sm-10" style="padding-top: 9px;">
                   <span>{{ text_version }}</span>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-debug">{{ entry_debug }}</label>
+                <label class="col-sm-2 col-form-label" for="input-debug">{{ entry_debug }}</label>
                 <div class="col-sm-10">
                   <select name="payment_klarna_checkout_debug" id="input-debug" class="form-control">
                     {% if payment_klarna_checkout_debug %}
@@ -58,43 +58,43 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-colour-button">{{ entry_colour_button }}</label>
+                <label class="col-sm-2 col-form-label" for="input-colour-button">{{ entry_colour_button }}</label>
                 <div class="col-sm-10">
                   <input type="color" name="payment_klarna_checkout_colour_button" value="{{ payment_klarna_checkout_colour_button }}" id="input-colour-button"/>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-colour-button-text">{{ entry_colour_button_text }}</label>
+                <label class="col-sm-2 col-form-label" for="input-colour-button-text">{{ entry_colour_button_text }}</label>
                 <div class="col-sm-10">
                   <input type="color" name="payment_klarna_checkout_colour_button_text" value="{{ payment_klarna_checkout_colour_button_text }}" id="input-colour-button-text"/>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-colour-checkbox">{{ entry_colour_checkbox }}</label>
+                <label class="col-sm-2 col-form-label" for="input-colour-checkbox">{{ entry_colour_checkbox }}</label>
                 <div class="col-sm-10">
                   <input type="color" name="payment_klarna_checkout_colour_checkbox" value="{{ payment_klarna_checkout_colour_checkbox }}" id="input-colour-checkbox"/>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-colour-checkbox-checkmark">{{ entry_colour_checkbox_checkmark }}</label>
+                <label class="col-sm-2 col-form-label" for="input-colour-checkbox-checkmark">{{ entry_colour_checkbox_checkmark }}</label>
                 <div class="col-sm-10">
                   <input type="color" name="payment_klarna_checkout_colour_checkbox_checkmark" value="{{ payment_klarna_checkout_colour_checkbox_checkmark }}" id="input-colour-checkbox-checkmark"/>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-colour-header">{{ entry_colour_header }}</label>
+                <label class="col-sm-2 col-form-label" for="input-colour-header">{{ entry_colour_header }}</label>
                 <div class="col-sm-10">
                   <input type="color" name="payment_klarna_checkout_colour_header" value="{{ payment_klarna_checkout_colour_header }}" id="input-colour-header"/>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-colour-link">{{ entry_colour_link }}</label>
+                <label class="col-sm-2 col-form-label" for="input-colour-link">{{ entry_colour_link }}</label>
                 <div class="col-sm-10">
                   <input type="color" name="payment_klarna_checkout_colour_link" value="{{ payment_klarna_checkout_colour_link }}" id="input-colour-link"/>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-separate-shipping-address">{{ entry_separate_shipping_address }}</label>
+                <label class="col-sm-2 col-form-label" for="input-separate-shipping-address">{{ entry_separate_shipping_address }}</label>
                 <div class="col-sm-10">
                   <select name="payment_klarna_checkout_separate_shipping_address" id="input-separate-shipping-address" class="form-control">
                     {% if payment_klarna_checkout_separate_shipping_address %}
@@ -109,7 +109,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-dob-mandatory">{{ entry_dob_mandatory }}</label>
+                <label class="col-sm-2 col-form-label" for="input-dob-mandatory">{{ entry_dob_mandatory }}</label>
                 <div class="col-sm-10">
                   <select name="payment_klarna_checkout_dob_mandatory" id="input-dob-mandatory" class="form-control">
                     {% if payment_klarna_checkout_dob_mandatory %}
@@ -124,7 +124,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-title-mandatory">{{ entry_title_mandatory }}</label>
+                <label class="col-sm-2 col-form-label" for="input-title-mandatory">{{ entry_title_mandatory }}</label>
                 <div class="col-sm-10">
                   <select name="payment_klarna_checkout_title_mandatory" id="input-title-mandatory" class="form-control">
                     {% if payment_klarna_checkout_title_mandatory %}
@@ -139,7 +139,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-additional-text-box">{{ entry_additional_text_box }}</label>
+                <label class="col-sm-2 col-form-label" for="input-additional-text-box">{{ entry_additional_text_box }}</label>
                 <div class="col-sm-10">
                   <select name="payment_klarna_checkout_additional_text_box" id="input-additional-text-box" class="form-control">
                     {% if payment_klarna_checkout_additional_text_box %}
@@ -154,14 +154,14 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-total">{{ entry_total }}</label>
+                <label class="col-sm-2 col-form-label" for="input-total">{{ entry_total }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_klarna_checkout_total" value="{{ payment_klarna_checkout_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
                   <small class="form-text text-muted">{{ help_total }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-terms">{{ entry_terms }}</label>
+                <label class="col-sm-2 col-form-label" for="input-terms">{{ entry_terms }}</label>
                 <div class="col-sm-10">
                   <select name="payment_klarna_checkout_terms" id="input-terms" class="form-control">
                     {% for information in informations %}
@@ -175,7 +175,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="payment_klarna_checkout_status" id="input-status" class="form-control">
                     {% if payment_klarna_checkout_status %}
@@ -191,7 +191,7 @@
             </div>
             <div class="tab-pane" id="tab-order-status">
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-authorised">{{ entry_order_status_authorised }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-authorised">{{ entry_order_status_authorised }}</label>
                 <div class="col-sm-10">
                   <select name="payment_klarna_checkout_order_status_authorised_id" id="input-order-status-authorised" class="form-control">
                     {% for order_status in order_statuses %}
@@ -205,7 +205,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-part-captured">{{ entry_order_status_part_captured }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-part-captured">{{ entry_order_status_part_captured }}</label>
                 <div class="col-sm-10">
                   <select name="payment_klarna_checkout_order_status_part_captured_id" id="input-order-status-part-captured" class="form-control">
                     {% for order_status in order_statuses %}
@@ -219,7 +219,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-captured">{{ entry_order_status_captured }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-captured">{{ entry_order_status_captured }}</label>
                 <div class="col-sm-10">
                   <select name="payment_klarna_checkout_order_status_captured_id" id="input-order-status-captured" class="form-control">
                     {% for order_status in order_statuses %}
@@ -233,7 +233,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-cancelled">{{ entry_order_status_cancelled }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-cancelled">{{ entry_order_status_cancelled }}</label>
                 <div class="col-sm-10">
                   <select name="payment_klarna_checkout_order_status_cancelled_id" id="input-order-status-cancelled" class="form-control">
                     {% for order_status in order_statuses %}
@@ -247,7 +247,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-refund">{{ entry_order_status_refund }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-refund">{{ entry_order_status_refund }}</label>
                 <div class="col-sm-10">
                   <select name="payment_klarna_checkout_order_status_refund_id" id="input-order-status-refund" class="form-control">
                     {% for order_status in order_statuses %}
@@ -261,7 +261,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-fraud-rejected">{{ entry_order_status_fraud_rejected }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-fraud-rejected">{{ entry_order_status_fraud_rejected }}</label>
                 <div class="col-sm-10">
                   <select name="payment_klarna_checkout_order_status_fraud_rejected_id" id="input-order-status-fraud-rejected" class="form-control">
                     {% for order_status in order_statuses %}
@@ -275,7 +275,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-fraud-pending">{{ entry_order_status_fraud_pending }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-fraud-pending">{{ entry_order_status_fraud_pending }}</label>
                 <div class="col-sm-10">
                   <select name="payment_klarna_checkout_order_status_fraud_pending_id" id="input-order-status-fraud-pending" class="form-control">
                     {% for order_status in order_statuses %}
@@ -289,7 +289,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-fraud-accepted">{{ entry_order_status_fraud_accepted }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-fraud-accepted">{{ entry_order_status_fraud_accepted }}</label>
                 <div class="col-sm-10">
                   <select name="payment_klarna_checkout_order_status_fraud_accepted_id" id="input-order-status-fraud-accepted" class="form-control">
                     {% for order_status in order_statuses %}
@@ -419,21 +419,21 @@
             </div>
             <div class="tab-pane" id="tab-settlement">
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-sftp-username">{{ entry_sftp_username }}</label>
+                <label class="col-sm-2 col-form-label" for="input-sftp-username">{{ entry_sftp_username }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_klarna_checkout_sftp_username" placeholder="{{ entry_sftp_username }}" class="form-control" value="{{ klarna_checkout_sftp_username }}"/>
                   <small class="form-text text-muted">{{ help_sftp_username }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-sftp-password">{{ entry_sftp_password }}</label>
+                <label class="col-sm-2 col-form-label" for="input-sftp-password">{{ entry_sftp_password }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_klarna_checkout_sftp_password" placeholder="{{ entry_sftp_password }}" class="form-control" value="{{ klarna_checkout_sftp_password }}"/>
                   <small class="form-text text-muted">{{ help_sftp_password }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-settlement-order-status">{{ entry_settlement_order_status }}</label>
+                <label class="col-sm-2 col-form-label" for="input-settlement-order-status">{{ entry_settlement_order_status }}</label>
                 <div class="col-sm-10">
                   <select name="payment_klarna_checkout_settlement_order_status_id" id="input-settlement-order-status" class="form-control">
                     {% for order_status in order_statuses %}
@@ -448,7 +448,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_process_settlement }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_process_settlement }}</label>
                 <div class="col-sm-10">
                   <button type="button" id="button-process-settlement" title="{{ button_process_settlement }}" class="btn btn-primary">{{ button_process_settlement }}</button>
                 </div>

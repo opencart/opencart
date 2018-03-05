@@ -36,7 +36,7 @@
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay-status">{{ entry_status }}</label>
+                <label class="col-sm-2 col-form-label" for="ebay-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="ebay_status" id="ebay-status" class="form-control">
                     {% if ebay_status %}
@@ -50,37 +50,37 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay-token">{{ entry_token }}</label>
+                <label class="col-sm-2 col-form-label" for="ebay-token">{{ entry_token }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="ebay_token" value="{{ ebay_token }}" placeholder="{{ entry_token }}" id="ebay-token" class="form-control credentials"/>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay-secret">{{ entry_secret }}</label>
+                <label class="col-sm-2 col-form-label" for="ebay-secret">{{ entry_secret }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="ebay_secret" value="{{ ebay_secret }}" placeholder="{{ entry_secret }}" id="ebay-secret" class="form-control credentials"/>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay-encryption-key">{{ entry_encryption_key }}</label>
+                <label class="col-sm-2 col-form-label" for="ebay-encryption-key">{{ entry_encryption_key }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="ebay_encryption_key" value="{{ ebay_encryption_key }}" placeholder="{{ entry_encryption_key }}" id="ebay-encryption-key" class="form-control credentials"/>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay-encryption-iv">{{ entry_encryption_iv }}</label>
+                <label class="col-sm-2 col-form-label" for="ebay-encryption-iv">{{ entry_encryption_iv }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="ebay_encryption_iv" value="{{ ebay_encryption_iv }}" placeholder="{{ entry_encryption_iv }}" id="ebay-encryption-iv" class="form-control credentials"/>
                 </div>
               </div>
               <div class="form-group" id="api-status-container" style="display: none;">
-                <label class="col-sm-2 control-label">{{ text_api_status }}</label>
+                <label class="col-sm-2 col-form-label">{{ text_api_status }}</label>
                 <div class="col-sm-10">
                   <h4><span id="api-status" class="label" style="display:none;"></span></h4>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ text_api_other }}</label>
+                <label class="col-sm-2 col-form-label">{{ text_api_other }}</label>
                 <div class="col-sm-10">
                   <a href="{{ link_token_renew }}" target="_BLANK" class="btn btn-default"><i class="fa fa-link"></i> {{ text_token_renew }}</a> &nbsp;
                   <a href="{{ link_update }}" target="_BLANK" class="btn btn-default"><i class="fa fa-link"></i> {{ text_obp_detail_update }}</a>
@@ -92,7 +92,7 @@
                 <legend>{{ text_app_settings }}</legend>
                 <p>{{ text_application_settings }}</p>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="ebay-enditems">{{ entry_end_items }}</label>
+                  <label class="col-sm-2 col-form-label" for="ebay-enditems">{{ entry_end_items }}</label>
                   <div class="col-sm-10">
                     <select name="ebay_enditems" id="ebay-enditems" class="form-control">
                       {% if ebay_enditems == 1 %}
@@ -107,7 +107,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="entry-relistitems">{{ entry_relist_items }}</label>
+                  <label class="col-sm-2 col-form-label" for="entry-relistitems">{{ entry_relist_items }}</label>
                   <div class="col-sm-10">
                     <select name="ebay_relistitems" id="entry-relistitems" class="form-control">
                       {% if ebay_relistitems == 1 %}
@@ -122,7 +122,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="entry-disable-nostock">{{ entry_disable_soldout }}</label>
+                  <label class="col-sm-2 col-form-label" for="entry-disable-nostock">{{ entry_disable_soldout }}</label>
                   <div class="col-sm-10">
                     <select name="ebay_disable_nostock" id="entry-disable-nostock" class="form-control">
                       {% if ebay_disable_nostock == 1 %}
@@ -137,7 +137,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="ebay_logging">{{ entry_debug }}</label>
+                  <label class="col-sm-2 col-form-label" for="ebay_logging">{{ entry_debug }}</label>
                   <div class="col-sm-10">
                     <select name="ebay_logging" id="ebay_logging" class="form-control">
                       {% if ebay_logging == 1 %}
@@ -151,7 +151,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="entry-default-currency">{{ entry_currency }}</label>
+                  <label class="col-sm-2 col-form-label" for="entry-default-currency">{{ entry_currency }}</label>
                   <div class="col-sm-10">
                     <select name="ebay_def_currency" id="entry-default-currency" class="form-control">
                       {% for currency in currency_list %}
@@ -162,7 +162,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="entry-stock-allocate">{{ entry_stock_allocate }}</label>
+                  <label class="col-sm-2 col-form-label" for="entry-stock-allocate">{{ entry_stock_allocate }}</label>
                   <div class="col-sm-10">
                     <select name="ebay_stock_allocate" id="entry-stock-allocate" class="form-control">
                       {% if ebay_stock_allocate %}
@@ -177,14 +177,14 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="entry-created-hours">{{ entry_created_hours }}</label>
+                  <label class="col-sm-2 col-form-label" for="entry-created-hours">{{ entry_created_hours }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="ebay_created_hours" value="{{ ebay_created_hours }}" placeholder="{{ entry_created_hours }}" id="entry-created-hours" class="form-control"/>
                     <small class="form-text text-muted">{{ help_created_hours }}</small>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="entry-create-date">{{ entry_create_date }}</label>
+                  <label class="col-sm-2 col-form-label" for="entry-create-date">{{ entry_create_date }}</label>
                   <div class="col-sm-10">
                     <select name="ebay_create_date" id="entry-create-date" class="form-control">
                       {% if ebay_create_date == 1 %}
@@ -199,7 +199,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="entry-time-offset">{{ entry_timezone_offset }}</label>
+                  <label class="col-sm-2 col-form-label" for="entry-time-offset">{{ entry_timezone_offset }}</label>
                   <div class="col-sm-10">
                     <select name="ebay_time_offset" id="entry-time-offset" class="form-control">
                       <option value="-12"{% if ebay_time_offset == "-12" %} selected{% endif %}>-12</option>
@@ -232,7 +232,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="entry-address-format">{{ entry_address_format }}</label>
+                  <label class="col-sm-2 col-form-label" for="entry-address-format">{{ entry_address_format }}</label>
                   <div class="col-sm-10">
                     <textarea name="ebay_default_addressformat" class="form-control" rows="3" id="entry-address-format">{{ ebay_default_addressformat }}</textarea>
                     <small class="form-text text-muted">{{ help_address_format }}</small>
@@ -243,7 +243,7 @@
                 <legend>{{ text_notify_settings }}</legend>
                 <p>{{ text_notifications }}</p>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="entry-update-notify">{{ entry_notify_order_update }}</label>
+                  <label class="col-sm-2 col-form-label" for="entry-update-notify">{{ entry_notify_order_update }}</label>
                   <div class="col-sm-10">
                     <select name="ebay_update_notify" id="entry-update-notify" class="form-control">
                       {% if ebay_update_notify == 1 %}
@@ -258,7 +258,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="entry-confirm-notify">{{ entry_notify_buyer }}</label>
+                  <label class="col-sm-2 col-form-label" for="entry-confirm-notify">{{ entry_notify_buyer }}</label>
                   <div class="col-sm-10">
                     <select name="ebay_confirm_notify" id="entry-confirm-notify" class="form-control">
                       {% if ebay_confirm_notify == 1 %}
@@ -273,7 +273,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="entry-confirm-admin-notify">{{ entry_notify_admin }}</label>
+                  <label class="col-sm-2 col-form-label" for="entry-confirm-admin-notify">{{ entry_notify_admin }}</label>
                   <div class="col-sm-10">
                     <select name="ebay_confirmadmin_notify" id="entry-confirm-admin-notify" class="form-control">
                       {% if ebay_confirmadmin_notify == 1 %}
@@ -288,7 +288,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="ebay_email_brand_disable">{{ entry_brand_disable }}</label>
+                  <label class="col-sm-2 col-form-label" for="ebay_email_brand_disable">{{ entry_brand_disable }}</label>
                   <div class="col-sm-10">
                     <select name="ebay_email_brand_disable" id="ebay_email_brand_disable" class="form-control">
                       {% if ebay_email_brand_disable == 1 %}
@@ -306,13 +306,13 @@
                 <legend>{{ text_default_import }}</legend>
                 <p>{{ text_import_description }}</p>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ entry_import_pending }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_import_pending }}</label>
                   <div class="col-sm-10">
                     <input type="hidden" name="ebay_import_unpaid" value="0"/> <input type="checkbox" name="ebay_import_unpaid" value="1"{% if ebay_import_unpaid == 1 %} checked="checked"{% endif %} />
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="ebay_status_import_id">{{ entry_import_def_id }}</label>
+                  <label class="col-sm-2 col-form-label" for="ebay_status_import_id">{{ entry_import_def_id }}</label>
                   <div class="col-sm-10">
                     <select name="ebay_status_import_id" id="ebay_status_import_id" class="form-control">
                       {% if ebay_status_import_id is empty %} {% set ebay_status_import_id = 1 %} {% endif %}
@@ -323,7 +323,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="ebay_status_paid_id">{{ entry_import_paid_id }}</label>
+                  <label class="col-sm-2 col-form-label" for="ebay_status_paid_id">{{ entry_import_paid_id }}</label>
                   <div class="col-sm-10">
                     <select name="ebay_status_paid_id" id="ebay_status_paid_id" class="form-control">
                       {% if ebay_status_paid_id is empty %}{% set ebay_status_paid_id = 2 %}{% endif %}
@@ -334,7 +334,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="ebay_status_shipped_id">{{ entry_import_shipped_id }}</label>
+                  <label class="col-sm-2 col-form-label" for="ebay_status_shipped_id">{{ entry_import_shipped_id }}</label>
                   <div class="col-sm-10">
                     <select name="ebay_status_shipped_id" id="ebay_status_shipped_id" class="form-control">
                       {% if ebay_status_shipped_id is empty %}{% set ebay_status_shipped_id = 3 %}{% endif %}
@@ -345,7 +345,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="ebay_status_cancelled_id">{{ entry_import_cancelled_id }}</label>
+                  <label class="col-sm-2 col-form-label" for="ebay_status_cancelled_id">{{ entry_import_cancelled_id }}</label>
                   <div class="col-sm-10">
                     <select name="ebay_status_cancelled_id" id="ebay_status_cancelled_id" class="form-control">
                       {% if ebay_status_cancelled_id is empty %}{% set ebay_status_cancelled_id = 7 %}{% endif %}
@@ -356,7 +356,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="ebay_status_partial_refund_id">{{ entry_import_part_refund_id }}</label>
+                  <label class="col-sm-2 col-form-label" for="ebay_status_partial_refund_id">{{ entry_import_part_refund_id }}</label>
                   <div class="col-sm-10">
                     <select name="ebay_status_partial_refund_id" id="ebay_status_partial_refund_id" class="form-control">
                       {% if ebay_status_partial_refund_id is empty %}{% set ebay_status_partial_refund_id = 2 %}{% endif %}
@@ -367,7 +367,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="ebay_status_refunded_id">{{ entry_import_refund_id }}</label>
+                  <label class="col-sm-2 col-form-label" for="ebay_status_refunded_id">{{ entry_import_refund_id }}</label>
                   <div class="col-sm-10">
                     <select name="ebay_status_refunded_id" id="ebay_status_refunded_id" class="form-control">
                       {% if ebay_status_refunded_id is empty %}{% set ebay_status_refunded_id = 11 %}{% endif %}
@@ -382,11 +382,11 @@
                 <legend>{{ text_developer }}</legend>
                 <p>{{ text_developer_description }}</p>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="button-clear-locks">{{ entry_developer_locks }}</label>
+                  <label class="col-sm-2 col-form-label" for="button-clear-locks">{{ entry_developer_locks }}</label>
                   <div class="col-sm-10"><a class="btn btn-primary" id="button-clear-locks">{{ button_clear }}</a></div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="button-repair-links">{{ button_repair_links }}</label>
+                  <label class="col-sm-2 col-form-label" for="button-repair-links">{{ button_repair_links }}</label>
                   <div class="col-sm-10"><a class="btn btn-primary" id="button-repair-links">{{ button_update }}</a></div>
                 </div>
               </fieldset>
@@ -395,7 +395,7 @@
               <fieldset>
                 <legend>{{ text_listing }}</legend>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="entry-duration">{{ entry_duration }}</label>
+                  <label class="col-sm-2 col-form-label" for="entry-duration">{{ entry_duration }}</label>
                   <div class="col-sm-10">
                     <select name="ebay_duration" id="entry-duration" class="form-control">
                       {% for key,duration in durations %}
@@ -406,7 +406,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="entry-measurement">{{ entry_measurement }}</label>
+                  <label class="col-sm-2 col-form-label" for="entry-measurement">{{ entry_measurement }}</label>
                   <div class="col-sm-10">
                     <select name="ebay_measurement" id="entry-measurement" class="form-control">
                       {% for key,type in measurement_types %}
@@ -421,20 +421,20 @@
                 <legend>{{ text_payments }}</legend>
                 <p>{{ text_payments_description }}</p>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="entry-payment-instruction">{{ entry_payment_instruction }}</label>
+                  <label class="col-sm-2 col-form-label" for="entry-payment-instruction">{{ entry_payment_instruction }}</label>
                   <div class="col-sm-10">
                     <textarea name="ebay_payment_instruction" class="form-control" rows="3" id="entry-payment-instruction">{{ ebay_payment_instruction }}</textarea>
                     <small class="form-text text-muted">{{ help_payment_instruction }}</small>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="ebay_payment_paypal_address">{{ text_payment_paypal_add }}</label>
+                  <label class="col-sm-2 col-form-label" for="ebay_payment_paypal_address">{{ text_payment_paypal_add }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="ebay_payment_paypal_address" value="{{ ebay_payment_paypal_address }}" placeholder="{{ text_payment_paypal_add }}" id="ebay_payment_paypal_address" class="form-control"/>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ entry_payment_types }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_payment_types }}</label>
                   <div class="col-sm-10">
                     {% for payment in payment_options %}
                       <div class="checkbox">
@@ -446,7 +446,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="entry-payment-immediate">{{ entry_payment_immediate }}</label>
+                  <label class="col-sm-2 col-form-label" for="entry-payment-immediate">{{ entry_payment_immediate }}</label>
                   <div class="col-sm-10">
                     <select name="ebay_payment_immediate" id="entry-payment-immediate" class="form-control">
                       {% if ebay_payment_immediate == 1 %}
@@ -461,7 +461,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="entry-tax-listing">{{ entry_tax_listing }}</label>
+                  <label class="col-sm-2 col-form-label" for="entry-tax-listing">{{ entry_tax_listing }}</label>
                   <div class="col-sm-10">
                     <select name="ebay_tax_listing" id="entry-tax-listing" class="form-control">
                       <option value="0"{% if ebay_tax_listing == 0 %} selected{% endif %}>{{ text_tax_use_value }}</option>
@@ -472,7 +472,7 @@
                   </div>
                 </div>
                 <div class="form-group" id="entry-tax-listing-preset">
-                  <label class="col-sm-2 control-label" for="entry-tax">{{ entry_tax }}</label>
+                  <label class="col-sm-2 col-form-label" for="entry-tax">{{ entry_tax }}</label>
                   <div class="col-sm-10">
                     <div class="input-group col-xs-2">
                       <input type="text" name="ebay_tax" value="{{ ebay_tax }}" id="entry-tax" class="form-control"/> <span class="input-group-addon">%</span>

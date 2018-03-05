@@ -29,7 +29,7 @@
             <div class="col-sm-10">{{ text_eway_image }}</div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-paymode">{{ entry_paymode }}</label>
+            <label class="col-sm-2 col-form-label" for="input-paymode">{{ entry_paymode }}</label>
             <div class="col-sm-10">
               <select name="payment_eway_paymode" id="input-test" class="form-control">
                 {% if payment_eway_paymode == 'iframe' %}
@@ -43,7 +43,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-test">{{ entry_test }}</label>
+            <label class="col-sm-2 col-form-label" for="input-test">{{ entry_test }}</label>
             <div class="col-sm-10">
               <select name="payment_eway_test" id="input-test" class="form-control">
                 {% if payment_eway_test %}
@@ -58,7 +58,7 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-username">{{ entry_username }}</label>
+            <label class="col-sm-2 col-form-label" for="input-username">{{ entry_username }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_eway_username" value="{{ payment_eway_username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
               <small class="form-text text-muted">{{ help_username }}</small>
@@ -68,7 +68,7 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-password">{{ entry_password }}</label>
+            <label class="col-sm-2 col-form-label" for="input-password">{{ entry_password }}</label>
             <div class="col-sm-10">
               <input type="password" name="payment_eway_password" value="{{ payment_eway_password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control"/>
               <small class="form-text text-muted">{{ help_password }}</small>
@@ -78,7 +78,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+            <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="payment_eway_status" id="input-status" class="form-control">
                 {% if payment_eway_status %}
@@ -92,7 +92,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-transaction-method">{{ entry_transaction_method }}</label>
+            <label class="col-sm-2 col-form-label" for="input-transaction-method">{{ entry_transaction_method }}</label>
             <div class="col-sm-10">
               <select name="payment_eway_transaction_method" id="input-transaction-method" class="form-control">
                 {% if payment_eway_transaction_method == 'auth' %}
@@ -107,7 +107,7 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="eway_payment_type">{{ entry_payment_type }}</label>
+            <label class="col-sm-2 col-form-label" for="eway_payment_type">{{ entry_payment_type }}</label>
             <div class="col-sm-10">
               <p>
                 <input type="hidden" name="payment_eway_payment_type[visa]" value="0"/> <input type='checkbox' name='payment_eway_payment_type[visa]' id="eway_payment_type" value='1' {{ payment_eway_payment_type.visa is defined and payment_eway_payment_type.visa == 1 ? 'checked="checked"' : '' }} /> CC - Visa
@@ -136,7 +136,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+            <label class="col-sm-2 col-form-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
               <select name="payment_eway_standard_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
@@ -151,7 +151,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
+            <label class="col-sm-2 col-form-label" for="input-order-status">{{ entry_order_status }}</label>
             <div class="col-sm-10">
               <select name="payment_eway_order_status_id" id="input-order-status" class="form-control">
                 {% for order_status in order_statuses %}
@@ -165,7 +165,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-order-status-refund">{{ entry_order_status_refund }}</label>
+            <label class="col-sm-2 col-form-label" for="input-order-status-refund">{{ entry_order_status_refund }}</label>
             <div class="col-sm-10">
               <select name="payment_eway_order_status_refunded_id" id="input-order-status-refund" class="form-control">
                 {% for order_status in order_statuses %}
@@ -179,7 +179,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-order-status-auth">{{ entry_order_status_auth }}</label>
+            <label class="col-sm-2 col-form-label" for="input-order-status-auth">{{ entry_order_status_auth }}</label>
             <div class="col-sm-10">
               <select name="payment_eway_order_status_auth_id" id="input-order-status-auth" class="form-control">
                 {% for order_status in order_statuses %}
@@ -193,7 +193,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-order-status-fraud">{{ entry_order_status_fraud }}</label>
+            <label class="col-sm-2 col-form-label" for="input-order-status-fraud">{{ entry_order_status_fraud }}</label>
             <div class="col-sm-10">
               <select name="payment_eway_order_status_fraud_id" id="input-order-status-fraud" class="form-control">
                 {% for order_status in order_statuses %}
@@ -207,7 +207,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+            <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_eway_sort_order" value="{{ payment_eway_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
             </div>

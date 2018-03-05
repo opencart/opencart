@@ -31,7 +31,7 @@
           <div class="row">
             <div class="col-sm-4">
               <div class="form-group">
-                <label class="control-label" for="input-start-date">{{ entry_start_date }}</label>
+                <label class="col-form-label" for="input-start-date">{{ entry_start_date }}</label>
                 <div class="input-group date">
                   <input type="text" name="filter_start" value="{{ filter_start }}" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-start-date" class="form-control" />
                   <div class="input-group-btn">
@@ -42,7 +42,7 @@
             </div>
             <div class="col-sm-4">
               <div class="form-group">
-                <label class="control-label" for="input-end-date">{{ entry_end_date }}</label>
+                <label class="col-form-label" for="input-end-date">{{ entry_end_date }}</label>
                 <div class="input-group date">
                   <input type="text" name="filter_end" value="{{ filter_end }}" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-end-date" class="form-control" />
                   <div class="input-group-btn">
@@ -53,7 +53,7 @@
             </div>
             <div class="col-sm-4">
               <div class="form-group">
-                <label class="control-label" for="input-status">{{ entry_status }}</label>
+                <label class="col-form-label" for="input-status">{{ entry_status }}</label>
                 <select name="filter_status" id="input-status" class="form-control">
                   <option value="" {% if filter_status == null %} selected{% endif %}>{{ text_option_all }}</option>
                   {% for option_key,option in status_options %}

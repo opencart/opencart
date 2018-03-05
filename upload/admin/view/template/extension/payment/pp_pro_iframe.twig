@@ -30,7 +30,7 @@
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="entry-username">{{ entry_username }}</label>
+                <label class="col-sm-2 col-form-label" for="entry-username">{{ entry_username }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_pp_pro_iframe_user" value="{{ payment_pp_pro_iframe_user }}" placeholder="{{ entry_username }}" id="entry-username" class="form-control"/>
                   {% if error.username %}
@@ -39,7 +39,7 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="entry-password">{{ entry_password }}</label>
+                <label class="col-sm-2 col-form-label" for="entry-password">{{ entry_password }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_pp_pro_iframe_password" value="{{ payment_pp_pro_iframe_password }}" placeholder="{{ entry_password }}" id="entry-password" class="form-control"/>
                   {% if error.password %}
@@ -48,7 +48,7 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="entry-signature">{{ entry_signature }}</label>
+                <label class="col-sm-2 col-form-label" for="entry-signature">{{ entry_signature }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_pp_pro_iframe_sig" value="{{ payment_pp_pro_iframe_sig }}" placeholder="{{ entry_signature }}" id="entry-signature" class="form-control"/>
                   {% if error.signature %}
@@ -57,7 +57,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-live-demo">{{ entry_test }}</label>
+                <label class="col-sm-2 col-form-label" for="input-live-demo">{{ entry_test }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_pro_iframe_test" id="input-live-demo" class="form-control">
                     {% if payment_pp_pro_iframe_test %}
@@ -72,7 +72,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-debug">{{ entry_debug }}</label>
+                <label class="col-sm-2 col-form-label" for="input-debug">{{ entry_debug }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_pro_iframe_debug" id="input-debug" class="form-control">
                     {% if payment_pp_pro_iframe_debug %}
@@ -87,7 +87,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-trans-method">{{ entry_transaction_method }}</label>
+                <label class="col-sm-2 col-form-label" for="input-trans-method">{{ entry_transaction_method }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_pro_iframe_transaction_method" id="input-trans-method" class="form-control">
                     {% if payment_pp_pro_iframe_transaction_method == 'authorization' %}
@@ -101,7 +101,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-checkout-method">{{ entry_checkout_method }}</label>
+                <label class="col-sm-2 col-form-label" for="input-checkout-method">{{ entry_checkout_method }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_pro_iframe_checkout_method" id="input-checkout-method" class="form-control">
                     {% if payment_pp_pro_iframe_checkout_method == 'iframe' %}
@@ -116,27 +116,27 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_ipn_url }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_ipn_url }}</label>
                 <div class="col-sm-10">
                   <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span> <input type="text" value="{{ ipn_url }}" class="form-control"/>
                   </div>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-total">{{ entry_total }}</label>
+                <label class="col-sm-2 col-form-label" for="input-total">{{ entry_total }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_pp_pro_iframe_total" value="{{ payment_pp_pro_iframe_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
                   <small class="form-text text-muted">{{ help_total }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+                <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_pp_pro_iframe_sort_order" value="{{ payment_pp_pro_iframe_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+                <label class="col-sm-2 col-form-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_pro_iframe_geo_zone_id" id="input-geo-zone" class="form-control">
                     <option value="0">{{ text_all_zones }}</option>
@@ -151,7 +151,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_pro_iframe_status" id="input-status" class="form-control">
                     {% if payment_pp_pro_iframe_status %}
@@ -167,7 +167,7 @@
             </div>
             <div class="tab-pane" id="tab-order-status">
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_canceled_reversal_status }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_canceled_reversal_status }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_pro_iframe_canceled_reversal_status_id" class="form-control">
                     {% for order_status in order_statuses %}
@@ -181,7 +181,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_completed_status }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_completed_status }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_pro_iframe_completed_status_id" class="form-control">
                     {% for order_status in order_statuses %}
@@ -195,7 +195,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_denied_status }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_denied_status }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_pro_iframe_denied_status_id" class="form-control">
                     {% for order_status in order_statuses %}
@@ -209,7 +209,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_expired_status }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_expired_status }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_pro_iframe_expired_status_id" class="form-control">
                     {% for order_status in order_statuses %}
@@ -223,7 +223,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_failed_status }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_failed_status }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_pro_iframe_failed_status_id" class="form-control">
                     {% for order_status in order_statuses %}
@@ -237,7 +237,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_pending_status }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_pending_status }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_pro_iframe_pending_status_id" class="form-control">
                     {% for order_status in order_statuses %}
@@ -251,7 +251,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_processed_status }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_processed_status }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_pro_iframe_processed_status_id" class="form-control">
                     {% for order_status in order_statuses %}
@@ -265,7 +265,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_refunded_status }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_refunded_status }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_pro_iframe_processed_status_id" class="form-control">
                     {% for order_status in order_statuses %}
@@ -279,7 +279,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_reversed_status }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_reversed_status }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_pro_iframe_reversed_status_id" class="form-control">
                     {% for order_status in order_statuses %}
@@ -293,7 +293,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_voided_status }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_voided_status }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_pro_iframe_voided_status_id" class="form-control">
                     {% for order_status in order_statuses %}

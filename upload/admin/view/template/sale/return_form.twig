@@ -34,7 +34,7 @@
               <fieldset>
                 <legend>{{ text_order }}</legend>
                 <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-order-id">{{ entry_order_id }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-order-id">{{ entry_order_id }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="order_id" value="{{ order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
                     {% if error_order_id %}
@@ -43,7 +43,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-date-ordered">{{ entry_date_ordered }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-date-ordered">{{ entry_date_ordered }}</label>
                   <div class="col-sm-3">
                     <div class="input-group date">
                       <input type="text" name="date_ordered" value="{{ date_ordered }}" placeholder="{{ entry_date_ordered }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-ordered" class="form-control"/>
@@ -54,13 +54,13 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-customer">{{ entry_customer }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-customer">{{ entry_customer }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/> <input type="hidden" name="customer_id" value="{{ customer_id }}"/>
                   </div>
                 </div>
                 <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-firstname">{{ entry_firstname }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-firstname">{{ entry_firstname }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
                     {% if error_firstname %}
@@ -69,7 +69,7 @@
                   </div>
                 </div>
                 <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-lastname">{{ entry_lastname }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-lastname">{{ entry_lastname }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
                     {% if error_lastname %}
@@ -78,7 +78,7 @@
                   </div>
                 </div>
                 <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-email">{{ entry_email }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-email">{{ entry_email }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
                     {% if error_email %}
@@ -87,7 +87,7 @@
                   </div>
                 </div>
                 <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-telephone">{{ entry_telephone }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-telephone">{{ entry_telephone }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
                     {% if error_telephone %}
@@ -99,7 +99,7 @@
               <fieldset>
                 <legend>{{ text_product }}</legend>
                 <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-product">{{ entry_product }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-product">{{ entry_product }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control"/> <input type="hidden" name="product_id" value="{{ product_id }}"/>
                     <small class="form-text text-muted">{{ help_product }}</small>
@@ -109,7 +109,7 @@
                   </div>
                 </div>
                 <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-model">{{ entry_model }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-model">{{ entry_model }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control"/>
                     {% if error_model %}
@@ -118,13 +118,13 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-quantity">{{ entry_quantity }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-quantity">{{ entry_quantity }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="quantity" value="{{ quantity }}" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control"/>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-return-reason">{{ entry_return_reason }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-return-reason">{{ entry_return_reason }}</label>
                   <div class="col-sm-10">
                     <select name="return_reason_id" id="input-return-reason" class="form-control">
                       {% for return_reason in return_reasons %}
@@ -138,7 +138,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-opened">{{ entry_opened }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-opened">{{ entry_opened }}</label>
                   <div class="col-sm-10">
                     <select name="opened" id="input-opened" class="form-control">
                       {% if opened %}
@@ -152,13 +152,13 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-comment">{{ entry_comment }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-comment">{{ entry_comment }}</label>
                   <div class="col-sm-10">
                     <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-return-action">{{ entry_return_action }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-return-action">{{ entry_return_action }}</label>
                   <div class="col-sm-10">
                     <select name="return_action_id" id="input-return-action" class="form-control">
                       <option value="0"></option>
@@ -174,7 +174,7 @@
                 </div>
                 {% if not return_id %}
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-return-status">{{ entry_return_status }}</label>
+                    <label class="col-sm-2 col-form-label" for="input-return-status">{{ entry_return_status }}</label>
                     <div class="col-sm-10">
                       <select name="return_status_id" id="input-return-status" class="form-control">
                         {% for return_status in return_statuses %}
@@ -202,7 +202,7 @@
                 <legend>{{ text_history_add }}</legend>
                 <form>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-return-status">{{ entry_return_status }}</label>
+                    <label class="col-sm-2 col-form-label" for="input-return-status">{{ entry_return_status }}</label>
                     <div class="col-sm-10">
                       <select name="return_status_id" id="input-return-status" class="form-control">
                         {% for return_status in return_statuses %}
@@ -216,13 +216,13 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-notify">{{ entry_notify }}</label>
+                    <label class="col-sm-2 col-form-label" for="input-notify">{{ entry_notify }}</label>
                     <div class="col-sm-10">
                       <input type="checkbox" name="notify" value="1" id="input-notify"/>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-history-comment">{{ entry_comment }}</label>
+                    <label class="col-sm-2 col-form-label" for="input-history-comment">{{ entry_comment }}</label>
                     <div class="col-sm-10">
                       <textarea name="comment" rows="8" id="input-history-comment" class="form-control"></textarea>
                     </div>

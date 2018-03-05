@@ -40,7 +40,7 @@
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="etsy_status">{{ text_status }}</label>
+                <label class="col-sm-2 col-form-label" for="etsy_status">{{ text_status }}</label>
                 <div class="col-sm-10">
                   <select name="etsy_status" id="etsy_status" class="form-control ftpsetting">
                     {% if etsy_status == 1 %}
@@ -54,25 +54,25 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="etsy_token">{{ entry_token }}</label>
+                <label class="col-sm-2 col-form-label" for="etsy_token">{{ entry_token }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="etsy_token" value="{{ etsy_token }}" placeholder="{{ entry_token }}" id="etsy_token" class="form-control credentials"/>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="etsy_encryption_key">{{ entry_encryption_key }}</label>
+                <label class="col-sm-2 col-form-label" for="etsy_encryption_key">{{ entry_encryption_key }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="etsy_encryption_key" value="{{ etsy_encryption_key }}" placeholder="{{ entry_encryption_key }}" id="etsy_encryption_key" class="form-control credentials"/>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="etsy_encryption_iv">{{ entry_encryption_iv }}</label>
+                <label class="col-sm-2 col-form-label" for="etsy_encryption_iv">{{ entry_encryption_iv }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="etsy_encryption_iv" value="{{ etsy_encryption_iv }}" placeholder="{{ entry_encryption_iv }}" id="etsy_encryption_iv" class="form-control credentials"/>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="etsy_logging">{{ entry_debug }}</label>
+                <label class="col-sm-2 col-form-label" for="etsy_logging">{{ entry_debug }}</label>
                 <div class="col-sm-10">
                   <select name="etsy_logging" id="etsy_logging" class="form-control">
                     {% if etsy_logging == 1 %}
@@ -86,14 +86,14 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="etsy_address_format">{{ entry_address_format }}</label>
+                <label class="col-sm-2 col-form-label" for="etsy_address_format">{{ entry_address_format }}</label>
                 <div class="col-sm-10">
                   <textarea name="etsy_address_format" class="form-control" rows="3" id="etsy_address_format">{{ etsy_address_format }}</textarea>
                   <small class="form-text text-muted">{{ help_address_format }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="etsy_order_status_new">{{ entry_import_def_id }}</label>
+                <label class="col-sm-2 col-form-label" for="etsy_order_status_new">{{ entry_import_def_id }}</label>
                 <div class="col-sm-10">
                   <select name="etsy_order_status_new" id="etsy_order_status_new" class="form-control">
                     {% if etsy_order_status_new is empty %}{% set etsy_order_status_new = 1 %}{% endif %}
@@ -104,7 +104,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="etsy_order_status_paid">{{ entry_import_paid_id }}</label>
+                <label class="col-sm-2 col-form-label" for="etsy_order_status_paid">{{ entry_import_paid_id }}</label>
                 <div class="col-sm-10">
                   <select name="etsy_order_status_paid" id="etsy_order_status_paid" class="form-control">
                     {% if etsy_order_status_paid is empty %}{% set etsy_order_status_paid = 2 %}{% endif %}
@@ -115,7 +115,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="etsy_order_status_shipped">{{ entry_import_shipped_id }}</label>
+                <label class="col-sm-2 col-form-label" for="etsy_order_status_shipped">{{ entry_import_shipped_id }}</label>
                 <div class="col-sm-10">
                   <select name="etsy_order_status_shipped" id="etsy_order_status_shipped" class="form-control">
                     {% if etsy_order_status_shipped is empty %}{% set etsy_order_status_shipped = 3 %}{% endif %}
@@ -127,13 +127,13 @@
               </div>
               {% if account_info.header_code == 200 %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="button-import">{{ text_pull_orders }}</label>
+                  <label class="col-sm-2 col-form-label" for="button-import">{{ text_pull_orders }}</label>
                   <div class="col-sm-10"><a class="btn btn-primary" id="button-import"><i class="fa fa-refresh"></i></a>
                     <small class="form-text text-muted">{{ help_pull_orders }}</small>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="button-settings">{{ text_sync_settings }}</label>
+                  <label class="col-sm-2 col-form-label" for="button-settings">{{ text_sync_settings }}</label>
                   <div class="col-sm-10"><a class="btn btn-primary" id="button-settings"><i class="fa fa-refresh"></i></a>
                     <small class="form-text text-muted">{{ help_sync_settings }}</small>
                   </div>

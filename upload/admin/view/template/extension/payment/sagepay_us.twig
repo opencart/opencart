@@ -24,7 +24,7 @@
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment">
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
+            <label class="col-sm-2 col-form-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_sagepay_us_merchant_id" value="{{ payment_sagepay_us_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="input-merchant-id" class="form-control"/>
               {% if error_merchant_id %}
@@ -33,7 +33,7 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-merchant-key">{{ entry_merchant_key }}</label>
+            <label class="col-sm-2 col-form-label" for="input-merchant-key">{{ entry_merchant_key }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_sagepay_us_merchant_key" value="{{ payment_sagepay_us_merchant_key }}" placeholder="{{ entry_merchant_key }}" id="input-merchant-key" class="form-control"/>
               {% if error_merchant_key %}
@@ -42,14 +42,14 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-total">{{ entry_total }}</label>
+            <label class="col-sm-2 col-form-label" for="input-total">{{ entry_total }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_sagepay_us_total" value="{{ payment_sagepay_us_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
               <small class="form-text text-muted">{{ help_total }}</small>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
+            <label class="col-sm-2 col-form-label" for="input-order-status">{{ entry_order_status }}</label>
             <div class="col-sm-10">
               <select name="payment_sagepay_us_order_status_id" id="input-order-status" class="form-control">
                 {% for order_status in order_statuses %}
@@ -63,7 +63,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+            <label class="col-sm-2 col-form-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
               <select name="payment_sagepay_us_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
@@ -78,7 +78,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+            <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="payment_sagepay_us_status" id="input-status" class="form-control">
                 {% if payment_sagepay_us_status %}
@@ -92,7 +92,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+            <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_sagepay_us_sort_order" value="{{ payment_sagepay_us_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
             </div>

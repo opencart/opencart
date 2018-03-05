@@ -33,7 +33,7 @@
               <div class="alert alert-danger" id="update-error" style="display:none;"></div>
               <div id="update-v2-box">
                 <div class="form-group">
-                  <label class="col-sm-3 control-label" for="update-v2-beta">{{ entry_beta }}</label>
+                  <label class="col-sm-3 col-form-label" for="update-v2-beta">{{ entry_beta }}</label>
                   <div class="col-sm-8">
                     <select id="update-v2-beta" class="form-control">
                       <option value="1">{{ text_yes }}</option>
@@ -43,7 +43,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-3 control-label" for="update-v2">{{ entry_update }}</label>
+                  <label class="col-sm-3 col-form-label" for="update-v2">{{ entry_update }}</label>
                   <div class="col-sm-8">
                     <button class="btn btn-primary" id="update-v2">{{ button_update }}</button>
                     <small class="form-text text-muted">{{ help_easy_update }}</small>
@@ -61,7 +61,7 @@
             <p>{{ text_patch_description }}</p>
             <div class="well">
               <div class="form-group">
-                <label class="col-sm-3 control-label" for="button-patch">{{ entry_patch }}</label>
+                <label class="col-sm-3 col-form-label" for="button-patch">{{ entry_patch }}</label>
                 <div class="col-sm-8">
                   <button class="btn btn-primary" id="button-patch">{{ button_patch }}</button>
                   <small class="form-text text-muted">{{ help_patch }}</small>
@@ -73,7 +73,7 @@
         <div class="tab-pane" id="tab-setting">
           <div class="well">
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-language">{{ text_language }}</label>
+              <label class="col-sm-2 col-form-label" for="input-language">{{ text_language }}</label>
               <div class="col-sm-10">
                 <select name="feed_openbaypro_language" id="input-language" class="form-control">
                   {% for language_iso, language_text in api_languages %}
@@ -83,7 +83,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="button-clear-faq">{{ text_clear_faq }}</label>
+              <label class="col-sm-2 col-form-label" for="button-clear-faq">{{ text_clear_faq }}</label>
               <div class="col-sm-10">
                 <button class="btn btn-primary" id="button-clear-faq">{{ button_clear }}</button>
                 <small class="form-text text-muted">{{ help_clear_faq }}</small>
@@ -94,7 +94,7 @@
         <div class="tab-pane" id="tab-developer">
           <div class="well">
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="button-clear-data">{{ entry_empty_data }}</label>
+              <label class="col-sm-2 col-form-label" for="button-clear-data">{{ entry_empty_data }}</label>
               <div class="col-sm-10"><a class="btn btn-primary" id="button-clear-data">{{ button_clear }}</a>
                 <small class="form-text text-muted">{{ help_empty_data }}</small>
               </div>

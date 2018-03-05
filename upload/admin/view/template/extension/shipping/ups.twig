@@ -24,7 +24,7 @@
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-shipping">
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-key">{{ entry_key }}</label>
+            <label class="col-sm-2 col-form-label" for="input-key">{{ entry_key }}</label>
             <div class="col-sm-10">
               <input type="text" name="shipping_ups_key" value="{{ shipping_ups_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control"/>
               <small class="form-text text-muted">{{ help_key }}</small>
@@ -34,7 +34,7 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-username">{{ entry_username }}</label>
+            <label class="col-sm-2 col-form-label" for="input-username">{{ entry_username }}</label>
             <div class="col-sm-10">
               <input type="text" name="shipping_ups_username" value="{{ shipping_ups_username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
               <small class="form-text text-muted">{{ help_username }}</small>
@@ -44,7 +44,7 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-password">{{ entry_password }}</label>
+            <label class="col-sm-2 col-form-label" for="input-password">{{ entry_password }}</label>
             <div class="col-sm-10">
               <input type="text" name="shipping_ups_password" value="{{ shipping_ups_password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control"/>
               <small class="form-text text-muted">{{ help_password }}</small>
@@ -54,7 +54,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-pickup">{{ entry_pickup }}</label>
+            <label class="col-sm-2 col-form-label" for="input-pickup">{{ entry_pickup }}</label>
             <div class="col-sm-10">
               <select name="shipping_ups_pickup" id="input-pickup" class="form-control">
                 {% for pickup in pickups %}
@@ -69,7 +69,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-packaging">{{ entry_packaging }}</label>
+            <label class="col-sm-2 col-form-label" for="input-packaging">{{ entry_packaging }}</label>
             <div class="col-sm-10">
               <select name="shipping_ups_packaging" id="input-packaging" class="form-control">
                 {% for package in packages %}
@@ -84,7 +84,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-classification">{{ entry_classification }}</label>
+            <label class="col-sm-2 col-form-label" for="input-classification">{{ entry_classification }}</label>
             <div class="col-sm-10">
               <select name="shipping_ups_classification" id="input-classification" class="form-control">
                 {% for classification in classifications %}
@@ -99,7 +99,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-origin">{{ entry_origin }}</label>
+            <label class="col-sm-2 col-form-label" for="input-origin">{{ entry_origin }}</label>
             <div class="col-sm-10">
               <select name="shipping_ups_origin" id="input-origin" class="form-control">
                 {% for origin in origins %}
@@ -114,7 +114,7 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-city">{{ entry_city }}</label>
+            <label class="col-sm-2 col-form-label" for="input-city">{{ entry_city }}</label>
             <div class="col-sm-10">
               <input type="text" name="shipping_ups_city" value="{{ shipping_ups_city }}" placeholder="{{ entry_city }}" id="input-city" class="form-control"/>
               <small class="form-text text-muted">{{ help_city }}</small>
@@ -124,7 +124,7 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-state">{{ entry_state }}</label>
+            <label class="col-sm-2 col-form-label" for="input-state">{{ entry_state }}</label>
             <div class="col-sm-10">
               <input type="text" name="shipping_ups_state" value="{{ shipping_ups_state }}" placeholder="{{ entry_state }}" id="input-state" class="form-control" maxlength="2"/>
               <small class="form-text text-muted">{{ help_state }}</small>
@@ -134,7 +134,7 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-country">{{ entry_country }}</label>
+            <label class="col-sm-2 col-form-label" for="input-country">{{ entry_country }}</label>
             <div class="col-sm-10">
               <input type="text" name="shipping_ups_country" value="{{ shipping_ups_country }}" placeholder="{{ entry_country }}" id="input-country" class="form-control" maxlength="2"/>
               {% if error_country %}
@@ -144,14 +144,14 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-postcode">{{ entry_postcode }}</label>
+            <label class="col-sm-2 col-form-label" for="input-postcode">{{ entry_postcode }}</label>
             <div class="col-sm-10">
               <input type="text" name="shipping_ups_postcode" value="{{ shipping_ups_postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control"/>
               <small class="form-text text-muted">{{ help_postcode }}</small>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label">{{ entry_test }}</label>
+            <label class="col-sm-2 col-form-label">{{ entry_test }}</label>
             <div class="col-sm-10">
               <label class="radio-inline">
                 {% if shipping_ups_test %}
@@ -174,7 +174,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-quote-type">{{ entry_quote_type }}</label>
+            <label class="col-sm-2 col-form-label" for="input-quote-type">{{ entry_quote_type }}</label>
             <div class="col-sm-10">
               <select name="shipping_ups_quote_type" id="input-quote-type" class="form-control">
                 {% for quote_type in quote_types %}
@@ -189,7 +189,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label">{{ entry_service }}</label>
+            <label class="col-sm-2 col-form-label">{{ entry_service }}</label>
             <div class="col-sm-10">
               <div id="service" class="well well-sm" style="height: 150px; overflow: auto;">
                 <div id="US">
@@ -749,7 +749,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label">{{ entry_insurance }}</label>
+            <label class="col-sm-2 col-form-label">{{ entry_insurance }}</label>
             <div class="col-sm-10">
               <label class="radio-inline">
                 {% if shipping_ups_insurance %}
@@ -772,7 +772,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label">{{ entry_display_weight }}</label>
+            <label class="col-sm-2 col-form-label">{{ entry_display_weight }}</label>
             <div class="col-sm-10">
               <label class="radio-inline">
                 {% if shipping_ups_display_weight %}
@@ -794,7 +794,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-weight-class">{{ entry_weight_class }}</label>
+            <label class="col-sm-2 col-form-label" for="input-weight-class">{{ entry_weight_class }}</label>
             <div class="col-sm-10">
               <select name="shipping_ups_weight_class_id" id="input-weight-class" class="form-control">
                 {% for weight_class in weight_classes %}
@@ -809,7 +809,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-length-class">{{ entry_length_class }}</label>
+            <label class="col-sm-2 col-form-label" for="input-length-class">{{ entry_length_class }}</label>
             <div class="col-sm-10">
               <select name="shipping_ups_length_class_id" id="input-length-class" class="form-control">
                 {% for length_class in length_classes %}
@@ -824,7 +824,7 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-length">{{ entry_dimension }}</label>
+            <label class="col-sm-2 col-form-label" for="input-length">{{ entry_dimension }}</label>
             <div class="col-sm-10">
               <div class="row">
                 <div class="col-sm-4">
@@ -844,7 +844,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-tax-class">{{ entry_tax_class }}</label>
+            <label class="col-sm-2 col-form-label" for="input-tax-class">{{ entry_tax_class }}</label>
             <div class="col-sm-10">
               <select name="shipping_ups_tax_class_id" id="input-tax-class" class="form-control">
                 <option value="0">{{ text_none }}</option>
@@ -859,7 +859,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+            <label class="col-sm-2 col-form-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
               <select name="shipping_ups_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
@@ -874,7 +874,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+            <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="shipping_ups_status" id="input-status" class="form-control">
                 {% if shipping_ups_status %}
@@ -888,13 +888,13 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+            <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
               <input type="text" name="shipping_ups_sort_order" value="{{ shipping_ups_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-debug">{{ entry_debug }}</label>
+            <label class="col-sm-2 col-form-label" for="input-debug">{{ entry_debug }}</label>
             <div class="col-sm-10">
               <select name="shipping_ups_debug" id="input-debug" class="form-control">
                 {% if shipping_ups_debug %}

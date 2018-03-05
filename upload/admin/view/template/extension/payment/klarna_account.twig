@@ -41,21 +41,21 @@
               <div class="tab-content">{% for country in countries %}
                   <div class="tab-pane" id="tab-{{ country.code }}">
                     <div class="form-group">
-                      <label class="col-sm-2 control-label" for="input-merchant{{ country.code }}">{{ entry_merchant }}</label>
+                      <label class="col-sm-2 col-form-label" for="input-merchant{{ country.code }}">{{ entry_merchant }}</label>
                       <div class="col-sm-10">
                         <input type="text" name="klarna_account[{{ country.code }}][merchant]" value="{{ klarna_account[country.code] ? klarna_account[country.code].merchant }}" placeholder="{{ entry_merchant }}" id="input-merchant{{ country.code }}" class="form-control"/>
                         <small class="form-text text-muted">{{ help_merchant }}</small>
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="col-sm-2 control-label" for="input-secret{{ country.code }}">{{ entry_secret }}</label>
+                      <label class="col-sm-2 col-form-label" for="input-secret{{ country.code }}">{{ entry_secret }}</label>
                       <div class="col-sm-10">
                         <input type="text" name="klarna_account[{{ country.code }}][secret]" value="{{ klarna_account[country.code] ? klarna_account[country.code].secret }}" placeholder="{{ entry_secret }}" id="input-secret{{ country.code }}" class="form-control"/>
                         <small class="form-text text-muted">{{ help_secret }}</small>
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="col-sm-2 control-label" for="input-server{{ country.code }}">{{ entry_server }}</label>
+                      <label class="col-sm-2 col-form-label" for="input-server{{ country.code }}">{{ entry_server }}</label>
                       <div class="col-sm-10">
                         <select name="klarna_account[{{ country.code }}][server]" id="input-server{{ country.code }}" class="form-control">
                           {% if klarna_account[country.code] and klarna_account[country.code].server == 'live' %}
@@ -72,14 +72,14 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="col-sm-2 control-label" for="input-total{{ country.code }}">{{ entry_total }}</label>
+                      <label class="col-sm-2 col-form-label" for="input-total{{ country.code }}">{{ entry_total }}</label>
                       <div class="col-sm-10">
                         <input type="text" name="klarna_account[{{ country.code }}][total]" value="{{ klarna_account[country.code] ? klarna_account[country.code].total }}" placeholder="{{ entry_total }}" id="input-total{{ country.code }}" class="form-control"/>
                         <small class="form-text text-muted">{{ help_total }}</small>
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="col-sm-2 control-label" for="input-pending-status{{ country.code }}">{{ entry_pending_status }}</label>
+                      <label class="col-sm-2 col-form-label" for="input-pending-status{{ country.code }}">{{ entry_pending_status }}</label>
                       <div class="col-sm-10">
                         <select name="klarna_account[{{ country.code }}][pending_status_id]" id="input-pending-status{{ country.code }}" class="form-control">
                           {% for order_status in order_statuses %}
@@ -93,7 +93,7 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="col-sm-2 control-label" for="input-accepted-status{{ country.code }}">{{ entry_accepted_status }}</label>
+                      <label class="col-sm-2 col-form-label" for="input-accepted-status{{ country.code }}">{{ entry_accepted_status }}</label>
                       <div class="col-sm-10">
                         <select name="klarna_account[{{ country.code }}][accepted_status_id]" id="input-accepted-status{{ country.code }}" class="form-control">
                           {% for order_status in order_statuses %}
@@ -107,7 +107,7 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="col-sm-2 control-label" for="input-geo-zone{{ country.code }}">{{ entry_geo_zone }}</label>
+                      <label class="col-sm-2 col-form-label" for="input-geo-zone{{ country.code }}">{{ entry_geo_zone }}</label>
                       <div class="col-sm-10">
                         <select name="klarna_account[{{ country.code }}][geo_zone_id]" id="input-geo-zone{{ country.code }}" class="form-control">
                           <option value="0">{{ text_all_zones }}</option>
@@ -122,7 +122,7 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="col-sm-2 control-label" for="input-status{{ country.code }}">{{ entry_status }}</label>
+                      <label class="col-sm-2 col-form-label" for="input-status{{ country.code }}">{{ entry_status }}</label>
                       <div class="col-sm-10">
                         <select name="klarna_account[{{ country.code }}][status]" id="input-status{{ country.code }}" class="form-control">
                           {% if klarna_account[country.code] and klarna_account[country.code]['status'] %}
@@ -136,7 +136,7 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="col-sm-2 control-label" for="input-sort-order{{ country.code }}">{{ entry_sort_order }}</label>
+                      <label class="col-sm-2 col-form-label" for="input-sort-order{{ country.code }}">{{ entry_sort_order }}</label>
                       <div class="col-sm-10">
                         <input type="text" name="klarna_account[{{ country.code }}][sort_order]" value="{{ klarna_account[country.code] ? klarna_account[country.code].sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order{{ country.code }}" class="form-control"/>
                       </div>

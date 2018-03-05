@@ -24,7 +24,7 @@
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment">
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-key">{{ entry_key }}</label>
+            <label class="col-sm-2 col-form-label" for="input-key">{{ entry_key }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_cardinity_key" value="{{ payment_cardinity_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control"/>
               {% if error_key %}
@@ -33,7 +33,7 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-secret">{{ entry_secret }}</label>
+            <label class="col-sm-2 col-form-label" for="input-secret">{{ entry_secret }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_cardinity_secret" value="{{ payment_cardinity_secret }}" placeholder="{{ entry_secret }}" id="input-secret" class="form-control"/>
               {% if error_secret %}
@@ -42,7 +42,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-debug">{{ entry_debug }}</label>
+            <label class="col-sm-2 col-form-label" for="input-debug">{{ entry_debug }}</label>
             <div class="col-sm-10">
               <select name="payment_cardinity_debug" id="input-debug" class="form-control">
                 {% if payment_cardinity_debug %}
@@ -57,14 +57,14 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-total">{{ entry_total }}</label>
+            <label class="col-sm-2 col-form-label" for="input-total">{{ entry_total }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_cardinity_total" value="{{ payment_cardinity_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
               <small class="form-text text-muted">{{ help_total }}</small>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
+            <label class="col-sm-2 col-form-label" for="input-order-status">{{ entry_order_status }}</label>
             <div class="col-sm-10">
               <select name="payment_cardinity_order_status_id" id="input-order-status" class="form-control">
                 {% for order_status in order_statuses %}
@@ -78,7 +78,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+            <label class="col-sm-2 col-form-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
               <select name="payment_cardinity_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
@@ -93,7 +93,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+            <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="payment_cardinity_status" id="input-status" class="form-control">
                 {% if payment_cardinity_status %}
@@ -107,7 +107,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+            <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_cardinity_sort_order" value="{{ payment_cardinity_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
             </div>

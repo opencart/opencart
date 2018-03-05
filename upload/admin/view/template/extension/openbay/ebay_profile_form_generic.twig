@@ -29,19 +29,19 @@
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ text_profile_default }}</label>
+                <label class="col-sm-2 col-form-label">{{ text_profile_default }}</label>
                 <div class="col-sm-10">
                   <input type="hidden" name="default" value="0"/> <input type="checkbox" name="default" value="1"{% if default == 1 %} checked="checked"{% endif %} />
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="name">{{ text_profile_name }}</label>
+                <label class="col-sm-2 col-form-label" for="name">{{ text_profile_name }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="name" value="{{ name }}" placeholder="{{ text_profile_name }}" id="name" class="form-control"/>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="description">{{ text_profile_desc }}</label>
+                <label class="col-sm-2 col-form-label" for="description">{{ text_profile_desc }}</label>
                 <div class="col-sm-10">
                   <textarea name="description" class="form-control" rows="3" id="description">{{ description }}</textarea>
                 </div>
@@ -49,7 +49,7 @@
             </div>
             <div class="tab-pane" id="tab-profile">
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ text_general_private }}</label>
+                <label class="col-sm-2 col-form-label">{{ text_general_private }}</label>
                 <div class="col-sm-10">
                   <select name="data[private_listing]" class="form-control">
                     <option value="0"{% if data.private_listing == 0 %} selected{% endif %}>{{ text_no }}</option>
@@ -58,7 +58,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="name">{{ text_general_price }}</label>
+                <label class="col-sm-2 col-form-label" for="name">{{ text_general_price }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="data[price_modify]" id="price_modify" value="{% if data.price_modify == "" %}{{ '0' }}{% else %}{{ data.price_modify }}{% endif %}" class="form-control"/> <span class="help-block">{{ text_general_price_help }}</span>
                 </div>

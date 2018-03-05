@@ -30,7 +30,7 @@
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-username">{{ entry_username }}</label>
+                <label class="col-sm-2 col-form-label" for="input-username">{{ entry_username }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="username" value="{{ username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
                   {% if error_username %}
@@ -38,7 +38,7 @@
                   {% endif %} </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-key">{{ entry_key }}</label>
+                <label class="col-sm-2 col-form-label" for="input-key">{{ entry_key }}</label>
                 <div class="col-sm-10">
                   <textarea name="key" placeholder="{{ entry_key }}" rows="5" id="input-key" class="form-control">{{ key }}</textarea>
                   <br/>
@@ -48,7 +48,7 @@
                   {% endif %} </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="status" id="input-status" class="form-control">
 

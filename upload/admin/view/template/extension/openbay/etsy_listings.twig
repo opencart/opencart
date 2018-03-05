@@ -24,12 +24,12 @@
           <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
-                <label class="control-label" for="input-keywords">{{ entry_keywords }}</label> <input type="text" name="keywords" value="{{ filter.keywords }}" placeholder="{{ entry_keywords }}" id="input-keywords" class="form-control"/> <span class="help-block">{{ help_keywords }}</span>
+                <label class="col-form-label" for="input-keywords">{{ entry_keywords }}</label> <input type="text" name="keywords" value="{{ filter.keywords }}" placeholder="{{ entry_keywords }}" id="input-keywords" class="form-control"/> <span class="help-block">{{ help_keywords }}</span>
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                <label class="control-label" for="input-status">{{ entry_status }}</label> <select name="status" id="input-status" class="form-control">
+                <label class="col-form-label" for="input-status">{{ entry_status }}</label> <select name="status" id="input-status" class="form-control">
                   <option value="active"{% if filter.status == "active" %} selected{% endif %}>{{ text_active }}</option>
                   <option value="inactive"{% if filter.status == "inactive" %} selected{% endif %}>{{ text_inactive }}</option>
                   <option value="draft"{% if filter.status == "draft" %} selected{% endif %}>{{ text_draft }}</option>
@@ -45,12 +45,12 @@
           <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
-                <label class="control-label" for="input-name">{{ entry_name }}</label> <input type="hidden" name="add_link_product_id" value="" id="input-product-id"/> <input type="text" name="add_link_product" value="" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+                <label class="col-form-label" for="input-name">{{ entry_name }}</label> <input type="hidden" name="add_link_product_id" value="" id="input-product-id"/> <input type="text" name="add_link_product" value="" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                <label class="control-label" for="input-etsy-id">{{ entry_etsy_id }}</label> <input type="text" name="add_link_etsy_id" value="" placeholder="{{ entry_etsy_id }}" id="input-etsy-id" class="form-control"/>
+                <label class="col-form-label" for="input-etsy-id">{{ entry_etsy_id }}</label> <input type="text" name="add_link_etsy_id" value="" placeholder="{{ entry_etsy_id }}" id="input-etsy-id" class="form-control"/>
               </div>
               <a onclick="addLink();" class="btn btn-primary pull-right" id="button-submit-link"><i class="fa fa-check"></i> {{ button_save }}</a></div>
           </div>

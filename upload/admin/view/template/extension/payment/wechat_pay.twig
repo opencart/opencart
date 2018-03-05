@@ -25,7 +25,7 @@
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment">
           <div class="tab-content">
             <div class="form-group required">
-              <label class="col-sm-2 control-label" for="entry-app-id">{{ entry_app_id }}</label>
+              <label class="col-sm-2 col-form-label" for="entry-app-id">{{ entry_app_id }}</label>
               <div class="col-sm-10">
                 <input type="text" name="payment_wechat_pay_app_id" value="{{ payment_wechat_pay_app_id }}" placeholder="{{ entry_app_id }}" id="entry-app-id" class="form-control"/>
                 {% if error_app_id %}
@@ -34,7 +34,7 @@
               </div>
             </div>
             <div class="form-group required">
-              <label class="col-sm-2 control-label" for="entry-app-secret">{{ entry_app_secret }}</label>
+              <label class="col-sm-2 col-form-label" for="entry-app-secret">{{ entry_app_secret }}</label>
               <div class="col-sm-10">
                 <input type="text" name="payment_wechat_pay_app_secret" value="{{ payment_wechat_pay_app_secret }}" placeholder="{{ entry_app_secret }}" id="entry-app-secret" class="form-control"/>
                 {% if error_app_secret %}
@@ -43,7 +43,7 @@
               </div>
             </div>
             <div class="form-group required">
-              <label class="col-sm-2 control-label" for="entry-mch-id">{{ entry_mch_id }}</label>
+              <label class="col-sm-2 col-form-label" for="entry-mch-id">{{ entry_mch_id }}</label>
               <div class="col-sm-10">
                 <input type="text" name="payment_wechat_pay_mch_id" value="{{ payment_wechat_pay_mch_id }}" placeholder="{{ entry_mch_id }}" id="entry-mch-id" class="form-control"/>
                 {% if error_mch_id %}
@@ -52,7 +52,7 @@
               </div>
             </div>
             <div class="form-group required">
-              <label class="col-sm-2 control-label" for="entry-api-secret">{{ entry_api_secret }}</label>
+              <label class="col-sm-2 col-form-label" for="entry-api-secret">{{ entry_api_secret }}</label>
               <div class="col-sm-10">
                 <input type="text" name="payment_wechat_pay_api_secret" value="{{ payment_wechat_pay_api_secret }}" placeholder="{{ entry_api_secret }}" id="entry-api-secret" class="form-control"/>
                 {% if error_api_secret %}
@@ -61,21 +61,21 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-total">{{ entry_total }}</label>
+              <label class="col-sm-2 col-form-label" for="input-total">{{ entry_total }}</label>
               <div class="col-sm-10">
                 <input type="text" name="payment_wechat_pay_total" value="{{ payment_wechat_pay_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
                 <small class="form-text text-muted">{{ help_total }}</small>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-currency">{{ entry_currency }}</label>
+              <label class="col-sm-2 col-form-label" for="input-currency">{{ entry_currency }}</label>
               <div class="col-sm-10">
                 <input type="text" name="payment_wechat_pay_currency" value="{{ payment_wechat_pay_currency }}" placeholder="{{ entry_currency }}" id="input-currency" class="form-control"/>
                 <small class="form-text text-muted">{{ help_currency }}</small>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-completed-status">{{ entry_completed_status }}</label>
+              <label class="col-sm-2 col-form-label" for="input-completed-status">{{ entry_completed_status }}</label>
               <div class="col-sm-10">
                 <select name="payment_wechat_pay_completed_status_id" id="input-completed-status" class="form-control">
                   {% for order_status in order_statuses %}
@@ -89,7 +89,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+              <label class="col-sm-2 col-form-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
               <div class="col-sm-10">
                 <select name="payment_wechat_pay_geo_zone_id" id="input-geo-zone" class="form-control">
                   <option value="0">{{ text_all_zones }}</option>
@@ -104,7 +104,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+              <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
               <div class="col-sm-10">
                 <select name="payment_wechat_pay_status" id="input-status" class="form-control">
                   {% if payment_wechat_pay_status %}
@@ -118,7 +118,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+              <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
               <div class="col-sm-10">
                 <input type="text" name="payment_wechat_pay_sort_order" value="{{ payment_wechat_pay_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
               </div>

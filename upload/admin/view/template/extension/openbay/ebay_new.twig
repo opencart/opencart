@@ -36,7 +36,7 @@
             <div id="tab-listing-general" class="tab-pane active">
               {% if product.store_cats is not empty %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ entry_shop_category }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_shop_category }}</label>
                   <div class="col-sm-10">
                     <div class="row form-group">
                       <div class="col-sm-12">
@@ -55,7 +55,7 @@
               {% endif %}
               {% if product.popular_cats is not empty %}
                 <div class="form-group" id="category-popular-row">
-                  <label class="col-sm-2 control-label">{{ entry_category_popular }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_category_popular }}</label>
                   <div class="col-sm-10">
                     <p><input type="radio" name="popular" value="" id="popular_default" checked/><strong>{{ text_none }}</strong></p>
                     {% for cat in product.popular_cats %}
@@ -68,7 +68,7 @@
                 <input type="hidden" name="popular" value=""/>
               {% endif %}
               <div class="form-group" id="category-selections-row">
-                <label class="col-sm-2 control-label">{{ entry_category }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_category }}</label>
                 <div class="col-sm-10">
                   <div class="row form-group">
                     <div class="col-sm-12">
@@ -110,14 +110,14 @@
                 </div>
               </div>
               <div class="form-group" id="category-suggested-row" style="display: none;">
-                <label class="col-sm-2 control-label">{{ entry_category_suggested }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_category_suggested }}</label>
                 <div class="col-sm-10">
                   <div id="suggested-cats"></div>
                   <small class="form-text text-muted">{{ help_category_suggested }}</small>
                 </div>
               </div>
               <div class="form-group" id="condition-container" style="display: none;">
-                <label class="col-sm-2 control-label">{{ entry_listing_condition }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_listing_condition }}</label>
                 <div class="col-sm-10">
                   <div class="row form-group">
                     <div class="col-sm-12">
@@ -128,7 +128,7 @@
                 </div>
               </div>
               <div class="form-group" id="duration-container" style="display: none;">
-                <label class="col-sm-2 control-label">{{ entry_listing_duration }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_listing_duration }}</label>
                 <div class="col-sm-10">
                   <div class="row form-group">
                     <div class="col-sm-12">
@@ -143,25 +143,25 @@
               <div class="well" style="display: none;" id="product_identifier_container">
                 <h3>{{ text_product_identifiers }}</h3>
                 <div class="form-group" id="product_identifier_ean_container" style="display:none;">
-                  <label class="col-sm-2 control-label">{{ text_ean }}</label>
+                  <label class="col-sm-2 col-form-label">{{ text_ean }}</label>
                   <div class="col-sm-10">
                     <input type="hidden" id="identifier_ean_required" class="product_identifier_required" value="0"/> <input type="hidden" id="identifier_ean_original" value="{{ product.ean }}"/> <input type="text" name="identifier_ean" value="{{ product.ean }}" id="identifier_ean" class="form-control"/>
                   </div>
                 </div>
                 <div class="form-group" id="product_identifier_isbn_container" style="display:none;">
-                  <label class="col-sm-2 control-label">{{ text_isbn }}</label>
+                  <label class="col-sm-2 col-form-label">{{ text_isbn }}</label>
                   <div class="col-sm-10">
                     <input type="hidden" id="identifier_isbn_required" class="product_identifier_required" value="0"/> <input type="hidden" id="identifier_isbn_original" value="{{ product.isbn }}"/> <input type="text" name="identifier_isbn" value="{{ product.isbn }}" id="identifier_isbn" class="form-control"/>
                   </div>
                 </div>
                 <div class="form-group" id="product_identifier_upc_container" style="display:none;">
-                  <label class="col-sm-2 control-label">{{ text_upc }}</label>
+                  <label class="col-sm-2 col-form-label">{{ text_upc }}</label>
                   <div class="col-sm-10">
                     <input type="hidden" id="identifier_upc_required" class="product_identifier_required" value="0"/> <input type="hidden" id="identifier_upc_original" value="{{ product.upc }}"/> <input type="text" name="identifier_upc" value="{{ product.upc }}" id="identifier_upc" class="form-control"/>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ text_identifier_not_required }}</label>
+                  <label class="col-sm-2 col-form-label">{{ text_identifier_not_required }}</label>
                   <div class="col-sm-10">
                     <input type="checkbox" name="identifier_not_required" value="1" id="identifier_not_required" class="form-control"/>
                   </div>
@@ -187,7 +187,7 @@
                     </div>
                   </div>
                   <div id="compatibility-options" class="form-group" style="display:none;">
-                    <label class="col-sm-2 control-label">{{ text_compatible }}</label>
+                    <label class="col-sm-2 col-form-label">{{ text_compatible }}</label>
                     <div class="col-sm-8">
                       <div class="table-responsive">
                         <table id="compatibility-table" class="table table-striped table-bordered table-hover">
@@ -200,7 +200,7 @@
             </div>
             <div id="tab-listing-catalog" class="tab-pane">
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_search_catalog }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_search_catalog }}</label>
                 <div class="col-sm-10">
                   <div class="row">
                     <div class="col-sm-3">
@@ -211,7 +211,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_catalog }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_catalog }}</label>
                 <div class="col-sm-10">
                   <span class="help-block">
                     <input type="hidden" value="0" name="catalog_image">
@@ -223,19 +223,19 @@
             </div>
             <div id="tab-listing-description" class="tab-pane">
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_title }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_title }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="name" value="{{ product.name }}" size="85" id="name" class="form-control"/>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_subtitle }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_subtitle }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="sub_name" value="" size="85" id="sub_name" class="form-control"/>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_description }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_description }}</label>
                 <div class="col-sm-10">
                   <textarea name="description" id="description-field" data-toggle="summernote" class="form-control">{{ product.description }}</textarea>
                 </div>
@@ -244,7 +244,7 @@
             <div id="tab-listing-images" class="tab-pane">
               <div class="well well-lg">
                 <div class="row">
-                  <label class="col-sm-2 control-label">{{ entry_profile_load }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_profile_load }}</label>
                   <div class="col-sm-10">
                     <div class="input-group"><span class="input-group-addon" id="profile-theme-icon"><i class="fa fa-lg fa-file-text"></i></span> <select name="profile_theme" id="profile-theme-input" class="form-control">
                         <option value="def">{{ text_select }}</option>
@@ -257,7 +257,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_template }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_template }}</label>
                 <div class="col-sm-10">
                   <select name="template" id="template_id" class="form-control">
                     <option value="None">None</option>
@@ -270,7 +270,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_image_gallery }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_image_gallery }}</label>
                 <div class="col-sm-10">
                   <div class="row">
                     <div class="col-sm-3">
@@ -283,7 +283,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_image_thumb }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_image_thumb }}</label>
                 <div class="col-sm-10">
                   <div class="row">
                     <div class="col-sm-3">
@@ -296,13 +296,13 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_images_supersize }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_images_supersize }}</label>
                 <div class="col-sm-10">
                   <input type="hidden" name="gallery_super" value="0"/> <input type="checkbox" name="gallery_super" value="1" id="gallery_super"/>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_images_gallery_plus }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_images_gallery_plus }}</label>
                 <div class="col-sm-10">
                   <input type="hidden" name="gallery_plus" value="0"/> <input type="checkbox" name="gallery_plus" value="1" id="gallery_plus"/>
                 </div>
@@ -369,7 +369,7 @@
                 <h2>{{ text_option_images }}</h2>
                 <p>{{ text_option_description }}</p>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ text_option_images_grp }}</label>
+                  <label class="col-sm-2 col-form-label">{{ text_option_images_grp }}</label>
                   <div class="col-sm-10">
                     <select name="option_image_group" id="option_image_group" class="form-control">
                       <option value="def">{{ text_select }}</option>
@@ -380,7 +380,7 @@
                   </div>
                 </div>
                 <div class="form-group option-group-img-tr" style="display:none;">
-                  <label class="col-sm-2 control-label">{{ text_option_images_choice }}</label>
+                  <label class="col-sm-2 col-form-label">{{ text_option_images_choice }}</label>
                   <div class="col-sm-10">
                     {% for option_groups in product.option_groups %}
                       <div id="option-group-img-{{ option_group.option_id }}" class="option-group-img">
@@ -416,7 +416,7 @@
             <div id="tab-listing-price" class="tab-pane">
               <div class="well well-lg">
                 <div class="row">
-                  <label class="col-sm-2 control-label">{{ entry_profile_load }}
+                  <label class="col-sm-2 col-form-label">{{ entry_profile_load }}
                     <br/>
                     <span id="profile-generic-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
                   <div class="col-sm-10">
@@ -432,7 +432,7 @@
               </div>
               {% if addon.openstock is not empty and addon.openstock == true and product.options is not empty %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ text_stock_matrix }}</label>
+                  <label class="col-sm-2 col-form-label">{{ text_stock_matrix }}</label>
                   <div class="col-sm-10">
                     <table class="table table-striped table-bordered table-hover">
                       <thead>
@@ -481,7 +481,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ entry_tax_inc }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_tax_inc }}</label>
                   <div class="col-sm-10">
                     <div class="input-group col-xs-2">
                       <input type="text" name="tax" value="{{ product.defaults.tax }}" id="taxRate" class="form-control text-right" onkeyup="updateVarPrice();"/> <span class="input-group-addon">%</span></div>
@@ -489,14 +489,14 @@
                 </div>
               {% else %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ entry_qty }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_qty }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="qty[0]" id="qty_0" value="{{ product.quantity }}" class="form-control" onkeyup="updateReserveMessage('0', '{{ product.quantity }}');"/> <span class="help-block">{{ help_quantity_reserve }}</span> <span class="help-block">{{ column_stock_total }}: {{ product.quantity }}
                       <br/>
                   <span id="qty_reserve_0">0</span> {{ text_stock_reserved }}</span></div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ entry_price }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_price }}</label>
                   <div class="col-sm-10">
                     <div class="input-group col-xs-4">
                       <input type="text" name="price_no_tax[0]" id="taxEx" value="{{ product.price|number_format(2, '.', '') }}" class="form-control" onkeyup="updatePriceFromEx();"/> <span class="input-group-addon">{{ text_price_ex_tax }}</span></div>
@@ -506,7 +506,7 @@
                     <span class="help-block">{{ help_price_inc_tax }}</span></div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ entry_tax_inc }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_tax_inc }}</label>
                   <div class="col-sm-10">
                     <div class="input-group col-xs-2">
                       <input type="text" name="tax" value="{{ product.defaults.tax }}" id="taxRate" class="form-control text-right" onkeyup="updatePriceFromEx();"/> <span class="input-group-addon">%</span></div>
@@ -515,14 +515,14 @@
               {% endif %}
               {% if product.options is empty %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ entry_offers }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_offers }}</label>
                   <div class="col-sm-10">
                     <input type="hidden" name="bestoffer" value="0"/> <input type="checkbox" name="bestoffer" value="1" id="bestoffer"/>
                   </div>
                 </div>
               {% endif %}
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_private }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_private }}</label>
                 <div class="col-sm-10"> <span class="help-block">
                   <input type="hidden" name="private_listing" value="0"/>
                   <input type="checkbox" name="private_listing" value="1" id="private_listing"/>
@@ -533,13 +533,13 @@
             </div>
             <div id="tab-listing-payment" class="tab-pane">
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_imediate_payment }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_imediate_payment }}</label>
                 <div class="col-sm-10">
                   <input type="hidden" name="ebay_payment_immediate" value="0"/> <input type="checkbox" name="ebay_payment_immediate" value="1" id="ebay_payment_immediate"{% if product.defaults.ebay_payment_immediate == 1 %} checked{% endif %} />
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_payment }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_payment }}</label>
                 <div class="col-sm-10">
                   {% set paypal = false %}
                   {% for payment in product.payments %}
@@ -553,7 +553,7 @@
               </div>
               {% if paypal == true %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">PayPal</label>
+                  <label class="col-sm-2 col-form-label">PayPal</label>
                   <div class="col-sm-10">
                     <div class="input-group">
                       <span class="input-group-addon"><input type="checkbox" name="payments[PayPal]" value="1" {% if product.defaults.ebay_payment_types["PayPal"] == 1 %} checked="checked"{% endif %} /></span> <input type="text" class="form-control" name="paypal_email" value="{{ product.defaults.paypal_address }}" placeholder="{{ text_paypal }}"/>
@@ -562,7 +562,7 @@
                 </div>
               {% endif %}
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_payment_instruction }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_payment_instruction }}</label>
                 <div class="col-sm-10">
                   <textarea name="payment_instruction" class="form-control" rows="3" id="payment_instruction">{{ product.defaults.payment_instruction }}</textarea>
                 </div>
@@ -571,7 +571,7 @@
             <div id="tab-listing-shipping" class="tab-pane">
               <div class="well well-lg">
                 <div class="row">
-                  <label class="col-sm-2 control-label">{{ entry_profile_load }}
+                  <label class="col-sm-2 col-form-label">{{ entry_profile_load }}
                     <br/>
                     <span id="profile-shipping-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
                   <div class="col-sm-10">
@@ -586,17 +586,17 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_item_postcode }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_item_postcode }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="postcode" id="postcode" class="form-control"/> <span class="help-block">{{ text_item_postcode_help }}</span></div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_item_location }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_item_location }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="location" id="location" class="form-control"/> <span class="help-block">{{ text_item_location_help }}</span></div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_despatch_country }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_despatch_country }}</label>
                 <div class="col-sm-10">
                   <select name="country" id="country" class="form-control">
                     {% for country in setting.countries %}
@@ -605,7 +605,7 @@
                   </select> <span class="help-block">{{ text_despatch_country_help }}</span></div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_despatch_time }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_despatch_time }}</label>
                 <div class="col-sm-10">
                   <select name="dispatch_time" id="dispatch_time" class="form-control">
                     {% for dispatch_time in setting.dispatch_times %}
@@ -615,14 +615,14 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_shipping_getitfast }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_shipping_getitfast }}</label>
                 <div class="col-sm-10">
                   <input type="hidden" name="get_it_fast" value="0"/> <input type="checkbox" name="get_it_fast" value="1" id="get_it_fast"/>
                 </div>
               </div>
               {% if setting.listing_restrictions.eligible_for_pickup_dropoff == 1 %}
                 <div class="form-group" id="eligible_for_pickup_dropoff_container">
-                  <label class="col-sm-2 control-label">{{ entry_shipping_pickupdropoff }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_shipping_pickupdropoff }}</label>
                   <div class="col-sm-10">
                     <input type="hidden" name="eligible_for_pickup_dropoff" value="0"/> <input type="checkbox" name="eligible_for_pickup_dropoff" value="1" id="eligible_for_pickup_dropoff"/>
                   </div>
@@ -630,7 +630,7 @@
               {% endif %}
               {% if setting.listing_restrictions.eligible_for_pickup_instore == 1 %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ entry_shipping_pickupinstore }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_shipping_pickupinstore }}</label>
                   <div class="col-sm-10">
                     <input type="hidden" name="eligible_for_pickup_instore" value="0"/> <input type="checkbox" name="eligible_for_pickup_instore" value="1" id="eligible_for_pickup_instore"/>
                   </div>
@@ -638,7 +638,7 @@
               {% endif %}
               {% if setting.listing_restrictions.global_shipping == 1 %}
                 <div class="form-group" id="global_shipping_container">
-                  <label class="col-sm-2 control-label">{{ entry_shipping_global_shipping }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_shipping_global_shipping }}</label>
                   <div class="col-sm-10">
                     <input type="hidden" name="global_shipping" value="0"/> <input type="checkbox" name="global_shipping" value="1" id="global_shipping"/>
                   </div>
@@ -646,14 +646,14 @@
               {% endif %}
               {% if product.defaults.cod_surcharge == 1 %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ entry_shipping_cod }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_shipping_cod }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="cod_fee" id="cod_fee" class="form-control"/>
                   </div>
                 </div>
               {% endif %}
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_shipping_type_nat }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_shipping_type_nat }}</label>
                 <div class="col-sm-10">
                   <select name="data[national][shipping_type]" class="form-control" id="shipping-type-national">
                     {% if setting.shipping_types.flat == 1 %}
@@ -666,7 +666,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_shipping_promotion_discount }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_shipping_promotion_discount }}</label>
                 <div class="col-sm-10">
                   <input type="hidden" name="promotional_shipping_discount" value="0"/> <input type="checkbox" name="promotional_shipping_discount" value="1" id="promotional_shipping_discount"/>
                   <small class="form-text text-muted">{{ help_shipping_promotion_discount }}</small>
@@ -697,7 +697,7 @@
               </div>
               <div id="national-container-calculated" style="display:none;" class="shipping-national-container">
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ entry_shipping_handling_nat }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_shipping_handling_nat }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="data[national][calculated][handling_fee]" id="national-handling-fee" class="form-control"/>
                   </div>
@@ -726,14 +726,14 @@
               </div>
               <div id="national-container-freight" style="display:none;" class="shipping-national-container">
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ entry_shipping_in_desc }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_shipping_in_desc }}</label>
                   <div class="col-sm-10">
                     <input type="hidden" name="data[national][freight][in_description]" value="0"/> <input type="checkbox" name="data[national][freight][in_description]" value="1"/>
                   </div>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_shipping_type_int }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_shipping_type_int }}</label>
                 <div class="col-sm-10">
                   <select name="data[international][shipping_type]" class="form-control" id="shipping-type-international">
                     {% if setting.shipping_types.flat == 1 %}
@@ -744,7 +744,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_shipping_promotion_discount_international }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_shipping_promotion_discount_international }}</label>
                 <div class="col-sm-10">
                   <input type="hidden" name="promotional_shipping_discount_international" value="0"/> <input type="checkbox" name="promotional_shipping_discount_international" value="1" id="promotional_shipping_discount_international"/>
                   <small class="form-text text-muted">{{ help_shipping_promotion_discount_international }}</small>
@@ -775,7 +775,7 @@
               </div>
               <div id="international-container-calculated" style="display:none;" class="shipping-international-container">
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ entry_shipping_handling_int }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_shipping_handling_int }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="data[international][calculated][handling_fee]" id="international-handling-fee" class="form-control"/>
                   </div>
@@ -805,7 +805,7 @@
               <div class="well">
                 <div class="row form-group">
                   <div class="col-sm-3">
-                    <label class="control-label">{{ text_unit }}</label> <select name="package[unit]" class="form-control" id="measure-unit">
+                    <label class="col-form-label">{{ text_unit }}</label> <select name="package[unit]" class="form-control" id="measure-unit">
                       {% for measurement_types in setting.measurement_types %}
                         <option value="{{ measurement_key }}"{% if product.defaults.ebay_measurement == measurement_key %} selected{% endif %}>{{ measurement_value }}</option>
                       {% endfor %}
@@ -814,12 +814,12 @@
                   <div class="col-sm-6">
                     <div class="row">
                       <div class="col-sm-6">
-                        <label class="control-label">{{ text_weight_major }}</label>
+                        <label class="col-form-label">{{ text_weight_major }}</label>
                         <div class="input-group col-xs-12">
                           <input type="text" name="package[weight_major]" class="form-control" value="{{ product.weight_major }}"> <span class="input-group-addon" id="weight-major-text"></span></div>
                       </div>
                       <div class="col-sm-6">
-                        <label class="control-label">{{ text_weight_minor }}</label>
+                        <label class="col-form-label">{{ text_weight_minor }}</label>
                         <div class="input-group col-xs-12">
                           <input type="text" name="package[weight_minor]" class="form-control" value="{{ product.weight_minor }}"> <span class="input-group-addon" id="weight-minor-text"></span></div>
                       </div>
@@ -827,7 +827,7 @@
                   </div>
                   {% if setting.package_type is not empty %}
                     <div class="col-sm-3">
-                      <label class="control-label">{{ text_package }}</label> <select name="package[package]" class="form-control">
+                      <label class="col-form-label">{{ text_package }}</label> <select name="package[package]" class="form-control">
                         {% for package_type in setting.package_type %}
                           <option value="{{ package_type.code }}"{% if package_type.default == 1 %} selected{% endif %}>{{ package_type.description }}</option>
                         {% endfor %}
@@ -837,25 +837,25 @@
                 </div>
                 <div class="row form-group">
                   <div class="col-sm-3">
-                    <label class="control-label">{{ text_depth }}</label>
+                    <label class="col-form-label">{{ text_depth }}</label>
                     <div class="input-group col-xs-12">
                       <input type="text" name="package[depth]" class="form-control" value="{{ product.height }}"> <span class="input-group-addon size-unit-text"></span>
                     </div>
                   </div>
                   <div class="col-sm-3">
-                    <label class="control-label">{{ text_length }}</label>
+                    <label class="col-form-label">{{ text_length }}</label>
                     <div class="input-group col-xs-12">
                       <input type="text" name="package[length]" class="form-control" value="{{ product.length }}"> <span class="input-group-addon size-unit-text"></span>
                     </div>
                   </div>
                   <div class="col-sm-3">
-                    <label class="control-label">{{ text_width }}</label>
+                    <label class="col-form-label">{{ text_width }}</label>
                     <div class="input-group col-xs-12">
                       <input type="text" name="package[width]" class="form-control" value="{{ product.width }}"> <span class="input-group-addon size-unit-text"></span>
                     </div>
                   </div>
                   <div class="col-sm-3">
-                    <label class="control-label">{{ text_shape }}</label> <select name="package[irregular]" class="form-control">
+                    <label class="col-form-label">{{ text_shape }}</label> <select name="package[irregular]" class="form-control">
                       <option value="0">{{ text_no }}</option>
                       <option value="1">{{ text_yes }}</option>
                     </select>
@@ -866,7 +866,7 @@
             <div id="tab-listing-returns" class="tab-pane">
               <div class="well well-lg">
                 <div class="row">
-                  <label class="col-sm-2 control-label">{{ entry_profile_load }}
+                  <label class="col-sm-2 col-form-label">{{ entry_profile_load }}
                     <br/>
                     <span id="profile-returns-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span> </label>
                   <div class="col-sm-10">
@@ -882,7 +882,7 @@
               </div>
               {% if setting.returns.accepted is not empty %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ text_return_accepted }}</label>
+                  <label class="col-sm-2 col-form-label">{{ text_return_accepted }}</label>
                   <div class="col-sm-10">
                     <select name="returns_accepted" id="returns_accepted" class="form-control">
                       {% for returns_option in setting.returns.accepted %}
@@ -894,7 +894,7 @@
               {% endif %}
               {% if setting.returns.within is not empty %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ text_return_days }}</label>
+                  <label class="col-sm-2 col-form-label">{{ text_return_days }}</label>
                   <div class="col-sm-10">
                     <select name="returns_within" id="returns_within" class="form-control">
                       {% for returns_option in setting.returns.within %}
@@ -906,7 +906,7 @@
               {% endif %}
               {% if setting.returns.paidby is not empty %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ text_return_scosts }}</label>
+                  <label class="col-sm-2 col-form-label">{{ text_return_scosts }}</label>
                   <div class="col-sm-10">
                     <select name="returns_shipping" id="returns_shipping" class="form-control">
                       {% for returns_option in setting.returns.paidby %}
@@ -918,7 +918,7 @@
               {% endif %}
               {% if setting.returns.refund is not empty %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ text_return_type }}</label>
+                  <label class="col-sm-2 col-form-label">{{ text_return_type }}</label>
                   <div class="col-sm-10">
                     <select name="returns_option" id="returns_option" class="form-control">
                       {% for returns_option in setting.returns.refund %}
@@ -930,7 +930,7 @@
               {% endif %}
               {% if setting.returns.description == true %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ text_return_policy }}</label>
+                  <label class="col-sm-2 col-form-label">{{ text_return_policy }}</label>
                   <div class="col-sm-10">
                     <textarea name="return_policy" class="form-control" rows="3" id="return_policy"></textarea>
                   </div>
@@ -938,7 +938,7 @@
               {% endif %}
               {% if setting.returns.restocking_fee is not empty %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ text_return_restock }}</label>
+                  <label class="col-sm-2 col-form-label">{{ text_return_restock }}</label>
                   <div class="col-sm-10">
                     <select name="returns_restocking_fee" id="returns_restocking_fee" class="form-control">
                       {% for returns_option in setting.returns.restocking_fee %}
@@ -1250,7 +1250,7 @@ function getCategoryFeatures(cat) {
 
 				if (data.data.vrm_identifier === true) {
 					html_inj = '<div class="form-group" id="vrm-input-container">';
-					html_inj += '<label class="col-sm-2 control-label">{{ entry_vrm }}</label>';
+					html_inj += '<label class="col-sm-2 col-form-label">{{ entry_vrm }}</label>';
 					html_inj += '<div class="col-sm-10">';
 					html_inj += '<input class="form-control" type="text" size="85" placeholder="{{ entry_vrm }}" name="vrm">';
 					html_inj += '</div>';
@@ -1260,7 +1260,7 @@ function getCategoryFeatures(cat) {
 
 				if (data.data.vin_identifier === true) {
 					html_inj = '<div class="form-group" id="vin-input-container">';
-					html_inj += '<label class="col-sm-2 control-label">{{ entry_vin }}</label>';
+					html_inj += '<label class="col-sm-2 col-form-label">{{ entry_vin }}</label>';
 					html_inj += '<div class="col-sm-10">';
 					html_inj += '<input class="form-control" type="text" size="85" placeholder="{{ entry_vin }}" name="vrm">';
 					html_inj += '</div>';
@@ -1610,7 +1610,7 @@ function itemFeatures(category_id) {
 					$.each(data.data, function(option_specific_key, option_specific_value) {
 						html_inj2 = '';
 						html_inj += '<div class="form-group">';
-						html_inj += '<label class="col-sm-2 control-label">' + option_specific_value.name + '</label>';
+						html_inj += '<label class="col-sm-2 col-form-label">' + option_specific_value.name + '</label>';
 						html_inj += '<div class="col-sm-10">';
 						if (("options" in option_specific_value) && (option_specific_value.validation.max_values == 1)) {
 							// matched_value_key in option_specific_value
@@ -1821,7 +1821,7 @@ function addShipping(id, type) {
 			html += '<div class="well" id="' + id + '_' + type + '_' + count + '">';
 			html += '<div class="row form-group">';
 			html += '<div class="col-sm-1 text-right">';
-			html += '<label class="control-label">{{ text_shipping_service }}<label>';
+			html += '<label class="col-form-label">{{ text_shipping_service }}<label>';
 			html += '</div>';
 			html += '<div class="col-sm-11">';
 			html += '<select name="data[' + id + '][' + type + '][service_id][' + count + ']" class="form-control">';
@@ -1834,7 +1834,7 @@ function addShipping(id, type) {
 			if (id == 'international') {
 				html += '<div class="row form-group">';
 				html += '<div class="col-sm-1 text-right">';
-				html += '<label class="control-label">{{ text_shipping_zones }}</label>';
+				html += '<label class="col-form-label">{{ text_shipping_zones }}</label>';
 				html += '</div>';
 				html += '<div class="col-sm-10">';
 				html += '<label class="checkbox-inline">';
@@ -1853,13 +1853,13 @@ function addShipping(id, type) {
 			html += '<div class="row form-group">';
 			if (type != 'calculated') {
 				html += '<div class="col-sm-1 text-right">';
-				html += '<label class="control-label">{{ text_shipping_first }}</label>';
+				html += '<label class="col-form-label">{{ text_shipping_first }}</label>';
 				html += '</div>';
 				html += '<div class="col-sm-3">';
 				html += '<input type="text" name="data[' + id + '][' + type + '][price][' + count + ']" class="form-control" value="0.00" class="form-control" />';
 				html += '</div>';
 				html += '<div class="col-sm-2 text-right">';
-				html += '<label class="control-label">{{ text_shipping_add }}</label>';
+				html += '<label class="col-form-label">{{ text_shipping_add }}</label>';
 				html += '</div>';
 				html += '<div class="col-sm-3">';
 				html += '<input type="text" name="data[' + id + '][' + type + '][price_additional][' + count + ']" class="form-control" value="0.00" />';

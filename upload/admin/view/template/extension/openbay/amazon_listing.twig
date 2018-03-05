@@ -83,18 +83,18 @@
             <div class="tab-content">
               <div class="tab-pane active" id="required-info">
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="quantity-display">{{ entry_quantity }}</label>
+                  <label class="col-sm-2 col-form-label" for="quantity-display">{{ entry_quantity }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="quantity_display" id="quantity-display" value="{{ quantity }}" class="form-control" disabled/>
                   </div>
                 </div>
                 <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="sku">{{ entry_sku }}</label>
+                  <label class="col-sm-2 col-form-label" for="sku">{{ entry_sku }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="sku" value="{{ sku }}" placeholder="{{ entry_sku }}" id="sku" class="form-control"/> <span class="help-block">{{ help_sku }}</span></div>
                 </div>
                 <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="condition">{{ entry_condition }}</label>
+                  <label class="col-sm-2 col-form-label" for="condition">{{ entry_condition }}</label>
                   <div class="col-sm-10">
                     <select name="condition" id="condition" class="form-control">
                       {% for value, title in conditions %}
@@ -111,7 +111,7 @@
                   <div class="col-sm-2">
                     <div class="row">
                       <div class="col-sm-12 text-right form-group">
-                        <label class="control-label" for="price">{{ entry_price }}</label>
+                        <label class="col-form-label" for="price">{{ entry_price }}</label>
                       </div>
                     </div>
                     <div class="row">
@@ -125,18 +125,18 @@
               </div>
               <div class="tab-pane" id="additional-info">
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="condition_note">{{ entry_condition_note }}</label>
+                  <label class="col-sm-2 col-form-label" for="condition_note">{{ entry_condition_note }}</label>
                   <div class="col-sm-10">
                     <textarea name="condition_note" class="form-control" rows="3" id="condition_note" placeholder="{{ text_placeholder_condition }}"></textarea>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="sale_price">{{ entry_sale_price }}</label>
+                  <label class="col-sm-2 col-form-label" for="sale_price">{{ entry_sale_price }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="sale_price" placeholder="{{ entry_sale_price }}" id="sale_price" class="form-control"/> <span class="help-block">{{ help_sale_price }}</span></div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="sale_price">{{ entry_sale_date }}</label>
+                  <label class="col-sm-2 col-form-label" for="sale_price">{{ entry_sale_date }}</label>
                   <div class="col-sm-3">
                     <div class="input-group date">
                       <input type="text" class="form-control" id="sale_from" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" placeholder="{{ entry_from }}" name="sale_from">
@@ -155,7 +155,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="start_selling">{{ entry_start_selling }}</label>
+                  <label class="col-sm-2 col-form-label" for="start_selling">{{ entry_start_selling }}</label>
                   <div class="col-sm-3">
                     <div class="input-group date">
                       <input type="text" class="form-control" id="start_selling" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" placeholder="{{ entry_start_selling }}" name="start_selling">
@@ -166,7 +166,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-date-restock">{{ entry_restock_date }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-date-restock">{{ entry_restock_date }}</label>
                   <div class="col-sm-3">
                     <div class="input-group date">
                       <input type="text" class="form-control" id="input-date-restock" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" placeholder="{{ entry_restock_date }}" name="restock_date">

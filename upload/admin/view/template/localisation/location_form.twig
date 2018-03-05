@@ -24,7 +24,7 @@
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-location">
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
+            <label class="col-sm-2 col-form-label" for="input-name">{{ entry_name }}</label>
             <div class="col-sm-10">
               <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
               {% if error_name %}
@@ -33,7 +33,7 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-address">{{ entry_address }}</label>
+            <label class="col-sm-2 col-form-label" for="input-address">{{ entry_address }}</label>
             <div class="col-sm-10">
               <textarea type="text" name="address" placeholder="{{ entry_address }}" rows="5" id="input-address" class="form-control">{{ address }}</textarea>
               {% if error_address %}
@@ -42,14 +42,14 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-geocode">{{ entry_geocode }}</label>
+            <label class="col-sm-2 col-form-label" for="input-geocode">{{ entry_geocode }}</label>
             <div class="col-sm-10">
               <input type="text" name="geocode" value="{{ geocode }}" placeholder="{{ entry_geocode }}" id="input-geocode" class="form-control"/>
               <small class="form-text text-muted">{{ help_geocode }}</small>
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-telephone">{{ entry_telephone }}</label>
+            <label class="col-sm-2 col-form-label" for="input-telephone">{{ entry_telephone }}</label>
             <div class="col-sm-10">
               <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
               {% if error_telephone %}
@@ -58,25 +58,25 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-telephone">{{ entry_fax }}</label>
+            <label class="col-sm-2 col-form-label" for="input-telephone">{{ entry_fax }}</label>
             <div class="col-sm-10">
               <input type="text" name="fax" value="{{ fax }}" placeholder="{{ entry_fax }}" id="input-fax" class="form-control"/>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-image">{{ entry_image }}</label>
+            <label class="col-sm-2 col-form-label" for="input-image">{{ entry_image }}</label>
             <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ thumb }}" alt="" title="" data-placeholder="{{ placeholder }}"/></a> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-open">{{ entry_open }}</label>
+            <label class="col-sm-2 col-form-label" for="input-open">{{ entry_open }}</label>
             <div class="col-sm-10">
               <textarea name="open" rows="5" placeholder="{{ entry_open }}" id="input-open" class="form-control">{{ open }}</textarea>
               <small class="form-text text-muted">{{ help_open }}</small>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-comment">{{ entry_comment }}</label>
+            <label class="col-sm-2 col-form-label" for="input-comment">{{ entry_comment }}</label>
             <div class="col-sm-10">
               <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
               <small class="form-text text-muted">{{ help_comment }}</small>

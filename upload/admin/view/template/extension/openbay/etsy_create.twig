@@ -36,7 +36,7 @@
                   <div class="row">
                     <div class="col-sm-12">
                       <div class="form-group required">
-                        <label class="col-sm-2 control-label">{{ entry_category }}</label>
+                        <label class="col-sm-2 col-form-label">{{ entry_category }}</label>
                         <div class="col-sm-10">
                           <div id="category-selected" class="alert alert-success" style="display:none;"><i class="fa fa-check fa-lg" style="color:green"></i> {{ text_category_selected }} <a class="label label-info" id="reset-category">{{ button_edit }}</a></div>
                           <span id="category-loading"><i class="fa fa-cog fa-lg fa-spin"></i></span> <span id="category-parents"></span>
@@ -46,26 +46,26 @@
                     </div>
                   </div>
                   <div class="form-group required">
-                    <label class="col-sm-2 control-label" for="input-title">{{ entry_title }}</label>
+                    <label class="col-sm-2 col-form-label" for="input-title">{{ entry_title }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="title" value="{{ product.name }}" placeholder="{{ entry_title }}" id="input-title" class="form-control"/>
                     </div>
                   </div>
                   <div class="form-group required">
-                    <label class="col-sm-2 control-label" for="input-description">{{ entry_description }}</label>
+                    <label class="col-sm-2 col-form-label" for="input-description">{{ entry_description }}</label>
                     <div class="col-sm-10">
                       <textarea name="description" placeholder="{{ entry_description }}" id="input-description" class="form-control">{{ product.description_raw }}</textarea>
                       <small class="form-text text-muted">{{ help_description }}</small>
                     </div>
                   </div>
                   <div class="form-group required">
-                    <label class="col-sm-2 control-label" for="input-price">{{ entry_price }}</label>
+                    <label class="col-sm-2 col-form-label" for="input-price">{{ entry_price }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="price" value="{{ product.price }}" placeholder="{{ entry_price }}" id="input-price" class="form-control"/>
                     </div>
                   </div>
                   <div class="form-group required">
-                    <label class="col-sm-2 control-label" for="input-is-supply">{{ entry_is_supply }}</label>
+                    <label class="col-sm-2 col-form-label" for="input-is-supply">{{ entry_is_supply }}</label>
                     <div class="col-sm-10">
                       <select name="is_supply" id="input-is-supply" class="form-control">
                         <option value="false" selected="selected">{{ text_no }}</option>
@@ -74,7 +74,7 @@
                     </div>
                   </div>
                   <div class="form-group required">
-                    <label class="col-sm-2 control-label" for="input-who-made">{{ entry_who_made }}</label>
+                    <label class="col-sm-2 col-form-label" for="input-who-made">{{ entry_who_made }}</label>
                     <div class="col-sm-10">
                       <select name="who_made" id="input-who-made" class="form-control">
                         {% for who_made in setting.who_made %}
@@ -84,7 +84,7 @@
                     </div>
                   </div>
                   <div class="form-group required">
-                    <label class="col-sm-2 control-label" for="input-when-made">{{ entry_when_made }}</label>
+                    <label class="col-sm-2 col-form-label" for="input-when-made">{{ entry_when_made }}</label>
                     <div class="col-sm-10">
                       <select name="when_made" id="input-when-made" class="form-control">
                         {% for when_made in setting.when_made %}
@@ -94,7 +94,7 @@
                     </div>
                   </div>
                   <div class="form-group required">
-                    <label class="col-sm-2 control-label" for="input-state">{{ entry_state }}</label>
+                    <label class="col-sm-2 col-form-label" for="input-state">{{ entry_state }}</label>
                     <div class="col-sm-10">
                       <select name="state" id="input-state" class="form-control">
                         {% for state in setting.state %}
@@ -104,7 +104,7 @@
                     </div>
                   </div>
                   <div class="form-group required">
-                    <label class="col-sm-2 control-label" for="input-shipping">{{ entry_shipping }} <span id="shipping-loading" style="display: none;"><i class="fa fa-cog fa-lg fa-spin"></i></span></label>
+                    <label class="col-sm-2 col-form-label" for="input-shipping">{{ entry_shipping }} <span id="shipping-loading" style="display: none;"><i class="fa fa-cog fa-lg fa-spin"></i></span></label>
                     <div class="col-sm-10">
                       <select name="shipping_template_id" id="input-shipping" class="form-control" disabled="disabled"> </select>
                     </div>
@@ -112,25 +112,25 @@
                 </div>
                 <div id="tab-listing-additional" class="tab-pane">
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-shop-section">{{ entry_shop }} <span id="shop-section-loading" style="display: none;"><i class="fa fa-cog fa-lg fa-spin"></i></span></label>
+                    <label class="col-sm-2 col-form-label" for="input-shop-section">{{ entry_shop }} <span id="shop-section-loading" style="display: none;"><i class="fa fa-cog fa-lg fa-spin"></i></span></label>
                     <div class="col-sm-10">
                       <select name="shop_section_id" id="input-shop-section" class="form-control" disabled="disabled"> </select>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-style-1">{{ entry_style }}</label>
+                    <label class="col-sm-2 col-form-label" for="input-style-1">{{ entry_style }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="style_1" value="" placeholder="{{ entry_style }}" id="input-style-1" class="form-control"/>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-style-2">{{ entry_style_2 }}</label>
+                    <label class="col-sm-2 col-form-label" for="input-style-2">{{ entry_style_2 }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="style_2" value="" placeholder="{{ entry_style_2 }}" id="input-style-2" class="form-control"/>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-non-taxable">{{ entry_non_taxable }}</label>
+                    <label class="col-sm-2 col-form-label" for="input-non-taxable">{{ entry_non_taxable }}</label>
                     <div class="col-sm-10">
                       <select name="non_taxable" id="input-non-taxable" class="form-control">
                         <option value="0" selected="selected">{{ text_no }}</option>
@@ -139,7 +139,7 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-recipient">{{ entry_recipient }}</label>
+                    <label class="col-sm-2 col-form-label" for="input-recipient">{{ entry_recipient }}</label>
                     <div class="col-sm-10">
                       <select name="recipient" id="input-recipient" class="form-control">
                         {% for recipient in setting.recipient %}
@@ -149,7 +149,7 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-occasion">{{ entry_occasion }}</label>
+                    <label class="col-sm-2 col-form-label" for="input-occasion">{{ entry_occasion }}</label>
                     <div class="col-sm-10">
                       <select name="occasion" id="input-occasion" class="form-control">
                         {% for occasion in setting.occasion %}
@@ -159,19 +159,19 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-processing-min">{{ entry_processing_min }}</label>
+                    <label class="col-sm-2 col-form-label" for="input-processing-min">{{ entry_processing_min }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="processing_min" value="" placeholder="{{ entry_processing_min }}" id="input-processing-min" class="form-control"/>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-processing-max">{{ entry_processing_max }}</label>
+                    <label class="col-sm-2 col-form-label" for="input-processing-max">{{ entry_processing_max }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="processing_max" value="" placeholder="{{ entry_processing_max }}" id="input-processing-max" class="form-control"/>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-material">{{ entry_materials }}</label>
+                    <label class="col-sm-2 col-form-label" for="input-material">{{ entry_materials }}</label>
                     <div class="col-sm-10">
                       <div class="row">
                         <div class="col-sm-4">
@@ -192,7 +192,7 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-tag">{{ entry_tags }}</label>
+                    <label class="col-sm-2 col-form-label" for="input-tag">{{ entry_tags }}</label>
                     <div class="col-sm-10">
                       <div class="row">
                         <div class="col-sm-4">
@@ -215,7 +215,7 @@
                 </div>
                 <div id="tab-images" class="tab-pane">
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-image">{{ entry_image }}</label>
+                    <label class="col-sm-2 col-form-label" for="input-image">{{ entry_image }}</label>
                     <div class="col-sm-10"><a id="thumb-image" class="img-thumbnail"><img src="{{ product.thumb }}" alt="" title=""/></a> <input type="hidden" name="image" value="{{ product.image_url }}" id="input-image"/>
                     </div>
                   </div>

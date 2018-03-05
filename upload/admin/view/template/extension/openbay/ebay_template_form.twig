@@ -25,13 +25,13 @@
         <form action="{{ btn_save }}" method="post" enctype="multipart/form-data" id="form">
           <input type="hidden" name="template_id" value="{{ template_id }}"/>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="name">{{ entry_template_name }}</label>
+            <label class="col-sm-2 col-form-label" for="name">{{ entry_template_name }}</label>
             <div class="col-sm-10">
               <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_template_name }}" id="name" class="form-control"/>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="code">{{ entry_template_html }}</label>
+            <label class="col-sm-2 col-form-label" for="code">{{ entry_template_html }}</label>
             <div class="col-sm-10">
               <textarea name="html" cols="100" rows="100" placeholder="{{ entry_template_html }}" id="code" class="form-control">{{ html }}</textarea>
             </div>

@@ -29,19 +29,19 @@
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ text_profile_default }}</label>
+                <label class="col-sm-2 col-form-label">{{ text_profile_default }}</label>
                 <div class="col-sm-10">
                   <input type="hidden" name="default" value="0"/> <input type="checkbox" name="default" value="1"{% if default == 1 %} checked="checked"{% endif %} />
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="name">{{ text_profile_name }}</label>
+                <label class="col-sm-2 col-form-label" for="name">{{ text_profile_name }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="name" value="{{ name }}" placeholder="{{ text_profile_name }}" id="name" class="form-control"/>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="description">{{ text_profile_desc }}</label>
+                <label class="col-sm-2 col-form-label" for="description">{{ text_profile_desc }}</label>
                 <div class="col-sm-10">
                   <textarea name="description" class="form-control" rows="3" id="description">{{ description }}</textarea>
                 </div>
@@ -50,7 +50,7 @@
             <div class="tab-pane" id="tab-returns">
               {% if setting.returns.accepted is not empty %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ text_returns_accept }}</label>
+                  <label class="col-sm-2 col-form-label">{{ text_returns_accept }}</label>
                   <div class="col-sm-10">
                     <select name="data[returns_accepted]" class="form-control">
                       {% for return_accepted in setting.returns.accepted %}
@@ -65,7 +65,7 @@
 
               {% if setting.returns.within is not empty %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ text_returns_days }}</label>
+                  <label class="col-sm-2 col-form-label">{{ text_returns_days }}</label>
                   <div class="col-sm-10">
                     <select name="data[returns_within]" class="form-control">
                       {% for return_within in setting.returns.within %}
@@ -80,7 +80,7 @@
 
               {% if setting.returns.paidby is not empty %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ text_returns_costs }}</label>
+                  <label class="col-sm-2 col-form-label">{{ text_returns_costs }}</label>
                   <div class="col-sm-10">
                     <select name="data[returns_shipping]" class="form-control">
                       {% for return_paidby in setting.returns.paidby %}
@@ -95,7 +95,7 @@
 
               {% if setting.returns.refund is not empty %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ text_returns_type }}</label>
+                  <label class="col-sm-2 col-form-label">{{ text_returns_type }}</label>
                   <div class="col-sm-10">
                     <select name="data[returns_option]" class="form-control">
                       {% for return_refund in setting.returns.refund %}
@@ -110,7 +110,7 @@
 
               {% if setting.returns.description == true %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ text_returns_inst }}</label>
+                  <label class="col-sm-2 col-form-label">{{ text_returns_inst }}</label>
                   <div class="col-sm-10">
                     <textarea name="data[returns_policy]" class="form-control" rows="3" maxlength="5000">{{ data.returns_policy }}</textarea>
                   </div>
@@ -121,7 +121,7 @@
 
               {% if setting.returns.restocking_fee is not empty %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ text_returns_restock }}</label>
+                  <label class="col-sm-2 col-form-label">{{ text_returns_restock }}</label>
                   <div class="col-sm-10">
                     <select name="data[returns_restocking_fee]" class="form-control">
                       {% for return_restocking_fee in setting.returns.restocking_fee %}

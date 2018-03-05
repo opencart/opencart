@@ -31,13 +31,13 @@
           <div class="card-header"><i class="fa fa-filter"></i> {{ text_filter }}</div>
           <div class="card-body">
             <div class="form-group">
-              <label class="control-label" for="input-order-id">{{ entry_order_id }}</label> <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
+              <label class="col-form-label" for="input-order-id">{{ entry_order_id }}</label> <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-customer">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
+              <label class="col-form-label" for="input-customer">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-order-status">{{ entry_order_status }}</label> <select name="filter_order_status_id" id="input-order-status" class="form-control">
+              <label class="col-form-label" for="input-order-status">{{ entry_order_status }}</label> <select name="filter_order_status_id" id="input-order-status" class="form-control">
                 <option value=""></option>
 
                 {% if filter_order_status_id == '0' %}
@@ -64,10 +64,10 @@
               </select>
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-total">{{ entry_total }}</label> <input type="text" name="filter_total" value="{{ filter_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
+              <label class="col-form-label" for="input-total">{{ entry_total }}</label> <input type="text" name="filter_total" value="{{ filter_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-date-added">{{ entry_date_added }}</label>
+              <label class="col-form-label" for="input-date-added">{{ entry_date_added }}</label>
               <div class="input-group date">
                 <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-added" class="form-control"/>
                 <div class="input-group-btn">
@@ -76,7 +76,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-date-modified">{{ entry_date_modified }}</label>
+              <label class="col-form-label" for="input-date-modified">{{ entry_date_modified }}</label>
               <div class="input-group date">
                 <input type="text" name="filter_date_modified" value="{{ filter_date_modified }}" placeholder="{{ entry_date_modified }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-modified" class="form-control"/>
                 <div class="input-group-btn">

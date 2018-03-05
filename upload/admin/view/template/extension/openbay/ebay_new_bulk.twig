@@ -78,25 +78,25 @@
                                         <div class="well">
                                           <div class="row">
                                             <div class="form-group" id="product_identifier_ean_container_{{ i }}" style="display:none;">
-                                              <label class="col-sm-2 control-label">{{ text_ean }}</label>
+                                              <label class="col-sm-2 col-form-label">{{ text_ean }}</label>
                                               <div class="col-sm-10">
                                                 <input type="hidden" id="identifier_ean_required_{{ i }}" class="product_identifier_required_{{ i }}" value="0"/> <input type="hidden" id="identifier_ean_original_{{ i }}" value="{{ product.ean }}"/> <input type="text" name="identifier_ean" value="{{ product.ean }}" id="identifier_ean_{{ i }}" class="form-control openbay_data_{{ i }}"/>
                                               </div>
                                             </div>
                                             <div class="form-group" id="product_identifier_isbn_container_{{ i }}" style="display:none;">
-                                              <label class="col-sm-2 control-label">{{ text_isbn }}</label>
+                                              <label class="col-sm-2 col-form-label">{{ text_isbn }}</label>
                                               <div class="col-sm-10">
                                                 <input type="hidden" id="identifier_isbn_required_{{ i }}" class="product_identifier_required_{{ i }}" value="0"/> <input type="hidden" id="identifier_isbn_original_{{ i }}" value="{{ product.isbn }}"/> <input type="text" name="identifier_isbn" value="{{ product.isbn }}" id="identifier_isbn_{{ i }}" class="form-control openbay_data_{{ i }}"/>
                                               </div>
                                             </div>
                                             <div class="form-group" id="product_identifier_upc_container_{{ i }}" style="display:none;">
-                                              <label class="col-sm-2 control-label">{{ text_upc }}</label>
+                                              <label class="col-sm-2 col-form-label">{{ text_upc }}</label>
                                               <div class="col-sm-10">
                                                 <input type="hidden" id="identifier_upc_required_{{ i }}" class="product_identifier_required" value="0"/> <input type="hidden" id="identifier_upc_original_{{ i }}" value="{{ product.upc }}"/> <input type="text" name="identifier_upc" value="{{ product.upc }}" id="identifier_upc_{{ i }}" class="form-control openbay_data_{{ i }}"/>
                                               </div>
                                             </div>
                                             <div class="form-group">
-                                              <label class="col-sm-2 control-label">{{ text_identifier_not_required }}</label>
+                                              <label class="col-sm-2 col-form-label">{{ text_identifier_not_required }}</label>
                                               <div class="col-sm-10">
                                                 <input type="checkbox" name="identifier_not_required" value="1" id="identifier_not_required_{{ i }}" class="form-control" onclick="identifierNotRequired({{ i }});"/>
                                               </div>
@@ -129,7 +129,7 @@
                                         <div class="well">
                                           <div class="row">
                                             <div class="form-group">
-                                              <label class="col-sm-2 control-label">{{ text_suggested }}</label>
+                                              <label class="col-sm-2 col-form-label">{{ text_suggested }}</label>
                                               <div class="col-sm-10">
                                                 <div class="alert alert-info" id="loadingSuggestedCat_{{ i }}"><i class="fa fa-cog fa-lg fa-spin"></i> {{ text_category }}</div>
                                                 <div id="suggestedCat_{{ i }}"></div>
@@ -139,7 +139,7 @@
                                           </div>
                                           <div class="row">
                                             <div class="form-group" id="cSelections_{{ i }}" style="display:none;">
-                                              <label class="col-sm-2 control-label">{{ text_category_choose }}</label>
+                                              <label class="col-sm-2 col-form-label">{{ text_category_choose }}</label>
                                               <div class="col-sm-10">
                                                 <div class="alert alert-info" id="imageLoading_{{ i }}"><i class="fa fa-cog fa-lg fa-spin"></i> {{ text_loading_categories }}</div>
                                                 <div class="row form-group">
@@ -201,7 +201,7 @@
                                         <div class="well">
                                           <div class="row">
                                             <div class="form-group">
-                                              <label class="col-sm-2 control-label">{{ text_search_term }}</label>
+                                              <label class="col-sm-2 col-form-label">{{ text_search_term }}</label>
                                               <div class="col-sm-10">
                                                 <input type="text" name="catalog_search" id="catalog_search_{{ i }}" value="" class="form-control"/>
                                               </div>
@@ -238,7 +238,7 @@
                                       <div class="card-body">
                                         <div class="well">
                                           <div class="form-group">
-                                            <label class="col-sm-2 control-label">{{ text_profile_theme }}</label>
+                                            <label class="col-sm-2 col-form-label">{{ text_profile_theme }}</label>
                                             <div class="col-sm-10">
                                               <select name="theme_profile" class="openbay_data_{{ i }} form-control">
                                                 {% for profile in default.profiles_theme %}
@@ -248,7 +248,7 @@
                                             </div>
                                           </div>
                                           <div class="form-group">
-                                            <label class="col-sm-2 control-label">{{ text_profile_shipping }}</label>
+                                            <label class="col-sm-2 col-form-label">{{ text_profile_shipping }}</label>
                                             <div class="col-sm-10">
                                               <select name="shipping_profile" class="openbay_data_{{ i }} form-control">
                                                 {% for profile in default.profiles_shipping %}
@@ -258,7 +258,7 @@
                                             </div>
                                           </div>
                                           <div class="form-group">
-                                            <label class="col-sm-2 control-label">{{ text_profile_generic }}</label>
+                                            <label class="col-sm-2 col-form-label">{{ text_profile_generic }}</label>
                                             <div class="col-sm-10">
                                               <select name="generic_profile" id="generic_profile_{{ i }}" class="openbay_data_{{ i }} form-control" onchange="genericProfileChange({{ i }});">
                                                 {% for profile in default.profiles_generic %}
@@ -268,7 +268,7 @@
                                             </div>
                                           </div>
                                           <div class="form-group">
-                                            <label class="col-sm-2 control-label">{{ text_profile_returns }}</label>
+                                            <label class="col-sm-2 col-form-label">{{ text_profile_returns }}</label>
                                             <div class="col-sm-10">
                                               <select name="return_profile" class="openbay_data_{{ i }} form-control">
                                                 {% for profile in default.profiles_returns %}
@@ -288,13 +288,13 @@
                         </div>
                         <div class="col-sm-10">
                           <div class="form-group">
-                            <label class="col-sm-2 control-label">{{ text_title }}</label>
+                            <label class="col-sm-2 col-form-label">{{ text_title }}</label>
                             <div class="col-sm-10">
                               <input type="text" name="title" class="openbay_data_{{ i }} form-control" value="{{ product.name }}" id="title_{{ i }}"/>
                             </div>
                           </div>
                           <div class="form-group">
-                            <label class="col-sm-2 control-label">{{ text_price }}</label>
+                            <label class="col-sm-2 col-form-label">{{ text_price }}</label>
                             <div class="col-sm-10">
                               {% set price_new = product.price * ((default.defaults.tax / 100) + 1) %}
                               <input id="price_{{ i }}" type="text" name="price" class="openbay_data_{{ i }} form-control" value="{{ price_new|number_format(2, '.', '') }}"/>
@@ -302,14 +302,14 @@
                           </div>
                           <div class="alert alert-info" id="conditionLoading_{{ i }}"><i class="fa fa-cog fa-lg fa-spin"></i> {{ text_loading_condition }}</div>
                           <div class="form-group" id="conditionContainer_{{ i }}" style="display:none;">
-                            <label class="col-sm-2 control-label">{{ entry_condition }}</label>
+                            <label class="col-sm-2 col-form-label">{{ entry_condition }}</label>
                             <div class="col-sm-10">
                               <select name="condition" class="openbay_data_{{ i }} form-control" id="conditionRow_{{ i }}"></select>
                             </div>
                           </div>
                           <div class="alert alert-info" id="durationLoading_{{ i }}"><i class="fa fa-cog fa-lg fa-spin"></i> {{ text_loading_duration }}</div>
                           <div class="form-group" id="durationContainer_{{ i }}" style="display:none;">
-                            <label class="col-sm-2 control-label">{{ text_duration }}</label>
+                            <label class="col-sm-2 col-form-label">{{ text_duration }}</label>
                             <div class="col-sm-10">
                               <select name="duration" class="openbay_data_{{ i }} form-control" id="durationRow_{{ i }}"></select>
                             </div>
@@ -685,7 +685,7 @@
 					  $.each(data.data, function(option_specific_key, option_specific_value) {
 						  html_inj2 = '';
 						  html_inj += '<div class="row form-group">';
-						  html_inj += '<label class="col-sm-2 control-label">' + option_specific_value.name + '</label>';
+						  html_inj += '<label class="col-sm-2 col-form-label">' + option_specific_value.name + '</label>';
 						  html_inj += '<div class="col-sm-10">';
 
 						  if (("options" in option_specific_value) && (option_specific_value.validation.max_values == 1)) {

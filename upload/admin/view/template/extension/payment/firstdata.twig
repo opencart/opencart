@@ -32,7 +32,7 @@
           <div class="tab-content">
             <div class="tab-pane active" id="tab-account">
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
+                <label class="col-sm-2 col-form-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_firstdata_merchant_id" value="{{ payment_firstdata_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="input-merchant-id" class="form-control"/>
                   {% if error_merchant_id %}
@@ -41,7 +41,7 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-secret">{{ entry_secret }}</label>
+                <label class="col-sm-2 col-form-label" for="input-secret">{{ entry_secret }}</label>
                 <div class="col-sm-10">
                   <input type="password" name="payment_firstdata_secret" value="{{ payment_firstdata_secret }}" placeholder="{{ entry_secret }}" id="input-secret" class="form-control"/>
                   {% if error_secret %}
@@ -50,7 +50,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-live-demo">{{ entry_live_demo }}</label>
+                <label class="col-sm-2 col-form-label" for="input-live-demo">{{ entry_live_demo }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_live_demo" id="input-live-demo" class="form-control">
                     {% if payment_firstdata_live_demo %}
@@ -64,7 +64,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+                <label class="col-sm-2 col-form-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_geo_zone_id" id="input-geo-zone" class="form-control">
                     <option value="0">{{ text_all_zones }}</option>
@@ -79,7 +79,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-debug">{{ entry_debug }}</label>
+                <label class="col-sm-2 col-form-label" for="input-debug">{{ entry_debug }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_debug" id="input-debug" class="form-control">
                     {% if payment_firstdata_debug %}
@@ -94,7 +94,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_status" id="input-status" class="form-control">
                     {% if payment_firstdata_status %}
@@ -108,14 +108,14 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-total">{{ entry_total }}</label>
+                <label class="col-sm-2 col-form-label" for="input-total">{{ entry_total }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_firstdata_total" value="{{ payment_firstdata_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
                   <small class="form-text text-muted">{{ help_total }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+                <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_firstdata_sort_order" value="{{ payment_firstdata_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
                 </div>
@@ -123,7 +123,7 @@
             </div>
             <div class="tab-pane" id="tab-order-status">
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-success-settled">{{ entry_status_success_settled }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-success-settled">{{ entry_status_success_settled }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_order_status_success_settled_id" id="input-order-status-success-settled" class="form-control">
                     {% for order_status in order_statuses %}
@@ -137,7 +137,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-success-unsettled">{{ entry_status_success_unsettled }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-success-unsettled">{{ entry_status_success_unsettled }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_order_status_success_unsettled_id" id="input-order-status-success-unsettled" class="form-control">
                     {% for order_status in order_statuses %}
@@ -151,7 +151,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-decline">{{ entry_status_decline }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-decline">{{ entry_status_decline }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_order_status_decline_id" id="input-order-status-decline" class="form-control">
                     {% for order_status in order_statuses %}
@@ -165,7 +165,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-void">{{ entry_status_void }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-void">{{ entry_status_void }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_order_status_void_id" id="input-order-status-void" class="form-control">
                     {% for order_status in order_statuses %}
@@ -181,7 +181,7 @@
             </div>
             <div class="tab-pane" id="tab-payment">
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-auto-settle">{{ entry_auto_settle }}</label>
+                <label class="col-sm-2 col-form-label" for="input-auto-settle">{{ entry_auto_settle }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_auto_settle" id="input-auto-settle" class="form-control">
                     {% if payment_firstdata_auto_settle %}
@@ -196,7 +196,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-card-store">{{ entry_enable_card_store }}</label>
+                <label class="col-sm-2 col-form-label" for="input-card-store">{{ entry_enable_card_store }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_card_storage" id="input-card-store" class="form-control">
                     {% if payment_firstdata_card_storage %}
@@ -212,7 +212,7 @@
             </div>
             <div class="tab-pane" id="tab-advanced">
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-live-url">{{ entry_live_url }}</label>
+                <label class="col-sm-2 col-form-label" for="input-live-url">{{ entry_live_url }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_firstdata_live_url" value="{{ payment_firstdata_live_url }}" placeholder="{{ entry_live_url }}" id="input-live-url" class="form-control"/>
                   {% if error_live_url %}
@@ -221,7 +221,7 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-demo-url">{{ entry_demo_url }}</label>
+                <label class="col-sm-2 col-form-label" for="input-demo-url">{{ entry_demo_url }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_firstdata_demo_url" value="{{ payment_firstdata_demo_url }}" placeholder="{{ entry_demo_url }}" id="input-demo-url" class="form-control"/>
                   {% if error_demo_url %}
@@ -230,7 +230,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-sort-order">{{ text_notification_url }}</label>
+                <label class="col-sm-2 col-form-label" for="input-sort-order">{{ text_notification_url }}</label>
                 <div class="col-sm-10">
                   <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span> <input type="text" value="{{ notify_url }}" class="form-control"/></div>
                   <small class="form-text text-muted">{{ help_notification }}</small>

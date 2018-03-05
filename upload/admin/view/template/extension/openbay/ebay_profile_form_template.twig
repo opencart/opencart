@@ -30,19 +30,19 @@
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ text_profile_default }}</label>
+                <label class="col-sm-2 col-form-label">{{ text_profile_default }}</label>
                 <div class="col-sm-10">
                   <input type="hidden" name="default" value="0"/> <input type="checkbox" name="default" value="1"{% if default == 1 %} checked="checked"{% endif %} />
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="name">{{ text_profile_name }}</label>
+                <label class="col-sm-2 col-form-label" for="name">{{ text_profile_name }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="name" value="{{ name }}" placeholder="{{ text_profile_name }}" id="name" class="form-control"/>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="description">{{ text_profile_desc }}</label>
+                <label class="col-sm-2 col-form-label" for="description">{{ text_profile_desc }}</label>
                 <div class="col-sm-10">
                   <textarea name="description" class="form-control" rows="3" id="description">{{ description }}</textarea>
                 </div>
@@ -50,7 +50,7 @@
             </div>
             <div class="tab-pane" id="tab-template">
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ text_template_choose }}</label>
+                <label class="col-sm-2 col-form-label">{{ text_template_choose }}</label>
                 <div class="col-sm-10">
                   <select name="data[ebay_template_id]" class="form-control">
                     <option value="None">None</option>
@@ -63,7 +63,7 @@
             </div>
             <div class="tab-pane" id="tab-gallery">
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="name">{{ text_image_gallery }}</label>
+                <label class="col-sm-2 col-form-label" for="name">{{ text_image_gallery }}</label>
                 <div class="col-sm-10">
                   <div class="row">
                     <div class="col-sm-3">
@@ -85,7 +85,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="name">{{ text_image_thumb }}</label>
+                <label class="col-sm-2 col-form-label" for="name">{{ text_image_thumb }}</label>
                 <div class="col-sm-10">
                   <div class="row">
                     <div class="col-sm-3">
@@ -107,31 +107,31 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ text_image_super }}</label>
+                <label class="col-sm-2 col-form-label">{{ text_image_super }}</label>
                 <div class="col-sm-10">
                   <input type="hidden" name="data[ebay_supersize]" value="0"/> <input type="checkbox" name="data[ebay_supersize]" value="1"{% if data.ebay_supersize == 1 %} checked="checked"{% endif %} />
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ text_image_gallery_plus }}</label>
+                <label class="col-sm-2 col-form-label">{{ text_image_gallery_plus }}</label>
                 <div class="col-sm-10">
                   <input type="hidden" name="data[ebay_gallery_plus]" value="0"/> <input type="checkbox" name="data[ebay_gallery_plus]" value="1"{% if data.ebay_gallery_plus == 1 %} checked="checked"{% endif %} />
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ text_image_all_ebay }}</label>
+                <label class="col-sm-2 col-form-label">{{ text_image_all_ebay }}</label>
                 <div class="col-sm-10">
                   <input type="hidden" name="data[ebay_img_ebay]" value="0"/> <input type="checkbox" name="data[ebay_img_ebay]" value="1"{% if data.ebay_img_ebay == 1 %} checked="checked"{% endif %} />
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ text_image_all_template }}</label>
+                <label class="col-sm-2 col-form-label">{{ text_image_all_template }}</label>
                 <div class="col-sm-10">
                   <input type="hidden" name="data[ebay_img_template]" value="0"/> <input type="checkbox" name="data[ebay_img_template]" value="1"{% if data.ebay_img_template == 1 %} checked="checked"{% endif %} />
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ text_image_exclude_default }}</label>
+                <label class="col-sm-2 col-form-label">{{ text_image_exclude_default }}</label>
                 <div class="col-sm-10">
                   <input type="hidden" name="data[default_img_exclude]" value="0"/> <input type="checkbox" name="data[default_img_exclude]" value="1"{% if data.default_img_exclude == 1 %} checked="checked"{% endif %} /> <span class="help-block">{{ text_image_exclude_default_help }}</span>
                 </div>

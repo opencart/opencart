@@ -28,25 +28,25 @@
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form">
           <input type="hidden" name="amount_original" value="{{ amount_original }}"/> <input type="hidden" name="currency_code" value="{{ currency_code }}"/>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-transaction-id">{{ entry_transaction_id }}</label>
+            <label class="col-sm-2 col-form-label" for="input-transaction-id">{{ entry_transaction_id }}</label>
             <div class="col-sm-10">
               <input type="text" name="transaction_id" value="{{ transaction_id }}" placeholder="{{ entry_transaction_id }}" id="input-transaction-id" class="form-control"/>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label">{{ entry_full_refund }}</label>
+            <label class="col-sm-2 col-form-label">{{ entry_full_refund }}</label>
             <div class="col-sm-10">
               <input type="hidden" name="refund_full" value="0"/> <input type="checkbox" name="refund_full" id="refund_full" value="1" {{ refund_available == '' ? 'checked="checked"' : '' }} onchange="refundAmount();"/>
             </div>
           </div>
           <div class="form-group" {{ refund_available == '' ? 'style="display:none;" ' : '' }} id="partial_amount_row">
-            <label class="col-sm-2 control-label">{{ entry_amount }}</label>
+            <label class="col-sm-2 col-form-label">{{ entry_amount }}</label>
             <div class="col-sm-10">
               <input type="text" name="amount" value="{{ refund_available is not '' ? refund_available : '' }}" placeholder="{{ entry_amount }}" class="form-control"/>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label">{{ entry_message }}</label>
+            <label class="col-sm-2 col-form-label">{{ entry_message }}</label>
             <div class="col-sm-10">
               <textarea name="refund_message" id="paypal_refund_message" cols="40" rows="5"></textarea>
             </div>

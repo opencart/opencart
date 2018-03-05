@@ -49,7 +49,7 @@
                 <input type="hidden" name="payment_pp_braintree_private_key" value=""/>
 
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ entry_connection }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_connection }}</label>
                   <div class="col-sm-10">
                     <div class="alert alert-info"><i class="fa fa-check"></i> {{ text_app_connected }} ({{ text_merchant_connected }}{{ payment_pp_braintree_merchant_id }})
                       <div class="btn btn-sm btn-danger pull-right" id="delete-link">{{ text_unlink }}</div>
@@ -64,19 +64,19 @@
                   <div class="col-sm-10" id="bt-connect"></div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="payment_pp_braintree_merchant_id" value="{{ payment_pp_braintree_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="input-merchant-id" class="form-control"/>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-public-key">{{ entry_public_key }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-public-key">{{ entry_public_key }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="payment_pp_braintree_public_key" value="{{ payment_pp_braintree_public_key }}" placeholder="{{ entry_public_key }}" id="input-public-key" class="form-control"/>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-private-key">{{ entry_private_key }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-private-key">{{ entry_private_key }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="payment_pp_braintree_private_key" value="{{ payment_pp_braintree_private_key }}" placeholder="{{ entry_private_key }}" id="input-private-key" class="form-control"/>
                   </div>
@@ -84,10 +84,10 @@
               {% endif %}
 
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-environment">{{ entry_environment }}</label>
+                <label class="col-sm-2 col-form-label" for="input-environment">{{ entry_environment }}</label>
                 <div class="col-sm-10">
                   {% if payment_pp_braintree_access_token is not empty and payment_pp_braintree_environment is not empty %}
-                    <label class="control-label">{{ payment_pp_braintree_environment }}</label>
+                    <label class="col-form-label">{{ payment_pp_braintree_environment }}</label>
                     <input type="hidden" name="payment_pp_braintree_environment" value="{{ payment_pp_braintree_environment }}"/>
                   {% else %}
                     <select name="payment_pp_braintree_environment" id="input-environment" class="form-control">
@@ -104,7 +104,7 @@
               </div>
 
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-settlement-immediate">{{ entry_settlement_type }}</label>
+                <label class="col-sm-2 col-form-label" for="input-settlement-immediate">{{ entry_settlement_type }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_braintree_settlement_immediate" id="input-settlement-immediate" class="form-control">
                     {% if payment_pp_braintree_settlement_immediate == 1 %}
@@ -119,7 +119,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-debug">{{ entry_debug }}</label>
+                <label class="col-sm-2 col-form-label" for="input-debug">{{ entry_debug }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_braintree_debug" id="input-debug" class="form-control">
                     {% if payment_pp_braintree_debug %}
@@ -134,14 +134,14 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-total">{{ entry_total }}</label>
+                <label class="col-sm-2 col-form-label" for="input-total">{{ entry_total }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_pp_braintree_total" value="{{ payment_pp_braintree_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
                   <small class="form-text text-muted">{{ help_total }}</small>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+                <label class="col-sm-2 col-form-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_braintree_geo_zone_id" id="input-geo-zone" class="form-control">
                     <option value="0">{{ text_all_zones }}</option>
@@ -156,7 +156,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_braintree_status" id="input-status" class="form-control">
                     {% if payment_pp_braintree_status %}
@@ -170,7 +170,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+                <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_pp_braintree_sort_order" value="{{ payment_pp_braintree_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
                 </div>
@@ -211,7 +211,7 @@
             </div>
             <div class="tab-pane" id="tab-order-status">
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-authorization-expired">{{ entry_authorization_expired }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-authorization-expired">{{ entry_authorization_expired }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_braintree_authorization_expired_id" id="input-order-status-authorization-expired" class="form-control">
                     {% for order_status in order_statuses %}
@@ -225,7 +225,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-authorized">{{ entry_authorized }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-authorized">{{ entry_authorized }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_braintree_authorized_id" id="input-order-status-authorized" class="form-control">
                     {% for order_status in order_statuses %}
@@ -239,7 +239,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-authorizing">{{ entry_authorizing }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-authorizing">{{ entry_authorizing }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_braintree_authorizing_id" id="input-order-status-authorizing" class="form-control">
                     {% for order_status in order_statuses %}
@@ -253,7 +253,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-settlement-pending">{{ entry_settlement_pending }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-settlement-pending">{{ entry_settlement_pending }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_braintree_settlement_pending_id" id="input-order-status-settlement-pending" class="form-control">
                     {% for order_status in order_statuses %}
@@ -267,7 +267,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-failed">{{ entry_failed }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-failed">{{ entry_failed }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_braintree_failed_id" id="input-order-status-failed" class="form-control">
                     {% for order_status in order_statuses %}
@@ -281,7 +281,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-gateway-rejected">{{ entry_gateway_rejected }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-gateway-rejected">{{ entry_gateway_rejected }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_braintree_gateway_rejected_id" id="input-order-status-gateway-rejected" class="form-control">
                     {% for order_status in order_statuses %}
@@ -295,7 +295,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-processor-declined">{{ entry_processor_declined }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-processor-declined">{{ entry_processor_declined }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_braintree_processor_declined_id" id="input-order-status-processor-declined" class="form-control">
                     {% for order_status in order_statuses %}
@@ -309,7 +309,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-settled">{{ entry_settled }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-settled">{{ entry_settled }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_braintree_settled_id" id="input-order-status-settled" class="form-control">
                     {% for order_status in order_statuses %}
@@ -323,7 +323,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-settling">{{ entry_settling }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-settling">{{ entry_settling }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_braintree_settling_id" id="input-order-status-settling" class="form-control">
                     {% for order_status in order_statuses %}
@@ -337,7 +337,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-submitted-for-settlement">{{ entry_submitted_for_settlement }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-submitted-for-settlement">{{ entry_submitted_for_settlement }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_braintree_submitted_for_settlement_id" id="input-order-status-submitted-for-settlement" class="form-control">
                     {% for order_status in order_statuses %}
@@ -351,7 +351,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-status-voided">{{ entry_voided }}</label>
+                <label class="col-sm-2 col-form-label" for="input-order-status-voided">{{ entry_voided }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_braintree_voided_id" id="input-order-status-voided" class="form-control">
                     {% for order_status in order_statuses %}
@@ -371,7 +371,7 @@
                 <input type="hidden" name="payment_pp_braintree_3ds_status" value="0"/>
               {% else %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-3ds-status">{{ entry_3ds_status }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-3ds-status">{{ entry_3ds_status }}</label>
                   <div class="col-sm-10">
                     <select name="payment_pp_braintree_3ds_status" id="input-3ds-status" class="form-control">
                       {% if payment_pp_braintree_3ds_status == 1 %}
@@ -386,7 +386,7 @@
                   </div>
                 </div>
                 <div class="form-group three-ds-status">
-                  <label class="col-sm-2 control-label" for="input-3ds-unsupported-card">{{ entry_3ds_unsupported_card }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-3ds-unsupported-card">{{ entry_3ds_unsupported_card }}</label>
                   <div class="col-sm-10">
                     <select name="payment_pp_braintree_3ds_unsupported_card" id="input-3ds-unsupported-card" class="form-control">
                       {% if payment_pp_braintree_3ds_unsupported_card == 1 %}
@@ -400,7 +400,7 @@
                   </div>
                 </div>
                 <div class="form-group three-ds-status">
-                  <label class="col-sm-2 control-label" for="input-3ds-lookup-error">{{ entry_3ds_lookup_error }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-3ds-lookup-error">{{ entry_3ds_lookup_error }}</label>
                   <div class="col-sm-10">
                     <select name="payment_pp_braintree_3ds_lookup_error" id="input-3ds-lookup-error" class="form-control">
                       {% if payment_pp_braintree_3ds_lookup_error == 1 %}
@@ -414,7 +414,7 @@
                   </div>
                 </div>
                 <div class="form-group three-ds-status">
-                  <label class="col-sm-2 control-label" for="input-3ds-lookup-enrolled">{{ entry_3ds_lookup_enrolled }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-3ds-lookup-enrolled">{{ entry_3ds_lookup_enrolled }}</label>
                   <div class="col-sm-10">
                     <select name="payment_pp_braintree_3ds_lookup_enrolled" id="input-3ds-lookup-enrolled" class="form-control">
                       {% if payment_pp_braintree_3ds_lookup_enrolled == 1 %}
@@ -428,7 +428,7 @@
                   </div>
                 </div>
                 <div class="form-group three-ds-status">
-                  <label class="col-sm-2 control-label" for="input-3ds-lookup-not-enrolled">{{ entry_3ds_lookup_not_enrolled }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-3ds-lookup-not-enrolled">{{ entry_3ds_lookup_not_enrolled }}</label>
                   <div class="col-sm-10">
                     <select name="payment_pp_braintree_3ds_lookup_not_enrolled" id="input-3ds-lookup-not-enrolled" class="form-control">
                       {% if payment_pp_braintree_3ds_lookup_not_enrolled == 1 %}
@@ -442,7 +442,7 @@
                   </div>
                 </div>
                 <div class="form-group three-ds-status">
-                  <label class="col-sm-2 control-label" for="input-3ds-not-participating">{{ entry_3ds_not_participating }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-3ds-not-participating">{{ entry_3ds_not_participating }}</label>
                   <div class="col-sm-10">
                     <select name="payment_pp_braintree_3ds_not_participating" id="input-3ds-not-participating" class="form-control">
                       {% if payment_pp_braintree_3ds_not_participating == 1 %}
@@ -456,7 +456,7 @@
                   </div>
                 </div>
                 <div class="form-group three-ds-status">
-                  <label class="col-sm-2 control-label" for="input-3ds-unavailable">{{ entry_3ds_unavailable }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-3ds-unavailable">{{ entry_3ds_unavailable }}</label>
                   <div class="col-sm-10">
                     <select name="payment_pp_braintree_3ds_unavailable" id="input-3ds-unavailable" class="form-control">
                       {% if payment_pp_braintree_3ds_unavailable == 1 %}
@@ -470,7 +470,7 @@
                   </div>
                 </div>
                 <div class="form-group three-ds-status">
-                  <label class="col-sm-2 control-label" for="input-3ds-signature-failed">{{ entry_3ds_signature_failed }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-3ds-signature-failed">{{ entry_3ds_signature_failed }}</label>
                   <div class="col-sm-10">
                     <select name="payment_pp_braintree_3ds_signature_failed" id="input-3ds-signature-failed" class="form-control">
                       {% if payment_pp_braintree_3ds_signature_failed == 1 %}
@@ -484,7 +484,7 @@
                   </div>
                 </div>
                 <div class="form-group three-ds-status">
-                  <label class="col-sm-2 control-label" for="input-3ds-successful">{{ entry_3ds_successful }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-3ds-successful">{{ entry_3ds_successful }}</label>
                   <div class="col-sm-10">
                     <select name="payment_pp_braintree_3ds_successful" id="input-3ds-successful" class="form-control">
                       {% if payment_pp_braintree_3ds_successful == 1 %}
@@ -498,7 +498,7 @@
                   </div>
                 </div>
                 <div class="form-group three-ds-status">
-                  <label class="col-sm-2 control-label" for="input-3ds-attempt-successful">{{ entry_3ds_attempt_successful }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-3ds-attempt-successful">{{ entry_3ds_attempt_successful }}</label>
                   <div class="col-sm-10">
                     <select name="payment_pp_braintree_3ds_attempt_successful" id="input-3ds-attempt-successful" class="form-control">
                       {% if payment_pp_braintree_3ds_attempt_successful == 1 %}
@@ -512,7 +512,7 @@
                   </div>
                 </div>
                 <div class="form-group three-ds-status">
-                  <label class="col-sm-2 control-label" for="input-3ds-failed">{{ entry_3ds_failed }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-3ds-failed">{{ entry_3ds_failed }}</label>
                   <div class="col-sm-10">
                     <select name="payment_pp_braintree_3ds_failed" id="input-3ds-failed" class="form-control">
                       {% if payment_pp_braintree_3ds_failed == 1 %}
@@ -526,7 +526,7 @@
                   </div>
                 </div>
                 <div class="form-group three-ds-status">
-                  <label class="col-sm-2 control-label" for="input-3ds-unable-to-auth">{{ entry_3ds_unable_to_auth }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-3ds-unable-to-auth">{{ entry_3ds_unable_to_auth }}</label>
                   <div class="col-sm-10">
                     <select name="payment_pp_braintree_3ds_unable_to_auth" id="input-3ds-unable-to-auth" class="form-control">
                       {% if payment_pp_braintree_3ds_unable_to_auth == 1 %}
@@ -540,7 +540,7 @@
                   </div>
                 </div>
                 <div class="form-group three-ds-status">
-                  <label class="col-sm-2 control-label" for="input-3ds-error">{{ entry_3ds_error }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-3ds-error">{{ entry_3ds_error }}</label>
                   <div class="col-sm-10">
                     <select name="payment_pp_braintree_3ds_error" id="input-3ds-error" class="form-control">
                       {% if payment_pp_braintree_3ds_error == 1 %}
@@ -557,7 +557,7 @@
             </div>
             <div class="tab-pane" id="tab-vault">
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-card-vault">{{ entry_card_vault }}</label>
+                <label class="col-sm-2 col-form-label" for="input-card-vault">{{ entry_card_vault }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_braintree_card_vault" id="input-card-vault" class="form-control">
                     {% if payment_pp_braintree_card_vault %}
@@ -572,7 +572,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-card-check-vault">{{ entry_card_check_vault }}</label>
+                <label class="col-sm-2 col-form-label" for="input-card-check-vault">{{ entry_card_check_vault }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_braintree_card_check_vault" id="input-card-check-vault" class="form-control">
                     {% if payment_pp_braintree_card_check_vault %}
@@ -587,7 +587,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-vault-cvv-3ds">{{ entry_vault_cvv_3ds }}</label>
+                <label class="col-sm-2 col-form-label" for="input-vault-cvv-3ds">{{ entry_vault_cvv_3ds }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_braintree_vault_cvv_3ds" id="input-vault-cvv-3ds" class="form-control">
                     {% if payment_pp_braintree_vault_cvv_3ds == "cvv" %}
@@ -609,7 +609,7 @@
               </div>
               {% if braintree_config.paypal_enabled == 1 %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-paypal-vault">{{ entry_paypal_vault }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-paypal-vault">{{ entry_paypal_vault }}</label>
                   <div class="col-sm-10">
                     <select name="payment_pp_braintree_paypal_vault" id="input-paypal-vault" class="form-control">
                       {% if payment_pp_braintree_paypal_vault %}
@@ -624,7 +624,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-paypal-check-vault">{{ entry_paypal_check_vault }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-paypal-check-vault">{{ entry_paypal_check_vault }}</label>
                   <div class="col-sm-10">
                     <select name="payment_pp_braintree_paypal_check_vault" id="input-paypal-check-vault" class="form-control">
                       {% if payment_pp_braintree_paypal_check_vault %}
@@ -649,7 +649,7 @@
                 <input type="hidden" name="payment_pp_braintree_paypal_option" value="0"/>
               {% else %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-paypal-option">{{ entry_paypal_option }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-paypal-option">{{ entry_paypal_option }}</label>
                   <div class="col-sm-10">
                     <select name="payment_pp_braintree_paypal_option" id="input-vault" class="form-control">
                       {% if payment_pp_braintree_paypal_option %}
@@ -668,7 +668,7 @@
                 <input type="hidden" name="payment_pp_braintree_billing_agreement" value=""/>
 
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-paypal-button-colour">{{ entry_paypal_button_colour }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-paypal-button-colour">{{ entry_paypal_button_colour }}</label>
                   <div class="col-sm-10">
                     <select name="payment_pp_braintree_paypal_button_colour" id="input-paypal-button-colour" class="form-control">
                       <option value="gold"{% if payment_pp_braintree_paypal_button_colour == "gold" %} selected="selected"{% endif %}>{{ text_paypal_gold }}</option>
@@ -678,7 +678,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-paypal-button-size">{{ entry_paypal_button_size }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-paypal-button-size">{{ entry_paypal_button_size }}</label>
                   <div class="col-sm-10">
                     <select name="payment_pp_braintree_paypal_button_size" id="input-paypal-button-size" class="form-control">
                       <option value="tiny"{% if payment_pp_braintree_paypal_button_size == "tiny" %} selected="selected"{% endif %}>{{ text_paypal_tiny }}</option>
@@ -688,7 +688,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-paypal-button-shape">{{ entry_paypal_button_shape }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-paypal-button-shape">{{ entry_paypal_button_shape }}</label>
                   <div class="col-sm-10">
                     <select name="payment_pp_braintree_paypal_button_shape" id="input-paypal-button-shape" class="form-control">
                       <option value="pill"{% if payment_pp_braintree_paypal_button_shape == "pill" %} selected="selected"{% endif %}>{{ text_paypal_pill }}</option>
@@ -697,7 +697,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">{{ text_paypal_preview }}</label>
+                  <label class="col-sm-2 col-form-label">{{ text_paypal_preview }}</label>
                   <div class="col-sm-10">
                     <script src="https://www.paypalobjects.com/api/button.js?"
                     data-merchant="braintree"
@@ -726,10 +726,10 @@
                     <div class="row">
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <label class="control-label" for="input-transaction-id">{{ entry_transaction_id }}</label> <input type="text" name="filter_transaction_id" value="" placeholder="Transaction ID" id="input-transaction-id" class="form-control"/>
+                          <label class="col-form-label" for="input-transaction-id">{{ entry_transaction_id }}</label> <input type="text" name="filter_transaction_id" value="" placeholder="Transaction ID" id="input-transaction-id" class="form-control"/>
                         </div>
                         <div class="form-group">
-                          <label class="control-label" for="input-transaction-type">{{ entry_transaction_type }}</label> <select name="filter_transaction_type" id="input-transaction-type" class="form-control">
+                          <label class="col-form-label" for="input-transaction-type">{{ entry_transaction_type }}</label> <select name="filter_transaction_type" id="input-transaction-type" class="form-control">
                             <option value="*" selected="selected">{{ text_all }}</option>
                             <option value="sale">{{ text_sale }}</option>
                             <option value="credit">{{ text_credit }}</option>
@@ -737,7 +737,7 @@
                         </div>
                         <div class="form-group">
                           <div class="col-sm-6" style="padding-left: 0;">
-                            <label class="control-label" for="input-date-from">{{ entry_date_from }}</label>
+                            <label class="col-form-label" for="input-date-from">{{ entry_date_from }}</label>
                             <div class="input-group date">
                               <input type="text" name="filter_date_from" value="" placeholder="From" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-from" class="form-control"/>
                               <div class="input-group-btn">
@@ -746,7 +746,7 @@
                             </div>
                           </div>
                           <div class="col-sm-6" style="padding-right: 0;">
-                            <label class="control-label" for="input-date-to">{{ entry_date_to }}</label>
+                            <label class="col-form-label" for="input-date-to">{{ entry_date_to }}</label>
                             <div class="input-group date">
                               <input type="text" name="filter_date_to" value="" placeholder="To" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-to" class="form-control"/>
                               <div class="input-group-btn">
@@ -758,14 +758,14 @@
                       </div>
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <label class="control-label" for="input-payment-type">{{ entry_payment_type }}</label> <select name="filter_payment_type" id="input-payment-type" class="form-control">
+                          <label class="col-form-label" for="input-payment-type">{{ entry_payment_type }}</label> <select name="filter_payment_type" id="input-payment-type" class="form-control">
                             <option value="*" selected="selected">{{ text_all }}</option>
                             <option value="Credit Card">{{ text_credit_card }}</option>
                             <option value="PayPal">{{ text_paypal }}</option>
                           </select>
                         </div>
                         <div class="form-group">
-                          <label class="control-label" for="input-card-type">{{ entry_card_type }}</label> <select name="filter_card_type" id="input-card-type" class="form-control">
+                          <label class="col-form-label" for="input-card-type">{{ entry_card_type }}</label> <select name="filter_card_type" id="input-card-type" class="form-control">
                             <option value="*">{{ text_all }}</option>
                             {% for card_type in card_types %}
                               <option value="{{ card_type }}">{{ card_type }}</option>
@@ -774,16 +774,16 @@
                         </div>
                         <div class="form-group">
                           <div class="col-sm-6" style="padding-left: 0;">
-                            <label class="control-label" for="input-amount-from">{{ entry_amount_from }}</label> <input type="text" name="filter_amount_from" value="" placeholder="From" id="input-amount-from" class="form-control"/>
+                            <label class="col-form-label" for="input-amount-from">{{ entry_amount_from }}</label> <input type="text" name="filter_amount_from" value="" placeholder="From" id="input-amount-from" class="form-control"/>
                           </div>
                           <div class="col-sm-6" style="padding-right: 0;">
-                            <label class="control-label" for="input-amount-to">{{ entry_amount_to }}</label> <input type="text" name="filter_amount_to" value="" placeholder="To" id="input-amount-to" class="form-control"/>
+                            <label class="col-form-label" for="input-amount-to">{{ entry_amount_to }}</label> <input type="text" name="filter_amount_to" value="" placeholder="To" id="input-amount-to" class="form-control"/>
                           </div>
                         </div>
                       </div>
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <label class="control-label" for="input-card-type">{{ entry_transaction_status }}</label>
+                          <label class="col-form-label" for="input-card-type">{{ entry_transaction_status }}</label>
                           <div class="well well-sm" style="height: 190px; overflow: auto; margin-bottom: 0;">
                             {% for transaction_status in transaction_statuses %}
                               <div class="checkbox">
@@ -796,7 +796,7 @@
                       </div>
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <label class="control-label" for="input-merchant-account-id">{{ entry_merchant_account_id }}</label> <select name="filter_merchant_account_id" id="input-merchant-account-id" class="form-control">
+                          <label class="col-form-label" for="input-merchant-account-id">{{ entry_merchant_account_id }}</label> <select name="filter_merchant_account_id" id="input-merchant-account-id" class="form-control">
                             <option value="*">All</option>
                             {% for pp_braintree_account_value in payment_pp_braintree_account %}
                               {% if pp_braintree_account_value.merchant_account_id %}

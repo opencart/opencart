@@ -168,4 +168,10 @@ class ModelCatalogProductOption extends Model {
 
 		return $query->row['total'];
 	}
+	
+	public function getProductsOptionValueByOptionId($option_id) {
+		$query = $this->db->query("SELECT DISTINCT option_value_id FROM " . DB_PREFIX . "product_option_value WHERE option_id = '" . (int)$option_id . "'");
+
+		return $query->rows;
+	}
 }

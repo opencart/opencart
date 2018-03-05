@@ -200,7 +200,7 @@
                         <td class="text-left">
                           <input type="text" name="payment_pp_braintree_account[{{ currency.code }}][merchant_account_id]" value="{{ payment_pp_braintree_account[currency.code].merchant_account_id }}" placeholder="{{ text_merchant_account_id }}" class="form-control"/>
                           {% if error_account[currency.code] %}
-                            <div class="text-danger">{{ error_account[currency.code] }}</div>
+                            <div class="invalid-tooltip">{{ error_account[currency.code] }}</div>
                           {% endif %}
                         </td>
                       </tr>

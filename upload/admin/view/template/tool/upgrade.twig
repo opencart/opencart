@@ -141,7 +141,7 @@ $('#button-upgrade').on('click', function() {
 		success: function(json) {
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+				$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
 				$('#log').append(json['error'] + "\n");
 			}
 
@@ -172,7 +172,7 @@ function next(url, i) {
 
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+				$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
 				$('#log').append(json['error'] + "\n");
 
 				$('#button-upgrade').button('reset');

@@ -43,7 +43,7 @@
                   <input type="text" name="config_url" value="{{ config_url }}" placeholder="{{ entry_url }}" id="input-url" class="form-control"/>
                   <small class="form-text text-muted">{{ help_url|escape('html') }}</small>
                   {% if error_url %}
-                    <div class="text-danger">{{ error_url }}</div>
+                    <div class="invalid-tooltip">{{ error_url }}</div>
                   {% endif %}
                 </div>
               </div>
@@ -52,7 +52,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="config_meta_title" value="{{ config_meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title" class="form-control"/>
                   {% if error_meta_title %}
-                    <div class="text-danger">{{ error_meta_title }}</div>
+                    <div class="invalid-tooltip">{{ error_meta_title }}</div>
                   {% endif %}
                 </div>
               </div>
@@ -104,7 +104,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="config_name" value="{{ config_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
                   {% if error_name %}
-                    <div class="text-danger">{{ error_name }}</div>
+                    <div class="invalid-tooltip">{{ error_name }}</div>
                   {% endif %}
                 </div>
               </div>
@@ -113,7 +113,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="config_owner" value="{{ config_owner }}" placeholder="{{ entry_owner }}" id="input-owner" class="form-control"/>
                   {% if error_owner %}
-                    <div class="text-danger">{{ error_owner }}</div>
+                    <div class="invalid-tooltip">{{ error_owner }}</div>
                   {% endif %}
                 </div>
               </div>
@@ -122,7 +122,7 @@
                 <div class="col-sm-10">
                   <textarea name="config_address" rows="5" placeholder="{{ entry_address }}" id="input-address" class="form-control">{{ config_address }}</textarea>
                   {% if error_address %}
-                    <div class="text-danger">{{ error_address }}</div>
+                    <div class="invalid-tooltip">{{ error_address }}</div>
                   {% endif %}
                 </div>
               </div>
@@ -138,7 +138,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="config_email" value="{{ config_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
                   {% if error_email %}
-                    <div class="text-danger">{{ error_email }}</div>
+                    <div class="invalid-tooltip">{{ error_email }}</div>
                   {% endif %}
                 </div>
               </div>
@@ -147,7 +147,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="config_telephone" value="{{ config_telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
                   {% if error_telephone %}
-                    <div class="text-danger">{{ error_telephone }}</div>
+                    <div class="invalid-tooltip">{{ error_telephone }}</div>
                   {% endif %}
                 </div>
               </div>
@@ -348,7 +348,7 @@
                     {% endfor %}
                     <small class="form-text text-muted">{{ help_customer_group_display }}</small>
                     {% if error_customer_group_display %}
-                      <div class="text-danger">{{ error_customer_group_display }}</div>
+                      <div class="invalid-tooltip">{{ error_customer_group_display }}</div>
                     {% endif %}
                   </div>
                 </div>

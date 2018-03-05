@@ -70,7 +70,7 @@
                           <div class="col-sm-10">
                             <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
                             {% if error_firstname %}
-                              <div class="text-danger">{{ error_firstname }}</div>
+                              <div class="invalid-tooltip">{{ error_firstname }}</div>
                             {% endif %}</div>
                         </div>
                         <div class="form-group required">
@@ -78,7 +78,7 @@
                           <div class="col-sm-10">
                             <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
                             {% if error_lastname %}
-                              <div class="text-danger">{{ error_lastname }}</div>
+                              <div class="invalid-tooltip">{{ error_lastname }}</div>
                             {% endif %}</div>
                         </div>
                         <div class="form-group required">
@@ -86,7 +86,7 @@
                           <div class="col-sm-10">
                             <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
                             {% if error_email %}
-                              <div class="text-danger">{{ error_email }}</div>
+                              <div class="invalid-tooltip">{{ error_email }}</div>
                             {% endif %}</div>
                         </div>
                         <div class="form-group required">
@@ -94,7 +94,7 @@
                           <div class="col-sm-10">
                             <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
                             {% if error_telephone %}
-                              <div class="text-danger">{{ error_telephone }}</div>
+                              <div class="invalid-tooltip">{{ error_telephone }}</div>
                             {% endif %}</div>
                         </div>
                         {% for custom_field in custom_fields %}
@@ -114,7 +114,7 @@
                                     {% endfor %}
                                   </select>
                                   {% if error_custom_field[custom_field.custom_field_id] %}
-                                    <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
+                                    <div class="invalid-tooltip">{{ error_custom_field[custom_field.custom_field_id] }}</div>
                                   {% endif %}</div>
                               </div>
                             {% endif %}
@@ -133,7 +133,7 @@
                                         {% endif %}</div>
                                     {% endfor %} </div>
                                   {% if error_custom_field[custom_field.custom_field_id] %}
-                                    <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
+                                    <div class="invalid-tooltip">{{ error_custom_field[custom_field.custom_field_id] }}</div>
                                   {% endif %}</div>
                               </div>
                             {% endif %}
@@ -151,7 +151,7 @@
                                         {% endif %}</div>
                                     {% endfor %}</div>
                                   {% if error_custom_field[custom_field.custom_field_id] %}
-                                    <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
+                                    <div class="invalid-tooltip">{{ error_custom_field[custom_field.custom_field_id] }}</div>
                                   {% endif %}</div>
                               </div>
                             {% endif %}
@@ -161,7 +161,7 @@
                                 <div class="col-sm-10">
                                   <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                                   {% if error_custom_field[custom_field.custom_field_id] %}
-                                    <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
+                                    <div class="invalid-tooltip">{{ error_custom_field[custom_field.custom_field_id] }}</div>
                                   {% endif %}</div>
                               </div>
                             {% endif %}
@@ -171,7 +171,7 @@
                                 <div class="col-sm-10">
                                   <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control">{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
                                   {% if error_custom_field[custom_field.custom_field_id] %}
-                                    <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
+                                    <div class="invalid-tooltip">{{ error_custom_field[custom_field.custom_field_id] }}</div>
                                   {% endif %}</div>
                               </div>
                             {% endif %}
@@ -182,7 +182,7 @@
                                   <button type="button" id="button-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-default"><i class="fa fa-upload"></i> {{ button_upload }}</button>
                                   <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] }}" id="input-custom-field{{ custom_field.custom_field_id }}"/>
                                   {% if error_custom_field[custom_field.custom_field_id] %}
-                                    <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
+                                    <div class="invalid-tooltip">{{ error_custom_field[custom_field.custom_field_id] }}</div>
                                   {% endif %}</div>
                               </div>
                             {% endif %}
@@ -197,7 +197,7 @@
                                     </div>
                                   </div>
                                   {% if error_custom_field[custom_field.custom_field_id] %}
-                                    <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
+                                    <div class="invalid-tooltip">{{ error_custom_field[custom_field.custom_field_id] }}</div>
                                   {% endif %}</div>
                               </div>
                             {% endif %}
@@ -212,7 +212,7 @@
                                     </div>
                                   </div>
                                   {% if error_custom_field[custom_field.custom_field_id] %}
-                                    <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
+                                    <div class="invalid-tooltip">{{ error_custom_field[custom_field.custom_field_id] }}</div>
                                   {% endif %}</div>
                               </div>
                             {% endif %}
@@ -227,7 +227,7 @@
                                     </div>
                                   </div>
                                   {% if error_custom_field[custom_field.custom_field_id] %}
-                                    <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
+                                    <div class="invalid-tooltip">{{ error_custom_field[custom_field.custom_field_id] }}</div>
                                   {% endif %}</div>
                               </div>
                             {% endif %}
@@ -241,7 +241,7 @@
                           <div class="col-sm-10">
                             <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" autocomplete="off"/>
                             {% if error_password %}
-                              <div class="text-danger">{{ error_password }}</div>
+                              <div class="invalid-tooltip">{{ error_password }}</div>
                             {% endif %}</div>
                         </div>
                         <div class="form-group required">
@@ -249,7 +249,7 @@
                           <div class="col-sm-10">
                             <input type="password" name="confirm" value="{{ confirm }}" placeholder="{{ entry_confirm }}" autocomplete="off" id="input-confirm" class="form-control"/>
                             {% if error_confirm %}
-                              <div class="text-danger">{{ error_confirm }}</div>
+                              <div class="invalid-tooltip">{{ error_confirm }}</div>
                             {% endif %}</div>
                         </div>
                       </fieldset>
@@ -308,7 +308,7 @@
                           <div class="col-sm-10">
                             <input type="text" name="address[{{ address_row }}][firstname]" value="{{ address.firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname{{ address_row }}" class="form-control"/>
                             {% if error_address[address_row].firstname %}
-                              <div class="text-danger">{{ error_address[address_row].firstname }}</div>
+                              <div class="invalid-tooltip">{{ error_address[address_row].firstname }}</div>
                             {% endif %}</div>
                         </div>
                         <div class="form-group required">
@@ -316,7 +316,7 @@
                           <div class="col-sm-10">
                             <input type="text" name="address[{{ address_row }}][lastname]" value="{{ address.lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname{{ address_row }}" class="form-control"/>
                             {% if error_address[address_row].lastname %}
-                              <div class="text-danger">{{ error_address[address_row].lastname }}</div>
+                              <div class="invalid-tooltip">{{ error_address[address_row].lastname }}</div>
                             {% endif %}</div>
                         </div>
                         <div class="form-group">
@@ -330,7 +330,7 @@
                           <div class="col-sm-10">
                             <input type="text" name="address[{{ address_row }}][address_1]" value="{{ address.address_1 }}" placeholder="{{ entry_address_1 }}" id="input-address-1{{ address_row }}" class="form-control"/>
                             {% if error_address[address_row].address_1 %}
-                              <div class="text-danger">{{ error_address[address_row].address_1 }}</div>
+                              <div class="invalid-tooltip">{{ error_address[address_row].address_1 }}</div>
                             {% endif %}</div>
                         </div>
                         <div class="form-group">
@@ -344,7 +344,7 @@
                           <div class="col-sm-10">
                             <input type="text" name="address[{{ address_row }}][city]" value="{{ address.city }}" placeholder="{{ entry_city }}" id="input-city{{ address_row }}" class="form-control"/>
                             {% if error_address[address_row].city %}
-                              <div class="text-danger">{{ error_address[address_row].city }}</div>
+                              <div class="invalid-tooltip">{{ error_address[address_row].city }}</div>
                             {% endif %}</div>
                         </div>
                         <div class="form-group required">
@@ -352,7 +352,7 @@
                           <div class="col-sm-10">
                             <input type="text" name="address[{{ address_row }}][postcode]" value="{{ address.postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode{{ address_row }}" class="form-control"/>
                             {% if error_address[address_row].postcode %}
-                              <div class="text-danger">{{ error_address[address_row].postcode }}</div>
+                              <div class="invalid-tooltip">{{ error_address[address_row].postcode }}</div>
                             {% endif %}</div>
                         </div>
                         <div class="form-group required">
@@ -369,7 +369,7 @@
                               {% endfor %}
                             </select>
                             {% if error_address[address_row].country %}
-                              <div class="text-danger">{{ error_address[address_row].country }}</div>
+                              <div class="invalid-tooltip">{{ error_address[address_row].country }}</div>
                             {% endif %}</div>
                         </div>
                         <div class="form-group required">
@@ -377,7 +377,7 @@
                           <div class="col-sm-10">
                             <select name="address[{{ address_row }}][zone_id]" id="input-zone{{ address_row }}" class="form-control"> </select>
                             {% if error_address[address_row].zone %}
-                              <div class="text-danger">{{ error_address[address_row].zone }}</div>
+                              <div class="invalid-tooltip">{{ error_address[address_row].zone }}</div>
                             {% endif %}</div>
                         </div>
                         {% for custom_field in custom_fields %}
@@ -397,7 +397,7 @@
                                     {% endfor %}
                                   </select>
                                   {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
-                                    <div class="text-danger">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
+                                    <div class="invalid-tooltip">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
                                   {% endif %}</div>
                               </div>
                             {% endif %}
@@ -415,7 +415,7 @@
                                         {% endif %}</div>
                                     {% endfor %} </div>
                                   {% if error_address[address_row].custom_field[custom_field.custom_field_id] %}
-                                    <div class="text-danger">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
+                                    <div class="invalid-tooltip">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
                                   {% endif %}</div>
                               </div>
                             {% endif %}
@@ -433,7 +433,7 @@
                                         {% endif %}</div>
                                     {% endfor %} </div>
                                   {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
-                                    <div class="text-danger">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
+                                    <div class="invalid-tooltip">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
                                   {% endif %}</div>
                               </div>
                             {% endif %}
@@ -443,7 +443,7 @@
                                 <div class="col-sm-10">
                                   <input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                                   {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
-                                    <div class="text-danger">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
+                                    <div class="invalid-tooltip">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
                                   {% endif %}</div>
                               </div>
                             {% endif %}
@@ -453,7 +453,7 @@
                                 <div class="col-sm-10">
                                   <textarea name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control">{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
                                   {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
-                                    <div class="text-danger">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
+                                    <div class="invalid-tooltip">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
                                   {% endif %}</div>
                               </div>
                             {% endif %}
@@ -464,7 +464,7 @@
                                   <button type="button" id="button-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-default"><i class="fa fa-upload"></i> {{ button_upload }}</button>
                                   <input type="hidden" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] }}"/>
                                   {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
-                                    <div class="text-danger">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
+                                    <div class="invalid-tooltip">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
                                   {% endif %}</div>
                               </div>
                             {% endif %}
@@ -479,7 +479,7 @@
                                     </div>
                                   </div>
                                   {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
-                                    <div class="text-danger">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
+                                    <div class="invalid-tooltip">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
                                   {% endif %}</div>
                               </div>
                             {% endif %}
@@ -494,7 +494,7 @@
                                     </div>
                                   </div>
                                   {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
-                                    <div class="text-danger">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
+                                    <div class="invalid-tooltip">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
                                   {% endif %}</div>
                               </div>
                             {% endif %}
@@ -509,7 +509,7 @@
                                     </div>
                                   </div>
                                   {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
-                                    <div class="text-danger">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
+                                    <div class="invalid-tooltip">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
                                   {% endif %}</div>
                               </div>
                             {% endif %}
@@ -1068,7 +1068,7 @@ $('#content').delegate('button[id^=\'button-custom-field\'], button[id^=\'button
 					$(element).parent().find('.text-danger').remove();
 
 					if (json['error']) {
-						$(element).parent().find('input[type=\'hidden\']').after('<div class="text-danger">' + json['error'] + '</div>');
+						$(element).parent().find('input[type=\'hidden\']').after('<div class="invalid-tooltip">' + json['error'] + '</div>');
 					}
 
 					if (json['success']) {

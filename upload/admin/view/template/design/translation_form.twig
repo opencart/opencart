@@ -63,7 +63,7 @@
             <div class="col-sm-10">
               <select id="input-key" class="form-control"></select><input type="text" name="key" value="{{ key }}" placeholder="{{ entry_key }}" class="form-control"/>
               {% if error_key %}
-                <div class="text-danger">{{ error_key }}</div>
+                <div class="invalid-tooltip">{{ error_key }}</div>
               {% endif %}
             </div>
           </div>

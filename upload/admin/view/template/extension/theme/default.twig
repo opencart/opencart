@@ -26,7 +26,7 @@
           <fieldset>
             <legend>{{ text_general }}</legend>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-directory"><span data-toggle="tooltip" title="{{ help_directory }}">{{ entry_directory }}</span></label>
+              <label class="col-sm-2 control-label" for="input-directory">{{ entry_directory }}</label>
               <div class="col-sm-10">
                 <select name="theme_default_directory" id="input-directory" class="form-control">
                   {% for directory in directories %}
@@ -37,6 +37,7 @@
                     {% endif %}
                   {% endfor %}
                 </select>
+                <small class="form-text text-muted">{{ help_directory }}</small>
               </div>
             </div>
             <div class="form-group">
@@ -57,20 +58,22 @@
           <fieldset>
             <legend>{{ text_product }}</legend>
             <div class="form-group required">
-              <label class="col-sm-2 control-label" for="input-catalog-limit"><span data-toggle="tooltip" title="{{ help_product_limit }}">{{ entry_product_limit }}</span></label>
+              <label class="col-sm-2 control-label" for="input-catalog-limit">{{ entry_product_limit }}</label>
               <div class="col-sm-10">
                 <input type="text" name="theme_default_product_limit" value="{{ theme_default_product_limit }}" placeholder="{{ entry_product_limit }}" id="input-catalog-limit" class="form-control"/>
+                <small class="form-text text-muted">{{ help_product_limit }}</small>
                 {% if error_product_limit %}
-                  <div class="text-danger">{{ error_product_limit }}</div>
+                  <div class="invalid-tooltip">{{ error_product_limit }}</div>
                 {% endif %}
               </div>
             </div>
             <div class="form-group required">
-              <label class="col-sm-2 control-label" for="input-description-limit"><span data-toggle="tooltip" title="{{ help_product_description_length }}">{{ entry_product_description_length }}</span></label>
+              <label class="col-sm-2 control-label" for="input-description-limit">{{ entry_product_description_length }}</label>
               <div class="col-sm-10">
                 <input type="text" name="theme_default_product_description_length" value="{{ theme_default_product_description_length }}" placeholder="{{ entry_product_description_length }}" id="input-description-limit" class="form-control"/>
+                <small class="form-text text-muted">{{ help_product_description_length }}</small>
                 {% if error_product_description_length %}
-                  <div class="text-danger">{{ error_product_description_length }}</div>
+                  <div class="invalid-tooltip">{{ error_product_description_length }}</div>
                 {% endif %}
               </div>
             </div>
@@ -89,7 +92,7 @@
                   </div>
                 </div>
                 {% if error_image_category %}
-                  <div class="text-danger">{{ error_image_category }}</div>
+                  <div class="invalid-tooltip">{{ error_image_category }}</div>
                 {% endif %}
               </div>
             </div>
@@ -105,7 +108,7 @@
                   </div>
                 </div>
                 {% if error_image_thumb %}
-                  <div class="text-danger">{{ error_image_thumb }}</div>
+                  <div class="invalid-tooltip">{{ error_image_thumb }}</div>
                 {% endif %}
               </div>
             </div>
@@ -121,7 +124,7 @@
                   </div>
                 </div>
                 {% if error_image_popup %}
-                  <div class="text-danger">{{ error_image_popup }}</div>
+                  <div class="invalid-tooltip">{{ error_image_popup }}</div>
                 {% endif %}
               </div>
             </div>
@@ -137,7 +140,7 @@
                   </div>
                 </div>
                 {% if error_image_product %}
-                  <div class="text-danger">{{ error_image_product }}</div>
+                  <div class="invalid-tooltip">{{ error_image_product }}</div>
                 {% endif %}
               </div>
             </div>
@@ -153,7 +156,7 @@
                   </div>
                 </div>
                 {% if error_image_additional %}
-                  <div class="text-danger">{{ error_image_additional }}</div>
+                  <div class="invalid-tooltip">{{ error_image_additional }}</div>
                 {% endif %}
               </div>
             </div>
@@ -169,7 +172,7 @@
                   </div>
                 </div>
                 {% if error_image_related %}
-                  <div class="text-danger">{{ error_image_related }}</div>
+                  <div class="invalid-tooltip">{{ error_image_related }}</div>
                 {% endif %}
               </div>
             </div>
@@ -185,7 +188,7 @@
                   </div>
                 </div>
                 {% if error_image_compare %}
-                  <div class="text-danger">{{ error_image_compare }}</div>
+                  <div class="invalid-tooltip">{{ error_image_compare }}</div>
                 {% endif %}
               </div>
             </div>
@@ -201,7 +204,7 @@
                   </div>
                 </div>
                 {% if error_image_wishlist %}
-                  <div class="text-danger">{{ error_image_wishlist }}</div>
+                  <div class="invalid-tooltip">{{ error_image_wishlist }}</div>
                 {% endif %}
               </div>
             </div>
@@ -217,7 +220,7 @@
                   </div>
                 </div>
                 {% if error_image_cart %}
-                  <div class="text-danger">{{ error_image_cart }}</div>
+                  <div class="invalid-tooltip">{{ error_image_cart }}</div>
                 {% endif %}
               </div>
             </div>
@@ -233,7 +236,7 @@
                   </div>
                 </div>
                 {% if error_image_location %}
-                  <div class="text-danger">{{ error_image_location }}</div>
+                  <div class="invalid-tooltip">{{ error_image_location }}</div>
                 {% endif %}
               </div>
             </div>

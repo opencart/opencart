@@ -40,7 +40,7 @@
                   <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
                   <small class="form-text text-muted">{{ help_code }}</small>
                   {% if error_code %}
-                    <div class="text-danger">{{ error_code }}</div>
+                    <div class="invalid-tooltip">{{ error_code }}</div>
                   {% endif %}
                 </div>
               </div>
@@ -49,7 +49,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="from_name" value="{{ from_name }}" placeholder="{{ entry_from_name }}" id="input-from-name" class="form-control"/>
                   {% if error_from_name %}
-                    <div class="text-danger">{{ error_from_name }}</div>
+                    <div class="invalid-tooltip">{{ error_from_name }}</div>
                   {% endif %}
                 </div>
               </div>
@@ -58,7 +58,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="from_email" value="{{ from_email }}" placeholder="{{ entry_from_email }}" id="input-from-email" class="form-control"/>
                   {% if error_from_email %}
-                    <div class="text-danger">{{ error_from_email }}</div>
+                    <div class="invalid-tooltip">{{ error_from_email }}</div>
                   {% endif %}
                 </div>
               </div>
@@ -67,7 +67,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="to_name" value="{{ to_name }}" placeholder="{{ entry_to_name }}" id="input-to-name" class="form-control"/>
                   {% if error_to_name %}
-                    <div class="text-danger">{{ error_to_name }}</div>
+                    <div class="invalid-tooltip">{{ error_to_name }}</div>
                   {% endif %}
                 </div>
               </div>
@@ -76,7 +76,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="to_email" value="{{ to_email }}" placeholder="{{ entry_to_email }}" id="input-to-email" class="form-control"/>
                   {% if error_to_email %}
-                    <div class="text-danger">{{ error_to_email }}</div>
+                    <div class="invalid-tooltip">{{ error_to_email }}</div>
                   {% endif %}
                 </div>
               </div>
@@ -105,7 +105,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="amount" value="{{ amount }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
                   {% if error_amount %}
-                    <div class="text-danger">{{ error_amount }}</div>
+                    <div class="invalid-tooltip">{{ error_amount }}</div>
                   {% endif %}
                 </div>
               </div>

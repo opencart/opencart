@@ -28,7 +28,7 @@
               <input type="text" name="query" value="{{ query }}" placeholder="{{ entry_query }}" id="input-query" class="form-control"/>
               <small class="form-text text-muted">{{ help_query }}</small>
               {% if error_query %}
-                <div class="text-danger">{{ error_query }}</div>
+                <div class="invalid-tooltip">{{ error_query }}</div>
               {% endif %}
             </div>
           </div>
@@ -38,7 +38,7 @@
               <input type="text" name="keyword" value="{{ keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control"/>
               <small class="form-text text-muted">{{ help_keyword }}</small>
               {% if error_keyword %}
-                <div class="text-danger">{{ error_keyword }}</div>
+                <div class="invalid-tooltip">{{ error_keyword }}</div>
               {% endif %}
             </div>
           </div>

@@ -31,7 +31,7 @@
                   <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span> <input type="text" name="option_description[{{ language.language_id }}][name]" value="{{ option_description[language.language_id] ? option_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control"/>
                   </div>
                   {% if error_name[language.language_id] %}
-                    <div class="text-danger">{{ error_name[language.language_id] }}</div>
+                    <div class="invalid-tooltip">{{ error_name[language.language_id] }}</div>
                   {% endif %}
                 {% endfor %}</div>
             </div>
@@ -122,7 +122,7 @@
                         <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span> <input type="text" name="option_value[{{ option_value_row }}][option_value_description][{{ language.language_id }}][name]" value="{{ option_value.option_value_description[language.language_id] ? option_value.option_value_description[language.language_id].name }}" placeholder="{{ entry_option_value }}" class="form-control"/>
                         </div>
                         {% if error_option_value[option_value_row][language.language_id] %}
-                          <div class="text-danger">{{ error_option_value[option_value_row][language.language_id] }}</div>
+                          <div class="invalid-tooltip">{{ error_option_value[option_value_row][language.language_id] }}</div>
                         {% endif %}
                       {% endfor %}</td>
                     <td class="text-left"><a href="" id="thumb-image{{ option_value_row }}" data-toggle="image" class="img-thumbnail"><img src="{{ option_value.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}"/></a> <input type="hidden" name="option_value[{{ option_value_row }}][image]" value="{{ option_value.image }}" id="input-image{{ option_value_row }}"/></td>

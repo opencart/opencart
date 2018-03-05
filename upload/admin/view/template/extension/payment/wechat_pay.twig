@@ -29,7 +29,7 @@
               <div class="col-sm-10">
                 <input type="text" name="payment_wechat_pay_app_id" value="{{ payment_wechat_pay_app_id }}" placeholder="{{ entry_app_id }}" id="entry-app-id" class="form-control"/>
                 {% if error_app_id %}
-                <div class="text-danger">{{ error_app_id }}</div>
+                <div class="invalid-tooltip">{{ error_app_id }}</div>
                 {% endif %}
               </div>
             </div>
@@ -38,7 +38,7 @@
               <div class="col-sm-10">
                 <input type="text" name="payment_wechat_pay_app_secret" value="{{ payment_wechat_pay_app_secret }}" placeholder="{{ entry_app_secret }}" id="entry-app-secret" class="form-control"/>
                 {% if error_app_secret %}
-                  <div class="text-danger">{{ error_app_secret }}</div>
+                  <div class="invalid-tooltip">{{ error_app_secret }}</div>
                 {% endif %}
               </div>
             </div>
@@ -47,7 +47,7 @@
               <div class="col-sm-10">
                 <input type="text" name="payment_wechat_pay_mch_id" value="{{ payment_wechat_pay_mch_id }}" placeholder="{{ entry_mch_id }}" id="entry-mch-id" class="form-control"/>
                 {% if error_mch_id %}
-                  <div class="text-danger">{{ error_mch_id }}</div>
+                  <div class="invalid-tooltip">{{ error_mch_id }}</div>
                 {% endif %}
               </div>
             </div>
@@ -56,7 +56,7 @@
               <div class="col-sm-10">
                 <input type="text" name="payment_wechat_pay_api_secret" value="{{ payment_wechat_pay_api_secret }}" placeholder="{{ entry_api_secret }}" id="entry-api-secret" class="form-control"/>
                 {% if error_api_secret %}
-                  <div class="text-danger">{{ error_api_secret }}</div>
+                  <div class="invalid-tooltip">{{ error_api_secret }}</div>
                 {% endif %}
               </div>
             </div>

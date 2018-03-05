@@ -87,7 +87,7 @@
                   <div class="col-sm-10">
                     <input type="text" name="payment_squareup_client_id" value="{{ payment_squareup_client_id }}" placeholder="{{ text_client_id_placeholder }}" id="input_payment_squareup_client_id" class="form-control"/>
                     {% if error_client_id %}
-                      <div class="text-danger">{{ error_client_id }}</div>
+                      <div class="invalid-tooltip">{{ error_client_id }}</div>
                     {% endif %}
                   </div>
                 </div>
@@ -96,7 +96,7 @@
                   <div class="col-sm-10">
                     <input type="text" name="payment_squareup_client_secret" value="{{ payment_squareup_client_secret }}" placeholder="{{ text_client_secret_placeholder }}" id="input_payment_squareup_client_secret" class="form-control"/>
                     {% if error_client_secret %}
-                      <div class="text-danger">{{ error_client_secret }}</div>
+                      <div class="invalid-tooltip">{{ error_client_secret }}</div>
                     {% endif %}
                   </div>
                 </div>
@@ -161,7 +161,7 @@
                   <div class="col-sm-10">
                     <input type="text" name="payment_squareup_sandbox_client_id" value="{{ payment_squareup_sandbox_client_id }}" placeholder="{{ text_sandbox_client_id_placeholder }}" id="input_payment_squareup_sandbox_client_id" class="form-control"/>
                     {% if error_sandbox_client_id %}
-                      <div class="text-danger">{{ error_sandbox_client_id }}</div>
+                      <div class="invalid-tooltip">{{ error_sandbox_client_id }}</div>
                     {% endif %}
                   </div>
                 </div>
@@ -170,7 +170,7 @@
                   <div class="col-sm-10">
                     <input type="text" name="payment_squareup_sandbox_token" value="{{ payment_squareup_sandbox_token }}" placeholder="{{ text_sandbox_access_token_placeholder }}" id="input_payment_squareup_sandbox_token" class="form-control"/>
                     {% if error_sandbox_token %}
-                      <div class="text-danger">{{ error_sandbox_token }}</div>
+                      <div class="invalid-tooltip">{{ error_sandbox_token }}</div>
                     {% endif %}
                   </div>
                 </div>
@@ -206,7 +206,7 @@
                       {% endfor %}
                     </select>
                     {% if error_location %}
-                      <div class="text-danger">{{ error_location }}</div>
+                      <div class="invalid-tooltip">{{ error_location }}</div>
                     {% endif %}
                   </div>
                 </div>
@@ -311,7 +311,7 @@
                     </label>
 
                     {% if error_cron_acknowledge %}
-                      <div class="text-danger">{{ error_cron_acknowledge }}</div>
+                      <div class="invalid-tooltip">{{ error_cron_acknowledge }}</div>
                     {% endif %}
                   </div>
                 </div>
@@ -334,7 +334,7 @@
                     <input id="input_payment_squareup_cron_email" name="payment_squareup_cron_email" type="text" class="form-control" value="{{ payment_squareup_cron_email }}"/>
                     <small class="form-text text-muted">{{ help_cron_email }}</small>
                     {% if error_cron_email %}
-                      <div class="text-danger">{{ error_cron_email }}</div>
+                      <div class="invalid-tooltip">{{ error_cron_email }}</div>
                     {% endif %}
                   </div>
                 </div>

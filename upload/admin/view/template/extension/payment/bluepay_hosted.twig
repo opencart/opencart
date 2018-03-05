@@ -28,7 +28,7 @@
             <div class="col-sm-10">
               <input type="text" name="payment_bluepay_hosted_account_name" value="{{ payment_bluepay_hosted_account_name }}" placeholder="{{ entry_account_name }}" id="input-account-name" class="form-control"/>
               {% if error_account_name %}
-                <div class="text-danger">{{ error_account_name }}</div>
+                <div class="invalid-tooltip">{{ error_account_name }}</div>
               {% endif %}
             </div>
           </div>
@@ -37,7 +37,7 @@
             <div class="col-sm-10">
               <input type="text" name="payment_bluepay_hosted_account_id" value="{{ payment_bluepay_hosted_account_id }}" placeholder="{{ entry_account_id }}" id="input-account-id" class="form-control"/>
               {% if error_account_id %}
-                <div class="text-danger">{{ error_account_id }}</div>
+                <div class="invalid-tooltip">{{ error_account_id }}</div>
               {% endif %}
             </div>
           </div>
@@ -46,7 +46,7 @@
             <div class="col-sm-10">
               <input type="text" name="payment_bluepay_hosted_secret_key" value="{{ payment_bluepay_hosted_secret_key }}" placeholder="{{ entry_secret_key }}" id="payment-bluepay-hosted-secret_key" class="form-control"/>
               {% if error_secret_key %}
-                <div class="text-danger">{{ error_secret_key }}</div>
+                <div class="invalid-tooltip">{{ error_secret_key }}</div>
               {% endif %}
             </div>
           </div>

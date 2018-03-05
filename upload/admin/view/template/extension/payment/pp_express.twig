@@ -59,7 +59,7 @@
                   <div class="col-sm-10">
                     <input type="text" name="payment_pp_express_username" value="{{ payment_pp_express_username }}" placeholder="{{ entry_username }}" id="entry-username" class="form-control"/>
                     {% if error_username %}
-                      <div class="text-danger">{{ error_username }}</div>
+                      <div class="invalid-tooltip">{{ error_username }}</div>
                     {% endif %}
                   </div>
                 </div>
@@ -68,7 +68,7 @@
                   <div class="col-sm-10">
                     <input type="text" name="payment_pp_express_password" value="{{ payment_pp_express_password }}" placeholder="{{ entry_password }}" id="entry-password" class="form-control"/>
                     {% if error_password %}
-                      <div class="text-danger">{{ error_password }}</div>
+                      <div class="invalid-tooltip">{{ error_password }}</div>
                     {% endif %}
                   </div>
                 </div>
@@ -77,7 +77,7 @@
                   <div class="col-sm-10">
                     <input type="text" name="payment_pp_express_signature" value="{{ payment_pp_express_signature }}" placeholder="{{ entry_signature }}" id="entry-signature" class="form-control"/>
                     {% if error_signature %}
-                      <div class="text-danger">{{ error_signature }}</div>
+                      <div class="invalid-tooltip">{{ error_signature }}</div>
                     {% endif %}
                   </div>
                 </div>
@@ -86,7 +86,7 @@
                   <div class="col-sm-10">
                     <input type="text" name="payment_pp_express_sandbox_username" value="{{ payment_pp_express_sandbox_username }}" placeholder="{{ entry_sandbox_username }}" id="entry-sandbox-username" class="form-control"/>
                     {% if error_sandbox_username %}
-                      <div class="text-danger">{{ error_sandbox_username }}</div>
+                      <div class="invalid-tooltip">{{ error_sandbox_username }}</div>
                     {% endif %}
                   </div>
                 </div>
@@ -95,7 +95,7 @@
                   <div class="col-sm-10">
                     <input type="text" name="payment_pp_express_sandbox_password" value="{{ payment_pp_express_sandbox_password }}" placeholder="{{ entry_sandbox_password }}" id="entry-sandbox-password" class="form-control"/>
                     {% if error_sandbox_password %}
-                      <div class="text-danger">{{ error_sandbox_password }}</div>
+                      <div class="invalid-tooltip">{{ error_sandbox_password }}</div>
                     {% endif %}
                   </div>
                 </div>
@@ -104,7 +104,7 @@
                   <div class="col-sm-10">
                     <input type="text" name="payment_pp_express_sandbox_signature" value="{{ payment_pp_express_sandbox_signature }}" placeholder="{{ entry_sandbox_signature }}" id="entry-sandbox-signature" class="form-control"/>
                     {% if error_sandbox_signature %}
-                      <div class="text-danger">{{ error_sandbox_signature }}</div>
+                      <div class="invalid-tooltip">{{ error_sandbox_signature }}</div>
                     {% endif %}
                   </div>
                 </div>

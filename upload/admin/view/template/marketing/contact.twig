@@ -62,24 +62,27 @@
             </div>
           </div>
           <div class="form-group to" id="to-customer">
-            <label class="col-sm-2 control-label" for="input-customer"><span data-toggle="tooltip" title="{{ help_customer }}">{{ entry_customer }}</span></label>
+            <label class="col-sm-2 control-label" for="input-customer">{{ entry_customer }}</label>
             <div class="col-sm-10">
               <input type="text" name="customers" value="" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
               <div class="well well-sm" style="height: 150px; overflow: auto;"></div>
+			  <small class="form-text text-muted">{{ help_customer }}</small>
             </div>
           </div>
           <div class="form-group to" id="to-affiliate">
-            <label class="col-sm-2 control-label" for="input-affiliate"><span data-toggle="tooltip" title="{{ help_affiliate }}">{{ entry_affiliate }}</span></label>
+            <label class="col-sm-2 control-label" for="input-affiliate">{{ entry_affiliate }}</label>
             <div class="col-sm-10">
               <input type="text" name="affiliates" value="" placeholder="{{ entry_affiliate }}" id="input-affiliate" class="form-control"/>
               <div class="well well-sm" style="height: 150px; overflow: auto;"></div>
+			  <small class="form-text text-muted">{{ help_affiliate }}</small>
             </div>
           </div>
           <div class="form-group to" id="to-product">
-            <label class="col-sm-2 control-label" for="input-product"><span data-toggle="tooltip" title="{{ help_product }}">{{ entry_product }}</span></label>
+            <label class="col-sm-2 control-label" for="input-product">{{ entry_product }}</label>
             <div class="col-sm-10">
               <input type="text" name="products" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
               <div class="well well-sm" style="height: 150px; overflow: auto;"></div>
+			  <small class="form-text text-muted">{{ help_product }}</small>
             </div>
           </div>
           <div class="form-group required">
@@ -230,11 +233,11 @@ function send(url) {
 				}
 
 				if (json['error']['subject']) {
-					$('input[name=\'subject\']').after('<div class="text-danger">' + json['error']['subject'] + '</div>');
+					$('input[name=\'subject\']').after('<div class="invalid-tooltip">' + json['error']['subject'] + '</div>');
 				}
 
 				if (json['error']['message']) {
-					$('textarea[name=\'message\']').parent().append('<div class="text-danger">' + json['error']['message'] + '</div>');
+					$('textarea[name=\'message\']').parent().append('<div class="invalid-tooltip">' + json['error']['message'] + '</div>');
 				}
 			}
 

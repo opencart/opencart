@@ -29,7 +29,7 @@
             <div class="col-sm-10">
               <input type="text" name="captcha_google_key" value="{{ captcha_google_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control"/>
               {% if error_key %}
-                <div class="text-danger">{{ error_key }}</div>
+                <div class="invalid-tooltip">{{ error_key }}</div>
               {% endif %}
             </div>
           </div>
@@ -38,7 +38,7 @@
             <div class="col-sm-10">
               <input type="text" name="captcha_google_secret" value="{{ captcha_google_secret }}" placeholder="{{ entry_secret }}" id="input-secret" class="form-control"/>
               {% if error_secret %}
-                <div class="text-danger">{{ error_secret }}</div>
+                <div class="invalid-tooltip">{{ error_secret }}</div>
               {% endif %}
             </div>
           </div>

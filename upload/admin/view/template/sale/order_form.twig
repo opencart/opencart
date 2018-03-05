@@ -1124,9 +1124,9 @@ $('#button-customer').on('click', function() {
 					var element = $('#input-' + i.replace('_', '-'));
 
 					if (element.parent().hasClass('input-group')) {
-						$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+						$(element).parent().after('<div class="invalid-tooltip">' + json['error'][i] + '</div>');
 					} else {
-						$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+						$(element).after('<div class="invalid-tooltip">' + json['error'][i] + '</div>');
 					}
 				}
 
@@ -1408,9 +1408,9 @@ $('#button-product-add').on('click', function() {
 						var element = $('#input-option' + i.replace('_', '-'));
 
 						if (element.parent().hasClass('input-group')) {
-							$(element).parent().after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+							$(element).parent().after('<div class="invalid-tooltip">' + json['error']['option'][i] + '</div>');
 						} else {
-							$(element).after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+							$(element).after('<div class="invalid-tooltip">' + json['error']['option'][i] + '</div>');
 						}
 					}
 				}
@@ -1459,9 +1459,9 @@ $('#button-voucher-add').on('click', function() {
 					var element = $('#input-' + i.replace('_', '-'));
 
 					if (element.parent().hasClass('input-group')) {
-						$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+						$(element).parent().after('<div class="invalid-tooltip">' + json['error'][i] + '</div>');
 					} else {
-						$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+						$(element).after('<div class="invalid-tooltip">' + json['error'][i] + '</div>');
 					}
 				}
 
@@ -1680,9 +1680,9 @@ $('#button-payment-address').on('click', function() {
 					var element = $('#input-payment-' + i.replace('_', '-'));
 
 					if ($(element).parent().hasClass('input-group')) {
-						$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+						$(element).parent().after('<div class="invalid-tooltip">' + json['error'][i] + '</div>');
 					} else {
-						$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+						$(element).after('<div class="invalid-tooltip">' + json['error'][i] + '</div>');
 					}
 				}
 
@@ -1864,9 +1864,9 @@ $('#button-shipping-address').on('click', function() {
 					var element = $('#input-shipping-' + i.replace('_', '-'));
 
 					if ($(element).parent().hasClass('input-group')) {
-						$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+						$(element).parent().after('<div class="invalid-tooltip">' + json['error'][i] + '</div>');
 					} else {
-						$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+						$(element).after('<div class="invalid-tooltip">' + json['error'][i] + '</div>');
 					}
 				}
 
@@ -2223,7 +2223,7 @@ $('#content').delegate('button[id^=\'button-upload\'], button[id^=\'button-custo
 					$(element).parent().find('.text-danger').remove();
 
 					if (json['error']) {
-						$(element).parent().find('input[type=\'hidden\']').after('<div class="text-danger">' + json['error'] + '</div>');
+						$(element).parent().find('input[type=\'hidden\']').after('<div class="invalid-tooltip">' + json['error'] + '</div>');
 					}
 
 					if (json['success']) {

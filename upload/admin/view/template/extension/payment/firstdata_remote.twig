@@ -35,7 +35,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="payment_firstdata_remote_merchant_id" value="{{ payment_firstdata_remote_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="input-merchant-id" class="form-control"/>
                   {% if error_merchant_id %}
-                    <div class="text-danger">{{ error_merchant_id }}</div>
+                    <div class="invalid-tooltip">{{ error_merchant_id }}</div>
                   {% endif %}
                 </div>
               </div>
@@ -44,7 +44,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="payment_firstdata_remote_user_id" value="{{ payment_firstdata_remote_user_id }}" placeholder="{{ entry_user_id }}" id="input-user-id" class="form-control"/>
                   {% if error_user_id %}
-                    <div class="text-danger">{{ error_user_id }}</div>
+                    <div class="invalid-tooltip">{{ error_user_id }}</div>
                   {% endif %}
                 </div>
               </div>
@@ -53,7 +53,7 @@
                 <div class="col-sm-10">
                   <input type="password" name="payment_firstdata_remote_password" value="{{ payment_firstdata_remote_password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control"/>
                   {% if error_password %}
-                    <div class="text-danger">{{ error_password }}</div>
+                    <div class="invalid-tooltip">{{ error_password }}</div>
                   {% endif %}
                 </div>
               </div>
@@ -63,7 +63,7 @@
                   <input type="text" name="payment_firstdata_remote_certificate" value="{{ payment_firstdata_remote_certificate }}" placeholder="{{ entry_certificate_path }}" id="input-certificate-path" class="form-control"/>
                   <small class="form-text text-muted">{{ help_certificate }}</small>
                   {% if error_certificate %}
-                    <div class="text-danger">{{ error_certificate }}</div>
+                    <div class="invalid-tooltip">{{ error_certificate }}</div>
                   {% endif %}
                 </div>
               </div>
@@ -72,7 +72,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="payment_firstdata_remote_key" value="{{ payment_firstdata_remote_key }}" placeholder="{{ entry_certificate_key_path }}" id="input-key-path" class="form-control"/>
                   {% if error_key %}
-                    <div class="text-danger">{{ error_key }}</div>
+                    <div class="invalid-tooltip">{{ error_key }}</div>
                   {% endif %}
                 </div>
               </div>
@@ -81,7 +81,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="payment_firstdata_remote_key_pw" value="{{ payment_firstdata_remote_key_pw }}" placeholder="{{ entry_certificate_key_pw }}" id="input-key-pw" class="form-control"/>
                   {% if error_key_pw %}
-                    <div class="text-danger">{{ error_key_pw }}</div>
+                    <div class="invalid-tooltip">{{ error_key_pw }}</div>
                   {% endif %}
                 </div>
               </div>
@@ -90,7 +90,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="payment_firstdata_remote_ca" value="{{ payment_firstdata_remote_ca }}" placeholder="{{ entry_certificate_ca_path }}" id="input-ca-path" class="form-control"/>
                   {% if error_ca %}
-                    <div class="text-danger">{{ error_ca }}</div>
+                    <div class="invalid-tooltip">{{ error_ca }}</div>
                   {% endif %}
                 </div>
               </div>

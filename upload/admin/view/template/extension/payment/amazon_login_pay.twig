@@ -69,7 +69,7 @@
                 {% endfor %}
               </select>
               {% if error_curreny %}
-                <div class="text-danger">{{ error_curreny }}</div>
+                <div class="invalid-tooltip">{{ error_curreny }}</div>
               {% endif %}
             </div>
           </div>
@@ -78,7 +78,7 @@
             <div class="col-sm-10">
               <input type="text" name="payment_amazon_login_pay_merchant_id" value="{{ payment_amazon_login_pay_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="amazon-login-pay-merchant-id" class="form-control"/>
               {% if error_merchant_id %}
-                <div class="text-danger">{{ error_merchant_id }}</div>
+                <div class="invalid-tooltip">{{ error_merchant_id }}</div>
               {% endif %}
             </div>
           </div>
@@ -87,7 +87,7 @@
             <div class="col-sm-10">
               <input type="text" name="payment_amazon_login_pay_access_key" value="{{ payment_amazon_login_pay_access_key }}" placeholder="{{ entry_access_key }}" id="amazon-login-pay-access-key" class="form-control"/>
               {% if error_access_key %}
-                <div class="text-danger">{{ error_access_key }}</div>
+                <div class="invalid-tooltip">{{ error_access_key }}</div>
               {% endif %}
             </div>
           </div>
@@ -96,7 +96,7 @@
             <div class="col-sm-10">
               <input type="text" name="payment_amazon_login_pay_access_secret" value="{{ payment_amazon_login_pay_access_secret }}" placeholder="{{ entry_access_secret }}" id="amazon-login-pay-access-secret" class="form-control"/>
               {% if error_access_secret %}
-                <div class="text-danger">{{ error_access_secret }}</div>
+                <div class="invalid-tooltip">{{ error_access_secret }}</div>
               {% endif %}
             </div>
           </div>
@@ -105,7 +105,7 @@
             <div class="col-sm-10">
               <input type="text" name="payment_amazon_login_pay_client_id" value="{{ payment_amazon_login_pay_client_id }}" placeholder="{{ entry_client_id }}" id="amazon-login-pay-client-id" class="form-control"/>
               {% if error_client_id %}
-                <div class="text-danger">{{ error_client_id }}</div>
+                <div class="invalid-tooltip">{{ error_client_id }}</div>
               {% endif %}
             </div>
           </div>
@@ -114,7 +114,7 @@
             <div class="col-sm-10">
               <input type="text" name="payment_amazon_login_pay_client_secret" value="{{ payment_amazon_login_pay_client_secret }}" placeholder="{{ entry_client_secret }}" id="amazon-login-pay-client-secret" class="form-control"/>
               {% if error_client_secret %}
-                <div class="text-danger">{{ error_client_secret }}</div>
+                <div class="invalid-tooltip">{{ error_client_secret }}</div>
               {% endif %}
             </div>
           </div>
@@ -221,7 +221,7 @@
               <input type="text" name="payment_amazon_login_pay_minimum_total" value="{{ payment_amazon_login_pay_minimum_total }}" placeholder="{{ text_minimum_total }}" id="amazon-login-pay-minimum-total" class="form-control"/>
               <small class="form-text text-muted">{{ help_minimum_total }}</small>
               {% if error_minimum_total %}
-                <div class="text-danger">{{ error_minimum_total }}</div>
+                <div class="invalid-tooltip">{{ error_minimum_total }}</div>
               {% endif %}
             </div>
           </div>

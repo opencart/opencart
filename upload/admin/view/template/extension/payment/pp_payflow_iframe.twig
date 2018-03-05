@@ -29,7 +29,7 @@
               <input type="text" name="payment_pp_payflow_iframe_vendor" value="{{ payment_pp_payflow_iframe_vendor }}" placeholder="{{ entry_vendor }}" id="entry-vender" class="form-control"/>
               <small class="form-text text-muted">{{ help_vendor }}</small>
               {% if error_vendor %}
-              <div class="text-danger">{{ error_vendor }}</div>
+              <div class="invalid-tooltip">{{ error_vendor }}</div>
               {% endif %}
             </div>
           </div>
@@ -39,7 +39,7 @@
               <input type="text" name="payment_pp_payflow_iframe_user" value="{{ payment_pp_payflow_iframe_user }}" placeholder="{{ entry_user }}" id="entry-user" class="form-control"/>
               <small class="form-text text-muted">{{ help_user }}</small>
               {% if error_user %}
-              <div class="text-danger">{{ error_user }}</div>
+              <div class="invalid-tooltip">{{ error_user }}</div>
               {% endif %}
             </div>
           </div>
@@ -49,7 +49,7 @@
               <input type="text" name="payment_pp_payflow_iframe_password" value="{{ payment_pp_payflow_iframe_password }}" placeholder="{{ entry_password }}" id="entry-password" class="form-control"/>
               <small class="form-text text-muted">{{ help_password }}</small>
               {% if error_password %}
-              <div class="text-danger">{{ error_password }}</div>
+              <div class="invalid-tooltip">{{ error_password }}</div>
               {% endif %}
             </div>
           </div>
@@ -59,7 +59,7 @@
               <input type="text" name="payment_pp_payflow_iframe_partner" value="{{ payment_pp_payflow_iframe_partner }}" placeholder="{{ entry_partner }}" id="entry-partner" class="form-control"/>
               <small class="form-text text-muted">{{ help_partner }}</small>
               {% if error_partner %}
-              <div class="text-danger">{{ error_partner }}</div>
+              <div class="invalid-tooltip">{{ error_partner }}</div>
               {% endif %}
             </div>
           </div>

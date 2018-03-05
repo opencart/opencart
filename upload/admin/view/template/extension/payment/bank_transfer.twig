@@ -30,7 +30,7 @@
                 <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span> <textarea name="payment_bank_transfer_bank{{ language.language_id }}" cols="80" rows="10" placeholder="{{ entry_bank }}" id="input-bank{{ language.language_id }}" class="form-control">{% if payment_bank_transfer_bank[language.language_id] %}{{ payment_bank_transfer_bank[language.language_id] }}{% endif %}</textarea>
                 </div>
                 {% if error_bank[language.language_id] %}
-                  <div class="text-danger">{{ error_bank[language.language_id] }}</div>
+                  <div class="invalid-tooltip">{{ error_bank[language.language_id] }}</div>
                 {% endif %}
               </div>
             </div>

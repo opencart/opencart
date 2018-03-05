@@ -27,7 +27,7 @@
             <div class="col-sm-10">
               <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
               {% if error_author %}
-                <div class="text-danger">{{ error_author }}</div>
+                <div class="invalid-tooltip">{{ error_author }}</div>
               {% endif %} </div>
           </div>
           <div class="form-group required">
@@ -36,7 +36,7 @@
               <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control"/> <input type="hidden" name="product_id" value="{{ product_id }}"/>
               <small class="form-text text-muted">{{ help_product }}</small>
               {% if error_product %}
-                <div class="text-danger">{{ error_product }}</div>
+                <div class="invalid-tooltip">{{ error_product }}</div>
               {% endif %} </div>
           </div>
           <div class="form-group required">
@@ -44,7 +44,7 @@
             <div class="col-sm-10">
               <textarea name="text" cols="60" rows="8" placeholder="{{ entry_text }}" id="input-text" class="form-control">{{ text }}</textarea>
               {% if error_text %}
-                <div class="text-danger">{{ error_text }}</div>
+                <div class="invalid-tooltip">{{ error_text }}</div>
               {% endif %} </div>
           </div>
           <div class="form-group required">
@@ -82,7 +82,7 @@
                   5
                 {% endif %} </label>
               {% if error_rating %}
-                <div class="text-danger">{{ error_rating }}</div>
+                <div class="invalid-tooltip">{{ error_rating }}</div>
               {% endif %} </div>
           </div>
           <div class="form-group">

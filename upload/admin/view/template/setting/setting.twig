@@ -43,7 +43,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="config_meta_title" value="{{ config_meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title" class="form-control"/>
                   {% if error_meta_title %}
-                    <div class="text-danger">{{ error_meta_title }}</div>
+                    <div class="invalid-tooltip">{{ error_meta_title }}</div>
                   {% endif %} </div>
               </div>
               <div class="form-group">
@@ -106,7 +106,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="config_name" value="{{ config_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
                   {% if error_name %}
-                    <div class="text-danger">{{ error_name }}</div>
+                    <div class="invalid-tooltip">{{ error_name }}</div>
                   {% endif %} </div>
               </div>
               <div class="form-group required">
@@ -114,7 +114,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="config_owner" value="{{ config_owner }}" placeholder="{{ entry_owner }}" id="input-owner" class="form-control"/>
                   {% if error_owner %}
-                    <div class="text-danger">{{ error_owner }}</div>
+                    <div class="invalid-tooltip">{{ error_owner }}</div>
                   {% endif %} </div>
               </div>
               <div class="form-group required">
@@ -122,7 +122,7 @@
                 <div class="col-sm-10">
                   <textarea name="config_address" placeholder="{{ entry_address }}" rows="5" id="input-address" class="form-control">{{ config_address }}</textarea>
                   {% if error_address %}
-                    <div class="text-danger">{{ error_address }}</div>
+                    <div class="invalid-tooltip">{{ error_address }}</div>
                   {% endif %} </div>
               </div>
               <div class="form-group">
@@ -137,7 +137,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="config_email" value="{{ config_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
                   {% if error_email %}
-                    <div class="text-danger">{{ error_email }}</div>
+                    <div class="invalid-tooltip">{{ error_email }}</div>
                   {% endif %} </div>
               </div>
               <div class="form-group required">
@@ -145,7 +145,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="config_telephone" value="{{ config_telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
                   {% if error_telephone %}
-                    <div class="text-danger">{{ error_telephone }}</div>
+                    <div class="invalid-tooltip">{{ error_telephone }}</div>
                   {% endif %} </div>
               </div>
               <div class="form-group">
@@ -386,7 +386,7 @@
                     <input type="text" name="config_limit_admin" value="{{ config_limit_admin }}" placeholder="{{ entry_limit_admin }}" id="input-admin-limit" class="form-control"/>
                     <small class="form-text text-muted">{{ help_limit_admin }}</small>
                     {% if error_limit_admin %}
-                      <div class="text-danger">{{ error_limit_admin }}</div>
+                      <div class="invalid-tooltip">{{ error_limit_admin }}</div>
                     {% endif %} </div>
                 </div>
               </fieldset>
@@ -439,7 +439,7 @@
                     <input type="text" name="config_voucher_min" value="{{ config_voucher_min }}" placeholder="{{ entry_voucher_min }}" id="input-voucher-min" class="form-control"/>
                     <small class="form-text text-muted">{{ help_voucher_min }}</small>
                     {% if error_voucher_min %}
-                      <div class="text-danger">{{ error_voucher_min }}</div>
+                      <div class="invalid-tooltip">{{ error_voucher_min }}</div>
                     {% endif %}</div>
                 </div>
                 <div class="form-group required">
@@ -448,7 +448,7 @@
                     <input type="text" name="config_voucher_max" value="{{ config_voucher_max }}" placeholder="{{ entry_voucher_max }}" id="input-voucher-max" class="form-control"/>
                     <small class="form-text text-muted">{{ help_voucher_max }}</small>
                     {% if error_voucher_max %}
-                      <div class="text-danger">{{ error_voucher_max }}</div>
+                      <div class="invalid-tooltip">{{ error_voucher_max }}</div>
                     {% endif %} </div>
                 </div>
               </fieldset>
@@ -599,7 +599,7 @@
                     {% endfor %}
                     <small class="form-text text-muted">{{ help_customer_group_display }}</small>
                     {% if error_customer_group_display %}
-                      <div class="text-danger">{{ error_customer_group_display }}</div>
+                      <div class="invalid-tooltip">{{ error_customer_group_display }}</div>
                     {% endif %}</div>
                 </div>
                 <div class="form-group">
@@ -627,7 +627,7 @@
                     <input type="text" name="config_login_attempts" value="{{ config_login_attempts }}" placeholder="{{ entry_login_attempts }}" id="input-login-attempts" class="form-control"/>
                     <small class="form-text text-muted">{{ help_login_attempts }}</small>
                     {% if error_login_attempts %}
-                      <div class="text-danger">{{ error_login_attempts }}</div>
+                      <div class="invalid-tooltip">{{ error_login_attempts }}</div>
                     {% endif %} </div>
                 </div>
                 <div class="form-group">
@@ -747,7 +747,7 @@
                       {% endfor %}</div>
                     <small class="form-text text-muted">{{ help_processing_status }}</small>
                     {% if error_processing_status %}
-                      <div class="text-danger">{{ error_processing_status }}</div>
+                      <div class="invalid-tooltip">{{ error_processing_status }}</div>
                     {% endif %} </div>
                 </div>
                 <div class="form-group">
@@ -766,7 +766,7 @@
                       {% endfor %} </div>
                     <small class="form-text text-muted">{{ help_complete_status }}</small>
                     {% if error_complete_status %}
-                      <div class="text-danger">{{ error_complete_status }}</div>
+                      <div class="invalid-tooltip">{{ error_complete_status }}</div>
                     {% endif %}</div>
                 </div>
                 <div class="form-group">
@@ -1219,7 +1219,7 @@
                     <textarea name="config_encryption" rows="5" placeholder="{{ entry_encryption }}" id="input-encryption" class="form-control">{{ config_encryption }}</textarea>
                     <small class="form-text text-muted">{{ help_encryption }}</small>
                     {% if error_encryption %}
-                      <div class="text-danger">{{ error_encryption }}</div>
+                      <div class="invalid-tooltip">{{ error_encryption }}</div>
                     {% endif %}</div>
                 </div>
               </fieldset>
@@ -1238,7 +1238,7 @@
                     <textarea name="config_file_ext_allowed" rows="5" placeholder="{{ entry_file_ext_allowed }}" id="input-file-ext-allowed" class="form-control">{{ config_file_ext_allowed }}</textarea>
                     <small class="form-text text-muted">{{ help_file_ext_allowed }}</small>
                     {% if error_extension %}
-                      <div class="text-danger">{{ error_extension }}</div>
+                      <div class="invalid-tooltip">{{ error_extension }}</div>
                     {% endif %}
                   </div>
                 </div>
@@ -1248,7 +1248,7 @@
                     <textarea name="config_file_mime_allowed" rows="5" placeholder="{{ entry_file_mime_allowed }}" id="input-file-mime-allowed" class="form-control">{{ config_file_mime_allowed }}</textarea>
                     <small class="form-text text-muted">{{ help_file_mime_allowed }}</small>
                     {% if error_mime %}
-                      <div class="text-danger">{{ error_mime }}</div>
+                      <div class="invalid-tooltip">{{ error_mime }}</div>
                     {% endif %}
                   </div>
                 </div>
@@ -1296,7 +1296,7 @@
                   <div class="col-sm-10">
                     <input type="text" name="config_error_filename" value="{{ config_error_filename }}" placeholder="{{ entry_error_filename }}" id="input-error-filename" class="form-control"/>
                     {% if error_log %}
-                      <div class="text-danger">{{ error_log }}</div>
+                      <div class="invalid-tooltip">{{ error_log }}</div>
                     {% endif %} </div>
                 </div>
               </fieldset>

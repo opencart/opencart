@@ -24,19 +24,21 @@
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-shipping">
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-rate"><span data-toggle="tooltip" title="{{ help_rate }}">{{ entry_rate }}</span></label>
+            <label class="col-sm-2 control-label" for="input-rate">{{ entry_rate }}</label>
             <div class="col-sm-10">
               <textarea name="shipping_parcelforce_48_rate" rows="5" placeholder="{{ entry_rate }}" id="input-rate" class="form-control">{{ shipping_parcelforce_48_rate }}</textarea>
+              <small class="form-text text-muted">{{ help_rate }}</small>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-insurance"><span data-toggle="tooltip" title="{{ help_insurance }}">{{ entry_insurance }}</span></label>
+            <label class="col-sm-2 control-label" for="input-insurance">{{ entry_insurance }}</label>
             <div class="col-sm-10">
               <textarea name="shipping_parcelforce_48_insurance" rows="5" placeholder="{{ entry_insurance }}" id="input-insurance" class="form-control">{{ shipping_parcelforce_48_insurance }}</textarea>
+              <small class="form-text text-muted">{{ help_insurance }}</small>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_display_weight }}">{{ entry_display_weight }}</span></label>
+            <label class="col-sm-2 control-label">{{ entry_display_weight }}</label>
             <div class="col-sm-10">
               <label class="radio-inline">
                 {% if shipping_parcelforce_48_display_weight %}
@@ -55,10 +57,11 @@
                   {{ text_no }}
                 {% endif %}
               </label>
+              <small class="form-text text-muted">{{ help_display_weight }}</small>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-display-insurance"><span data-toggle="tooltip" title="{{ help_display_insurance }}">{{ entry_display_insurance }}</span></label>
+            <label class="col-sm-2 control-label" for="input-display-insurance">{{ entry_display_insurance }}</label>
             <div class="col-sm-10">
               <label class="radio-inline" id="input-display-insurance">
                 {% if shipping_parcelforce_48_display_insurance %}
@@ -77,10 +80,11 @@
                   {{ text_no }}
                 {% endif %}
               </label>
+              <small class="form-text text-muted">{{ help_display_insurance }}</small>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_display_time }}">{{ entry_display_time }}</span></label>
+            <label class="col-sm-2 control-label">{{ entry_display_time }}</label>
             <div class="col-sm-10">
               <label class="radio-inline">
                 {% if shipping_parcelforce_48_display_time %}
@@ -99,6 +103,7 @@
                   {{ text_no }}
                 {% endif %}
               </label>
+              <small class="form-text text-muted">{{ help_display_time }}</small>
             </div>
           </div>
           <div class="form-group">

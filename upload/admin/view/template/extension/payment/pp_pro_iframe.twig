@@ -34,7 +34,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="payment_pp_pro_iframe_user" value="{{ payment_pp_pro_iframe_user }}" placeholder="{{ entry_username }}" id="entry-username" class="form-control"/>
                   {% if error.username %}
-                    <div class="text-danger">{{ error.username }}</div>
+                    <div class="invalid-tooltip">{{ error.username }}</div>
                   {% endif %}
                 </div>
               </div>
@@ -43,7 +43,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="payment_pp_pro_iframe_password" value="{{ payment_pp_pro_iframe_password }}" placeholder="{{ entry_password }}" id="entry-password" class="form-control"/>
                   {% if error.password %}
-                    <div class="text-danger">{{ error.password }}</div>
+                    <div class="invalid-tooltip">{{ error.password }}</div>
                   {% endif %}
                 </div>
               </div>
@@ -52,7 +52,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="payment_pp_pro_iframe_sig" value="{{ payment_pp_pro_iframe_sig }}" placeholder="{{ entry_signature }}" id="entry-signature" class="form-control"/>
                   {% if error.signature %}
-                    <div class="text-danger">{{ error.signature }}</div>
+                    <div class="invalid-tooltip">{{ error.signature }}</div>
                   {% endif %}
                 </div>
               </div>

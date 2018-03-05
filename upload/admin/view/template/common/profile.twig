@@ -33,7 +33,7 @@
             <div class="col-sm-10">
               <input type="text" name="username" value="{{ username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
               {% if error_username %}
-                <div class="text-danger">{{ error_username }}</div>
+                <div class="invalid-tooltip">{{ error_username }}</div>
               {% endif %}
             </div>
           </div>
@@ -42,7 +42,7 @@
             <div class="col-sm-10">
               <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
               {% if error_firstname %}
-                <div class="text-danger">{{ error_firstname }}</div>
+                <div class="invalid-tooltip">{{ error_firstname }}</div>
               {% endif %}
             </div>
           </div>
@@ -51,7 +51,7 @@
             <div class="col-sm-10">
               <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
               {% if error_lastname %}
-                <div class="text-danger">{{ error_lastname }}</div>
+                <div class="invalid-tooltip">{{ error_lastname }}</div>
               {% endif %}
             </div>
           </div>
@@ -60,7 +60,7 @@
             <div class="col-sm-10">
               <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
               {% if error_email %}
-                <div class="text-danger">{{ error_email }}</div>
+                <div class="invalid-tooltip">{{ error_email }}</div>
               {% endif %}
             </div>
           </div>
@@ -74,7 +74,7 @@
             <div class="col-sm-10">
               <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" autocomplete="off"/>
               {% if error_password %}
-                <div class="text-danger">{{ error_password }}</div>
+                <div class="invalid-tooltip">{{ error_password }}</div>
               {% endif %}
             </div>
           </div>
@@ -83,7 +83,7 @@
             <div class="col-sm-10">
               <input type="password" name="confirm" value="{{ confirm }}" placeholder="{{ entry_confirm }}" id="input-confirm" class="form-control"/>
               {% if error_confirm %}
-                <div class="text-danger">{{ error_confirm }}</div>
+                <div class="invalid-tooltip">{{ error_confirm }}</div>
               {% endif %}
             </div>
           </div>

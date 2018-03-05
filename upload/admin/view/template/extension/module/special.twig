@@ -28,7 +28,7 @@
             <div class="col-sm-10">
               <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
               {% if error_name %}
-                <div class="text-danger">{{ error_name }}</div>
+                <div class="invalid-tooltip">{{ error_name }}</div>
               {% endif %}
             </div>
           </div>
@@ -43,7 +43,7 @@
             <div class="col-sm-10">
               <input type="text" name="width" value="{{ width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control"/>
               {% if error_width %}
-                <div class="text-danger">{{ error_width }}</div>
+                <div class="invalid-tooltip">{{ error_width }}</div>
               {% endif %}
             </div>
           </div>
@@ -52,7 +52,7 @@
             <div class="col-sm-10">
               <input type="text" name="height" value="{{ height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control"/>
               {% if error_height %}
-                <div class="text-danger">{{ error_height }}</div>
+                <div class="invalid-tooltip">{{ error_height }}</div>
               {% endif %}
             </div>
           </div>

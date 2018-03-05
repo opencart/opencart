@@ -28,7 +28,7 @@
             <div class="col-sm-10">
               <input type="text" name="payment_payza_merchant" value="{{ payment_payza_merchant }}" placeholder="{{ entry_merchant }}" id="input-merchant" class="form-control" />
               {% if error_merchant %}
-              <div class="text-danger">{{ error_merchant }}</div>
+              <div class="invalid-tooltip">{{ error_merchant }}</div>
               {% endif %}
             </div>
           </div>
@@ -37,7 +37,7 @@
             <div class="col-sm-10">
               <input type="text" name="payment_payza_security" value="{{ payment_payza_security }}" placeholder="{{ entry_security }}" id="input-security" class="form-control" />
               {% if error_security %}
-              <div class="text-danger">{{ error_security }}</div>
+              <div class="invalid-tooltip">{{ error_security }}</div>
               {% endif %}
             </div>
           </div>

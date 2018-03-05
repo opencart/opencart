@@ -40,11 +40,11 @@ $('#button-save').on('click', function(e) {
 				}
 
 				if (json['error']['username']) {
-					$('input[name="username"]').after('<div class="text-danger">' + json['error']['username'] + '</div>');
+					$('input[name="username"]').after('<div class="invalid-tooltip">' + json['error']['username'] + '</div>');
 				}
 
 				if (json['error']['secret']) {
-					$('textarea[name="secret"]').after('<div class="text-danger">' + json['error']['secret'] + '</div>');
+					$('textarea[name="secret"]').after('<div class="invalid-tooltip">' + json['error']['secret'] + '</div>');
 				}
 			}
 

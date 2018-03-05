@@ -29,7 +29,7 @@
               <textarea name="module_google_hangouts_code" rows="5" id="input-code" class="form-control">{{ module_google_hangouts_code }}</textarea>
               <small class="form-text text-muted">{{ help_code|escape('html') }}</small>
               {% if error_code %}
-                <div class="text-danger">{{ error_code }}</div>
+                <div class="invalid-tooltip">{{ error_code }}</div>
               {% endif %}
             </div>
           </div>

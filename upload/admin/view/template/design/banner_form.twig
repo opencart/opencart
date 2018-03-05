@@ -28,7 +28,7 @@
             <div class="col-sm-10">
               <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
               {% if error_name %}
-                <div class="text-danger">{{ error_name }}</div>
+                <div class="invalid-tooltip">{{ error_name }}</div>
               {% endif %}
             </div>
           </div>
@@ -72,7 +72,7 @@
                         <tr id="image-row{{ image_row }}">
                           <td class="text-left"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][title]" value="{{ banner_image.title }}" placeholder="{{ entry_title }}" class="form-control"/>
                             {% if error_banner_image[language.language_id][image_row] %}
-                              <div class="text-danger">{{ error_banner_image[language.language_id][image_row] }}</div>
+                              <div class="invalid-tooltip">{{ error_banner_image[language.language_id][image_row] }}</div>
                             {% endif %}</td>
                           <td class="text-left" style="width: 30%;"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][link]" value="{{ banner_image.link }}" placeholder="{{ entry_link }}" class="form-control"/></td>
                           <td class="text-center"><a href="" id="thumb-image{{ image_row }}" data-toggle="image" class="img-thumbnail"><img src="{{ banner_image.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}"/></a> <input type="hidden" name="banner_image[{{ language.language_id }}][{{ image_row }}][image]" value="{{ banner_image.image }}" id="input-image{{ image_row }}"/></td>

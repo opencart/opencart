@@ -28,7 +28,7 @@
             <div class="col-sm-10">
               <input type="text" name="payment_twocheckout_account" value="{{ payment_twocheckout_account }}" placeholder="{{ entry_account }}" id="input-account" class="form-control"/>
               {% if error_account %}
-                <div class="text-danger">{{ error_account }}</div>
+                <div class="invalid-tooltip">{{ error_account }}</div>
               {% endif %}
             </div>
           </div>
@@ -38,7 +38,7 @@
               <input type="text" name="payment_twocheckout_secret" value="{{ payment_twocheckout_secret }}" placeholder="{{ entry_secret }}" id="input-secret" class="form-control"/>
               <small class="form-text text-muted">{{ help_secret }}</small>
               {% if error_secret %}
-                <div class="text-danger">{{ error_secret }}</div>
+                <div class="invalid-tooltip">{{ error_secret }}</div>
               {% endif %}
             </div>
           </div>

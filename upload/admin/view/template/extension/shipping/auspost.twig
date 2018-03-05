@@ -28,7 +28,7 @@
             <div class="col-sm-10">
               <input type="text" name="shipping_auspost_api" value="{{ shipping_auspost_api }}" placeholder="{{ entry_api }}" id="input-api" class="form-control" maxlength="40"/>
               {% if error_api %}
-                <div class="text-danger">{{ error_api }}</div>
+                <div class="invalid-tooltip">{{ error_api }}</div>
               {% endif %}
             </div>
           </div>
@@ -37,12 +37,12 @@
             <div class="col-sm-10">
               <input type="text" name="shipping_auspost_postcode" value="{{ shipping_auspost_postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" maxlength="4"/>
               {% if error_postcode %}
-                <div class="text-danger">{{ error_postcode }}</div>
+                <div class="invalid-tooltip">{{ error_postcode }}</div>
               {% endif %}
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-weight-class"><span data-toggle="tooltip" title="{{ help_weight_class }}">{{ entry_weight_class }}</span></label>
+            <label class="col-sm-2 control-label" for="input-weight-class">{{ entry_weight_class }}</label>
             <div class="col-sm-10">
               <select name="shipping_auspost_weight_class_id" id="input-weight-class" class="form-control">
                 {% for weight_class in weight_classes %}
@@ -53,6 +53,7 @@
                   {% endif %}
                 {% endfor %}
               </select>
+              <small class="form-text text-muted">{{ help_weight_class }}</small>
             </div>
           </div>
           <div class="form-group">

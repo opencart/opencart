@@ -63,7 +63,7 @@
               <input type="text" name="payment_eway_username" value="{{ payment_eway_username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
               <small class="form-text text-muted">{{ help_username }}</small>
               {% if error_username %}
-                <div class="text-danger">{{ error_username }}</div>
+                <div class="invalid-tooltip">{{ error_username }}</div>
               {% endif %}
             </div>
           </div>
@@ -73,7 +73,7 @@
               <input type="password" name="payment_eway_password" value="{{ payment_eway_password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control"/>
               <small class="form-text text-muted">{{ help_password }}</small>
               {% if error_password %}
-                <div class="text-danger">{{ error_password }}</div>
+                <div class="invalid-tooltip">{{ error_password }}</div>
               {% endif %}
             </div>
           </div>
@@ -131,7 +131,7 @@
                 <input type="hidden" name="payment_eway_payment_type[masterpass]" value="0"/> <input type='checkbox' name='payment_eway_payment_type[masterpass]' value='1' {{ payment_eway_payment_type.masterpass is defined and payment_eway_payment_type.masterpass == 1 ? 'checked="checked"' : '' }} /> MasterPass
               </p>
               {% if error_payment_type %}
-                <div class="text-danger">{{ error_payment_type }}</div>
+                <div class="invalid-tooltip">{{ error_payment_type }}</div>
               {% endif %}
             </div>
           </div>

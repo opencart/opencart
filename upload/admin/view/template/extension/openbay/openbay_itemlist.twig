@@ -208,7 +208,7 @@
                         {% if product.special %}
                           <span style="text-decoration: line-through;">{{ product.price }}</span>
                           <br/>
-                          <div class="text-danger">{{ product.special }}</div>
+                          <div class="invalid-tooltip">{{ product.special }}</div>
                         {% else %}
                           {{ product.price }}
                         {% endif %}

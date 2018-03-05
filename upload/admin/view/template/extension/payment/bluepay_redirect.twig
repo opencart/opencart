@@ -28,7 +28,7 @@
             <div class="col-sm-10">
               <input type="text" name="payment_bluepay_redirect_account_id" value="{{ payment_bluepay_redirect_account_id }}" placeholder="{{ entry_vendor }}" id="input-vendor" class="form-control"/>
               {% if error_account_id %}
-                <div class="text-danger">{{ error_account_id }}</div>
+                <div class="invalid-tooltip">{{ error_account_id }}</div>
               {% endif %}
             </div>
           </div>
@@ -37,7 +37,7 @@
             <div class="col-sm-10">
               <input type="text" name="payment_bluepay_redirect_secret_key" value="{{ payment_bluepay_redirect_secret_key }}" placeholder="{{ entry_secret_key }}" id="payment_bluepay_redirect_secret_key" class="form-control"/>
               {% if error_secret_key %}
-                <div class="text-danger">{{ error_secret_key }}</div>
+                <div class="invalid-tooltip">{{ error_secret_key }}</div>
               {% endif %}
             </div>
           </div>

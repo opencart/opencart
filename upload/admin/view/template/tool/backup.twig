@@ -109,7 +109,7 @@ function backup(url) {
 
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+				$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
 
 				$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token }}');
 
@@ -170,7 +170,7 @@ function restore(url, element) {
 
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+				$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
 
 				$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token }}');
 

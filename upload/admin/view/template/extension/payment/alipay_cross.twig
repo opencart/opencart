@@ -29,7 +29,7 @@
               <div class="col-sm-10">
                 <input type="text" name="payment_alipay_cross_app_id" value="{{ payment_alipay_cross_app_id }}" placeholder="{{ entry_app_id }}" id="entry-app-id" class="form-control"/>
                 {% if error_app_id %}
-                  <div class="text-danger">{{ error_app_id }}</div>
+                  <div class="invalid-tooltip">{{ error_app_id }}</div>
                 {% endif %}
               </div>
             </div>
@@ -38,7 +38,7 @@
               <div class="col-sm-10">
                 <input type="text" name="payment_alipay_cross_merchant_private_key" value="{{ payment_alipay_cross_merchant_private_key }}" placeholder="{{ entry_merchant_private_key }}" id="entry-app-id" class="form-control"/>
                 {% if error_merchant_private_key %}
-                  <div class="text-danger">{{ error_merchant_private_key }}</div>
+                  <div class="invalid-tooltip">{{ error_merchant_private_key }}</div>
                 {% endif %}
               </div>
             </div>

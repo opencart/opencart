@@ -28,7 +28,7 @@
             <div class="col-sm-10">
               <input type="text" name="module_pp_login_client_id" value="{{ module_pp_login_client_id }}" placeholder="{{ entry_client_id }}" id="entry-client_id" class="form-control"/>
               {% if error_client_id %}
-              <div class="text-danger">{{ error_client_id }}</div>
+              <div class="invalid-tooltip">{{ error_client_id }}</div>
               {% endif %}
             </div>
           </div>
@@ -37,7 +37,7 @@
             <div class="col-sm-10">
               <input type="text" name="module_pp_login_secret" value="{{ module_pp_login_secret }}" placeholder="{{ entry_secret }}" id="entry-secret" class="form-control"/>
               {% if error_secret %}
-              <div class="text-danger">{{ error_secret }}</div>
+              <div class="invalid-tooltip">{{ error_secret }}</div>
               {% endif %}
             </div>
           </div>

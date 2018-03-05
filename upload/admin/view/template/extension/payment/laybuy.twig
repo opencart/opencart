@@ -40,7 +40,7 @@
                   <input type="text" name="payment_laybuys_membership_id" value="{{ payment_laybuys_membership_id }}" placeholder="{{ entry_membership_id }}" id="input-laybuys-membership-id" class="form-control"/>
                   <small class="form-text text-muted">{{ help_membership_id }}</small>
                   {% if error_laybuys_membership_id %}
-                    <div class="text-danger">{{ error_laybuys_membership_id }}</div>
+                    <div class="invalid-tooltip">{{ error_laybuys_membership_id }}</div>
                   {% endif %}
                 </div>
               </div>
@@ -50,7 +50,7 @@
                   <input type="text" name="payment_laybuy_token" value="{{ payment_laybuy_token }}" placeholder="{{ entry_token }}" id="input-laybuy-token" class="form-control"/>
                   <small class="form-text text-muted">{{ help_token }}</small>
                   {% if error_laybuy_token %}
-                    <div class="text-danger">{{ error_laybuy_token }}</div>
+                    <div class="invalid-tooltip">{{ error_laybuy_token }}</div>
                   {% endif %}
                 </div>
               </div>
@@ -66,7 +66,7 @@
                   </select>
                   <small class="form-text text-muted">{{ help_minimum }}</small>
                   {% if error_laybuy_min_deposit %}
-                    <div class="text-danger">{{ error_laybuy_min_deposit }}</div>
+                    <div class="invalid-tooltip">{{ error_laybuy_min_deposit }}</div>
                   {% endif %}
                 </div>
               </div>

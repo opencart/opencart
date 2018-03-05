@@ -49,6 +49,8 @@ $(document).ready(function() {
 		$(this).parent().parent().datetimepicker('toggle');
 	});
 
+	$('.invalid-tooltip').show();
+
 	// tooltip remove
 	$('[data-toggle=\'tooltip\']').on('remove', function() {
 		$(this).tooltip('destroy');

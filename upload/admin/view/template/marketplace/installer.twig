@@ -91,7 +91,7 @@ $('#button-upload').on('click', function() {
 				success: function(json) {
 					if (json['error']) {
 						$('#progress-bar').addClass('progress-bar-danger');
-						$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+						$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
 
 						$('#button-upload').button('reset');
 					}
@@ -124,7 +124,7 @@ function next(url, i) {
 
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+				$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
 
 				$('#button-upload').button('reset');
 			}
@@ -174,7 +174,7 @@ $('#history').on('click', '.btn-danger', function(e) {
 		success: function(json) {
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+				$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
 			}
 
 			if (json['success']) {

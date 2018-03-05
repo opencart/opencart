@@ -28,7 +28,7 @@
             <div class="col-sm-10">
               <input type="text" name="shipping_fedex_key" value="{{ shipping_fedex_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control"/>
               {% if error_key %}
-                <div class="text-danger">{{ error_key }}</div>
+                <div class="invalid-tooltip">{{ error_key }}</div>
               {% endif %}
             </div>
           </div>
@@ -37,7 +37,7 @@
             <div class="col-sm-10">
               <input type="text" name="shipping_fedex_password" value="{{ shipping_fedex_password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control"/>
               {% if error_password %}
-                <div class="text-danger">{{ error_password }}</div>
+                <div class="invalid-tooltip">{{ error_password }}</div>
               {% endif %}
             </div>
           </div>
@@ -46,7 +46,7 @@
             <div class="col-sm-10">
               <input type="text" name="shipping_fedex_account" value="{{ shipping_fedex_account }}" placeholder="{{ entry_account }}" id="input-account" class="form-control"/>
               {% if error_account %}
-                <div class="text-danger">{{ error_account }}</div>
+                <div class="invalid-tooltip">{{ error_account }}</div>
               {% endif %}
             </div>
           </div>
@@ -55,7 +55,7 @@
             <div class="col-sm-10">
               <input type="text" name="shipping_fedex_meter" value="{{ shipping_fedex_meter }}" placeholder="{{ entry_meter }}" id="input-meter" class="form-control"/>
               {% if error_meter %}
-                <div class="text-danger">{{ error_meter }}</div>
+                <div class="invalid-tooltip">{{ error_meter }}</div>
               {% endif %}
             </div>
           </div>
@@ -64,7 +64,7 @@
             <div class="col-sm-10">
               <input type="text" name="shipping_fedex_postcode" value="{{ shipping_fedex_postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control"/>
               {% if error_postcode %}
-                <div class="text-danger">{{ error_postcode }}</div>
+                <div class="invalid-tooltip">{{ error_postcode }}</div>
               {% endif %}
             </div>
           </div>
@@ -142,12 +142,12 @@
                 </div>
               </div>
               {% if error_dimension %}
-                <div class="text-danger">{{ error_dimension }}</div>
+                <div class="invalid-tooltip">{{ error_dimension }}</div>
               {% endif %}
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-length-class"><span data-toggle="tooltip" title="{{ help_length_class }}">{{ entry_length_class }}</span></label>
+            <label class="col-sm-2 control-label" for="input-length-class">{{ entry_length_class }}</label>
             <div class="col-sm-10">
               <select name="shipping_fedex_length_class_id" id="input-length-class" class="form-control">
                 {% for length_class in length_classes %}
@@ -158,6 +158,7 @@
                   {% endif %}
                 {% endfor %}
               </select>
+              <small class="form-text text-muted">{{ help_length_class }}</small>
             </div>
           </div>
           <div class="form-group">
@@ -252,7 +253,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_display_time }}">{{ entry_display_time }}</span></label>
+            <label class="col-sm-2 control-label">{{ entry_display_time }}</label>
             <div class="col-sm-10">
               <label class="radio-inline">
                 {% if shipping_fedex_display_time %}
@@ -271,10 +272,11 @@
                   {{ text_no }}
                 {% endif %}
               </label>
+              <small class="form-text text-muted">{{ help_display_time }}</small>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_display_weight }}">{{ entry_display_weight }}</span></label>
+            <label class="col-sm-2 control-label">{{ entry_display_weight }}</label>
             <div class="col-sm-10">
               <label class="radio-inline">
                 {% if shipping_fedex_display_weight %}
@@ -293,10 +295,11 @@
                   {{ text_no }}
                 {% endif %}
               </label>
+              <small class="form-text text-muted">{{ help_display_weight }}</small>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-weight-class"><span data-toggle="tooltip" title="{{ help_weight_class }}">{{ entry_weight_class }}</span></label>
+            <label class="col-sm-2 control-label" for="input-weight-class">{{ entry_weight_class }}</label>
             <div class="col-sm-10">
               <select name="shipping_fedex_weight_class_id" id="input-weight-class" class="form-control">
                 {% for weight_class in weight_classes %}
@@ -307,6 +310,7 @@
                   {% endif %}
                 {% endfor %}
               </select>
+              <small class="form-text text-muted">{{ help_weight_class }}</small>
             </div>
           </div>
           <div class="form-group">

@@ -28,7 +28,7 @@
             <div class="col-sm-10">
               <input type="text" name="payment_web_payment_software_merchant_name" value="{{ payment_web_payment_software_merchant_name }}" placeholder="{{ entry_login }}" id="input-login" class="form-control"/>
               {% if error_login %}
-                <div class="text-danger">{{ error_login }}</div>
+                <div class="invalid-tooltip">{{ error_login }}</div>
               {% endif %}
             </div>
           </div>
@@ -37,7 +37,7 @@
             <div class="col-sm-10">
               <input type="text" name="payment_web_payment_software_merchant_key" value="{{ payment_web_payment_software_merchant_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control"/>
               {% if error_key %}
-                <div class="text-danger">{{ error_key }}</div>
+                <div class="invalid-tooltip">{{ error_key }}</div>
               {% endif %}
             </div>
           </div>

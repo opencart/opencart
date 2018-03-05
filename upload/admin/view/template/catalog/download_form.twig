@@ -38,7 +38,7 @@
                     <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span> <input type="text" name="download_description[{{ language.language_id }}][name]" value="{{ download_description[language.language_id] ? download_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control"/>
                     </div>
                     {% if error_name[language.language_id] %}
-                      <div class="text-danger">{{ error_name[language.language_id] }}</div>
+                      <div class="invalid-tooltip">{{ error_name[language.language_id] }}</div>
                     {% endif %}
                   {% endfor %}
                 </div>
@@ -54,7 +54,7 @@
                   </div>
                   <small class="form-text text-muted">{{ help_filename }}</small>
                   {% if error_filename %}
-                    <div class="text-danger">{{ error_filename }}</div>
+                    <div class="invalid-tooltip">{{ error_filename }}</div>
                   {% endif %}
                 </div>
               </div>
@@ -64,7 +64,7 @@
                   <input type="text" name="mask" value="{{ mask }}" placeholder="{{ entry_mask }}" id="input-mask" class="form-control"/>
                   <small class="form-text text-muted">{{ help_mask }}</small>
                   {% if error_mask %}
-                    <div class="text-danger">{{ error_mask }}</div>
+                    <div class="invalid-tooltip">{{ error_mask }}</div>
                   {% endif %}
                 </div>
               </div>

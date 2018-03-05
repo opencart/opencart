@@ -106,7 +106,7 @@
                   <input type="text" name="payment_pilibaba_merchant_number" value="{{ payment_pilibaba_merchant_number }}" placeholder="{{ entry_merchant_number }}" id="input-pilibaba-merchant-number" class="form-control"/>
                   <small class="form-text text-muted">{{ help_merchant_number }}</small>
                   {% if error_pilibaba_merchant_number %}
-                    <div class="text-danger">{{ error_pilibaba_merchant_number }}</div>
+                    <div class="invalid-tooltip">{{ error_pilibaba_merchant_number }}</div>
                   {% endif %}
                 </div>
               </div>
@@ -116,7 +116,7 @@
                   <input type="text" name="payment_pilibaba_secret_key" value="{{ payment_pilibaba_secret_key }}" placeholder="{{ entry_secret_key }}" id="input-pilibaba-secret-key" class="form-control"/>
                   <small class="form-text text-muted">{{ help_secret_key }}</small>
                   {% if error_pilibaba_secret_key %}
-                    <div class="text-danger">{{ error_pilibaba_secret_key }}</div>
+                    <div class="invalid-tooltip">{{ error_pilibaba_secret_key }}</div>
                   {% endif %}
                 </div>
               </div>
@@ -143,7 +143,7 @@
                   <input type="text" name="payment_pilibaba_shipping_fee" value="{{ payment_pilibaba_shipping_fee }}" placeholder="{{ entry_shipping_fee }} (e.g. 4.99)" id="input-pilibaba-shipping-fee" class="form-control"/>
                   <small class="form-text text-muted">{{ help_shipping_fee }}</small>
                   {% if error_pilibaba_shipping_fee %}
-                    <div class="text-danger">{{ error_pilibaba_shipping_fee }}</div>
+                    <div class="invalid-tooltip">{{ error_pilibaba_shipping_fee }}</div>
                   {% endif %}
                 </div>
               </div>

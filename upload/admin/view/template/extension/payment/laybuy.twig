@@ -4,13 +4,15 @@
     <div class="container-fluid">
       <div class="pull-right">
         <button type="submit" form="form-payment" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ fetch }}" data-toggle="tooltip" title="{{ button_fetch }}" class="btn btn-info"><i class="fa fa-refresh"></i></a> <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <a href="{{ fetch }}" data-toggle="tooltip" title="{{ button_fetch }}" class="btn btn-info"><i class="fa fa-refresh"></i></a> <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
-      <ul class="breadcrumb">
-        {% for breadcrumb in breadcrumbs %}
-          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-        {% endfor %}
-      </ul>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          {% for breadcrumb in breadcrumbs %}
+            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          {% endfor %}
+        </ol>
+      </nav>
     </div>
   </div>
   <div class="container-fluid">
@@ -298,7 +300,7 @@
                       <div class="input-group date">
                         <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-added" class="form-control"/>
                         <div class="input-group-btn">
-                          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                          <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
                         </div>
                       </div>
                     </div>

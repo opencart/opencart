@@ -4,13 +4,15 @@
     <div class="container-fluid">
       <div class="pull-right">
         <button type="submit" form="form-product" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
-      <ul class="breadcrumb">
-        {% for breadcrumb in breadcrumbs %}
-          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-        {% endfor %}
-      </ul>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          {% for breadcrumb in breadcrumbs %}
+            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          {% endfor %}
+        </ol>
+      </nav>
     </div>
   </div>
   <div class="container-fluid">{% if error_warning %}
@@ -232,7 +234,7 @@
                   <div class="input-group date">
                     <input type="text" name="date_available" value="{{ date_available }}" placeholder="{{ entry_date_available }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-available" class="form-control"/>
                     <div class="input-group-btn">
-                      <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                      <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
                     </div>
                   </div>
                 </div>
@@ -494,7 +496,7 @@
                           <div class="input-group date">
                             <input type="text" name="product_discount[{{ discount_row }}][date_start]" value="{{ product_discount.date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" class="form-control"/>
                             <div class="input-group-btn">
-                              <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                              <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
                             </div>
                           </div>
                         </td>
@@ -502,7 +504,7 @@
                           <div class="input-group date">
                             <input type="text" name="product_discount[{{ discount_row }}][date_end]" value="{{ product_discount.date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" class="form-control"/>
                             <div class="input-group-btn">
-                              <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                              <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
                             </div>
                           </div>
                         </td>
@@ -552,7 +554,7 @@
                           <div class="input-group date">
                             <input type="text" name="product_special[{{ special_row }}][date_start]" value="{{ product_special.date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" class="form-control"/>
                             <div class="input-group-btn">
-                              <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                              <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
                             </div>
                           </div>
                         </td>
@@ -560,7 +562,7 @@
                           <div class="input-group date">
                             <input type="text" name="product_special[{{ special_row }}][date_end]" value="{{ product_special.date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" class="form-control"/>
                             <div class="input-group-btn">
-                              <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                              <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
                             </div>
                           </div>
                         </td>
@@ -917,8 +919,8 @@ function addDiscount() {
 	html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][quantity]" value="" placeholder="{{ entry_quantity }}" class="form-control" /></td>';
 	html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][priority]" value="" placeholder="{{ entry_priority }}" class="form-control" /></td>';
 	html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][price]" value="" placeholder="{{ entry_price }}" class="form-control" /></td>';
-	html += '  <td class="text-left" style="width: 20%;"><div class="input-group date"><input type="text" name="product_discount[' + discount_row + '][date_start]" value="" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" class="form-control" /><div class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></div></div></td>';
-	html += '  <td class="text-left" style="width: 20%;"><div class="input-group date"><input type="text" name="product_discount[' + discount_row + '][date_end]" value="" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" class="form-control" /><div class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></div></div></td>';
+	html += '  <td class="text-left" style="width: 20%;"><div class="input-group date"><input type="text" name="product_discount[' + discount_row + '][date_start]" value="" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" class="form-control" /><div class="input-group-btn"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div></td>';
+	html += '  <td class="text-left" style="width: 20%;"><div class="input-group date"><input type="text" name="product_discount[' + discount_row + '][date_end]" value="" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" class="form-control" /><div class="input-group-btn"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#discount-row' + discount_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 
@@ -941,8 +943,8 @@ function addSpecial() {
 	html += '  </select></td>';
 	html += '  <td class="text-right"><input type="text" name="product_special[' + special_row + '][priority]" value="" placeholder="{{ entry_priority }}" class="form-control" /></td>';
 	html += '  <td class="text-right"><input type="text" name="product_special[' + special_row + '][price]" value="" placeholder="{{ entry_price }}" class="form-control" /></td>';
-	html += '  <td class="text-left" style="width: 20%;"><div class="input-group date"><input type="text" name="product_special[' + special_row + '][date_start]" value="" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" class="form-control" /><div class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></div></div></td>';
-	html += '  <td class="text-left" style="width: 20%;"><div class="input-group date"><input type="text" name="product_special[' + special_row + '][date_end]" value="" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" class="form-control" /><div class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></div></div></td>';
+	html += '  <td class="text-left" style="width: 20%;"><div class="input-group date"><input type="text" name="product_special[' + special_row + '][date_start]" value="" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" class="form-control" /><div class="input-group-btn"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div></td>';
+	html += '  <td class="text-left" style="width: 20%;"><div class="input-group date"><input type="text" name="product_special[' + special_row + '][date_end]" value="" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" class="form-control" /><div class="input-group-btn"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#special-row' + special_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 

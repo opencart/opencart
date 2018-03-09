@@ -4,13 +4,15 @@
     <div class="container-fluid">
       <div class="pull-right">
         <button type="submit" form="form-category" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
-      <ol class="breadcrumb">
-        {% for breadcrumb in breadcrumbs %}
-          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-        {% endfor %}
-      </ol>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          {% for breadcrumb in breadcrumbs %}
+            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          {% endfor %}
+        </ol>
+      </nav>
     </div>
   </div>
   <div class="container-fluid">
@@ -142,7 +144,7 @@
                       {% else %}
                         <input type="checkbox" name="top" value="1" id="input-top"/>
                       {% endif %}
-                      &nbsp; </label>
+                    </label>
                   </div>
                   <small class="form-text text-muted">{{ help_top }}</small>
                 </div>
@@ -189,13 +191,17 @@
                     {% for store in stores %}
                       <tr>
                         <td class="text-left">{{ store.name }}</td>
-                        <td class="text-left">{% for language in languages %}
-                            <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span> <input type="text" name="category_seo_url[{{ store.store_id }}][{{ language.language_id }}]" value="{% if category_seo_url[store.store_id][language.language_id] %}{{ category_seo_url[store.store_id][language.language_id] }}{% endif %}" placeholder="{{ entry_keyword }}" class="form-control"/>
+                        <td class="text-left">
+                          {% for language in languages %}
+                            <div class="input-group">
+                              <div class="input-group-prepend"><span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span></div>
+                              <input type="text" name="category_seo_url[{{ store.store_id }}][{{ language.language_id }}]" value="{% if category_seo_url[store.store_id][language.language_id] %}{{ category_seo_url[store.store_id][language.language_id] }}{% endif %}" placeholder="{{ entry_keyword }}" class="form-control"/>
                             </div>
                             {% if error_keyword[store.store_id][language.language_id] %}
                               <div class="invalid-tooltip">{{ error_keyword[store.store_id][language.language_id] }}</div>
                             {% endif %}
-                          {% endfor %}</td>
+                          {% endfor %}
+                        </td>
                       </tr>
                     {% endfor %}
                   </tbody>

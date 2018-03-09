@@ -9,28 +9,30 @@
         {% if url_delete_links is not empty %}
           <a href="{{ url_delete_links }}" data-toggle="tooltip" title="{{ button_remove_links }}" class="btn btn-danger"><i class="fa fa-times-circle"></i></a>
         {% endif %}
-        <a href="{{ url_return }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
+        <a href="{{ url_return }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
       <h1>{{ text_edit_heading }}</h1>
-      <ul class="breadcrumb">
-        {% for breadcrumb in breadcrumbs %}
-        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-        {% endfor %}
-      </ul>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          {% for breadcrumb in breadcrumbs %}
+            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          {% endfor %}
+        </ol>
+      </nav>
     </div>
   </div>
   <div class="container-fluid"> {% if has_saved_listings %}
-    <div class="well">
-      <div class="row">
-        <div class="col-sm-12">
-          <p>{{ text_has_saved_listings }}</p>
+      <div class="well">
+        <div class="row">
+          <div class="col-sm-12">
+            <p>{{ text_has_saved_listings }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="pull-right"><a onclick="location = '{{ url_saved_listings }}'" class="btn btn-primary">{{ button_saved_listings }}</a></div>
+          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="pull-right"> <a onclick="location = '{{ url_saved_listings }}'" class="btn btn-primary">{{ button_saved_listings }}</a> </div>
-        </div>
-      </div>
-    </div>
     {% endif %}
     <table class="table table-bordered table-hover">
       <thead>
@@ -45,23 +47,23 @@
       </thead>
       <tbody>
 
-      {% if product_links %}
-      {% for link in product_links %}
-      <tr>
-        <td class="text-left">{{ link.product_name }}</td>
-        <td class="text-left">{{ link.sku }}</td>
-        <td class="text-left">{{ link.model }}</td>
-        <td class="text-left">{{ link.combination }}</td>
-        <td class="text-left">{{ link.var }}</td>
-        <td class="text-left">{{ link.amazonus_sku }}</td>
-      </tr>
-      {% endfor %}
-      {% else %}
-      <tr>
-        <td colspan="6" class="text-center">{{ text_no_results }}</td>
-      </tr>
-      {% endif %}
-        </tbody>
+        {% if product_links %}
+          {% for link in product_links %}
+            <tr>
+              <td class="text-left">{{ link.product_name }}</td>
+              <td class="text-left">{{ link.sku }}</td>
+              <td class="text-left">{{ link.model }}</td>
+              <td class="text-left">{{ link.combination }}</td>
+              <td class="text-left">{{ link.var }}</td>
+              <td class="text-left">{{ link.amazonus_sku }}</td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="6" class="text-center">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
 
     </table>
   </div>

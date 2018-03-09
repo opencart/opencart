@@ -3,11 +3,13 @@
   <div class="page-header">
     <div class="container-fluid">
       <h1>{{ heading_title }}</h1>
-      <ul class="breadcrumb">
-        {% for breadcrumb in breadcrumbs %}
-          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-        {% endfor %}
-      </ul>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          {% for breadcrumb in breadcrumbs %}
+            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          {% endfor %}
+        </ol>
+      </nav>
     </div>
   </div>
   <div class="container-fluid"> {% if success %}
@@ -29,21 +31,21 @@
               <div class="col-md-12">
                 <table class="table table-bordered table-hover">
                   <thead>
-                  <tr>
-                    <td class="text-left" width="60%">{{ column_name }}</td>
-                    <td class="text-center" width="20%">{{ column_status }}</td>
-                    <td class="text-right" width="20%">{{ column_action }}</td>
-                  </tr>
+                    <tr>
+                      <td class="text-left" width="60%">{{ column_name }}</td>
+                      <td class="text-center" width="20%">{{ column_status }}</td>
+                      <td class="text-right" width="20%">{{ column_action }}</td>
+                    </tr>
                   </thead>
                   <tbody>
 
-                  {% for extension in extensions %}
-                    <tr>
-                      <td class="text-left">{{ extension.name }}</td>
-                      <td class="text-center">{{ extension.status }}</td>
-                      <td class="text-right"> {% if not extension.installed %} <a href="{{ extension.install }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success" id="button-install-{{ extension.code }}"><i class="fa fa-plus-circle"></i></a> {% else %} <a href="{{ extension.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary" id="button-edit-{{ extension.code }}"><i class="fa fa-pencil"></i></a> <a onclick="confirm('{{ text_confirm }}') ? location.href='{{ extension.uninstall }}' : false;" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger" id="button-uninstall-{{ extension.code }}"><i class="fa fa-minus-circle"></i></a> {% endif %}</td>
-                    </tr>
-                  {% endfor %}
+                    {% for extension in extensions %}
+                      <tr>
+                        <td class="text-left">{{ extension.name }}</td>
+                        <td class="text-center">{{ extension.status }}</td>
+                        <td class="text-right"> {% if not extension.installed %} <a href="{{ extension.install }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success" id="button-install-{{ extension.code }}"><i class="fa fa-plus-circle"></i></a> {% else %} <a href="{{ extension.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary" id="button-edit-{{ extension.code }}"><i class="fa fa-pencil"></i></a> <a onclick="confirm('{{ text_confirm }}') ? location.href='{{ extension.uninstall }}' : false;" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger" id="button-uninstall-{{ extension.code }}"><i class="fa fa-minus-circle"></i></a> {% endif %}</td>
+                      </tr>
+                    {% endfor %}
                   </tbody>
 
                 </table>

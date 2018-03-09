@@ -14,11 +14,13 @@
         {% endif %}
       </div>
       <h1>{{ heading_title }}</h1>
-      <ul class="breadcrumb">
-        {% for breadcrumb in breadcrumbs %}
-          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-        {% endfor %}
-      </ul>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          {% for breadcrumb in breadcrumbs %}
+            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          {% endfor %}
+        </ol>
+      </nav>
     </div>
   </div>
   <div class="container-fluid">
@@ -242,7 +244,7 @@
                               <a disable="disable" data-toggle="tooltip" title="{{ market.text }}" class="btn btn-info btn-block btn-sm">{{ market.name }}</a>
                             {% endif %}
                           {% else %}
-                            <a href="{{ market.href }}" data-toggle="tooltip" title="{{ market.text }}" class="btn btn-block btn-sm btn-default">{{ market.name }}</a>
+                            <a href="{{ market.href }}" data-toggle="tooltip" title="{{ market.text }}" class="btn btn-block btn-sm btn-light">{{ market.name }}</a>
                           {% endif %}
                         {% endfor %}
                       </td>

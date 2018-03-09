@@ -2,233 +2,235 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"> <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <div class="pull-right"><a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
-      <ul class="breadcrumb">
-        {% for breadcrumb in breadcrumbs %}
-        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-        {% endfor %}
-      </ul>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          {% for breadcrumb in breadcrumbs %}
+            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          {% endfor %}
+        </ol>
+      </nav>
     </div>
   </div>
   <div class="container-fluid">
-  	{% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
     {% endif %}
     {% if success %}
-    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
+      <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
     {% endif %}
     <div class="card">
       <div class="card-header"><i class="fa fa-info-circle"></i> {{ text_transaction_details }}</div>
       <div class="card-body">
-      	{% if transaction %}
-        <form action="" method="post" enctype="multipart/form-data" id="form-laybuy-transaction">
-          <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab-reference" data-toggle="tab">{{ tab_reference }}</a></li>
-            <li class="nav-item"><a href="#tab-customer" data-toggle="tab">{{ tab_customer }}</a></li>
-            <li class="nav-item"><a href="#tab-payment-plan" data-toggle="tab">{{ tab_payment }}</a></li>
-            {% if transaction.status_id == 1 %}
-            <li class="nav-item"><a href="#tab-modify" data-toggle="tab">{{ tab_modify }}</a></li>
-            {% endif %}
-          </ul>
-          <div class="tab-content">
-            <div class="tab-pane active" id="tab-reference">
-              <div class="form-group">
-                <label class="col-sm-2 col-form-label">{{ text_paypal_profile_id }}</label>
-                <div class="col-sm-10"> {{ transaction.paypal_profile_id }} </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 col-form-label">{{ text_laybuy_ref_no }}</label>
-                <div class="col-sm-10"> {{ transaction.laybuy_ref_no }} </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 col-form-label">{{ text_order_id }}</label>
-                <div class="col-sm-10"> {{ transaction.order_id }} </div>
-              </div>
-            </div>
-            <div class="tab-pane" id="tab-customer">
-              <div class="form-group">
-                <label class="col-sm-2 col-form-label">{{ text_firstname }}</label>
-                <div class="col-sm-10"> {{ transaction.firstname }} </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 col-form-label">{{ text_lastname }}</label>
-                <div class="col-sm-10"> {{ transaction.lastname }} </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 col-form-label">{{ text_email }}</label>
-                <div class="col-sm-10"> {{ transaction.email }} </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 col-form-label">{{ text_address }}</label>
-                <div class="col-sm-10"> {{ transaction.address }} </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 col-form-label">{{ text_suburb }}</label>
-                <div class="col-sm-10"> {{ transaction.suburb }} </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 col-form-label">{{ text_state }}</label>
-                <div class="col-sm-10"> {{ transaction.state }} </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 col-form-label">{{ text_country }}</label>
-                <div class="col-sm-10"> {{ transaction.country }} </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 col-form-label">{{ text_postcode }}</label>
-                <div class="col-sm-10"> {{ transaction.postcode }} </div>
-              </div>
-            </div>
-            <div class="tab-pane" id="tab-payment-plan">
-              <div class="form-group">
-                <label class="col-sm-2 col-form-label">{{ text_status }}</label>
-                <div class="col-sm-10"> {{ transaction.status }} </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 col-form-label">{{ text_amount }}</label>
-                <div class="col-sm-10"> {{ transaction.amount }} </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 col-form-label">{{ text_downpayment_percent }}</label>
-                <div class="col-sm-10"> {{ transaction.downpayment ~ '%' }} </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 col-form-label">{{ text_months }}</label>
-                <div class="col-sm-10"> {{ transaction.months }} </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 col-form-label">{{ text_downpayment_amount }}</label>
-                <div class="col-sm-10"> {{ transaction.downpayment_amount }} </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 col-form-label">{{ text_payment_amounts }}</label>
-                <div class="col-sm-10"> {{ transaction.payment_amounts }} </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 col-form-label">{{ text_first_payment_due }}</label>
-                <div class="col-sm-10"> {{ transaction.first_payment_due }} </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 col-form-label">{{ text_last_payment_due }}</label>
-                <div class="col-sm-10"> {{ transaction.last_payment_due }} </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 col-form-label">{{ text_report }}</label>
-                <div class="col-sm-10">
-                  <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th>{{ text_instalment }}</th>
-                        <th>{{ text_amount }}</th>
-                        <th>{{ text_date }}</th>
-                        <th>{{ text_pp_trans_id }}</th>
-                        <th>{{ text_status }}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {% for report in transaction.report %}
-                        {% if report.instalment == '0' %}
-                          <tr>
-                            <td>{{ text_downpayment }}</td>
-                            <td>{{ report.amount }}</td>
-                            <td>{{ report.date }}</td>
-                            <td>{{ report.pp_trans_id }}</td>
-                            <td>{{ report.status }}</td>
-                          </tr>
-                        {% else %}
-                          <tr>
-                            <td>{{ text_month ~ ' ' ~ report.instalment }}</td>
-                            <td>{{ report.amount }}</td>
-                            <td>{{ report.date }}</td>
-                            <td>{{ report.pp_trans_id }}</td>
-                            <td>{{ report.status }}</td>
-                          </tr>
-                        {% endif %}
-                      {% endfor %}
-                    </tbody>
-                  </table>
+        {% if transaction %}
+          <form action="" method="post" enctype="multipart/form-data" id="form-laybuy-transaction">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#tab-reference" data-toggle="tab">{{ tab_reference }}</a></li>
+              <li class="nav-item"><a href="#tab-customer" data-toggle="tab">{{ tab_customer }}</a></li>
+              <li class="nav-item"><a href="#tab-payment-plan" data-toggle="tab">{{ tab_payment }}</a></li>
+              {% if transaction.status_id == 1 %}
+                <li class="nav-item"><a href="#tab-modify" data-toggle="tab">{{ tab_modify }}</a></li>
+              {% endif %}
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active" id="tab-reference">
+                <div class="form-group">
+                  <label class="col-sm-2 col-form-label">{{ text_paypal_profile_id }}</label>
+                  <div class="col-sm-10"> {{ transaction.paypal_profile_id }} </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 col-form-label">{{ text_laybuy_ref_no }}</label>
+                  <div class="col-sm-10"> {{ transaction.laybuy_ref_no }} </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 col-form-label">{{ text_order_id }}</label>
+                  <div class="col-sm-10"> {{ transaction.order_id }} </div>
                 </div>
               </div>
-            </div>
-            {% if transaction.status_id == 1 %}
-            <div class="tab-pane" id="tab-modify">
-              <div class="form-group">
-                <label class="col-sm-2 col-form-label">{{ text_cancel_plan }}</label>
-                <div class="col-sm-10">
-                  <button class="btn btn-primary btn-xs" id="cancel-plan">{{ button_cancel_plan }}</button>
+              <div class="tab-pane" id="tab-customer">
+                <div class="form-group">
+                  <label class="col-sm-2 col-form-label">{{ text_firstname }}</label>
+                  <div class="col-sm-10"> {{ transaction.firstname }} </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 col-form-label">{{ text_lastname }}</label>
+                  <div class="col-sm-10"> {{ transaction.lastname }} </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 col-form-label">{{ text_email }}</label>
+                  <div class="col-sm-10"> {{ transaction.email }} </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 col-form-label">{{ text_address }}</label>
+                  <div class="col-sm-10"> {{ transaction.address }} </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 col-form-label">{{ text_suburb }}</label>
+                  <div class="col-sm-10"> {{ transaction.suburb }} </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 col-form-label">{{ text_state }}</label>
+                  <div class="col-sm-10"> {{ transaction.state }} </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 col-form-label">{{ text_country }}</label>
+                  <div class="col-sm-10"> {{ transaction.country }} </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 col-form-label">{{ text_postcode }}</label>
+                  <div class="col-sm-10"> {{ transaction.postcode }} </div>
                 </div>
               </div>
-              <div class="form-group">
-                <label class="col-sm-2 col-form-label">{{ text_revise_plan }}</label>
-                <div class="col-sm-10">
-                  <button class="btn btn-primary btn-xs" id="revise-plan" style="margin-bottom:10px">{{ button_revise_plan }}</button>
-                  <div class="amount_remaining"> <b>{{ text_remaining }}</b> {{ transaction.remaining }}
-                    <input type="hidden" id="amount" name="amount" value="{{ total }}" />
+              <div class="tab-pane" id="tab-payment-plan">
+                <div class="form-group">
+                  <label class="col-sm-2 col-form-label">{{ text_status }}</label>
+                  <div class="col-sm-10"> {{ transaction.status }} </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 col-form-label">{{ text_amount }}</label>
+                  <div class="col-sm-10"> {{ transaction.amount }} </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 col-form-label">{{ text_downpayment_percent }}</label>
+                  <div class="col-sm-10"> {{ transaction.downpayment ~ '%' }} </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 col-form-label">{{ text_months }}</label>
+                  <div class="col-sm-10"> {{ transaction.months }} </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 col-form-label">{{ text_downpayment_amount }}</label>
+                  <div class="col-sm-10"> {{ transaction.downpayment_amount }} </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 col-form-label">{{ text_payment_amounts }}</label>
+                  <div class="col-sm-10"> {{ transaction.payment_amounts }} </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 col-form-label">{{ text_first_payment_due }}</label>
+                  <div class="col-sm-10"> {{ transaction.first_payment_due }} </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 col-form-label">{{ text_last_payment_due }}</label>
+                  <div class="col-sm-10"> {{ transaction.last_payment_due }} </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 col-form-label">{{ text_report }}</label>
+                  <div class="col-sm-10">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>{{ text_instalment }}</th>
+                          <th>{{ text_amount }}</th>
+                          <th>{{ text_date }}</th>
+                          <th>{{ text_pp_trans_id }}</th>
+                          <th>{{ text_status }}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for report in transaction.report %}
+                          {% if report.instalment == '0' %}
+                            <tr>
+                              <td>{{ text_downpayment }}</td>
+                              <td>{{ report.amount }}</td>
+                              <td>{{ report.date }}</td>
+                              <td>{{ report.pp_trans_id }}</td>
+                              <td>{{ report.status }}</td>
+                            </tr>
+                          {% else %}
+                            <tr>
+                              <td>{{ text_month ~ ' ' ~ report.instalment }}</td>
+                              <td>{{ report.amount }}</td>
+                              <td>{{ report.date }}</td>
+                              <td>{{ report.pp_trans_id }}</td>
+                              <td>{{ report.status }}</td>
+                            </tr>
+                          {% endif %}
+                        {% endfor %}
+                      </tbody>
+                    </table>
                   </div>
-                  <select name="payment_type" id="payment-type">
-                    <option value="1">{{ text_type_laybuy }}</option>
-                    <option value="0">{{ text_type_buynow }}</option>
-                  </select>
-                  <div class="laybuy_section"> <br>
-                    <select name="INIT" id="down-payment">
-                      {% for percent in initial_payments %}
-                        {% if percent == transaction.downpayment %}
-                          <option value="{{ percent }}" selected="selected">{{ percent }}%</option>
-                        {% else %}
-                          <option value="{{ percent }}">{{ percent }}%</option>
-                        {% endif %}
-                      {% endfor %}
-                    </select>
-                    <select name="MONTHS" id="months">
-                      {% for month in months %}
-                        {% if month.value == transaction.months %}
-                          <option value="{{ month.value }}" selected="selected">{{ month.label }}</option>
-                        {% else %}
-                          <option value="{{ month.value }}">{{ month.label }}</option>
-                        {% endif %}
-                      {% endfor %}
-                    </select>
-                    <div class="table-responsive">
-                      <table class="table table-striped table-responsive table-condensed" id="payment-table" style="margin-top:5px">
-                        <thead>
-                        <th>{{ text_payment }}</th>
-                          <th>{{ text_due_date }}</th>
-                          <th class="text-right">{{ text_amount }}</th>
+                </div>
+              </div>
+              {% if transaction.status_id == 1 %}
+                <div class="tab-pane" id="tab-modify">
+                  <div class="form-group">
+                    <label class="col-sm-2 col-form-label">{{ text_cancel_plan }}</label>
+                    <div class="col-sm-10">
+                      <button class="btn btn-primary btn-xs" id="cancel-plan">{{ button_cancel_plan }}</button>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 col-form-label">{{ text_revise_plan }}</label>
+                    <div class="col-sm-10">
+                      <button class="btn btn-primary btn-xs" id="revise-plan" style="margin-bottom:10px">{{ button_revise_plan }}</button>
+                      <div class="amount_remaining"><b>{{ text_remaining }}</b> {{ transaction.remaining }}
+                        <input type="hidden" id="amount" name="amount" value="{{ total }}"/>
+                      </div>
+                      <select name="payment_type" id="payment-type">
+                        <option value="1">{{ text_type_laybuy }}</option>
+                        <option value="0">{{ text_type_buynow }}</option>
+                      </select>
+                      <div class="laybuy_section">
+                        <br>
+                        <select name="INIT" id="down-payment">
+                          {% for percent in initial_payments %}
+                            {% if percent == transaction.downpayment %}
+                              <option value="{{ percent }}" selected="selected">{{ percent }}%</option>
+                            {% else %}
+                              <option value="{{ percent }}">{{ percent }}%</option>
+                            {% endif %}
+                          {% endfor %}
+                        </select> <select name="MONTHS" id="months">
+                          {% for month in months %}
+                            {% if month.value == transaction.months %}
+                              <option value="{{ month.value }}" selected="selected">{{ month.label }}</option>
+                            {% else %}
+                              <option value="{{ month.value }}">{{ month.label }}</option>
+                            {% endif %}
+                          {% endfor %}
+                        </select>
+                        <div class="table-responsive">
+                          <table class="table table-striped table-responsive table-condensed" id="payment-table" style="margin-top:5px">
+                            <thead>
+                              <th>{{ text_payment }}</th>
+                              <th>{{ text_due_date }}</th>
+                              <th class="text-right">{{ text_amount }}</th>
                             </thead>
-                        <tbody>
-                          <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                          </tr>
-                        </tbody>
-                      </table>
+                            <tbody>
+                              <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            {% endif %} </div>
-        </form>
+              {% endif %} </div>
+          </form>
         {% else %}
-        {{ text_not_found }}
+          {{ text_not_found }}
         {% endif %} </div>
     </div>
   </div>
 </div>
 <style>
-.form-horizontal .control-label {
-	padding-top: 0;
-}
+  .form-horizontal .control-label {
+    padding-top: 0;
+  }
 
-.amount_remaining {
-	margin-bottom: 10px;
-}
+  .amount_remaining {
+    margin-bottom: 10px;
+  }
 </style>
 <script type="text/javascript"><!--
 var token = '';
@@ -241,17 +243,17 @@ $.ajax({
 	data: 'key={{ api_key }}',
 	crossDomain: true,
 	success: function(json) {
-        if (json['error']) {
-    		if (json['error']['key']) {
-    			alert(json['error']['key']);
-    		}
+		if (json['error']) {
+			if (json['error']['key']) {
+				alert(json['error']['key']);
+			}
 
-            if (json['error']['ip']) {
-    			alert(json['error']['ip']);
-    		}
-        }
+			if (json['error']['ip']) {
+				alert(json['error']['ip']);
+			}
+		}
 
-        if (json['user_token']) {
+		if (json['user_token']) {
 			token = json['user_token'];
 		}
 	},
@@ -259,7 +261,7 @@ $.ajax({
 		alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 	}
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#cancel-plan').on('click', function(e) {
 	e.preventDefault();
@@ -306,12 +308,12 @@ $('#cancel-plan').on('click', function(e) {
 				location = json['reload'].replace(/&amp;/g, '&');
 			}
 		},
-	 	error: function(xhr, ajaxOptions, thrownError) {
-	 		alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#revise-plan').on('click', function(e) {
 	e.preventDefault();
@@ -346,7 +348,7 @@ $('#revise-plan').on('click', function(e) {
 		}
 	});
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#payment-type').on('change', function() {
 	var payment_type = $('#payment-type').val();
@@ -357,11 +359,11 @@ $('#payment-type').on('change', function() {
 		$('.laybuy_section').hide();
 	}
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $(document).ready(function() {
 	$('#tab-modify').on('change', 'select', function() {
-   		calculate($('#down-payment').val(), $('#months').val());
+		calculate($('#down-payment').val(), $('#months').val());
 	});
 
 	var symbol_left = "{{ currency_symbol_left }}";
@@ -377,7 +379,7 @@ $(document).ready(function() {
 		var remainder = total - down_payment;
 
 		var payments = getPayments(remainder, months);
-			payments[0] = {
+		payments[0] = {
 			payment: '{{ text_downpayment }}',
 			dueDate: '{{ text_today }}',
 			amount: parseFloat(down_payment).toFixed(2)
@@ -432,5 +434,5 @@ $(document).ready(function() {
 		$('#payment-table').find('tbody').append(row);
 	}
 });
-//--></script> 
+//--></script>
 {{ footer }}

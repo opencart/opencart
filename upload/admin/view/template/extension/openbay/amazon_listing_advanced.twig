@@ -6,13 +6,15 @@
         {% if has_listing_errors %}
         <a href="{{ url_remove_errors }}" data-toggle="tooltip" title="{{ button_remove_error }}" class="btn btn-danger"><i class="fa fa-reply"></i></a>
         {% endif %}
-        <a href="{{ cancel_url }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
+        <a href="{{ cancel_url }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a> </div>
       <h1>{{ text_title_advanced }}</h1>
-      <ul class="breadcrumb">
-        {% for breadcrumb in breadcrumbs %}
-        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-        {% endfor %}
-      </ul>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          {% for breadcrumb in breadcrumbs %}
+            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          {% endfor %}
+        </ol>
+      </nav>
     </div>
   </div>
   <div class="container-fluid">
@@ -90,8 +92,8 @@
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
+              <h5 id="mySmallModalLabel" class="modal-title">{{ entry_browse_node }}</h5>
               <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-              <h4 id="mySmallModalLabel" class="modal-title">{{ entry_browse_node }}</h4>
             </div>
             <div class="modal-body">
               <div id="browse-node-content"></div>

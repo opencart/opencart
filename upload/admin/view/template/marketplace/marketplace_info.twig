@@ -6,13 +6,15 @@
           <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-info"><i class="fa fa-cog"></i></button>
         {% else %}
           <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ error_signature }}" data-placement="left" class="btn btn-danger"><i class="fa fa-exclamation-triangle"></i></button>
-        {% endif %} <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        {% endif %} <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
-      <ul class="breadcrumb">
-        {% for breadcrumb in breadcrumbs %}
-          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-        {% endfor %}
-      </ul>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          {% for breadcrumb in breadcrumbs %}
+            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          {% endfor %}
+        </ol>
+      </nav>
     </div>
   </div>
   <div id="marketplace-extension-info" class="container-fluid">{% if error_warning %}
@@ -54,31 +56,31 @@
                   <legend>{{ text_available }}</legend>
                   <table class="table table-bordered">
                     <thead>
-                    <td>{{ text_name }}</td>
-                    <td>{{ text_date_added }}</td>
-                    <td class="text-right">{{ text_action }}</td>
+                      <td>{{ text_name }}</td>
+                      <td>{{ text_date_added }}</td>
+                      <td class="text-right">{{ text_action }}</td>
                     </thead>
                     <tbody>
 
-                    {% if downloads %}
-                      {% for download in downloads %}
+                      {% if downloads %}
+                        {% for download in downloads %}
+                          <tr>
+                            <td>{{ download.name }}</td>
+                            <td>{{ download.date_added }}</td>
+                            <td class="text-right">{% if download.extension_install_id %}
+                                <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="{{ download.extension_install_id }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-trash-o"></i> {{ button_uninstall }}</button>
+                              {% elseif download.filename|slice(-10) == '.ocmod.zip' %}
+                                <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"{% if not download.status %} disabled{% endif %}><i class="fa fa-download"></i> {{ button_install }}</button>
+                              {% else %}
+                                <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"{% if not download.status %} disabled{% endif %}><i class="fa fa-download"></i> {{ button_download }}</button>
+                              {% endif %}</td>
+                          </tr>
+                        {% endfor %}
+                      {% else %}
                         <tr>
-                          <td>{{ download.name }}</td>
-                          <td>{{ download.date_added }}</td>
-                          <td class="text-right">{% if download.extension_install_id %}
-                              <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="{{ download.extension_install_id }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-trash-o"></i> {{ button_uninstall }}</button>
-                            {% elseif download.filename|slice(-10) == '.ocmod.zip' %}
-                              <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"{% if not download.status %} disabled{% endif %}><i class="fa fa-download"></i> {{ button_install }}</button>
-                            {% else %}
-                              <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"{% if not download.status %} disabled{% endif %}><i class="fa fa-download"></i> {{ button_download }}</button>
-                            {% endif %}</td>
+                          <td colspan="3" class="text-center">{{ text_no_results }}</td>
                         </tr>
-                      {% endfor %}
-                    {% else %}
-                      <tr>
-                        <td colspan="3" class="text-center">{{ text_no_results }}</td>
-                      </tr>
-                    {% endif %}
+                      {% endif %}
                     </tbody>
 
                   </table>
@@ -202,7 +204,7 @@ $('#button-buy').on('click', function(e) {
 	html += '          <input type="password" name="pin" value="" placeholder="{{ entry_pin }}" id="input-pin" class="form-control" />';
 	html += '        </div>';
 	html += '        <div class="form-group text-right">';
-	html += '          <div class="pull-left"><a href="https://www.opencart.com/index.php?route=support/contact" class="btn btn-default btn-lg" target="_blank">{{ button_forgot_pin }}</a></div>';
+	html += '          <div class="pull-left"><a href="https://www.opencart.com/index.php?route=support/contact" class="btn btn-light btn-lg" target="_blank">{{ button_forgot_pin }}</a></div>';
 	html += '          <button type="button" id="button-purchase" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg">{{ button_purchase }}</button>';
 	html += '        </div>';
 	html += '      </div>';

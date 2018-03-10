@@ -37,46 +37,39 @@
   <header id="header" class="navbar navbar-light">
 
     <div class="container-fluid">
-
-        <a href="{{ home }}" class="navbar-brand"><img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}"/></a>
-
+      <a href="{{ home }}" class="navbar-brand"><img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}"/></a>
       <button type="button" id="button-menu" class="hidden-md hidden-lg navbar-toggler"><span class="fa fa-bars"></span></button>
 
-
-
-
-        {% if logged %}
+      {% if logged %}
+        <!--
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" id="user-profile" class="img-circle"/> <span class="hidden-xs">{{ firstname }} {{ lastname }}</span> <i class="fa fa-caret-down fa-fw"></i></a>
+        //-->
 
         <ul class="navbar-nav navbar-right">
-          <li class="nav-item dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" id="user-profile" class="img-circle"/> <span class="hidden-xs">{{ firstname }} {{ lastname }}</span> <i class="fa fa-caret-down fa-fw"></i></a>
+          <li class="nav-item">
 
+            <div class="dropdown">
+              <button type="button" data-toggle="dropdown" class="btn btn-link dropdown-toggle">Link</button>
 
-            <ul class="dropdown-menu dropdown-menu-right">
-              <li class="dropdown-item"><a href="{{ profile }}"><i class="fa fa-user-circle-o fa-fw"></i> {{ text_profile }}</a></li>
-              <li class="ddropdown-divider" role="separator"></li>
-              <li class="dropdown-header">{{ text_store }}</li>
+              <div class="dropdown-menu dropdown-menu-right">
+                <a href="{{ profile }}" class="dropdown-item"><i class="fa fa-user-circle-o fa-fw"></i> {{ text_profile }}</a>
+                <div class="ddropdown-divider"></div>
+                <h6 class="dropdown-header">{{ text_store }}</h6>
+                {% for store in stores %}
+                  <a href="{{ store.href }}" target="_blank" class="dropdown-item">{{ store.name }}</a>
+                {% endfor %}
+                <div class="dropdown-divider"></div>
+                <h6 class="dropdown-header">{{ text_help }}</h6>
+                <a href="http://www.opencart.com" target="_blank" class="dropdown-item"><i class="fa fa-opencart fa-fw"></i> {{ text_homepage }}</a>
+                <a href="http://docs.opencart.com" target="_blank" class="dropdown-item"><i class="fa fa-file-text-o fa-fw"></i> {{ text_documentation }}</a>
+                <a href="http://forum.opencart.com" target="_blank" class="dropdown-item"><i class="fa fa-comments-o fa-fw"></i> {{ text_support }}</a>
+              </div>
+            </div>
 
-              {% for store in stores %}
-                <li class="dropdown-item"><a href="{{ store.href }}" target="_blank">{{ store.name }}</a></li>
-              {% endfor %}
-              <li class="dropdown-divider" role="separator"></li>
-              <li class="dropdown-header">{{ text_help }}</li>
-              <li class="dropdown-item"><a href="http://www.opencart.com" target="_blank"><i class="fa fa-opencart fa-fw"></i> {{ text_homepage }}</a></li>
-              <li class="dropdown-item"><a href="http://docs.opencart.com" target="_blank"><i class="fa fa-file-text-o fa-fw"></i> {{ text_documentation }}</a></li>
-              <li class="dropdown-item"><a href="http://forum.opencart.com" target="_blank"><i class="fa fa-comments-o fa-fw"></i> {{ text_support }}</a></li>
-            </ul>
-        
           </li>
-          <li><a href="{{ logout }}"><i class="fa fa-sign-out"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_logout }}</span></a></li>
+          <li class="nav-item"><a href="{{ logout }}"><i class="fa fa-sign-out"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_logout }}</span></a></li>
         </ul>
-
-          <span class="navbar-text">
-      Navbar text with an inline element
-    </span>
-
-
-        {% endif %}
-
+      {% endif %}
 
 
     </div>

@@ -138,7 +138,7 @@ $('#button-opencart').on('click', function(e) {
 			$('#button-opencart').button('reset');
 		},
 		success: function(html) {
-			$('body').append('<div id="modal-opencart" class="modal">' + html + '</div>');
+			$('body').append(html);
 
 			$('#modal-opencart').modal('show');
 		},

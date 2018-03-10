@@ -173,7 +173,7 @@ $('#button-opencart').on('click', function(e) {
 			$('#button-opencart').button('reset');
 		},
 		success: function(html) {
-			$('body').append('<div id="modal-opencart" class="modal">' + html + '</div>');
+			$('body').append(html);
 
 			$('#modal-opencart').modal('show');
 		},
@@ -193,8 +193,8 @@ $('#button-buy').on('click', function(e) {
 	html += '  <div class="modal-dialog">';
 	html += '    <div class="modal-content">';
 	html += '      <div class="modal-header">';
+	html += '        <h5 class="modal-title">{{ text_purchase }}</h5>';
 	html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
-	html += '        <h4 class="modal-title">{{ text_purchase }}</h4>';
 	html += '      </div>';
 	html += '      <div class="modal-body">';
 	html += '        <p>{{ text_pin }}</p>';

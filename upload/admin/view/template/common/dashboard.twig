@@ -46,7 +46,7 @@ $('#button-setting').on('click', function() {
 		success: function(html) {
 			$('#modal-developer').remove();
 
-			$('body').prepend('<div id="modal-developer" class="modal fade">' + html + '</div>');
+			$('body').prepend(html);
 
 			$('#modal-developer').modal('show');
 		},

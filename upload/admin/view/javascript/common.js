@@ -144,7 +144,7 @@ $(document).ready(function() {
 					}
 				},
 				success: function(html) {
-					$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
+					$('body').append(html);
 
 					$('#modal-image').modal('show');
 				}

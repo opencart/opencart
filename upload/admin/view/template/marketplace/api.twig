@@ -1,19 +1,21 @@
-<div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h4 class="modal-title"><i class="fa fa-cog"></i> {{ heading_title }}</h4>
-    </div>
-    <div class="modal-body">
-      <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_signup }}</div>
-      <div class="form-group">
-        <label for="input-username">{{ entry_username }}</label> <input type="text" name="opencart_username" value="" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
+<div id="modal-opencart" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="fa fa-cog"></i> {{ heading_title }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       </div>
-      <div class="form-group">
-        <label for="input-secret">{{ entry_secret }}</label> <textarea name="opencart_secret" placeholder="{{ entry_secret }}" rows="8" id="input-secret" class="form-control"></textarea>
-      </div>
-      <div class="form-group text-right">
-        <button type="button" id="button-save" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_save }}</button>
+      <div class="modal-body">
+        <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_signup }}</div>
+        <div class="form-group">
+          <label for="input-username">{{ entry_username }}</label> <input type="text" name="opencart_username" value="" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
+        </div>
+        <div class="form-group">
+          <label for="input-secret">{{ entry_secret }}</label> <textarea name="opencart_secret" placeholder="{{ entry_secret }}" rows="8" id="input-secret" class="form-control"></textarea>
+        </div>
+        <div class="form-group text-right">
+          <button type="button" id="button-save" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_save }}</button>
+        </div>
       </div>
     </div>
   </div>

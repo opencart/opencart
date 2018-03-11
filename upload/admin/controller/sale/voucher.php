@@ -567,6 +567,8 @@ class ControllerSaleVoucher extends Controller {
 			}
 
 			if ($vouchers) {
+				$this->load->language('sale/voucher');
+				
 				foreach ($vouchers as $voucher_id) {
 					$voucher_info = $this->model_sale_voucher->getVoucher($voucher_id);
 			

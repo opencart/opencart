@@ -33,7 +33,7 @@ fieldset {
     margin-bottom: 15px;
     text-shadow: 0 1px #fff;
 }
-
+/*
 .breadcrumb {
     display: inline-block;
     background: none;
@@ -60,7 +60,7 @@ fieldset {
     padding: 0 5px;
     font-size: 10px;
 }
-
+*/
 a:hover, a:focus {
     text-decoration: none;
 }
@@ -83,7 +83,7 @@ a:hover, a:focus {
     margin: 0;
     padding: 0;
     box-shadow: 0px 0px 3px #ccc;
-    z-index: 10;
+    z-index: 1000;
 }
 
 #header .container-fluid {
@@ -139,7 +139,7 @@ a:hover, a:focus {
     padding-right: 10px;
 }
 
-/* Desktop */
+/* Desktop
 @media (min-width: 768px) {
     #header .navbar-header {
         display: inline-block;
@@ -153,6 +153,7 @@ a:hover, a:focus {
         line-height: 60px;
     }
 }
+*/
 
 #button-menu {
     line-height: 30px;
@@ -388,10 +389,10 @@ div.required .control-label:not(span):before, td.required:before {
     color: #F00;
     font-weight: bold;
 }
-
+/*
 .btn-group {
     white-space: nowrap;
-}
+}*/
 
 .table thead td span[data-toggle="tooltip"]:after, label.control-label span:after {
     font-family: FontAwesome;
@@ -508,43 +509,43 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 }
 
 /* Panels */
-.panel {
+.card {
     border-radius: 0px;
 }
 
-.panel .panel-heading {
+.card .card-heading {
     position: relative;
 }
 
-.panel-heading h3 i {
+.card-heading h3 i {
     margin-right: 5px;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-.panel-heading h3 {
+.card-heading h3 {
     font-weight: 500;
     display: inline-block;
 }
 
 /* Primary Panel */
-.panel-primary {
+.card-primary {
     border: 1px solid #c3e4f6;
     border-top: 2px solid #5cb7e7;
 }
 
-.panel-primary .panel-heading {
+.card-primary .card-heading {
     color: #1e91cf;
     border-color: #96d0f0;
     background: white;
 }
 
 /* Default Panel */
-.panel-default {
+.card-default {
     border: 1px solid #dcdcdc;
     border-top: 1px solid #dcdcdc;
 }
 
-.panel-default .panel-heading {
+.card-default .card-heading {
     color: #4c4d5a;
     border-color: #dcdcdc;
     background: #f6f6f6;

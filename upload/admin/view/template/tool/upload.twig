@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-upload').toggleClass('hidden-sm hidden-xs');" class="btn btn-light hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
+        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-upload').toggleClass('d-none');" class="btn btn-light d-md-none"><i class="fa fa-filter"></i></button>
         <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-upload').submit() : false;"><i class="fa fa-trash-o"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
@@ -27,7 +27,7 @@
       </div>
     {% endif %}
     <div class="row">
-      <div id="filter-upload" class="col-md-3 col-md-push-9 col-sm-12 hidden-sm hidden-xs">
+      <div id="filter-upload" class="col-md-3 col-sm-12 order-md-9 d-none d-md-block">
         <div class="card">
           <div class="card-header"><i class="fa fa-filter"></i> {{ text_filter }}</div>
           <div class="card-body">
@@ -49,7 +49,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-9 col-md-pull-3 col-sm-12">
+      <div class="col-md-9 col-sm-12">
         <div class="card">
           <div class="card-header"><i class="fa fa-list"></i> {{ text_list }}</div>
           <div class="card-body">

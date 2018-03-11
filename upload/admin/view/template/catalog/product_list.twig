@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-product').toggleClass('d-sm-block');" class="btn btn-light hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
+        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-product').toggleClass('d-none');" class="btn btn-light d-md-none d-lg-none"><i class="fa fa-filter"></i></button>
         <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
         <button type="submit" form="form-product" formaction="{{ copy }}" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fa fa-copy"></i></button>
         <button type="button" form="form-product" formaction="{{ delete }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-product').submit() : false;"><i class="fa fa-trash-o"></i></button>
@@ -30,7 +30,7 @@
       </div>
     {% endif %}
     <div class="row">
-      <div id="filter-product" class="col-md-3 order-md-9 col-sm-12 d-none d-md-block d-lg-block d-xl-block">
+      <div id="filter-product" class="col-md-3 order-md-9 col-sm-12 d-none d-md-block">
         <div class="card">
           <div class="card-header"><i class="fa fa-filter"></i> {{ text_filter }}</div>
           <div class="card-body">

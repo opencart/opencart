@@ -26,7 +26,7 @@
       <div class="card-header"><i class="fa fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-attribute-group">
-          <div class="form-group required">
+          <div class="form-group row required">
             <label class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
               {% for language in languages %}
@@ -40,7 +40,7 @@
               {% endfor %}
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
               <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>

@@ -10,7 +10,7 @@
         <form >
           <fieldset>
             <legend>{{ text_choose }}</legend>
-            <div class="form-group">
+            <div class="form-group row">
               <select name="type" id="input-type" class="form-control">
                 <option value="automatic">{{ text_automatic }}</option>
                 <option value="manual">{{ text_manual }}</option>
@@ -19,7 +19,7 @@
           </fieldset>
           <fieldset id="collapse-automatic" class="collapse">
             <legend>{{ text_automatic }}</legend>
-            <div class="form-group">
+            <div class="form-group row">
               <div class="input-group">
                 <div class="input-group-btn dropdown">
                   <button type="button" id="button-path" data-toggle="dropdown" class="btn btn-light">{{ document_root }} <span class="caret"></span></button>
@@ -43,7 +43,7 @@
           </fieldset>
           <fieldset id="collapse-manual" class="collapse">
             <legend>{{ text_manual }}</legend>
-            <div class="form-group">
+            <div class="form-group row">
               <div style="height: 300px; overflow-y: scroll;" class="form-control" disabled="disabled"></div>
             </div>
           </fieldset>

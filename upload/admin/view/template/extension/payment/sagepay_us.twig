@@ -25,7 +25,7 @@
       <div class="card-header"><i class="fa fa-pencil"></i> {{ text_edit }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment">
-          <div class="form-group required">
+          <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_sagepay_us_merchant_id" value="{{ payment_sagepay_us_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="input-merchant-id" class="form-control"/>
@@ -34,7 +34,7 @@
               {% endif %}
             </div>
           </div>
-          <div class="form-group required">
+          <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="input-merchant-key">{{ entry_merchant_key }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_sagepay_us_merchant_key" value="{{ payment_sagepay_us_merchant_key }}" placeholder="{{ entry_merchant_key }}" id="input-merchant-key" class="form-control"/>

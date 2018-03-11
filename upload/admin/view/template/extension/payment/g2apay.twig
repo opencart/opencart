@@ -31,7 +31,7 @@
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
-              <div class="form-group required">
+              <div class="form-group row required">
                 <label class="col-sm-2 col-form-label" for="input-username">{{ entry_username }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_g2apay_username" value="{{ payment_g2apay_username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control"/> <span class="help-block">{{ help_username }}</span>
@@ -40,7 +40,7 @@
                   {% endif %}
                 </div>
               </div>
-              <div class="form-group required">
+              <div class="form-group row required">
                 <label class="col-sm-2 col-form-label" for="input-secret">{{ entry_secret }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_g2apay_secret" value="{{ payment_g2apay_secret }}" placeholder="{{ entry_secret }}" id="input-secret" class="form-control"/>
@@ -49,7 +49,7 @@
                   {% endif %}
                 </div>
               </div>
-              <div class="form-group required">
+              <div class="form-group row required">
                 <label class="col-sm-2 col-form-label" for="input-api-hash">{{ entry_api_hash }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_g2apay_api_hash" value="{{ payment_g2apay_api_hash }}" placeholder="{{ entry_api_hash }}" id="input-api-hash" class="form-control"/>

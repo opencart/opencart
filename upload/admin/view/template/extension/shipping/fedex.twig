@@ -25,7 +25,7 @@
       <div class="card-header"><i class="fa fa-pencil"></i> {{ text_edit }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-shipping">
-          <div class="form-group required">
+          <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="input-key">{{ entry_key }}</label>
             <div class="col-sm-10">
               <input type="text" name="shipping_fedex_key" value="{{ shipping_fedex_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control"/>
@@ -34,7 +34,7 @@
               {% endif %}
             </div>
           </div>
-          <div class="form-group required">
+          <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="input-password">{{ entry_password }}</label>
             <div class="col-sm-10">
               <input type="text" name="shipping_fedex_password" value="{{ shipping_fedex_password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control"/>
@@ -43,7 +43,7 @@
               {% endif %}
             </div>
           </div>
-          <div class="form-group required">
+          <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="input-account">{{ entry_account }}</label>
             <div class="col-sm-10">
               <input type="text" name="shipping_fedex_account" value="{{ shipping_fedex_account }}" placeholder="{{ entry_account }}" id="input-account" class="form-control"/>
@@ -52,7 +52,7 @@
               {% endif %}
             </div>
           </div>
-          <div class="form-group required">
+          <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="input-meter">{{ entry_meter }}</label>
             <div class="col-sm-10">
               <input type="text" name="shipping_fedex_meter" value="{{ shipping_fedex_meter }}" placeholder="{{ entry_meter }}" id="input-meter" class="form-control"/>
@@ -61,7 +61,7 @@
               {% endif %}
             </div>
           </div>
-          <div class="form-group required">
+          <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="input-postcode">{{ entry_postcode }}</label>
             <div class="col-sm-10">
               <input type="text" name="shipping_fedex_postcode" value="{{ shipping_fedex_postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control"/>
@@ -129,7 +129,7 @@
               </div>
               <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', true);" class="btn btn-link">{{ text_select_all }}</button> / <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', false);" class="btn btn-link">{{ text_unselect_all }}</button></div>
           </div>
-          <div class="form-group required">
+          <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="input-length">{{ entry_dimension }}</label>
             <div class="col-sm-10">
               <div class="row">

@@ -30,17 +30,17 @@
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-setting">
           <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
-            <li class="nav-item"><a href="#tab-store" data-toggle="tab">{{ tab_store }}</a></li>
-            <li class="nav-item"><a href="#tab-local" data-toggle="tab">{{ tab_local }}</a></li>
-            <li class="nav-item"><a href="#tab-option" data-toggle="tab">{{ tab_option }}</a></li>
-            <li class="nav-item"><a href="#tab-image" data-toggle="tab">{{ tab_image }}</a></li>
-            <li class="nav-item"><a href="#tab-mail" data-toggle="tab">{{ tab_mail }}</a></li>
-            <li class="nav-item"><a href="#tab-server" data-toggle="tab">{{ tab_server }}</a></li>
+            <li class="nav-item"><a href="#tab-general" data-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+            <li class="nav-item"><a href="#tab-store" data-toggle="tab" class="nav-link">{{ tab_store }}</a></li>
+            <li class="nav-item"><a href="#tab-local" data-toggle="tab" class="nav-link">{{ tab_local }}</a></li>
+            <li class="nav-item"><a href="#tab-option" data-toggle="tab" class="nav-link">{{ tab_option }}</a></li>
+            <li class="nav-item"><a href="#tab-image" data-toggle="tab" class="nav-link">{{ tab_image }}</a></li>
+            <li class="nav-item"><a href="#tab-mail" data-toggle="tab" class="nav-link">{{ tab_mail }}</a></li>
+            <li class="nav-item"><a href="#tab-server" data-toggle="tab" class="nav-link">{{ tab_server }}</a></li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
-              <div class="form-group required">
+              <div class="form-group row required">
                 <label class="col-sm-2 col-form-label" for="input-meta-title">{{ entry_meta_title }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_meta_title" value="{{ config_meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title" class="form-control"/>
@@ -103,7 +103,7 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-store">
-              <div class="form-group required">
+              <div class="form-group row required">
                 <label class="col-sm-2 col-form-label" for="input-name">{{ entry_name }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_name" value="{{ config_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
@@ -111,7 +111,7 @@
                     <div class="invalid-tooltip">{{ error_name }}</div>
                   {% endif %} </div>
               </div>
-              <div class="form-group required">
+              <div class="form-group row required">
                 <label class="col-sm-2 col-form-label" for="input-owner">{{ entry_owner }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_owner" value="{{ config_owner }}" placeholder="{{ entry_owner }}" id="input-owner" class="form-control"/>
@@ -119,7 +119,7 @@
                     <div class="invalid-tooltip">{{ error_owner }}</div>
                   {% endif %} </div>
               </div>
-              <div class="form-group required">
+              <div class="form-group row required">
                 <label class="col-sm-2 col-form-label" for="input-address">{{ entry_address }}</label>
                 <div class="col-sm-10">
                   <textarea name="config_address" placeholder="{{ entry_address }}" rows="5" id="input-address" class="form-control">{{ config_address }}</textarea>
@@ -134,7 +134,7 @@
                   <small class="form-text text-muted">{{ help_geocode }}</small>
                 </div>
               </div>
-              <div class="form-group required">
+              <div class="form-group row required">
                 <label class="col-sm-2 col-form-label" for="input-email">{{ entry_email }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_email" value="{{ config_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
@@ -142,7 +142,7 @@
                     <div class="invalid-tooltip">{{ error_email }}</div>
                   {% endif %} </div>
               </div>
-              <div class="form-group required">
+              <div class="form-group row required">
                 <label class="col-sm-2 col-form-label" for="input-telephone">{{ entry_telephone }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_telephone" value="{{ config_telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
@@ -382,7 +382,7 @@
                     <small class="form-text text-muted">{{ help_product_count }}</small>
                   </div>
                 </div>
-                <div class="form-group required">
+                <div class="form-group row required">
                   <label class="col-sm-2 col-form-label" for="input-admin-limit">{{ entry_limit_admin }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="config_limit_admin" value="{{ config_limit_admin }}" placeholder="{{ entry_limit_admin }}" id="input-admin-limit" class="form-control"/>
@@ -435,7 +435,7 @@
               </fieldset>
               <fieldset>
                 <legend>{{ text_voucher }}</legend>
-                <div class="form-group required">
+                <div class="form-group row required">
                   <label class="col-sm-2 col-form-label" for="input-voucher-min">{{ entry_voucher_min }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="config_voucher_min" value="{{ config_voucher_min }}" placeholder="{{ entry_voucher_min }}" id="input-voucher-min" class="form-control"/>
@@ -444,7 +444,7 @@
                       <div class="invalid-tooltip">{{ error_voucher_min }}</div>
                     {% endif %}</div>
                 </div>
-                <div class="form-group required">
+                <div class="form-group row required">
                   <label class="col-sm-2 col-form-label" for="input-voucher-max">{{ entry_voucher_max }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="config_voucher_max" value="{{ config_voucher_max }}" placeholder="{{ entry_voucher_max }}" id="input-voucher-max" class="form-control"/>
@@ -1293,7 +1293,7 @@
                       {% endif %}</label>
                   </div>
                 </div>
-                <div class="form-group required">
+                <div class="form-group row required">
                   <label class="col-sm-2 col-form-label" for="input-error-filename">{{ entry_error_filename }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="config_error_filename" value="{{ config_error_filename }}" placeholder="{{ entry_error_filename }}" id="input-error-filename" class="form-control"/>

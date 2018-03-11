@@ -1,7 +1,7 @@
 <div id="openbay-info">
   <div>
     <div class="alert alert-warning">{{ text_marketplace_shipped }}</div>
-    <div class="form-group">
+    <div class="form-group row">
       <label class="col-sm-2 col-form-label" for="carrier-id">{{ entry_courier }}</label>
       <div class="col-sm-10">
         <select name="carrier_id" id="carrier-id" class="form-control openbay-data">
@@ -15,13 +15,13 @@
         </select>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group row">
       <label class="col-sm-2 col-form-label" for="carrier-other">{{ entry_courier_other }}</label>
       <div class="col-sm-10">
         <input type="text" name="courier_other" value="{% if order_info.courier_other is not empty %}{{ order_info.courier_id }}{% endif %}" placeholder="{{ entry_courier_other }}" id="carrier-other" class="form-control openbay-data" />
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group row">
       <label class="col-sm-2 col-form-label" for="tracking-no">{{ entry_tracking }}</label>
       <div class="col-sm-10">
         <input type="text" name="tracking_no" value="{{ order_info.tracking_no }}" placeholder="{{ entry_tracking }}" id="tracking-no" class="form-control openbay-data" />

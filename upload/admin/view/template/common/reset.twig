@@ -10,13 +10,13 @@
           <div class="card-body">
             <form action="{{ action }}" method="post" enctype="multipart/form-data">
               <p>{{ text_password }}</p>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-form-label" for="input-password">{{ entry_password }}</label> <input type="password" name="password" value="{{ password }}" id="input-password" class="form-control"/>
                 {% if error_password %}
                   <div class="invalid-tooltip">{{ error_password }}</div>
                 {% endif %}
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-form-label" for="input-confirm">{{ entry_confirm }}</label> <input type="password" name="confirm" value="{{ confirm }}" id="input-confirm" class="form-control"/>
                 {% if error_confirm %}
                   <div class="invalid-tooltip">{{ error_confirm }}</div>

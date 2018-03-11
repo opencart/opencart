@@ -25,7 +25,7 @@
       <div class="card-header"><i class="fa fa-pencil"></i> {{ text_edit }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-pp-payflow">
-          <div class="form-group required">
+          <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="entry-vendor">{{ entry_vendor }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_pp_payflow_vendor" value="{{ payment_pp_payflow_vendor }}" placeholder="{{ entry_vendor }}" id="entry-vendor" class="form-control"/>
@@ -35,7 +35,7 @@
               {% endif %}
             </div>
           </div>
-          <div class="form-group required">
+          <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="entry-user">{{ entry_user }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_pp_payflow_user" value="{{ payment_pp_payflow_user }}" placeholder="{{ entry_user }}" id="entry-user" class="form-control"/>
@@ -45,7 +45,7 @@
               {% endif %}
             </div>
           </div>
-          <div class="form-group required">
+          <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="entry-password">{{ entry_password }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_pp_payflow_password" value="{{ payment_pp_payflow_password }}" placeholder="{{ entry_password }}" id="entry-password" class="form-control"/>
@@ -55,7 +55,7 @@
               {% endif %}
             </div>
           </div>
-          <div class="form-group required">
+          <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="entry-partner">{{ entry_partner }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_pp_payflow_partner" value="{{ payment_pp_payflow_partner }}" placeholder="{{ entry_partner }}" id="entry-partner" class="form-control"/>

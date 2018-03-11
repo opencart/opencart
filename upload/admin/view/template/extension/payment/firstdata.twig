@@ -33,7 +33,7 @@
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-account">
-              <div class="form-group required">
+              <div class="form-group row required">
                 <label class="col-sm-2 col-form-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_firstdata_merchant_id" value="{{ payment_firstdata_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="input-merchant-id" class="form-control"/>
@@ -42,7 +42,7 @@
                   {% endif %}
                 </div>
               </div>
-              <div class="form-group required">
+              <div class="form-group row required">
                 <label class="col-sm-2 col-form-label" for="input-secret">{{ entry_secret }}</label>
                 <div class="col-sm-10">
                   <input type="password" name="payment_firstdata_secret" value="{{ payment_firstdata_secret }}" placeholder="{{ entry_secret }}" id="input-secret" class="form-control"/>
@@ -213,7 +213,7 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-advanced">
-              <div class="form-group required">
+              <div class="form-group row required">
                 <label class="col-sm-2 col-form-label" for="input-live-url">{{ entry_live_url }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_firstdata_live_url" value="{{ payment_firstdata_live_url }}" placeholder="{{ entry_live_url }}" id="input-live-url" class="form-control"/>
@@ -222,7 +222,7 @@
                   {% endif %}
                 </div>
               </div>
-              <div class="form-group required">
+              <div class="form-group row required">
                 <label class="col-sm-2 col-form-label" for="input-demo-url">{{ entry_demo_url }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_firstdata_demo_url" value="{{ payment_firstdata_demo_url }}" placeholder="{{ entry_demo_url }}" id="input-demo-url" class="form-control"/>

@@ -26,7 +26,7 @@
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment">
           <div class="tab-content">
-            <div class="form-group required">
+            <div class="form-group row required">
               <label class="col-sm-2 col-form-label" for="entry-app-id">{{ entry_app_id }}</label>
               <div class="col-sm-10">
                 <input type="text" name="payment_alipay_app_id" value="{{ payment_alipay_app_id }}" placeholder="{{ entry_app_id }}" id="entry-app-id" class="form-control"/>
@@ -35,7 +35,7 @@
                 {% endif %}
               </div>
             </div>
-            <div class="form-group required">
+            <div class="form-group row required">
               <label class="col-sm-2 col-form-label" for="entry-merchant-private-key">{{ entry_merchant_private_key }}</label>
               <div class="col-sm-10">
                 <textarea name="payment_alipay_merchant_private_key" rows="10" placeholder="{{ entry_merchant_private_key }}" id="entry-merchant-private-key" class="form-control">{{ payment_alipay_merchant_private_key }}</textarea>
@@ -44,7 +44,7 @@
                 {% endif %}
               </div>
             </div>
-            <div class="form-group required">
+            <div class="form-group row required">
               <label class="col-sm-2 col-form-label" for="entry-alipay-public-key">{{ entry_alipay_public_key }}</label>
               <div class="col-sm-10">
                 <textarea name="payment_alipay_alipay_public_key" rows="5" placeholder="{{ entry_alipay_public_key }}" id="entry-alipay-public-key" class="form-control">{{ payment_alipay_alipay_public_key }}</textarea>

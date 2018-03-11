@@ -25,7 +25,7 @@
       <div class="card-header"><i class="fa fa-pencil"></i> {{ heading_title }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment">
-          <div class="form-group required">
+          <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="securetrading_pp_site_reference">{{ entry_site_reference }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_securetrading_pp_site_reference" value="{{ payment_securetrading_pp_site_reference }}" placeholder="{{ entry_site_reference }}" id="securetrading_pp_site_reference" class="form-control"/>
@@ -69,7 +69,7 @@
               <input type="text" name="payment_securetrading_pp_site_security_password" value="{{ payment_securetrading_pp_site_security_password }}" placeholder="{{ entry_site_security_password }}" id="securetrading_pp_site_security_password" class="form-control"/>
             </div>
           </div>
-          <div class="form-group required">
+          <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="securetrading_pp_notification_password">{{ entry_notification_password }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_securetrading_pp_notification_password" value="{{ payment_securetrading_pp_notification_password }}" placeholder="{{ entry_notification_password }}" id="securetrading_pp_site_security_password" class="form-control"/>
@@ -88,7 +88,7 @@
             <div class="col-sm-10">
               <input type="text" name="payment_securetrading_pp_webservice_password" value="{{ payment_securetrading_pp_webservice_password }}" placeholder="{{ entry_password }}" id="securetrading_pp_webservice_username" class="form-control"/> <span class="help-block">{{ help_password }}</span></div>
           </div>
-          <div class="form-group required">
+          <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="securetrading_pp_cards_accepted">{{ entry_cards_accepted }}</label>
             <div class="col-sm-10">
               {% for key, value in cards %}

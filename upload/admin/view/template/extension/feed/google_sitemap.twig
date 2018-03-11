@@ -25,7 +25,7 @@
       <div class="card-header"><i class="fa fa-pencil"></i> {{ text_edit }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-feed">
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="feed_google_sitemap_status" id="input-status" class="form-control">
@@ -39,7 +39,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-data-feed">{{ entry_data_feed }}</label>
             <div class="col-sm-10">
               <textarea rows="5" readonly id="input-data-feed" class="form-control">{{ data_feed }}</textarea>

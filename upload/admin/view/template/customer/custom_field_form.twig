@@ -27,7 +27,7 @@
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-custom-field">
           <fieldset>
             <legend>{{ text_custom_field }}</legend>
-            <div class="form-group required">
+            <div class="form-group row required">
               <label class="col-sm-2 col-form-label">{{ entry_name }}</label>
               <div class="col-sm-10"> {% for language in languages %}
                   <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span> <input type="text" name="custom_field_description[{{ language.language_id }}][name]" value="{{ custom_field_description[language.language_id] ? custom_field_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control"/>
@@ -38,7 +38,7 @@
                 {% endfor %}
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group row">
               <label class="col-sm-2 col-form-label" for="input-location">{{ entry_location }}</label>
               <div class="col-sm-10">
                 <select name="location" id="input-location" class="form-control">
@@ -60,7 +60,7 @@
                 </select>
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group row">
               <label class="col-sm-2 col-form-label" for="input-type">{{ entry_type }}</label>
               <div class="col-sm-10">
                 <select name="type" id="input-type" class="form-control">
@@ -120,20 +120,20 @@
                 </select>
               </div>
             </div>
-            <div class="form-group" id="display-value">
+            <div class="form-group row" id="display-value">
               <label class="col-sm-2 col-form-label" for="input-value">{{ entry_value }}</label>
               <div class="col-sm-10">
                 <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_value }}" id="input-value" class="form-control"/>
               </div>
             </div>
-            <div class="form-group" id="display-validation">
+            <div class="form-group row" id="display-validation">
               <label class="col-sm-2 col-form-label" for="input-validation">{{ entry_validation }}</label>
               <div class="col-sm-10">
                 <input type="text" name="validation" id="input-validation" value="{{ validation }}" placeholder="{{ text_regex }}" class="form-control"/>
                 <small class="form-text text-muted">{{ help_regex }}</small>
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group row">
               <label class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
               <div class="col-sm-10">{% set customer_group_row = 0 %}
                 {% for customer_group in customer_groups %}
@@ -149,7 +149,7 @@
                   {% set customer_group_row = customer_group_row + 1 %}
                 {% endfor %}</div>
             </div>
-            <div class="form-group">
+            <div class="form-group row">
               <label class="col-sm-2 col-form-label">{{ entry_required }}</label>
               <div class="col-sm-10">{% set customer_group_row = 0 %}
                 {% for customer_group in customer_groups %}
@@ -165,7 +165,7 @@
                   {% set customer_group_row = customer_group_row + 1 %}
                 {% endfor %}</div>
             </div>
-            <div class="form-group">
+            <div class="form-group row">
               <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
               <div class="col-sm-10">
                 <select name="status" id="input-status" class="form-control">
@@ -179,7 +179,7 @@
                 </select>
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group row">
               <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
               <div class="col-sm-10">
                 <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>

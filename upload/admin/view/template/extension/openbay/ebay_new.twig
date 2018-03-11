@@ -680,7 +680,7 @@
                     <div class="row">
                       <div class="col-sm-12 text-right">
                         <p>
-                          <label class="control-label text-right">{{ entry_shipping_nat }}</label>
+                          <label class="col-form-label text-right">{{ entry_shipping_nat }}</label>
                         </p>
                       </div>
                     </div>
@@ -709,7 +709,7 @@
                     <div class="row">
                       <div class="col-sm-12 text-right">
                         <p>
-                          <label class="control-label text-right">{{ entry_shipping_nat }}</label>
+                          <label class="col-form-label text-right">{{ entry_shipping_nat }}</label>
                         </p>
                       </div>
                     </div>
@@ -758,7 +758,7 @@
                     <div class="row">
                       <div class="col-sm-12 text-right">
                         <p>
-                          <label class="control-label text-right">{{ entry_shipping_intnat }}</label>
+                          <label class="col-form-label text-right">{{ entry_shipping_intnat }}</label>
                         </p>
                       </div>
                     </div>
@@ -787,7 +787,7 @@
                     <div class="row">
                       <div class="col-sm-12 text-right">
                         <p>
-                          <label class="control-label text-right">{{ entry_shipping_intnat }}</label>
+                          <label class="col-form-label text-right">{{ entry_shipping_intnat }}</label>
                         </p>
                       </div>
                     </div>
@@ -1323,7 +1323,7 @@ function getCompatibilityNames(category_id) {
 
 			$.each(data.options, function(option_key, option_value) {
 				compatibility_html += '<div class="form-group"  id="compatibility-data-' + option_value.sequence + '-container">';
-				compatibility_html += '<label class="col-sm-2 control-label pull-left">' + option_value.display_name + '</label>';
+				compatibility_html += '<label class="col-sm-2 col-form-label pull-left">' + option_value.display_name + '</label>';
 				compatibility_html += '<input type="hidden" id="compatibility-data-' + option_value.sequence + '-sequence" value="' + option_value.sequence + '" />';
 				compatibility_html += '<input type="hidden" id="compatibility-data-' + option_value.sequence + '-name" value="' + option_value.name + '" />';
 				compatibility_html += '<div class="col-sm-8">';

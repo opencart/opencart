@@ -32,13 +32,13 @@
         <div class="card">
           <div class="card-header"><i class="fa fa-filter"></i> {{ text_filter }}</div>
           <div class="card-body">
-            <div class="form-group">
+            <div class="form-group row">
               <label class="col-form-label" for="input-query">{{ entry_query }}</label> <input type="text" name="filter_query" value="{{ filter_query }}" placeholder="{{ entry_query }}" id="input-query" class="form-control"/>
             </div>
-            <div class="form-group">
+            <div class="form-group row">
               <label class="col-form-label" for="input-keyword">{{ entry_keyword }}</label> <input type="text" name="filter_keyword" value="{{ filter_keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control"/>
             </div>
-            <div class="form-group">
+            <div class="form-group row">
               <label class="col-form-label" for="input-store">{{ entry_store }}</label> <select name="filter_store_id" id="input-store" class="form-control">
                 <option value=""></option>
                 {% if filter_store_id == '0' %}
@@ -55,7 +55,7 @@
                 {% endfor %}
               </select>
             </div>
-            <div class="form-group">
+            <div class="form-group row">
               <label class="col-form-label" for="input-language">{{ entry_language }}</label> <select name="filter_language_id" id="input-language" class="form-control">
                 <option value=""></option>
                 {% for language in languages %}

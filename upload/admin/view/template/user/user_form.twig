@@ -25,7 +25,7 @@
       <div class="card-header"><i class="fa fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-user">
-          <div class="form-group required">
+          <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="input-username">{{ entry_username }}</label>
             <div class="col-sm-10">
               <input type="text" name="username" value="{{ username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
@@ -48,7 +48,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group required">
+          <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="input-firstname">{{ entry_firstname }}</label>
             <div class="col-sm-10">
               <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
@@ -57,7 +57,7 @@
               {% endif %}
             </div>
           </div>
-          <div class="form-group required">
+          <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="input-lastname">{{ entry_lastname }}</label>
             <div class="col-sm-10">
               <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
@@ -66,7 +66,7 @@
               {% endif %}
             </div>
           </div>
-          <div class="form-group required">
+          <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="input-email">{{ entry_email }}</label>
             <div class="col-sm-10">
               <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
@@ -80,7 +80,7 @@
             <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ thumb }}" alt="" title="" data-placeholder="{{ placeholder }}"/></a> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
             </div>
           </div>
-          <div class="form-group required">
+          <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="input-password">{{ entry_password }}</label>
             <div class="col-sm-10">
               <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" autocomplete="off"/>
@@ -89,7 +89,7 @@
               {% endif %}
             </div>
           </div>
-          <div class="form-group required">
+          <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="input-confirm">{{ entry_confirm }}</label>
             <div class="col-sm-10">
               <input type="password" name="confirm" value="{{ confirm }}" placeholder="{{ entry_confirm }}" id="input-confirm" class="form-control"/>

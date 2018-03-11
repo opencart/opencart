@@ -25,7 +25,7 @@
       <div class="card-header"><i class="fa fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-translation">
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-store">{{ entry_store }}</label>
             <div class="col-sm-10">
               <select name="store_id" id="input-store" class="form-control">
@@ -40,7 +40,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-language">{{ entry_language }}</label>
             <div class="col-sm-10">
               <select name="language_id" id="input-language" class="form-control">
@@ -54,13 +54,13 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-route">{{ entry_route }}</label>
             <div class="col-sm-10">
               <select name="route" id="input-route" class="form-control"></select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-key">{{ entry_key }}</label>
             <div class="col-sm-10">
               <select id="input-key" class="form-control"></select><input type="text" name="key" value="{{ key }}" placeholder="{{ entry_key }}" class="form-control"/>
@@ -69,13 +69,13 @@
               {% endif %}
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-default">{{ entry_default }}</label>
             <div class="col-sm-10">
               <textarea name="default" placeholder="{{ entry_default }}" rows="5" id="input-default" class="form-control" disabled="disabled">{% if default %}{{ default }}{% endif %}</textarea>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-value">{{ entry_value }}</label>
             <div class="col-sm-10">
               <textarea name="value" rows="5" placeholder="{{ entry_value }}" id="input-value" class="form-control">{{ value }}</textarea>

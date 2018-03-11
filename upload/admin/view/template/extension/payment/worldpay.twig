@@ -26,7 +26,7 @@
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
-              <div class="form-group required">
+              <div class="form-group row required">
                 <label class="col-sm-2 col-form-label" for="input-service-key">{{ entry_service_key }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_worldpay_service_key" value="{{ payment_worldpay_service_key }}" placeholder="{{ entry_service_key }}" id="input-service-key" class="form-control"/>
@@ -34,7 +34,7 @@
                     <div class="invalid-tooltip">{{ error_service_key }}</div>
                   {% endif %} </div>
               </div>
-              <div class="form-group required">
+              <div class="form-group row required">
                 <label class="col-sm-2 col-form-label" for="input-client-key">{{ entry_client_key }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_worldpay_client_key" value="{{ payment_worldpay_client_key }}" placeholder="{{ entry_client_key }}" id="input-client-key" class="form-control"/>

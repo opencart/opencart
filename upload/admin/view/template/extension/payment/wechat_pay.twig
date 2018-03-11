@@ -26,7 +26,7 @@
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment">
           <div class="tab-content">
-            <div class="form-group required">
+            <div class="form-group row required">
               <label class="col-sm-2 col-form-label" for="entry-app-id">{{ entry_app_id }}</label>
               <div class="col-sm-10">
                 <input type="text" name="payment_wechat_pay_app_id" value="{{ payment_wechat_pay_app_id }}" placeholder="{{ entry_app_id }}" id="entry-app-id" class="form-control"/>
@@ -35,7 +35,7 @@
                 {% endif %}
               </div>
             </div>
-            <div class="form-group required">
+            <div class="form-group row required">
               <label class="col-sm-2 col-form-label" for="entry-app-secret">{{ entry_app_secret }}</label>
               <div class="col-sm-10">
                 <input type="text" name="payment_wechat_pay_app_secret" value="{{ payment_wechat_pay_app_secret }}" placeholder="{{ entry_app_secret }}" id="entry-app-secret" class="form-control"/>
@@ -44,7 +44,7 @@
                 {% endif %}
               </div>
             </div>
-            <div class="form-group required">
+            <div class="form-group row required">
               <label class="col-sm-2 col-form-label" for="entry-mch-id">{{ entry_mch_id }}</label>
               <div class="col-sm-10">
                 <input type="text" name="payment_wechat_pay_mch_id" value="{{ payment_wechat_pay_mch_id }}" placeholder="{{ entry_mch_id }}" id="entry-mch-id" class="form-control"/>
@@ -53,7 +53,7 @@
                 {% endif %}
               </div>
             </div>
-            <div class="form-group required">
+            <div class="form-group row required">
               <label class="col-sm-2 col-form-label" for="entry-api-secret">{{ entry_api_secret }}</label>
               <div class="col-sm-10">
                 <input type="text" name="payment_wechat_pay_api_secret" value="{{ payment_wechat_pay_api_secret }}" placeholder="{{ entry_api_secret }}" id="entry-api-secret" class="form-control"/>

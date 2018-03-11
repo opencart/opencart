@@ -37,7 +37,7 @@
                 <div id="tab-listing-general" class="tab-pane active">
                   <div class="row">
                     <div class="col-sm-12">
-                      <div class="form-group required">
+                      <div class="form-group row required">
                         <label class="col-sm-2 col-form-label">{{ entry_category }}</label>
                         <div class="col-sm-10">
                           <div id="category-selected" class="alert alert-success" style="display:none;"><i class="fa fa-check fa-lg" style="color:green"></i> {{ text_category_selected }} <a class="label label-info" id="reset-category">{{ button_edit }}</a></div>
@@ -47,26 +47,26 @@
                       </div>
                     </div>
                   </div>
-                  <div class="form-group required">
+                  <div class="form-group row required">
                     <label class="col-sm-2 col-form-label" for="input-title">{{ entry_title }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="title" value="{{ product.name }}" placeholder="{{ entry_title }}" id="input-title" class="form-control"/>
                     </div>
                   </div>
-                  <div class="form-group required">
+                  <div class="form-group row required">
                     <label class="col-sm-2 col-form-label" for="input-description">{{ entry_description }}</label>
                     <div class="col-sm-10">
                       <textarea name="description" placeholder="{{ entry_description }}" id="input-description" class="form-control">{{ product.description_raw }}</textarea>
                       <small class="form-text text-muted">{{ help_description }}</small>
                     </div>
                   </div>
-                  <div class="form-group required">
+                  <div class="form-group row required">
                     <label class="col-sm-2 col-form-label" for="input-price">{{ entry_price }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="price" value="{{ product.price }}" placeholder="{{ entry_price }}" id="input-price" class="form-control"/>
                     </div>
                   </div>
-                  <div class="form-group required">
+                  <div class="form-group row required">
                     <label class="col-sm-2 col-form-label" for="input-is-supply">{{ entry_is_supply }}</label>
                     <div class="col-sm-10">
                       <select name="is_supply" id="input-is-supply" class="form-control">
@@ -75,7 +75,7 @@
                       </select>
                     </div>
                   </div>
-                  <div class="form-group required">
+                  <div class="form-group row required">
                     <label class="col-sm-2 col-form-label" for="input-who-made">{{ entry_who_made }}</label>
                     <div class="col-sm-10">
                       <select name="who_made" id="input-who-made" class="form-control">
@@ -85,7 +85,7 @@
                       </select>
                     </div>
                   </div>
-                  <div class="form-group required">
+                  <div class="form-group row required">
                     <label class="col-sm-2 col-form-label" for="input-when-made">{{ entry_when_made }}</label>
                     <div class="col-sm-10">
                       <select name="when_made" id="input-when-made" class="form-control">
@@ -95,7 +95,7 @@
                       </select>
                     </div>
                   </div>
-                  <div class="form-group required">
+                  <div class="form-group row required">
                     <label class="col-sm-2 col-form-label" for="input-state">{{ entry_state }}</label>
                     <div class="col-sm-10">
                       <select name="state" id="input-state" class="form-control">
@@ -105,7 +105,7 @@
                       </select>
                     </div>
                   </div>
-                  <div class="form-group required">
+                  <div class="form-group row required">
                     <label class="col-sm-2 col-form-label" for="input-shipping">{{ entry_shipping }} <span id="shipping-loading" style="display: none;"><i class="fa fa-cog fa-lg fa-spin"></i></span></label>
                     <div class="col-sm-10">
                       <select name="shipping_template_id" id="input-shipping" class="form-control" disabled="disabled"> </select>

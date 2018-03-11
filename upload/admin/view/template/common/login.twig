@@ -19,12 +19,12 @@
               </div>
             {% endif %}
             <form action="{{ action }}" method="post" enctype="multipart/form-data">
-              <div class="form-group">
+              <div class="form-group row">
                 <label for="input-username">{{ entry_username }}</label>
                 <div class="input-group"><span class="input-group-addon"><i class="fa fa-user"></i></span> <input type="text" name="username" value="{{ username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label for="input-password">{{ entry_password }}</label>
                 <div class="input-group"><span class="input-group-addon"><i class="fa fa-lock"></i></span> <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control"/>
                 </div>

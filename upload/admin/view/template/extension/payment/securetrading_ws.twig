@@ -63,11 +63,11 @@
             <label class="col-sm-2 col-form-label" for="securetrading_ws_cards_accepted">{{ entry_cards_accepted }}</label>
             <div class="col-sm-10"> {% for key, value in cards %}
                 <div class="checkbox">
-                  <label> {% for key in payment_securetrading_ws_cards_accepted %}
+                  <label> {% if key in payment_securetrading_ws_cards_accepted %}
                       <input type="checkbox" checked="checked" name="payment_securetrading_ws_cards_accepted[]" value="{{ key }}"/>
                     {% else %}
                       <input type="checkbox" name="payment_securetrading_ws_cards_accepted[]" value="{{ key }}"/>
-                    {% endfor %}
+                    {% endif %}
                     {{ value }} </label>
                 </div>
               {% endfor %}

@@ -59,21 +59,16 @@ class ControllerMailReward extends Controller {
 			$data['text_received'] = sprintf($language->get('text_received'), $points);
 			$data['text_total'] = sprintf($language->get('text_total'), $this->model_customer_customer->getRewardTotal($customer_id));
 
-			$mail = new Mail($this->config->get('config_mail_engine'));
-			$mail->protocol = $this->config->get('config_mail_protocol');
-			$mail->parameter = $this->config->get('config_mail_parameter');
-			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-
-			$mail->setTo($customer_info['email']);
-			$mail->setFrom($this->config->get('config_email'));
-			$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject(sprintf($language->get('text_subject'), html_entity_decode($store_name, ENT_QUOTES, 'UTF-8')));
-			$mail->setText($this->load->view('mail/reward', $data));
-			$mail->send();
+			$this->load->model('tool/mail');
+			
+			$mail_data = array(
+				'to'		=> $customer_info['email'],
+				'sender'	=> $store_name,
+				'subject'	=> sprintf($language->get('text_subject'), html_entity_decode($store_name, ENT_QUOTES, 'UTF-8')),
+				'text'		=> $this->load->view('mail/reward', $data)
+			);
+			
+			$this->model_tool_mail->sendMail($mail_data);
 		}
 	}
 }

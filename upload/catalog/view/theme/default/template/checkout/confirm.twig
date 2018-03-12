@@ -11,6 +11,7 @@
       </tr>
     </thead>
     <tbody>
+
     {% for product in products %}
     <tr>
       <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a> {% for option in product.option %} <br />
@@ -33,7 +34,9 @@
     </tr>
     {% endfor %}
       </tbody>
+
     <tfoot>
+
     {% for total in totals %}
     <tr>
       <td colspan="4" class="text-right"><strong>{{ total.title }}:</strong></td>
@@ -41,6 +44,7 @@
     </tr>
     {% endfor %}
       </tfoot>
+
   </table>
 </div>
 {{ payment }}
@@ -48,4 +52,4 @@
 <script type="text/javascript"><!--
 location = '{{ redirect }}';
 //--></script>
-{% endif %}
+{% endif %} 

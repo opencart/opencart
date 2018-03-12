@@ -15,19 +15,19 @@
     {% endif %}
     <div id="content" class="{{ class }}">{{ content_top }}
       <h1>{{ heading_title }}</h1>
-      <form action="{{ action }}" method="post" enctype="multipart/form-data" class="form-horizontal">
+      <form action="{{ action }}" method="post" enctype="multipart/form-data">
         <fieldset>
           <legend>{{ text_password }}</legend>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-password">{{ entry_password }}</label>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-password">{{ entry_password }}</label>
             <div class="col-sm-10">
               <input type="password" name="password" value="{{ password }}" id="input-password" class="form-control" />
               {% if error_password %}
               <div class="text-danger">{{ error_password }}</div>
-              {% endif %}</div>
+              {% endif %} </div>
           </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-confirm">{{ entry_confirm }}</label>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-confirm">{{ entry_confirm }}</label>
             <div class="col-sm-10">
               <input type="password" name="confirm" value="{{ confirm }}" id="input-confirm" class="form-control" />
               {% if error_confirm %}
@@ -36,10 +36,10 @@
           </div>
         </fieldset>
         <div class="buttons clearfix">
-          <div class="pull-right">
+          <div class="pull-left"><a href="{{ back }}" class="btn btn-default">{{ button_back }}</a></div>
+          <div class="float-right">
             <button type="submit" class="btn btn-primary">{{ button_continue }}</button>
           </div>
-          <div class="pull-left"><a href="{{ back }}" class="btn btn-default">{{ button_back }}</a></div>
         </div>
       </form>
       {{ content_bottom }}</div>

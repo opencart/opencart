@@ -1,20 +1,22 @@
 <h2>{{ text_instruction }}</h2>
-<div class="well well-sm">
-  <p><b>{{ text_payable }}</b></p>
-  <p>{{ payable }}</p>
-  <b>{{ text_address }}</b><br />
-  <p>{{ address }}</p>
-  <p>{{ text_payment }}</p>
+<div class="card">
+  <div class="card-body">
+    <p><b>{{ text_payable }}</b></p>
+    <p>{{ payable }}</p>
+    <b>{{ text_address }}</b><br />
+    <p>{{ address }}</p>
+    <p>{{ text_payment }}</p>
+  </div>
 </div>
 <div class="buttons">
-  <div class="pull-right">
+  <div class="float-right">
     <input type="button" value="{{ button_confirm }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
   </div>
 </div>
 <script type="text/javascript"><!--
 $('#button-confirm').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/payment/cheque/confirm&language=' + getCookie('language'),
+		url: 'index.php?route=extension/payment/cheque/confirm',
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-confirm').button('loading');
@@ -24,7 +26,7 @@ $('#button-confirm').on('click', function() {
 		},
 		success: function(json) {
 			if (json['redirect']) {
-				location = json['redirect'];	
+				location = json['redirect'];
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

@@ -42,6 +42,7 @@
     </tr>
   </thead>
   <tbody>
+  
   {% for report in transaction.report %}
   {% if report.instalment == '0' %}
   <tr>
@@ -61,5 +62,6 @@
   </tr>
   {% endif %}
   {% endfor %}
-  </tbody>
+    </tbody>
+  
 </table>

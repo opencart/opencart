@@ -213,7 +213,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="{{ button_close }}">&times;</button>
       </div>
       <div class="modal-body">
-        <div class="form-group">
+        <div class="form-group row">
           <label class="col-sm-2 col-form-label" for="input-billing-address-title">{{ column_title }}</label>
           <div class="col-sm-10">
             <input type="text" name="title" value="{{ transaction.billing_address.title }}" id="input-capture-billing-address-title" class="form-control"/>
@@ -237,7 +237,7 @@
             <input type="text" name="street_address" value="{{ transaction.billing_address.street_address }}" id="input-billing-address-street-address" class="form-control"/>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group row">
           <label class="col-sm-2 col-form-label" for="input-billing-address-street-address2">{{ column_street_address2 }}</label>
           <div class="col-sm-10">
             <input type="text" name="street_address2" value="{{ transaction.billing_address.street_address2 }}" id="input-billing-address-street-address2" class="form-control"/>
@@ -296,7 +296,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="{{ button_close }}">&times;</button>
       </div>
       <div class="modal-body">
-        <div class="form-group">
+        <div class="form-group row">
           <label class="col-sm-2 col-form-label" for="input-shipping-address-title">{{ column_title }}</label>
           <div class="col-sm-10">
             <input type="text" name="title" value="{{ transaction.shipping_address.title }}" id="input-capture-shipping-address-title" class="form-control"/>
@@ -320,7 +320,7 @@
             <input type="text" name="street_address" value="{{ transaction.shipping_address.street_address }}" id="input-shipping-address-street-address" class="form-control"/>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group row">
           <label class="col-sm-2 col-form-label" for="input-shipping-address-street-address2">{{ column_street_address2 }}</label>
           <div class="col-sm-10">
             <input type="text" name="street_address2" value="{{ transaction.shipping_address.street_address2 }}" id="input-shipping-address-street-address2" class="form-control"/>
@@ -379,7 +379,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="{{ button_close }}">&times;</button>
       </div>
       <div class="modal-body">
-        <div class="form-group">
+        <div class="form-group row">
           <label class="col-sm-2 col-form-label" for="input-capture-amount">{{ column_amount }}</label>
           <div class="col-sm-10">
             <input text="text" name="capture_amount" value="{{ max_capture_amount }}" id="input-capture-amount" class="form-control"/>
@@ -401,7 +401,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="{{ button_close }}">&times;</button>
       </div>
       <div class="modal-body">
-        <div class="form-group">
+        <div class="form-group row">
           <label class="col-sm-2 col-form-label" for="input-refund-amount">{{ column_amount }}</label>
           <div class="col-sm-10">
             <input text="text" name="refund_amount" value="{{ max_refund_amount }}" id="input-refund-amount" class="form-control"/>
@@ -485,7 +485,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="{{ button_close }}">&times;</button>
         </div>
         <div class="modal-body">
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-capture-billing-address-{{ capture.capture_id }}-title">{{ column_title }}</label>
             <div class="col-sm-10">
               <input type="text" name="title" value="{{ capture.billing_address.title }}" id="input-capture-billing-address-{{ capture.capture_id }}-title" class="form-control"/>
@@ -509,7 +509,7 @@
               <input type="text" name="street_address" value="{{ capture.billing_address.street_address }}" id="input-capture-billing-address-{{ capture.capture_id }}-street-address" class="form-control"/>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-capture-billing-address-{{ capture.capture_id }}-street-address2">{{ column_street_address2 }}</label>
             <div class="col-sm-10">
               <input type="text" name="street_address2" value="{{ capture.billing_address.street_address2 }}" id="input-capture-billing-address-{{ capture.capture_id }}-street-address2" class="form-control"/>

@@ -59,7 +59,7 @@
               <fieldset>
                 <legend>{{ text_settings_section_heading }}</legend>
                 <div class="form-group">
-                  <label class="col-sm-2 </div> for=" dropdown_payment_squareup_status"><span data-toggle="tooltip" title="{{ text_extension_status_help }}">{{ text_extension_status }}</span></label>
+                  <label class="col-sm-2 col-form-label" for=" dropdown_payment_squareup_status"><span data-toggle="tooltip" title="{{ text_extension_status_help }}">{{ text_extension_status }}</span></label>
                   <div class="col-sm-10">
                     <select name="payment_squareup_status" id="dropdown_payment_squareup_status" class="form-control">
                       <option value="1" {% if payment_squareup_status == 1 %} selected {% endif %}>{{ text_extension_status_enabled }}</option>
@@ -68,7 +68,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 </div>> <span data-toggle=" tooltip" title="{{ text_payment_method_name_help }}">{{ text_payment_method_name_label }}</span> </label>
+                  <label class="col-sm-2 col-form-label"> <span data-toggle=" tooltip" title="{{ text_payment_method_name_help }}">{{ text_payment_method_name_label }}</span> </label>
                   <div class="col-sm-10">
                     {% for language in languages %}
                       <div class="input-group">
@@ -78,13 +78,13 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 </div> for=" input_payment_squareup_redirect_uri_static"> <span data-toggle="tooltip" title="{{ text_redirect_uri_help }}">{{ text_redirect_uri_label }}</span> </label>
+                  <label class="col-sm-2 col-form-label" for=" input_payment_squareup_redirect_uri_static"> <span data-toggle="tooltip" title="{{ text_redirect_uri_help }}">{{ text_redirect_uri_label }}</span> </label>
                   <div class="col-sm-10">
                     <input type="text" id="input_payment_squareup_redirect_uri_static" name="payment_squareup_redirect_uri_static" value="{{ payment_squareup_redirect_uri }}" class="form-control" disabled/>
                   </div>
                 </div>
                 <div class="form-group row required">
-                  <label class="col-sm-2 </div> for=" input_payment_squareup_client_id"> <span data-toggle="tooltip" title="{{ text_client_id_help }}">{{ text_client_id_label }}</span> </label>
+                  <label class="col-sm-2 col-form-label" for=" input_payment_squareup_client_id"> <span data-toggle="tooltip" title="{{ text_client_id_help }}">{{ text_client_id_label }}</span> </label>
                   <div class="col-sm-10">
                     <input type="text" name="payment_squareup_client_id" value="{{ payment_squareup_client_id }}" placeholder="{{ text_client_id_placeholder }}" id="input_payment_squareup_client_id" class="form-control"/>
                     {% if error_client_id %}
@@ -93,7 +93,7 @@
                   </div>
                 </div>
                 <div class="form-group row required">
-                  <label class="col-sm-2 </div> for=" input_payment_squareup_client_secret"> <span data-toggle="tooltip" title="{{ text_client_secret_help }}">{{ text_client_secret_label }}</span> </label>
+                  <label class="col-sm-2 col-form-label" for=" input_payment_squareup_client_secret"> <span data-toggle="tooltip" title="{{ text_client_secret_help }}">{{ text_client_secret_label }}</span> </label>
                   <div class="col-sm-10">
                     <input type="text" name="payment_squareup_client_secret" value="{{ payment_squareup_client_secret }}" placeholder="{{ text_client_secret_placeholder }}" id="input_payment_squareup_client_secret" class="form-control"/>
                     {% if error_client_secret %}
@@ -102,7 +102,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 </div> for=" dropdown_payment_squareup_delay_capture"><span data-toggle="tooltip" title="{{ text_delay_capture_help }}">{{ text_delay_capture_label }}</span></label>
+                  <label class="col-sm-2 col-form-label" for=" dropdown_payment_squareup_delay_capture"><span data-toggle="tooltip" title="{{ text_delay_capture_help }}">{{ text_delay_capture_label }}</span></label>
                   <div class="col-sm-10">
                     <select name="payment_squareup_delay_capture" id="dropdown_payment_squareup_delay_capture" class="form-control">
                       <option value="1" {% if payment_squareup_delay_capture == 1 %} selected {% endif %}>{{ text_authorize_label }}</option>
@@ -111,14 +111,14 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 </div> for=" input_payment_squareup_total">{{ entry_total }}</label>
+                  <label class="col-sm-2 col-form-label" for=" input_payment_squareup_total">{{ entry_total }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="payment_squareup_total" value="{{ payment_squareup_total }}" placeholder="{{ entry_total }}" id="payment_squareup_total" class="form-control"/>
                     <small class="form-text text-muted">{{ help_total }}</small>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 </div> for=" input-geo-zone">{{ entry_geo_zone }}</label>
+                  <label class="col-sm-2 col-form-label" for=" input-geo-zone">{{ entry_geo_zone }}</label>
                   <div class="col-sm-10">
                     <select name="payment_squareup_geo_zone_id" id="input-geo-zone" class="form-control">
                       <option value="0">{{ text_all_zones }}</option>
@@ -129,7 +129,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 </div> for=" input_payment_squareup_sort_order">
+                  <label class="col-sm-2 col-form-label" for=" input_payment_squareup_sort_order">
                   {{ entry_sort_order }}
                   </label>
                   <div class="col-sm-10">
@@ -137,7 +137,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 </div> for=" dropdown_payment_squareup_debug"><span data-toggle="tooltip" title="{{ text_debug_help }}">{{ text_debug_label }}</span></label>
+                  <label class="col-sm-2 col-form-label" for=" dropdown_payment_squareup_debug"><span data-toggle="tooltip" title="{{ text_debug_help }}">{{ text_debug_label }}</span></label>
                   <div class="col-sm-10">
                     <select name="payment_squareup_debug" id="dropdown_payment_squareup_debug" class="form-control">
                       <option value="1" {% if payment_squareup_debug == 1 %} selected {% endif %}>{{ text_debug_enabled }}</option>
@@ -146,7 +146,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 </div> for=" dropdown_payment_squareup_enable_sandbox"><span data-toggle="tooltip" title="{{ text_enable_sandbox_help }}">{{ text_enable_sandbox_label }}</span></label>
+                  <label class="col-sm-2 col-form-label" for=" dropdown_payment_squareup_enable_sandbox"><span data-toggle="tooltip" title="{{ text_enable_sandbox_help }}">{{ text_enable_sandbox_label }}</span></label>
                   <div class="col-sm-10">
                     <select name="payment_squareup_enable_sandbox" id="dropdown_payment_squareup_enable_sandbox" class="form-control">
                       <option value="1" {% if payment_squareup_enable_sandbox == 1 %} selected {% endif %}>{{ text_sandbox_enabled_label }}</option>
@@ -158,7 +158,7 @@
               <fieldset id="sandbox_settings" {% if not payment_squareup_enable_sandbox %} style="display: none;" {% endif %}>
                 <legend>{{ text_sandbox_section_heading }}</legend>
                 <div class="form-group row required">
-                  <label class="col-sm-2 </div> for=" input_payment_squareup_sandbox_client_id"> <span data-toggle="tooltip" title="{{ text_sandbox_client_id_help }}">{{ text_sandbox_client_id_label }}</span> </label>
+                  <label class="col-sm-2 col-form-label" for=" input_payment_squareup_sandbox_client_id"> <span data-toggle="tooltip" title="{{ text_sandbox_client_id_help }}">{{ text_sandbox_client_id_label }}</span> </label>
                   <div class="col-sm-10">
                     <input type="text" name="payment_squareup_sandbox_client_id" value="{{ payment_squareup_sandbox_client_id }}" placeholder="{{ text_sandbox_client_id_placeholder }}" id="input_payment_squareup_sandbox_client_id" class="form-control"/>
                     {% if error_sandbox_client_id %}
@@ -167,7 +167,7 @@
                   </div>
                 </div>
                 <div class="form-group row required">
-                  <label class="col-sm-2 </div> for=" input_payment_squareup_sandbox_token"> <span data-toggle="tooltip" title="{{ text_sandbox_access_token_help }}">{{ text_sandbox_access_token_label }}</span> </label>
+                  <label class="col-sm-2 col-form-label" for=" input_payment_squareup_sandbox_token"> <span data-toggle="tooltip" title="{{ text_sandbox_access_token_help }}">{{ text_sandbox_access_token_label }}</span> </label>
                   <div class="col-sm-10">
                     <input type="text" name="payment_squareup_sandbox_token" value="{{ payment_squareup_sandbox_token }}" placeholder="{{ text_sandbox_access_token_placeholder }}" id="input_payment_squareup_sandbox_token" class="form-control"/>
                     {% if error_sandbox_token %}
@@ -179,7 +179,7 @@
               <fieldset>
                 <legend>{{ text_merchant_info_section_heading }}</legend>
                 <div class="form-group">
-                  <label class="col-sm-2 </div> for=" input_merchant_name">
+                  <label class="col-sm-2 col-form-label" for=" input_merchant_name">
                   {{ text_merchant_name_label }}
                   </label>
                   <div class="col-sm-10">
@@ -187,7 +187,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 </div> for=" access_token_expires_time">
+                  <label class="col-sm-2 col-form-label" for=" access_token_expires_time">
                   {{ text_access_token_expires_label }}
                   </label>
                   <div class="col-sm-10">
@@ -195,7 +195,7 @@
                   </div>
                 </div>
                 <div class="form-group row required">
-                  <label class="col-sm-2 </div> for=" dropdown_payment_squareup_sandbox_location_id"><span data-toggle="tooltip" title="{{ text_location_help }}">{{ text_location_label }}</span></label>
+                  <label class="col-sm-2 col-form-label" for=" dropdown_payment_squareup_sandbox_location_id"><span data-toggle="tooltip" title="{{ text_location_help }}">{{ text_location_label }}</span></label>
                   <div class="col-sm-10">
                     <select name="payment_squareup_location_id" id="dropdown_payment_squareup_location_id" class="form-control" {% if not payment_squareup_locations %} disabled {% endif %}>
                       {% for location in payment_squareup_locations %}

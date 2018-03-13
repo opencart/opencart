@@ -2,7 +2,8 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">{% if not error_signature %}
+      <div class="pull-right">
+        {% if not error_signature %}
           <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-info"><i class="fa fa-cog"></i></button>
         {% else %}
           <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ error_signature }}" data-placement="left" class="btn btn-danger"><i class="fa fa-exclamation-triangle"></i></button>
@@ -26,17 +27,19 @@
       <div class="card-header"><i class="fa fa-puzzle-piece"></i> {{ name }}</div>
       <div class="card-body">
         <div class="row extension-info">
-          <div class="col-sm-8">{% if banner %}
+          <div class="col-sm-8">
+            {% if banner %}
               <div id="banner" class="text-center thumbnail"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-responsive"/></div>
             {% endif %}
-            <div class="row thumbnails">{% for image in images %}
+            <div class="row thumbnails">
+              {% for image in images %}
                 <div class="col-xs-4 col-sm-2"><a href="{{ image.popup }}" class="thumbnail"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="img-responsive"/></a></div>
               {% endfor %}</div>
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#tab-description" data-toggle="tab">{{ tab_general }}</a></li>
-              <li class="nav-item"><a href="#tab-documentation" data-toggle="tab">{{ tab_documentation }}</a></li>
-              <li class="nav-item"><a href="#tab-download" data-toggle="tab">{{ tab_download }}</a></li>
-              <li class="nav-item"><a href="#tab-comment" data-toggle="tab">{{ tab_comment }} ({{ comment_total }})</a></li>
+              <li class="nav-item"><a href="#tab-description" data-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+              <li class="nav-item"><a href="#tab-documentation" data-toggle="tab" class="nav-link">{{ tab_documentation }}</a></li>
+              <li class="nav-item"><a href="#tab-download" data-toggle="tab" class="nav-link">{{ tab_download }}</a></li>
+              <li class="nav-item"><a href="#tab-comment" data-toggle="tab" class="nav-link">{{ tab_comment }} ({{ comment_total }})</a></li>
             </ul>
             <div class="tab-content">
               <div id="tab-description" class="tab-pane active">{{ description }}</div>
@@ -61,7 +64,6 @@
                       <td class="text-right">{{ text_action }}</td>
                     </thead>
                     <tbody>
-
                       {% if downloads %}
                         {% for download in downloads %}
                           <tr>
@@ -82,7 +84,6 @@
                         </tr>
                       {% endif %}
                     </tbody>
-
                   </table>
                 </fieldset>
               </div>
@@ -142,7 +143,7 @@
               </div>
             </div>
             <div id="sales" class="well"><i class="opencart-icon-cart-mini"></i> <strong>{{ sales }}</strong> {{ text_sales }}</div>
-            <div id="sales" class="well"><i class="opencart-icon-cart-mini"></i> <strong>{{ downloaded }}</strong> {{ text_downloaded }}</div>
+            <div id="download" class="well"><i class="opencart-icon-cart-mini"></i> <strong>{{ downloaded }}</strong> {{ text_downloaded }}</div>
             <div class="well">
               <div class="media">
                 <div class="media-left media-middle"><img src="{{ member_image }}" alt="{{ member_username }}" title="{{ member_username }}" class="media-object img-circle"></div>

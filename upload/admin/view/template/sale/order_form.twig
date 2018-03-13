@@ -296,8 +296,8 @@
             </div>
             <form>
               <ul class="nav nav-tabs nav-justified">
-                <li class="active"><a href="#tab-product" data-toggle="tab">{{ tab_product }}</a></li>
-                <li><a href="#tab-voucher" data-toggle="tab">{{ tab_voucher }}</a></li>
+                <li class="nav-item"><a href="#tab-product" data-toggle="tab" class="nav-link active">{{ tab_product }}</a></li>
+                <li class="nav-item"><a href="#tab-voucher" data-toggle="tab" class="nav-link">{{ tab_voucher }}</a></li>
               </ul>
               <div class="tab-content">
                 <div class="tab-pane active" id="tab-product">
@@ -389,15 +389,11 @@
           </div>
         </div>
       </div>
-
       <div class="card">
         <div class="card-header"><i class="fa fa-credit-card fa-fw"></i> {{ text_payment_detail }}</div>
         <div id="collapse-payment" data-parent="#collapse" class="panel-collapse collapse">
           <div class="card-body">
-
             <form>
-
-
               <div class="form-group">
                 <label class="col-sm-2 col-form-label" for="input-payment-address">{{ entry_address }}</label>
                 <div class="col-sm-10">

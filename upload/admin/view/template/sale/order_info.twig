@@ -199,10 +199,10 @@
       <div class="card-header"><i class="fa fa-comment-o"></i> {{ text_history }}</div>
       <div class="card-body">
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#tab-history" data-toggle="tab">{{ tab_history }}</a></li>
-          <li class="nav-item"><a href="#tab-additional" data-toggle="tab">{{ tab_additional }}</a></li>
+          <li class="nav-item"><a href="#tab-history" data-toggle="tab" class="nav-link active">{{ tab_history }}</a></li>
+          <li class="nav-item"><a href="#tab-additional" data-toggle="tab" class="nav-link">{{ tab_additional }}</a></li>
           {% for tab in tabs %}
-            <li class="nav-item"><a href="#tab-{{ tab.code }}" data-toggle="tab">{{ tab.title }}</a></li>
+            <li class="nav-item"><a href="#tab-{{ tab.code }}" data-toggle="tab" class="nav-link">{{ tab.title }}</a></li>
           {% endfor %}
         </ul>
         <div class="tab-content">

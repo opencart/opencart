@@ -37,7 +37,7 @@
           <div class="tab-pane">
             <ul class="nav nav-tabs" id="language">
               {% for language in languages %}
-                <li class="nav-item"><a href="#language{{ language.language_id }}" data-toggle="tab"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/> {{ language.name }}</a></li>
+                <li class="nav-item"><a href="#language{{ language.language_id }}" data-toggle="tab" class="nav-link"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/> {{ language.name }}</a></li>
               {% endfor %}
             </ul>
             <div class="tab-content">
@@ -79,6 +79,6 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#language a:first').tab('show');
+$('#language li:first-child a').tab('show');
 //--></script>
 {{ footer }}

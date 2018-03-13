@@ -41,15 +41,18 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">{{ entry_store }}</label>
                 <div class="col-sm-10">
-                  <div class="well well-sm" style="height: 150px; overflow: auto;"> {% for store in stores %}
+                  <div class="form-control" style="height: 150px; overflow: auto;">
+                    {% for store in stores %}
                       <div class="checkbox">
-                        <label>{% if store.store_id in manufacturer_store %}
+                        <label>
+                          {% if store.store_id in manufacturer_store %}
                             <input type="checkbox" name="manufacturer_store[]" value="{{ store.store_id }}" checked="checked"/>
                             {{ store.name }}
                           {% else %}
                             <input type="checkbox" name="manufacturer_store[]" value="{{ store.store_id }}"/>
                             {{ store.name }}
-                          {% endif %}</label>
+                          {% endif %}
+                        </label>
                       </div>
                     {% endfor %}</div>
                 </div>

@@ -736,9 +736,9 @@
                 <div class="form-group">
                   <label class="col-sm-2 col-form-label" for="input-process-status">{{ entry_processing_status }}</label>
                   <div class="col-sm-10">
-                    <div class="well well-sm" style="height: 150px; overflow: auto;"> {% for order_status in order_statuses %}
+                    <div class="form-control" style="height: 150px; overflow: auto;"> {% for order_status in order_statuses %}
                         <div class="checkbox">
-                          <label> {% if order_status.order_status_id in config_processing_status %}
+                          <label>{% if order_status.order_status_id in config_processing_status %}
                               <input type="checkbox" name="config_processing_status[]" value="{{ order_status.order_status_id }}" checked="checked"/>
                               {{ order_status.name }}
                             {% else %}
@@ -755,9 +755,9 @@
                 <div class="form-group">
                   <label class="col-sm-2 col-form-label" for="input-complete-status">{{ entry_complete_status }}</label>
                   <div class="col-sm-10">
-                    <div class="well well-sm" style="height: 150px; overflow: auto;"> {% for order_status in order_statuses %}
+                    <div class="form-control" style="height: 150px; overflow: auto;"> {% for order_status in order_statuses %}
                         <div class="checkbox">
-                          <label> {% if order_status.order_status_id in config_complete_status %}
+                          <label>{% if order_status.order_status_id in config_complete_status %}
                               <input type="checkbox" name="config_complete_status[]" value="{{ order_status.order_status_id }}" checked="checked"/>
                               {{ order_status.name }}
                             {% else %}
@@ -1002,7 +1002,7 @@
                 <div class="form-group">
                   <label class="col-sm-2 col-form-label">{{ entry_captcha_page }}</label>
                   <div class="col-sm-10">
-                    <div class="well well-sm" style="height: 150px; overflow: auto;"> {% for captcha_page in captcha_pages %}
+                    <div class="form-control" style="height: 150px; overflow: auto;"> {% for captcha_page in captcha_pages %}
                         <div class="checkbox">
                           <label> {% if captcha_page.value in config_captcha_page %}
                               <input type="checkbox" name="config_captcha_page[]" value="{{ captcha_page.value }}" checked="checked"/>
@@ -1096,7 +1096,7 @@
                 <div class="form-group">
                   <label class="col-sm-2 col-form-label">{{ entry_mail_alert }}</label>
                   <div class="col-sm-10">
-                    <div class="well well-sm" style="height: 150px; overflow: auto;"> {% for mail_alert in mail_alerts %}
+                    <div class="form-control" style="height: 150px; overflow: auto;"> {% for mail_alert in mail_alerts %}
                         <div class="checkbox">
                           <label> {% if mail_alert.value in config_mail_alert %}
                               <input type="checkbox" name="config_mail_alert[]" value="{{ mail_alert.value }}" checked="checked"/>

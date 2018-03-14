@@ -39,7 +39,7 @@
   function chekOrderStatus() {
     var loop=true;
     $.ajax({
-      url: 'index.php?route=extension/payment/wechat_pay/isOrderPaid&order_id={{ order_id }}&language=' + getCookie('language'),
+      url: 'index.php?route=extension/payment/wechat_pay/isOrderPaid&order_id={{ order_id }}',
       dataType: 'json',
       success: function(json) {
         if (json['result']) {

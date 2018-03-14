@@ -34,20 +34,21 @@
         <div class="card">
           <div class="card-header"><i class="fa fa-filter"></i> {{ text_filter }}</div>
           <div class="card-body">
-            <div class="form-group row">
-              <label class="col-form-label" for="input-name">{{ entry_name }}</label> <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+            <div class="form-group">
+              <label class="col-form-label" for="input-name"><strong>{{ entry_name }}</strong></label>
+              <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
             </div>
-            <div class="form-group row">
-              <label class="col-form-label" for="input-model">{{ entry_model }}</label> <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control"/>
+            <div class="form-group">
+              <label class="col-form-label" for="input-model"><strong>{{ entry_model }}</strong></label> <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control"/>
             </div>
-            <div class="form-group row">
-              <label class="col-form-label" for="input-price">{{ entry_price }}</label> <input type="text" name="filter_price" value="{{ filter_price }}" placeholder="{{ entry_price }}" id="input-price" class="form-control"/>
+            <div class="form-group">
+              <label class="col-form-label" for="input-price"><strong>{{ entry_price }}</strong></label> <input type="text" name="filter_price" value="{{ filter_price }}" placeholder="{{ entry_price }}" id="input-price" class="form-control"/>
             </div>
-            <div class="form-group row">
-              <label class="col-form-label" for="input-quantity">{{ entry_quantity }}</label> <input type="text" name="filter_quantity" value="{{ filter_quantity }}" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control"/>
+            <div class="form-group">
+              <label class="col-form-label" for="input-quantity"><strong>{{ entry_quantity }}</strong></label> <input type="text" name="filter_quantity" value="{{ filter_quantity }}" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control"/>
             </div>
-            <div class="form-group row">
-              <label class="col-form-label" for="input-status">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-control">
+            <div class="form-group">
+              <label class="col-form-label" for="input-status"><strong>{{ entry_status }}</strong></label> <select name="filter_status" id="input-status" class="form-control">
                 <option value=""></option>
                 {% if filter_status == '1' %}
                   <option value="1" selected="selected">{{ text_enabled }}</option>
@@ -98,13 +99,17 @@
                           <td class="text-center">{% if product.image %}<img src="{{ product.image }}" alt="{{ product.name }}" class="img-thumbnail"/>{% else %}<span class="img-thumbnail list"><i class="fa fa-camera fa-2x"></i></span>{% endif %}</td>
                           <td class="text-left">{{ product.name }}</td>
                           <td class="text-left">{{ product.model }}</td>
-                          <td class="text-right">{% if product.special %}<span style="text-decoration: line-through;">{{ product.price }}</span>
+                          <td class="text-right">
+                          {% if product.special %}<span style="text-decoration: line-through;">{{ product.price }}</span>
                               <br/>
                               <div class="invalid-tooltip">{{ product.special }}</div>
                             {% else %}
                               {{ product.price }}
                             {% endif %}</td>
-                          <td class="text-right">{% if product.quantity <= 0 %}<span class="label label-warning">{{ product.quantity }}</span>{% elseif product.quantity <= 5 %}<span class="label label-danger">{{ product.quantity }}</span>{% else %}<span class="label label-success">{{ product.quantity }}</span>{% endif %}</td>
+                          <td class="text-right">
+                          {% if product.quantity <= 0 %}<span class="label label-warning">{{ product.quantity }}</span>
+                          {% elseif product.quantity <= 5 %}<span class="label label-danger">{{ product.quantity }}</span>
+                          {% else %}<span class="label label-success">{{ product.quantity }}</span>{% endif %}</td>
                           <td class="text-left">{{ product.status }}</td>
                           <td class="text-right"><a href="{{ product.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                         </tr>
@@ -211,4 +216,4 @@ $('input[name=\'filter_model\']').autocomplete({
 	}
 });
 //--></script>
-{{ footer }} 
+{{ footer }}

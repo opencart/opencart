@@ -1,4 +1,4 @@
-<form action="{{ action }}" method="POST" class="form-horizontal" id="realex_form_redirect">
+<form action="{{ action }}" method="POST" id="realex_form_redirect">
   <input type=hidden name="MERCHANT_ID" value="{{ merchant_id }}" />
   <input type=hidden name="ORDER_ID" value="{{ order_id }}" />
   <input type=hidden name="CURRENCY" value="{{ currency }}" >
@@ -15,13 +15,17 @@
   <input type=hidden name="COMMENT1" value="OpenCart">
   {% if card_select %}
   <fieldset id="payment">
-    <div class="form-group required">
-      <label class="col-sm-2 control-label" for="input-cc-type"><span data-toggle="tooltip" title="{{ help_select_card }}">{{ entry_cc_type }}</span></label>
+    <div class="form-group row required">
+      <label class="col-sm-2 col-form-label" for="input-cc-type"><span data-toggle="tooltip" title="{{ help_select_card }}">{{ entry_cc_type }}</span></label>
       <div class="col-sm-10">
         <select name="ACCOUNT" class="form-control" id="input-cc-type">
+          
           {% for card in cards %}
+          
           <option value="{{ card.account }}">{{ card.type }}</option>
+          
           {% endfor %}
+        
         </select>
       </div>
     </div>
@@ -29,7 +33,7 @@
   {% endif %}
 </form>
 <div class="buttons">
-  <div class="pull-right">
+  <div class="float-right">
     <input type="button" value="{{ button_confirm }}" id="button-confirm" class="btn btn-primary" />
   </div>
 </div>

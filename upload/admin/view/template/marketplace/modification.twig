@@ -30,12 +30,14 @@
     <div class="card">
       <div class="card-header"><i class="fa fa-list"></i> {{ text_list }}</div>
       <div class="card-body">
+
         <ul class="nav nav-tabs">
           <li class="nav-item"><a href="#tab-general" data-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
           <li class="nav-item"><a href="#tab-log" data-toggle="tab" class="nav-link">{{ tab_log }}</a></li>
+
         </ul>
         <div class="tab-content">
-          <div class="tab-pane active" id="tab-general">
+          <div id="tab-general" class="tab-pane fade show active">
             <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-modification">
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
@@ -110,7 +112,7 @@
               <div class="col-sm-6 text-right">{{ results }}</div>
             </div>
           </div>
-          <div class="tab-pane" id="tab-log">
+          <div id="tab-log" class="tab-pane fade">
             <div class="form-group">
               <textarea wrap="off" rows="15" class="form-control">{{ log }}</textarea>
             </div>

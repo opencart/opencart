@@ -27,24 +27,24 @@
       <div class="card-header"><i class="fa fa-puzzle-piece"></i> {{ name }}</div>
       <div class="card-body">
         <div class="row extension-info">
-          <div class="col-sm-8">
-            {% if banner %}
-              <div id="banner" class="text-center thumbnail"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-responsive"/></div>
+
+          <div class="col-md-8 col-lg-9">{% if banner %}
+              <div id="banner" class="text-center img-thumbnail mb-3"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-fluid"/></div>
             {% endif %}
-            <div class="row thumbnails">
-              {% for image in images %}
-                <div class="col-xs-4 col-sm-2"><a href="{{ image.popup }}" class="thumbnail"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="img-responsive"/></a></div>
+            <div class="row thumbnails">{% for image in images %}
+                <div class="col-4 col-md-3 col-lg-2 mb-3"><a href="{{ image.popup }}"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="img-fluid img-thumbnail"/></a></div>
               {% endfor %}</div>
-            <ul class="nav nav-tabs">
-              <li class="nav-item"><a href="#tab-description" data-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
-              <li class="nav-item"><a href="#tab-documentation" data-toggle="tab" class="nav-link">{{ tab_documentation }}</a></li>
-              <li class="nav-item"><a href="#tab-download" data-toggle="tab" class="nav-link">{{ tab_download }}</a></li>
-              <li class="nav-item"><a href="#tab-comment" data-toggle="tab" class="nav-link">{{ tab_comment }} ({{ comment_total }})</a></li>
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item"><a href="#tab-description" class="nav-link active" id="description-tab" data-toggle="tab" role="tab" aria-controls="tab-description" aria-selected="true">{{ tab_general }}</a></li>
+              <li class="nav-item"><a href="#tab-documentation" class="nav-link" id="documentation-tab" data-toggle="tab" role="tab" aria-controls="tab-documentation" aria-selected="true">{{ tab_documentation }}</a></li>
+              <li class="nav-item"><a href="#tab-download" class="nav-link" id="download-tab" data-toggle="tab" role="tab" aria-controls="tab-download" aria-selected="true">{{ tab_download }}</a></li>
+              <li class="nav-item"><a href="#tab-comment" class="nav-link" id="comment-tab" data-toggle="tab" role="tab" aria-controls="tab-comment" aria-selected="true">{{ tab_comment }} ({{ comment_total }})</a></li>
+
             </ul>
             <div class="tab-content">
-              <div id="tab-description" class="tab-pane active">{{ description }}</div>
-              <div id="tab-documentation" class="tab-pane">{{ documentation }}</div>
-              <div id="tab-download" class="tab-pane">
+              <div id="tab-description" class="tab-pane fade show active">{{ description }}</div>
+              <div id="tab-documentation" class="tab-pane fade">{{ documentation }}</div>
+              <div id="tab-download" class="tab-pane fade">
                 <fieldset>
                   <legend>{{ text_progress }}</legend>
                   <div id="progress">
@@ -87,7 +87,7 @@
                   </table>
                 </fieldset>
               </div>
-              <div id="tab-comment" class="tab-pane">
+              <div id="tab-comment" class="tab-pane fade">
                 <fieldset>
                   <legend>{{ text_comment_add }}</legend>
                   <div class="form-group">
@@ -105,55 +105,76 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-4">
-            <div id="buy" class="well">{% if license == '1' and not purchased %}
-                <button id="button-buy" class="btn btn-success btn-lg btn-block">{{ button_purchase }}</button>
-              {% endif %}
-              <div id="price" class="row">
-                <div class="col-xs-5"><strong>{{ text_price }}</strong></div>
-                <div class="col-xs-7 text-right">{% if license %}
-                    {{ price }}
-                  {% else %}
-                    {{ text_free }}
-                  {% endif %}</div>
-              </div>
-              <hr>
-              <ul class="list-check">
-                <li>{{ text_partner }}</li>
-                <li>{{ text_support }}</li>
-                <li>{{ text_documentation }}</li>
-              </ul>
-              <hr>
-              <div class="row">
-                <div class="col-xs-5"><strong>{{ text_rating }}</strong></div>
-                <div class="col-xs-7 text-right">{% for i in 1..5 %}
-                    {% if rating >= i %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
-                  {% endfor %} ({{ rating_total }})
+          <div class="col-md-4 col-lg-3">
+            <div id="buy" class="card mb-3">
+              <div class="card-body">
+
+                {% if license == '1' and not purchased %}
+                  <button id="button-buy" class="btn btn-success btn-lg btn-block">{{ button_purchase }}</button>
+                {% endif %}
+                <div id="price" class="row">
+                  <div class="col-lg-5"><strong>{{ text_price }}</strong></div>
+                  <div class="col-lg-7 text-right">{% if license %}
+                      {{ price }}
+                    {% else %}
+                      {{ text_free }}
+                    {% endif %}</div>
                 </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-xs-5"><strong>{{ text_date_modified }}</strong></div>
-                <div class="col-xs-7 text-right">{{ date_modified }}</div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-xs-5"><strong>{{ text_date_added }}</strong></div>
-                <div class="col-xs-7 text-right">{{ date_added }}</div>
+                <hr>
+                <ul class="list-check">
+                  <li>{{ text_partner }}</li>
+                  <li>{{ text_support }}</li>
+                  <li>{{ text_documentation }}</li>
+                </ul>
+                <hr>
+                <div class="row">
+                  <div class="col-md-5"><strong>{{ text_rating }}</strong></div>
+                  <div class="col-md-7 text-right">{% for i in 1..5 %}
+                      {% if rating >= i %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
+                    {% endfor %} ({{ rating_total }})
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-md-5"><strong>{{ text_date_modified }}</strong></div>
+                  <div class="col-md-7 text-right">{{ date_modified }}</div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-md-5"><strong>{{ text_date_added }}</strong></div>
+                  <div class="col-md-7 text-right">{{ date_added }}</div>
+                </div>
+
               </div>
             </div>
-            <div id="sales" class="well"><i class="opencart-icon-cart-mini"></i> <strong>{{ sales }}</strong> {{ text_sales }}</div>
-            <div id="download" class="well"><i class="opencart-icon-cart-mini"></i> <strong>{{ downloaded }}</strong> {{ text_downloaded }}</div>
-            <div class="well">
-              <div class="media">
-                <div class="media-left media-middle"><img src="{{ member_image }}" alt="{{ member_username }}" title="{{ member_username }}" class="media-object img-circle"></div>
-                <div class="media-body"><span><a href="{{ filter_member }}">{{ member_username }}</a></span>
-                  <br>
-                  <small>{{ text_member_since }} {{ member_date_added }}</small>
-                </div>
+            <div id="sales" class="card mb-3">
+              <div class="card-body">
+                <i class="opencart-icon-cart-mini"></i> <strong>{{ sales }}</strong> {{ text_sales }}
               </div>
-              <br/>
-              <a href="{{ filter_member }}" class="btn btn-primary btn-lg btn-block">{{ button_view_all }}</a> <a href="https://www.opencart.com/index.php?route=support/seller&amp;extension_id={{ extension_id }}" target="_blank" class="btn btn-ghost-dark btn-lg btn-block">{{ button_get_support }}</a></div>
+            </div>
+            <div id="sales" class="card mb-3">
+              <div class="card-body">
+                <i class="opencart-icon-cart-mini"></i> <strong>{{ downloaded }}</strong> {{ text_downloaded }}
+              </div>
+            </div>
+
+            <div class="card mb-3">
+              <div class="card-body">
+
+                <div class="media">
+                  <img src="{{ member_image }}" alt="{{ member_username }}" title="{{ member_username }}" class="mr-3 rounded-circle">
+                  <div class="media-body">
+                    <h5 class="mt-0"><a href="{{ filter_member }}">{{ member_username }}</a></h5>
+                    <small>{{ text_member_since }} {{ member_date_added }}</small>
+                  </div>
+
+                </div>
+                <br/>
+                <a href="{{ filter_member }}" class="btn btn-primary btn-lg btn-block">{{ button_view_all }}</a>
+                <a href="https://www.opencart.com/index.php?route=support/seller&amp;extension_id={{ extension_id }}" target="_blank" class="btn btn-ghost-dark btn-lg btn-block">{{ button_get_support }}</a>
+
+              </div>
+            </div>
           </div>
         </div>
       </div>

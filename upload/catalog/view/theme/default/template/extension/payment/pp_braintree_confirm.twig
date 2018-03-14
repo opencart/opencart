@@ -10,16 +10,19 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
   {% endif %}
+
   {% if success %}
     <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
   {% endif %}
+
   {% if error_warning %}
     <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
   {% endif %}
+
   <div class="row">{{ column_left }}
     {% if column_left and column_right %}
     {% set class = 'col-sm-6' %}
@@ -30,26 +33,28 @@
     {% endif %}
     <div id="content" class="{{ class }}">{{ content_top }}
       <h1>{{ heading_title }}</h1>
+
       {% if coupon or voucher or reward %}
         <div class="panel-group" id="accordion">{{ coupon }}{{ voucher }}{{ reward }}</div>
       {% endif %}
+
       {% if has_shipping %}
         {% if not shipping_methods %}
           <div class="warning">{{ error_no_shipping }}</div>
         {% else %}
           <form action="{{ action_shipping }}" method="post" id="shipping_form">
-            <div class="panel-body">
+            <div class="card-body">
               {% for shipping_method in shipping_methods %}
                 <p><strong>{{ shipping_method.title }}</strong></p>
                 {% if not shipping_method.error %}
                   {% for quote in shipping_method.quote %}
-                  <div class="radio">
+                  <div class="form-check">
                     <label>
                       {% if quote.code == code or not code %}
                         {% set code = quote.code %}
-                        <input type="radio" name="shipping_method" value="{{ quote.code }}" id="{{ quote.code }}" checked="checked" />
+                        <input type="radio" name="shipping_method" value="{{ quote.code }}" id="{{ quote.code }}" class="form-check-input" checked="checked" />
                       {% else %}
-                        <input type="radio" name="shipping_method" value="{{ quote.code }}" id="{{ quote.code }}" />
+                        <input type="radio" name="shipping_method" value="{{ quote.code }}" id="{{ quote.code }}" class="form-check-input" />
                       {% endif %}
                       {{ quote.title }}
                     </label>
@@ -106,7 +111,7 @@
       </div>
       <br />
       <div class="row">
-        <div class="col-sm-4 col-sm-offset-8">
+        <div class="col-md-4 offset-md-8">
           <table class="table table-bordered">
             {% for total in totals %}
             <tr>
@@ -118,7 +123,7 @@
         </div>
       </div>
       <div class="buttons">
-        <div class="pull-right"><a href="{{ action_confirm }}" class="btn btn-primary" id="paypal-confirm">{{ button_confirm }}</a></div>
+        <div class="float-right"><a href="{{ action_confirm }}" class="btn btn-primary" id="paypal-confirm">{{ button_confirm }}</a></div>
       </div>
       {{ content_bottom }}</div>
     {{ column_right }}</div>

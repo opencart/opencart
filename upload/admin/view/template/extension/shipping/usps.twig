@@ -43,7 +43,7 @@
               {% endif %}
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label">{{ entry_domestic }}</label>
             <div class="col-sm-10">
               <div class="well well-sm" style="height: 150px; overflow: auto;">
@@ -292,7 +292,7 @@
               </div>
               <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', true);" class="btn btn-link">{{ text_select_all }}</button> / <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', false);" class="btn btn-link">{{ text_unselect_all }}</button></div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label">{{ entry_international }}</label>
             <div class="col-sm-10">
               <div class="well well-sm" style="height: 150px; overflow: auto;">
@@ -475,7 +475,7 @@
               </div>
               <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', true);" class="btn btn-link">{{ text_select_all }}</button> / <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', false);" class="btn btn-link">{{ text_unselect_all }}</button></div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-size">{{ entry_size }}</label>
             <div class="col-sm-10">
               <select name="shipping_usps_size" id="input-size" class="form-control">
@@ -489,7 +489,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-container">{{ entry_container }}</label>
             <div class="col-sm-10">
               <select name="shipping_usps_container" id="input-container" class="form-control">
@@ -503,7 +503,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-machinable">{{ entry_machinable }}</label>
             <div class="col-sm-10">
               <select name="shipping_usps_machinable" id="input-machinable" class="form-control">
@@ -537,7 +537,7 @@
               {% endif %}
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label">{{ entry_display_time }}</label>
             <div class="col-sm-10">
               <label class="radio-inline">
@@ -560,7 +560,7 @@
               <small class="form-text text-muted">{{ help_display_time }}</small>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label">{{ entry_display_weight }}</label>
             <div class="col-sm-10">
               <label class="radio-inline">
@@ -583,7 +583,7 @@
               <small class="form-text text-muted">{{ help_display_weight }}</small>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-weight-class">{{ entry_weight_class }}</label>
             <div class="col-sm-10">
               <select name="shipping_usps_weight_class_id" id="input-weight-class" class="form-control">
@@ -598,7 +598,7 @@
               <small class="form-text text-muted">{{ help_weight_class }}</small>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-tax-class">{{ entry_tax }}</label>
             <div class="col-sm-10">
               <select name="shipping_usps_tax_class_id" id="input-tax-class" class="form-control">
@@ -613,7 +613,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
               <select name="shipping_usps_geo_zone_id" id="input-geo-zone" class="form-control">
@@ -628,7 +628,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="shipping_usps_status" id="input-status" class="form-control">
@@ -642,13 +642,13 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
               <input type="text" name="shipping_usps_sort_order" value="{{ shipping_usps_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-debug">{{ entry_debug }}</label>
             <div class="col-sm-10">
               <select name="shipping_usps_debug" id="input-debug" class="form-control">

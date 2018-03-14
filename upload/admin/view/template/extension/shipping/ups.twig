@@ -55,7 +55,7 @@
               {% endif %}
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-pickup">{{ entry_pickup }}</label>
             <div class="col-sm-10">
               <select name="shipping_ups_pickup" id="input-pickup" class="form-control">
@@ -70,7 +70,7 @@
               <small class="form-text text-muted">{{ help_pickup }}</small>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-packaging">{{ entry_packaging }}</label>
             <div class="col-sm-10">
               <select name="shipping_ups_packaging" id="input-packaging" class="form-control">
@@ -85,7 +85,7 @@
               <small class="form-text text-muted">{{ help_packaging }}</small>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-classification">{{ entry_classification }}</label>
             <div class="col-sm-10">
               <select name="shipping_ups_classification" id="input-classification" class="form-control">
@@ -100,7 +100,7 @@
               <small class="form-text text-muted">{{ help_classification }}</small>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-origin">{{ entry_origin }}</label>
             <div class="col-sm-10">
               <select name="shipping_ups_origin" id="input-origin" class="form-control">
@@ -145,14 +145,14 @@
               <small class="form-text text-muted">{{ help_country }}</small>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-postcode">{{ entry_postcode }}</label>
             <div class="col-sm-10">
               <input type="text" name="shipping_ups_postcode" value="{{ shipping_ups_postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control"/>
               <small class="form-text text-muted">{{ help_postcode }}</small>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label">{{ entry_test }}</label>
             <div class="col-sm-10">
               <label class="radio-inline">
@@ -175,7 +175,7 @@
               <small class="form-text text-muted">{{ help_test }}</small>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-quote-type">{{ entry_quote_type }}</label>
             <div class="col-sm-10">
               <select name="shipping_ups_quote_type" id="input-quote-type" class="form-control">
@@ -190,7 +190,7 @@
               <small class="form-text text-muted">{{ help_quote_type }}</small>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label">{{ entry_service }}</label>
             <div class="col-sm-10">
               <div id="service" class="well well-sm" style="height: 150px; overflow: auto;">
@@ -750,7 +750,7 @@
               <small class="form-text text-muted">{{ help_service }}</small>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label">{{ entry_insurance }}</label>
             <div class="col-sm-10">
               <label class="radio-inline">
@@ -773,7 +773,7 @@
               <small class="form-text text-muted">{{ help_insurance }}</small>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label">{{ entry_display_weight }}</label>
             <div class="col-sm-10">
               <label class="radio-inline">
@@ -795,7 +795,7 @@
               </label>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-weight-class">{{ entry_weight_class }}</label>
             <div class="col-sm-10">
               <select name="shipping_ups_weight_class_id" id="input-weight-class" class="form-control">
@@ -810,7 +810,7 @@
               <small class="form-text text-muted">{{ help_weight_class }}</small>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-length-class">{{ entry_length_class }}</label>
             <div class="col-sm-10">
               <select name="shipping_ups_length_class_id" id="input-length-class" class="form-control">
@@ -845,7 +845,7 @@
               {% endif %}
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-tax-class">{{ entry_tax_class }}</label>
             <div class="col-sm-10">
               <select name="shipping_ups_tax_class_id" id="input-tax-class" class="form-control">
@@ -860,7 +860,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
               <select name="shipping_ups_geo_zone_id" id="input-geo-zone" class="form-control">
@@ -875,7 +875,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="shipping_ups_status" id="input-status" class="form-control">
@@ -889,13 +889,13 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
               <input type="text" name="shipping_ups_sort_order" value="{{ shipping_ups_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-debug">{{ entry_debug }}</label>
             <div class="col-sm-10">
               <select name="shipping_ups_debug" id="input-debug" class="form-control">

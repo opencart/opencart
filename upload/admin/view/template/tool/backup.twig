@@ -31,7 +31,7 @@
         <form>
           <fieldset>
             <legend>{{ text_progress }}</legend>
-            <div class="form-group">
+            <div class="form-group row">
               <label class="col-sm-2 col-form-label">{{ entry_progress }}</label>
               <div class="col-sm-10">
                 <div id="progress-backup" class="progress">
@@ -43,7 +43,7 @@
           </fieldset>
           <fieldset>
             <legend>{{ text_option }}</legend>
-            <div class="form-group">
+            <div class="form-group row">
               <label class="col-sm-2 col-form-label">{{ entry_export }}</label>
               <div class="col-sm-10">
                 <div class="form-control" style="height: 150px; overflow: auto;">
@@ -54,9 +54,10 @@
                   {% endfor %}
                 </div>
                 <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', true);" class="btn btn-link">{{ text_select_all }}</button> / <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', false);" class="btn btn-link">{{ text_unselect_all }}</button>
-              </div>
+
+			  </div>
             </div>
-            <div class="form-group">
+            <div class="form-group row">
               <div class="col-sm-offset-2 col-sm-10">
                 <button type="button" id="button-backup" data-loading-text="{{ text_loading }}" class="btn btn-success"><i class="fa fa-upload"></i> {{ button_backup }}</button>
               </div>

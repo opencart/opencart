@@ -26,7 +26,7 @@
     <div class="panel-group" id="collapse">
       <div class="card">
         <div class="card-header"><a href="#collapse-version" data-toggle="collapse" data-parent="#collapse"><i class="fa fa-refresh"></i> {{ text_version }}</a></div>
-        <div id="collapse-version" class="panel-collapse collapse in">
+        <div id="collapse-version" class="card-collapse collapse in">
           <div class="card-body">
             <fieldset>
               {% if error_warning %}
@@ -59,7 +59,7 @@
       </div>
       <div class="card">
         <div class="card-header"><a href="#collapse-compatible" data-toggle="collapse" data-parent="#collapse"><i class="fa fa-random"></i> {{ text_compatibility }}</a></div>
-        <div id="collapse-compatible" class="panel-collapse collapse">
+        <div id="collapse-compatible" class="card-collapse collapse">
           <div class="card-body">
             <div class="alert alert-warning">
               Before upgrading, it's very important to check the extensions installed are compatible with the latest version!
@@ -77,7 +77,6 @@
                 {% if extensions %}
                   {% for extension in extensions %}
                     <tr>
-
                       <td class="text-left"><a href="{{ extension.link }}">{{ extension.name }}</a></td>
                       <td class="text-center">{% if extension.compatible %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
                       <td class="text-center">{% if extension.available %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
@@ -101,7 +100,7 @@
           <div class="card-body">
             <fieldset>
               <legend>{{ text_progress }}</legend>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Progress</label>
                 <div class="col-sm-10">
                   <div id="progress-download" class="progress">

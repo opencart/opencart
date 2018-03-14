@@ -67,7 +67,8 @@
           </div>
         </div>
         <br/>
-        <div id="extension-list">{% if promotions %}
+        <div id="extension-list">
+          {% if promotions %}
             <h3>Featured</h3>
             <div class="row">
               {% for extension in promotions %}
@@ -98,7 +99,8 @@
             <hr/>
           {% endif %}
           {% if extensions %}
-            <div class="row">{% for extension in extensions %}
+            <div class="row">
+              {% for extension in extensions %}
                 {% if extension %}
                   <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                     <section>
@@ -124,7 +126,8 @@
               {% endfor %}</div>
           {% else %}
             <p class="text-center">{{ text_no_results }}</p>
-          {% endif %} </div>
+          {% endif %}
+        </div>
         <div class="row">
           <div class="col-sm-12 text-center">{{ pagination }}</div>
         </div>

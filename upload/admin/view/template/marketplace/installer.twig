@@ -122,7 +122,7 @@ function next(url, i) {
 		url: url,
 		dataType: 'json',
 		success: function(json) {
-			$('#progress-bar').css('width', (i * 20) + '%');
+			$('#progress-bar').css('width', (i * 16.66) + '%');
 
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
@@ -143,9 +143,19 @@ function next(url, i) {
 			if (json['text']) {
 				$('#progress-text').html(json['text']);
 			}
-
+			
+			if(json['xmls']){
+				$("#modal-xmls").remove();
+				$('body').append(json['xmls']);
+				$('#modal-xmls').modal('show');										
+			}
+			
 			if (json['next']) {
-				next(json['next'], i);
+				if(json['next'] == 'additional'){
+					additional(json['additional']);
+				}else{
+					next(json['next'], i);
+				}
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -154,6 +164,43 @@ function next(url, i) {
 	});
 }
 
+function additional(additional){
+	$.ajax({
+		url: additional,
+		type: 'get',
+		dataType: 'html',
+		success: function(data) {
+			$("#modal-xmls").remove();
+			$('body').append(data);
+			$('#modal-xmls').modal('show');
+		}
+	});
+}
+
+function installxmls(additional){
+	$.ajax({
+		url: additional,
+        type: 'post',
+        data: $("#additional_xmls").serialize(),
+        dataType: 'json',
+		success: function(json) {
+			if (json['error']) {
+				$('#progress-bar').addClass('progress-bar-danger');
+				$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
+
+				$('#button-upload').button('reset');
+			}
+			if (json['text']) {
+				$('#progress-text').html(json['text']);
+			}			
+			$('#modal-xmls').modal('hide');
+			$('#modal-xmls').remove();
+			if (json['next']) {
+				next(json['next'], 6);
+			}
+		}
+	});
+}
 // Uninstall
 $('#history').on('click', '.btn-danger', function(e) {
 	e.preventDefault();

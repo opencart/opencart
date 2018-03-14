@@ -49,6 +49,8 @@ $(document).ready(function() {
 		$(this).parent().parent().datetimepicker('toggle');
 	});
 
+	$('.invalid-tooltip').show();
+
 	// tooltip remove
 	$('[data-toggle=\'tooltip\']').on('remove', function() {
 		$(this).tooltip('destroy');
@@ -142,7 +144,7 @@ $(document).ready(function() {
 					}
 				},
 				success: function(html) {
-					$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
+					$('body').append(html);
 
 					$('#modal-image').modal('show');
 				}

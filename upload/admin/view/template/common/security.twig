@@ -2,15 +2,15 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
+        <h5 class="modal-title text-danger"><i class="fa fa-exclamation-triangle"></i> {{ heading_title }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title text-danger"><i class="fa fa-exclamation-triangle"></i> {{ heading_title }}</h4>
       </div>
       <div class="modal-body">
         <div class="alert alert-info"><i class="fa fa-exclamation-circle"></i> {{ text_security }}</div>
-        <form class="form-horizontal">
+        <form >
           <fieldset>
             <legend>{{ text_choose }}</legend>
-            <div class="form-group">
+            <div class="form-group row">
               <select name="type" id="input-type" class="form-control">
                 <option value="automatic">{{ text_automatic }}</option>
                 <option value="manual">{{ text_manual }}</option>
@@ -19,10 +19,10 @@
           </fieldset>
           <fieldset id="collapse-automatic" class="collapse">
             <legend>{{ text_automatic }}</legend>
-            <div class="form-group">
+            <div class="form-group row">
               <div class="input-group">
                 <div class="input-group-btn dropdown">
-                  <button type="button" id="button-path" data-toggle="dropdown" class="btn btn-default">{{ document_root }} <span class="caret"></span></button>
+                  <button type="button" id="button-path" data-toggle="dropdown" class="btn btn-light">{{ document_root }} <span class="caret"></span></button>
                   <ul class="dropdown-menu">
                     {% for path in paths %}
                       {% if path|length > document_root|length %}
@@ -43,7 +43,7 @@
           </fieldset>
           <fieldset id="collapse-manual" class="collapse">
             <legend>{{ text_manual }}</legend>
-            <div class="form-group">
+            <div class="form-group row">
               <div style="height: 300px; overflow-y: scroll;" class="form-control" disabled="disabled"></div>
             </div>
           </fieldset>
@@ -118,19 +118,19 @@ $('#button-move').on('click', function() {
 
 $('#modal-security select[name=\'type\']').on('change', function() {
 	html  = '<ol>';
-	html += '<li><p>{{ text_move }}</p>';
-	html += '<p><strong>{{ storage }}</strong></p>';
-	html += '<p>{{ text_to }}</p>';
-	html += '<p><strong>' + $('#modal-security input[name=\'path\']').val() + $('#modal-security input[name=\'directory\']').val() + '/</strong></p></li>';
-	html += '<li><p>{{ text_config }}</p>';
-	html += '<p><strong>define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');</strong></p>';
-	html += '<p>{{ text_by }}</p>';
-	html += '<p><strong>define(\'DIR_STORAGE\', \'' + $('#modal-security input[name=\'path\']').val() + $('#modal-security input[name=\'directory\']').val() + '/\');</strong></p></li>';
-	html += '<li><p>{{ text_admin }}</p>';
-	html += '<p><strong>define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');</strong></p>';
-	html += '<p>{{ text_by }}</p>';
-	html += '<p><strong>define(\'DIR_STORAGE\', \'' + $('#modal-security input[name=\'path\']').val() + $('#modal-security input[name=\'directory\']').val() + '/\');</strong></p></li>';
-	html += '</li>';
+	html += '  <li><p>{{ text_move }}</p>';
+	html += '    <p><strong>{{ storage }}</strong></p>';
+	html += '    <p>{{ text_to }}</p>';
+	html += '    <p><strong>' + $('#modal-security input[name=\'path\']').val() + $('#modal-security input[name=\'directory\']').val() + '/</strong></p></li>';
+	html += '   <li><p>{{ text_config }}</p>';
+	html += '     <p><strong>define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');</strong></p>';
+	html += '     <p>{{ text_by }}</p>';
+	html += '     <p><strong>define(\'DIR_STORAGE\', \'' + $('#modal-security input[name=\'path\']').val() + $('#modal-security input[name=\'directory\']').val() + '/\');</strong></p></li>';
+	html += '   <li><p>{{ text_admin }}</p>';
+	html += '     <p><strong>define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');</strong></p>';
+	html += '     <p>{{ text_by }}</p>';
+	html += '     <p><strong>define(\'DIR_STORAGE\', \'' + $('#modal-security input[name=\'path\']').val() + $('#modal-security input[name=\'directory\']').val() + '/\');</strong></p></li>';
+	html += '  </li>';
 	html += '</ol>';
 
 	$('#collapse-manual .form-control').html(html);

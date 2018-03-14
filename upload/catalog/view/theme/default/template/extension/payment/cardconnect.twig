@@ -1,9 +1,9 @@
-<form id="cardconnect-form" action="{{ action }}" method="post" class="form form-horizontal">
+<form id="cardconnect-form" action="{{ action }}" method="post" class="form">
   <fieldset id="payment">
     <legend>{{ text_card_details }}</legend>
     {% if echeck %}
-    <div class="form-group">
-      <label class="col-sm-2 control-label" for="input-method">{{ entry_method }}</label>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label" for="input-method">{{ entry_method }}</label>
       <div class="col-sm-10">
         <select name="method" id="input-method" class="form-control">
           <option value="card">{{ text_card }}</option>
@@ -14,19 +14,23 @@
     {% endif %}
     <div class="card_container">
       <div class="form-group" {% if not store_cards %} style="display: none;" {% endif %}>
-        <label class="col-sm-2 control-label">{{ entry_card_new_or_old }}</label>
+        <label class="col-sm-2 col-form-label">{{ entry_card_new_or_old }}</label>
         <div class="col-sm-10">
-          <label class="radio-inline">
-            <input type="radio" name="card_new" value="1" checked="checked"/>
+          <div class="form-check form-check-inline">
+            <label>
+            <input type="radio" name="card_new" value="1" class="form-check-input" checked="checked"/>
             {{ entry_card_new }}</label>
-          <label class="radio-inline">
-            <input type="radio" name="card_new" value="0"/>
+          </div>
+          <div class="form-check form-check-inline">
+            <label>
+            <input type="radio" name="card_new" value="0" class="form-check-input" />
             {{ entry_card_old }}</label>
+          </div>
         </div>
       </div>
       <div class="card_new_container">
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-card-type">{{ entry_card_type }}</label>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label" for="input-card-type">{{ entry_card_type }}</label>
           <div class="col-sm-10">
             <select name="card_type" id="input-card-type" class="form-control">
              {% for card_type in card_types %}
@@ -35,14 +39,14 @@
             </select>
           </div>
         </div>
-        <div class="form-group required">
-          <label class="col-sm-2 control-label" for="input-card-number">{{ entry_card_number }}</label>
+        <div class="form-group row required">
+          <label class="col-sm-2 col-form-label" for="input-card-number">{{ entry_card_number }}</label>
           <div class="col-sm-10">
             <input type="text" name="card_number" value="" placeholder="{{ entry_card_number }}" id="input-card-number" class="form-control" />
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-card-expiry">{{ entry_card_expiry }}</label>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label" for="input-card-expiry">{{ entry_card_expiry }}</label>
           <div class="col-sm-3">
             <select name="card_expiry_month" id="input-card-expiry" class="form-control">
              {% for month in months %}
@@ -58,30 +62,30 @@
             </select>
           </div>
         </div>
-        <div class="form-group required">
-          <label class="col-sm-2 control-label" for="input-card-cvv2">{{ entry_card_cvv2 }}</label>
+        <div class="form-group row required">
+          <label class="col-sm-2 col-form-label" for="input-card-cvv2">{{ entry_card_cvv2 }}</label>
           <div class="col-sm-10">
             <input type="text" name="card_cvv2" value="" placeholder="{{ entry_card_cvv2 }}" id="input-card-cvv2" class="form-control" />
           </div>
         </div>
         {% if store_cards %}
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-card-save" style="padding-top:0">{{ entry_card_save }}</label>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label" for="input-card-save" style="padding-top:0">{{ entry_card_save }}</label>
           <div class="col-sm-10">
             <input type="checkbox" name="card_save" value="1" id="input-card-save"/>
           </div>
         </div>
-        {% endif %}</div>
+        {% endif %} </div>
       <div class="card_old_container" style="display: none">
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-card-choice">{{ entry_card_choice }}</label>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label" for="input-card-choice">{{ entry_card_choice }}</label>
           <div class="col-sm-8">
             <select name="card_choice" id="input-card-choice" class="form-control" {% if not cards %} disabled {% endif %}>
-              {% if cards %}
+          	  {% if cards %}
               <option value="">{{ text_select_card }}</option>
-              {% for card in cards %}
+               {% for card in cards %}
               <option value="{{ card.token }}">{{ card.type }}, &nbsp; {{ card.account }}, &nbsp; {{ card.expiry }}</option>
-              {% endfor %}
+                {% endfor %}
               {% else %}
               <option value="">{{ text_no_cards }}</option>
               {% endif %}
@@ -94,14 +98,14 @@
       </div>
     </div>
     <div class="echeck_container" style="display:none">
-      <div class="form-group required">
-        <label class="col-sm-2 control-label" for="input-account-number">{{ entry_account_number }}</label>
+      <div class="form-group row required">
+        <label class="col-sm-2 col-form-label" for="input-account-number">{{ entry_account_number }}</label>
         <div class="col-sm-10">
           <input type="text" name="account_number" value="" placeholder="{{ entry_account_number }}" id="input-account-number" class="form-control" />
         </div>
       </div>
-      <div class="form-group required">
-        <label class="col-sm-2 control-label" for="input-routing-number">{{ entry_routing_number }}</label>
+      <div class="form-group row required">
+        <label class="col-sm-2 col-form-label" for="input-routing-number">{{ entry_routing_number }}</label>
         <div class="col-sm-10">
           <input type="text" name="routing_number" value="" placeholder="{{ entry_routing_number }}" id="input-routing-number" class="form-control" />
         </div>
@@ -110,7 +114,7 @@
   </fieldset>
 </form>
 <div class="buttons">
-  <div class="pull-right">
+  <div class="float-right">
     <input type="button" value="{{ button_confirm }}" id="button-confirm" class="btn btn-primary" data-loading-text="{{ text_loading }}">
   </div>
 </div>
@@ -126,7 +130,7 @@ $('select[name="method"]').on('change', function() {
 		$('.echeck_container').show();
 	}
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('input[name="card_new"]').on('change', function() {
 	if ($(this).val() == '1') {
@@ -137,12 +141,12 @@ $('input[name="card_new"]').on('change', function() {
 		$('.card_old_container').show();
 	}
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#button-delete').bind('click', function() {
 	if (confirm('{{ text_confirm_delete }}')) {
 		$.ajax({
-			url: 'index.php?route=extension/payment/cardconnect/delete&language=' + getCookie('language'),
+			url: 'index.php?route=extension/payment/cardconnect/delete',
 			type: 'post',
 			data: $('#input-card-choice'),
 			dataType: 'json',
@@ -162,7 +166,7 @@ $('#button-delete').bind('click', function() {
 					$('.cardconnect_message').fadeIn();
 				} else {
 					$.ajax({
-						url: 'index.php?route=checkout/confirm&language=' + getCookie('language'),
+						url: 'index.php?route=checkout/confirm',
 						dataType: 'html',
 						success: function (html) {
 							$('#collapse-checkout-confirm .panel-body').html(html);
@@ -176,11 +180,11 @@ $('#button-delete').bind('click', function() {
 		});
 	}
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/payment/cardconnect/send&language=' + getCookie('language'),
+		url: 'index.php?route=extension/payment/cardconnect/send',
 		type: 'post',
 		data: $('#cardconnect-form').serialize(),
 		dataType: 'json',

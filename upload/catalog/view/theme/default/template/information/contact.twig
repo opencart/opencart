@@ -16,8 +16,8 @@
     <div id="content" class="{{ class }}">{{ content_top }}
       <h1>{{ heading_title }}</h1>
       <h3>{{ text_location }}</h3>
-      <div class="panel panel-default">
-        <div class="panel-body">
+      <div class="card">
+        <div class="card-body">
           <div class="row">
             {% if image %}
             <div class="col-sm-3"><img src="{{ image }}" alt="{{ store }}" title="{{ store }}" class="img-thumbnail" /></div>
@@ -56,12 +56,12 @@
       <h3>{{ text_store }}</h3>
       <div class="panel-group" id="accordion">
         {% for location in locations %}
-        <div class="panel panel-default">
+        <div class="card">
           <div class="panel-heading">
             <h4 class="panel-title"><a href="#collapse-location{{ location.location_id }}" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion">{{ location.name }} <i class="fa fa-caret-down"></i></a></h4>
           </div>
           <div class="panel-collapse collapse" id="collapse-location{{ location.location_id }}">
-            <div class="panel-body">
+            <div class="card-body">
               <div class="row">
                 {% if location.image %}
                 <div class="col-sm-3"><img src="{{ location.image }}" alt="{{ location.name }}" title="{{ location.name }}" class="img-thumbnail" /></div>
@@ -100,11 +100,11 @@
         {% endfor %}
       </div>
       {% endif %}
-      <form action="{{ action }}" method="post" enctype="multipart/form-data" class="form-horizontal">
+      <form action="{{ action }}" method="post" enctype="multipart/form-data">
         <fieldset>
           <legend>{{ text_contact }}</legend>
-          <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
+          <div class="form-group row required">
+            <label class="col-sm-2 col-form-label" for="input-name">{{ entry_name }}</label>
             <div class="col-sm-10">
               <input type="text" name="name" value="{{ name }}" id="input-name" class="form-control" />
               {% if error_name %}
@@ -112,8 +112,8 @@
               {% endif %}
             </div>
           </div>
-          <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-email">{{ entry_email }}</label>
+          <div class="form-group row required">
+            <label class="col-sm-2 col-form-label" for="input-email">{{ entry_email }}</label>
             <div class="col-sm-10">
               <input type="text" name="email" value="{{ email }}" id="input-email" class="form-control" />
               {% if error_email %}
@@ -121,8 +121,8 @@
               {% endif %}
             </div>
           </div>
-          <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-enquiry">{{ entry_enquiry }}</label>
+          <div class="form-group row required">
+            <label class="col-sm-2 col-form-label" for="input-enquiry">{{ entry_enquiry }}</label>
             <div class="col-sm-10">
               <textarea name="enquiry" rows="10" id="input-enquiry" class="form-control">{{ enquiry }}</textarea>
               {% if error_enquiry %}
@@ -133,7 +133,7 @@
           {{ captcha }}
         </fieldset>
         <div class="buttons">
-          <div class="pull-right">
+          <div class="float-right">
             <input class="btn btn-primary" type="submit" value="{{ button_submit }}" />
           </div>
         </div>

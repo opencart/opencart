@@ -4,12 +4,13 @@
 {% if payment_methods %}
 <p>{{ text_payment_method }}</p>
 {% for payment_method in payment_methods %}
-<div class="radio">
-  <label>{% if payment_method.code == code or not code %}
+<div class="form-check">
+  <label>
+    {% if payment_method.code == code or not code %}
     {% set code = payment_method.code %}
-    <input type="radio" name="payment_method" value="{{ payment_method.code }}" checked="checked" />
+    <input type="radio" name="payment_method" value="{{ payment_method.code }}" class="form-check-input" checked="checked" />
     {% else %}
-    <input type="radio" name="payment_method" value="{{ payment_method.code }}" />
+    <input type="radio" name="payment_method" value="{{ payment_method.code }}" class="form-check-input" />
     {% endif %}
     {{ payment_method.title }}
     {% if payment_method.terms %}
@@ -24,7 +25,7 @@
 </p>
 {% if text_agree %}
 <div class="buttons">
-  <div class="pull-right">{{ text_agree }}
+  <div class="float-right">{{ text_agree }}
     {% if agree %}
     <input type="checkbox" name="agree" value="1" checked="checked" />
     {% else %}
@@ -36,7 +37,7 @@
 </div>
 {% else %}
 <div class="buttons">
-  <div class="pull-right">
+  <div class="float-right">
     <input type="button" value="{{ button_continue }}" id="button-payment-method" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
   </div>
 </div>

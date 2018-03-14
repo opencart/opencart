@@ -38,16 +38,16 @@
       <div class="warning">{{ error_no_shipping }}</div>
       {% else %}
       <form action="{{ action_shipping }}" method="post" id="shipping_form">
-        <div class="panel-body"> {% for shipping_method in shipping_methods %}
+        <div class="card-body"> {% for shipping_method in shipping_methods %}
           <p><strong>{{ shipping_method.title }}</strong></p>
           {% if not shipping_method.error %}
           {% for quote in shipping_method.quote %}
-          <div class="radio">
+          <div class="form-check">
             <label> {% if quote.code == code or not code %}
               {% set code = quote.code %}
-              <input type="radio" name="shipping_method" value="{{ quote.code }}" id="{{ quote.code }}" checked="checked" />
+              <input type="radio" name="shipping_method" value="{{ quote.code }}" id="{{ quote.code }}" class="form-check-input" checked="checked" />
               {% else %}
-              <input type="radio" name="shipping_method" value="{{ quote.code }}" id="{{ quote.code }}" />
+              <input type="radio" name="shipping_method" value="{{ quote.code }}" id="{{ quote.code }}" class="form-check-input" />
               {% endif %}
               {{ quote.title }} </label>
           </div>
@@ -97,7 +97,7 @@
       </div>
       <br />
       <div class="row">
-        <div class="col-sm-4 col-sm-offset-8">
+        <div class="col-md-4 offset-md-8">
           <table class="table table-bordered">
             {% for total in totals %}
             <tr>
@@ -109,12 +109,12 @@
         </div>
       </div>
       <div class="buttons">
-        <div class="pull-right"><a href="{{ action_confirm }}" class="btn btn-primary">{{ button_confirm }}</a></div>
+        <div class="float-right"><a href="{{ action_confirm }}" class="btn btn-primary">{{ button_confirm }}</a></div>
       </div>
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>
-{{ footer }} 
+{{ footer }}
 <script type="text/javascript"><!--
 $('input[name=\'shipping_method\']').change(function() {
 	$('#shipping_form').submit();

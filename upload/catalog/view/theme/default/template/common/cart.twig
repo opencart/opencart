@@ -1,6 +1,7 @@
-<div id="cart" class="btn-group btn-block">
+<div id="cart">
   <button type="button" data-toggle="dropdown" data-loading-text="{{ text_loading }}" class="btn btn-inverse btn-block btn-lg dropdown-toggle"><i class="fa fa-shopping-cart"></i> <span id="cart-total">{{ text_items }}</span></button>
-  <ul class="dropdown-menu pull-right">
+
+  <ul class="dropdown-menu dropdown-menu-right">
     {% if products or vouchers %}
     <li>
       <table class="table table-striped">
@@ -15,7 +16,7 @@
             - <small>{{ text_recurring }} {{ product.recurring }}</small> {% endif %}</td>
           <td class="text-right">x {{ product.quantity }}</td>
           <td class="text-right">{{ product.total }}</td>
-          <td class="text-center"><button type="button" onclick="cart.remove('{{ product.cart_id }}', '{{ language }}');" title="{{ button_remove }}" class="btn btn-danger btn-xs"><i class="fa fa-times"></i></button></td>
+          <td class="text-center"><button type="button" onclick="cart.remove('{{ product.cart_id }}');" title="{{ button_remove }}" class="btn btn-danger btn-xs"><i class="fa fa-times"></i></button></td>
         </tr>
         {% endfor %}
         {% for voucher in vouchers %}
@@ -44,7 +45,7 @@
     </li>
     {% else %}
     <li>
-      <p class="text-center">{{ text_no_results }}</p>
+      <p class="text-center">{{ text_empty }}</p>
     </li>
     {% endif %}
   </ul>

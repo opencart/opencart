@@ -3,35 +3,36 @@
   <div class="page-header">
     <div class="container-fluid">
       <h1>{{ heading_title }}</h1>
-      <ul class="breadcrumb">
-        {% for breadcrumb in breadcrumbs %}
-          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-        {% endfor %}
-      </ul>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          {% for breadcrumb in breadcrumbs %}
+            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          {% endfor %}
+        </ol>
+      </nav>
     </div>
   </div>
   <div class="container-fluid">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> {{ text_upload }}</h3>
-      </div>
-      <div class="panel-body">
-        <form class="form-horizontal">
+    <div class="card">
+      <div class="card-header"><i class="fa fa-puzzle-piece"></i> {{ text_upload }}</div>
+      <div class="card-body">
+        <form>
           <fieldset>
             <legend>{{ text_upload }}</legend>
-            <div class="form-group required">
-              <label class="col-sm-2 control-label" for="button-upload"><span data-toggle="tooltip" title="{{ help_upload }}">{{ entry_upload }}</span></label>
+            <div class="form-group row required">
+              <label class="col-sm-2 col-form-label" for="button-upload">{{ entry_upload }}</label>
               <div class="col-sm-10">
                 <button type="button" id="button-upload" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-upload"></i> {{ button_upload }}</button>
+                <small class="form-text text-muted">{{ help_upload }}</small>
               </div>
             </div>
           </fieldset>
           <br/>
           <fieldset>
             <legend>{{ text_progress }}</legend>
-            <div class="form-group">
-              <label class="col-sm-2 control-label">{{ entry_progress }}</label>
-              <div class="col-sm-10">
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">{{ entry_progress }}</label>
+              <div class="col-sm-10 mt-2">
                 <div class="progress">
                   <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
                 </div>
@@ -92,7 +93,7 @@ $('#button-upload').on('click', function() {
 				success: function(json) {
 					if (json['error']) {
 						$('#progress-bar').addClass('progress-bar-danger');
-						$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+						$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
 
 						$('#button-upload').button('reset');
 					}
@@ -125,7 +126,7 @@ function next(url, i) {
 
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+				$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
 
 				$('#button-upload').button('reset');
 			}
@@ -175,7 +176,7 @@ $('#history').on('click', '.btn-danger', function(e) {
 		success: function(json) {
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+				$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
 			}
 
 			if (json['success']) {

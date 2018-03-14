@@ -28,16 +28,18 @@
             </tr>
           </thead>
           <tbody>
+          
           {% for download in downloads %}
           <tr>
             <td class="text-right">{{ download.order_id }}</td>
             <td class="text-left">{{ download.name }}</td>
             <td class="text-left">{{ download.size }}</td>
             <td class="text-left">{{ download.date_added }}</td>
-            <td class="text-right"><a href="{{ download.href }}" data-toggle="tooltip" title="{{ button_download }}" class="btn btn-primary"><i class="fa fa-cloud-download"></i></a></td>
+            <td><a href="{{ download.href }}" data-toggle="tooltip" title="{{ button_download }}" class="btn btn-primary"><i class="fa fa-cloud-download"></i></a></td>
           </tr>
           {% endfor %}
           </tbody>
+          
         </table>
       </div>
       <div class="row">
@@ -45,10 +47,10 @@
         <div class="col-sm-6 text-right">{{ results }}</div>
       </div>
       {% else %}
-      <p>{{ text_no_results }}</p>
+      <p>{{ text_empty }}</p>
       {% endif %}
       <div class="buttons clearfix">
-        <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+        <div class="float-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       </div>
       {{ content_bottom }}</div>
     {{ column_right }}</div>

@@ -377,7 +377,7 @@ a:hover, a:focus {
     font-weight: bold;
     color: #333;
 }
-
+/*
 .form-control:hover {
     border: 1px solid #b9b9b9;
     border-top-color: #a0a0a0;
@@ -385,15 +385,15 @@ a:hover, a:focus {
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
 }
 
-div.required .control-label:not(span):before, td.required:before {
+div.required .col-form-label:not(span):before, td.required:before {
     content: '* ';
     color: #F00;
     font-weight: bold;
 }
-/*
+
 .btn-group {
     white-space: nowrap;
-}*/
+}
 
 .table thead td span[data-toggle="tooltip"]:after, label.control-label span:after {
     font-family: FontAwesome;
@@ -508,7 +508,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .form-group + .form-group {
     border-top: 1px solid #ededed;
 }
-
+*/
 /* Panels */
 .card {
     border-radius: 0px;
@@ -701,6 +701,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     font-size: 10.5em;
 }
 
+/*
 #extension-list {
     color: #4b525d;
 }
@@ -955,11 +956,11 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .list-check.list-color-blue li::before {
     color: #02afe9;
 }
-
+/*
 .well.filter {
     background-color: #ffffff;
 }
-
+*/
 @font-face {
     font-family: 'opencart';
     src: url('fonts/opencart.eot?h4wsna');

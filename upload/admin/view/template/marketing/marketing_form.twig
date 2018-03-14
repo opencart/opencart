@@ -26,9 +26,9 @@
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-marketing">
           <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
+            <li class="nav-item"><a href="#tab-general" data-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
             {% if marketing_id %}
-              <li class="nav-item"><a href="#tab-report" data-toggle="tab">{{ tab_report }}</a></li>
+              <li class="nav-item"><a href="#tab-report" data-toggle="tab" class="nav-link">{{ tab_report }}</a></li>
             {% endif %}
           </ul>
           <div class="tab-content">

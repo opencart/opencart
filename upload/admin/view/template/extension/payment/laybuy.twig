@@ -31,8 +31,8 @@
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment">
           <ul class="nav nav-tabs">
-            <li class="active" id="li-tab-settings"><a href="#tab-settings" data-toggle="tab">{{ tab_settings }}</a></li>
-            <li class="nav-item" id="li-tab-reports"><a href="#tab-reports" data-toggle="tab">{{ tab_reports }}</a></li>
+            <li class="nav-item" id="li-tab-settings"><a href="#tab-settings" data-toggle="tab" class="nav-link active">{{ tab_settings }}</a></li>
+            <li class="nav-item" id="li-tab-reports"><a href="#tab-reports" data-toggle="tab" class="nav-link">{{ tab_reports }}</a></li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-settings">
@@ -56,7 +56,7 @@
                   {% endif %}
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-laybuy-min-deposit">{{ entry_minimum }}</label>
                 <div class="col-sm-10">
                   <select name="payment_laybuy_min_deposit" id="input-laybuy-min-deposit" class="form-control">
@@ -72,7 +72,7 @@
                   {% endif %}
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-laybuy-max-deposit">{{ entry_maximum }}</label>
                 <div class="col-sm-10">
                   <select name="payment_laybuy_max_deposit" id="input-laybuy-max-deposit" class="form-control">
@@ -85,7 +85,7 @@
                   <small class="form-text text-muted">{{ help_maximum }}</small>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-laybuy-max-months">{{ entry_max_months }}</label>
                 <div class="col-sm-10">
                   <select name="payment_laybuy_max_months" id="input-laybuy-max-months" class="form-control">
@@ -99,11 +99,11 @@
                   <small class="form-text text-muted">{{ help_months }}</small>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="category">{{ entry_category }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="category" class="form-control"/>
-                  <div id="laybuy-category" class="well well-sm" style="height: 150px; overflow: auto;">
+                  <div id="laybuy-category" class="form-control" style="height: 150px; overflow: auto;">
                     {% for category in categories %}
                       <div id="category{{ category.category_id }}"><i class="fa fa-minus-circle"></i> {{ category.name }}
                         <input type="hidden" name="payment_laybuy_category[]" value="{{ category.category_id }}"/>
@@ -113,18 +113,18 @@
                   <small class="form-text text-muted">{{ help_category }}</small>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-laybuy-xproducts">{{ entry_product_ids }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_laybuy_xproducts" value="{{ payment_laybuy_xproducts }}" placeholder="{{ entry_product_ids }}" id="input-laybuy-xproducts" class="form-control"/>
                   <small class="form-text text-muted">{{ help_product_ids }}</small>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="customer-group">{{ entry_customer_group }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="customer_group" value="" placeholder="{{ entry_customer_group }}" id="customer-group" class="form-control"/>
-                  <div id="laybuy-customer-group" class="well well-sm" style="height: 150px; overflow: auto;">
+                  <div id="laybuy-customer-group" class="form-control" style="height: 150px; overflow: auto;">
                     {% for customer_group in customer_groups %}
                       <div id="customer-group{{ customer_group.customer_group_id }}"><i class="fa fa-minus-circle"></i> {{ customer_group.name }}
                         <input type="hidden" name="payment_laybuy_customer_group[]" value="{{ customer_group.customer_group_id }}"/>
@@ -134,7 +134,7 @@
                   <small class="form-text text-muted">{{ help_customer_group }}</small>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-laybuy-logging">{{ entry_logging }}</label>
                 <div class="col-sm-10">
                   <select name="payment_laybuy_logging" id="input-laybuy-logging" class="form-control">
@@ -149,14 +149,14 @@
                   <small class="form-text text-muted">{{ help_logging }}</small>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-laybuy-total">{{ entry_total }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_laybuy_total" value="{{ payment_laybuy_total }}" placeholder="{{ entry_total }}" id="input-laybuy-total" class="form-control"/>
                   <small class="form-text text-muted">{{ help_total }}</small>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-laybuy-order-status-pending">{{ entry_order_status_pending }}</label>
                 <div class="col-sm-10">
                   <select name="payment_laybuy_order_status_id_pending" id="input-laybuy-order-status-pending" class="form-control">
@@ -171,7 +171,7 @@
                   <small class="form-text text-muted">{{ help_order_status_pending }}</small>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-laybuy-order-status-canceled">{{ entry_order_status_canceled }}</label>
                 <div class="col-sm-10">
                   <select name="payment_laybuy_order_status_id_canceled" id="input-laybuy-order-status-canceled" class="form-control">
@@ -186,7 +186,7 @@
                   <small class="form-text text-muted">{{ help_order_status_canceled }}</small>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-laybuy-order-status-processing">{{ entry_order_status_processing }}</label>
                 <div class="col-sm-10">
                   <select name="payment_laybuy_order_status_id_processing" id="input-laybuy-order-status-processing" class="form-control">
@@ -201,19 +201,19 @@
                   <small class="form-text text-muted">{{ help_order_status_processing }}</small>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-laybuy-gateway-url">{{ entry_gateway_url }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_laybuy_gateway_url" value="{{ payment_laybuy_gateway_url }}" placeholder="{{ entry_gateway_url }}" id="input-laybuy-gateway-url" class="form-control"/>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-laybuy-api-url">{{ entry_api_url }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_laybuy_api_url" value="{{ payment_laybuy_api_url }}" placeholder="{{ entry_api_url }}" id="input-laybuy-api-url" class="form-control"/>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-laybuy-geo-zone">{{ entry_geo_zone }}</label>
                 <div class="col-sm-10">
                   <select name="payment_laybuy_geo_zone_id" id="input-laybuy-geo-zone" class="form-control">
@@ -228,7 +228,7 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-laybuy-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="payment_laybuy_status" id="input-laybuy-status" class="form-control">
@@ -242,20 +242,20 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-laybuy-sort-order">{{ entry_sort_order }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_laybuy_sort_order" value="{{ payment_laybuy_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-laybuy-sort-order" class="form-control"/>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-laybuy-cron-url">{{ entry_cron_url }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="laybuy_cron_url" value="{{ laybuy_cron_url }}" readonly placeholder="{{ entry_cron_url }}" id="input-laybuy-cron-url" class="form-control"/>
                   <small class="form-text text-muted">{{ help_cron_url }}</small>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-laybuy-cron-time">{{ entry_cron_time }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="laybuy_cron_time" value="{{ laybuy_cron_time }}" readonly disabled placeholder="{{ entry_cron_time }}" id="input-laybuy-cron-time" class="form-control"/>
@@ -422,14 +422,12 @@
     </div>
   </div>
 </div>
-
-<style>
+<style type="text/css">
   #tab-reports .form-group {
     margin-left: 0;
     margin-right: 0;
   }
 </style>
-
 <script type="text/javascript"><!--
 $('input[name="category"]').autocomplete({
 	source: function(request, response) {

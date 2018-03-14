@@ -26,9 +26,9 @@
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-coupon">
           <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
+            <li class="nav-item"><a href="#tab-general" data-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
             {% if coupon_id %}
-              <li class="nav-item"><a href="#tab-history" data-toggle="tab">{{ tab_history }}</a></li>
+              <li class="nav-item"><a href="#tab-history" data-toggle="tab" class="nav-link">{{ tab_history }}</a></li>
             {% endif %}
           </ul>
           <div class="tab-content">
@@ -50,7 +50,7 @@
                     <div class="invalid-tooltip">{{ error_code }}</div>
                   {% endif %} </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-type">{{ entry_type }}</label>
                 <div class="col-sm-10">
                   <select name="type" id="input-type" class="form-control">
@@ -68,23 +68,23 @@
                   <small class="form-text text-muted">{{ help_type }}</small>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-discount">{{ entry_discount }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="discount" value="{{ discount }}" placeholder="{{ entry_discount }}" id="input-discount" class="form-control"/>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-total">{{ entry_total }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="total" value="{{ total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
                   <small class="form-text text-muted">{{ help_total }}</small>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label">{{ entry_logged }}</label>
                 <div class="col-sm-10">
-                  <label class="radio-inline"> {% if logged %}
+                  <label class="radio-inline">{% if logged %}
                       <input type="radio" name="logged" value="1" checked="checked"/>
                       {{ text_yes }}
                     {% else %}
@@ -100,25 +100,25 @@
                   <small class="form-text text-muted">{{ help_logged }}</small>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label">{{ entry_shipping }}</label>
                 <div class="col-sm-10">
-                  <label class="radio-inline"> {% if shipping %}
+                  <label class="radio-inline">{% if shipping %}
                       <input type="radio" name="shipping" value="1" checked="checked"/>
                       {{ text_yes }}
                     {% else %}
                       <input type="radio" name="shipping" value="1"/>
                       {{ text_yes }}
-                    {% endif %} </label> <label class="radio-inline"> {% if not shipping %}
+                    {% endif %}</label> <label class="radio-inline"> {% if not shipping %}
                       <input type="radio" name="shipping" value="0" checked="checked"/>
                       {{ text_no }}
                     {% else %}
                       <input type="radio" name="shipping" value="0"/>
                       {{ text_no }}
-                    {% endif %} </label>
+                    {% endif %}</label>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-product">{{ entry_product }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
@@ -130,7 +130,7 @@
                   <small class="form-text text-muted">{{ help_product }}</small>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-category">{{ entry_category }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" class="form-control"/>
@@ -142,7 +142,7 @@
                   <small class="form-text text-muted">{{ help_category }}</small>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-date-start">{{ entry_date_start }}</label>
                 <div class="col-sm-3">
                   <div class="input-group date">
@@ -153,7 +153,7 @@
                   </div>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-date-end">{{ entry_date_end }}</label>
                 <div class="col-sm-3">
                   <div class="input-group date">
@@ -164,37 +164,31 @@
                   </div>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-uses-total">{{ entry_uses_total }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="uses_total" value="{{ uses_total }}" placeholder="{{ entry_uses_total }}" id="input-uses-total" class="form-control"/>
                   <small class="form-text text-muted">{{ help_uses_total }}</small>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-uses-customer">{{ entry_uses_customer }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="uses_customer" value="{{ uses_customer }}" placeholder="{{ entry_uses_customer }}" id="input-uses-customer" class="form-control"/>
                   <small class="form-text text-muted">{{ help_uses_customer }}</small>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="status" id="input-status" class="form-control">
-
                     {% if status %}
-
                       <option value="1" selected="selected">{{ text_enabled }}</option>
                       <option value="0">{{ text_disabled }}</option>
-
                     {% else %}
-
                       <option value="1">{{ text_enabled }}</option>
                       <option value="0" selected="selected">{{ text_disabled }}</option>
-
                     {% endif %}
-
                   </select>
                 </div>
               </div>

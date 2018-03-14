@@ -95,7 +95,7 @@
                 <label class="col-sm-2 col-form-label" for="input-filter">{{ entry_filter }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="filter" value="" placeholder="{{ entry_filter }}" id="input-filter" class="form-control"/>
-                  <div id="category-filter" class="well well-sm" style="height: 150px; overflow: auto;">
+                  <div id="category-filter" class="form-control" style="height: 150px; overflow: auto;">
                     {% for category_filter in category_filters %}
                       <div id="category-filter{{ category_filter.filter_id }}"><i class="fa fa-minus-circle"></i> {{ category_filter.name }}
                         <input type="hidden" name="category_filter[]" value="{{ category_filter.filter_id }}"/>
@@ -108,7 +108,7 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">{{ entry_store }}</label>
                 <div class="col-sm-10">
-                  <div class="well well-sm" style="height: 150px; overflow: auto;">
+                  <div class="form-control" style="height: 150px; overflow: auto;">
                     {% for store in stores %}
                       <div class="checkbox">
                         <label>

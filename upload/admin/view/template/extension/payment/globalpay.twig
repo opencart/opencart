@@ -53,13 +53,13 @@
                   {% endif %}
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-secret">{{ entry_rebate_password }}</label>
                 <div class="col-sm-10">
                   <input type="password" name="payment_globalpay_rebate_password" value="{{ payment_globalpay_rebate_password }}" placeholder="{{ entry_rebate_password }}" id="input-rebate-password" class="form-control"/>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-live-demo">{{ entry_live_demo }}</label>
                 <div class="col-sm-10">
                   <select name="payment_globalpay_live_demo" id="input-live-demo" class="form-control">
@@ -73,7 +73,7 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
                 <div class="col-sm-10">
                   <select name="payment_globalpay_geo_zone_id" id="input-geo-zone" class="form-control">
@@ -88,7 +88,7 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-debug">{{ entry_debug }}</label>
                 <div class="col-sm-10">
                   <select name="payment_globalpay_debug" id="input-debug" class="form-control">
@@ -103,7 +103,7 @@
                   <small class="form-text text-muted">{{ help_debug }}</small>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="payment_globalpay_status" id="input-status" class="form-control">
@@ -117,14 +117,14 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-total">{{ entry_total }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_globalpay_total" value="{{ payment_globalpay_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
                   <small class="form-text text-muted">{{ help_total }}</small>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_globalpay_sort_order" value="{{ payment_globalpay_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
@@ -187,7 +187,7 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-order-status">
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-order-status-success-settled">{{ entry_status_success_settled }}</label>
                 <div class="col-sm-10">
                   <select name="globalpay_order_status_success_settled_id" id="input-order-status-success-settled" class="form-control">
@@ -201,7 +201,7 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-order-status-success-unsettled">{{ entry_status_success_unsettled }}</label>
                 <div class="col-sm-10">
                   <select name="payment_globalpay_order_status_success_unsettled_id" id="input-order-status-success-unsettled" class="form-control">
@@ -215,7 +215,7 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-order-status-decline">{{ entry_status_decline }}</label>
                 <div class="col-sm-10">
                   <select name="payment_globalpay_order_status_decline_id" id="input-order-status-decline" class="form-control">
@@ -229,7 +229,7 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-order-status-decline-pending">{{ entry_status_decline_pending }}</label>
                 <div class="col-sm-10">
                   <select name="payment_globalpay_order_status_decline_pending_id" id="input-order-status-decline-pending" class="form-control">
@@ -243,7 +243,7 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-order-status-decline-stolen">{{ entry_status_decline_stolen }}</label>
                 <div class="col-sm-10">
                   <select name="payment_globalpay_order_status_decline_stolen_id" id="input-order-status-decline-stolen" class="form-control">
@@ -257,7 +257,7 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-order-status-decline-bank">{{ entry_status_decline_bank }}</label>
                 <div class="col-sm-10">
                   <select name="payment_globalpay_order_status_decline_bank_id" id="input-order-status-decline-bank" class="form-control">
@@ -273,7 +273,7 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-payment">
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-auto-settle">{{ entry_auto_settle }}</label>
                 <div class="col-sm-10">
                   <select name="payment_globalpay_auto_settle" id="input-auto-settle" class="form-control">
@@ -284,7 +284,7 @@
                   <small class="form-text text-muted">{{ help_dcc_settle }}</small>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-card-select">{{ entry_card_select }}</label>
                 <div class="col-sm-10">
                   <select name="payment_globalpay_card_select" id="input-card-select" class="form-control">
@@ -299,7 +299,7 @@
                   <small class="form-text text-muted">{{ help_card_select }}</small>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-tss-check">{{ entry_tss_check }}</label>
                 <div class="col-sm-10">
                   <select name="payment_globalpay_tss_check" id="input-tss-check" class="form-control">
@@ -333,7 +333,7 @@
                   {% endif %}
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_notification_url }}</label>
                 <div class="col-sm-10">
                   <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span> <input type="text" value="{{ notify_url }}" class="form-control"/></div>

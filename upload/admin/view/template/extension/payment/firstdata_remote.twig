@@ -96,7 +96,7 @@
                   {% endif %}
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-debug">{{ entry_debug }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_remote_debug" id="input-debug" class="form-control">
@@ -111,14 +111,14 @@
                   <small class="form-text text-muted">{{ help_debug }}</small>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-total">{{ entry_total }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_firstdata_remote_total" value="{{ payment_firstdata_remote_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
                   <small class="form-text text-muted">{{ help_total }}</small>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_remote_geo_zone_id" id="input-geo-zone" class="form-control">
@@ -133,7 +133,7 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_remote_status" id="input-status" class="form-control">
@@ -147,7 +147,7 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_firstdata_remote_sort_order" value="{{ payment_firstdata_remote_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
@@ -155,7 +155,7 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-order-status">
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-order-status-success-settled">{{ entry_status_success_settled }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_remote_order_status_success_settled_id" id="input-order-status-success-settled" class="form-control">
@@ -169,7 +169,7 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-order-status-success-unsettled">{{ entry_status_success_unsettled }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_remote_order_status_success_unsettled_id" id="input-order-status-success-unsettled" class="form-control">
@@ -183,7 +183,7 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-order-status-decline">{{ entry_status_decline }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_remote_order_status_decline_id" id="input-order-status-decline" class="form-control">
@@ -199,7 +199,7 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-payment">
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-auto-settle">{{ entry_auto_settle }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_remote_auto_settle" id="input-auto-settle" class="form-control">
@@ -215,7 +215,7 @@
                   <small class="form-text text-muted">{{ help_settle }}</small>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-card-store">{{ entry_enable_card_store }}</label>
                 <div class="col-sm-10">
                   <select name="payment_firstdata_remote_card_storage" id="input-card-store" class="form-control">
@@ -229,7 +229,7 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label">{{ entry_cards_accepted }}</label>
                 <div class="col-sm-10">
                   {% for card in cards %}

@@ -43,7 +43,7 @@
               {% endif %}
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-geocode">{{ entry_geocode }}</label>
             <div class="col-sm-10">
               <input type="text" name="geocode" value="{{ geocode }}" placeholder="{{ entry_geocode }}" id="input-geocode" class="form-control"/>
@@ -59,25 +59,25 @@
               {% endif %}
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-telephone">{{ entry_fax }}</label>
             <div class="col-sm-10">
               <input type="text" name="fax" value="{{ fax }}" placeholder="{{ entry_fax }}" id="input-fax" class="form-control"/>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-image">{{ entry_image }}</label>
             <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ thumb }}" alt="" title="" data-placeholder="{{ placeholder }}"/></a> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-open">{{ entry_open }}</label>
             <div class="col-sm-10">
               <textarea name="open" rows="5" placeholder="{{ entry_open }}" id="input-open" class="form-control">{{ open }}</textarea>
               <small class="form-text text-muted">{{ help_open }}</small>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-comment">{{ entry_comment }}</label>
             <div class="col-sm-10">
               <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>

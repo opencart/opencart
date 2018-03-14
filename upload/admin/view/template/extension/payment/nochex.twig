@@ -32,7 +32,7 @@
                 <div class="invalid-tooltip">{{ error_email }}</div>
               {% endif %} </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-account">{{ entry_account }}</label>
             <div class="col-sm-10">
               <select name="payment_nochex_account" id="input-account" class="form-control">
@@ -67,7 +67,7 @@
                 <div class="invalid-tooltip">{{ error_merchant }}</div>
               {% endif %} </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label">{{ entry_template }}</label>
             <div class="col-sm-10">
               <label class="radio-inline"> {% if payment_nochex_template %}
@@ -85,7 +85,7 @@
                 {% endif %} </label>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label">{{ entry_test }}</label>
             <div class="col-sm-10">
               <label class="radio-inline"> {% if payment_nochex_test %}
@@ -103,14 +103,14 @@
                 {% endif %} </label>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-total">{{ entry_total }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_nochex_total" value="{{ payment_nochex_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
               <small class="form-text text-muted">{{ help_total }}</small>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-order-status">{{ entry_order_status }}</label>
             <div class="col-sm-10">
               <select name="payment_nochex_order_status_id" id="input-order-status" class="form-control">
@@ -130,7 +130,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
               <select name="payment_nochex_geo_zone_id" id="input-geo-zone" class="form-control">
@@ -151,7 +151,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="payment_nochex_status" id="input-status" class="form-control">
@@ -171,7 +171,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_nochex_sort_order" value="{{ payment_nochex_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>

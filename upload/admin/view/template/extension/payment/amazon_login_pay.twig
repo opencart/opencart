@@ -44,7 +44,7 @@
       <div class="card-header"><i class="fa fa-pencil"></i> {{ text_edit }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment">
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="amazon-login-pay-payment-region">{{ entry_payment_region }}</label>
             <div class="col-sm-10">
               <select name="payment_amazon_login_pay_payment_region" id="amazon-login-pay-payment_region" class="form-control">
@@ -58,7 +58,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="amazon-login-pay-language">{{ entry_language }}</label>
             <div class="col-sm-10">
               <select name="payment_amazon_login_pay_language" id="amazon-login-pay-language" class="form-control">
@@ -120,7 +120,7 @@
               {% endif %}
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="amazon-login-pay-test">{{ entry_login_pay_test }}</label>
             <div class="col-sm-10">
               <select name="payment_amazon_login_pay_test" id="amazon-login-pay-test" class="form-control">
@@ -137,7 +137,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="amazon-login-pay-mode">{{ entry_login_pay_mode }}</label>
             <div class="col-sm-10">
               <select name="payment_amazon_login_pay_mode" id="amazon-login-pay-mode" class="form-control">
@@ -155,7 +155,7 @@
               <small class="form-text text-muted">{{ help_pay_mode }}</small>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="amazon-login-pay-checkout">{{ entry_checkout }}</label>
             <div class="col-sm-10">
               <select name="payment_amazon_login_pay_checkout" id="amazon-login-checkout-mode" class="form-control">
@@ -173,7 +173,7 @@
               <small class="form-text text-muted">{{ help_checkout }}</small>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="amazon-login-pay-capture-status">{{ entry_capture_status }}</label>
             <div class="col-sm-10">
               <select name="payment_amazon_login_pay_capture_status" id="amazon-login-pay-capturet-status" class="form-control">
@@ -189,7 +189,7 @@
               <small class="form-text text-muted">{{ help_capture_status }}</small>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="amazon-login-pay-pending-status">{{ entry_pending_status }}</label>
             <div class="col-sm-10">
               <select name="payment_amazon_login_pay_pending_status" id="amazon-login-pay-pendingt-status" class="form-control">
@@ -203,21 +203,21 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-ipn-token">{{ entry_ipn_token }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_amazon_login_pay_ipn_token" value="{{ payment_amazon_login_pay_ipn_token }}" id="input-ipn-token" class="form-control"/>
               <small class="form-text text-muted">{{ help_ipn_token }}</small>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-ipn-url">{{ entry_ipn_url }}</label>
             <div class="col-sm-10">
               <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span> <input type="text" readonly value="{{ ipn_url }}" id="input-ipn-url" class="form-control"/>
               </div>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="amazon-login-pay-minimum-total">{{ text_minimum_total }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_amazon_login_pay_minimum_total" value="{{ payment_amazon_login_pay_minimum_total }}" placeholder="{{ text_minimum_total }}" id="amazon-login-pay-minimum-total" class="form-control"/>
@@ -227,7 +227,7 @@
               {% endif %}
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="amazon-login-pay-geo-zone">{{ text_geo_zone }}</label>
             <div class="col-sm-10">
               <select name="payment_amazon_login_pay_geo_zone" id="amazon-login-pay-geo-zone" class="form-control">
@@ -246,7 +246,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="amazon-login-pay-input-debug">{{ entry_debug }}</label>
             <div class="col-sm-10">
               <select name="payment_amazon_login_pay_debug" id="amazon-login-pay-input-debug" class="form-control">
@@ -261,13 +261,13 @@
               <small class="form-text text-muted">{{ help_debug }}</small>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="amazon-login-pay-sort-order">{{ text_sort_order }}</label>
             <div class="col-sm-10">
               <input type="text" name="payment_amazon_login_pay_sort_order" value="{{ payment_amazon_login_pay_sort_order }}" placeholder="{{ text_sort_order }}" id="amazon-login-pay-sort-order" class="form-control"/>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="amazon-login-pay-status">{{ text_status }}</label>
             <div class="col-sm-10">
               <select name="payment_amazon_login_pay_status" id="amazon-login-pay-status" class="form-control">
@@ -284,7 +284,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="amazon-login-pay-declined_codes">{{ text_declined_codes }}</label>
             <div class="col-sm-10">
               <select name="payment_amazon_login_pay_declined_code" id="amazon-login-pay-declined_code" class="form-control">

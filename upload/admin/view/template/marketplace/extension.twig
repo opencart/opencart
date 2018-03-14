@@ -18,17 +18,22 @@
       <div class="card-body">
         <fieldset>
           <legend>{{ text_type }}</legend>
-          <div class="well">
-            <div class="input-group">
-              <select name="type" class="form-control">
-                {% for category in categories %}
-                  {% if type == category.code %}
-                    <option value="{{ category.href }}" selected="selected">{{ category.text }}</option>
-                  {% else %}
-                    <option value="{{ category.href }}">{{ category.text }}</option>
-                  {% endif %}
-                {% endfor %}
-              </select> <span class="input-group-addon"><i class="fa fa-filter"></i> {{ text_filter }}</span>
+          <div class="card">
+            <div class="card-body">
+              <div class="input-group">
+                <select name="type" class="form-control">
+                  {% for category in categories %}
+                    {% if type == category.code %}
+                      <option value="{{ category.href }}" selected="selected">{{ category.text }}</option>
+                    {% else %}
+                      <option value="{{ category.href }}">{{ category.text }}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+                <div class="input-group-append">
+                  <span class="input-group-text"><i class="fa fa-filter"></i> {{ text_filter }}</span>
+                </div>
+              </div>
             </div>
           </div>
         </fieldset>
@@ -114,4 +119,4 @@
   //--></script>
 {% endif %}
 
-{{ footer }} 
+{{ footer }}

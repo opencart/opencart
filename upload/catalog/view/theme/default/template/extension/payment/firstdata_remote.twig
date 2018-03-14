@@ -1,8 +1,8 @@
-<form class="form-horizontal" id="payment_form">
+<form id="payment_form">
   <fieldset id="payment">
     <legend>{{ text_credit_card }}</legend>
     {% if not accepted_cards %}
-      <div class="form-group">
+      <div class="form-group row">
         <div class="col-sm-12">
           <p>
             <strong>{{ text_card_accepted }}</strong>
@@ -19,7 +19,7 @@
     {% endif %}
 
     {% if card_storage == 1 and stored_cards|length > 0 %}
-    <div class="form-group">
+    <div class="form-group row">
       <div class="col-sm-12">
        {% set i = 0 %}
        {% for card in stored_cards %}
@@ -33,22 +33,22 @@
     {% endif %}
 
     <div id="card_info" style="display:none;">
-      <div class="form-group required">
-        <label class="col-sm-2 control-label" for="input-cc-name">{{ entry_cc_name }}</label>
+      <div class="form-group row required">
+        <label class="col-sm-2 col-form-label" for="input-cc-name">{{ entry_cc_name }}</label>
 
         <div class="col-sm-10">
           <input type="text" name="cc_name" value="" placeholder="{{ entry_cc_name }}" id="input-cc-name" class="form-control"/>
         </div>
       </div>
-      <div class="form-group required">
-        <label class="col-sm-2 control-label" for="input-cc-number">{{ entry_cc_number }}</label>
+      <div class="form-group row required">
+        <label class="col-sm-2 col-form-label" for="input-cc-number">{{ entry_cc_number }}</label>
 
         <div class="col-sm-10">
           <input type="text" name="cc_number" value="" placeholder="{{ entry_cc_number }}" id="input-cc-number" class="form-control"/>
         </div>
       </div>
-      <div class="form-group required">
-        <label class="col-sm-2 control-label" for="input-cc-expire-date">{{ entry_cc_expire_date }}</label>
+      <div class="form-group row required">
+        <label class="col-sm-2 col-form-label" for="input-cc-expire-date">{{ entry_cc_expire_date }}</label>
 
         <div class="col-sm-3">
           <select name="cc_expire_date_month" id="input-cc-expire-date" class="form-control">
@@ -67,8 +67,8 @@
       </div>
 
       {% if card_storage == 1 %}
-      <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-cc-cvv2">Store card details?</label>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label" for="input-cc-cvv2">Store card details?</label>
 
         <div class="col-sm-10">
           <input type="hidden" name="cc_store" value="0"/> <input type="checkbox" name="cc_store" value="1" checked/>
@@ -77,8 +77,8 @@
       {% endif %}
     </div>
 
-    <div class="form-group required">
-      <label class="col-sm-2 control-label" for="input-cc-cvv2">{{ entry_cc_cvv2 }}</label>
+    <div class="form-group row required">
+      <label class="col-sm-2 col-form-label" for="input-cc-cvv2">{{ entry_cc_cvv2 }}</label>
       <div class="col-sm-10">
         <input type="text" name="cc_cvv2" value="" placeholder="{{ entry_cc_cvv2 }}" id="input-cc-cvv2" class="form-control"/>
       </div>
@@ -86,14 +86,14 @@
   </fieldset>
 </form>
 <div class="buttons">
-  <div class="pull-right">
+  <div class="float-right">
     <input type="button" value="{{ button_confirm }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary"/>
   </div>
 </div>
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function () {
 	$.ajax({
-		url: 'index.php?route=extension/payment/firstdata_remote/send&language=' + getCookie('language'),
+		url: 'index.php?route=extension/payment/firstdata_remote/send',
 		type: 'post',
 		data: $('#payment_form').serialize(),
 		dataType: 'json',

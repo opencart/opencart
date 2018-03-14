@@ -1,25 +1,29 @@
 {% if existing_cards %}
 	<legend>{{ text_credit_card }}</legend>
-	<div class="form-horizontal">
+	<div>
 	  <div id="choose-card" class="form-group">
-		<label class="col-sm-2 control-label">{{ entry_card }}</label>
-		<div class="col-sm-10">
-		  <label class="radio-inline">
-			<input type="radio" name="existing-card" value="1" checked="checked"/>
-			{{ entry_card_existing }}
-		  </label>
-		  <label class="radio-inline">
-			<input type="radio" name="existing-card" value="0"/>
-			{{ entry_card_new }}
-		  </label>
-		</div>
+			<label class="col-sm-2 col-form-label">{{ entry_card }}</label>
+			<div class="col-sm-10">
+				<div class="form-check form-check-inline">
+					<label>
+					<input type="radio" name="existing-card" value="1" class="form-check-input" checked="checked"/>
+					{{ entry_card_existing }}
+				  </label>
+				</div>
+				<div class="form-check form-check-inline">
+					<label>
+					<input type="radio" name="existing-card" value="0" class="form-check-input" />
+					{{ entry_card_new }}
+				  </label>
+				</div>
+			</div>
 	  </div>
 	</div>
-	<form id="payment-existing-form" action="{{ form_submit }}" method="post" class="form-horizontal">
+	<form id="payment-existing-form" action="{{ form_submit }}" method="post">
 	  <fieldset>
 		<div id="card-existing">
-		  <div class="form-group required">
-			<label class="col-sm-2 control-label" for="token">{{ entry_cc_choice }}</label>
+		  <div class="form-group row required">
+			<label class="col-sm-2 col-form-label" for="token">{{ entry_cc_choice }}</label>
 			<div class="col-sm-10">
 			  <select name="token" data-worldpay="token" class="form-control">
 				{% for existing_card in existing_cards %}
@@ -29,12 +33,12 @@
 			</div>
 		  </div>
 		  <div class="buttons clearfix">
-			<div class="pull-right">
+			<div class="float-right">
 			  <input type="button" value="{{ button_delete_card }}" id="button-delete" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
 			</div>
 		  </div>
-		  <div class="form-group required">
-			<label class="col-sm-2 control-label" for="input-cc-cvc">{{ entry_cc_cvc }}</label>
+		  <div class="form-group row required">
+			<label class="col-sm-2 col-form-label" for="input-cc-cvc">{{ entry_cc_cvc }}</label>
 			<div class="col-sm-10">
 			  <input type="text" data-worldpay="cvc" value="" size="4" placeholder="{{ entry_cc_cvc }}" id="input-cc-cvc" class="form-control" />
 			</div>
@@ -42,22 +46,22 @@
 		</div>
 	  </fieldset>
 	  <div class="buttons">
-		<div class="pull-right">
+		<div class="float-right">
 		  <input type="submit" value="{{ button_confirm }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
 		</div>
 	  </div>
 	</form>
-	<form style="display: none" id="payment-new-form" action="{{ form_submit }}" method="post" class="form-horizontal">
+	<form style="display: none" id="payment-new-form" action="{{ form_submit }}" method="post">
   {% else %}
-	  <form id="payment-new-form" action="{{ form_submit }}" method="post" class="form-horizontal">
+	  <form id="payment-new-form" action="{{ form_submit }}" method="post">
 	{% endif %}
 	<fieldset>
-	  <div class="form-group">
+	  <div class="form-group row">
 		<div class="col-sm-11" id='paymentDetailsHere' style="margin-left: 3%"></div>
 	  </div>
 	  {% if worldpay_card %}
-		  <div class="form-group">
-			<label class="col-sm-2 control-label" for="input-cc-save">{{ entry_card_save }}</label>
+		  <div class="form-group row">
+			<label class="col-sm-2 col-form-label" for="input-cc-save">{{ entry_card_save }}</label>
 			<div class="col-sm-2">
 			  <input type="checkbox" name="save-card" value=true id="input-cc-save"/>
 			</div>
@@ -66,7 +70,7 @@
 	  </div>
 	</fieldset>
 	<div class="buttons">
-	  <div class="pull-right">
+	  <div class="float-right">
 		<input type="submit" value="{{ button_confirm }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
 	  </div>
 	</div>
@@ -132,7 +136,7 @@
 
         if (confirm('{{ text_confirm_delete }}\n' + token.text())) {
           $.ajax({
-            url: 'index.php?route=extension/payment/worldpay/deleteCard&language=' + getCookie('language'),
+            url: 'index.php?route=extension/payment/worldpay/deleteCard',
             type: 'post',
             data: {token: token.val()},
             dataType: 'json',

@@ -100,6 +100,7 @@ a:hover, a:focus {
 #header .navbar-brand {
     margin-left: 8px;
     border-right: 1px solid #eee;
+    padding: 13px 15px;
 }
 
 #header .navbar-nav > li {
@@ -728,7 +729,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 }
 
 #extension-list > .row {
-    margin-top: 40px;
+    margin-top: 30px;
 }
 
 #extension-list > .row > * {
@@ -737,6 +738,10 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 
 #extension-list .extension-preview {
     min-height: 150px;
+}
+
+#extension-list .extension-preview img {
+    margin: 0 auto;
 }
 
 #extension-list .extension-preview .extension-description {
@@ -983,4 +988,10 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 
 .opencart-icon-cart-mini:before {
     content: "\e91c";
+}
+
+.btn-ghost-dark {
+  border: 1px solid #000;
+  background-color: transparent;
+  color: #000;
 }

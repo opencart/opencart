@@ -231,7 +231,7 @@ $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberati
 $font-family-base:            $font-family-sans-serif !default;
 // stylelint-enable value-keyword-case
 
-$font-size-base:              1rem !default; // Assumes the browser default, typically `16px`
+$font-size-base:              0.8rem !default; // Assumes the browser default, typically `16px`
 $font-size-lg:                ($font-size-base * 1.25) !default;
 $font-size-sm:                ($font-size-base * .875) !default;
 

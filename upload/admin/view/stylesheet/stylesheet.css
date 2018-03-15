@@ -22,8 +22,9 @@ label {
 }
 
 legend {
-  border-bottom: 2px solid #ddd;
+  border-bottom: 3px solid #ddd;
   margin-bottom: 20px;
+  padding-bottom: 5px;
 }
 
 .page-header {
@@ -120,6 +121,11 @@ a:hover, a:focus {
 #header .nav > li.dropdown > a {
     padding-left: 10px;
     padding-right: 10px;
+}
+
+#header .nav-link:last-child {
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
 
 #button-menu {

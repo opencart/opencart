@@ -42,7 +42,7 @@ $(document).ready(function() {
 
 	// Makes tooltips work on ajax generated content
 	$(document).ajaxStop(function() {
-		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
+		//	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 	});
 
 	$('.date button, .time button, .datetime button').on('click', function() {
@@ -72,7 +72,7 @@ $(document).ready(function() {
 
 	$('#button-menu').on('click', function(e) {
 		e.preventDefault();
-		
+
 		$('#column-left').toggleClass('active');
 	});
 
@@ -87,13 +87,13 @@ $(document).ready(function() {
 		// Sets active and open to selected page in the left column menu.
 		$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parent().addClass('active');
 	}
-	
+
 	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li > a').removeClass('collapsed');
-	
+
 	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('ul').addClass('in');
-	
+
 	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li').addClass('active');
-	
+
 	// Image Manager
 	$(document).on('click', 'a[data-toggle=\'image\']', function(e) {
 		var $element = $(this);
@@ -122,7 +122,7 @@ $(document).ready(function() {
 
 		$('#button-image').on('click', function() {
 			var $button = $(this);
-			var $icon   = $button.find('> i');
+			var $icon = $button.find('> i');
 
 			$('#modal-image').remove();
 
@@ -210,7 +210,7 @@ $(document).ready(function() {
 
 			// Keydown
 			$this.on('keydown', function(event) {
-				switch(event.keyCode) {
+				switch (event.keyCode) {
 					case 27: // escape
 						this.hide();
 						break;
@@ -224,7 +224,7 @@ $(document).ready(function() {
 			this.click = function(event) {
 				event.preventDefault();
 
-				var value = $(event.target).parent().attr('data-value');
+				var value = $(event.target).attr('href');
 
 				if (value && this.items[value]) {
 					this.select(this.items[value]);
@@ -271,10 +271,11 @@ $(document).ready(function() {
 
 						if (!json[i]['category']) {
 							// ungrouped items
-							html += '<li data-value="' + json[i]['value'] + '"><a href="#">' + json[i]['label'] + '</a></li>';
+							html += '<a href="' + json[i]['value'] + '" class="dropdown-item">' + json[i]['label'] + '</a></li>';
 						} else {
 							// grouped items
 							name = json[i]['category'];
+
 							if (!category[name]) {
 								category[name] = [];
 							}
@@ -284,10 +285,10 @@ $(document).ready(function() {
 					}
 
 					for (name in category) {
-						html += '<li class="dropdown-header">' + name + '</li>';
+						html += '<h6 class="dropdown-header">' + name + '</h6>';
 
 						for (j = 0; j < category[name].length; j++) {
-							html += '<li data-value="' + category[name][j]['value'] + '"><a href="#">&nbsp;&nbsp;&nbsp;' + category[name][j]['label'] + '</a></li>';
+							html += '<a href="' + category[name][j]['value'] + '" class="dropdown-item">&nbsp;&nbsp;&nbsp;' + category[name][j]['label'] + '</a>';
 						}
 					}
 				}
@@ -301,7 +302,7 @@ $(document).ready(function() {
 				$dropdown.html(html);
 			}
 
-			$dropdown.on('click', '> li > a', $.proxy(this.click, this));
+			$dropdown.on('click', '> a', $.proxy(this.click, this));
 			$this.after($dropdown);
 		});
 	}

@@ -685,9 +685,9 @@
 
                           {% for language in languages %}
                             <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span>
-                            </div>
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span>
+                              </div>
 
                               <input type="text" name="product_seo_url[{{ store.store_id }}][{{ language.language_id }}]" value="{% if product_seo_url[store.store_id][language.language_id] %}{{ product_seo_url[store.store_id][language.language_id] }}{% endif %}" placeholder="{{ entry_keyword }}" class="form-control"/>
                             </div>
@@ -1006,13 +1006,11 @@ var recurring_row = {{ recurring_row }};
 
 function addRecurring() {
 	html = '<tr id="recurring-row' + recurring_row + '">';
-	html += '  <td class="text-left">';
-	html += '    <select name="product_recurring[' + recurring_row + '][recurring_id]" class="form-control">';
+	html += '  <td class="text-left"><select name="product_recurring[' + recurring_row + '][recurring_id]" class="form-control">';
   {% for recurring in recurrings %}
 	html += '      <option value="{{ recurring.recurring_id }}">{{ recurring.name|escape('js') }}</option>';
   {% endfor %}
-	html += '    </select>';
-	html += '  </td>';
+	html += '    </select></td>';
 	html += '  <td class="text-left">';
 	html += '    <select name="product_recurring[' + recurring_row + '][customer_group_id]" class="form-control">>';
   {% for customer_group in customer_groups %}
@@ -1020,7 +1018,7 @@ function addRecurring() {
   {% endfor %}
 	html += '    <select>';
 	html += '  </td>';
-	html += '  <td class="text-left"><a onclick="$(\'#recurring-row' + recurring_row + '\').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#recurring-row' + recurring_row + '\').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 
 	$('#tab-recurring table tbody').append(html);

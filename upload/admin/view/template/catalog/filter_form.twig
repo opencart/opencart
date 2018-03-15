@@ -29,7 +29,11 @@
             <div class="form-group row required">
               <label class="col-sm-2 col-form-label">{{ entry_group }}</label>
               <div class="col-sm-10"> {% for language in languages %}
-                  <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span> <input type="text" name="filter_group_description[{{ language.language_id }}][name]" value="{{ filter_group_description[language.language_id] ? filter_group_description[language.language_id].name }}" placeholder="{{ entry_group }}" class="form-control"/>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span>
+                    </div>
+                    <input type="text" name="filter_group_description[{{ language.language_id }}][name]" value="{{ filter_group_description[language.language_id] ? filter_group_description[language.language_id].name }}" placeholder="{{ entry_group }}" class="form-control"/>
                   </div>
                   {% if error_group[language.language_id] %}
                     <div class="invalid-tooltip">{{ error_group[language.language_id] }}</div>
@@ -59,7 +63,11 @@
                   <tr id="filter-row{{ filter_row }}">
                     <td class="text-left" style="width: 70%;"><input type="hidden" name="filter[{{ filter_row }}][filter_id]" value="{{ filter.filter_id }}"/>
                       {% for language in languages %}
-                        <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span> <input type="text" name="filter[{{ filter_row }}][filter_description][{{ language.language_id }}][name]" value="{{ filter.filter_description[language.language_id] ? filter.filter_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control"/>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span>
+                          </div>
+                          <input type="text" name="filter[{{ filter_row }}][filter_description][{{ language.language_id }}][name]" value="{{ filter.filter_description[language.language_id] ? filter.filter_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control"/>
                         </div>
                         {% if error_filter[filter_row][language.language_id] %}
                           <div class="invalid-tooltip">{{ error_filter[filter_row][language.language_id] }}</div>
@@ -89,10 +97,13 @@ var filter_row = {{ filter_row }};
 
 function addFilterRow() {
 	html = '<tr id="filter-row' + filter_row + '">';
-	html += '  <td class="text-left" style="width: 70%;"><input type="hidden" name="filter[' + filter_row + '][filter_id]" value="" />';
+	html += '  <td class="text-left" style="width: 70%;"><input type="hidden" name="filter[' + filter_row + '][filter_id]" value=""/>';
   {% for language in languages %}
 	html += '  <div class="input-group">';
-	html += '    <span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span><input type="text" name="filter[' + filter_row + '][filter_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_name }}" class="form-control" />';
+	html += '    <div class="input-group-prepend">';
+	html += '      <span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>';
+	html += '    </div>';
+	html += '    <input type="text" name="filter[' + filter_row + '][filter_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_name }}" class="form-control" />';
 	html += '  </div>';
   {% endfor %}
 	html += '  </td>';

@@ -67,7 +67,7 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                   <label class="col-sm-2 col-form-label"> <span data-toggle=" tooltip" title="{{ text_payment_method_name_help }}">{{ text_payment_method_name_label }}</span> </label>
                   <div class="col-sm-10">
                     {% for language in languages %}
@@ -77,7 +77,7 @@
                     {% endfor %}
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for=" input_payment_squareup_redirect_uri_static"> <span data-toggle="tooltip" title="{{ text_redirect_uri_help }}">{{ text_redirect_uri_label }}</span> </label>
                   <div class="col-sm-10">
                     <input type="text" id="input_payment_squareup_redirect_uri_static" name="payment_squareup_redirect_uri_static" value="{{ payment_squareup_redirect_uri }}" class="form-control" disabled/>
@@ -101,7 +101,7 @@
                     {% endif %}
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for=" dropdown_payment_squareup_delay_capture"><span data-toggle="tooltip" title="{{ text_delay_capture_help }}">{{ text_delay_capture_label }}</span></label>
                   <div class="col-sm-10">
                     <select name="payment_squareup_delay_capture" id="dropdown_payment_squareup_delay_capture" class="form-control">
@@ -110,14 +110,14 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for=" input_payment_squareup_total">{{ entry_total }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="payment_squareup_total" value="{{ payment_squareup_total }}" placeholder="{{ entry_total }}" id="payment_squareup_total" class="form-control"/>
                     <small class="form-text text-muted">{{ help_total }}</small>
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for=" input-geo-zone">{{ entry_geo_zone }}</label>
                   <div class="col-sm-10">
                     <select name="payment_squareup_geo_zone_id" id="input-geo-zone" class="form-control">
@@ -128,7 +128,7 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for=" input_payment_squareup_sort_order">
                   {{ entry_sort_order }}
                   </label>
@@ -136,7 +136,7 @@
                     <input type="text" name="payment_squareup_sort_order" value="{{ payment_squareup_sort_order }}" placeholder="{{ entry_sort_order }}" id="input_payment_squareup_sort_order" class="form-control"/>
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for=" dropdown_payment_squareup_debug"><span data-toggle="tooltip" title="{{ text_debug_help }}">{{ text_debug_label }}</span></label>
                   <div class="col-sm-10">
                     <select name="payment_squareup_debug" id="dropdown_payment_squareup_debug" class="form-control">
@@ -145,7 +145,7 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for=" dropdown_payment_squareup_enable_sandbox"><span data-toggle="tooltip" title="{{ text_enable_sandbox_help }}">{{ text_enable_sandbox_label }}</span></label>
                   <div class="col-sm-10">
                     <select name="payment_squareup_enable_sandbox" id="dropdown_payment_squareup_enable_sandbox" class="form-control">
@@ -178,7 +178,7 @@
               </fieldset>
               <fieldset>
                 <legend>{{ text_merchant_info_section_heading }}</legend>
-                <div class="form-group">
+                <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for=" input_merchant_name">
                   {{ text_merchant_name_label }}
                   </label>
@@ -186,7 +186,7 @@
                     <input type="text" name="merchant_name" value="{{ payment_squareup_merchant_name }}" placeholder="{{ text_merchant_name_placeholder }}" id="input_merchant_name" class="form-control" disabled/>
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for=" access_token_expires_time">
                   {{ text_access_token_expires_label }}
                   </label>
@@ -214,7 +214,7 @@
               </fieldset>
               <fieldset>
                 <legend>{{ text_transaction_statuses }}</legend>
-                <div class="form-group">
+                <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="dropdown_payment_squareup_status_authorized"><span data-toggle="tooltip" title="{{ payment_squareup_status_comment_authorized }}">{{ entry_status_authorized }}</span></label>
                   <div class="col-sm-10">
                     <select name="payment_squareup_status_authorized" id="dropdown_payment_squareup_status_authorized" class="form-control">
@@ -224,7 +224,7 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="dropdown_payment_squareup_status_captured"><span data-toggle="tooltip" title="{{ payment_squareup_status_comment_captured }}">{{ entry_status_captured }}</span></label>
                   <div class="col-sm-10">
                     <select name="payment_squareup_status_captured" id="dropdown_payment_squareup_status_captured" class="form-control">
@@ -234,7 +234,7 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="dropdown_payment_squareup_status_voided"><span data-toggle="tooltip" title="{{ payment_squareup_status_comment_voided }}">{{ entry_status_voided }}</span></label>
                   <div class="col-sm-10">
                     <select name="payment_squareup_status_voided" id="dropdown_payment_squareup_status_voided" class="form-control">
@@ -244,7 +244,7 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="dropdown_payment_squareup_status_failed"><span data-toggle="tooltip" title="{{ payment_squareup_status_comment_failed }}">{{ entry_status_failed }}</span></label>
                   <div class="col-sm-10">
                     <select name="payment_squareup_status_failed" id="dropdown_payment_squareup_status_failed" class="form-control">
@@ -285,14 +285,14 @@
               <fieldset>
                 <legend>{{ text_executables }}</legend>
                 <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_recurring_info }}</div>
-                <div class="form-group">
+                <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ text_local_cron }}</label>
                   <div class="col-sm-10">
                     <input disabled type="text" class="form-control" value="{{ payment_squareup_cron_command }}"/>
                     <small class="form-text text-muted">{{ help_local_cron }}</small>
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ text_remote_cron }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
@@ -319,7 +319,7 @@
               </fieldset>
               <fieldset>
                 <legend>{{ text_admin_notifications }}</legend>
-                <div class="form-group">
+                <div class="form-group row">
                   <label class="col-form-label col-sm-2" for="dropdown_payment_squareup_cron_email_status">{{ text_cron_email_status }}</label>
                   <div class="col-sm-10">
                     <select id="dropdown_payment_squareup_cron_email_status" name="payment_squareup_cron_email_status" class="form-control">
@@ -342,7 +342,7 @@
               </fieldset>
             </div>
             <div class="tab-pane" id="tab-recurring">
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-form-label col-sm-2" for="dropdown_payment_squareup_recurring_status">{{ text_recurring_status }}</label>
                 <div class="col-sm-10">
                   <select id="dropdown_payment_squareup_recurring_status" name="payment_squareup_recurring_status" class="form-control">
@@ -354,7 +354,7 @@
               </div>
               <fieldset>
                 <legend>{{ text_customer_notifications }}</legend>
-                <div class="form-group">
+                <div class="form-group row">
                   <label class="col-form-label col-sm-2" for="dropdown_payment_squareup_notify_recurring_success">{{ text_notify_recurring_success }}</label>
                   <div class="col-sm-10">
                     <select id="dropdown_payment_squareup_notify_recurring_success" name="payment_squareup_notify_recurring_success" class="form-control">
@@ -364,7 +364,7 @@
                     <small class="form-text text-muted">{{ help_notify_recurring_success }}</small>
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                   <label class="col-form-label col-sm-2" for="dropdown_payment_squareup_notify_recurring_fail">{{ text_notify_recurring_fail }}</label>
                   <div class="col-sm-10">
                     <select id="dropdown_payment_squareup_notify_recurring_fail" name="payment_squareup_notify_recurring_fail" class="form-control">

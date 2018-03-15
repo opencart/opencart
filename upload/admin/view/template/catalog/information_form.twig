@@ -37,7 +37,8 @@
                   <li class="nav-item"><a href="#language{{ language.language_id }}" data-toggle="tab" class="nav-link"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/> {{ language.name }}</a></li>
                 {% endfor %}
               </ul>
-              <div class="tab-content">{% for language in languages %}
+              <div class="tab-content">
+                {% for language in languages %}
                   <div class="tab-pane" id="language{{ language.language_id }}">
                     <div class="form-group row required">
                       <label class="col-sm-2 col-form-label" for="input-title{{ language.language_id }}">{{ entry_title }}</label>
@@ -150,8 +151,13 @@
                     {% for store in stores %}
                       <tr>
                         <td class="text-left">{{ store.name }}</td>
-                        <td class="text-left">{% for language in languages %}
-                            <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span> <input type="text" name="information_seo_url[{{ store.store_id }}][{{ language.language_id }}]" value="{% if information_seo_url[store.store_id][language.language_id] %}{{ information_seo_url[store.store_id][language.language_id] }}{% endif %}" placeholder="{{ entry_keyword }}" class="form-control"/>
+                        <td class="text-left">
+                          {% for language in languages %}
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span>
+                              </div>
+                              <input type="text" name="information_seo_url[{{ store.store_id }}][{{ language.language_id }}]" value="{% if information_seo_url[store.store_id][language.language_id] %}{{ information_seo_url[store.store_id][language.language_id] }}{% endif %}" placeholder="{{ entry_keyword }}" class="form-control"/>
                             </div>
                             {% if error_keyword[store.store_id][language.language_id] %}
                               <div class="invalid-tooltip">{{ error_keyword[store.store_id][language.language_id] }}</div>

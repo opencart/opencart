@@ -20,7 +20,7 @@
         <div id="collapse-customer" class="panel-collapse collapse in">
           <div class="card-body">
             <form>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-store">{{ entry_store }}</label>
                 <div class="col-sm-10">
                   <select name="store_id" id="input-store" class="form-control">
@@ -34,7 +34,7 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-currency">{{ entry_currency }}</label>
                 <div class="col-sm-10">
                   <select name="currency" id="input-currency" class="form-control">
@@ -48,13 +48,13 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-customer">{{ entry_customer }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/> <input type="hidden" name="customer_id" value="{{ customer_id }}"/>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-customer-group">{{ entry_customer_group }}</label>
                 <div class="col-sm-10">
                   <select name="customer_group_id" id="input-customer-group" class="form-control">
@@ -303,13 +303,13 @@
                 <div class="tab-pane active" id="tab-product">
                   <fieldset>
                     <legend>{{ text_product }}</legend>
-                    <div class="form-group">
+                    <div class="form-group row">
                       <label class="col-sm-2 col-form-label" for="input-product">{{ entry_product }}</label>
                       <div class="col-sm-10">
                         <input type="text" name="product" value="" id="input-product" class="form-control"/> <input type="hidden" name="product_id" value=""/>
                       </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group row">
                       <label class="col-sm-2 col-form-label" for="input-quantity">{{ entry_quantity }}</label>
                       <div class="col-sm-10">
                         <input type="text" name="quantity" value="1" id="input-quantity" class="form-control"/>
@@ -358,7 +358,7 @@
                         </select>
                       </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group row">
                       <label class="col-sm-2 col-form-label" for="input-message">{{ entry_message }}</label>
                       <div class="col-sm-10">
                         <textarea name="message" rows="5" id="input-message" class="form-control"></textarea>
@@ -394,7 +394,7 @@
         <div id="collapse-payment" data-parent="#collapse" class="panel-collapse collapse">
           <div class="card-body">
             <form>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-payment-address">{{ entry_address }}</label>
                 <div class="col-sm-10">
                   <select name="payment_address" id="input-payment-address" class="form-control">
@@ -417,7 +417,7 @@
                   <input type="text" name="lastname" value="{{ payment_lastname }}" id="input-payment-lastname" class="form-control"/>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-payment-company">{{ entry_company }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="company" value="{{ payment_company }}" id="input-payment-company" class="form-control"/>
@@ -429,7 +429,7 @@
                   <input type="text" name="address_1" value="{{ payment_address_1 }}" id="input-payment-address-1" class="form-control"/>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-payment-address-2">{{ entry_address_2 }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="address_2" value="{{ payment_address_2 }}" id="input-payment-address-2" class="form-control"/>
@@ -612,7 +612,7 @@
         <div id="collapse-shipping" data-parent="#collapse" class="panel-collapse collapse">
           <div class="card-body">
             <form>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-shipping-address">{{ entry_address }}</label>
                 <div class="col-sm-10">
                   <select name="shipping_address" id="input-shipping-address" class="form-control">
@@ -635,7 +635,7 @@
                   <input type="text" name="lastname" value="{{ shipping_lastname }}" id="input-shipping-lastname" class="form-control"/>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-shipping-company">{{ entry_company }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="company" value="{{ shipping_company }}" id="input-shipping-company" class="form-control"/>
@@ -647,7 +647,7 @@
                   <input type="text" name="address_1" value="{{ shipping_address_1 }}" id="input-shipping-address-1" class="form-control"/>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-shipping-address-2">{{ entry_address_2 }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="address_2" value="{{ shipping_address_2 }}" id="input-shipping-address-2" class="form-control"/>
@@ -881,7 +881,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-coupon">{{ entry_coupon }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
@@ -892,7 +892,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-voucher">{{ entry_voucher }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
@@ -903,7 +903,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-reward">{{ entry_reward }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
@@ -914,7 +914,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-order-status">{{ entry_order_status }}</label>
                   <div class="col-sm-10">
                     <select name="order_status_id" id="input-order-status" class="form-control">
@@ -928,13 +928,13 @@
                     </select> <input type="hidden" name="order_id" value="{{ order_id }}"/>
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-comment">{{ entry_comment }}</label>
                   <div class="col-sm-10">
                     <textarea name="comment" rows="5" id="input-comment" class="form-control">{{ comment }}</textarea>
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-affiliate">{{ entry_affiliate }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="affiliate" value="{{ affiliate }}" id="input-affiliate" class="form-control"/> <input type="hidden" name="affiliate_id" value="{{ affiliate_id }}"/>

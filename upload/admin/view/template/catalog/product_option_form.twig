@@ -56,7 +56,6 @@
           <fieldset>
             <legend>{{ text_option_value }}</legend>
             <div id="product-option-value">
-
               {% if type == 'text' %}
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value }}</label>
@@ -65,7 +64,6 @@
                   </div>
                 </div>
               {% endif %}
-
               {% if type == 'textarea' %}
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value }}</label>
@@ -74,7 +72,6 @@
                   </div>
                 </div>
               {% endif %}
-
               {% if type == 'file' %}
                 <div class="form-group row" style="display: none;">
                   <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value }}</label>
@@ -83,7 +80,6 @@
                   </div>
                 </div>
               {% endif %}
-
               {% if type == 'date' %}
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value }}</label>
@@ -97,7 +93,6 @@
                   </div>
                 </div>
               {% endif %}
-
               {% if type == 'time' %}
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value }}</label>
@@ -111,7 +106,6 @@
                   </div>
                 </div>
               {% endif %}
-
               {% if type == 'datetime' %}
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value }}</label>
@@ -125,7 +119,6 @@
                   </div>
                 </div>
               {% endif %}
-
               {% set option_value_row = 0 %}
               {% if type == 'select' or type == 'radio' or type == 'checkbox' or type == 'image' %}
                 <div class="table-responsive">
@@ -142,7 +135,6 @@
                       </tr>
                     </thead>
                     <tbody>
-
                       {% for product_option_value in product_option_values %}
                         <tr id="option-value-row{{ option_value_row }}">
                           <td class="text-left"><select name="product_option_value[{{ option_value_row }}][option_value_id]" class="form-control">
@@ -164,7 +156,6 @@
                                 <option value="0" selected="selected">{{ text_no }}</option>
                               {% endif %}
                             </select></td>
-
                           <td class="text-right"><select name="product_option_value[{{ option_value_row }}][price_prefix]" class="form-control">
                               {% if product_option_value.price_prefix == '+' %}
                                 <option value="+" selected="selected">+</option>

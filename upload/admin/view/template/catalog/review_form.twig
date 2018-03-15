@@ -52,37 +52,42 @@
           <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="input-name">{{ entry_rating }}</label>
             <div class="col-sm-10">
-              <label class="radio-inline"> {% if rating == 1 %}
+              <label class="radio-inline">
+                {% if rating == 1 %}
                   <input type="radio" name="rating" value="1" checked="checked"/>
                   1
                 {% else %}
                   <input type="radio" name="rating" value="1"/>
                   1
-                {% endif %} </label> <label class="radio-inline"> {% if rating == 2 %}
+                {% endif %}</label> <label class="radio-inline">
+                {% if rating == 2 %}
                   <input type="radio" name="rating" value="2" checked="checked"/>
                   2
                 {% else %}
                   <input type="radio" name="rating" value="2"/>
                   2
-                {% endif %} </label> <label class="radio-inline"> {% if rating == 3 %}
+                {% endif %}</label> <label class="radio-inline">
+                {% if rating == 3 %}
                   <input type="radio" name="rating" value="3" checked="checked"/>
                   3
                 {% else %}
                   <input type="radio" name="rating" value="3"/>
                   3
-                {% endif %} </label> <label class="radio-inline"> {% if rating == 4 %}
+                {% endif %}</label> <label class="radio-inline">
+                {% if rating == 4 %}
                   <input type="radio" name="rating" value="4" checked="checked"/>
                   4
                 {% else %}
                   <input type="radio" name="rating" value="4"/>
                   4
-                {% endif %} </label> <label class="radio-inline"> {% if rating == 5 %}
+                {% endif %}</label> <label class="radio-inline">
+                {% if rating == 5 %}
                   <input type="radio" name="rating" value="5" checked="checked"/>
                   5
                 {% else %}
                   <input type="radio" name="rating" value="5"/>
                   5
-                {% endif %} </label>
+                {% endif %}</label>
               {% if error_rating %}
                 <div class="invalid-tooltip">{{ error_rating }}</div>
               {% endif %}</div>

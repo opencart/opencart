@@ -37,19 +37,19 @@ $(document).ready(function() {
 		}
 	});
 
-	// tooltips on hover
-	$('[data-toggle=\'tooltip\']').tooltip({container: 'body', html: true});
-
-	// Makes tooltips work on ajax generated content
-	$(document).ajaxStop(function() {
-		//	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
-	});
-
 	$('.date button, .time button, .datetime button').on('click', function() {
 		$(this).parent().parent().datetimepicker('toggle');
 	});
 
 	$('.invalid-tooltip').show();
+
+	// tooltips on hover
+	$('[data-toggle=\'tooltip\']').tooltip({container: 'body', html: true});
+
+	// Makes tooltips work on ajax generated content
+	$(document).ajaxStop(function() {
+		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
+	});
 
 	// tooltip remove
 	$('[data-toggle=\'tooltip\']').on('remove', function() {
@@ -90,7 +90,7 @@ $(document).ready(function() {
 
 	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li > a').removeClass('collapsed');
 
-	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('ul').addClass('in');
+	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('ul').addClass('show');
 
 	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li').addClass('active');
 

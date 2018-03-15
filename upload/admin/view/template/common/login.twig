@@ -30,14 +30,14 @@
               </div>
               <div class="form-group">
                 <label class="col-form-label" for="input-password">{{ entry_password }}</label>
-                <div class="input-group">
+                <div class="input-group mb-2">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-lock"></i></span>
                   </div>
                   <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control"/>
                 </div>
                 {% if forgotten %}
-                  <span class="help-block"><a href="{{ forgotten }}">{{ text_forgotten }}</a></span>
+                  <div class="form-text"><a href="{{ forgotten }}">{{ text_forgotten }}</a></div>
                 {% endif %}
               </div>
               <div class="text-right">

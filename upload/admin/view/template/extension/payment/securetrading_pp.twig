@@ -81,12 +81,16 @@
           <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="securetrading_pp_webservice_username">{{ entry_username }}</label>
             <div class="col-sm-10">
-              <input type="text" name="payment_securetrading_pp_webservice_username" value="{{ payment_securetrading_pp_webservice_username }}" placeholder="{{ entry_username }}" id="securetrading_pp_webservice_username" class="form-control"/> <span class="help-block">{{ help_username }}</span></div>
+              <input type="text" name="payment_securetrading_pp_webservice_username" value="{{ payment_securetrading_pp_webservice_username }}" placeholder="{{ entry_username }}" id="securetrading_pp_webservice_username" class="form-control"/>
+              <small class="form-text text-muted">{{ help_username }}</small>
+            </div>
           </div>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="securetrading_pp_webservice_password">{{ entry_password }}</label>
             <div class="col-sm-10">
-              <input type="text" name="payment_securetrading_pp_webservice_password" value="{{ payment_securetrading_pp_webservice_password }}" placeholder="{{ entry_password }}" id="securetrading_pp_webservice_username" class="form-control"/> <span class="help-block">{{ help_password }}</span></div>
+              <input type="text" name="payment_securetrading_pp_webservice_password" value="{{ payment_securetrading_pp_webservice_password }}" placeholder="{{ entry_password }}" id="securetrading_pp_webservice_username" class="form-control"/>
+              <small class="form-text text-muted">{{ help_password }}</small>
+            </div>
           </div>
           <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="securetrading_pp_cards_accepted">{{ entry_cards_accepted }}</label>
@@ -99,7 +103,8 @@
                     {% else %}
                       <input type="checkbox" name="payment_securetrading_pp_cards_accepted[]" value="{{ key }}"/>
                     {% endif %}
-                    {{ value }} </label>
+                    {{ value }}
+                  </label>
                 </div>
               {% endfor %}
               {% if error_cards_accepted %}
@@ -143,7 +148,9 @@
           <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="securetrading_pp_total">{{ entry_total }}</label>
             <div class="col-sm-10">
-              <input type="text" name="payment_securetrading_pp_total" value="{{ payment_securetrading_pp_total }}" placeholder="{{ entry_total }}" id="securetrading_pp_total" class="form-control"/> <span class="help-block">{{ help_total }}</span></div>
+              <input type="text" name="payment_securetrading_pp_total" value="{{ payment_securetrading_pp_total }}" placeholder="{{ entry_total }}" id="securetrading_pp_total" class="form-control"/>
+              <small class="form-text text-muted">{{ help_total }}</small>
+            </div>
           </div>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="securetrading_pp_order_status_id">{{ entry_order_status }}</label>

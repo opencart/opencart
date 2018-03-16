@@ -36,26 +36,16 @@
             <label class="col-sm-2 col-form-label" for="input-account">{{ entry_account }}</label>
             <div class="col-sm-10">
               <select name="payment_nochex_account" id="input-account" class="form-control">
-
                 {% if payment_nochex_account == 'seller' %}
-
                   <option value="seller" selected="selected">{{ text_seller }}</option>
-
                 {% else %}
-
                   <option value="seller">{{ text_seller }}</option>
-
                 {% endif %}
                 {% if payment_nochex_account == 'merchant' %}
-
                   <option value="merchant" selected="selected">{{ text_merchant }}</option>
-
                 {% else %}
-
                   <option value="merchant">{{ text_merchant }}</option>
-
                 {% endif %}
-
               </select>
             </div>
           </div>

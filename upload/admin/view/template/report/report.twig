@@ -17,19 +17,23 @@
   </div>
   <div class="container-fluid">
     <div class="card mb-3">
-      <div class="card-header"><i class="fa fa-bar-chart"></i> {{ text_type }}</div>
+      <div class="card-header"><i class="fa fa-bar-chart"></i>{{ text_type }}</div>
       <div class="card-body">
-        <div class="input-group">
-          <select name="report" onchange="location = this.value;" class="form-control">
-            {% for report in reports %}
-              {% if code == report.code %}
-                <option value="{{ report.href }}" selected="selected">{{ report.text }}</option>
-              {% else %}
-                <option value="{{ report.href }}">{{ report.text }}</option>
-              {% endif %}
-            {% endfor %}
-          </select>
-          <div class="input-group-append"><span class="input-group-text"><i class="fa fa-filter"></i> {{ text_filter }}</span></div>
+        <div class="card">
+          <div class="card-body bg-light">
+            <div class="input-group">
+              <select name="report" onchange="location = this.value;" class="form-control">
+                {% for report in reports %}
+                  {% if code == report.code %}
+                    <option value="{{ report.href }}" selected="selected">{{ report.text }}</option>
+                  {% else %}
+                    <option value="{{ report.href }}">{{ report.text }}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+              <div class="input-group-append"><span class="input-group-text"><i class="fa fa-filter"></i>&nbsp;{{ text_filter }}</span></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

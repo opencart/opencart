@@ -1,12 +1,12 @@
 <div class="card mb-3">
   <div class="card-header">
     <div class="float-right"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-calendar"></i> <i class="caret"></i></a>
-      <ul id="range" class="dropdown-menu dropdown-menu-right">
-        <li><a href="day">{{ text_day }}</a></li>
-        <li><a href="week">{{ text_week }}</a></li>
-        <li class="active"><a href="month">{{ text_month }}</a></li>
-        <li><a href="year">{{ text_year }}</a></li>
-      </ul>
+      <div id="range" class="dropdown-menu dropdown-menu-right">
+        <a href="day" class="dropdown-item">{{ text_day }}</a>
+        <a href="week" class="dropdown-item">{{ text_week }}</a>
+        <a href="month" class="dropdown-item active">{{ text_month }}</a>
+        <a href="year" class="dropdown-item">{{ text_year }}</a>
+      </div>
     </div>
     <i class="fa fa-bar-chart-o"></i> {{ heading_title }}
   </div>
@@ -20,9 +20,9 @@
 $('#range a').on('click', function(e) {
 	e.preventDefault();
 
-	$(this).parent().parent().find('li').removeClass('active');
+	$(this).parent().find('a').removeClass('active');
 
-	$(this).parent().addClass('active');
+	$(this).addClass('active');
 
 	$.ajax({
 		type: 'get',
@@ -81,5 +81,5 @@ $('#range a').on('click', function(e) {
 	});
 });
 
-$('#range .active a').trigger('click');
+$('#range a.active').trigger('click');
 //--></script>

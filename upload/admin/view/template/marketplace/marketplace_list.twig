@@ -21,10 +21,8 @@
     <div class="card">
       <div class="card-header"><i class="fa fa-puzzle-piece"></i> {{ text_list }}</div>
       <div class="card-body">
-
         <div class="card bg-light">
           <div class="card-body">
-
             <div id="extension-filter" class="input-group">
               <input type="text" name="filter_search" value="{{ filter_search }}" placeholder="{{ text_search }}" class="form-control"/>
               <div class="input-group-append dropdown">
@@ -42,24 +40,20 @@
               <div class="input-group-append">
                 <button type="button" id="button-filter" class="btn btn-primary"><i class="fa fa-filter"></i></button>
               </div>
-
             </div>
             <input type="hidden" name="filter_category_id" value="{{ filter_category_id }}" class="form-control"/> <input type="hidden" name="filter_download_id" value="{{ filter_download_id }}" class="form-control"/> <input type="hidden" name="filter_rating" value="{{ filter_rating }}" class="form-control"/> <input type="hidden" name="filter_license" value="{{ filter_license }}" class="form-control"/> <input type="hidden" name="filter_partner" value="{{ filter_partner }}" class="form-control"/> <input type="hidden" name="sort" value="{{ sort }}" class="form-control"/>
           </div>
-
         </div>
         <br>
-        <div class="row">
+        <div class="row mb-4">
           <div class="col-sm-9 col-xs-7">
             <div class="btn-group">{% for license in licenses %}
                 {% if license.value == filter_license %}<a href="{{ license.href }}" class="btn btn-light active">{{ license.text }}</a>{% else %}<a href="{{ license.href }}" class="btn btn-light">{{ license.text }}</a>{% endif %}
               {% endfor %}</div>
           </div>
           <div class="col-sm-3 col-xs-5">
-
             <div class="input-group pull-right">
               <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-sort-amount-asc"></i></span></div>
-
               <select onchange="location = this.value;" class="form-control">
                 {% for sorts in sorts %}
                   {% if sorts.value == sort %}
@@ -70,10 +64,8 @@
                 {% endfor %}
               </select>
             </div>
-
           </div>
         </div>
-
         <div id="extension-list">
           {% if promotions %}
             <h3>Featured</h3>

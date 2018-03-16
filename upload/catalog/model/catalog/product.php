@@ -200,7 +200,10 @@ class ModelCatalogProduct extends Model {
 		$query = $this->db->query($sql);
 
 		foreach ($query->rows as $result) {
+			// for never get one more time with same product id
+			if(!isset($product_data[$result['product_id']])){
 			$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
+			}	
 		}
 
 		return $product_data;

@@ -31,6 +31,8 @@ class ControllerExtensionPaymentPPStandard extends Controller {
 					if ($option['type'] != 'file') {
 						$value = $option['value'];
 					} else {
+						$this->load->model('tool/upload');
+						
 						$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
 						
 						if ($upload_info) {
@@ -41,7 +43,7 @@ class ControllerExtensionPaymentPPStandard extends Controller {
 					}
 
 					$option_data[] = array(
-						'name'  => $option['name'],
+						'name'  => (utf8_strlen($option['name']) > 64 ? utf8_substr($option['name'], 0, 62) . '..' : $option['name']),
 						'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
 					);
 				}
@@ -84,10 +86,10 @@ class ControllerExtensionPaymentPPStandard extends Controller {
 			$data['country'] = $order_info['payment_iso_code_2'];
 			$data['email'] = $order_info['email'];
 			$data['invoice'] = $this->session->data['order_id'] . ' - ' . html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8') . ' ' . html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
-			$data['lc'] = $this->session->data['language'];
-			$data['return'] = $this->url->link('checkout/success');
-			$data['notify_url'] = $this->url->link('extension/payment/pp_standard/callback');
-			$data['cancel_return'] = $this->url->link('checkout/checkout');
+			$data['lc'] = $this->config->get('config_language');
+			$data['return'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'));
+			$data['notify_url'] = $this->url->link('extension/payment/pp_standard/callback', 'language=' . $this->config->get('config_language'));
+			$data['cancel_return'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 
 			if (!$this->config->get('payment_pp_standard_transaction')) {
 				$data['paymentaction'] = 'authorization';

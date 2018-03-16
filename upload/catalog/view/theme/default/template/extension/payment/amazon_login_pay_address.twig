@@ -17,7 +17,7 @@
   <div style="clear: both;"></div>
   <div class="buttons">
     <div class="pull-left"> <a href="{{ history }}" class="btn btn-primary">{{ text_cart }}</a> </div>
-    <div class="pull-right">
+    <div class="float-right">
       <input class="btn btn-primary" id="continue-button" type="submit" value="{{ text_continue }}" />
     </div>
   </div>
@@ -70,7 +70,7 @@ $(document).ready(function() {
 						html += '<p><strong>' + shippingMethod.title + '</strong></p>';
 
 						$.each(shippingMethod.quote, function(i, quote) {
-							html += '<div class="radio">';
+							html += '<div class="form-check">';
 							html += '<label>';
 
 							if (data.selected == quote.code) {

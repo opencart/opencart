@@ -19,8 +19,8 @@ class ModelCatalogInformation extends Model {
 		if (isset($data['information_seo_url'])) {
 			foreach ($data['information_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
-					if (!empty($keyword)) {
-						$this->db->query("INSERT INTO " . DB_PREFIX . "seo_url SET store_id = '" . (int)$store_id . "', language_id = '" . (int)$language_id . "', query = 'information_id=" . (int)$information_id . "', keyword = '" . $this->db->escape($keyword) . "'");
+					if ($keyword) {
+						$this->db->query("INSERT INTO " . DB_PREFIX . "seo_url SET store_id = '" . (int)$store_id . "', language_id = '" . (int)$language_id . "', query = 'information_id=" . (int)$information_id . "', keyword = '" . $this->db->escape($keyword) . "', push = '" . $this->db->escape('route=information/information&information_id=' . (int)$information_id) . "'");
 					}
 				}
 			}
@@ -59,8 +59,8 @@ class ModelCatalogInformation extends Model {
 		if (isset($data['information_seo_url'])) {
 			foreach ($data['information_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
-					if (trim($keyword)) {
-						$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET store_id = '" . (int)$store_id . "', language_id = '" . (int)$language_id . "', query = 'information_id=" . (int)$information_id . "', keyword = '" . $this->db->escape($keyword) . "'");
+					if ($keyword) {
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET store_id = '" . (int)$store_id . "', language_id = '" . (int)$language_id . "', query = 'information_id=" . (int)$information_id . "', keyword = '" . $this->db->escape($keyword) . "', push = '" . $this->db->escape('route=information/information&information_id=' . (int)$information_id) . "'");
 					}
 				}
 			}

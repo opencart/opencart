@@ -21,24 +21,26 @@
     {% endif %}
     <div id="content" class="{{ class }}">{{ content_top }}
         <h2>{{ heading_title }}</h2>
+
         {% if not cards %}
-        <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> {{ text_no_cards }}</div>
+            <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> {{ text_no_cards }}</div>
         {% else %}
-        <table class="table table-bordered">
-          {% for card in cards %}
-          <tr>
-            <td>
-              {{ card.text }}
-            </td>
-            <td class="text-right">
-              <a class="btn btn-danger remove_card" href="{{ card.delete }}">{{ text_delete }}</a>
-            </td>
-          </tr>
-          {% endfor %}
-        </table>
+            <table class="table table-bordered">
+                {% for card in cards %}
+                    <tr>
+                        <td>
+                            {{ card.text }}
+                        </td>
+                        <td class="text-right">
+                            <a class="btn btn-danger remove_card" href="{{ card.delete }}">{{ text_delete }}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
         {% endif %}
+
         <div class="buttons">
-          <a class="btn btn-default" href="{{ back }}">{{ text_back }}</a>
+            <a class="btn btn-default" href="{{ back }}">{{ text_back }}</a>
         </div>
       {{ content_bottom }}</div>
     {{ column_right }}</div>

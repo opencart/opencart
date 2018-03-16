@@ -12,6 +12,11 @@ class ControllerStartupStartup extends Controller {
 			}
 		}
 
+		// Set time zone
+		if ($this->config->get('config_timezone')) {
+			date_default_timezone_set($this->config->get('config_timezone'));
+		}
+
 		// Theme
 		$this->config->set('template_cache', $this->config->get('developer_theme'));
 				
@@ -57,8 +62,5 @@ class ControllerStartupStartup extends Controller {
 		
 		// Encryption
 		$this->registry->set('encryption', new Encryption($this->config->get('config_encryption')));
-		
-		// OpenBay Pro
-		$this->registry->set('openbay', new Openbay($this->registry));
 	}
 }

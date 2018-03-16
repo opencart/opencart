@@ -35,6 +35,7 @@
         </tr>
       </thead>
       <tbody>
+      
       {% for product in products %}
       <tr>
         <td class="text-left">{{ product.name }}
@@ -46,20 +47,23 @@
         <td class="text-right">{{ product.total }}</td>
       </tr>
       {% endfor %}
-      </tbody>
+        </tbody>
+      
       <tfoot>
+      
       {% for total in totals %}
       <tr>
         <td colspan="4" class="text-right"><strong>{{ total.title }}:</strong></td>
         <td class="text-right">{{ total.text }}</td>
       </tr>
       {% endfor %}
-      </tfoot>
+        </tfoot>
+      
     </table>
   </div>
   <div class="buttons">
     <div class="pull-left"> <a href="{{ back }}" class="btn btn-primary">{{ text_back }}</a> </div>
-    <div class="pull-right">
+    <div class="float-right">
       <input class="btn btn-primary" id="confirm-button" type="submit" value="{{ text_confirm }}" />
     </div>
   </div>

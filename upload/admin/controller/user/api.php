@@ -252,7 +252,7 @@ class ControllerUserApi extends Controller {
 	protected function getForm() {
 		$data['text_form'] = !isset($this->request->get['api_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_ip'] = sprintf($this->language->get('text_ip'), $this->request->server['REMOTE_ADDR']);
-		
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->error['warning'])) {
@@ -272,7 +272,7 @@ class ControllerUserApi extends Controller {
 		} else {
 			$data['error_key'] = '';
 		}
-		
+
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -343,13 +343,13 @@ class ControllerUserApi extends Controller {
 		} else {
 			$data['api_ips'] = array();
 		}
-		
+
 		// Session
 		$data['api_sessions'] = array();
-		
+
 		if (isset($this->request->get['api_id'])) {
 			$results = $this->model_user_api->getApiSessions($this->request->get['api_id']);
-			
+
 			foreach ($results as $result) {
 				$data['api_sessions'][] = array(
 					'api_session_id' => $result['api_session_id'],
@@ -360,7 +360,7 @@ class ControllerUserApi extends Controller {
 				);
 			}
 		}
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -369,7 +369,7 @@ class ControllerUserApi extends Controller {
 	}
 
 	protected function validateForm() {
-		if (!$this->user->hasPermission('modify', 'user/user')) {
+		if (!$this->user->hasPermission('modify', 'user/api')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -380,7 +380,7 @@ class ControllerUserApi extends Controller {
 		if ((utf8_strlen($this->request->post['key']) < 64) || (utf8_strlen($this->request->post['key']) > 256)) {
 			$this->error['key'] = $this->language->get('error_key');
 		}
-		
+
 		if (!isset($this->error['warning']) && !isset($this->request->post['api_ip'])) {
 			$this->error['warning'] = $this->language->get('error_ip');
 		}
@@ -413,5 +413,5 @@ class ControllerUserApi extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}	
+	}
 }

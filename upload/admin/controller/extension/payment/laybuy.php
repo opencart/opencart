@@ -470,7 +470,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 		} else {
 			$data['success'] = '';
 		}
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -1021,7 +1021,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 				}
 
 				if ($this->request->get['source'] == 'order') {
-					$json['reload'] = $this->url->link('sale/order/info', 'order_id=' . (int)$transaction_info['order_id'] . '&user_token=' . $this->session->data['user_token'],);
+					$json['reload'] = $this->url->link('sale/order/info', 'order_id=' . (int)$transaction_info['order_id'] . '&user_token=' . $this->session->data['user_token']);
 				} else {
 					$json['reload'] = $this->url->link('extension/payment/laybuy/transaction', 'user_token=' . $this->session->data['user_token'] . '&id=' . $id);
 				}

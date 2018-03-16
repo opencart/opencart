@@ -1,5 +1,18 @@
 <?php
 
+// +----------------------------------------------------------------------
+// | wechat-php-sdk
+// +----------------------------------------------------------------------
+// | 版权所有 2014~2017 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// +----------------------------------------------------------------------
+// | 官方文档: https://www.kancloud.cn/zoujingli/wechat-php-sdk
+// +----------------------------------------------------------------------
+// | 开源协议 ( https://mit-license.org )
+// +----------------------------------------------------------------------
+// | github开源项目：https://github.com/zoujingli/wechat-php-sdk
+// +----------------------------------------------------------------------
+
+
 namespace Wechat\Lib;
 
 use Wechat\Loader;
@@ -94,6 +107,40 @@ class Cache
             return false;
         }
         return true;
+    }
+
+    /**
+     * 文件缓存，成功返回文件路径
+     * @param string $content 文件内容
+     * @param string $filename 文件名称
+     * @return bool|string
+     */
+    static public function file($content, $filename = '')
+    {
+        if (isset(Loader::$callback['CacheFile'])) {
+            return call_user_func_array(Loader::$callback['CacheFile'], func_get_args());
+        }
+        empty($filename) && $filename = md5($content) . '.' . self::getFileExt($content);
+        if (self::check() && file_put_contents(self::$cachepath . $filename, $content)) {
+            return self::$cachepath . $filename;
+        }
+        return false;
+    }
+
+    /**
+     * 根据文件流读取文件后缀
+     * @param string $content
+     * @return string
+     */
+    static public function getFileExt($content)
+    {
+        $types = array(
+            255216 => 'jpg', 7173 => 'gif', 6677 => 'bmp', 13780 => 'png',
+            7368   => 'mp3', 4838 => 'wma', 7784 => 'mid', 6063 => 'xml',
+        );
+        $typeInfo = @unpack("C2chars", substr($content, 0, 2));
+        $typeCode = intval($typeInfo['chars1'] . $typeInfo['chars2']);
+        return isset($types[$typeCode]) ? $types[$typeCode] : 'mp4';
     }
 
 }

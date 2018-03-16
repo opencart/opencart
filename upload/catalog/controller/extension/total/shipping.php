@@ -46,14 +46,14 @@ class ControllerExtensionTotalShipping extends Controller {
 		}
 
 		if (!$this->cart->hasShipping()) {
-			$json['error']['warning'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact'));
+			$json['error']['warning'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
 		}
 
 		if ($this->request->post['country_id'] == '') {
 			$json['error']['country'] = $this->language->get('error_country');
 		}
 
-		if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
+		if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '' || !is_numeric($this->request->post['zone_id'])) {
 			$json['error']['zone'] = $this->language->get('error_zone');
 		}
 
@@ -146,7 +146,7 @@ class ControllerExtensionTotalShipping extends Controller {
 			if ($this->session->data['shipping_methods']) {
 				$json['shipping_method'] = $this->session->data['shipping_methods'];
 			} else {
-				$json['error']['warning'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact'));
+				$json['error']['warning'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
 			}
 		}
 
@@ -176,7 +176,7 @@ class ControllerExtensionTotalShipping extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$json['redirect'] = $this->url->link('checkout/cart');
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

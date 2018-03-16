@@ -3,11 +3,13 @@
   <div class="page-header">
     <div class="container-fluid">
       <h1>{{ heading_title }}</h1>
-      <ul class="breadcrumb">
-        {% for breadcrumb in breadcrumbs %}
-          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-        {% endfor %}
-      </ul>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          {% for breadcrumb in breadcrumbs %}
+            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          {% endfor %}
+        </ol>
+      </nav>
     </div>
   </div>
   <div class="container-fluid">
@@ -22,26 +24,26 @@
       </div>
     {% endif %}
     <div class="panel-group" id="collapse">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title"><a href="#collapse-version" data-toggle="collapse" data-parent="#collapse">
-          <span class="text-info"><i class="fa fa-refresh"></i> {{ text_version }}</span></a></h3>
-        </div>
-        <div id="collapse-version" class="panel-collapse collapse in">
-          <div class="panel-body">
+      <div class="card">
+        <div class="card-header"><a href="#collapse-version" data-toggle="collapse" data-parent="#collapse"><i class="fa fa-refresh"></i> {{ text_version }}</a></div>
+        <div id="collapse-version" class="card-collapse collapse in">
+          <div class="card-body">
             <fieldset>
               {% if error_warning %}
-              <legend class="text-danger" id="btn-version">{{ text_update }}</legend>
+                <legend class="text-danger" id="btn-version">{{ text_update }}</legend>
               {% else %}
-              <legend id="btn-version">{{ text_update }}</legend>
+                <legend id="btn-version">{{ text_update }}</legend>
               {% endif %}
             </fieldset>
             <div class="alert alert-info">
               <p><strong><i class="fa fa-exclamation-circle "></i> Tips: Before upgrading it's very important to</strong></p>
               <ol>
-                <li>Make a complete backup of your web site! <br/>
-                  Backup <a href="{{ backup }}">here</a>; <br/>
-                  If you are using the cloud version, you can backup with your opencart account <a href="{{ opencart_account }}" target="_blank">here</a>.</li>
+                <li>Make a complete backup of your web site!
+                  <br/>
+                  Backup <a href="{{ backup }}">here</a>;
+                  <br/>
+                  If you are using the cloud version, you can backup with your opencart account <a href="{{ opencart_account }}" target="_blank">here</a>.
+                </li>
                 <li>Check the extensions installed are compatible with the latest version</li>
                 <li>It's better if you could copy your site to a test server and practise upgrading before starting with the live web site.</li>
               </ol>
@@ -55,40 +57,36 @@
           </div>
         </div>
       </div>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title"><a href="#collapse-compatible" data-toggle="collapse" data-parent="#collapse">
-          <span class="text-warning"><i class="fa fa-random"></i> {{ text_compatibility }}</span></a></h3>
-        </div>
-        <div id="collapse-compatible" class="panel-collapse collapse">
-          <div class="panel-body">
-           <div class="alert alert-warning">
+      <div class="card">
+        <div class="card-header"><a href="#collapse-compatible" data-toggle="collapse" data-parent="#collapse"><i class="fa fa-random"></i> {{ text_compatibility }}</a></div>
+        <div id="collapse-compatible" class="card-collapse collapse">
+          <div class="card-body">
+            <div class="alert alert-warning">
               Before upgrading, it's very important to check the extensions installed are compatible with the latest version!
               <button type="button" class="close" data-dismiss="alert">&times;</button>
             </div>
             <table class="table table-bordered table-hover">
               <thead>
-              <tr>
-                <td class="text-left">{{ column_name }}</td>
-                <td class="text-center">{{ column_compatible }}</td>
-                <td class="text-center">{{ column_available }}</td>
-              </tr>
+                <tr>
+                  <td class="text-left">{{ column_name }}</td>
+                  <td class="text-center">{{ column_compatible }}</td>
+                  <td class="text-center">{{ column_available }}</td>
+                </tr>
               </thead>
               <tbody>
-              {% if extensions %}
-                {% for extension in extensions %}
+                {% if extensions %}
+                  {% for extension in extensions %}
+                    <tr>
+                      <td class="text-left"><a href="{{ extension.link }}">{{ extension.name }}</a></td>
+                      <td class="text-center">{% if extension.compatible %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
+                      <td class="text-center">{% if extension.available %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
+                    </tr>
+                  {% endfor %}
+                {% else %}
                   <tr>
-
-                    <td class="text-left"><a href="{{ extension.link }}">{{ extension.name }}</a></td>
-                    <td class="text-center">{% if extension.compatible %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
-                    <td class="text-center">{% if extension.available %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
+                    <td class="text-center" colspan="3">{{ text_no_results }}</td>
                   </tr>
-                {% endfor %}
-              {% else %}
-                <tr>
-                  <td class="text-center" colspan="3">{{ text_no_results }}</td>
-                </tr>
-              {% endif %}
+                {% endif %}
               </tbody>
             </table>
             <br/>
@@ -96,16 +94,14 @@
           </div>
         </div>
       </div>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title"><a href="#collapse-upgrade" data-toggle="collapse" data-parent="#collapse"><span class="text-success"><i class="fa fa-check"></i> {{ text_upgrade }}</span></a></h3>
-        </div>
+      <div class="card">
+        <div class="card-header"><a href="#collapse-upgrade" data-toggle="collapse" data-parent="#collapse"><i class="fa fa-check"></i> {{ text_upgrade }}</a></div>
         <div id="collapse-upgrade" class="panel-collapse collapse">
-          <div class="panel-body">
+          <div class="card-body">
             <fieldset>
               <legend>{{ text_progress }}</legend>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">Progress</label>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Progress</label>
                 <div class="col-sm-10">
                   <div id="progress-download" class="progress">
                     <div id="progress-bar" class="progress-bar"></div>
@@ -114,7 +110,7 @@
                 </div>
               </div>
               <div class="col-sm-10 col-sm-offset-2">
-                <div class="form-group">
+                <div class="form-group row">
                   {% if upgrade %}
                     <button type="button" id="button-upgrade" data-loading-text="{{ text_loading }}" class="btn btn-success"><i class="fa fa-play"></i> {{ button_start }}</button>
                   {% else %}
@@ -149,7 +145,7 @@ $('#button-upgrade').on('click', function() {
 		success: function(json) {
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+				$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
 				$('#log').append(json['error'] + "\n");
 			}
 
@@ -180,7 +176,7 @@ function next(url, i) {
 
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+				$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
 				$('#log').append(json['error'] + "\n");
 
 				$('#button-upgrade').button('reset');
@@ -195,7 +191,7 @@ function next(url, i) {
 			}
 
 			if (json['text']) {
-                $('#progress-text').html(json['text']);
+				$('#progress-text').html(json['text']);
 				$('#log').append(json['text'] + "\n");
 			}
 
@@ -208,5 +204,6 @@ function next(url, i) {
 		}
 	});
 }
+
 //--></script>
 {{ footer }}

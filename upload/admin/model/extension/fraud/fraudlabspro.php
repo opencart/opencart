@@ -58,7 +58,7 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 		$status_fraud_id = $this->db->getLastId();
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_status` (`language_id`, `name`) VALUES (1, 'Fraud Review');");
-		
+
 		$status_fraud_review_id = $this->db->getLastId();
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` (`code`, `key`, `value`, `serialized`) VALUES ('fraudlabspro', 'fraud_fraudlabspro_review_status_id', '" . (int)$status_fraud_review_id . "', '0');");
@@ -95,11 +95,6 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 
 		if (isset($this->session->data['cookie'])) {
 			$curl = curl_init();
-
-			// Set SSL if required
-			if (substr($url, 0, 5) == 'https') {
-				curl_setopt($curl, CURLOPT_PORT, 443);
-			}
 
 			curl_setopt($curl, CURLOPT_HEADER, false);
 			curl_setopt($curl, CURLINFO_HEADER_OUT, true);

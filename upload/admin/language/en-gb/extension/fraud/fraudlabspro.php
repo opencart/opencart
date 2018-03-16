@@ -6,7 +6,7 @@ $_['heading_title']              = 'FraudLabs Pro';
 $_['text_extension']             = 'Extensions';
 $_['text_success']               = 'Success: You have modified FraudLabs Pro Settings!';
 $_['text_edit']                  = 'Settings';
-$_['text_signup']                = 'FraudLabs Pro is a fraud detection solution. It helps you to reduce your fraud losses or chargebacks by screening all your incoming orders for fraud patterns. You can <a href="http://www.fraudlabspro.com/pricing?ref=1730" target="_blank"><u>sign up</u></a> for a free Micro plan to get the API key if you do not have one.';
+$_['text_signup']                = 'FraudLabs Pro is a fraud detection solution. It helps you to reduce your fraud losses or chargebacks by screening all your incoming orders for fraud patterns. You can <a href="http://www.fraudlabspro.com/pricing?ref=1730" target="_blank" class="alert-link">sign up</a> for a free Micro plan to get the API key if you do not have one.';
 $_['text_id']                    = 'FraudLabs Pro ID';
 $_['text_ip_address']            = 'IP Address';
 $_['text_ip_net_speed']          = 'IP Net Speed';

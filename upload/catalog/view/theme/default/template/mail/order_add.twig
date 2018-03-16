@@ -76,6 +76,7 @@
       </tr>
     </thead>
     <tbody>
+    
     {% for product in products %}
     <tr>
       <td style="font-size: 12px; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">{{ product.name }}
@@ -97,7 +98,9 @@
     </tr>
     {% endfor %}
       </tbody>
+    
     <tfoot>
+    
     {% for total in totals %}
     <tr>
       <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: right; padding: 7px;" colspan="4"><b>{{ total.title }}:</b></td>
@@ -105,6 +108,7 @@
     </tr>
     {% endfor %}
       </tfoot>
+    
   </table>
   <p style="margin-top: 0px; margin-bottom: 20px;">{{ text_footer }}</p>
 </div>

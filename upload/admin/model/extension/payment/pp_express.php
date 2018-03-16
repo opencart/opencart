@@ -75,17 +75,29 @@ class ModelExtensionPaymentPPExpress extends Model {
 	}
 
 	public function addTransaction($transaction_data, $request_data = array()) {
-		if ($request_data) {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "paypal_order_transaction` SET 
+		`paypal_order_id` = '" . (int)$transaction_data['paypal_order_id'] . "', 
+		`transaction_id` = '" . $this->db->escape($transaction_data['transaction_id']) . "', 
+		`parent_id` = '" . $this->db->escape($transaction_data['parent_id']) . "', 
+		`date_added` = NOW(), `note` = '" . $this->db->escape($transaction_data['note']) . "', 
+		`msgsubid` = '" . $this->db->escape($transaction_data['msgsubid']) . "', 
+		`receipt_id` = '" . $this->db->escape($transaction_data['receipt_id']) . "', 
+		`payment_type` = '" . $this->db->escape($transaction_data['payment_type']) . "', 
+		`payment_status` = '" . $this->db->escape($transaction_data['payment_status']) . "', 
+		`pending_reason` = '" . $this->db->escape($transaction_data['pending_reason']) . "', 
+		`transaction_entity` = '" . $this->db->escape($transaction_data['transaction_entity']) . "', 
+		`amount` = '" . (float)$transaction_data['amount'] . "', 
+		`debug_data` = '" . $this->db->escape($transaction_data['debug_data']) . "'");
+
+		$paypal_order_transaction_id = $this->db->getLastId();
+
+		if (!empty($request_data)) {
 			$serialized_data = json_encode($request_data);
 
-			$this->db->query("UPDATE " . DB_PREFIX . "paypal_order_transaction SET call_data = '" . $this->db->escape($serialized_data) . "' WHERE paypal_order_transaction_id = " . (int)$paypal_order_transaction_id . " LIMIT 1");
+			$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order_transaction` SET `call_data` = '" . $this->db->escape($serialized_data) . "' WHERE `paypal_order_transaction_id` = " . (int)$paypal_order_transaction_id . " LIMIT 1");
 		}
 
-
-
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "paypal_order_transaction` SET `paypal_order_id` = '" . (int)$transaction_data['paypal_order_id'] . "', `transaction_id` = '" . $this->db->escape($transaction_data['transaction_id']) . "', `parent_id` = '" . $this->db->escape($transaction_data['parent_id']) . "', `date_added` = NOW(), `note` = '" . $this->db->escape($transaction_data['note']) . "', `msgsubid` = '" . $this->db->escape($transaction_data['msgsubid']) . "', `receipt_id` = '" . $this->db->escape($transaction_data['receipt_id']) . "', `payment_type` = '" . $this->db->escape($transaction_data['payment_type']) . "', `payment_status` = '" . $this->db->escape($transaction_data['payment_status']) . "', `pending_reason` = '" . $this->db->escape($transaction_data['pending_reason']) . "', `transaction_entity` = '" . $this->db->escape($transaction_data['transaction_entity']) . "', `amount` = '" . (float)$transaction_data['amount'] . "', `debug_data` = '" . $this->db->escape($transaction_data['debug_data']) . "'");
-
-		return $this->db->getLastId();
+		return $paypal_order_transaction_id;
 	}
 
 	public function updateTransaction($transaction) {
@@ -149,6 +161,7 @@ class ModelExtensionPaymentPPExpress extends Model {
 			'THB',
 			'TRY',
 			'USD',
+			'INR',
 		);
 	}
 

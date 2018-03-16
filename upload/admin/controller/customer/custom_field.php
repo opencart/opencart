@@ -485,6 +485,10 @@ class ControllerCustomerCustomField extends Controller {
 			}
 		}
 
+		if (@preg_match('/' . html_entity_decode($this->request->post['validation'], ENT_QUOTES, 'UTF-8') . '/', null) === false) {
+			$this->error['validation'] = $this->language->get('error_validation');
+		}
+
 		return !$this->error;
 	}
 

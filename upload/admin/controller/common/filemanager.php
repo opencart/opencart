@@ -3,7 +3,6 @@ class ControllerCommonFileManager extends Controller {
 	public function index() {
 		$this->load->language('common/filemanager');
 
-		// Find which protocol to use to pass the full image link back
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = basename(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		} else {
@@ -12,7 +11,7 @@ class ControllerCommonFileManager extends Controller {
 
 		// Make sure we have the correct directory
 		if (isset($this->request->get['directory'])) {
-			$directory = rtrim(DIR_IMAGE . 'catalog/' . $this->request->get['directory'], '/');
+			$directory = rtrim(DIR_IMAGE . 'catalog' . $this->request->get['directory'], '/');
 		} else {
 			$directory = DIR_IMAGE . 'catalog';
 		}
@@ -191,7 +190,7 @@ class ControllerCommonFileManager extends Controller {
 		}
 
 		// Check its a directory
-		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_IMAGE . 'catalog/')) != str_replace('\\', '/', DIR_IMAGE . 'catalog/')) {
+		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_IMAGE . 'catalog')) != str_replace('\\', '/', DIR_IMAGE . 'catalog')) {
 			$json['error'] = $this->language->get('error_directory');
 		}
 
@@ -286,7 +285,7 @@ class ControllerCommonFileManager extends Controller {
 		}
 
 		// Check its a directory
-		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_IMAGE . 'catalog/')) != str_replace('\\', '/', DIR_IMAGE . 'catalog/')) {
+		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_IMAGE . 'catalog')) != str_replace('\\', '/', DIR_IMAGE . 'catalog')) {
 			$json['error'] = $this->language->get('error_directory');
 		}
 

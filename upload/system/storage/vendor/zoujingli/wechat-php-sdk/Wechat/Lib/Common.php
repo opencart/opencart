@@ -1,5 +1,17 @@
 <?php
 
+// +----------------------------------------------------------------------
+// | wechat-php-sdk
+// +----------------------------------------------------------------------
+// | 版权所有 2014~2017 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// +----------------------------------------------------------------------
+// | 官方文档: https://www.kancloud.cn/zoujingli/wechat-php-sdk
+// +----------------------------------------------------------------------
+// | 开源协议 ( https://mit-license.org )
+// +----------------------------------------------------------------------
+// | github开源项目：https://github.com/zoujingli/wechat-php-sdk
+// +----------------------------------------------------------------------
+
 namespace Wechat\Lib;
 
 use Prpcrypt;
@@ -49,6 +61,24 @@ class Common
     }
 
     /**
+     * 当前当前错误代码
+     * @return int
+     */
+    public function getErrorCode()
+    {
+        return $this->errCode;
+    }
+
+    /**
+     * 获取当前错误内容
+     * @return string
+     */
+    public function getError()
+    {
+        return $this->errMsg;
+    }
+
+    /**
      * 获取当前操作公众号APPID
      * @return string
      */
@@ -86,7 +116,7 @@ class Common
                 if (!isset($array[0]) || intval($array[0]) > 0) {
                     $this->errCode = $array[0];
                     $this->errMsg = $array[1];
-                    Tools::log("Interface Authentication Failed. {$this->errMsg}[{$this->errCode}]", 'ERR');
+                    Tools::log("Interface Authentication Failed. {$this->errMsg}[{$this->errCode}]", "ERR - {$this->appid}");
                     return false;
                 }
                 $this->postxml = $array[1];
@@ -96,10 +126,10 @@ class Common
             }
         } elseif (isset($_GET["echostr"])) {
             if ($this->checkSignature()) {
+                @ob_clean();
                 exit($_GET["echostr"]);
-            } else {
-                return false;
             }
+            return false;
         }
         if (!$this->checkSignature($encryptStr)) {
             $this->errMsg = 'Interface authentication failed, please use the correct method to call.';
@@ -115,7 +145,6 @@ class Common
      */
     private function checkSignature($str = '')
     {
-        // 如果存在加密验证则用加密验证段
         $signature = isset($_GET["msg_signature"]) ? $_GET["msg_signature"] : (isset($_GET["signature"]) ? $_GET["signature"] : '');
         $timestamp = isset($_GET["timestamp"]) ? $_GET["timestamp"] : '';
         $nonce = isset($_GET["nonce"]) ? $_GET["nonce"] : '';
@@ -123,9 +152,8 @@ class Common
         sort($tmpArr, SORT_STRING);
         if (sha1(implode($tmpArr)) == $signature) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -138,8 +166,7 @@ class Common
     public function getAccessToken($appid = '', $appsecret = '', $token = '')
     {
         if (!$appid || !$appsecret) {
-            $appid = $this->appid;
-            $appsecret = $this->appsecret;
+            list($appid, $appsecret) = array($this->appid, $this->appsecret);
         }
         if ($token) {
             return $this->access_token = $token;
@@ -158,11 +185,11 @@ class Common
             if (!$json || isset($json['errcode'])) {
                 $this->errCode = $json['errcode'];
                 $this->errMsg = $json['errmsg'];
-                Tools::log("Get New AccessToken Error. {$this->errMsg}[{$this->errCode}]", 'ERR');
+                Tools::log("Get New AccessToken Error. {$this->errMsg}[{$this->errCode}]", "ERR - {$this->appid}");
                 return false;
             }
             $this->access_token = $json['access_token'];
-            Tools::log("Get New AccessToken Success.");
+            Tools::log("Get New AccessToken Success.", "MSG - {$this->appid}");
             Tools::setCache($cache, $this->access_token, 5000);
             return $this->access_token;
         }
@@ -171,18 +198,18 @@ class Common
 
     /**
      * 接口失败重试
-     * @param $method   SDK方法名称
+     * @param string $method SDK方法名称
      * @param array $arguments SDK方法参数
      * @return bool|mixed
      */
     protected function checkRetry($method, $arguments = array())
     {
+        Tools::log("Run {$method} Faild. {$this->errMsg}[{$this->errCode}]", "ERR - {$this->appid}");
         if (!$this->_retry && in_array($this->errCode, array('40014', '40001', '41001', '42001'))) {
-            Tools::log("Run {$method} Faild. {$this->errMsg}[{$this->errCode}]", 'ERR');
             ($this->_retry = true) && $this->resetAuth();
             $this->errCode = 40001;
             $this->errMsg = 'no access';
-            Tools::log("Retry Run {$method} ...");
+            Tools::log("Retry Run {$method} ...", "MSG - {$this->appid}");
             return call_user_func_array(array($this, $method), $arguments);
         }
         return false;
@@ -196,7 +223,7 @@ class Common
     public function resetAuth($appid = '')
     {
         $authname = 'wechat_access_token_' . (empty($appid) ? $this->appid : $appid);
-        Tools::log("Reset Auth And Remove Old AccessToken.");
+        Tools::log("Reset Auth And Remove Old AccessToken.", "MSG - {$this->appid}");
         $this->access_token = '';
         Tools::removeCache($authname);
         return true;

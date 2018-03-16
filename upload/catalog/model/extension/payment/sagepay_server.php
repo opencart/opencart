@@ -1,5 +1,5 @@
 <?php
-class ModelExtensionPaymentSagePayServer extends Model {
+class ModelExtensionPaymentSagepayServer extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('extension/payment/sagepay_server');
 
@@ -71,7 +71,7 @@ class ModelExtensionPaymentSagePayServer extends Model {
 
 	public function addOrder($order_info) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "sagepay_server_order` WHERE `order_id` = '" . (int)$order_info['order_id'] . "'");
-		
+
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "sagepay_server_order` SET `order_id` = '" . (int)$order_info['order_id'] . "', `customer_id` = '" . (int)$this->customer->getId() . "', `VPSTxId` = '" . $this->db->escape($order_info['VPSTxId']) . "',  `VendorTxCode` = '" . $this->db->escape($order_info['VendorTxCode']) . "', `SecurityKey` = '" . $this->db->escape($order_info['SecurityKey']) . "', `date_added` = now(), `date_modified` = now(), `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $this->currency->format($order_info['total'], $order_info['currency_code'], false, false) . "'");
 	}
 
@@ -137,8 +137,8 @@ class ModelExtensionPaymentSagePayServer extends Model {
 		}
 
 		//create new recurring and set to pending status as no payment has been made yet.
-		$recurring_id = $this->model_checkout_recurring->addRecurring($this->session->data['order_id'], $recurring_description, $item['recurring']);
-		
+		$recurring_id = $this->model_checkout_recurring->addRecurring($this->session->data['order_id'], $recurring_description, $item);
+
 		$this->model_checkout_recurring->editReference($recurring_id, $vendor_tx_code);
 	}
 

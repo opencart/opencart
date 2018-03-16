@@ -4,13 +4,15 @@
     <div class="container-fluid">
       <div class="pull-right">
         <button type="submit" form="form-captcha" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
-      <ul class="breadcrumb">
-        {% for breadcrumb in breadcrumbs %}
-          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-        {% endfor %}
-      </ul>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          {% for breadcrumb in breadcrumbs %}
+            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          {% endfor %}
+        </ol>
+      </nav>
     </div>
   </div>
   <div class="container-fluid">
@@ -19,33 +21,31 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
-      </div>
-      <div class="panel-body">
-        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-captcha" class="form-horizontal">
+    <div class="card">
+      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-captcha">
           <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_signup }}</div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-key">{{ entry_key }}</label>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-key">{{ entry_key }}</label>
             <div class="col-sm-10">
               <input type="text" name="captcha_google_key" value="{{ captcha_google_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control"/>
               {% if error_key %}
-                <div class="text-danger">{{ error_key }}</div>
+                <div class="invalid-tooltip">{{ error_key }}</div>
               {% endif %}
             </div>
           </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-secret">{{ entry_secret }}</label>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-secret">{{ entry_secret }}</label>
             <div class="col-sm-10">
               <input type="text" name="captcha_google_secret" value="{{ captcha_google_secret }}" placeholder="{{ entry_secret }}" id="input-secret" class="form-control"/>
               {% if error_secret %}
-                <div class="text-danger">{{ error_secret }}</div>
+                <div class="invalid-tooltip">{{ error_secret }}</div>
               {% endif %}
             </div>
           </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="captcha_google_status" id="input-status" class="form-control">
                 {% if captcha_google_status %}

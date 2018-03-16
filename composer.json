@@ -1,17 +1,25 @@
 {
 	"name": "opencart/opencart",
-    "type": "project",
     "description": "OpenCart",
+    "type": "project",
     "keywords": ["opencart", "ecommerce", "framework", "opensource"],
-    "homepage": "http://www.opencart.com",
-    "license": "GPL-3.0+",
+    "homepage": "https://www.opencart.com/",
+    "license": "GPL-3.0-or-later",
+	"support": {
+        "email": "support@opencart.com",
+        "issues": "https://github.com/opencart/opencart/issues",
+        "forum": "https://forum.opencart.com/",
+        "wiki": "https://github.com/opencart/opencart/wiki",
+        "source": "https://github.com/opencart/opencart/releases",
+        "docs": "http://docs.opencart.com/"
+    },
     "config": {
         "vendor-dir": "./upload/system/storage/vendor/"
     },
     "require": {
         "cardinity/cardinity-sdk-php": "^1.0",
         "braintree/braintree_php" : "3.2.0",
-        "leafo/scssphp": "0.0.12",
+        "leafo/scssphp": "0.7.5",
         "divido/divido-php": ">=1.1.1",
         "klarna/kco_rest": "^2.2",
         "php": ">=5.4.0",

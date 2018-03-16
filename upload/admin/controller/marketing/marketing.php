@@ -358,7 +358,7 @@ class ControllerMarketingMarketing extends Controller {
 		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->request->get['marketing_id'])) {
-			$data['marketing_id'] = $this->request->get['marketing_id'];
+			$data['marketing_id'] = (int)$this->request->get['marketing_id'];
 		} else {
 			$data['marketing_id'] = 0;
 		}

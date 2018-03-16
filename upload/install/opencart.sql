@@ -610,7 +610,12 @@ INSERT INTO `oc_cron` (`cron_id`, `code`, `cycle`, `action`, `status`, `date_add
 INSERT INTO `oc_currency` (`currency_id`, `title`, `code`, `symbol_left`, `symbol_right`, `decimal_place`, `value`, `status`, `date_modified`) VALUES
 (1, 'Pound Sterling', 'GBP', '£', '', '2', 0.61250001, 1, '2014-09-25 14:40:00'),
 (2, 'US Dollar', 'USD', '$', '', '2', 1.00000000, 1, '2014-09-25 14:40:00'),
-(3, 'Euro', 'EUR', '', '€', '2', 0.78460002, 1, '2014-09-25 14:40:00');
+(3, 'Euro', 'EUR', '', '€', '2', 0.78460002, 1, '2014-09-25 14:40:00'),
+(4, 'Hong Kong Dollar', 'HKD', 'HK$', '', '2', 7.82224000, 0, '2018-02-16 12:00:00'),
+(5, 'Indian Rupee', 'INR', '₹', '', '2', 64.40000000, 0, '2018-02-16 12:00:00'),
+(6, 'Russian Ruble', 'RUB', '₽', '', '2', 56.40360000, 0, '2018-02-16 12:00:00'),
+(7, 'Chinese Yuan Renminbi', 'CNY', '¥', '', '2', 6.34510000, 0, '2018-02-16 12:00:00'),
+(8, 'Australian Dollar', 'AUD', '$', '', '2', 1.26544000, 0, '2018-02-16 12:00:00');
 
 -----------------------------------------------------------
 
@@ -677,9 +682,9 @@ INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUE
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
 (17, 'mail_customer_alert', 'catalog/model/account/customer/addCustomer/after', 'mail/register/alert', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
-(18, 'mail_affiliate_add', 'catalog/model/account/customer/addAffiliate/after', 'mail/affiliate', 1);
+(18, 'mail_affiliate_add', 'catalog/model/account/affiliate/addAffiliate/after', 'mail/affiliate', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
-(19, 'mail_affiliate_alert', 'catalog/model/account/customer/addAffiliate/after', 'mail/affiliate/alert', 1);
+(19, 'mail_affiliate_alert', 'catalog/model/account/affiliate/addAffiliate/after', 'mail/affiliate/alert', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
 (20, 'mail_voucher', 'catalog/model/checkout/order/addOrderHistory/after', 'extension/total/voucher/send', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
@@ -762,7 +767,7 @@ INSERT INTO `oc_extension` (`extension_id`, `type`, `code`) VALUES
 (39, 'report', 'customer_activity'),
 (40, 'report', 'customer_order'),
 (41, 'report', 'customer_reward'),
-(42, 'currency', 'currency_fixer');
+(42, 'currency', 'fixer');
 
 -----------------------------------------------------------
 
@@ -1426,8 +1431,6 @@ INSERT INTO `oc_statistics` (`statistics_id`, `code`, `value`) VALUES
 INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALUES
 (0, 'config', 'config_robots', 'abot\r\ndbot\r\nebot\r\nhbot\r\nkbot\r\nlbot\r\nmbot\r\nnbot\r\nobot\r\npbot\r\nrbot\r\nsbot\r\ntbot\r\nvbot\r\nybot\r\nzbot\r\nbot.\r\nbot/\r\n_bot\r\n.bot\r\n/bot\r\n-bot\r\n:bot\r\n(bot\r\ncrawl\r\nslurp\r\nspider\r\nseek\r\naccoona\r\nacoon\r\nadressendeutschland\r\nah-ha.com\r\nahoy\r\naltavista\r\nananzi\r\nanthill\r\nappie\r\narachnophilia\r\narale\r\naraneo\r\naranha\r\narchitext\r\naretha\r\narks\r\nasterias\r\natlocal\r\natn\r\natomz\r\naugurfind\r\nbackrub\r\nbannana_bot\r\nbaypup\r\nbdfetch\r\nbig brother\r\nbiglotron\r\nbjaaland\r\nblackwidow\r\nblaiz\r\nblog\r\nblo.\r\nbloodhound\r\nboitho\r\nbooch\r\nbradley\r\nbutterfly\r\ncalif\r\ncassandra\r\nccubee\r\ncfetch\r\ncharlotte\r\nchurl\r\ncienciaficcion\r\ncmc\r\ncollective\r\ncomagent\r\ncombine\r\ncomputingsite\r\ncsci\r\ncurl\r\ncusco\r\ndaumoa\r\ndeepindex\r\ndelorie\r\ndepspid\r\ndeweb\r\ndie blinde kuh\r\ndigger\r\nditto\r\ndmoz\r\ndocomo\r\ndownload express\r\ndtaagent\r\ndwcp\r\nebiness\r\nebingbong\r\ne-collector\r\nejupiter\r\nemacs-w3 search engine\r\nesther\r\nevliya celebi\r\nezresult\r\nfalcon\r\nfelix ide\r\nferret\r\nfetchrover\r\nfido\r\nfindlinks\r\nfireball\r\nfish search\r\nfouineur\r\nfunnelweb\r\ngazz\r\ngcreep\r\ngenieknows\r\ngetterroboplus\r\ngeturl\r\nglx\r\ngoforit\r\ngolem\r\ngrabber\r\ngrapnel\r\ngralon\r\ngriffon\r\ngromit\r\ngrub\r\ngulliver\r\nhamahakki\r\nharvest\r\nhavindex\r\nhelix\r\nheritrix\r\nhku www octopus\r\nhomerweb\r\nhtdig\r\nhtml index\r\nhtml_analyzer\r\nhtmlgobble\r\nhubater\r\nhyper-decontextualizer\r\nia_archiver\r\nibm_planetwide\r\nichiro\r\niconsurf\r\niltrovatore\r\nimage.kapsi.net\r\nimagelock\r\nincywincy\r\nindexer\r\ninfobee\r\ninformant\r\ningrid\r\ninktomisearch.com\r\ninspector web\r\nintelliagent\r\ninternet shinchakubin\r\nip3000\r\niron33\r\nisraeli-search\r\nivia\r\njack\r\njakarta\r\njavabee\r\njetbot\r\njumpstation\r\nkatipo\r\nkdd-explorer\r\nkilroy\r\nknowledge\r\nkototoi\r\nkretrieve\r\nlabelgrabber\r\nlachesis\r\nlarbin\r\nlegs\r\nlibwww\r\nlinkalarm\r\nlink validator\r\nlinkscan\r\nlockon\r\nlwp\r\nlycos\r\nmagpie\r\nmantraagent\r\nmapoftheinternet\r\nmarvin/\r\nmattie\r\nmediafox\r\nmediapartners\r\nmercator\r\nmerzscope\r\nmicrosoft url control\r\nminirank\r\nmiva\r\nmj12\r\nmnogosearch\r\nmoget\r\nmonster\r\nmoose\r\nmotor\r\nmultitext\r\nmuncher\r\nmuscatferret\r\nmwd.search\r\nmyweb\r\nnajdi\r\nnameprotect\r\nnationaldirectory\r\nnazilla\r\nncsa beta\r\nnec-meshexplorer\r\nnederland.zoek\r\nnetcarta webmap engine\r\nnetmechanic\r\nnetresearchserver\r\nnetscoop\r\nnewscan-online\r\nnhse\r\nnokia6682/\r\nnomad\r\nnoyona\r\nnutch\r\nnzexplorer\r\nobjectssearch\r\noccam\r\nomni\r\nopen text\r\nopenfind\r\nopenintelligencedata\r\norb search\r\nosis-project\r\npack rat\r\npageboy\r\npagebull\r\npage_verifier\r\npanscient\r\nparasite\r\npartnersite\r\npatric\r\npear.\r\npegasus\r\nperegrinator\r\npgp key agent\r\nphantom\r\nphpdig\r\npicosearch\r\npiltdownman\r\npimptrain\r\npinpoint\r\npioneer\r\npiranha\r\nplumtreewebaccessor\r\npogodak\r\npoirot\r\npompos\r\npoppelsdorf\r\npoppi\r\npopular iconoclast\r\npsycheclone\r\npublisher\r\npython\r\nrambler\r\nraven search\r\nroach\r\nroad runner\r\nroadhouse\r\nrobbie\r\nrobofox\r\nrobozilla\r\nrules\r\nsalty\r\nsbider\r\nscooter\r\nscoutjet\r\nscrubby\r\nsearch.\r\nsearchprocess\r\nsemanticdiscovery\r\nsenrigan\r\nsg-scout\r\nshai''hulud\r\nshark\r\nshopwiki\r\nsidewinder\r\nsift\r\nsilk\r\nsimmany\r\nsite searcher\r\nsite valet\r\nsitetech-rover\r\nskymob.com\r\nsleek\r\nsmartwit\r\nsna-\r\nsnappy\r\nsnooper\r\nsohu\r\nspeedfind\r\nsphere\r\nsphider\r\nspinner\r\nspyder\r\nsteeler/\r\nsuke\r\nsuntek\r\nsupersnooper\r\nsurfnomore\r\nsven\r\nsygol\r\nszukacz\r\ntach black widow\r\ntarantula\r\ntempleton\r\n/teoma\r\nt-h-u-n-d-e-r-s-t-o-n-e\r\ntheophrastus\r\ntitan\r\ntitin\r\ntkwww\r\ntoutatis\r\nt-rex\r\ntutorgig\r\ntwiceler\r\ntwisted\r\nucsd\r\nudmsearch\r\nurl check\r\nupdated\r\nvagabondo\r\nvalkyrie\r\nverticrawl\r\nvictoria\r\nvision-search\r\nvolcano\r\nvoyager/\r\nvoyager-hc\r\nw3c_validator\r\nw3m2\r\nw3mir\r\nwalker\r\nwallpaper\r\nwanderer\r\nwauuu\r\nwavefire\r\nweb core\r\nweb hopper\r\nweb wombat\r\nwebbandit\r\nwebcatcher\r\nwebcopy\r\nwebfoot\r\nweblayers\r\nweblinker\r\nweblog monitor\r\nwebmirror\r\nwebmonkey\r\nwebquest\r\nwebreaper\r\nwebsitepulse\r\nwebsnarf\r\nwebstolperer\r\nwebvac\r\nwebwalk\r\nwebwatch\r\nwebwombat\r\nwebzinger\r\nwhizbang\r\nwhowhere\r\nwild ferret\r\nworldlight\r\nwwwc\r\nwwwster\r\nxenu\r\nxget\r\nxift\r\nxirq\r\nyandex\r\nyanga\r\nyeti\r\nyodao\r\nzao\r\nzippp\r\nzyborg', 0),
 (0, 'config', 'config_shared', '0', 0),
-(0, 'voucher', 'total_voucher_sort_order', '8', 0),
-(0, 'voucher', 'total_voucher_status', '1', 0),
 (0, 'config', 'config_fraud_detection', '0', 0),
 (0, 'config', 'config_ftp_status', '0', 0),
 (0, 'config', 'config_ftp_root', '', 0),
@@ -1442,6 +1445,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_layout_id', '4', 0),
 (0, 'config', 'config_country_id', '222', 0),
 (0, 'config', 'config_zone_id', '3563', 0),
+(0, 'config', 'config_timezone', 'UTC', 0),
 (0, 'config', 'config_language', 'en-gb', 0),
 (0, 'config', 'config_admin_language', 'en-gb', 0),
 (0, 'config', 'config_currency', 'USD', 0),
@@ -1519,7 +1523,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_captcha', 'basic', 0),
 (0, 'config', 'config_captcha_page', '["review","return","contact"]', 1),
 (0, 'config', 'config_login_attempts', '5', 0),
-(0, 'currency', 'currency_fixer_status', '1', 0),
+(0, 'currency_fixer', 'currency_fixer_status', '1', 0),
 (0, 'payment_free_checkout', 'payment_free_checkout_status', '1', 0),
 (0, 'payment_free_checkout', 'payment_free_checkout_order_status_id', '1', 0),
 (0, 'payment_free_checkout', 'payment_free_checkout_sort_order', '1', 0),
@@ -1548,6 +1552,8 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'total_shipping', 'total_shipping_estimator', '1', 0),
 (0, 'total_coupon', 'total_coupon_sort_order', '4', 0),
 (0, 'total_coupon', 'total_coupon_status', '1', 0),
+(0, 'total_voucher', 'total_voucher_sort_order', '8', 0),
+(0, 'total_voucher', 'total_voucher_status', '1', 0),
 (0, 'module_category', 'module_category_status', '1', 0),
 (0, 'module_account', 'module_account_status', '1', 0),
 (0, 'theme_default', 'theme_default_product_limit', '15', 0),
@@ -1684,77 +1690,103 @@ INSERT INTO `oc_tax_rule` (`tax_rule_id`, `tax_class_id`, `tax_rate_id`, `based`
 -----------------------------------------------------------
 
 --
+-- Dumping data for table `oc_seo_regex`
+--
+
+INSERT INTO `oc_seo_regex` (`name`, `regex`, `sort_order`) VALUES
+('Product', '(product_id=\\d+)(?:[&]|$)', 100),
+('Category Level 1', '(path=\\d+)(?:[_&]|$)', 1),
+('Category Level 2', '(path=\\d+_\\d+)(?:[_&]|$)', 2),
+('Category Level 3', '(path=\\d+_\\d+_\\d+)(?:[_&]|$)', 3),
+('Information', '(information_id=\\d+)(?:[&]|$)', 1),
+('Manufacturer', '(manufacturer_id=\\d+)(?:[&]|$)', 2),
+('Language', '(language=[a-z-]+)(?:[&]|$)', -1),
+('Route', '(route=[a-zA-Z0-9\\/]+)(?:[&]|$)', 0),
+('Category Level 4', '(path=\\d+_\\d+_\\d+_\\d+)(?:[_&]|$)', 4),
+('Category Level 5', '(path=\\d+_\\d+_\\d+_\\d+_\\d+)(?:[_&]|$)', 5),
+('Manufacturer', '(manufacturer_id=)', 1),
+('Information', '(information_id=)', 1),
+('Category', '(path=)', 1),
+('Product', '(product_id=)', 99);
+
+-----------------------------------------------------------
+
+--
 -- Dumping data for table `oc_seo_url`
 --
 
-INSERT INTO `oc_seo_url` (`seo_url_id`, `store_id`, `language_id`, `query`, `keyword`) VALUES
-(824, 0, 1, 'product_id=48', 'ipod-classic'),
-(836, 0, 1, 'category_id=20', 'desktops'),
-(834, 0, 1, 'category_id=26', 'pc'),
-(835, 0, 1, 'category_id=27', 'mac'),
-(730, 0, 1, 'manufacturer_id=8', 'apple'),
-(772, 0, 1, 'information_id=4', 'about_us'),
-(768, 0, 1, 'product_id=42', 'test'),
-(789, 0, 1, 'category_id=34', 'mp3-players'),
-(781, 0, 1, 'category_id=36', 'test2'),
-(774, 0, 1, 'category_id=18', 'laptop-notebook'),
-(775, 0, 1, 'category_id=46', 'macs'),
-(776, 0, 1, 'category_id=45', 'windows'),
-(777, 0, 1, 'category_id=25', 'component'),
-(778, 0, 1, 'category_id=29', 'mouse'),
-(779, 0, 1, 'category_id=28', 'monitor'),
-(780, 0, 1, 'category_id=35', 'test1'),
-(782, 0, 1, 'category_id=30', 'printer'),
-(783, 0, 1, 'category_id=31', 'scanner'),
-(784, 0, 1, 'category_id=32', 'web-camera'),
-(785, 0, 1, 'category_id=57', 'tablet'),
-(786, 0, 1, 'category_id=17', 'software'),
-(787, 0, 1, 'category_id=24', 'smartphone'),
-(788, 0, 1, 'category_id=33', 'camera'),
-(790, 0, 1, 'category_id=43', 'test11'),
-(791, 0, 1, 'category_id=44', 'test12'),
-(792, 0, 1, 'category_id=47', 'test15'),
-(793, 0, 1, 'category_id=48', 'test16'),
-(794, 0, 1, 'category_id=49', 'test17'),
-(795, 0, 1, 'category_id=50', 'test18'),
-(796, 0, 1, 'category_id=51', 'test19'),
-(797, 0, 1, 'category_id=52', 'test20'),
-(798, 0, 1, 'category_id=58', 'test25'),
-(799, 0, 1, 'category_id=53', 'test21'),
-(800, 0, 1, 'category_id=54', 'test22'),
-(801, 0, 1, 'category_id=55', 'test23'),
-(802, 0, 1, 'category_id=56', 'test24'),
-(803, 0, 1, 'category_id=38', 'test4'),
-(804, 0, 1, 'category_id=37', 'test5'),
-(805, 0, 1, 'category_id=39', 'test6'),
-(806, 0, 1, 'category_id=40', 'test7'),
-(807, 0, 1, 'category_id=41', 'test8'),
-(808, 0, 1, 'category_id=42', 'test9'),
-(809, 0, 1, 'product_id=30', 'canon-eos-5d'),
-(840, 0, 1, 'product_id=47', 'hp-lp3065'),
-(811, 0, 1, 'product_id=28', 'htc-touch-hd'),
-(812, 0, 1, 'product_id=43', 'macbook'),
-(813, 0, 1, 'product_id=44', 'macbook-air'),
-(814, 0, 1, 'product_id=45', 'macbook-pro'),
-(816, 0, 1, 'product_id=31', 'nikon-d300'),
-(817, 0, 1, 'product_id=29', 'palm-treo-pro'),
-(818, 0, 1, 'product_id=35', 'product-8'),
-(819, 0, 1, 'product_id=49', 'samsung-galaxy-tab-10-1'),
-(820, 0, 1, 'product_id=33', 'samsung-syncmaster-941bw'),
-(821, 0, 1, 'product_id=46', 'sony-vaio'),
-(837, 0, 1, 'product_id=41', 'imac'),
-(823, 0, 1, 'product_id=40', 'iphone'),
-(825, 0, 1, 'product_id=36', 'ipod-nano'),
-(826, 0, 1, 'product_id=34', 'ipod-shuffle'),
-(827, 0, 1, 'product_id=32', 'ipod-touch'),
-(828, 0, 1, 'manufacturer_id=9', 'canon'),
-(829, 0, 1, 'manufacturer_id=5', 'htc'),
-(830, 0, 1, 'manufacturer_id=7', 'hewlett-packard'),
-(831, 0, 1, 'manufacturer_id=6', 'palm'),
-(832, 0, 1, 'manufacturer_id=10', 'sony'),
-(841, 0, 1, 'information_id=6', 'delivery'),
-(842, 0, 1, 'information_id=3', 'privacy'),
-(843, 0, 1, 'information_id=5', 'terms');
+INSERT INTO `oc_seo_url` (`store_id`, `language_id`, `query`, `keyword`, `push`) VALUES
+(0, 1, 'product_id=48', 'ipod-classic', 'route=product/product&product_id=48'),
+(0, 1, 'path=20', 'desktops', 'route=product/category&path=20'),
+(0, 1, 'path=20_26', 'pc', 'route=product/category&path=20_26'),
+(0, 1, 'path=20_27', 'mac', 'route=product/category&path=20_27'),
+(0, 1, 'manufacturer_id=8', 'apple', 'route=product/manufacturer/info&manufacturer_id=8'),
+(0, 1, 'information_id=4', 'about-us', 'route=information/information&information_id=4'),
+(0, 1, 'path=34', 'mp3-players', 'route=product/category&path=34'),
+(0, 1, 'path=18', 'laptop-notebook', 'route=product/category&path=18'),
+(0, 1, 'path=18_46', 'macs', 'route=product/category&path=18_46'),
+(0, 1, 'path=18_45', 'windows', 'route=product/category&path=18_45'),
+(0, 1, 'path=25', 'component', 'route=product/category&path=25'),
+(0, 1, 'path=25_29', 'mouse', 'route=product/category&path=25_29'),
+(0, 1, 'path=25_28', 'monitor', 'route=product/category&path=25_28'),
+(0, 1, 'path=25_30', 'printer', 'route=product/category&path=25_30'),
+(0, 1, 'path=25_31', 'scanner', 'route=product/category&path=25_31'),
+(0, 1, 'path=25_32', 'web-camera', 'route=product/category&path=25_32'),
+(0, 1, 'path=57', 'tablet', 'route=product/category&path=57'),
+(0, 1, 'path=17', 'software', 'route=product/category&path=17'),
+(0, 1, 'path=24', 'smartphone', 'route=product/category&path=24'),
+(0, 1, 'path=33', 'camera', 'route=product/category&path=33'),
+(0, 1, 'path=34_43', 'test-11', 'route=product/category&path=34_43'),
+(0, 1, 'path=34_44', 'test-12', 'route=product/category&path=34_44'),
+(0, 1, 'path=34_47', 'test-15', 'route=product/category&path=34_47'),
+(0, 1, 'path=34_48', 'test-16', 'route=product/category&path=34_48'),
+(0, 1, 'path=34_49', 'test-17', 'route=product/category&path=34_49'),
+(0, 1, 'path=34_50', 'test-18', 'route=product/category&path=34_50'),
+(0, 1, 'path=34_51', 'test-19', 'route=product/category&path=34_51'),
+(0, 1, 'path=34_52', 'test-20', 'route=product/category&path=34_52'),
+(0, 1, 'path=34_58', 'test-25', 'route=product/category&path=34_58'),
+(0, 1, 'path=34_53', 'test-21', 'route=product/category&path=34_53'),
+(0, 1, 'path=34_54', 'test-22', 'route=product/category&path=34_54'),
+(0, 1, 'path=34_55', 'test-23', 'route=product/category&path=34_55'),
+(0, 1, 'path=34_56', 'test-24', 'route=product/category&path=34_56'),
+(0, 1, 'path=34_38', 'test-4', 'route=product/category&path=34_38'),
+(0, 1, 'path=34_37', 'test-5', 'route=product/category&path=34_37'),
+(0, 1, 'path=34_39', 'test-6', 'route=product/category&path=34_39'),
+(0, 1, 'path=34_40', 'test-7', 'route=product/category&path=34_40'),
+(0, 1, 'path=34_41', 'test-8', 'route=product/category&path=34_41'),
+(0, 1, 'path=34_42', 'test-9', 'route=product/category&path=34_42'),
+(0, 1, 'product_id=30', 'canon-eos-5d', 'route=product/product&product_id=30'),
+(0, 1, 'product_id=47', 'hp-lp3065', 'route=product/product&product_id=47'),
+(0, 1, 'product_id=28', 'htc-touch-hd', 'route=product/product&product_id=28'),
+(0, 1, 'product_id=43', 'macbook', 'route=product/product&product_id=43'),
+(0, 1, 'product_id=44', 'macbook-air', 'route=product/product&product_id=44'),
+(0, 1, 'product_id=45', 'macbook-pro', 'route=product/product&product_id=45'),
+(0, 1, 'product_id=31', 'nikon-d300', 'route=product/product&product_id=31'),
+(0, 1, 'product_id=29', 'palm-treo-pro', 'route=product/product&product_id=29'),
+(0, 1, 'product_id=35', 'product-8', 'route=product/product&product_id=35'),
+(0, 1, 'product_id=49', 'samsung-galaxy-tab-10-1', 'route=product/product&product_id=49'),
+(0, 1, 'product_id=33', 'samsung-syncmaster-941bw', 'route=product/product&product_id=33'),
+(0, 1, 'product_id=46', 'sony-vaio', 'route=product/product&product_id=46'),
+(0, 1, 'product_id=41', 'imac', 'route=product/product&product_id=41'),
+(0, 1, 'product_id=40', 'iphone', 'route=product/product&product_id=40'),
+(0, 1, 'product_id=36', 'ipod-nano', 'route=product/product&product_id=36'),
+(0, 1, 'product_id=34', 'ipod-shuffle', 'route=product/product&product_id=34'),
+(0, 1, 'product_id=32', 'ipod-touch', 'route=product/product&product_id=32'),
+(0, 1, 'manufacturer_id=9', 'canon', 'route=product/manufacturer/info&manufacturer_id=9'),
+(0, 1, 'manufacturer_id=5', 'htc', 'route=product/manufacturer/info&manufacturer_id=5'),
+(0, 1, 'manufacturer_id=7', 'hewlett-packard', 'route=product/manufacturer/info&manufacturer_id=7'),
+(0, 1, 'manufacturer_id=6', 'palm', 'route=product/manufacturer/info&manufacturer_id=6'),
+(0, 1, 'manufacturer_id=10', 'sony', 'route=product/manufacturer/info&manufacturer_id=10'),
+(0, 1, 'information_id=6', 'delivery', 'route=information/information&information_id=6'),
+(0, 1, 'information_id=3', 'privacy', 'route=information/information&information_id=3'),
+(0, 1, 'information_id=5', 'terms', 'route=information/information&information_id=5'),
+(0, 1, 'language=en-gb', 'en-gb', 'language=en-gb'),
+(0, 1, 'route=information/information', '', ''),
+(0, 1, 'route=product/category', '', ''),
+(0, 1, 'route=product/product', '', ''),
+(0, 1, 'route=product/manufacturer', 'brands', 'route=product/manufacturer'),
+(0, 1, 'route=product/manufacturer/info', '', ''),
+(0, 1, 'manufacturer_id=', 'brands', '');
 
 -----------------------------------------------------------
 

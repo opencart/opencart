@@ -34,9 +34,7 @@ class IbanValidator extends ConstraintValidator
      * a BBAN (Basic Bank Account Number) which has a fixed length per country and,
      * included within it, a bank identifier with a fixed position and a fixed length per country
      *
-     * @see http://www.swift.com/dsp/resources/documents/IBAN_Registry.pdf
-     *
-     * @var array
+     * @see https://www.swift.com/sites/default/files/resources/iban_registry.pdf
      */
     private static $formats = array(
         'AD' => 'AD\d{2}\d{4}\d{4}[\dA-Z]{12}', // Andorra
@@ -53,13 +51,14 @@ class IbanValidator extends ConstraintValidator
         'BH' => 'BH\d{2}[A-Z]{4}[\dA-Z]{14}', // Bahrain
         'BI' => 'BI\d{2}\d{12}', // Burundi
         'BJ' => 'BJ\d{2}[A-Z]{1}\d{23}', // Benin
+        'BY' => 'BY\d{2}[\dA-Z]{4}\d{4}[\dA-Z]{16}', // Belarus - https://bank.codes/iban/structure/belarus/
         'BL' => 'FR\d{2}\d{5}\d{5}[\dA-Z]{11}\d{2}', // Saint Barthelemy
         'BR' => 'BR\d{2}\d{8}\d{5}\d{10}[A-Z][\dA-Z]', // Brazil
         'CG' => 'CG\d{2}\d{23}', // Congo
         'CH' => 'CH\d{2}\d{5}[\dA-Z]{12}', // Switzerland
         'CI' => 'CI\d{2}[A-Z]{1}\d{23}', // Ivory Coast
         'CM' => 'CM\d{2}\d{23}', // Cameron
-        'CR' => 'CR\d{2}\d{3}\d{14}', // Costa Rica
+        'CR' => 'CR\d{2}0\d{3}\d{14}', // Costa Rica
         'CV' => 'CV\d{2}\d{21}', // Cape Verde
         'CY' => 'CY\d{2}\d{3}\d{5}[\dA-Z]{16}', // Cyprus
         'CZ' => 'CZ\d{2}\d{20}', // Czech Republic
@@ -130,7 +129,7 @@ class IbanValidator extends ConstraintValidator
         'TL' => 'TL\d{2}\d{3}\d{14}\d{2}', // Timor-Leste
         'TN' => 'TN59\d{2}\d{3}\d{13}\d{2}', // Tunisia
         'TR' => 'TR\d{2}\d{5}[\dA-Z]{1}[\dA-Z]{16}', // Turkey
-        'UA' => 'UA\d{2}[A-Z]{6}[\dA-Z]{19}', // Ukraine
+        'UA' => 'UA\d{2}\d{6}[\dA-Z]{19}', // Ukraine
         'VG' => 'VG\d{2}[A-Z]{4}\d{16}', // Virgin Islands, British
         'WF' => 'FR\d{2}\d{5}\d{5}[\dA-Z]{11}\d{2}', // Wallis and Futuna Islands
         'XK' => 'XK\d{2}\d{4}\d{10}\d{2}', // Republic of Kosovo

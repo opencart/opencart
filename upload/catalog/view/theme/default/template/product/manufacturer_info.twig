@@ -24,41 +24,53 @@
           </div>
         </div>
         <div class="col-md-3 col-sm-6">
-          <div class="form-group"> <a href="{{ compare }}" id="compare-total" class="btn btn-link">{{ text_compare }}</a> </div>
+          <div class="form-group row"> <a href="{{ compare }}" id="compare-total" class="btn btn-link">{{ text_compare }}</a> </div>
         </div>
-        <div class="col-md-4 col-xs-6">
+        <div class="col-md-4 col-6">
           <div class="form-group input-group input-group-sm">
             <label class="input-group-addon" for="input-sort">{{ text_sort }}</label>
             <select id="input-sort" class="form-control" onchange="location = this.value;">
+              
               {% for sorts in sorts %}
               {% if sorts.value == '%s-%s'|format(sort, order) %}
+              
               <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
+              
               {% else %}
+              
               <option value="{{ sorts.href }}">{{ sorts.text }}</option>
+              
               {% endif %}
               {% endfor %}
+            
             </select>
           </div>
         </div>
-        <div class="col-md-3 col-xs-6">
+        <div class="col-md-3 col-6">
           <div class="form-group input-group input-group-sm">
             <label class="input-group-addon" for="input-limit">{{ text_limit }}</label>
             <select id="input-limit" class="form-control" onchange="location = this.value;">
+              
               {% for limits in limits %}
               {% if limits.value == limit %}
+              
               <option value="{{ limits.href }}" selected="selected">{{ limits.text }}</option>
+              
               {% else %}
+              
               <option value="{{ limits.href }}">{{ limits.text }}</option>
+              
               {% endif %}
               {% endfor %}
+            
             </select>
           </div>
         </div>
       </div>
       <div class="row"> {% for product in products %}
-        <div class="product-layout product-list col-xs-12">
+        <div class="product-layout product-list col-12">
           <div class="product-thumb">
-            <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
+            <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-fluid" /></a></div>
             <div>
               <div class="caption">
                 <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
@@ -89,9 +101,9 @@
         <div class="col-sm-6 text-right">{{ results }}</div>
       </div>
       {% else %}
-      <p>{{ text_no_results }}</p>
+      <p>{{ text_empty }}</p>
       <div class="buttons">
-        <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+        <div class="float-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       </div>
       {% endif %}
       {{ content_bottom }}</div>

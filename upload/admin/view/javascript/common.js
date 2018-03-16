@@ -37,12 +37,28 @@ $(document).ready(function() {
 		}
 	});
 
+	$('.date button, .time button, .datetime button').on('click', function() {
+		$(this).parent().parent().datetimepicker('toggle');
+	});
+
+	$('.invalid-tooltip').show();
+
 	// tooltips on hover
 	$('[data-toggle=\'tooltip\']').tooltip({container: 'body', html: true});
 
 	// Makes tooltips work on ajax generated content
 	$(document).ajaxStop(function() {
 		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
+	});
+
+	// tooltip remove
+	$('[data-toggle=\'tooltip\']').on('remove', function() {
+		$(this).tooltip('destroy');
+	});
+
+	// Tooltip remove fixed
+	$(document).on('click', '[data-toggle=\'tooltip\']', function(e) {
+		$('body > .tooltip').remove();
 	});
 
 	// https://github.com/opencart/opencart/issues/2595
@@ -53,20 +69,10 @@ $(document).ready(function() {
 			}
 		}
 	}
-	
-	// tooltip remove
-	$('[data-toggle=\'tooltip\']').on('remove', function() {
-		$(this).tooltip('destroy');
-	});
 
-	// Tooltip remove fixed
-	$(document).on('click', '[data-toggle=\'tooltip\']', function(e) {
-		$('body > .tooltip').remove();
-	});
-	
 	$('#button-menu').on('click', function(e) {
 		e.preventDefault();
-		
+
 		$('#column-left').toggleClass('active');
 	});
 
@@ -81,13 +87,13 @@ $(document).ready(function() {
 		// Sets active and open to selected page in the left column menu.
 		$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parent().addClass('active');
 	}
-	
+
 	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li > a').removeClass('collapsed');
-	
-	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('ul').addClass('in');
-	
+
+	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('ul').addClass('show');
+
 	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li').addClass('active');
-	
+
 	// Image Manager
 	$(document).on('click', 'a[data-toggle=\'image\']', function(e) {
 		var $element = $(this);
@@ -116,7 +122,7 @@ $(document).ready(function() {
 
 		$('#button-image').on('click', function() {
 			var $button = $(this);
-			var $icon   = $button.find('> i');
+			var $icon = $button.find('> i');
 
 			$('#modal-image').remove();
 
@@ -125,6 +131,7 @@ $(document).ready(function() {
 				dataType: 'html',
 				beforeSend: function() {
 					$button.prop('disabled', true);
+
 					if ($icon.length) {
 						$icon.attr('class', 'fa fa-circle-o-notch fa-spin');
 					}
@@ -137,7 +144,7 @@ $(document).ready(function() {
 					}
 				},
 				success: function(html) {
-					$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
+					$('body').append(html);
 
 					$('#modal-image').modal('show');
 				}
@@ -162,6 +169,7 @@ $(document).ready(function() {
 			tb = t.offset().top + t.height(),
 			mb = m.offset().top + m.outerHeight(true),
 			d = 20;
+
 		if (t[0].scrollWidth > t.innerWidth()) {
 			if (mb + d > tb) {
 				t.css('padding-bottom', ((mb + d) - tb));
@@ -202,7 +210,7 @@ $(document).ready(function() {
 
 			// Keydown
 			$this.on('keydown', function(event) {
-				switch(event.keyCode) {
+				switch (event.keyCode) {
 					case 27: // escape
 						this.hide();
 						break;
@@ -216,7 +224,7 @@ $(document).ready(function() {
 			this.click = function(event) {
 				event.preventDefault();
 
-				var value = $(event.target).parent().attr('data-value');
+				var value = $(event.target).attr('href');
 
 				if (value && this.items[value]) {
 					this.select(this.items[value]);
@@ -263,10 +271,11 @@ $(document).ready(function() {
 
 						if (!json[i]['category']) {
 							// ungrouped items
-							html += '<li data-value="' + json[i]['value'] + '"><a href="#">' + json[i]['label'] + '</a></li>';
+							html += '<a href="' + json[i]['value'] + '" class="dropdown-item">' + json[i]['label'] + '</a></li>';
 						} else {
 							// grouped items
 							name = json[i]['category'];
+
 							if (!category[name]) {
 								category[name] = [];
 							}
@@ -276,10 +285,10 @@ $(document).ready(function() {
 					}
 
 					for (name in category) {
-						html += '<li class="dropdown-header">' + name + '</li>';
+						html += '<h6 class="dropdown-header">' + name + '</h6>';
 
 						for (j = 0; j < category[name].length; j++) {
-							html += '<li data-value="' + category[name][j]['value'] + '"><a href="#">&nbsp;&nbsp;&nbsp;' + category[name][j]['label'] + '</a></li>';
+							html += '<a href="' + category[name][j]['value'] + '" class="dropdown-item">&nbsp;&nbsp;&nbsp;' + category[name][j]['label'] + '</a>';
 						}
 					}
 				}
@@ -293,7 +302,7 @@ $(document).ready(function() {
 				$dropdown.html(html);
 			}
 
-			$dropdown.on('click', '> li > a', $.proxy(this.click, this));
+			$dropdown.on('click', '> a', $.proxy(this.click, this));
 			$this.after($dropdown);
 		});
 	}

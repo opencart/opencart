@@ -1,11 +1,13 @@
 <h2>{{ text_instruction }}</h2>
 <p><b>{{ text_description }}</b></p>
-<div class="well well-sm">
-  <p>{{ bank }}</p>
-  <p>{{ text_payment }}</p>
+<div class="card">
+  <div class="card-body">
+    <p>{{ bank }}</p>
+    <p>{{ text_payment }}</p>
+  </div>
 </div>
 <div class="buttons">
-  <div class="pull-right">
+  <div class="float-right">
     <input type="button" value="{{ button_confirm }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
   </div>
 </div>
@@ -22,7 +24,7 @@ $('#button-confirm').on('click', function() {
 		},
 		success: function(json) {
 			if (json['redirect']) {
-				location = json['redirect'];	
+				location = json['redirect'];
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

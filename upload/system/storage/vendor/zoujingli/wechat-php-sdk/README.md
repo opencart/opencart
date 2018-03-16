@@ -26,7 +26,7 @@
 
 **若对您有帮助，可以赞助并支持下作者哦，谢谢！**
 --
-![](https://git.kancloud.cn/repos/zoujingli/wechat-php-sdk/raw/master/image/%E8%B5%9E%E5%8A%A9.png?access-token=49255b63935edafaf42aec9376136528&v1)
+![](http://plugs.ctolog.com/pay.png)
 
 
 **官方接口文档链接**

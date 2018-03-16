@@ -8,13 +8,13 @@ class ControllerCheckoutCart extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/home'),
-			'text' => $this->language->get('text_home')
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('checkout/cart'),
-			'text' => $this->language->get('heading_title')
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'))
 		);
 
 		if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
@@ -29,7 +29,7 @@ class ControllerCheckoutCart extends Controller {
 			}
 
 			if ($this->config->get('config_customer_price') && !$this->customer->isLogged()) {
-				$data['attention'] = sprintf($this->language->get('text_login'), $this->url->link('account/login'), $this->url->link('account/register'));
+				$data['attention'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language')), $this->url->link('account/register', 'language=' . $this->config->get('config_language')));
 			} else {
 				$data['attention'] = '';
 			}
@@ -42,7 +42,7 @@ class ControllerCheckoutCart extends Controller {
 				$data['success'] = '';
 			}
 
-			$data['action'] = $this->url->link('checkout/cart/edit');
+			$data['action'] = $this->url->link('checkout/cart/edit', 'language=' . $this->config->get('config_language'));
 
 			if ($this->config->get('config_cart_weight')) {
 				$data['weight'] = $this->weight->format($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->language->get('decimal_point'), $this->language->get('thousand_point'));
@@ -52,6 +52,14 @@ class ControllerCheckoutCart extends Controller {
 
 			$this->load->model('tool/image');
 			$this->load->model('tool/upload');
+
+			$frequencies = array(
+				'day'        => $this->language->get('text_day'),
+				'week'       => $this->language->get('text_week'),
+				'semi_month' => $this->language->get('text_semi_month'),
+				'month'      => $this->language->get('text_month'),
+				'year'       => $this->language->get('text_year')
+			);
 
 			$data['products'] = array();
 
@@ -100,7 +108,7 @@ class ControllerCheckoutCart extends Controller {
 				// Display prices
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 					$unit_price = $this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));
-					
+
 					$price = $this->currency->format($unit_price, $this->session->data['currency']);
 					$total = $this->currency->format($unit_price * $product['quantity'], $this->session->data['currency']);
 				} else {
@@ -111,14 +119,6 @@ class ControllerCheckoutCart extends Controller {
 				$recurring = '';
 
 				if ($product['recurring']) {
-					$frequencies = array(
-						'day'        => $this->language->get('text_day'),
-						'week'       => $this->language->get('text_week'),
-						'semi_month' => $this->language->get('text_semi_month'),
-						'month'      => $this->language->get('text_month'),
-						'year'       => $this->language->get('text_year')
-					);
-
 					if ($product['recurring']['trial']) {
 						$recurring = sprintf($this->language->get('text_trial_description'), $this->currency->format($this->tax->calculate($product['recurring']['trial_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['trial_cycle'], $frequencies[$product['recurring']['trial_frequency']], $product['recurring']['trial_duration']) . ' ';
 					}
@@ -142,7 +142,7 @@ class ControllerCheckoutCart extends Controller {
 					'reward'    => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
 					'price'     => $price,
 					'total'     => $total,
-					'href'      => $this->url->link('product/product', 'product_id=' . $product['product_id'])
+					'href'      => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
 				);
 			}
 
@@ -155,7 +155,7 @@ class ControllerCheckoutCart extends Controller {
 						'key'         => $key,
 						'description' => $voucher['description'],
 						'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency']),
-						'remove'      => $this->url->link('checkout/cart', 'remove=' . $key)
+						'remove'      => $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language') . '&remove=' . $key)
 					);
 				}
 			}
@@ -166,14 +166,14 @@ class ControllerCheckoutCart extends Controller {
 			$totals = array();
 			$taxes = $this->cart->getTaxes();
 			$total = 0;
-			
-			// Because __call can not keep var references so we put them into an array. 			
+
+			// Because __call can not keep var references so we put them into an array.
 			$total_data = array(
 				'totals' => &$totals,
 				'taxes'  => &$taxes,
 				'total'  => &$total
 			);
-			
+
 			// Display prices
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 				$sort_order = array();
@@ -189,7 +189,7 @@ class ControllerCheckoutCart extends Controller {
 				foreach ($results as $result) {
 					if ($this->config->get('total_' . $result['code'] . '_status')) {
 						$this->load->model('extension/total/' . $result['code']);
-						
+
 						// We have to put the totals in an array so that they pass by reference.
 						$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
 					}
@@ -213,25 +213,27 @@ class ControllerCheckoutCart extends Controller {
 				);
 			}
 
-			$data['continue'] = $this->url->link('common/home');
+			$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
 
-			$data['checkout'] = $this->url->link('checkout/checkout');
+			$data['checkout'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 
 			$this->load->model('setting/extension');
 
 			$data['modules'] = array();
-			
+
 			$files = glob(DIR_APPLICATION . '/controller/extension/total/*.php');
 
 			if ($files) {
 				foreach ($files as $file) {
 					$result = $this->load->controller('extension/total/' . basename($file, '.php'));
-					
+
 					if ($result) {
 						$data['modules'][] = $result;
 					}
 				}
 			}
+
+			$data['language'] = $this->config->get('config_language');
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
@@ -243,10 +245,12 @@ class ControllerCheckoutCart extends Controller {
 			$this->response->setOutput($this->load->view('checkout/cart', $data));
 		} else {
 			$data['text_error'] = $this->language->get('text_empty');
-			
-			$data['continue'] = $this->url->link('common/home');
+
+			$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
 
 			unset($this->session->data['success']);
+
+			$data['language'] = $this->config->get('config_language');
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
@@ -318,61 +322,15 @@ class ControllerCheckoutCart extends Controller {
 			if (!$json) {
 				$this->cart->add($this->request->post['product_id'], $quantity, $option, $recurring_id);
 
-				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('checkout/cart'));
+				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 
 				// Unset all shipping and payment methods
 				unset($this->session->data['shipping_method']);
 				unset($this->session->data['shipping_methods']);
 				unset($this->session->data['payment_method']);
 				unset($this->session->data['payment_methods']);
-
-				// Totals
-				$this->load->model('setting/extension');
-
-				$totals = array();
-				$taxes = $this->cart->getTaxes();
-				$total = 0;
-		
-				// Because __call can not keep var references so we put them into an array. 			
-				$total_data = array(
-					'totals' => &$totals,
-					'taxes'  => &$taxes,
-					'total'  => &$total
-				);
-
-				// Display prices
-				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-					$sort_order = array();
-
-					$results = $this->model_setting_extension->getExtensions('total');
-
-					foreach ($results as $key => $value) {
-						$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
-					}
-
-					array_multisort($sort_order, SORT_ASC, $results);
-
-					foreach ($results as $result) {
-						if ($this->config->get('total_' . $result['code'] . '_status')) {
-							$this->load->model('extension/total/' . $result['code']);
-
-							// We have to put the totals in an array so that they pass by reference.
-							$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
-						}
-					}
-
-					$sort_order = array();
-
-					foreach ($totals as $key => $value) {
-						$sort_order[$key] = $value['sort_order'];
-					}
-
-					array_multisort($sort_order, SORT_ASC, $totals);
-				}
-
-				$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total, $this->session->data['currency']));
 			} else {
-				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']));
+				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->post['product_id']));
 			}
 		}
 
@@ -399,7 +357,7 @@ class ControllerCheckoutCart extends Controller {
 			unset($this->session->data['payment_methods']);
 			unset($this->session->data['reward']);
 
-			$this->response->redirect($this->url->link('checkout/cart'));
+			$this->response->redirect($this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -424,52 +382,6 @@ class ControllerCheckoutCart extends Controller {
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 			unset($this->session->data['reward']);
-
-			// Totals
-			$this->load->model('setting/extension');
-
-			$totals = array();
-			$taxes = $this->cart->getTaxes();
-			$total = 0;
-
-			// Because __call can not keep var references so we put them into an array. 			
-			$total_data = array(
-				'totals' => &$totals,
-				'taxes'  => &$taxes,
-				'total'  => &$total
-			);
-
-			// Display prices
-			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-				$sort_order = array();
-
-				$results = $this->model_setting_extension->getExtensions('total');
-
-				foreach ($results as $key => $value) {
-					$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
-				}
-
-				array_multisort($sort_order, SORT_ASC, $results);
-
-				foreach ($results as $result) {
-					if ($this->config->get('total_' . $result['code'] . '_status')) {
-						$this->load->model('extension/total/' . $result['code']);
-
-						// We have to put the totals in an array so that they pass by reference.
-						$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
-					}
-				}
-
-				$sort_order = array();
-
-				foreach ($totals as $key => $value) {
-					$sort_order[$key] = $value['sort_order'];
-				}
-
-				array_multisort($sort_order, SORT_ASC, $totals);
-			}
-
-			$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total, $this->session->data['currency']));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

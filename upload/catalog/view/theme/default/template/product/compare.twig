@@ -89,6 +89,7 @@
           <td>{{ product.length }} x {{ product.width }} x {{ product.height }}</td>
           {% endfor %} </tr>
           </tbody>
+        
         {% for attribute_group in attribute_groups %}
         <thead>
           <tr>
@@ -118,12 +119,12 @@
           {% endfor %} </tr>
       </table>
       {% else %}
-      <p>{{ text_no_results }}</p>
+      <p>{{ text_empty }}</p>
       <div class="buttons">
-        <div class="pull-right"><a href="{{ continue }}" class="btn btn-default">{{ button_continue }}</a></div>
+        <div class="float-right"><a href="{{ continue }}" class="btn btn-default">{{ button_continue }}</a></div>
       </div>
       {% endif %}
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>
-{{ footer }}
+{{ footer }} 

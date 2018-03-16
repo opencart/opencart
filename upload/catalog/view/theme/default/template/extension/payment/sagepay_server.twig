@@ -1,21 +1,25 @@
-<form class="form-horizontal">
+<form>
   <fieldset id="payment">
     {% if cards %}
     <legend>{{ text_credit_card }}</legend>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">{{ entry_card }}</label>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">{{ entry_card }}</label>
       <div class="col-sm-10">
-        <label class="radio-inline">
-          <input type="radio" name="CreateToken" value="0" checked="checked"/>
+        <div class="form-check form-check-inline">
+					<label>
+          <input type="radio" name="CreateToken" value="0" class="form-check-input" checked="checked"/>
           {{ entry_card_existing }} </label>
-        <label class="radio-inline">
-          <input type="radio" name="CreateToken" value=""/>
+        </div>
+        <div class="form-check form-check-inline">
+					<label>
+          <input type="radio" name="CreateToken" value="" class="form-check-input" />
           {{ entry_card_new }} </label>
+        </div>
       </div>
     </div>
     <div id="card-existing">
-      <div class="form-group required">
-        <label class="col-sm-2 control-label" for="Token">{{ entry_cc_choice }}</label>
+      <div class="form-group row required">
+        <label class="col-sm-2 col-form-label" for="Token">{{ entry_cc_choice }}</label>
         <div class="col-sm-8">
           <select name="Token" class="form-control">
 			{% for card in cards %}
@@ -29,9 +33,9 @@
       </div>
     </div>
     <div style="display:none" id="card-save" class="form-group">
-      <label class="col-sm-2 control-label">{{ entry_card_save }}</label>
+      <label class="col-sm-2 col-form-label">{{ entry_card_save }}</label>
       <div class="col-sm-10">
-        <div class="checkbox">
+        <div class="form-check">
           <label>
             <input type="checkbox" name="CreateToken" value="1" disabled/>
           </label>
@@ -40,18 +44,20 @@
     </div>
     {% elseif sagepay_server_card %}
     <legend>{{ text_credit_card }}</legend>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">{{ entry_card }}</label>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">{{ entry_card }}</label>
       <div class="col-sm-10">
-        <label class="radio-inline">
-          <input type="radio" name="CreateToken" value="" checked="checked"/>
+        <div class="form-check form-check-inline">
+          <label>
+          <input type="radio" name="CreateToken" value="" class="form-check-input" checked="checked"/>
           {{ entry_card_new }} </label>
+        </div>
       </div>
     </div>
     <div id="card-save" class="form-group">
-      <label class="col-sm-2 control-label">{{ entry_card_save }}</label>
+      <label class="col-sm-2 col-form-label">{{ entry_card_save }}</label>
       <div class="col-sm-10">
-        <div class="checkbox">
+        <div class="form-check">
           <label>
             <input type="checkbox" name="CreateToken" value="1"/>
           </label>
@@ -60,7 +66,7 @@
     </div>
     {% endif %}
     <div class="buttons">
-      <div class="pull-right">
+      <div class="float-right">
         <input type="button" value="{{ button_confirm }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
       </div>
     </div>
@@ -80,7 +86,7 @@
 			$('#card-save :input').prop('disabled', false);
 		}
 	});
-//</script> 
+//</script>
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function() {
 	$.ajax({
@@ -116,7 +122,7 @@ $('#button-confirm').bind('click', function() {
 		}
 	});
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#button-delete').bind('click', function () {
   if (confirm('{{ text_confirm_delete }}')) {

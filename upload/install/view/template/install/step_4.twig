@@ -29,11 +29,8 @@
     </div>
   </div>
   <div class="modules">
-    <div class="row" id="extension">
-      <h2 class="text-center"><i class="fa fa-circle-o-notch fa-spin"></i> {{ text_loading }}</h2>
-    </div>
     <div class="row">
-      <div class="col-sm-12 text-center"><a href="http://www.opencart.com/index.php?route=extension/extension&utm_source=opencart_install&utm_medium=store_link&utm_campaign=opencart_install" target="_BLANK" class="btn btn-default">{{ text_extension }}</a></div>
+      <div class="col-sm-12 text-center"><a href="https://www.opencart.com/index.php?route=marketplace/extension&utm_source=opencart_install&utm_medium=store_link&utm_campaign=opencart_install" target="_BLANK" class="btn btn-default">{{ text_extension }}</a></div>
     </div>
   </div>
   <div class="mailing">
@@ -60,46 +57,15 @@
         <h3>{{ text_facebook }}</h3>
         <p>{{ text_facebook_description }}</p>
         <a href="https://www.facebook.com/pages/OpenCart/477182382328323">{{ text_facebook_visit }}</a></div>
-      <div class="col-sm-4"><a href="http://forum.opencart.com/?utm_source=opencart_install&utm_medium=forum_link&utm_campaign=opencart_install" class="icon transition"><i class="fa fa-comments fa-4x"></i></a>
+      <div class="col-sm-4"><a href="https://forum.opencart.com/?utm_source=opencart_install&utm_medium=forum_link&utm_campaign=opencart_install" class="icon transition"><i class="fa fa-comments fa-4x"></i></a>
         <h3>{{ text_forum }}</h3>
         <p>{{ text_forum_description }}</p>
-        <a href="http://forum.opencart.com/?utm_source=opencart_install&utm_medium=forum_link&utm_campaign=opencart_install">{{ text_forum_visit }}</a></div>
-      <div class="col-sm-4"><a href="http://www.opencart.com/index.php?route=partner/partner&utm_source=opencart_install&utm_medium=partner_link&utm_campaign=opencart_install" class="icon transition"><i class="fa fa-user fa-4x"></i></a>
+        <a href="https://forum.opencart.com/?utm_source=opencart_install&utm_medium=forum_link&utm_campaign=opencart_install">{{ text_forum_visit }}</a></div>
+      <div class="col-sm-4"><a href="https://www.opencart.com/index.php?route=support/partner&utm_source=opencart_install&utm_medium=partner_link&utm_campaign=opencart_install" class="icon transition"><i class="fa fa-user fa-4x"></i></a>
         <h3>{{ text_commercial }}</h3>
         <p>{{ text_commercial_description }}</p>
-        <a href="http://www.opencart.com/index.php?route=partner/partner&utm_source=opencart_install&utm_medium=partner_link&utm_campaign=opencart_install" target="_BLANK">{{ text_commercial_visit }}</a></div>
+        <a href="https://www.opencart.com/index.php?route=support/partner&utm_source=opencart_install&utm_medium=partner_link&utm_campaign=opencart_install" target="_BLANK">{{ text_commercial_visit }}</a></div>
     </div>
   </div>
 </div>
 {{ footer }}
-<script type="text/javascript"><!--
-$(document).ready(function() {
-	$.ajax({
-		url: '{{ extension }}',
-		type: 'post',
-		dataType: 'json',
-		success: function(json) {
-			if (json['extensions']) {
-				html  = '';
-
-				for (i = 0; i < json['extensions'].length; i++) {
-					extension = json['extensions'][i];
-
-					html += '<div class="col-sm-6 module">';
-					html += '  <a class="thumbnail pull-left" href="' + extension['href'] + '"><img src="' + extension['image'] + '" alt="' + extension['name'] + '" /></a>';
-					html += '  <h5>' + extension['name'] + '</h5>';
-					html += '  <p>' + extension['price'] + ' <a target="_BLANK" href="' + extension['href'] + '">{{ text_view }}</a></p>';
-					html += '  <div class="clearfix"></div>';
-					html += '</div>';
-
-					i++;
-				}
-
-				$('#extension').html(html);
-			} else {
-				$('#extension').fadeOut();
-			}
-		}
-	});
-});
-//--></script>

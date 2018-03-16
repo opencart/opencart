@@ -52,8 +52,10 @@ class ControllerExtensionPaymentDivido extends Controller {
 		$this->model_extension_payment_divido->setMerchant($this->config->get('payment_divido_api_key'));
 
 		$plans = $this->model_extension_payment_divido->getCartPlans($this->cart);
+
 		foreach ($plans as $key => $plan) {
 			$planMinTotal = $total - ($total * ($plan->min_deposit / 100));
+
 			if ($plan->min_amount > $planMinTotal) {
 				unset($plans[$key]);
 			}
@@ -199,16 +201,15 @@ class ControllerExtensionPaymentDivido extends Controller {
 
 		$shop_url = $this->config->get('config_url');
 
-		$callback_url = $this->url->link('extension/payment/divido/update');
-		$return_url = $this->url->link('checkout/success');
-		$checkout_url = $this->url->link('checkout/checkout');
+		$callback_url = $this->url->link('extension/payment/divido/update', 'language=' . $this->config->get('config_language'));
+		$return_url = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'));
+		$checkout_url = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 
 		$salt = uniqid('', true);
 		$hash = $this->model_extension_payment_divido->hashOrderId($order_id, $salt);
 
 		$request_data = array(
-			'merchant' => $api_key, mexico44
-
+			'merchant' => $api_key,
 			'deposit'  => $deposit_amount,
 			'finance'  => $finance,
 			'country'  => $country,

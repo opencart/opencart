@@ -90,9 +90,15 @@ class ModelUserApi extends Model {
 	}
 
 	public function getApiIps($api_id) {
+		$ip_data = array();
+
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "api_ip` WHERE api_id = '" . (int)$api_id . "'");
 
-		return $query->rows;
+		foreach ($query->rows as $result) {
+			$ip_data[] = $result['ip'];
+		}
+
+		return $ip_data;
 	}
 
 	public function addApiSession($api_id, $session_id, $ip) {

@@ -259,6 +259,8 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 				);
 			}
 
+			$data['language'] = $this->config->get('config_language');
+
 			return $this->load->view('extension/payment/klarna_account', $data);
 		}
 	}
@@ -535,7 +537,7 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 
 						$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $order_status, $comment, 1);
 
-						$json['redirect'] = $this->url->link('checkout/success');
+						$json['redirect'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'));
 					}
 				}
 

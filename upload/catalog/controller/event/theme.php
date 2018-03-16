@@ -4,12 +4,10 @@ class ControllerEventTheme extends Controller {
 		// If there is a template file we render
 		if ($template) {
 			// include and register Twig auto-loader
-			include_once(DIR_SYSTEM . 'library/template/Twig/Autoloader.php');
-			
 			Twig_Autoloader::register();
 					
 			// specify where to look for templates
-			$loader = new \Twig_Loader_Filesystem(DIR_TEMPLATE);		
+			$loader = new \Twig_Loader_Filesystem(DIR_TEMPLATE);
 			
 			$config = array('autoescape' => false);
 			

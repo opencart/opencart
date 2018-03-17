@@ -17,6 +17,15 @@ fieldset {
     margin-bottom: 10px;
 }
 
+label {
+  font-weight: bold;
+}
+
+legend {
+  border-bottom: 2px solid #ddd;
+  margin-bottom: 20px;
+}
+
 .page-header {
     vertical-align: middle;
     margin: 20px 0 15px 0;
@@ -33,34 +42,7 @@ fieldset {
     margin-bottom: 15px;
     text-shadow: 0 1px #fff;
 }
-/*
-.breadcrumb {
-    display: inline-block;
-    background: none;
-    margin: 8px 0 19px 0;
-    padding: 0 10px;
-    border-radius: 0;
-}
 
-.breadcrumb li a {
-    color: #999999;
-    font-size: 14px;
-    padding: 0px;
-    margin: 0px;
-}
-
-.breadcrumb li a:hover {
-    text-decoration: none;
-}
-
-.breadcrumb li + li:before {
-    content: "\f105";
-    font-family: FontAwesome;
-    color: #BBBBBB;
-    padding: 0 5px;
-    font-size: 10px;
-}
-*/
 a:hover, a:focus {
     text-decoration: none;
 }
@@ -139,22 +121,6 @@ a:hover, a:focus {
     padding-left: 10px;
     padding-right: 10px;
 }
-
-/* Desktop
-@media (min-width: 768px) {
-    #header .navbar-header {
-        display: inline-block;
-    }
-
-    #header #user-profile {
-        max-width: none;
-    }
-
-    #header .nav > li > a {
-        line-height: 60px;
-    }
-}
-*/
 
 #button-menu {
     line-height: 30px;

@@ -26,18 +26,18 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
-    <div class="panel panel-info">
+    <div class="card mb-3">
       <div class="card-header"><i class="fa fa-question-circle"></i> {{ text_instruction }}</div>
       <div class="card-body">
         <p>{{ text_cron_1 }}</p>
         <p>{{ text_cron_2 }}</p>
         <div class="form-group">
           <div class="input-group">
-            <div class="input-group-addon">
-              {{ entry_cron }}
+            <div class="input-group-prepend">
+              <span class="input-group-text">{{ entry_cron }}</span>
             </div>
             <input type="text" value="wget &quot;{{ cron }}&quot; --read-timeout=5400" id="input-cron" class="form-control"/>
-            <div class="input-group-btn">
+            <div class="input-group-append">
               <button type="button" id="button-copy" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fa fa-copy"></i></button>
             </div>
           </div>

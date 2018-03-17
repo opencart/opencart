@@ -30,7 +30,11 @@
             <label class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
               {% for language in languages %}
-                <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span> <input type="text" name="recurring_description[{{ language.language_id }}][name]" value="{{ recurring_description[language.language_id] ? recurring_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control"/>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span>
+                  </div>
+                  <input type="text" name="recurring_description[{{ language.language_id }}][name]" value="{{ recurring_description[language.language_id] ? recurring_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control"/>
                 </div>
                 {% if error_name[language.language_id] %}
                   <div class="invalid-tooltip">{{ error_name[language.language_id] }}</div>
@@ -147,7 +151,4 @@
     </div>
   </div>
 </div>
-<script type="text/javascript"><!--
-$('#language a:first').tab('show');
-//--></script>
 {{ footer }}

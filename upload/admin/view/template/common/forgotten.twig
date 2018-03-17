@@ -17,10 +17,11 @@
             {% endif %}
             <form action="{{ action }}" method="post" enctype="multipart/form-data">
               <div class="form-group">
-                <label for="input-email">{{ entry_email }}</label>
+                <label class="col-form-label" for="input-email">{{ entry_email }}</label>
                 <div class="input-group">
                   <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fa fa-envelope"></i></span></div>
+                    <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                  </div>
                   <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
                 </div>
               </div>

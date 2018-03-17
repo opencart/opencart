@@ -136,7 +136,7 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 			$data['payment_pilibaba_email_address'] = '';
 		}
 
-		if ($data['pilibaba_merchant_number'] && $data['payment_pilibaba_secret_key']) {
+		if (!empty($data['pilibaba_merchant_number']) && $data['payment_pilibaba_secret_key']) {
 			$data['show_register'] = false;
 
 			$data['currencies'] = $data['warehouses'] = $data['countries'] = array();

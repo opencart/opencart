@@ -17,7 +17,7 @@
     <div id="collapse" class="panel-group">
       <div class="card">
         <div class="card-header"><i class="fa fa-user fa-fw"></i> {{ text_customer_detail }}</div>
-        <div id="collapse-customer" class="panel-collapse collapse show">
+        <div id="collapse-customer" data-parent="#collapse" class="panel-collapse collapse show">
           <div class="card-body">
             <form>
               <div class="form-group row">
@@ -228,7 +228,6 @@
         <div class="card-header"><i class="fa fa-shopping-cart fa-fw"></i> {{ text_cart }}</div>
         <div id="collapse-cart" data-parent="#collapse" class="panel-collapse collapse">
           <div class="card-body">
-
             <div class="table-responsive">
               <table class="table table-bordered">
                 <thead>
@@ -970,14 +969,14 @@ $('select[name=\'currency\']').on('change', function() {
 			$('select[name=\'currency\']').prop('disabled', false);
 		},
 		success: function(json) {
-			$('.alert-dismissible, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
+			$('.alert-dismissible, .invalid-tooltip').remove();
+			$('.is-invalid').removeClass('is-invalid');
 
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
-				$('select[name=\'currency\']').closest('.form-group').addClass('has-error');
+				$('select[name=\'currency\']').addClass('is-invalid');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -1126,9 +1125,6 @@ $('#button-customer').on('click', function() {
 						$(element).after('<div class="invalid-tooltip" style="display: block;">' + json['error'][i] + '</div>');
 					}
 				}
-
-				// Highlight any found errors
-				$('.invalid-tooltip').parentsUntil('.form-group').parent().addClass('has-error');
 			} else {
 				// Refresh products, vouchers and totals
 				$.ajax({
@@ -1144,8 +1140,8 @@ $('#button-customer').on('click', function() {
 						$('#button-voucher-add').button('reset');
 					},
 					success: function(json) {
-						$('.alert-dismissible, .text-danger').remove();
-						$('.form-group').removeClass('has-error');
+						$('.alert-dismissible, .invalid-tooltip').remove();
+						$('.is-invalid').removeClass('is-invalid');
 
 						if (json['error'] && json['error']['warning']) {
 							$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
@@ -1168,8 +1164,8 @@ $('#button-customer').on('click', function() {
 							$('#button-product-add').button('reset');
 						},
 						success: function(json) {
-							$('.alert-dismissible, .text-danger').remove();
-							$('.form-group').removeClass('has-error');
+							$('.alert-dismissible, .invalid-tooltip').remove();
+							$('.is-invalid').removeClass('is-invalid');
 
 							if (json['error'] && json['error']['warning']) {
 								$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
@@ -1392,8 +1388,8 @@ $('#button-product-add').on('click', function() {
 			$('#button-product-add').button('reset');
 		},
 		success: function(json) {
-			$('.alert-dismissible, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
+			$('.alert-dismissible, .invalid-tooltip').remove();
+			$('.is-invalid').removeClass('is-invalid');
 
 			if (json['error']) {
 				if (json['error']['warning']) {
@@ -1404,10 +1400,13 @@ $('#button-product-add').on('click', function() {
 					for (i in json['error']['option']) {
 						var element = $('#input-option' + i.replace('_', '-'));
 
+						// Highlight any found errors
+						$(element).addClass('is-invalid');
+
 						if (element.parent().hasClass('input-group')) {
-							$(element).parent().after('<div class="invalid-tooltip">' + json['error']['option'][i] + '</div>');
+							$(element).parent().after('<div class="invalid-tooltip" style="display: block;">' + json['error']['option'][i] + '</div>');
 						} else {
-							$(element).after('<div class="invalid-tooltip">' + json['error']['option'][i] + '</div>');
+							$(element).after('<div class="invalid-tooltip" style="display: block;">' + json['error']['option'][i] + '</div>');
 						}
 					}
 				}
@@ -1415,9 +1414,6 @@ $('#button-product-add').on('click', function() {
 				if (json['error']['store']) {
 					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['store'] + '</div>');
 				}
-
-				// Highlight any found errors
-				$('.text-danger').parentsUntil('.form-group').parent().addClass('has-error');
 			} else {
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -1444,8 +1440,8 @@ $('#button-voucher-add').on('click', function() {
 			$('#button-voucher-add').button('reset');
 		},
 		success: function(json) {
-			$('.alert-dismissible, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
+			$('.alert-dismissible, .invalid-tooltip').remove();
+			$('.is-invalid').removeClass('is-invalid');
 
 			if (json['error']) {
 				if (json['error']['warning']) {
@@ -1455,15 +1451,15 @@ $('#button-voucher-add').on('click', function() {
 				for (i in json['error']) {
 					var element = $('#input-' + i.replace('_', '-'));
 
+					// Highlight any found errors
+					$(element).addClass('is-invalid');
+
 					if (element.parent().hasClass('input-group')) {
-						$(element).parent().after('<div class="invalid-tooltip">' + json['error'][i] + '</div>');
+						$(element).parent().after('<div class="invalid-tooltip" style="display: block;">' + json['error'][i] + '</div>');
 					} else {
-						$(element).after('<div class="invalid-tooltip">' + json['error'][i] + '</div>');
+						$(element).after('<div class="invalid-tooltip" style="display: block;">' + json['error'][i] + '</div>');
 					}
 				}
-
-				// Highlight any found errors
-				$('.text-danger').parentsUntil('.form-group').parent().addClass('has-error');
 			} else {
 				$('input[name=\'from_name\']').val('');
 				$('input[name=\'from_email\']').val('');
@@ -1498,7 +1494,7 @@ $('#cart').delegate('.btn-danger', 'click', function() {
 			$(element).button('reset');
 		},
 		success: function(json) {
-			$('.alert-dismissible, .text-danger').remove();
+			$('.alert-dismissible, .invalid-tooltip').remove();
 
 			// Check for errors
 			if (json['error']) {
@@ -1531,8 +1527,8 @@ $('#cart').delegate('.btn-primary', 'click', function() {
 			$(element).button('reset');
 		},
 		success: function(json) {
-			$('.alert-dismissible, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
+			$('.alert-dismissible, .invalid-tooltip').remove();
+			$('.is-invalid').removeClass('is-invalid');
 
 			if (json['error'] && json['error']['warning']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
@@ -1664,8 +1660,8 @@ $('#button-payment-address').on('click', function() {
 			$('#button-payment-address').button('reset');
 		},
 		success: function(json) {
-			$('.alert-dismissible, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
+			$('.alert-dismissible, .invalid-tooltip').remove();
+			$('.is-invalid').removeClass('is-invalid');
 
 			// Check for errors
 			if (json['error']) {
@@ -1676,15 +1672,15 @@ $('#button-payment-address').on('click', function() {
 				for (i in json['error']) {
 					var element = $('#input-payment-' + i.replace('_', '-'));
 
+					// Highlight any found errors
+					$(element).addClass('is-invalid');
+
 					if ($(element).parent().hasClass('input-group')) {
-						$(element).parent().after('<div class="invalid-tooltip">' + json['error'][i] + '</div>');
+						$(element).parent().after('<div class="invalid-tooltip" style="display: block;">' + json['error'][i] + '</div>');
 					} else {
-						$(element).after('<div class="invalid-tooltip">' + json['error'][i] + '</div>');
+						$(element).after('<div class="invalid-tooltip" style="display: block;">' + json['error'][i] + '</div>');
 					}
 				}
-
-				// Highlight any found errors
-				$('.text-danger').parentsUntil('.form-group').parent().addClass('has-error');
 			} else {
 				// Payment Methods
 				$.ajax({
@@ -1848,8 +1844,8 @@ $('#button-shipping-address').on('click', function() {
 			$('#button-shipping-address').button('reset');
 		},
 		success: function(json) {
-			$('.alert-dismissible, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
+			$('.alert-dismissible, .invalid-tooltip').remove();
+			$('.is-invalid').removeClass('is-invalid');
 
 			// Check for errors
 			if (json['error']) {
@@ -1860,15 +1856,15 @@ $('#button-shipping-address').on('click', function() {
 				for (i in json['error']) {
 					var element = $('#input-shipping-' + i.replace('_', '-'));
 
+					// Highlight any found errors
+					$(element).addClass('is-invalid');
+
 					if ($(element).parent().hasClass('input-group')) {
-						$(element).parent().after('<div class="invalid-tooltip">' + json['error'][i] + '</div>');
+						$(element).parent().after('<div class="invalid-tooltip" style="display: block;">' + json['error'][i] + '</div>');
 					} else {
-						$(element).after('<div class="invalid-tooltip">' + json['error'][i] + '</div>');
+						$(element).after('<div class="invalid-tooltip" style="display: block;">' + json['error'][i] + '</div>');
 					}
 				}
-
-				// Highlight any found errors
-				$('.text-danger').parentsUntil('.form-group').parent().addClass('has-error');
 			} else {
 				// Shipping Methods
 				var request = $.ajax({
@@ -1942,8 +1938,8 @@ $('#button-shipping-method').on('click', function() {
 			$('#button-shipping-method').button('reset');
 		},
 		success: function(json) {
-			$('.alert-dismissible, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
+			$('.alert-dismissible, .invalid-tooltip').remove();
+			$('.is-invalid').removeClass('is-invalid');
 
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
@@ -1980,8 +1976,8 @@ $('#button-payment-method').on('click', function() {
 			$('#button-payment-method').button('reset');
 		},
 		success: function(json) {
-			$('.alert-dismissible, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
+			$('.alert-dismissible, .invalid-tooltip').remove();
+			$('.is-invalid').removeClass('is-invalid');
 
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
@@ -2018,8 +2014,8 @@ $('#button-coupon').on('click', function() {
 			$('#button-coupon').button('reset');
 		},
 		success: function(json) {
-			$('.alert-dismissible, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
+			$('.alert-dismissible, .invalid-tooltip').remove();
+			$('.is-invalid').removeClass('is-invalid');
 
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
@@ -2056,14 +2052,14 @@ $('#button-voucher').on('click', function() {
 			$('#button-voucher').button('reset');
 		},
 		success: function(json) {
-			$('.alert-dismissible, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
+			$('.alert-dismissible, .invalid-tooltip').remove();
+			$('.is-invalid').removeClass('is-invalid');
 
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
-				$('input[name=\'voucher\']').closest('.form-group').addClass('has-error');
+				$('input[name=\'voucher\']').addClass('is-invalid');
 			}
 
 			if (json['success']) {
@@ -2094,18 +2090,18 @@ $('#button-reward').on('click', function() {
 			$('#button-reward').button('reset');
 		},
 		success: function(json) {
-			$('.alert-dismissible, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
+			$('.alert-dismissible, .invalid-tooltip').remove();
+			$('.is-invalid').removeClass('is-invalid');
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#collapse-total .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
-				$('input[name=\'reward\']').closest('.form-group').addClass('has-error');
+				$('input[name=\'reward\']').addClass('is-invalid');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#collapse-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -2165,7 +2161,7 @@ $('#button-save').on('click', function() {
 			$('#button-save').button('reset');
 		},
 		success: function(json) {
-			$('.alert-dismissible, .text-danger').remove();
+			$('.alert-dismissible, .invalid-tooltip').remove();
 
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');

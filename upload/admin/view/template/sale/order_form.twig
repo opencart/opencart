@@ -1393,7 +1393,7 @@ $('#button-product-add').on('click', function() {
 
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#collapse-cart .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#tab-product').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				if (json['error']['option']) {
@@ -1412,7 +1412,7 @@ $('#button-product-add').on('click', function() {
 				}
 
 				if (json['error']['store']) {
-					$('#collapse-cart .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['store'] + '</div>');
+					$('#tab-product').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['store'] + '</div>');
 				}
 			} else {
 				// Refresh products, vouchers and totals
@@ -1445,7 +1445,7 @@ $('#button-voucher-add').on('click', function() {
 
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#collapse-cart .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#tab-voucher').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				for (i in json['error']) {

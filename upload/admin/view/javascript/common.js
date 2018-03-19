@@ -187,12 +187,14 @@ $(document).ready(function() {
 	$.fn.autocomplete = function(option) {
 		return this.each(function() {
 			var $this = $(this);
-			var $dropdown = $('<ul class="dropdown-menu" />');
+			var $dropdown = $('<div class="dropdown-menu"/>');
 
 			this.timer = null;
 			this.items = [];
 
 			$.extend(this, option);
+
+			$(this).wrap('<div class="dropdown">');
 
 			$this.attr('autocomplete', 'off');
 
@@ -233,19 +235,12 @@ $(document).ready(function() {
 
 			// Show
 			this.show = function() {
-				var pos = $this.position();
-
-				$dropdown.css({
-					top: pos.top + $this.outerHeight(),
-					left: pos.left
-				});
-
-				$dropdown.show();
+				$dropdown.addClass('show');
 			}
 
 			// Hide
 			this.hide = function() {
-				$dropdown.hide();
+				$dropdown.removeClass('show');
 			}
 
 			// Request
@@ -271,7 +266,7 @@ $(document).ready(function() {
 
 						if (!json[i]['category']) {
 							// ungrouped items
-							html += '<a href="' + json[i]['value'] + '" class="dropdown-item">' + json[i]['label'] + '</a></li>';
+							html += '<a href="' + json[i]['value'] + '" class="dropdown-item">' + json[i]['label'] + '</a>';
 						} else {
 							// grouped items
 							name = json[i]['category'];
@@ -303,6 +298,7 @@ $(document).ready(function() {
 			}
 
 			$dropdown.on('click', '> a', $.proxy(this.click, this));
+
 			$this.after($dropdown);
 		});
 	}

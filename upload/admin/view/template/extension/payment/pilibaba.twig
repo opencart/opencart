@@ -32,10 +32,10 @@
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment">
           <ul class="nav nav-tabs">
             {% if show_register %}
-              <li class="active" id="li-tab-register"><a href="#tab-register" data-toggle="tab">{{ tab_register }}</a></li>
-              <li class="nav-item" id="li-tab-settings"><a href="#tab-settings" data-toggle="tab">{{ tab_settings }}</a></li>
+              <li class="nav-item" id="li-tab-register"><a href="#tab-register" data-toggle="tab" class="nav-link active">{{ tab_register }}</a></li>
+              <li class="nav-item" id="li-tab-settings"><a href="#tab-settings" data-toggle="tab" class="nav-link">{{ tab_settings }}</a></li>
             {% else %}
-              <li class="active" id="li-tab-settings"><a href="#tab-settings" data-toggle="tab">{{ tab_settings }}</a></li>
+              <li class="active" id="li-tab-settings"><a href="#tab-settings" data-toggle="tab" class="nav-link">{{ tab_settings }}</a></li>
             {% endif %}
           </ul>
           <div class="tab-content">

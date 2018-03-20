@@ -670,7 +670,7 @@ div.required .col-form-label:before {
 .collapse .in {
   display: block; }
 /* Theme Custom CSS */
-#display-control #compare-total.btn {
+#display-control #compare-total.a {
   margin-top: -2px;
   padding: 0.35rem 0.565rem; }
 

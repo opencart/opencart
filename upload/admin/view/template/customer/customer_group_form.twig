@@ -29,7 +29,9 @@
             <label class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
               {% for language in languages %}
-                <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span> <input type="text" name="customer_group_description[{{ language.language_id }}][name]" value="{{ customer_group_description[language.language_id] ? customer_group_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control"/>
+                <div class="input-group">
+                  <div class="input-group-prepend"><span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span></div>
+                  <input type="text" name="customer_group_description[{{ language.language_id }}][name]" value="{{ customer_group_description[language.language_id] ? customer_group_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control"/>
                 </div>
                 {% if error_name[language.language_id] %}
                   <div class="invalid-tooltip">{{ error_name[language.language_id] }}</div>
@@ -41,7 +43,9 @@
             <div class="form-group row">
               <label class="col-sm-2 col-form-label" for="input-description{{ language.language_id }}">{{ entry_description }}</label>
               <div class="col-sm-10">
-                <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span> <textarea name="customer_group_description[{{ language.language_id }}][description]" rows="5" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" class="form-control">{{ customer_group_description[language.language_id] ? customer_group_description[language.language_id].description }}</textarea>
+                <div class="input-group">
+                  <div class="input-group-prepend"><span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span></div>
+                  <textarea name="customer_group_description[{{ language.language_id }}][description]" rows="5" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" class="form-control">{{ customer_group_description[language.language_id] ? customer_group_description[language.language_id].description }}</textarea>
                 </div>
               </div>
             </div>

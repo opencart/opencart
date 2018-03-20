@@ -121,7 +121,10 @@
             <label class="col-sm-2 col-form-label">{{ entry_locale }}</label>
             <div class="col-sm-10">
               {% for language in languages %}
-              <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
+                </div>
                 <select name="module_pp_login_locale[{{ language.language_id }}]" class="form-control">
                   {% for locale in locales %}
                   {% if pp_login_locale[language.language_id] and pp_login_locale[language.language_id] == locale.value %}

@@ -215,7 +215,7 @@ function send(url) {
 			$('#button-send').button('reset');
 		},
 		success: function(json) {
-			$('.alert-dismissible, .text-danger').remove();
+			$('.alert-dismissible, .invalid-tooltip').remove();
 
 			if (json['error']) {
 				if (json['error']['warning']) {
@@ -227,11 +227,11 @@ function send(url) {
 				}
 
 				if (json['error']['subject']) {
-					$('input[name=\'subject\']').after('<div class="invalid-tooltip">' + json['error']['subject'] + '</div>');
+					$('input[name=\'subject\']').after('<div class="invalid-tooltip d-block">' + json['error']['subject'] + '</div>');
 				}
 
 				if (json['error']['message']) {
-					$('textarea[name=\'message\']').parent().append('<div class="invalid-tooltip">' + json['error']['message'] + '</div>');
+					$('textarea[name=\'message\']').after('<div class="invalid-tooltip d-block">' + json['error']['message'] + '</div>');
 				}
 			}
 

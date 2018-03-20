@@ -1069,10 +1069,10 @@ $('#content').delegate('button[id^=\'button-custom-field\'], button[id^=\'button
 					$(element).button('reset');
 				},
 				success: function(json) {
-					$(element).parent().find('.text-danger').remove();
+					$(element).parent().find('.invalid-tooltip').remove();
 
 					if (json['error']) {
-						$(element).parent().find('input[type=\'hidden\']').after('<div class="invalid-tooltip">' + json['error'] + '</div>');
+						$(element).parent().find('input[type=\'hidden\']').after('<div class="invalid-tooltip d-block">' + json['error'] + '</div>');
 					}
 
 					if (json['success']) {

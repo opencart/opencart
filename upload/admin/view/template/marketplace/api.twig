@@ -13,9 +13,9 @@
         <div class="form-group">
           <label for="input-secret">{{ entry_secret }}</label> <textarea name="opencart_secret" placeholder="{{ entry_secret }}" rows="8" id="input-secret" class="form-control"></textarea>
         </div>
-        <div class="form-group text-right">
-          <button type="button" id="button-save" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_save }}</button>
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="button-save" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_save }}</button>
       </div>
     </div>
   </div>
@@ -34,7 +34,7 @@ $('#button-save').on('click', function(e) {
 			$('#button-save').button('reset');
 		},
 		success: function(json) {
-			$('.alert-dismissible, .text-danger').remove();
+			$('.alert-dismissible, .invalid-tooltip').remove();
 
 			if (json['error']) {
 				if (json['error']['warning']) {
@@ -42,11 +42,11 @@ $('#button-save').on('click', function(e) {
 				}
 
 				if (json['error']['username']) {
-					$('input[name="username"]').after('<div class="invalid-tooltip">' + json['error']['username'] + '</div>');
+					$('input[name="username"]').after('<div class="invalid-tooltip d-block">' + json['error']['username'] + '</div>');
 				}
 
 				if (json['error']['secret']) {
-					$('textarea[name="secret"]').after('<div class="invalid-tooltip">' + json['error']['secret'] + '</div>');
+					$('textarea[name="secret"]').after('<div class="invalid-tooltip d-block">' + json['error']['secret'] + '</div>');
 				}
 			}
 

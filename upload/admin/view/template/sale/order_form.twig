@@ -1120,9 +1120,9 @@ $('#button-customer').on('click', function() {
 					element.addClass('is-invalid');
 
 					if (element.parent().hasClass('input-group')) {
-						$(element).parent().after('<div class="invalid-tooltip" style="display: block;">' + json['error'][i] + '</div>');
+						$(element).parent().after('<div class="invalid-tooltip d-block">' + json['error'][i] + '</div>');
 					} else {
-						$(element).after('<div class="invalid-tooltip" style="display: block;">' + json['error'][i] + '</div>');
+						$(element).after('<div class="invalid-tooltip d-block">' + json['error'][i] + '</div>');
 					}
 				}
 			} else {
@@ -1404,9 +1404,9 @@ $('#button-product-add').on('click', function() {
 						$(element).addClass('is-invalid');
 
 						if (element.parent().hasClass('input-group')) {
-							$(element).parent().after('<div class="invalid-tooltip" style="display: block;">' + json['error']['option'][i] + '</div>');
+							$(element).parent().after('<div class="invalid-tooltip d-block">' + json['error']['option'][i] + '</div>');
 						} else {
-							$(element).after('<div class="invalid-tooltip" style="display: block;">' + json['error']['option'][i] + '</div>');
+							$(element).after('<div class="invalid-tooltip d-block">' + json['error']['option'][i] + '</div>');
 						}
 					}
 				}
@@ -1455,9 +1455,9 @@ $('#button-voucher-add').on('click', function() {
 					$(element).addClass('is-invalid');
 
 					if (element.parent().hasClass('input-group')) {
-						$(element).parent().after('<div class="invalid-tooltip" style="display: block;">' + json['error'][i] + '</div>');
+						$(element).parent().after('<div class="invalid-tooltip d-block">' + json['error'][i] + '</div>');
 					} else {
-						$(element).after('<div class="invalid-tooltip" style="display: block;">' + json['error'][i] + '</div>');
+						$(element).after('<div class="invalid-tooltip d-block">' + json['error'][i] + '</div>');
 					}
 				}
 			} else {
@@ -1676,9 +1676,9 @@ $('#button-payment-address').on('click', function() {
 					$(element).addClass('is-invalid');
 
 					if ($(element).parent().hasClass('input-group')) {
-						$(element).parent().after('<div class="invalid-tooltip" style="display: block;">' + json['error'][i] + '</div>');
+						$(element).parent().after('<div class="invalid-tooltip d-block">' + json['error'][i] + '</div>');
 					} else {
-						$(element).after('<div class="invalid-tooltip" style="display: block;">' + json['error'][i] + '</div>');
+						$(element).after('<div class="invalid-tooltip d-block">' + json['error'][i] + '</div>');
 					}
 				}
 			} else {
@@ -1860,9 +1860,9 @@ $('#button-shipping-address').on('click', function() {
 					$(element).addClass('is-invalid');
 
 					if ($(element).parent().hasClass('input-group')) {
-						$(element).parent().after('<div class="invalid-tooltip" style="display: block;">' + json['error'][i] + '</div>');
+						$(element).parent().after('<div class="invalid-tooltip d-block">' + json['error'][i] + '</div>');
 					} else {
-						$(element).after('<div class="invalid-tooltip" style="display: block;">' + json['error'][i] + '</div>');
+						$(element).after('<div class="invalid-tooltip d-block">' + json['error'][i] + '</div>');
 					}
 				}
 			} else {
@@ -2213,10 +2213,10 @@ $('#content').delegate('button[id^=\'button-upload\'], button[id^=\'button-custo
 					$(element).button('reset');
 				},
 				success: function(json) {
-					$(element).parent().find('.text-danger').remove();
+					$(element).parent().find('.invalid-tooltip').remove();
 
 					if (json['error']) {
-						$(element).parent().find('input[type=\'hidden\']').after('<div class="invalid-tooltip">' + json['error'] + '</div>');
+						$(element).parent().find('input[type=\'hidden\']').after('<div class="invalid-tooltip d-block">' + json['error'] + '</div>');
 					}
 
 					if (json['success']) {

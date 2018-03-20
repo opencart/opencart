@@ -34,14 +34,13 @@
             <li class="nav-item"><a href="#tab-recurring" data-toggle="tab" class="nav-link"><i class="fa fa-hourglass-half"></i>&nbsp;{{ tab_recurring }}</a></li>
           </ul>
           <div class="tab-content">
-            <div class="tab-pane" id="tab-setting">
+            <div class="tab-pane active" id="tab-setting">
               <fieldset>
                 {% if payment_squareup_merchant_id %}
                   <legend>{{ text_connection_section }} - {{ text_connected }}</legend>
                   <div class="row">
                     <div class="col-sm-12">
-                      <a href="{{ payment_squareup_auth_link }}" id="reconnect-button" data-toggle="tooltip" title="{{ text_disabled_connect_help_text }}" class="btn btn-primary btn-lg btn-connect">{{ button_reconnect }}</a>
-                      <a href="{{ payment_squareup_refresh_link }}" id="refresh-button" data-toggle="tooltip" title="{{ text_disabled_connect_help_text }}" class="btn btn-primary btn-lg btn-connect">{{ button_refresh }}</a>
+                      <a href="{{ payment_squareup_auth_link }}" id="reconnect-button" data-toggle="tooltip" title="{{ text_disabled_connect_help_text }}" class="btn btn-primary btn-lg btn-connect">{{ button_reconnect }}</a> <a href="{{ payment_squareup_refresh_link }}" id="refresh-button" data-toggle="tooltip" title="{{ text_disabled_connect_help_text }}" class="btn btn-primary btn-lg btn-connect">{{ button_refresh }}</a>
                       <p>{{ text_connected_info }}</p>
                     </div>
                   </div>
@@ -67,13 +66,17 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-2 col-form-label"> <span data-toggle=" tooltip" title="{{ text_payment_method_name_help }}">{{ text_payment_method_name_label }}</span> </label>
+                  <label class="col-sm-2 col-form-label">{{ text_payment_method_name_label }}</label>
                   <div class="col-sm-10">
                     {% for language in languages %}
                       <div class="input-group">
-                        <span class="input-group-addon"><img src="{{ language.image }}" alt="{{ language.name }}"/></span> <input type="text" name="payment_squareup_display_name[{{ language.language_id }}]" value="{{ payment_squareup_display_name[language.language_id] ?? text_payment_method_name_placeholder }}" placeholder="{{ text_payment_method_name_placeholder }}" class="form-control"/>
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"> <img src="{{ language.image }}" alt="{{ language.name }}"/></span>
+                        </div>
+                        <input type="text" name="payment_squareup_display_name[{{ language.language_id }}]" value="{{ payment_squareup_display_name[language.language_id] ?? text_payment_method_name_placeholder }}" placeholder="{{ text_payment_method_name_placeholder }}" class="form-control"/>
                       </div>
                     {% endfor %}
+                    <small class="form-text text-muted">{{ text_payment_method_name_help }}</small>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -287,7 +290,7 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ text_local_cron }}</label>
                   <div class="col-sm-10">
-                    <input disabled type="text" class="form-control" value="{{ payment_squareup_cron_command }}"/>
+                    <input type="text" value="{{ payment_squareup_cron_command }}" class="form-control" disabled/>
                     <small class="form-text text-muted">{{ help_local_cron }}</small>
                   </div>
                 </div>
@@ -295,21 +298,21 @@
                   <label class="col-sm-2 col-form-label">{{ text_remote_cron }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
-                      <input disabled type="text" name="payment_squareup_cron_url" id="input_payment_squareup_cron_url" class="form-control" value=""/>
-                      <div data-toggle="tooltip" data-original-title="{{ text_refresh_token }}" class="input-group-addon btn btn-primary" id="refresh-cron-token">
-                        <i class="fa fa-refresh"></i>
+                      <input disabled type="text" name="payment_squareup_cron_url" id="input_payment_squareup_cron_url" class="form-control" value="" data-toggle="tooltip" data-original-title="{{ text_refresh_token }}"/>
+                      <div class="input-group-append">
+                        <div class="btn btn-primary" id="refresh-cron-token">
+                          <i class="fa fa-refresh"></i>
+                        </div>
                       </div>
                     </div>
-                    <input id="input_payment_squareup_cron_token" type="hidden" name="payment_squareup_cron_token" value="{{ payment_squareup_cron_token }}"/>
+                    <input type="hidden" name="payment_squareup_cron_token" value="{{ payment_squareup_cron_token }}" id="input_payment_squareup_cron_token"/>
                     <small class="form-text text-muted">{{ help_remote_cron }}</small>
                   </div>
                 </div>
                 <div class="form-group row required">
                   <label class="col-sm-2 col-form-label" for="checkbox_payment_squareup_cron_acknowledge">{{ entry_setup_confirmation }}</label>
                   <div class="col-sm-10">
-                    <label class="checkbox-inline"> <input id="checkbox_payment_squareup_cron_acknowledge" type="checkbox" value="1" {% if payment_squareup_cron_acknowledge %} checked {% endif %} name="payment_squareup_cron_acknowledge"/> {{ text_acknowledge_cron }}
-                    </label>
-
+                    <label class="checkbox-inline"><input id="checkbox_payment_squareup_cron_acknowledge" type="checkbox" value="1" {% if payment_squareup_cron_acknowledge %} checked {% endif %} name="payment_squareup_cron_acknowledge"/> {{ text_acknowledge_cron }}</label>
                     {% if error_cron_acknowledge %}
                       <div class="invalid-tooltip">{{ error_cron_acknowledge }}</div>
                     {% endif %}

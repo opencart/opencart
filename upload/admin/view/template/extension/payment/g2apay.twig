@@ -83,7 +83,12 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-ipn-url">{{ entry_ipn_url }}</label>
                 <div class="col-sm-10">
-                  <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span> <input type="text" readonly value="{{ g2apay_ipn_url }}" id="input-ipn-url" class="form-control"/></div>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fa fa-link"></i></span>
+                    </div>
+                    <input type="text" readonly value="{{ g2apay_ipn_url }}" id="input-ipn-url" class="form-control"/>
+                  </div>
                   <small class="form-text text-muted">{{ help_ipn_url }}</small>
                 </div>
               </div>

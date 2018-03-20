@@ -432,9 +432,6 @@ $('#button-cart').on('click', function() {
 
         $('#alert-box').addClass('open');
         $('#cart').parent().load('index.php?route=common/cart/info&language=' + getCookie('language'));
-				//$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
-
-				//$('#cart > ul').load('index.php?route=common/cart/info ul li');
 			}
 		},
         error: function(xhr, ajaxOptions, thrownError) {

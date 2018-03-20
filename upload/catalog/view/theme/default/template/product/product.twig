@@ -400,6 +400,8 @@ $('#button-cart').on('click', function() {
 			$('#button-cart').button('reset');
 		},
 		success: function(json) {
+      console.log(json);
+
 			$('.alert-dismissible, .text-danger').remove();
 			$('.form-group').removeClass('has-error');
 
@@ -425,13 +427,14 @@ $('#button-cart').on('click', function() {
 			}
 
 			if (json['success']) {
+
         $('#alert-box').append('<div class="alert alert-success alert-dismissible">' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
         $('#alert-box').addClass('open');
+        $('#cart').parent().load('index.php?route=common/cart/info&language=' + getCookie('language'));
+				//$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
 
-				$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
-
-				$('#cart > ul').load('index.php?route=common/cart/info ul li');
+				//$('#cart > ul').load('index.php?route=common/cart/info ul li');
 			}
 		},
         error: function(xhr, ajaxOptions, thrownError) {

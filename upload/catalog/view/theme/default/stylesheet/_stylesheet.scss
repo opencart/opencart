@@ -750,6 +750,7 @@ div.required .col-form-label:before {
   }
   h4 {
     font-weight: bold;
+		margin-top: 10px;
   }
   .image {
   	text-align: center;
@@ -860,7 +861,7 @@ div.required .col-form-label:before {
 .product-list {
   .product-thumb {
     .caption {
-      margin-left: 230px;
+      //margin-left: 230px;
     }
     .button-group {
     	border-left: 1px solid #ddd;
@@ -870,8 +871,17 @@ div.required .col-form-label:before {
   @media (min-width: 768px) {
     .product-thumb {
       .image {
-      	float: left;
+      	//float: left;
       	padding: 0 15px;
+				display: inline-block;
+				width: 30%;
+
+				+ div {
+					display: inline-block;
+					margin-left: 0%;
+					width: 69.62%;
+
+				}
       }
     }
   }
@@ -1093,4 +1103,22 @@ div.required .col-form-label:before {
   .card {
     margin-bottom: 20px;
   }
+}
+
+#alert-box {
+	position: fixed;
+	top: 15px;
+	right: 0;
+	transition: all 0.5s;
+	z-index: 99;
+	&.open {
+		right: 15px;
+	}
+
+	> .alert {
+		padding-right: 28px;
+	}
+	.close {
+		padding: 5px 8px;
+	}
 }

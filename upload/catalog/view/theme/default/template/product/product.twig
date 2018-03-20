@@ -425,11 +425,11 @@ $('#button-cart').on('click', function() {
 			}
 
 			if (json['success']) {
-				$('.breadcrumb').after('<div class="alert alert-success alert-dismissible">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+        $('#alert-box').append('<div class="alert alert-success alert-dismissible">' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+        $('#alert-box').addClass('open');
 
 				$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
-
-				$('html, body').animate({ scrollTop: 0 }, 'slow');
 
 				$('#cart > ul').load('index.php?route=common/cart/info ul li');
 			}

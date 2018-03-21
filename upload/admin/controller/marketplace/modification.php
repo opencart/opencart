@@ -327,7 +327,11 @@ class ControllerMarketplaceModification extends Controller {
 										} else {
 											$search = trim($operation->getElementsByTagName('search')->item(0)->textContent);
 											$limit = $operation->getElementsByTagName('search')->item(0)->getAttribute('limit');
-											$replace = trim($operation->getElementsByTagName('add')->item(0)->textContent);
+											$trim = $operation->getElementsByTagName('add')->item(0)->getAttribute('trim');
+											$replace = $operation->getElementsByTagName('add')->item(0)->textContent;
+											if ($trim == 'true') {
+												$replace = trim($replace);
+											}
 
 											// Limit
 											if (!$limit) {

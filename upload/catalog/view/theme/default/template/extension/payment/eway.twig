@@ -1,14 +1,14 @@
 {% if error %}
 <div class="alert alert-danger alert-dismissible">Payment Error: {{ error }}</div>
 {% else %}
-<form action="{{ action }}" method="POST" class="form-horizontal" id="eway-payment-form">
+<form action="{{ action }}" method="POST" id="eway-payment-form">
   <fieldset id="payment">
     <legend>{{ text_credit_card }}</legend>
     <input type="hidden" name="EWAY_ACCESSCODE" value="{{ AccessCode }}" />
     {% if text_testing %}
     <div class="alert alert-warning alert-dismissible">{{ text_testing }}</div>
     {% endif %}
-    <div class="form-group">
+    <div class="form-group row">
       <div class="col-sm-12">
         <ul>
           {% if payment_type.visa == 1 or payment_type.mastercard == 1 or payment_type.diners == 1 or payment_type.jcb == 1 or payment_type.amex == 1 %}
@@ -39,40 +39,56 @@
     {% if payment_type.masterpass == 1 %}
     <p id="tip-masterpass" style="display:none;">{{ text_type_help }}{{ text_card_type_mp }}</p>
     {% endif %}
-    {% if payment_type.visa == 1 or payment_type.mastercard == 1 or payment_type.diners == 1 or payment_type.jcb == 1 or payment_type.amex == 1 %}
+    {% if payment_type.visa == 1 and payment_type.mastercard == 1 and payment_type.diners == 1 or payment_type.jcb == 1 or payment_type.amex == 1 %}
     <div id="creditcard-info">
-    <div class="form-group required">
-      <label class="col-sm-2 control-label" for="eway-cardname">{{ entry_cc_name }}</label>
+    <div class="form-group row required">
+      <label class="col-sm-2 col-form-label" for="eway-cardname">{{ entry_cc_name }}</label>
       <div class="col-sm-10">
         <input name="EWAY_CARDNAME" type="text" value="" id="eway-cardname" placeholder="{{ entry_cc_name }}"  autocomplete="off" class="form-control"/>
         <span id="ewaycard-error" class="text-danger"></span> </div>
     </div>
-    <div class="form-group required">
-      <label class="col-sm-2 control-label" for="eway-cardnumber">{{ entry_cc_number }}</label>
+    <div class="form-group row required">
+      <label class="col-sm-2 col-form-label" for="eway-cardnumber">{{ entry_cc_number }}</label>
       <div class="col-sm-10">
         <input name="EWAY_CARDNUMBER" type="text" maxlength="19" id="eway-cardnumber" value="" placeholder="{{ entry_cc_number }}"  autocomplete="off" class="form-control" pattern="\d*" />
         <span id="ewaynumber-error" class="text-danger"></span> </div>
     </div>
-    <div class="form-group required">
-      <label class="col-sm-2 control-label" for="eway-card-expiry-month">{{ entry_cc_expire_date }}</label>
+    <div class="form-group row required">
+      <label class="col-sm-2 col-form-label" for="eway-card-expiry-month">{{ entry_cc_expire_date }}</label>
       <div class="col-sm-2">
         <select name="EWAY_CARDEXPIRYMONTH" id="eway-card-expiry-month" class="form-control">
-          {% for month in months %}
+          
+          
+					% for month in months %}
+						
+          
           <option value="{{ month.value }}">{{ month.text }}</option>
-          {% endfor %}
+          
+          
+					{% endfor %}
+				  
+        
         </select>
       </div>
       <div class="col-sm-2">
         <select name="EWAY_CARDEXPIRYYEAR" id="eway-card-expiry-year" class="form-control">
-          {% for year in year_expire %}
+          
+          
+					% for year in year_expire %}
+						
+          
           <option value="{{ year.value }}">{{ year.text }}</option>
-          {% endfor %}
+          
+          
+					{% endfor %}
+				  
+        
         </select>
         <div id="expiry-error" class="text-danger"></div>
       </div>
     </div>
-    <div class="form-group required">
-      <label class="col-sm-2 control-label" for="eway-cardcvn">{{ entry_cc_cvv2 }}</label>
+    <div class="form-group row required">
+      <label class="col-sm-2 col-form-label" for="eway-cardcvn">{{ entry_cc_cvv2 }}</label>
       <div class="col-sm-10">
         <input name="EWAY_CARDCVN" type="text" maxlength="4" value="" placeholder="{{ entry_cc_cvv2 }}" id="eway-cardcvn" autocomplete="off" class="form-control" pattern="\d*" />
         <span id="cvn-details" class="help"> {{ help_cvv }}
@@ -85,7 +101,7 @@
   </fieldset>
 </form>
 <div class="buttons">
-  <div class="pull-right">
+  <div class="float-right">
     <input type="button" value="{{ button_confirm }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
   </div>
 </div>

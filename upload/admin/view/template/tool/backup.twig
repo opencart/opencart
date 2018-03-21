@@ -6,11 +6,13 @@
         <button type="button" id="button-upload" data-toggle="tooltip" title="{{ button_upload }}" class="btn btn-primary"><i class="fa fa-upload"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
-      <ul class="breadcrumb">
-        {% for breadcrumb in breadcrumbs %}
-          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-        {% endfor %}
-      </ul>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          {% for breadcrumb in breadcrumbs %}
+            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          {% endfor %}
+        </ol>
+      </nav>
     </div>
   </div>
   <div class="container-fluid">{% if error_warning %}
@@ -23,16 +25,14 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-exchange"></i> {{ heading_title }}</h3>
-      </div>
-      <div class="panel-body">
-        <form class="form-horizontal">
+    <div class="card">
+      <div class="card-header"><i class="fa fa-exchange"></i> {{ heading_title }}</div>
+      <div class="card-body">
+        <form>
           <fieldset>
             <legend>{{ text_progress }}</legend>
-            <div class="form-group">
-              <label class="col-sm-2 control-label">{{ entry_progress }}</label>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">{{ entry_progress }}</label>
               <div class="col-sm-10">
                 <div id="progress-backup" class="progress">
                   <div id="progress-bar" class="progress-bar"></div>
@@ -43,10 +43,10 @@
           </fieldset>
           <fieldset>
             <legend>{{ text_option }}</legend>
-            <div class="form-group">
-              <label class="col-sm-2 control-label">{{ entry_export }}</label>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">{{ entry_export }}</label>
               <div class="col-sm-10">
-                <div class="well well-sm" style="height: 150px; overflow: auto;">
+                <div class="form-control" style="height: 150px; overflow: auto;">
                   {% for table in tables %}
                     <div class="checkbox">
                       <label><input type="checkbox" name="backup[]" value="{{ table }}" checked="checked"/> {{ table }}</label>
@@ -54,9 +54,10 @@
                   {% endfor %}
                 </div>
                 <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', true);" class="btn btn-link">{{ text_select_all }}</button> / <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', false);" class="btn btn-link">{{ text_unselect_all }}</button>
-              </div>
+
+			  </div>
             </div>
-            <div class="form-group">
+            <div class="form-group row">
               <div class="col-sm-offset-2 col-sm-10">
                 <button type="button" id="button-backup" data-loading-text="{{ text_loading }}" class="btn btn-success"><i class="fa fa-upload"></i> {{ button_backup }}</button>
               </div>
@@ -111,7 +112,7 @@ function backup(url) {
 
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+				$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
 
 				$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token }}');
 
@@ -172,7 +173,7 @@ function restore(url, element) {
 
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+				$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
 
 				$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token }}');
 

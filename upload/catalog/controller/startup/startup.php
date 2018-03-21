@@ -216,8 +216,5 @@ class ControllerStartupStartup extends Controller {
 
 		// Encryption
 		$this->registry->set('encryption', new Encryption());
-
-		// OpenBay Pro
-		$this->registry->set('openbay', new Openbay($this->registry));
 	}
 }

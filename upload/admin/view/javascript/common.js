@@ -37,6 +37,12 @@ $(document).ready(function() {
 		}
 	});
 
+	$('.date button, .time button, .datetime button').on('click', function() {
+		$(this).parent().parent().datetimepicker('toggle');
+	});
+
+	$('.invalid-tooltip').show();
+
 	// tooltips on hover
 	$('[data-toggle=\'tooltip\']').tooltip({container: 'body', html: true});
 
@@ -45,13 +51,9 @@ $(document).ready(function() {
 		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 	});
 
-	$('.date button, .time button, .datetime button').on('click', function() {
-		$(this).parent().parent().datetimepicker('toggle');
-	});
-
 	// tooltip remove
 	$('[data-toggle=\'tooltip\']').on('remove', function() {
-		$(this).tooltip('destroy');
+		$(this).tooltip('dispose');
 	});
 
 	// Tooltip remove fixed
@@ -70,7 +72,7 @@ $(document).ready(function() {
 
 	$('#button-menu').on('click', function(e) {
 		e.preventDefault();
-		
+
 		$('#column-left').toggleClass('active');
 	});
 
@@ -85,13 +87,13 @@ $(document).ready(function() {
 		// Sets active and open to selected page in the left column menu.
 		$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parent().addClass('active');
 	}
-	
+
 	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li > a').removeClass('collapsed');
-	
-	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('ul').addClass('in');
-	
+
+	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('ul').addClass('show');
+
 	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li').addClass('active');
-	
+
 	// Image Manager
 	$(document).on('click', 'a[data-toggle=\'image\']', function(e) {
 		var $element = $(this);
@@ -120,7 +122,7 @@ $(document).ready(function() {
 
 		$('#button-image').on('click', function() {
 			var $button = $(this);
-			var $icon   = $button.find('> i');
+			var $icon = $button.find('> i');
 
 			$('#modal-image').remove();
 
@@ -142,7 +144,7 @@ $(document).ready(function() {
 					}
 				},
 				success: function(html) {
-					$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
+					$('body').append(html);
 
 					$('#modal-image').modal('show');
 				}
@@ -185,12 +187,14 @@ $(document).ready(function() {
 	$.fn.autocomplete = function(option) {
 		return this.each(function() {
 			var $this = $(this);
-			var $dropdown = $('<ul class="dropdown-menu" />');
+			var $dropdown = $('<div class="dropdown-menu"/>');
 
 			this.timer = null;
 			this.items = [];
 
 			$.extend(this, option);
+
+			$(this).wrap('<div class="dropdown">');
 
 			$this.attr('autocomplete', 'off');
 
@@ -208,7 +212,7 @@ $(document).ready(function() {
 
 			// Keydown
 			$this.on('keydown', function(event) {
-				switch(event.keyCode) {
+				switch (event.keyCode) {
 					case 27: // escape
 						this.hide();
 						break;
@@ -222,7 +226,7 @@ $(document).ready(function() {
 			this.click = function(event) {
 				event.preventDefault();
 
-				var value = $(event.target).parent().attr('data-value');
+				var value = $(event.target).attr('href');
 
 				if (value && this.items[value]) {
 					this.select(this.items[value]);
@@ -231,19 +235,12 @@ $(document).ready(function() {
 
 			// Show
 			this.show = function() {
-				var pos = $this.position();
-
-				$dropdown.css({
-					top: pos.top + $this.outerHeight(),
-					left: pos.left
-				});
-
-				$dropdown.show();
+				$dropdown.addClass('show');
 			}
 
 			// Hide
 			this.hide = function() {
-				$dropdown.hide();
+				$dropdown.removeClass('show');
 			}
 
 			// Request
@@ -269,10 +266,11 @@ $(document).ready(function() {
 
 						if (!json[i]['category']) {
 							// ungrouped items
-							html += '<li data-value="' + json[i]['value'] + '"><a href="#">' + json[i]['label'] + '</a></li>';
+							html += '<a href="' + json[i]['value'] + '" class="dropdown-item">' + json[i]['label'] + '</a>';
 						} else {
 							// grouped items
 							name = json[i]['category'];
+
 							if (!category[name]) {
 								category[name] = [];
 							}
@@ -282,10 +280,10 @@ $(document).ready(function() {
 					}
 
 					for (name in category) {
-						html += '<li class="dropdown-header">' + name + '</li>';
+						html += '<h6 class="dropdown-header">' + name + '</h6>';
 
 						for (j = 0; j < category[name].length; j++) {
-							html += '<li data-value="' + category[name][j]['value'] + '"><a href="#">&nbsp;&nbsp;&nbsp;' + category[name][j]['label'] + '</a></li>';
+							html += '<a href="' + category[name][j]['value'] + '" class="dropdown-item">&nbsp;&nbsp;&nbsp;' + category[name][j]['label'] + '</a>';
 						}
 					}
 				}
@@ -299,7 +297,8 @@ $(document).ready(function() {
 				$dropdown.html(html);
 			}
 
-			$dropdown.on('click', '> li > a', $.proxy(this.click, this));
+			$dropdown.on('click', '> a', $.proxy(this.click, this));
+
 			$this.after($dropdown);
 		});
 	}

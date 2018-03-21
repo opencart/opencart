@@ -389,6 +389,36 @@ class ControllerCatalogOption extends Controller {
 		}
 
 		if (isset($this->request->post['option_value'])) {
+			if ($this->request->get['option_id']) {
+				$option_id = $this->request->get['option_id'];
+			} else {
+				$option_id = '';
+			}
+
+			if ($option_id) {
+				$this->load->model('catalog/option');
+							
+				$this->load->model('catalog/product_option');
+				
+				$option_info = $this->model_catalog_product_option->getProductsOptionValueByOptionId($option_id);
+	
+				foreach ($this->request->post['option_value'] as $option_value_id => $option_value) {
+					$option_value_list[] = array(
+						'option_value_id' => $option_value['option_value_id']
+					);
+				}
+				
+				foreach ($option_info as $option) {
+					if (!in_array($option, $option_value_list)) {
+						$product_total = $this->model_catalog_product_option->getTotalProductsByOptionId($option_id);
+	
+						$this->error['warning'] = sprintf($this->language->get('error_option'), $product_total);
+					}
+				}
+			}
+		}
+
+		if (isset($this->request->post['option_value'])) {
 			foreach ($this->request->post['option_value'] as $option_value_id => $option_value) {
 				foreach ($option_value['option_value_description'] as $language_id => $option_value_description) {
 					if ((utf8_strlen($option_value_description['name']) < 1) || (utf8_strlen($option_value_description['name']) > 128)) {

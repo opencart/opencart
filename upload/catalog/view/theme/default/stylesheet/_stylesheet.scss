@@ -707,10 +707,10 @@ div.required .col-form-label:before {
 
 /* list group */
 .list-group {
+
   a {
-  	border: 1px solid #DDDDDD;
   	color: #888888;
-  	padding: 8px 12px;
+		display: block;
     &.active {
       &,
       &:hover,

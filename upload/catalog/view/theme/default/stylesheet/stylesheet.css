@@ -451,9 +451,8 @@ div.required .col-form-label:before {
     background-image: linear-gradient(to bottom, #333, #111); }
 /* list group */
 .list-group a {
-  border: 1px solid #ddd;
   color: #888;
-  padding: 8px 12px; }
+  display: block; }
   .list-group a.active, .list-group a.active:hover, .list-group a.active:focus {
     color: #444;
     background: #eee;

@@ -28,7 +28,7 @@
             </tr>
           </thead>
           <tbody>
-          
+
           {% for recurring in recurrings %}
           <tr>
             <td class="text-right">#{{ recurring.order_recurring_id }}</td>
@@ -38,13 +38,17 @@
             <td class="text-right"><a href="{{ recurring.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
           </tr>
           {% endfor %}
-          
+
           </tbody>
         </table>
       </div>
       <div class="text-right">{{ pagination }}</div>
       {% else %}
-      <p>{{ text_empty }}</p>
+      <div class="card">
+        <div class="card-body">
+          <p class="text-center mb-0">{{ text_empty }}</p>
+        </div>
+      </div>
       {% endif %}
       <div class="buttons clearfix">
         <div class="float-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>

@@ -55,23 +55,25 @@
 
             {% if attribute_groups %}
             <div class="tab-pane fade" id="tab-specification" role="tabpanel" aria-labelledby="specification-tab">
-              <table class="table table-bordered">
-                {% for attribute_group in attribute_groups %}
-                <thead>
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  {% for attribute_group in attribute_groups %}
+                  <thead>
+                    <tr>
+                      <td colspan="2"><strong>{{ attribute_group.name }}</strong></td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for attribute in attribute_group.attribute %}
                   <tr>
-                    <td colspan="2"><strong>{{ attribute_group.name }}</strong></td>
+                    <td>{{ attribute.name }}</td>
+                    <td>{{ attribute.text }}</td>
                   </tr>
-                </thead>
-                <tbody>
-                {% for attribute in attribute_group.attribute %}
-                <tr>
-                  <td>{{ attribute.name }}</td>
-                  <td>{{ attribute.text }}</td>
-                </tr>
-                {% endfor %}
-                  </tbody>
-                {% endfor %}
-              </table>
+                  {% endfor %}
+                    </tbody>
+                  {% endfor %}
+                </table>
+              </div>
             </div>
             {% endif %}
             {% if review_status %}

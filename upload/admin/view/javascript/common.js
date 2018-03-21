@@ -53,7 +53,7 @@ $(document).ready(function() {
 
 	// tooltip remove
 	$('[data-toggle=\'tooltip\']').on('remove', function() {
-		$(this).tooltip('destroy');
+		$(this).tooltip('dispose');
 	});
 
 	// Tooltip remove fixed

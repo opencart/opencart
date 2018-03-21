@@ -194,7 +194,7 @@
                                 <div class="col-sm-10">
                                   <div class="input-group date">
                                     <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
-                                    <div class="input-group-btn">
+                                    <div class="input-group-append">
                                       <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
                                     </div>
                                   </div>
@@ -209,7 +209,7 @@
                                 <div class="col-sm-10">
                                   <div class="input-group time">
                                     <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="HH:mm" data-locale="{{ datepicker }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
-                                    <div class="input-group-btn">
+                                    <div class="input-group-append">
                                       <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
                                     </div>
                                   </div>
@@ -224,7 +224,7 @@
                                 <div class="col-sm-10">
                                   <div class="input-group datetime">
                                     <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" data-locale="{{ datepicker }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
-                                    <div class="input-group-btn">
+                                    <div class="input-group-append">
                                       <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
                                     </div>
                                   </div>
@@ -476,7 +476,7 @@
                                 <div class="col-sm-10">
                                   <div class="input-group date">
                                     <input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
-                                    <div class="input-group-btn">
+                                    <div class="input-group-append">
                                       <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
                                     </div>
                                   </div>
@@ -491,7 +491,7 @@
                                 <div class="col-sm-10">
                                   <div class="input-group time">
                                     <input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="HH:mm" data-locale="{{ datepicker }}" id="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
-                                    <div class="input-group-btn">
+                                    <div class="input-group-append">
                                       <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
                                     </div>
                                   </div>
@@ -506,7 +506,7 @@
                                 <div class="col-sm-10">
                                   <div class="input-group datetime">
                                     <input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" data-locale="{{ datepicker }}" id="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
-                                    <div class="input-group-btn">
+                                    <div class="input-group-append">
                                       <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
                                     </div>
                                   </div>
@@ -786,7 +786,7 @@ $('#address-add').on('click', function(e) {
 	html += '	  <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
 	html += '		<label class="col-sm-2 col-form-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name|e('js') }}</label>';
 	html += '		<div class="col-sm-10">';
-	html += '		  <div class="input-group date"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }} data-date-format="YYYY-MM-DD" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><div class="input-group-btn"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div>';
+	html += '		  <div class="input-group date"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }} data-date-format="YYYY-MM-DD" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div>';
 	html += '		</div>';
 	html += '	  </div>';
   {% endif %}
@@ -795,7 +795,7 @@ $('#address-add').on('click', function(e) {
 	html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
 	html += '		<label class="col-sm-2 col-form-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name|e('js') }}</label>';
 	html += '		<div class="col-sm-10">';
-	html += '		  <div class="input-group time"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }}" data-date-format="HH:mm" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><div class="input-group-btn"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div>';
+	html += '		  <div class="input-group time"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }}" data-date-format="HH:mm" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div>';
 	html += '		</div>';
 	html += '	  </div>';
   {% endif %}
@@ -804,7 +804,7 @@ $('#address-add').on('click', function(e) {
 	html += '	  <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
 	html += '		<label class="col-sm-2 col-form-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name|e('js') }}</label>';
 	html += '		<div class="col-sm-10">';
-	html += '		  <div class="input-group datetime"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }}" data-date-format="YYYY-MM-DD HH:mm" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><div class="input-group-btn"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div>';
+	html += '		  <div class="input-group datetime"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }}" data-date-format="YYYY-MM-DD HH:mm" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div>';
 	html += '		</div>';
 	html += '	  </div>';
   {% endif %}

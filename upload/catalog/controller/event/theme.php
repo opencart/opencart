@@ -40,7 +40,11 @@ class ControllerEventTheme extends Controller {
 		$theme_info = $this->model_design_theme->getTheme($route, $theme);
 		
 		if ($theme_info) {
+			// Fix Theme Editor
+			if (!is_file(DIR_MODIFICATION . basename(DIR_APPLICATION) . '/' . substr(DIR_TEMPLATE, strlen(DIR_APPLICATION)) . $theme . '/template/' . $route . '.twig')) {
 			$template = html_entity_decode($theme_info['code'], ENT_QUOTES, 'UTF-8');
+			}
+			// Fix Theme Editor
 		} elseif (is_file(DIR_TEMPLATE . $theme . '/template/' . $route . '.twig')) {
 			$this->config->set('template_directory', $theme . '/template/');
 		} elseif (is_file(DIR_TEMPLATE . 'default/template/' . $route . '.twig')) {

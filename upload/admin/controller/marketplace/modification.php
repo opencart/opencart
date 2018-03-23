@@ -64,6 +64,10 @@ class ControllerMarketplaceModification extends Controller {
 
 			$this->load->model('setting/setting');
 
+		// Fix Theme Editor
+			$this->load->model('design/theme');
+		// Fix Theme Editor
+
 			$this->model_setting_setting->editSettingValue('config', 'config_maintenance', true);
 
 			//Log
@@ -196,7 +200,18 @@ class ControllerMarketplaceModification extends Controller {
 
 									// If file contents is not already in the modification array we need to load it.
 									if (!isset($modification[$key])) {
+
+								// Fix Theme Editor
+									if (stristr($key, '/', true) === basename(DIR_CATALOG) && stristr($key, '.twig') != FALSE) {
+									$fix_theme = basename(stristr($file, '/template/', true));
+									$fix_route = stristr(substr(stristr($key, '/template/'), 10 ), '.twig', true);
+									$fix_store_id = (int)$this->config->get('config_store_id');
+									$theme_info = $this->model_design_theme->getTheme($fix_store_id, $fix_theme, $fix_route);
+									$content = $theme_info ? html_entity_decode($theme_info['code']) : file_get_contents($file);
+									} else {
 										$content = file_get_contents($file);
+									}
+								// Fix Theme Editor
 
 										$modification[$key] = preg_replace('~\r?\n~', "\n", $content);
 										$original[$key] = preg_replace('~\r?\n~', "\n", $content);

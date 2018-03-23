@@ -279,17 +279,19 @@ $(document).ready(function() {
 		var result = true;
 
 		if (!$(reason_input)[0].checkValidity()) {
-			$(reason_input).closest('.form-group').addClass('has-error');
+			$(reason_input).addClass('is-invalid');
+
 			result = false;
 		} else {
-			$(reason_input).closest('.form-group').removeClass('has-error');
+			$(reason_input).removeClass('is-invalid');
 		}
 
 		if (!$(amount_input)[0].checkValidity()) {
-			$(amount_input).closest('.form-group').addClass('has-error');
+			$(amount_input).addClass('is-invalid');
+
 			result = false;
 		} else {
-			$(amount_input).closest('.form-group').removeClass('has-error');
+			$(amount_input).removeClass('is-invalid');
 		}
 
 		return result;

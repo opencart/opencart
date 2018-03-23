@@ -30,11 +30,11 @@
         {% if transaction %}
           <form action="" method="post" enctype="multipart/form-data" id="form-laybuy-transaction">
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#tab-reference" data-toggle="tab">{{ tab_reference }}</a></li>
-              <li class="nav-item"><a href="#tab-customer" data-toggle="tab">{{ tab_customer }}</a></li>
-              <li class="nav-item"><a href="#tab-payment-plan" data-toggle="tab">{{ tab_payment }}</a></li>
+              <li class="nav-item"><a href="#tab-reference" data-toggle="tab" class="nav-link active">{{ tab_reference }}</a></li>
+              <li class="nav-item"><a href="#tab-customer" data-toggle="tab" class="nav-link">{{ tab_customer }}</a></li>
+              <li class="nav-item"><a href="#tab-payment-plan" data-toggle="tab" class="nav-link">{{ tab_payment }}</a></li>
               {% if transaction.status_id == 1 %}
-                <li class="nav-item"><a href="#tab-modify" data-toggle="tab">{{ tab_modify }}</a></li>
+                <li class="nav-item"><a href="#tab-modify" data-toggle="tab" class="nav-link">{{ tab_modify }}</a></li>
               {% endif %}
             </ul>
             <div class="tab-content">

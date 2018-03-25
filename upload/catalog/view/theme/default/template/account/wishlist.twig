@@ -34,7 +34,7 @@
             </tr>
           </thead>
           <tbody>
-          
+
           {% for product in products %}
           <tr>
             <td class="text-center">{% if product.thumb %}<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" /></a>{% endif %}</td>
@@ -51,11 +51,15 @@
           </tr>
           {% endfor %}
             </tbody>
-          
+
         </table>
       </div>
       {% else %}
-      <p>{{ text_empty }}</p>
+      <div class="card mt-3 mb-3">
+        <div class="card-body">
+          <p class="text-center mb-0">{{ text_no_results }}</p>
+        </div>
+      </div>
       {% endif %}
       <div class="buttons clearfix">
         <div class="float-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>

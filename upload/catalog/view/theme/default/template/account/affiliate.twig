@@ -71,7 +71,7 @@
               </div>
             </div>
           </div>
-          <div class="form-group row payment" id="payment-cheque">
+          <div class="form-group row required payment" id="payment-cheque">
             <label class="col-sm-2 col-form-label" for="input-cheque">{{ entry_cheque }}</label>
             <div class="col-sm-10">
               <input type="text" name="cheque" value="{{ cheque }}" placeholder="{{ entry_cheque }}" id="input-cheque" class="form-control" />
@@ -80,7 +80,7 @@
               {% endif %}
             </div>
           </div>
-          <div class="form-group row payment" id="payment-paypal">
+          <div class="form-group row required payment" id="payment-paypal">
             <label class="col-sm-2 col-form-label" for="input-paypal">{{ entry_paypal }}</label>
             <div class="col-sm-10">
               <input type="text" name="paypal" value="{{ paypal }}" placeholder="{{ entry_paypal }}" id="input-paypal" class="form-control" />
@@ -108,7 +108,7 @@
                 <input type="text" name="bank_swift_code" value="{{ bank_swift_code }}" placeholder="{{ entry_bank_swift_code }}" id="input-bank-swift-code" class="form-control" />
               </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group required row">
               <label class="col-sm-2 col-form-label" for="input-bank-account-name">{{ entry_bank_account_name }}</label>
               <div class="col-sm-10">
                 <input type="text" name="bank_account_name" value="{{ bank_account_name }}" placeholder="{{ entry_bank_account_name }}" id="input-bank-account-name" class="form-control" />
@@ -117,7 +117,7 @@
                 {% endif %}
               </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group required row">
               <label class="col-sm-2 col-form-label" for="input-bank-account-number">{{ entry_bank_account_number }}</label>
               <div class="col-sm-10">
                 <input type="text" name="bank_account_number" value="{{ bank_account_number }}" placeholder="{{ entry_bank_account_number }}" id="input-bank-account-number" class="form-control" />

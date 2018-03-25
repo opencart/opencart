@@ -289,21 +289,21 @@ $('input[name=\'option\']').autocomplete({
 		if (item['type'] == 'date') {
 			html += '	<div class="form-group row">';
 			html += '	  <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value|escape('js') }}</label>';
-			html += '	  <div class="col-sm-3"><div class="input-group date"><input type="text" name="value" value="" placeholder="{{ entry_option_value|escape('js') }}" data-date-format="YYYY-MM-DD" id="input-value" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div></div>';
+			html += '	  <div class="col-sm-3"><div class="input-group date"><input type="text" name="value" value="" placeholder="{{ entry_option_value|escape('js') }}" data-date-format="YYYY-MM-DD" id="input-value" class="form-control" /><div class="input-group-addon"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div></div>';
 			html += '	</div>';
 		}
 
 		if (item['type'] == 'time') {
 			html += '	<div class="form-group row">';
 			html += '	  <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value|escape('js') }}</label>';
-			html += '	  <div class="col-sm-3"><div class="input-group time"><input type="text" name="value" value="" placeholder="{{ entry_option_value|escape('js') }}" data-date-format="HH:mm" id="input-value" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div></div>';
+			html += '	  <div class="col-sm-3"><div class="input-group time"><input type="text" name="value" value="" placeholder="{{ entry_option_value|escape('js') }}" data-date-format="HH:mm" id="input-value" class="form-control" /><div class="input-group-addon"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div></div>';
 			html += '	</div>';
 		}
 
 		if (item['type'] == 'datetime') {
 			html += '	<div class="form-group row">';
 			html += '	  <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value|escape('js') }}</label>';
-			html += '	  <div class="col-sm-3"><div class="input-group datetime"><input type="text" name="value" value="" placeholder="{{ entry_option_value|escape('js') }}" data-date-format="YYYY-MM-DD HH:mm" id="input-value" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div></div>';
+			html += '	  <div class="col-sm-3"><div class="input-group datetime"><input type="text" name="value" value="" placeholder="{{ entry_option_value|escape('js') }}" data-date-format="YYYY-MM-DD HH:mm" id="input-value" class="form-control" /><div class="input-group-addon"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div></div>';
 			html += '	</div>';
 		}
 

@@ -597,20 +597,41 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-image">
-              <div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <td class="text-left">{{ entry_image }}</td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="text-left"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ thumb }}" alt="" title="" data-placeholder="{{ placeholder }}"/></a> <input type="hidden" name="image" value="{{ image }}" id="input-image"/></td>
-                    </tr>
-                  </tbody>
-                </table>
+              <div class="card-deck">
+              <div class="card">
+                <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/>
+                <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
+                <div class="card-footer text-center">
+                  <div class="btn-group btn-group-sm">
+                    <button type="button" data-toggle="image" data-target="input-image" data-thumb="thumb-image" class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i> {{ button_edit }}</button>
+                    <button type="button" data-toggle="clear" data-target="input-image" data-thumb="thumb-image" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash-o"></i> Clear</button>
+                  </div>
+                </div>
               </div>
+
+              {% set image_row = 0 %}
+              {% for product_image in product_images %}
+              <div class="card">
+                <img src="{{ product_image.thumb }}" alt="" title="" id="thumb-image{{ image_row }}" data-placeholder="{{ placeholder }}" class="card-img-top"/>
+                <input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-image{{ image_row }}"/>
+                <div class="card-body">
+                  <div class="form-group">
+                    <input type="text" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control form-control-sm"/>
+                  </div>
+                </div>
+                <div class="card-footer text-center">
+                  <div class="btn-group btn-group-sm">
+                    <button type="button" data-event="image" data-target="input-image" data-toggle="tooltip" data-title="{{ button_edit }}" data-thumb="thumb-image" class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i></button>
+                    <button type="button" data-event="clear" data-target="input-image" data-toggle="tooltip" data-title="{{ button_clear }}" data-thumb="thumb-image" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+                    <button type="button" data-event="clear" data-target="input-image" data-toggle="tooltip" data-title="{{ button_remove }}" data-thumb="thumb-image" class="btn btn-outline-danger btn-sm"><i class="fa fa-minus-circle"></i></button>
+                  </div>
+                </div>
+              </div>
+
+                {% set image_row = image_row + 1 %}
+              {% endfor %}
+              </div>
+
               <div class="table-responsive">
                 <table id="images" class="table table-striped table-bordered table-hover">
                   <thead>
@@ -624,7 +645,15 @@
                     {% set image_row = 0 %}
                     {% for product_image in product_images %}
                       <tr id="image-row{{ image_row }}">
-                        <td class="text-left"><a href="" id="thumb-image{{ image_row }}" data-toggle="image" class="img-thumbnail"><img src="{{ product_image.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}"/></a> <input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-image{{ image_row }}"/></td>
+                        <td class="text-left">
+
+                          <a href="" id="thumb-image{{ image_row }}" data-toggle="image" class="img-thumbnail"><img src="{{ product_image.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}"/></a>
+
+                          <input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-image{{ image_row }}"/>
+
+
+
+                        </td>
                         <td class="text-right"><input type="text" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
                         <td class="text-left"><button type="button" onclick="$('#image-row{{ image_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                       </tr>

@@ -18,12 +18,10 @@
           </div>
         </div>
         {% endfor %}
-
         {% if comment.next %}
         <div class="text-center"><a href="{{ comment.next }}" class="btn btn-block">see more replies...</a></div>
         {% endif %}
-
-        {% endif %} <a href="{{ comment.refresh }}" class="reply-refresh hide">refresh</a> </div>
+        {% endif %}<a href="{{ comment.refresh }}" class="reply-refresh hide">refresh</a></div>
     </div>
     <p class="text-right">
       <button type="button" class="btn btn-link btn-xs">{{ button_reply }}</button>

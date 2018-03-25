@@ -95,71 +95,34 @@ $(document).ready(function() {
 	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li').addClass('active');
 
 	// Image Manager
-	$(document).on('click', 'a[data-toggle=\'image\']', function(e) {
-		var $element = $(this);
-		var $popover = $element.data('bs.popover'); // element has bs popover?
+	$(document).on('click', '[data-toggle=\'image\']', function(e) {
+		var element = this;
 
-		e.preventDefault();
+		$('#modal-image').remove();
 
-		// destroy all image popovers
-		$('a[data-toggle="image"]').popover('destroy');
+		$.ajax({
+			url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token') + '&target=' + $(this).attr('data-target') + '&thumb=' + $(this).attr('data-thumb'),
+			dataType: 'html',
+			beforeSend: function() {
+				$(element).button('loading');
+			},
+			complete: function() {
+				$(element).button('reset');
+			},
+			success: function(html) {
+				$('body').append(html);
 
-		// remove flickering (do not re-add popover when clicking for removal)
-		if ($popover) {
-			return;
-		}
-
-		$element.popover({
-			html: true,
-			placement: 'right',
-			trigger: 'manual',
-			content: function() {
-				return '<button type="button" id="button-image" class="btn btn-primary"><i class="fa fa-pencil"></i></button> <button type="button" id="button-clear" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>';
+				$('#modal-image').modal('show');
 			}
 		});
+	});
 
-		$element.popover('show');
+	$(document).on('click', '[data-toggle=\'clear\']', function() {
+		var element = this;
 
-		$('#button-image').on('click', function() {
-			var $button = $(this);
-			var $icon = $button.find('> i');
+		$('#' + $(this).attr('data-thumb')).attr('src', $('#' + $(this).attr('data-thumb')).attr('data-placeholder'));
 
-			$('#modal-image').remove();
-
-			$.ajax({
-				url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token') + '&target=' + $element.parent().find('input').attr('id') + '&thumb=' + $element.attr('id'),
-				dataType: 'html',
-				beforeSend: function() {
-					$button.prop('disabled', true);
-
-					if ($icon.length) {
-						$icon.attr('class', 'fa fa-circle-o-notch fa-spin');
-					}
-				},
-				complete: function() {
-					$button.prop('disabled', false);
-
-					if ($icon.length) {
-						$icon.attr('class', 'fa fa-pencil');
-					}
-				},
-				success: function(html) {
-					$('body').append(html);
-
-					$('#modal-image').modal('show');
-				}
-			});
-
-			$element.popover('destroy');
-		});
-
-		$('#button-clear').on('click', function() {
-			$element.find('img').attr('src', $element.find('img').attr('data-placeholder'));
-
-			$element.parent().find('input').val('');
-
-			$element.popover('destroy');
-		});
+		$('#' + $(this).attr('data-target')).val('');
 	});
 
 	// table dropdown responsive fix

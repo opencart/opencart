@@ -33,7 +33,11 @@
         </table>
       </div>
       {% else %}
-      <p>{{ text_empty }}</p>
+      <div class="card mt-3 mb-3">
+        <div class="card-body">
+          <p class="text-center mb-0">{{ text_no_results }}</p>
+        </div>
+      </div>
       {% endif %}
       <div class="buttons clearfix">
         <div class="pull-left"><a href="{{ back }}" class="btn btn-default">{{ button_back }}</a></div>

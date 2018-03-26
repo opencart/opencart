@@ -16,18 +16,9 @@ class ModelToolImage extends Model {
 			if (!in_array($image_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF))) { 
 				return DIR_IMAGE . $image_old;
 			}
-						
-			$path = '';
-
-			$directories = explode('/', dirname($image_new));
-
-			foreach ($directories as $directory) {
-				$path = $path . '/' . $directory;
-
-				if (!is_dir(DIR_IMAGE . $path)) {
-					@mkdir(DIR_IMAGE . $path, 0777);
-				}
-			}
+								
+			$path = rtrim(DIR_IMAGE, '/\\') . '/' . dirname($image_new);
+			@mkdir($path, 0777, true);
 
 			if ($width_orig != $width || $height_orig != $height) {
 				$image = new Image(DIR_IMAGE . $image_old);

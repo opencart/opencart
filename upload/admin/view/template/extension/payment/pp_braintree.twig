@@ -701,16 +701,7 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ text_paypal_preview }}</label>
                   <div class="col-sm-10">
-                    <script src="https://www.paypalobjects.com/api/button.js?"
-                    data-merchant="braintree"
-                    data-id="paypal-button"
-                    data-button="checkout"
-                    data-color="{{ payment_pp_braintree_paypal_button_colour }}"
-                    data-size="{{ payment_pp_braintree_paypal_button_size }}"
-                    data-shape="{{ payment_pp_braintree_paypal_button_shape }}"
-                    data-button_type="submit"
-                    data-button_disabled="true"
-                    ></script>
+                    <script src="https://www.paypalobjects.com/api/button.js?" data-merchant="braintree" data-id="paypal-button" data-button="checkout" data-color="{{ payment_pp_braintree_paypal_button_colour }}" data-size="{{ payment_pp_braintree_paypal_button_size }}" data-shape="{{ payment_pp_braintree_paypal_button_shape }}" data-button_type="submit" data-button_disabled="true"></script>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -720,103 +711,98 @@
               {% endif %}
             </div>
             <div class="tab-pane" id="tab-transaction">
-              {% if braintree_config.paypal_enabled == 0 %}
-                <div class="alert alert-info">{{ error_braintree_account_paypal }}</div>
+              {% if braintree_config.paypal_enabled == 1 %}
+              <div class="alert alert-info">{{ error_braintree_account_paypal }}</div>
               {% else %}
-                {% if payment_pp_braintree_status == 1 %}
-                  <div class="well">
-                    <div class="row">
-                      <div class="col-sm-3">
-                        <div class="form-group">
-                          <label class="col-form-label" for="input-transaction-id">{{ entry_transaction_id }}</label> <input type="text" name="filter_transaction_id" value="" placeholder="Transaction ID" id="input-transaction-id" class="form-control"/>
-                        </div>
-                        <div class="form-group">
-                          <label class="col-form-label" for="input-transaction-type">{{ entry_transaction_type }}</label> <select name="filter_transaction_type" id="input-transaction-type" class="form-control">
-                            <option value="*" selected="selected">{{ text_all }}</option>
-                            <option value="sale">{{ text_sale }}</option>
-                            <option value="credit">{{ text_credit }}</option>
-                          </select>
-                        </div>
-                        <div class="form-group">
-                          <div class="col-sm-6" style="padding-left: 0;">
-                            <label class="col-form-label" for="input-date-from">{{ entry_date_from }}</label>
-                            <div class="input-group date">
-                              <input type="text" name="filter_date_from" value="" placeholder="From" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-from" class="form-control"/>
-                              <div class="input-group-append">
-                                <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-sm-6" style="padding-right: 0;">
-                            <label class="col-form-label" for="input-date-to">{{ entry_date_to }}</label>
-                            <div class="input-group date">
-                              <input type="text" name="filter_date_to" value="" placeholder="To" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-to" class="form-control"/>
-                              <div class="input-group-append">
-                                <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
-                              </div>
-                            </div>
+              {% if payment_pp_braintree_status == 0 %}
+              <div class="card bg-light mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label class="col-form-label" for="input-transaction-id">{{ entry_transaction_id }}</label> <input type="text" name="filter_transaction_id" value="" placeholder="Transaction ID" id="input-transaction-id" class="form-control"/>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-form-label" for="input-transaction-type">{{ entry_transaction_type }}</label> <select name="filter_transaction_type" id="input-transaction-type" class="form-control">
+                          <option value="*" selected="selected">{{ text_all }}</option>
+                          <option value="sale">{{ text_sale }}</option>
+                          <option value="credit">{{ text_credit }}</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-form-label" for="input-date-from">{{ entry_date_from }}</label>
+                        <div class="input-group date">
+                          <input type="text" name="filter_date_from" value="" placeholder="From" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-from" class="form-control"/>
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
                           </div>
                         </div>
                       </div>
-                      <div class="col-sm-3">
-                        <div class="form-group">
-                          <label class="col-form-label" for="input-payment-type">{{ entry_payment_type }}</label> <select name="filter_payment_type" id="input-payment-type" class="form-control">
-                            <option value="*" selected="selected">{{ text_all }}</option>
-                            <option value="Credit Card">{{ text_credit_card }}</option>
-                            <option value="PayPal">{{ text_paypal }}</option>
-                          </select>
-                        </div>
-                        <div class="form-group">
-                          <label class="col-form-label" for="input-card-type">{{ entry_card_type }}</label> <select name="filter_card_type" id="input-card-type" class="form-control">
-                            <option value="*">{{ text_all }}</option>
-                            {% for card_type in card_types %}
-                              <option value="{{ card_type }}">{{ card_type }}</option>
-                            {% endfor %}
-                          </select>
-                        </div>
-                        <div class="form-group">
-                          <div class="col-sm-6" style="padding-left: 0;">
-                            <label class="col-form-label" for="input-amount-from">{{ entry_amount_from }}</label> <input type="text" name="filter_amount_from" value="" placeholder="From" id="input-amount-from" class="form-control"/>
-                          </div>
-                          <div class="col-sm-6" style="padding-right: 0;">
-                            <label class="col-form-label" for="input-amount-to">{{ entry_amount_to }}</label> <input type="text" name="filter_amount_to" value="" placeholder="To" id="input-amount-to" class="form-control"/>
+                      <div class="form-group">
+                        <label class="col-form-label" for="input-date-to">{{ entry_date_to }}</label>
+                        <div class="input-group date">
+                          <input type="text" name="filter_date_to" value="" placeholder="To" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-to" class="form-control"/>
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
                           </div>
                         </div>
-                      </div>
-                      <div class="col-sm-3">
-                        <div class="form-group">
-                          <label class="col-form-label" for="input-card-type">{{ entry_transaction_status }}</label>
-                          <div class="well well-sm" style="height: 190px; overflow: auto; margin-bottom: 0;">
-                            {% for transaction_status in transaction_statuses %}
-                              <div class="checkbox">
-                                <label> <input class="filter-transaction-status" type="checkbox" name="filter_transaction_status[]" value="{{ transaction_status }}" checked="checked"/> {{ transaction_status }}
-                                </label>
-                              </div>
-                            {% endfor %}
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-3">
-                        <div class="form-group">
-                          <label class="col-form-label" for="input-merchant-account-id">{{ entry_merchant_account_id }}</label> <select name="filter_merchant_account_id" id="input-merchant-account-id" class="form-control">
-                            <option value="*">All</option>
-                            {% for pp_braintree_account_value in payment_pp_braintree_account %}
-                              {% if pp_braintree_account_value.merchant_account_id %}
-                                <option value="{{ pp_braintree_account_value.merchant_account_id }}">{{ pp_braintree_account_value.merchant_account_id }}</option>
-                              {% endif %}
-                            {% endfor %}
-                          </select>
-                        </div>
-                        <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> {{ button_filter }}</button>
                       </div>
                     </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label class="col-form-label" for="input-payment-type">{{ entry_payment_type }}</label> <select name="filter_payment_type" id="input-payment-type" class="form-control">
+                          <option value="*" selected="selected">{{ text_all }}</option>
+                          <option value="Credit Card">{{ text_credit_card }}</option>
+                          <option value="PayPal">{{ text_paypal }}</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-form-label" for="input-card-type">{{ entry_card_type }}</label> <select name="filter_card_type" id="input-card-type" class="form-control">
+                          <option value="*">{{ text_all }}</option>
+                          {% for card_type in card_types %}
+                            <option value="{{ card_type }}">{{ card_type }}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-form-label" for="input-amount-from">{{ entry_amount_from }}</label> <input type="text" name="filter_amount_from" value="" placeholder="From" id="input-amount-from" class="form-control"/> <label class="col-form-label" for="input-amount-to">{{ entry_amount_to }}</label> <input type="text" name="filter_amount_to" value="" placeholder="To" id="input-amount-to" class="form-control"/>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label class="col-form-label" for="input-card-type">{{ entry_transaction_status }}</label>
+                        <div class="form-control" style="height: 190px; overflow: auto; margin-bottom: 0;">
+                          {% for transaction_status in transaction_statuses %}
+                            <div class="checkbox">
+                              <label> <input class="filter-transaction-status" type="checkbox" name="filter_transaction_status[]" value="{{ transaction_status }}" checked="checked"/> {{ transaction_status }}
+                              </label>
+                            </div>
+                          {% endfor %}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label class="col-form-label" for="input-merchant-account-id">{{ entry_merchant_account_id }}</label> <select name="filter_merchant_account_id" id="input-merchant-account-id" class="form-control">
+                          <option value="*">All</option>
+                          {% for pp_braintree_account_value in payment_pp_braintree_account %}
+                            {% if pp_braintree_account_value.merchant_account_id %}
+                              <option value="{{ pp_braintree_account_value.merchant_account_id }}">{{ pp_braintree_account_value.merchant_account_id }}</option>
+                            {% endif %}
+                          {% endfor %}
+                        </select>
+                      </div>
+                      <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> {{ button_filter }}</button>
+                    </div>
                   </div>
-                  <div id="table-action"></div>
-                {% else %}
-                  {{ text_enable_transactions }}
-                {% endif %}
-              {% endif %}
+                </div>
+              </div>
             </div>
+            <div id="table-action"></div>
+            {% else %}
+              {{ text_enable_transactions }}
+            {% endif %}
+            {% endif %}
           </div>
         </form>
       </div>

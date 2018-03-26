@@ -28,7 +28,7 @@ $(document).ready(function() {
         });
     }
 
-    $(document).delegate('#button-cancel', 'click', function() {
+    $(document).on('click', '#button-cancel', function() {
         if (!confirm("{{ text_confirm_cancel }}")) {
             return false;
         }

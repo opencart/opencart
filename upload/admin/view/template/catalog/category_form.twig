@@ -301,7 +301,7 @@ $('input[name=\'filter\']').autocomplete({
 	}
 });
 
-$('#category-filter').delegate('.fa-minus-circle', 'click', function() {
+$('#category-filter').on('click', '.fa-minus-circle', function() {
 	$(this).parent().remove();
 });
 //--></script>

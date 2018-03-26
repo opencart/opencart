@@ -453,7 +453,7 @@ $('input[name="category"]').autocomplete({
 	}
 });
 
-$('#laybuy-category').delegate('.fa-minus-circle', 'click', function() {
+$('#laybuy-category').on('click', '.fa-minus-circle', function() {
 	$(this).parent().remove();
 });
 //--></script>
@@ -483,7 +483,7 @@ $('input[name="customer_group"]').autocomplete({
 	}
 });
 
-$('#laybuy-customer-group').delegate('.fa-minus-circle', 'click', function() {
+$('#laybuy-customer-group').on('click', '.fa-minus-circle', function() {
 	$(this).parent().remove();
 });
 //--></script>

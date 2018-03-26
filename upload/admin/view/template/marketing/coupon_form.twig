@@ -231,7 +231,7 @@ $('input[name=\'product\']').autocomplete({
 	}
 });
 
-$('#coupon-product').delegate('.fa-minus-circle', 'click', function() {
+$('#coupon-product').on('click', '.fa-minus-circle', function() {
 	$(this).parent().remove();
 });
 
@@ -260,13 +260,13 @@ $('input[name=\'category\']').autocomplete({
 	}
 });
 
-$('#coupon-category').delegate('.fa-minus-circle', 'click', function() {
+$('#coupon-category').on('click', '.fa-minus-circle', function() {
 	$(this).parent().remove();
 });
 //--></script>
 {% if coupon_id %}
   <script type="text/javascript"><!--
-  $('#history').delegate('.pagination a', 'click', function(e) {
+  $('#history').on('click', '.pagination a', function(e) {
 	  e.preventDefault();
 
 	  $('#history').load(this.href);

@@ -350,7 +350,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$(document).delegate('#button-invoice', 'click', function() {
+$(document).on('click', '#button-invoice', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/createinvoiceno&user_token={{ user_token }}&order_id={{ order_id }}',
 		dataType: 'json',
@@ -379,7 +379,7 @@ $(document).delegate('#button-invoice', 'click', function() {
 	});
 });
 
-$(document).delegate('#button-reward-add', 'click', function() {
+$(document).on('click', '#button-reward-add', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/addreward&user_token={{ user_token }}&order_id={{ order_id }}',
 		type: 'post',
@@ -409,7 +409,7 @@ $(document).delegate('#button-reward-add', 'click', function() {
 	});
 });
 
-$(document).delegate('#button-reward-remove', 'click', function() {
+$(document).on('click', '#button-reward-remove', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/removereward&user_token={{ user_token }}&order_id={{ order_id }}',
 		type: 'post',
@@ -439,7 +439,7 @@ $(document).delegate('#button-reward-remove', 'click', function() {
 	});
 });
 
-$(document).delegate('#button-commission-add', 'click', function() {
+$(document).on('click', '#button-commission-add', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/addcommission&user_token={{ user_token }}&order_id={{ order_id }}',
 		type: 'post',
@@ -469,7 +469,7 @@ $(document).delegate('#button-commission-add', 'click', function() {
 	});
 });
 
-$(document).delegate('#button-commission-remove', 'click', function() {
+$(document).on('click', '#button-commission-remove', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/removecommission&user_token={{ user_token }}&order_id={{ order_id }}',
 		type: 'post',
@@ -499,7 +499,7 @@ $(document).delegate('#button-commission-remove', 'click', function() {
 	});
 });
 
-$('#history').delegate('.pagination a', 'click', function(e) {
+$('#history').on('click', '.pagination a', function(e) {
 	e.preventDefault();
 
 	$('#history').load(this.href);

@@ -526,9 +526,7 @@ div.required .col-form-label:before {
   .product-thumb .button-group button + button {
     width: 20%;
     border-left: 1px solid #ddd; }
-  @media (max-width: 1200px) {
-  .product-thumb .button-group button, .product-thumb .button-group button + button {
-    width: 33.33%; } }
+
   @media (max-width: 767px) {
   .product-thumb .button-group button, .product-thumb .button-group button + button {
     width: 33.33%; } }
@@ -553,7 +551,7 @@ div.required .col-form-label:before {
     .product-list .product-thumb .image + div {
       display: inline-block;
       margin-left: 0%;
-      width: 69.62%; } }
+      width: 69.5%; } }
   @media (max-width: 767px) {
   .product-list .product-thumb .caption {
     min-height: 0;

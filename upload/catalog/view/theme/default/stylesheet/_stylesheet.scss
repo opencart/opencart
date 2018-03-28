@@ -815,16 +815,6 @@ div.required .col-form-label:before {
       }
     }
   }
-  @media (max-width: 1200px) {
-    .button-group {
-      button {
-        &,
-        + button {
-          width: 33.33%;
-        }
-      }
-    }
-  }
   @media (max-width: 767px) {
     .button-group {
       button {
@@ -879,7 +869,7 @@ div.required .col-form-label:before {
 				+ div {
 					display: inline-block;
 					margin-left: 0%;
-					width: 69.62%;
+					width: 69.5%;
 
 				}
       }

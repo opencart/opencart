@@ -13,7 +13,7 @@
       <ul class="dropdown-menu" aria-labelledby="dropdown-language">
         {% for language in languages %}
         <li>
-          <button class="language-select btn btn-sm btn-link btn-block" type="button" name="{{ language.code }}"><img src="catalog/language/{{ language.code }}/{{ language.code }}.png" alt="{{ language.name }}" title="{{ language.name }}" /> {{ language.name }}</button>
+          <a class="language-select btn btn-sm btn-link btn-block" name="{{ language.code }}"><img src="catalog/language/{{ language.code }}/{{ language.code }}.png" alt="{{ language.name }}" title="{{ language.name }}" /> {{ language.name }}</a>
         </li>
         {% endfor %}
       </ul>

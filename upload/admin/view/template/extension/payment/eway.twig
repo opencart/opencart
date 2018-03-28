@@ -47,15 +47,15 @@
           <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-test">{{ entry_test }}</label>
             <div class="col-sm-10">
-              <select name="payment_eway_test" id="input-test" class="form-control">
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
                 {% if payment_eway_test %}
-                  <option value="1" selected="selected">{{ text_yes }}</option>
-                  <option value="0">{{ text_no }}</option>
+                  <label class="btn btn-success active"><input type="radio" name="payment_eway_test" value="1" checked="checked"/> {{ text_yes }}</label>
+                  <label class="btn btn-danger"><input type="radio" name="payment_eway_test" value="0"/> {{ text_no }}</label>
                 {% else %}
-                  <option value="1">{{ text_yes }}</option>
-                  <option value="0" selected="selected">{{ text_no }}</option>
+                  <label class="btn btn-success"><input type="radio" name="payment_eway_test" value="1"/> {{ text_yes }}</label>
+                  <label class="btn btn-danger active"><input type="radio" name="payment_eway_test" value="0" checked="checked"/> {{ text_no }}</label>
                 {% endif %}
-              </select>
+              </div>
               <small class="form-text text-muted">{{ help_testmode }}</small>
             </div>
           </div>

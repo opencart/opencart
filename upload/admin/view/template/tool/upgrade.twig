@@ -23,10 +23,10 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
-    <div class="panel-group" id="collapse">
+    <div id="collapse">
       <div class="card">
-        <div class="card-header"><a href="#collapse-version" data-toggle="collapse" data-parent="#collapse"><i class="fa fa-refresh"></i> {{ text_version }}</a></div>
-        <div id="collapse-version" class="card-collapse collapse in">
+        <div class="card-header" data-toggle="collapse" data-target="#collapse-version"><i class="fa fa-refresh"></i> {{ text_version }}</div>
+        <div id="collapse-version" data-parent="#collapse" class="collapse show">
           <div class="card-body">
             <fieldset>
               {% if error_warning %}
@@ -36,7 +36,7 @@
               {% endif %}
             </fieldset>
             <div class="alert alert-info">
-              <p><strong><i class="fa fa-exclamation-circle "></i> Tips: Before upgrading it's very important to</strong></p>
+              <p><strong><i class="fa fa-exclamation-circle"></i> Tips: Before upgrading it's very important to</strong></p>
               <ol>
                 <li>Make a complete backup of your web site!
                   <br/>
@@ -58,8 +58,8 @@
         </div>
       </div>
       <div class="card">
-        <div class="card-header"><a href="#collapse-compatible" data-toggle="collapse" data-parent="#collapse"><i class="fa fa-random"></i> {{ text_compatibility }}</a></div>
-        <div id="collapse-compatible" class="card-collapse collapse">
+        <div class="card-header collapsed" data-toggle="collapse" data-target="#collapse-compatible"><i class="fa fa-random"></i> {{ text_compatibility }}</div>
+        <div id="collapse-compatible" data-parent="#collapse" class="collapse">
           <div class="card-body">
             <div class="alert alert-warning">
               Before upgrading, it's very important to check the extensions installed are compatible with the latest version!
@@ -95,8 +95,8 @@
         </div>
       </div>
       <div class="card">
-        <div class="card-header"><a href="#collapse-upgrade" data-toggle="collapse" data-parent="#collapse"><i class="fa fa-check"></i> {{ text_upgrade }}</a></div>
-        <div id="collapse-upgrade" class="panel-collapse collapse">
+        <div class="card-header collapsed" data-toggle="collapse" data-target="#collapse-upgrade"><i class="fa fa-check"></i> {{ text_upgrade }}</div>
+        <div id="collapse-upgrade" data-parent="#collapse" class="collapse">
           <div class="card-body">
             <fieldset>
               <legend>{{ text_progress }}</legend>

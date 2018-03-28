@@ -183,17 +183,17 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-subtract">{{ entry_subtract }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_subtract }}</label>
                 <div class="col-sm-10">
-                  <select name="subtract" id="input-subtract" class="form-control">
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     {% if subtract %}
-                      <option value="1" selected="selected">{{ text_yes }}</option>
-                      <option value="0">{{ text_no }}</option>
+                      <label class="btn btn-success active"><input type="radio" name="subtract" value="1" checked="checked"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger"><input type="radio" name="subtract" value="0"/> {{ text_no }}</label>
                     {% else %}
-                      <option value="1">{{ text_yes }}</option>
-                      <option value="0" selected="selected">{{ text_no }}</option>
+                      <label class="btn btn-success"><input type="radio" name="subtract" value="1"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger active"><input type="radio" name="subtract" value="0" checked="checked"/> {{ text_no }}</label>
                     {% endif %}
-                  </select>
+                  </div>
                 </div>
               </div>
               <div class="form-group row">
@@ -214,21 +214,15 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">{{ entry_shipping }}</label>
                 <div class="col-sm-10">
-                  <label class="radio-inline">
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     {% if shipping %}
-                      <input type="radio" name="shipping" value="1" checked="checked"/>
-                      {{ text_yes }}
+                      <label class="btn btn-success active"><input type="radio" name="shipping" value="1" checked="checked"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger"><input type="radio" name="shipping" value="0"/> {{ text_no }}</label>
                     {% else %}
-                      <input type="radio" name="shipping" value="1"/>
-                      {{ text_yes }}
-                    {% endif %}</label> <label class="radio-inline"> {% if not shipping %}
-                      <input type="radio" name="shipping" value="0" checked="checked"/>
-                      {{ text_no }}
-                    {% else %}
-                      <input type="radio" name="shipping" value="0"/>
-                      {{ text_no }}
+                      <label class="btn btn-success"><input type="radio" name="shipping" value="1"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger active"><input type="radio" name="shipping" value="0" checked="checked"/> {{ text_no }}</label>
                     {% endif %}
-                  </label>
+                  </div>
                 </div>
               </div>
               <div class="form-group row">
@@ -598,38 +592,36 @@
             </div>
             <div class="tab-pane" id="tab-image">
               <div class="card-deck">
-              <div class="card">
-                <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/>
-                <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
-                <div class="card-footer text-center">
-                  <div class="btn-group btn-group-sm">
-                    <button type="button" data-toggle="image" data-target="input-image" data-thumb="thumb-image" class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i> {{ button_edit }}</button>
-                    <button type="button" data-toggle="clear" data-target="input-image" data-thumb="thumb-image" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash-o"></i> Clear</button>
+                <div class="card">
+                  <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
+                  <div class="card-footer text-center">
+                    <div class="btn-group btn-group-sm">
+                      <button type="button" data-toggle="image" data-target="input-image" data-thumb="thumb-image" class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i> {{ button_edit }}</button>
+                      <button type="button" data-toggle="clear" data-target="input-image" data-thumb="thumb-image" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash-o"></i> Clear</button>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {% set image_row = 0 %}
-              {% for product_image in product_images %}
-              <div class="card">
-                <img src="{{ product_image.thumb }}" alt="" title="" id="thumb-image{{ image_row }}" data-placeholder="{{ placeholder }}" class="card-img-top"/>
-                <input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-image{{ image_row }}"/>
-                <div class="card-body">
-                  <div class="form-group">
-                    <input type="text" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control form-control-sm"/>
+                {% set image_row = 0 %}
+                {% for product_image in product_images %}
+                  <div class="card">
+                    <img src="{{ product_image.thumb }}" alt="" title="" id="thumb-image{{ image_row }}" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-image{{ image_row }}"/>
+                    <div class="card-body">
+                      <div class="form-group">
+                        <input type="text" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control form-control-sm"/>
+                      </div>
+                    </div>
+                    <div class="card-footer text-center">
+                      <div class="btn-group btn-group-sm">
+                        <button type="button" data-event="image" data-target="input-image" data-toggle="tooltip" data-title="{{ button_edit }}" data-thumb="thumb-image" class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i></button>
+                        <button type="button" data-event="clear" data-target="input-image" data-toggle="tooltip" data-title="{{ button_clear }}" data-thumb="thumb-image" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+                        <button type="button" data-event="clear" data-target="input-image" data-toggle="tooltip" data-title="{{ button_remove }}" data-thumb="thumb-image" class="btn btn-outline-danger btn-sm"><i class="fa fa-minus-circle"></i></button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="card-footer text-center">
-                  <div class="btn-group btn-group-sm">
-                    <button type="button" data-event="image" data-target="input-image" data-toggle="tooltip" data-title="{{ button_edit }}" data-thumb="thumb-image" class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i></button>
-                    <button type="button" data-event="clear" data-target="input-image" data-toggle="tooltip" data-title="{{ button_clear }}" data-thumb="thumb-image" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash-o"></i></button>
-                    <button type="button" data-event="clear" data-target="input-image" data-toggle="tooltip" data-title="{{ button_remove }}" data-thumb="thumb-image" class="btn btn-outline-danger btn-sm"><i class="fa fa-minus-circle"></i></button>
-                  </div>
-                </div>
-              </div>
 
-                {% set image_row = image_row + 1 %}
-              {% endfor %}
+                  {% set image_row = image_row + 1 %}
+                {% endfor %}
               </div>
 
               <div class="table-responsive">
@@ -650,7 +642,6 @@
                           <a href="" id="thumb-image{{ image_row }}" data-toggle="image" class="img-thumbnail"><img src="{{ product_image.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}"/></a>
 
                           <input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-image{{ image_row }}"/>
-
 
 
                         </td>
@@ -815,7 +806,7 @@ $('input[name=\'category\']').autocomplete({
 	}
 });
 
-$('#product-category').delegate('.fa-minus-circle', 'click', function() {
+$('#product-category').on('click', '.fa-minus-circle', function() {
 	$(this).parent().remove();
 });
 
@@ -844,7 +835,7 @@ $('input[name=\'filter\']').autocomplete({
 	}
 });
 
-$('#product-filter').delegate('.fa-minus-circle', 'click', function() {
+$('#product-filter').on('click', '.fa-minus-circle', function() {
 	$(this).parent().remove();
 });
 
@@ -873,7 +864,7 @@ $('input[name=\'download\']').autocomplete({
 	}
 });
 
-$('#product-download').delegate('.fa-minus-circle', 'click', function() {
+$('#product-download').on('click', '.fa-minus-circle', function() {
 	$(this).parent().remove();
 });
 
@@ -902,7 +893,7 @@ $('input[name=\'related\']').autocomplete({
 	}
 });
 
-$('#product-related').delegate('.fa-minus-circle', 'click', function() {
+$('#product-related').on('click', '.fa-minus-circle', function() {
 	$(this).parent().remove();
 });
 //--></script>

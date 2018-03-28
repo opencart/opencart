@@ -436,7 +436,7 @@ $('input[name=\'customer_group_id\']').on('change', function() {
 $('input[name=\'customer_group_id\']').trigger('change');
 //--></script>
 <script type="text/javascript"><!--
-$('#history').delegate('.pagination a', 'click', function(e) {
+$('#history').on('click', '.pagination a', function(e) {
 	e.preventDefault();
 
 	$('#history').load(this.href);
@@ -480,7 +480,7 @@ $('#button-history').on('click', function(e) {
 });
 //--></script>
 <script type="text/javascript"><!--
-$('#transaction').delegate('.pagination a', 'click', function(e) {
+$('#transaction').on('click', '.pagination a', function(e) {
 	e.preventDefault();
 
 	$('#transaction').load(this.href);
@@ -525,7 +525,7 @@ $('#button-transaction').on('click', function(e) {
 });
 //--></script>
 <script type="text/javascript"><!--
-$('#report').delegate('.pagination a', 'click', function(e) {
+$('#report').on('click', '.pagination a', function(e) {
 	e.preventDefault();
 
 	$('#report').load(this.href);
@@ -534,7 +534,7 @@ $('#report').delegate('.pagination a', 'click', function(e) {
 $('#report').load('index.php?route=marketing/affiliate/report&user_token={{ user_token }}&customer_id={{ customer_id }}');
 //--></script>
 <script type="text/javascript"><!--
-$('#content').delegate('button[id^=\'button-custom-field\'], button[id^=\'button-address\']', 'click', function() {
+$('#content').on('click', 'button[id^=\'button-custom-field\'], button[id^=\'button-address\']', function() {
 	var element = this;
 
 	$('#form-upload').remove();

@@ -14,10 +14,10 @@
     </div>
   </div>
   <div class="container-fluid">
-    <div id="collapse" class="panel-group">
+    <div id="collapse">
       <div class="card">
         <div class="card-header"><i class="fa fa-user fa-fw"></i> {{ text_customer_detail }}</div>
-        <div id="collapse-customer" data-parent="#collapse" class="panel-collapse collapse show">
+        <div id="collapse-customer" data-parent="#collapse" class="collapse show">
           <div class="card-body">
             <form>
               <div class="form-group row">
@@ -226,7 +226,7 @@
       </div>
       <div class="card">
         <div class="card-header"><i class="fa fa-shopping-cart fa-fw"></i> {{ text_cart }}</div>
-        <div id="collapse-cart" data-parent="#collapse" class="panel-collapse collapse">
+        <div id="collapse-cart" data-parent="#collapse" class="collapse">
           <div class="card-body">
             <div class="table-responsive">
               <table class="table table-bordered">
@@ -390,7 +390,7 @@
       </div>
       <div class="card">
         <div class="card-header"><i class="fa fa-credit-card fa-fw"></i> {{ text_payment_detail }}</div>
-        <div id="collapse-payment" data-parent="#collapse" class="panel-collapse collapse">
+        <div id="collapse-payment" data-parent="#collapse" class="collapse">
           <div class="card-body">
             <form>
               <div class="form-group row">
@@ -606,7 +606,7 @@
       </div>
       <div class="card">
         <div class="card-header"><i class="fa fa-truck fa-fw"></i> {{ text_shipping_detail }}</div>
-        <div id="collapse-shipping" data-parent="#collapse" class="panel-collapse collapse">
+        <div id="collapse-shipping" data-parent="#collapse" class="collapse">
           <div class="card-body">
             <form>
               <div class="form-group row">
@@ -822,7 +822,7 @@
       </div>
       <div class="card">
         <div class="card-header"><i class="fa fa-usd fa-fw"></i> {{ text_total_detail }}</div>
-        <div id="collapse-total" data-parent="#collapse" class="panel-collapse collapse">
+        <div id="collapse-total" data-parent="#collapse" class="collapse">
           <div class="card-body">
             <div class="table-responsive">
               <table class="table table-bordered">
@@ -1478,7 +1478,7 @@ $('#button-voucher-add').on('click', function() {
 	});
 });
 
-$('#cart').delegate('.btn-danger', 'click', function() {
+$('#cart').on('click', '.btn-danger', function() {
 	var element = this;
 
 	$.ajax({
@@ -1510,7 +1510,7 @@ $('#cart').delegate('.btn-danger', 'click', function() {
 	});
 });
 
-$('#cart').delegate('.btn-primary', 'click', function() {
+$('#cart').on('click', '.btn-primary', function() {
 	var element = this;
 
 	// Refresh products, vouchers and totals
@@ -2181,7 +2181,7 @@ $('#button-save').on('click', function() {
 	});
 });
 
-$('#content').delegate('button[id^=\'button-upload\'], button[id^=\'button-custom-field\'], button[id^=\'button-payment-custom-field\'], button[id^=\'button-shipping-custom-field\']', 'click', function() {
+$('#content').on('click', 'button[id^=\'button-upload\'], button[id^=\'button-custom-field\'], button[id^=\'button-payment-custom-field\'], button[id^=\'button-shipping-custom-field\']', function() {
 	var element = this;
 
 	$('#form-upload').remove();

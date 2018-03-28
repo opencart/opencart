@@ -264,47 +264,49 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-reports">
-              <div class="well">
-                <div class="row">
-                  <div class="col-sm-4">
-                    <div class="form-group">
-                      <label class="col-form-label" for="input-order-id">{{ entry_order_id }}</label> <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-form-label" for="input-months">{{ entry_months }}</label> <input type="text" name="filter_months" value="{{ filter_months }}" placeholder="{{ entry_months }}" id="input-months" class="form-control"/>
-                    </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="form-group">
-                      <label class="col-form-label" for="input-customer">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-form-label" for="input-status">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-control"/>
-                      <option value="*"></option>
-                      {% for transaction_status in transaction_statuses %}
-                        {% if transaction_status.status_id == filter_status %}
-                          <option value="{{ transaction_status.status_id }}" selected="selected">{{ transaction_status.status_name }}</option>
-                        {% else %}
-                          <option value="{{ transaction_status.status_id }}">{{ transaction_status.status_name }}</option>
-                        {% endif %}
-                      {% endfor %}
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="form-group">
-                      <label class="col-form-label" for="input-dp-percent">{{ entry_dp_percent }}</label> <input type="text" name="filter_dp_percent" value="{{ filter_dp_percent }}" placeholder="{{ entry_dp_percent }}" id="input-dp-percent" class="form-control"/>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-form-label" for="input-date-added">{{ entry_date_added }}</label>
-                      <div class="input-group date">
-                        <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-added" class="form-control"/>
-                        <div class="input-group-append">
-                          <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
-                        </div>
+              <div class="card bg-light mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label class="col-form-label" for="input-order-id">{{ entry_order_id }}</label> <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-form-label" for="input-months">{{ entry_months }}</label> <input type="text" name="filter_months" value="{{ filter_months }}" placeholder="{{ entry_months }}" id="input-months" class="form-control"/>
                       </div>
                     </div>
-                    <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label class="col-form-label" for="input-customer">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-form-label" for="input-status">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-control"/>
+                        <option value="*"></option>
+                        {% for transaction_status in transaction_statuses %}
+                          {% if transaction_status.status_id == filter_status %}
+                            <option value="{{ transaction_status.status_id }}" selected="selected">{{ transaction_status.status_name }}</option>
+                          {% else %}
+                            <option value="{{ transaction_status.status_id }}">{{ transaction_status.status_name }}</option>
+                          {% endif %}
+                        {% endfor %}
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label class="col-form-label" for="input-dp-percent">{{ entry_dp_percent }}</label> <input type="text" name="filter_dp_percent" value="{{ filter_dp_percent }}" placeholder="{{ entry_dp_percent }}" id="input-dp-percent" class="form-control"/>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-form-label" for="input-date-added">{{ entry_date_added }}</label>
+                        <div class="input-group date">
+                          <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-added" class="form-control"/>
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                          </div>
+                        </div>
+                      </div>
+                      <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -453,7 +455,7 @@ $('input[name="category"]').autocomplete({
 	}
 });
 
-$('#laybuy-category').delegate('.fa-minus-circle', 'click', function() {
+$('#laybuy-category').on('click', '.fa-minus-circle', function() {
 	$(this).parent().remove();
 });
 //--></script>
@@ -483,7 +485,7 @@ $('input[name="customer_group"]').autocomplete({
 	}
 });
 
-$('#laybuy-customer-group').delegate('.fa-minus-circle', 'click', function() {
+$('#laybuy-customer-group').on('click', '.fa-minus-circle', function() {
 	$(this).parent().remove();
 });
 //--></script>

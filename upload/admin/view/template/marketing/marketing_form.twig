@@ -91,7 +91,7 @@ $('#input-code').trigger('keyup');
 //--></script>
 {% if marketing_id %}
   <script type="text/javascript"><!--
-  $('#report').delegate('.pagination a', 'click', function(e) {
+  $('#report').on('click', '.pagination a', function(e) {
 	  e.preventDefault();
 
 	  $('#report').load(this.href);

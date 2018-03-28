@@ -89,7 +89,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#customer-approval').delegate('.pagination a', 'click', function(e) {
+$('#customer-approval').on('click', '.pagination a', function(e) {
 	e.preventDefault();
 
 	$('#customer-approval').load(this.href);

@@ -258,45 +258,46 @@
                       <fieldset>
                         <legend>{{ text_other }}</legend>
                         <div class="form-group row">
-                          <label class="col-sm-2 col-form-label" for="input-newsletter">{{ entry_newsletter }}</label>
+                          <label class="col-sm-2 col-form-label">{{ entry_newsletter }}</label>
                           <div class="col-sm-10">
-                            <select name="newsletter" id="input-newsletter" class="form-control">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
                               {% if newsletter %}
-                                <option value="1" selected="selected">{{ text_enabled }}</option>
-                                <option value="0">{{ text_disabled }}</option>
+                                <label class="btn btn-success active"><input type="radio" name="newsletter" value="1" checked="checked"/> {{ text_yes }}</label>
+                                <label class="btn btn-danger"><input type="radio" name="newsletter" value="0"/> {{ text_no }}</label>
                               {% else %}
-                                <option value="1">{{ text_enabled }}</option>
-                                <option value="0" selected="selected">{{ text_disabled }}</option>
+                                <label class="btn btn-success"><input type="radio" name="newsletter" value="1"/> {{ text_yes }}</label>
+                                <label class="btn btn-danger active"><input type="radio" name="newsletter" value="0" checked="checked"/> {{ text_no }}</label>
                               {% endif %}
-                            </select>
+                            </div>
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
+                          <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
                           <div class="col-sm-10">
-                            <select name="status" id="input-status" class="form-control">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
                               {% if status %}
-                                <option value="1" selected="selected">{{ text_enabled }}</option>
-                                <option value="0">{{ text_disabled }}</option>
+                                <label class="btn btn-success active"><input type="radio" name="status" value="1" checked="checked"/> {{ text_yes }}</label>
+                                <label class="btn btn-danger"><input type="radio" name="status" value="0"/> {{ text_no }}</label>
                               {% else %}
-                                <option value="1">{{ text_enabled }}</option>
-                                <option value="0" selected="selected">{{ text_disabled }}</option>
+                                <label class="btn btn-success"><input type="radio" name="status" value="1"/> {{ text_yes }}</label>
+                                <label class="btn btn-danger active"><input type="radio" name="status" value="0" checked="checked"/> {{ text_no }}</label>
                               {% endif %}
-                            </select>
+                            </div>
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label class="col-sm-2 col-form-label" for="input-safe">{{ entry_safe }}</label>
+                          <label class="col-sm-2 col-form-label">{{ entry_safe }}</label>
                           <div class="col-sm-10">
-                            <select name="safe" id="input-safe" class="form-control">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
                               {% if safe %}
-                                <option value="1" selected="selected">{{ text_yes }}</option>
-                                <option value="0">{{ text_no }}</option>
+                                <label class="btn btn-success active"><input type="radio" name="safe" value="1" checked="checked"/> {{ text_yes }}</label>
+                                <label class="btn btn-danger"><input type="radio" name="safe" value="0"/> {{ text_no }}</label>
                               {% else %}
-                                <option value="1">{{ text_yes }}</option>
-                                <option value="0" selected="selected">{{ text_no }}</option>
+                                <label class="btn btn-success"><input type="radio" name="safe" value="1"/> {{ text_yes }}</label>
+                                <label class="btn btn-danger active"><input type="radio" name="safe" value="0" checked="checked"/> {{ text_no }}</label>
                               {% endif %}
-                            </select>
+                            </div>
+                            <small class="form-text text-muted">{{ help_safe }}</small>
                           </div>
                         </div>
                       </fieldset>

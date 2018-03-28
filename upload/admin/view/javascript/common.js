@@ -29,16 +29,12 @@ $(document).ready(function() {
 	});
 
 	// Highlight any found errors
-	$('.text-danger').each(function() {
-		var element = $(this).parent().parent();
+	$('.invalid-tooltip').each(function() {
+		var element = $(this).parent().find(':input');
 
-		if (element.hasClass('form-group')) {
-			element.addClass('has-error');
+		if (element.hasClass('form-control')) {
+			element.addClass('is-invalid');
 		}
-	});
-
-	$('.date button, .time button, .datetime button').on('click', function() {
-		$(this).parent().parent().datetimepicker('toggle');
 	});
 
 	$('.invalid-tooltip').show();
@@ -69,6 +65,10 @@ $(document).ready(function() {
 			}
 		}
 	}
+
+	$('.date button, .time button, .datetime button').on('click', function() {
+		$(this).parent().parent().datetimepicker('toggle');
+	});
 
 	$('#button-menu').on('click', function(e) {
 		e.preventDefault();

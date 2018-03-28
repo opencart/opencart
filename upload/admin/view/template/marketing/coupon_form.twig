@@ -122,7 +122,7 @@
                 <label class="col-sm-2 col-form-label" for="input-product">{{ entry_product }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
-                  <div id="coupon-product" class="well well-sm" style="height: 150px; overflow: auto;"> {% for coupon_product in coupon_product %}
+                  <div id="coupon-product" class="form-control" style="height: 150px; overflow: auto;"> {% for coupon_product in coupon_product %}
                       <div id="coupon-product{{ coupon_product.product_id }}"><i class="fa fa-minus-circle"></i> {{ coupon_product.name }}
                         <input type="hidden" name="coupon_product[]" value="{{ coupon_product.product_id }}"/>
                       </div>
@@ -134,7 +134,7 @@
                 <label class="col-sm-2 col-form-label" for="input-category">{{ entry_category }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" class="form-control"/>
-                  <div id="coupon-category" class="well well-sm" style="height: 150px; overflow: auto;"> {% for coupon_category in coupon_category %}
+                  <div id="coupon-category" class="form-control" style="height: 150px; overflow: auto;"> {% for coupon_category in coupon_category %}
                       <div id="coupon-category{{ coupon_category.category_id }}"><i class="fa fa-minus-circle"></i> {{ coupon_category.name }}
                         <input type="hidden" name="coupon_category[]" value="{{ coupon_category.category_id }}"/>
                       </div>

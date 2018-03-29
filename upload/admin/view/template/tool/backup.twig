@@ -15,7 +15,8 @@
       </nav>
     </div>
   </div>
-  <div class="container-fluid">{% if error_warning %}
+  <div class="container-fluid">
+    {% if error_warning %}
       <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
@@ -48,14 +49,11 @@
               <div class="col-sm-10">
                 <div class="form-control" style="height: 150px; overflow: auto;">
                   {% for table in tables %}
-                    <div class="checkbox">
-                      <label><input type="checkbox" name="backup[]" value="{{ table }}" checked="checked"/> {{ table }}</label>
-                    </div>
+                    <label class="form-check"><input type="checkbox" name="backup[]" value="{{ table }}" checked="checked" class="form-check-input"/> {{ table }}</label>
                   {% endfor %}
                 </div>
                 <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', true);" class="btn btn-link">{{ text_select_all }}</button> / <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', false);" class="btn btn-link">{{ text_unselect_all }}</button>
-
-			  </div>
+              </div>
             </div>
             <div class="form-group row">
               <div class="offset-sm-2 col-sm-10">

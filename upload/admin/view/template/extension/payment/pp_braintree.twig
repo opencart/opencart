@@ -665,10 +665,8 @@
                     <small class="form-text text-muted">{{ help_paypal_option }}</small>
                   </div>
                 </div>
-
                 <!-- required at a later date but must be empty -->
                 <input type="hidden" name="payment_pp_braintree_billing_agreement" value=""/>
-
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-paypal-button-colour">{{ entry_paypal_button_colour }}</label>
                   <div class="col-sm-10">
@@ -773,10 +771,7 @@
                         <label class="col-form-label" for="input-card-type">{{ entry_transaction_status }}</label>
                         <div class="form-control" style="height: 190px; overflow: auto; margin-bottom: 0;">
                           {% for transaction_status in transaction_statuses %}
-                            <div class="checkbox">
-                              <label> <input class="filter-transaction-status" type="checkbox" name="filter_transaction_status[]" value="{{ transaction_status }}" checked="checked"/> {{ transaction_status }}
-                              </label>
-                            </div>
+                            <label class="form-check"><input class="filter-transaction-status" type="checkbox" name="filter_transaction_status[]" value="{{ transaction_status }}" checked="checked" class="form-check-input"/> {{ transaction_status }}</label>
                           {% endfor %}
                         </div>
                       </div>

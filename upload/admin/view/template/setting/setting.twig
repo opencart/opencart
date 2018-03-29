@@ -166,19 +166,20 @@
               {% if locations %}
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ entry_location }}</label>
-                  <div class="col-sm-10"> {% for location in locations %}
-                      <div class="checkbox">
-                        <label>
+                  <div class="col-sm-10">
+                    <div class="form-control" style="height: 150px; overflow: auto;">
+                      {% for location in locations %}
+                        <label class="form-check">
                           {% if location.location_id in config_location %}
-                            <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" checked="checked"/>
+                            <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" checked="checked" class="form-check-input"/>
                             {{ location.name }}
                           {% else %}
-                            <input type="checkbox" name="config_location[]" value="{{ location.location_id }}"/>
+                            <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" class="form-check-input"/>
                             {{ location.name }}
                           {% endif %}
                         </label>
-                      </div>
-                    {% endfor %}
+                      {% endfor %}
+                    </div>
                     <small class="form-text text-muted">{{ help_location }}</small>
                   </div>
                 </div>
@@ -223,19 +224,13 @@
                 <label class="col-sm-2 col-form-label" for="input-language">{{ entry_language }}</label>
                 <div class="col-sm-10">
                   <select name="config_language" id="input-language" class="form-control">
-
                     {% for language in languages %}
                       {% if language.code == config_language %}
-
                         <option value="{{ language.code }}" selected="selected">{{ language.name }}</option>
-
                       {% else %}
-
                         <option value="{{ language.code }}">{{ language.name }}</option>
-
                       {% endif %}
                     {% endfor %}
-
                   </select>
                 </div>
               </div>
@@ -243,19 +238,13 @@
                 <label class="col-sm-2 col-form-label" for="input-admin-language">{{ entry_admin_language }}</label>
                 <div class="col-sm-10">
                   <select name="config_admin_language" id="input-admin-language" class="form-control">
-
                     {% for language in languages %}
                       {% if language.code == config_admin_language %}
-
                         <option value="{{ language.code }}" selected="selected">{{ language.name }}</option>
-
                       {% else %}
-
                         <option value="{{ language.code }}">{{ language.name }}</option>
-
                       {% endif %}
                     {% endfor %}
-
                   </select>
                 </div>
               </div>
@@ -666,17 +655,19 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-process-status">{{ entry_processing_status }}</label>
                   <div class="col-sm-10">
-                    <div class="form-control" style="height: 150px; overflow: auto;"> {% for order_status in order_statuses %}
-                        <div class="checkbox">
-                          <label>{% if order_status.order_status_id in config_processing_status %}
-                              <input type="checkbox" name="config_processing_status[]" value="{{ order_status.order_status_id }}" checked="checked"/>
-                              {{ order_status.name }}
-                            {% else %}
-                              <input type="checkbox" name="config_processing_status[]" value="{{ order_status.order_status_id }}"/>
-                              {{ order_status.name }}
-                            {% endif %}</label>
-                        </div>
-                      {% endfor %}</div>
+
+                    <div class="form-control" style="height: 150px; overflow: auto;">
+                      {% for order_status in order_statuses %}
+                        <label class="form-check">{% if order_status.order_status_id in config_processing_status %}
+                            <input type="checkbox" name="config_processing_status[]" value="{{ order_status.order_status_id }}" checked="checked" class="form-check-input"/>
+                            {{ order_status.name }}
+                          {% else %}
+                            <input type="checkbox" name="config_processing_status[]" value="{{ order_status.order_status_id }}" class="form-check-input"/>
+                            {{ order_status.name }}
+                          {% endif %}
+                        </label>
+                      {% endfor %}
+                    </div>
                     <small class="form-text text-muted">{{ help_processing_status }}</small>
                     {% if error_processing_status %}
                       <div class="invalid-tooltip">{{ error_processing_status }}</div>
@@ -685,17 +676,19 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-complete-status">{{ entry_complete_status }}</label>
                   <div class="col-sm-10">
-                    <div class="form-control" style="height: 150px; overflow: auto;"> {% for order_status in order_statuses %}
-                        <div class="checkbox">
-                          <label>{% if order_status.order_status_id in config_complete_status %}
-                              <input type="checkbox" name="config_complete_status[]" value="{{ order_status.order_status_id }}" checked="checked"/>
-                              {{ order_status.name }}
-                            {% else %}
-                              <input type="checkbox" name="config_complete_status[]" value="{{ order_status.order_status_id }}"/>
-                              {{ order_status.name }}
-                            {% endif %} </label>
-                        </div>
-                      {% endfor %} </div>
+                    <div class="form-control" style="height: 150px; overflow: auto;">
+                      {% for order_status in order_statuses %}
+                        <label class="form-check">
+                          {% if order_status.order_status_id in config_complete_status %}
+                            <input type="checkbox" name="config_complete_status[]" value="{{ order_status.order_status_id }}" checked="checked" class="form-check-input"/>
+                            {{ order_status.name }}
+                          {% else %}
+                            <input type="checkbox" name="config_complete_status[]" value="{{ order_status.order_status_id }}" class="form-check-input"/>
+                            {{ order_status.name }}
+                          {% endif %}
+                        </label>
+                      {% endfor %}
+                    </div>
                     <small class="form-text text-muted">{{ help_complete_status }}</small>
                     {% if error_complete_status %}
                       <div class="invalid-tooltip">{{ error_complete_status }}</div>
@@ -912,17 +905,19 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ entry_captcha_page }}</label>
                   <div class="col-sm-10">
-                    <div class="form-control" style="height: 150px; overflow: auto;"> {% for captcha_page in captcha_pages %}
-                        <div class="checkbox">
-                          <label> {% if captcha_page.value in config_captcha_page %}
-                              <input type="checkbox" name="config_captcha_page[]" value="{{ captcha_page.value }}" checked="checked"/>
-                              {{ captcha_page.text }}
-                            {% else %}
-                              <input type="checkbox" name="config_captcha_page[]" value="{{ captcha_page.value }}"/>
-                              {{ captcha_page.text }}
-                            {% endif %} </label>
-                        </div>
-                      {% endfor %} </div>
+                    <div class="form-control" style="height: 150px; overflow: auto;">
+                      {% for captcha_page in captcha_pages %}
+                        <label class="form-check">
+                          {% if captcha_page.value in config_captcha_page %}
+                            <input type="checkbox" name="config_captcha_page[]" value="{{ captcha_page.value }}" checked="checked" class="form-check-input"/>
+                            {{ captcha_page.text }}
+                          {% else %}
+                            <input type="checkbox" name="config_captcha_page[]" value="{{ captcha_page.value }}" class="form-check-input"/>
+                            {{ captcha_page.text }}
+                          {% endif %}
+                        </label>
+                      {% endfor %}
+                    </div>
                   </div>
                 </div>
               </fieldset>
@@ -1008,15 +1003,15 @@
                   <div class="col-sm-10">
                     <div class="form-control" style="height: 150px; overflow: auto;">
                       {% for mail_alert in mail_alerts %}
-                        <div class="checkbox">
-                          <label> {% if mail_alert.value in config_mail_alert %}
-                              <input type="checkbox" name="config_mail_alert[]" value="{{ mail_alert.value }}" checked="checked"/>
-                              {{ mail_alert.text }}
-                            {% else %}
-                              <input type="checkbox" name="config_mail_alert[]" value="{{ mail_alert.value }}"/>
-                              {{ mail_alert.text }}
-                            {% endif %} </label>
-                        </div>
+                        <label class="form-check">
+                          {% if mail_alert.value in config_mail_alert %}
+                            <input type="checkbox" name="config_mail_alert[]" value="{{ mail_alert.value }}" checked="checked" class="form-check-input"/>
+                            {{ mail_alert.text }}
+                          {% else %}
+                            <input type="checkbox" name="config_mail_alert[]" value="{{ mail_alert.value }}" class="form-check-input"/>
+                            {{ mail_alert.text }}
+                          {% endif %}
+                        </label>
                       {% endfor %}
                     </div>
                     <small class="form-text text-muted">{{ help_mail_alert }}</small>

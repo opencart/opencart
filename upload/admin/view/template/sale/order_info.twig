@@ -229,8 +229,8 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-override">{{ entry_override }}</label>
                   <div class="col-sm-10">
-                    <div class="checkbox">
-                      <input type="checkbox" name="override" value="1" id="input-override"/>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                      <label class="btn btn-success"><input type="radio" name="override" value="1"/> {{ text_yes }}</label> <label class="btn btn-danger active"><input type="radio" name="override" value="0" checked="checked"/> {{ text_no }}</label>
                     </div>
                     <small class="form-text text-muted">{{ help_override }}</small>
                   </div>
@@ -238,8 +238,8 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-notify">{{ entry_notify }}</label>
                   <div class="col-sm-10">
-                    <div class="checkbox">
-                      <input type="checkbox" name="notify" value="1" id="input-notify"/>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                      <label class="btn btn-success"><input type="radio" name="notify" value="1"/> {{ text_yes }}</label> <label class="btn btn-danger active"><input type="radio" name="notify" value="0" checked="checked"/> {{ text_no }}</label>
                     </div>
                   </div>
                 </div>

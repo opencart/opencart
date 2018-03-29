@@ -110,17 +110,14 @@
                 <div class="col-sm-10">
                   <div class="form-control" style="height: 150px; overflow: auto;">
                     {% for store in stores %}
-                      <div class="checkbox">
-                        <label>
-                          {% if store.store_id in category_store %}
-                            <input type="checkbox" name="category_store[]" value="{{ store.store_id }}" checked="checked"/>
-                            {{ store.name }}
-                          {% else %}
-                            <input type="checkbox" name="category_store[]" value="{{ store.store_id }}"/>
-                            {{ store.name }}
-                          {% endif %}
-                        </label>
-                      </div>
+                      <label class="form-check">
+                        {% if store.store_id in category_store %}
+                          <input type="checkbox" name="category_store[]" value="{{ store.store_id }}" checked="checked" class="form-check-input"/>
+                        {% else %}
+                          <input type="checkbox" name="category_store[]" value="{{ store.store_id }}" class="form-check-input"/>
+                        {% endif %}
+                          {{ store.name }}
+                      </label>
                     {% endfor %}
                   </div>
                 </div>

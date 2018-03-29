@@ -85,7 +85,7 @@ class ControllerStartupSeoUrl extends Controller {
 				}
 
 				if ($query) {
-					$query = '?' . str_replace('&', '&amp;', trim($query, '&'));
+					$query = '?' . str_replace('&', '&amp;', trim(str_replace('%2F', '/', $query), '&'));
 				}
 			}
 

@@ -120,20 +120,19 @@
                                   {% endif %}</div>
                               </div>
                             {% endif %}
-
                             {% if custom_field.type == 'radio' %}
                               <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
                                 <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                                 <div class="col-sm-10">
-                                  <div> {% for custom_field_value in custom_field.custom_field_value %}
-                                      <div class="radio"> {% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == account_custom_field[custom_field.custom_field_id] %}
-                                          <label> <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked"/>
+                                  <div>{% for custom_field_value in custom_field.custom_field_value %}
+                                      <div class="radio">{% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == account_custom_field[custom_field.custom_field_id] %}
+                                          <label><input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked"/>
                                             {{ custom_field_value.name }}</label>
                                         {% else %}
-                                          <label> <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}"/>
+                                          <label><input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}"/>
                                             {{ custom_field_value.name }}</label>
                                         {% endif %}</div>
-                                    {% endfor %} </div>
+                                    {% endfor %}</div>
                                   {% if error_custom_field[custom_field.custom_field_id] %}
                                     <div class="invalid-tooltip">{{ error_custom_field[custom_field.custom_field_id] }}</div>
                                   {% endif %}</div>
@@ -143,15 +142,17 @@
                               <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
                                 <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                                 <div class="col-sm-10">
-                                  <div> {% for custom_field_value in custom_field.custom_field_value %}
-                                      <div class="checkbox">{% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in account_custom_field[custom_field.custom_field_id] %}
-                                          <label> <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked"/>
-                                            {{ custom_field_value.name }}</label>
-                                        {% else %}
-                                          <label> <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}"/>
-                                            {{ custom_field_value.name }}</label>
-                                        {% endif %}</div>
-                                    {% endfor %}</div>
+                                  <div>
+                                    {% for custom_field_value in custom_field.custom_field_value %}
+                                      <label class="form-check">
+                                      {% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in account_custom_field[custom_field.custom_field_id] %}
+                                        <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked" class="form-check-input"/> {{ custom_field_value.name }}</label>
+                                      {% else %}
+                                        <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> {{ custom_field_value.name }}
+                                      {% endif %}
+                                      </label>
+                                    {% endfor %}
+                                  </div>
                                   {% if error_custom_field[custom_field.custom_field_id] %}
                                     <div class="invalid-tooltip">{{ error_custom_field[custom_field.custom_field_id] }}</div>
                                   {% endif %}</div>
@@ -258,45 +259,46 @@
                       <fieldset>
                         <legend>{{ text_other }}</legend>
                         <div class="form-group row">
-                          <label class="col-sm-2 col-form-label" for="input-newsletter">{{ entry_newsletter }}</label>
+                          <label class="col-sm-2 col-form-label">{{ entry_newsletter }}</label>
                           <div class="col-sm-10">
-                            <select name="newsletter" id="input-newsletter" class="form-control">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
                               {% if newsletter %}
-                                <option value="1" selected="selected">{{ text_enabled }}</option>
-                                <option value="0">{{ text_disabled }}</option>
+                                <label class="btn btn-success active"><input type="radio" name="newsletter" value="1" checked="checked"/> {{ text_yes }}</label>
+                                <label class="btn btn-danger"><input type="radio" name="newsletter" value="0"/> {{ text_no }}</label>
                               {% else %}
-                                <option value="1">{{ text_enabled }}</option>
-                                <option value="0" selected="selected">{{ text_disabled }}</option>
+                                <label class="btn btn-success"><input type="radio" name="newsletter" value="1"/> {{ text_yes }}</label>
+                                <label class="btn btn-danger active"><input type="radio" name="newsletter" value="0" checked="checked"/> {{ text_no }}</label>
                               {% endif %}
-                            </select>
+                            </div>
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
+                          <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
                           <div class="col-sm-10">
-                            <select name="status" id="input-status" class="form-control">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
                               {% if status %}
-                                <option value="1" selected="selected">{{ text_enabled }}</option>
-                                <option value="0">{{ text_disabled }}</option>
+                                <label class="btn btn-success active"><input type="radio" name="status" value="1" checked="checked"/> {{ text_yes }}</label>
+                                <label class="btn btn-danger"><input type="radio" name="status" value="0"/> {{ text_no }}</label>
                               {% else %}
-                                <option value="1">{{ text_enabled }}</option>
-                                <option value="0" selected="selected">{{ text_disabled }}</option>
+                                <label class="btn btn-success"><input type="radio" name="status" value="1"/> {{ text_yes }}</label>
+                                <label class="btn btn-danger active"><input type="radio" name="status" value="0" checked="checked"/> {{ text_no }}</label>
                               {% endif %}
-                            </select>
+                            </div>
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label class="col-sm-2 col-form-label" for="input-safe">{{ entry_safe }}</label>
+                          <label class="col-sm-2 col-form-label">{{ entry_safe }}</label>
                           <div class="col-sm-10">
-                            <select name="safe" id="input-safe" class="form-control">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
                               {% if safe %}
-                                <option value="1" selected="selected">{{ text_yes }}</option>
-                                <option value="0">{{ text_no }}</option>
+                                <label class="btn btn-success active"><input type="radio" name="safe" value="1" checked="checked"/> {{ text_yes }}</label>
+                                <label class="btn btn-danger"><input type="radio" name="safe" value="0"/> {{ text_no }}</label>
                               {% else %}
-                                <option value="1">{{ text_yes }}</option>
-                                <option value="0" selected="selected">{{ text_no }}</option>
+                                <label class="btn btn-success"><input type="radio" name="safe" value="1"/> {{ text_yes }}</label>
+                                <label class="btn btn-danger active"><input type="radio" name="safe" value="0" checked="checked"/> {{ text_no }}</label>
                               {% endif %}
-                            </select>
+                            </div>
+                            <small class="form-text text-muted">{{ help_safe }}</small>
                           </div>
                         </div>
                       </fieldset>
@@ -425,15 +427,19 @@
                               <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
                                 <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                                 <div class="col-sm-10">
-                                  <div> {% for custom_field_value in custom_field.custom_field_value %}
-                                      <div class="checkbox"> {% if address.custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in address.custom_field[custom_field.custom_field_id] %}
-                                          <label> <input type="checkbox" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked"/>
-                                            {{ custom_field_value.name }}</label>
+                                  <div>
+                                    {% for custom_field_value in custom_field.custom_field_value %}
+                                      <label class="form-check">
+                                        {% if address.custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in address.custom_field[custom_field.custom_field_id] %}
+                                          <input type="checkbox" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked" class="form-check-input"/>
+                                          {{ custom_field_value.name }}
                                         {% else %}
-                                          <label> <input type="checkbox" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}"/>
-                                            {{ custom_field_value.name }}</label>
-                                        {% endif %}</div>
-                                    {% endfor %} </div>
+                                          <input type="checkbox" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/>
+                                          {{ custom_field_value.name }}
+                                        {% endif %}
+                                      </label>
+                                    {% endfor %}
+                                  </div>
                                   {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
                                     <div class="invalid-tooltip">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
                                   {% endif %}</div>
@@ -746,7 +752,7 @@ $('#address-add').on('click', function(e) {
 	html += '		  <div>';
 
   {% for custom_field_value in custom_field.custom_field_value %}
-	html += '			<div class="checkbox"><label><input type="checkbox" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" /> {{ custom_field_value.name|e('js') }}</label></div>';
+	html += '			<label class="form-check"><input type="checkbox" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> {{ custom_field_value.name|e('js') }}</label>';
   {% endfor %}
 
 	html += '		  </div>';
@@ -896,7 +902,7 @@ function country(element, index, zone_id) {
 $('select[name$=\'[country_id]\']').trigger('change');
 //--></script>
 <script type="text/javascript"><!--
-$('#history').delegate('.pagination a', 'click', function(e) {
+$('#history').on('click', '.pagination a', function(e) {
 	e.preventDefault();
 
 	$('#history').load(this.href);
@@ -940,7 +946,7 @@ $('#button-history').on('click', function(e) {
 });
 //--></script>
 <script type="text/javascript"><!--
-$('#transaction').delegate('.pagination a', 'click', function(e) {
+$('#transaction').on('click', '.pagination a', function(e) {
 	e.preventDefault();
 
 	$('#transaction').load(this.href);
@@ -985,7 +991,7 @@ $('#button-transaction').on('click', function(e) {
 });
 //--></script>
 <script type="text/javascript"><!--
-$('#reward').delegate('.pagination a', 'click', function(e) {
+$('#reward').on('click', '.pagination a', function(e) {
 	e.preventDefault();
 
 	$('#reward').load(this.href);
@@ -1029,7 +1035,7 @@ $('#button-reward').on('click', function(e) {
 	});
 });
 
-$('#ip').delegate('.pagination a', 'click', function(e) {
+$('#ip').on('click', '.pagination a', function(e) {
 	e.preventDefault();
 
 	$('#ip').load(this.href);
@@ -1037,7 +1043,7 @@ $('#ip').delegate('.pagination a', 'click', function(e) {
 
 $('#ip').load('index.php?route=customer/customer/ip&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
-$('#content').delegate('button[id^=\'button-custom-field\'], button[id^=\'button-address\']', 'click', function() {
+$('#content').on('click', 'button[id^=\'button-custom-field\'], button[id^=\'button-address\']', function() {
 	var element = this;
 
 	$('#form-upload').remove();

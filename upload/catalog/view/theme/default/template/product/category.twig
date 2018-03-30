@@ -60,7 +60,7 @@
         </div>
         <div class="col-md-3">
           <div class="mb-3">
-            <a href="{{ compare }}" id="compare-total-mobile" class="btn btn-primary btn-block"><i class="fa fa-sliders"></i> {{ text_compare }}</a>
+            <a href="{{ compare }}" id="compare-total" class="btn btn-primary btn-block"><i class="fa fa-sliders"></i> {{ text_compare }}</a>
           </div>
         </div>
 
@@ -154,7 +154,7 @@
                   {% endfor %} </div>
                 {% endif %} </div>
               <div class="button-group">
-                <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
+                <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><span class="d-none d-md-block"><i class="fa fa-shopping-cart"></i> {{ button_cart }}</span><span class="d-block d-md-none"><i class="fa fa-shopping-cart"></i></span></button>
                 <button type="button" data-toggle="tooltip" data-placement="top" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
                 <button type="button" data-toggle="tooltip" data-placement="top" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
               </div>

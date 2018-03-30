@@ -17,9 +17,9 @@
   </div>
   <div class="container-fluid">
     {% if error.error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error.error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
+      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error.error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
     {% endif %}
     <div class="card">
       <div class="card-header"><i class="fa fa-pencil"></i> {{ heading_title }}</div>
@@ -30,7 +30,7 @@
             <div class="col-sm-10">
               <input type="text" name="module_pp_login_client_id" value="{{ module_pp_login_client_id }}" placeholder="{{ entry_client_id }}" id="entry-client_id" class="form-control"/>
               {% if error_client_id %}
-              <div class="invalid-tooltip">{{ error_client_id }}</div>
+                <div class="invalid-tooltip">{{ error_client_id }}</div>
               {% endif %}
             </div>
           </div>
@@ -39,37 +39,37 @@
             <div class="col-sm-10">
               <input type="text" name="module_pp_login_secret" value="{{ module_pp_login_secret }}" placeholder="{{ entry_secret }}" id="entry-secret" class="form-control"/>
               {% if error_secret %}
-              <div class="invalid-tooltip">{{ error_secret }}</div>
+                <div class="invalid-tooltip">{{ error_secret }}</div>
               {% endif %}
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="entry-sandbox">{{ entry_sandbox }}</label>
+            <label class="col-sm-2 col-form-label">{{ entry_sandbox }}</label>
             <div class="col-sm-10">
-              <select name="module_pp_login_sandbox" id="entry-sandbox" class="form-control">
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
                 {% if module_pp_login_sandbox %}
-                <option value="1" selected="selected">{{ text_yes }}</option>
-                <option value="0">{{ text_no }}</option>
+                  <label class="btn btn-success active"><input type="radio" name="module_pp_login_sandbox" value="1" checked="checked"/> {{ text_yes }}</label>
+                  <label class="btn btn-danger"><input type="radio" name="module_pp_login_sandbox" value="0"/> {{ text_no }}</label>
                 {% else %}
-                <option value="1">{{ text_yes }}</option>
-                <option value="0" selected="selected">{{ text_no }}</option>
+                  <label class="btn btn-success"><input type="radio" name="module_pp_login_sandbox" value="1"/> {{ text_yes }}</label>
+                  <label class="btn btn-danger active"><input type="radio" name="module_pp_login_sandbox" value="0" checked="checked"/> {{ text_no }}</label>
                 {% endif %}
-              </select>
+              </div>
               <small class="form-text text-muted">{{ help_sandbox }}</small>
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-loggin">{{ entry_debug }}</label>
+            <label class="col-sm-2 col-form-label">{{ entry_debug }}</label>
             <div class="col-sm-10">
-              <select name="module_pp_login_debug" id="input-logging" class="form-control">
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
                 {% if module_pp_login_debug %}
-                <option value="1" selected="selected">{{ text_yes }}</option>
-                <option value="0">{{ text_no }}</option>
+                  <label class="btn btn-success active"><input type="radio" name="module_pp_login_debug" value="1" checked="checked"/> {{ text_yes }}</label>
+                  <label class="btn btn-danger"><input type="radio" name="module_pp_login_debug" value="0"/> {{ text_no }}</label>
                 {% else %}
-                <option value="1">{{ text_yes }}</option>
-                <option value="0" selected="selected">{{ text_no }}</option>
+                  <label class="btn btn-success"><input type="radio" name="module_pp_login_debug" value="1"/> {{ text_yes }}</label>
+                  <label class="btn btn-danger active"><input type="radio" name="module_pp_login_debug" value="0" checked="checked"/> {{ text_no }}</label>
                 {% endif %}
-              </select>
+              </div>
               <small class="form-text text-muted">{{ help_debug_logging }}</small>
             </div>
           </div>
@@ -78,11 +78,11 @@
             <div class="col-sm-10">
               <select name="module_pp_login_customer_group_id" id="input-customer-group" class="form-control">
                 {% for customer_group in customer_groups %}
-                {% if customer_group.customer_group_id == module_pp_login_customer_group_id %}
-                <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
-                {% else %}
-                <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
-                {% endif %}
+                  {% if customer_group.customer_group_id == module_pp_login_customer_group_id %}
+                    <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                  {% else %}
+                    <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+                  {% endif %}
                 {% endfor %}
               </select>
               <small class="form-text text-muted">{{ help_customer_group }}</small>
@@ -93,27 +93,27 @@
             <div class="col-sm-10">
               <select name="module_pp_login_button_colour" id="input-button_colour" class="form-control">
                 {% if module_pp_login_button_colour == 'blue' %}
-                <option value="blue" selected="selected">{{ text_button_blue }}</option>
-                <option value="grey">{{ text_button_grey }}</option>
+                  <option value="blue" selected="selected">{{ text_button_blue }}</option>
+                  <option value="grey">{{ text_button_grey }}</option>
                 {% else %}
-                <option value="blue">{{ text_button_blue }}</option>
-                <option value="grey" selected="selected">{{ text_button_grey }}</option>
+                  <option value="blue">{{ text_button_blue }}</option>
+                  <option value="grey" selected="selected">{{ text_button_grey }}</option>
                 {% endif %}
               </select>
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-seamless">{{ entry_seamless }}</label>
+            <label class="col-sm-2 col-form-label">{{ entry_seamless }}</label>
             <div class="col-sm-10">
-              <select name="module_pp_login_seamless" id="input-logging" class="form-control">
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
                 {% if module_pp_login_seamless %}
-                <option value="1" selected="selected">{{ text_yes }}</option>
-                <option value="0">{{ text_no }}</option>
+                  <label class="btn btn-success active"><input type="radio" name="module_pp_login_seamless" value="1" checked="checked"/> {{ text_yes }}</label>
+                  <label class="btn btn-danger"><input type="radio" name="module_pp_login_seamless" value="0"/> {{ text_no }}</label>
                 {% else %}
-                <option value="1">{{ text_yes }}</option>
-                <option value="0" selected="selected">{{ text_no }}</option>
+                  <label class="btn btn-success"><input type="radio" name="module_pp_login_seamless" value="1"/> {{ text_yes }}</label>
+                  <label class="btn btn-danger active"><input type="radio" name="module_pp_login_seamless" value="0" checked="checked"/> {{ text_no }}</label>
                 {% endif %}
-              </select>
+              </div>
               <small class="form-text text-muted">{{ help_seamless }}</small>
             </div>
           </div>
@@ -121,20 +121,20 @@
             <label class="col-sm-2 col-form-label">{{ entry_locale }}</label>
             <div class="col-sm-10">
               {% for language in languages %}
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span>
+                  </div>
+                  <select name="module_pp_login_locale[{{ language.language_id }}]" class="form-control">
+                    {% for locale in locales %}
+                      {% if pp_login_locale[language.language_id] and pp_login_locale[language.language_id] == locale.value %}
+                        <option value="{{ locale.value }}" selected="selected">{{ locale.text }}</option>
+                      {% else %}
+                        <option value="{{ locale.value }}">{{ locale.text }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
                 </div>
-                <select name="module_pp_login_locale[{{ language.language_id }}]" class="form-control">
-                  {% for locale in locales %}
-                  {% if pp_login_locale[language.language_id] and pp_login_locale[language.language_id] == locale.value %}
-                  <option value="{{ locale.value }}" selected="selected">{{ locale.text }}</option>
-                  {% else %}
-                  <option value="{{ locale.value }}">{{ locale.text }}</option>
-                  {% endif %}
-                  {% endfor %}
-                </select>
-              </div>
               {% endfor %}
               <small class="form-text text-muted">{{ help_locale }}</small>
             </div>
@@ -142,7 +142,7 @@
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">{{ entry_return_url }}</label>
             <div class="col-sm-10">
-              <input type="text" readonly id="return-url" value="{{ return_url }}" class="form-control" />
+              <input type="text" readonly id="return-url" value="{{ return_url }}" class="form-control"/>
               <small class="form-text text-muted">{{ help_return_url }}</small>
             </div>
           </div>
@@ -151,11 +151,11 @@
             <div class="col-sm-10">
               <select name="module_pp_login_status" id="input-status" class="form-control">
                 {% if module_pp_login_status %}
-                <option value="1" selected="selected">{{ text_enabled }}</option>
-                <option value="0">{{ text_disabled }}</option>
+                  <option value="1" selected="selected">{{ text_enabled }}</option>
+                  <option value="0">{{ text_disabled }}</option>
                 {% else %}
-                <option value="1">{{ text_enabled }}</option>
-                <option value="0" selected="selected">{{ text_disabled }}</option>
+                  <option value="1">{{ text_enabled }}</option>
+                  <option value="0" selected="selected">{{ text_disabled }}</option>
                 {% endif %}
               </select>
             </div>

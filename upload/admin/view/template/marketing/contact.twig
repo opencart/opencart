@@ -59,7 +59,7 @@
             <label class="col-sm-2 col-form-label" for="input-customer">{{ entry_customer }}</label>
             <div class="col-sm-10">
               <input type="text" name="customers" value="" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
-              <div class="well well-sm" style="height: 150px; overflow: auto;"></div>
+              <div id="mail-customer" class="form-control" style="height: 150px; overflow: auto;"></div>
               <small class="form-text text-muted">{{ help_customer }}</small>
             </div>
           </div>
@@ -67,7 +67,7 @@
             <label class="col-sm-2 col-form-label" for="input-affiliate">{{ entry_affiliate }}</label>
             <div class="col-sm-10">
               <input type="text" name="affiliates" value="" placeholder="{{ entry_affiliate }}" id="input-affiliate" class="form-control"/>
-              <div class="well well-sm" style="height: 150px; overflow: auto;"></div>
+              <div id="mail-affiliate" class="form-control" style="height: 150px; overflow: auto;"></div>
               <small class="form-text text-muted">{{ help_affiliate }}</small>
             </div>
           </div>
@@ -75,7 +75,7 @@
             <label class="col-sm-2 col-form-label" for="input-product">{{ entry_product }}</label>
             <div class="col-sm-10">
               <input type="text" name="products" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
-              <div class="well well-sm" style="height: 150px; overflow: auto;"></div>
+              <div id="mail-product" class="form-control" style="height: 150px; overflow: auto;"></div>
               <small class="form-text text-muted">{{ help_product }}</small>
             </div>
           </div>
@@ -128,13 +128,13 @@ $('input[name=\'customers\']').autocomplete({
 	'select': function(item) {
 		$('input[name=\'customers\']').val('');
 
-		$('#input-customer' + item['value']).remove();
+		$('#mail-customer' + item['value']).remove();
 
-		$('#input-customer').parent().find('.well').append('<div id="customer' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="customer[]" value="' + item['value'] + '" /></div>');
+		$('#mail-customer').append('<div id="mail-customer' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="customer[]" value="' + item['value'] + '" /></div>');
 	}
 });
 
-$('#input-customer').parent().find('.well').delegate('.fa-minus-circle', 'click', function() {
+$('#mail-customer').on('click', '.fa-minus-circle', function() {
 	$(this).parent().remove();
 });
 
@@ -160,13 +160,13 @@ $('input[name=\'affiliates\']').autocomplete({
 	'select': function(item) {
 		$('input[name=\'affiliates\']').val('');
 
-		$('#input-affiliate' + item['value']).remove();
+		$('#mail-affiliate' + item['value']).remove();
 
-		$('#input-affiliate').parent().find('.well').append('<div id="affiliate' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="affiliate[]" value="' + item['value'] + '" /></div>');
+		$('#mail-affiliate').append('<div id="mail-affiliate' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="affiliate[]" value="' + item['value'] + '" /></div>');
 	}
 });
 
-$('#input-affiliate').parent().find('.well').delegate('.fa-minus-circle', 'click', function() {
+$('#input-affiliate').on('click', '.fa-minus-circle', function() {
 	$(this).parent().remove();
 });
 
@@ -192,13 +192,13 @@ $('input[name=\'products\']').autocomplete({
 	'select': function(item) {
 		$('input[name=\'products\']').val('');
 
-		$('#input-product' + item['value']).remove();
+		$('#mail-product' + item['value']).remove();
 
-		$('#input-product').parent().find('.well').append('<div id="product' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '" /></div>');
+		$('#mail-product').append('<div id="mail-product' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '" /></div>');
 	}
 });
 
-$('#input-product').parent().find('.well').delegate('.fa-minus-circle', 'click', function() {
+$('#mail-product').on('click', '.fa-minus-circle', function() {
 	$(this).parent().remove();
 });
 

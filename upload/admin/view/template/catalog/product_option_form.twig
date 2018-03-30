@@ -39,17 +39,17 @@
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-2 col-form-label" for="input-required">{{ entry_required }}</label>
+              <label class="col-sm-2 col-form-label">{{ entry_required }}</label>
               <div class="col-sm-10">
-                <select name="required" id="input-required" class="form-control">
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
                   {% if required %}
-                    <option value="1" selected="selected">{{ text_yes }}</option>
-                    <option value="0">{{ text_no }}</option>
+                    <label class="btn btn-success active"><input type="radio" name="required" value="1" checked="checked"/> {{ text_yes }}</label>
+                    <label class="btn btn-danger"><input type="radio" name="required" value="0"/> {{ text_no }}</label>
                   {% else %}
-                    <option value="1">{{ text_yes }}</option>
-                    <option value="0" selected="selected">{{ text_no }}</option>
+                    <label class="btn btn-success"><input type="radio" name="required" value="1"/> {{ text_yes }}</label>
+                    <label class="btn btn-danger active"><input type="radio" name="required" value="0" checked="checked"/> {{ text_no }}</label>
                   {% endif %}
-                </select>
+                </div>
               </div>
             </div>
           </fieldset>
@@ -147,15 +147,15 @@
                               {% endfor %}
                             </select><input type="hidden" name="product_option_value[{{ option_value_row }}][product_option_value_id]" value="{{ product_option_value.product_option_value_id }}"/></td>
                           <td class="text-right"><input type="text" name="product_option_value[{{ option_value_row }}][quantity]" value="{{ product_option_value.quantity }}" placeholder="{{ entry_quantity }}" class="form-control"/></td>
-                          <td class="text-left"><select name="product_option_value[{{ option_value_row }}][subtract]" class="form-control">
-                              {% if product_option_value.subtract == '1' %}
-                                <option value="1" selected="selected">{{ text_yes }}</option>
-                                <option value="0">{{ text_no }}</option>
+                          <td class="text-left"><div class="btn-group btn-group-toggle" data-toggle="buttons">
+                              {% if product_option_value.subtract %}
+                                <label class="btn btn-success active"><input type="radio" name="product_option_value[{{ option_value_row }}][subtract]" value="1" checked="checked"/> {{ text_yes }}</label>
+                                <label class="btn btn-danger"><input type="radio" name="product_option_value[{{ option_value_row }}][subtract]" value="0"/> {{ text_no }}</label>
                               {% else %}
-                                <option value="1">{{ text_yes }}</option>
-                                <option value="0" selected="selected">{{ text_no }}</option>
+                                <label class="btn btn-success"><input type="radio" name="product_option_value[{{ option_value_row }}][subtract]" value="1"/> {{ text_yes }}</label>
+                                <label class="btn btn-danger active"><input type="radio" name="product_option_value[{{ option_value_row }}][subtract]" value="0" checked="checked"/> {{ text_no }}</label>
                               {% endif %}
-                            </select></td>
+                            </div></td>
                           <td class="text-right"><select name="product_option_value[{{ option_value_row }}][price_prefix]" class="form-control">
                               {% if product_option_value.price_prefix == '+' %}
                                 <option value="+" selected="selected">+</option>
@@ -365,10 +365,10 @@ $('#product-option-value').on('click', '#button-option-value', function() {
 	html += $('#option-values').html();
 	html += '  </select><input type="hidden" name="product_option_value[' + option_value_row + '][product_option_value_id]" value="" /></td>';
 	html += '  <td class="text-right"><input type="text" name="product_option_value[' + option_value_row + '][quantity]" value="" placeholder="{{ entry_quantity }}" class="form-control" /></td>';
-	html += '  <td class="text-left"><select name="product_option_value[' + option_value_row + '][subtract]" class="form-control">';
-	html += '    <option value="1">{{ text_yes }}</option>';
-	html += '    <option value="0">{{ text_no }}</option>';
-	html += '  </select></td>';
+	html += '  <td class="text-left"><div class="btn-group btn-group-toggle" data-toggle="buttons">';
+	html += '    <label class="btn btn-success"><input type="radio" name="product_option_value[' + option_value_row + '][subtract]" value="1"/> {{ text_yes }}</label>';
+	html += '  	 <label class="btn btn-danger active"><input type="radio" name="product_option_value[' + option_value_row + '][subtract]" value="0" checked="checked"/> {{ text_no }}</label>';
+	html += '  </div></td>';
 	html += '  <td class="text-right"><select name="product_option_value[' + option_value_row + '][price_prefix]" class="form-control">';
 	html += '    <option value="+">+</option>';
 	html += '    <option value="-">-</option>';

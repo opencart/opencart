@@ -71,7 +71,13 @@ class ModelCustomerCustomer extends Model {
 	}
 	
 	public function getCustomers($data = array()) {
-		$sql = "SELECT *, CONCAT(c.firstname, ' ', c.lastname) AS name, cgd.name AS customer_group FROM " . DB_PREFIX . "customer c LEFT JOIN " . DB_PREFIX . "customer_group_description cgd ON (c.customer_group_id = cgd.customer_group_id) WHERE cgd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT *, CONCAT(c.firstname, ' ', c.lastname) AS name, cgd.name AS customer_group FROM " . DB_PREFIX . "customer c LEFT JOIN " . DB_PREFIX . "customer_group_description cgd ON (c.customer_group_id = cgd.customer_group_id)";
+
+		if (!empty($data['filter_affiliate'])) {
+			$sql .= " LEFT JOIN " . DB_PREFIX . "customer_affiliate ca ON (ca.customer_id = c.customer_id)";
+		}
+
+		$sql .= " WHERE cgd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND CONCAT(c.firstname, ' ', c.lastname) LIKE '%" . $this->db->escape((string)$data['filter_name']) . "%'";
@@ -88,7 +94,11 @@ class ModelCustomerCustomer extends Model {
 		if (!empty($data['filter_customer_group_id'])) {
 			$sql .= " AND c.customer_group_id = '" . (int)$data['filter_customer_group_id'] . "'";
 		}
-		
+
+		if (!empty($data['filter_affiliate'])) {
+			$sql .= " AND (SELECT customer_id FROM " . DB_PREFIX . "customer_affiliate ca WHERE ca.customer_id = c.customer_id)";
+		}
+
 		if (!empty($data['filter_ip'])) {
 			$sql .= " AND c.customer_id IN (SELECT customer_id FROM " . DB_PREFIX . "customer_ip WHERE ip = '" . $this->db->escape((string)$data['filter_ip']) . "')";
 		}
@@ -208,6 +218,10 @@ class ModelCustomerCustomer extends Model {
 
 	public function getTotalCustomers($data = array()) {
 		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer";
+
+		if (!empty($data['filter_affiliate'])) {
+			$sql .= " LEFT JOIN " . DB_PREFIX . "customer_affiliate ca ON (ca.customer_id = c.customer_id)";
+		}
 
 		$implode = array();
 

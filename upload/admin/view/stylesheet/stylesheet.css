@@ -5,6 +5,7 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
     color: #545454;
     text-rendering: optimizeLegibility;
 }
@@ -66,6 +67,7 @@ a:hover, a:focus {
     padding: 0;
     box-shadow: 0px 0px 3px #ccc;
     z-index: 1000;
+    height: 60px;
 }
 
 #header .container-fluid {
@@ -80,23 +82,25 @@ a:hover, a:focus {
 }
 
 #header .navbar-brand {
-    margin-left: 8px;
     border-right: 1px solid #eee;
-    padding: 13px 15px;
+    padding: 13px 27px;
+}
+
+@media screen and (max-width: 767px){
+  #header .navbar-brand {
+      display: none;
+  }
 }
 
 #header .navbar-nav > li {
     display: inline-block;
-}
-
-#header .navbar-right > li {
     border-left: 1px solid #eee;
+    line-height: 2.8em;
 }
 
-#header .navbar-right {
-    margin-right: 0;
-    margin: 0px 0px 0px 0px;
-    float: right;
+#header .navbar-nav .nav-link {
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 #header #user-profile {
@@ -123,11 +127,10 @@ a:hover, a:focus {
 }
 
 #button-menu {
-    line-height: 30px;
     font-size: 24px;
     float: left;
+    margin-left: 10px;
     padding: 10px 16px;
-    line-height: 25px;
     display: inline-block;
     cursor: pointer;
     color: #6D6D6D;

@@ -5,35 +5,35 @@ $_['heading_title']				= 'eWAY Payment';
 // Text
 $_['text_extension']			= 'Extensions';
 $_['text_success']				= 'Success: You have modified your eWAY details!';
-$_['text_edit']					= 'Edit eWAY';
-$_['text_eway']					= '<a target="_BLANK" href="http://www.eway.com.au/"><img src="view/image/payment/eway.png" alt="eWAY" title="eWAY" style="border: 1px solid #EEEEEE;" /></a>';
-$_['text_authorisation']		= 'Authorisation';
-$_['text_sale']					= 'Sale';
-$_['text_transparent']			= 'Transparent Redirect (payment form on site)';
-$_['text_iframe']				= 'IFrame (payment form in window)';
-$_['text_connect_eway']	        = 'To start accepting real-time credit card payments via OpenCart, Click Connect with eWAY to get started.';
-$_['text_eway_image']	    	= '<a target="_BLANK" href="https://myeway.force.com/success/accelerator-signup?pid=4382&pa=0012000000ivcWf"><img width="428" height="57" src="view/image/payment/eway_connect.png" alt="eWAY" title="eWAY" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_edit']				   	= 'Edit eWAY';
+$_['text_eway']					  = '<a target="_BLANK" href="http://www.eway.com.au/"><img src="view/image/payment/eway.png" alt="eWAY" title="eWAY" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_authorisation']	= 'Authorisation';
+$_['text_sale']					  = 'Sale';
+$_['text_transparent']		= 'Transparent Redirect (payment form on site)';
+$_['text_iframe']				  = 'IFrame (payment form in window)';
+$_['text_connect_eway']	  = 'Start accepting credit card payments with eWAY and OpenCart in as little as 5 minutes. Don’t have an eWAY Account? <a target="_blank" href="https://myeway.force.com/success/accelerator-signup?pid=4382&pa=0012000000ivcWf">Click Here</a>';
+$_['text_eway_image']	    = '<a target="_BLANK" href="https://myeway.force.com/success/accelerator-signup?pid=4382&pa=0012000000ivcWf"><img src="view/image/payment/eway_connect.png" alt="eWAY" title="eWAY" class="img-fluid" /></a>';
 
 // Entry
 $_['entry_paymode']				= 'Payment Mode';
-$_['entry_test']				= 'Test mode';
-$_['entry_order_status']		= 'Order status';
+$_['entry_test']				  = 'Test mode';
+$_['entry_order_status']	= 'Order status';
 $_['entry_order_status_refund'] = 'Refunded order status';
-$_['entry_order_status_auth']	= 'Authorised order status';
+$_['entry_order_status_auth']	  = 'Authorised order status';
 $_['entry_order_status_fraud']	= 'Suspected Fraud order status';
 $_['entry_status']				= 'Status';
 $_['entry_username']			= 'eWAY API Key';
 $_['entry_password']			= 'eWAY password';
-$_['entry_payment_type']		= 'Payment Type';
+$_['entry_payment_type']	= 'Payment Type';
 $_['entry_geo_zone']			= 'Geo Zone';
-$_['entry_sort_order']			= 'Sort order';
+$_['entry_sort_order']		= 'Sort order';
 $_['entry_transaction_method']	= 'Transaction Method';
 
 // Error
-$_['error_permission']			= 'Warning: You do not have permission to modify the eWAY payment module';
+$_['error_permission']		= 'Warning: You do not have permission to modify the eWAY payment module';
 $_['error_username']			= 'eWAY API Key is required!';
 $_['error_password']			= 'eWAY password is required!';
-$_['error_payment_type']		= 'At least one payment type is required!';
+$_['error_payment_type']	= 'At least one payment type is required!';
 
 // Help hints
 $_['help_testmode']				= 'Set to Yes to use the eWAY Sandbox.';
@@ -42,27 +42,27 @@ $_['help_password']				= 'Your eWAY API Password from your MYeWAY account.';
 $_['help_transaction_method']	= 'Authorisation is only available for Australian banks';
 
 // Order page - payment tab
-$_['text_payment_info']			= 'Payment information';
-$_['text_order_total']			= 'Total authorised';
-$_['text_transactions']			= 'Transactions';
+$_['text_payment_info']		     	= 'Payment information';
+$_['text_order_total']			    = 'Total authorised';
+$_['text_transactions']			    = 'Transactions';
 $_['text_column_transactionid'] = 'eWAY Transaction ID';
-$_['text_column_amount']		= 'Amount';
-$_['text_column_type']			= 'Type';
-$_['text_column_created']		= 'Created';
-$_['text_total_captured']		= 'Total captured';
-$_['text_capture_status']		= 'Payment captured';
-$_['text_void_status']			= 'Payment voided';
-$_['text_refund_status']		= 'Payment refunded';
-$_['text_total_refunded']		= 'Total refunded';
-$_['text_refund_success']		= 'Refund succeeded!';
-$_['text_capture_success']		= 'Capture succeeded!';
-$_['text_refund_failed']		= 'Refund failed: ';
-$_['text_capture_failed']		= 'Capture failed: ';
-$_['text_unknown_failure']		= 'Invalid order or amount';
+$_['text_column_amount']		    = 'Amount';
+$_['text_column_type']			    = 'Type';
+$_['text_column_created']		    = 'Created';
+$_['text_total_captured']		    = 'Total captured';
+$_['text_capture_status']		    = 'Payment captured';
+$_['text_void_status']			    = 'Payment voided';
+$_['text_refund_status']		    = 'Payment refunded';
+$_['text_total_refunded']		    = 'Total refunded';
+$_['text_refund_success']		    = 'Refund succeeded!';
+$_['text_capture_success']		  = 'Capture succeeded!';
+$_['text_refund_failed']		    = 'Refund failed: ';
+$_['text_capture_failed']		    = 'Capture failed: ';
+$_['text_unknown_failure']		  = 'Invalid order or amount';
 
 $_['text_confirm_capture']		= 'Are you sure you want to capture the payment?';
 $_['text_confirm_release']		= 'Are you sure you want to release the payment?';
-$_['text_confirm_refund']		= 'Are you sure you want to refund the payment?';
+$_['text_confirm_refund']		  = 'Are you sure you want to refund the payment?';
 
 $_['text_empty_refund']			= 'Please enter an amount to refund';
 $_['text_empty_capture']		= 'Please enter an amount to capture';
@@ -71,7 +71,7 @@ $_['btn_refund']				= 'Refund';
 $_['btn_capture']				= 'Capture';
 
 // Validation Error codes
-$_['text_card_message_V6000']	= 'Undefined Validation Error';
+$_['text_card_message_V6000']	  = 'Undefined Validation Error';
 $_['text_card_message_V6001'] 	= 'Invalid Customer IP';
 $_['text_card_message_V6002'] 	= 'Invalid DeviceID';
 $_['text_card_message_V6011'] 	= 'Invalid Amount';

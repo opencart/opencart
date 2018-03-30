@@ -55,23 +55,25 @@
 
             {% if attribute_groups %}
             <div class="tab-pane fade" id="tab-specification" role="tabpanel" aria-labelledby="specification-tab">
-              <table class="table table-bordered">
-                {% for attribute_group in attribute_groups %}
-                <thead>
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  {% for attribute_group in attribute_groups %}
+                  <thead>
+                    <tr>
+                      <td colspan="2"><strong>{{ attribute_group.name }}</strong></td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for attribute in attribute_group.attribute %}
                   <tr>
-                    <td colspan="2"><strong>{{ attribute_group.name }}</strong></td>
+                    <td>{{ attribute.name }}</td>
+                    <td>{{ attribute.text }}</td>
                   </tr>
-                </thead>
-                <tbody>
-                {% for attribute in attribute_group.attribute %}
-                <tr>
-                  <td>{{ attribute.name }}</td>
-                  <td>{{ attribute.text }}</td>
-                </tr>
-                {% endfor %}
-                  </tbody>
-                {% endfor %}
-              </table>
+                  {% endfor %}
+                    </tbody>
+                  {% endfor %}
+                </table>
+              </div>
             </div>
             {% endif %}
             {% if review_status %}
@@ -340,7 +342,7 @@
                 {% if product.tax %} <span class="price-tax">{{ text_tax }} {{ product.tax }}</span> {% endif %} </p>
               {% endif %} </div>
             <div class="button-group">
-              <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span> <i class="fa fa-shopping-cart"></i></button>
+              <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><span class="d-none d-md-block"><i class="fa fa-shopping-cart"></i> {{ button_cart }}</span><span class="d-block d-md-none"><i class="fa fa-shopping-cart"></i></span></button>
               <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
               <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
             </div>
@@ -400,6 +402,7 @@ $('#button-cart').on('click', function() {
 			$('#button-cart').button('reset');
 		},
 		success: function(json) {
+
 			$('.alert-dismissible, .text-danger').remove();
 			$('.form-group').removeClass('has-error');
 
@@ -425,13 +428,11 @@ $('#button-cart').on('click', function() {
 			}
 
 			if (json['success']) {
-				$('.breadcrumb').after('<div class="alert alert-success alert-dismissible">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
+        $('#alert-box').append('<div class="alert alert-success alert-dismissible">' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$('html, body').animate({ scrollTop: 0 }, 'slow');
-
-				$('#cart > ul').load('index.php?route=common/cart/info ul li');
+        $('#alert-box').addClass('open');
+        $('#cart').parent().load('index.php?route=common/cart/info&language=' + getCookie('language'));
 			}
 		},
         error: function(xhr, ajaxOptions, thrownError) {

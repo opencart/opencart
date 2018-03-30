@@ -16,11 +16,13 @@
         {% for currency in currencies %}
         {% if currency.symbol_left %}
         <li>
-          <button class="currency-select btn btn-sm btn-link btn-block" type="button" name="{{ currency.code }}">{{ currency.symbol_left }} {{ currency.title }}</button>
+          <a class="currency-select btn btn-sm btn-link btn-block" name="{{ currency.code }}">
+          {{ currency.symbol_left }} {{ currency.title }}</a>
         </li>
         {% else %}
         <li>
-          <button class="currency-select btn btn-link btn-block" type="button" name="{{ currency.code }}">{{ currency.symbol_right }} {{ currency.title }}</button>
+          <a class="currency-select btn btn-link btn-block" name="{{ currency.code }}">
+          {{ currency.symbol_right }} {{ currency.title }}</a>
         </li>
         {% endif %}
         {% endfor %}

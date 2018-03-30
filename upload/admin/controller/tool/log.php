@@ -70,7 +70,7 @@ class ControllerToolLog extends Controller {
 				$data['error_warning'] = sprintf($this->language->get('error_warning'), basename($file), round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i]);
 			}
 
-			$handle = fopen($file);
+			$handle = fopen($file, 'r+');
 
 			$data['log'] = fread($handle, 3145728);
 

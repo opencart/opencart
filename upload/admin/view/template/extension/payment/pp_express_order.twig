@@ -125,7 +125,7 @@
 		}
 	});
 
-	$('#paypal-transaction').delegate('button', 'click', function() {
+	$('#paypal-transaction').on('click', 'button', function() {
 		var element = this;
 
 		$.ajax({

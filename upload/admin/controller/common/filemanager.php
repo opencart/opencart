@@ -78,7 +78,7 @@ class ControllerCommonFileManager extends Controller {
 			$data['user_token'] = $this->session->data['user_token'];
 
 			if (isset($this->request->get['directory'])) {
-				$data['directory'] = urlencode($this->request->get['directory']);
+				$data['directory'] = urldecode($this->request->get['directory']);
 			} else {
 				$data['directory'] = '';
 			}

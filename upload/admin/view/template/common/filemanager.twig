@@ -1,4 +1,4 @@
-<div id="modal-image" class="modal">
+<div id="modal-image" class="modal show">
   <div id="filemanager" class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -19,6 +19,7 @@
                 <button type="button" data-toggle="tooltip" title="{{ button_search }}" id="button-search" class="btn btn-primary"><i class="fa fa-search"></i></button>
               </div>
             </div>
+            <input type="hidden" name="directory" value="{{ directory }}"/>
           </div>
         </div>
         <hr/>
@@ -42,13 +43,15 @@
           <br/>
         {% endfor %}
       </div>
+      {% if pagination %}
       <div class="modal-footer">{{ pagination }}</div>
+      {% endif %}
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
 {% if target %}
-$('a.thumbnail').on('click', function(e) {
+$('#modal-image').on('click', 'a.thumbnail', function(e) {
 	e.preventDefault();
 
   {% if thumb %}
@@ -61,28 +64,28 @@ $('a.thumbnail').on('click', function(e) {
 });
 {% endif %}
 
-$('a.directory').on('click', function(e) {
+$('#modal-image').on('click', 'a.directory', function(e) {
 	e.preventDefault();
 
-	$('#modal-image').load($(this).attr('href'));
+	$('#modal-image').load($(this).attr('href') + ' div#filemanager');
 });
 
-$('.pagination a').on('click', function(e) {
+$('#modal-image').on('click', '.pagination a', function(e) {
 	e.preventDefault();
 
-	$('#modal-image').load($(this).attr('href'));
+	$('#modal-image').load($(this).attr('href') + ' div#filemanager');
 });
 
-$('#button-parent').on('click', function(e) {
+$('#modal-image').on('click', '#button-parent', function(e) {
 	e.preventDefault();
 
-	$('#modal-image').load($(this).attr('href'));
+	$('#modal-image').load($(this).attr('href') + ' div#filemanager');
 });
 
-$('#button-refresh').on('click', function(e) {
+$('#modal-image').on('click', '#button-refresh', function(e) {
 	e.preventDefault();
 
-	$('#modal-image').load($(this).attr('href'));
+	$('#modal-image').load($(this).attr('href') + ' div#filemanager');
 });
 
 $('input[name=\'search\']').on('keydown', function(e) {
@@ -91,8 +94,8 @@ $('input[name=\'search\']').on('keydown', function(e) {
 	}
 });
 
-$('#button-search').on('click', function(e) {
-	var url = 'index.php?route=common/filemanager&user_token={{ user_token }}&directory={{ directory|escape('js') }}';
+$('#modal-image').on('click', '#button-search', function(e) {
+	var url = 'index.php?route=common/filemanager&user_token={{ user_token }}&directory=' + encodeURIComponent($('#modal-image input[name=\'directory\']').val());
 
 	var filter_name = $('input[name=\'search\']').val();
 
@@ -108,11 +111,11 @@ $('#button-search').on('click', function(e) {
 	url += '&target=' + '{{ target }}';
   {% endif %}
 
-	$('#modal-image').load(url);
+	$('#modal-image').load(url + ' div#filemanager');
 });
 //--></script>
 <script type="text/javascript"><!--
-$('#button-upload').on('click', function() {
+$('#modal-image').on('click', '#button-upload', function() {
 	$('#form-upload').remove();
 
 	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file[]" value="" multiple="multiple" /></form>');
@@ -128,7 +131,7 @@ $('#button-upload').on('click', function() {
 			clearInterval(timer);
 
 			$.ajax({
-				url: 'index.php?route=common/filemanager/upload&user_token={{ user_token }}&directory={{ directory|escape('js') }}',
+				url: 'index.php?route=common/filemanager/upload&user_token={{ user_token }}&directory=' + encodeURIComponent($('#modal-image input[name=\'directory\']').val()),
 				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),
@@ -180,7 +183,7 @@ $('#button-folder').popover({
 $('#button-folder').on('shown.bs.popover', function() {
 	$('#button-create').on('click', function() {
 		$.ajax({
-			url: 'index.php?route=common/filemanager/folder&user_token={{ user_token }}&directory={{ directory|escape('js') }}',
+			url: 'index.php?route=common/filemanager/folder&user_token={{ user_token }}&directory=' + encodeURIComponent($('#modal-image input[name=\'directory\']').val()),
 			type: 'post',
 			dataType: 'json',
 			data: 'folder=' + encodeURIComponent($('input[name=\'folder\']').val()),
@@ -208,7 +211,7 @@ $('#button-folder').on('shown.bs.popover', function() {
 	});
 });
 
-$('#modal-image #button-delete').on('click', function(e) {
+$('#modal-image').on('click', '#button-delete', function(e) {
 	if (confirm('{{ text_confirm }}')) {
 		$.ajax({
 			url: 'index.php?route=common/filemanager/delete&user_token={{ user_token }}',
@@ -216,9 +219,11 @@ $('#modal-image #button-delete').on('click', function(e) {
 			dataType: 'json',
 			data: $('input[name^=\'path\']:checked'),
 			beforeSend: function() {
+				$('#button-delete i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 				$('#button-delete').prop('disabled', true);
 			},
 			complete: function() {
+				$('#button-delete i').replaceWith('<i class="fa fa-upload"></i>');
 				$('#button-delete').prop('disabled', false);
 			},
 			success: function(json) {

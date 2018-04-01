@@ -246,6 +246,10 @@
   </div>
 </div>
 <script type="text/javascript"><!--
+window.onload = function() {
+	CKEDITOR.replace('input-description1');
+}
+
 $('input[name=\'path\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({

@@ -1,6 +1,6 @@
 <?php
 class ControllerExtensionModuleAmazonPay extends Controller {
-
+	private $version = '3.0';
 	private $error = array();
 
 	public function index() {
@@ -13,10 +13,9 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('module_amazon_pay', $this->request->post);
-
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module'));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true));
 		}
 
 		if (isset($this->error['warning'])) {
@@ -25,26 +24,31 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 			$data['error_warning'] = '';
 		}
 
+		$data['heading_title'] = $this->language->get('heading_title') . ' ' . $this->version;
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true),
+			'separator' => false
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module')
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true),
+			'separator' => ' :: '
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/module/amazon_pay', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/module/amazon_pay', 'user_token=' . $this->session->data['user_token'], true),
+			'separator' => ' :: '
 		);
 
-		$data['action'] = $this->url->link('extension/module/amazon_pay', 'user_token=' . $this->session->data['user_token']);
+		$data['action'] = $this->url->link('extension/module/amazon_pay', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module');
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true);
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -94,14 +98,13 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('marketplace/event');
-
+		$this->load->model('setting/event');
 		$this->model_setting_event->addEvent('amazon_pay', 'catalog/controller/account/logout/after', 'extension/module/amazon_pay/logout');
 	}
 
 	public function uninstall() {
-		$this->load->model('marketplace/event');
-
+		$this->load->model('setting/event');
 		$this->model_setting_event->deleteEventByCode('amazon_pay');
 	}
+
 }

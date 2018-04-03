@@ -1,9 +1,10 @@
 <?php
 class ControllerExtensionModuleAmazonLogin extends Controller {
-
+	private $version = '3.0';
 	private $error = array();
 
 	public function index() {
+
 		$this->load->language('extension/module/amazon_login');
 
 		$this->load->model('setting/setting');
@@ -16,7 +17,7 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module'));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true));
 		}
 
 		if (isset($this->error['warning'])) {
@@ -25,26 +26,28 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 			$data['error_warning'] = '';
 		}
 
+		$data['heading_title'] = $this->language->get('heading_title') . ' ' . $this->version;
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module')
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/module/amazon_login', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/module/amazon_login', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/module/amazon_login', 'user_token=' . $this->session->data['user_token']);
+		$data['action'] = $this->url->link('extension/module/amazon_login', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module');
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true);
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -95,13 +98,11 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 
 	public function install() {
 		$this->load->model('setting/event');
-
-		$this->model_setting_event->addEvent('amazon_login', 'catalog/controller/account/logout/after', 'extension/module/amazon_login/logout');
+        $this->model_setting_event->addEvent('amazon_login', 'catalog/controller/account/logout/after', 'extension/module/amazon_login/logout');
 	}
 
 	public function uninstall() {
 		$this->load->model('setting/event');
-
 		$this->model_setting_event->deleteEventByCode('amazon_login');
 	}
 

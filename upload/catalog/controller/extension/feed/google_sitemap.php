@@ -1,5 +1,19 @@
 <?php
 class ControllerExtensionFeedGoogleSitemap extends Controller {
+
+    private function xml_entities($string) {
+        return strtr(
+            $string, 
+            array(
+                "<" => "&lt;",
+                ">" => "&gt;",
+                '"' => "&quot;",
+                "'" => "&apos;",
+                "&" => "&amp;",
+            )
+        );
+    }
+
 	public function index() {
 		if ($this->config->get('feed_google_sitemap_status')) {
 			$output  = '<?xml version="1.0" encoding="UTF-8"?>';
@@ -12,6 +26,7 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 
 			foreach ($products as $product) {
 				if ($product['image']) {
+                    $name = xml_entities($product['name']);
 					$output .= '<url>';
 					$output .= '  <loc>' . $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id']) . '</loc>';
 					$output .= '  <changefreq>weekly</changefreq>';
@@ -19,8 +34,8 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 					$output .= '  <priority>1.0</priority>';
 					$output .= '  <image:image>';
 					$output .= '  <image:loc>' . $this->model_tool_image->resize($product['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_height')) . '</image:loc>';
-					$output .= '  <image:caption>' . $product['name'] . '</image:caption>';
-					$output .= '  <image:title>' . $product['name'] . '</image:title>';
+					$output .= '  <image:caption>' . $name. '</image:caption>';
+					$output .= '  <image:title>' . $name . '</image:title>';
 					$output .= '  </image:image>';
 					$output .= '</url>';
 				}

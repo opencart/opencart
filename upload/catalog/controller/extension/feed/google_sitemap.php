@@ -26,7 +26,7 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 
 			foreach ($products as $product) {
 				if ($product['image']) {
-                    $name = $product['name'];
+                    $name = xml_entities($product['name']);
 					$output .= '<url>';
 					$output .= '  <loc>' . $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id']) . '</loc>';
 					$output .= '  <changefreq>weekly</changefreq>';

@@ -88,7 +88,7 @@
           <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="input-message">{{ entry_message }}</label>
             <div class="col-sm-10">
-              <textarea name="message" placeholder="{{ entry_message }}" id="input-message" data-toggle="summernote" data-lang="{{ summernote }}" class="form-control"></textarea>
+              <textarea name="message" placeholder="{{ entry_message }}" id="input-message" data-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control"></textarea>
             </div>
           </div>
         </form>
@@ -97,6 +97,10 @@
   </div>
 </div>
 <script type="text/javascript"><!--
+CKEDITOR.timestamp = Math.random();
+
+$('textarea[data-toggle=\'ckeditor\']').ckeditor();
+
 $('select[name=\'to\']').on('change', function() {
 	$('.to').hide();
 

@@ -7,9 +7,9 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 
 		$data['worldpay_client_key'] = $this->config->get('payment_worldpay_client_key');
 
-		$data['form_submit'] = $this->url->link('extension/payment/worldpay/send', 'language=' . $this->config->get('config_language'));
+		$data['form_submit'] = $this->url->link('extension/payment/worldpay/send', '', true);
 
-		if ($this->config->get('worldpay_card') == '1' && $this->customer->isLogged()) {
+		if ($this->config->get('payment_worldpay_card') == '1' && $this->customer->isLogged()) {
 			$data['worldpay_card'] = true;
 		} else {
 			$data['worldpay_card'] = false;
@@ -105,11 +105,11 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 				$this->model_extension_payment_worldpay->recurringPayment($item, $this->session->data['order_id'] . rand(), $this->request->post['token']);
 			}
 
-			$this->response->redirect($this->url->link('checkout/success', 'language=' . $this->config->get('config_language')));
+			$this->response->redirect($this->url->link('checkout/success', '', true));
 		} else {
 
 			$this->session->data['error'] = $this->language->get('error_process_order');
-			$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
+			$this->response->redirect($this->url->link('checkout/checkout', '', true));
 		}
 	}
 
@@ -136,7 +136,7 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 	}
 
 	public function webhook() {
-		if (isset($this->request->get['token']) && hash_equals($this->config->get('worldpay_secret_token'), $this->request->get['token'])) {
+		if (isset($this->request->get['token']) && hash_equals($this->config->get('payment_worldpay_secret_token'), $this->request->get['token'])) {
 			$this->load->model('extension/payment/worldpay');
 			$message = json_decode(file_get_contents('php://input'), true);
 
@@ -145,36 +145,35 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 				$this->model_extension_payment_worldpay->logger($order);
 				switch ($message['paymentStatus']) {
 					case 'SUCCESS':
-						$order_status_id = $this->config->get('payment_worldpay_success_status_id');
+						$order_status_id = $this->config->get('payment_worldpay_entry_success_status_id');
 						break;
 					case 'FAILED':
-						$order_status_id = $this->config->get('payment_worldpay_failed_status_id');
+						$order_status_id = $this->config->get('payment_worldpay_entry_failed_status_id');
 						break;
 					case 'SETTLED':
-						$order_status_id = $this->config->get('payment_worldpay_settled_status_id');
+						$order_status_id = $this->config->get('payment_worldpay_entry_settled_status_id');
 						break;
 					case 'REFUNDED':
 						$order_status_id = $this->config->get('payment_worldpay_refunded_status_id');
 						break;
 					case 'PARTIALLY_REFUNDED':
-						$order_status_id = $this->config->get('payment_worldpay_partially_refunded_status_id');
+						$order_status_id = $this->config->get('payment_worldpay_entry_partially_refunded_status_id');
 						break;
 					case 'CHARGED_BACK':
-						$order_status_id = $this->config->get('payment_worldpay_chargeback_status_id');
+						$order_status_id = $this->config->get('payment_worldpay_entry_charged_back_status_id');
 						break;
 					case 'INFORMATION_REQUESTED':
-						$order_status_id = $this->config->get('payment_worldpay_information_requested_status_id');
+						$order_status_id = $this->config->get('payment_worldpay_entry_information_requested_status_id');
 						break;
 					case 'INFORMATION_SUPPLIED':
-						$order_status_id = $this->config->get('payment_worldpay_information_supplied_status_id');
+						$order_status_id = $this->config->get('payment_worldpay_entry_information_supplied_status_id');
 						break;
 					case 'CHARGEBACK_REVERSED':
-						$order_status_id = $this->config->get('payment_worldpay_chargeback_reversed_status_id');
+						$order_status_id = $this->config->get('payment_worldpay_entry_chargeback_reversed_status_id');
 						break;
 				}
 
 				$this->model_extension_payment_worldpay->logger($order_status_id);
-
 				if (isset($order['order_id'])) {
 					$this->load->model('checkout/order');
 					$this->model_checkout_order->addOrderHistory($order['order_id'], $order_status_id);
@@ -187,7 +186,7 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 	}
 
 	public function cron() {
-		if ($this->request->get['token'] == $this->config->get('worldpay_cron_job_token')) {
+		if ($this->request->get['token'] == $this->config->get('payment_worldpay_cron_job_token')) {
 			$this->load->model('extension/payment/worldpay');
 
 			$orders = $this->model_extension_payment_worldpay->cronPayment();

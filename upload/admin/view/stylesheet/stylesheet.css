@@ -471,13 +471,13 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .pagination {
     margin: 0;
 }
-
+/*
 .form-group {
     padding-top: 15px;
     padding-bottom: 15px;
     margin-bottom: 0;
 }
-
+*/
 .form-group + .form-group {
     border-top: 1px solid #ededed;
 }

@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
+      <div class="float-right">
         <button type="submit" form="form-product" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
@@ -596,8 +596,8 @@
                   <div class="card">
                     <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
                     <div class="card-body">
-                      <button type="button" data-toggle="image" data-target="input-image" data-thumb="thumb-image" class="btn btn-primary btn-block"><i class="fa fa-pencil"></i> {{ button_edit }}</button>
-                      <button type="button" data-toggle="clear" data-target="input-image" data-thumb="thumb-clear" class="btn btn-warning btn-block"><i class="fa fa-trash-o"></i> {{ button_clear }}</button>
+                      <button type="button" data-toggle="image" data-target="input-image" data-thumb="thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fa fa-pencil"></i> {{ button_edit }}</button>
+                      <button type="button" data-toggle="clear" data-target="input-image" data-thumb="thumb-clear" class="btn btn-warning btn-sm btn-block"><i class="fa fa-trash-o"></i> {{ button_clear }}</button>
                     </div>
                   </div>
                 </div>
@@ -608,12 +608,12 @@
                       <img src="{{ product_image.thumb }}" alt="" title="" id="thumb-image{{ image_row }}" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-image{{ image_row }}"/>
                       <div class="card-body">
                         <div class="form-group">
-                          <label class="col-form-label">{{ entry_sort_order }}</label>
-                          <input type="text" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/>
+                          <label class="col-form-label col-form-label-sm">{{ entry_sort_order }}</label>
+                          <input type="text" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control form-control-sm"/>
                         </div>
-                        <button type="button" data-toggle="image" data-target="input-image{{ image_row }}" data-toggle="tooltip" data-title="" data-thumb="thumb-image" class="btn btn-primary btn-block"><i class="fa fa-pencil"></i> {{ button_edit }}</button>
-                        <button type="button" data-toggle="clear" data-target="input-image{{ image_row }}" data-toggle="tooltip" data-title="" data-thumb="thumb-image" class="btn btn-warning btn-block"><i class="fa fa-trash-o"></i> {{ button_clear }}</button>
-                        <button type="button" onclick="$('#image-row{{ image_row }}').remove();" class="btn btn-danger btn-block"><i class="fa fa-minus-circle"></i> {{ button_remove }}</button>
+                        <button type="button" data-toggle="image" data-target="input-image{{ image_row }}" data-thumb="thumb-image{{ image_row }}" class="btn btn-primary btn-sm btn-block"><i class="fa fa-pencil"></i> {{ button_edit }}</button>
+                        <button type="button" data-toggle="clear" data-target="input-image{{ image_row }}" data-thumb="thumb-image{{ image_row }}" class="btn btn-warning btn-sm btn-block"><i class="fa fa-trash-o"></i> {{ button_clear }}</button>
+                        <button type="button" onclick="$('#image-row{{ image_row }}').remove();" class="btn btn-danger btn-sm btn-block"><i class="fa fa-minus-circle"></i> {{ button_remove }}</button>
                       </div>
                     </div>
                   </div>
@@ -979,15 +979,13 @@ $('#button-image').on('click', function() {
 	html += '  	 <img src="{{ placeholder }}" alt="" title="" id="thumb-image' + image_row + '" data-placeholder="{{ placeholder }}" class="card-img-top"/>';
 	html += '  	 <input type="hidden" name="product_image[' + image_row + '][image]" value="" id="input-image' + image_row + '"/>';
 	html += '  	 <div class="card-body">';
-	html += '  	   <div class="form-group">' +
-		'<input type="text" name="product_image[' + image_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control form-control-sm"/></div>';
-	html += '    </div>';
-	html += '  	 <div class="card-footer text-center">';
-	html += '  	   <div class="btn-group btn-group-sm">';
-	html += '        <button type="button" data-event="image" data-target="input-image" data-toggle="tooltip" data-title="{{ button_edit }}" data-thumb="thumb-image" class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i></button>';
-	html += '  	     <button type="button" data-event="clear" data-target="input-image" data-toggle="tooltip" data-title="{{ button_clear }}" data-thumb="thumb-image" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash-o"></i></button>';
-	html += '  	     <button type="button" data-event="clear" data-target="input-image" data-toggle="tooltip" data-title="{{ button_remove }}" data-thumb="thumb-image" class="btn btn-outline-danger btn-sm"><i class="fa fa-minus-circle"></i></button>';
-	html += '  	   </div>';
+	html += '  	   <div class="form-group">';
+	html += '  	     <label class="col-form-label col-form-label-sm">{{ entry_sort_order }}</label>';
+	html += '  	     <input type="text" name="product_image[' + image_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control form-control-sm"/>';
+	html += '      </div>';
+	html += '      <button type="button" data-toggle="image" data-target="input-image' + image_row + '" data-thumb="thumb-image' + image_row + '" class="btn btn-primary btn-sm btn-block"><i class="fa fa-pencil"></i> {{ button_edit }}</button>';
+	html += '  	   <button type="button" data-toggle="clear" data-target="input-image' + image_row + '" data-thumb="thumb-image' + image_row + '" class="btn btn-warning btn-sm btn-block"><i class="fa fa-trash-o"></i> {{ button_clear }}</button>';
+	html += '  	   <button type="button" onclick="$(\'#image-row{{ image_row }}\').remove();" class="btn btn-danger btn-sm btn-block"><i class="fa fa-minus-circle"></i> {{ button_remove }}</button>';
 	html += '    </div>';
 	html += '  </div>';
 	html += '</div>';

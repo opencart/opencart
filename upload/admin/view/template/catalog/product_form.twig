@@ -584,78 +584,48 @@
                   <tfoot>
                     <tr>
                       <td colspan="5"></td>
-                      <td class="text-left"><button type="button" onclick="addSpecial();" data-toggle="tooltip" title="{{ button_special_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                      <td class="text-left"><button type="button" id="button-special" data-toggle="tooltip" title="{{ button_special_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                     </tr>
                   </tfoot>
                 </table>
               </div>
             </div>
             <div class="tab-pane" id="tab-image">
-              <div class="card-deck">
-                <div class="card">
-                  <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
-                  <div class="card-footer text-center">
-                    <div class="btn-group btn-group-sm">
-                      <button type="button" data-toggle="image" data-target="input-image" data-thumb="thumb-image" class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i> {{ button_edit }}</button>
-                      <button type="button" data-toggle="clear" data-target="input-image" data-thumb="thumb-image" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash-o"></i> Clear</button>
+              <div id="images" class="row">
+                <div class="col-sm-4 col-md-3 mb-3">
+                  <div class="card">
+                    <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
+                    <div class="card-body">
+                      <button type="button" data-toggle="image" data-target="input-image" data-thumb="thumb-image" class="btn btn-primary btn-block"><i class="fa fa-pencil"></i> {{ button_edit }}</button>
+                      <button type="button" data-toggle="clear" data-target="input-image" data-thumb="thumb-clear" class="btn btn-warning btn-block"><i class="fa fa-trash-o"></i> {{ button_clear }}</button>
                     </div>
                   </div>
                 </div>
-
                 {% set image_row = 0 %}
                 {% for product_image in product_images %}
-                  <div class="card">
-                    <img src="{{ product_image.thumb }}" alt="" title="" id="thumb-image{{ image_row }}" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-image{{ image_row }}"/>
-                    <div class="card-body">
-                      <div class="form-group">
-                        <input type="text" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control form-control-sm"/>
-                      </div>
-                    </div>
-                    <div class="card-footer text-center">
-                      <div class="btn-group btn-group-sm">
-                        <button type="button" data-event="image" data-target="input-image" data-toggle="tooltip" data-title="{{ button_edit }}" data-thumb="thumb-image" class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i></button>
-                        <button type="button" data-event="clear" data-target="input-image" data-toggle="tooltip" data-title="{{ button_clear }}" data-thumb="thumb-image" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash-o"></i></button>
-                        <button type="button" data-event="clear" data-target="input-image" data-toggle="tooltip" data-title="{{ button_remove }}" data-thumb="thumb-image" class="btn btn-outline-danger btn-sm"><i class="fa fa-minus-circle"></i></button>
+                  <div id="image-row{{ image_row }}" class="col-sm-4 col-md-3 mb-3">
+                    <div class="card">
+                      <img src="{{ product_image.thumb }}" alt="" title="" id="thumb-image{{ image_row }}" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-image{{ image_row }}"/>
+                      <div class="card-body">
+                        <div class="form-group">
+                          <label class="col-form-label">{{ entry_sort_order }}</label>
+                          <input type="text" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/>
+                        </div>
+                        <button type="button" data-toggle="image" data-target="input-image{{ image_row }}" data-toggle="tooltip" data-title="" data-thumb="thumb-image" class="btn btn-primary btn-block"><i class="fa fa-pencil"></i> {{ button_edit }}</button>
+                        <button type="button" data-toggle="clear" data-target="input-image{{ image_row }}" data-toggle="tooltip" data-title="" data-thumb="thumb-image" class="btn btn-warning btn-block"><i class="fa fa-trash-o"></i> {{ button_clear }}</button>
+                        <button type="button" onclick="$('#image-row{{ image_row }}').remove();" class="btn btn-danger btn-block"><i class="fa fa-minus-circle"></i> {{ button_remove }}</button>
                       </div>
                     </div>
                   </div>
-
                   {% set image_row = image_row + 1 %}
                 {% endfor %}
-              </div>
-              <div class="table-responsive">
-                <table id="images" class="table table-striped table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <td class="text-left">{{ entry_additional_image }}</td>
-                      <td class="text-right">{{ entry_sort_order }}</td>
-                      <td></td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% set image_row = 0 %}
-                    {% for product_image in product_images %}
-                      <tr id="image-row{{ image_row }}">
-                        <td class="text-left">
-                          <a href="" id="thumb-image{{ image_row }}" data-toggle="image" class="img-thumbnail"><img src="{{ product_image.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}"/></a>
-
-                          <input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-image{{ image_row }}"/>
-
-
-                        </td>
-                        <td class="text-right"><input type="text" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
-                        <td class="text-left"><button type="button" onclick="$('#image-row{{ image_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
-                      </tr>
-                      {% set image_row = image_row + 1 %}
-                    {% endfor %}
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <td colspan="2"></td>
-                      <td class="text-left"><button type="button" onclick="addImage();" data-toggle="tooltip" title="{{ button_image_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
-                    </tr>
-                  </tfoot>
-                </table>
+                <div class="col-sm-4 col-md-3 mb-3 align-self-center">
+                  <div class="card">
+                    <div class="card-body">
+                      <button type="button" id="button-image" class="btn btn-default btn-lg"><i class="fa fa-plus-circle"></i></button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="tab-pane" id="tab-reward">
@@ -978,7 +948,7 @@ function addDiscount() {
 <script type="text/javascript"><!--
 var special_row = {{ special_row }};
 
-function addSpecial() {
+$('#button-special').on('click', function() {
 	html = '<tr id="special-row' + special_row + '">';
 	html += '  <td class="text-left"><select name="product_special[' + special_row + '][customer_group_id]" class="form-control">';
   {% for customer_group in customer_groups %}
@@ -997,24 +967,35 @@ function addSpecial() {
 	$('.date').datetimepicker();
 
 	special_row++;
-}
+});
 
 //--></script>
 <script type="text/javascript"><!--
 var image_row = {{ image_row }};
 
-function addImage() {
-	html = '<tr id="image-row' + image_row + '">';
-	html += '  <td class="text-left"><a href="" id="thumb-image' + image_row + '"data-toggle="image" class="img-thumbnail"><img src="{{ placeholder }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a><input type="hidden" name="product_image[' + image_row + '][image]" value="" id="input-image' + image_row + '" /></td>';
-	html += '  <td class="text-right"><input type="text" name="product_image[' + image_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#image-row' + image_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
-	html += '</tr>';
+$('#button-image').on('click', function() {
+	html = '<div id="image-row' + image_row + '" class="col-sm-4 col-md-3 mb-3">';
+	html += '  <div class="card">';
+	html += '  	 <img src="{{ placeholder }}" alt="" title="" id="thumb-image' + image_row + '" data-placeholder="{{ placeholder }}" class="card-img-top"/>';
+	html += '  	 <input type="hidden" name="product_image[' + image_row + '][image]" value="" id="input-image' + image_row + '"/>';
+	html += '  	 <div class="card-body">';
+	html += '  	   <div class="form-group">' +
+		'<input type="text" name="product_image[' + image_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control form-control-sm"/></div>';
+	html += '    </div>';
+	html += '  	 <div class="card-footer text-center">';
+	html += '  	   <div class="btn-group btn-group-sm">';
+	html += '        <button type="button" data-event="image" data-target="input-image" data-toggle="tooltip" data-title="{{ button_edit }}" data-thumb="thumb-image" class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i></button>';
+	html += '  	     <button type="button" data-event="clear" data-target="input-image" data-toggle="tooltip" data-title="{{ button_clear }}" data-thumb="thumb-image" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash-o"></i></button>';
+	html += '  	     <button type="button" data-event="clear" data-target="input-image" data-toggle="tooltip" data-title="{{ button_remove }}" data-thumb="thumb-image" class="btn btn-outline-danger btn-sm"><i class="fa fa-minus-circle"></i></button>';
+	html += '  	   </div>';
+	html += '    </div>';
+	html += '  </div>';
+	html += '</div>';
 
-	$('#images tbody').append(html);
+	$('#button-image').parent().parent().parent().before(html);
 
 	image_row++;
-}
-
+});
 //--></script>
 <script type="text/javascript"><!--
 var recurring_row = {{ recurring_row }};

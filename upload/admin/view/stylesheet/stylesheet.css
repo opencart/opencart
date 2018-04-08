@@ -5,7 +5,6 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: 'Open Sans', sans-serif;
-    font-size: 14px;
     color: #545454;
     text-rendering: optimizeLegibility;
 }
@@ -23,8 +22,8 @@ label {
 }
 
 legend {
-  border-bottom: 2px solid #ddd;
-  margin-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 20px;
 }
 
 .page-header {
@@ -43,6 +42,8 @@ legend {
     margin-bottom: 15px;
     text-shadow: 0 1px #fff;
 }
+
+
 
 a:hover, a:focus {
     text-decoration: none;
@@ -347,6 +348,9 @@ a:hover, a:focus {
     color: #333;
 }
 
+.col-form-label {
+    text-align: right;
+}
 .form-control:hover {
     border: 1px solid #b9b9b9;
     border-top-color: #a0a0a0;
@@ -925,6 +929,9 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .list-check.list-color-blue li::before {
     color: #02afe9;
 }
+
+
+/* for the opencaaet marketplace */
 @font-face {
     font-family: 'opencart';
     src: url('fonts/opencart.eot?h4wsna');
@@ -952,10 +959,4 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 
 .opencart-icon-cart-mini:before {
     content: "\e91c";
-}
-
-.btn-ghost-dark {
-  border: 1px solid #000;
-  background-color: transparent;
-  color: #000;
 }

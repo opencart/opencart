@@ -1,6 +1,7 @@
 .breadcrumb {
-  display: flex;
-  flex-wrap: wrap;
+//  display: flex;
+  display: inline-block;
+//  flex-wrap: wrap;
   padding: $breadcrumb-padding-y $breadcrumb-padding-x;
   margin-bottom: $breadcrumb-margin-bottom;
   list-style: none;
@@ -9,6 +10,8 @@
 }
 
 .breadcrumb-item {
+  text-shadow: 0 1px #fff;
+
   // The separator between breadcrumbs (by default, a forward-slash: "/")
   + .breadcrumb-item::before {
     display: inline-block; // Suppress underlining of the separator in modern browsers
@@ -16,6 +19,7 @@
     padding-left: $breadcrumb-item-padding;
     color: $breadcrumb-divider-color;
     content: "#{$breadcrumb-divider}";
+    font-family: FontAwesome;
   }
 
   // IE9-11 hack to properly handle hyperlink underlines for breadcrumbs built

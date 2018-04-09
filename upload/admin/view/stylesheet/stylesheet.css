@@ -27,6 +27,7 @@ legend {
   margin-bottom: 20px;
 }
 
+
 .page-header {
     vertical-align: middle;
     margin: 20px 0 15px 0;
@@ -42,6 +43,41 @@ legend {
     display: inline-block;
     margin-bottom: 15px;
     text-shadow: 0 1px #fff;
+}
+
+.page-header nav {
+  display: contents;
+}
+.page-header nav .breadcrumb {
+  width: 50%;
+  display: inline-block;
+  background: none;
+  margin: 8px 0 19px 0;
+  padding: 0 10px;
+  border-radius: 0;
+}
+
+.page-header nav .breadcrumb li {
+  display: inline-block;
+}
+
+.breadcrumb li + li:before {
+    content: "\f105";
+    font-family: 'FontAwesome';
+    color: #BBBBBB;
+    padding: 0 5px;
+    font-size: 10px;
+}
+
+.breadcrumb li a {
+    color: #999999;
+    font-size: 14px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.breadcrumb > li:last-child a {
+    color: #1e91cf;
 }
 
 a:hover, a:focus {

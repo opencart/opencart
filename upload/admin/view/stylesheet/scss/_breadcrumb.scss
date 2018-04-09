@@ -15,7 +15,7 @@
     padding-right: $breadcrumb-item-padding;
     padding-left: $breadcrumb-item-padding;
     color: $breadcrumb-divider-color;
-    content: "#{$breadcrumb-divider}";
+    //content: "#{$breadcrumb-divider}";
   }
 
   // IE9-11 hack to properly handle hyperlink underlines for breadcrumbs built

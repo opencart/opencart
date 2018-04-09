@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
-        <button type="submit" form="form-option" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
+        <button type="submit" form="form-option" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -17,12 +17,12 @@
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     <div class="card">
-      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-option">
           <fieldset>
@@ -136,9 +136,17 @@
                           <div class="invalid-tooltip">{{ error_option_value[option_value_row][language.language_id] }}</div>
                         {% endif %}
                       {% endfor %}</td>
-                    <td class="text-left"><a href="" id="thumb-image{{ option_value_row }}" data-toggle="image" class="img-thumbnail"><img src="{{ option_value.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}"/></a> <input type="hidden" name="option_value[{{ option_value_row }}][image]" value="{{ option_value.image }}" id="input-image{{ option_value_row }}"/></td>
+                    <td class="text-left">
+                      <div class="card">
+                        <img src="{{ option_value.thumb }}" alt="" title="" id="thumb-image{{ option_value_row }}" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="option_value[{{ option_value_row }}][image]" value="{{ option_value.image }}" id="input-image{{ option_value_row }}"/>
+                        <div class="card-body">
+                          <button type="button" data-toggle="image" data-target="input-image{{ option_value_row }}" data-thumb="thumb-image{{ option_value_row }}" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+                          <button type="button" data-toggle="clear" data-target="input-image{{ option_value_row }}" data-thumb="thumb-image{{ option_value_row }}" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+                        </div>
+                      </div>
+                    </td>
                     <td class="text-right"><input type="text" name="option_value[{{ option_value_row }}][sort_order]" value="{{ option_value.sort_order }}" class="form-control"/></td>
-                    <td class="text-right"><button type="button" onclick="$('#option-value-row{{ option_value_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                    <td class="text-right"><button type="button" onclick="$('#option-value-row{{ option_value_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
                   </tr>
                   {% set option_value_row = option_value_row + 1 %}
                 {% endfor %}
@@ -146,7 +154,7 @@
               <tfoot>
                 <tr>
                   <td colspan="3"></td>
-                  <td class="text-right"><button type="button" onclick="addOptionValue();" data-toggle="tooltip" title="{{ button_option_value_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                  <td class="text-right"><button type="button" onclick="addOptionValue();" data-toggle="tooltip" title="{{ button_option_value_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
                 </tr>
               </tfoot>
             </table>
@@ -179,9 +187,16 @@ function addOptionValue() {
 	html += '    </div>';
   {% endfor %}
 	html += '  </td>';
-	html += '  <td class="text-center"><a href="" id="thumb-image' + option_value_row + '" data-toggle="image" class="img-thumbnail"><img src="{{ placeholder }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a><input type="hidden" name="option_value[' + option_value_row + '][image]" value="" id="input-image' + option_value_row + '" /></td>';
+	html += '  <td class="text-center"><div class="card">';
+	html += '      <img src="{{ placeholder }}" alt="" title="" id="thumb-image' + option_value_row + '" data-placeholder="{{ placeholder }}" class="card-img-top"/>';
+	html += '      <input type="hidden" name="option_value[' + option_value_row + '][image]" value="" id="input-image' + option_value_row + '"/>';
+	html += '      <div class="card-body">';
+	html += '        <button type="button" data-toggle="image" data-target="input-image' + option_value_row + '" data-thumb="thumb-image' + option_value_row + '" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>';
+	html += '        <button type="button" data-toggle="clear" data-target="input-image' + option_value_row + '" data-thumb="thumb-image' + option_value_row + '" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>';
+	html += '      </div>';
+	html += '    </div></td>';
 	html += '  <td class="text-right"><input type="text" name="option_value[' + option_value_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
-	html += '  <td class="text-right"><button type="button" onclick="$(\'#option-value-row' + option_value_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	html += '  <td class="text-right"><button type="button" onclick="$(\'#option-value-row' + option_value_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 
 	$('#option-value tbody').append(html);

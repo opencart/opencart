@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="float-right"><a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
+      <div class="float-right"><a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -15,17 +15,17 @@
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     {% if success %}
-      <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+      <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     <div class="card">
-      <div class="card-header"><i class="fa fa-info-circle"></i> {{ text_transaction_details }}</div>
+      <div class="card-header"><i class="fas fa-info-circle"></i> {{ text_transaction_details }}</div>
       <div class="card-body">
         {% if transaction %}
           <form action="" method="post" enctype="multipart/form-data" id="form-laybuy-transaction">

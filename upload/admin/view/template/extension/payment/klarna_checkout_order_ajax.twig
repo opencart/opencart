@@ -465,7 +465,7 @@
             <tfoot>
               <tr>
                 <td colspan="{{ capture.shipping_info|length + 1 }}"></td>
-                <td class="text-left"><button id="add-shipping-info" type="button" onclick="addShippingInfo('#capture-shipping-info-{{ capture.capture_id }}');" data-toggle="tooltip" title="{{ button_add_shipping_info }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                <td class="text-left"><button id="add-shipping-info" type="button" onclick="addShippingInfo('#capture-shipping-info-{{ capture.capture_id }}');" data-toggle="tooltip" title="{{ button_add_shipping_info }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
               </tr>
             </tfoot>
           </table>
@@ -643,11 +643,11 @@ $(document).off('click', '.button-command').on('click', '.button-command', funct
 			},
 			success: function(json) {
 				if (json.error) {
-					$('.kc-alert').show().addClass('alert alert-danger').html('<i class="fa fa-check-circle"></i> ' + json.error);
+					$('.kc-alert').show().addClass('alert alert-danger').html('<i class="fas fa-check-circle"></i> ' + json.error);
 				}
 
 				if (json.success) {
-					$('.kc-alert').show().addClass('alert alert-success').html('<i class="fa fa-exclamation-circle"></i> ' + json.success);
+					$('.kc-alert').show().addClass('alert alert-success').html('<i class="fas fa-exclamation-circle"></i> ' + json.success);
 				}
 
 				if (json.order_status_id) {
@@ -666,13 +666,13 @@ $(document).off('click', '.button-command').on('click', '.button-command', funct
 							$('.alert-dismissible').remove();
 
 							if (json['error']) {
-								$('#history').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+								$('#history').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 							}
 
 							if (json['success']) {
 								$('#history').load('index.php?route=sale/order/history&user_token={{ user_token }}&order_id={{ order_id }}');
 
-								$('#history').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+								$('#history').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 								$('textarea[name=\'comment\']').val('');
 							}

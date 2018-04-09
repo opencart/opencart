@@ -4,10 +4,10 @@
     <div class="container-fluid">
       <div class="float-right">
         {% if not error_signature %}
-          <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-info"><i class="fa fa-cog"></i></button>
+          <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-info"><i class="fas fa-cog"></i></button>
         {% else %}
-          <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ error_signature }}" data-placement="left" class="btn btn-danger"><i class="fa fa-exclamation-triangle"></i></button>
-        {% endif %} <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
+          <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ error_signature }}" data-placement="left" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i></button>
+        {% endif %} <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -19,12 +19,12 @@
     </div>
   </div>
   <div id="marketplace-extension-info" class="container-fluid">{% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     <div class="card">
-      <div class="card-header"><i class="fa fa-puzzle-piece"></i> {{ name }}</div>
+      <div class="card-header"><i class="fas fa-puzzle-piece"></i> {{ name }}</div>
       <div class="card-body">
         <div class="row extension-info">
           <div class="col-md-8 col-lg-9">{% if banner %}
@@ -68,11 +68,11 @@
                             <td>{{ download.name }}</td>
                             <td>{{ download.date_added }}</td>
                             <td class="text-right">{% if download.extension_install_id %}
-                                <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="{{ download.extension_install_id }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-trash-o"></i> {{ button_uninstall }}</button>
+                                <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="{{ download.extension_install_id }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i> {{ button_uninstall }}</button>
                               {% elseif download.filename|slice(-10) == '.ocmod.zip' %}
-                                <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"{% if not download.status %} disabled{% endif %}><i class="fa fa-download"></i> {{ button_install }}</button>
+                                <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"{% if not download.status %} disabled{% endif %}><i class="fas fa-download"></i> {{ button_install }}</button>
                               {% else %}
-                                <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"{% if not download.status %} disabled{% endif %}><i class="fa fa-download"></i> {{ button_download }}</button>
+                                <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"{% if not download.status %} disabled{% endif %}><i class="fas fa-download"></i> {{ button_download }}</button>
                               {% endif %}</td>
                           </tr>
                         {% endfor %}
@@ -127,7 +127,7 @@
                 <div class="row">
                   <div class="col-md-5"><strong>{{ text_rating }}</strong></div>
                   <div class="col-md-7 text-right">{% for i in 1..5 %}
-                      {% if rating >= i %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
+                      {% if rating >= i %}<i class="fas fa-star"></i>{% else %}<i class="fas fa-star-o"></i>{% endif %}
                     {% endfor %} ({{ rating_total }})
                   </div>
                 </div>
@@ -217,7 +217,7 @@ $('#button-buy').on('click', function(e) {
 	html += '          <input type="password" name="pin" value="" placeholder="{{ entry_pin }}" id="input-pin" class="form-control" />';
 	html += '        </div>';
 	html += '        <div class="form-group text-right">';
-	html += '          <div class="pull-left"><a href="https://www.opencart.com/index.php?route=support/contact" class="btn btn-light btn-lg" target="_blank">{{ button_forgot_pin }}</a></div>';
+	html += '          <div class="float-left"><a href="https://www.opencart.com/index.php?route=support/contact" class="btn btn-light btn-lg" target="_blank">{{ button_forgot_pin }}</a></div>';
 	html += '          <button type="button" id="button-purchase" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg">{{ button_purchase }}</button>';
 	html += '        </div>';
 	html += '      </div>';
@@ -250,11 +250,11 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#modal-purchase .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#modal-purchase .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('#modal-purchase').modal('hide');
 
@@ -337,7 +337,7 @@ function next(url, element, i) {
 				$('#progress-bar').addClass('progress-bar-success');
 				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
 
-				$(element).replaceWith('<button type="button" data-install="' + $(element).attr('data-install') + '" data-uninstall="' + $(element).attr('data-uninstall') + '" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-trash-o"></i> {{ button_uninstall }}</button>');
+				$(element).replaceWith('<button type="button" data-install="' + $(element).attr('data-install') + '" data-uninstall="' + $(element).attr('data-uninstall') + '" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i> {{ button_uninstall }}</button>');
 			}
 
 			if (json['text']) {
@@ -384,7 +384,7 @@ $('#tab-download').on('click', ' .btn-danger', function(e) {
 				$('#progress-bar').addClass('progress-bar-success');
 				$('#progress-text').html('<span class="text-success">' + json['success'] + '</div>');
 
-				$(element).replaceWith('<button type="button" data-install="' + $(element).attr('data-install') + '" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> {{ button_install }}</button>');
+				$(element).replaceWith('<button type="button" data-install="' + $(element).attr('data-install') + '" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-download"></i> {{ button_install }}</button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -419,11 +419,11 @@ $('#button-comment').on('click', function() {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#tab-comment').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#tab-comment').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#tab-comment').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#tab-comment').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('#comment').load('index.php?route=marketplace/marketplace/comment&user_token={{ user_token }}&extension_id={{ extension_id }}');
 
@@ -490,11 +490,11 @@ $('#comment').on('click', '.btn-primary', function(e) {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$(element).parents('.reply-input-box').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$(element).parents('.reply-input-box').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$(element).parents('.reply-input-box').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$(element).parents('.reply-input-box').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$(element).parents('.reply-input-box').parents('.media').find('.reply-refresh').last().trigger('click');
 

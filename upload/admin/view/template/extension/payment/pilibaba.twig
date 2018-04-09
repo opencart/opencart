@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
-        <button type="submit" form="form-payment" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
+        <button type="submit" form="form-payment" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -17,17 +17,17 @@
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     {% if success %}
-      <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+      <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     <div class="card">
-      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_edit }}</div>
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment">
           <ul class="nav nav-tabs">
@@ -93,16 +93,16 @@
               </div>
               <div class="offset-sm-2">
                 <a class="button btn btn-primary" id="button-register">{{ button_register }}</a>
-                <span class="btn btn-primary" id="img_loading_register" style="display: none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+                <span class="btn btn-primary" id="img_loading_register" style="display: none;"><i class="fas fa-circle-o-notch fa-spin fa-lg"></i></span>
               </div>
             </div>
             <div class="tab-pane {% if not show_register %} active {% endif %}" id="tab-settings">
               {% if error_weight %}
-                <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_weight }}</div>
+                <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_weight }}</div>
               {% endif %}
 
               {% if notice_email %}
-                <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ notice_email }}</div>
+                <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ notice_email }}</div>
               {% endif %}
 
               <div class="form-group row required">
@@ -244,7 +244,7 @@ $('#button-register').click(function() {
 			}
 
 			if (json['error']) {
-				$('#tab-register').prepend('<div class="alert alert-danger pilibaba_message" style="display:none"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>').fadeIn();
+				$('#tab-register').prepend('<div class="alert alert-danger pilibaba_message" style="display:none"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + '</div>').fadeIn();
 			}
 
 			$('#button-register').show();

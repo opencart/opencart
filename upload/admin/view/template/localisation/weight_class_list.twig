@@ -2,8 +2,8 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="float-right"><a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
-        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-weight-class').submit() : false;"><i class="fa fa-trash-o"></i></button>
+      <div class="float-right"><a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-weight-class').submit() : false;"><i class="fas fa-trash-alt"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <nav aria-label="breadcrumb">
@@ -17,17 +17,17 @@
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     {% if success %}
-      <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+      <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     <div class="card">
-      <div class="card-header"><i class="fa fa-list"></i> {{ text_list }}</div>
+      <div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
       <div class="card-body">
         <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-weight-class">
           <div class="table-responsive">
@@ -65,7 +65,7 @@
                       <td class="text-left">{{ weight_class.title }}</td>
                       <td class="text-left">{{ weight_class.unit }}</td>
                       <td class="text-right">{{ weight_class.value }}</td>
-                      <td class="text-right"><a href="{{ weight_class.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                      <td class="text-right"><a href="{{ weight_class.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
                     </tr>
                   {% endfor %}
                 {% else %}

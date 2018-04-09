@@ -4,8 +4,8 @@
     <div class="container-fluid">
       <div class="float-right">
         <button type="button" id="button-import" data-toggle="tooltip" title="{{ button_import }}" class="btn btn-success"><i class="fa fa fa-upload"></i></button>
-        <button type="submit" form="form-feed" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
+        <button type="submit" form="form-feed" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -18,14 +18,14 @@
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     <div class="card">
-      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_edit }}</div>
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
       <div class="card-body">
-        <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_import }} <button type="button" class="close" data-dismiss="alert">×</button></div>
+        <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_import }} <button type="button" class="close" data-dismiss="alert">×</button></div>
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-feed">
           <div id="category"></div>
           <br/>
@@ -35,7 +35,7 @@
               <input type="text" name="google_base_category" value="" placeholder="{{ entry_google_category }}" id="input-google-category" class="form-control"/> <input type="hidden" name="google_base_category_id" value=""/>
               <div class="input-group">
                 <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" class="form-control"/> <input type="hidden" name="category_id" value=""/>
-                <div class="input-group-append"><button type="button" id="button-category-add" data-toggle="tooltip" title="{{ button_category_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></button></div>
+                <div class="input-group-append"><button type="button" id="button-category-add" data-toggle="tooltip" title="{{ button_category_add }}" class="btn btn-primary"><i class="fas fa-plus"></i></button></div>
               </div>
             </div>
           </div>
@@ -139,13 +139,13 @@ $('#button-category-add').on('click', function() {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#category').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#category').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
 				$('#category').load('index.php?route=extension/feed/google_base/category&user_token={{ user_token }}');
 
-				$('#category').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#category').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('input[name=\'category\']').val('');
 				$('input[name=\'category_id\']').val('');
@@ -179,13 +179,13 @@ $('#category').on('click', '.btn-danger', function() {
 
 			// Check for errors
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
 				$('#category').load('index.php?route=extension/feed/google_base/category&user_token={{ user_token }}');
 
-				$('#category').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#category').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -227,11 +227,11 @@ $('#button-import').on('click', function() {
 					$('.alert-dismissible').remove();
 
 					if (json['error']) {
-						$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+						$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 					}
 
 					if (json['success']) {
-						$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+						$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {

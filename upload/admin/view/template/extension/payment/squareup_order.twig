@@ -67,7 +67,7 @@ $(document).ready(function() {
 			beforeSend: function() {
 				$('#refresh_transactions').button('loading');
 				$('#transactions_pagination').empty();
-				$('#transactions').html('<tr><td colspan="9" class="text-center"><i class="fa fa-circle-o-notch fa-spin"></i>&nbsp;{{ text_loading }}</td></tr>');
+				$('#transactions').html('<tr><td colspan="9" class="text-center"><i class="fas fa-circle-o-notch fa-spin"></i>&nbsp;{{ text_loading }}</td></tr>');
 			},
 			success: function(data) {
 				var html = '';
@@ -129,15 +129,15 @@ $(document).ready(function() {
 	var transactionLoading = function() {
 		var message = $('#transaction-alert').attr('data-message');
 
-		$('#transaction-alert').html('<div class="text-center alert alert-info"><i class="fa fa-circle-o-notch fa-spin"></i>&nbsp;' + message + '</div>');
+		$('#transaction-alert').html('<div class="text-center alert alert-info"><i class="fas fa-circle-o-notch fa-spin"></i>&nbsp;' + message + '</div>');
 	}
 
 	var transactionError = function(message) {
-		$('#transaction-alert').html('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-label="X"><span aria-hidden="true">&times;</span></button><i class="fa fa-exclamation-circle"></i>&nbsp;' + message + '</div>');
+		$('#transaction-alert').html('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-label="X"><span aria-hidden="true">&times;</span></button><i class="fas fa-exclamation-circle"></i>&nbsp;' + message + '</div>');
 	}
 
 	var transactionSuccess = function(message) {
-		$('#transaction-alert').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert" aria-label="X"><span aria-hidden="true">&times;</span></button><i class="fa fa-exclamation-circle"></i>&nbsp;' + message + '</div>');
+		$('#transaction-alert').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert" aria-label="X"><span aria-hidden="true">&times;</span></button><i class="fas fa-exclamation-circle"></i>&nbsp;' + message + '</div>');
 	}
 
 	var addOrderHistory = function(data, success_callback) {

@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
-        <button type="submit" form="form-api" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
+        <button type="submit" form="form-api" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -16,12 +16,12 @@
     </div>
   </div>
   <div class="container-fluid">{% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     <div class="card">
-      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-api">
           <ul class="nav nav-tabs">
@@ -44,7 +44,7 @@
                 <div class="col-sm-10">
                   <textarea name="key" placeholder="{{ entry_key }}" rows="5" id="input-key" class="form-control">{{ key }}</textarea>
                   <br/>
-                  <button type="button" id="button-generate" class="btn btn-primary"><i class="fa fa-refresh"></i> {{ button_generate }}</button>
+                  <button type="button" id="button-generate" class="btn btn-primary"><i class="fas fa-refresh"></i> {{ button_generate }}</button>
                   {% if error_key %}
                     <div class="invalid-tooltip">{{ error_key }}</div>
                   {% endif %}</div>
@@ -65,7 +65,7 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-ip">
-              <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_ip }}</div>
+              <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_ip }}</div>
               <div class="table-responsive">
                 <table id="ip" class="table table-striped table-bordered table-hover">
                   <thead>
@@ -80,7 +80,7 @@
                     {% for api_ip in api_ips %}
                       <tr id="ip-row{{ ip_row }}">
                         <td class="text-left"><input type="text" name="api_ip[]" value="{{ api_ip }}" placeholder="{{ entry_ip }}" class="form-control"/></td>
-                        <td class="text-left"><button type="button" onclick="$('#ip-row{{ ip_row }}').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                        <td class="text-left"><button type="button" onclick="$('#ip-row{{ ip_row }}').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
                       </tr>
                       {% set ip_row = ip_row + 1 %}
                     {% endfor %}
@@ -89,7 +89,7 @@
                   <tfoot>
                     <tr>
                       <td></td>
-                      <td class="text-left"><button type="button" onclick="addIp()" data-toggle="tooltip" title="{{ button_ip_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                      <td class="text-left"><button type="button" onclick="addIp()" data-toggle="tooltip" title="{{ button_ip_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
                     </tr>
                   </tfoot>
                 </table>
@@ -116,7 +116,7 @@
                           <td class="text-left">{{ api_session.ip }}</td>
                           <td class="text-left">{{ api_session.date_added }}</td>
                           <td class="text-left">{{ api_session.date_modified }}</td>
-                          <td class="text-right"><button type="button" value="{{ api_session.api_session_id }}" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                          <td class="text-right"><button type="button" value="{{ api_session.api_session_id }}" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
                         </tr>
                       {% endfor %}
                     {% else %}
@@ -154,7 +154,7 @@ var ip_row = {{ ip_row }};
 function addIp() {
 	html = '<tr id="ip-row' + ip_row + '">';
 	html += '  <td class="text-right"><input type="text" name="api_ip[]" value="" placeholder="{{ entry_ip }}" class="form-control" /></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#ip-row' + ip_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#ip-row' + ip_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 
 	$('#ip tbody').append(html);
@@ -183,11 +183,11 @@ $('#session button').on('click', function(e) {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#tab-session').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#tab-session').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#tab-session').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#tab-session').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$(element).parent().parent().remove();
 			}

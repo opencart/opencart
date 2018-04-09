@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="float-right"><a href="{{ cancel }}" class="btn btn-light"><i class="fa fa-reply"></i> {{ button_cancel }}</a></div>
+      <div class="float-right"><a href="{{ cancel }}" class="btn btn-light"><i class="fas fa-reply"></i> {{ button_cancel }}</a></div>
       <h1>{{ heading_title }}</h1>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -16,7 +16,7 @@
   <div class="container-fluid">
     <div id="collapse">
       <div class="card">
-        <div class="card-header"><i class="fa fa-user fa-fw"></i> {{ text_customer_detail }}</div>
+        <div class="card-header"><i class="fas fa-user fa-fw"></i> {{ text_customer_detail }}</div>
         <div id="collapse-customer" data-parent="#collapse" class="collapse show">
           <div class="card-body">
             <form>
@@ -169,7 +169,7 @@
                     <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                       <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                       <div class="col-sm-10">
-                        <button type="button" id="button-custom-field{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fa fa-upload"></i> {{ button_upload }}</button>
+                        <button type="button" id="button-custom-field{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                         <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] }}" id="input-custom-field{{ custom_field.custom_field_id }}"/>
                       </div>
                     </div>
@@ -181,7 +181,7 @@
                         <div class="input-group date">
                           <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                           <div class="input-group-append">
-                            <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                            <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                           </div>
                         </div>
                       </div>
@@ -194,7 +194,7 @@
                         <div class="input-group time">
                           <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="HH:mm" data-locale="{{ datepicker }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                           <div class="input-group-append">
-                            <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                            <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                           </div>
                         </div>
                       </div>
@@ -207,7 +207,7 @@
                         <div class="input-group datetime">
                           <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" data-locale="{{ datepicker }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                           <div class="input-group-append">
-                            <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                            <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                           </div>
                         </div>
                       </div>
@@ -217,13 +217,13 @@
               {% endfor %}
             </form>
             <div class="text-right">
-              <buttton id="button-customer" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-arrow-right"></i> {{ button_continue }}</buttton>
+              <buttton id="button-customer" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-arrow-right"></i> {{ button_continue }}</buttton>
             </div>
           </div>
         </div>
       </div>
       <div class="card">
-        <div class="card-header"><i class="fa fa-shopping-cart fa-fw"></i> {{ text_cart }}</div>
+        <div class="card-header"><i class="fas fa-shopping-cart fa-fw"></i> {{ text_cart }}</div>
         <div id="collapse-cart" data-parent="#collapse" class="collapse">
           <div class="card-body">
             <div class="table-responsive">
@@ -315,7 +315,7 @@
                     <div id="option"></div>
                   </fieldset>
                   <div class="text-right">
-                    <button type="button" id="button-product-add" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> {{ button_product_add }}</button>
+                    <button type="button" id="button-product-add" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_product_add }}</button>
                   </div>
                 </div>
                 <div class="tab-pane" id="tab-voucher">
@@ -369,7 +369,7 @@
                     </div>
                   </fieldset>
                   <div class="text-right">
-                    <button type="button" id="button-voucher-add" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> {{ button_voucher_add }}</button>
+                    <button type="button" id="button-voucher-add" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_voucher_add }}</button>
                   </div>
                 </div>
               </div>
@@ -377,17 +377,17 @@
             <br/>
             <div class="row">
               <div class="col-sm-6 text-left">
-                <a href="#collapse-customer" data-toggle="collapse" data-parent="#collapse" class="btn btn-light"><i class="fa fa-arrow-left"></i> {{ button_back }}</a>
+                <a href="#collapse-customer" data-toggle="collapse" data-parent="#collapse" class="btn btn-light"><i class="fas fa-arrow-left"></i> {{ button_back }}</a>
               </div>
               <div class="col-sm-6 text-right">
-                <button type="button" id="button-cart" class="btn btn-primary"><i class="fa fa-arrow-right"></i> {{ button_continue }}</button>
+                <button type="button" id="button-cart" class="btn btn-primary"><i class="fas fa-arrow-right"></i> {{ button_continue }}</button>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="card">
-        <div class="card-header"><i class="fa fa-credit-card fa-fw"></i> {{ text_payment_detail }}</div>
+        <div class="card-header"><i class="fas fa-credit-card fa-fw"></i> {{ text_payment_detail }}</div>
         <div id="collapse-payment" data-parent="#collapse" class="collapse">
           <div class="card-body">
             <form>
@@ -544,7 +544,7 @@
                     <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                       <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                       <div class="col-sm-10">
-                        <button type="button" id="button-payment-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fa fa-upload"></i> {{ button_upload }}</button>
+                        <button type="button" id="button-payment-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                         <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}"/>
                       </div>
                     </div>
@@ -556,7 +556,7 @@
                         <div class="input-group date">
                           <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                           <div class="input-group-append">
-                            <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                            <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                           </div>
                         </div>
                       </div>
@@ -569,7 +569,7 @@
                         <div class="input-group time">
                           <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="HH:mm" data-locale="{{ datepicker }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                           <div class="input-group-append">
-                            <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                            <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                           </div>
                         </div>
                       </div>
@@ -582,7 +582,7 @@
                         <div class="input-group datetime">
                           <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" data-locale="{{ datepicker }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                           <div class="input-group-append">
-                            <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                            <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                           </div>
                         </div>
                       </div>
@@ -593,17 +593,17 @@
             </form>
             <div class="row">
               <div class="col-sm-6 text-left">
-                <a href="#collapse-cart" data-toggle="collapse" data-parent="#collapse" class="btn btn-light"><i class="fa fa-arrow-left"></i> {{ button_back }}</a>
+                <a href="#collapse-cart" data-toggle="collapse" data-parent="#collapse" class="btn btn-light"><i class="fas fa-arrow-left"></i> {{ button_back }}</a>
               </div>
               <div class="col-sm-6 text-right">
-                <button type="button" id="button-payment-address" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-arrow-right"></i> {{ button_continue }}</button>
+                <button type="button" id="button-payment-address" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-arrow-right"></i> {{ button_continue }}</button>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="card">
-        <div class="card-header"><i class="fa fa-truck fa-fw"></i> {{ text_shipping_detail }}</div>
+        <div class="card-header"><i class="fas fa-truck fa-fw"></i> {{ text_shipping_detail }}</div>
         <div id="collapse-shipping" data-parent="#collapse" class="collapse">
           <div class="card-body">
             <form>
@@ -760,7 +760,7 @@
                     <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                       <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                       <div class="col-sm-10">
-                        <button type="button" id="button-shipping-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fa fa-upload"></i> {{ button_upload }}</button>
+                        <button type="button" id="button-shipping-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                         <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] }}" id="input-custom-field{{ custom_field.custom_field_id }}"/>
                       </div>
                     </div>
@@ -772,7 +772,7 @@
                         <div class="input-group date">
                           <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                           <div class="input-group-append">
-                            <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                            <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                           </div>
                         </div>
                       </div>
@@ -785,7 +785,7 @@
                         <div class="input-group time">
                           <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="HH:mm" data-locale="{{ datepicker }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                           <div class="input-group-append">
-                            <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                            <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                           </div>
                         </div>
                       </div>
@@ -798,7 +798,7 @@
                         <div class="input-group datetime">
                           <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" data-locale="{{ datepicker }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                           <div class="input-group-append">
-                            <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                            <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                           </div>
                         </div>
                       </div>
@@ -809,17 +809,17 @@
             </form>
             <div class="row">
               <div class="col-sm-6 text-left">
-                <a href="#collapse-payment" data-toggle="collapse" data-parent="#collapse" class="btn btn-light"><i class="fa fa-arrow-left"></i> {{ button_back }}</a>
+                <a href="#collapse-payment" data-toggle="collapse" data-parent="#collapse" class="btn btn-light"><i class="fas fa-arrow-left"></i> {{ button_back }}</a>
               </div>
               <div class="col-sm-6 text-right">
-                <button type="button" id="button-shipping-address" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-arrow-right"></i> {{ button_continue }}</button>
+                <button type="button" id="button-shipping-address" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-arrow-right"></i> {{ button_continue }}</button>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="card">
-        <div class="card-header"><i class="fa fa-usd fa-fw"></i> {{ text_total_detail }}</div>
+        <div class="card-header"><i class="fas fa-usd fa-fw"></i> {{ text_total_detail }}</div>
         <div id="collapse-total" data-parent="#collapse" class="collapse">
           <div class="card-body">
             <div class="table-responsive">
@@ -938,11 +938,11 @@
             </form>
             <div class="row">
               <div class="col-sm-6 text-left">
-                <button type="button" onclick="$('select[name=\'shipping_method\']').prop('disabled') ? $('#collapse-payment').collapse('show') : $('#collapse-shipping').collapse('show');" class="btn btn-light"><i class="fa fa-arrow-left"></i> {{ button_back }}</button>
+                <button type="button" onclick="$('select[name=\'shipping_method\']').prop('disabled') ? $('#collapse-payment').collapse('show') : $('#collapse-shipping').collapse('show');" class="btn btn-light"><i class="fas fa-arrow-left"></i> {{ button_back }}</button>
               </div>
               <div class="col-sm-6 text-right">
-                <button type="button" id="button-refresh" data-toggle="tooltip" title="{{ button_refresh }}" data-loading-text="{{ text_loading }}" class="btn btn-warning"><i class="fa fa-refresh"></i></button>
-                <button type="button" id="button-save" class="btn btn-primary"><i class="fa fa-check-circle"></i> {{ button_save }}</button>
+                <button type="button" id="button-refresh" data-toggle="tooltip" title="{{ button_refresh }}" data-loading-text="{{ text_loading }}" class="btn btn-warning"><i class="fas fa-refresh"></i></button>
+                <button type="button" id="button-save" class="btn btn-primary"><i class="fas fa-check-circle"></i> {{ button_save }}</button>
               </div>
             </div>
           </div>
@@ -971,7 +971,7 @@ $('select[name=\'currency\']').on('change', function() {
 			$('.is-invalid').removeClass('is-invalid');
 
 			if (json['error']) {
-				$('#collapse-customer .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#collapse-customer .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
 				$('select[name=\'currency\']').addClass('is-invalid');
@@ -1109,7 +1109,7 @@ $('#button-customer').on('click', function() {
 
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#collapse-customer .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#collapse-customer .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				for (i in json['error']) {
@@ -1142,7 +1142,7 @@ $('#button-customer').on('click', function() {
 						$('.is-invalid').removeClass('is-invalid');
 
 						if (json['error'] && json['error']['warning']) {
-							$('#collapse-customer .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+							$('#collapse-customer .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 						}
 					},
 					error: function(xhr, ajaxOptions, thrownError) {
@@ -1166,7 +1166,7 @@ $('#button-customer').on('click', function() {
 							$('.is-invalid').removeClass('is-invalid');
 
 							if (json['error'] && json['error']['warning']) {
-								$('#collapse-customer .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+								$('#collapse-customer .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 							}
 						},
 						error: function(xhr, ajaxOptions, thrownError) {
@@ -1328,7 +1328,7 @@ $('#tab-product input[name=\'product\']').autocomplete({
 					html += '<div class="form-group row' + (option['required'] ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 col-form-label">' + option['name'] + '</label>';
 					html += '  <div class="col-sm-10">';
-					html += '    <button type="button" id="button-upload' + option['product_option_id'] + '" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fa fa-upload"></i> {{ button_upload }}</button>';
+					html += '    <button type="button" id="button-upload' + option['product_option_id'] + '" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>';
 					html += '    <input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" id="input-option' + option['product_option_id'] + '" />';
 					html += '  </div>';
 					html += '</div>';
@@ -1337,21 +1337,21 @@ $('#tab-product input[name=\'product\']').autocomplete({
 				if (option['type'] == 'date') {
 					html += '<div class="form-group row' + (option['required'] ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 col-form-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
-					html += '  <div class="col-sm-3"><div class="input-group date"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="YYYY-MM-DD" id="input-option' + option['product_option_id'] + '" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div></div>';
+					html += '  <div class="col-sm-3"><div class="input-group date"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="YYYY-MM-DD" id="input-option' + option['product_option_id'] + '" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button></div></div></div>';
 					html += '</div>';
 				}
 
 				if (option['type'] == 'datetime') {
 					html += '<div class="form-group row' + (option['required'] ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 col-form-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
-					html += '  <div class="col-sm-3"><div class="input-group datetime"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="YYYY-MM-DD HH:mm" id="input-option' + option['product_option_id'] + '" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div></div>';
+					html += '  <div class="col-sm-3"><div class="input-group datetime"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="YYYY-MM-DD HH:mm" id="input-option' + option['product_option_id'] + '" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button></div></div></div>';
 					html += '</div>';
 				}
 
 				if (option['type'] == 'time') {
 					html += '<div class="form-group row' + (option['required'] ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 col-form-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
-					html += '  <div class="col-sm-3"><div class="input-group time"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="HH:mm" id="input-option' + option['product_option_id'] + '" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div></div>';
+					html += '  <div class="col-sm-3"><div class="input-group time"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="HH:mm" id="input-option' + option['product_option_id'] + '" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button></div></div></div>';
 					html += '</div>';
 				}
 			}
@@ -1388,7 +1388,7 @@ $('#button-product-add').on('click', function() {
 
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#tab-product').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#tab-product').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				if (json['error']['option']) {
@@ -1407,7 +1407,7 @@ $('#button-product-add').on('click', function() {
 				}
 
 				if (json['error']['store']) {
-					$('#tab-product').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['store'] + '</div>');
+					$('#tab-product').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['store'] + '</div>');
 				}
 			} else {
 				// Refresh products, vouchers and totals
@@ -1440,7 +1440,7 @@ $('#button-voucher-add').on('click', function() {
 
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#tab-voucher').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#tab-voucher').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				for (i in json['error']) {
@@ -1493,7 +1493,7 @@ $('#cart').on('click', '.btn-danger', function() {
 
 			// Check for errors
 			if (json['error']) {
-				$('#collapse-cart .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#collapse-cart .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			} else {
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -1526,11 +1526,11 @@ $('#cart').on('click', '.btn-primary', function() {
 			$('.is-invalid').removeClass('is-invalid');
 
 			if (json['error'] && json['error']['warning']) {
-				$('#collapse-cart .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#collapse-cart .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#collapse-cart .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#collapse-cart .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -1661,7 +1661,7 @@ $('#button-payment-address').on('click', function() {
 			// Check for errors
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#collapse-payment .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#collapse-payment .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				for (i in json['error']) {
@@ -1690,7 +1690,7 @@ $('#button-payment-address').on('click', function() {
 					},
 					success: function(json) {
 						if (json['error']) {
-							$('#collapse-payment .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+							$('#collapse-payment .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 						} else {
 							html = '<option value="">{{ text_select }}</option>';
 
@@ -1845,7 +1845,7 @@ $('#button-shipping-address').on('click', function() {
 			// Check for errors
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#collapse-shipping .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#collapse-shipping .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				for (i in json['error']) {
@@ -1873,7 +1873,7 @@ $('#button-shipping-address').on('click', function() {
 					},
 					success: function(json) {
 						if (json['error']) {
-							$('#collapse-shipping .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+							$('#collapse-shipping .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 						} else {
 							// Shipping Methods
 							html = '<option value="">{{ text_select }}</option>';
@@ -1937,14 +1937,14 @@ $('#button-shipping-method').on('click', function() {
 			$('.is-invalid').removeClass('is-invalid');
 
 			if (json['error']) {
-				$('#collapse-total .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#collapse-total .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
 				$('select[name=\'shipping_method\']').addClass('is-invalid');
 			}
 
 			if (json['success']) {
-				$('#collapse-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#collapse-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -1975,14 +1975,14 @@ $('#button-payment-method').on('click', function() {
 			$('.is-invalid').removeClass('is-invalid');
 
 			if (json['error']) {
-				$('#collapse-total .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#collapse-total .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
 				$('select[name=\'payment_method\']').addClass('is-invalid');
 			}
 
 			if (json['success']) {
-				$('#collapse-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#collapse-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -2013,14 +2013,14 @@ $('#button-coupon').on('click', function() {
 			$('.is-invalid').removeClass('is-invalid');
 
 			if (json['error']) {
-				$('#collapse-total .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#collapse-total .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
 				$('input[name=\'coupon\']').addClass('is-invalid');
 			}
 
 			if (json['success']) {
-				$('#collapse-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#collapse-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -2051,14 +2051,14 @@ $('#button-voucher').on('click', function() {
 			$('.is-invalid').removeClass('is-invalid');
 
 			if (json['error']) {
-				$('#collapse-total .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#collapse-total .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
 				$('input[name=\'voucher\']').addClass('is-invalid');
 			}
 
 			if (json['success']) {
-				$('#collapse-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#collapse-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -2089,14 +2089,14 @@ $('#button-reward').on('click', function() {
 			$('.is-invalid').removeClass('is-invalid');
 
 			if (json['error']) {
-				$('#collapse-total .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#collapse-total .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
 				$('input[name=\'reward\']').addClass('is-invalid');
 			}
 
 			if (json['success']) {
-				$('#collapse-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#collapse-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -2159,11 +2159,11 @@ $('#button-save').on('click', function() {
 			$('.alert-dismissible, .invalid-tooltip').remove();
 
 			if (json['error']) {
-				$('#collapse-total .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#collapse-total .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#collapse-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#collapse-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['order_id']) {
@@ -2297,16 +2297,16 @@ $('#button-refresh').on('click', function() {
 			// Check for errors
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				if (json['error']['stock']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['stock'] + '</div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['stock'] + '</div>');
 				}
 
 				if (json['error']['minimum']) {
 					for (i in json['error']['minimum']) {
-						$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['minimum'][i] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+						$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['minimum'][i] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 					}
 				}
 			}
@@ -2345,10 +2345,10 @@ $('#button-refresh').on('click', function() {
 
 					html += '</td>';
 					html += '  <td class="text-left">' + product['model'] + '</td>';
-					html += '  <td class="text-right"><div class="input-group"><input type="text" name="product[' + i + '][quantity]" value="' + product['quantity'] + '" class="form-control" /><div class="input-group-append"><button type="button" data-toggle="tooltip" title="{{ button_refresh }}" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-refresh"></i></button></div></div></td>';
+					html += '  <td class="text-right"><div class="input-group"><input type="text" name="product[' + i + '][quantity]" value="' + product['quantity'] + '" class="form-control" /><div class="input-group-append"><button type="button" data-toggle="tooltip" title="{{ button_refresh }}" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-refresh"></i></button></div></div></td>';
 					html += '  <td class="text-right">' + product['price'] + '</td>';
 					html += '  <td class="text-right">' + product['total'] + '</td>';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + product['cart_id'] + '" data-toggle="tooltip" title="{{ button_remove }}" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + product['cart_id'] + '" data-toggle="tooltip" title="{{ button_remove }}" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
 					html += '</tr>';
 
 					if (product['shipping'] != 0) {
@@ -2386,7 +2386,7 @@ $('#button-refresh').on('click', function() {
 					html += '  <td class="text-right">1</td>';
 					html += '  <td class="text-right">' + voucher['price'] + '</td>';
 					html += '  <td class="text-right">' + voucher['price'] + '</td>';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + voucher['code'] + '" data-toggle="tooltip" title="{{ button_remove }}" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + voucher['code'] + '" data-toggle="tooltip" title="{{ button_remove }}" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
 					html += '</tr>';
 				}
 			}

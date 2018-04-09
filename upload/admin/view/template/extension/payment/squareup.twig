@@ -4,8 +4,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
-        <button type="submit" form="form-square-checkout" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
+        <button type="submit" form="form-square-checkout" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -18,20 +18,20 @@
   </div>
   <div class="container-fluid">
     {% for alert in alerts %}
-      <div class="alert alert-{{ alert.type }}"><i class="fa fa-{{ alert.icon }}"></i>&nbsp;{{ alert.text }}
+      <div class="alert alert-{{ alert.type }}"><i class="fas fa-{{ alert.icon }}"></i>&nbsp;{{ alert.text }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endfor %}
     <div class="card">
-      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_edit_heading }}</div>
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit_heading }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-square-checkout">
           <input type="hidden" name="payment_squareup_card" value="1"/>
           <ul class="nav nav-tabs">
-            <li class="nav-item"><a href="#tab-setting" data-toggle="tab" class="nav-link active"><i class="fa fa-gear"></i>&nbsp;{{ tab_setting }}</a></li>
-            <li class="nav-item"><a href="#tab-transaction" data-toggle="tab" class="nav-link"><i class="fa fa-list"></i>&nbsp;{{ tab_transaction }}</a></li>
-            <li class="nav-item"><a href="#tab-cron" data-toggle="tab" class="nav-link"><i class="fa fa-clock-o"></i>&nbsp;{{ tab_cron }}</a></li>
-            <li class="nav-item"><a href="#tab-recurring" data-toggle="tab" class="nav-link"><i class="fa fa-hourglass-half"></i>&nbsp;{{ tab_recurring }}</a></li>
+            <li class="nav-item"><a href="#tab-setting" data-toggle="tab" class="nav-link active"><i class="fas fa-gear"></i>&nbsp;{{ tab_setting }}</a></li>
+            <li class="nav-item"><a href="#tab-transaction" data-toggle="tab" class="nav-link"><i class="fas fa-list"></i>&nbsp;{{ tab_transaction }}</a></li>
+            <li class="nav-item"><a href="#tab-cron" data-toggle="tab" class="nav-link"><i class="fas fa-clock-o"></i>&nbsp;{{ tab_cron }}</a></li>
+            <li class="nav-item"><a href="#tab-recurring" data-toggle="tab" class="nav-link"><i class="fas fa-hourglass-half"></i>&nbsp;{{ tab_recurring }}</a></li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-setting">
@@ -286,7 +286,7 @@
             <div class="tab-pane" id="tab-cron">
               <fieldset>
                 <legend>{{ text_executables }}</legend>
-                <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_recurring_info }}</div>
+                <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_recurring_info }}</div>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ text_local_cron }}</label>
                   <div class="col-sm-10">
@@ -301,7 +301,7 @@
                       <input disabled type="text" name="payment_squareup_cron_url" id="input_payment_squareup_cron_url" class="form-control" value="" data-toggle="tooltip" data-original-title="{{ text_refresh_token }}"/>
                       <div class="input-group-append">
                         <div class="btn btn-primary" id="refresh-cron-token">
-                          <i class="fa fa-refresh"></i>
+                          <i class="fas fa-refresh"></i>
                         </div>
                       </div>
                     </div>
@@ -459,7 +459,7 @@ $(document).ready(function() {
 			beforeSend: function() {
 				$('#refresh_transactions').button('loading');
 				$('#transactions_pagination').empty();
-				$('#transactions').html('<tr><td colspan="9" class="text-center"><i class="fa fa-circle-o-notch fa-spin"></i>&nbsp;{{ text_loading }}</td></tr>');
+				$('#transactions').html('<tr><td colspan="9" class="text-center"><i class="fas fa-circle-o-notch fa-spin"></i>&nbsp;{{ text_loading }}</td></tr>');
 			},
 			success: function(data) {
 				var html = '';
@@ -523,15 +523,15 @@ $(document).ready(function() {
 	var transactionLoading = function() {
 		var message = $('#transaction-alert').attr('data-message');
 
-		$('#transaction-alert').html('<div class="text-center alert alert-info"><i class="fa fa-circle-o-notch fa-spin"></i>&nbsp;' + message + '</div>');
+		$('#transaction-alert').html('<div class="text-center alert alert-info"><i class="fas fa-circle-o-notch fa-spin"></i>&nbsp;' + message + '</div>');
 	}
 
 	var transactionError = function(message) {
-		$('#transaction-alert').html('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-label="X"><span aria-hidden="true">&times;</span></button><i class="fa fa-exclamation-circle"></i>&nbsp;' + message + '</div>');
+		$('#transaction-alert').html('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-label="X"><span aria-hidden="true">&times;</span></button><i class="fas fa-exclamation-circle"></i>&nbsp;' + message + '</div>');
 	}
 
 	var transactionSuccess = function(message) {
-		$('#transaction-alert').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert" aria-label="X"><span aria-hidden="true">&times;</span></button><i class="fa fa-exclamation-circle"></i>&nbsp;' + message + '</div>');
+		$('#transaction-alert').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert" aria-label="X"><span aria-hidden="true">&times;</span></button><i class="fas fa-exclamation-circle"></i>&nbsp;' + message + '</div>');
 	}
 
 	var addOrderHistory = function(data, success_callback) {

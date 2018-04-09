@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
-        <button type="submit" form="form-category" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
+        <button type="submit" form="form-category" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -17,12 +17,12 @@
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     <div class="card">
-      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-category">
           <ul class="nav nav-tabs">
@@ -97,7 +97,7 @@
                   <input type="text" name="filter" value="" placeholder="{{ entry_filter }}" id="input-filter" class="form-control"/>
                   <div id="category-filter" class="form-control" style="height: 150px; overflow: auto;">
                     {% for category_filter in category_filters %}
-                      <div id="category-filter{{ category_filter.filter_id }}"><i class="fa fa-minus-circle"></i> {{ category_filter.name }}
+                      <div id="category-filter{{ category_filter.filter_id }}"><i class="fas fa-minus-circle"></i> {{ category_filter.name }}
                         <input type="hidden" name="category_filter[]" value="{{ category_filter.filter_id }}"/>
                       </div>
                     {% endfor %}
@@ -125,13 +125,12 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">{{ entry_image }}</label>
                 <div class="col-sm-10">
-                  <div class="card" style="max-width: 10rem;">
-                    <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
-                    <div class="card-footer text-center">
-                      <div class="btn-group btn-group-sm">
-                        <button type="button" data-toggle="image" data-target="input-image" data-thumb="thumb-image" class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i> {{ button_edit }}</button>
-                        <button type="button" data-toggle="clear" data-target="input-image" data-thumb="thumb-image" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash-o"></i> {{ button_clear }}</button>
-                      </div>
+                  <div class="card" style="width:  18rem;">
+                    <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/>
+                    <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
+                    <div class="card-body">
+                      <button type="button" data-toggle="image" data-target="input-image" data-thumb="thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+                      <button type="button" data-toggle="clear" data-target="input-image" data-thumb="thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
                     </div>
                   </div>
                 </div>
@@ -180,7 +179,7 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-seo">
-              <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_keyword }}</div>
+              <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_keyword }}</div>
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                   <thead>
@@ -295,7 +294,7 @@ $('input[name=\'filter\']').autocomplete({
 
 		$('#category-filter' + item['value']).remove();
 
-		$('#category-filter').append('<div id="category-filter' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="category_filter[]" value="' + item['value'] + '" /></div>');
+		$('#category-filter').append('<div id="category-filter' + item['value'] + '"><i class="fas fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="category_filter[]" value="' + item['value'] + '" /></div>');
 	}
 });
 

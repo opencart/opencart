@@ -1,14 +1,14 @@
 <div class="row">
   <div id="filter-report" class="col-md-3 col-sm-12 order-md-9 d-none d-md-block">
     <div class="card">
-      <div class="card-header"><i class="fa fa-filter"></i> {{ text_filter }}</div>
+      <div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
       <div class="card-body">
         <div class="form-group">
           <label class="col-form-label" for="input-date-start">{{ entry_date_start }}</label>
           <div class="input-group date">
             <input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-start" class="form-control"/>
             <div class="input-group-append">
-              <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+              <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
             </div>
           </div>
         </div>
@@ -17,19 +17,19 @@
           <div class="input-group date">
             <input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-end" class="form-control"/>
             <div class="input-group-append">
-              <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+              <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
             </div>
           </div>
         </div>
         <div class="form-group text-right">
-          <button type="button" id="button-filter" class="btn btn-light"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+          <button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
         </div>
       </div>
     </div>
   </div>
   <div class="col-md-9 col-sm-12">
     <div class="card">
-      <div class="card-header"><i class="fa fa-bar-chart"></i> {{ heading_title }}</div>
+      <div class="card-header"><i class="fas fa-bar-chart"></i> {{ heading_title }}</div>
       <div class="card-body">
         <div class="table-responsive">
           <table class="table table-bordered">
@@ -50,7 +50,7 @@
                     <td class="text-left">{{ coupon.code }}</td>
                     <td class="text-right">{{ coupon.orders }}</td>
                     <td class="text-right">{{ coupon.total }}</td>
-                    <td class="text-right"><a href="{{ coupon.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                    <td class="text-right"><a href="{{ coupon.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
                   </tr>
                 {% endfor %}
               {% else %}

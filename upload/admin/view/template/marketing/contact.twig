@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
-        <button id="button-send" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_send }}" class="btn btn-primary" onclick="send('index.php?route=marketing/contact/send&user_token={{ user_token }}');"><i class="fa fa-envelope"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
+        <button id="button-send" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_send }}" class="btn btn-primary" onclick="send('index.php?route=marketing/contact/send&user_token={{ user_token }}');"><i class="fas fa-envelope"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -17,7 +17,7 @@
   </div>
   <div class="container-fluid">
     <div class="card">
-      <div class="card-header"><i class="fa fa-envelope"></i> {{ heading_title }}</div>
+      <div class="card-header"><i class="fas fa-envelope"></i> {{ heading_title }}</div>
       <div class="card-body">
         <form>
           <div class="form-group row">
@@ -132,7 +132,7 @@ $('input[name=\'customers\']').autocomplete({
 
 		$('#mail-customer' + item['value']).remove();
 
-		$('#mail-customer').append('<div id="mail-customer' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="customer[]" value="' + item['value'] + '" /></div>');
+		$('#mail-customer').append('<div id="mail-customer' + item['value'] + '"><i class="fas fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="customer[]" value="' + item['value'] + '" /></div>');
 	}
 });
 
@@ -164,7 +164,7 @@ $('input[name=\'affiliates\']').autocomplete({
 
 		$('#mail-affiliate' + item['value']).remove();
 
-		$('#mail-affiliate').append('<div id="mail-affiliate' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="affiliate[]" value="' + item['value'] + '" /></div>');
+		$('#mail-affiliate').append('<div id="mail-affiliate' + item['value'] + '"><i class="fas fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="affiliate[]" value="' + item['value'] + '" /></div>');
 	}
 });
 
@@ -196,7 +196,7 @@ $('input[name=\'products\']').autocomplete({
 
 		$('#mail-product' + item['value']).remove();
 
-		$('#mail-product').append('<div id="mail-product' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '" /></div>');
+		$('#mail-product').append('<div id="mail-product' + item['value'] + '"><i class="fas fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '" /></div>');
 	}
 });
 
@@ -221,11 +221,11 @@ function send(url) {
 
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				if (json['error']['email']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['email'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['email'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				if (json['error']['subject']) {
@@ -238,7 +238,7 @@ function send(url) {
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i>  ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i>  ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['next']) {

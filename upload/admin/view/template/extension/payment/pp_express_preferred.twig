@@ -24,10 +24,10 @@
           <p><img class="float-right" src="view/image/payment/paypal-express-gold-pill.png" alt="PayPal Express" width="130" style="margin-bottom:10px;"/></p>
 
           {% if connect_link is not empty %}
-            <p><a href="{{ connect_link }}" data-toggle="tooltip" title="" class="btn btn-primary pull-right" target="_blank" data-original-title="{{ text_connect_paypal }}">{{ text_connect_paypal }}</a></p>
+            <p><a href="{{ connect_link }}" data-toggle="tooltip" title="" class="btn btn-primary float-right" target="_blank" data-original-title="{{ text_connect_paypal }}">{{ text_connect_paypal }}</a></p>
           {% endif %}
           {% if module_link is not empty %}
-            <p><a href="{{ module_link }}" data-toggle="tooltip" title="" class="btn btn-primary pull-right" data-original-title="{{ text_edit }}"><i class="fa fa-pencil"></i></a></p>
+            <p><a href="{{ module_link }}" data-toggle="tooltip" title="" class="btn btn-primary float-right" data-original-title="{{ text_edit }}"><i class="fas fa-pencil-alt"></i></a></p>
           {% endif %}
         </div>
       </div>

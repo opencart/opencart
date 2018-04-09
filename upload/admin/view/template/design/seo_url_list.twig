@@ -3,9 +3,9 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
-        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-seo').toggleClass('d-none');" class="btn btn-light d-md-none d-lg-none"><i class="fa fa-filter"></i></button>
-        <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
-        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-url-alias').submit() : false;"><i class="fa fa-trash-o"></i></button>
+        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-seo').toggleClass('d-none');" class="btn btn-light d-md-none d-lg-none"><i class="fas fa-filter"></i></button>
+        <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-url-alias').submit() : false;"><i class="fas fa-trash-alt"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <nav aria-label="breadcrumb">
@@ -18,19 +18,19 @@
     </div>
   </div>
   <div class="container-fluid">{% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     {% if success %}
-      <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+      <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     <div class="row">
       <div id="filter-seo" class="col-md-3 col-sm-12 order-md-9 d-none d-md-block">
         <div class="card">
-          <div class="card-header"><i class="fa fa-filter"></i> {{ text_filter }}</div>
+          <div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
           <div class="card-body">
             <div class="form-group row">
               <label class="col-form-label" for="input-query">{{ entry_query }}</label> <input type="text" name="filter_query" value="{{ filter_query }}" placeholder="{{ entry_query }}" id="input-query" class="form-control"/>
@@ -68,14 +68,14 @@
               </select>
             </div>
             <div class="text-right">
-              <button type="button" id="button-filter" class="btn btn-light"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+              <button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
             </div>
           </div>
         </div>
       </div>
       <div class="col-md-9 col-sm-12">
         <div class="card">
-          <div class="card-header"><i class="fa fa-list"></i> {{ text_list }}</div>
+          <div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
           <div class="card-body">
             <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-url-alias">
               <div class="table-responsive">
@@ -103,7 +103,7 @@
                           <td class="text-left">{{ seo_url.keyword }}</td>
                           <td class="text-left">{{ seo_url.store }}</td>
                           <td class="text-left">{{ seo_url.language }}</td>
-                          <td class="text-right"><a href="{{ seo_url.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                          <td class="text-right"><a href="{{ seo_url.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
                         </tr>
                       {% endfor %}
                     {% else %}

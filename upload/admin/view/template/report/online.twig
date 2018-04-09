@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
-        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-online').toggleClass('d-none');" class="btn btn-light d-md-none"><i class="fa fa-filter"></i></button>
-        <a href="{{ refresh }}" data-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-light"><i class="fa fa-refresh"></i></a></div>
+        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-online').toggleClass('d-none');" class="btn btn-light d-md-none"><i class="fas fa-filter"></i></button>
+        <a href="{{ refresh }}" data-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-light"><i class="fas fa-refresh"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -19,7 +19,7 @@
     <div class="row">
       <div id="filter-online" class="col-md-3 col-sm-12 order-md-9 d-none d-md-block">
         <div class="card">
-          <div class="card-header"><i class="fa fa-filter"></i> {{ text_filter }}</div>
+          <div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
           <div class="card-body">
             <div class="form-group">
               <label class="col-form-label" for="input-ip">{{ entry_ip }}</label> <input type="text" name="filter_ip" value="{{ filter_ip }}" id="input-ip" placeholder="{{ entry_ip }}" i class="form-control"/>
@@ -28,14 +28,14 @@
               <label class="col-form-label" for="input-customer">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
             </div>
             <div class="form-group text-right">
-              <button type="button" id="button-filter" class="btn btn-light"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+              <button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
             </div>
           </div>
         </div>
       </div>
       <div class="col-md-9 col-sm-12">
         <div class="card">
-          <div class="card-header"><i class="fa fa-list"></i> {{ text_list }}</div>
+          <div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table table-bordered table-hover">
@@ -61,8 +61,8 @@
                       <td class="text-left">{% if customer.referer %}<a href="{{ customer.referer }}" target="_blank">{{ customer.referer|split('', 30)|join('<br/>
                     ') }}</a>{% endif %}</td>
                       <td class="text-left">{{ customer.date_added }}</td>
-                      <td class="text-right">{% if customer.customer_id %}<a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>{% else %}
-                          <button type="button" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary" disabled="disabled"><i class="fa fa-pencil"></i></button>
+                      <td class="text-right">{% if customer.customer_id %}<a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>{% else %}
+                          <button type="button" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary" disabled="disabled"><i class="fas fa-pencil-alt"></i></button>
                         {% endif %}</td>
                     </tr>
                   {% endfor %}

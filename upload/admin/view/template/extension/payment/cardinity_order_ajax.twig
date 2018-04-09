@@ -99,7 +99,7 @@ $('.button-command').on('click', function() {
 
 					$('.alert').addClass('alert-danger');
 
-					$('.alert').html('<i class="fa fa-check-circle"></i> ' + json.error);
+					$('.alert').html('<i class="fas fa-check-circle"></i> ' + json.error);
 				}
 
 				if (json.success) {
@@ -107,7 +107,7 @@ $('.button-command').on('click', function() {
 
 					$('.alert').addClass('alert-success');
 
-					$('.alert').html('<i class="fa fa-exclamation-circle"></i> ' + json.success);
+					$('.alert').html('<i class="fas fa-exclamation-circle"></i> ' + json.success);
 				}
 
 				getPayment('{{ payment_id }}');

@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
-        <button type="submit" form="form-module" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
+        <button type="submit" form="form-module" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -17,12 +17,12 @@
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     <div class="card">
-      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_edit }}</div>
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-module">
           <div class="form-group row">
@@ -40,7 +40,7 @@
               <input type="text" name="product_name" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
               <div id="featured-product" class="form-control" style="height: 150px; overflow: auto;">
                 {% for product in products %}
-                  <div id="featured-product{{ product.product_id }}"><i class="fa fa-minus-circle"></i> {{ product.name }}
+                  <div id="featured-product{{ product.product_id }}"><i class="fas fa-minus-circle"></i> {{ product.name }}
                     <input type="hidden" name="product[]" value="{{ product.product_id }}"/>
                   </div>
                 {% endfor %}
@@ -111,7 +111,7 @@
 
 		  $('#featured-product' + item['value']).remove();
 
-		  $('#featured-product').append('<div id="featured-product' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '" /></div>');
+		  $('#featured-product').append('<div id="featured-product' + item['value'] + '"><i class="fas fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '" /></div>');
 	  }
   });
 

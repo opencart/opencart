@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="float-right"><a href="{{ cancel }}" class="btn btn-primary"><i class="fa fa-reply"></i> {{ button_cancel }}</a></div>
+      <div class="float-right"><a href="{{ cancel }}" class="btn btn-primary"><i class="fas fa-reply"></i> {{ button_cancel }}</a></div>
       <h1>{{ heading_title }}</h1>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -15,17 +15,17 @@
   </div>
   <div class="container-fluid">
     {% if error != '' %}
-      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error }}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     {% if attention != '' %}
-      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ attention }}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ attention }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     <div class="card">
-      <div class="card-header"><i class="fa fa-pencil"></i> {{ heading_title }}</div>
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ heading_title }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form">
           <input type="hidden" name="amount_original" value="{{ amount_original }}"/> <input type="hidden" name="currency_code" value="{{ currency_code }}"/>

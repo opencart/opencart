@@ -13,17 +13,17 @@
     </div>
   </div>
   <div class="container-fluid">{% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+    <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endif %}
     {% if success %}
-    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+    <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endif %}
     <div class="card">
-      <div class="card-header"><i class="fa fa-list"></i> {{ text_list }}</div>
+      <div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
       <div class="card-body">
         <div class="table-responsive">
           <table class="table table-bordered">
@@ -40,7 +40,7 @@
               <tr>
                 <td class="text-left">{{ statistic.name }}</td>
                 <td class="text-right">{{ statistic.value }}</td>
-                <td class="text-right"><a href="{{ statistic.href }}" data-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-warning"><i class="fa fa-refresh"></i></a></td>
+                <td class="text-right"><a href="{{ statistic.href }}" data-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-warning"><i class="fas fa-refresh"></i></a></td>
               </tr>
               {% endfor %}
               {% else %}

@@ -136,7 +136,15 @@
                           <div class="invalid-tooltip">{{ error_option_value[option_value_row][language.language_id] }}</div>
                         {% endif %}
                       {% endfor %}</td>
-                    <td class="text-left"><a href="" id="thumb-image{{ option_value_row }}" data-toggle="image" class="img-thumbnail"><img src="{{ option_value.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}"/></a> <input type="hidden" name="option_value[{{ option_value_row }}][image]" value="{{ option_value.image }}" id="input-image{{ option_value_row }}"/></td>
+                    <td class="text-left">
+                      <div class="card">
+                        <img src="{{ option_value.thumb }}" alt="" title="" id="thumb-image{{ option_value_row }}" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="option_value[{{ option_value_row }}][image]" value="{{ option_value.image }}" id="input-image{{ option_value_row }}"/>
+                        <div class="card-body">
+                          <button type="button" data-toggle="image" data-target="input-image{{ option_value_row }}" data-thumb="thumb-image{{ option_value_row }}" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+                          <button type="button" data-toggle="clear" data-target="input-image{{ option_value_row }}" data-thumb="thumb-image{{ option_value_row }}" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+                        </div>
+                      </div>
+                    </td>
                     <td class="text-right"><input type="text" name="option_value[{{ option_value_row }}][sort_order]" value="{{ option_value.sort_order }}" class="form-control"/></td>
                     <td class="text-right"><button type="button" onclick="$('#option-value-row{{ option_value_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
                   </tr>
@@ -179,7 +187,14 @@ function addOptionValue() {
 	html += '    </div>';
   {% endfor %}
 	html += '  </td>';
-	html += '  <td class="text-center"><a href="" id="thumb-image' + option_value_row + '" data-toggle="image" class="img-thumbnail"><img src="{{ placeholder }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a><input type="hidden" name="option_value[' + option_value_row + '][image]" value="" id="input-image' + option_value_row + '" /></td>';
+	html += '  <td class="text-center"><div class="card">';
+	html += '      <img src="{{ placeholder }}" alt="" title="" id="thumb-image' + option_value_row + '" data-placeholder="{{ placeholder }}" class="card-img-top"/>';
+	html += '      <input type="hidden" name="option_value[' + option_value_row + '][image]" value="" id="input-image' + option_value_row + '"/>';
+	html += '      <div class="card-body">';
+	html += '        <button type="button" data-toggle="image" data-target="input-image' + option_value_row + '" data-thumb="thumb-image' + option_value_row + '" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>';
+	html += '        <button type="button" data-toggle="clear" data-target="input-image' + option_value_row + '" data-thumb="thumb-image' + option_value_row + '" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>';
+	html += '      </div>';
+	html += '    </div></td>';
 	html += '  <td class="text-right"><input type="text" name="option_value[' + option_value_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
 	html += '  <td class="text-right"><button type="button" onclick="$(\'#option-value-row' + option_value_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
 	html += '</tr>';

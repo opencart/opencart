@@ -44,11 +44,7 @@ legend {
     text-shadow: 0 1px #fff;
 }
 
-.page-header nav {
-  display: contents;
-}
-.page-header nav .breadcrumb {
-  width: 50%;
+.breadcrumb {
   display: inline-block;
   background: none;
   margin: 8px 0 19px 0;
@@ -56,13 +52,11 @@ legend {
   border-radius: 0;
 }
 
-.page-header nav .breadcrumb li {
+.breadcrumb li {
   display: inline-block;
 }
 
 .breadcrumb li + li:before {
-    content: "\f105";
-    font-family: 'FontAwesome';
     color: #BBBBBB;
     padding: 0 5px;
     font-size: 10px;
@@ -78,7 +72,6 @@ legend {
 .breadcrumb > li:last-child a {
     color: #1e91cf;
 }
-
 
 a:hover, a:focus {
     text-decoration: none;
@@ -994,4 +987,8 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 
 .opencart-icon-cart-mini:before {
     content: "\e91c";
+}
+
+.btn-info {
+    color: #ffffff;
 }

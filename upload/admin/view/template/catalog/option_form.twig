@@ -178,7 +178,7 @@ $('select[name=\'type\']').trigger('change');
 var option_value_row = {{ option_value_row }};
 
 function addOptionValue() {
-	html = '<tr id="option-value-row' + option_value_row + '">';
+	html  = '<tr id="option-value-row' + option_value_row + '">';
 	html += '  <td class="text-left"><input type="hidden" name="option_value[' + option_value_row + '][option_value_id]" value="" />';
   {% for language in languages %}
 	html += '    <div class="input-group">';
@@ -187,14 +187,16 @@ function addOptionValue() {
 	html += '    </div>';
   {% endfor %}
 	html += '  </td>';
-	html += '  <td class="text-center"><div class="card">';
+	html += '  <td class="text-center">';
+	html += '    <div class="card">';
 	html += '      <img src="{{ placeholder }}" alt="" title="" id="thumb-image' + option_value_row + '" data-placeholder="{{ placeholder }}" class="card-img-top"/>';
 	html += '      <input type="hidden" name="option_value[' + option_value_row + '][image]" value="" id="input-image' + option_value_row + '"/>';
 	html += '      <div class="card-body">';
 	html += '        <button type="button" data-toggle="image" data-target="input-image' + option_value_row + '" data-thumb="thumb-image' + option_value_row + '" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>';
 	html += '        <button type="button" data-toggle="clear" data-target="input-image' + option_value_row + '" data-thumb="thumb-image' + option_value_row + '" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>';
 	html += '      </div>';
-	html += '    </div></td>';
+	html += '    </div>';
+	html += '  </td>';
 	html += '  <td class="text-right"><input type="text" name="option_value[' + option_value_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
 	html += '  <td class="text-right"><button type="button" onclick="$(\'#option-value-row' + option_value_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
 	html += '</tr>';

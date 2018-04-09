@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
-        <button type="submit" form="form-product" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
+        <button type="submit" form="form-product" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -16,12 +16,12 @@
     </div>
   </div>
   <div class="container-fluid">{% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     <div class="card">
-      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-product">
           <ul class="nav nav-tabs">
@@ -231,7 +231,7 @@
                   <div class="input-group date">
                     <input type="text" name="date_available" value="{{ date_available }}" placeholder="{{ entry_date_available }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-available" class="form-control"/>
                     <div class="input-group-append">
-                      <button type="button" class="btn btn-outline-secondary"><i class="fa fa-calendar"></i></button>
+                      <button type="button" class="btn btn-outline-secondary"><i class="fas fa-calendar"></i></button>
                     </div>
                   </div>
                 </div>
@@ -320,7 +320,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" class="form-control"/>
                   <div id="product-category" class="form-control" style="height: 150px; overflow: auto;">{% for product_category in product_categories %}
-                      <div id="product-category{{ product_category.category_id }}"><i class="fa fa-minus-circle"></i> {{ product_category.name }}
+                      <div id="product-category{{ product_category.category_id }}"><i class="fas fa-minus-circle"></i> {{ product_category.name }}
                         <input type="hidden" name="product_category[]" value="{{ product_category.category_id }}"/>
                       </div>
                     {% endfor %}
@@ -334,7 +334,7 @@
                   <input type="text" name="filter" value="" placeholder="{{ entry_filter }}" id="input-filter" class="form-control"/>
                   <div id="product-filter" class="form-control" style="height: 150px; overflow: auto;">
                     {% for product_filter in product_filters %}
-                      <div id="product-filter{{ product_filter.filter_id }}"><i class="fa fa-minus-circle"></i> {{ product_filter.name }}
+                      <div id="product-filter{{ product_filter.filter_id }}"><i class="fas fa-minus-circle"></i> {{ product_filter.name }}
                         <input type="hidden" name="product_filter[]" value="{{ product_filter.filter_id }}"/>
                       </div>
                     {% endfor %}
@@ -365,7 +365,7 @@
                   <input type="text" name="download" value="" placeholder="{{ entry_download }}" id="input-download" class="form-control"/>
                   <div id="product-download" class="form-control" style="height: 150px; overflow: auto;">
                     {% for product_download in product_downloads %}
-                      <div id="product-download{{ product_download.download_id }}"><i class="fa fa-minus-circle"></i> {{ product_download.name }}
+                      <div id="product-download{{ product_download.download_id }}"><i class="fas fa-minus-circle"></i> {{ product_download.name }}
                         <input type="hidden" name="product_download[]" value="{{ product_download.download_id }}"/>
                       </div>
                     {% endfor %}
@@ -379,7 +379,7 @@
                   <input type="text" name="related" value="" placeholder="{{ entry_related }}" id="input-related" class="form-control"/>
                   <div id="product-related" class="form-control" style="height: 150px; overflow: auto;">
                     {% for product_related in product_relateds %}
-                      <div id="product-related{{ product_related.product_id }}"><i class="fa fa-minus-circle"></i> {{ product_related.name }}
+                      <div id="product-related{{ product_related.product_id }}"><i class="fas fa-minus-circle"></i> {{ product_related.name }}
                         <input type="hidden" name="product_related[]" value="{{ product_related.product_id }}"/>
                       </div>
                     {% endfor %}
@@ -412,7 +412,7 @@
                               <textarea name="product_attribute[{{ attribute_row }}][product_attribute_description][{{ language.language_id }}][text]" rows="5" placeholder="{{ entry_text }}" class="form-control">{{ product_attribute.product_attribute_description[language.language_id] ? product_attribute.product_attribute_description[language.language_id].text }}</textarea>
                             </div>
                           {% endfor %}</td>
-                        <td class="text-left"><button type="button" onclick="$('#attribute-row{{ attribute_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                        <td class="text-left"><button type="button" onclick="$('#attribute-row{{ attribute_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
                       </tr>
                       {% set attribute_row = attribute_row + 1 %}
                     {% endfor %}
@@ -420,7 +420,7 @@
                   <tfoot>
                     <tr>
                       <td colspan="2"></td>
-                      <td class="text-left"><button type="button" onclick="addAttribute();" data-toggle="tooltip" title="{{ button_attribute_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                      <td class="text-left"><button type="button" onclick="addAttribute();" data-toggle="tooltip" title="{{ button_attribute_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
                     </tr>
                   </tfoot>
                 </table>
@@ -458,7 +458,7 @@
                               {% endif %}
                             {% endfor %}
                           </select></td>
-                        <td class="text-left"><button type="button" onclick="$('#recurring-row{{ recurring_row }}').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                        <td class="text-left"><button type="button" onclick="$('#recurring-row{{ recurring_row }}').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
                       </tr>
                       {% set recurring_row = recurring_row + 1 %}
                     {% endfor %}
@@ -466,7 +466,7 @@
                   <tfoot>
                     <tr>
                       <td colspan="2"></td>
-                      <td class="text-left"><button type="button" onclick="addRecurring()" data-toggle="tooltip" title="{{ button_recurring_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                      <td class="text-left"><button type="button" onclick="addRecurring()" data-toggle="tooltip" title="{{ button_recurring_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
                     </tr>
                   </tfoot>
                 </table>
@@ -506,7 +506,7 @@
                           <div class="input-group date">
                             <input type="text" name="product_discount[{{ discount_row }}][date_start]" value="{{ product_discount.date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" class="form-control"/>
                             <div class="input-group-append">
-                              <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                              <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                             </div>
                           </div>
                         </td>
@@ -514,11 +514,11 @@
                           <div class="input-group date">
                             <input type="text" name="product_discount[{{ discount_row }}][date_end]" value="{{ product_discount.date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" class="form-control"/>
                             <div class="input-group-append">
-                              <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                              <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                             </div>
                           </div>
                         </td>
-                        <td class="text-left"><button type="button" onclick="$('#discount-row{{ discount_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                        <td class="text-left"><button type="button" onclick="$('#discount-row{{ discount_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
                       </tr>
                       {% set discount_row = discount_row + 1 %}
                     {% endfor %}
@@ -526,7 +526,7 @@
                   <tfoot>
                     <tr>
                       <td colspan="6"></td>
-                      <td class="text-left"><button type="button" onclick="addDiscount();" data-toggle="tooltip" title="{{ button_discount_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                      <td class="text-left"><button type="button" onclick="addDiscount();" data-toggle="tooltip" title="{{ button_discount_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
                     </tr>
                   </tfoot>
                 </table>
@@ -564,7 +564,7 @@
                           <div class="input-group date">
                             <input type="text" name="product_special[{{ special_row }}][date_start]" value="{{ product_special.date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" class="form-control"/>
                             <div class="input-group-append">
-                              <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                              <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                             </div>
                           </div>
                         </td>
@@ -572,11 +572,11 @@
                           <div class="input-group date">
                             <input type="text" name="product_special[{{ special_row }}][date_end]" value="{{ product_special.date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" class="form-control"/>
                             <div class="input-group-append">
-                              <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                              <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                             </div>
                           </div>
                         </td>
-                        <td class="text-left"><button type="button" onclick="$('#special-row{{ special_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                        <td class="text-left"><button type="button" onclick="$('#special-row{{ special_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
                       </tr>
                       {% set special_row = special_row + 1 %}
                     {% endfor %}
@@ -584,7 +584,7 @@
                   <tfoot>
                     <tr>
                       <td colspan="5"></td>
-                      <td class="text-left"><button type="button" id="button-special" data-toggle="tooltip" title="{{ button_special_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                      <td class="text-left"><button type="button" id="button-special" data-toggle="tooltip" title="{{ button_special_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
                     </tr>
                   </tfoot>
                 </table>
@@ -596,8 +596,8 @@
                   <div class="card">
                     <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
                     <div class="card-body">
-                      <button type="button" data-toggle="image" data-target="input-image" data-thumb="thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fa fa-pencil"></i> {{ button_edit }}</button>
-                      <button type="button" data-toggle="clear" data-target="input-image" data-thumb="thumb-clear" class="btn btn-warning btn-sm btn-block"><i class="fa fa-trash-o"></i> {{ button_clear }}</button>
+                      <button type="button" data-toggle="image" data-target="input-image" data-thumb="thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+                      <button type="button" data-toggle="clear" data-target="input-image" data-thumb="thumb-clear" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
                     </div>
                   </div>
                 </div>
@@ -611,9 +611,9 @@
                           <label class="col-form-label col-form-label-sm">{{ entry_sort_order }}</label>
                           <input type="text" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control form-control-sm"/>
                         </div>
-                        <button type="button" data-toggle="image" data-target="input-image{{ image_row }}" data-thumb="thumb-image{{ image_row }}" class="btn btn-primary btn-sm btn-block"><i class="fa fa-pencil"></i> {{ button_edit }}</button>
-                        <button type="button" data-toggle="clear" data-target="input-image{{ image_row }}" data-thumb="thumb-image{{ image_row }}" class="btn btn-warning btn-sm btn-block"><i class="fa fa-trash-o"></i> {{ button_clear }}</button>
-                        <button type="button" onclick="$('#image-row{{ image_row }}').remove();" class="btn btn-danger btn-sm btn-block"><i class="fa fa-minus-circle"></i> {{ button_remove }}</button>
+                        <button type="button" data-toggle="image" data-target="input-image{{ image_row }}" data-thumb="thumb-image{{ image_row }}" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+                        <button type="button" data-toggle="clear" data-target="input-image{{ image_row }}" data-thumb="thumb-image{{ image_row }}" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+                        <button type="button" onclick="$('#image-row{{ image_row }}').remove();" class="btn btn-danger btn-sm btn-block"><i class="fas fa-minus-circle"></i> {{ button_remove }}</button>
                       </div>
                     </div>
                   </div>
@@ -622,7 +622,7 @@
                 <div class="col-sm-4 col-md-3 mb-3 align-self-center">
                   <div class="card">
                     <div class="card-body">
-                      <button type="button" id="button-image" class="btn btn-default btn-lg"><i class="fa fa-plus-circle"></i></button>
+                      <button type="button" id="button-image" class="btn btn-default btn-lg"><i class="fas fa-plus-circle"></i></button>
                     </div>
                   </div>
                 </div>
@@ -656,7 +656,7 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-seo">
-              <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_keyword }}</div>
+              <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_keyword }}</div>
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                   <thead>
@@ -772,7 +772,7 @@ $('input[name=\'category\']').autocomplete({
 
 		$('#product-category' + item['value']).remove();
 
-		$('#product-category').append('<div id="product-category' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product_category[]" value="' + item['value'] + '" /></div>');
+		$('#product-category').append('<div id="product-category' + item['value'] + '"><i class="fas fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product_category[]" value="' + item['value'] + '" /></div>');
 	}
 });
 
@@ -801,7 +801,7 @@ $('input[name=\'filter\']').autocomplete({
 
 		$('#product-filter' + item['value']).remove();
 
-		$('#product-filter').append('<div id="product-filter' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product_filter[]" value="' + item['value'] + '" /></div>');
+		$('#product-filter').append('<div id="product-filter' + item['value'] + '"><i class="fas fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product_filter[]" value="' + item['value'] + '" /></div>');
 	}
 });
 
@@ -830,7 +830,7 @@ $('input[name=\'download\']').autocomplete({
 
 		$('#product-download' + item['value']).remove();
 
-		$('#product-download').append('<div id="product-download' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product_download[]" value="' + item['value'] + '" /></div>');
+		$('#product-download').append('<div id="product-download' + item['value'] + '"><i class="fas fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product_download[]" value="' + item['value'] + '" /></div>');
 	}
 });
 
@@ -859,7 +859,7 @@ $('input[name=\'related\']').autocomplete({
 
 		$('#product-related' + item['value']).remove();
 
-		$('#product-related').append('<div id="product-related' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product_related[]" value="' + item['value'] + '" /></div>');
+		$('#product-related').append('<div id="product-related' + item['value'] + '"><i class="fas fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product_related[]" value="' + item['value'] + '" /></div>');
 	}
 });
 
@@ -881,7 +881,7 @@ function addAttribute() {
 	html += '</div>';
   {% endfor %}
 	html += '  </td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#attribute-row' + attribute_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#attribute-row' + attribute_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 
 	$('#attribute tbody').append(html);
@@ -932,9 +932,9 @@ function addDiscount() {
 	html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][quantity]" value="" placeholder="{{ entry_quantity }}" class="form-control" /></td>';
 	html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][priority]" value="" placeholder="{{ entry_priority }}" class="form-control" /></td>';
 	html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][price]" value="" placeholder="{{ entry_price }}" class="form-control" /></td>';
-	html += '  <td class="text-left"><div class="input-group date"><input type="text" name="product_discount[' + discount_row + '][date_start]" value="" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div></td>';
-	html += '  <td class="text-left"><div class="input-group date"><input type="text" name="product_discount[' + discount_row + '][date_end]" value="" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#discount-row' + discount_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	html += '  <td class="text-left"><div class="input-group date"><input type="text" name="product_discount[' + discount_row + '][date_start]" value="" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button></div></div></td>';
+	html += '  <td class="text-left"><div class="input-group date"><input type="text" name="product_discount[' + discount_row + '][date_end]" value="" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button></div></div></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#discount-row' + discount_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 
 	$('#discount tbody').append(html);
@@ -957,9 +957,9 @@ $('#button-special').on('click', function() {
 	html += '  </select></td>';
 	html += '  <td class="text-right"><input type="text" name="product_special[' + special_row + '][priority]" value="" placeholder="{{ entry_priority }}" class="form-control" /></td>';
 	html += '  <td class="text-right"><input type="text" name="product_special[' + special_row + '][price]" value="" placeholder="{{ entry_price }}" class="form-control" /></td>';
-	html += '  <td class="text-left"><div class="input-group date"><input type="text" name="product_special[' + special_row + '][date_start]" value="" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div></td>';
-	html += '  <td class="text-left"><div class="input-group date"><input type="text" name="product_special[' + special_row + '][date_end]" value="" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#special-row' + special_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	html += '  <td class="text-left"><div class="input-group date"><input type="text" name="product_special[' + special_row + '][date_start]" value="" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button></div></div></td>';
+	html += '  <td class="text-left"><div class="input-group date"><input type="text" name="product_special[' + special_row + '][date_end]" value="" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button></div></div></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#special-row' + special_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 
 	$('#special tbody').append(html);
@@ -983,9 +983,9 @@ $('#button-image').on('click', function() {
 	html += '  	     <label class="col-form-label col-form-label-sm">{{ entry_sort_order }}</label>';
 	html += '  	     <input type="text" name="product_image[' + image_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control form-control-sm"/>';
 	html += '      </div>';
-	html += '      <button type="button" data-toggle="image" data-target="input-image' + image_row + '" data-thumb="thumb-image' + image_row + '" class="btn btn-primary btn-sm btn-block"><i class="fa fa-pencil"></i> {{ button_edit }}</button>';
-	html += '  	   <button type="button" data-toggle="clear" data-target="input-image' + image_row + '" data-thumb="thumb-image' + image_row + '" class="btn btn-warning btn-sm btn-block"><i class="fa fa-trash-o"></i> {{ button_clear }}</button>';
-	html += '  	   <button type="button" onclick="$(\'#image-row{{ image_row }}\').remove();" class="btn btn-danger btn-sm btn-block"><i class="fa fa-minus-circle"></i> {{ button_remove }}</button>';
+	html += '      <button type="button" data-toggle="image" data-target="input-image' + image_row + '" data-thumb="thumb-image' + image_row + '" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>';
+	html += '  	   <button type="button" data-toggle="clear" data-target="input-image' + image_row + '" data-thumb="thumb-image' + image_row + '" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>';
+	html += '  	   <button type="button" onclick="$(\'#image-row{{ image_row }}\').remove();" class="btn btn-danger btn-sm btn-block"><i class="fas fa-minus-circle"></i> {{ button_remove }}</button>';
 	html += '    </div>';
 	html += '  </div>';
 	html += '</div>';
@@ -1012,7 +1012,7 @@ function addRecurring() {
   {% endfor %}
 	html += '    <select>';
 	html += '  </td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#recurring-row' + recurring_row + '\').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#recurring-row' + recurring_row + '\').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 
 	$('#tab-recurring table tbody').append(html);

@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
-        <button type="submit" form="form-payment" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
+        <button type="submit" form="form-payment" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -17,12 +17,12 @@
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     <div class="card">
-      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_edit }}</div>
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment">
           <div class="form-group row">
@@ -140,7 +140,7 @@
               <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="category" class="form-control"/>
               <div id="divido-category" class="form-control" style="height: 150px; overflow: auto;">
                 {% for category in categories %}
-                  <div id="category{{ category.category_id }}"><i class="fa fa-minus-circle"></i> {{ category.name }}
+                  <div id="category{{ category.category_id }}"><i class="fas fa-minus-circle"></i> {{ category.name }}
                     <input type="hidden" name="payment_divido_categories[]" value="{{ category.category_id }}"/>
                   </div>
                 {% endfor %}
@@ -214,7 +214,7 @@
 		select: function(item) {
 			$('input[name=\'category\']').val('');
 			$('#divido-category' + item['value']).remove();
-			$('#divido-category').append('<div id="divido-category' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="payment_divido_categories[]" value="' + item['value'] + '" /></div>');
+			$('#divido-category').append('<div id="divido-category' + item['value'] + '"><i class="fas fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="payment_divido_categories[]" value="' + item['value'] + '" /></div>');
 		}
 	});
 

@@ -2,11 +2,11 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title text-danger"><i class="fa fa-exclamation-triangle"></i> {{ heading_title }}</h5>
+        <h5 class="modal-title text-danger"><i class="fas fa-exclamation-triangle"></i> {{ heading_title }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       </div>
       <div class="modal-body">
-        <div class="alert alert-info"><i class="fa fa-exclamation-circle"></i> {{ text_security }}</div>
+        <div class="alert alert-info"><i class="fas fa-exclamation-circle"></i> {{ text_security }}</div>
         <form>
           <fieldset>
             <legend>{{ text_choose }}</legend>
@@ -26,16 +26,16 @@
                   <div class="dropdown-menu">
                     {% for path in paths %}
                       {% if path|length > document_root|length %}
-                        <a href="{{ path }}" class="dropdown-item"><i class="fa fa-exclamation-triangle fa-fw text-danger"></i> {{ path }}</a>
+                        <a href="{{ path }}" class="dropdown-item"><i class="fas fa-exclamation-triangle fa-fw text-danger"></i> {{ path }}</a>
                       {% else %}
-                        <a href="{{ path }}" class="dropdown-item"><i class="fa fa-check-circle fa-fw text-success"></i> {{ path }}</a>
+                        <a href="{{ path }}" class="dropdown-item"><i class="fas fa-check-circle fa-fw text-success"></i> {{ path }}</a>
                       {% endif %}
                     {% endfor %}
                   </div>
                 </div>
                 <input type="text" name="directory" value="storage" placeholder="{{ entry_directory }}" class="form-control"/>
                 <div class="input-group-append">
-                  <button type="button" id="button-move" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-exclamation-triangle"></i> {{ button_move }}</button>
+                  <button type="button" id="button-move" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i> {{ button_move }}</button>
                 </div>
               </div>
               <input type="hidden" name="path" value="{{ document_root }}"/>
@@ -103,11 +103,11 @@ $('#button-move').on('click', function() {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#modal-security .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#modal-security .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#modal-security .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#modal-security .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

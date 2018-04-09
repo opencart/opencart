@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
-        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-event').submit() : false;"><i class="fa fa-trash-o"></i></button>
+        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-event').submit() : false;"><i class="fas fa-trash-alt"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <nav aria-label="breadcrumb">
@@ -17,18 +17,18 @@
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     {% if success %}
-      <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+      <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
-    <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_event }}</div>
+    <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_event }}</div>
     <div class="card">
-      <div class="card-header"><i class="fa fa-list"></i> {{ text_list }}</div>
+      <div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
       <div class="card-body">
         <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-event">
           <div class="table-responsive">
@@ -54,11 +54,11 @@
                       <td class="text-left">{{ event.code }}</td>
                       <td class="text-left">{{ event.status }}</td>
                       <td class="text-right">{{ event.sort_order }}</td>
-                      <td class="text-right"><button type="button" data-toggle="modal" data-target="#modal-event{{ event.event_id }}" class="btn btn-info"><i class="fa fa-info-circle"></i></button>
+                      <td class="text-right"><button type="button" data-toggle="modal" data-target="#modal-event{{ event.event_id }}" class="btn btn-info"><i class="fas fa-info-circle"></i></button>
                         {% if not event.enabled %}
-                          <button type="button" value="{{ event.event_id }}" data-toggle="tooltip" data-title="{{ button_enable }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></button>
+                          <button type="button" value="{{ event.event_id }}" data-toggle="tooltip" data-title="{{ button_enable }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
                         {% else %}
-                          <button type="button" value="{{ event.event_id }}" data-toggle="tooltip" data-title="{{ button_disable }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+                          <button type="button" value="{{ event.event_id }}" data-toggle="tooltip" data-title="{{ button_disable }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
                         {% endif %}
                         <div id="modal-event{{ event.event_id }}" class="modal text-left">
                           <div class="modal-dialog">
@@ -115,13 +115,13 @@ $('#form-event').on('click', '.btn-success', function() {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('.alert-info').after('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('.alert-info').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('.alert-info').after('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('.alert-info').after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$(element).replaceWith('<button type="button" value="' + $(element).val() + '" data-toggle="tooltip" data-title="{{ button_disable }}"  class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>');
+				$(element).replaceWith('<button type="button" value="' + $(element).val() + '" data-toggle="tooltip" data-title="{{ button_disable }}"  class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -146,13 +146,13 @@ $('#form-event').on('click', '.btn-danger', function() {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('.alert-info').after('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('.alert-info').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('.alert-info').after('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('.alert-info').after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$(element).replaceWith('<button type="button" value="' + $(element).val() + '" data-toggle="tooltip" data-title="{{ button_enable }}"  class="btn btn-success"><i class="fa fa-plus-circle"></i></button>');
+				$(element).replaceWith('<button type="button" value="' + $(element).val() + '" data-toggle="tooltip" data-title="{{ button_enable }}"  class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

@@ -3,9 +3,9 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">{% if not error_signature %}
-          <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-info"><i class="fa fa-cog"></i></button>
+          <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-info"><i class="fas fa-cog"></i></button>
         {% else %}
-          <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ error_signature }}" data-placement="left" class="btn btn-danger"><i class="fa fa-exclamation-triangle"></i></button>
+          <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ error_signature }}" data-placement="left" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i></button>
         {% endif %}</div>
       <h1>{{ heading_title }}</h1>
       <nav aria-label="breadcrumb">
@@ -19,7 +19,7 @@
   </div>
   <div class="container-fluid">
     <div class="card">
-      <div class="card-header"><i class="fa fa-puzzle-piece"></i> {{ text_list }}</div>
+      <div class="card-header"><i class="fas fa-puzzle-piece"></i> {{ text_list }}</div>
       <div class="card-body">
         <div class="card bg-light">
           <div class="card-body">
@@ -38,7 +38,7 @@
                 </div>
               </div>
               <div class="input-group-append">
-                <button type="button" id="button-filter" class="btn btn-primary"><i class="fa fa-filter"></i></button>
+                <button type="button" id="button-filter" class="btn btn-primary"><i class="fas fa-filter"></i></button>
               </div>
             </div>
             <input type="hidden" name="filter_category_id" value="{{ filter_category_id }}" class="form-control"/> <input type="hidden" name="filter_download_id" value="{{ filter_download_id }}" class="form-control"/> <input type="hidden" name="filter_rating" value="{{ filter_rating }}" class="form-control"/> <input type="hidden" name="filter_license" value="{{ filter_license }}" class="form-control"/> <input type="hidden" name="filter_partner" value="{{ filter_partner }}" class="form-control"/> <input type="hidden" name="sort" value="{{ sort }}" class="form-control"/>
@@ -52,8 +52,8 @@
               {% endfor %}</div>
           </div>
           <div class="col-sm-3 col-xs-5">
-            <div class="input-group pull-right">
-              <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-sort-amount-asc"></i></span></div>
+            <div class="input-group float-right">
+              <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-sort-amount-asc"></i></span></div>
               <select onchange="location = this.value;" class="form-control">
                 {% for sorts in sorts %}
                   {% if sorts.value == sort %}
@@ -83,7 +83,7 @@
                       <div class="extension-rate">
                         <div class="row">
                           <div class="col-xs-6">{% for i in 1..5 %}
-                              {% if extension.rating >= i %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
+                              {% if extension.rating >= i %}<i class="fas fa-star"></i>{% else %}<i class="fas fa-star-o"></i>{% endif %}
                             {% endfor %}</div>
                           <div class="col-xs-6">
                             <div class="text-right">{{ extension.rating_total }} {{ text_reviews }}</div>
@@ -112,7 +112,7 @@
                       <div class="extension-rate">
                         <div class="row">
                           <div class="col-6">{% for i in 1..5 %}
-                              {% if extension.rating >= i %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
+                              {% if extension.rating >= i %}<i class="fas fa-star"></i>{% else %}<i class="fas fa-star-o"></i>{% endif %}
                             {% endfor %}</div>
                           <div class="col-6">
                             <div class="text-right">{{ extension.rating_total }} {{ text_reviews }}</div>

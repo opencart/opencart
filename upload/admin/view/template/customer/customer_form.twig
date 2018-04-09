@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
-        <button type="submit" form="form-customer" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
+        <button type="submit" form="form-customer" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -17,12 +17,12 @@
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     <div class="card">
-      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-customer">
           <ul class="nav nav-tabs">
@@ -42,10 +42,10 @@
                     <li class="nav-item"><a href="#tab-customer" data-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
                     {% set address_row = 1 %}
                     {% for address in addresses %}
-                      <li class="nav-item"><a href="#tab-address{{ address_row }}" data-toggle="tab" class="nav-link"><i class="fa fa-minus-circle" onclick="$('#address li:first-child a').tab('show'); $('#address a[href=\'#tab-address{{ address_row }}\']').parent().remove(); $('#tab-address{{ address_row }}').remove();"></i> {{ tab_address }} {{ address_row }}</a></li>
+                      <li class="nav-item"><a href="#tab-address{{ address_row }}" data-toggle="tab" class="nav-link"><i class="fas fa-minus-circle" onclick="$('#address li:first-child a').tab('show'); $('#address a[href=\'#tab-address{{ address_row }}\']').parent().remove(); $('#tab-address{{ address_row }}').remove();"></i> {{ tab_address }} {{ address_row }}</a></li>
                       {% set address_row = address_row + 1 %}
                     {% endfor %}
-                    <li class="nav-item"><a href="#" id="address-add" class="nav-link"><i class="fa fa-plus-circle"></i> {{ button_address_add }}</a></li>
+                    <li class="nav-item"><a href="#" id="address-add" class="nav-link"><i class="fas fa-plus-circle"></i> {{ button_address_add }}</a></li>
                   </ul>
                 </div>
                 <div class="col-sm-10">
@@ -186,7 +186,7 @@
                               <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
                                 <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                                 <div class="col-sm-10">
-                                  <button type="button" id="button-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fa fa-upload"></i> {{ button_upload }}</button>
+                                  <button type="button" id="button-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                                   <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] }}" id="input-custom-field{{ custom_field.custom_field_id }}"/>
                                   {% if error_custom_field[custom_field.custom_field_id] %}
                                     <div class="invalid-tooltip">{{ error_custom_field[custom_field.custom_field_id] }}</div>
@@ -200,7 +200,7 @@
                                   <div class="input-group date">
                                     <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                                     <div class="input-group-append">
-                                      <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                                      <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                                     </div>
                                   </div>
                                   {% if error_custom_field[custom_field.custom_field_id] %}
@@ -215,7 +215,7 @@
                                   <div class="input-group time">
                                     <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="HH:mm" data-locale="{{ datepicker }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                                     <div class="input-group-append">
-                                      <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                                      <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                                     </div>
                                   </div>
                                   {% if error_custom_field[custom_field.custom_field_id] %}
@@ -230,7 +230,7 @@
                                   <div class="input-group datetime">
                                     <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" data-locale="{{ datepicker }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                                     <div class="input-group-append">
-                                      <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                                      <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                                     </div>
                                   </div>
                                   {% if error_custom_field[custom_field.custom_field_id] %}
@@ -482,7 +482,7 @@
                               <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
                                 <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                                 <div class="col-sm-10">
-                                  <button type="button" id="button-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fa fa-upload"></i> {{ button_upload }}</button>
+                                  <button type="button" id="button-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                                   <input type="hidden" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] }}"/>
                                   {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
                                     <div class="invalid-tooltip">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
@@ -496,7 +496,7 @@
                                   <div class="input-group date">
                                     <input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                                     <div class="input-group-append">
-                                      <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                                      <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                                     </div>
                                   </div>
                                   {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
@@ -511,7 +511,7 @@
                                   <div class="input-group time">
                                     <input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="HH:mm" data-locale="{{ datepicker }}" id="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                                     <div class="input-group-append">
-                                      <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                                      <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                                     </div>
                                   </div>
                                   {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
@@ -526,7 +526,7 @@
                                   <div class="input-group datetime">
                                     <input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" data-locale="{{ datepicker }}" id="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                                     <div class="input-group-append">
-                                      <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                                      <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                                     </div>
                                   </div>
                                   {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
@@ -572,7 +572,7 @@
                   </div>
                 </fieldset>
                 <div class="text-right">
-                  <button id="button-history" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> {{ button_history_add }}</button>
+                  <button id="button-history" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
                 </div>
               </div>
               <div class="tab-pane" id="tab-transaction">
@@ -597,7 +597,7 @@
                   </div>
                 </fieldset>
                 <div class="text-right">
-                  <button type="button" id="button-transaction" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> {{ button_transaction_add }}</button>
+                  <button type="button" id="button-transaction" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_transaction_add }}</button>
                 </div>
               </div>
               <div class="tab-pane" id="tab-reward">
@@ -623,7 +623,7 @@
                   </div>
                 </fieldset>
                 <div class="text-right">
-                  <button type="button" id="button-reward" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> {{ button_reward_add }}</button>
+                  <button type="button" id="button-reward" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_reward_add }}</button>
                 </div>
               </div>
             {% endif %}
@@ -797,7 +797,7 @@ $('#address-add').on('click', function(e) {
 	html += '	  <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
 	html += '		<label class="col-sm-2 col-form-label">{{ custom_field.name|e('js') }}</label>';
 	html += '		<div class="col-sm-10">';
-	html += '		  <button type="button" id="button-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fa fa-upload"></i> {{ button_upload }}</button>';
+	html += '		  <button type="button" id="button-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>';
 	html += '		  <input type="hidden" name="address[' + address_row + '][{{ custom_field.custom_field_id }}]" value="" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" />';
 	html += '		</div>';
 	html += '	  </div>';
@@ -807,7 +807,7 @@ $('#address-add').on('click', function(e) {
 	html += '	  <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
 	html += '		<label class="col-sm-2 col-form-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name|e('js') }}</label>';
 	html += '		<div class="col-sm-10">';
-	html += '		  <div class="input-group date"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }} data-date-format="YYYY-MM-DD" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div>';
+	html += '		  <div class="input-group date"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }} data-date-format="YYYY-MM-DD" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button></div></div>';
 	html += '		</div>';
 	html += '	  </div>';
   {% endif %}
@@ -816,7 +816,7 @@ $('#address-add').on('click', function(e) {
 	html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
 	html += '		<label class="col-sm-2 col-form-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name|e('js') }}</label>';
 	html += '		<div class="col-sm-10">';
-	html += '		  <div class="input-group time"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }}" data-date-format="HH:mm" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div>';
+	html += '		  <div class="input-group time"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }}" data-date-format="HH:mm" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button></div></div>';
 	html += '		</div>';
 	html += '	  </div>';
   {% endif %}
@@ -825,7 +825,7 @@ $('#address-add').on('click', function(e) {
 	html += '	  <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
 	html += '		<label class="col-sm-2 col-form-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name|e('js') }}</label>';
 	html += '		<div class="col-sm-10">';
-	html += '		  <div class="input-group datetime"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }}" data-date-format="YYYY-MM-DD HH:mm" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button></div></div>';
+	html += '		  <div class="input-group datetime"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }}" data-date-format="YYYY-MM-DD HH:mm" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button></div></div>';
 	html += '		</div>';
 	html += '	  </div>';
   {% endif %}
@@ -846,7 +846,7 @@ $('#address-add').on('click', function(e) {
 
 	$('select[name=\'address[' + address_row + '][country_id]\']').trigger('change');
 
-	$('#address-add').parent().before('<li class="nav-item"><a href="#tab-address' + address_row + '" data-toggle="tab" class="nav-link"><i class="fa fa-minus-circle" onclick="$(\'#address a:first\').tab(\'show\'); $(\'a[href=\\\'#tab-address' + address_row + '\\\']\').parent().remove(); $(\'#tab-address' + address_row + '\').remove();"></i> {{ tab_address }} ' + address_row + '</a></li>');
+	$('#address-add').parent().before('<li class="nav-item"><a href="#tab-address' + address_row + '" data-toggle="tab" class="nav-link"><i class="fas fa-minus-circle" onclick="$(\'#address a:first\').tab(\'show\'); $(\'a[href=\\\'#tab-address' + address_row + '\\\']\').parent().remove(); $(\'#tab-address' + address_row + '\').remove();"></i> {{ tab_address }} ' + address_row + '</a></li>');
 
 	$('#address a[href=\'#tab-address' + address_row + '\']').tab('show');
 
@@ -943,11 +943,11 @@ $('#button-history').on('click', function(e) {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#tab-history').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#tab-history').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#tab-history').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#tab-history').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('#history').load('index.php?route=customer/customer/history&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
@@ -987,11 +987,11 @@ $('#button-transaction').on('click', function(e) {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#tab-transaction').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#tab-transaction').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#tab-transaction').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#tab-transaction').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('#transaction').load('index.php?route=customer/customer/transaction&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
@@ -1032,11 +1032,11 @@ $('#button-reward').on('click', function(e) {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#tab-reward').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#tab-reward').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#tab-reward').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#tab-reward').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('#reward').load('index.php?route=customer/customer/reward&user_token={{ user_token }}&customer_id={{ customer_id }}');
 

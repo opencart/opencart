@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
-        <button type="submit" form="form-payment" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
+        <button type="submit" form="form-payment" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -17,17 +17,17 @@
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     {% if error_tax_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_tax_warning }}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_tax_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     <div class="card">
-      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_edit }}</div>
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment">
           <ul class="nav nav-tabs" id="tabs">
@@ -307,7 +307,7 @@
             </div>
             <div class="tab-pane" id="tab-account">
               {% if error_account_warning %}
-                <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_account_warning }}</div>
+                <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_account_warning }}</div>
               {% endif %}
               <table id="account" class="table table-striped table-bordered table-hover">
                 <thead>
@@ -406,7 +406,7 @@
                           {% endfor %}
                         </select>
                       </td>
-                      <td class="text-left"><button type="button" onclick="$('#account-row{{ account_row }}').remove();" data-toggle="tooltip" title="{{ button_account_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                      <td class="text-left"><button type="button" onclick="$('#account-row{{ account_row }}').remove();" data-toggle="tooltip" title="{{ button_account_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
                     </tr>
                     {% set account_row = account_row + 1 %}
                   {% endfor %}
@@ -414,7 +414,7 @@
                 <tfoot>
                   <tr>
                     <td colspan="8"></td>
-                    <td class="text-left"><button type="button" onclick="addAccount();" data-toggle="tooltip" title="{{ button_account_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                    <td class="text-left"><button type="button" onclick="addAccount();" data-toggle="tooltip" title="{{ button_account_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
                   </tr>
                 </tfoot>
               </table>
@@ -492,18 +492,18 @@ $(document).on('click', '#button-process-settlement', function() {
 			success: function(json) {
 				if (json['error']) {
 					$.each(json['error'], function(index, value) {
-						$('.settlement-alerts').append('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + value + '</div>');
+						$('.settlement-alerts').append('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + value + '</div>');
 					});
 				}
 
 				if (json['orders']) {
-					$('.settlement-alerts').append('<div class="alert alert-success alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ text_downloading_settlement }}</div>');
+					$('.settlement-alerts').append('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ text_downloading_settlement }}</div>');
 
 					if (json['orders'].length > 0) {
-						$('.settlement-alerts').append('<div class="alert alert-success alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ text_processing_orders }}</div>');
+						$('.settlement-alerts').append('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ text_processing_orders }}</div>');
 
 						$.each(json['orders'], function(index, value) {
-							$('.settlement-alerts').append('<div class="alert alert-success alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ text_processing_order }} ' + value + '</div>');
+							$('.settlement-alerts').append('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ text_processing_order }} ' + value + '</div>');
 
 							$.ajax({
 								url: '{{ store_url }}index.php?route=api/order/history&api_token={{ api_token }}&order_id=' + encodeURIComponent(value),
@@ -518,11 +518,11 @@ $(document).on('click', '#button-process-settlement', function() {
 								},
 								success: function(json) {
 									if (json['error']) {
-										$('.settlement-alerts').append('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+										$('.settlement-alerts').append('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 									}
 
 									if (json['success']) {
-										$('.settlement-alerts').append('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+										$('.settlement-alerts').append('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 									}
 								},
 								error: function(xhr, ajaxOptions, thrownError) {
@@ -532,7 +532,7 @@ $(document).on('click', '#button-process-settlement', function() {
 						});
 					}
 
-					$('.settlement-alerts').append('<div class="alert alert-success alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ text_no_files }}</div>');
+					$('.settlement-alerts').append('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ text_no_files }}</div>');
 				}
 			}
 		});
@@ -582,7 +582,7 @@ function addAccount() {
 	html += '    <option value="{{ api_location.code }}">{{ api_location.name }}</option>';
   {% endfor %}
 	html += '  </select></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#account-row' + account_row + '\').remove();" data-toggle="tooltip" title="{{ button_account_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#account-row' + account_row + '\').remove();" data-toggle="tooltip" title="{{ button_account_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 
 	$('#account tbody').append(html);

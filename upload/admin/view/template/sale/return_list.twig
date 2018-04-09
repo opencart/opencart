@@ -3,9 +3,9 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
-        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-return').toggleClass('d-none');" class="btn btn-light d-md-none"><i class="fa fa-filter"></i></button>
-        <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
-        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-return').submit() : false;"><i class="fa fa-trash-o"></i></button>
+        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-return').toggleClass('d-none');" class="btn btn-light d-md-none"><i class="fas fa-filter"></i></button>
+        <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-return').submit() : false;"><i class="fas fa-trash-alt"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <nav aria-label="breadcrumb">
@@ -18,19 +18,19 @@
     </div>
   </div>
   <div class="container-fluid">{% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     {% if success %}
-      <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+      <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     <div class="row">
       <div id="filter-return" class="col-md-3 col-sm-12 order-md-9 d-none d-md-block">
         <div class="card">
-          <div class="card-header"><i class="fa fa-filter"></i> {{ text_filter }}</div>
+          <div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
           <div class="card-body">
             <div class="form-group">
               <label class="col-form-label" for="input-return-id">{{ entry_return_id }}</label> <input type="text" name="filter_return_id" value="{{ filter_return_id }}" placeholder="{{ entry_return_id }}" id="input-return-id" class="form-control"/>
@@ -64,7 +64,7 @@
               <div class="input-group date">
                 <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-added" class="form-control"/>
                 <div class="input-group-append">
-                  <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                  <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                 </div>
               </div>
             </div>
@@ -73,19 +73,19 @@
               <div class="input-group date">
                 <input type="text" name="filter_date_modified" value="{{ filter_date_modified }}" placeholder="{{ entry_date_modified }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-modified" class="form-control"/>
                 <div class="input-group-append">
-                  <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                  <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                 </div>
               </div>
             </div>
             <div class="form-group text-right">
-              <button type="button" id="button-filter" class="btn btn-light"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+              <button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
             </div>
           </div>
         </div>
       </div>
       <div class="col-md-9 col-sm-12">
         <div class="card">
-          <div class="card-header"><i class="fa fa-list"></i> {{ text_list }}</div>
+          <div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
           <div class="card-body">
             <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-return">
               <div class="table-responsive">
@@ -121,7 +121,7 @@
                           <td class="text-left">{{ return.return_status }}</td>
                           <td class="text-left">{{ return.date_added }}</td>
                           <td class="text-left">{{ return.date_modified }}</td>
-                          <td class="text-right"><a href="{{ return.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                          <td class="text-right"><a href="{{ return.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
                         </tr>
                       {% endfor %}
                     {% else %}

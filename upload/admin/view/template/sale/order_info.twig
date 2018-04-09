@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="float-right"><a href="{{ invoice }}" target="_blank" data-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info"><i class="fa fa-print"></i></a> <a href="{{ shipping }}" target="_blank" data-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info"><i class="fa fa-truck"></i></a> <a href="{{ edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
+      <div class="float-right"><a href="{{ invoice }}" target="_blank" data-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info"><i class="fas fa-print"></i></a> <a href="{{ shipping }}" target="_blank" data-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info"><i class="fas fa-truck"></i></a> <a href="{{ edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a> <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -17,24 +17,24 @@
     <div class="row">
       <div class="col-md-4">
         <div class="card">
-          <div class="card-header"><i class="fa fa-shopping-cart"></i> {{ text_order_detail }}</div>
+          <div class="card-header"><i class="fas fa-shopping-cart"></i> {{ text_order_detail }}</div>
           <table class="table">
             <tbody>
               <tr>
-                <td style="width: 1%;"><button data-toggle="tooltip" title="{{ text_store }}" class="btn btn-info btn-xs"><i class="fa fa-shopping-cart fa-fw"></i></button></td>
+                <td style="width: 1%;"><button data-toggle="tooltip" title="{{ text_store }}" class="btn btn-info btn-xs"><i class="fas fa-shopping-cart fa-fw"></i></button></td>
                 <td><a href="{{ store_url }}" target="_blank">{{ store_name }}</a></td>
               </tr>
               <tr>
-                <td><button data-toggle="tooltip" title="{{ text_date_added }}" class="btn btn-info btn-xs"><i class="fa fa-calendar fa-fw"></i></button></td>
+                <td><button data-toggle="tooltip" title="{{ text_date_added }}" class="btn btn-info btn-xs"><i class="fas fa-calendar fa-fw"></i></button></td>
                 <td>{{ date_added }}</td>
               </tr>
               <tr>
-                <td><button data-toggle="tooltip" title="{{ text_payment_method }}" class="btn btn-info btn-xs"><i class="fa fa-credit-card fa-fw"></i></button></td>
+                <td><button data-toggle="tooltip" title="{{ text_payment_method }}" class="btn btn-info btn-xs"><i class="fas fa-credit-card fa-fw"></i></button></td>
                 <td>{{ payment_method }}</td>
               </tr>
               {% if shipping_method %}
                 <tr>
-                  <td><button data-toggle="tooltip" title="{{ text_shipping_method }}" class="btn btn-info btn-xs"><i class="fa fa-truck fa-fw"></i></button></td>
+                  <td><button data-toggle="tooltip" title="{{ text_shipping_method }}" class="btn btn-info btn-xs"><i class="fas fa-truck fa-fw"></i></button></td>
                   <td>{{ shipping_method }}</td>
                 </tr>
               {% endif %}
@@ -44,24 +44,24 @@
       </div>
       <div class="col-md-4">
         <div class="card">
-          <div class="card-header"><i class="fa fa-user"></i> {{ text_customer_detail }}</div>
+          <div class="card-header"><i class="fas fa-user"></i> {{ text_customer_detail }}</div>
           <table class="table">
             <tr>
-              <td style="width: 1%;"><button data-toggle="tooltip" title="{{ text_customer }}" class="btn btn-info btn-xs"><i class="fa fa-user fa-fw"></i></button></td>
+              <td style="width: 1%;"><button data-toggle="tooltip" title="{{ text_customer }}" class="btn btn-info btn-xs"><i class="fas fa-user fa-fw"></i></button></td>
               <td>{% if customer %} <a href="{{ customer }}" target="_blank">{{ firstname }} {{ lastname }}</a> {% else %}
                   {{ firstname }} {{ lastname }}
                 {% endif %}</td>
             </tr>
             <tr>
-              <td><button data-toggle="tooltip" title="{{ text_customer_group }}" class="btn btn-info btn-xs"><i class="fa fa-group fa-fw"></i></button></td>
+              <td><button data-toggle="tooltip" title="{{ text_customer_group }}" class="btn btn-info btn-xs"><i class="fas fa-group fa-fw"></i></button></td>
               <td>{{ customer_group }}</td>
             </tr>
             <tr>
-              <td><button data-toggle="tooltip" title="{{ text_email }}" class="btn btn-info btn-xs"><i class="fa fa-envelope-o fa-fw"></i></button></td>
+              <td><button data-toggle="tooltip" title="{{ text_email }}" class="btn btn-info btn-xs"><i class="fas fa-envelope-o fa-fw"></i></button></td>
               <td><a href="mailto:{{ email }}">{{ email }}</a></td>
             </tr>
             <tr>
-              <td><button data-toggle="tooltip" title="{{ text_telephone }}" class="btn btn-info btn-xs"><i class="fa fa-phone fa-fw"></i></button></td>
+              <td><button data-toggle="tooltip" title="{{ text_telephone }}" class="btn btn-info btn-xs"><i class="fas fa-phone fa-fw"></i></button></td>
               <td>{{ telephone }}</td>
             </tr>
           </table>
@@ -69,16 +69,16 @@
       </div>
       <div class="col-md-4">
         <div class="card">
-          <div class="card-header"><i class="fa fa-cog"></i> {{ text_option }}</div>
+          <div class="card-header"><i class="fas fa-cog"></i> {{ text_option }}</div>
           <table class="table">
             <tbody>
               <tr>
                 <td>{{ text_invoice }}</td>
                 <td id="invoice" class="text-right">{{ invoice_no }}</td>
                 <td style="width: 1%;" class="text-center">{% if not invoice_no %}
-                    <button id="button-invoice" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_generate }}" class="btn btn-success btn-xs"><i class="fa fa-cog"></i></button>
+                    <button id="button-invoice" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_generate }}" class="btn btn-success btn-xs"><i class="fas fa-cog"></i></button>
                   {% else %}
-                    <button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-refresh"></i></button>
+                    <button disabled="disabled" class="btn btn-success btn-xs"><i class="fas fa-refresh"></i></button>
                   {% endif %}</td>
               </tr>
               <tr>
@@ -86,12 +86,12 @@
                 <td class="text-right">{{ reward }}</td>
                 <td class="text-center">{% if customer and reward %}
                     {% if not reward_total %}
-                      <button id="button-reward-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
+                      <button id="button-reward-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success btn-xs"><i class="fas fa-plus-circle"></i></button>
                     {% else %}
-                      <button id="button-reward-remove" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>
+                      <button id="button-reward-remove" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger btn-xs"><i class="fas fa-minus-circle"></i></button>
                     {% endif %}
                   {% else %}
-                    <button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
+                    <button disabled="disabled" class="btn btn-success btn-xs"><i class="fas fa-plus-circle"></i></button>
                   {% endif %}</td>
               </tr>
               <tr>
@@ -102,12 +102,12 @@
                 <td class="text-right">{{ commission }}</td>
                 <td class="text-center">{% if affiliate %}
                     {% if not commission_total %}
-                      <button id="button-commission-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
+                      <button id="button-commission-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success btn-xs"><i class="fas fa-plus-circle"></i></button>
                     {% else %}
-                      <button id="button-commission-remove" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>
+                      <button id="button-commission-remove" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger btn-xs"><i class="fas fa-minus-circle"></i></button>
                     {% endif %}
                   {% else %}
-                    <button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
+                    <button disabled="disabled" class="btn btn-success btn-xs"><i class="fas fa-plus-circle"></i></button>
                   {% endif %}</td>
               </tr>
             </tbody>
@@ -116,7 +116,7 @@
       </div>
     </div>
     <div class="card">
-      <div class="card-header"><i class="fa fa-info-circle"></i> {{ text_order }}</div>
+      <div class="card-header"><i class="fas fa-info-circle"></i> {{ text_order }}</div>
       <div class="card-body">
         <table class="table table-bordered">
           <thead>
@@ -196,7 +196,7 @@
         {% endif %}</div>
     </div>
     <div class="card">
-      <div class="card-header"><i class="fa fa-comment-o"></i> {{ text_history }}</div>
+      <div class="card-header"><i class="fas fa-comment-o"></i> {{ text_history }}</div>
       <div class="card-body">
         <ul class="nav nav-tabs">
           <li class="nav-item"><a href="#tab-history" data-toggle="tab" class="nav-link active">{{ tab_history }}</a></li>
@@ -252,7 +252,7 @@
               </form>
             </fieldset>
             <div class="text-right">
-              <button id="button-history" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> {{ button_history_add }}</button>
+              <button id="button-history" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
             </div>
           </div>
           <div class="tab-pane" id="tab-additional"> {% if account_custom_fields %}
@@ -364,13 +364,13 @@ $(document).on('click', '#button-invoice', function() {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 
 			if (json['invoice_no']) {
 				$('#invoice').html(json['invoice_no']);
 
-				$('#button-invoice').replaceWith('<button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-cog"></i></button>');
+				$('#button-invoice').replaceWith('<button disabled="disabled" class="btn btn-success btn-xs"><i class="fas fa-cog"></i></button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -394,13 +394,13 @@ $(document).on('click', '#button-reward-add', function() {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '</div>');
 
-				$('#button-reward-add').replaceWith('<button id="button-reward-remove" data-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>');
+				$('#button-reward-add').replaceWith('<button id="button-reward-remove" data-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger btn-xs"><i class="fas fa-minus-circle"></i></button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -424,13 +424,13 @@ $(document).on('click', '#button-reward-remove', function() {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '</div>');
 
-				$('#button-reward-remove').replaceWith('<button id="button-reward-add" data-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>');
+				$('#button-reward-remove').replaceWith('<button id="button-reward-add" data-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success btn-xs"><i class="fas fa-plus-circle"></i></button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -454,13 +454,13 @@ $(document).on('click', '#button-commission-add', function() {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '</div>');
 
-				$('#button-commission-add').replaceWith('<button id="button-commission-remove" data-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>');
+				$('#button-commission-add').replaceWith('<button id="button-commission-remove" data-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger btn-xs"><i class="fas fa-minus-circle"></i></button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -484,13 +484,13 @@ $(document).on('click', '#button-commission-remove', function() {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '</div>');
 
-				$('#button-commission-remove').replaceWith('<button id="button-commission-add" data-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>');
+				$('#button-commission-remove').replaceWith('<button id="button-commission-add" data-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success btn-xs"><i class="fas fa-plus-circle"></i></button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -523,13 +523,13 @@ $('#button-history').on('click', function() {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#history').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#history').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
 				$('#history').load('index.php?route=sale/order/history&user_token={{ user_token }}&order_id={{ order_id }}');
 
-				$('#history').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#history').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('textarea[name=\'comment\']').val('');
 			}

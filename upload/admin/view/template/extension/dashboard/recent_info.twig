@@ -1,5 +1,5 @@
 <div class="card mb-3">
-  <div class="card-header"><i class="fa fa-shopping-cart"></i> {{ heading_title }}</div>
+  <div class="card-header"><i class="fas fa-shopping-cart"></i> {{ heading_title }}</div>
   <div class="table-responsive">
     <table class="table">
       <thead>
@@ -21,7 +21,7 @@
               <td>{{ order.status }}</td>
               <td>{{ order.date_added }}</td>
               <td class="text-right">{{ order.total }}</td>
-              <td class="text-right"><a href="{{ order.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+              <td class="text-right"><a href="{{ order.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fas fa-eye"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}

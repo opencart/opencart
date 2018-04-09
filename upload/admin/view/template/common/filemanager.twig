@@ -7,16 +7,16 @@
       </div>
       <div class="modal-body">
         <div class="row">
-          <div class="col-sm-5"><a href="{{ parent }}" data-toggle="tooltip" title="{{ button_parent }}" id="button-parent" class="btn btn-light"><i class="fa fa-level-up"></i></a> <a href="{{ refresh }}" data-toggle="tooltip" title="{{ button_refresh }}" id="button-refresh" class="btn btn-light"><i class="fa fa-refresh"></i></a>
-            <button type="button" data-toggle="tooltip" title="{{ button_upload }}" id="button-upload" class="btn btn-primary"><i class="fa fa-upload"></i></button>
-            <button type="button" data-toggle="tooltip" title="{{ button_folder }}" id="button-folder" class="btn btn-light"><i class="fa fa-folder"></i></button>
-            <button type="button" data-toggle="tooltip" title="{{ button_delete }}" id="button-delete" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+          <div class="col-sm-5"><a href="{{ parent }}" data-toggle="tooltip" title="{{ button_parent }}" id="button-parent" class="btn btn-light"><i class="fas fa-level-up"></i></a> <a href="{{ refresh }}" data-toggle="tooltip" title="{{ button_refresh }}" id="button-refresh" class="btn btn-light"><i class="fas fa-refresh"></i></a>
+            <button type="button" data-toggle="tooltip" title="{{ button_upload }}" id="button-upload" class="btn btn-primary"><i class="fas fa-upload"></i></button>
+            <button type="button" data-toggle="tooltip" title="{{ button_folder }}" id="button-folder" class="btn btn-light"><i class="fas fa-folder"></i></button>
+            <button type="button" data-toggle="tooltip" title="{{ button_delete }}" id="button-delete" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
           </div>
           <div class="col-sm-7">
             <div class="input-group">
               <input type="text" name="search" value="{{ filter_name }}" placeholder="{{ entry_search }}" class="form-control">
               <div class="input-group-append">
-                <button type="button" data-toggle="tooltip" title="{{ button_search }}" id="button-search" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                <button type="button" data-toggle="tooltip" title="{{ button_search }}" id="button-search" class="btn btn-primary"><i class="fas fa-search"></i></button>
               </div>
             </div>
           </div>
@@ -27,7 +27,7 @@
             {% for image in image %}
               <div class="col-sm-3 col-xs-6 text-center">
                 {% if image.type == 'directory' %}
-                  <div class="text-center"><a href="{{ image.href }}" class="directory" style="vertical-align: middle;"><i class="fa fa-folder fa-5x"></i></a></div>
+                  <div class="text-center"><a href="{{ image.href }}" class="directory" style="vertical-align: middle;"><i class="fas fa-folder fa-5x"></i></a></div>
                   <label><input type="checkbox" name="path[]" value="{{ image.path }}"/>
                     {{ image.name }}</label>
                 {% endif %}
@@ -115,11 +115,11 @@ $('#modal-image').on('click', '#button-upload', function() {
 				contentType: false,
 				processData: false,
 				beforeSend: function() {
-					$('#button-upload i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+					$('#button-upload i').replaceWith('<i class="fas fa-circle-o-notch fa-spin"></i>');
 					$('#button-upload').prop('disabled', true);
 				},
 				complete: function() {
-					$('#button-upload i').replaceWith('<i class="fa fa-upload"></i>');
+					$('#button-upload i').replaceWith('<i class="fas fa-upload"></i>');
 					$('#button-upload').prop('disabled', false);
 				},
 				success: function(json) {
@@ -149,7 +149,7 @@ $('#button-folder').popover({
 	content: function() {
 		html  = '<div class="input-group">';
 		html += '  <input type="text" name="folder" value="" placeholder="{{ entry_folder }}" class="form-control">';
-		html += '  <div class="input-group-append"><button type="button" title="{{ button_folder }}" id="button-create" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></div>';
+		html += '  <div class="input-group-append"><button type="button" title="{{ button_folder }}" id="button-create" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></div>';
 		html += '</div>';
 
 		return html;
@@ -195,11 +195,11 @@ $('#modal-image').on('click', '#button-delete', function(e) {
 			dataType: 'json',
 			data: $('input[name^=\'path\']:checked'),
 			beforeSend: function() {
-				$('#button-delete i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+				$('#button-delete i').replaceWith('<i class="fas fa-circle-o-notch fa-spin"></i>');
 				$('#button-delete').prop('disabled', true);
 			},
 			complete: function() {
-				$('#button-delete i').replaceWith('<i class="fa fa-upload"></i>');
+				$('#button-delete i').replaceWith('<i class="fas fa-upload"></i>');
 				$('#button-delete').prop('disabled', false);
 			},
 			success: function(json) {

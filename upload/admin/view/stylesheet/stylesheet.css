@@ -43,9 +43,11 @@ legend {
     margin-bottom: 15px;
     text-shadow: 0 1px #fff;
 }
-
-.breadcrumb {
+nav {
+  width: auto;
   display: inline-block;
+}
+.breadcrumb {
   background: none;
   margin: 8px 0 19px 0;
   padding: 0 10px;

@@ -11,9 +11,9 @@ class ControllerCommonFileManager extends Controller {
 
 		// Make sure we have the correct directory
 		if (isset($this->request->get['directory'])) {
-			$directory = rtrim(DIR_IMAGE . 'catalog' . $this->request->get['directory'], '/');
+			$directory = DIR_IMAGE . 'catalog/' . html_entity_decode($this->request->get['directory'], ENT_QUOTES, 'UTF-8') . '/';
 		} else {
-			$directory = DIR_IMAGE . 'catalog';
+			$directory = DIR_IMAGE . 'catalog/';
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -22,11 +22,11 @@ class ControllerCommonFileManager extends Controller {
 			$page = 1;
 		}
 
-		if (substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_IMAGE . 'catalog')) == str_replace('\\', '/', DIR_IMAGE . 'catalog')) {
+		if (substr(str_replace('\\', '/', realpath($directory . $filter_name)), 0, utf8_strlen(DIR_IMAGE . 'catalog')) == DIR_IMAGE . 'catalog') {
 			$data['images'] = array();
 
 			// Get directories
-			$directories = glob($directory . '/' . $filter_name . '*', GLOB_ONLYDIR);
+			$directories = glob($directory . $filter_name . '*', GLOB_ONLYDIR);
 
 			if ($directories) {
 				// Split the array based on current page number and max number of items per page of 10
@@ -45,18 +45,22 @@ class ControllerCommonFileManager extends Controller {
 						$url .= '&thumb=' . $this->request->get['thumb'];
 					}
 
+					if (isset($this->request->get['ckeditor'])) {
+						$url .= '&ckeditor=' . $this->request->get['ckeditor'];
+					}
+
 					$data['images'][] = array(
 						'name' => implode(' ', $name),
 						'path' => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
 						'type' => 'directory',
-						'href' => $this->url->link('common/filemanager', 'user_token=' . $this->session->data['user_token'] . '&directory=' . urlencode(utf8_substr($image, utf8_strlen(DIR_IMAGE . 'catalog'))) . $url)
+						'href' => $this->url->link('common/filemanager', 'user_token=' . $this->session->data['user_token'] . '&directory=' . urlencode(utf8_substr($image, utf8_strlen(DIR_IMAGE . 'catalog/'))) . $url)
 					);
 				}
 			}
 
 			$this->load->model('tool/image');
 
-			$files = glob($directory . '/' . $filter_name . '*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}', GLOB_BRACE);
+			$files = glob($directory . $filter_name . '*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}', GLOB_BRACE);
 
 			if ($files) {
 				// Split the array based on current page number and max number of items per page of 10
@@ -78,15 +82,9 @@ class ControllerCommonFileManager extends Controller {
 			$data['user_token'] = $this->session->data['user_token'];
 
 			if (isset($this->request->get['directory'])) {
-				$data['directory'] = urlencode($this->request->get['directory']);
+				$data['directory'] = urldecode($this->request->get['directory']);
 			} else {
 				$data['directory'] = '';
-			}
-
-			if (isset($this->request->get['filter_name'])) {
-				$data['filter_name'] = $this->request->get['filter_name'];
-			} else {
-				$data['filter_name'] = '';
 			}
 
 			// Return the target ID for the file manager to set the value
@@ -101,6 +99,18 @@ class ControllerCommonFileManager extends Controller {
 				$data['thumb'] = $this->request->get['thumb'];
 			} else {
 				$data['thumb'] = '';
+			}
+
+			if (isset($this->request->get['ckeditor'])) {
+				$data['ckeditor'] = $this->request->get['ckeditor'];
+			} else {
+				$data['ckeditor'] = '';
+			}
+
+			if (isset($this->request->get['filter_name'])) {
+				$data['filter_name'] = $this->request->get['filter_name'];
+			} else {
+				$data['filter_name'] = '';
 			}
 
 			// Parent
@@ -139,6 +149,14 @@ class ControllerCommonFileManager extends Controller {
 				$url .= '&thumb=' . $this->request->get['thumb'];
 			}
 
+			if (isset($this->request->get['ckeditor'])) {
+				$url .= '&ckeditor=' . $this->request->get['ckeditor'];
+			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+
 			$data['refresh'] = $this->url->link('common/filemanager', 'user_token=' . $this->session->data['user_token'] . $url);
 
 			$url = '';
@@ -157,6 +175,10 @@ class ControllerCommonFileManager extends Controller {
 
 			if (isset($this->request->get['thumb'])) {
 				$url .= '&thumb=' . $this->request->get['thumb'];
+			}
+
+			if (isset($this->request->get['ckeditor'])) {
+				$url .= '&ckeditor=' . $this->request->get['ckeditor'];
 			}
 
 			// Get total number of files and directories
@@ -184,13 +206,13 @@ class ControllerCommonFileManager extends Controller {
 
 		// Make sure we have the correct directory
 		if (isset($this->request->get['directory'])) {
-			$directory = rtrim(DIR_IMAGE . 'catalog/' . $this->request->get['directory'], '/');
+			$directory = DIR_IMAGE . 'catalog/' . html_entity_decode($this->request->get['directory'], ENT_QUOTES, 'UTF-8') . '/';
 		} else {
-			$directory = DIR_IMAGE . 'catalog';
+			$directory = DIR_IMAGE . 'catalog/';
 		}
 
 		// Check its a directory
-		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_IMAGE . 'catalog')) != str_replace('\\', '/', DIR_IMAGE . 'catalog')) {
+		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_IMAGE . 'catalog')) != DIR_IMAGE . 'catalog') {
 			$json['error'] = $this->language->get('error_directory');
 		}
 
@@ -254,7 +276,7 @@ class ControllerCommonFileManager extends Controller {
 				}
 
 				if (!$json) {
-					move_uploaded_file($file['tmp_name'], $directory . '/' . $filename);
+					move_uploaded_file($file['tmp_name'], $directory . $filename);
 				}
 			}
 		}
@@ -279,13 +301,13 @@ class ControllerCommonFileManager extends Controller {
 
 		// Make sure we have the correct directory
 		if (isset($this->request->get['directory'])) {
-			$directory = rtrim(DIR_IMAGE . 'catalog/' . $this->request->get['directory'], '/');
+			$directory = DIR_IMAGE . 'catalog/' . html_entity_decode($this->request->get['directory'], ENT_QUOTES, 'UTF-8') . '/';
 		} else {
-			$directory = DIR_IMAGE . 'catalog';
+			$directory = DIR_IMAGE . 'catalog/';
 		}
 
 		// Check its a directory
-		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_IMAGE . 'catalog')) != str_replace('\\', '/', DIR_IMAGE . 'catalog')) {
+		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_IMAGE . 'catalog')) != DIR_IMAGE . 'catalog') {
 			$json['error'] = $this->language->get('error_directory');
 		}
 
@@ -336,7 +358,7 @@ class ControllerCommonFileManager extends Controller {
 		// Loop through each path to run validations
 		foreach ($paths as $path) {
 			// Check path exsists
-			if ($path == DIR_IMAGE . 'catalog' || substr(str_replace('\\', '/', realpath(DIR_IMAGE . $path) . '/'), 0, strlen(DIR_IMAGE . 'catalog')) != str_replace('\\', '/', DIR_IMAGE . 'catalog')) {
+			if ($path == DIR_IMAGE . 'catalog' || substr(str_replace('\\', '/', realpath(DIR_IMAGE . $path) . '/'), 0, strlen(DIR_IMAGE . 'catalog')) != DIR_IMAGE . 'catalog') {
 				$json['error'] = $this->language->get('error_delete');
 
 				break;

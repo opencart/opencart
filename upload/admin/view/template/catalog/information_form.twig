@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
+      <div class="float-right">
         <button type="submit" form="form-information" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
@@ -52,7 +52,7 @@
                     <div class="form-group row required">
                       <label class="col-sm-2 col-form-label" for="input-description{{ language.language_id }}">{{ entry_description }}</label>
                       <div class="col-sm-10">
-                        <textarea name="information_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" data-toggle="summernote" data-lang="{{ summernote }}" class="form-control">{{ information_description[language.language_id] ? information_description[language.language_id].description }}</textarea>
+                        <textarea name="information_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" data-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control">{{ information_description[language.language_id] ? information_description[language.language_id].description }}</textarea>
                         {% if error_description[language.language_id] %}
                           <div class="invalid-tooltip">{{ error_description[language.language_id] }}</div>
                         {% endif %}
@@ -80,7 +80,8 @@
                       </div>
                     </div>
                   </div>
-                {% endfor %}</div>
+                {% endfor %}
+              </div>
             </div>
             <div class="tab-pane" id="tab-data">
               <div class="form-group row">
@@ -88,30 +89,30 @@
                 <div class="col-sm-10">
                   <div class="form-control" style="height: 150px; overflow: auto;">
                     {% for store in stores %}
-                      <div class="checkbox">
-                        <label>
-                          {% if store.store_id in information_store %}
-                            <input type="checkbox" name="information_store[]" value="{{ store.store_id }}" checked="checked"/>
-                            {{ store.name }}
-                          {% else %}
-                            <input type="checkbox" name="information_store[]" value="{{ store.store_id }}"/>
-                            {{ store.name }}
-                          {% endif %}</label>
-                      </div>
+                      <label class="form-check">
+                        {% if store.store_id in information_store %}
+                          <input type="checkbox" name="information_store[]" value="{{ store.store_id }}" checked="checked" class="form-check-input"/>
+                          {{ store.name }}
+                        {% else %}
+                          <input type="checkbox" name="information_store[]" value="{{ store.store_id }}" class="form-check-input"/>
+                          {{ store.name }}
+                        {% endif %}
+                      </label>
                     {% endfor %}
                   </div>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-bottom">{{ entry_bottom }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_bottom }}</label>
                 <div class="col-sm-10">
-                  <div class="checkbox">
-                    <label>{% if bottom %}
-                        <input type="checkbox" name="bottom" value="1" checked="checked" id="input-bottom"/>
-                      {% else %}
-                        <input type="checkbox" name="bottom" value="1" id="input-bottom"/>
-                      {% endif %}
-                      &nbsp;</label>
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    {% if bottom %}
+                      <label class="btn btn-success active"><input type="radio" name="bottom" value="1" checked="checked"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger"><input type="radio" name="bottom" value="0"/> {{ text_no }}</label>
+                    {% else %}
+                      <label class="btn btn-success"><input type="radio" name="bottom" value="1"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger active"><input type="radio" name="bottom" value="0" checked="checked"/> {{ text_no }}</label>
+                    {% endif %}
                   </div>
                   <small class="form-text text-muted">{{ help_bottom }}</small>
                 </div>
@@ -205,6 +206,8 @@
   </div>
 </div>
 <script type="text/javascript"><!--
+$('textarea[data-toggle=\'ckeditor\']').ckeditor();
+
 $('#language li:first-child a').tab('show');
 //--></script>
 {{ footer }} 

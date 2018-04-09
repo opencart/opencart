@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
+      <div class="float-right">
         <button type="submit" form="form-payment" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
@@ -96,62 +96,62 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-separate-shipping-address">{{ entry_separate_shipping_address }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_separate_shipping_address }}</label>
                 <div class="col-sm-10">
-                  <select name="payment_klarna_checkout_separate_shipping_address" id="input-separate-shipping-address" class="form-control">
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     {% if payment_klarna_checkout_separate_shipping_address %}
-                      <option value="1" selected="selected">{{ text_yes }}</option>
-                      <option value="0">{{ text_no }}</option>
+                      <label class="btn btn-success active"><input type="radio" name="payment_klarna_checkout_separate_shipping_address" value="1" checked="checked"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger"><input type="radio" name="payment_klarna_checkout_separate_shipping_address" value="0"/> {{ text_no }}</label>
                     {% else %}
-                      <option value="1">{{ text_yes }}</option>
-                      <option value="0" selected="selected">{{ text_no }}</option>
+                      <label class="btn btn-success"><input type="radio" name="payment_klarna_checkout_separate_shipping_address" value="1"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger active"><input type="radio" name="payment_klarna_checkout_separate_shipping_address" value="0" checked="checked"/> {{ text_no }}</label>
                     {% endif %}
-                  </select>
+                  </div>
                   <small class="form-text text-muted">{{ help_separate_shipping_address }}</small>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-dob-mandatory">{{ entry_dob_mandatory }}</label>
                 <div class="col-sm-10">
-                  <select name="payment_klarna_checkout_dob_mandatory" id="input-dob-mandatory" class="form-control">
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     {% if payment_klarna_checkout_dob_mandatory %}
-                      <option value="1" selected="selected">{{ text_yes }}</option>
-                      <option value="0">{{ text_no }}</option>
+                      <label class="btn btn-success active"><input type="radio" name="payment_klarna_checkout_dob_mandatory" value="1" checked="checked"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger"><input type="radio" name="payment_klarna_checkout_dob_mandatory" value="0"/> {{ text_no }}</label>
                     {% else %}
-                      <option value="1">{{ text_yes }}</option>
-                      <option value="0" selected="selected">{{ text_no }}</option>
+                      <label class="btn btn-success"><input type="radio" name="payment_klarna_checkout_dob_mandatory" value="1"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger active"><input type="radio" name="payment_klarna_checkout_dob_mandatory" value="0" checked="checked"/> {{ text_no }}</label>
                     {% endif %}
-                  </select>
+                  </div>
                   <small class="form-text text-muted">{{ help_dob_mandatory }}</small>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-title-mandatory">{{ entry_title_mandatory }}</label>
                 <div class="col-sm-10">
-                  <select name="payment_klarna_checkout_title_mandatory" id="input-title-mandatory" class="form-control">
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     {% if payment_klarna_checkout_title_mandatory %}
-                      <option value="1" selected="selected">{{ text_yes }}</option>
-                      <option value="0">{{ text_no }}</option>
+                      <label class="btn btn-success active"><input type="radio" name="payment_klarna_checkout_title_mandatory" value="1" checked="checked"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger"><input type="radio" name="payment_klarna_checkout_title_mandatory" value="0"/> {{ text_no }}</label>
                     {% else %}
-                      <option value="1">{{ text_yes }}</option>
-                      <option value="0" selected="selected">{{ text_no }}</option>
+                      <label class="btn btn-success"><input type="radio" name="payment_klarna_checkout_title_mandatory" value="1"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger active"><input type="radio" name="payment_klarna_checkout_title_mandatory" value="0" checked="checked"/> {{ text_no }}</label>
                     {% endif %}
-                  </select>
+                  </div>
                   <small class="form-text text-muted">{{ help_title_mandatory }}</small>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-additional-text-box">{{ entry_additional_text_box }}</label>
                 <div class="col-sm-10">
-                  <select name="payment_klarna_checkout_additional_text_box" id="input-additional-text-box" class="form-control">
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     {% if payment_klarna_checkout_additional_text_box %}
-                      <option value="1" selected="selected">{{ text_yes }}</option>
-                      <option value="0">{{ text_no }}</option>
+                      <label class="btn btn-success active"><input type="radio" name="payment_klarna_checkout_additional_text_box" value="1" checked="checked"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger"><input type="radio" name="payment_klarna_checkout_additional_text_box" value="0"/> {{ text_no }}</label>
                     {% else %}
-                      <option value="1">{{ text_yes }}</option>
-                      <option value="0" selected="selected">{{ text_no }}</option>
+                      <label class="btn btn-success"><input type="radio" name="payment_klarna_checkout_additional_text_box" value="1"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger active"><input type="radio" name="payment_klarna_checkout_additional_text_box" value="0" checked="checked"/> {{ text_no }}</label>
                     {% endif %}
-                  </select>
+                  </div>
                   <small class="form-text text-muted">{{ help_additional_text_box }}</small>
                 </div>
               </div>

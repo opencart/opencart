@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
+      <div class="float-right">
         <button type="submit" form="form-module" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
@@ -52,7 +52,7 @@
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label" for="input-description{{ language.language_id }}">{{ entry_description }}</label>
                     <div class="col-sm-10">
-                      <textarea name="module_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" data-toggle="summernote" class="form-control">{{ module_description[language.language_id] ? module_description[language.language_id].description }}</textarea>
+                      <textarea name="module_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" data-toggle="ckeditor" class="form-control">{{ module_description[language.language_id] ? module_description[language.language_id].description }}</textarea>
                     </div>
                   </div>
                 </div>
@@ -79,6 +79,8 @@
   </div>
 </div>
 <script type="text/javascript"><!--
+$('textarea[data-toggle=\'ckeditor\']').ckeditor();
+
 $('#language li:first-child a').tab('show');
 //--></script>
 {{ footer }}

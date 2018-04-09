@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
+      <div class="float-right">
         <button type="submit" form="form-coupon" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
@@ -84,38 +84,30 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">{{ entry_logged }}</label>
                 <div class="col-sm-10">
-                  <label class="radio-inline">{% if logged %}
-                      <input type="radio" name="logged" value="1" checked="checked"/>
-                      {{ text_yes }}
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    {% if logged %}
+                      <label class="btn btn-success active"><input type="radio" name="logged" value="1" checked="checked"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger"><input type="radio" name="logged" value="0"/> {{ text_no }}</label>
                     {% else %}
-                      <input type="radio" name="logged" value="1"/>
-                      {{ text_yes }}
-                    {% endif %} </label> <label class="radio-inline"> {% if not logged %}
-                      <input type="radio" name="logged" value="0" checked="checked"/>
-                      {{ text_no }}
-                    {% else %}
-                      <input type="radio" name="logged" value="0"/>
-                      {{ text_no }}
-                    {% endif %}</label>
+                      <label class="btn btn-success"><input type="radio" name="logged" value="1"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger active"><input type="radio" name="logged" value="0" checked="checked"/> {{ text_no }}</label>
+                    {% endif %}
+                  </div>
                   <small class="form-text text-muted">{{ help_logged }}</small>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">{{ entry_shipping }}</label>
                 <div class="col-sm-10">
-                  <label class="radio-inline">{% if shipping %}
-                      <input type="radio" name="shipping" value="1" checked="checked"/>
-                      {{ text_yes }}
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    {% if shipping %}
+                      <label class="btn btn-success active"><input type="radio" name="shipping" value="1" checked="checked"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger"><input type="radio" name="shipping" value="0"/> {{ text_no }}</label>
                     {% else %}
-                      <input type="radio" name="shipping" value="1"/>
-                      {{ text_yes }}
-                    {% endif %}</label> <label class="radio-inline"> {% if not shipping %}
-                      <input type="radio" name="shipping" value="0" checked="checked"/>
-                      {{ text_no }}
-                    {% else %}
-                      <input type="radio" name="shipping" value="0"/>
-                      {{ text_no }}
-                    {% endif %}</label>
+                      <label class="btn btn-success"><input type="radio" name="shipping" value="1"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger active"><input type="radio" name="shipping" value="0" checked="checked"/> {{ text_no }}</label>
+                    {% endif %}
+                  </div>
                 </div>
               </div>
               <div class="form-group row">

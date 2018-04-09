@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
+      <div class="float-right">
         {% if is_authorized %}
           <a id="transaction_capture" data-url-transaction-capture="{{ url_capture }}" data-confirm-capture="{{ confirm_capture }}" class="btn btn-success">{{ button_capture }}</a>
           <a id="transaction_void" data-url-transaction-void="{{ url_void }}" data-confirm-void="{{ confirm_void }}" class="btn btn-warning">{{ button_void }}</a>

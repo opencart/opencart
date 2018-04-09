@@ -5,7 +5,6 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: 'Open Sans', sans-serif;
-    font-size: 14px;
     color: #545454;
     text-rendering: optimizeLegibility;
 }
@@ -23,8 +22,8 @@ label {
 }
 
 legend {
-  border-bottom: 2px solid #ddd;
-  margin-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 20px;
 }
 
 
@@ -79,6 +78,7 @@ legend {
 .breadcrumb > li:last-child a {
     color: #1e91cf;
 }
+
 
 a:hover, a:focus {
     text-decoration: none;
@@ -382,7 +382,10 @@ a:hover, a:focus {
     font-weight: bold;
     color: #333;
 }
-/*
+
+.col-form-label {
+    text-align: right;
+}
 .form-control:hover {
     border: 1px solid #b9b9b9;
     border-top-color: #a0a0a0;
@@ -410,7 +413,7 @@ div.required .col-form-label:not(span):before, td.required:before {
 fieldset legend {
     padding-bottom: 5px;
 }
-
+/*
 input[type="radio"], input[type="checkbox"] {
     margin: 2px 0 0;
 }
@@ -481,7 +484,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     display: block;
     content: url('../image/checkmark.png');
 }
-
+*/
 .table thead td {
     font-weight: bold;
 }
@@ -503,17 +506,17 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .pagination {
     margin: 0;
 }
-
+/*
 .form-group {
     padding-top: 15px;
     padding-bottom: 15px;
     margin-bottom: 0;
 }
-
+*/
 .form-group + .form-group {
     border-top: 1px solid #ededed;
 }
-*/
+
 /* Panels */
 .card {
     border-radius: 0px;
@@ -706,7 +709,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     font-size: 10.5em;
 }
 
-/*
+
 #extension-list {
     color: #4b525d;
 }
@@ -961,11 +964,9 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .list-check.list-color-blue li::before {
     color: #02afe9;
 }
-/*
-.well.filter {
-    background-color: #ffffff;
-}
-*/
+
+
+/* for the opencaaet marketplace */
 @font-face {
     font-family: 'opencart';
     src: url('fonts/opencart.eot?h4wsna');
@@ -993,10 +994,4 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 
 .opencart-icon-cart-mini:before {
     content: "\e91c";
-}
-
-.btn-ghost-dark {
-  border: 1px solid #000;
-  background-color: transparent;
-  color: #000;
 }

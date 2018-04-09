@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
+      <div class="float-right">
         <button type="submit" form="form-payment" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
@@ -233,17 +233,15 @@
                 <label class="col-sm-2 col-form-label">{{ entry_cards_accepted }}</label>
                 <div class="col-sm-10">
                   {% for card in cards %}
-                    <div class="checkbox">
-                      <label>
-                        {% if card.value in payment_firstdata_remote_cards_accepted %}
-                          <input type="checkbox" name="payment_firstdata_remote_cards_accepted[]" value="{{ card.value }}" checked="checked"/>
-                          {{ card.text }}
-                        {% else %}
-                          <input type="checkbox" name="payment_firstdata_remote_cards_accepted[]" value="{{ card.value }}"/>
-                          {{ card.text }}
-                        {% endif %}
-                      </label>
-                    </div>
+                    <label class="form-check">
+                      {% if card.value in payment_firstdata_remote_cards_accepted %}
+                        <input type="checkbox" name="payment_firstdata_remote_cards_accepted[]" value="{{ card.value }}" checked="checked" class="form-check-input"/>
+                        {{ card.text }}
+                      {% else %}
+                        <input type="checkbox" name="payment_firstdata_remote_cards_accepted[]" value="{{ card.value }}" class="form-check-input"/>
+                        {{ card.text }}
+                      {% endif %}
+                    </label>
                   {% endfor %}
                 </div>
               </div>

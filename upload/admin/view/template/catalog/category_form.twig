@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
+      <div class="float-right">
         <button type="submit" form="form-category" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
@@ -53,7 +53,7 @@
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label" for="input-description{{ language.language_id }}">{{ entry_description }}</label>
                       <div class="col-sm-10">
-                        <textarea name="category_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" data-toggle="summernote" data-lang="{{ summernote }}" class="form-control">{{ category_description[language.language_id] ? category_description[language.language_id].description }}</textarea>
+                        <textarea name="category_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" data-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control">{{ category_description[language.language_id] ? category_description[language.language_id].description }}</textarea>
                       </div>
                     </div>
                     <div class="form-group row required">
@@ -110,17 +110,14 @@
                 <div class="col-sm-10">
                   <div class="form-control" style="height: 150px; overflow: auto;">
                     {% for store in stores %}
-                      <div class="checkbox">
-                        <label>
-                          {% if store.store_id in category_store %}
-                            <input type="checkbox" name="category_store[]" value="{{ store.store_id }}" checked="checked"/>
-                            {{ store.name }}
-                          {% else %}
-                            <input type="checkbox" name="category_store[]" value="{{ store.store_id }}"/>
-                            {{ store.name }}
-                          {% endif %}
-                        </label>
-                      </div>
+                      <label class="form-check">
+                        {% if store.store_id in category_store %}
+                          <input type="checkbox" name="category_store[]" value="{{ store.store_id }}" checked="checked" class="form-check-input"/>
+                        {% else %}
+                          <input type="checkbox" name="category_store[]" value="{{ store.store_id }}" class="form-check-input"/>
+                        {% endif %}
+                          {{ store.name }}
+                      </label>
                     {% endfor %}
                   </div>
                 </div>
@@ -249,6 +246,8 @@
   </div>
 </div>
 <script type="text/javascript"><!--
+$('textarea[data-toggle=\'ckeditor\']').ckeditor();
+
 $('input[name=\'path\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({

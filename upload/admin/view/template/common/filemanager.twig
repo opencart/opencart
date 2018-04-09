@@ -1,4 +1,4 @@
-<div id="modal-image" class="modal">
+<div id="modal-image" class="modal show">
   <div id="filemanager" class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -42,47 +42,23 @@
           <br/>
         {% endfor %}
       </div>
-      <div class="modal-footer">{{ pagination }}</div>
+      {% if pagination %}
+        <div class="modal-footer">{{ pagination }}</div>
+      {% endif %}
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-{% if target %}
-$('a.thumbnail').on('click', function(e) {
+$('#modal-image').on('click', '#button-parent', function(e) {
 	e.preventDefault();
 
-  {% if thumb %}
-	$('#{{ thumb }}').attr('src', $(this).find('img').attr('src'));
-  {% endif %}
-
-	$('#{{ target|escape('js') }}').val($(this).parent().find('input').val());
-
-	$('#modal-image').modal('hide');
-});
-{% endif %}
-
-$('a.directory').on('click', function(e) {
-	e.preventDefault();
-
-	$('#modal-image').load($(this).attr('href'));
+	$('#modal-image').load($(this).attr('href') + ' div#filemanager');
 });
 
-$('.pagination a').on('click', function(e) {
+$('#modal-image').on('click', '#button-refresh', function(e) {
 	e.preventDefault();
 
-	$('#modal-image').load($(this).attr('href'));
-});
-
-$('#button-parent').on('click', function(e) {
-	e.preventDefault();
-
-	$('#modal-image').load($(this).attr('href'));
-});
-
-$('#button-refresh').on('click', function(e) {
-	e.preventDefault();
-
-	$('#modal-image').load($(this).attr('href'));
+	$('#modal-image').load($(this).attr('href') + ' div#filemanager');
 });
 
 $('input[name=\'search\']').on('keydown', function(e) {
@@ -91,7 +67,7 @@ $('input[name=\'search\']').on('keydown', function(e) {
 	}
 });
 
-$('#button-search').on('click', function(e) {
+$('#modal-image').on('click', '#button-search', function(e) {
 	var url = 'index.php?route=common/filemanager&user_token={{ user_token }}&directory={{ directory|escape('js') }}';
 
 	var filter_name = $('input[name=\'search\']').val();
@@ -101,18 +77,21 @@ $('#button-search').on('click', function(e) {
 	}
 
   {% if thumb %}
-	url += '&thumb=' + '{{ thumb }}';
+	url += '&thumb={{ thumb|escape('js') }}';
   {% endif %}
 
   {% if target %}
-	url += '&target=' + '{{ target }}';
+	url += '&target={{ target|escape('js') }}';
   {% endif %}
 
-	$('#modal-image').load(url);
+  {% if ckeditor %}
+	url += '&ckeditor={{ ckeditor|escape('js') }}';
+  {% endif %}
+
+	$('#modal-image').load(url + ' div#filemanager');
 });
-//--></script>
-<script type="text/javascript"><!--
-$('#button-upload').on('click', function() {
+
+$('#modal-image').on('click', '#button-upload', function() {
 	$('#form-upload').remove();
 
 	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file[]" value="" multiple="multiple" /></form>');
@@ -168,7 +147,7 @@ $('#button-folder').popover({
 	trigger: 'click',
 	title: '{{ entry_folder }}',
 	content: function() {
-		html = '<div class="input-group">';
+		html  = '<div class="input-group">';
 		html += '  <input type="text" name="folder" value="" placeholder="{{ entry_folder }}" class="form-control">';
 		html += '  <div class="input-group-append"><button type="button" title="{{ button_folder }}" id="button-create" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></div>';
 		html += '</div>';
@@ -208,7 +187,7 @@ $('#button-folder').on('shown.bs.popover', function() {
 	});
 });
 
-$('#modal-image #button-delete').on('click', function(e) {
+$('#modal-image').on('click', '#button-delete', function(e) {
 	if (confirm('{{ text_confirm }}')) {
 		$.ajax({
 			url: 'index.php?route=common/filemanager/delete&user_token={{ user_token }}',
@@ -216,9 +195,11 @@ $('#modal-image #button-delete').on('click', function(e) {
 			dataType: 'json',
 			data: $('input[name^=\'path\']:checked'),
 			beforeSend: function() {
+				$('#button-delete i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 				$('#button-delete').prop('disabled', true);
 			},
 			complete: function() {
+				$('#button-delete i').replaceWith('<i class="fa fa-upload"></i>');
 				$('#button-delete').prop('disabled', false);
 			},
 			success: function(json) {
@@ -237,5 +218,33 @@ $('#modal-image #button-delete').on('click', function(e) {
 			}
 		});
 	}
+});
+
+$('#modal-image').on('click', 'a.directory', function(e) {
+	e.preventDefault();
+
+	$('#modal-image').load($(this).attr('href') + ' div#filemanager');
+});
+
+$('#modal-image').on('click', 'a.thumbnail', function(e) {
+	e.preventDefault();
+
+  {% if thumb %}
+	$('#{{ thumb|escape('js') }}').attr('src', $(this).find('img').attr('src'));
+
+	$('#{{ target|escape('js') }}').val($(this).parent().find('input').val());
+  {% endif %}
+
+  {% if ckeditor %}
+	CKEDITOR.instances['{{ ckeditor|escape('js') }}'].insertHtml('<img src="' + $(this).attr('href') + '" alt="" title="" />');
+  {% endif %}
+
+	$('#modal-image').modal('hide');
+});
+
+$('#modal-image').on('click', '.pagination a', function(e) {
+	e.preventDefault();
+
+	$('#modal-image').load($(this).attr('href') + ' div#filemanager');
 });
 //--></script>

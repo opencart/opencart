@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
+      <div class="float-right">
         <button type="submit" form="form-store" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
@@ -182,19 +182,19 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ entry_location }}</label>
                   <div class="col-sm-10">
-                    {% for location in locations %}
-                      <div class="checkbox">
-                        <label>
+                    <div class="form-control" style="height: 150px; overflow: auto;">
+                      {% for location in locations %}
+                        <label class="form-check">
                           {% if location.location_id in config_location %}
-                            <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" checked="checked"/>
+                            <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" checked="checked" class="form-check-input"/>
                             {{ location.name }}
                           {% else %}
-                            <input type="checkbox" name="config_location[]" value="{{ location.location_id }}"/>
+                            <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" class="form-check-input"/>
                             {{ location.name }}
                           {% endif %}
                         </label>
-                      </div>
-                    {% endfor %}
+                      {% endfor %}
+                    </div>
                     <small class="form-text text-muted">{{ help_location }}</small>
                   </div>
                 </div>
@@ -257,23 +257,15 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ entry_tax }}</label>
                   <div class="col-sm-10">
-                    <label class="radio-inline">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
                       {% if config_tax %}
-                        <input type="radio" name="config_tax" value="1" checked="checked"/>
-                        {{ text_yes }}
+                        <label class="btn btn-success active"><input type="radio" name="config_tax" value="1" checked="checked"/> {{ text_yes }}</label>
+                        <label class="btn btn-danger"><input type="radio" name="config_tax" value="0"/> {{ text_no }}</label>
                       {% else %}
-                        <input type="radio" name="config_tax" value="1"/>
-                        {{ text_yes }}
+                        <label class="btn btn-success"><input type="radio" name="config_tax" value="1"/> {{ text_yes }}</label>
+                        <label class="btn btn-danger active"><input type="radio" name="config_tax" value="0" checked="checked"/> {{ text_no }}</label>
                       {% endif %}
-                    </label> <label class="radio-inline">
-                      {% if not config_tax %}
-                        <input type="radio" name="config_tax" value="0" checked="checked"/>
-                        {{ text_no }}
-                      {% else %}
-                        <input type="radio" name="config_tax" value="0"/>
-                        {{ text_no }}
-                      {% endif %}
-                    </label>
+                    </div>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -335,19 +327,19 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ entry_customer_group_display }}</label>
                   <div class="col-sm-10">
-                    {% for customer_group in customer_groups %}
-                      <div class="checkbox">
-                        <label>
+                    <div class="form-control" style="height: 150px; overflow: auto;">
+                      {% for customer_group in customer_groups %}
+                        <label class="form-check">
                           {% if customer_group.customer_group_id in config_customer_group_display %}
-                            <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" checked="checked"/>
+                            <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" checked="checked" class="form-check-input"/>
                             {{ customer_group.name }}
                           {% else %}
-                            <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}"/>
+                            <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" class="form-check-input"/>
                             {{ customer_group.name }}
                           {% endif %}
                         </label>
-                      </div>
-                    {% endfor %}
+                      {% endfor %}
+                    </div>
                     <small class="form-text text-muted">{{ help_customer_group_display }}</small>
                     {% if error_customer_group_display %}
                       <div class="invalid-tooltip">{{ error_customer_group_display }}</div>
@@ -357,23 +349,15 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ entry_customer_price }}</label>
                   <div class="col-sm-10">
-                    <label class="radio-inline">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
                       {% if config_customer_price %}
-                        <input type="radio" name="config_customer_price" value="1" checked="checked"/>
-                        {{ text_yes }}
+                        <label class="btn btn-success active"><input type="radio" name="config_customer_price" value="1" checked="checked"/> {{ text_yes }}</label>
+                        <label class="btn btn-danger"><input type="radio" name="config_customer_price" value="0"/> {{ text_no }}</label>
                       {% else %}
-                        <input type="radio" name="config_customer_price" value="1"/>
-                        {{ text_yes }}
+                        <label class="btn btn-success"><input type="radio" name="config_customer_price" value="1"/> {{ text_yes }}</label>
+                        <label class="btn btn-danger active"><input type="radio" name="config_customer_price" value="0" checked="checked"/> {{ text_no }}</label>
                       {% endif %}
-                    </label> <label class="radio-inline">
-                      {% if not config_customer_price %}
-                        <input type="radio" name="config_customer_price" value="0" checked="checked"/>
-                        {{ text_no }}
-                      {% else %}
-                        <input type="radio" name="config_customer_price" value="0"/>
-                        {{ text_no }}
-                      {% endif %}
-                    </label>
+                    </div>
                     <small class="form-text text-muted">{{ help_customer_price }}</small>
                   </div>
                 </div>
@@ -399,45 +383,29 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ entry_cart_weight }}</label>
                   <div class="col-sm-10">
-                    <label class="radio-inline">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
                       {% if config_cart_weight %}
-                        <input type="radio" name="config_cart_weight" value="1" checked="checked"/>
-                        {{ text_yes }}
+                        <label class="btn btn-success active"><input type="radio" name="config_cart_weight" value="1" checked="checked"/> {{ text_yes }}</label>
+                        <label class="btn btn-danger"><input type="radio" name="config_cart_weight" value="0"/> {{ text_no }}</label>
                       {% else %}
-                        <input type="radio" name="config_cart_weight" value="1"/>
-                        {{ text_yes }}
+                        <label class="btn btn-success"><input type="radio" name="config_cart_weight" value="1"/> {{ text_yes }}</label>
+                        <label class="btn btn-danger active"><input type="radio" name="config_cart_weight" value="0" checked="checked"/> {{ text_no }}</label>
                       {% endif %}
-                    </label> <label class="radio-inline">
-                      {% if not config_cart_weight %}
-                        <input type="radio" name="config_cart_weight" value="0" checked="checked"/>
-                        {{ text_no }}
-                      {% else %}
-                        <input type="radio" name="config_cart_weight" value="0"/>
-                        {{ text_no }}
-                      {% endif %}
-                    </label>
+                    </div>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ entry_checkout_guest }}</label>
                   <div class="col-sm-10">
-                    <label class="radio-inline">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
                       {% if config_checkout_guest %}
-                        <input type="radio" name="config_checkout_guest" value="1" checked="checked"/>
-                        {{ text_yes }}
+                        <label class="btn btn-success active"><input type="radio" name="config_checkout_guest" value="1" checked="checked"/> {{ text_yes }}</label>
+                        <label class="btn btn-danger"><input type="radio" name="config_checkout_guest" value="0"/> {{ text_no }}</label>
                       {% else %}
-                        <input type="radio" name="config_checkout_guest" value="1"/>
-                        {{ text_yes }}
+                        <label class="btn btn-success"><input type="radio" name="config_checkout_guest" value="1"/> {{ text_yes }}</label>
+                        <label class="btn btn-danger active"><input type="radio" name="config_checkout_guest" value="0" checked="checked"/> {{ text_no }}</label>
                       {% endif %}
-                    </label> <label class="radio-inline">
-                      {% if not config_checkout_guest %}
-                        <input type="radio" name="config_checkout_guest" value="0" checked="checked"/>
-                        {{ text_no }}
-                      {% else %}
-                        <input type="radio" name="config_checkout_guest" value="0"/>
-                        {{ text_no }}
-                      {% endif %}
-                    </label>
+                    </div>
                     <small class="form-text text-muted">{{ help_checkout_guest }}</small>
                   </div>
                 </div>
@@ -478,46 +446,30 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ entry_stock_display }}</label>
                   <div class="col-sm-10">
-                    <label class="radio-inline">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
                       {% if config_stock_display %}
-                        <input type="radio" name="config_stock_display" value="1" checked="checked"/>
-                        {{ text_yes }}
+                        <label class="btn btn-success active"><input type="radio" name="config_stock_display" value="1" checked="checked"/> {{ text_yes }}</label>
+                        <label class="btn btn-danger"><input type="radio" name="config_stock_display" value="0"/> {{ text_no }}</label>
                       {% else %}
-                        <input type="radio" name="config_stock_display" value="1"/>
-                        {{ text_yes }}
+                        <label class="btn btn-success"><input type="radio" name="config_stock_display" value="1"/> {{ text_yes }}</label>
+                        <label class="btn btn-danger active"><input type="radio" name="config_stock_display" value="0" checked="checked"/> {{ text_no }}</label>
                       {% endif %}
-                    </label> <label class="radio-inline">
-                      {% if not config_stock_display %}
-                        <input type="radio" name="config_stock_display" value="0" checked="checked"/>
-                        {{ text_no }}
-                      {% else %}
-                        <input type="radio" name="config_stock_display" value="0"/>
-                        {{ text_no }}
-                      {% endif %}
-                    </label>
+                    </div>
                     <small class="form-text text-muted">{{ help_stock_display }}</small>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ entry_stock_checkout }}</label>
                   <div class="col-sm-10">
-                    <label class="radio-inline">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
                       {% if config_stock_checkout %}
-                        <input type="radio" name="config_stock_checkout" value="1" checked="checked"/>
-                        {{ text_yes }}
+                        <label class="btn btn-success active"><input type="radio" name="config_stock_checkout" value="1" checked="checked"/> {{ text_yes }}</label>
+                        <label class="btn btn-danger"><input type="radio" name="config_stock_checkout" value="0"/> {{ text_no }}</label>
                       {% else %}
-                        <input type="radio" name="config_stock_checkout" value="1"/>
-                        {{ text_yes }}
+                        <label class="btn btn-success"><input type="radio" name="config_stock_checkout" value="1"/> {{ text_yes }}</label>
+                        <label class="btn btn-danger active"><input type="radio" name="config_stock_checkout" value="0" checked="checked"/> {{ text_no }}</label>
                       {% endif %}
-                    </label> <label class="radio-inline">
-                      {% if not config_stock_checkout %}
-                        <input type="radio" name="config_stock_checkout" value="0" checked="checked"/>
-                        {{ text_no }}
-                      {% else %}
-                        <input type="radio" name="config_stock_checkout" value="0"/>
-                        {{ text_no }}
-                      {% endif %}
-                    </label>
+                    </div>
                     <small class="form-text text-muted">{{ help_stock_checkout }}</small>
                   </div>
                 </div>

@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
+      <div class="float-right">
         <button type="submit" form="form-manufacturer" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
@@ -43,26 +43,24 @@
                 <div class="col-sm-10">
                   <div class="form-control" style="height: 150px; overflow: auto;">
                     {% for store in stores %}
-                      <div class="checkbox">
-                        <label>
-                          {% if store.store_id in manufacturer_store %}
-                            <input type="checkbox" name="manufacturer_store[]" value="{{ store.store_id }}" checked="checked"/>
-                            {{ store.name }}
-                          {% else %}
-                            <input type="checkbox" name="manufacturer_store[]" value="{{ store.store_id }}"/>
-                            {{ store.name }}
-                          {% endif %}
-                        </label>
-                      </div>
-                    {% endfor %}</div>
+                      <label class="form-check">
+                        {% if store.store_id in manufacturer_store %}
+                          <input type="checkbox" name="manufacturer_store[]" value="{{ store.store_id }}" checked="checked" class="form-check-input"/>
+                          {{ store.name }}
+                        {% else %}
+                          <input type="checkbox" name="manufacturer_store[]" value="{{ store.store_id }}" class="form-check-input"/>
+                          {{ store.name }}
+                        {% endif %}
+                      </label>
+                    {% endfor %}
+                  </div>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-image">{{ entry_image }}</label>
                 <div class="col-sm-10">
                   <div class="card" style="max-width: 10rem;">
-                    <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/>
-                    <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
+                    <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
                     <div class="card-footer text-center">
                       <div class="btn-group btn-group-sm">
                         <button type="button" data-toggle="image" data-target="input-image" data-thumb="thumb-image" class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i> {{ button_edit }}</button>

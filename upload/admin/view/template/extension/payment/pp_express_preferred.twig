@@ -1,8 +1,8 @@
 <div class="col-lg-6 col-md-12 col-sm-12">
   <div class="card">
-    <div class="card-header"><img class="pull-right" width="135" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_200x51.png" alt="PayPal Logo">
+    <div class="card-header"><img class="float-right" width="135" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_200x51.png" alt="PayPal Logo">
       {% if payment_pp_express_status == "enabled" %}
-        <div class="pull-right"><span class="label label-success">{{ text_enabled }}</span></div>
+        <div class="float-right"><span class="label label-success">{{ text_enabled }}</span></div>
       {% endif %}
     </div>
     <div class="card-body">
@@ -21,7 +21,7 @@
           </ul>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3">
-          <p><img class="pull-right" src="view/image/payment/paypal-express-gold-pill.png" alt="PayPal Express" width="130" style="margin-bottom:10px;"/></p>
+          <p><img class="float-right" src="view/image/payment/paypal-express-gold-pill.png" alt="PayPal Express" width="130" style="margin-bottom:10px;"/></p>
 
           {% if connect_link is not empty %}
             <p><a href="{{ connect_link }}" data-toggle="tooltip" title="" class="btn btn-primary pull-right" target="_blank" data-original-title="{{ text_connect_paypal }}">{{ text_connect_paypal }}</a></p>

@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
+      <div class="float-right">
         <button type="submit" form="form-pp-express" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a> <a href="{{ search }}" data-toggle="tooltip" title="{{ button_search }}" class="btn btn-info"><i class="fa fa-search"></i></a></div>
       <h1>{{ heading_title }}</h1>
@@ -140,31 +140,31 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-test">{{ entry_test }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_test }}</label>
                 <div class="col-sm-10">
-                  <select name="payment_pp_express_test" id="input-test" class="form-control">
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     {% if payment_pp_express_test %}
-                      <option value="1" selected="selected">{{ text_yes }}</option>
-                      <option value="0">{{ text_no }}</option>
+                      <label class="btn btn-success active"><input type="radio" name="payment_pp_express_test" value="1" checked="checked"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger"><input type="radio" name="payment_pp_express_test" value="0"/> {{ text_no }}</label>
                     {% else %}
-                      <option value="1">{{ text_yes }}</option>
-                      <option value="0" selected="selected">{{ text_no }}</option>
+                      <label class="btn btn-success"><input type="radio" name="payment_pp_express_test" value="1"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger active"><input type="radio" name="payment_pp_express_test" value="0" checked="checked"/> {{ text_no }}</label>
                     {% endif %}
-                  </select>
+                  </div>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-debug">{{ entry_debug }}</label>
                 <div class="col-sm-10">
-                  <select name="payment_pp_express_debug" id="input-debug" class="form-control">
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     {% if payment_pp_express_debug %}
-                      <option value="1" selected="selected">{{ text_yes }}</option>
-                      <option value="0">{{ text_no }}</option>
+                      <label class="btn btn-success active"><input type="radio" name="payment_pp_express_debug" value="1" checked="checked"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger"><input type="radio" name="payment_pp_express_debug" value="0"/> {{ text_no }}</label>
                     {% else %}
-                      <option value="1">{{ text_yes }}</option>
-                      <option value="0" selected="selected">{{ text_no }}</option>
+                      <label class="btn btn-success"><input type="radio" name="payment_pp_express_debug" value="1"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger active"><input type="radio" name="payment_pp_express_debug" value="0" checked="checked"/> {{ text_no }}</label>
                     {% endif %}
-                  </select>
+                  </div>
                 </div>
               </div>
               <div class="form-group row">
@@ -387,16 +387,16 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-notes">{{ entry_allow_notes }}</label>
                 <div class="col-sm-10">
-                  <select name="payment_pp_express_allow_note" id="input-notes" class="form-control">
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     {% if payment_pp_express_allow_note %}
-                      <option value="1" selected="selected">{{ text_yes }}</option>
-                      <option value="0">{{ text_no }}</option>
+                      <label class="btn btn-success active"><input type="radio" name="payment_pp_express_allow_note" value="1" checked="checked"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger"><input type="radio" name="payment_pp_express_allow_note" value="0"/> {{ text_no }}</label>
                     {% else %}
-                      <option value="1">{{ text_yes }}</option>
-                      <option value="0" selected="selected">{{ text_no }}</option>
+                      <label class="btn btn-success"><input type="radio" name="payment_pp_express_allow_note" value="1"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger active"><input type="radio" name="payment_pp_express_allow_note" value="0" checked="checked"/> {{ text_no }}</label>
                     {% endif %}
-                  </select>
-                  <br/>{{ text_incontext_not_supported }}
+                  </div>
+                  <small class="form-text text-muted">{{ text_incontext_not_supported }}</small>
                 </div>
               </div>
               <div class="form-group row">
@@ -415,17 +415,17 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-incontext-disable">{{ entry_incontext }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_incontext }}</label>
                 <div class="col-sm-10">
-                  <select name="payment_pp_express_incontext_disable" id="input-incontext-disable" class="form-control">
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     {% if payment_pp_express_incontext_disable %}
-                      <option value="1" selected="selected">{{ text_yes }}</option>
-                      <option value="0">{{ text_no }}</option>
+                      <label class="btn btn-success active"><input type="radio" name="payment_pp_express_incontext_disable" value="1" checked="checked"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger"><input type="radio" name="payment_pp_express_incontext_disable" value="0"/> {{ text_no }}</label>
                     {% else %}
-                      <option value="1">{{ text_yes }}</option>
-                      <option value="0" selected="selected">{{ text_no }}</option>
+                      <label class="btn btn-success"><input type="radio" name="payment_pp_express_incontext_disable" value="1"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger active"><input type="radio" name="payment_pp_express_incontext_disable" value="0" checked="checked"/> {{ text_no }}</label>
                     {% endif %}
-                  </select>
+                  </div>
                 </div>
               </div>
               <div class="form-group row">

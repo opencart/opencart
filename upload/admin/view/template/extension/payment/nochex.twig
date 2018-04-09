@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
+      <div class="float-right">
         <button type="submit" form="form-payment" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
@@ -60,37 +60,29 @@
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">{{ entry_template }}</label>
             <div class="col-sm-10">
-              <label class="radio-inline"> {% if payment_nochex_template %}
-                  <input type="radio" name="payment_nochex_template" value="1" checked="checked"/>
-                  {{ text_yes }}
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                {% if payment_nochex_template %}
+                  <label class="btn btn-success active"><input type="radio" name="payment_nochex_template" value="1" checked="checked"/> {{ text_yes }}</label>
+                  <label class="btn btn-danger"><input type="radio" name="payment_nochex_template" value="0"/> {{ text_no }}</label>
                 {% else %}
-                  <input type="radio" name="payment_nochex_template" value="1"/>
-                  {{ text_yes }}
-                {% endif %} </label> <label class="radio-inline"> {% if not payment_nochex_template %}
-                  <input type="radio" name="payment_nochex_template" value="0" checked="checked"/>
-                  {{ text_no }}
-                {% else %}
-                  <input type="radio" name="payment_nochex_template" value="0"/>
-                  {{ text_no }}
-                {% endif %} </label>
+                  <label class="btn btn-success"><input type="radio" name="payment_nochex_template" value="1"/> {{ text_yes }}</label>
+                  <label class="btn btn-danger active"><input type="radio" name="payment_nochex_template" value="0" checked="checked"/> {{ text_no }}</label>
+                {% endif %}
+              </div>
             </div>
           </div>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">{{ entry_test }}</label>
             <div class="col-sm-10">
-              <label class="radio-inline"> {% if payment_nochex_test %}
-                  <input type="radio" name="payment_nochex_test" value="1" checked="checked"/>
-                  {{ text_yes }}
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                {% if payment_nochex_test %}
+                  <label class="btn btn-success active"><input type="radio" name="payment_nochex_test" value="1" checked="checked"/> {{ text_yes }}</label>
+                  <label class="btn btn-danger"><input type="radio" name="payment_nochex_test" value="0"/> {{ text_no }}</label>
                 {% else %}
-                  <input type="radio" name="payment_nochex_test" value="1"/>
-                  {{ text_yes }}
-                {% endif %} </label> <label class="radio-inline"> {% if not payment_nochex_test %}
-                  <input type="radio" name="payment_nochex_test" value="0" checked="checked"/>
-                  {{ text_no }}
-                {% else %}
-                  <input type="radio" name="payment_nochex_test" value="0"/>
-                  {{ text_no }}
-                {% endif %} </label>
+                  <label class="btn btn-success"><input type="radio" name="payment_nochex_test" value="1"/> {{ text_yes }}</label>
+                  <label class="btn btn-danger active"><input type="radio" name="payment_nochex_test" value="0" checked="checked"/> {{ text_no }}</label>
+                {% endif %}
+              </div>
             </div>
           </div>
           <div class="form-group row">

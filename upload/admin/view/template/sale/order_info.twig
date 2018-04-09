@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="{{ invoice }}" target="_blank" data-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info"><i class="fa fa-print"></i></a> <a href="{{ shipping }}" target="_blank" data-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info"><i class="fa fa-truck"></i></a> <a href="{{ edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
+      <div class="float-right"><a href="{{ invoice }}" target="_blank" data-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info"><i class="fa fa-print"></i></a> <a href="{{ shipping }}" target="_blank" data-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info"><i class="fa fa-truck"></i></a> <a href="{{ edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -229,8 +229,8 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-override">{{ entry_override }}</label>
                   <div class="col-sm-10">
-                    <div class="checkbox">
-                      <input type="checkbox" name="override" value="1" id="input-override"/>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                      <label class="btn btn-success"><input type="radio" name="override" value="1"/> {{ text_yes }}</label> <label class="btn btn-danger active"><input type="radio" name="override" value="0" checked="checked"/> {{ text_no }}</label>
                     </div>
                     <small class="form-text text-muted">{{ help_override }}</small>
                   </div>
@@ -238,8 +238,8 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-notify">{{ entry_notify }}</label>
                   <div class="col-sm-10">
-                    <div class="checkbox">
-                      <input type="checkbox" name="notify" value="1" id="input-notify"/>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                      <label class="btn btn-success"><input type="radio" name="notify" value="1"/> {{ text_yes }}</label> <label class="btn btn-danger active"><input type="radio" name="notify" value="0" checked="checked"/> {{ text_no }}</label>
                     </div>
                   </div>
                 </div>

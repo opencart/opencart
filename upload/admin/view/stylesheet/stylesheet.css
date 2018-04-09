@@ -992,3 +992,6 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .btn-info {
     color: #ffffff;
 }
+.btn-danger {
+    border-color: #dd3520;
+}

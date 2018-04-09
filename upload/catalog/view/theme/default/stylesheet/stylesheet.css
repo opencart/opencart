@@ -364,34 +364,31 @@ div.required .col-form-label:before {
   .btn.active {
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125); }
 
-.btn-default {
+.btn-light {
   color: #777;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
   background-color: #e7e7e7;
   background-image: linear-gradient(to bottom, #eee, #ddd);
   background-repeat: repeat-x;
   border-color: #ddd #ddd #b3b3b3 #b7b7b7; }
-  .btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .btn-default.disabled, .btn-default[disabled] {
+  .btn-light:hover, .btn-light:focus, .btn-light:active, .btn-light.active, .btn-light.disabled, .btn-light[disabled] {
     color: #333;
     background-color: #e6e6e6;
     border-color: #adadad;
-    background-position: 0 -15px; }
+    background-position: 0; }
 
 .btn-primary {
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: #229ac8;
   background-image: linear-gradient(to bottom, #23a1d1, #1f90bb);
   background-repeat: repeat-x;
   border-color: #1f90bb #1f90bb #145e7a; }
   .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .btn-primary.disabled, .btn-primary[disabled] {
-    background-color: #1f90bb;
-    background-position: 0 -15px; }
+    background-position: 0; }
 
 .btn-warning {
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: #faa732;
   background-image: linear-gradient(to bottom, #fbb450, #f89406);
   background-repeat: repeat-x;
   border-color: #f89406 #f89406 #ad6704; }
@@ -401,7 +398,6 @@ div.required .col-form-label:before {
 .btn-danger {
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: #da4f49;
   background-image: linear-gradient(to bottom, #ee5f5b, #bd362f);
   background-repeat: repeat-x;
   border-color: #bd362f #bd362f #802420; }
@@ -411,7 +407,6 @@ div.required .col-form-label:before {
 .btn-success {
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: #5bb75b;
   background-image: linear-gradient(to bottom, #62c462, #51a351);
   background-repeat: repeat-x;
   border-color: #51a351 #51a351 #387038; }
@@ -421,7 +416,6 @@ div.required .col-form-label:before {
 .btn-info {
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: #df5c39;
   background-image: linear-gradient(to bottom, #e06342, #dc512c);
   background-repeat: repeat-x;
   border-color: #dc512c #dc512c #a2371a; }

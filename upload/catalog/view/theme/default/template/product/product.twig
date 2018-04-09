@@ -131,8 +131,8 @@
         {% endif %}
         <div class="{{ class }}">
           <div class="btn-group">
-            <button type="button" data-toggle="tooltip" class="btn btn-default" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');"><i class="fa fa-heart"></i></button>
-            <button type="button" data-toggle="tooltip" class="btn btn-default" title="{{ button_compare }}" onclick="compare.add('{{ product_id }}');"><i class="fa fa-exchange"></i></button>
+            <button type="button" data-toggle="tooltip" class="btn btn-light" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');"><i class="fa fa-heart"></i></button>
+            <button type="button" data-toggle="tooltip" class="btn btn-light" title="{{ button_compare }}" onclick="compare.add('{{ product_id }}');"><i class="fa fa-exchange"></i></button>
           </div>
           <h1>{{ heading_title }}</h1>
           <ul class="list-unstyled">
@@ -238,7 +238,7 @@
             {% if option.type == 'file' %}
             <div class="form-group{% if option.required %} required {% endif %}">
               <label class="col-form-label">{{ option.name }}</label>
-              <button type="button" id="button-upload{{ option.product_option_id }}" data-loading-text="{{ text_loading }}" class="btn btn-default btn-block"><i class="fa fa-upload"></i> {{ button_upload }}</button>
+              <button type="button" id="button-upload{{ option.product_option_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light btn-block"><i class="fa fa-upload"></i> {{ button_upload }}</button>
               <input type="hidden" name="option[{{ option.product_option_id }}]" value="" id="input-option{{ option.product_option_id }}" />
             </div>
             {% endif %}
@@ -248,7 +248,7 @@
               <div class="input-group date">
                 <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="YYYY-MM-DD" id="input-option{{ option.product_option_id }}" class="form-control" />
                 <div class="input-group-append">
-                <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                <button class="btn btn-light" type="button"><i class="fa fa-calendar"></i></button>
                 </div>
               </div>
             </div>
@@ -259,7 +259,7 @@
               <div class="input-group datetime">
                 <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="YYYY-MM-DD HH:mm" id="input-option{{ option.product_option_id }}" class="form-control" />
                 <div class="input-group-append">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                  <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
                 </div>
               </div>
             </div>
@@ -270,7 +270,7 @@
               <div class="input-group time">
                 <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="HH:mm" id="input-option{{ option.product_option_id }}" class="form-control" />
                 <div class="input-group-append">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                  <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
                 </div>
               </div>
             </div>

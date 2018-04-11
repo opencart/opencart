@@ -146,7 +146,14 @@
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-image">{{ entry_image }}</label>
-                <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ thumb }}" alt="" title="" data-placeholder="{{ placeholder }}"/></a> <input type="hidden" name="config_image" value="{{ config_image }}" id="input-image"/>
+                <div class="col-sm-10">
+                  <div class="card" style="width:  12rem;">
+                    <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_image" value="{{ config_image }}" id="input-image"/>
+                    <div class="card-body">
+                      <button type="button" data-toggle="image" data-target="input-image" data-thumb="thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+                      <button type="button" data-toggle="clear" data-target="input-image" data-thumb="thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="form-group row">
@@ -280,17 +287,16 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">{{ entry_currency_auto }}</label>
                 <div class="col-sm-10">
-                  <label class="radio-inline">
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                      {% if config_currency_auto %}
-                        <label class="btn btn-success active"><input type="radio" name="config_currency_auto" value="1" checked="checked"/> {{ text_yes }}</label>
-                        <label class="btn btn-danger"><input type="radio" name="config_currency_auto" value="0"/> {{ text_no }}</label>
-                      {% else %}
-                        <label class="btn btn-success"><input type="radio" name="config_currency_auto" value="1"/> {{ text_yes }}</label>
-                        <label class="btn btn-danger active"><input type="radio" name="config_currency_auto" value="0" checked="checked"/> {{ text_no }}</label>
-                      {% endif %}
-                    </div>
-                    <small class="form-text text-muted">{{ help_currency_auto }}</small>
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    {% if config_currency_auto %}
+                      <label class="btn btn-success active"><input type="radio" name="config_currency_auto" value="1" checked="checked"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger"><input type="radio" name="config_currency_auto" value="0"/> {{ text_no }}</label>
+                    {% else %}
+                      <label class="btn btn-success"><input type="radio" name="config_currency_auto" value="1"/> {{ text_yes }}</label>
+                      <label class="btn btn-danger active"><input type="radio" name="config_currency_auto" value="0" checked="checked"/> {{ text_no }}</label>
+                    {% endif %}
+                  </div>
+                  <small class="form-text text-muted">{{ help_currency_auto }}</small>
                 </div>
               </div>
               <div class="form-group row">
@@ -653,7 +659,6 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-process-status">{{ entry_processing_status }}</label>
                   <div class="col-sm-10">
-
                     <div class="form-control" style="height: 150px; overflow: auto;">
                       {% for order_status in order_statuses %}
                         <label class="form-check">{% if order_status.order_status_id in config_processing_status %}
@@ -669,7 +674,8 @@
                     <small class="form-text text-muted">{{ help_processing_status }}</small>
                     {% if error_processing_status %}
                       <div class="invalid-tooltip">{{ error_processing_status }}</div>
-                    {% endif %}</div>
+                    {% endif %}
+                  </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-complete-status">{{ entry_complete_status }}</label>
@@ -778,19 +784,13 @@
                   <label class="col-sm-2 col-form-label" for="input-affiliate-group">{{ entry_affiliate_group }}</label>
                   <div class="col-sm-10">
                     <select name="config_affiliate_group_id" id="input-affiliate-group" class="form-control">
-
                       {% for customer_group in customer_groups %}
                         {% if customer_group.customer_group_id == config_affiliate_group_id %}
-
                           <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
-
                         {% else %}
-
                           <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
-
                         {% endif %}
                       {% endfor %}
-
                     </select>
                   </div>
                 </div>
@@ -923,12 +923,28 @@
             <div class="tab-pane" id="tab-image">
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-logo">{{ entry_logo }}</label>
-                <div class="col-sm-10"><a href="" id="thumb-logo" data-toggle="image" class="img-thumbnail"><img src="{{ logo }}" alt="" title="" data-placeholder="{{ placeholder }}"/></a> <input type="hidden" name="config_logo" value="{{ config_logo }}" id="input-logo"/>
+                <div class="col-sm-10">
+                  <div class="card" style="width:  12rem;">
+                    <img src="{{ logo }}" alt="" title="" id="thumb-logo" data-placeholder="{{ placeholder }}" class="card-img-top"/>
+                    <input type="hidden" name="config_logo" value="{{ config_logo }}" id="input-logo"/>
+                    <div class="card-body">
+                      <button type="button" data-toggle="image" data-target="input-logo" data-thumb="thumb-logo" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+                      <button type="button" data-toggle="clear" data-target="input-logo" data-thumb="thumb-logo" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-icon">{{ entry_icon }}</label>
-                <div class="col-sm-10"><a href="" id="thumb-icon" data-toggle="image" class="img-thumbnail"><img src="{{ icon }}" alt="" title="" data-placeholder="{{ placeholder }}"/></a> <input type="hidden" name="config_icon" value="{{ config_icon }}" id="input-icon"/>
+                <div class="col-sm-10">
+                  <div class="card" style="width:  12rem;">
+                    <img src="{{ icon }}" alt="" title="" id="thumb-icon" data-placeholder="{{ placeholder }}" class="card-img-top"/>
+                    <input type="hidden" name="config_icon" value="{{ config_icon }}" id="input-icon"/>
+                    <div class="card-body">
+                      <button type="button" data-toggle="image" data-target="input-icon" data-thumb="thumb-icon" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+                      <button type="button" data-toggle="clear" data-target="input-icon" data-thumb="thumb-icon" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+                    </div>
+                  </div>
                   <small class="form-text text-muted">{{ help_icon }}</small>
                 </div>
               </div>

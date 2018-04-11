@@ -178,7 +178,7 @@ $('select[name=\'type\']').trigger('change');
 var option_value_row = {{ option_value_row }};
 
 function addOptionValue() {
-	html  = '<tr id="option-value-row' + option_value_row + '">';
+	html = '<tr id="option-value-row' + option_value_row + '">';
 	html += '  <td class="text-left"><input type="hidden" name="option_value[' + option_value_row + '][option_value_id]" value="" />';
   {% for language in languages %}
 	html += '    <div class="input-group">';

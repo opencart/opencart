@@ -120,7 +120,7 @@
                           <td class="text-right">
                             <div class="btn-group">
                               <a href="{{ order.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
-                              <button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle dropdown-toggle-split"><span class="caret"></span></button>
+                              <button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle dropdown-toggle-split"><i class="fas fa-caret-down"></i></button>
                               <div class="dropdown-menu dropdown-menu-right">
                                 <a href="{{ order.edit }}" class="dropdown-item"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</a> <a href="{{ order.order_id }}" class="dropdown-item"><i class="fas fa-trash-alt"></i> {{ button_delete }}</a>
                               </div>
@@ -272,8 +272,6 @@ $('#form-order li:last-child a').on('click', function(e) {
 	}
 });
 //--></script>
-<script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
-<link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen"/>
 <script type="text/javascript"><!--
 $('.date').datetimepicker();
 //--></script>

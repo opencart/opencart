@@ -28,7 +28,7 @@
               <div class="input-group-append dropdown">
                 {% for category in categories %}
                   {% if category.value == filter_category %}
-                    <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">{{ text_category }} ({{ category.text }}) <span class="caret"></span></button>
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">{{ text_category }} ({{ category.text }}) <i class="fas fa-caret-down"></i></button>
                   {% endif %}
                 {% endfor %}
                 <div class="dropdown-menu dropdown-menu-right">

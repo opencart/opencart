@@ -43,9 +43,7 @@
           <li class="nav-item dropdown">
             <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle"><img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" id="user-profile" class="rounded-circle"/>&nbsp;&nbsp;<span class="d-none d-sm-inline-block">{{ firstname }} {{ lastname }}</span> <i class="fas fa-caret-down fa-fw"></i></a>
             <div class="dropdown-menu dropdown-menu-right">
-
               <a href="{{ profile }}" class="dropdown-item"><i class="fas fa-user-circle fa-fw"></i> {{ text_profile }}</a>
-
               <div class="dropdown-divider"></div>
               <h6 class="dropdown-header">{{ text_store }}</h6>
               {% for store in stores %}

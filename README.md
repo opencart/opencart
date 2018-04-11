@@ -1,4 +1,4 @@
-# OpenCart test
+# OpenCart
 
 ## Overview
 

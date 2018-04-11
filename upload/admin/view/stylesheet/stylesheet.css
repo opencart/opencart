@@ -123,38 +123,27 @@ a:hover, a:focus {
   }
 }
 
-#header .navbar-nav > li {
+#header .navbar-nav .nav-item {
     display: inline-block;
     border-left: 1px solid #eee;
-    line-height: 2.8em;
 }
 
-#header .navbar-nav .nav-link {
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
-#header #user-profile {
-    max-width: 30px;
-    margin-right: 10px;
-}
-
-#header .nav > li > a {
+#header .navbar-nav .nav-item > a {
     padding: 0px 21px;
-    line-height: 45px;
+    line-height: 60px;
     cursor: pointer;
     color: #6D6D6D;
     border-left: 0px solid #E1E1E1;
 }
 
-#header .nav > li.dropdown > a {
+#header .navbar-nav .nav-item.dropdown > a {
     padding-left: 10px;
     padding-right: 10px;
 }
 
-#header .nav > li.dropdown > a {
-    padding-left: 10px;
-    padding-right: 10px;
+#header #user-profile {
+    max-width: 45px;
+    margin-right: 10px;
 }
 
 #button-menu {
@@ -996,4 +985,43 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 }
 .btn-danger {
     border-color: #dd3520;
+}
+
+.form-group {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-bottom: 0;
+}
+
+.card .list-group-item {
+  border-left: 0;
+  border-right: 0;
+}
+.card .list-group-item:first-child {
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+}
+.card .list-group-item:last-child {
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.card-header {
+    font-weight: 500;
+    padding-left: 15px;
+    padding-right: 15px;
+    color: #4c4d5a;
+    font-size: 15px;
+}
+.card-header > * {
+    margin-right: 5px;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+#last-order .table {
+    margin-bottom: 0;
+}
+#last-order .table thead:first-child > tr:first-child > td {
+    border-top: 0;
 }

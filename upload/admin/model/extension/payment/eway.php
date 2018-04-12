@@ -82,7 +82,7 @@ class ModelExtensionPaymentEway extends Model {
 
 			$capture_data = new stdClass();
 			$capture_data->Payment = new stdClass();
-			$capture_data->Payment->TotalAmount = (int)number_format($capture_amount, 2, '.', '') * 100;
+			$capture_data->Payment->TotalAmount = (int)(number_format($capture_amount, 2, '.', '') * 100);
 			$capture_data->Payment->CurrencyCode = $currency;
 			$capture_data->TransactionID = $eway_order['transaction_id'];
 

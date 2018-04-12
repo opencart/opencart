@@ -23,7 +23,7 @@
 		  {% if amazon_login_pay_order.cancel_status == 0 %}
 			  <input type="text" width="10" id="capture-amount" value="{{ amazon_login_pay_order.total }}"/>
 			  <a class="button btn btn-primary" id="button-capture">{{ button_capture }}</a>
-			  <span class="btn btn-primary" id="loading-capture" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+			  <span class="btn btn-primary" id="loading-capture" style="display:none;"><i class="fas fa-circle-o-notch fa-spin fa-lg"></i></span>
 		  {% endif %}
 	  {% endif %}
 	</td>
@@ -37,7 +37,7 @@
 		  <span class="cancel_text">{{ text_no }}</span>&nbsp;&nbsp;
 		  {% if amazon_login_pay_order.total_captured == 0 and amazon_login_pay_order.refund_status != 1 %}
 		  <a class="button btn btn-primary" id="button-cancel">{{ button_cancel }}</a>
-		  <span class="btn btn-primary" id="loading-cancel" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+		  <span class="btn btn-primary" id="loading-cancel" style="display:none;"><i class="fas fa-circle-o-notch fa-spin fa-lg"></i></span>
 		  {% endif %}
 	  {% endif %}
 	</td>
@@ -56,7 +56,7 @@
 			  <input type="text" width="10" id="refund-amount" style="display: none;"/>
 			  <a class="button btn btn-primary" id="button-refund" style="display: none;">{{ button_refund }}</a>
 		  {% endif %}
-		  <span class="btn btn-primary" id="loading-refund" style="display: none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+		  <span class="btn btn-primary" id="loading-refund" style="display: none;"><i class="fas fa-circle-o-notch fa-spin fa-lg"></i></span>
 	  {% endif %}
 	</td>
   </tr>
@@ -124,7 +124,7 @@
               $('#capture-amount').hide();
 
               if (data.msg != '') {
-                $('#amazon_login_pay-transaction-msg').empty().html('<i class="fa fa-check-circle"></i> ' + data.msg).fadeIn();
+                $('#amazon_login_pay-transaction-msg').empty().html('<i class="fas fa-check-circle"></i> ' + data.msg).fadeIn();
               }
             }
             if (data.error == true) {
@@ -175,7 +175,7 @@
               }
 
               if (data.msg != '') {
-                $('#amazon_login_pay-transaction-msg').empty().html('<i class="fa fa-check-circle"></i> ' + data.msg).fadeIn();
+                $('#amazon_login_pay-transaction-msg').empty().html('<i class="fas fa-check-circle"></i> ' + data.msg).fadeIn();
               }
 
               $('#button-refund').show();
@@ -230,7 +230,7 @@
               $('#refund-amount').val(0.00).show();
             }
             if (data.msg != '' && data.msg != undefined) {
-              $('#amazon_login_pay-transaction-msg').empty().html('<i class="fa fa-check-circle"></i> ' + data.msg).fadeIn();
+              $('#amazon_login_pay-transaction-msg').empty().html('<i class="fas fa-check-circle"></i> ' + data.msg).fadeIn();
             }
             if (data.error == true) {
               var msg = '';

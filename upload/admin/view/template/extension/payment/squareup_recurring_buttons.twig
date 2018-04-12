@@ -1,6 +1,6 @@
 <div id="squareup_buttons" class="form-control-static buttons clearfix">
   {% if order_recurring_id %}
-  <div class="pull-right">
+  <div class="float-right">
     <button type="button" id="button-cancel" data-loading-text="{{ text_loading }}" class="btn btn-danger">{{ button_text }}</button>
   </div>
   {% endif %}
@@ -15,7 +15,7 @@ $(document).ready(function() {
             data: 'order_status_id={{ order_status_id }}&notify={{ notify }}&override=0&append=0&comment=' + encodeURIComponent("{{ comment }}"),
             success: function(json) {
                 if (json['error']) {
-                    $('#squareup_buttons').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                    $('#squareup_buttons').before('<div class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
 
                 if (json['success']) {
@@ -23,7 +23,7 @@ $(document).ready(function() {
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                $('#squareup_buttons').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + thrownError + "<br />" + xhr.statusText + "<br />" + xhr.responseText + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#squareup_buttons').before('<div class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> ' + thrownError + "<br />" + xhr.statusText + "<br />" + xhr.responseText + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
             }
         });
     }

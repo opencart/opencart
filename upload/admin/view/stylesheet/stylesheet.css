@@ -5,7 +5,6 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: 'Open Sans', sans-serif;
-    font-size: 14px;
     color: #545454;
     text-rendering: optimizeLegibility;
 }
@@ -23,9 +22,10 @@ label {
 }
 
 legend {
-  border-bottom: 2px solid #ddd;
-  margin-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 20px;
 }
+
 
 .page-header {
     vertical-align: middle;
@@ -42,6 +42,37 @@ legend {
     display: inline-block;
     margin-bottom: 15px;
     text-shadow: 0 1px #fff;
+}
+nav {
+  width: auto;
+  display: inline-block;
+}
+.breadcrumb {
+  background: none;
+  margin: 8px 0 19px 0;
+  padding: 0 10px;
+  border-radius: 0;
+}
+
+.breadcrumb li {
+  display: inline-block;
+}
+
+.breadcrumb li + li:before {
+    color: #BBBBBB;
+    padding: 0 5px;
+    font-size: 10px;
+}
+
+.breadcrumb li a {
+    color: #999999;
+    font-size: 14px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.breadcrumb > li:last-child a {
+    color: #1e91cf;
 }
 
 a:hover, a:focus {
@@ -347,6 +378,9 @@ a:hover, a:focus {
     color: #333;
 }
 
+.col-form-label {
+    text-align: right;
+}
 .form-control:hover {
     border: 1px solid #b9b9b9;
     border-top-color: #a0a0a0;
@@ -467,13 +501,13 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .pagination {
     margin: 0;
 }
-
+/*
 .form-group {
     padding-top: 15px;
     padding-bottom: 15px;
     margin-bottom: 0;
 }
-
+*/
 .form-group + .form-group {
     border-top: 1px solid #ededed;
 }
@@ -925,6 +959,9 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .list-check.list-color-blue li::before {
     color: #02afe9;
 }
+
+
+/* for the opencaaet marketplace */
 @font-face {
     font-family: 'opencart';
     src: url('fonts/opencart.eot?h4wsna');
@@ -954,8 +991,9 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     content: "\e91c";
 }
 
-.btn-ghost-dark {
-  border: 1px solid #000;
-  background-color: transparent;
-  color: #000;
+.btn-info {
+    color: #ffffff;
+}
+.btn-danger {
+    border-color: #dd3520;
 }

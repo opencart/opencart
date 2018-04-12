@@ -198,11 +198,11 @@ $('.button-command').on('click', function() {
 			},
 			success: function(json) {
 				if (json.error) {
-					$('.alert').show().addClass('alert-danger').html('<i class="fa fa-check-circle"></i> ' + json.error);
+					$('.alert').show().addClass('alert-danger').html('<i class="fas fa-check-circle"></i> ' + json.error);
 				}
 
 				if (json.success) {
-					$('.alert').show().addClass('alert-success').html('<i class="fa fa-exclamation-circle"></i> ' + json.success);
+					$('.alert').show().addClass('alert-success').html('<i class="fas fa-exclamation-circle"></i> ' + json.success);
 				}
 
 				getTransaction('{{ transaction_id }}');

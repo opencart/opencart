@@ -46,7 +46,12 @@
           <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-geocode">{{ entry_geocode }}</label>
             <div class="col-sm-10">
-              <input type="text" name="geocode" value="{{ geocode }}" placeholder="{{ entry_geocode }}" id="input-geocode" class="form-control"/>
+              <div class="input-group">
+		        <input type="text" name="geocode" value="{{ geocode }}" placeholder="{{ entry_geocode }}" id="input-geocode" class="form-control" />
+				  <span class="input-group-btn">
+				    <button type="button" id="button-geocode" data-toggle="tooltip" title="{{ button_geocode }}" data-loading-text="{{ text_loading }}" class="btn btn-warning"><i class="fa fa-refresh"></i></button>
+				  </span>
+			  </div>
               <small class="form-text text-muted">{{ help_geocode }}</small>
             </div>
           </div>
@@ -89,4 +94,36 @@
     </div>
   </div>
 </div>
+<script type="text/javascript"><!--
+// Geocode
+$('#button-geocode').on('click', function() {
+	var address = $('textarea[name=\'address\']').val();
+	
+	if (address) {
+		$('textarea[name=\'address\']').parent().parent().removeClass("has-error");
+		$.ajax({
+			url: 'index.php?route=localisation/location/geocode&user_token={{ user_token }}&address=' + address,
+			dataType: 'json',
+			crossDomain: true,
+			beforeSend: function() {
+				$('#button-geocode').button('loading');
+			},
+			complete: function() {
+				$('#button-geocode').button('reset');
+			},		
+			success: function(json) {
+				if (json['lat'] != "" && json['lng'] != "") {
+					$('#input-geocode').val(json['lat'] + "," + json['lng']);
+				}
+
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	} else {
+		$('textarea[name=\'address\']').parent().parent().addClass("has-error");
+	}
+});
+//--></script>
 {{ footer }}

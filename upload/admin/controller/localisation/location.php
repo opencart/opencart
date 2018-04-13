@@ -428,7 +428,7 @@ class ControllerLocalisationLocation extends Controller {
 	public function geocode() {
 		$json = array();
 
-		if (isset($this->request->get['address']) && !empty($this->request->get['address'])) {
+		if (!empty($this->request->get['address'])) {
 			$address = $this->request->get['address'];
 		} else {
 			$address = "";

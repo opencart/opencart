@@ -33,7 +33,7 @@ class ControllerCommonFileManager extends Controller {
 				$images = array_splice($directories, ($page - 1) * 16, 16);
 
 				foreach ($images as $image) {
-					$name = str_split(basename($image), 14);
+					$name = basename($image);
 
 					$url = '';
 
@@ -50,7 +50,7 @@ class ControllerCommonFileManager extends Controller {
 					}
 
 					$data['images'][] = array(
-						'name' => implode(' ', $name),
+						'name' => $name,
 						'path' => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
 						'type' => 'directory',
 						'href' => $this->url->link('common/filemanager', 'user_token=' . $this->session->data['user_token'] . '&directory=' . urlencode(utf8_substr($image, utf8_strlen(DIR_IMAGE . 'catalog/'))) . $url)
@@ -67,11 +67,11 @@ class ControllerCommonFileManager extends Controller {
 				$images = array_splice($files, ($page - 1) * 16, 16 - count($data['images']));
 
 				foreach ($images as $image) {
-					$name = str_split(basename($image), 14);
+					$name = basename($image);
 
 					$data['images'][] = array(
 						'thumb' => $this->model_tool_image->resize(utf8_substr($image, utf8_strlen(DIR_IMAGE)), 100, 100),
-						'name'  => implode(' ', $name),
+						'name'  => $name,
 						'path'  => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
 						'type'  => 'image',
 						'href'  => HTTP_CATALOG . 'image/' . utf8_substr($image, utf8_strlen(DIR_IMAGE))

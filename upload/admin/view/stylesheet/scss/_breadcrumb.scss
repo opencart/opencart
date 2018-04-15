@@ -18,8 +18,8 @@
     padding-right: $breadcrumb-item-padding;
     padding-left: $breadcrumb-item-padding;
     color: $breadcrumb-divider-color;
+    font-family: "Font Awesome 5 Free";
     content: "#{$breadcrumb-divider}";
-    font-family: FontAwesome;
   }
 
   // IE9-11 hack to properly handle hyperlink underlines for breadcrumbs built

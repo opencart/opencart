@@ -13,7 +13,7 @@ function getTransaction() {
 		beforeSend: function() {
 			$('#button-filter').button('loading');
 
-			$('#table-action').html('<i class="klarna_checkout-loading fa fa-spinner fa-spin fa-5x" style="text-align: center; margin: 0 auto; width: 100%; font-size: 5em;"></i>');
+			$('#table-action').html('<i class="klarna_checkout-loading fas fa-spinner fa-spin fa-5x" style="text-align: center; margin: 0 auto; width: 100%; font-size: 5em;"></i>');
 		},
 		complete: function() {
 			$('#button-filter').button('reset');

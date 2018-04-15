@@ -3,7 +3,7 @@
   <ul id="menu">
     {% set i = 0 %}
     {% for menu in menus %}
-      <li id="{{ menu.id }}">{% if menu.href %}<a href="{{ menu.href }}"><i class="fa {{ menu.icon }} fw"></i> {{ menu.name }}</a>{% else %}<a href="#collapse{{ i }}" data-toggle="collapse" class="parent collapsed"><i class="fa {{ menu.icon }} fw"></i> {{ menu.name }}</a>{% endif %}
+      <li id="{{ menu.id }}">{% if menu.href %}<a href="{{ menu.href }}"><i class="fas {{ menu.icon }} fw"></i> {{ menu.name }}</a>{% else %}<a href="#collapse{{ i }}" data-toggle="collapse" class="parent collapsed"><i class="fas {{ menu.icon }} fw"></i> {{ menu.name }}</a>{% endif %}
         {% if menu.children %}
           <ul id="collapse{{ i }}" class="collapse">
             {% set j = 0 %}

@@ -49,13 +49,13 @@
 		  url: $('select[name="type"]').val(),
 		  dataType: 'html',
 		  beforeSend: function() {
-			  $('.fa-filter').addClass('fa-circle-o-notch fa-spin');
+			  $('.fa-filter').addClass('fa-circle-notch fa-spin');
 			  $('.fa-filter').removeClass('fa-filter');
 			  $('select[name=\'type\']').prop('disabled', true);
 		  },
 		  complete: function() {
-			  $('.fa-circle-o-notch').addClass('fa-filter');
-			  $('.fa-circle-o-notch').removeClass('fa-circle-o-notch fa-spin');
+			  $('.fa-circle-notch').addClass('fa-filter');
+			  $('.fa-circle-notch').removeClass('fa-circle-notch fa-spin');
 			  $('select[name=\'type\']').prop('disabled', false);
 		  },
 		  success: function(html) {

@@ -53,11 +53,11 @@
                 {% endif %}</td>
             </tr>
             <tr>
-              <td><button data-toggle="tooltip" title="{{ text_customer_group }}" class="btn btn-info btn-xs"><i class="fas fa-group fa-fw"></i></button></td>
+              <td><button data-toggle="tooltip" title="{{ text_customer_group }}" class="btn btn-info btn-xs"><i class="fas fa-users fa-fw"></i></button></td>
               <td>{{ customer_group }}</td>
             </tr>
             <tr>
-              <td><button data-toggle="tooltip" title="{{ text_email }}" class="btn btn-info btn-xs"><i class="fas fa-envelope-o fa-fw"></i></button></td>
+              <td><button data-toggle="tooltip" title="{{ text_email }}" class="btn btn-info btn-xs"><i class="fas fa-envelope fa-fw"></i></button></td>
               <td><a href="mailto:{{ email }}">{{ email }}</a></td>
             </tr>
             <tr>
@@ -78,7 +78,7 @@
                 <td style="width: 1%;" class="text-center">{% if not invoice_no %}
                     <button id="button-invoice" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_generate }}" class="btn btn-success btn-xs"><i class="fas fa-cog"></i></button>
                   {% else %}
-                    <button disabled="disabled" class="btn btn-success btn-xs"><i class="fas fa-refresh"></i></button>
+                    <button disabled="disabled" class="btn btn-success btn-xs"><i class="fas fa-sync"></i></button>
                   {% endif %}</td>
               </tr>
               <tr>
@@ -196,7 +196,7 @@
         {% endif %}</div>
     </div>
     <div class="card">
-      <div class="card-header"><i class="fas fa-comment-o"></i> {{ text_history }}</div>
+      <div class="card-header"><i class="fas fa-comment"></i> {{ text_history }}</div>
       <div class="card-body">
         <ul class="nav nav-tabs">
           <li class="nav-item"><a href="#tab-history" data-toggle="tab" class="nav-link active">{{ tab_history }}</a></li>

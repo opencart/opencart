@@ -819,7 +819,7 @@
         </div>
       </div>
       <div class="card">
-        <div class="card-header"><i class="fas fa-usd fa-fw"></i> {{ text_total_detail }}</div>
+        <div class="card-header"><i class="fas fa-dollar-sign fa-fw"></i> {{ text_total_detail }}</div>
         <div id="collapse-total" data-parent="#collapse" class="collapse">
           <div class="card-body">
             <div class="table-responsive">
@@ -941,7 +941,7 @@
                 <button type="button" onclick="$('select[name=\'shipping_method\']').prop('disabled') ? $('#collapse-payment').collapse('show') : $('#collapse-shipping').collapse('show');" class="btn btn-light"><i class="fas fa-arrow-left"></i> {{ button_back }}</button>
               </div>
               <div class="col-sm-6 text-right">
-                <button type="button" id="button-refresh" data-toggle="tooltip" title="{{ button_refresh }}" data-loading-text="{{ text_loading }}" class="btn btn-warning"><i class="fas fa-refresh"></i></button>
+                <button type="button" id="button-refresh" data-toggle="tooltip" title="{{ button_refresh }}" data-loading-text="{{ text_loading }}" class="btn btn-warning"><i class="fas fa-sync"></i></button>
                 <button type="button" id="button-save" class="btn btn-primary"><i class="fas fa-check-circle"></i> {{ button_save }}</button>
               </div>
             </div>
@@ -2345,7 +2345,7 @@ $('#button-refresh').on('click', function() {
 
 					html += '</td>';
 					html += '  <td class="text-left">' + product['model'] + '</td>';
-					html += '  <td class="text-right"><div class="input-group"><input type="text" name="product[' + i + '][quantity]" value="' + product['quantity'] + '" class="form-control" /><div class="input-group-append"><button type="button" data-toggle="tooltip" title="{{ button_refresh }}" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-refresh"></i></button></div></div></td>';
+					html += '  <td class="text-right"><div class="input-group"><input type="text" name="product[' + i + '][quantity]" value="' + product['quantity'] + '" class="form-control" /><div class="input-group-append"><button type="button" data-toggle="tooltip" title="{{ button_refresh }}" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-sync"></i></button></div></div></td>';
 					html += '  <td class="text-right">' + product['price'] + '</td>';
 					html += '  <td class="text-right">' + product['total'] + '</td>';
 					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + product['cart_id'] + '" data-toggle="tooltip" title="{{ button_remove }}" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';

@@ -20,7 +20,7 @@
       {% else %}
         <span class="capture_text">{{ text_no }}</span>&nbsp;&nbsp;
         {% if firstdata_order.void_status == 0 %}
-          <a class="btn btn-primary" id="button-capture">{{ button_capture }}</a> <span class="btn btn-primary" id="img_loading_capture" style="display:none;"><i class="fas fa-circle-o-notch fa-spin fa-lg"></i></span>
+          <a class="btn btn-primary" id="button-capture">{{ button_capture }}</a> <span class="btn btn-primary" id="img_loading_capture" style="display:none;"><i class="fas fa-circle-notch fa-spin fa-lg"></i></span>
         {% endif %}
       {% endif %}</td>
   </tr>
@@ -31,7 +31,7 @@
     {% else %}
       <span class="void_text">{{ text_no }}</span>&nbsp;&nbsp;
       {% if firstdata_order.capture_status == 0 %}
-        <a class="btn btn-primary" id="button-void">{{ button_void }}</a> <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fas fa-circle-o-notch fa-spin fa-lg"></i></span>
+        <a class="btn btn-primary" id="button-void">{{ button_void }}</a> <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fas fa-circle-notch fa-spin fa-lg"></i></span>
       {% endif %}
       {% endif %}>
     </td>
@@ -48,7 +48,7 @@
           <a class="btn btn-primary" id="button-refund">{{ button_refund }}</a>
         {% endif %}
         <span class="btn btn-primary" id="img_loading_refund" style="display:none;">
-        <i class="fas fa-circle-o-notch fa-spin fa-lg"></i>
+        <i class="fas fa-circle-notch fa-spin fa-lg"></i>
       </span>
       {% endif %}</td>
   </tr>

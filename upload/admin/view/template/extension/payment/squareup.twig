@@ -28,9 +28,9 @@
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-square-checkout">
           <input type="hidden" name="payment_squareup_card" value="1"/>
           <ul class="nav nav-tabs">
-            <li class="nav-item"><a href="#tab-setting" data-toggle="tab" class="nav-link active"><i class="fas fa-gear"></i>&nbsp;{{ tab_setting }}</a></li>
+            <li class="nav-item"><a href="#tab-setting" data-toggle="tab" class="nav-link active"><i class="fas fa-cog"></i>&nbsp;{{ tab_setting }}</a></li>
             <li class="nav-item"><a href="#tab-transaction" data-toggle="tab" class="nav-link"><i class="fas fa-list"></i>&nbsp;{{ tab_transaction }}</a></li>
-            <li class="nav-item"><a href="#tab-cron" data-toggle="tab" class="nav-link"><i class="fas fa-clock-o"></i>&nbsp;{{ tab_cron }}</a></li>
+            <li class="nav-item"><a href="#tab-cron" data-toggle="tab" class="nav-link"><i class="fas fa-clock"></i>&nbsp;{{ tab_cron }}</a></li>
             <li class="nav-item"><a href="#tab-recurring" data-toggle="tab" class="nav-link"><i class="fas fa-hourglass-half"></i>&nbsp;{{ tab_recurring }}</a></li>
           </ul>
           <div class="tab-content">
@@ -301,7 +301,7 @@
                       <input disabled type="text" name="payment_squareup_cron_url" id="input_payment_squareup_cron_url" class="form-control" value="" data-toggle="tooltip" data-original-title="{{ text_refresh_token }}"/>
                       <div class="input-group-append">
                         <div class="btn btn-primary" id="refresh-cron-token">
-                          <i class="fas fa-refresh"></i>
+                          <i class="fas fa-sync"></i>
                         </div>
                       </div>
                     </div>
@@ -459,7 +459,7 @@ $(document).ready(function() {
 			beforeSend: function() {
 				$('#refresh_transactions').button('loading');
 				$('#transactions_pagination').empty();
-				$('#transactions').html('<tr><td colspan="9" class="text-center"><i class="fas fa-circle-o-notch fa-spin"></i>&nbsp;{{ text_loading }}</td></tr>');
+				$('#transactions').html('<tr><td colspan="9" class="text-center"><i class="fas fa-circle-notch fa-spin"></i>&nbsp;{{ text_loading }}</td></tr>');
 			},
 			success: function(data) {
 				var html = '';
@@ -523,7 +523,7 @@ $(document).ready(function() {
 	var transactionLoading = function() {
 		var message = $('#transaction-alert').attr('data-message');
 
-		$('#transaction-alert').html('<div class="text-center alert alert-info"><i class="fas fa-circle-o-notch fa-spin"></i>&nbsp;' + message + '</div>');
+		$('#transaction-alert').html('<div class="text-center alert alert-info"><i class="fas fa-circle-notch fa-spin"></i>&nbsp;' + message + '</div>');
 	}
 
 	var transactionError = function(message) {

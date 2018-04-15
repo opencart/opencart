@@ -47,6 +47,8 @@ nav {
   width: auto;
   display: inline-block;
 }
+
+/*
 .breadcrumb {
   background: none;
   margin: 8px 0 19px 0;
@@ -74,6 +76,7 @@ nav {
 .breadcrumb > li:last-child a {
     color: #1e91cf;
 }
+*/
 
 a:hover, a:focus {
     text-decoration: none;
@@ -316,7 +319,7 @@ a:hover, a:focus {
 #menu li li a:before {
     content: "\f101";
     font-size: 13px;
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     margin-left: 10px;
     margin-right: 10px;
     transition: margin ease 0.5s;

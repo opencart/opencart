@@ -7,7 +7,7 @@
       </div>
       <div class="modal-body">
         <div class="row">
-          <div class="col-sm-5"><a href="{{ parent }}" data-toggle="tooltip" title="{{ button_parent }}" id="button-parent" class="btn btn-light"><i class="fas fa-level-up"></i></a> <a href="{{ refresh }}" data-toggle="tooltip" title="{{ button_refresh }}" id="button-refresh" class="btn btn-light"><i class="fas fa-refresh"></i></a>
+          <div class="col-sm-5"><a href="{{ parent }}" data-toggle="tooltip" title="{{ button_parent }}" id="button-parent" class="btn btn-light"><i class="fas fa-level-up-alt"></i></a> <a href="{{ refresh }}" data-toggle="tooltip" title="{{ button_refresh }}" id="button-refresh" class="btn btn-light"><i class="fas fa-sync"></i></a>
             <button type="button" data-toggle="tooltip" title="{{ button_upload }}" id="button-upload" class="btn btn-primary"><i class="fas fa-upload"></i></button>
             <button type="button" data-toggle="tooltip" title="{{ button_folder }}" id="button-folder" class="btn btn-light"><i class="fas fa-folder"></i></button>
             <button type="button" data-toggle="tooltip" title="{{ button_delete }}" id="button-delete" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
@@ -115,7 +115,7 @@ $('#modal-image').on('click', '#button-upload', function() {
 				contentType: false,
 				processData: false,
 				beforeSend: function() {
-					$('#button-upload i').replaceWith('<i class="fas fa-circle-o-notch fa-spin"></i>');
+					$('#button-upload i').replaceWith('<i class="fas fa-circle-notch fa-spin"></i>');
 					$('#button-upload').prop('disabled', true);
 				},
 				complete: function() {
@@ -195,7 +195,7 @@ $('#modal-image').on('click', '#button-delete', function(e) {
 			dataType: 'json',
 			data: $('input[name^=\'path\']:checked'),
 			beforeSend: function() {
-				$('#button-delete i').replaceWith('<i class="fas fa-circle-o-notch fa-spin"></i>');
+				$('#button-delete i').replaceWith('<i class="fas fa-circle-notch fa-spin"></i>');
 				$('#button-delete').prop('disabled', true);
 			},
 			complete: function() {

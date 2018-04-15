@@ -67,7 +67,7 @@ $(document).ready(function() {
 			beforeSend: function() {
 				$('#refresh_transactions').button('loading');
 				$('#transactions_pagination').empty();
-				$('#transactions').html('<tr><td colspan="9" class="text-center"><i class="fas fa-circle-o-notch fa-spin"></i>&nbsp;{{ text_loading }}</td></tr>');
+				$('#transactions').html('<tr><td colspan="9" class="text-center"><i class="fas fa-circle-notch fa-spin"></i>&nbsp;{{ text_loading }}</td></tr>');
 			},
 			success: function(data) {
 				var html = '';
@@ -129,7 +129,7 @@ $(document).ready(function() {
 	var transactionLoading = function() {
 		var message = $('#transaction-alert').attr('data-message');
 
-		$('#transaction-alert').html('<div class="text-center alert alert-info"><i class="fas fa-circle-o-notch fa-spin"></i>&nbsp;' + message + '</div>');
+		$('#transaction-alert').html('<div class="text-center alert alert-info"><i class="fas fa-circle-notch fa-spin"></i>&nbsp;' + message + '</div>');
 	}
 
 	var transactionError = function(message) {

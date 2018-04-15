@@ -18,7 +18,7 @@
       <div class="card-body">
         <div class="row">
           <div class="col-lg-3 col-md-3 col-sm-12">
-            <div class="list-group">
+            <div class="list-group mb-3">
               <div class="list-group-item">
                 <h4 class="list-group-item-heading">{{ text_store }}</h4>
               </div>
@@ -107,10 +107,10 @@ $('#path').on('click', 'a.directory', function(e) {
 		dataType: 'json',
 		beforeSend: function() {
 			$(element).find('i').removeClass('fa-arrow-right');
-			$(element).find('i').addClass('fa-circle-o-notch fa-spin');
+			$(element).find('i').addClass('fa-circle-notch fa-spin');
 		},
 		complete: function() {
-			$(element).find('i').removeClass('fa-circle-o-notch fa-spin');
+			$(element).find('i').removeClass('fa-circle-notch fa-spin');
 			$(element).find('i').addClass('fa-arrow-right');
 		},
 		success: function(json) {
@@ -160,10 +160,10 @@ $('#path').on('click', 'a.file', function(e) {
 			dataType: 'json',
 			beforeSend: function() {
 				$(element).find('i').removeClass('fa-arrow-right');
-				$(element).find('i').addClass('fa-circle-o-notch fa-spin');
+				$(element).find('i').addClass('fa-circle-notch fa-spin');
 			},
 			complete: function() {
-				$(element).find('i').removeClass('fa-circle-o-notch fa-spin');
+				$(element).find('i').removeClass('fa-circle-notch fa-spin');
 				$(element).find('i').addClass('fa-arrow-right');
 			},
 			success: function(json) {
@@ -179,7 +179,7 @@ $('#path').on('click', 'a.file', function(e) {
 					html += '  <input type="hidden" name="path" value="' + $(element).attr('href') + '" />';
 					html += '  <br />';
 					html += '  <div class="float-right">';
-					html += '    <button type="button" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-floppy-o"></i> {{ button_save }}</button>';
+					html += '    <button type="button" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>';
 					html += '    <button data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-recycle"></i> {{ button_reset }}</button>';
 					html += '  </div>';
 					html += '</div>';
@@ -341,7 +341,7 @@ $('#history').on('click', '.btn-primary', function(e) {
 					html += '  <input type="hidden" name="path" value="' + $(element).parent().parent().find('input[name="path"]').val() + '.twig" />';
 					html += '  <br />';
 					html += '  <div class="float-right">';
-					html += '    <button type="button" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-floppy-o"></i> {{ button_save }}</button>';
+					html += '    <button type="button" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>';
 					html += '    <button data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-recycle"></i> {{ button_reset }}</button>';
 					html += '  </div>';
 					html += '</div>';

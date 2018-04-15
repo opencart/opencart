@@ -25,7 +25,7 @@
       {% if transaction.payment_type == 'instant' and (transaction.payment_status == 'Completed' or transaction.payment_status == 'Partially-Refunded') %}
       <a href="{{ transaction.refund }}" data-toggle="tooltip" title="{{ button_refund }}" class="btn btn-danger"><i class="fas fa-reply"></i></a>&nbsp;
       {% else %}
-      <button type="button" value="{{ transaction.resend }}" data-toggle="tooltip" title="{{ button_resend }}" class="btn btn-info"><i class="fas fa-refresh"></i></button>
+      <button type="button" value="{{ transaction.resend }}" data-toggle="tooltip" title="{{ button_resend }}" class="btn btn-info"><i class="fas fa-sync"></i></button>
       {% endif %}
     {% endif %} </td>
   </tr>

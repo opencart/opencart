@@ -10,7 +10,7 @@
   </tr>
   <tr>
     <td>{{ text_update }}</td>
-    <td><a class="button btn btn-primary btn-xs" id="button-inquire-all">{{ button_inquire_all }}</a> <span class="btn btn-primary btn-xs img_loading_inquire" style="display:none"><i class="fas fa-circle-o-notch fa-spin fa-lg"></i></span></td>
+    <td><a class="button btn btn-primary btn-xs" id="button-inquire-all">{{ button_inquire_all }}</a> <span class="btn btn-primary btn-xs img_loading_inquire" style="display:none"><i class="fas fa-circle-notch fa-spin fa-lg"></i></span></td>
   </tr>
   <tr>
     <td>{{ text_order_total }}</td>
@@ -24,19 +24,19 @@
     <td>{{ text_capture_payment }}</td>
     <td>
       <input type="text" style="width:80px" id="capture_amount" value="{{ cardconnect_order.total }}"/>
-      <a class="button btn btn-primary btn-sm" id="button-capture">{{ button_capture }}</a> <span class="btn btn-primary btn-sm" id="img_loading_capture" style="display:none"><i class="fas fa-circle-o-notch fa-spin fa-lg"></i></span>
+      <a class="button btn btn-primary btn-sm" id="button-capture">{{ button_capture }}</a> <span class="btn btn-primary btn-sm" id="img_loading_capture" style="display:none"><i class="fas fa-circle-notch fa-spin fa-lg"></i></span>
     </td>
   </tr>
   <tr>
     <td>{{ text_refund_payment }}</td>
     <td>
       <input type="text" style="width:80px" id="refund_amount" {{ cardconnect_order.total_captured < 1 ? 'style="display:none"' : '' }} />
-      <a class="button btn btn-primary btn-sm" id="button-refund" {{ cardconnect_order.total_captured < 1 ? 'style="display:none"' : '' }}>{{ button_refund }}</a> <span class="btn btn-primary btn-sm" id="img_loading_refund" style="display:none"><i class="fas fa-circle-o-notch fa-spin fa-lg"></i></span>
+      <a class="button btn btn-primary btn-sm" id="button-refund" {{ cardconnect_order.total_captured < 1 ? 'style="display:none"' : '' }}>{{ button_refund }}</a> <span class="btn btn-primary btn-sm" id="img_loading_refund" style="display:none"><i class="fas fa-circle-notch fa-spin fa-lg"></i></span>
     </td>
   </tr>
   <tr>
     <td>{{ text_void }}</td>
-    <td><a class="button btn btn-primary btn-xs" id="button-void-all">{{ button_void_all }}</a> <span class="btn btn-primary btn-xs" id="img_loading_void" style="display:none"><i class="fas fa-circle-o-notch fa-spin fa-lg"></i></span></td>
+    <td><a class="button btn btn-primary btn-xs" id="button-void-all">{{ button_void_all }}</a> <span class="btn btn-primary btn-xs" id="img_loading_void" style="display:none"><i class="fas fa-circle-notch fa-spin fa-lg"></i></span></td>
   </tr>
   <tr>
     <td>{{ text_transactions }}</td>
@@ -62,8 +62,8 @@
             <td class="text-left">{{ transaction.status }}</td>
             <td class="text-left">{{ transaction.date_modified }}</td>
             <td class="text-left">{{ transaction.date_added }}</td>
-            <td class="text-left"><a class="button btn btn-primary button-inquire btn-xs" data-inquire-retref="{{ transaction.retref }}">{{ button_inquire }}</a> <span class="btn btn-primary btn-xs img_loading_inquire" style="display:none"><i class="fas fa-circle-o-notch fa-spin fa-lg"></i></span></td>
-            <td class="text-left"><a class="button btn btn-primary button-void btn-xs" data-void-retref="{{ transaction.retref }}">{{ button_void }}</a> <span class="btn btn-primary btn-xs img_loading_void" style="display:none"><i class="fas fa-circle-o-notch fa-spin fa-lg"></i></span></td>
+            <td class="text-left"><a class="button btn btn-primary button-inquire btn-xs" data-inquire-retref="{{ transaction.retref }}">{{ button_inquire }}</a> <span class="btn btn-primary btn-xs img_loading_inquire" style="display:none"><i class="fas fa-circle-notch fa-spin fa-lg"></i></span></td>
+            <td class="text-left"><a class="button btn btn-primary button-void btn-xs" data-void-retref="{{ transaction.retref }}">{{ button_void }}</a> <span class="btn btn-primary btn-xs img_loading_void" style="display:none"><i class="fas fa-circle-notch fa-spin fa-lg"></i></span></td>
           </tr>
           {% endfor %}
         </tbody>
@@ -101,8 +101,8 @@
 						html += '<td class="text-left">' + json['status'] + '</td>';
 						html += '<td class="text-left">' + json['date_modified'] + '</td>';
 						html += '<td class="text-left">' + json['date_added'] + '</td>';
-						html += '<td class="text-left">' + '<a class="button btn btn-primary button-inquire btn-xs" data-inquire-retref="' + json['retref'] + '">{{ button_inquire }}</a> <span class="btn btn-primary btn-xs img_loading_inquire" style="display:none"><i class="fas fa-circle-o-notch fa-spin fa-lg"></i></span>' + '</td>';
-						html += '<td class="text-left">' + '<a class="button btn btn-primary button-void btn-xs" data-void-retref="' + json['retref'] + '">{{ button_void }}</a> <span class="btn btn-primary btn-xs img_loading_void" style="display:none"><i class="fas fa-circle-o-notch fa-spin fa-lg"></i></span>' + '</td>';
+						html += '<td class="text-left">' + '<a class="button btn btn-primary button-inquire btn-xs" data-inquire-retref="' + json['retref'] + '">{{ button_inquire }}</a> <span class="btn btn-primary btn-xs img_loading_inquire" style="display:none"><i class="fas fa-circle-notch fa-spin fa-lg"></i></span>' + '</td>';
+						html += '<td class="text-left">' + '<a class="button btn btn-primary button-void btn-xs" data-void-retref="' + json['retref'] + '">{{ button_void }}</a> <span class="btn btn-primary btn-xs img_loading_void" style="display:none"><i class="fas fa-circle-notch fa-spin fa-lg"></i></span>' + '</td>';
 						html += '</tr>';
 
 						$('#cardconnect_transactions').append(html);
@@ -150,8 +150,8 @@
 						html += '<td class="text-left">' + json['status'] + '</td>';
 						html += '<td class="text-left">' + json['date_modified'] + '</td>';
 						html += '<td class="text-left">' + json['date_added'] + '</td>';
-						html += '<td class="text-left">' + '<a class="button btn btn-primary button-inquire btn-xs" data-inquire-retref="' + json['retref'] + '">{{ button_inquire }}</a> <span class="btn btn-primary btn-xs img_loading_inquire" style="display:none"><i class="fas fa-circle-o-notch fa-spin fa-lg"></i></span>' + '</td>';
-						html += '<td class="text-left">' + '<a class="button btn btn-primary button-void btn-xs" data-void-retref="' + json['retref'] + '">{{ button_void }}</a> <span class="btn btn-primary btn-xs img_loading_void" style="display:none"><i class="fas fa-circle-o-notch fa-spin fa-lg"></i></span>' + '</td>';
+						html += '<td class="text-left">' + '<a class="button btn btn-primary button-inquire btn-xs" data-inquire-retref="' + json['retref'] + '">{{ button_inquire }}</a> <span class="btn btn-primary btn-xs img_loading_inquire" style="display:none"><i class="fas fa-circle-notch fa-spin fa-lg"></i></span>' + '</td>';
+						html += '<td class="text-left">' + '<a class="button btn btn-primary button-void btn-xs" data-void-retref="' + json['retref'] + '">{{ button_void }}</a> <span class="btn btn-primary btn-xs img_loading_void" style="display:none"><i class="fas fa-circle-notch fa-spin fa-lg"></i></span>' + '</td>';
 						html += '</tr>';
 
 						$('#cardconnect_transactions').append(html);

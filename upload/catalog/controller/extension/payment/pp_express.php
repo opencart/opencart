@@ -1088,40 +1088,9 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 			if ($result['ACK'] == 'Success') {
 				//handle order status
-				switch($result['PAYMENTINFO_0_PAYMENTSTATUS']) {
-					case 'Canceled_Reversal':
-						$order_status_id = $this->config->get('payment_pp_express_canceled_reversal_status_id');
-						break;
-					case 'Completed':
-						$order_status_id = $this->config->get('payment_pp_express_completed_status_id');
-						break;
-					case 'Denied':
-						$order_status_id = $this->config->get('payment_pp_express_denied_status_id');
-						break;
-					case 'Expired':
-						$order_status_id = $this->config->get('payment_pp_express_expired_status_id');
-						break;
-					case 'Failed':
-						$order_status_id = $this->config->get('payment_pp_express_failed_status_id');
-						break;
-					case 'Pending':
-						$order_status_id = $this->config->get('payment_pp_express_pending_status_id');
-						break;
-					case 'Processed':
-						$order_status_id = $this->config->get('payment_pp_express_processed_status_id');
-						break;
-					case 'Refunded':
-						$order_status_id = $this->config->get('payment_pp_express_refunded_status_id');
-						break;
-					case 'Reversed':
-						$order_status_id = $this->config->get('payment_pp_express_reversed_status_id');
-						break;
-					case 'Voided':
-						$order_status_id = $this->config->get('payment_pp_express_voided_status_id');
-						break;
-				}
+                $order_status_id = $this->getOrderStatus($result['PAYMENTINFO_0_PAYMENTSTATUS']);
 
-				$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
+                $this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
 
 				//add order to paypal table
 				$paypal_order_data = array(
@@ -1398,38 +1367,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 		if ($result['ACK'] == 'Success') {
 			//handle order status
-			switch($result['PAYMENTINFO_0_PAYMENTSTATUS']) {
-				case 'Canceled_Reversal':
-					$order_status_id = $this->config->get('payment_pp_express_canceled_reversal_status_id');
-					break;
-				case 'Completed':
-					$order_status_id = $this->config->get('payment_pp_express_completed_status_id');
-					break;
-				case 'Denied':
-					$order_status_id = $this->config->get('payment_pp_express_denied_status_id');
-					break;
-				case 'Expired':
-					$order_status_id = $this->config->get('payment_pp_express_expired_status_id');
-					break;
-				case 'Failed':
-					$order_status_id = $this->config->get('payment_pp_express_failed_status_id');
-					break;
-				case 'Pending':
-					$order_status_id = $this->config->get('payment_pp_express_pending_status_id');
-					break;
-				case 'Processed':
-					$order_status_id = $this->config->get('payment_pp_express_processed_status_id');
-					break;
-				case 'Refunded':
-					$order_status_id = $this->config->get('payment_pp_express_refunded_status_id');
-					break;
-				case 'Reversed':
-					$order_status_id = $this->config->get('payment_pp_express_reversed_status_id');
-					break;
-				case 'Voided':
-					$order_status_id = $this->config->get('payment_pp_express_voided_status_id');
-					break;
-			}
+            $order_status_id = $this->getOrderStatus($result['PAYMENTINFO_0_PAYMENTSTATUS']);
 
 			$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
 
@@ -1598,8 +1536,9 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 	public function ipn() {
 		$this->load->model('extension/payment/pp_express');
 		$this->load->model('account/recurring');
+        $this->load->model('checkout/order');
 
-		$request = 'cmd=_notify-validate';
+        $request = 'cmd=_notify-validate';
 
 		foreach ($_POST as $key => $value) {
 			$request .= '&' . $key . '=' . urlencode(html_entity_decode($value, ENT_QUOTES, 'UTF-8'));
@@ -1632,7 +1571,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				$this->log->write($this->request->post['transaction_entity']);
 			}
 
-			if (isset($this->request->post['txn_id'])) {
+            if (isset($this->request->post['txn_id'])) {
 				$transaction = $this->model_extension_payment_pp_express->getTransactionRow($this->request->post['txn_id']);
 			} else {
 				$transaction = false;
@@ -1644,7 +1583,9 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				$parent_transaction = false;
 			}
 
-			if ($transaction) {
+            $order_id = null;
+
+            if ($transaction) {
 				//transaction exists, check for cleared payment or updates etc
 				$this->model_extension_payment_pp_express->log('Transaction exists', 'IPN data');
 
@@ -1655,6 +1596,8 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 					//payment is still pending but the pending reason has changed, update it.
 					$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order_transaction` SET `pending_reason` = '" . $this->db->escape($this->request->post['pending_reason']) . "' WHERE `transaction_id` = '" . $this->db->escape($transaction['transaction_id']) . "' LIMIT 1");
 				}
+
+				$order_id = $transaction['order_id'];
 			} else {
 				$this->model_extension_payment_pp_express->log('Transaction does not exist', 'IPN data');
 
@@ -1704,7 +1647,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 						$this->model_extension_payment_pp_express->log('Remaining: ' . $remaining, 'IPN data');
 
 						if ($remaining > 0.00) {
-							$transaction = array(
+							$void_transaction = array(
 								'paypal_order_id'       => $parent_transaction['paypal_order_id'],
 								'transaction_id'        => '',
 								'parent_id' 			=> $this->request->post['parent_txn_id'],
@@ -1712,24 +1655,33 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 								'msgsubid'              => '',
 								'receipt_id'            => '',
 								'payment_type'          => '',
-								'payment_status'        => 'Void',
+								'payment_status'        => 'Voided',
 								'pending_reason'        => '',
 								'amount'                => '',
 								'debug_data'            => 'Voided after capture',
 								'transaction_entity'    => 'auth'
 							);
 
-							$this->model_extension_payment_pp_express->addTransaction($transaction);
+							$this->model_extension_payment_pp_express->addTransaction($void_transaction);
 						}
 
 						$this->model_extension_payment_pp_express->updateOrder('Complete', $parent_transaction['order_id']);
 					}
+
+					$order_id = $parent_transaction['order_id'];
 
 				} else {
 					//parent transaction doesn't exists, need to investigate?
 					$this->model_extension_payment_pp_express->log('Parent transaction not found', 'IPN data');
 				}
 			}
+
+			if ($order_id !== null) {
+                //handle order status
+                $order_status_id = $this->getOrderStatus($transaction['payment_status']);
+
+                $this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
+            }
 
 			/*
 			 * Subscription payments
@@ -1945,4 +1897,47 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			return false;
 		}
 	}
+
+    /**
+     * Get order status corresponding from Paypal payment status in config
+     *
+     * @param string $paypal_payment_status
+     * @return mixed
+     */
+    private function getOrderStatus($paypal_payment_status)
+    {
+        switch ($paypal_payment_status) {
+            case 'Canceled_Reversal':
+                $order_status_id = $this->config->get('payment_pp_express_canceled_reversal_status_id');
+                break;
+            case 'Completed':
+                $order_status_id = $this->config->get('payment_pp_express_completed_status_id');
+                break;
+            case 'Denied':
+                $order_status_id = $this->config->get('payment_pp_express_denied_status_id');
+                break;
+            case 'Expired':
+                $order_status_id = $this->config->get('payment_pp_express_expired_status_id');
+                break;
+            case 'Failed':
+                $order_status_id = $this->config->get('payment_pp_express_failed_status_id');
+                break;
+            case 'Pending':
+                $order_status_id = $this->config->get('payment_pp_express_pending_status_id');
+                break;
+            case 'Processed':
+                $order_status_id = $this->config->get('payment_pp_express_processed_status_id');
+                break;
+            case 'Refunded':
+                $order_status_id = $this->config->get('payment_pp_express_refunded_status_id');
+                break;
+            case 'Reversed':
+                $order_status_id = $this->config->get('payment_pp_express_reversed_status_id');
+                break;
+            case 'Voided':
+                $order_status_id = $this->config->get('payment_pp_express_voided_status_id');
+                break;
+        }
+        return $order_status_id;
+    }
 }

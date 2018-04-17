@@ -2826,6 +2826,7 @@ tbody.collapse.show {
     padding-left: 0.5rem;
     color: #6c757d;
     font-family: "Font Awesome 5 Free";
+    font-weight: 900;
     content: "\f105"; }
   .breadcrumb-item + .breadcrumb-item:hover::before {
     text-decoration: underline; }

@@ -1639,7 +1639,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 					 */
 					if (isset($this->request->post['auth_status']) && $this->request->post['auth_status'] == 'Completed' && $parent_transaction['payment_status'] == 'Pending') {
 						$captured = $this->currency->format($this->model_extension_payment_pp_express->getTotalCaptured($parent_transaction['paypal_order_id']), $this->session->data['currency'], false, false);
-						$refunded = $this->currency->format($this->model_extension_payment_pp_express->getRefundedTotal($parent_transaction['paypal_order_id']), $this->session->data['currency'], false, false);
+						$refunded = $this->currency->format($this->model_extension_payment_pp_express->getTotalRefunded($parent_transaction['paypal_order_id']), $this->session->data['currency'], false, false);
 						$remaining = $this->currency->format($parent_transaction['amount'] - $captured + $refunded, $this->session->data['currency'], false, false);
 
 						$this->model_extension_payment_pp_express->log('Captured: ' . $captured, 'IPN data');

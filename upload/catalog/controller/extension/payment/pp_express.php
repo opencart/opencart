@@ -1597,6 +1597,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 					$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order_transaction` SET `pending_reason` = '" . $this->db->escape($this->request->post['pending_reason']) . "' WHERE `transaction_id` = '" . $this->db->escape($transaction['transaction_id']) . "' LIMIT 1");
 				}
 
+				$transaction['payment_status'] = $this->request->post['payment_status'];
 				$order_id = $transaction['order_id'];
 			} else {
 				$this->model_extension_payment_pp_express->log('Transaction does not exist', 'IPN data');

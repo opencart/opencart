@@ -1,4 +1,12 @@
 <?php
+
+use Cart\Currency;
+
+/**
+ * Class ModelExtensionPaymentPPExpress
+ *
+ * @property Currency $currency
+ */
 class ModelExtensionPaymentPPExpress extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('extension/payment/pp_express');
@@ -75,6 +83,8 @@ class ModelExtensionPaymentPPExpress extends Model {
 		$i = 0;
 		$item_total = 0;
 
+		$decimal_places = $this->currency->getDecimalPlace($this->session->data['currency']);
+
 		foreach ($this->cart->getProducts() as $item) {
 			$item_price = $this->currency->format($item['price'], $this->session->data['currency'], false, false);
 
@@ -82,7 +92,7 @@ class ModelExtensionPaymentPPExpress extends Model {
 			$data['L_PAYMENTREQUEST_0_NUMBER' . $i] = $item['model'];
 			$data['L_PAYMENTREQUEST_0_AMT' . $i] = $item_price;
 
-			$item_total += number_format($item_price * $item['quantity'], 2, '.', '');
+			$item_total += round($item_price * $item['quantity'], 2, $decimal_places);
 
 			$data['L_PAYMENTREQUEST_0_QTY' . $i] = (int)$item['quantity'];
 
@@ -90,7 +100,7 @@ class ModelExtensionPaymentPPExpress extends Model {
 
 			if ($this->config->get('config_cart_weight')) {
 				$weight = $this->weight->convert($item['weight'], $item['weight_class_id'], $this->config->get('config_weight_class_id'));
-				$data['L_PAYMENTREQUEST_0_ITEMWEIGHTVALUE' . $i] = number_format($weight / $item['quantity'], 2, '.', '');
+				$data['L_PAYMENTREQUEST_0_ITEMWEIGHTVALUE' . $i] = round($weight / $item['quantity'], $decimal_places);
 				$data['L_PAYMENTREQUEST_0_ITEMWEIGHTUNIT' . $i] = $this->weight->getUnit($this->config->get('config_weight_class_id'));
 			}
 
@@ -179,8 +189,8 @@ class ModelExtensionPaymentPPExpress extends Model {
 			}
 		}
 
-		$data['PAYMENTREQUEST_0_ITEMAMT'] = number_format($item_total, 2, '.', '');
-		$data['PAYMENTREQUEST_0_AMT'] = number_format($item_total, 2, '.', '');
+		$data['PAYMENTREQUEST_0_ITEMAMT'] = round($item_total, $decimal_places);
+		$data['PAYMENTREQUEST_0_AMT'] = round($item_total, $decimal_places);
 
 		$z = 0;
 

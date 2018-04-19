@@ -25,6 +25,7 @@ $_['text_trial_description']   = '%s every %d %s(s) for %d payment(s) then';
 $_['text_payment_description'] = '%s every %d %s(s) for %d payment(s)';
 $_['text_payment_cancel']      = '%s every %d %s(s) until canceled';
 
+
 // Column
 $_['column_image']             = 'Image';
 $_['column_name']              = 'Product Name';
@@ -39,3 +40,5 @@ $_['error_minimum']            = 'Minimum order amount for %s is %s!';
 $_['error_required']           = '%s required!';
 $_['error_product']            = 'Warning: There are no products in your cart!';
 $_['error_recurring_required'] = 'Please select a payment recurring!';
+$_['error_quantity_required']  = 'Please enter number!';
+$_['error_quantity_required_zero'] = 'Quantity cannot be 0!';

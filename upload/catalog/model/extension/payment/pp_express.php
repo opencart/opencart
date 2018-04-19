@@ -92,7 +92,7 @@ class ModelExtensionPaymentPPExpress extends Model {
 			$data['L_PAYMENTREQUEST_0_NUMBER' . $i] = $item['model'];
 			$data['L_PAYMENTREQUEST_0_AMT' . $i] = $item_price;
 
-			$item_total += round($item_price * $item['quantity'], 2, $decimal_places);
+			$item_total += round($item_price * $item['quantity'], $decimal_places);
 
 			$data['L_PAYMENTREQUEST_0_QTY' . $i] = (int)$item['quantity'];
 

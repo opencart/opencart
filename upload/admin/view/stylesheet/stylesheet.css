@@ -17,15 +17,14 @@ fieldset {
     margin-bottom: 10px;
 }
 
-label {
-  font-weight: bold;
-}
-
 legend {
     border-bottom: 2px solid #ddd;
     margin-bottom: 20px;
 }
-
+nav {
+    width: auto;
+    display: inline-block;
+}
 
 .page-header {
     vertical-align: middle;
@@ -43,11 +42,6 @@ legend {
     margin-bottom: 15px;
     text-shadow: 0 1px #fff;
 }
-nav {
-  width: auto;
-  display: inline-block;
-}
-
 /*
 .breadcrumb {
   background: none;
@@ -269,7 +263,7 @@ a:hover, a:focus {
 
 #menu li a.parent:after {
     font-family: 'Font Awesome 5 Free';
-    font-weight: 900;
+    font-weight: 600;
     float: right;
     margin-right: 8px;
 }
@@ -387,7 +381,10 @@ a:hover, a:focus {
 
 .col-form-label {
     text-align: right;
+    font-weight: bold;
 }
+
+
 .form-control:hover {
     border: 1px solid #b9b9b9;
     border-top-color: #a0a0a0;
@@ -399,10 +396,6 @@ div.required .col-form-label:not(span):before, td.required:before {
     content: '* ';
     color: #F00;
     font-weight: bold;
-}
-
-.btn-group {
-    white-space: nowrap;
 }
 
 .table thead td span[data-toggle="tooltip"]:after, label.control-label span:after {
@@ -511,7 +504,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     border-top: 1px solid #ededed;
 }
 
-/* Panels */
+/* Panels
 .card {
     border-radius: 0px;
 }
@@ -529,7 +522,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     font-weight: 500;
     display: inline-block;
 }
-
+*/
 /* Primary Panel */
 .card-primary {
     border: 1px solid #c3e4f6;
@@ -553,24 +546,6 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     border-color: #dcdcdc;
     background: #f6f6f6;
     text-shadow: 0 -1px 0 rgba(50, 50, 50, 0);
-}
-
-.img-thumbnail i {
-    color: #FFFFFF;
-    background-color: #EEEEEE;
-    text-align: center;
-    vertical-align: middle;
-    width: 100px;
-    height: 100px;
-    padding-top: 20px;
-    vertical-align: middle;
-    display: inline-block;
-}
-
-.img-thumbnail.list i {
-    width: 40px;
-    height: 40px;
-    padding-top: 10px;
 }
 
 /* Tiles */
@@ -683,26 +658,10 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     z-index: 999;
 }
 
-.alert {
-    overflow: visible;
-}
-
-/* Fix form-group margin inside the modal */
-.modal-body .form-group {
-    margin: 0;
-}
-
-/* Fixed Sumernote Button Height */
-.note-toolbar.panel-heading i,
-.note-toolbar.panel-heading .note-icon-caret {
-    font-size: 14px;
-}
-
 /* Filemanager Folder Size */
 #filemanager .fa-folder.fa-5x {
     font-size: 10.5em;
 }
-
 
 #extension-list {
     color: #4b525d;
@@ -945,7 +904,6 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .list-check {
     list-style: none;
 }
-
 .list-check li::before {
     font-family: 'FontAwesome';
     content: '\f00c';
@@ -957,37 +915,6 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 
 .list-check.list-color-blue li::before {
     color: #02afe9;
-}
-
-
-/* for the opencaaet marketplace */
-@font-face {
-    font-family: 'opencart';
-    src: url('fonts/opencart.eot?h4wsna');
-    src: url('fonts/opencart.eot?h4wsna#iefix') format('embedded-opentype'), url('fonts/opencart.ttf?h4wsna') format('truetype'), url('fonts/opencart.woff?h4wsna') format('woff'), url('fonts/opencart.svg?h4wsna#opencart') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
-[class^="opencart-icon-"], [class*=" opencart-icon-"] {
-    font-family: 'opencart' !important;
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    /* Better Font Rendering =========== */
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-.opencart-icon-comment:before {
-    content: "\e91b";
-}
-
-.opencart-icon-cart-mini:before {
-    content: "\e91c";
 }
 
 .btn-info {

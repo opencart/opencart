@@ -423,6 +423,10 @@ $('#button-cart').on('click', function() {
 					$('select[name=\'recurring_id\']').after('<div class="text-danger">' + json['error']['recurring'] + '</div>');
 				}
 
+				if (json['error']['quantity']) {
+					$('input[name=\'quantity\']').after('<div class="text-danger">' + json['error']['quantity'] + '</div>');
+				}
+
 				// Highlight any found errors
 				$('.text-danger').parent().addClass('has-error');
 			}

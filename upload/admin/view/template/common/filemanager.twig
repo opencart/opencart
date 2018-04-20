@@ -32,21 +32,15 @@
                 <label class="mt-1"><input type="checkbox" name="path[]" value="{{ directory.path }}"/>
                   {{ directory.name }}
                 </label>
-
               </div>
-
-
             </div>
           {% endfor %}
           {% for image in images %}
             <div class="col-sm-3 col-6 mb-3 text-center">
               <div class="h-100">
-
                 <a href="{{ image.href }}" class="thumbnail mb-1"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="img-thumbnail"/></a>
-
                 <label class="mt-1"><input type="checkbox" name="path[]" value="{{ image.path }}"/>
                   {{ image.name }}</label>
-
               </div>
             </div>
           {% endfor %}

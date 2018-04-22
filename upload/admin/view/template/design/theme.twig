@@ -212,14 +212,19 @@ $('#path').on('click', 'a.file', function(e) {
 $('.nav-tabs').on('click', 'i.fa-minus-circle', function(e) {
 	e.preventDefault();
 
+	var active = $(this).parent().parent().parent().find('a.active');
+
+	// For some strange reason in bs4 it wants me to show the tab before removing it.
 	$(this).parent().trigger('click');
 
 	$($(this).parent().attr('href')).remove();
 
 	$(this).parent().parent().remove();
 
-	if ($(this).parent().is('a.active')) {
-		$('.nav-tabs li:last-child a').tab('show');
+	if ($(active).has()) {
+		$(active).parent().trigger('click');
+	} else {
+		$('.nav-tabs li:last-child a').trigger('click');
 	}
 
 	if (!$('#code > ul > li').length) {

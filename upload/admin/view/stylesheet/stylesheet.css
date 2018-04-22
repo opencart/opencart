@@ -399,9 +399,10 @@ div.required .col-form-label:not(span):before, td.required:before {
 }
 
 .table thead td span[data-toggle="tooltip"]:after, label.control-label span:after {
-    font-family: FontAwesome;
-    color: #1E91CF;
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 600;
     content: "\f059";
+    color: #1E91CF;
     margin-left: 4px;
 }
 
@@ -481,13 +482,15 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 }
 
 .table a.asc:after {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 600;
     content: " \f106";
-    font-family: FontAwesome;
 }
 
 .table a.desc:after {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 600;
     content: " \f107";
-    font-family: FontAwesome;
 }
 
 .pagination {

@@ -60,7 +60,7 @@ $('#range a').on('click', function(e) {
 				$('.tooltip').remove();
 
 				if (item) {
-					$('<div id="tooltip" class="tooltip top in"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + item.datapoint[1].toFixed(2) + '</div></div>').prependTo('body');
+					$('<div id="tooltip" class="tooltip top show"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + item.datapoint[1].toFixed(2) + '</div></div>').prependTo('body');
 
 					$('#tooltip').css({
 						position: 'absolute',

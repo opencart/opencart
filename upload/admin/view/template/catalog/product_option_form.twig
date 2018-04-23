@@ -351,7 +351,11 @@ $('input[name=\'option\']').autocomplete({
 			html: true
 		});
 
-		$('.date').datetimepicker();
+		$('.date').datetimepicker({
+			'format': 'YYYY-MM-DD',
+			'locale': '{{ datepicker }}'
+		});
+
 		$('.time').datetimepicker();
 		$('.datetime').datetimepicker();
 	}
@@ -394,7 +398,11 @@ $('#product-option-value').on('click', '#button-option-value', function() {
 });
 //--></script>
 <script type="text/javascript"><!--
-$('.date').datetimepicker();
+$('.date').datetimepicker({
+	'format': 'YYYY-MM-DD',
+	'locale': '{{ datepicker }}'
+});
+
 $('.time').datetimepicker();
 $('.datetime').datetimepicker();
 //--></script>

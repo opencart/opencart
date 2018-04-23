@@ -266,7 +266,11 @@ $('select[name=\'type\']').on('change', function() {
 		$('#display-value > div').html('<input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" id="input-value" class="form-control" />');
 	}
 
-	$('.date').datetimepicker();
+	$('.date').datetimepicker({
+		'format': 'YYYY-MM-DD',
+		'locale': '{{ datepicker }}'
+	});
+
 	$('.time').datetimepicker();
 	$('.datetime').datetimepicker();
 });

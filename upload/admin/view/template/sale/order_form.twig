@@ -1360,7 +1360,11 @@ $('#tab-product input[name=\'product\']').autocomplete({
 
 			$('#option').html(html);
 
-			$('.date').datetimepicker();
+			$('.date').datetimepicker({
+				'format': 'YYYY-MM-DD',
+				'locale': '{{ datepicker }}'
+			});
+
 			$('.time').datetimepicker();
 			$('.datetime').datetimepicker();
 		} else {
@@ -2230,8 +2234,13 @@ $('#content').on('click', 'button[id^=\'button-upload\'], button[id^=\'button-cu
 	}, 500);
 });
 
-$('.date').datetimepicker();
+$('.date').datetimepicker({
+	'format': 'YYYY-MM-DD',
+	'locale': '{{ datepicker }}'
+});
+
 $('.time').datetimepicker();
+
 $('.datetime').datetimepicker();
 //--></script>
 <script type="text/javascript"><!--

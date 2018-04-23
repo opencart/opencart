@@ -169,7 +169,10 @@ $('#form input').keydown(function(e) {
 	}
 });
 
-$('.date').datetimepicker();
+$('.date').datetimepicker({
+	'format': 'YYYY-MM-DD',
+	'locale': '{{ datepicker }}'
+});
 //--></script>
 <script type="text/javascript"><!--
 $('input[name=\'filter_customer\']').autocomplete({

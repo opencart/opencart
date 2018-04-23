@@ -259,7 +259,10 @@
   });
   //--></script>
   <script type="text/javascript"><!--
-  $('.date').datetimepicker();
+  $('.date').datetimepicker({
+	  'format': 'YYYY-MM-DD',
+	  'locale': '{{ datepicker }}'
+  });
   //--></script>
 </div>
 {{ footer }} 

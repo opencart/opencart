@@ -939,7 +939,10 @@ function addDiscount() {
 
 	$('#discount tbody').append(html);
 
-	$('.date').datetimepicker();
+	$('.date').datetimepicker({
+		'format': 'YYYY-MM-DD',
+		'locale': '{{ datepicker }}'
+	});
 
 	discount_row++;
 }
@@ -964,7 +967,10 @@ $('#button-special').on('click', function() {
 
 	$('#special tbody').append(html);
 
-	$('.date').datetimepicker();
+	$('.date').datetimepicker({
+		'format': 'YYYY-MM-DD',
+		'locale': '{{ datepicker }}'
+	});
 
 	special_row++;
 });

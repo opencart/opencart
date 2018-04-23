@@ -591,7 +591,10 @@ $('#content').on('click', 'button[id^=\'button-custom-field\'], button[id^=\'but
 	}, 500);
 });
 
-$('.date').datetimepicker();
+$('.date').datetimepicker({
+	'format': 'YYYY-MM-DD',
+	'locale': '{{ datepicker }}'
+});
 $('.time').datetimepicker();
 $('.datetime').datetimepicker();
 

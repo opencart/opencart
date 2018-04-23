@@ -813,7 +813,10 @@
 <script type="text/javascript"><!--
 $('#tabs a:first').tab('show');
 
-$('.date').datetimepicker();
+$('.date').datetimepicker({
+	'format': 'YYYY-MM-DD',
+	'locale': '{{ datepicker }}'
+});
 
 $('#button-filter').on('click', function(event) {
 	event.preventDefault();
@@ -993,7 +996,6 @@ function getTransaction(transaction_id) {
 		}
 	});
 }
-
 //--></script>
 
 {% if auth_connect_url %}
@@ -1006,6 +1008,7 @@ function getTransaction(transaction_id) {
 		  alert(error.message);
 	  }
   });
+
   $('#bt-connect').show();
   //--></script>
 {% endif %}

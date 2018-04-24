@@ -50,8 +50,7 @@ class ControllerStartupSeoUrl extends Controller {
 		parse_str($url_info['query'], $data);
 
 		foreach ($this->regex as $result) {
-			$result_regex_quoted = preg_quote($result['regex'], '/');
-			if (preg_match('/' . $result_regex_quoted . '/', $url_info['query'], $matches)) {
+			if (preg_match('/' . $result['regex'] . '/', $url_info['query'], $matches)) {
 				array_shift($matches);
 
 				foreach ($matches as $match) {

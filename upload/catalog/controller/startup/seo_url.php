@@ -50,7 +50,8 @@ class ControllerStartupSeoUrl extends Controller {
 		parse_str($url_info['query'], $data);
 
 		foreach ($this->regex as $result) {
-			if (preg_match('/' . $result['regex'] . '/', $url_info['query'], $matches)) {
+			$result_regex_quoted = preg_quote($result['regex'], '/');
+			if (preg_match('/' . $result_regex_quoted . '/', $url_info['query'], $matches)) {
 				array_shift($matches);
 
 				foreach ($matches as $match) {
@@ -58,7 +59,7 @@ class ControllerStartupSeoUrl extends Controller {
 
 					if ($query->num_rows) {
 						foreach ($query->rows as $seo) {
-							if ($seo['keyword']) {
+							if (!empty($seo['keyword'])) {
 								$url .= '/' . $seo['keyword'];
 							}
 						}

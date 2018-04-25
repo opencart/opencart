@@ -69,6 +69,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 		if (isset($json['error'])) {
 			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode($json));
+			die();
 		}
 
 		$order_id = $this->session->data['order_id'];
@@ -125,6 +126,8 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 
 					$this->response->addHeader('Content-Type: application/json');
 					$this->response->setOutput(json_encode($json));
+					$this->response->output();
+-					die();
 				}
 
 				// Cardholder Not Enrolled. Shift in liability. ECI = 6
@@ -148,6 +151,8 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 
 						$this->response->addHeader('Content-Type: application/json');
 						$this->response->setOutput(json_encode($json));
+						$this->response->output();
+-						die();
 					} else {
 						$eci_ref = 2;
 						$xid = '';
@@ -290,6 +295,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 					$this->session->data['error'] = $this->language->get('error_3d_unsuccessful');
 
 					$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
+					die();
 				}
 			}
 

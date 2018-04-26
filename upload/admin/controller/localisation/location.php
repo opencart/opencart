@@ -424,4 +424,25 @@ class ControllerLocalisationLocation extends Controller {
 
 		return !$this->error;
 	}
+	
+	public function geocode() {
+		$json = array();
+
+		if (!empty($this->request->get['address'])) {
+			$address = $this->request->get['address'];
+		} else {
+			$address = "";
+		}
+
+		$this->load->model('localisation/location');
+		$info = $this->model_localisation_location->getGoogleAddressInfo($address);
+
+		$json = array(
+			'lat' 		=> $info['lat'],
+			'lng' 		=> $info['lng']
+		);
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 }

@@ -62,4 +62,28 @@ class ModelLocalisationLocation extends Model {
 
 		return $query->row['total'];
 	}
+	
+	public function getGoogleAddressInfo($address) {
+		$file = "https://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($address);
+		$file_headers = @get_headers($file);
+		if(preg_match("|200|", $file_headers[0])) {
+			return $this->getGoogleLatLng(json_decode(@file_get_contents($file), true));	
+		} else {
+			return false;
+		}
+	}
+
+	public function getGoogleLatLng($address) {
+		$tmp = array();
+		if (isset($address['results'][0]) && !empty($address['results'][0]) ) {
+			$tmp['lat'] = @$address['results'][0]['geometry']['location']['lat'];
+			$tmp['lng'] = @$address['results'][0]['geometry']['location']['lng'];
+		}
+
+		if (!empty($tmp)) {
+			return $tmp;
+		} else { 
+			return false;
+		}	
+	}
 }

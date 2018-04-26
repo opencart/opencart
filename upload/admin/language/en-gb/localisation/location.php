@@ -26,6 +26,9 @@ $_['entry_image']      = 'Image';
 $_['entry_open']       = 'Opening Times';
 $_['entry_comment']    = 'Comment';
 
+//Button
+$_['button_geocode']   = 'Generate a geographic code';
+
 // Help
 $_['help_geocode']     = 'Please enter your store location geocode manually.';
 $_['help_open']        = 'Fill in your stores opening times.';

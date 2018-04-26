@@ -1,26 +1,21 @@
 {% if languages|length > 1 %}
 <div class="float-left">
-  <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-language">
-    <div class="dropdown">
-      <button class="btn btn-link dropdown-toggle" type="button" id="dropdown-language" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        {% for language in languages %}
-        {% if language.code == code %}
-        <img src="catalog/language/{{ language.code }}/{{ language.code }}.png" alt="{{ language.name }}" title="{{ language.name }}">
-        {% endif %}
-        {% endfor %}
-        <span class="hidden-sm hidden-md">{{ text_language }}</span>
-      </button>
-      <ul class="dropdown-menu" aria-labelledby="dropdown-language">
-        {% for language in languages %}
-        <li>
-          <a class="language-select btn btn-sm btn-link btn-block" name="{{ language.code }}"><img src="catalog/language/{{ language.code }}/{{ language.code }}.png" alt="{{ language.name }}" title="{{ language.name }}" /> {{ language.name }}</a>
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
-
-    <input type="hidden" name="code" value="" />
-    <input type="hidden" name="redirect" value="{{ redirect }}" />
-  </form>
+  <div class="dropdown">
+    <button class="btn btn-link dropdown-toggle" type="button" id="dropdown-language" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      {% for language in languages %}
+      {% if language.code == code %}
+      <img src="catalog/language/{{ language.code }}/{{ language.code }}.png" alt="{{ language.name }}" title="{{ language.name }}">
+      {% endif %}
+      {% endfor %}
+      <span class="hidden-sm hidden-md">{{ text_language }}</span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdown-language">
+      {% for language in languages %}
+      <li>
+        <a href="{{ language.href }}" class="language-select btn btn-sm btn-link btn-block" name="{{ language.code }}"><img src="catalog/language/{{ language.code }}/{{ language.code }}.png" alt="{{ language.name }}" title="{{ language.name }}" /> {{ language.name }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
 </div>
 {% endif %}

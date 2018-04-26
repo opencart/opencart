@@ -85,7 +85,7 @@
                   <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value }}</label>
                   <div class="col-sm-3">
                     <div class="input-group date">
-                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-value" class="form-control"/>
+                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" id="input-value" class="form-control"/>
                       <div class="input-group-append">
                         <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                       </div>
@@ -98,7 +98,7 @@
                   <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value }}</label>
                   <div class="col-sm-10">
                     <div class="input-group time">
-                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" data-date-format="HH:mm" data-locale="{{ datepicker }}" id="input-value" class="form-control"/>
+                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" id="input-value" class="form-control"/>
                       <div class="input-group-append">
                         <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                       </div>
@@ -111,7 +111,7 @@
                   <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value }}</label>
                   <div class="col-sm-10">
                     <div class="input-group datetime">
-                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" data-date-format="YYYY-MM-DD HH:mm" data-locale="{{ datepicker }}" id="input-value" class="form-control"/>
+                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" id="input-value" class="form-control"/>
                       <div class="input-group-append">
                         <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                       </div>
@@ -356,8 +356,15 @@ $('input[name=\'option\']').autocomplete({
 			'locale': '{{ datepicker }}'
 		});
 
-		$('.time').datetimepicker();
-		$('.datetime').datetimepicker();
+		$('.time').datetimepicker({
+			'format': 'HH:mm',
+			'locale': '{{ datepicker }}'
+		});
+
+		$('.datetime').datetimepicker({
+			'format': 'YYYY-MM-DD HH:mm',
+			'locale': '{{ datepicker }}'
+		});
 	}
 });
 
@@ -403,7 +410,14 @@ $('.date').datetimepicker({
 	'locale': '{{ datepicker }}'
 });
 
-$('.time').datetimepicker();
-$('.datetime').datetimepicker();
+$('.time').datetimepicker({
+	'format': 'HH:mm',
+	'locale': '{{ datepicker }}'
+});
+
+$('.datetime').datetimepicker({
+	'format': 'YYYY-MM-DD HH:mm',
+	'locale': '{{ datepicker }}'
+});
 //--></script>
 {{ footer }}

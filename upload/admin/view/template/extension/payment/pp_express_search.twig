@@ -24,7 +24,7 @@
               <label class="col-sm-2 col-form-label" for="input-date-start">{{ entry_date_start }}</label>
               <div class="col-sm-10">
                 <div class="input-group date">
-                  <input type="text" name="date_start" value="{{ date_start }}" placeholder="{{ text_format }}: yy-mm-dd" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-start" class="form-control"/>
+                  <input type="text" name="date_start" value="{{ date_start }}" placeholder="{{ text_format }}: yy-mm-dd" id="input-date-start" class="form-control"/>
                   <div class="input-group-append">
                     <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                   </div>
@@ -35,7 +35,7 @@
               <label class="col-sm-2 col-form-label" for="input-date-end">{{ entry_date_end }}</label>
               <div class="col-sm-10">
                 <div class="input-group date">
-                  <input type="text" name="date_end" value="{{ date_end }}" placeholder="{{ text_format }}: yy-mm-dd" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" class="form-control"/>
+                  <input type="text" name="date_end" value="{{ date_end }}" placeholder="{{ text_format }}: yy-mm-dd" class="form-control"/>
                   <div class="input-group-append">
                     <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                   </div>
@@ -254,8 +254,15 @@
 	  'locale': '{{ datepicker }}'
   });
 
-  $('.time').datetimepicker();
-  $('.datetime').datetimepicker();
+  $('.time').datetimepicker({
+	  'format': 'HH:mm',
+	  'locale': '{{ datepicker }}'
+  });
+
+  $('.datetime').datetimepicker({
+	  'format': 'YYYY-MM-DD HH:mm',
+	  'locale': '{{ datepicker }}'
+  });
   //--></script>
 </div>
 {{ footer }}

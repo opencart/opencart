@@ -229,7 +229,7 @@
                 <label class="col-sm-2 col-form-label" for="input-date-available">{{ entry_date_available }}</label>
                 <div class="col-sm-3">
                   <div class="input-group date">
-                    <input type="text" name="date_available" value="{{ date_available }}" placeholder="{{ entry_date_available }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-available" class="form-control"/>
+                    <input type="text" name="date_available" value="{{ date_available }}" placeholder="{{ entry_date_available }}" id="input-date-available" class="form-control"/>
                     <div class="input-group-append">
                       <button type="button" class="btn btn-outline-secondary"><i class="fas fa-calendar"></i></button>
                     </div>
@@ -504,7 +504,7 @@
                         <td class="text-right"><input type="text" name="product_discount[{{ discount_row }}][price]" value="{{ product_discount.price }}" placeholder="{{ entry_price }}" class="form-control"/></td>
                         <td class="text-left">
                           <div class="input-group date">
-                            <input type="text" name="product_discount[{{ discount_row }}][date_start]" value="{{ product_discount.date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" class="form-control"/>
+                            <input type="text" name="product_discount[{{ discount_row }}][date_start]" value="{{ product_discount.date_start }}" placeholder="{{ entry_date_start }}" class="form-control"/>
                             <div class="input-group-append">
                               <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                             </div>
@@ -512,7 +512,7 @@
                         </td>
                         <td class="text-left">
                           <div class="input-group date">
-                            <input type="text" name="product_discount[{{ discount_row }}][date_end]" value="{{ product_discount.date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" class="form-control"/>
+                            <input type="text" name="product_discount[{{ discount_row }}][date_end]" value="{{ product_discount.date_end }}" placeholder="{{ entry_date_end }}" class="form-control"/>
                             <div class="input-group-append">
                               <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                             </div>
@@ -562,7 +562,7 @@
                         <td class="text-right"><input type="text" name="product_special[{{ special_row }}][price]" value="{{ product_special.price }}" placeholder="{{ entry_price }}" class="form-control"/></td>
                         <td class="text-left">
                           <div class="input-group date">
-                            <input type="text" name="product_special[{{ special_row }}][date_start]" value="{{ product_special.date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" class="form-control"/>
+                            <input type="text" name="product_special[{{ special_row }}][date_start]" value="{{ product_special.date_start }}" placeholder="{{ entry_date_start }}" class="form-control"/>
                             <div class="input-group-append">
                               <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                             </div>
@@ -570,7 +570,7 @@
                         </td>
                         <td class="text-left">
                           <div class="input-group date">
-                            <input type="text" name="product_special[{{ special_row }}][date_end]" value="{{ product_special.date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" class="form-control"/>
+                            <input type="text" name="product_special[{{ special_row }}][date_end]" value="{{ product_special.date_end }}" placeholder="{{ entry_date_end }}" class="form-control"/>
                             <div class="input-group-append">
                               <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                             </div>
@@ -1029,11 +1029,19 @@ function addRecurring() {
 //--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
-  'format': 'YYYY-MM-DD',
-  'locale': '{{ datepicker }}'
+    'format': 'YYYY-MM-DD',
+    'locale': '{{ datepicker }}'
 });
-$('.time').datetimepicker();
-$('.datetime').datetimepicker();
+
+$('.time').datetimepicker({
+	'format': 'HH:mm',
+	'locale': '{{ datepicker }}'
+});
+
+$('.datetime').datetimepicker({
+	'format': 'YYYY-MM-DD HH:mm',
+	'locale': '{{ datepicker }}'
+});
 //--></script>
 <script type="text/javascript"><!--
 $('#language li:first-child a').tab('show');

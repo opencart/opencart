@@ -271,8 +271,15 @@ $('select[name=\'type\']').on('change', function() {
 		'locale': '{{ datepicker }}'
 	});
 
-	$('.time').datetimepicker();
-	$('.datetime').datetimepicker();
+	$('.time').datetimepicker({
+		'format': 'HH:mm',
+		'locale': '{{ datepicker }}'
+	});
+
+	$('.datetime').datetimepicker({
+		'format': 'YYYY-MM-DD HH:mm',
+		'locale': '{{ datepicker }}'
+	});
 });
 
 $('select[name=\'type\']').trigger('change');

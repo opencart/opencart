@@ -179,7 +179,7 @@
                       <label class="col-sm-2 col-form-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                       <div class="col-sm-10">
                         <div class="input-group date">
-                          <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+                          <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                           <div class="input-group-append">
                             <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                           </div>
@@ -192,7 +192,7 @@
                       <label class="col-sm-2 col-form-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                       <div class="col-sm-10">
                         <div class="input-group time">
-                          <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="HH:mm" data-locale="{{ datepicker }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+                          <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                           <div class="input-group-append">
                             <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                           </div>
@@ -205,7 +205,7 @@
                       <label class="col-sm-2 col-form-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                       <div class="col-sm-10">
                         <div class="input-group datetime">
-                          <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" data-locale="{{ datepicker }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+                          <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                           <div class="input-group-append">
                             <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                           </div>
@@ -554,7 +554,7 @@
                       <label class="col-sm-2 col-form-label" for="input-payment-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                       <div class="col-sm-10">
                         <div class="input-group date">
-                          <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+                          <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                           <div class="input-group-append">
                             <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                           </div>
@@ -567,7 +567,7 @@
                       <label class="col-sm-2 col-form-label" for="input-payment-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                       <div class="col-sm-10">
                         <div class="input-group time">
-                          <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="HH:mm" data-locale="{{ datepicker }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+                          <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                           <div class="input-group-append">
                             <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                           </div>
@@ -580,7 +580,7 @@
                       <label class="col-sm-2 col-form-label" for="input-payment-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                       <div class="col-sm-10">
                         <div class="input-group datetime">
-                          <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" data-locale="{{ datepicker }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+                          <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                           <div class="input-group-append">
                             <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                           </div>
@@ -770,7 +770,7 @@
                       <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                       <div class="col-sm-10">
                         <div class="input-group date">
-                          <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+                          <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                           <div class="input-group-append">
                             <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                           </div>
@@ -783,7 +783,7 @@
                       <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                       <div class="col-sm-10">
                         <div class="input-group time">
-                          <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="HH:mm" data-locale="{{ datepicker }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+                          <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                           <div class="input-group-append">
                             <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                           </div>
@@ -796,7 +796,7 @@
                       <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                       <div class="col-sm-10">
                         <div class="input-group datetime">
-                          <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" data-locale="{{ datepicker }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+                          <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                           <div class="input-group-append">
                             <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
                           </div>
@@ -1365,8 +1365,15 @@ $('#tab-product input[name=\'product\']').autocomplete({
 				'locale': '{{ datepicker }}'
 			});
 
-			$('.time').datetimepicker();
-			$('.datetime').datetimepicker();
+			$('.time').datetimepicker({
+				'format': 'HH:mm',
+				'locale': '{{ datepicker }}'
+			});
+
+			$('.datetime').datetimepicker({
+				'format': 'YYYY-MM-DD HH:mm',
+				'locale': '{{ datepicker }}'
+			});
 		} else {
 			$('#option').html('');
 		}
@@ -2239,9 +2246,15 @@ $('.date').datetimepicker({
 	'locale': '{{ datepicker }}'
 });
 
-$('.time').datetimepicker();
+$('.time').datetimepicker({
+	'format': 'HH:mm',
+	'locale': '{{ datepicker }}'
+});
 
-$('.datetime').datetimepicker();
+$('.datetime').datetimepicker({
+	'format': 'YYYY-MM-DD HH:mm',
+	'locale': '{{ datepicker }}'
+});
 //--></script>
 <script type="text/javascript"><!--
 // Sort the custom fields

@@ -543,7 +543,8 @@ $('#tabs a:first').tab('show');
 
 $('.date').datetimepicker({
     'format': 'YYYY-MM-DD',
-    'locale': '{{ datepicker }}'
+    'locale': '{{ datepicker }}',
+	'allowInputToggle': true
 });
 
 {% if not klarna_checkout_account %}

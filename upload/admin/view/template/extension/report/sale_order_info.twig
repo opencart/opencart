@@ -1,5 +1,5 @@
 <div class="row">
-  <div id="filter-report" class="col-md-3 col-sm-12 order-md-9 d-none d-md-block">
+  <div id="filter-report" class="col-md-3 col-sm-12 order-md-9 d-none d-md-block mb-3">
     <div class="card">
       <div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
       <div class="card-body">
@@ -128,6 +128,7 @@ $('#button-filter').on('click', function() {
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	'format': 'YYYY-MM-DD',
-	'locale': '{{ datepicker }}'
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
 });
 //--></script>

@@ -1337,21 +1337,21 @@ $('#tab-product input[name=\'product\']').autocomplete({
 				if (option['type'] == 'date') {
 					html += '<div class="form-group row' + (option['required'] ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 col-form-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
-					html += '  <div class="col-sm-3"><div class="input-group date"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="YYYY-MM-DD" id="input-option' + option['product_option_id'] + '" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div></div>';
+					html += '  <div class="col-sm-3"><div class="input-group date"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '"  id="input-option' + option['product_option_id'] + '" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div></div>';
 					html += '</div>';
 				}
 
 				if (option['type'] == 'datetime') {
 					html += '<div class="form-group row' + (option['required'] ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 col-form-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
-					html += '  <div class="col-sm-3"><div class="input-group datetime"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="YYYY-MM-DD HH:mm" id="input-option' + option['product_option_id'] + '" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div></div>';
+					html += '  <div class="col-sm-3"><div class="input-group datetime"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option' + option['product_option_id'] + '" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div></div>';
 					html += '</div>';
 				}
 
 				if (option['type'] == 'time') {
 					html += '<div class="form-group row' + (option['required'] ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 col-form-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
-					html += '  <div class="col-sm-3"><div class="input-group time"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="HH:mm" id="input-option' + option['product_option_id'] + '" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div></div>';
+					html += '  <div class="col-sm-3"><div class="input-group time"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option' + option['product_option_id'] + '" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div></div>';
 					html += '</div>';
 				}
 			}
@@ -1362,17 +1362,20 @@ $('#tab-product input[name=\'product\']').autocomplete({
 
 			$('.date').datetimepicker({
 				'format': 'YYYY-MM-DD',
-				'locale': '{{ datepicker }}'
+				'locale': '{{ datepicker }}',
+				'allowInputToggle': true
 			});
 
 			$('.time').datetimepicker({
 				'format': 'HH:mm',
-				'locale': '{{ datepicker }}'
+				'locale': '{{ datepicker }}',
+				'allowInputToggle': true
 			});
 
 			$('.datetime').datetimepicker({
 				'format': 'YYYY-MM-DD HH:mm',
-				'locale': '{{ datepicker }}'
+				'locale': '{{ datepicker }}',
+				'allowInputToggle': true
 			});
 		} else {
 			$('#option').html('');
@@ -2243,17 +2246,20 @@ $('#content').on('click', 'button[id^=\'button-upload\'], button[id^=\'button-cu
 
 $('.date').datetimepicker({
 	'format': 'YYYY-MM-DD',
-	'locale': '{{ datepicker }}'
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
 });
 
 $('.time').datetimepicker({
 	'format': 'HH:mm',
-	'locale': '{{ datepicker }}'
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
 });
 
 $('.datetime').datetimepicker({
 	'format': 'YYYY-MM-DD HH:mm',
-	'locale': '{{ datepicker }}'
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
 });
 //--></script>
 <script type="text/javascript"><!--

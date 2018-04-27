@@ -420,7 +420,7 @@
                   <tfoot>
                     <tr>
                       <td colspan="2"></td>
-                      <td class="text-left"><button type="button" onclick="addAttribute();" data-toggle="tooltip" title="{{ button_attribute_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
+                      <td class="text-left"><button type="button" id="button-attribute" data-toggle="tooltip" title="{{ button_attribute_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
                     </tr>
                   </tfoot>
                 </table>
@@ -526,7 +526,7 @@
                   <tfoot>
                     <tr>
                       <td colspan="6"></td>
-                      <td class="text-left"><button type="button" onclick="addDiscount();" data-toggle="tooltip" title="{{ button_discount_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
+                      <td class="text-left"><button type="button" id="button-discount" data-toggle="tooltip" title="{{ button_discount_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
                     </tr>
                   </tfoot>
                 </table>
@@ -869,7 +869,7 @@ $('#product-related').on('click', '.fa-minus-circle', function() {
 <script type="text/javascript"><!--
 var attribute_row = {{ attribute_row }};
 
-function addAttribute() {
+$('#button-attribute').on('click', function() {
 	html = '<tr id="attribute-row' + attribute_row + '">';
 	html += '  <td class="text-left"><input type="text" name="product_attribute[' + attribute_row + '][name]" value="" placeholder="{{ entry_attribute }}" class="form-control" /><input type="hidden" name="product_attribute[' + attribute_row + '][attribute_id]" value="" /></td>';
 	html += '  <td class="text-left">';
@@ -888,7 +888,7 @@ function addAttribute() {
 	attributeautocomplete(attribute_row);
 
 	attribute_row++;
-}
+});
 
 function attributeautocomplete(attribute_row) {
 	$('input[name=\'product_attribute[' + attribute_row + '][name]\']').autocomplete({
@@ -921,7 +921,7 @@ $('#attribute tbody tr').each(function(index, element) {
 <script type="text/javascript"><!--
 var discount_row = {{ discount_row }};
 
-function addDiscount() {
+$('#button-discount').on('click', function() {
 	html = '<tr id="discount-row' + discount_row + '">';
 	html += '  <td class="text-left"><select name="product_discount[' + discount_row + '][customer_group_id]" class="form-control">';
   {% for customer_group in customer_groups %}
@@ -945,7 +945,7 @@ function addDiscount() {
 	});
 
 	discount_row++;
-}
+});
 
 //--></script>
 <script type="text/javascript"><!--

@@ -66,10 +66,6 @@ $(document).ready(function() {
 		}
 	}
 
-	$('.date button, .time button, .datetime button').on('click', function() {
-		$(this).parent().parent().datetimepicker('toggle');
-	});
-
 	$('#button-menu').on('click', function(e) {
 		e.preventDefault();
 

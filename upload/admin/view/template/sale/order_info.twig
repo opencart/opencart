@@ -21,20 +21,20 @@
           <table class="table">
             <tbody>
               <tr>
-                <td style="width: 1%;"><button data-toggle="tooltip" title="{{ text_store }}" class="btn btn-info btn-xs"><i class="fas fa-shopping-cart fa-fw"></i></button></td>
+                <td style="width: 1%;"><button type="button" data-toggle="tooltip" title="{{ text_store }}" class="btn btn-info btn-xs"><i class="fas fa-shopping-cart fa-fw"></i></button></td>
                 <td><a href="{{ store_url }}" target="_blank">{{ store_name }}</a></td>
               </tr>
               <tr>
-                <td><button data-toggle="tooltip" title="{{ text_date_added }}" class="btn btn-info btn-xs"><i class="fas fa-calendar fa-fw"></i></button></td>
+                <td><button type="button" data-toggle="tooltip" title="{{ text_date_added }}" class="btn btn-info btn-xs"><i class="fas fa-calendar fa-fw"></i></button></td>
                 <td>{{ date_added }}</td>
               </tr>
               <tr>
-                <td><button data-toggle="tooltip" title="{{ text_payment_method }}" class="btn btn-info btn-xs"><i class="fas fa-credit-card fa-fw"></i></button></td>
+                <td><button type="button" data-toggle="tooltip" title="{{ text_payment_method }}" class="btn btn-info btn-xs"><i class="fas fa-credit-card fa-fw"></i></button></td>
                 <td>{{ payment_method }}</td>
               </tr>
               {% if shipping_method %}
                 <tr>
-                  <td><button data-toggle="tooltip" title="{{ text_shipping_method }}" class="btn btn-info btn-xs"><i class="fas fa-truck fa-fw"></i></button></td>
+                  <td><button type="button" data-toggle="tooltip" title="{{ text_shipping_method }}" class="btn btn-info btn-xs"><i class="fas fa-truck fa-fw"></i></button></td>
                   <td>{{ shipping_method }}</td>
                 </tr>
               {% endif %}
@@ -47,21 +47,21 @@
           <div class="card-header"><i class="fas fa-user"></i> {{ text_customer_detail }}</div>
           <table class="table">
             <tr>
-              <td style="width: 1%;"><button data-toggle="tooltip" title="{{ text_customer }}" class="btn btn-info btn-xs"><i class="fas fa-user fa-fw"></i></button></td>
+              <td style="width: 1%;"><button type="button" data-toggle="tooltip" title="{{ text_customer }}" class="btn btn-info btn-xs"><i class="fas fa-user fa-fw"></i></button></td>
               <td>{% if customer %} <a href="{{ customer }}" target="_blank">{{ firstname }} {{ lastname }}</a> {% else %}
                   {{ firstname }} {{ lastname }}
                 {% endif %}</td>
             </tr>
             <tr>
-              <td><button data-toggle="tooltip" title="{{ text_customer_group }}" class="btn btn-info btn-xs"><i class="fas fa-users fa-fw"></i></button></td>
+              <td><button type="button" data-toggle="tooltip" title="{{ text_customer_group }}" class="btn btn-info btn-xs"><i class="fas fa-users fa-fw"></i></button></td>
               <td>{{ customer_group }}</td>
             </tr>
             <tr>
-              <td><button data-toggle="tooltip" title="{{ text_email }}" class="btn btn-info btn-xs"><i class="fas fa-envelope fa-fw"></i></button></td>
+              <td><button type="button" data-toggle="tooltip" title="{{ text_email }}" class="btn btn-info btn-xs"><i class="fas fa-envelope fa-fw"></i></button></td>
               <td><a href="mailto:{{ email }}">{{ email }}</a></td>
             </tr>
             <tr>
-              <td><button data-toggle="tooltip" title="{{ text_telephone }}" class="btn btn-info btn-xs"><i class="fas fa-phone fa-fw"></i></button></td>
+              <td><button type="button" data-toggle="tooltip" title="{{ text_telephone }}" class="btn btn-info btn-xs"><i class="fas fa-phone fa-fw"></i></button></td>
               <td>{{ telephone }}</td>
             </tr>
           </table>
@@ -76,9 +76,9 @@
                 <td>{{ text_invoice }}</td>
                 <td id="invoice" class="text-right">{{ invoice_no }}</td>
                 <td style="width: 1%;" class="text-center">{% if not invoice_no %}
-                    <button id="button-invoice" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_generate }}" class="btn btn-success btn-xs"><i class="fas fa-cog"></i></button>
+                    <button type="button" id="button-invoice" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_generate }}" class="btn btn-success btn-xs"><i class="fas fa-cog"></i></button>
                   {% else %}
-                    <button disabled="disabled" class="btn btn-success btn-xs"><i class="fas fa-sync"></i></button>
+                    <button type="button" disabled="disabled" class="btn btn-success btn-xs"><i class="fas fa-cog"></i></button>
                   {% endif %}</td>
               </tr>
               <tr>
@@ -86,12 +86,12 @@
                 <td class="text-right">{{ reward }}</td>
                 <td class="text-center">{% if customer and reward %}
                     {% if not reward_total %}
-                      <button id="button-reward-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success btn-xs"><i class="fas fa-plus-circle"></i></button>
+                      <button type="button" id="button-reward-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success btn-xs"><i class="fas fa-plus-circle"></i></button>
                     {% else %}
-                      <button id="button-reward-remove" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger btn-xs"><i class="fas fa-minus-circle"></i></button>
+                      <button type="button" id="button-reward-remove" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger btn-xs"><i class="fas fa-minus-circle"></i></button>
                     {% endif %}
                   {% else %}
-                    <button disabled="disabled" class="btn btn-success btn-xs"><i class="fas fa-plus-circle"></i></button>
+                    <button type="button" disabled="disabled" class="btn btn-success btn-xs"><i class="fas fa-plus-circle"></i></button>
                   {% endif %}</td>
               </tr>
               <tr>
@@ -102,12 +102,12 @@
                 <td class="text-right">{{ commission }}</td>
                 <td class="text-center">{% if affiliate %}
                     {% if not commission_total %}
-                      <button id="button-commission-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success btn-xs"><i class="fas fa-plus-circle"></i></button>
+                      <button type="button" id="button-commission-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success btn-xs"><i class="fas fa-plus-circle"></i></button>
                     {% else %}
-                      <button id="button-commission-remove" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger btn-xs"><i class="fas fa-minus-circle"></i></button>
+                      <button type="button" id="button-commission-remove" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger btn-xs"><i class="fas fa-minus-circle"></i></button>
                     {% endif %}
                   {% else %}
-                    <button disabled="disabled" class="btn btn-success btn-xs"><i class="fas fa-plus-circle"></i></button>
+                    <button type="button" disabled="disabled" class="btn btn-success btn-xs"><i class="fas fa-plus-circle"></i></button>
                   {% endif %}</td>
               </tr>
             </tbody>

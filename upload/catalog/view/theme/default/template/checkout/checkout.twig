@@ -151,7 +151,7 @@
         },
         success: function(html) {
           $('.alert-dismissible, .text-danger').remove();
-          $('.form-group').removeClass('has-error');
+          $('.form-control').removeClass('is-invalid');
           $('#collapse-payment-address .card-body').html(html);
 
           if ($('input[name=\'account\']:checked').val() == 'register') {
@@ -183,14 +183,14 @@
           },
           success: function(json) {
             $('.alert-dismissible, .text-danger').remove();
-            $('.form-group').removeClass('has-error');
+            $('.form-control').removeClass('is-invalid');
             if (json['redirect']) {
               location = json['redirect'];
             } else if (json['error']) {
               $('#collapse-checkout-option .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
               // Highlight any found errors
-              $('input[name=\'email\']').parent().addClass('has-error');
-              $('input[name=\'password\']').parent().addClass('has-error');
+              $('input[name=\'email\']').addClass('is-invalid');
+              $('input[name=\'password\']').addClass('is-invalid');
             }
           },
           error: function(xhr, ajaxOptions, thrownError) {
@@ -211,7 +211,7 @@
         		},
             success: function(json) {
                 $('.alert-dismissible, .text-danger').remove();
-                $('.form-group').removeClass('has-error');
+                $('.form-control').removeClass('is-invalid');
 
                 if (json['redirect']) {
                     location = json['redirect'];
@@ -233,7 +233,7 @@
           				}
 
           				// Highlight any found errors
-          				$('.text-danger').parent().addClass('has-error');
+          				$('.text-danger').siblings('.form-control').addClass('is-invalid');
                 } else {
                     {% if shipping_required %}
                     var shipping_address = $('#payment-address input[name=\'shipping_address\']:checked').prop('value');
@@ -343,7 +343,7 @@
             },
             success: function(json) {
                $('.alert-dismissible, .text-danger').remove();
-               $('.form-group').removeClass('has-error');
+               $('.form-control').removeClass('is-invalid');
 
                 if (json['redirect']) {
                     location = json['redirect'];
@@ -363,7 +363,7 @@
                     }
 
                     // Highlight any found errors
-                    $('.text-danger').parent().parent().addClass('has-error');
+                    $('.text-danger').siblings('.form-control').addClass('is-invalid');
                 } else {
                     {% if shipping_required %}
                     $.ajax({
@@ -444,7 +444,7 @@ $(document).delegate('#button-shipping-address', 'click', function() {
 	    },
         success: function(json) {
             $('.alert-dismissible, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
+			$('.form-control').removeClass('is-invalid');
 
             if (json['redirect']) {
                 location = json['redirect'];
@@ -466,7 +466,7 @@ $(document).delegate('#button-shipping-address', 'click', function() {
 				}
 
 				// Highlight any found errors
-				$('.text-danger').parent().parent().addClass('has-error');
+				$('.text-danger').siblings('.form-control').addClass('is-invalid');
             } else {
                 $.ajax({
                     url: 'index.php?route=checkout/shipping_method',
@@ -530,7 +530,7 @@ $(document).delegate('#button-guest', 'click', function() {
 	    },
         success: function(json) {
             $('.alert-dismissible, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
+			$('.form-control').removeClass('is-invalid');
 
             if (json['redirect']) {
                 location = json['redirect'];
@@ -552,7 +552,7 @@ $(document).delegate('#button-guest', 'click', function() {
 				}
 
 				// Highlight any found errors
-				$('.text-danger').parent().addClass('has-error');
+				$('.text-danger').siblings('.form-control').addClass('is-invalid');
             } else {
                 {% if shipping_required %}
                 var shipping_address = $('#collapse-payment-address input[name=\'shipping_address\']:checked').prop('value');
@@ -656,7 +656,7 @@ $(document).delegate('#button-guest-shipping', 'click', function() {
 		},
         success: function(json) {
             $('.alert-dismissible, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
+			$('.form-control').removeClass('is-invalid');
 
             if (json['redirect']) {
                 location = json['redirect'];
@@ -678,7 +678,7 @@ $(document).delegate('#button-guest-shipping', 'click', function() {
 				}
 
 				// Highlight any found errors
-				$('.text-danger').parent().addClass('has-error');
+				$('.text-danger').siblings('.form-control').addClass('is-invalid');
             } else {
                 $.ajax({
                     url: 'index.php?route=checkout/shipping_method',

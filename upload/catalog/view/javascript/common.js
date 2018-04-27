@@ -52,11 +52,7 @@ $(document).ready(function() {
 
 	// Highlight any found errors
 	$('.text-danger').each(function() {
-		var element = $(this).parent().parent();
-
-		if (element.hasClass('form-group')) {
-			element.addClass('has-error');
-		}
+		$(this).siblings('.form-control').addClass('is-invalid');
 	});
 
 	// tooltips on hover

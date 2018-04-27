@@ -404,7 +404,7 @@ $('#button-cart').on('click', function() {
 		success: function(json) {
 
 			$('.alert-dismissible, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
+			$('.form-control').removeClass('is-invalid');
 
 			if (json['error']) {
 				if (json['error']['option']) {
@@ -428,7 +428,7 @@ $('#button-cart').on('click', function() {
 				}
 
 				// Highlight any found errors
-				$('.text-danger').parent().addClass('has-error');
+				$('.text-danger').siblings('.form-control').addClass('is-invalid');
 			}
 
 			if (json['success']) {

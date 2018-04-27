@@ -96,9 +96,9 @@
             <label class="col-sm-2 col-form-label" for="input-date-added">{{ entry_date_added }}</label>
             <div class="col-sm-3">
               <div class="input-group datetime">
-                <input type="text" name="date_added" value="{{ date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD HH:mm:ss" data-locale="{{ datepicker }}" id="input-date-added" class="form-control"/>
+                <input type="text" name="date_added" value="{{ date_added }}" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control"/>
                 <div class="input-group-append">
-                  <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
+                  <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                 </div>
               </div>
             </div>
@@ -123,7 +123,10 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('.datetime').datetimepicker();
+$('.datetime').datetimepicker({
+	'format': 'YYYY-MM-DD HH:mm',
+	'locale': '{{ datepicker }}'
+});
 //--></script>
 <script type="text/javascript"><!--
 $('input[name=\'product\']').autocomplete({

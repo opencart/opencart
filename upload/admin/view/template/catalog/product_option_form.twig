@@ -85,9 +85,9 @@
                   <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value }}</label>
                   <div class="col-sm-3">
                     <div class="input-group date">
-                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-value" class="form-control"/>
+                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" id="input-value" class="form-control"/>
                       <div class="input-group-append">
-                        <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
+                        <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                       </div>
                     </div>
                   </div>
@@ -98,9 +98,9 @@
                   <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value }}</label>
                   <div class="col-sm-10">
                     <div class="input-group time">
-                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" data-date-format="HH:mm" data-locale="{{ datepicker }}" id="input-value" class="form-control"/>
+                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" id="input-value" class="form-control"/>
                       <div class="input-group-append">
-                        <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
+                        <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                       </div>
                     </div>
                   </div>
@@ -111,9 +111,9 @@
                   <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value }}</label>
                   <div class="col-sm-10">
                     <div class="input-group datetime">
-                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" data-date-format="YYYY-MM-DD HH:mm" data-locale="{{ datepicker }}" id="input-value" class="form-control"/>
+                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" id="input-value" class="form-control"/>
                       <div class="input-group-append">
-                        <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
+                        <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                       </div>
                     </div>
                   </div>
@@ -147,7 +147,8 @@
                               {% endfor %}
                             </select><input type="hidden" name="product_option_value[{{ option_value_row }}][product_option_value_id]" value="{{ product_option_value.product_option_value_id }}"/></td>
                           <td class="text-right"><input type="text" name="product_option_value[{{ option_value_row }}][quantity]" value="{{ product_option_value.quantity }}" placeholder="{{ entry_quantity }}" class="form-control"/></td>
-                          <td class="text-left"><div class="btn-group btn-group-toggle" data-toggle="buttons">
+                          <td class="text-left">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
                               {% if product_option_value.subtract %}
                                 <label class="btn btn-success active"><input type="radio" name="product_option_value[{{ option_value_row }}][subtract]" value="1" checked="checked"/> {{ text_yes }}</label>
                                 <label class="btn btn-danger"><input type="radio" name="product_option_value[{{ option_value_row }}][subtract]" value="0"/> {{ text_no }}</label>
@@ -155,7 +156,8 @@
                                 <label class="btn btn-success"><input type="radio" name="product_option_value[{{ option_value_row }}][subtract]" value="1"/> {{ text_yes }}</label>
                                 <label class="btn btn-danger active"><input type="radio" name="product_option_value[{{ option_value_row }}][subtract]" value="0" checked="checked"/> {{ text_no }}</label>
                               {% endif %}
-                            </div></td>
+                            </div>
+                          </td>
                           <td class="text-right"><select name="product_option_value[{{ option_value_row }}][price_prefix]" class="form-control">
                               {% if product_option_value.price_prefix == '+' %}
                                 <option value="+" selected="selected">+</option>
@@ -289,21 +291,21 @@ $('input[name=\'option\']').autocomplete({
 		if (item['type'] == 'date') {
 			html += '	<div class="form-group row">';
 			html += '	  <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value|escape('js') }}</label>';
-			html += '	  <div class="col-sm-3"><div class="input-group date"><input type="text" name="value" value="" placeholder="{{ entry_option_value|escape('js') }}" data-date-format="YYYY-MM-DD" id="input-value" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button></div></div></div>';
+			html += '	  <div class="col-sm-3"><div class="input-group date"><input type="text" name="value" value="" placeholder="{{ entry_option_value|escape('js') }}" id="input-value" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div></div>';
 			html += '	</div>';
 		}
 
 		if (item['type'] == 'time') {
 			html += '	<div class="form-group row">';
 			html += '	  <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value|escape('js') }}</label>';
-			html += '	  <div class="col-sm-3"><div class="input-group time"><input type="text" name="value" value="" placeholder="{{ entry_option_value|escape('js') }}" data-date-format="HH:mm" id="input-value" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button></div></div></div>';
+			html += '	  <div class="col-sm-3"><div class="input-group time"><input type="text" name="value" value="" placeholder="{{ entry_option_value|escape('js') }}" id="input-value" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div></div>';
 			html += '	</div>';
 		}
 
 		if (item['type'] == 'datetime') {
 			html += '	<div class="form-group row">';
 			html += '	  <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value|escape('js') }}</label>';
-			html += '	  <div class="col-sm-3"><div class="input-group datetime"><input type="text" name="value" value="" placeholder="{{ entry_option_value|escape('js') }}" data-date-format="YYYY-MM-DD HH:mm" id="input-value" class="form-control" /><div class="input-group-append"><button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button></div></div></div>';
+			html += '	  <div class="col-sm-3"><div class="input-group datetime"><input type="text" name="value" value="" placeholder="{{ entry_option_value|escape('js') }}" id="input-value" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div></div>';
 			html += '	</div>';
 		}
 
@@ -351,9 +353,23 @@ $('input[name=\'option\']').autocomplete({
 			html: true
 		});
 
-		$('.date').datetimepicker();
-		$('.time').datetimepicker();
-		$('.datetime').datetimepicker();
+		$('.date').datetimepicker({
+			'format': 'YYYY-MM-DD',
+			'locale': '{{ datepicker }}',
+			'allowInputToggle': true
+		});
+
+		$('.time').datetimepicker({
+			'format': 'HH:mm',
+			'locale': '{{ datepicker }}',
+			'allowInputToggle': true
+		});
+
+		$('.datetime').datetimepicker({
+			'format': 'YYYY-MM-DD HH:mm',
+			'locale': '{{ datepicker }}',
+			'allowInputToggle': true
+		});
 	}
 });
 
@@ -394,8 +410,22 @@ $('#product-option-value').on('click', '#button-option-value', function() {
 });
 //--></script>
 <script type="text/javascript"><!--
-$('.date').datetimepicker();
-$('.time').datetimepicker();
-$('.datetime').datetimepicker();
+$('.date').datetimepicker({
+	'format': 'YYYY-MM-DD',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
+});
+
+$('.time').datetimepicker({
+	'format': 'HH:mm',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
+});
+
+$('.datetime').datetimepicker({
+	'format': 'YYYY-MM-DD HH:mm',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
+});
 //--></script>
 {{ footer }}

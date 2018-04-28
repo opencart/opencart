@@ -1,7 +1,6 @@
 .breadcrumb {
-//  display: flex;
-  display: inline-block;
-//  flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
   padding: $breadcrumb-padding-y $breadcrumb-padding-x;
   margin-bottom: $breadcrumb-margin-bottom;
   list-style: none;
@@ -12,14 +11,20 @@
 .breadcrumb-item {
   text-shadow: 0 1px #fff;
 
+  + .breadcrumb-item:first-child {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    border: 1px solid #0a001f;
+  }
+
   // The separator between breadcrumbs (by default, a forward-slash: "/")
   + .breadcrumb-item::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
     display: inline-block; // Suppress underlining of the separator in modern browsers
     padding-right: $breadcrumb-item-padding;
     padding-left: $breadcrumb-item-padding;
     color: $breadcrumb-divider-color;
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
     content: "#{$breadcrumb-divider}";
   }
 

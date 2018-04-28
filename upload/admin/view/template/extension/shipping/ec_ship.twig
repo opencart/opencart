@@ -6,13 +6,11 @@
         <button type="submit" form="form-shipping" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          {% for breadcrumb in breadcrumbs %}
-            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-          {% endfor %}
-        </ol>
-      </nav>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
     </div>
   </div>
   <div class="container-fluid">
@@ -82,8 +80,7 @@
                     <input type="checkbox" name="shipping_ec_ship_air_registered_mail" value="1" class="form-check-input"/>
                     {{ text_air_registered_mail }}
                   {% endif %}
-                </label>
-                <label class="form-check">
+                </label> <label class="form-check">
                   {% if shipping_ec_ship_air_parcel %}
                     <input type="checkbox" name="shipping_ec_ship_air_parcel" value="1" checked="checked" class="form-check-input"/>
                     {{ text_air_parcel }}
@@ -91,8 +88,7 @@
                     <input type="checkbox" name="shipping_ec_ship_air_parcel" value="1" class="form-check-input"/>
                     {{ text_air_parcel }}
                   {% endif %}
-                </label>
-                <label class="form-check">
+                </label> <label class="form-check">
                   {% if shipping_ec_ship_e_express_service_to_us %}
                     <input type="checkbox" name="shipping_ec_ship_e_express_service_to_us" value="1" checked="checked" class="form-check-input"/>
                     {{ text_e_express_service_to_us }}
@@ -100,8 +96,7 @@
                     <input type="checkbox" name="shipping_ec_ship_e_express_service_to_us" value="1" class="form-check-input"/>
                     {{ text_e_express_service_to_us }}
                   {% endif %}
-                </label>
-                <label class="form-check">
+                </label> <label class="form-check">
                   {% if shipping_ec_ship_e_express_service_to_canada %}
                     <input type="checkbox" name="shipping_ec_ship_e_express_service_to_canada" value="1" checked="checked" class="form-check-input"/>
                     {{ text_e_express_service_to_canada }}
@@ -109,8 +104,7 @@
                     <input type="checkbox" name="shipping_ec_ship_e_express_service_to_canada" value="1" class="form-check-input"/>
                     {{ text_e_express_service_to_canada }}
                   {% endif %}
-                </label>
-                <label class="form-check">
+                </label> <label class="form-check">
                   {% if shipping_ec_ship_e_express_service_to_united_kingdom %}
                     <input type="checkbox" name="shipping_ec_ship_e_express_service_to_united_kingdom" value="1" checked="checked" class="form-check-input"/>
                     {{ text_e_express_service_to_united_kingdom }}
@@ -118,8 +112,7 @@
                     <input type="checkbox" name="shipping_ec_ship_e_express_service_to_united_kingdom" value="1" class="form-check-input"/>
                     {{ text_e_express_service_to_united_kingdom }}
                   {% endif %}
-                </label>
-                <label class="form-check">
+                </label> <label class="form-check">
                   {% if shipping_ec_ship_e_express_service_to_russia %}
                     <input type="checkbox" name="shipping_ec_ship_e_express_service_to_russia" value="1" checked="checked" class="form-check-input"/>
                     {{ text_e_express_service_to_russia }}
@@ -127,8 +120,7 @@
                     <input type="checkbox" name="shipping_ec_ship_e_express_service_to_russia" value="1" class="form-check-input"/>
                     {{ text_e_express_service_to_russia }}
                   {% endif %}
-                </label>
-                <label class="form-check">
+                </label> <label class="form-check">
                   {% if shipping_ec_ship_e_express_service_one %}
                     <input type="checkbox" name="shipping_ec_ship_e_express_service_one" value="1" checked="checked" class="form-check-input"/>
                     {{ text_e_express_service_one }}
@@ -136,8 +128,7 @@
                     <input type="checkbox" name="shipping_ec_ship_e_express_service_one" value="1" class="form-check-input"/>
                     {{ text_e_express_service_one }}
                   {% endif %}
-                </label>
-                <label class="form-check">
+                </label> <label class="form-check">
                   {% if shipping_ec_ship_e_express_service_two %}
                     <input type="checkbox" name="shipping_ec_ship_e_express_service_two" value="1" checked="checked" class="form-check-input"/>
                     {{ text_e_express_service_two }}
@@ -145,8 +136,7 @@
                     <input type="checkbox" name="shipping_ec_ship_e_express_service_two" value="1" class="form-check-input"/>
                     {{ text_e_express_service_two }}
                   {% endif %}
-                </label>
-                <label class="form-check">
+                </label> <label class="form-check">
                   {% if shipping_ec_ship_speed_post %}
                     <input type="checkbox" name="shipping_ec_ship_speed_post" value="1" checked="checked" class="form-check-input"/>
                     {{ text_speed_post }}
@@ -154,8 +144,7 @@
                     <input type="checkbox" name="shipping_ec_ship_speed_post" value="1" class="form-check-input"/>
                     {{ text_speed_post }}
                   {% endif %}
-                </label>
-                <label class="form-check">
+                </label> <label class="form-check">
                   {% if shipping_ec_ship_smart_post %}
                     <input type="checkbox" name="shipping_ec_ship_smart_post" value="1" checked="checked" class="form-check-input"/>
                     {{ text_smart_post }}
@@ -163,8 +152,7 @@
                     <input type="checkbox" name="shipping_ec_ship_smart_post" value="1" class="form-check-input"/>
                     {{ text_smart_post }}
                   {% endif %}
-                </label>
-                <label class="form-check">
+                </label> <label class="form-check">
                   {% if shipping_ec_ship_local_courier_post %}
                     <input type="checkbox" name="shipping_ec_ship_local_courier_post" value="1" checked="checked" class="form-check-input"/>
                     {{ text_local_courier_post }}
@@ -172,8 +160,7 @@
                     <input type="checkbox" name="shipping_ec_ship_local_courier_post" value="1" class="form-check-input"/>
                     {{ text_local_courier_post }}
                   {% endif %}
-                </label>
-                <label class="form-check">
+                </label> <label class="form-check">
                   {% if shipping_ec_ship_local_parcel %}
                     <input type="checkbox" name="shipping_ec_ship_local_parcel" value="1" checked="checked" class="form-check-input"/>
                     {{ text_local_parcel }}

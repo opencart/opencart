@@ -7,20 +7,16 @@
           <a id="transaction_capture" data-url-transaction-capture="{{ url_capture }}" data-confirm-capture="{{ confirm_capture }}" class="btn btn-success">{{ button_capture }}</a>
           <a id="transaction_void" data-url-transaction-void="{{ url_void }}" data-confirm-void="{{ confirm_void }}" class="btn btn-warning">{{ button_void }}</a>
         {% endif %}
-
         {% if is_captured %}
           <a id="transaction_refund" data-url-transaction-refund="{{ url_refund }}" data-confirm-refund="{{ confirm_refund }}" data-insert-amount="{{ insert_amount }}" class="btn btn-danger">{{ button_refund }}</a>
         {% endif %}
-
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          {% for breadcrumb in breadcrumbs %}
-            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-          {% endfor %}
-        </ol>
-      </nav>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
     </div>
   </div>
   <div class="container-fluid">

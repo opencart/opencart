@@ -72,12 +72,12 @@ nav {
 .breadcrumb > li:last-child a {
     color: #1e91cf;
 }
-*/
+
 
 a:hover, a:focus {
     text-decoration: none;
 }
-
+*/
 #container {
     min-height: 100%;
     width: 100%;
@@ -351,6 +351,36 @@ a:hover, a:focus {
 
 #menu li li li li ul a {
     padding-left: 80px;
+}
+
+#stats {
+    border-radius: 2px;
+    color: #808b9c;
+    background: #2e3a47;
+    margin: 15px 20px;
+    padding: 5px 0;
+}
+
+#stats ul, #stats li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+#stats li {
+    font-size: 11px;
+    color: #9d9d9d;
+    padding: 5px 10px;
+    border-bottom: 1px dotted #373737;
+}
+
+#stats div:first-child {
+    margin-bottom: 4px;
+}
+
+#stats .progress {
+    height: 3px;
+    margin-bottom: 0;
 }
 
 /* footer */
@@ -627,36 +657,6 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     background-color: rgba(0, 0, 0, 0.1);
 }
 
-#stats {
-    border-radius: 2px;
-    color: #808b9c;
-    background: #2e3a47;
-    margin: 15px 20px;
-    padding: 5px 0;
-}
-
-#stats ul, #stats li {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
-
-#stats li {
-    font-size: 11px;
-    color: #9d9d9d;
-    padding: 5px 10px;
-    border-bottom: 1px dotted #373737;
-}
-
-#stats div:first-child {
-    margin-bottom: 4px;
-}
-
-#stats .progress {
-    height: 3px;
-    margin-bottom: 0;
-}
-
 .jqvmap-label {
     z-index: 999;
 }
@@ -777,8 +777,9 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     #extension-list span {
         font-weight: 600;
     }
-
 }
+
+
 
 #marketplace-extension-info #banner img {
     margin-left: auto;
@@ -884,24 +885,6 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     #marketplace-extension-info .container-fluid {
         padding-bottom: 30px;
     }
-}
-
-#collapse-version p {
-    margin-bottom: 10px;
-}
-
-#collapse-version ol {
-    margin-bottom: 5px;
-    margin-left: -10px;
-}
-
-#collapse-version ol li {
-    line-height: 2;
-}
-
-#collapse-version .form-control[readonly],
-#collapse-upgrade .form-control[readonly] {
-    background-color: #fff;
 }
 
 .list-check {

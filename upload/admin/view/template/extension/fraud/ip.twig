@@ -6,13 +6,11 @@
         <button class="btn btn-primary" data-toggle="tooltip" form="form-fraud" title="{{ button_save }}" type="submit"><i class="fas fa-save"></i></button>
         <a class="btn btn-light" data-toggle="tooltip" href="{{ cancel }}" title="{{ button_cancel }}"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          {% for breadcrumb in breadcrumbs %}
-            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-          {% endfor %}
-        </ol>
-      </nav>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
     </div>
   </div>
   <div class="container-fluid"> {% if error_warning %}
@@ -23,7 +21,7 @@
     <div class="card">
       <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
       <div class="card-body">
-        <form action="{{ action }}" method="post"  enctype="multipart/form-data" id="form-fraud">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-fraud">
           <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-order-status">{{ entry_order_status }}</label>
             <div class="col-sm-10">

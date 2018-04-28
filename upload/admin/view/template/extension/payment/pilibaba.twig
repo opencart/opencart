@@ -6,13 +6,11 @@
         <button type="submit" form="form-payment" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          {% for breadcrumb in breadcrumbs %}
-            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-          {% endfor %}
-        </ol>
-      </nav>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
     </div>
   </div>
   <div class="container-fluid">
@@ -92,8 +90,7 @@
                 </div>
               </div>
               <div class="offset-sm-2">
-                <a class="button btn btn-primary" id="button-register">{{ button_register }}</a>
-                <span class="btn btn-primary" id="img_loading_register" style="display: none;"><i class="fas fa-circle-notch fa-spin fa-lg"></i></span>
+                <a class="button btn btn-primary" id="button-register">{{ button_register }}</a> <span class="btn btn-primary" id="img_loading_register" style="display: none;"><i class="fas fa-circle-notch fa-spin fa-lg"></i></span>
               </div>
             </div>
             <div class="tab-pane {% if not show_register %} active {% endif %}" id="tab-settings">

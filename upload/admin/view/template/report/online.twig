@@ -6,13 +6,11 @@
         <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-online').toggleClass('d-none');" class="btn btn-light d-md-none"><i class="fas fa-filter"></i></button>
         <a href="{{ refresh }}" data-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-light"><i class="fas fa-sync"></i></a></div>
       <h1>{{ heading_title }}</h1>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          {% for breadcrumb in breadcrumbs %}
-            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-          {% endfor %}
-        </ol>
-      </nav>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
     </div>
   </div>
   <div class="container-fluid">
@@ -40,37 +38,37 @@
             <div class="table-responsive">
               <table class="table table-bordered table-hover">
                 <thead>
-                <tr>
-                  <td class="text-left">{{ column_ip }}</td>
-                  <td class="text-left">{{ column_customer }}</td>
-                  <td class="text-left">{{ column_url }}</td>
-                  <td class="text-left">{{ column_referer }}</td>
-                  <td class="text-left">{{ column_date_added }}</td>
-                  <td class="text-right">{{ column_action }}</td>
-                </tr>
+                  <tr>
+                    <td class="text-left">{{ column_ip }}</td>
+                    <td class="text-left">{{ column_customer }}</td>
+                    <td class="text-left">{{ column_url }}</td>
+                    <td class="text-left">{{ column_referer }}</td>
+                    <td class="text-left">{{ column_date_added }}</td>
+                    <td class="text-right">{{ column_action }}</td>
+                  </tr>
                 </thead>
                 <tbody>
 
-                {% if customers %}
-                  {% for customer in customers %}
-                    <tr>
-                      <td class="text-left"><a href="//whatismyipaddress.com/ip/{{ customer.ip }}" target="_blank">{{ customer.ip }}</a></td>
-                      <td class="text-left">{{ customer.customer }}</td>
-                      <td class="text-left"><a href="{{ customer.url }}" target="_blank" rel="noreferrer">{{ customer.url|split('', 30)|join('<br/>
+                  {% if customers %}
+                    {% for customer in customers %}
+                      <tr>
+                        <td class="text-left"><a href="//whatismyipaddress.com/ip/{{ customer.ip }}" target="_blank">{{ customer.ip }}</a></td>
+                        <td class="text-left">{{ customer.customer }}</td>
+                        <td class="text-left"><a href="{{ customer.url }}" target="_blank" rel="noreferrer">{{ customer.url|split('', 30)|join('<br/>
                     ') }}</a></td>
-                      <td class="text-left">{% if customer.referer %}<a href="{{ customer.referer }}" target="_blank">{{ customer.referer|split('', 30)|join('<br/>
+                        <td class="text-left">{% if customer.referer %}<a href="{{ customer.referer }}" target="_blank">{{ customer.referer|split('', 30)|join('<br/>
                     ') }}</a>{% endif %}</td>
-                      <td class="text-left">{{ customer.date_added }}</td>
-                      <td class="text-right">{% if customer.customer_id %}<a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>{% else %}
-                          <button type="button" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary" disabled="disabled"><i class="fas fa-pencil-alt"></i></button>
-                        {% endif %}</td>
+                        <td class="text-left">{{ customer.date_added }}</td>
+                        <td class="text-right">{% if customer.customer_id %}<a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>{% else %}
+                            <button type="button" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary" disabled="disabled"><i class="fas fa-pencil-alt"></i></button>
+                          {% endif %}</td>
+                      </tr>
+                    {% endfor %}
+                  {% else %}
+                    <tr>
+                      <td class="text-center" colspan="6">{{ text_no_results }}</td>
                     </tr>
-                  {% endfor %}
-                {% else %}
-                  <tr>
-                    <td class="text-center" colspan="6">{{ text_no_results }}</td>
-                  </tr>
-                {% endif %}
+                  {% endif %}
                 </tbody>
 
               </table>

@@ -6,13 +6,11 @@
         <button type="submit" id="button-save" form="form-setting" data-toggle="tooltip" title="{{ button_save }}" disabled="disabled" class="btn btn-primary"><i class="fas fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          {% for breadcrumb in breadcrumbs %}
-            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-          {% endfor %}
-        </ol>
-      </nav>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
     </div>
   </div>
   <div class="container-fluid"> {% if error_warning %}
@@ -925,8 +923,7 @@
                 <label class="col-sm-2 col-form-label" for="input-logo">{{ entry_logo }}</label>
                 <div class="col-sm-10">
                   <div class="card" style="width:  12rem;">
-                    <img src="{{ logo }}" alt="" title="" id="thumb-logo" data-placeholder="{{ placeholder }}" class="card-img-top"/>
-                    <input type="hidden" name="config_logo" value="{{ config_logo }}" id="input-logo"/>
+                    <img src="{{ logo }}" alt="" title="" id="thumb-logo" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_logo" value="{{ config_logo }}" id="input-logo"/>
                     <div class="card-body">
                       <button type="button" data-toggle="image" data-target="input-logo" data-thumb="thumb-logo" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
                       <button type="button" data-toggle="clear" data-target="input-logo" data-thumb="thumb-logo" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
@@ -938,8 +935,7 @@
                 <label class="col-sm-2 col-form-label" for="input-icon">{{ entry_icon }}</label>
                 <div class="col-sm-10">
                   <div class="card" style="width:  12rem;">
-                    <img src="{{ icon }}" alt="" title="" id="thumb-icon" data-placeholder="{{ placeholder }}" class="card-img-top"/>
-                    <input type="hidden" name="config_icon" value="{{ config_icon }}" id="input-icon"/>
+                    <img src="{{ icon }}" alt="" title="" id="thumb-icon" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_icon" value="{{ config_icon }}" id="input-icon"/>
                     <div class="card-body">
                       <button type="button" data-toggle="image" data-target="input-icon" data-thumb="thumb-icon" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
                       <button type="button" data-toggle="clear" data-target="input-icon" data-thumb="thumb-icon" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>

@@ -6,13 +6,11 @@
         <button type="submit" form="form-shipping" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          {% for breadcrumb in breadcrumbs %}
-            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-          {% endfor %}
-        </ol>
-      </nav>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
     </div>
   </div>
   <div class="container-fluid">
@@ -195,8 +193,7 @@
                       <input type="checkbox" name="shipping_ups_us_01" value="1" class="form-check-input"/>
                       {{ text_next_day_air }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_us_02 %}
                       <input type="checkbox" name="shipping_ups_us_02" value="1" checked="checked" class="form-check-input"/>
                       {{ text_2nd_day_air }}
@@ -204,8 +201,7 @@
                       <input type="checkbox" name="shipping_ups_us_02" value="1" class="form-check-input"/>
                       {{ text_2nd_day_air }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_us_03 %}
                       <input type="checkbox" name="shipping_ups_us_03" value="1" checked="checked" class="form-check-input"/>
                       {{ text_ground }}
@@ -213,8 +209,7 @@
                       <input type="checkbox" name="shipping_ups_us_03" value="1" class="form-check-input"/>
                       {{ text_ground }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_us_07 %}
                       <input type="checkbox" name="shipping_ups_us_07" value="1" checked="checked" class="form-check-input"/>
                       {{ text_worldwide_express }}
@@ -222,8 +217,7 @@
                       <input type="checkbox" name="shipping_ups_us_07" value="1" class="form-check-input"/>
                       {{ text_worldwide_express }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_us_08 %}
                       <input type="checkbox" name="shipping_ups_us_08" value="1" checked="checked" class="form-check-input"/>
                       {{ text_worldwide_expedited }}
@@ -231,8 +225,7 @@
                       <input type="checkbox" name="shipping_ups_us_08" value="1" class="form-check-input"/>
                       {{ text_worldwide_expedited }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_us_11 %}
                       <input type="checkbox" name="shipping_ups_us_11" value="1" checked="checked" class="form-check-input"/>
                       {{ text_standard }}
@@ -240,8 +233,7 @@
                       <input type="checkbox" name="shipping_ups_us_11" value="1" class="form-check-input"/>
                       {{ text_standard }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_us_12 %}
                       <input type="checkbox" name="shipping_ups_us_12" value="1" checked="checked" class="form-check-input"/>
                       {{ text_3_day_select }}
@@ -249,8 +241,7 @@
                       <input type="checkbox" name="shipping_ups_us_12" value="1" class="form-check-input"/>
                       {{ text_3_day_select }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_us_13 %}
                       <input type="checkbox" name="shipping_ups_us_13" value="1" checked="checked" class="form-check-input"/>
                       {{ text_next_day_air_saver }}
@@ -258,8 +249,7 @@
                       <input type="checkbox" name="shipping_ups_us_13" value="1" class="form-check-input"/>
                       {{ text_next_day_air_saver }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_us_14 %}
                       <input type="checkbox" name="shipping_ups_us_14" value="1" checked="checked" class="form-check-input"/>
                       {{ text_next_day_air_early_am }}
@@ -267,8 +257,7 @@
                       <input type="checkbox" name="shipping_ups_us_14" value="1" class="form-check-input"/>
                       {{ text_next_day_air_early_am }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_us_54 %}
                       <input type="checkbox" name="shipping_ups_us_54" value="1" checked="checked" class="form-check-input"/>
                       {{ text_worldwide_express_plus }}
@@ -276,8 +265,7 @@
                       <input type="checkbox" name="shipping_ups_us_54" value="1" class="form-check-input"/>
                       {{ text_worldwide_express_plus }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_us_59 %}
                       <input type="checkbox" name="shipping_ups_us_59" value="1" checked="checked" class="form-check-input"/>
                       {{ text_2nd_day_air_am }}
@@ -285,8 +273,7 @@
                       <input type="checkbox" name="shipping_ups_us_59" value="1" class="form-check-input"/>
                       {{ text_2nd_day_air_am }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_us_65 %}
                       <input type="checkbox" name="shipping_ups_us_65" value="1" checked="checked" class="form-check-input"/>
                       {{ text_saver }}
@@ -305,8 +292,7 @@
                       <input type="checkbox" name="shipping_ups_pr_01" value="1" class="form-check-input"/>
                       {{ text_next_day_air }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_pr_02 %}
                       <input type="checkbox" name="shipping_ups_pr_02" value="1" checked="checked" class="form-check-input"/>
                       {{ text_2nd_day_air }}
@@ -314,8 +300,7 @@
                       <input type="checkbox" name="shipping_ups_pr_02" value="1" class="form-check-input"/>
                       {{ text_2nd_day_air }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_pr_03 %}
                       <input type="checkbox" name="shipping_ups_pr_03" value="1" checked="checked" class="form-check-input"/>
                       {{ text_ground }}
@@ -323,8 +308,7 @@
                       <input type="checkbox" name="shipping_ups_pr_03" value="1" class="form-check-input"/>
                       {{ text_ground }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_pr_07 %}
                       <input type="checkbox" name="shipping_ups_pr_07" value="1" checked="checked" class="form-check-input"/>
                       {{ text_worldwide_express }}
@@ -332,8 +316,7 @@
                       <input type="checkbox" name="shipping_ups_pr_07" value="1" class="form-check-input"/>
                       {{ text_worldwide_express }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_pr_08 %}
                       <input type="checkbox" name="shipping_ups_pr_08" value="1" checked="checked" class="form-check-input"/>
                       {{ text_worldwide_expedited }}
@@ -341,8 +324,7 @@
                       <input type="checkbox" name="shipping_ups_pr_08" value="1" class="form-check-input"/>
                       {{ text_worldwide_expedited }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_pr_14 %}
                       <input type="checkbox" name="shipping_ups_pr_14" value="1" checked="checked" class="form-check-input"/>
                       {{ text_next_day_air_early_am }}
@@ -350,8 +332,7 @@
                       <input type="checkbox" name="shipping_ups_pr_14" value="1" class="form-check-input"/>
                       {{ text_next_day_air_early_am }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_pr_54 %}
                       <input type="checkbox" name="shipping_ups_pr_54" value="1" checked="checked" class="form-check-input"/>
                       {{ text_worldwide_express_plus }}
@@ -359,8 +340,7 @@
                       <input type="checkbox" name="shipping_ups_pr_54" value="1" class="form-check-input"/>
                       {{ text_worldwide_express_plus }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_pr_65 %}
                       <input type="checkbox" name="shipping_ups_pr_65" value="1" checked="checked" class="form-check-input"/>
                       {{ text_saver }}
@@ -379,8 +359,7 @@
                       <input type="checkbox" name="shipping_ups_ca_01" value="1" class="form-check-input"/>
                       {{ text_express }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_ca_02 %}
                       <input type="checkbox" name="shipping_ups_ca_02" value="1" checked="checked" class="form-check-input"/>
                       {{ text_expedited }}
@@ -388,8 +367,7 @@
                       <input type="checkbox" name="shipping_ups_ca_02" value="1" class="form-check-input"/>
                       {{ text_expedited }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_ca_07 %}
                       <input type="checkbox" name="shipping_ups_ca_07" value="1" checked="checked" class="form-check-input"/>
                       {{ text_worldwide_express }}
@@ -397,8 +375,7 @@
                       <input type="checkbox" name="shipping_ups_ca_07" value="1" class="form-check-input"/>
                       {{ text_worldwide_express }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_ca_08 %}
                       <input type="checkbox" name="shipping_ups_ca_08" value="1" checked="checked" class="form-check-input"/>
                       {{ text_worldwide_expedited }}
@@ -406,8 +383,7 @@
                       <input type="checkbox" name="shipping_ups_ca_08" value="1" class="form-check-input"/>
                       {{ text_worldwide_expedited }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_ca_11 %}
                       <input type="checkbox" name="shipping_ups_ca_11" value="1" checked="checked" class="form-check-input"/>
                       {{ text_standard }}
@@ -415,8 +391,7 @@
                       <input type="checkbox" name="shipping_ups_ca_11" value="1" class="form-check-input"/>
                       {{ text_standard }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_ca_12 %}
                       <input type="checkbox" name="shipping_ups_ca_12" value="1" checked="checked" class="form-check-input"/>
                       {{ text_3_day_select }}
@@ -424,8 +399,7 @@
                       <input type="checkbox" name="shipping_ups_ca_12" value="1" class="form-check-input"/>
                       {{ text_3_day_select }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_ca_13 %}
                       <input type="checkbox" name="shipping_ups_ca_13" value="1" checked="checked" class="form-check-input"/>
                       {{ text_saver }}
@@ -433,8 +407,7 @@
                       <input type="checkbox" name="shipping_ups_ca_13" value="1" class="form-check-input"/>
                       {{ text_saver }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_ca_14 %}
                       <input type="checkbox" name="shipping_ups_ca_14" value="1" checked="checked" class="form-check-input"/>
                       {{ text_express_early_am }}
@@ -442,8 +415,7 @@
                       <input type="checkbox" name="shipping_ups_ca_14" value="1" class="form-check-input"/>
                       {{ text_express_early_am }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_ca_54 %}
                       <input type="checkbox" name="shipping_ups_ca_54" value="1" checked="checked" class="form-check-input"/>
                       {{ text_worldwide_express_plus }}
@@ -451,8 +423,7 @@
                       <input type="checkbox" name="shipping_ups_ca_54" value="1" class="form-check-input"/>
                       {{ text_worldwide_express_plus }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_ca_65 %}
                       <input type="checkbox" name="shipping_ups_ca_65" value="1" checked="checked" class="form-check-input"/>
                       {{ text_saver }}
@@ -471,8 +442,7 @@
                       <input type="checkbox" name="shipping_ups_mx_07" value="1" class="form-check-input"/>
                       {{ text_worldwide_express }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_mx_08 %}
                       <input type="checkbox" name="shipping_ups_mx_08" value="1" checked="checked" class="form-check-input"/>
                       {{ text_worldwide_expedited }}
@@ -480,8 +450,7 @@
                       <input type="checkbox" name="shipping_ups_mx_08" value="1" class="form-check-input"/>
                       {{ text_worldwide_expedited }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_mx_54 %}
                       <input type="checkbox" name="shipping_ups_mx_54" value="1" checked="checked" class="form-check-input"/>
                       {{ text_worldwide_express_plus }}
@@ -489,8 +458,7 @@
                       <input type="checkbox" name="shipping_ups_mx_54" value="1" class="form-check-input"/>
                       {{ text_worldwide_express_plus }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_mx_65 %}
                       <input type="checkbox" name="shipping_ups_mx_65" value="1" checked="checked" class="form-check-input"/>
                       {{ text_saver }}
@@ -509,8 +477,7 @@
                       <input type="checkbox" name="shipping_ups_eu_07" value="1" class="form-check-input"/>
                       {{ text_express }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_eu_08 %}
                       <input type="checkbox" name="shipping_ups_eu_08" value="1" checked="checked" class="form-check-input"/>
                       {{ text_expedited }}
@@ -518,8 +485,7 @@
                       <input type="checkbox" name="shipping_ups_eu_08" value="1" class="form-check-input"/>
                       {{ text_expedited }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_eu_11 %}
                       <input type="checkbox" name="shipping_ups_eu_11" value="1" checked="checked" class="form-check-input"/>
                       {{ text_standard }}
@@ -527,8 +493,7 @@
                       <input type="checkbox" name="shipping_ups_eu_11" value="1" class="form-check-input"/>
                       {{ text_standard }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_eu_54 %}
                       <input type="checkbox" name="shipping_ups_eu_54" value="1" checked="checked" class="form-check-input"/>
                       {{ text_worldwide_express_plus }}
@@ -536,8 +501,7 @@
                       <input type="checkbox" name="shipping_ups_eu_54" value="1" class="form-check-input"/>
                       {{ text_worldwide_express_plus }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_eu_65 %}
                       <input type="checkbox" name="shipping_ups_eu_65" value="1" checked="checked" class="form-check-input"/>
                       {{ text_saver }}
@@ -545,8 +509,7 @@
                       <input type="checkbox" name="shipping_ups_eu_65" value="1" class="form-check-input"/>
                       {{ text_saver }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_eu_82 %}
                       <input type="checkbox" name="shipping_ups_eu_82" value="1" checked="checked" class="form-check-input"/>
                       {{ text_today_standard }}
@@ -554,8 +517,7 @@
                       <input type="checkbox" name="shipping_ups_eu_82" value="1" class="form-check-input"/>
                       {{ text_today_standard }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_eu_83 %}
                       <input type="checkbox" name="shipping_ups_eu_83" value="1" checked="checked" class="form-check-input"/>
                       {{ text_today_dedicated_courier }}
@@ -563,8 +525,7 @@
                       <input type="checkbox" name="shipping_ups_eu_83" value="1" class="form-check-input"/>
                       {{ text_today_dedicated_courier }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_eu_84 %}
                       <input type="checkbox" name="shipping_ups_eu_84" value="1" checked="checked" class="form-check-input"/>
                       {{ text_today_intercity }}
@@ -572,8 +533,7 @@
                       <input type="checkbox" name="shipping_ups_eu_84" value="1" class="form-check-input"/>
                       {{ text_today_intercity }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_eu_85 %}
                       <input type="checkbox" name="shipping_ups_eu_85" value="1" checked="checked" class="form-check-input"/>
                       {{ text_today_express }}
@@ -581,8 +541,7 @@
                       <input type="checkbox" name="shipping_ups_eu_85" value="1" class="form-check-input"/>
                       {{ text_today_express }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_eu_86 %}
                       <input type="checkbox" name="shipping_ups_eu_86" value="1" checked="checked" class="form-check-input"/>
                       {{ text_today_express_saver }}
@@ -601,8 +560,7 @@
                       <input type="checkbox" name="shipping_ups_other_07" value="1" class="form-check-input"/>
                       {{ text_express }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_other_08 %}
                       <input type="checkbox" name="shipping_ups_other_08" value="1" checked="checked" class="form-check-input"/>
                       {{ text_expedited }}
@@ -610,8 +568,7 @@
                       <input type="checkbox" name="shipping_ups_other_08" value="1" class="form-check-input"/>
                       {{ text_expedited }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_other_11 %}
                       <input type="checkbox" name="shipping_ups_other_11" value="1" checked="checked" class="form-check-input"/>
                       {{ text_standard }}
@@ -619,8 +576,7 @@
                       <input type="checkbox" name="shipping_ups_other_11" value="1" class="form-check-input"/>
                       {{ text_standard }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_other_54 %}
                       <input type="checkbox" name="shipping_ups_other_54" value="1" checked="checked" class="form-check-input"/>
                       {{ text_worldwide_express_plus }}
@@ -628,8 +584,7 @@
                       <input type="checkbox" name="shipping_ups_other_54" value="1" class="form-check-input"/>
                       {{ text_worldwide_express_plus }}
                     {% endif %}
-                  </label>
-                  <label class="form-check">
+                  </label> <label class="form-check">
                     {% if shipping_ups_other_65 %}
                       <input type="checkbox" name="shipping_ups_other_65" value="1" checked="checked" class="form-check-input"/>
                       {{ text_saver }}

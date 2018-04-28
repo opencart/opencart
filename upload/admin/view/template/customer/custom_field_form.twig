@@ -6,13 +6,11 @@
         <button type="submit" form="form-custom-field" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          {% for breadcrumb in breadcrumbs %}
-            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-          {% endfor %}
-        </ol>
-      </nav>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
     </div>
   </div>
   <div class="container-fluid">
@@ -160,15 +158,15 @@
                 <div class="form-control" style="height: 150px; overflow: auto;">
                   {% set customer_group_row = 0 %}
                   {% for customer_group in customer_groups %}
-                      <label class="form-check">
-                        {% if customer_group.customer_group_id in custom_field_required %}
-                          <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][required]" value="{{ customer_group.customer_group_id }}" checked="checked" class="form-check-input"/>
-                          {{ customer_group.name }}
-                        {% else %}
-                          <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][required]" value="{{ customer_group.customer_group_id }}" class="form-check-input"/>
-                          {{ customer_group.name }}
-                        {% endif %}
-                      </label>
+                    <label class="form-check">
+                      {% if customer_group.customer_group_id in custom_field_required %}
+                        <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][required]" value="{{ customer_group.customer_group_id }}" checked="checked" class="form-check-input"/>
+                        {{ customer_group.name }}
+                      {% else %}
+                        <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][required]" value="{{ customer_group.customer_group_id }}" class="form-check-input"/>
+                        {{ customer_group.name }}
+                      {% endif %}
+                    </label>
                     {% set customer_group_row = customer_group_row + 1 %}
                   {% endfor %}
                 </div>

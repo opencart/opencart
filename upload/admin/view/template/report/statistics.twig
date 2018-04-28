@@ -3,24 +3,22 @@
   <div class="page-header">
     <div class="container-fluid">
       <h1>{{ heading_title }}</h1>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          {% for breadcrumb in breadcrumbs %}
-            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-          {% endfor %}
-        </ol>
-      </nav>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
     </div>
   </div>
   <div class="container-fluid">{% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
     {% endif %}
     {% if success %}
-    <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
+      <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
     {% endif %}
     <div class="card">
       <div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
@@ -36,17 +34,17 @@
             </thead>
             <tbody>
               {% if statistics %}
-              {% for statistic in statistics %}
-              <tr>
-                <td class="text-left">{{ statistic.name }}</td>
-                <td class="text-right">{{ statistic.value }}</td>
-                <td class="text-right"><a href="{{ statistic.href }}" data-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-warning"><i class="fas fa-sync"></i></a></td>
-              </tr>
-              {% endfor %}
+                {% for statistic in statistics %}
+                  <tr>
+                    <td class="text-left">{{ statistic.name }}</td>
+                    <td class="text-right">{{ statistic.value }}</td>
+                    <td class="text-right"><a href="{{ statistic.href }}" data-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-warning"><i class="fas fa-sync"></i></a></td>
+                  </tr>
+                {% endfor %}
               {% else %}
-              <tr>
-                <td class="text-center" colspan="3">{{ text_no_results }}</td>
-              </tr>
+                <tr>
+                  <td class="text-center" colspan="3">{{ text_no_results }}</td>
+                </tr>
               {% endif %}
             </tbody>
           </table>

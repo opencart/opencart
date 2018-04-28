@@ -4,13 +4,11 @@
     <div class="container-fluid">
       <div class="float-right"><a id="button-edit" data-toggle="tooltip" style="display:none;" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a> <a id="button-search" data-toggle="tooltip" title="{{ button_search }}" class="btn btn-info"><i class="fas fa-search"></i></a></div>
       <h1><i class="fas fa-search"></i> {{ heading_title }}</h1>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          {% for breadcrumb in breadcrumbs %}
-            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-          {% endfor %}
-        </ol>
-      </nav>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
     </div>
   </div>
   <div class="container-fluid">

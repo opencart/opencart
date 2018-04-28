@@ -2811,7 +2811,8 @@ tbody.collapse.show {
       width: 100%; } }
 
 .breadcrumb {
-  display: inline-block;
+  display: flex;
+  flex-wrap: wrap;
   padding: 0.75rem 1rem;
   margin-bottom: 1rem;
   list-style: none;
@@ -2820,13 +2821,17 @@ tbody.collapse.show {
 
 .breadcrumb-item {
   text-shadow: 0 1px #fff; }
+  .breadcrumb-item + .breadcrumb-item:first-child {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    border: 1px solid #0a001f; }
   .breadcrumb-item + .breadcrumb-item::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
     display: inline-block;
     padding-right: 0.5rem;
     padding-left: 0.5rem;
     color: #6c757d;
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
     content: "\f105"; }
   .breadcrumb-item + .breadcrumb-item:hover::before {
     text-decoration: underline; }

@@ -1,6 +1,6 @@
 <div class="card mb-3">
   <div class="card-header"><i class="fas fa-calendar"></i> {{ heading_title }}</div>
-  <ul class="list-group">
+  <ul class="list-group list-group-flush">
     {% if activities %}
       {% for activity in activities %}
         <li class="list-group-item">{{ activity.comment }}

@@ -62,6 +62,7 @@ fieldset:disabled a.btn {
 
 @each $color, $value in $theme-colors {
   .btn-#{$color} {
+    //@include button-variant($value, $value);
     @include button-variant($value, darken($value, 13%));
   }
 }
@@ -100,6 +101,7 @@ fieldset:disabled a.btn {
   &:disabled,
   &.disabled {
     color: $btn-link-disabled-color;
+    pointer-events: none;
   }
 
   // No need for an active state here

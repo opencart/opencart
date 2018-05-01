@@ -48,16 +48,19 @@ legend {
 }
 
 .container-fluid {
-    padding: 0 20px;
-}
+    /* padding: 0 20px; */
+ }
 
-#header {
-    background: #FFFFFF;
-    border-bottom: 1px solid #d8d8d8;
-    margin: 0;
-    padding: 0;
+ #header {
+     background: #FFFFFF;
+     border-bottom: 1px solid #d8d8d8;
     box-shadow: 0px 0px 3px #ccc;
     z-index: 1000;
+
+     /*
+     margin: 0;
+     padding: 0;
+     */
     /*height: 60px;*/
 }
 /*
@@ -68,7 +71,6 @@ legend {
 #header .navbar-brand {
     transition: 0.3s all;
     width: 235px;
-    /*display: none;*/
 }
 
 /*
@@ -496,25 +498,16 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 }
 
 
-/* Panels
+/* Cards */
 .card {
     border-radius: 0px;
 }
 
-.card .card-heading {
-    position: relative;
-}
-
-.card-heading h3 i {
+.card-header i {
     margin-right: 5px;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-.card-heading h3 {
-    font-weight: 500;
-    display: inline-block;
-}
-*/
 /* Primary Panel */
 .card-primary {
     border: 1px solid #c3e4f6;
@@ -527,7 +520,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     background: white;
 }
 
-/* Default Panel */
+/* Default Panel
 .card-default {
     border: 1px solid #dcdcdc;
     border-top: 1px solid #dcdcdc;
@@ -539,7 +532,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     background: #f6f6f6;
     text-shadow: 0 -1px 0 rgba(50, 50, 50, 0);
 }
-
+*/
 /* Tiles */
 .tile {
     margin-bottom: 15px;
@@ -861,11 +854,3 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .list-check.list-color-blue li::before {
     color: #02afe9;
 }
-/*
-.btn-info {
-    color: #ffffff;
-}
-.btn-danger {
-    border-color: #dd3520;
-}
-*/

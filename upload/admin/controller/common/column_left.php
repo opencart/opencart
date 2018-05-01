@@ -27,11 +27,8 @@ class ControllerCommonColumnLeft extends Controller {
 				);
 			}
 
-			// Products
-			$product = array();
-
 			if ($this->user->hasPermission('access', 'catalog/product')) {
-				$product[] = array(
+				$catalog[] = array(
 					'name'	   => $this->language->get('text_product'),
 					'href'     => $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token']),
 					'children' => array()
@@ -39,18 +36,10 @@ class ControllerCommonColumnLeft extends Controller {
 			}
 
 			if ($this->user->hasPermission('access', 'catalog/product_option')) {
-				$product[] = array(
+				$catalog[] = array(
 					'name'	   => $this->language->get('text_product_option'),
 					'href'     => $this->url->link('catalog/product_option', 'user_token=' . $this->session->data['user_token']) ,
 					'children' => array()
-				);
-			}
-
-			if ($product) {
-				$catalog[] = array(
-					'name'	   => $this->language->get('text_product'),
-					'href'     => '',
-					'children' => $product
 				);
 			}
 

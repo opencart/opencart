@@ -309,8 +309,11 @@ $hr-margin-y:                 $spacer !default;
 //
 // Customizes the `.table` component with basic values, each used across all table variations.
 
-$table-cell-padding:          .75rem !default;
-$table-cell-padding-sm:       .3rem !default;
+//$table-cell-padding:          .75rem !default;
+$table-cell-padding:          .6154rem !default;
+
+//$table-cell-padding-sm:       .3rem !default;
+$table-cell-padding-sm:       .3846rem !default;
 
 $table-bg:                    transparent !default;
 $table-accent-bg:             rgba($black, .05) !default;
@@ -338,9 +341,9 @@ $table-caption-color:         $text-muted !default;
 // Shared variables that are reassigned to `$input-` and `$btn-` specific variables.
 
 //$input-btn-padding-y:         .375rem !default;
-$input-btn-padding-y:         .6154rem !default;
+$input-btn-padding-y:         .5385rem !default;
 //$input-btn-padding-x:         .75rem !default;
-$input-btn-padding-x:         1rem !default;
+$input-btn-padding-x:         .7692rem !default;
 $input-btn-line-height:       $line-height-base !default;
 
 $input-btn-focus-width:       .2rem !default;
@@ -639,8 +642,8 @@ $navbar-brand-font-size:            $font-size-lg !default;
 // Compute the navbar-brand padding-y so the navbar-brand will have the same height as navbar-text and nav-link
 $nav-link-height:                   ($font-size-base * $line-height-base + $nav-link-padding-y * 2) !default;
 $navbar-brand-height:               $navbar-brand-font-size * $line-height-base !default;
-$navbar-brand-padding-y:            ($nav-link-height - $navbar-brand-height) / 2 !default;
-//$navbar-brand-padding-y:            0;
+//$navbar-brand-padding-y:            ($nav-link-height - $navbar-brand-height) / 2 !default;
+$navbar-brand-padding-y:            0;
 
 $navbar-toggler-padding-y:          .25rem !default;
 $navbar-toggler-padding-x:          .75rem !default;

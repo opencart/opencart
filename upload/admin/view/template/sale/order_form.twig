@@ -133,17 +133,19 @@
                     <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                       <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                       <div class="col-sm-10">
-                        {% for custom_field_value in custom_field.custom_field_value %}
-                          <label class="form-check">
-                            {% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in account_custom_field[custom_field.custom_field_id] %}
-                              <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked" class="form-check-input"/>
-                              {{ custom_field_value.name }}
-                            {% else %}
-                              <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/>
-                              {{ custom_field_value.name }}
-                            {% endif %}
-                          </label>
-                        {% endfor %}
+                        <div class="form-control" style="height: 150px; overflow: auto;">
+                          {% for custom_field_value in custom_field.custom_field_value %}
+                            <label class="form-check">
+                              {% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in account_custom_field[custom_field.custom_field_id] %}
+                                <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked" class="form-check-input"/>
+                                {{ custom_field_value.name }}
+                              {% else %}
+                                <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/>
+                                {{ custom_field_value.name }}
+                              {% endif %}
+                            </label>
+                          {% endfor %}
+                        </div>
                       </div>
                     </div>
                   {% endif %}
@@ -506,7 +508,7 @@
                     <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                       <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                       <div class="col-sm-10">
-                        <div id="input-payment-custom-field{{ custom_field.custom_field_id }}">
+                        <div id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">
                           {% for custom_field_value in custom_field.custom_field_value %}
                             <label class="form-check">
                               {% if payment_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in payment_custom_field[custom_field.custom_field_id] %}
@@ -722,7 +724,7 @@
                     <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                       <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                       <div class="col-sm-10">
-                        <div id="input-shipping-custom-field{{ custom_field.custom_field_id }}">
+                        <div id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">
                           {% for custom_field_value in custom_field.custom_field_value %}
                             <label class="form-check">
                               {% if shipping_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in shipping_custom_field[custom_field.custom_field_id] %}

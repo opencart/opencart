@@ -92,7 +92,7 @@ class ControllerMarketplaceCron extends Controller {
 		);
 
 		$data['delete'] = $this->url->link('marketplace/cron/delete', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['cron'] = $this->url->link('common/cron');
+		$data['cron'] = $this->url->link('common/cron', 'cron_token=' . $this->config->get('config_cron_token'));
 
 		$data['crons'] = array();
 

@@ -1,6 +1,10 @@
 <?php
 class ControllerCommonCron extends Controller {
 	public function index() {
+        if ($this->config->get('config_cron_token') && (empty($this->request->get['cron_token']) || ((string)$this->request->get['cron_token'] != $this->config->get('config_cron_token')))) {
+            die();
+        }
+
 		$this->load->model('setting/cron');
 
 		$results = $this->model_setting_cron->getCrons();

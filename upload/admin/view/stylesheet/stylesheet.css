@@ -505,6 +505,10 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	opacity: 0.4;
 }
 
+.btn-group-toggle > .btn:hover, .btn-group-toggle > .btn.focus {
+    opacity: 0.6;
+}
+
 .btn-group-toggle > .btn.active {
 	opacity: 1;
 }

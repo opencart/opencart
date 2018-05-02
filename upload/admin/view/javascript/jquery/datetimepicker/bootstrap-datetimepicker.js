@@ -365,7 +365,7 @@
 					content.append(toolbar);
 				}
 				if (hasDate()) {
-					content.append($('<li>').addClass((options.collapse && hasTime() ? 'collapse in' : '')).append(dateView));
+					content.append($('<li>').addClass((options.collapse && hasTime() ? 'collapse show' : '')).append(dateView));
 				}
 				if (options.toolbarPlacement === 'default') {
 					content.append(toolbar);
@@ -1100,8 +1100,8 @@
 				togglePicker: function (e) {
 					var $this = $(e.target),
 						$parent = $this.closest('ul'),
-						expanded = $parent.find('.in'),
-						closed = $parent.find('.collapse:not(.in)'),
+						expanded = $parent.find('.show'),
+						closed = $parent.find('.collapse:not(.show)'),
 						collapseData;
 
 					if (expanded && expanded.length) {
@@ -1113,8 +1113,8 @@
 							expanded.collapse('hide');
 							closed.collapse('show');
 						} else { // otherwise just toggle in class on the two views
-							expanded.removeClass('in');
-							closed.addClass('in');
+							expanded.removeClass('show');
+							closed.addClass('show');
 						}
 						if ($this.is('span')) {
 							$this.toggleClass(options.icons.time + ' ' + options.icons.date);

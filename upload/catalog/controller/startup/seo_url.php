@@ -58,7 +58,7 @@ class ControllerStartupSeoUrl extends Controller {
 
 					if ($query->num_rows) {
 						foreach ($query->rows as $seo) {
-							if ($seo['keyword']) {
+							if (!empty($seo['keyword'])) {
 								$url .= '/' . $seo['keyword'];
 							}
 						}

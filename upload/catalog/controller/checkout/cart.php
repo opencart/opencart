@@ -360,6 +360,9 @@ class ControllerCheckoutCart extends Controller {
 				$this->cart->update($key, $value);
 			}
 
+			// Manually trigger event
+            $this->registry->get('event')->trigger('controller/checkout/cart/edit/after');
+
 			$this->session->data['success'] = $this->language->get('text_remove');
 
 			unset($this->session->data['shipping_method']);

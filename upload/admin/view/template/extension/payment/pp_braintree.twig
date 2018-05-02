@@ -730,18 +730,18 @@
                       <div class="form-group">
                         <label class="col-form-label" for="input-date-from">{{ entry_date_from }}</label>
                         <div class="input-group date">
-                          <input type="text" name="filter_date_from" value="" placeholder="From" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-from" class="form-control"/>
+                          <input type="text" name="filter_date_from" value="" placeholder="From" id="input-date-from" class="form-control"/>
                           <div class="input-group-append">
-                            <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
+                            <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                           </div>
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="col-form-label" for="input-date-to">{{ entry_date_to }}</label>
                         <div class="input-group date">
-                          <input type="text" name="filter_date_to" value="" placeholder="To" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-to" class="form-control"/>
+                          <input type="text" name="filter_date_to" value="" placeholder="To" id="input-date-to" class="form-control"/>
                           <div class="input-group-append">
-                            <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
+                            <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                           </div>
                         </div>
                       </div>
@@ -813,7 +813,11 @@
 <script type="text/javascript"><!--
 $('#tabs a:first').tab('show');
 
-$('.date').datetimepicker();
+$('.date').datetimepicker({
+	'format': 'YYYY-MM-DD',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
+});
 
 $('#button-filter').on('click', function(event) {
 	event.preventDefault();
@@ -993,7 +997,6 @@ function getTransaction(transaction_id) {
 		}
 	});
 }
-
 //--></script>
 
 {% if auth_connect_url %}
@@ -1006,6 +1009,7 @@ function getTransaction(transaction_id) {
 		  alert(error.message);
 	  }
   });
+
   $('#bt-connect').show();
   //--></script>
 {% endif %}

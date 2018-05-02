@@ -12,6 +12,7 @@ $_['text_account']          = 'Customer Details';
 $_['text_password']         = 'Password';
 $_['text_other']            = 'Other';
 $_['text_balance']          = 'Balance';
+$_['text_address']          = 'Address';
 $_['text_history']          = 'History';
 $_['text_history_add']      = 'Add History';
 $_['text_transaction']      = 'Transactions';

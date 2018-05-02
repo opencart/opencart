@@ -275,9 +275,9 @@
                       <div class="form-group">
                         <label class="col-form-label" for="date-from">{{ entry_date_from }}</label>
                         <div class="input-group date">
-                          <input type="text" name="date_from" value="<?php echo date('Y-m-d'); ?>" placeholder="{{ entry_date_from }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="date-from" class="form-control"/>
+                          <input type="text" name="date_from" value="<?php echo date('Y-m-d'); ?>" placeholder="{{ entry_date_from }}" id="date-from" class="form-control"/>
                           <div class="input-group-append">
-                            <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
+                            <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                           </div>
                         </div>
                       </div>
@@ -310,9 +310,9 @@
                       <div class="form-group">
                         <label class="col-form-label" for="date-to">{{ entry_date_to }}</label>
                         <div class="input-group date">
-                          <input type="text" name="date_to" value="<?php echo date('Y-m-d'); ?>" placeholder="{{ entry_date_to }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="date-to" class="form-control"/>
+                          <input type="text" name="date_to" value="<?php echo date('Y-m-d'); ?>" placeholder="{{ entry_date_to }}" id="date-to" class="form-control"/>
                           <div class="input-group-append">
-                            <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
+                            <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                           </div>
                         </div>
                       </div>
@@ -425,6 +425,10 @@ function showTransactions() {
 	});
 }
 
-$('.date').datetimepicker();
+$('.date').datetimepicker({
+	'format': 'YYYY-MM-DD',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
+});
 </script>
 {{ footer }}

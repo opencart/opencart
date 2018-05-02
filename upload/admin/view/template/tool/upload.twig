@@ -27,7 +27,7 @@
       </div>
     {% endif %}
     <div class="row">
-      <div id="filter-upload" class="col-md-3 col-sm-12 order-md-9 d-none d-md-block">
+      <div id="filter-upload" class="col-md-3 col-sm-12 order-md-9 d-none d-md-block mb-3">
         <div class="card">
           <div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
           <div class="card-body">
@@ -37,9 +37,9 @@
             <div class="form-group">
               <label class="col-form-label" for="input-date-added">{{ entry_date_added }}</label>
               <div class="input-group date">
-                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-added" class="form-control"/>
+                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control"/>
                 <div class="input-group-append">
-                  <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
+                  <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                 </div>
               </div>
             </div>
@@ -125,6 +125,10 @@ $('#button-filter').on('click', function() {
 });
 //--></script>
 <script type="text/javascript"><!--
-$('.date').datetimepicker();
+$('.date').datetimepicker({
+	'format': 'YYYY-MM-DD',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
+});
 //--></script>
 {{ footer }}

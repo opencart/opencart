@@ -24,9 +24,9 @@
               <label class="col-sm-2 col-form-label" for="input-date-start">{{ entry_date_start }}</label>
               <div class="col-sm-10">
                 <div class="input-group date">
-                  <input type="text" name="date_start" value="{{ date_start }}" placeholder="{{ text_format }}: yy-mm-dd" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-start" class="form-control"/>
+                  <input type="text" name="date_start" value="{{ date_start }}" placeholder="{{ text_format }}: yy-mm-dd" id="input-date-start" class="form-control"/>
                   <div class="input-group-append">
-                    <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
+                    <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                   </div>
                 </div>
               </div>
@@ -35,9 +35,9 @@
               <label class="col-sm-2 col-form-label" for="input-date-end">{{ entry_date_end }}</label>
               <div class="col-sm-10">
                 <div class="input-group date">
-                  <input type="text" name="date_end" value="{{ date_end }}" placeholder="{{ text_format }}: yy-mm-dd" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" class="form-control"/>
+                  <input type="text" name="date_end" value="{{ date_end }}" placeholder="{{ text_format }}: yy-mm-dd" class="form-control"/>
                   <div class="input-group-append">
-                    <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
+                    <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                   </div>
                 </div>
               </div>
@@ -249,9 +249,23 @@
 	  $('#error').empty().hide();
   });
 
-  $('.date').datetimepicker();
-  $('.time').datetimepicker();
-  $('.datetime').datetimepicker();
+  $('.date').datetimepicker({
+	  'format': 'YYYY-MM-DD',
+	  'locale': '{{ datepicker }}',
+	  'allowInputToggle': true
+  });
+
+  $('.time').datetimepicker({
+	  'format': 'HH:mm',
+	  'locale': '{{ datepicker }}',
+	  'allowInputToggle': true
+  });
+
+  $('.datetime').datetimepicker({
+	  'format': 'YYYY-MM-DD HH:mm',
+	  'locale': '{{ datepicker }}',
+	  'allowInputToggle': true
+  });
   //--></script>
 </div>
 {{ footer }}

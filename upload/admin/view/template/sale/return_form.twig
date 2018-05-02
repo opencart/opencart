@@ -48,9 +48,9 @@
                   <label class="col-sm-2 col-form-label" for="input-date-ordered">{{ entry_date_ordered }}</label>
                   <div class="col-sm-3">
                     <div class="input-group date">
-                      <input type="text" name="date_ordered" value="{{ date_ordered }}" placeholder="{{ entry_date_ordered }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-ordered" class="form-control"/>
+                      <input type="text" name="date_ordered" value="{{ date_ordered }}" placeholder="{{ entry_date_ordered }}" id="input-date-ordered" class="form-control"/>
                       <div class="input-group-append">
-                        <button type="button" class="btn btn-light"><i class="fas fa-calendar"></i></button>
+                        <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                       </div>
                     </div>
                   </div>
@@ -337,6 +337,10 @@ $('#button-history').on('click', function(e) {
 });
 //--></script>
 <script type="text/javascript"><!--
-$('.date').datetimepicker();
+$('.date').datetimepicker({
+	'format': 'YYYY-MM-DD',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
+});
 //--></script>
 {{ footer }}

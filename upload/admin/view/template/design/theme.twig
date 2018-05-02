@@ -77,13 +77,13 @@ $('select[name="store_id"]').on('change', function(e) {
 
 			if (json['directory']) {
 				for (i = 0; i < json['directory'].length; i++) {
-					html += '<a href="' + json['directory'][i]['path'] + '" class="list-group-item directory">' + json['directory'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-right"></i></a>';
+					html += '<a href="' + json['directory'][i]['path'] + '" class="list-group-item list-group-item-action directory">' + json['directory'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-right"></i></a>';
 				}
 			}
 
 			if (json['file']) {
 				for (i = 0; i < json['file'].length; i++) {
-					html += '<a href="' + json['file'][i]['path'] + '" class="list-group-item file">' + json['file'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-right"></i></a>';
+					html += '<a href="' + json['file'][i]['path'] + '" class="list-group-item list-group-item-action file">' + json['file'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-right"></i></a>';
 				}
 			}
 
@@ -118,18 +118,18 @@ $('#path').on('click', 'a.directory', function(e) {
 
 			if (json['directory']) {
 				for (i = 0; i < json['directory'].length; i++) {
-					html += '<a href="' + json['directory'][i]['path'] + '" class="list-group-item directory">' + json['directory'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-right"></i></a>';
+					html += '<a href="' + json['directory'][i]['path'] + '" class="list-group-item list-group-item-action directory">' + json['directory'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-right"></i></a>';
 				}
 			}
 
 			if (json['file']) {
 				for (i = 0; i < json['file'].length; i++) {
-					html += '<a href="' + json['file'][i]['path'] + '" class="list-group-item file">' + json['file'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-right"></i></a>';
+					html += '<a href="' + json['file'][i]['path'] + '" class="list-group-item list-group-item-action file">' + json['file'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-right"></i></a>';
 				}
 			}
 
 			if (json['back']) {
-				html += '<a href="' + json['back']['path'] + '" class="list-group-item directory">' + json['back']['name'] + ' <i class="fas fa-arrow-left fa-fw float-right"></i></a>';
+				html += '<a href="' + json['back']['path'] + '" class="list-group-item list-group-item-action directory">' + json['back']['name'] + ' <i class="fas fa-arrow-left fa-fw float-right"></i></a>';
 			}
 
 			$('#path').html(html);
@@ -212,19 +212,20 @@ $('#path').on('click', 'a.file', function(e) {
 $('.nav-tabs').on('click', 'i.fa-minus-circle', function(e) {
 	e.preventDefault();
 
-	if ($(this).parent().is('a.active')) {
-		index = $(this).parent().parent().index();
+	var active = $(this).parent().parent().parent().find('a.active');
 
-		if (index == 0) {
-			$(this).parent().parent().parent().find('li').eq(index + 1).find('a').tab('show');
-		} else {
-			$(this).parent().parent().parent().find('li').eq(index - 1).find('a').tab('show');
-		}
-	}
+	// For some strange reason in bs4 it wants me to show the tab before removing it.
+	$(this).parent().trigger('click');
+
+	$($(this).parent().attr('href')).remove();
 
 	$(this).parent().parent().remove();
 
-	$($(this).parent().attr('href')).remove();
+	if ($(active).has()) {
+		$(active).parent().trigger('click');
+	} else {
+		$('.nav-tabs li:last-child a').trigger('click');
+	}
 
 	if (!$('#code > ul > li').length) {
 		$('#code').hide();

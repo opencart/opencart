@@ -541,11 +541,15 @@ $(document).on('click', '#button-process-settlement', function() {
 
 $('#tabs a:first').tab('show');
 
-$('.date').datetimepicker();
+$('.date').datetimepicker({
+    'format': 'YYYY-MM-DD',
+    'locale': '{{ datepicker }}',
+	'allowInputToggle': true
+});
 
 {% if not klarna_checkout_account %}
 $(document).ready(function() {
-	addAccount();
+    addAccount();
 });
 {% endif %}
 

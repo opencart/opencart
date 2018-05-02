@@ -1096,7 +1096,7 @@
 				togglePeriod: function () {
 					setValue(date.clone().add((date.hours() >= 12) ? -12 : 12, 'h'));
 				},
-
+ 
 				togglePicker: function (e) {
 					var $this = $(e.target),
 						$parent = $this.closest('ul'),

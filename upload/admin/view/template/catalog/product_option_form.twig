@@ -41,11 +41,11 @@
               <div class="col-sm-10">
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                   {% if required %}
-                    <label class="btn btn-success active"><input type="radio" name="required" value="1" checked="checked"/> {{ text_yes }}</label>
-                    <label class="btn btn-danger"><input type="radio" name="required" value="0"/> {{ text_no }}</label>
+                    <label class="btn btn-outline-secondary active"><input type="radio" name="required" value="1" checked="checked"/> {{ text_yes }}</label>
+                    <label class="btn btn-outline-secondary"><input type="radio" name="required" value="0"/> {{ text_no }}</label>
                   {% else %}
-                    <label class="btn btn-success"><input type="radio" name="required" value="1"/> {{ text_yes }}</label>
-                    <label class="btn btn-danger active"><input type="radio" name="required" value="0" checked="checked"/> {{ text_no }}</label>
+                    <label class="btn btn-outline-secondary"><input type="radio" name="required" value="1"/> {{ text_yes }}</label>
+                    <label class="btn btn-outline-secondary active"><input type="radio" name="required" value="0" checked="checked"/> {{ text_no }}</label>
                   {% endif %}
                 </div>
               </div>
@@ -148,11 +148,11 @@
                           <td class="text-left">
                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                               {% if product_option_value.subtract %}
-                                <label class="btn btn-success active"><input type="radio" name="product_option_value[{{ option_value_row }}][subtract]" value="1" checked="checked"/> {{ text_yes }}</label>
-                                <label class="btn btn-danger"><input type="radio" name="product_option_value[{{ option_value_row }}][subtract]" value="0"/> {{ text_no }}</label>
+                                <label class="btn btn-outline-secondary active"><input type="radio" name="product_option_value[{{ option_value_row }}][subtract]" value="1" checked="checked"/> {{ text_yes }}</label>
+                                <label class="btn btn-outline-secondary"><input type="radio" name="product_option_value[{{ option_value_row }}][subtract]" value="0"/> {{ text_no }}</label>
                               {% else %}
-                                <label class="btn btn-success"><input type="radio" name="product_option_value[{{ option_value_row }}][subtract]" value="1"/> {{ text_yes }}</label>
-                                <label class="btn btn-danger active"><input type="radio" name="product_option_value[{{ option_value_row }}][subtract]" value="0" checked="checked"/> {{ text_no }}</label>
+                                <label class="btn btn-outline-secondary"><input type="radio" name="product_option_value[{{ option_value_row }}][subtract]" value="1"/> {{ text_yes }}</label>
+                                <label class="btn btn-outline-secondary active"><input type="radio" name="product_option_value[{{ option_value_row }}][subtract]" value="0" checked="checked"/> {{ text_no }}</label>
                               {% endif %}
                             </div>
                           </td>
@@ -380,8 +380,8 @@ $('#product-option-value').on('click', '#button-option-value', function() {
 	html += '  </select><input type="hidden" name="product_option_value[' + option_value_row + '][product_option_value_id]" value="" /></td>';
 	html += '  <td class="text-right"><input type="text" name="product_option_value[' + option_value_row + '][quantity]" value="" placeholder="{{ entry_quantity }}" class="form-control" /></td>';
 	html += '  <td class="text-left"><div class="btn-group btn-group-toggle" data-toggle="buttons">';
-	html += '    <label class="btn btn-success"><input type="radio" name="product_option_value[' + option_value_row + '][subtract]" value="1"/> {{ text_yes }}</label>';
-	html += '  	 <label class="btn btn-danger active"><input type="radio" name="product_option_value[' + option_value_row + '][subtract]" value="0" checked="checked"/> {{ text_no }}</label>';
+	html += '    <label class="btn btn-outline-secondary"><input type="radio" name="product_option_value[' + option_value_row + '][subtract]" value="1"/> {{ text_yes }}</label>';
+	html += '  	 <label class="btn btn-outline-secondary active"><input type="radio" name="product_option_value[' + option_value_row + '][subtract]" value="0" checked="checked"/> {{ text_no }}</label>';
 	html += '  </div></td>';
 	html += '  <td class="text-right"><select name="product_option_value[' + option_value_row + '][price_prefix]" class="form-control">';
 	html += '    <option value="+">+</option>';

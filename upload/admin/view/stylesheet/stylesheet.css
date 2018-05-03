@@ -18,8 +18,8 @@ fieldset {
 }
 
 legend {
-    border-bottom: 2px solid #ddd;
-    margin-bottom: 20px;
+    border-bottom: 1px solid #e5e5e5;
+
 }
 
 .page-header {
@@ -71,6 +71,11 @@ legend {
 #header .navbar-brand {
     transition: 0.3s all;
     width: 235px;
+}
+
+#header .navbar-nav .nav-link:hover {
+    background: black;
+
 }
 
 /*
@@ -377,7 +382,6 @@ legend {
     font-weight: bold;
 }
 
-
 .form-control:hover {
     border: 1px solid #b9b9b9;
     border-top-color: #a0a0a0;
@@ -397,10 +401,6 @@ div.required .col-form-label:not(span):before, td.required:before {
     content: "\f059";
     color: #1E91CF;
     margin-left: 4px;
-}
-
-fieldset legend {
-    padding-bottom: 5px;
 }
 
 input[type="radio"], .radio input[type="radio"], .radio-inline input[type="radio"], input[type="checkbox"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] {

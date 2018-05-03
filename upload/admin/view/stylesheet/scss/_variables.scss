@@ -89,7 +89,8 @@ $theme-colors: map-merge((
 $theme-color-interval:      8% !default;
 
 // The yiq lightness value that determines when the lightness of color changes from "dark" to "light". Acceptable values are between 0 and 255.
-$yiq-contrasted-threshold:  150 !default;
+//$yiq-contrasted-threshold:  150 !default;
+$yiq-contrasted-threshold:  200 !default;
 
 // Customize the light and dark text colors for use in our YIQ color contrast function.
 $yiq-text-dark:             $gray-900 !default;
@@ -102,7 +103,7 @@ $yiq-text-light:            $white !default;
 //$enable-caret:              true !default;
 $enable-caret:              false !default;
 $enable-rounded:            true !default;
-$enable-shadows:            true !default;
+$enable-shadows:            false !default;
 $enable-gradients:          false !default;
 $enable-transitions:        true !default;
 $enable-hover-media-query:  false !default; // Deprecated, no longer affects any compiled CSS
@@ -631,16 +632,19 @@ $nav-divider-margin-y:              ($spacer / 2) !default;
 
 // Navbar
 
-$navbar-padding-y:                  ($spacer / 2) !default;
-//$navbar-padding-y:                  0 !default;
-$navbar-padding-x:                  $spacer !default;
-//$navbar-padding-x:                  0 !default;
+//$navbar-padding-y:                  ($spacer / 2) !default;
+$navbar-padding-y:                  0 !default;
+//$navbar-padding-x:                  $spacer !default;
+$navbar-padding-x:                  0 !default;
 
-$navbar-nav-link-padding-x:         .5rem !default;
+$navbar-nav-link-padding-x:         1.5rem !default;
+//$navbar-nav-link-padding-x:         .4615rem !default;
 
 $navbar-brand-font-size:            $font-size-lg !default;
 // Compute the navbar-brand padding-y so the navbar-brand will have the same height as navbar-text and nav-link
+//$nav-link-height:                   ($font-size-base * $line-height-base + $nav-link-padding-y * 2) !default;
 $nav-link-height:                   ($font-size-base * $line-height-base + $nav-link-padding-y * 2) !default;
+
 $navbar-brand-height:               $navbar-brand-font-size * $line-height-base !default;
 //$navbar-brand-padding-y:            ($nav-link-height - $navbar-brand-height) / 2 !default;
 $navbar-brand-padding-y:            0;

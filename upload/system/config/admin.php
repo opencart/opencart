@@ -43,9 +43,9 @@ $_['action_event'] = array(
 		999  => 'event/language',
 		1000 => 'event/theme'
 	),
-	'view/*/before' => array(
-		'event/language'
-	),
+	// 'view/*/before' => array(
+	// 	'event/language'
+	// ),
 	//'model/*/after' => array(
 	//	'event/debug/before'
 	//),

@@ -1065,7 +1065,8 @@ class ControllerCatalogProduct extends Controller {
 				);
 			}
 		}
-
+		
+		// Related
 		if (isset($this->request->post['product_related'])) {
 			$products = $this->request->post['product_related'];
 		} elseif (isset($this->request->get['product_id'])) {

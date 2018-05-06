@@ -2522,8 +2522,8 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 
 .navbar-brand {
   display: inline-block;
-  padding-top: 0;
-  padding-bottom: 0;
+  padding-top: 1000;
+  padding-bottom: 1000;
   margin-right: 0;
   font-size: 1.015625rem;
   line-height: inherit;

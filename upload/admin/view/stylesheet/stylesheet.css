@@ -47,48 +47,31 @@ legend {
     overflow: hidden;
 }
 
-.container-fluid {
-    /* padding: 0 20px; */
- }
-
- #header {
-     background: #FFFFFF;
-     border-bottom: 1px solid #d8d8d8;
+#header {
+    background: #FFFFFF;
+    border-bottom: 1px solid #d8d8d8;
     box-shadow: 0px 0px 3px #ccc;
     z-index: 1000;
+    height: 60px;
+}
 
-     /*
-     margin: 0;
-     padding: 0;
-     */
-    /*height: 60px;*/
-}
-/*
-#header .container-fluid {
- padding: 0;
-}
-*/
 #header .navbar-brand {
+    text-align: center;
     transition: 0.3s all;
     width: 235px;
+    height: 60px;
+}
+
+#header .navbar-brand img {
+    padding: 14px 0px;
 }
 
 #header .navbar-nav .nav-link:hover {
     background: black;
-
 }
 
 /*
-#header .navbar-brand {
- border-right: 1px solid #eee;
- padding: 13px 27px;
-}
 
-@media screen and (max-width: 767px){
-#header .navbar-brand {
-   display: none;
-}
-}
 
 #header .navbar-nav > li {
  display: inline-block;
@@ -358,10 +341,9 @@ legend {
 }
 
 /* Navs
-/* Tabs */
+/* Tabs*/
 .nav-tabs > li > a {
     color: #a5a5a5;
-    border-radius: 2px 2px 0 0;
 }
 
 .nav-tabs > li > a:hover {
@@ -372,14 +354,29 @@ legend {
     margin-bottom: 25px;
 }
 
-.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+.nav-tabs li.nav-item a.active {
     font-weight: bold;
     color: #333;
 }
 
 .col-form-label {
-    text-align: right;
     font-weight: bold;
+}
+
+@media (min-width: 768px) {
+    .col-form-label {
+        text-align: right;
+    }
+}
+
+@media (min-width: 768px) {
+    .col-form-label {
+        text-align: right;
+    }
+}
+
+.image {
+    width: 12rem;
 }
 
 .form-control:hover {

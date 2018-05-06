@@ -2928,7 +2928,7 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 .breadcrumb-item {
   /* OpenCart Start */
   text-shadow: 0 1px #fff;
-  font-size: 1.077rem;
+  font-size: 0.9231rem;
   display: inline-block;
   /* OpenCart End */ }
   .breadcrumb-item + .breadcrumb-item {

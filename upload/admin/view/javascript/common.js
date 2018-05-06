@@ -137,9 +137,118 @@ $(document).ready(function() {
 			t.css('overflow', 'visible');
 		}
 	}).on('hidden.bs.dropdown', function() {
-		$(this).css({'padding-bottom': '', 'overflow': ''});
+		$(this).css({
+			'padding-bottom': '',
+			'overflow': ''
+		});
 	});
+
+	console.log($.fn.button.prototype);
+
+
+
+
+		/*
+		$.fn.button.DEFAULTS = {
+			loadingText: 'loading...'
+		}
+
+		//$.extend({}, Button.DEFAULTS, options)
+		$.fn.button.prototype.setState = function (state) {
+			var d    = 'disabled'
+			var $el  = $(element)
+			var val  = $el.is('input') ? 'val' : 'html'
+			var data = $el.data()
+
+			state += 'Text'
+
+			if (data.resetText == null) $el.data('resetText', $el[val]())
+
+			// push to event loop to allow forms to submit
+			setTimeout($.proxy(function () {
+				$el[val](data[state] == null ? this.options[state] : data[state])
+
+				if (state == 'loadingText') {
+					this.isLoading = true
+					$el.addClass(d).attr(d, d)
+				} else if (this.isLoading) {
+					this.isLoading = false
+					$el.removeClass(d).removeAttr(d)
+				}
+			}, this), 0)
+		}
+
+		function Plugin(option) {
+			return this.each(function () {
+				var $this   = $(this)
+				var data    = $this.data('bs.button')
+				var options = typeof option == 'object' && option
+
+				if (!data) $this.data('bs.button', (data = new Button(this, options)))
+
+				if (option == 'toggle') data.toggle()
+				else if (option) data.setState(option)
+			})
+		}
+		*/
+
+
+
+	(function($) {
+
+
+
+
+
+		$.extend(true, $.fn.button.prototype, {
+			'loading': function() {
+
+				console.log('hi');
+				alert('hi');
+
+			}
+		})
+	})(window.jQuery);
+
+
+
+
+
+
+	$('button').button('test');
+
+
+
+
+
+
+	//console.log($.fn['button']);
+	//console.log($.fn.button);
+
+	$('button').button('loading');
+
+	//$('button').button('toggle');
 });
+
+
+(function($) {
+
+
+
+
+	$.extend(true, $.fn.button.prototype, {
+		'loading': function() {
+
+			console.log('hi');
+
+			alert('hi');
+		}
+	})
+})(window.jQuery);
+
+$('button').button('loading');
+
+
 
 // Autocomplete */
 (function($) {

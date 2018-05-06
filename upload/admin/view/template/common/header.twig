@@ -13,20 +13,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <link href="view/stylesheet/bootstrap.css" type="text/css" rel="stylesheet"/>
   <link href="view/stylesheet/stylesheet.css" type="text/css" rel="stylesheet" media="screen"/>
-
   <link href="view/javascript/font-awesome/css/fontawesome-all.css" type="text/css" rel="stylesheet"/>
-
   <link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen"/>
-
   <script type="text/javascript" src="view/javascript/jquery/jquery-3.3.1.min.js"></script>
   <script type="text/javascript" src="view/javascript/popper.min.js"></script>
   <script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.min.js"></script>
   <script src="view/javascript/jquery/datetimepicker/moment/moment.min.js" type="text/javascript"></script>
   <script src="view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js" type="text/javascript"></script>
-
   <script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.js" type="text/javascript"></script>
-
-
   {% for style in styles %}
     <link type="text/css" href="{{ style.href }}" rel="{{ style.rel }}" media="{{ style.media }}"/>
   {% endfor %}
@@ -40,12 +34,12 @@
 </head>
 <body>
 <div id="container">
-
   <header id="header" class="navbar navbar-expand navbar-light bg-light">
     <div class="container-fluid">
 
-      <a href="{{ home }}" class="navbar-brand border-right"><img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}"/></a>
-      <button type="button" id="button-menu" class="d-md-none navbar-toggler"><span class="fas fa-bars"></span></button>
+      <a href="{{ home }}" class="navbar-brand d-none d-md-block border-right"><img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}"/></a>
+
+      <button type="button" id="button-menu" class="navbar-toggler"><span class="fas fa-bars"></span></button>
 
       {% if logged %}
 
@@ -75,9 +69,8 @@
             </div>
           </li>
 
-          <li class="nav-item border-left"><a href="{{ logout }}" class="nav-link"><i class="fas fa-sign-out-alt"></i> <span class="">{{ text_logout }}</span></a></li>
+          <li class="nav-item border-left"><a href="{{ logout }}" class="nav-link"><i class="fas fa-sign-out-alt"></i> <span class="d-none d-md-inline">{{ text_logout }}</span></a></li>
         </ul>
       </div>
       {% endif %}
-
   </header>

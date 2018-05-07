@@ -10,6 +10,9 @@
 /**
 * Image class
 */
+
+ini_set('memory_limit','-1');
+
 class Image {
 	private $file;
 	private $image;

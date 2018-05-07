@@ -12,7 +12,7 @@
       <ul class="navbar-nav">
         {% for category in categories %}
         {% if category.children %}
-        <li class="nav-item dropdown"><a href="{{ category.href }}" class="nav-link" data-toggle="dropdown">{{ category.name }}</a>
+        <li class="nav-item dropdown"><a href="{{ category.href }}" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ category.name }}</a>
           <div class="dropdown-menu">
             <div class="dropdown-inner"> {% for children in category.children|batch(category.children|length / category.column|round(1, 'ceil')) %}
               <ul class="list-unstyled">

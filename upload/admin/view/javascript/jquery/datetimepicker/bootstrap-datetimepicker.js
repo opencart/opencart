@@ -1096,7 +1096,7 @@
 				togglePeriod: function () {
 					setValue(date.clone().add((date.hours() >= 12) ? -12 : 12, 'h'));
 				},
- 
+
 				togglePicker: function (e) {
 					var $this = $(e.target),
 						$parent = $this.closest('ul'),
@@ -2460,15 +2460,15 @@
 		disabledDates: false,
 		enabledDates: false,
 		icons: {
-			time: 'glyphicon glyphicon-time',
-			date: 'glyphicon glyphicon-calendar',
-			up: 'glyphicon glyphicon-chevron-up',
-			down: 'glyphicon glyphicon-chevron-down',
-			previous: 'glyphicon glyphicon-chevron-left',
-			next: 'glyphicon glyphicon-chevron-right',
-			today: 'glyphicon glyphicon-screenshot',
-			clear: 'glyphicon glyphicon-trash',
-			close: 'glyphicon glyphicon-remove'
+			time: 'far fa-clock',
+			date: 'far fa-calendar-alt',
+			up: 'fas fa-angle-up',
+			down: 'fas fa-angle-down',
+			previous: 'fas fa-angle-left',
+			next: 'fas fa-angle-right',
+			today: 'far fa-clock',
+			clear: 'fas fa-trash',
+			close: 'fas fa-times-circle'
 		},
 		tooltips: {
 			today: 'Go to today',

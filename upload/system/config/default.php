@@ -48,6 +48,7 @@ $_['session_name']         = 'OCSESSID';
 $_['template_engine']      = 'twig';
 $_['template_directory']   = '';
 $_['template_cache']       = false;
+$_['template_extension']   = '.twig';
 
 // Error
 $_['error_display']        = true;

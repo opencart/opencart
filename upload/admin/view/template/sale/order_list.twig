@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
-        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-order').toggleClass('d-none');" class="btn btn-light d-md-none"><i class="fas fa-filter"></i></button>
+        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-order').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fas fa-filter"></i></button>
         <button type="submit" id="button-shipping" form="form-order" formaction="{{ shipping }}" formtarget="_blank" data-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info"><i class="fas fa-truck"></i></button>
         <button type="submit" id="button-invoice" form="form-order" formaction="{{ invoice }}" formtarget="_blank" data-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info"><i class="fas fa-print"></i></button>
         <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fas fa-plus"></i></a></div>
@@ -15,7 +15,8 @@
       </ol>
     </div>
   </div>
-  <div class="container-fluid">{% if error_warning %}
+  <div class="container-fluid">
+    {% if error_warning %}
       <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
@@ -26,7 +27,7 @@
       </div>
     {% endif %}
     <div class="row">
-      <div id="filter-order" class="col-md-3 col-sm-12 order-md-9 d-none d-md-block mb-3">
+      <div id="filter-order" class="col-lg-3 col-md-12 order-lg-9 d-none d-lg-block mb-3">
         <div class="card">
           <div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
           <div class="card-body">
@@ -80,7 +81,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-9 col-sm-12">
+      <div class="col-lg-9 col-md-12">
         <div class="card">
           <div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
           <div class="card-body">

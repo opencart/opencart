@@ -49,12 +49,11 @@ legend {
 }
 
 #header .navbar-brand img {
-    padding: 13px 0px;
+    padding: 12px 0px;
 }
 
-
 #header .navbar-nav .nav-link:hover {
-   
+   background: #EEEEEE;
 }
 
 #header .navbar-nav .nav-link {
@@ -63,18 +62,16 @@ legend {
 }
 
 #header #user-profile {
-    max-width: 30px;
+    max-width: 29px;
 }
 
 #header .navbar-nav > li > a {
     padding-left: 21px;
     padding-right: 21px;
-
     line-height: 45px;
     cursor: pointer;
     color: #6D6D6D;
     border-left: 0px solid #E1E1E1;
-
     padding: 0px;
 }
 
@@ -82,7 +79,6 @@ legend {
     padding-left: 10px;
     padding-right: 10px;
 }
-
 
 /* Desktop */
 @media (min-width: 768px) {
@@ -96,10 +92,8 @@ legend {
 }
 
 #button-menu {
-    font-size: 24px;
-
+    font-size: 25px;
     padding: 5px 16px;
-    display: inline-block;
     cursor: pointer;
     color: #6D6D6D;
     border-right: 1px solid #eee;
@@ -228,10 +222,12 @@ legend {
     font-size: 16px;
     width: 18px;
     margin-right: 5px;
+    color: #b3cbdd;
 }
 
 #menu > li.active > a {
     color: #0b91d2;
+
     background-color: #171b21;
 }
 

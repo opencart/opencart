@@ -1,4 +1,4 @@
-	<?php
+<?php
 class ModelCatalogProductOption extends Model {
 	public function addProductOption($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option` SET product_id = '" . (int)$data['product_id'] . "', option_id = '" . (int)$data['option_id'] . "', value = '" . $this->db->escape(isset($data['value']) ? $data['value'] : '') . "', required = '" . (int)$data['required'] . "'");

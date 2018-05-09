@@ -1,5 +1,5 @@
 <?php
-// *	@copyright	OPENCART.PRO 2011 - 2017.
+// *	@copyright	OPENCART.PRO 2011 - 2016.
 // *	@forum	http://forum.opencart.pro
 // *	@source		See SOURCE.txt for source and other copyright.
 // *	@license	GNU General Public License version 3; see LICENSE.txt
@@ -8,7 +8,7 @@
 $_['heading_title']    = 'Магазин';
 
 // Text
-$_['text_module']      = 'Модули';
+$_['text_extension']   = 'Расширения';
 $_['text_success']     = 'Настройки успешно изменены!';
 $_['text_edit']        = 'Редактирование';
 

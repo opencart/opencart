@@ -231,6 +231,7 @@ class ControllerStartupSeoPro extends Controller {
 			//blog	
 			case 'product/product/review':
 			case 'information/information/info':
+			case 'information/information/agree':
 				return $link;
 				break;
 			default:
@@ -250,6 +251,7 @@ class ControllerStartupSeoPro extends Controller {
 				case 'manufacturer_id':
 				case 'category_id':
 				case 'information_id':
+				case 'order_id':
 				case 'download_id':
 				case 'search':
 				case 'sub_category':

@@ -150,6 +150,7 @@ $(document).ready(function() {
 		return this.each(function() {
 			var $this = $(this);
 			var $dropdown = $('<div class="dropdown-menu"/>');
+			$this.active = false;
 
 			this.timer = null;
 			this.items = [];
@@ -161,19 +162,23 @@ $(document).ready(function() {
 			$this.attr('autocomplete', 'off');
 
 			// Focus
-			$this.on('keydown', function() {
+			$this.on('focus', function() {
 				this.request();
-
-				/*
-				setTimeout(function(object) {
-					object.request();
-				}, 200, this);
-*/
 			});
 
 			// Blur
-			$this.on('blur', function() {
-				this.hide();
+			$this.on('blur', function(e) {
+				if (!$this.active) {
+					this.hide();
+				}
+			});
+
+			$this.parent().on('mouseover', function(e) {
+				$this.active = true;
+			});
+
+			$this.parent().on('mouseout', function(e) {
+				$this.active = false;
 			});
 
 			// Keydown
@@ -181,7 +186,6 @@ $(document).ready(function() {
 				switch (event.keyCode) {
 					case 27: // escape
 						this.hide();
-
 						break;
 					default:
 						this.request();
@@ -197,6 +201,8 @@ $(document).ready(function() {
 
 				if (value && this.items[value]) {
 					this.select(this.items[value]);
+
+					this.hide();
 				}
 			}
 
@@ -216,7 +222,7 @@ $(document).ready(function() {
 
 				this.timer = setTimeout(function(object) {
 					object.source($(object).val(), $.proxy(object.response, object));
-				}, 200, this);
+				}, 50, this);
 			}
 
 			// Response
@@ -271,28 +277,28 @@ $(document).ready(function() {
 	}
 })(window.jQuery);
 
-+function ($) {
++function($) {
 	'use strict';
 
 	// BUTTON PUBLIC CLASS DEFINITION
 	// ==============================
 
-	var Button = function (element, options) {
-		this.$element  = $(element)
-		this.options   = $.extend({}, Button.DEFAULTS, options)
+	var Button = function(element, options) {
+		this.$element = $(element)
+		this.options = $.extend({}, Button.DEFAULTS, options)
 		this.isLoading = false
 	}
 
-	Button.VERSION  = '3.3.5'
+	Button.VERSION = '3.3.5'
 
 	Button.DEFAULTS = {
 		loadingText: 'loading...'
 	}
 
-	Button.prototype.setState = function (state) {
-		var d    = 'disabled'
-		var $el  = this.$element
-		var val  = $el.is('input') ? 'val' : 'html'
+	Button.prototype.setState = function(state) {
+		var d = 'disabled'
+		var $el = this.$element
+		var val = $el.is('input') ? 'val' : 'html'
 		var data = $el.data()
 
 		state += 'Text'
@@ -300,7 +306,7 @@ $(document).ready(function() {
 		if (data.resetText == null) $el.data('resetText', $el[val]())
 
 		// push to event loop to allow forms to submit
-		setTimeout($.proxy(function () {
+		setTimeout($.proxy(function() {
 			$el[val](data[state] == null ? this.options[state] : data[state])
 
 			if (state == 'loadingText') {
@@ -313,7 +319,7 @@ $(document).ready(function() {
 		}, this), 0)
 	}
 
-	Button.prototype.toggle = function () {
+	Button.prototype.toggle = function() {
 		var changed = true
 		var $parent = this.$element.closest('[data-toggle="buttons"]')
 
@@ -340,9 +346,9 @@ $(document).ready(function() {
 	// ========================
 
 	function Plugin(option) {
-		return this.each(function () {
-			var $this   = $(this)
-			var data    = $this.data('bs.button')
+		return this.each(function() {
+			var $this = $(this)
+			var data = $this.data('bs.button')
 			var options = typeof option == 'object' && option
 
 			if (!data) $this.data('bs.button', (data = new Button(this, options)))
@@ -354,14 +360,14 @@ $(document).ready(function() {
 
 	var old = $.fn.button
 
-	$.fn.button             = Plugin
+	$.fn.button = Plugin
 	$.fn.button.Constructor = Button
 
 
 	// BUTTON NO CONFLICT
 	// ==================
 
-	$.fn.button.noConflict = function () {
+	$.fn.button.noConflict = function() {
 		$.fn.button = old
 		return this
 	}
@@ -371,13 +377,13 @@ $(document).ready(function() {
 	// ===============
 
 	$(document)
-		.on('click.bs.button.data-api', '[data-toggle^="button"]', function (e) {
+		.on('click.bs.button.data-api', '[data-toggle^="button"]', function(e) {
 			var $btn = $(e.target)
 			if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn')
 			Plugin.call($btn, 'toggle')
 			if (!($(e.target).is('input[type="radio"]') || $(e.target).is('input[type="checkbox"]'))) e.preventDefault()
 		})
-		.on('focus.bs.button.data-api blur.bs.button.data-api', '[data-toggle^="button"]', function (e) {
+		.on('focus.bs.button.data-api blur.bs.button.data-api', '[data-toggle^="button"]', function(e) {
 			$(e.target).closest('.btn').toggleClass('focus', /^focus(in)?$/.test(e.type))
 		})
 

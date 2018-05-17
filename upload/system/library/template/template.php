@@ -1,12 +1,17 @@
 <?php
 namespace Template;
 final class Template {
+	private $template = '';
 	private $data = array();
 		
 	public function set($key, $value) {
 		$this->data[$key] = $value;
 	}
-	
+
+	public function setFilename() {
+
+	}
+
 	public function render($template) {
 		$file = DIR_TEMPLATE . $template . '.tpl';
 

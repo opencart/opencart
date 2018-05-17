@@ -488,7 +488,6 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     margin-right: -20px;
 }
 
-
 /* Cards */
 .card {
     border-radius: 0px;
@@ -697,8 +696,6 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     }
 }
 
-
-
 #marketplace-extension-info #banner img {
     margin-left: auto;
     margin-right: auto;
@@ -808,6 +805,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .list-check {
     list-style: none;
 }
+
 .list-check li::before {
     font-family: 'FontAwesome';
     content: '\f00c';

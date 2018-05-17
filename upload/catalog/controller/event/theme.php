@@ -1,6 +1,9 @@
 <?php
 class ControllerEventTheme extends Controller {
 	public function index(&$route, &$args, &$template) {
+
+		echo $template;
+
 		// If there is a template file we render
 		if ($template) {
 			// include and register Twig auto-loader
@@ -20,12 +23,14 @@ class ControllerEventTheme extends Controller {
 				
 			return $twig->createTemplate($template)->render($args);
 		}
-	}	
+	}
 	
 	public function override(&$route, &$args, &$template) {
 		if (!$this->config->get('theme_' . $this->config->get('config_theme') . '_status')) {
 			exit('Error: A theme has not been assigned to this store!');
 		}
+
+		echo 'hi';
 
 		// If the default theme is selected we need to know which directory its pointing to			
 		if ($this->config->get('config_theme') == 'default') {
@@ -40,7 +45,12 @@ class ControllerEventTheme extends Controller {
 		$theme_info = $this->model_design_theme->getTheme($route, $theme);
 		
 		if ($theme_info) {
+
+
 			$template = html_entity_decode($theme_info['code'], ENT_QUOTES, 'UTF-8');
+
+
+
 		} elseif (is_file(DIR_TEMPLATE . $theme . '/template/' . $route . '.twig')) {
 			$this->config->set('template_directory', $theme . '/template/');
 		} elseif (is_file(DIR_TEMPLATE . 'default/template/' . $route . '.twig')) {

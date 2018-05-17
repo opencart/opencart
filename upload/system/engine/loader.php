@@ -110,11 +110,17 @@ final class Loader {
 		// Keep the original trigger
 		$trigger = $route;
 
-		// Template contents. Not the output!
-		$template = '';
+		$output = '';
+
+		// Modify the loaded template
+		$file = DIR_TEMPLATE . $this->registry->get('config')->get('template_directory') . $route . $this->registry->get('config')->get('template_extension');
+
+		if (is_file($file)) {
+			$output = file_get_contents($file);
+		}
 
 		// Trigger the pre events
-		$result = $this->registry->get('event')->trigger('view/' . $trigger . '/before', array(&$route, &$data, &$template));
+		$result = $this->registry->get('event')->trigger('view/' . $trigger . '/before', array(&$route, &$data, &$output));
 
 		// Make sure its only the last event that returns an output if required.
 		if ($result && !$result instanceof Exception) {
@@ -126,7 +132,7 @@ final class Loader {
 				$template->set($key, $value);
 			}
 
-			$output = $template->render($this->registry->get('config')->get('template_directory') . $route, $this->registry->get('config')->get('template_cache'));
+			$output = $template->render($route, $this->registry->get('config')->get('template_cache'));
 		}
 
 		// Trigger the post events

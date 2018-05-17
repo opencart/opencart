@@ -46,7 +46,10 @@ $_['action_event'] = array(
 	),
 	'controller/*/after' => array(
 		'event/language/after'
-	),	
+	),
+	'view/*' => array(
+		'event/theme'
+	),
 	'view/*/before' => array(
 		500  => 'event/theme/override',
 		998  => 'event/language',

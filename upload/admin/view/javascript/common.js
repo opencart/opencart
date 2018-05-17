@@ -150,7 +150,6 @@ $(document).ready(function() {
 		return this.each(function() {
 			var $this = $(this);
 			var $dropdown = $('<div class="dropdown-menu"/>');
-			$this.active = false;
 
 			this.timer = null;
 			this.items = [];
@@ -160,6 +159,7 @@ $(document).ready(function() {
 			$(this).wrap('<div class="dropdown">');
 
 			$this.attr('autocomplete', 'off');
+			$this.active = false;
 
 			// Focus
 			$this.on('focus', function() {

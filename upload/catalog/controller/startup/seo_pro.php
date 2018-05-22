@@ -77,6 +77,7 @@ class ControllerStartupSeoPro extends Controller {
 	
 	
 	public function index() {
+
 		// Add rewrite to url class
 		if ($this->config->get('config_seo_url')) {
 			$this->url->addRewrite($this);
@@ -238,10 +239,11 @@ class ControllerStartupSeoPro extends Controller {
 				break;
 		}
 		
-		// Убираем старый вариант формирования, добавляем формирование ссылки с портом
-		$link = $url_info['scheme'] . '://' . $url_info['host'] . (isset($url_info['port']) ? ':' . $url_info['port'] : '') . '/';
 		
-		$link .= 'index.php?route=' . $route . (count($data) ? '&amp;' . urldecode(http_build_query($data, '', '&amp;')) : '');			
+		$link = $url_info['scheme'] . '://' . $url_info['host'] . (isset($url_info['port']) ? ':' . $url_info['port'] : '');
+		
+		//fix subfolder ($url_info['path'])
+		$link .= $url_info['path'] . '?route=' . $route . (count($data) ? '&amp;' . urldecode(http_build_query($data, '', '&amp;')) : '');			
 		
 		$queries = array();
 		foreach ($data as $key => $value) {
@@ -298,23 +300,22 @@ class ControllerStartupSeoPro extends Controller {
 				$seo_url .= '/' . rawurlencode($aliases[$query]);
 			}
 		}
+		
 		if ($seo_url == '') return $link;
 		$seo_url = trim($seo_url, '/');
+		//fix subfolder
+		$path = rtrim($url_info['path'], '/index.php');
+
 	
-		// Убираем старый вариант формирования, добавляем формирование ссылки с портом
-		/*
-		if ($url_info['scheme'] == 'https') {
-			$seo_url = $this->config->get('config_ssl') . $seo_url;
-		} else {
-			$seo_url = $this->config->get('config_url') . $seo_url;
-		}*/
-		
-		$seo_url = $url_info['scheme'] . '://' . $url_info['host'] . (isset($url_info['port']) ? ':' . $url_info['port'] : '') . '/' . $seo_url;
+		$seo_url = $url_info['scheme'] . '://' . $url_info['host'] . (isset($url_info['port']) ? ':' . $url_info['port'] : '') . $path . '/' . $seo_url;
 		if (isset($postfix)) {
 			$seo_url .= trim($this->config->get('config_seo_url_postfix'));
 		} else {
 			$seo_url .= '/';
 		}
+		//fix subfolder
+
+		
 		if(substr($seo_url, -2) == '//') {
 			$seo_url = substr($seo_url, 0, -1);
 		}
@@ -409,16 +410,32 @@ class ControllerStartupSeoPro extends Controller {
 	
 	//blog
 	private function validate() {
-		if (isset($this->request->get['route']) && $this->request->get['route'] == 'error/not_found') {
-			return;
-		}
+		//fix flat link for xml feed
+		if (isset($this->request->get['route'])) {
+			$break_routes = [
+				'error/not_found',
+				'extension/feed/google_sitemap',
+				'extension/feed/google_base',
+				'extension/feed/sitemap_pro',
+				'extension/feed/yandex_feed'
+			];
+			
+			if (in_array($this->request->get['route'], $break_routes)) 
+				return;
+			
+		}		
+		
 		if(empty($this->request->get['route'])) {
 			$this->request->get['route'] = 'common/home';
 		}
+		
+		
 		if (isset($this->request->server['HTTP_X_REQUESTED_WITH']) && strtolower($this->request->server['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
 			return;
 		}
-		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+
+
+		if ((isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == '1' || $_SERVER['HTTPS'])) || (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && (strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']) == 'https') || (!empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on'))) {		
 			$url = str_replace('&amp;', '&', $this->config->get('config_ssl') . ltrim($this->request->server['REQUEST_URI'], '/'));
 			$seo = str_replace('&amp;', '&', $this->url->link($this->request->get['route'], $this->getQueryString(array('route')), 'SSL'));
 		} else {
@@ -427,6 +444,7 @@ class ControllerStartupSeoPro extends Controller {
 				. $this->request->server['REQUEST_URI']);
 			$seo = str_replace('&amp;', '&', $this->url->link($this->request->get['route'], $this->getQueryString(array('route'))));
 		}
+
 		if (rawurldecode($url) != rawurldecode($seo)) {
 			$this->response->redirect($seo, 301);
 		}

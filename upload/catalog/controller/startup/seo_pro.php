@@ -84,6 +84,10 @@ class ControllerStartupSeoPro extends Controller {
 		} else {
 			return;
 		}
+		
+		// Для cron скриптов, типа YML feed
+		if (php_sapi_name() === 'cli') return;
+		
 		// Decode URL
 		if (!isset($this->request->get['_route_'])) {
 			$this->validate();

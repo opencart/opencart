@@ -18,7 +18,7 @@
       <?php if ($categories) { ?>
       <p><strong><?php echo $text_index; ?></strong>
         <?php foreach ($categories as $category) { ?>
-        &nbsp;&nbsp;&nbsp;<a href="index.php?route=product/manufacturer#<?php echo $category['name']; ?>"><?php echo $category['name']; ?></a>
+        &nbsp;&nbsp;&nbsp;<a href="<?php echo $category['href']; ?>#<?php echo $category['name']; ?>"><?php echo $category['name']; ?></a>
         <?php } ?>
       </p>
       <?php foreach ($categories as $category) { ?>

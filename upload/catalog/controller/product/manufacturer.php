@@ -46,6 +46,7 @@ class ControllerProductManufacturer extends Controller {
 
 			if (!isset($data['categories'][$key])) {
 				$data['categories'][$key]['name'] = $key;
+				$data['categories'][$key]['href'] = $this->url->link('product/manufacturer');
 			}
 
 			$data['categories'][$key]['manufacturer'][] = array(

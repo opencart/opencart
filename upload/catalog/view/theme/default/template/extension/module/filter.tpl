@@ -34,6 +34,10 @@ $('#button-filter').on('click', function() {
 		filter.push(this.value);
 	});
 
-	location = '<?php echo $action; ?>&filter=' + filter.join(',');
+	if (filter != 0) {
+        	location = '<?php echo $action; ?>&filter=' + filter.join(',');
+    	} else if (filter = []) {
+        	location = '<?php echo $action; ?>';
+    	}
 });
 //--></script>

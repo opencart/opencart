@@ -1,4 +1,4 @@
-<?php
+ <?php
 // Registry
 $registry = new Registry();
 

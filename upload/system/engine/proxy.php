@@ -32,9 +32,9 @@ class Proxy {
 	
 	public function __call($key, $args) {
 		$arg_data = array();
-		
+
 		$args = func_get_args();
-		
+
 		foreach ($args as $arg) {
 			if ($arg instanceof Ref) {
 				$arg_data[] =& $arg->getRef();
@@ -42,9 +42,9 @@ class Proxy {
 				$arg_data[] =& $arg;
 			}
 		}
-		
+
 		if (isset($this->{$key})) {		
-			return call_user_func_array($this->{$key}, $arg_data);	
+			return call_user_func_array($this->{$key}, $arg_data);
 		} else {
 			$trace = debug_backtrace();
 

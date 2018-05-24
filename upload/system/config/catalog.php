@@ -1,7 +1,6 @@
 <?php
 // Site
 $_['site_url']           = HTTP_SERVER;
-$_['site_ssl']           = HTTPS_SERVER;
 
 // Url
 $_['url_autostart']      = false;
@@ -48,12 +47,11 @@ $_['action_event'] = array(
 		'event/language/after'
 	),
 	'view/*' => array(
-		'event/theme'
+		//'event/theme'
 	),
 	'view/*/before' => array(
-		500  => 'event/theme/override',
-		998  => 'event/language',
-		1000 => 'event/theme'
+		500  => 'event/theme',
+		998  => 'event/language'
 	),
 	'language/*/after' => array(
 		'event/translation'

@@ -1,7 +1,6 @@
 <?php
 // Site
 $_['site_url']             = '';
-$_['site_ssl']             = false;
 
 // Url
 $_['url_autostart']        = true;

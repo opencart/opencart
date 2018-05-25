@@ -93,7 +93,11 @@ class ControllerExtensionModuleImgcategory extends Controller {
 			'href' => $this->url->link('extension/module/imgcategory', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/module/imgcategory', 'token=' . $this->session->data['token'], true);
+		if (!isset($this->request->get['module_id'])) {
+			$data['action'] = $this->url->link('extension/module/imgcategory', 'token=' . $this->session->data['token'], true);
+		} else {
+			$data['action'] = $this->url->link('extension/module/imgcategory', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], true);
+		}
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 

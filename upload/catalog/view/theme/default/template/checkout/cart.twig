@@ -94,10 +94,13 @@
       {% if modules %}
       <h2>{{ text_next }}</h2>
       <p>{{ text_next_choice }}</p>
-      <div class="panel-group" id="accordion"> {% for module in modules %}
+      <div class="panel-group" id="accordion">
+        {% for module in modules %}
         {{ module }}
-        {% endfor %} </div>
-      {% endif %} <br />
+        {% endfor %}
+      </div>
+      {% endif %}
+      <br />
       <div class="row">
         <div class="col-md-4 offset-md-8">
           <table class="table table-bordered">

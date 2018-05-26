@@ -172,7 +172,7 @@ $('#path').on('click', 'a.file', function(e) {
 					$('.nav-tabs').append('<li class="nav-item"><a href="#tab-' + tab_id + '" data-toggle="tab" class="nav-link">' + $(element).attr('href').split('/').join(' / ') + '&nbsp;&nbsp;<i class="fas fa-minus-circle"></i></a></li>');
 
 					html = '<div class="tab-pane" id="tab-' + tab_id + '">';
-					html += '  <textarea name="code" rows="10"></textarea>';
+					html += '  <textarea name="code" rows="10" class="form-control"></textarea>';
 					html += '  <input type="hidden" name="store_id" value="' + $('select[name="store_id"]').val() + '" />';
 					html += '  <input type="hidden" name="path" value="' + $(element).attr('href') + '" />';
 					html += '  <br />';

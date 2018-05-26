@@ -1,17 +1,23 @@
 <?php
 namespace DB;
+use Squareup\Exception;
+
 final class MySQLi {
 	private $connection;
 
 	public function __construct($hostname, $username, $password, $database, $port = '3306') {
-		$this->connection = new \mysqli($hostname, $username, $password, $database, $port);
+		try {
+			$this->connection = new \mysqli($hostname, $username, $password, $database, $port);
 
-		if ($this->connection->connect_errno) {
-			throw new \Exception('Error: ' . $this->connection->connect_error . '<br />Error No: ' . $this->connection->connect_errno);
+			//echo $this->connection->connect_errno;
+
+		} catch (Exception $e) {
+			exit('Error: Could not make a database link using ' . $username . '@' . $hostname);
 		}
 
-		$this->connection->set_charset("utf8");
-		$this->connection->query("SET SQL_MODE = ''");
+
+	//	$this->connection->set_charset("utf8");
+	//	$this->connection->query("SET SQL_MODE = ''");
 	}
 
 	public function query($sql) {

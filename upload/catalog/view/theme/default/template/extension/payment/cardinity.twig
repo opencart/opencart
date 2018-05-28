@@ -57,12 +57,12 @@ $('#button-confirm').on('click', function() {
 
 			$('.payment-warning .message').text();
 
-			$('#payment').find('*').removeClass('has-error');
+			$('#payment .form-control').removeClass('is-invalid');
 
-			$('#button-confirm').button('loading').attr('disabled', true);
+			$('#button-confirm').button('loading').prop('disabled', true);
 		},
 		complete: function() {
-			$('#button-confirm').button('reset');
+			$('#button-confirm').button('reset').prop('disabled', false);
 		},
 		success: function(json) {
 			if (json['error']) {
@@ -73,19 +73,19 @@ $('#button-confirm').on('click', function() {
 				}
 
 				if (json['error']['holder']) {
-					$('#input-holder').closest('.form-group').addClass('has-error');
+					$('#input-holder').addClass('is-invalid');
 				}
 
 				if (json['error']['pan']) {
-					$('#input-pan').closest('.form-group').addClass('has-error');
+					$('#input-pan').addClass('is-invalid');;
 				}
 
 				if (json['error']['expiry_date']) {
-					$('#expiry-date-group').addClass('has-error');
+					$('#expiry-date-group').addClass('is-invalid');
 				}
 
 				if (json['error']['cvc']) {
-					$('#input-cvc').closest('.form-group').addClass('has-error');
+					$('#input-cvc').addClass('is-invalid');
 				}
 			}
 

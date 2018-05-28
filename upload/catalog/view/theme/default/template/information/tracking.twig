@@ -43,7 +43,7 @@ $('#button-tracking').on('click', function() {
         },
         success: function(json) {
             $('.alert-dismissible, .text-danger').remove();
-            $('.form-group').removeClass('has-error');
+            $('.form-control').removeClass('is-invalid');
 
             if (json['redirect']) {
                 location = json['redirect'];
@@ -51,8 +51,8 @@ $('#button-tracking').on('click', function() {
                 $('#collapse-checkout-option .panel-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
-				$('input[name=\'email\']').parent().addClass('has-error');
-				$('input[name=\'password\']').parent().addClass('has-error');
+				$('input[name=\'email\']').addClass('is-invalid');
+				$('input[name=\'password\']').addClass('is-invalid');
 		   }
         },
         error: function(xhr, ajaxOptions, thrownError) {

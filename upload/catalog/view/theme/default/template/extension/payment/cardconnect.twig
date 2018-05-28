@@ -191,7 +191,7 @@ $('#button-confirm').bind('click', function() {
 		beforeSend: function() {
 			$('.cardconnect_message').remove();
 			$('.text-danger').remove();
-			$('#payment').find('*').removeClass('has-error');
+			$('#payment .form-control').removeClass('is-invalid');
 			$('#payment').before('<div class="alert alert-info cardconnect_wait"><i class="fa fa-info-circle"></i> {{ text_wait }}</div>');
 			$('#button-confirm').button('loading');
 		},
@@ -209,37 +209,37 @@ $('#button-confirm').bind('click', function() {
 			if (json['error']['card_number']) {
 				$('#input-card-number').after('<div class="text-danger">' + json['error']['card_number'] + '</div>');
 
-				$('#input-card-number').closest('.form-group').addClass('has-error');
+				$('#input-card-number').addClass('is-invalid');
 			}
 
 			if (json['error']['card_cvv2']) {
 				$('#input-card-cvv2').after('<div class="text-danger">' + json['error']['card_cvv2'] + '</div>');
 
-				$('#input-card-cvv2').closest('.form-group').addClass('has-error');
+				$('#input-card-cvv2').addClass('is-invalid');
 			}
 
 			if (json['error']['card_choice']) {
 				$('#input-card-choice').after('<div class="text-danger">' + json['error']['card_choice'] + '</div>');
 
-				$('#input-card-choice').closest('.form-group').addClass('has-error');
+				$('#input-card-choice').addClass('is-invalid');
 			}
 
 			if (json['error']['method']) {
 				$('#input-method').after('<div class="text-danger">' + json['error']['method'] + '</div>');
 
-				$('#input-method').closest('.form-group').addClass('has-error');
+				$('#input-method').addClass('is-invalid');
 			}
 
 			if (json['error']['account_number']) {
 				$('#input-account-number').after('<div class="text-danger">' + json['error']['account_number'] + '</div>');
 
-				$('#input-account-number').closest('.form-group').addClass('has-error');
+				$('#input-account-number').addClass('is-invalid');
 			}
 
 			if (json['error']['routing_number']) {
 				$('#input-routing-number').after('<div class="text-danger">' + json['error']['routing_number'] + '</div>');
 
-				$('#input-routing-number').closest('.form-group').addClass('has-error');
+				$('#input-routing-number').addClass('is-invalid');
 			}
 
 			if (json['success']) {

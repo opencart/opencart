@@ -8,7 +8,7 @@ final class PDO {
 		try {
 			$connection = @new \PDO("mysql:host=" . $hostname . ";port=" . $port . ";dbname=" . $database, $username, $password, array(\PDO::ATTR_PERSISTENT => true));
 		} catch (\PDOException $e) {
-			throw new \Exception('ghghError: Could not make a database link using ' . $username . '@' . $hostname . '!');
+			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname . '!');
 		}
 
 		$this->connection->exec("SET NAMES 'utf8'");

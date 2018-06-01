@@ -7,7 +7,7 @@ final class PgSQL {
 		$this->connection = @pg_connect('hostname=' . $hostname . ' port=' . $port .  ' username=' . $username . ' password='	. $password . ' database=' . $database);
 
 		if (!$this->connection) {
-			throw new \Exception('PgSQLError: Could not make a database link using ' . $username . '@' . $hostname);
+			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname);
 		}
 
 		pg_query($this->connection, "SET CLIENT_ENCODING TO 'UTF8'");

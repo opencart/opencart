@@ -1,16 +1,14 @@
 <div class="card">
-  <div class="card-header" id="collapse-coupon-title">
-    <h4 data-toggle="collapse" data-target="#collapse-coupon">{{ heading_title }} <i class="fa fa-caret-down"></i></h4>
-  </div>
+  <h4 class="card-header" data-toggle="collapse" data-target="#collapse-coupon">{{ heading_title }} <i class="fa fa-caret-down"></i></h4>
   <div id="collapse-coupon" class="collapse" data-parent="#accordion">
     <div class="card-body">
       <div class="row">
         <label class="col-md-2 col-form-label" for="input-coupon">{{ entry_coupon }}</label>
         <div class="col-md-10">
           <div class="input-group">
-            <input type="text" name="coupon" value="{{ coupon }}" placeholder="{{ entry_coupon }}" id="input-coupon" class="form-control" />
+            <input type="text" name="coupon" value="{{ coupon }}" placeholder="{{ entry_coupon }}" id="input-coupon" class="form-control"/>
             <div class="input-group-append">
-              <input type="button" value="{{ button_coupon }}" id="button-coupon" data-loading-text="{{ text_loading }}"  class="btn btn-primary" />
+              <input type="button" value="{{ button_coupon }}" id="button-coupon" data-loading-text="{{ text_loading }}" class="btn btn-primary"/>
             </div>
           </div>
         </div>

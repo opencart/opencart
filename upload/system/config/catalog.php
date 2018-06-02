@@ -34,6 +34,7 @@ $_['action_pre_action']  = array(
 	'startup/marketing',
 	'startup/error',
 	'startup/event',
+	'startup/sass',
 	'startup/maintenance',
 	'startup/seo_url'
 );
@@ -45,9 +46,6 @@ $_['action_event'] = array(
 	),
 	'controller/*/after' => array(
 		'event/language/after'
-	),
-	'view/*' => array(
-		//'event/theme'
 	),
 	'view/*/before' => array(
 		500  => 'event/theme',

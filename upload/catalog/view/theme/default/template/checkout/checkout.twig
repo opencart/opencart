@@ -18,23 +18,19 @@
     {% else %}
       {% set class = 'col-sm-12' %}
     {% endif %}
-    <div id="content" class="{{ class }}">{{ content_top }}
+    <div id="content" class="{{ class }}">
+	  {{ content_top }}
       <h1>{{ heading_title }}</h1>
       <div id="accordion">
         <div class="card">
-          <div class="card-header" id="heading-checkout-option">
-            <h4>{{ text_checkout_option }}</h4>
-          </div>
+          <h4 class="card-header" id="heading-checkout-option">{{ text_checkout_option }}</h4>
           <div id="collapse-checkout-option" class="collapse" aria-labelledby="heading-checkout-option" data-parent="#accordion">
             <div class="card-body"></div>
           </div>
         </div>
-
         <div class="card">
           {% if not logged and account != 'guest' %}
-            <div class="card-header" id="heading-payment-address">
-              <h4>{{ text_checkout_account }}</h4>
-            </div>
+            <h4 class="card-header" id="heading-payment-address">{{ text_checkout_account }}</h4>
             <div id="collapse-payment-address" class="collapse" aria-labelledby="heading-payment-address" data-parent="#accordion">
               <div class="card-body"></div>
             </div>
@@ -47,43 +43,32 @@
             </div>
           {% endif %}
         </div>
-
         {% if shipping_required %}
           <div class="card">
-            <div class="card-header" id="heading-shipping-address">
-              <h4>{{ text_checkout_shipping_address }}</h4>
-            </div>
+            <h4 class="card-header" id="heading-shipping-address">{{ text_checkout_shipping_address }}</h4>
             <div id="collapse-shipping-address" class="collapse" aria-labelledby="heading-shipping-address" data-parent="#accordion">
               <div class="card-body"></div>
             </div>
           </div>
           <div class="card">
-            <div class="card-header" id="heading-shipping-method">
-              <h4>{{ text_checkout_shipping_method }}</h4>
-            </div>
+            <h4 class="card-header" id="heading-shipping-method">{{ text_checkout_shipping_method }}</h4>
             <div id="collapse-shipping-method" class="collapse" aria-labelledby="heading-shipping-method" data-parent="#accordion">
               <div class="card-body"></div>
             </div>
           </div>
         {% endif %}
-
         <div class="card">
-          <div class="card-header" id="heading-payment-method">
-            <h4>{{ text_checkout_payment_method }}</h4>
-          </div>
+          <h4 class="card-header" id="heading-payment-method">{{ text_checkout_payment_method }}</h4>
           <div id="collapse-payment-method" class="collapse" aria-labelledby="heading-payment-method" data-parent="#accordion">
             <div class="card-body"></div>
           </div>
         </div>
         <div class="card">
-          <div class="card-header" id="heading-checkout-confirm">
-            <h4>{{ text_checkout_confirm }}</h4>
-          </div>
+          <h4 class="card-header" id="heading-checkout-confirm">{{ text_checkout_confirm }}</h4>
           <div id="collapse-checkout-confirm" class="collapse" aria-labelledby="heading-payment-method" data-parent="#accordion">
             <div class="card-body"></div>
           </div>
         </div>
-
       </div>
       {{ content_bottom }}</div>
     {{ column_right }}</div>

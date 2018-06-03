@@ -2,29 +2,27 @@
   <fieldset id="payment">
     <legend>{{ text_card_details }}</legend>
     {% if echeck %}
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label" for="input-method">{{ entry_method }}</label>
-      <div class="col-sm-10">
-        <select name="method" id="input-method" class="form-control">
-          <option value="card">{{ text_card }}</option>
-          <option value="echeck">{{ text_echeck }}</option>
-        </select>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label" for="input-method">{{ entry_method }}</label>
+        <div class="col-sm-10">
+          <select name="method" id="input-method" class="form-control">
+            <option value="card">{{ text_card }}</option>
+            <option value="echeck">{{ text_echeck }}</option>
+          </select>
+        </div>
       </div>
-    </div>
     {% endif %}
     <div class="card_container">
       <div class="form-group" {% if not store_cards %} style="display: none;" {% endif %}>
         <label class="col-sm-2 col-form-label">{{ entry_card_new_or_old }}</label>
         <div class="col-sm-10">
           <div class="form-check form-check-inline">
-            <label>
-            <input type="radio" name="card_new" value="1" class="form-check-input" checked="checked"/>
-            {{ entry_card_new }}</label>
+            <label> <input type="radio" name="card_new" value="1" class="form-check-input" checked="checked"/>
+              {{ entry_card_new }}</label>
           </div>
           <div class="form-check form-check-inline">
-            <label>
-            <input type="radio" name="card_new" value="0" class="form-check-input" />
-            {{ entry_card_old }}</label>
+            <label> <input type="radio" name="card_new" value="0" class="form-check-input"/>
+              {{ entry_card_old }}</label>
           </div>
         </div>
       </div>
@@ -33,8 +31,8 @@
           <label class="col-sm-2 col-form-label" for="input-card-type">{{ entry_card_type }}</label>
           <div class="col-sm-10">
             <select name="card_type" id="input-card-type" class="form-control">
-             {% for card_type in card_types %}
-              <option value="{{ card_type.value }}">{{ card_type.text }}</option>
+              {% for card_type in card_types %}
+                <option value="{{ card_type.value }}">{{ card_type.text }}</option>
               {% endfor %}
             </select>
           </div>
@@ -42,22 +40,22 @@
         <div class="form-group row required">
           <label class="col-sm-2 col-form-label" for="input-card-number">{{ entry_card_number }}</label>
           <div class="col-sm-10">
-            <input type="text" name="card_number" value="" placeholder="{{ entry_card_number }}" id="input-card-number" class="form-control" />
+            <input type="text" name="card_number" value="" placeholder="{{ entry_card_number }}" id="input-card-number" class="form-control"/>
           </div>
         </div>
         <div class="form-group row">
           <label class="col-sm-2 col-form-label" for="input-card-expiry">{{ entry_card_expiry }}</label>
           <div class="col-sm-3">
             <select name="card_expiry_month" id="input-card-expiry" class="form-control">
-             {% for month in months %}
-              <option value="{{ month.value }}">{{ month.text }}</option>
+              {% for month in months %}
+                <option value="{{ month.value }}">{{ month.text }}</option>
               {% endfor %}
             </select>
           </div>
           <div class="col-sm-3">
             <select name="card_expiry_year" class="form-control">
-             {% for year in years %}
-              <option value="{{ year.value }}">{{ year.text }}</option>
+              {% for year in years %}
+                <option value="{{ year.value }}">{{ year.text }}</option>
               {% endfor %}
             </select>
           </div>
@@ -65,34 +63,35 @@
         <div class="form-group row required">
           <label class="col-sm-2 col-form-label" for="input-card-cvv2">{{ entry_card_cvv2 }}</label>
           <div class="col-sm-10">
-            <input type="text" name="card_cvv2" value="" placeholder="{{ entry_card_cvv2 }}" id="input-card-cvv2" class="form-control" />
+            <input type="text" name="card_cvv2" value="" placeholder="{{ entry_card_cvv2 }}" id="input-card-cvv2" class="form-control"/>
           </div>
         </div>
         {% if store_cards %}
-        <div class="form-group row">
-          <label class="col-sm-2 col-form-label" for="input-card-save" style="padding-top:0">{{ entry_card_save }}</label>
-          <div class="col-sm-10">
-            <input type="checkbox" name="card_save" value="1" id="input-card-save"/>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-card-save" style="padding-top:0">{{ entry_card_save }}</label>
+            <div class="col-sm-10">
+              <input type="checkbox" name="card_save" value="1" id="input-card-save"/>
+            </div>
           </div>
-        </div>
-        {% endif %} </div>
+        {% endif %}
+      </div>
       <div class="card_old_container" style="display: none">
         <div class="form-group row">
           <label class="col-sm-2 col-form-label" for="input-card-choice">{{ entry_card_choice }}</label>
           <div class="col-sm-8">
             <select name="card_choice" id="input-card-choice" class="form-control" {% if not cards %} disabled {% endif %}>
-          	  {% if cards %}
-              <option value="">{{ text_select_card }}</option>
-               {% for card in cards %}
-              <option value="{{ card.token }}">{{ card.type }}, &nbsp; {{ card.account }}, &nbsp; {{ card.expiry }}</option>
+              {% if cards %}
+                <option value="">{{ text_select_card }}</option>
+                {% for card in cards %}
+                  <option value="{{ card.token }}">{{ card.type }}, &nbsp; {{ card.account }}, &nbsp; {{ card.expiry }}</option>
                 {% endfor %}
               {% else %}
-              <option value="">{{ text_no_cards }}</option>
+                <option value="">{{ text_no_cards }}</option>
               {% endif %}
             </select>
           </div>
           <div class="col-sm-2">
-            <input type="button" value="{{ button_delete }}" id="button-delete" data-loading-text="{{ text_loading }}" class="btn btn-danger" />
+            <input type="button" value="{{ button_delete }}" id="button-delete" data-loading-text="{{ text_loading }}" class="btn btn-danger"/>
           </div>
         </div>
       </div>
@@ -101,13 +100,13 @@
       <div class="form-group row required">
         <label class="col-sm-2 col-form-label" for="input-account-number">{{ entry_account_number }}</label>
         <div class="col-sm-10">
-          <input type="text" name="account_number" value="" placeholder="{{ entry_account_number }}" id="input-account-number" class="form-control" />
+          <input type="text" name="account_number" value="" placeholder="{{ entry_account_number }}" id="input-account-number" class="form-control"/>
         </div>
       </div>
       <div class="form-group row required">
         <label class="col-sm-2 col-form-label" for="input-routing-number">{{ entry_routing_number }}</label>
         <div class="col-sm-10">
-          <input type="text" name="routing_number" value="" placeholder="{{ entry_routing_number }}" id="input-routing-number" class="form-control" />
+          <input type="text" name="routing_number" value="" placeholder="{{ entry_routing_number }}" id="input-routing-number" class="form-control"/>
         </div>
       </div>
     </div>
@@ -168,10 +167,10 @@ $('#button-delete').bind('click', function() {
 					$.ajax({
 						url: 'index.php?route=checkout/confirm',
 						dataType: 'html',
-						success: function (html) {
+						success: function(html) {
 							$('#collapse-checkout-confirm .panel-body').html(html);
 						},
-						error: function (xhr, ajaxOptions, thrownError) {
+						error: function(xhr, ajaxOptions, thrownError) {
 							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 						}
 					});

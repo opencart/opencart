@@ -71,30 +71,26 @@
               <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control"/>
               {% if error_postcode %}
                 <div class="text-danger">{{ error_postcode }}</div>
-              {% endif %} </div>
+              {% endif %}
+            </div>
           </div>
           <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="input-country">{{ entry_country }}</label>
             <div class="col-sm-10">
               <select name="country_id" id="input-country" class="form-control">
                 <option value="">{{ text_select }}</option>
-
                 {% for country in countries %}
                   {% if country.country_id == country_id %}
-
                     <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
-
                   {% else %}
-
                     <option value="{{ country.country_id }}">{{ country.name }}</option>
-
                   {% endif %}
                 {% endfor %}
-
               </select>
               {% if error_country %}
                 <div class="text-danger">{{ error_country }}</div>
-              {% endif %} </div>
+              {% endif %}
+            </div>
           </div>
           <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="input-zone">{{ entry_zone }}</label>
@@ -102,7 +98,8 @@
               <select name="zone_id" id="input-zone" class="form-control"> </select>
               {% if error_zone %}
                 <div class="text-danger">{{ error_zone }}</div>
-              {% endif %} </div>
+              {% endif %}
+            </div>
           </div>
           {% for custom_field in custom_fields %}
             {% if custom_field.type == 'select' %}
@@ -121,7 +118,8 @@
                   </select>
                   {% if error_custom_field[custom_field.custom_field_id] %}
                     <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
-                  {% endif %}</div>
+                  {% endif %}
+                </div>
               </div>
             {% endif %}
             {% if custom_field.type == 'radio' %}
@@ -142,7 +140,8 @@
                   </div>
                   {% if error_custom_field[custom_field.custom_field_id] %}
                     <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
-                  {% endif %} </div>
+                  {% endif %}
+                </div>
               </div>
             {% endif %}
             {% if custom_field.type == 'checkbox' %}
@@ -185,7 +184,8 @@
                   <textarea name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control">{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}</textarea>
                   {% if error_custom_field[custom_field.custom_field_id] %}
                     <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
-                  {% endif %} </div>
+                  {% endif %}
+                </div>
               </div>
             {% endif %}
             {% if custom_field.type == 'file' %}
@@ -196,7 +196,8 @@
                   <input type="hidden" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}  {{ address_custom_field[custom_field.custom_field_id] }} {% endif %}"/>
                   {% if error_custom_field[custom_field.custom_field_id] %}
                     <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
-                  {% endif %} </div>
+                  {% endif %}
+                </div>
               </div>
             {% endif %}
             {% if custom_field.type == 'date' %}
@@ -211,7 +212,8 @@
                   </div>
                   {% if error_custom_field[custom_field.custom_field_id] %}
                     <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
-                  {% endif %} </div>
+                  {% endif %}
+                </div>
               </div>
             {% endif %}
             {% if custom_field.type == 'time' %}
@@ -226,7 +228,8 @@
                   </div>
                   {% if error_custom_field[custom_field.custom_field_id] %}
                     <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
-                  {% endif %} </div>
+                  {% endif %}
+                </div>
               </div>
             {% endif %}
             {% if custom_field.type == 'time' %}
@@ -241,7 +244,8 @@
                   </div>
                   {% if error_custom_field[custom_field.custom_field_id] %}
                     <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
-                  {% endif %} </div>
+                  {% endif %}
+                </div>
               </div>
             {% endif %}
           {% endfor %}

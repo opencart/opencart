@@ -24,7 +24,8 @@
               <input type="password" name="password" value="{{ password }}" id="input-password" class="form-control" />
               {% if error_password %}
               <div class="text-danger">{{ error_password }}</div>
-              {% endif %} </div>
+              {% endif %}
+            </div>
           </div>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-confirm">{{ entry_confirm }}</label>
@@ -32,7 +33,8 @@
               <input type="password" name="confirm" value="{{ confirm }}" id="input-confirm" class="form-control" />
               {% if error_confirm %}
               <div class="text-danger">{{ error_confirm }}</div>
-              {% endif %}</div>
+              {% endif %}
+            </div>
           </div>
         </fieldset>
         <div class="buttons clearfix">

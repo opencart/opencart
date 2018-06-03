@@ -2,32 +2,30 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <button type="submit" form="form-payment" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ fetch }}" data-toggle="tooltip" title="{{ button_fetch }}" class="btn btn-info"><i class="fa fa-refresh"></i></a> <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
+      <div class="float-right">
+        <button type="submit" form="form-payment" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ fetch }}" data-toggle="tooltip" title="{{ button_fetch }}" class="btn btn-info"><i class="fas fa-sync"></i></a> <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          {% for breadcrumb in breadcrumbs %}
-            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-          {% endfor %}
-        </ol>
-      </nav>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
     </div>
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     {% if success %}
-      <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+      <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     <div class="card">
-      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_edit }}</div>
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment">
           <ul class="nav nav-tabs">
@@ -105,7 +103,7 @@
                   <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="category" class="form-control"/>
                   <div id="laybuy-category" class="form-control" style="height: 150px; overflow: auto;">
                     {% for category in categories %}
-                      <div id="category{{ category.category_id }}"><i class="fa fa-minus-circle"></i> {{ category.name }}
+                      <div id="category{{ category.category_id }}"><i class="fas fa-minus-circle"></i> {{ category.name }}
                         <input type="hidden" name="payment_laybuy_category[]" value="{{ category.category_id }}"/>
                       </div>
                     {% endfor %}
@@ -126,7 +124,7 @@
                   <input type="text" name="customer_group" value="" placeholder="{{ entry_customer_group }}" id="customer-group" class="form-control"/>
                   <div id="laybuy-customer-group" class="form-control" style="height: 150px; overflow: auto;">
                     {% for customer_group in customer_groups %}
-                      <div id="customer-group{{ customer_group.customer_group_id }}"><i class="fa fa-minus-circle"></i> {{ customer_group.name }}
+                      <div id="customer-group{{ customer_group.customer_group_id }}"><i class="fas fa-minus-circle"></i> {{ customer_group.name }}
                         <input type="hidden" name="payment_laybuy_customer_group[]" value="{{ customer_group.customer_group_id }}"/>
                       </div>
                     {% endfor %}
@@ -264,47 +262,49 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-reports">
-              <div class="well">
-                <div class="row">
-                  <div class="col-sm-4">
-                    <div class="form-group">
-                      <label class="col-form-label" for="input-order-id">{{ entry_order_id }}</label> <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-form-label" for="input-months">{{ entry_months }}</label> <input type="text" name="filter_months" value="{{ filter_months }}" placeholder="{{ entry_months }}" id="input-months" class="form-control"/>
-                    </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="form-group">
-                      <label class="col-form-label" for="input-customer">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-form-label" for="input-status">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-control"/>
-                      <option value="*"></option>
-                      {% for transaction_status in transaction_statuses %}
-                        {% if transaction_status.status_id == filter_status %}
-                          <option value="{{ transaction_status.status_id }}" selected="selected">{{ transaction_status.status_name }}</option>
-                        {% else %}
-                          <option value="{{ transaction_status.status_id }}">{{ transaction_status.status_name }}</option>
-                        {% endif %}
-                      {% endfor %}
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="form-group">
-                      <label class="col-form-label" for="input-dp-percent">{{ entry_dp_percent }}</label> <input type="text" name="filter_dp_percent" value="{{ filter_dp_percent }}" placeholder="{{ entry_dp_percent }}" id="input-dp-percent" class="form-control"/>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-form-label" for="input-date-added">{{ entry_date_added }}</label>
-                      <div class="input-group date">
-                        <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-added" class="form-control"/>
-                        <div class="input-group-btn">
-                          <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
-                        </div>
+              <div class="card bg-light mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label class="col-form-label" for="input-order-id">{{ entry_order_id }}</label> <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-form-label" for="input-months">{{ entry_months }}</label> <input type="text" name="filter_months" value="{{ filter_months }}" placeholder="{{ entry_months }}" id="input-months" class="form-control"/>
                       </div>
                     </div>
-                    <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label class="col-form-label" for="input-customer">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-form-label" for="input-status">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-control"/>
+                        <option value="*"></option>
+                        {% for transaction_status in transaction_statuses %}
+                          {% if transaction_status.status_id == filter_status %}
+                            <option value="{{ transaction_status.status_id }}" selected="selected">{{ transaction_status.status_name }}</option>
+                          {% else %}
+                            <option value="{{ transaction_status.status_id }}">{{ transaction_status.status_name }}</option>
+                          {% endif %}
+                        {% endfor %}
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label class="col-form-label" for="input-dp-percent">{{ entry_dp_percent }}</label> <input type="text" name="filter_dp_percent" value="{{ filter_dp_percent }}" placeholder="{{ entry_dp_percent }}" id="input-dp-percent" class="form-control"/>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-form-label" for="input-date-added">{{ entry_date_added }}</label>
+                        <div class="input-group date">
+                          <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control"/>
+                          <div class="input-group-append">
+                            <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                          </div>
+                        </div>
+                      </div>
+                      <button type="button" id="button-filter" class="btn btn-primary float-right"><i class="fas fa-filter"></i> {{ button_filter }}</button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -400,7 +400,7 @@
                           <td class="text-left">{{ report.last_payment }}</td>
                           <td class="text-left">{{ report.status }}</td>
                           <td class="text-left">{{ report.date_added }}</td>
-                          <td class="text-right"><a href="{{ report.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+                          <td class="text-right"><a href="{{ report.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fas fa-eye"></i></a></td>
                         </tr>
                       {% endfor %}
                     {% else %}
@@ -449,11 +449,11 @@ $('input[name="category"]').autocomplete({
 
 		$('#laybuy-category' + item['value']).remove();
 
-		$('#laybuy-category').append('<div id="laybuy-category' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="payment_laybuy_category[]" value="' + item['value'] + '" /></div>');
+		$('#laybuy-category').append('<div id="laybuy-category' + item['value'] + '"><i class="fas fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="payment_laybuy_category[]" value="' + item['value'] + '" /></div>');
 	}
 });
 
-$('#laybuy-category').delegate('.fa-minus-circle', 'click', function() {
+$('#laybuy-category').on('click', '.fa-minus-circle', function() {
 	$(this).parent().remove();
 });
 //--></script>
@@ -479,11 +479,11 @@ $('input[name="customer_group"]').autocomplete({
 
 		$('#laybuy-customer-group' + item['value']).remove();
 
-		$('#laybuy-customer-group').append('<div id="laybuy-customer-group' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="payment_laybuy_customer_group[]" value="' + item['value'] + '" /></div>');
+		$('#laybuy-customer-group').append('<div id="laybuy-customer-group' + item['value'] + '"><i class="fas fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="payment_laybuy_customer_group[]" value="' + item['value'] + '" /></div>');
 	}
 });
 
-$('#laybuy-customer-group').delegate('.fa-minus-circle', 'click', function() {
+$('#laybuy-customer-group').on('click', '.fa-minus-circle', function() {
 	$(this).parent().remove();
 });
 //--></script>
@@ -553,7 +553,11 @@ $('#button-filter').on('click', function() {
 });
 //--></script>
 <script type="text/javascript"><!--
-$('.date').datetimepicker();
+$('.date').datetimepicker({
+	'format': 'YYYY-MM-DD',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
+});
 //--></script>
 <script type="text/javascript"><!--
 if (document.location.hash != '') {

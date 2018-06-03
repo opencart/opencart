@@ -1,10 +1,10 @@
 {% if error %}
-<div class="alert alert-danger alert-dismissible">{{ error }}</div>
+  <div class="alert alert-danger alert-dismissible">{{ error }}</div>
 {% endif %}
 {% if success %}
-<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-</div>
+  <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
 {% endif %}
 <table class="table table-bordered">
   <thead>
@@ -17,18 +17,18 @@
   </thead>
   <tbody>
     {% if histories %}
-    {% for history in histories %}
-    <tr>
-      <td class="text-left">{{ history.date_added }}</td>
-      <td class="text-left">{{ history.comment }}</td>
-      <td class="text-left">{{ history.status }}</td>
-      <td class="text-left">{{ history.notify }}</td>
-    </tr>
-    {% endfor %}
+      {% for history in histories %}
+        <tr>
+          <td class="text-left">{{ history.date_added }}</td>
+          <td class="text-left">{{ history.comment }}</td>
+          <td class="text-left">{{ history.status }}</td>
+          <td class="text-left">{{ history.notify }}</td>
+        </tr>
+      {% endfor %}
     {% else %}
-    <tr>
-      <td class="text-center" colspan="4">{{ text_no_results }}</td>
-    </tr>
+      <tr>
+        <td class="text-center" colspan="4">{{ text_no_results }}</td>
+      </tr>
     {% endif %}
   </tbody>
 </table>

@@ -251,7 +251,7 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 		$validate_paramter_data['SellerId'] = $data['payment_amazon_login_pay_merchant_id'];
 		$validate_paramter_data['AmazonOrderReferenceId'] = 'validate details';
 		$validate_details = $this->offAmazon('GetOrderReferenceDetails', $validate_paramter_data);
-		$validate_response = $this->validateResponse('GetOrderReferenceDetails', $validate_details);
+		$validate_response = $this->validateResponse('GetOrderReferenceDetails', $validate_details, true);
 		if($validate_response['error_code'] && $validate_response['error_code'] != 'InvalidOrderReferenceId'){
 			return $validate_response;
 		}
@@ -306,9 +306,11 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 		return $this->sendCurl($url, $parameters);
 	}
 
-	private function validateResponse($action, $details) {
+	private function validateResponse($action, $details, $skip_logger = false) {
 		$details_xml = simplexml_load_string($details['ResponseBody']);
-		$this->logger($details_xml);
+		if (!$skip_logger) {
+			$this->logger($details_xml);
+		}
 		switch ($action) {
 			case 'Authorize':
 				$result = 'AuthorizeResult';
@@ -406,7 +408,8 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 		if ($this->config->get('payment_amazon_login_pay_debug') == 1) {
 			$log = new Log('amazon_login_pay.log');
 			$backtrace = debug_backtrace();
-			$log->write('Origin: ' . $backtrace[6]['class'] . '::' . $backtrace[6]['function']);
+			$class = isset($backtrace[6]['class']) ? $backtrace[6]['class'] . '::' : '';
+			$log->write('Origin: ' . $class . $backtrace[6]['function']);
 			$log->write(print_r($message, 1));
 		}
 	}

@@ -20,13 +20,13 @@
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <td class="text-left">{{ column_date_added }}</td>
-              <td class="text-left">{{ column_description }}</td>
-              <td class="text-right">{{ column_points }}</td>
+              <th class="text-left">{{ column_date_added }}</th>
+              <th class="text-left">{{ column_description }}</th>
+              <th class="text-right">{{ column_points }}</th>
             </tr>
           </thead>
           <tbody>
-          
+
           {% if rewards %}
           {% for reward in rewards %}
           <tr>
@@ -39,11 +39,11 @@
           {% endfor %}
           {% else %}
           <tr>
-            <td class="text-center" colspan="3">{{ text_empty }}</td>
+            <td class="text-center" colspan="3">{{ text_no_results }}</td>
           </tr>
           {% endif %}
             </tbody>
-          
+
         </table>
       </div>
       <div class="row">

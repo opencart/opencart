@@ -2,32 +2,30 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <button type="submit" form="form-store" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
+      <div class="float-right">
+        <button type="submit" form="form-store" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          {% for breadcrumb in breadcrumbs %}
-            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-          {% endfor %}
-        </ol>
-      </nav>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
     </div>
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     {% if success %}
-      <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+      <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     <div class="card">
-      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-store">
           <ul class="nav nav-tabs">
@@ -161,7 +159,14 @@
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-image">{{ entry_image }}</label>
-                <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ thumb }}" alt="" title="" data-placeholder="{{ placeholder }}"/></a> <input type="hidden" name="config_image" value="{{ config_image }}" id="input-image"/>
+                <div class="col-sm-10">
+                  <div class="card image">
+                    <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_image" value="{{ config_image }}" id="input-image"/>
+                    <div class="card-body">
+                      <button type="button" data-toggle="image" data-target="input-image" data-thumb="thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+                      <button type="button" data-toggle="clear" data-target="input-image" data-thumb="thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="form-group row">
@@ -182,19 +187,19 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ entry_location }}</label>
                   <div class="col-sm-10">
-                    {% for location in locations %}
-                      <div class="checkbox">
-                        <label>
+                    <div class="form-control" style="height: 150px; overflow: auto;">
+                      {% for location in locations %}
+                        <label class="form-check">
                           {% if location.location_id in config_location %}
-                            <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" checked="checked"/>
+                            <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" checked="checked" class="form-check-input"/>
                             {{ location.name }}
                           {% else %}
-                            <input type="checkbox" name="config_location[]" value="{{ location.location_id }}"/>
+                            <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" class="form-check-input"/>
                             {{ location.name }}
                           {% endif %}
                         </label>
-                      </div>
-                    {% endfor %}
+                      {% endfor %}
+                    </div>
                     <small class="form-text text-muted">{{ help_location }}</small>
                   </div>
                 </div>
@@ -257,23 +262,15 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ entry_tax }}</label>
                   <div class="col-sm-10">
-                    <label class="radio-inline">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
                       {% if config_tax %}
-                        <input type="radio" name="config_tax" value="1" checked="checked"/>
-                        {{ text_yes }}
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_tax" value="1" checked="checked"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary"><input type="radio" name="config_tax" value="0"/> {{ text_no }}</label>
                       {% else %}
-                        <input type="radio" name="config_tax" value="1"/>
-                        {{ text_yes }}
+                        <label class="btn btn-outline-secondary"><input type="radio" name="config_tax" value="1"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_tax" value="0" checked="checked"/> {{ text_no }}</label>
                       {% endif %}
-                    </label> <label class="radio-inline">
-                      {% if not config_tax %}
-                        <input type="radio" name="config_tax" value="0" checked="checked"/>
-                        {{ text_no }}
-                      {% else %}
-                        <input type="radio" name="config_tax" value="0"/>
-                        {{ text_no }}
-                      {% endif %}
-                    </label>
+                    </div>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -335,19 +332,19 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ entry_customer_group_display }}</label>
                   <div class="col-sm-10">
-                    {% for customer_group in customer_groups %}
-                      <div class="checkbox">
-                        <label>
+                    <div class="form-control" style="height: 150px; overflow: auto;">
+                      {% for customer_group in customer_groups %}
+                        <label class="form-check">
                           {% if customer_group.customer_group_id in config_customer_group_display %}
-                            <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" checked="checked"/>
+                            <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" checked="checked" class="form-check-input"/>
                             {{ customer_group.name }}
                           {% else %}
-                            <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}"/>
+                            <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" class="form-check-input"/>
                             {{ customer_group.name }}
                           {% endif %}
                         </label>
-                      </div>
-                    {% endfor %}
+                      {% endfor %}
+                    </div>
                     <small class="form-text text-muted">{{ help_customer_group_display }}</small>
                     {% if error_customer_group_display %}
                       <div class="invalid-tooltip">{{ error_customer_group_display }}</div>
@@ -357,23 +354,15 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ entry_customer_price }}</label>
                   <div class="col-sm-10">
-                    <label class="radio-inline">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
                       {% if config_customer_price %}
-                        <input type="radio" name="config_customer_price" value="1" checked="checked"/>
-                        {{ text_yes }}
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_customer_price" value="1" checked="checked"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary"><input type="radio" name="config_customer_price" value="0"/> {{ text_no }}</label>
                       {% else %}
-                        <input type="radio" name="config_customer_price" value="1"/>
-                        {{ text_yes }}
+                        <label class="btn btn-outline-secondary"><input type="radio" name="config_customer_price" value="1"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_customer_price" value="0" checked="checked"/> {{ text_no }}</label>
                       {% endif %}
-                    </label> <label class="radio-inline">
-                      {% if not config_customer_price %}
-                        <input type="radio" name="config_customer_price" value="0" checked="checked"/>
-                        {{ text_no }}
-                      {% else %}
-                        <input type="radio" name="config_customer_price" value="0"/>
-                        {{ text_no }}
-                      {% endif %}
-                    </label>
+                    </div>
                     <small class="form-text text-muted">{{ help_customer_price }}</small>
                   </div>
                 </div>
@@ -399,45 +388,29 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ entry_cart_weight }}</label>
                   <div class="col-sm-10">
-                    <label class="radio-inline">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
                       {% if config_cart_weight %}
-                        <input type="radio" name="config_cart_weight" value="1" checked="checked"/>
-                        {{ text_yes }}
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_cart_weight" value="1" checked="checked"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary"><input type="radio" name="config_cart_weight" value="0"/> {{ text_no }}</label>
                       {% else %}
-                        <input type="radio" name="config_cart_weight" value="1"/>
-                        {{ text_yes }}
+                        <label class="btn btn-outline-secondary"><input type="radio" name="config_cart_weight" value="1"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_cart_weight" value="0" checked="checked"/> {{ text_no }}</label>
                       {% endif %}
-                    </label> <label class="radio-inline">
-                      {% if not config_cart_weight %}
-                        <input type="radio" name="config_cart_weight" value="0" checked="checked"/>
-                        {{ text_no }}
-                      {% else %}
-                        <input type="radio" name="config_cart_weight" value="0"/>
-                        {{ text_no }}
-                      {% endif %}
-                    </label>
+                    </div>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ entry_checkout_guest }}</label>
                   <div class="col-sm-10">
-                    <label class="radio-inline">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
                       {% if config_checkout_guest %}
-                        <input type="radio" name="config_checkout_guest" value="1" checked="checked"/>
-                        {{ text_yes }}
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_checkout_guest" value="1" checked="checked"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary"><input type="radio" name="config_checkout_guest" value="0"/> {{ text_no }}</label>
                       {% else %}
-                        <input type="radio" name="config_checkout_guest" value="1"/>
-                        {{ text_yes }}
+                        <label class="btn btn-outline-secondary"><input type="radio" name="config_checkout_guest" value="1"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_checkout_guest" value="0" checked="checked"/> {{ text_no }}</label>
                       {% endif %}
-                    </label> <label class="radio-inline">
-                      {% if not config_checkout_guest %}
-                        <input type="radio" name="config_checkout_guest" value="0" checked="checked"/>
-                        {{ text_no }}
-                      {% else %}
-                        <input type="radio" name="config_checkout_guest" value="0"/>
-                        {{ text_no }}
-                      {% endif %}
-                    </label>
+                    </div>
                     <small class="form-text text-muted">{{ help_checkout_guest }}</small>
                   </div>
                 </div>
@@ -478,46 +451,30 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ entry_stock_display }}</label>
                   <div class="col-sm-10">
-                    <label class="radio-inline">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
                       {% if config_stock_display %}
-                        <input type="radio" name="config_stock_display" value="1" checked="checked"/>
-                        {{ text_yes }}
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_stock_display" value="1" checked="checked"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary"><input type="radio" name="config_stock_display" value="0"/> {{ text_no }}</label>
                       {% else %}
-                        <input type="radio" name="config_stock_display" value="1"/>
-                        {{ text_yes }}
+                        <label class="btn btn-outline-secondary"><input type="radio" name="config_stock_display" value="1"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_stock_display" value="0" checked="checked"/> {{ text_no }}</label>
                       {% endif %}
-                    </label> <label class="radio-inline">
-                      {% if not config_stock_display %}
-                        <input type="radio" name="config_stock_display" value="0" checked="checked"/>
-                        {{ text_no }}
-                      {% else %}
-                        <input type="radio" name="config_stock_display" value="0"/>
-                        {{ text_no }}
-                      {% endif %}
-                    </label>
+                    </div>
                     <small class="form-text text-muted">{{ help_stock_display }}</small>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ entry_stock_checkout }}</label>
                   <div class="col-sm-10">
-                    <label class="radio-inline">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
                       {% if config_stock_checkout %}
-                        <input type="radio" name="config_stock_checkout" value="1" checked="checked"/>
-                        {{ text_yes }}
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_stock_checkout" value="1" checked="checked"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary"><input type="radio" name="config_stock_checkout" value="0"/> {{ text_no }}</label>
                       {% else %}
-                        <input type="radio" name="config_stock_checkout" value="1"/>
-                        {{ text_yes }}
+                        <label class="btn btn-outline-secondary"><input type="radio" name="config_stock_checkout" value="1"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_stock_checkout" value="0" checked="checked"/> {{ text_no }}</label>
                       {% endif %}
-                    </label> <label class="radio-inline">
-                      {% if not config_stock_checkout %}
-                        <input type="radio" name="config_stock_checkout" value="0" checked="checked"/>
-                        {{ text_no }}
-                      {% else %}
-                        <input type="radio" name="config_stock_checkout" value="0"/>
-                        {{ text_no }}
-                      {% endif %}
-                    </label>
+                    </div>
                     <small class="form-text text-muted">{{ help_stock_checkout }}</small>
                   </div>
                 </div>
@@ -526,12 +483,26 @@
             <div class="tab-pane" id="tab-image">
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-logo">{{ entry_logo }}</label>
-                <div class="col-sm-10"><a href="" id="thumb-logo" data-toggle="image" class="img-thumbnail"><img src="{{ logo }}" alt="" title="" data-placeholder="{{ placeholder }}"/></a> <input type="hidden" name="config_logo" value="{{ config_logo }}" id="input-logo"/>
+                <div class="col-sm-10">
+                  <div class="card image">
+                    <img src="{{ logo }}" alt="" title="" id="thumb-logo" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_logo" value="{{ config_logo }}" id="input-logo"/>
+                    <div class="card-body">
+                      <button type="button" data-toggle="image" data-target="input-logo" data-thumb="thumb-logo" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+                      <button type="button" data-toggle="clear" data-target="input-logo" data-thumb="thumb-logo" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-icon">{{ entry_icon }}</label>
-                <div class="col-sm-10"><a href="" id="thumb-icon" data-toggle="image" class="img-thumbnail"><img src="{{ icon }}" alt="" title="" data-placeholder="{{ placeholder }}"/></a> <input type="hidden" name="config_icon" value="{{ config_icon }}" id="input-icon"/>
+                <div class="col-sm-10">
+                  <div class="card image">
+                    <img src="{{ icon }}" alt="" title="" id="thumb-icon" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_icon" value="{{ config_icon }}" id="input-icon"/>
+                    <div class="card-body">
+                      <button type="button" data-toggle="image" data-target="input-icon" data-thumb="thumb-icon" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+                      <button type="button" data-toggle="clear" data-target="input-icon" data-thumb="thumb-icon" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+                    </div>
+                  </div>
                   <small class="form-text text-muted">{{ help_icon }}</small>
                 </div>
               </div>

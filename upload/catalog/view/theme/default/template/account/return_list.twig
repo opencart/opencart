@@ -29,7 +29,7 @@
             </tr>
           </thead>
           <tbody>
-          
+
           {% for return in returns %}
           <tr>
             <td class="text-right">#{{ return.return_id }}</td>
@@ -41,7 +41,7 @@
           </tr>
           {% endfor %}
             </tbody>
-          
+
         </table>
       </div>
       <div class="row">
@@ -49,7 +49,11 @@
         <div class="col-sm-6 text-right">{{ results }}</div>
       </div>
       {% else %}
-      <p>{{ text_empty }}</p>
+      <div class="card">
+        <div class="card-body">
+          <p class="text-center mb-0">{{ text_no_results }}</p>
+        </div>
+      </div>
       {% endif %}
       <div class="buttons clearfix">
         <div class="float-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
@@ -57,4 +61,4 @@
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>
-{{ footer }} 
+{{ footer }}

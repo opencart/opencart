@@ -1,7 +1,6 @@
 <?php
 // Site
 $_['site_url']             = '';
-$_['site_ssl']             = false;
 
 // Url
 $_['url_autostart']        = true;
@@ -48,6 +47,7 @@ $_['session_name']         = 'OCSESSID';
 $_['template_engine']      = 'twig';
 $_['template_directory']   = '';
 $_['template_cache']       = false;
+$_['template_extension']   = '.twig';
 
 // Error
 $_['error_display']        = true;

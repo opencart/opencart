@@ -3,30 +3,28 @@
   <div class="page-header">
     <div class="container-fluid">
       <h1>{{ heading_title }}</h1>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          {% for breadcrumb in breadcrumbs %}
-            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-          {% endfor %}
-        </ol>
-      </nav>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
     </div>
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <div class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     {% if success %}
-      <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+      <div class="alert alert-success"><i class="fas fa-check-circle"></i> {{ success }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
-    <div class="panel-group" id="collapse">
+    <div id="collapse">
       <div class="card">
-        <div class="card-header"><a href="#collapse-version" data-toggle="collapse" data-parent="#collapse"><i class="fa fa-refresh"></i> {{ text_version }}</a></div>
-        <div id="collapse-version" class="card-collapse collapse in">
+        <div class="card-header" data-toggle="collapse" data-target="#collapse-version"><i class="fas fa-sync"></i> {{ text_version }}</div>
+        <div id="collapse-version" data-parent="#collapse" class="collapse show">
           <div class="card-body">
             <fieldset>
               {% if error_warning %}
@@ -36,7 +34,7 @@
               {% endif %}
             </fieldset>
             <div class="alert alert-info">
-              <p><strong><i class="fa fa-exclamation-circle "></i> Tips: Before upgrading it's very important to</strong></p>
+              <p><strong><i class="fas fa-exclamation-circle"></i> Tips: Before upgrading it's very important to</strong></p>
               <ol>
                 <li>Make a complete backup of your web site!
                   <br/>
@@ -53,13 +51,13 @@
               <textarea wrap="off" rows="10" readonly class="form-control">{{ log }}</textarea>
             </fieldset>
             <br/>
-            <div class="text-right"><a href="#collapse-compatible" data-toggle="collapse" data-parent="#collapse" class="btn btn-primary"><i class="fa fa-arrow-right"></i> {{ button_continue }}</a></div>
+            <div class="text-right"><a href="#collapse-compatible" data-toggle="collapse" data-parent="#collapse" class="btn btn-primary"><i class="fas fa-arrow-right"></i> {{ button_continue }}</a></div>
           </div>
         </div>
       </div>
       <div class="card">
-        <div class="card-header"><a href="#collapse-compatible" data-toggle="collapse" data-parent="#collapse"><i class="fa fa-random"></i> {{ text_compatibility }}</a></div>
-        <div id="collapse-compatible" class="card-collapse collapse">
+        <div class="card-header collapsed" data-toggle="collapse" data-target="#collapse-compatible"><i class="fas fa-random"></i> {{ text_compatibility }}</div>
+        <div id="collapse-compatible" data-parent="#collapse" class="collapse">
           <div class="card-body">
             <div class="alert alert-warning">
               Before upgrading, it's very important to check the extensions installed are compatible with the latest version!
@@ -78,8 +76,8 @@
                   {% for extension in extensions %}
                     <tr>
                       <td class="text-left"><a href="{{ extension.link }}">{{ extension.name }}</a></td>
-                      <td class="text-center">{% if extension.compatible %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
-                      <td class="text-center">{% if extension.available %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
+                      <td class="text-center">{% if extension.compatible %}<i class="fas fa-check text-success"></i>{% else %}<i class="fas fa-times text-danger"></i>{% endif %}</td>
+                      <td class="text-center">{% if extension.available %}<i class="fas fa-check text-success"></i>{% else %}<i class="fas fa-times text-danger"></i>{% endif %}</td>
                     </tr>
                   {% endfor %}
                 {% else %}
@@ -90,13 +88,13 @@
               </tbody>
             </table>
             <br/>
-            <div class="text-right"><a href="#collapse-upgrade" data-toggle="collapse" data-parent="#collapse" class="btn btn-primary"><i class="fa fa-arrow-right"></i> {{ button_continue }}</a></div>
+            <div class="text-right"><a href="#collapse-upgrade" data-toggle="collapse" data-parent="#collapse" class="btn btn-primary"><i class="fas fa-arrow-right"></i> {{ button_continue }}</a></div>
           </div>
         </div>
       </div>
       <div class="card">
-        <div class="card-header"><a href="#collapse-upgrade" data-toggle="collapse" data-parent="#collapse"><i class="fa fa-check"></i> {{ text_upgrade }}</a></div>
-        <div id="collapse-upgrade" class="panel-collapse collapse">
+        <div class="card-header collapsed" data-toggle="collapse" data-target="#collapse-upgrade"><i class="fas fa-check"></i> {{ text_upgrade }}</div>
+        <div id="collapse-upgrade" data-parent="#collapse" class="collapse">
           <div class="card-body">
             <fieldset>
               <legend>{{ text_progress }}</legend>
@@ -109,12 +107,12 @@
                   <div id="progress-text"></div>
                 </div>
               </div>
-              <div class="col-sm-10 col-sm-offset-2">
+              <div class="col-sm-10 offset-sm-2">
                 <div class="form-group row">
                   {% if upgrade %}
-                    <button type="button" id="button-upgrade" data-loading-text="{{ text_loading }}" class="btn btn-success"><i class="fa fa-play"></i> {{ button_start }}</button>
+                    <button type="button" id="button-upgrade" data-loading-text="{{ text_loading }}" class="btn btn-success"><i class="fas fa-play"></i> {{ button_start }}</button>
                   {% else %}
-                    <button type="button" id="button-upgrade" data-loading-text="{{ text_loading }}" class="btn btn-success" disabled="disabled"><i class="fa fa-play"></i> {{ button_start }}</button>
+                    <button type="button" id="button-upgrade" data-loading-text="{{ text_loading }}" class="btn btn-success" disabled="disabled"><i class="fas fa-play"></i> {{ button_start }}</button>
                   {% endif %}
                 </div>
               </div>

@@ -1,7 +1,6 @@
 <?php
 // Site
 $_['site_url']          = HTTP_SERVER;
-$_['site_ssl']          = HTTPS_SERVER;
 
 // Database
 $_['db_autostart']      = true;
@@ -42,9 +41,6 @@ $_['action_event'] = array(
 	'view/*/before' => array(
 		999  => 'event/language',
 		1000 => 'event/theme'
-	),
-	'view/*/before' => array(
-		'event/language'
 	),
 	//'model/*/after' => array(
 	//	'event/debug/before'

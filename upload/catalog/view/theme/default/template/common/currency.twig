@@ -11,16 +11,19 @@
         {% endif %}
         {% endfor %}
         <span class="hidden-sm hidden-md">{{ text_currency }}</span>
+        <i class="fa fa-caret-down fa-fw"></i>
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdown-currency">
         {% for currency in currencies %}
         {% if currency.symbol_left %}
         <li>
-          <button class="currency-select btn btn-sm btn-link btn-block" type="button" name="{{ currency.code }}">{{ currency.symbol_left }} {{ currency.title }}</button>
+          <a class="currency-select btn btn-sm btn-link btn-block" name="{{ currency.code }}">
+          {{ currency.symbol_left }} {{ currency.title }}</a>
         </li>
         {% else %}
         <li>
-          <button class="currency-select btn btn-link btn-block" type="button" name="{{ currency.code }}">{{ currency.symbol_right }} {{ currency.title }}</button>
+          <a class="currency-select btn btn-link btn-block" name="{{ currency.code }}">
+          {{ currency.symbol_right }} {{ currency.title }}</a>
         </li>
         {% endif %}
         {% endfor %}

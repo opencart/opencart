@@ -3,22 +3,20 @@
   <div class="page-header">
     <div class="container-fluid">
       <h1>{{ heading_title }}</h1>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          {% for breadcrumb in breadcrumbs %}
-            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-          {% endfor %}
-        </ol>
-      </nav>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
     </div>
   </div>
   <div class="container-fluid">
     <div class="card">
-      <div class="card-header"><i class="fa fa-list"></i> {{ text_edit }}</div>
+      <div class="card-header"><i class="fas fa-list"></i> {{ text_edit }}</div>
       <div class="card-body">
         <div class="row">
           <div class="col-lg-3 col-md-3 col-sm-12">
-            <div class="list-group">
+            <div class="list-group mb-3">
               <div class="list-group-item">
                 <h4 class="list-group-item-heading">{{ text_store }}</h4>
               </div>
@@ -39,7 +37,7 @@
             </div>
           </div>
           <div class="col-lg-9 col-md-9 col-sm-12">
-            <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_twig }}</div>
+            <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_twig }}</div>
             <div id="recent">
               <fieldset>
                 <legend>{{ text_history }}</legend>
@@ -77,13 +75,13 @@ $('select[name="store_id"]').on('change', function(e) {
 
 			if (json['directory']) {
 				for (i = 0; i < json['directory'].length; i++) {
-					html += '<a href="' + json['directory'][i]['path'] + '" class="list-group-item directory">' + json['directory'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+					html += '<a href="' + json['directory'][i]['path'] + '" class="list-group-item list-group-item-action directory">' + json['directory'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-right"></i></a>';
 				}
 			}
 
 			if (json['file']) {
 				for (i = 0; i < json['file'].length; i++) {
-					html += '<a href="' + json['file'][i]['path'] + '" class="list-group-item file">' + json['file'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+					html += '<a href="' + json['file'][i]['path'] + '" class="list-group-item list-group-item-action file">' + json['file'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-right"></i></a>';
 				}
 			}
 
@@ -107,10 +105,10 @@ $('#path').on('click', 'a.directory', function(e) {
 		dataType: 'json',
 		beforeSend: function() {
 			$(element).find('i').removeClass('fa-arrow-right');
-			$(element).find('i').addClass('fa-circle-o-notch fa-spin');
+			$(element).find('i').addClass('fa-circle-notch fa-spin');
 		},
 		complete: function() {
-			$(element).find('i').removeClass('fa-circle-o-notch fa-spin');
+			$(element).find('i').removeClass('fa-circle-notch fa-spin');
 			$(element).find('i').addClass('fa-arrow-right');
 		},
 		success: function(json) {
@@ -118,18 +116,18 @@ $('#path').on('click', 'a.directory', function(e) {
 
 			if (json['directory']) {
 				for (i = 0; i < json['directory'].length; i++) {
-					html += '<a href="' + json['directory'][i]['path'] + '" class="list-group-item directory">' + json['directory'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+					html += '<a href="' + json['directory'][i]['path'] + '" class="list-group-item list-group-item-action directory">' + json['directory'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-right"></i></a>';
 				}
 			}
 
 			if (json['file']) {
 				for (i = 0; i < json['file'].length; i++) {
-					html += '<a href="' + json['file'][i]['path'] + '" class="list-group-item file">' + json['file'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+					html += '<a href="' + json['file'][i]['path'] + '" class="list-group-item list-group-item-action file">' + json['file'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-right"></i></a>';
 				}
 			}
 
 			if (json['back']) {
-				html += '<a href="' + json['back']['path'] + '" class="list-group-item directory">' + json['back']['name'] + ' <i class="fa fa-arrow-left fa-fw pull-right"></i></a>';
+				html += '<a href="' + json['back']['path'] + '" class="list-group-item list-group-item-action directory">' + json['back']['name'] + ' <i class="fas fa-arrow-left fa-fw float-right"></i></a>';
 			}
 
 			$('#path').html(html);
@@ -160,10 +158,10 @@ $('#path').on('click', 'a.file', function(e) {
 			dataType: 'json',
 			beforeSend: function() {
 				$(element).find('i').removeClass('fa-arrow-right');
-				$(element).find('i').addClass('fa-circle-o-notch fa-spin');
+				$(element).find('i').addClass('fa-circle-notch fa-spin');
 			},
 			complete: function() {
-				$(element).find('i').removeClass('fa-circle-o-notch fa-spin');
+				$(element).find('i').removeClass('fa-circle-notch fa-spin');
 				$(element).find('i').addClass('fa-arrow-right');
 			},
 			success: function(json) {
@@ -171,16 +169,16 @@ $('#path').on('click', 'a.file', function(e) {
 					$('#code').show();
 					$('#recent').hide();
 
-					$('.nav-tabs').append('<li><a href="#tab-' + tab_id + '" data-toggle="tab">' + $(element).attr('href').split('/').join(' / ') + '&nbsp;&nbsp;<i class="fa fa-minus-circle"></i></a></li>');
+					$('.nav-tabs').append('<li class="nav-item"><a href="#tab-' + tab_id + '" data-toggle="tab" class="nav-link">' + $(element).attr('href').split('/').join(' / ') + '&nbsp;&nbsp;<i class="fas fa-minus-circle"></i></a></li>');
 
 					html = '<div class="tab-pane" id="tab-' + tab_id + '">';
-					html += '  <textarea name="code" rows="10"></textarea>';
+					html += '  <textarea name="code" rows="10" class="form-control"></textarea>';
 					html += '  <input type="hidden" name="store_id" value="' + $('select[name="store_id"]').val() + '" />';
 					html += '  <input type="hidden" name="path" value="' + $(element).attr('href') + '" />';
 					html += '  <br />';
-					html += '  <div class="pull-right">';
-					html += '    <button type="button" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-floppy-o"></i> {{ button_save }}</button>';
-					html += '    <button data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-recycle"></i> {{ button_reset }}</button>';
+					html += '  <div class="float-right">';
+					html += '    <button type="button" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>';
+					html += '    <button data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-recycle"></i> {{ button_reset }}</button>';
 					html += '  </div>';
 					html += '</div>';
 
@@ -212,19 +210,20 @@ $('#path').on('click', 'a.file', function(e) {
 $('.nav-tabs').on('click', 'i.fa-minus-circle', function(e) {
 	e.preventDefault();
 
-	if ($(this).parent().parent().is('li.active')) {
-		index = $(this).parent().parent().index();
+	var active = $(this).parent().parent().parent().find('a.active');
 
-		if (index == 0) {
-			$(this).parent().parent().parent().find('li').eq(index + 1).find('a').tab('show');
-		} else {
-			$(this).parent().parent().parent().find('li').eq(index - 1).find('a').tab('show');
-		}
-	}
+	// For some strange reason in bs4 it wants me to show the tab before removing it.
+	$(this).parent().trigger('click');
+
+	$($(this).parent().attr('href')).remove();
 
 	$(this).parent().parent().remove();
 
-	$($(this).parent().attr('href')).remove();
+	if ($(active).has()) {
+		$(active).parent().trigger('click');
+	} else {
+		$('.nav-tabs li:last-child a').trigger('click');
+	}
 
 	if (!$('#code > ul > li').length) {
 		$('#code').hide();
@@ -252,11 +251,11 @@ $('.tab-content').on('click', '.btn-primary', function(e) {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('#history').load('index.php?route=design/theme/history&user_token={{ user_token }}');
 			}
@@ -284,11 +283,11 @@ $('.tab-content').on('click', '.btn-danger', function(e) {
 				$('.alert-dismissible').remove();
 
 				if (json['error']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				if (json['success']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				var codemirror = $('.tab-content .active .CodeMirror')[0].CodeMirror;
@@ -302,7 +301,7 @@ $('.tab-content').on('click', '.btn-danger', function(e) {
 	}
 });
 
-$('#history').delegate('.pagination a', 'click', function(e) {
+$('#history').on('click', '.pagination a', function(e) {
 	e.preventDefault();
 
 	$('#history').load(this.href);
@@ -333,16 +332,16 @@ $('#history').on('click', '.btn-primary', function(e) {
 					$('#code').show();
 					$('#recent').hide();
 
-					$('.nav-tabs').append('<li><a href="#tab-' + tab_id + '" data-toggle="tab">' + $(element).parent().parent().find('input[name="path"]').val().split('/').join(' / ') + '&nbsp;&nbsp;<i class="fa fa-minus-circle"></i></a></li>');
+					$('.nav-tabs').append('<li class="nav-item"><a href="#tab-' + tab_id + '" data-toggle="tab" class="nav-link">' + $(element).parent().parent().find('input[name="path"]').val().split('/').join(' / ') + '&nbsp;&nbsp;<i class="fas fa-minus-circle"></i></a></li>');
 
 					html = '<div class="tab-pane" id="tab-' + tab_id + '">';
 					html += '  <textarea name="code" rows="10"></textarea>';
 					html += '  <input type="hidden" name="store_id" value="' + $(element).parent().parent().find('input[name="store_id"]').val() + '" />';
 					html += '  <input type="hidden" name="path" value="' + $(element).parent().parent().find('input[name="path"]').val() + '.twig" />';
 					html += '  <br />';
-					html += '  <div class="pull-right">';
-					html += '    <button type="button" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-floppy-o"></i> {{ button_save }}</button>';
-					html += '    <button data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-recycle"></i> {{ button_reset }}</button>';
+					html += '  <div class="float-right">';
+					html += '    <button type="button" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>';
+					html += '    <button data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-recycle"></i> {{ button_reset }}</button>';
 					html += '  </div>';
 					html += '</div>';
 
@@ -390,11 +389,11 @@ $('#history').on('click', '.btn-danger', function(e) {
 				$('.alert-dismissible').remove();
 
 				if (json['error']) {
-					$('#history').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#history').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				if (json['success']) {
-					$('#history').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#history').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 					$('#history').load('index.php?route=design/theme/history&user_token={{ user_token }}');
 				}

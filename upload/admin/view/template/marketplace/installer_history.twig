@@ -8,22 +8,20 @@
       </tr>
     </thead>
     <tbody>
-    
-    {% if histories %}
-    {% for history in histories %}
-    <tr>
-      <td>{{ history.filename }}</td>
-      <td>{{ history.date_added }}</td>
-      <td class="text-right"><button type="button" value="{{ history.extension_install_id }}" data-loading="{{ text_loading }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa fa-trash-o"></i></button></td>
-    </tr>
-    {% endfor %}
-    {% else %}
-    <tr>
-      <td colspan="3" class="text-center">{{ text_no_results }}</td>
-    </tr>
-    {% endif %}
+      {% if histories %}
+        {% for history in histories %}
+          <tr>
+            <td>{{ history.filename }}</td>
+            <td>{{ history.date_added }}</td>
+            <td class="text-right"><button type="button" value="{{ history.extension_install_id }}" data-loading="{{ text_loading }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="3" class="text-center">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
     </tbody>
-    
   </table>
 </div>
 <div class="row">

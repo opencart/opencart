@@ -127,7 +127,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 					$this->response->addHeader('Content-Type: application/json');
 					$this->response->setOutput(json_encode($json));
 					$this->response->output();
-					die();
+-					die();
 				}
 
 				// Cardholder Not Enrolled. Shift in liability. ECI = 6
@@ -152,7 +152,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 						$this->response->addHeader('Content-Type: application/json');
 						$this->response->setOutput(json_encode($json));
 						$this->response->output();
-						die();
+-						die();
 					} else {
 						$eci_ref = 2;
 						$xid = '';
@@ -174,8 +174,6 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 
 						$this->response->addHeader('Content-Type: application/json');
 						$this->response->setOutput(json_encode($json));
-						$this->response->output();
-						die();
 					} else {
 						$eci_ref = 3;
 						if ($this->request->post['cc_type'] == 'mc') {

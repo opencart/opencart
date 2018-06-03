@@ -2,27 +2,25 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <button type="submit" form="form-coupon" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
+      <div class="float-right">
+        <button type="submit" form="form-coupon" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          {% for breadcrumb in breadcrumbs %}
-            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-          {% endfor %}
-        </ol>
-      </nav>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
     </div>
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     <div class="card">
-      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-coupon">
           <ul class="nav nav-tabs">
@@ -84,46 +82,38 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">{{ entry_logged }}</label>
                 <div class="col-sm-10">
-                  <label class="radio-inline">{% if logged %}
-                      <input type="radio" name="logged" value="1" checked="checked"/>
-                      {{ text_yes }}
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    {% if logged %}
+                      <label class="btn btn-outline-secondary active"><input type="radio" name="logged" value="1" checked="checked"/> {{ text_yes }}</label>
+                      <label class="btn btn-outline-secondary"><input type="radio" name="logged" value="0"/> {{ text_no }}</label>
                     {% else %}
-                      <input type="radio" name="logged" value="1"/>
-                      {{ text_yes }}
-                    {% endif %} </label> <label class="radio-inline"> {% if not logged %}
-                      <input type="radio" name="logged" value="0" checked="checked"/>
-                      {{ text_no }}
-                    {% else %}
-                      <input type="radio" name="logged" value="0"/>
-                      {{ text_no }}
-                    {% endif %}</label>
+                      <label class="btn btn-outline-secondary"><input type="radio" name="logged" value="1"/> {{ text_yes }}</label>
+                      <label class="btn btn-outline-secondary active"><input type="radio" name="logged" value="0" checked="checked"/> {{ text_no }}</label>
+                    {% endif %}
+                  </div>
                   <small class="form-text text-muted">{{ help_logged }}</small>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">{{ entry_shipping }}</label>
                 <div class="col-sm-10">
-                  <label class="radio-inline">{% if shipping %}
-                      <input type="radio" name="shipping" value="1" checked="checked"/>
-                      {{ text_yes }}
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    {% if shipping %}
+                      <label class="btn btn-outline-secondary active"><input type="radio" name="shipping" value="1" checked="checked"/> {{ text_yes }}</label>
+                      <label class="btn btn-outline-secondary"><input type="radio" name="shipping" value="0"/> {{ text_no }}</label>
                     {% else %}
-                      <input type="radio" name="shipping" value="1"/>
-                      {{ text_yes }}
-                    {% endif %}</label> <label class="radio-inline"> {% if not shipping %}
-                      <input type="radio" name="shipping" value="0" checked="checked"/>
-                      {{ text_no }}
-                    {% else %}
-                      <input type="radio" name="shipping" value="0"/>
-                      {{ text_no }}
-                    {% endif %}</label>
+                      <label class="btn btn-outline-secondary"><input type="radio" name="shipping" value="1"/> {{ text_yes }}</label>
+                      <label class="btn btn-outline-secondary active"><input type="radio" name="shipping" value="0" checked="checked"/> {{ text_no }}</label>
+                    {% endif %}
+                  </div>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-product">{{ entry_product }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
-                  <div id="coupon-product" class="well well-sm" style="height: 150px; overflow: auto;"> {% for coupon_product in coupon_product %}
-                      <div id="coupon-product{{ coupon_product.product_id }}"><i class="fa fa-minus-circle"></i> {{ coupon_product.name }}
+                  <div id="coupon-product" class="form-control" style="height: 150px; overflow: auto;"> {% for coupon_product in coupon_product %}
+                      <div id="coupon-product{{ coupon_product.product_id }}"><i class="fas fa-minus-circle"></i> {{ coupon_product.name }}
                         <input type="hidden" name="coupon_product[]" value="{{ coupon_product.product_id }}"/>
                       </div>
                     {% endfor %}</div>
@@ -134,8 +124,8 @@
                 <label class="col-sm-2 col-form-label" for="input-category">{{ entry_category }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" class="form-control"/>
-                  <div id="coupon-category" class="well well-sm" style="height: 150px; overflow: auto;"> {% for coupon_category in coupon_category %}
-                      <div id="coupon-category{{ coupon_category.category_id }}"><i class="fa fa-minus-circle"></i> {{ coupon_category.name }}
+                  <div id="coupon-category" class="form-control" style="height: 150px; overflow: auto;"> {% for coupon_category in coupon_category %}
+                      <div id="coupon-category{{ coupon_category.category_id }}"><i class="fas fa-minus-circle"></i> {{ coupon_category.name }}
                         <input type="hidden" name="coupon_category[]" value="{{ coupon_category.category_id }}"/>
                       </div>
                     {% endfor %}</div>
@@ -146,9 +136,9 @@
                 <label class="col-sm-2 col-form-label" for="input-date-start">{{ entry_date_start }}</label>
                 <div class="col-sm-3">
                   <div class="input-group date">
-                    <input type="text" name="date_start" value="{{ date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-start" class="form-control"/>
-                    <div class="input-group-btn">
-                      <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                    <input type="text" name="date_start" value="{{ date_start }}" placeholder="{{ entry_date_start }}" id="input-date-start" class="form-control"/>
+                    <div class="input-group-append">
+                      <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                     </div>
                   </div>
                 </div>
@@ -157,9 +147,9 @@
                 <label class="col-sm-2 col-form-label" for="input-date-end">{{ entry_date_end }}</label>
                 <div class="col-sm-3">
                   <div class="input-group date">
-                    <input type="text" name="date_end" value="{{ date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-end" class="form-control"/>
-                    <div class="input-group-btn">
-                      <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                    <input type="text" name="date_end" value="{{ date_end }}" placeholder="{{ entry_date_end }}" id="input-date-end" class="form-control"/>
+                    <div class="input-group-append">
+                      <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                     </div>
                   </div>
                 </div>
@@ -227,11 +217,11 @@ $('input[name=\'product\']').autocomplete({
 
 		$('#coupon-product' + item['value']).remove();
 
-		$('#coupon-product').append('<div id="coupon-product' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="coupon_product[]" value="' + item['value'] + '" /></div>');
+		$('#coupon-product').append('<div id="coupon-product' + item['value'] + '"><i class="fas fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="coupon_product[]" value="' + item['value'] + '" /></div>');
 	}
 });
 
-$('#coupon-product').delegate('.fa-minus-circle', 'click', function() {
+$('#coupon-product').on('click', '.fa-minus-circle', function() {
 	$(this).parent().remove();
 });
 
@@ -256,17 +246,17 @@ $('input[name=\'category\']').autocomplete({
 
 		$('#coupon-category' + item['value']).remove();
 
-		$('#coupon-category').append('<div id="coupon-category' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="coupon_category[]" value="' + item['value'] + '" /></div>');
+		$('#coupon-category').append('<div id="coupon-category' + item['value'] + '"><i class="fas fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="coupon_category[]" value="' + item['value'] + '" /></div>');
 	}
 });
 
-$('#coupon-category').delegate('.fa-minus-circle', 'click', function() {
+$('#coupon-category').on('click', '.fa-minus-circle', function() {
 	$(this).parent().remove();
 });
 //--></script>
 {% if coupon_id %}
   <script type="text/javascript"><!--
-  $('#history').delegate('.pagination a', 'click', function(e) {
+  $('#history').on('click', '.pagination a', function(e) {
 	  e.preventDefault();
 
 	  $('#history').load(this.href);
@@ -276,6 +266,10 @@ $('#coupon-category').delegate('.fa-minus-circle', 'click', function() {
   //--></script>
 {% endif %}
 <script type="text/javascript"><!--
-$('.date').datetimepicker();
+$('.date').datetimepicker({
+	'format': 'YYYY-MM-DD',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
+});
 //--></script>
 {{ footer }}

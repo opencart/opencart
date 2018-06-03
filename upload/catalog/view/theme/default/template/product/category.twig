@@ -145,9 +145,11 @@
                         {% if product.tax %} <span class="price-tax">{{ text_tax }} {{ product.tax }}</span> {% endif %} </p>
                     {% endif %}
                     {% if product.rating %}
-                      <div class="rating"> {% for i in 1..5 %}
+                      <div class="rating">
+                        {% for i in 1..5 %}
                           {% if product.rating < i %} <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>{% endif %}
-                        {% endfor %} </div>
+                        {% endfor %}
+                      </div>
                     {% endif %}
                   </div>
                   <div class="button-group">

@@ -2,19 +2,19 @@
 <div class="container">{{ content_top }}
   <div style="text-align:center;">
     <h3>{{ heading_address }}</h3>
-    <div style="margin: 0 auto; width: 400px; height: 228px;" id="addressBookWidgetDiv"> </div>
+    <div style="margin: 0 auto; width: 400px; height: 228px;" id="addressBookWidgetDiv"></div>
     <div style="margin: 5px auto 0; width: 180px;">
       <div class="shipping-methods amazon-payments-box"></div>
     </div>
   </div>
   <div style="clear: both;"></div>
   <div class="buttons" style="max-width: 400px; margin-left: auto; margin-right: auto;">
-    <div class="pull-left"> <a href="{{ history }}" class="btn btn-primary">{{ text_cart }}</a> </div>
-    <div class="pull-right">
-      <input class="btn btn-primary" id="continue-button" type="submit" value="{{ text_continue }}" />
+    <div class="float-left"><a href="{{ history }}" class="btn btn-primary">{{ text_cart }}</a></div>
+    <div class="float-right">
+      <input class="btn btn-primary" id="continue-button" type="submit" value="{{ text_continue }}"/>
     </div>
   </div>
-  <input type="hidden" name="addressSelected" value="0" />
+  <input type="hidden" name="addressSelected" value="0"/>
   {{ content_bottom }} </div>
 <script type="text/javascript"><!--
 $(document).ready(function() {
@@ -87,14 +87,15 @@ $(document).ready(function() {
 			}, 'json');
 		},
 		design: {
-			designMode: 'responsive'},
+			designMode: 'responsive'
+		},
 		onError: function(error) {
-			{% if payment_amazon_login_pay_test %}
-                console.log("Amazon Login Error (" + error.getErrorCode() + "): " + error.getErrorMessage());
-            {% endif %}
+          {% if payment_amazon_login_pay_test %}
+			console.log("Amazon Login Error (" + error.getErrorCode() + "): " + error.getErrorMessage());
+          {% endif %}
 		}
 	}).bind("addressBookWidgetDiv");
 
 });
-//--></script> 
+//--></script>
 {{ footer }} 

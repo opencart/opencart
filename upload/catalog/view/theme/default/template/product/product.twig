@@ -185,7 +185,8 @@
                 {% if option.type == 'radio' %}
                   <div class="form-group{% if option.required %} required {% endif %}">
                     <label class="col-form-label">{{ option.name }}</label>
-                    <div id="input-option{{ option.product_option_id }}"> {% for option_value in option.product_option_value %}
+                    <div id="input-option{{ option.product_option_id }}">
+                      {% for option_value in option.product_option_value %}
                         <div class="form-check">
                           <label><input type="radio" name="option[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" class="form-check-input"/>
                             {% if option_value.image %}<img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
@@ -195,7 +196,8 @@
                             {% endif %}
                           </label>
                         </div>
-                      {% endfor %} </div>
+                      {% endfor %}
+                    </div>
                   </div>
                 {% endif %}
                 {% if option.type == 'checkbox' %}
@@ -320,16 +322,25 @@
                   <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
                   <p>{{ product.description }}</p>
                   {% if product.rating %}
-                    <div class="rating"> {% for j in 1..5 %}
+                    <div class="rating">
+                      {% for j in 1..5 %}
                         {% if product.rating < j %} <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span> {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span> {% endif %}
-                      {% endfor %} </div>
+                      {% endfor %}
+                    </div>
                   {% endif %}
                   {% if product.price %}
-                    <p class="price">{% if not product.special %}
+                    <p class="price">
+                      {% if not product.special %}
                         {{ product.price }}
-                      {% else %} <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span> {% endif %}
-                      {% if product.tax %} <span class="price-tax">{{ text_tax }} {{ product.tax }}</span> {% endif %} </p>
-                  {% endif %}</div>
+                      {% else %}
+                        <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
+                      {% endif %}
+                      {% if product.tax %}
+                        <span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
+                      {% endif %}
+                    </p>
+                  {% endif %}
+                </div>
                 <div class="button-group">
                   <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><span class="d-none d-md-block"><i class="fa fa-shopping-cart"></i> {{ button_cart }}</span><span class="d-block d-md-none"><i class="fa fa-shopping-cart"></i></span></button>
                   <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
@@ -345,17 +356,24 @@
               <div class="clearfix visible-md"></div>
             {% endif %}
             {% set i = i + 1 %}
-          {% endfor %} </div>
+          {% endfor %}
+        </div>
       {% endif %}
       {% if tags %}
         <p>{{ text_tags }}
           {% for i in 0..tags|length %}
-            {% if i < (tags|length - 1) %} <a href="{{ tags[i].href }}">{{ tags[i].tag }}</a>,
-            {% else %} <a href="{{ tags[i].href }}">{{ tags[i].tag }}</a> {% endif %}
-          {% endfor %} </p>
+            {% if i < (tags|length - 1) %}
+              <a href="{{ tags[i].href }}">{{ tags[i].tag }}</a>,
+            {% else %}
+              <a href="{{ tags[i].href }}">{{ tags[i].tag }}</a>
+            {% endif %}
+          {% endfor %}
+        </p>
       {% endif %}
-      {{ content_bottom }}</div>
-    {{ column_right }}</div>
+      {{ content_bottom }}
+    </div>
+    {{ column_right }}
+  </div>
 </div>
 <script type="text/javascript"><!--
 $('select[name=\'recurring_id\'], input[name="quantity"]').change(function() {

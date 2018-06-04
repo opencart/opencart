@@ -49,13 +49,13 @@ class User {
 			} else {
 				return false;
 			}
-			
+
 			$this->session->data['user_id'] = $user_query->row['user_id'];
 
 			$this->user_id = $user_query->row['user_id'];
 			$this->username = $user_query->row['username'];
 			$this->user_group_id = $user_query->row['user_group_id'];
-			
+
 			if (isset($new_password_hashed)) {
 				$this->db->query("UPDATE " . DB_PREFIX . "user SET salt = '', password = '" . $this->db->escape($new_password_hashed) . "' WHERE user_id = '" . (int)$this->user_id . "'");
 			}

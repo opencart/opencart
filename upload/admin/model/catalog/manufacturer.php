@@ -14,7 +14,7 @@ class ModelCatalogManufacturer extends Model {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "manufacturer_to_store SET manufacturer_id = '" . (int)$manufacturer_id . "', store_id = '" . (int)$store_id . "'");
 			}
 		}
-				
+
 		// SEO URL
 		if (isset($data['manufacturer_seo_url'])) {
 			foreach ($data['manufacturer_seo_url'] as $store_id => $language) {
@@ -25,7 +25,7 @@ class ModelCatalogManufacturer extends Model {
 				}
 			}
 		}
-		
+
 		$this->cache->delete('manufacturer');
 
 		return $manufacturer_id;
@@ -127,10 +127,10 @@ class ModelCatalogManufacturer extends Model {
 
 		return $manufacturer_store_data;
 	}
-	
+
 	public function getManufacturerSeoUrls($manufacturer_id) {
 		$manufacturer_seo_url_data = array();
-		
+
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE query = 'manufacturer_id=" . (int)$manufacturer_id . "'");
 
 		foreach ($query->rows as $result) {
@@ -139,7 +139,7 @@ class ModelCatalogManufacturer extends Model {
 
 		return $manufacturer_seo_url_data;
 	}
-	
+
 	public function getTotalManufacturers() {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "manufacturer");
 

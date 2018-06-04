@@ -12,11 +12,11 @@ class ModelToolImage extends Model {
 
 		if (!is_file(DIR_IMAGE . $image_new) || (filemtime(DIR_IMAGE . $image_old) > filemtime(DIR_IMAGE . $image_new))) {
 			list($width_orig, $height_orig, $image_type) = getimagesize(DIR_IMAGE . $image_old);
-				 
-			if (!in_array($image_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF))) { 
+
+			if (!in_array($image_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF))) {
 				return DIR_IMAGE . $image_old;
 			}
-						
+
 			$path = '';
 
 			$directories = explode('/', dirname($image_new));
@@ -37,9 +37,9 @@ class ModelToolImage extends Model {
 				copy(DIR_IMAGE . $image_old, DIR_IMAGE . $image_new);
 			}
 		}
-		
+
 		$image_new = str_replace(' ', '%20', $image_new);  // fix bug when attach image on email (gmail.com). it is automatic changing space " " to +
-		
+
 		return $this->config->get('config_url') . 'image/' . $image_new;
 	}
 }

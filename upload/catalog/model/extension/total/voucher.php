@@ -78,7 +78,7 @@ class ModelExtensionTotalVoucher extends Model {
 
 			if ($voucher_info) {
 				$amount = min($voucher_info['amount'], $total['total']);
-				
+
 				if ($amount > 0) {
 					$total['totals'][] = array(
 						'code'       => 'voucher',

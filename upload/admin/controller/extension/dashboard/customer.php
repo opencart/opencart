@@ -51,11 +51,11 @@ class ControllerExtensionDashboardCustomer extends Controller {
 		}
 
 		$data['columns'] = array();
-		
+
 		for ($i = 3; $i <= 12; $i++) {
 			$data['columns'][] = $i;
 		}
-				
+
 		if (isset($this->request->post['dashboard_customer_status'])) {
 			$data['dashboard_customer_status'] = $this->request->post['dashboard_customer_status'];
 		} else {
@@ -82,7 +82,7 @@ class ControllerExtensionDashboardCustomer extends Controller {
 
 		return !$this->error;
 	}
-		
+
 	public function dashboard() {
 		$this->load->language('extension/dashboard/customer');
 

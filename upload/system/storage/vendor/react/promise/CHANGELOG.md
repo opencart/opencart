@@ -85,7 +85,7 @@ CHANGELOG for 2.x
     * Add standalone Promise class.
     * Add new `race()` function.
     * BC break: Bump minimum PHP version to PHP 5.4.
-    * BC break: Remove `ResolverInterface` and `PromiseInterface` from 
+    * BC break: Remove `ResolverInterface` and `PromiseInterface` from
       `Deferred`.
     * BC break: Change signature of `PromiseInterface`.
     * BC break: Remove `When` and `Util` classes and move static methods to

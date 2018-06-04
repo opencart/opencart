@@ -8,7 +8,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
 
         $data['action'] = $this->url->link('extension/payment/squareup/checkout', 'language=' . $this->config->get('config_language'));
         $data['squareup_js_api'] = Squareup::PAYMENT_FORM_URL;
-        
+
         if (!empty($this->session->data['payment_address']['postcode'])) {
             $data['payment_zip'] = $this->session->data['payment_address']['postcode'];
         } else {
@@ -133,7 +133,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
                 if (!$this->model_extension_credit_card_squareup->cardExists($this->customer->getId(), $square_card)) {
                     $this->model_extension_credit_card_squareup->addCard($this->customer->getId(), $this->config->get('payment_squareup_enable_sandbox'), $square_card);
                 }
-                
+
                 $use_saved = true;
                 $square_card_id = $square_card['id'];
             }
@@ -150,7 +150,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
                 'delay_capture' => !$this->cart->hasRecurringProducts() && $this->config->get('payment_squareup_delay_capture'),
                 'integration_id' => Squareup::SQUARE_INTEGRATION_ID
             );
-            
+
             if (!empty($shipping_address)) {
                 $transaction_data['shipping_address'] = $shipping_address;
             }
@@ -247,5 +247,5 @@ class ControllerExtensionPaymentSquareup extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    
+
 }

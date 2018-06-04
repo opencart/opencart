@@ -18,13 +18,13 @@ class Braintree_AddressGateway
      * @var Braintree_Gateway
      */
     private $_gateway;
-    
+
     /**
      *
      * @var Braintree_Configuration
      */
     private $_config;
-    
+
     /**
      *
      * @var Braintree_Http
@@ -32,7 +32,7 @@ class Braintree_AddressGateway
     private $_http;
 
     /**
-     * 
+     *
      * @param Braintree_Gateway $gateway
      */
     public function __construct($gateway)

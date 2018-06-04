@@ -73,12 +73,12 @@ class ControllerExtensionExtensionAnalytics extends Controller {
 				unset($extensions[$key]);
 			}
 		}
-		
+
 		$this->load->model('setting/store');
 		$this->load->model('setting/setting');
 
 		$stores = $this->model_setting_store->getStores();
-		
+
 		$data['extensions'] = array();
 
 		// Compatibility code for old extension folders
@@ -87,10 +87,10 @@ class ControllerExtensionExtensionAnalytics extends Controller {
 		if ($files) {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
-				
+
 				// Compatibility code for old extension folders
 				$this->load->language('extension/analytics/' . $extension, 'extension');
-				
+
 				$store_data = array();
 
 				$store_data[] = array(
@@ -98,7 +98,7 @@ class ControllerExtensionExtensionAnalytics extends Controller {
 					'edit'   => $this->url->link('extension/analytics/' . $extension, 'user_token=' . $this->session->data['user_token'] . '&store_id=0'),
 					'status' => $this->config->get('analytics_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 				);
-				
+
 				foreach ($stores as $store) {
 					$store_data[] = array(
 						'name'   => $store['name'],

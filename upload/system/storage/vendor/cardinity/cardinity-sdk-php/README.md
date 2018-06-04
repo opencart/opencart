@@ -5,7 +5,7 @@ Cardinity Client PHP Library
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/cardinity/cardinity-sdk-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/cardinity/cardinity-sdk-php/?branch=master)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/536548a5-73e5-4c71-8a8b-d6fdd6e5e7a6/mini.png)](https://insight.sensiolabs.com/projects/536548a5-73e5-4c71-8a8b-d6fdd6e5e7a6)
 
-This is official PHP client library for [Cardinity's](https://developers.cardinity.com/api/v1/) API.  
+This is official PHP client library for [Cardinity's](https://developers.cardinity.com/api/v1/) API.
 Library includes all the functionality provided by API. Library was designed to be flexible and self-explanatory for developers to implement.
 
 ## Documentation

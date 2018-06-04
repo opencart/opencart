@@ -12,7 +12,7 @@ class ModelLocalisationTaxClass extends Model {
 		}
 
 		$this->cache->delete('tax_class');
-		
+
 		return $tax_class_id;
 	}
 

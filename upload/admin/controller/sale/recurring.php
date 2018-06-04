@@ -142,7 +142,7 @@ class ControllerSaleRecurring extends Controller {
 			} else {
 				$status = '';
 			}
-			
+
 			$data['recurrings'][] = array(
 				'order_recurring_id' => $result['order_recurring_id'],
 				'order_id'           => $result['order_id'],
@@ -170,7 +170,7 @@ class ControllerSaleRecurring extends Controller {
 		} else {
 			$data['success'] = '';
 		}
-		
+
 		$url = '';
 
 		if (isset($this->request->get['filter_order_recurring_id'])) {
@@ -265,22 +265,22 @@ class ControllerSaleRecurring extends Controller {
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_status'] = $filter_status;
 		$data['filter_date_added'] = $filter_date_added;
-		
+
 		$data['sort'] = $sort;
 		$data['order'] = $order;
-		
+
 		$data['recurring_statuses'] = array();
-		
+
 		$data['recurring_statuses'][0] = array(
 			'text'  => '',
 			'value' => 0
 		);
-			
+
 		for ($i = 1; $i <= 6; $i++) {
 			$data['recurring_statuses'][$i] = array(
 				'text'  => $this->language->get('text_status_' . $i),
 				'value' => 1
-			);		
+			);
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -292,22 +292,22 @@ class ControllerSaleRecurring extends Controller {
 
 	public function info() {
 		$this->load->model('sale/recurring');
-		
+
 		if (isset($this->request->get['order_recurring_id'])) {
 			$order_recurring_id = $this->request->get['order_recurring_id'];
 		} else {
 			$order_recurring_id = 0;
 		}
-		
+
 		$order_recurring_info = $this->model_sale_recurring->getRecurring($order_recurring_id);
 
 		if ($order_recurring_info) {
 			$this->load->language('sale/recurring');
-		
+
 			$this->document->setTitle($this->language->get('heading_title'));
 
 			$data['user_token'] = $this->session->data['user_token'];
-			
+
 			$url = '';
 
 			if (isset($this->request->get['filter_order_recurring_id'])) {
@@ -359,55 +359,55 @@ class ControllerSaleRecurring extends Controller {
 			);
 
 			$data['cancel'] = $this->url->link('sale/recurring', 'user_token=' . $this->session->data['user_token'] . $url);
-			
+
 			// Recurring
 			$data['order_recurring_id'] = $order_recurring_info['order_recurring_id'];
 			$data['reference'] = $order_recurring_info['reference'];
 			$data['recurring_name'] = $order_recurring_info['recurring_name'];
-			
+
 			if ($order_recurring_info['recurring_id']) {
 				$data['recurring'] = $this->url->link('catalog/recurring/edit', 'user_token=' . $this->session->data['user_token'] . '&recurring_id=' . $order_recurring_info['recurring_id']);
 			} else {
 				$data['recurring'] = '';
-			}			
-			
+			}
+
 			$data['recurring_description'] = $order_recurring_info['recurring_description'];
-			
+
 			if ($order_recurring_info['status']) {
 				$data['recurring_status']= $this->language->get('text_status_' . $order_recurring_info['status']);
 			} else {
 				$data['recurring_status'] = '';
 			}
-			
+
 			$this->load->model('sale/order');
 
 			$order_info = $this->model_sale_order->getOrder($order_recurring_info['order_id']);
-			
+
 			$data['payment_method'] = $order_info['payment_method'];
-			
+
 			// Order
 			$data['order_id'] = $order_info['order_id'];
 			$data['order'] = $this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_info['order_id']);
 			$data['firstname'] = $order_info['firstname'];
 			$data['lastname'] = $order_info['lastname'];
-			
+
 			if ($order_info['customer_id']) {
 				$data['customer'] = $this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $order_info['customer_id']);
 			} else {
 				$data['customer'] = '';
 			}
-		
+
 			$data['email'] = $order_info['email'];
 			$data['order_status'] = $order_info['order_status'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
-			
+
 			// Product
 			$data['product'] = $order_recurring_info['product_name'];
 			$data['quantity'] = $order_recurring_info['product_quantity'];
 
 			// Transactions
 			$data['transactions'] = array();
-			
+
 			$transactions = $this->model_sale_recurring->getRecurringTransactions($order_recurring_info['order_recurring_id']);
 
 			foreach ($transactions as $transaction) {

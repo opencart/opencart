@@ -11,7 +11,7 @@ class ModelDesignSeoRegex extends Model {
 	public function deleteSeoRegex($seo_regex_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_regex` WHERE `seo_regex_id` = '" . (int)$seo_regex_id . "'");
 	}
-	
+
 	public function getSeoRegex($seo_regex_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_regex` WHERE `seo_regex_id` = '" . (int)$seo_regex_id . "'");
 

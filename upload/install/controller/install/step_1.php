@@ -2,7 +2,7 @@
 class ControllerInstallStep1 extends Controller {
 	public function index() {
 		$this->load->language('install/step_1');
-		
+
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			$this->response->redirect($this->url->link('install/step_2'));
 		}
@@ -10,7 +10,7 @@ class ControllerInstallStep1 extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_step_1'] = $this->language->get('text_step_1');
 		$data['text_terms'] = $this->language->get('text_terms');
 

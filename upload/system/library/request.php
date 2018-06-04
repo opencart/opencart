@@ -16,7 +16,7 @@ class Request {
 	public $cookie = array();
 	public $files = array();
 	public $server = array();
-	
+
 	/**
 	 * Constructor
  	*/
@@ -28,9 +28,9 @@ class Request {
 		$this->files = $this->clean($_FILES);
 		$this->server = $this->clean($_SERVER);
 	}
-	
+
 	/**
-     * 
+     *
 	 * @param	array	$data
 	 *
      * @return	array

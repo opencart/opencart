@@ -9,7 +9,7 @@ class ModelSettingCron extends Model {
 	public function deleteCron($cron_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "cron` WHERE `cron_id` = '" . (int)$cron_id . "'");
 	}
-	
+
 	public function deleteCronByCode($code) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "cron` WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
@@ -33,7 +33,7 @@ class ModelSettingCron extends Model {
 
 		return $query->row;
 	}
-		
+
 	public function getCrons($data = array()) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "cron`";
 

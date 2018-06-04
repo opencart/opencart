@@ -60,7 +60,7 @@ class ControllerExtensionReportSaleShipping extends Controller {
 
 		$this->response->setOutput($this->load->view('extension/report/sale_shipping_form', $data));
 	}
-	
+
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'extension/report/sale_shipping')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -68,10 +68,10 @@ class ControllerExtensionReportSaleShipping extends Controller {
 
 		return !$this->error;
 	}
-		
+
 	public function report() {
 		$this->load->language('extension/report/sale_shipping');
-	
+
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
 		} else {
@@ -128,7 +128,7 @@ class ControllerExtensionReportSaleShipping extends Controller {
 				'total'      => $this->currency->format($result['total'], $this->config->get('config_currency'))
 			);
 		}
-		
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->load->model('localisation/order_status');

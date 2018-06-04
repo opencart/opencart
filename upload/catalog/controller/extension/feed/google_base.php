@@ -29,9 +29,9 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 
 				foreach ($products as $product) {
 					if (!in_array($product['product_id'], $product_data) && $product['description']) {
-						
+
 						$product_data[] = $product['product_id'];
-						
+
 						$output .= '<item>';
 						$output .= '<title><![CDATA[' . $product['name'] . ']]></title>';
 						$output .= '<link>' . $this->url->link('product/product', 'language=' . $this->config->get('config_language') .  '&product_id=' . $product['product_id']) . '</link>';

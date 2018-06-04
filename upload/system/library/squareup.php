@@ -82,7 +82,7 @@ class Squareup {
                 }
 
                 break;
-            default : 
+            default :
                 $curl_options[CURLOPT_CUSTOMREQUEST] = $request_data['method'];
 
                 if ($params !== null) {
@@ -106,7 +106,7 @@ class Squareup {
                 // custom token trumps sandbox/regular one
                 $token = $request_data['token'];
             }
-            
+
             $added_headers[] = 'Authorization: ' . $request_data['auth_type'] . ' ' . $token;
         }
 

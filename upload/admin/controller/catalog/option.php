@@ -397,21 +397,21 @@ class ControllerCatalogOption extends Controller {
 
 			if ($option_id) {
 				$this->load->model('catalog/option');
-							
+
 				$this->load->model('catalog/product_option');
-				
+
 				$option_info = $this->model_catalog_product_option->getProductsOptionValueByOptionId($option_id);
-	
+
 				foreach ($this->request->post['option_value'] as $option_value_id => $option_value) {
 					$option_value_list[] = array(
 						'option_value_id' => $option_value['option_value_id']
 					);
 				}
-				
+
 				foreach ($option_info as $option) {
 					if (!in_array($option, $option_value_list)) {
 						$product_total = $this->model_catalog_product_option->getTotalProductsByOptionId($option_id);
-	
+
 						$this->error['warning'] = sprintf($this->language->get('error_option'), $product_total);
 					}
 				}

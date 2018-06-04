@@ -16,7 +16,7 @@
   <tr>
     <td>{{ text_refund_status }}</td>
     <td id="refund_status"> {% if g2apay_order.refund_status == 1 %} <span class="refund_text">{{ text_yes }}</span> {% else %} <span class="refund_text">{{ text_no }}</span>&nbsp;&nbsp;
-      
+
       {% if g2apay_order.total_released > 0 %}
       <input type="text" width="10" id="refund_amount" />
       <a class="button btn btn-primary" id="btn_refund">{{ btn_refund }}</a> <span class="btn btn-primary" id="img_loading_refund" style="display:none;"><i class="fas fa-cog fa-spin fa-lg"></i></span> {% endif %}
@@ -33,7 +33,7 @@
           </tr>
         </thead>
         <tbody>
-        
+
         {% for transaction in g2apay_order.transactions %}
         <tr>
           <td class="text-left">{{ transaction.date_added }}</td>
@@ -42,7 +42,7 @@
         </tr>
         {% endfor %}
           </tbody>
-        
+
       </table></td>
   </tr>
 </table>

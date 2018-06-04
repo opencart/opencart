@@ -46,7 +46,7 @@
 /upload/system/storage/upload/*
 !/upload/system/storage/upload/index.html
 
-# Flags 
+# Flags
 # remove sharp char if you want to add flags to gitignore
 # /upload/flags/*
 

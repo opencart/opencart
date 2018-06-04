@@ -16,7 +16,7 @@ class ModelLocalisationOrderStatus extends Model {
 
 			$this->cache->set('order_status.' . (int)$this->config->get('config_language_id'), $order_status_data);
 		}
-		
+
 		return $order_status_data;
 	}
 }

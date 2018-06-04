@@ -47,7 +47,7 @@ final class MySQLi {
 	public function escape($value) {
 		return $this->connection->real_escape_string($value);
 	}
-	
+
 	public function countAffected() {
 		return $this->connection->affected_rows;
 	}
@@ -55,11 +55,11 @@ final class MySQLi {
 	public function getLastId() {
 		return $this->connection->insert_id;
 	}
-	
+
 	public function isConnected() {
 		return $this->connection->ping();
 	}
-	
+
 	public function __destruct() {
 		if (!$this->connection) {
 			$this->connection->close();

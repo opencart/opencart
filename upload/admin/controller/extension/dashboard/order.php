@@ -49,13 +49,13 @@ class ControllerExtensionDashboardOrder extends Controller {
 		} else {
 			$data['dashboard_order_width'] = $this->config->get('dashboard_order_width');
 		}
-		
+
 		$data['columns'] = array();
-		
+
 		for ($i = 3; $i <= 12; $i++) {
 			$data['columns'][] = $i;
 		}
-				
+
 		if (isset($this->request->post['dashboard_order_status'])) {
 			$data['dashboard_order_status'] = $this->request->post['dashboard_order_status'];
 		} else {
@@ -82,7 +82,7 @@ class ControllerExtensionDashboardOrder extends Controller {
 
 		return !$this->error;
 	}
-	
+
 	public function dashboard() {
 		$this->load->language('extension/dashboard/order');
 

@@ -176,7 +176,7 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 				$data['auto_settle'] = $sagepay_direct_order['settle_type'];
 
 				$data['order_id'] = (int)$this->request->get['order_id'];
-				
+
 				$data['user_token'] = $this->session->data['user_token'];
 
 				return $this->load->view('extension/payment/sagepay_direct_order', $data);

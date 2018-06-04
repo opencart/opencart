@@ -53,7 +53,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 		);
 
 		$data['action'] = $this->url->link('extension/payment/globalpay_remote', 'user_token=' . $this->session->data['user_token']);
-		
+
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
 
 		if (isset($this->request->post['payment_globalpay_remote_merchant_id'])) {
@@ -215,7 +215,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 				$data['auto_settle'] = $globalpay_order['settle_type'];
 
 				$data['order_id'] = (int)$this->request->get['order_id'];
-				
+
 				$data['user_token'] = $this->session->data['user_token'];
 
 				return $this->load->view('extension/payment/globalpay_remote_order', $data);

@@ -2,9 +2,9 @@
 class ControllerToolLog extends Controller {
 	private $error = array();
 
-	public function index() {		
+	public function index() {
 		$this->load->language('tool/log');
-		
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (isset($this->session->data['error'])) {
@@ -104,7 +104,7 @@ class ControllerToolLog extends Controller {
 			$this->response->redirect($this->url->link('tool/log', 'user_token=' . $this->session->data['user_token']));
 		}
 	}
-	
+
 	public function clear() {
 		$this->load->language('tool/log');
 

@@ -7,11 +7,11 @@ class ModelExtensionPaymentSquareup extends Model {
     const RECURRING_SUSPENDED = 4;
     const RECURRING_EXPIRED = 5;
     const RECURRING_PENDING = 6;
-    
+
     public function getTransaction($squareup_transaction_id) {
         return $this->db->query("SELECT * FROM `" . DB_PREFIX . "squareup_transaction` WHERE squareup_transaction_id='" . (int)$squareup_transaction_id . "'")->row;
     }
-    
+
     public function getTransactions($data) {
         $sql = "SELECT * FROM `" . DB_PREFIX . "squareup_transaction`";
 
@@ -30,14 +30,14 @@ class ModelExtensionPaymentSquareup extends Model {
 
     public function getTotalTransactions($data) {
         $sql = "SELECT COUNT(*) as total FROM `" . DB_PREFIX . "squareup_transaction`";
-        
+
         if (isset($data['order_id'])) {
             $sql .= " WHERE order_id='" . (int)$data['order_id'] . "'";
         }
 
         return $this->db->query($sql)->row['total'];
     }
-    
+
     public function updateTransaction($squareup_transaction_id, $type, $refunds = array()) {
         $this->db->query("UPDATE `" . DB_PREFIX . "squareup_transaction` SET transaction_type='" . $this->db->escape($type) . "', is_refunded='" . (int)!empty($refunds) . "', refunds='" . $this->db->escape(json_encode($refunds)) . "' WHERE squareup_transaction_id='" . (int)$squareup_transaction_id . "'");
     }
@@ -108,7 +108,7 @@ class ModelExtensionPaymentSquareup extends Model {
          PRIMARY KEY (`customer_id`, `sandbox`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8");
     }
-    
+
     public function dropTables() {
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "squareup_transaction`");
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "squareup_token`");

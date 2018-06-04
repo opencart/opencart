@@ -1,24 +1,24 @@
 <?php
 
 class CatalogModelCheckoutOrderTest extends OpenCartTest {
-	
+
 	/**
 	 * @before
 	 */
 	public function setupTest() {
 		$this->loadModelByRoute('checkout/order');
 		$this->loadModelByRoute('account/custom_field');
-		
+
 		$this->emptyTables();
 	}
-	
+
 	/**
 	 * @after
 	 */
 	public function completeTest() {
 		$this->emptyTables();
 	}
-	
+
 	private function emptyTables() {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_custom_field");
@@ -30,9 +30,9 @@ class CatalogModelCheckoutOrderTest extends OpenCartTest {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_recurring_transaction");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_total");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_voucher");
-		
+
 	}
-	
+
 	private function getOrderArray() {
 		$order = array(
 			'invoice_prefix' => '',
@@ -124,7 +124,7 @@ class CatalogModelCheckoutOrderTest extends OpenCartTest {
 			'ip' => '',
 			'forwarded_ip' => '',
 			'user_agent' => '',
-			'accept_language' => '',	
+			'accept_language' => '',
 			'totals' => array(
 				array(
 					'code' => '',
@@ -140,64 +140,64 @@ class CatalogModelCheckoutOrderTest extends OpenCartTest {
 				),
 			),
 		);
-		
+
 		return $order;
 	}
-	
+
 	public function testAddOrder() {
 		$orderData = $this->getOrderArray();
-		
+
 		$orderId = $this->model_checkout_order->addOrder($orderData);
-		
+
 		$this->assertNotNull($orderId);
-		
+
 		$numRows = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order`")->row['total'];
 		$this->assertEquals(1, $numRows);
-		
+
 		$numRows = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order_product`")->row['total'];
 		$this->assertEquals(1, $numRows);
-		
+
 		$numRows = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order_option`")->row['total'];
 		$this->assertEquals(1, $numRows);
-		
+
 		$numRows = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order_voucher`")->row['total'];
 		$this->assertEquals(1, $numRows);
-		
+
 		$numRows = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order_total`")->row['total'];
 		$this->assertEquals(2, $numRows);
 	}
-	
+
 	// The following three tests should be completed when custom fields are implemented
-	
+
 	public function testGetOrder() {
 		$this->markTestIncomplete();
-		
+
 		$orderData = $this->getOrderArray();
-		
+
 		$this->model_checkout_order->addOrder($orderData);
-		
+
 		$orderId = $this->db->query("SELECT order_id FROM `" . DB_PREFIX . "order` LIMIT 1")->row['order_id'];
-		
+
 		$order = $this->model_checkout_order->getOrder($orderId);
-		
+
 		$this->assertEquals($orderId, $order['order_id']);
 	}
-	
+
 	public function testConfirm() {
 		$this->markTestIncomplete();
-		
+
 		$orderData = $this->getOrderArray();
-		
+
 		$orderId = $this->model_checkout_order->addOrder($orderData);
-		
+
 		$this->model_checkout_order->confirm($orderId, $this->config->get('config_complete_status_id'));
 	}
 
 	public function testUpdate() {
 		$this->markTestIncomplete();
-		
+
 		$orderData = $this->getOrderArray();
-		
+
 		$orderId = $this->model_checkout_order->addOrder($orderData);
 		$this->model_checkout_order->update($orderId, $this->config->get('config_complete_status_id'));
 	}

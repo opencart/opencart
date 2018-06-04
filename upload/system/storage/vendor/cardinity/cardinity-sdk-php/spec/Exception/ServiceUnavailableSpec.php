@@ -15,7 +15,7 @@ class ServiceUnavailableSpec extends ObjectBehavior
             $error
         );
     }
-    
+
     function it_is_initializable()
     {
         $this->shouldHaveType('Cardinity\Exception\ServiceUnavailable');

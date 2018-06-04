@@ -15,8 +15,8 @@ class ClientTestCase extends \PHPUnit_Framework_TestCase
 
         // @NOTE uncomment if request/response debugging is needed
         // Use 'null' value for printing request to console
-        // $log = Client::LOG_DEBUG; 
-        
+        // $log = Client::LOG_DEBUG;
+
         // Use monolog logger to log requests into the file
         // $log = new Logger('requests');
         // $log->pushHandler(new StreamHandler(__DIR__ . '/info.log', Logger::INFO));

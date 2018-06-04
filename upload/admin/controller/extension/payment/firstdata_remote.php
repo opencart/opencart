@@ -91,7 +91,7 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 		);
 
 		$data['action'] = $this->url->link('extension/payment/firstdata_remote', 'user_token=' . $this->session->data['user_token']);
-		
+
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
 
 		if (isset($this->request->post['payment_firstdata_remote_merchant_id'])) {

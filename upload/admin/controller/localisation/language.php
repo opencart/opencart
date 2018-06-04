@@ -239,7 +239,7 @@ class ControllerLocalisationLanguage extends Controller {
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -267,13 +267,13 @@ class ControllerLocalisationLanguage extends Controller {
 		} else {
 			$data['error_code'] = '';
 		}
-		
+
 		if (isset($this->error['locale'])) {
 			$data['error_locale'] = $this->error['locale'];
 		} else {
 			$data['error_locale'] = '';
 		}
-		
+
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -327,9 +327,9 @@ class ControllerLocalisationLanguage extends Controller {
 		} else {
 			$data['code'] = '';
 		}
-		
+
 		$data['languages'] = array();
-		
+
 		$folders = glob(DIR_LANGUAGE . '*', GLOB_ONLYDIR);
 
 		foreach ($folders as $folder) {
@@ -343,7 +343,7 @@ class ControllerLocalisationLanguage extends Controller {
 		} else {
 			$data['locale'] = '';
 		}
-		
+
 		if (isset($this->request->post['sort_order'])) {
 			$data['sort_order'] = $this->request->post['sort_order'];
 		} elseif (!empty($language_info)) {
@@ -379,11 +379,11 @@ class ControllerLocalisationLanguage extends Controller {
 		if (utf8_strlen($this->request->post['code']) < 2) {
 			$this->error['code'] = $this->language->get('error_code');
 		}
-		
+
 		if (!$this->request->post['locale']) {
 			$this->error['locale'] = $this->language->get('error_locale');
 		}
-		
+
 		$language_info = $this->model_localisation_language->getLanguageByCode($this->request->post['code']);
 
 		if (!isset($this->request->get['language_id'])) {

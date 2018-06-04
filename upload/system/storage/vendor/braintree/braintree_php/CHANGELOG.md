@@ -66,7 +66,7 @@
 * Allow payee_email to be passed in options params for Transaction create
 
 ## 2.31.0
-* Added paypal specific fields to transaction calls               
+* Added paypal specific fields to transaction calls
 * Added SettlementPending, SettlementDeclined transaction statuses
 
 ## 2.30.0

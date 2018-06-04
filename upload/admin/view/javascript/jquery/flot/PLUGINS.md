@@ -34,7 +34,7 @@ plugins bundled with Flot.
 
 
 ## Complete example ##
-  
+
 Here is a simple debug plugin which alerts each of the series in the
 plot. It has a single option that control whether it is enabled and
 how much info to output:
@@ -63,7 +63,7 @@ how much info to output:
     }
 
     var options = { debug: 0 };
-      
+
     $.plot.plugins.push({
         init: init,
         options: options,
@@ -75,7 +75,7 @@ how much info to output:
 
 We also define "name" and "version". It's not used by Flot, but might
 be helpful for other plugins in resolving dependencies.
-  
+
 Put the above in a file named "jquery.flot.debug.js", include it in an
 HTML page and then it can be used with:
 
@@ -111,9 +111,9 @@ but because your event handler is still referencing it, it can't be
 garbage collected yet, and worse, if your handler eventually runs, it
 may overwrite stuff on a completely different plot.
 
- 
+
 ## Some hints on the options ##
-   
+
 Plugins should always support appropriate options to enable/disable
 them because the plugin user may have several plots on the same page
 where only one should use the plugin. In most cases it's probably a

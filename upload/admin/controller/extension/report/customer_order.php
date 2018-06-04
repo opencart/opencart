@@ -60,7 +60,7 @@ class ControllerExtensionReportCustomerOrder extends Controller {
 
 		$this->response->setOutput($this->load->view('extension/report/customer_order_form', $data));
 	}
-	
+
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'extension/report/customer_order')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -68,7 +68,7 @@ class ControllerExtensionReportCustomerOrder extends Controller {
 
 		return !$this->error;
 	}
-			
+
 	public function report() {
 		$this->load->language('extension/report/customer_order');
 

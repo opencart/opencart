@@ -35,10 +35,10 @@ class DB {
 	}
 
 	/**
-     * 
+     *
      *
      * @param	string	$sql
-	 * 
+	 *
 	 * @return	array
      */
 	public function query($sql) {
@@ -46,10 +46,10 @@ class DB {
 	}
 
 	/**
-     * 
+     *
      *
      * @param	string	$value
-	 * 
+	 *
 	 * @return	string
      */
 	public function escape($value) {
@@ -57,8 +57,8 @@ class DB {
 	}
 
 	/**
-     * 
-	 * 
+     *
+	 *
 	 * @return	int
      */
 	public function countAffected() {
@@ -66,19 +66,19 @@ class DB {
 	}
 
 	/**
-     * 
-	 * 
+     *
+	 *
 	 * @return	int
      */
 	public function getLastId() {
 		return $this->adaptor->getLastId();
 	}
-	
+
 	/**
-     * 
-	 * 
+     *
+	 *
 	 * @return	bool
-     */	
+     */
 	public function connected() {
 		return $this->adaptor->connected();
 	}

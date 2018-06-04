@@ -2,7 +2,7 @@
 class ControllerCheckoutRegister extends Controller {
 	public function index() {
 		$this->load->language('checkout/checkout');
-		
+
 		$data['entry_newsletter'] = sprintf($this->language->get('entry_newsletter'), $this->config->get('config_name'));
 
 		$data['customer_groups'] = array();
@@ -208,12 +208,12 @@ class ControllerCheckoutRegister extends Controller {
 
 			// Default Payment Address
 			$this->load->model('account/address');
-				
+
 			$address_id = $this->model_account_address->addAddress($customer_id, $this->request->post);
-			
+
 			// Set the address as default
 			$this->model_account_customer->editAddressId($customer_id, $address_id);
-			
+
 			// Clear any previous login attempts for unregistered accounts.
 			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
 

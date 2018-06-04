@@ -2,7 +2,7 @@
 class Braintree_SettlementBatchSummary extends Braintree_Base
 {
     /**
-     * 
+     *
      * @param array $attributes
      * @return Braintree_SettlementBatchSummary
      */
@@ -30,7 +30,7 @@ class Braintree_SettlementBatchSummary extends Braintree_Base
 
     /**
      * static method redirecting to gateway
-     * 
+     *
      * @param string $settlement_date Date YYYY-MM-DD
      * @param string $groupByCustomField
      * @return Braintree_Result_Successful|Braintree_Result_Error

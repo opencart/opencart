@@ -9,7 +9,7 @@ class Get implements MethodInterface
 {
     private $paymentId;
     private $voidId;
-    
+
     public function __construct($paymentId, $voidId)
     {
         $this->paymentId = $paymentId;

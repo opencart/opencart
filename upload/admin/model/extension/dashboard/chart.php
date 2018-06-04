@@ -117,7 +117,7 @@ class ModelExtensionDashboardChart extends Model {
 
 		return $order_data;
 	}
-	
+
 	public function getTotalCustomersByDay() {
 		$customer_data = array();
 
@@ -210,5 +210,5 @@ class ModelExtensionDashboardChart extends Model {
 		}
 
 		return $customer_data;
-	}	
+	}
 }

@@ -60,7 +60,7 @@ class ControllerExtensionReportCustomerTransaction extends Controller {
 
 		$this->response->setOutput($this->load->view('extension/report/customer_transaction_form', $data));
 	}
-	
+
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'extension/report/customer_transaction')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -68,7 +68,7 @@ class ControllerExtensionReportCustomerTransaction extends Controller {
 
 		return !$this->error;
 	}
-		
+
 	public function report() {
 		$this->load->language('extension/report/customer_transaction');
 
@@ -97,7 +97,7 @@ class ControllerExtensionReportCustomerTransaction extends Controller {
 		}
 
 		$this->load->model('extension/report/customer_transaction');
-		
+
 		$data['customers'] = array();
 
 		$filter_data = array(

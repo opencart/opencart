@@ -32,7 +32,7 @@
 class Braintree_Customer extends Braintree_Base
 {
     /**
-     * 
+     *
      * @return Braintree_Customer[]
      */
     public static function all()
@@ -41,7 +41,7 @@ class Braintree_Customer extends Braintree_Base
     }
 
     /**
-     * 
+     *
      * @param string $query
      * @param int[] $ids
      * @return Braintree_Customer|Braintree_Customer[]
@@ -52,7 +52,7 @@ class Braintree_Customer extends Braintree_Base
     }
 
     /**
-     * 
+     *
      * @param array $attribs
      * @return Braintree_Customer
      */
@@ -62,7 +62,7 @@ class Braintree_Customer extends Braintree_Base
     }
 
     /**
-     * 
+     *
      * @param array $attribs
      * @return Braintree_Customer
      */
@@ -91,7 +91,7 @@ class Braintree_Customer extends Braintree_Base
     }
 
     /**
-     * 
+     *
      * @throws Braintree_Exception_NotFound
      * @param int $id
      * @return Braintree_Customer
@@ -102,7 +102,7 @@ class Braintree_Customer extends Braintree_Base
     }
 
     /**
-     * 
+     *
      * @param int $customerId
      * @param array $transactionAttribs
      * @return Braintree_Result_Successful|Braintree_Result_Error
@@ -113,7 +113,7 @@ class Braintree_Customer extends Braintree_Base
     }
 
     /**
-     * 
+     *
      * @throws Braintree_Exception_ValidationError
      * @param type $customerId
      * @param type $transactionAttribs
@@ -125,7 +125,7 @@ class Braintree_Customer extends Braintree_Base
     }
 
     /**
-     * 
+     *
      * @throws Braintree_Exception on invalid id or non-200 http response code
      * @param int $customerId
      * @return Braintree_Result_Successful
@@ -136,7 +136,7 @@ class Braintree_Customer extends Braintree_Base
     }
 
     /**
-     * 
+     *
      * @param int $customerId
      * @param array $transactionAttribs
      * @return Braintree_Transaction
@@ -147,18 +147,18 @@ class Braintree_Customer extends Braintree_Base
     }
 
     /**
-     * 
+     *
      * @param int $customerId
      * @param array $transactionAttribs
      * @return Braintree_Transaction
-     */    
+     */
     public static function saleNoValidate($customerId, $transactionAttribs)
     {
         return Braintree_Configuration::gateway()->customer()->saleNoValidate($customerId, $transactionAttribs);
     }
 
     /**
-     * 
+     *
      * @throws InvalidArgumentException
      * @param string $query
      * @return Braintree_ResourceCollection
@@ -169,7 +169,7 @@ class Braintree_Customer extends Braintree_Base
     }
 
     /**
-     * 
+     *
      * @throws Braintree_Exception_Unexpected
      * @param int $customerId
      * @param array $attributes
@@ -181,7 +181,7 @@ class Braintree_Customer extends Braintree_Base
     }
 
     /**
-     * 
+     *
      * @throws Braintree_Exception_Unexpected
      * @param int $customerId
      * @param array $attributes
@@ -193,7 +193,7 @@ class Braintree_Customer extends Braintree_Base
     }
 
     /**
-     * 
+     *
      * @deprecated since version 2.3.0
      * @return string
      */
@@ -203,7 +203,7 @@ class Braintree_Customer extends Braintree_Base
     }
 
     /**
-     * 
+     *
      * @deprecated since version 2.3.0
      * @param string $queryString
      * @return Braintree_Result_Successful|Braintree_Result_Error

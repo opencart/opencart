@@ -1,5 +1,5 @@
 /*!
- * jQVMap Version 1.0 
+ * jQVMap Version 1.0
  *
  * http://jqvmap.com
  *

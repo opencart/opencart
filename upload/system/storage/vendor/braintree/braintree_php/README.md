@@ -67,7 +67,7 @@ any system meeting the base requirements:
 
     phpunit tests/unit/
 
-Please note that the integration tests require access to services internal to 
+Please note that the integration tests require access to services internal to
 Braintree, and so will not run in your test environment.
 
 ## Open Source Attribution

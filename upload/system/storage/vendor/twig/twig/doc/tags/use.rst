@@ -40,7 +40,7 @@ The ``use`` statement tells Twig to import the blocks defined in
 .. code-block:: jinja
 
     {# blocks.html #}
-    
+
     {% block sidebar %}{% endblock %}
 
 In this example, the ``use`` statement imports the ``sidebar`` block into the

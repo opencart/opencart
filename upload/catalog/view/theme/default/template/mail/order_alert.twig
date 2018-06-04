@@ -13,19 +13,19 @@
 	- {{ option.name }} {{ option.value }}
 {% endfor %}
 {% endif %}
-{% endfor %} 
+{% endfor %}
 {% if vouchers %}
 
 {% for voucher in vouchers %}
 1x {{ voucher.description }} {{ voucher.amount }}
-{% endfor %} 
+{% endfor %}
 {% endif %}
 {{ text_total }}
 
 {% for total in totals %}
 {{ total.title }}: {{ total.value }}
-{% endfor %} 
-  
+{% endfor %}
+
 {% if comment %}
 {{ text_comment }}
 

@@ -60,7 +60,7 @@ class ControllerExtensionReportCustomerSearch extends Controller {
 
 		$this->response->setOutput($this->load->view('extension/report/customer_search_form', $data));
 	}
-	
+
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'extension/report/customer_search')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -68,7 +68,7 @@ class ControllerExtensionReportCustomerSearch extends Controller {
 
 		return !$this->error;
 	}
-	
+
 	public function report() {
 		$this->load->language('extension/report/customer_search');
 

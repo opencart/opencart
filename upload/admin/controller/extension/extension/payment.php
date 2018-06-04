@@ -4,7 +4,7 @@ class ControllerExtensionExtensionPayment extends Controller {
 
 	public function index() {
 		$this->load->language('extension/extension/payment');
-		
+
 		$this->load->model('setting/extension');
 
 		$this->getList();
@@ -77,7 +77,7 @@ class ControllerExtensionExtensionPayment extends Controller {
 		}
 
 		$data['extensions'] = array();
-		
+
 		// Compatibility code for old extension folders
 		$files = glob(DIR_APPLICATION . 'controller/extension/payment/*.php');
 

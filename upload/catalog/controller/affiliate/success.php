@@ -31,7 +31,7 @@ class ControllerAffiliateSuccess extends Controller {
 		} else {
 			$data['text_message'] = sprintf($this->language->get('text_approval'), $this->config->get('config_name'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
 		}
-		
+
 		$data['button_continue'] = $this->language->get('button_continue');
 
 		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));

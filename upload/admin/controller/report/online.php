@@ -22,7 +22,7 @@ class ControllerReportOnline extends Controller {
 		} else {
 			$page = 1;
 		}
-		
+
 		$url = '';
 
 		if (isset($this->request->get['filter_customer'])) {
@@ -36,7 +36,7 @@ class ControllerReportOnline extends Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-			
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -48,11 +48,11 @@ class ControllerReportOnline extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('report/online', 'user_token=' . $this->session->data['user_token'])
 		);
-		
+
 		$data['refresh'] = $this->url->link('report/online', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$this->load->model('report/online');
-		$this->load->model('customer/customer');		
+		$this->load->model('customer/customer');
 
 		$data['customers'] = array();
 
@@ -111,11 +111,11 @@ class ControllerReportOnline extends Controller {
 
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_ip'] = $filter_ip;
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
-		
+
 		$this->response->setOutput($this->load->view('report/online', $data));
 	}
 }

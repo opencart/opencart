@@ -3,13 +3,13 @@ class ModelUpgrade1003 extends Model {
 	public function upgrade() {
 		// affiliate_activity
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_activity'");
-		
+
 		if ($query->num_rows) {
 			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_activity' AND COLUMN_NAME = 'activity_id'");
-	
+
 			if ($query->num_rows) {
 				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_activity' AND COLUMN_NAME = 'affiliate_activity_id'");
-	
+
 				if ($query->num_rows) {
 					$this->db->query("UPDATE `" . DB_PREFIX . "affiliate_activity` SET `affiliate_activity_id` = `activity_id` WHERE `affiliate_activity_id` IS NULL or `affiliate_activity_id` = ''");
 					$this->db->query("ALTER TABLE `" . DB_PREFIX . "affiliate_activity` DROP `activity_id`");
@@ -99,14 +99,14 @@ class ModelUpgrade1003 extends Model {
 
 		if ($query->num_rows) {
 			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "affiliate_activity` WHERE data LIKE 'a:%'");
-	
+
 			foreach ($query->rows as $result) {
 				if (preg_match('/^(a:)/', $result['data'])) {
 					$this->db->query("UPDATE `" . DB_PREFIX . "affiliate_activity` SET `data` = '" . $this->db->escape(json_encode(unserialize($result['data']))) . "' WHERE `affiliate_activity_id` = '" . (int)$result['affiliate_activity_id'] . "'");
 				}
 			}
 		}
-		
+
 		// customer_activity
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_activity` WHERE data LIKE 'a:%'");
 

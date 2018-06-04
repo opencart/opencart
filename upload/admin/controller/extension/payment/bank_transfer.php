@@ -55,7 +55,7 @@ class ControllerExtensionPaymentBankTransfer extends Controller {
 		$data['payment_bank_transfer'] = array();
 
 		$languages = $this->model_localisation_language->getLanguages();
-		
+
 		foreach ($languages as $language) {
 			if (isset($this->request->post['payment_bank_transfer_bank' . $language['language_id']])) {
 				$data['payment_bank_transfer_bank'][$language['language_id']] = $this->request->post['payment_bank_transfer_bank' . $language['language_id']];

@@ -49,13 +49,13 @@ class ControllerExtensionDashboardSale extends Controller {
 		} else {
 			$data['dashboard_sale_width'] = $this->config->get('dashboard_sale_width');
 		}
-	
+
 		$data['columns'] = array();
-		
+
 		for ($i = 3; $i <= 12; $i++) {
 			$data['columns'][] = $i;
 		}
-				
+
 		if (isset($this->request->post['dashboard_sale_status'])) {
 			$data['dashboard_sale_status'] = $this->request->post['dashboard_sale_status'];
 		} else {
@@ -82,7 +82,7 @@ class ControllerExtensionDashboardSale extends Controller {
 
 		return !$this->error;
 	}
-	
+
 	public function dashboard() {
 		$this->load->language('extension/dashboard/sale');
 

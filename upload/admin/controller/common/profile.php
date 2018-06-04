@@ -14,7 +14,7 @@ class ControllerCommonProfile extends Controller {
 				'user_group_id' => $this->user->getGroupId(),
 				'status'        => 1,
 			));
-			
+
 			$this->model_user_user->editUser($this->user->getId(), $user_data);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -153,7 +153,7 @@ class ControllerCommonProfile extends Controller {
 		} else {
 			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		}
-		
+
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
 		$data['header'] = $this->load->controller('common/header');

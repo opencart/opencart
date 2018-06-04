@@ -12,20 +12,20 @@
 */
 class Config {
 	private $data = array();
-    
+
 	/**
-     * 
+     *
      *
      * @param	string	$key
-	 * 
+	 *
 	 * @return	mixed
      */
 	public function get($key) {
 		return (isset($this->data[$key]) ? $this->data[$key] : null);
 	}
-	
+
     /**
-     * 
+     *
      *
      * @param	string	$key
 	 * @param	string	$value
@@ -35,7 +35,7 @@ class Config {
 	}
 
     /**
-     * 
+     *
      *
      * @param	string	$key
 	 *
@@ -44,9 +44,9 @@ class Config {
 	public function has($key) {
 		return isset($this->data[$key]);
 	}
-	
+
     /**
-     * 
+     *
      *
      * @param	string	$filename
      */

@@ -67,7 +67,7 @@ class ControllerExtensionPaymentRealex extends Controller {
 		);
 
 		$data['action'] = $this->url->link('extension/payment/realex', 'user_token=' . $this->session->data['user_token']);
-		
+
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
 
 		if (isset($this->request->post['payment_realex_merchant_id'])) {
@@ -244,7 +244,7 @@ class ControllerExtensionPaymentRealex extends Controller {
 				$data['auto_settle'] = $realex_order['settle_type'];
 
 				$data['order_id'] = (int)$this->request->get['order_id'];
-				
+
 				$data['user_token'] = $this->session->data['user_token'];
 
 				return $this->load->view('extension/payment/realex_order', $data);

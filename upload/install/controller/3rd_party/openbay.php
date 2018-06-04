@@ -2,11 +2,11 @@
 class Controller3rdPartyOpenbay extends Controller {
 	public function index() {
 		$this->load->language('3rd_party/openbay');
-		
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_openbay'] = $this->language->get('text_openbay');
 		$data['text_ebay'] = $this->language->get('text_ebay');
 		$data['text_amazon'] = $this->language->get('text_amazon');

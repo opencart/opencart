@@ -7,7 +7,7 @@ class ModelExtensionPaymentSquareup extends Model {
     const RECURRING_SUSPENDED = 4;
     const RECURRING_EXPIRED = 5;
     const RECURRING_PENDING = 6;
-    
+
     const TRANSACTION_DATE_ADDED = 0;
     const TRANSACTION_PAYMENT = 1;
     const TRANSACTION_OUTSTANDING_PAYMENT = 2;
@@ -120,13 +120,13 @@ class ModelExtensionPaymentSquareup extends Model {
         $mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
         $mail->setText(strip_tags($message));
         $mail->setHtml($message);
-        
+
         $mail->send();
     }
 
     public function cronEmail($result) {
         $mail = new Mail();
-        
+
         $mail->protocol = $this->config->get('config_mail_protocol');
         $mail->parameter = $this->config->get('config_mail_parameter');
 
@@ -310,7 +310,7 @@ class ModelExtensionPaymentSquareup extends Model {
             $number_of_successful_payments = $this->getTotalSuccessfulPayments($order_recurring_id);
 
             $total_duration = (int)$recurring_info['trial_duration'] + (int)$recurring_info['recurring_duration'];
-            
+
             // If successful payments exceed total_duration
             if ($number_of_successful_payments >= $total_duration) {
                 $this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET status='" . self::RECURRING_EXPIRED . "' WHERE order_recurring_id='" . (int)$order_recurring_id . "'");

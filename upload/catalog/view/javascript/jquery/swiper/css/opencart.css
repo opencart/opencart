@@ -34,7 +34,7 @@
 .swiper-viewport .swiper-button-next {
 	opacity: 0.7;
 	right: 10px;
-	
+
 }
 /* Desktop */
 @media (min-width: 768px){
@@ -60,7 +60,7 @@
 	width: 40px;
     height: 40px;
 	font-family: FontAwesome;
-	content: "\f053"; 
+	content: "\f053";
 	color: rgba(0,0,0,0.8);
 	font-size: 40px;
 }
@@ -68,7 +68,7 @@
 	width: 40px;
     height: 40px;
 	font-family: FontAwesome;
-	content: "\f054"; 
+	content: "\f054";
 	color: rgba(0,0,0,0.8);
 	font-size: 40px;
 }

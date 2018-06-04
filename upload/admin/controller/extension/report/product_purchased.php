@@ -60,7 +60,7 @@ class ControllerExtensionReportProductPurchased extends Controller {
 
 		$this->response->setOutput($this->load->view('extension/report/product_purchased_form', $data));
 	}
-	
+
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'extension/report/product_purchased')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -68,7 +68,7 @@ class ControllerExtensionReportProductPurchased extends Controller {
 
 		return !$this->error;
 	}
-		
+
 	public function report() {
 		$this->load->language('extension/report/product_purchased');
 

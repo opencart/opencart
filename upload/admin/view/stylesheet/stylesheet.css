@@ -363,12 +363,6 @@ legend {
     }
 }
 
-@media (min-width: 768px) {
-    .col-form-label {
-        text-align: right;
-    }
-}
-
 .image {
     width: 12rem;
 }

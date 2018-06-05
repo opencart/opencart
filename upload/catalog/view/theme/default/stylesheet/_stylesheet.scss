@@ -130,6 +130,13 @@ div.required .col-form-label:before {
   font-weight: bold;
 }
 
+@media (min-width: 768px) {
+  .col-form-label {
+    text-align: right;
+  }
+}
+
+
 /* Gradent to all drop down menus */
 .dropdown-menu {
   font-size: 1.1em;
@@ -162,48 +169,49 @@ div.required .col-form-label:before {
   margin: 0 0 20px 0;
   min-height: 44px;
 
-  .nav {
-    .list-inline {
-      .list-inline-item {
+    .nav {
+      > .list-inline {
+        > .list-inline-item {
 
-        color: #888;
-        text-shadow: 0 1px 0 #FFF;
+          color: #888;
+          text-shadow: 0 1px 0 #FFF;
+        }
       }
     }
-  }
 
-   /*
-   #form-currency {
-     .currency-select {
-       text-align: left;
-       &:hover {
-         text-shadow: none;
-         color: #ffffff;
-         background-color: #229ac8;
-         background-image: linear-gradient(to bottom, #23a1d1, #1f90bb);
-         background-repeat: repeat-x;
+
+  /*
+       #form-currency {
+         .currency-select {
+           text-align: left;
+           &:hover {
+             text-shadow: none;
+             color: #ffffff;
+             background-color: #229ac8;
+             background-image: linear-gradient(to bottom, #23a1d1, #1f90bb);
+             background-repeat: repeat-x;
+           }
+         }
        }
-     }
-   }
 
 
-   #form-language {
-     img {
-       width: 16px;
-     }
-     .language-select {
-       text-align: left;
-       &:hover {
-         text-shadow: none;
-         color: #ffffff;
-         background-color: #229ac8;
-         background-image: linear-gradient(to bottom, #23a1d1, #1f90bb);
-         background-repeat: repeat-x;
+       #form-language {
+         img {
+           width: 16px;
+         }
+         .language-select {
+           text-align: left;
+           &:hover {
+             text-shadow: none;
+             color: #ffffff;
+             background-color: #229ac8;
+             background-image: linear-gradient(to bottom, #23a1d1, #1f90bb);
+             background-repeat: repeat-x;
+           }
+         }
+
        }
-     }
-
-   }
-  */
+      */
 
   .btn-link {
     color: #888;
@@ -252,6 +260,15 @@ div.required .col-form-label:before {
   }
   */
 }
+
+
+
+
+
+
+
+
+
 
 /* logo */
 #logo {

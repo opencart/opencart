@@ -30,8 +30,7 @@ class ControllerCommonCurrency extends Controller {
 					'title'        => $result['title'],
 					'code'         => $result['code'],
 					'symbol_left'  => $result['symbol_left'],
-					'symbol_right' => $result['symbol_right'],
-					'href'         => $this->url->link('common/currency/currency', 'code=' . $result['code'] . '&redirect=' . htmlspecialchars($this->url->link($route, 'language=' . $result['code'] . $url), ENT_COMPAT, 'UTF-8'))
+					'symbol_right' => $result['symbol_right']
 				);
 			}
 		}

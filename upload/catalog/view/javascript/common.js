@@ -52,10 +52,10 @@ $(document).ready(function() {
 
 	// Highlight any found errors
 	$('.text-danger').each(function() {
-		var element = $(this).parent().parent();
+		var element = $(this).parent().find(':input');
 
-		if (element.hasClass('form-group')) {
-			element.addClass('has-error');
+		if (element.hasClass('form-control') || element.hasClass('form-check-input')) {
+			element.addClass('is-invalid');
 		}
 	});
 
@@ -340,12 +340,12 @@ $(document).delegate('.agree', 'click', function(e) {
 		type: 'get',
 		dataType: 'html',
 		success: function(data) {
-			html  = '<div id="modal-agree" class="modal">';
+			html  = '<div id="modal-agree" class="modal fade">';
 			html += '  <div class="modal-dialog">';
 			html += '    <div class="modal-content">';
 			html += '      <div class="modal-header">';
-			html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
 			html += '        <h4 class="modal-title">' + $(element).text() + '</h4>';
+			html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
 			html += '      </div>';
 			html += '      <div class="modal-body">' + data + '</div>';
 			html += '    </div>';

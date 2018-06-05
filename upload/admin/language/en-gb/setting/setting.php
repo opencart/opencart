@@ -171,7 +171,7 @@ $_['help_icon']                      = 'The icon should be a PNG that is 16px x 
 $_['help_mail_engine']               = 'Only choose \'Mail\' unless your host has disabled the php mail function.';
 $_['help_mail_parameter']            = 'When using \'Mail\', additional mail parameters can be added here (e.g. -f email@storeaddress.com).';
 $_['help_mail_smtp_hostname']        = 'Add \'tls://\' or \'ssl://\' prefix if security connection is required. (e.g. tls://smtp.gmail.com, ssl://smtp.gmail.com).';
-$_['help_mail_smtp_password']        = 'For Gmail you might need to setup an application specific password here: https://security.google.com/settings/security/apppasswords.';
+$_['help_mail_smtp_password']        = 'For Gmail you might need to setup an application specific password here: <a href="https://security.google.com/settings/security/apppasswords">https://security.google.com/settings/security/apppasswords</a>.';
 $_['help_mail_alert']                = 'Select which features you would like to receive an alert email on when a customer uses them.';
 $_['help_mail_alert_email']          = 'Any additional emails you want to receive the alert email, in addition to the main store email. (comma separated).';
 $_['help_shared']                    = 'Try to share the session cookie between stores so the cart can be passed between different domains.';

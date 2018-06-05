@@ -82,6 +82,10 @@ div.required .col-form-label:before {
   content: '* ';
   color: #f00;
   font-weight: bold; }
+
+@media (min-width: 768px) {
+  .col-form-label {
+    text-align: right; } }
 /* Gradent to all drop down menus */
 .dropdown-menu {
   font-size: 1.1em; }
@@ -159,7 +163,7 @@ div.required .col-form-label:before {
    }
    }
    */ }
-  #top .nav .list-inline .list-inline-item {
+  #top .nav > .list-inline > .list-inline-item {
     color: #888;
     text-shadow: 0 1px 0 #fff; }
   #top .btn-link {

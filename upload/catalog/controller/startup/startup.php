@@ -52,6 +52,11 @@ class ControllerStartupStartup extends Controller {
 			$code = $this->request->cookie['language'];
 		}
 
+		// No cookie then use the language in the url
+		if (!$code && isset($this->request->get['language']) && array_key_exists($this->request->get['language'], $language_codes)) {
+			$code = $this->request->get['language'];
+		}
+
 		// Language Detection
 		if (!$code && !empty($this->request->server['HTTP_ACCEPT_LANGUAGE'])) {
 			$detect = '';
@@ -98,12 +103,7 @@ class ControllerStartupStartup extends Controller {
 			$code = ($detect) ? $detect : '';
 		}
 
-		// No cookie then use the language in the url
-		if (!$code && isset($this->request->get['language']) && array_key_exists($this->request->get['language'], $language_codes)) {
-			$code = $this->request->get['language'];
-		}
-
-		// Language not avaliable then use default
+		// Language not available then use default
 		if (!array_key_exists($code, $language_codes)) {
 			$code = $this->config->get('config_language');
 		}

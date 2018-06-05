@@ -158,41 +158,52 @@ div.required .col-form-label:before {
 #top {
   background-color: #EEEEEE;
   border-bottom: 1px solid #e2e2e2;
-  padding: 4px 0px 3px 0;
+  padding: 10px 0;
   margin: 0 0 20px 0;
-  min-height: 40px;
-  .container {
-    padding: 0 20px;
-  }
+  min-height: 44px;
 
-  #form-currency {
-    .currency-select {
-      text-align: left;
-      &:hover {
-        text-shadow: none;
-        color: #ffffff;
-        background-color: #229ac8;
-        background-image: linear-gradient(to bottom, #23a1d1, #1f90bb);
-        background-repeat: repeat-x;
+  .nav {
+    .list-inline {
+      .list-inline-item {
+
+        color: #888;
+        text-shadow: 0 1px 0 #FFF;
       }
     }
   }
-  #form-language {
-    img {
-      width: 16px;
-    }
-    .language-select {
-      text-align: left;
-      &:hover {
-        text-shadow: none;
-        color: #ffffff;
-        background-color: #229ac8;
-        background-image: linear-gradient(to bottom, #23a1d1, #1f90bb);
-        background-repeat: repeat-x;
-      }
-    }
 
-  }
+   /*
+   #form-currency {
+     .currency-select {
+       text-align: left;
+       &:hover {
+         text-shadow: none;
+         color: #ffffff;
+         background-color: #229ac8;
+         background-image: linear-gradient(to bottom, #23a1d1, #1f90bb);
+         background-repeat: repeat-x;
+       }
+     }
+   }
+
+
+   #form-language {
+     img {
+       width: 16px;
+     }
+     .language-select {
+       text-align: left;
+       &:hover {
+         text-shadow: none;
+         color: #ffffff;
+         background-color: #229ac8;
+         background-image: linear-gradient(to bottom, #23a1d1, #1f90bb);
+         background-repeat: repeat-x;
+       }
+     }
+
+   }
+  */
 
   .btn-link {
     color: #888;
@@ -207,6 +218,12 @@ div.required .col-form-label:before {
       line-height: 14px;
     }
   }
+
+
+
+
+
+/*
   #top-links {
     padding-top: 6px;
 
@@ -224,12 +241,6 @@ div.required .col-form-label:before {
       }
     }
 
-    a {
-      + a {
-        margin-left: 15px;
-      }
-    }
-
     .dropdown-menu {
       a {
         text-shadow: none;
@@ -239,6 +250,7 @@ div.required .col-form-label:before {
       }
     }
   }
+  */
 }
 
 /* logo */
@@ -1063,7 +1075,6 @@ div.required .col-form-label:before {
   }
 }
 
-
 #checkout-cart h4.collapsed {
 
 }
@@ -1071,8 +1082,6 @@ div.required .col-form-label:before {
 #checkout-checkout {
 
 }
-
-
 
 #product-product {
   h1 {

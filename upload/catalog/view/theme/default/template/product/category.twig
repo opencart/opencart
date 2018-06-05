@@ -50,7 +50,6 @@
         {% endif %}
       {% endif %}
       {% if products %}
-
         <div id="display-control" class="row">
           <div class="col-md-1 d-none d-sm-none d-md-block">
             <div class="btn-group btn-group-sm">
@@ -63,36 +62,19 @@
               <a href="{{ compare }}" id="compare-total" class="btn btn-primary btn-block"><i class="fa fa-sliders"></i> {{ text_compare }}</a>
             </div>
           </div>
-
           <div class="col-md-4 offset-md-1 col-6">
             <div class="input-group input-group-sm mb-3">
               <div class="input-group-prepend">
                 <label class="input-group-text" for="input-sort">{{ text_sort }}</label>
               </div>
               <select id="input-sort" class="form-control" onchange="location = this.value;">
-
-
                 {% for sorts in sorts %}
                   {% if sorts.value == '%s-%s'|format(sort, order) %}
-
-
-
                     <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
-
-
-
                   {% else %}
-
-
-
                     <option value="{{ sorts.href }}">{{ sorts.text }}</option>
-
-
-
                   {% endif %}
                 {% endfor %}
-
-
               </select>
             </div>
           </div>
@@ -102,29 +84,13 @@
                 <label class="input-group-text" for="input-limit">{{ text_limit }}</label>
               </div>
               <select id="input-limit" class="form-control" onchange="location = this.value;">
-
-
                 {% for limits in limits %}
                   {% if limits.value == limit %}
-
-
-
                     <option value="{{ limits.href }}" selected="selected">{{ limits.text }}</option>
-
-
-
                   {% else %}
-
-
-
                     <option value="{{ limits.href }}">{{ limits.text }}</option>
-
-
-
                   {% endif %}
                 {% endfor %}
-
-
               </select>
             </div>
           </div>
@@ -173,7 +139,9 @@
           <div class="float-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
         </div>
       {% endif %}
-      {{ content_bottom }}</div>
-    {{ column_right }}</div>
+      {{ content_bottom }}
+    </div>
+    {{ column_right }}
+  </div>
 </div>
 {{ footer }}

@@ -103,29 +103,65 @@ div.required .col-form-label:before {
 #top {
   background-color: #eee;
   border-bottom: 1px solid #e2e2e2;
-  padding: 4px 0px 3px 0;
+  padding: 10px 0;
   margin: 0 0 20px 0;
-  min-height: 40px; }
-  #top .container {
-    padding: 0 20px; }
-  #top #form-currency .currency-select {
-    text-align: left; }
-    #top #form-currency .currency-select:hover {
-      text-shadow: none;
-      color: #fff;
-      background-color: #229ac8;
-      background-image: linear-gradient(to bottom, #23a1d1, #1f90bb);
-      background-repeat: repeat-x; }
-  #top #form-language img {
-    width: 16px; }
-    #top #form-language .language-select {
-      text-align: left; }
-    #top #form-language .language-select:hover {
-      text-shadow: none;
-      color: #fff;
-      background-color: #229ac8;
-      background-image: linear-gradient(to bottom, #23a1d1, #1f90bb);
-      background-repeat: repeat-x; }
+  min-height: 44px;
+  /*
+   #form-currency {
+   .currency-select {
+   text-align: left;
+   &:hover {
+   text-shadow: none;
+   color: #ffffff;
+   background-color: #229ac8;
+   background-image: linear-gradient(to bottom, #23a1d1, #1f90bb);
+   background-repeat: repeat-x;
+   }
+   }
+   }
+   #form-language {
+   img {
+   width: 16px;
+   }
+   .language-select {
+   text-align: left;
+   &:hover {
+   text-shadow: none;
+   color: #ffffff;
+   background-color: #229ac8;
+   background-image: linear-gradient(to bottom, #23a1d1, #1f90bb);
+   background-repeat: repeat-x;
+   }
+   }
+   }
+   */
+  /*
+   #top-links {
+   padding-top: 6px;
+   li {
+   &,
+   a {
+   color: #888;
+   text-shadow: 0 1px 0 #fff;
+   text-decoration: none;
+   &:hover {
+   color: #444;
+   }
+   }
+   }
+   .dropdown-menu {
+   a {
+   text-shadow: none;
+   &:hover {
+   color: #fff;
+   }
+   }
+   }
+   }
+   */ }
+  #top .nav .list-inline .list-inline-item {
+    color: #888;
+    text-shadow: 0 1px 0 #fff; }
   #top .btn-link {
     color: #888;
     text-shadow: 0 1px 0 #fff;
@@ -135,20 +171,6 @@ div.required .col-form-label:before {
     #top .btn-link strong {
       font-size: 14px;
       line-height: 14px; }
-  #top #top-links {
-    padding-top: 6px; }
-    #top #top-links li, #top #top-links li a {
-      color: #888;
-      text-shadow: 0 1px 0 #fff;
-      text-decoration: none; }
-      #top #top-links li:hover, #top #top-links li a:hover {
-        color: #444; }
-    #top #top-links a + a {
-      margin-left: 15px; }
-    #top #top-links .dropdown-menu a {
-      text-shadow: none; }
-      #top #top-links .dropdown-menu a:hover {
-        color: #fff; }
 /* logo */
 #logo {
   margin: 0 0 10px 0; }

@@ -93,7 +93,7 @@ $(document).on('change', 'input[name=\'account\']', function() {
 {% if not logged %}
 $(document).ready(function() {
 	$.ajax({
-		url: 'index.php?route=checkout/login',
+		url: 'index.php?route=checkout/login&language={{ language }}',
 		dataType: 'html',
 		success: function(html) {
 			$('#collapse-checkout-option .card-body').html(html);
@@ -112,7 +112,7 @@ $(document).ready(function() {
 {% else %}
 $(document).ready(function() {
 	$.ajax({
-		url: 'index.php?route=checkout/payment_address',
+		url: 'index.php?route=checkout/payment_address&language={{ language }}',
 		dataType: 'html',
 		success: function(html) {
 			$('#collapse-payment-address .card-body').html(html);
@@ -131,7 +131,7 @@ $(document).ready(function() {
 // Checkout
 $(document).delegate('#button-account', 'click', function() {
 	$.ajax({
-		url: 'index.php?route=checkout/' + $('input[name=\'account\']:checked').val(),
+		url: 'index.php?route=checkout/' + $('input[name=\'account\']:checked').val() + '&language={{ language }}',
 		dataType: 'html',
 		beforeSend: function() {
 			$('#button-account').button('loading');
@@ -163,7 +163,7 @@ $(document).delegate('#button-account', 'click', function() {
 // Login
 $(document).delegate('#button-login', 'click', function() {
 	$.ajax({
-		url: 'index.php?route=checkout/login/save',
+		url: 'index.php?route=checkout/login/save&language={{ language }}',
 		type: 'post',
 		data: $('#collapse-checkout-option :input'),
 		dataType: 'json',
@@ -195,7 +195,7 @@ $(document).delegate('#button-login', 'click', function() {
 // Register
 $(document).delegate('#button-register', 'click', function() {
 	$.ajax({
-		url: 'index.php?route=checkout/register/save',
+		url: 'index.php?route=checkout/register/save&language={{ language }}',
 		type: 'post',
 		data: $('#collapse-payment-address input[type=\'text\'], #collapse-payment-address input[type=\'date\'], #collapse-payment-address input[type=\'datetime-local\'], #collapse-payment-address input[type=\'time\'], #collapse-payment-address input[type=\'password\'], #collapse-payment-address input[type=\'hidden\'], #collapse-payment-address input[type=\'checkbox\']:checked, #collapse-payment-address input[type=\'radio\']:checked, #collapse-payment-address textarea, #collapse-payment-address select'),
 		dataType: 'json',
@@ -238,7 +238,7 @@ $(document).delegate('#button-register', 'click', function() {
 						success: function(html) {
 							// Add the shipping address
 							$.ajax({
-								url: 'index.php?route=checkout/shipping_address',
+								url: 'index.php?route=checkout/shipping_address&language={{ language }}',
 								dataType: 'html',
 								success: function(html) {
 									$('#collapse-shipping-address .card-body').html(html);

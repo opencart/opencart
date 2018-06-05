@@ -137,7 +137,7 @@ class ControllerMarketplaceModification extends Controller {
 				if (empty($xml)){
 					continue;
 				}
-				
+
 				$dom = new DOMDocument('1.0', 'UTF-8');
 				$dom->preserveWhiteSpace = false;
 				$dom->loadXml($xml);
@@ -577,11 +577,11 @@ class ControllerMarketplaceModification extends Controller {
 
 	public function clearlog() {
 		$this->load->language('marketplace/modification');
-		
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/modification');
-		
+
 		if ($this->validate()) {
 			$handle = fopen(DIR_LOGS . 'ocmod.log', 'w+');
 

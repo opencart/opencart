@@ -10,7 +10,7 @@ class ModelUpgrade1006 extends Model {
 
 		// Update the template setting for v1.5.x
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'config_theme', value = 'default' WHERE `key` = 'config_template' AND `value` = 'default'");
-		
+
 		// update the template setting for v2.x
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET value = 'default' WHERE `key` = 'config_theme'");
 
@@ -50,7 +50,7 @@ class ModelUpgrade1006 extends Model {
 					fclose($handle);
 				}
 			}
-		}			
+		}
 
 		// Update the config.php to add /storage/ to paths
 		if (is_file(DIR_OPENCART . 'config.php')) {

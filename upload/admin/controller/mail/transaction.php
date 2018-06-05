@@ -6,27 +6,27 @@ class ControllerMailTransaction extends Controller {
 		} else {
 			$customer_id = '';
 		}
-		
+
 		if (isset($args[1])) {
 			$description = $args[1];
 		} else {
 			$description = '';
-		}		
-		
+		}
+
 		if (isset($args[2])) {
 			$amount = $args[2];
 		} else {
 			$amount = '';
 		}
-		
+
 		if (isset($args[3])) {
 			$order_id = $args[3];
 		} else {
 			$order_id = '';
 		}
-			
+
 		$this->load->model('customer/customer');
-						
+
 		$customer_info = $this->model_customer_customer->getCustomer($customer_id);
 
 		if ($customer_info) {
@@ -58,7 +58,7 @@ class ControllerMailTransaction extends Controller {
 
 			$data['text_received'] = sprintf($language->get('text_received'), $this->currency->format($amount, $this->config->get('config_currency')));
 			$data['text_total'] = sprintf($language->get('text_total'), $this->currency->format($this->model_customer_customer->getTransactionTotal($customer_id), $this->config->get('config_currency')));
-			
+
 			$mail = new Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
@@ -74,5 +74,5 @@ class ControllerMailTransaction extends Controller {
 			$mail->setText($this->load->view('mail/transaction', $data));
 			$mail->send();
 		}
-	}		
-}	
+	}
+}

@@ -139,7 +139,7 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
             onZoomClick(e, delta < 0);
             return false;
         }
-        
+
         var prevCursor = 'default', prevPageX = 0, prevPageY = 0,
             panTimeout = null;
 
@@ -153,7 +153,7 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
             prevPageX = e.pageX;
             prevPageY = e.pageY;
         }
-        
+
         function onDrag(e) {
             var frameRate = plot.getOptions().pan.frameRate;
             if (panTimeout || !frameRate)
@@ -164,7 +164,7 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
                            top: prevPageY - e.pageY });
                 prevPageX = e.pageX;
                 prevPageY = e.pageY;
-                                                    
+
                 panTimeout = null;
             }, 1 / frameRate * 1000);
         }
@@ -174,12 +174,12 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
                 clearTimeout(panTimeout);
                 panTimeout = null;
             }
-                    
+
             plot.getPlaceholder().css('cursor', prevCursor);
             plot.pan({ left: prevPageX - e.pageX,
                        top: prevPageY - e.pageY });
         }
-        
+
         function bindEvents(plot, eventHolder) {
             var o = plot.getOptions();
             if (o.zoom.interactive) {
@@ -197,25 +197,25 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
         plot.zoomOut = function (args) {
             if (!args)
                 args = {};
-            
+
             if (!args.amount)
                 args.amount = plot.getOptions().zoom.amount;
 
             args.amount = 1 / args.amount;
             plot.zoom(args);
         };
-        
+
         plot.zoom = function (args) {
             if (!args)
                 args = {};
-            
+
             var c = args.center,
                 amount = args.amount || plot.getOptions().zoom.amount,
                 w = plot.width(), h = plot.height();
 
             if (!c)
                 c = { left: w / 2, top: h / 2 };
-                
+
             var xf = c.left / w,
                 yf = c.top / h,
                 minmax = {
@@ -238,7 +238,7 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
 
                 if (zr === false) // no zooming on this axis
                     return;
-                    
+
                 min = axis.c2p(min);
                 max = axis.c2p(max);
                 if (min > max) {
@@ -263,14 +263,14 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
                     ((zr[0] != null && range < zr[0]) ||
                      (zr[1] != null && range > zr[1])))
                     return;
-            
+
                 opts.min = min;
                 opts.max = max;
             });
-            
+
             plot.setupGrid();
             plot.draw();
-            
+
             if (!args.preventEvent)
                 plot.getPlaceholder().trigger("plotzoom", [ plot, args ]);
         };
@@ -296,7 +296,7 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
                 var pr = opts.panRange;
                 if (pr === false) // no panning on this axis
                     return;
-                
+
                 if (pr) {
                     // check whether we hit the wall
                     if (pr[0] != null && pr[0] > min) {
@@ -304,21 +304,21 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
                         min += d;
                         max += d;
                     }
-                    
+
                     if (pr[1] != null && pr[1] < max) {
                         d = pr[1] - max;
                         min += d;
                         max += d;
                     }
                 }
-                
+
                 opts.min = min;
                 opts.max = max;
             });
-            
+
             plot.setupGrid();
             plot.draw();
-            
+
             if (!args.preventEvent)
                 plot.getPlaceholder().trigger("plotpan", [ plot, args ]);
         };
@@ -332,11 +332,11 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
             if (panTimeout)
                 clearTimeout(panTimeout);
         }
-        
+
         plot.hooks.bindEvents.push(bindEvents);
         plot.hooks.shutdown.push(shutdown);
     }
-    
+
     $.plot.plugins.push({
         init: init,
         options: options,

@@ -60,7 +60,7 @@ class ControllerExtensionReportProductViewed extends Controller {
 
 		$this->response->setOutput($this->load->view('extension/report/product_viewed_form', $data));
 	}
-	
+
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'extension/report/product_viewed')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -68,7 +68,7 @@ class ControllerExtensionReportProductViewed extends Controller {
 
 		return !$this->error;
 	}
-		
+
 	public function report() {
 		$this->load->language('extension/report/product_viewed');
 
@@ -77,7 +77,7 @@ class ControllerExtensionReportProductViewed extends Controller {
 		} else {
 			$page = 1;
 		}
-		
+
 		$data['reset'] = $this->url->link('extension/report/product_viewed/reset', 'user_token=' . $this->session->data['user_token'] . '&page={page}');
 
 		$this->load->model('extension/report/product');
@@ -109,7 +109,7 @@ class ControllerExtensionReportProductViewed extends Controller {
 				'percent' => $percent . '%'
 			);
 		}
-		
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$url = '';
@@ -127,7 +127,7 @@ class ControllerExtensionReportProductViewed extends Controller {
 		$data['pagination'] = $pagination->render();
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($product_total - $this->config->get('config_limit_admin'))) ? $product_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $product_total, ceil($product_total / $this->config->get('config_limit_admin')));
-		
+
 		return $this->load->view('extension/report/product_viewed_info', $data);
 	}
 

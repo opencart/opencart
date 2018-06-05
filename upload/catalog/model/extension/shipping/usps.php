@@ -14,7 +14,7 @@ class ModelExtensionShippingUsps extends Model {
 		}
 
 		$weight = $this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->config->get('shipping_usps_weight_class_id'));
-		
+
 		// 70 pound limit
 		if ($weight > 70) {
 			$status = false;

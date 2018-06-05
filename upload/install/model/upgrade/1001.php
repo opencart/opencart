@@ -91,7 +91,7 @@ class ModelUpgrade1001 extends Model {
 				$this->db->query("ALTER TABLE `" . DB_PREFIX . "setting` CHANGE `group` `code` varchar(128) NOT NULL");
 			}
 		}
-		
+
 		// tags
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "product_tag'");
 

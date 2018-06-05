@@ -345,7 +345,7 @@ class ControllerLocalisationLocation extends Controller {
 		} else {
 			$data['telephone'] = '';
 		}
-		
+
 		if (isset($this->request->post['fax'])) {
 			$data['fax'] = $this->request->post['fax'];
 		} elseif (!empty($location_info)) {
@@ -353,7 +353,7 @@ class ControllerLocalisationLocation extends Controller {
 		} else {
 			$data['fax'] = '';
 		}
-		
+
 		if (isset($this->request->post['image'])) {
 			$data['image'] = $this->request->post['image'];
 		} elseif (!empty($location_info)) {

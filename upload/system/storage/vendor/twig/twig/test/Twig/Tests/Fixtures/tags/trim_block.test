@@ -17,9 +17,9 @@ Trim on output tag:
 
 
 Trim comments:
-      
+
 {#- Invisible -#}
-       
+
 After the comment.
 
 Trim leading space:
@@ -35,7 +35,7 @@ Trim leading space:
 
 
 Trim trailing space:
-{% if trailing -%}          
+{% if trailing -%}
 	{{ trailing -}}
 
 {% endif -%}

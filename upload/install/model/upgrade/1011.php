@@ -9,17 +9,17 @@
 
 /**
 * Upgrade file for updating setting table columns
-* 
+*
 */
 class ModelUpgrade1011 extends Model {
 	public function upgrade() {
 		//get all setting columns from extension table
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension`");	
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension`");
 
 		foreach ($query->rows as $extension) {
 			//get all setting from setting table
-			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE code = '" . $extension['code'] . "'");	
-			
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE code = '" . $extension['code'] . "'");
+
 			if ($query->num_rows) {
 				foreach ($query->rows as $result) {
 					//update old column name to adding prefix before the name
@@ -27,7 +27,7 @@ class ModelUpgrade1011 extends Model {
 						$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `code` = '" . $this->db->escape($extension['type'] . "_" . $extension['code']) . "', `key` = '" . $this->db->escape($extension['type'] . "_" . $result['key']) . "', `value` = '" . $this->db->escape($result['value']) . "' WHERE `setting_id` = '" . (int)$result['setting_id'] . "'");
 					}
 				}
-			}	
+			}
 		}
 	}
 }

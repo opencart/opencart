@@ -60,7 +60,7 @@ class ControllerExtensionReportMarketing extends Controller {
 
 		$this->response->setOutput($this->load->view('extension/report/marketing_form', $data));
 	}
-	
+
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'extension/report/marketing')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -68,7 +68,7 @@ class ControllerExtensionReportMarketing extends Controller {
 
 		return !$this->error;
 	}
-	
+
 	public function report() {
 		$this->load->language('extension/report/marketing');
 

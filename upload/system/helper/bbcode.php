@@ -67,4 +67,4 @@ function bbcode_decode($string) {
 	$string = preg_replace($pattern, $replace, $string);
 
 	return $string;
-}  
+}

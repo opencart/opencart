@@ -83,7 +83,7 @@ class ControllerMailAffiliate extends Controller {
 			} else {
 				$data['logo'] = '';
 			}
-			
+
 			if ($this->customer->isLogged()) {
 				$customer_group_id = $this->customer->getGroupId();
 

@@ -104,7 +104,7 @@ class ControllerExtensionCreditCardSagepayDirect extends Controller {
 			'text' => $this->language->get('text_account'),
 			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
 		);
-		
+
 		$data['add'] = $this->url->link('extension/credit_card/sagepay_direct/addCard', 'language=' . $this->config->get('config_language'));
 		$data['back'] = $this->url->link('extension/credit_card/sagepay_direct', 'language=' . $this->config->get('config_language'));
 
@@ -206,17 +206,17 @@ class ControllerExtensionCreditCardSagepayDirect extends Controller {
 			} else {
 				$url = 'https://test.sagepay.com/gateway/service/removetoken.vsp';
 			}
-			
+
 			$payment_data['VPSProtocol'] = '3.00';
 			$payment_data['Vendor'] = $this->config->get('payment_sagepay_direct_vendor');
 			$payment_data['TxType'] = 'REMOVETOKEN';
 			$payment_data['Token'] = $card['token'];
 
 			$response_data = $this->model_extension_payment_sagepay_direct->sendCurl($url, $payment_data);
-			
+
 			if ($response_data['Status'] == 'OK') {
 				$this->model_extension_payment_sagepay_direct->deleteCard($this->request->get['card_id']);
-				
+
 				$this->session->data['success'] = $this->language->get('text_success_card');
 			} else {
 				$this->session->data['error_warning'] = $this->language->get('text_fail_card');
@@ -224,7 +224,7 @@ class ControllerExtensionCreditCardSagepayDirect extends Controller {
 		} else {
 			$this->session->data['error_warning'] = $this->language->get('text_fail_card');
 		}
-		
+
 		$this->response->redirect($this->url->link('acredit_card/sagepay_direct', 'language=' . $this->config->get('config_language')));
 	}
 

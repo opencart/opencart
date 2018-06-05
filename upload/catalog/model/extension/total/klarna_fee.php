@@ -2,7 +2,7 @@
 class ModelExtensionTotalKlarnaFee extends Model {
 	public function getTotal($totals) {
 		extract($totals);
-		
+
 		$this->load->language('extension/total/klarna_fee');
 
 		$status = true;

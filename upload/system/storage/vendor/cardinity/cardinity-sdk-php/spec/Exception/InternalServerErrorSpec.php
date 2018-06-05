@@ -15,7 +15,7 @@ class InternalServerErrorSpec extends ObjectBehavior
             $error
         );
     }
-    
+
     function it_should_extend_request()
     {
         $this->shouldHaveType('Cardinity\Exception\Request');

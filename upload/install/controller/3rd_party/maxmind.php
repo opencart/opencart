@@ -4,21 +4,21 @@ class Controller3rdPartyMaxmind extends Controller {
 
 	public function index() {
 		$this->load->language('3rd_party/maxmind');
-		
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('3rd_party/maxmind');
-		
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_3rd_party_maxmind->editSetting('fraud_maxmind', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->response->redirect($this->url->link('install/step_4'));
-		} 
-	
+		}
+
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_maxmind'] = $this->language->get('text_maxmind');
 		$data['text_signup'] = sprintf($this->language->get('text_signup'), '');
 
@@ -63,7 +63,7 @@ class Controller3rdPartyMaxmind extends Controller {
 		} else {
 			$data['maxmind_order_status_id'] = '';
 		}
-		
+
 		$data['order_statuses'] = $this->model_3rd_party_maxmind->getOrderStatuses();
 
 		$data['back'] = $this->url->link('install/step_4');

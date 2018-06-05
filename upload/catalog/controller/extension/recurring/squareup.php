@@ -2,7 +2,7 @@
 class ControllerExtensionRecurringSquareup extends Controller {
     public function index() {
         $this->load->language('extension/recurring/squareup');
-        
+
         $this->load->model('account/recurring');
         $this->load->model('extension/payment/squareup');
 
@@ -11,14 +11,14 @@ class ControllerExtensionRecurringSquareup extends Controller {
         } else {
             $order_recurring_id = 0;
         }
-        
+
         $recurring_info = $this->model_account_recurring->getOrderRecurring($order_recurring_id);
-        
+
         if ($recurring_info) {
             $data['cancel_url'] = html_entity_decode($this->url->link('extension/recurring/squareup/cancel', 'language=' . $this->config->get('config_language') . '&order_recurring_id=' . $order_recurring_id));
 
             $data['continue'] = $this->url->link('account/recurring', 'language=' . $this->config->get('config_language'));
-            
+
             if ($recurring_info['status'] == ModelExtensionPaymentSquareup::RECURRING_ACTIVE) {
                 $data['order_recurring_id'] = $order_recurring_id;
             } else {
@@ -28,13 +28,13 @@ class ControllerExtensionRecurringSquareup extends Controller {
             return $this->load->view('extension/recurring/squareup', $data);
         }
     }
-    
+
     public function cancel() {
         $this->load->language('extension/recurring/squareup');
-        
+
         $this->load->model('account/recurring');
         $this->load->model('extension/payment/squareup');
-        
+
         if (isset($this->request->get['order_recurring_id'])) {
             $order_recurring_id = $this->request->get['order_recurring_id'];
         } else {
@@ -42,7 +42,7 @@ class ControllerExtensionRecurringSquareup extends Controller {
         }
 
         $json = array();
-        
+
         $recurring_info = $this->model_account_recurring->getOrderRecurring($order_recurring_id);
 
         if ($recurring_info) {
@@ -65,7 +65,7 @@ class ControllerExtensionRecurringSquareup extends Controller {
 
     public function recurring() {
         $this->load->language('extension/payment/squareup');
-        
+
         $this->load->model('extension/payment/squareup');
 
         if (!$this->model_extension_payment_squareup->validateCRON()) {

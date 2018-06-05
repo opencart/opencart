@@ -6,12 +6,12 @@
 (escape_and_nl2br is an escaper filter)
 
 1. Don't escape escaper filter output
-( var is escaped by |escape_and_nl2br, line-breaks are added, 
+( var is escaped by |escape_and_nl2br, line-breaks are added,
   the output is not escaped )
 {{ var|escape_and_nl2br }}
 
 2. Don't escape escaper filter output
-( var is escaped by |escape_and_nl2br, line-breaks are added, 
+( var is escaped by |escape_and_nl2br, line-breaks are added,
   the output is not escaped, |raw is redundant )
 {{ var|escape_and_nl2br|raw }}
 
@@ -67,13 +67,13 @@ return array('var' => "<Fabien>\nTwig")
 (escape_and_nl2br is an escaper filter)
 
 1. Don't escape escaper filter output
-( var is escaped by |escape_and_nl2br, line-breaks are added, 
+( var is escaped by |escape_and_nl2br, line-breaks are added,
   the output is not escaped )
 &lt;Fabien&gt;<br />
 Twig
 
 2. Don't escape escaper filter output
-( var is escaped by |escape_and_nl2br, line-breaks are added, 
+( var is escaped by |escape_and_nl2br, line-breaks are added,
   the output is not escaped, |raw is redundant )
 &lt;Fabien&gt;<br />
 Twig

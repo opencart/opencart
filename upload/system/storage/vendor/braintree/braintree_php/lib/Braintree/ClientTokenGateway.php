@@ -7,13 +7,13 @@ class Braintree_ClientTokenGateway
      * @var Braintree_Gateway
      */
     private $_gateway;
-    
+
     /**
      *
      * @var Braintree_Configuration
      */
     private $_config;
-    
+
     /**
      *
      * @var Braintree_Http
@@ -21,7 +21,7 @@ class Braintree_ClientTokenGateway
     private $_http;
 
     /**
-     * 
+     *
      * @param Braintree_Gateway $gateway
      */
     public function __construct($gateway)
@@ -61,7 +61,7 @@ class Braintree_ClientTokenGateway
     }
 
     /**
-     * 
+     *
      * @param array $params
      * @throws InvalidArgumentException
      */
@@ -75,7 +75,7 @@ class Braintree_ClientTokenGateway
     }
 
     /**
-     * 
+     *
      * @return mixed[]
      */
     public function generateWithCustomerIdSignature()
@@ -84,7 +84,7 @@ class Braintree_ClientTokenGateway
     }
 
     /**
-     * 
+     *
      * @return string[]
      */
     public function generateWithoutCustomerIdSignature()

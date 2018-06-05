@@ -15,12 +15,12 @@ interface MethodInterface
      * HTTP method PATCH
      */
     const PATCH = 'PATCH';
-    
+
     /**
      * HTTP method GET
      */
     const GET = 'GET';
-    
+
     /**
      * HTTP method to use
      * @return string
@@ -38,7 +38,7 @@ interface MethodInterface
      * @return ResultObjectInterface
      */
     public function createResultObject();
-    
+
     /**
      * Validation constraints for fields
      * @return \Symfony\Component\Validator\Constraints\Collection

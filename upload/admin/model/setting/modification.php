@@ -11,7 +11,7 @@ class ModelSettingModification extends Model {
 	public function deleteModificationsByExtensionInstallId($extension_install_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
 	}
-	
+
 	public function enableModification($modification_id) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "modification` SET `status` = '1' WHERE `modification_id` = '" . (int)$modification_id . "'");
 	}
@@ -71,10 +71,10 @@ class ModelSettingModification extends Model {
 
 		return $query->row['total'];
 	}
-	
+
 	public function getModificationByCode($code) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "modification` WHERE `code` = '" . $this->db->escape($code) . "'");
 
 		return $query->row;
-	}	
+	}
 }

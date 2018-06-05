@@ -72,5 +72,4 @@ class ValidatorSpec extends ObjectBehavior
 
         $this->validate($method);
     }
-}   
-    
+}

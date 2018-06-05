@@ -10,33 +10,33 @@ class ControllerAccountTracking extends Controller {
 		$this->load->model('account/affiliate');
 
 		$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
-			
+
 		if ($affiliate_info) {
 			$this->load->language('account/tracking');
-	
+
 			$this->document->setTitle($this->language->get('heading_title'));
-	
+
 			$data['breadcrumbs'] = array();
-	
+
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
 				'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 			);
-	
+
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_account'),
 				'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
 			);
-	
+
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
 				'href' => $this->url->link('account/tracking', 'language=' . $this->config->get('config_language'))
 			);
-	
+
 			$data['text_description'] = sprintf($this->language->get('text_description'), $this->config->get('config_name'));
-	
+
 			$data['code'] = $affiliate_info['tracking'];
-	
+
 			$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 
 			$data['column_left'] = $this->load->controller('common/column_left');
@@ -45,7 +45,7 @@ class ControllerAccountTracking extends Controller {
 			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
-	
+
 			$this->response->setOutput($this->load->view('account/tracking', $data));
 		} else {
 			return new Action('error/not_found');
@@ -61,7 +61,7 @@ class ControllerAccountTracking extends Controller {
 			} else {
 				$tracking = '';
 			}
-			
+
 			$this->load->model('catalog/product');
 
 			$filter_data = array(

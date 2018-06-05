@@ -14,10 +14,10 @@ final class Registry {
 	private $data = array();
 
 	/**
-     * 
+     *
      *
      * @param	string	$key
-	 * 
+	 *
 	 * @return	mixed
      */
 	public function get($key) {
@@ -25,17 +25,17 @@ final class Registry {
 	}
 
     /**
-     * 
+     *
      *
      * @param	string	$key
 	 * @param	string	$value
-     */	
+     */
 	public function set($key, $value) {
 		$this->data[$key] = $value;
 	}
-	
+
     /**
-     * 
+     *
      *
      * @param	string	$key
 	 *

@@ -85,7 +85,7 @@ class Braintree_Address extends Braintree_Base
     // static methods redirecting to gateway
 
     /**
-     * 
+     *
      * @param array $attribs
      * @return Braintree_Address
      */
@@ -95,7 +95,7 @@ class Braintree_Address extends Braintree_Base
     }
 
     /**
-     * 
+     *
      * @param array $attribs
      * @return Braintree_Address
      */
@@ -105,7 +105,7 @@ class Braintree_Address extends Braintree_Base
     }
 
     /**
-     * 
+     *
      * @param Braintree_Customer|int $customerOrId
      * @param int $addressId
      * @throws InvalidArgumentException
@@ -117,7 +117,7 @@ class Braintree_Address extends Braintree_Base
     }
 
     /**
-     * 
+     *
      * @param Braintree_Customer|int $customerOrId
      * @param int $addressId
      * @throws Braintree_Exception_NotFound
@@ -129,7 +129,7 @@ class Braintree_Address extends Braintree_Base
     }
 
     /**
-     * 
+     *
      * @param Braintree_Customer|int $customerOrId
      * @param int $addressId
      * @param array $attributes

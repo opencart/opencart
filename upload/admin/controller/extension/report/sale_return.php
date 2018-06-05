@@ -60,7 +60,7 @@ class ControllerExtensionReportSaleReturn extends Controller {
 
 		$this->response->setOutput($this->load->view('extension/report/sale_return_form', $data));
 	}
-	
+
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'extension/report/sale_return')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -68,7 +68,7 @@ class ControllerExtensionReportSaleReturn extends Controller {
 
 		return !$this->error;
 	}
-	
+
 	public function report() {
 		$this->load->language('extension/report/sale_return');
 
@@ -101,7 +101,7 @@ class ControllerExtensionReportSaleReturn extends Controller {
 		} else {
 			$page = 1;
 		}
-		
+
 		$this->load->model('extension/report/return');
 
 		$data['returns'] = array();
@@ -187,7 +187,7 @@ class ControllerExtensionReportSaleReturn extends Controller {
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_group'] = $filter_group;
 		$data['filter_return_status_id'] = $filter_return_status_id;
-		
+
 		return $this->load->view('extension/report/sale_return_info', $data);
 	}
 }

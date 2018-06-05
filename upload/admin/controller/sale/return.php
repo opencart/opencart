@@ -897,7 +897,7 @@ class ControllerSaleReturn extends Controller {
 
 		$this->response->setOutput($this->load->view('sale/return_history', $data));
 	}
-	
+
 	public function addHistory() {
 		$this->load->language('sale/return');
 
@@ -915,5 +915,5 @@ class ControllerSaleReturn extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}	
+	}
 }

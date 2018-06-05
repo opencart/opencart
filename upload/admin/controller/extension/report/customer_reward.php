@@ -60,7 +60,7 @@ class ControllerExtensionReportCustomerReward extends Controller {
 
 		$this->response->setOutput($this->load->view('extension/report/customer_reward_form', $data));
 	}
-	
+
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'extension/report/customer_reward')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -68,7 +68,7 @@ class ControllerExtensionReportCustomerReward extends Controller {
 
 		return !$this->error;
 	}
-		
+
 	public function report() {
 		$this->load->language('extension/report/customer_reward');
 
@@ -154,7 +154,7 @@ class ControllerExtensionReportCustomerReward extends Controller {
 		$data['filter_date_start'] = $filter_date_start;
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_customer'] = $filter_customer;
-	
+
 		return $this->load->view('extension/report/customer_reward_info', $data);
 	}
 }

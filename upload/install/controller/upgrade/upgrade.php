@@ -4,9 +4,9 @@ class ControllerUpgradeUpgrade extends Controller {
 		$this->load->language('upgrade/upgrade');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_upgrade'] = $this->language->get('text_upgrade');
 		$data['text_server'] = $this->language->get('text_server');
 		$data['text_steps'] = $this->language->get('text_steps');
@@ -19,7 +19,7 @@ class ControllerUpgradeUpgrade extends Controller {
 		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['entry_progress'] = $this->language->get('entry_progress');
-		
+
 		$data['button_continue'] = $this->language->get('button_continue');
 
 		$data['store'] = HTTP_OPENCART;
@@ -32,10 +32,10 @@ class ControllerUpgradeUpgrade extends Controller {
 
 		$this->response->setOutput($this->load->view('upgrade/upgrade', $data));
 	}
-	
+
 	public function next() {
 		$this->load->language('upgrade/upgrade');
-				
+
 		$json = array();
 
 		if (isset($this->request->get['step'])) {
@@ -43,28 +43,28 @@ class ControllerUpgradeUpgrade extends Controller {
 		} else {
 			$step = 1;
 		}
-		
+
 		$files = glob(DIR_APPLICATION . 'model/upgrade/*.php');
 
 		if (isset($files[$step - 1])) {
 			// Get the upgrade file
 			try {
 				$this->load->model('upgrade/' . basename($files[$step - 1], '.php'));
-				
+
 				// All upgrade methods require a upgrade method
 				$this->{'model_upgrade_' . str_replace('.', '', basename($files[$step - 1], '.php'))}->upgrade();
-			
+
 				$json['success'] = sprintf($this->language->get('text_progress'), basename($files[$step - 1], '.php'), $step, count($files));
-			
+
 				$json['next'] = str_replace('&amp;', '&', $this->url->link('upgrade/upgrade/next', 'step=' . ($step + 1)));
 			} catch(Exception $exception) {
 				$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
-			}		
+			}
 		} else {
 			$json['success'] = $this->language->get('text_success');
 		}
-				
+
 		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));			
+		$this->response->setOutput(json_encode($json));
 	}
 }

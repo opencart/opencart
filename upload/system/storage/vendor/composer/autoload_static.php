@@ -12,29 +12,29 @@ class ComposerStaticInit167789ffe806ec460a83d9e4acc6ff30
     );
 
     public static $prefixLengthsPsr4 = array (
-        'W' => 
+        'W' =>
         array (
             'Wechat\\' => 7,
         ),
-        'S' => 
+        'S' =>
         array (
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Component\\Validator\\' => 28,
             'Symfony\\Component\\Translation\\' => 30,
         ),
-        'R' => 
+        'R' =>
         array (
             'React\\Promise\\' => 14,
         ),
-        'P' => 
+        'P' =>
         array (
             'Psr\\Log\\' => 8,
         ),
-        'L' => 
+        'L' =>
         array (
             'Leafo\\ScssPhp\\' => 14,
         ),
-        'G' => 
+        'G' =>
         array (
             'GuzzleHttp\\Subscriber\\Oauth\\' => 28,
             'GuzzleHttp\\Subscriber\\Log\\' => 26,
@@ -42,62 +42,62 @@ class ComposerStaticInit167789ffe806ec460a83d9e4acc6ff30
             'GuzzleHttp\\Ring\\' => 16,
             'GuzzleHttp\\' => 11,
         ),
-        'C' => 
+        'C' =>
         array (
             'Cardinity\\' => 10,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Wechat\\' => 
+        'Wechat\\' =>
         array (
             0 => __DIR__ . '/..' . '/zoujingli/wechat-php-sdk/Wechat',
         ),
-        'Symfony\\Polyfill\\Mbstring\\' => 
+        'Symfony\\Polyfill\\Mbstring\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
         ),
-        'Symfony\\Component\\Validator\\' => 
+        'Symfony\\Component\\Validator\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/validator',
         ),
-        'Symfony\\Component\\Translation\\' => 
+        'Symfony\\Component\\Translation\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/translation',
         ),
-        'React\\Promise\\' => 
+        'React\\Promise\\' =>
         array (
             0 => __DIR__ . '/..' . '/react/promise/src',
         ),
-        'Psr\\Log\\' => 
+        'Psr\\Log\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
         ),
-        'Leafo\\ScssPhp\\' => 
+        'Leafo\\ScssPhp\\' =>
         array (
             0 => __DIR__ . '/..' . '/leafo/scssphp/src',
         ),
-        'GuzzleHttp\\Subscriber\\Oauth\\' => 
+        'GuzzleHttp\\Subscriber\\Oauth\\' =>
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/oauth-subscriber/src',
         ),
-        'GuzzleHttp\\Subscriber\\Log\\' => 
+        'GuzzleHttp\\Subscriber\\Log\\' =>
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/log-subscriber/src',
         ),
-        'GuzzleHttp\\Stream\\' => 
+        'GuzzleHttp\\Stream\\' =>
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/streams/src',
         ),
-        'GuzzleHttp\\Ring\\' => 
+        'GuzzleHttp\\Ring\\' =>
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/ringphp/src',
         ),
-        'GuzzleHttp\\' => 
+        'GuzzleHttp\\' =>
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
-        'Cardinity\\' => 
+        'Cardinity\\' =>
         array (
             0 => __DIR__ . '/..' . '/cardinity/cardinity-sdk-php/src',
         ),
@@ -108,23 +108,23 @@ class ComposerStaticInit167789ffe806ec460a83d9e4acc6ff30
     );
 
     public static $prefixesPsr0 = array (
-        'T' => 
+        'T' =>
         array (
-            'Twig_' => 
+            'Twig_' =>
             array (
                 0 => __DIR__ . '/..' . '/twig/twig/lib',
             ),
         ),
-        'D' => 
+        'D' =>
         array (
-            'Divido' => 
+            'Divido' =>
             array (
                 0 => __DIR__ . '/..' . '/divido/divido-php/lib',
             ),
         ),
-        'B' => 
+        'B' =>
         array (
-            'Braintree' => 
+            'Braintree' =>
             array (
                 0 => __DIR__ . '/..' . '/braintree/braintree_php/lib',
             ),

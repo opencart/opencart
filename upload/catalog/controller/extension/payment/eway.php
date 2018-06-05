@@ -118,7 +118,7 @@ class ControllerExtensionPaymentEway extends Controller {
 		$request->TransactionType = 'Purchase';
 		$request->DeviceID = 'opencart-' . VERSION . ' eway-trans-2.1.2';
 		$request->CustomerIP = $this->request->server['REMOTE_ADDR'];
-		$request->PartnerID = '0f1bec3642814f89a2ea06e7d2800b7f';		
+		$request->PartnerID = '0f1bec3642814f89a2ea06e7d2800b7f';
 
 		$this->load->model('extension/payment/eway');
 		$template = 'eway';
@@ -273,7 +273,7 @@ class ControllerExtensionPaymentEway extends Controller {
 			}
 		}
 	}
-	
+
 	public function lowestDenomination($value, $currency) {
         $power = $this->currency->getDecimalPlace($currency);
 
@@ -281,7 +281,7 @@ class ControllerExtensionPaymentEway extends Controller {
 
         return (int)($value * pow(10, $power));
     }
-	
+
 	public function validateDenomination($value, $currency) {
         $power = $this->currency->getDecimalPlace($currency);
 

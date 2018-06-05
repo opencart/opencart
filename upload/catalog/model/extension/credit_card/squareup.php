@@ -16,7 +16,7 @@ class ModelExtensionCreditCardSquareup extends Model {
     public function getCard($squareup_token_id) {
         return $this->db->query("SELECT * FROM `" . DB_PREFIX . "squareup_token` WHERE squareup_token_id='" . (int)$squareup_token_id . "'")->row;
     }
-    
+
     public function getCards($customer_id, $sandbox) {
         return $this->db->query("SELECT * FROM `" . DB_PREFIX . "squareup_token` WHERE customer_id='" . (int)$customer_id . "' AND sandbox='" . (int)$sandbox . "'")->rows;
     }

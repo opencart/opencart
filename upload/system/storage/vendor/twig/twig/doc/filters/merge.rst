@@ -39,7 +39,7 @@ overridden.
         {% set items = { 'apple': 'unknown' }|merge(items) %}
 
         {# items now contains { 'apple': 'fruit', 'orange': 'fruit' } #}
-        
+
 .. note::
 
     Internally, Twig uses the PHP `array_merge`_ function. It supports

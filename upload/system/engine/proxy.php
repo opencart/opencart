@@ -12,24 +12,24 @@
 */
 class Proxy {
     /**
-     * 
+     *
      *
      * @param	string	$key
-     */	
+     */
 	public function &__get($key) {
 		return $this->{$key};
-	}	
+	}
 
     /**
-     * 
+     *
      *
      * @param	string	$key
 	 * @param	string	$value
-     */	
+     */
 	public function __set($key, $value) {
 		 $this->{$key} = $value;
 	}
-	
+
 	public function __call($key, $args) {
 		$arg_data = array();
 
@@ -41,7 +41,7 @@ class Proxy {
 			}
 		}
 
-		if (isset($this->{$key})) {		
+		if (isset($this->{$key})) {
 			return call_user_func_array($this->{$key}, array($args));
 		} else {
 			$trace = debug_backtrace();

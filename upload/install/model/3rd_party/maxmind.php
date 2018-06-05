@@ -15,10 +15,10 @@ class Model3rdPartyMaxmind extends Model {
 			}
 		}
 	}
-	
+
 	public function getOrderStatuses() {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `language_id` = '1' ORDER BY `name` ASC");
-		
+
 		return $query->rows;
 	}
 }

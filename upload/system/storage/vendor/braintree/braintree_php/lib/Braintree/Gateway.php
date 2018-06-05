@@ -23,7 +23,7 @@ class Braintree_Gateway
     }
 
     /**
-     * 
+     *
      * @return \Braintree_AddOnGateway
      */
     public function addOn()
@@ -32,7 +32,7 @@ class Braintree_Gateway
     }
 
     /**
-     * 
+     *
      * @return \Braintree_AddressGateway
      */
     public function address()
@@ -41,7 +41,7 @@ class Braintree_Gateway
     }
 
     /**
-     * 
+     *
      * @return \Braintree_ClientTokenGateway
      */
     public function clientToken()
@@ -50,7 +50,7 @@ class Braintree_Gateway
     }
 
     /**
-     * 
+     *
      * @return \Braintree_CreditCardGateway
      */
     public function creditCard()
@@ -59,7 +59,7 @@ class Braintree_Gateway
     }
 
     /**
-     * 
+     *
      * @return \Braintree_CreditCardVerificationGateway
      */
     public function creditCardVerification()
@@ -68,7 +68,7 @@ class Braintree_Gateway
     }
 
     /**
-     * 
+     *
      * @return \Braintree_CustomerGateway
      */
     public function customer()
@@ -77,7 +77,7 @@ class Braintree_Gateway
     }
 
     /**
-     * 
+     *
      * @return \Braintree_DiscountGateway
      */
     public function discount()
@@ -86,7 +86,7 @@ class Braintree_Gateway
     }
 
     /**
-     * 
+     *
      * @return \Braintree_MerchantGateway
      */
     public function merchant()
@@ -95,7 +95,7 @@ class Braintree_Gateway
     }
 
     /**
-     * 
+     *
      * @return \Braintree_MerchantAccountGateway
      */
     public function merchantAccount()
@@ -104,7 +104,7 @@ class Braintree_Gateway
     }
 
     /**
-     * 
+     *
      * @return \Braintree_OAuthGateway
      */
     public function oauth()
@@ -113,7 +113,7 @@ class Braintree_Gateway
     }
 
     /**
-     * 
+     *
      * @return \Braintree_PaymentMethodGateway
      */
     public function paymentMethod()
@@ -122,7 +122,7 @@ class Braintree_Gateway
     }
 
     /**
-     * 
+     *
      * @return \Braintree_PaymentMethodNonceGateway
      */
     public function paymentMethodNonce()
@@ -131,7 +131,7 @@ class Braintree_Gateway
     }
 
     /**
-     * 
+     *
      * @return \Braintree_PayPalAccountGateway
      */
     public function payPalAccount()
@@ -140,7 +140,7 @@ class Braintree_Gateway
     }
 
     /**
-     * 
+     *
      * @return \Braintree_PlanGateway
      */
     public function plan()
@@ -149,7 +149,7 @@ class Braintree_Gateway
     }
 
     /**
-     * 
+     *
      * @return \Braintree_SettlementBatchSummaryGateway
      */
     public function settlementBatchSummary()
@@ -158,7 +158,7 @@ class Braintree_Gateway
     }
 
     /**
-     * 
+     *
      * @return \Braintree_SubscriptionGateway
      */
     public function subscription()
@@ -167,7 +167,7 @@ class Braintree_Gateway
     }
 
     /**
-     * 
+     *
      * @return \Braintree_TransactionGateway
      */
     public function transaction()
@@ -176,7 +176,7 @@ class Braintree_Gateway
     }
 
     /**
-     * 
+     *
      * @return \Braintree_TransparentRedirectGateway
      */
     public function transparentRedirect()

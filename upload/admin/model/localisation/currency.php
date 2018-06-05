@@ -6,7 +6,7 @@ class ModelLocalisationCurrency extends Model {
 		$currency_id = $this->db->getLastId();
 
 		$this->cache->delete('currency');
-		
+
 		return $currency_id;
 	}
 

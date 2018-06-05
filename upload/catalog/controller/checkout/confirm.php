@@ -109,7 +109,7 @@ class ControllerCheckoutConfirm extends Controller {
 			} else {
 				$order_data['store_url'] = HTTP_SERVER;
 			}
-			
+
 			$this->load->model('account/customer');
 
 			if ($this->customer->isLogged()) {

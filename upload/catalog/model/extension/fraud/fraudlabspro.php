@@ -23,7 +23,7 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 		// Get real client IP is they are behind proxy server.
 		if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
 			$xip = trim(current(explode(',', $_SERVER['HTTP_X_FORWARDED_FOR'])));
-			
+
 			if (filter_var($xip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
 				$ip = $xip;
 			}
@@ -55,7 +55,7 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 			$request['ship_zip_code'] = $data['shipping_postcode'];
 			$request['ship_country'] = $data['shipping_iso_code_2'];
 		}
-		
+
 		$request['email'] = $data['email'];
 		$request['email_hash'] = $this->hashIt($data['email']);
 		$request['amount'] = $this->currency->format($data['total'], $data['currency_code'], $data['currency_value'], false);

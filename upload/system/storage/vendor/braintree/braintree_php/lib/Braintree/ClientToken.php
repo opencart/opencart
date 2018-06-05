@@ -8,7 +8,7 @@ class Braintree_ClientToken
     // static methods redirecting to gateway
 
     /**
-     * 
+     *
      * @param array $params
      * @return array
      */
@@ -18,7 +18,7 @@ class Braintree_ClientToken
     }
 
     /**
-     * 
+     *
      * @param type $params
      * @throws InvalidArgumentException
      */
@@ -28,7 +28,7 @@ class Braintree_ClientToken
     }
 
     /**
-     * 
+     *
      * @return string client token retrieved from server
      */
     public static function generateWithCustomerIdSignature()
@@ -37,7 +37,7 @@ class Braintree_ClientToken
     }
 
     /**
-     * 
+     *
      * @return string client token retrieved from server
      */
     public static function generateWithoutCustomerIdSignature()

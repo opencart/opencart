@@ -7,13 +7,13 @@ class Braintree_AddOnGateway
      * @var Braintree_Gateway
      */
     private $_gateway;
-    
+
     /**
      *
      * @var Braintree_Configuration
      */
     private $_config;
-    
+
     /**
      *
      * @var Braintree_Http
@@ -21,7 +21,7 @@ class Braintree_AddOnGateway
     private $_http;
 
     /**
-     * 
+     *
      * @param Braintree_Gateway $gateway
      */
     public function __construct($gateway)
@@ -33,7 +33,7 @@ class Braintree_AddOnGateway
     }
 
     /**
-     * 
+     *
      * @return Braintree_AddOn[]
      */
     public function all()

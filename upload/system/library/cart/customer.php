@@ -51,7 +51,7 @@ class Customer {
 					return false;
 				}
 			}
-			
+
 			$this->session->data['customer_id'] = $customer_query->row['customer_id'];
 
 			$this->customer_id = $customer_query->row['customer_id'];

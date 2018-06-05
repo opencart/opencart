@@ -8,7 +8,7 @@ middleware.
 Handlers
 --------
 
-Handlers are implemented as a PHP ``callable`` that accept a request array 
+Handlers are implemented as a PHP ``callable`` that accept a request array
 and return a response array (``GuzzleHttp\Ring\Future\FutureArrayInterface``).
 
 For example:

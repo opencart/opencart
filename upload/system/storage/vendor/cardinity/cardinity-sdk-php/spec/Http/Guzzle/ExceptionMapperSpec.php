@@ -52,7 +52,7 @@ class ExceptionMapperSpec extends ObjectBehavior
         $response->json()->willReturn([]);
         $response->getStatusCode()->willReturn(999);
         $exception->getResponse()->willReturn($response);
-        
+
         $this
             ->get($exception, $method)
             ->shouldReturnAnInstanceOf('Cardinity\Exception\UnexpectedResponse')

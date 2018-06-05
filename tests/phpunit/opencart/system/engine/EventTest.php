@@ -10,7 +10,7 @@ class EventTest extends OpenCartTest {
 		$actionMock = $this->getMockBuilder('Action')
 			->disableOriginalConstructor()
 			->getMock();
-			
+
 		$actionMock->expects($this->exactly(3))
 			->method('execute');
 

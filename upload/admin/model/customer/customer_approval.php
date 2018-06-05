@@ -10,15 +10,15 @@ class ModelCustomerCustomerApproval extends Model {
 		if (!empty($data['filter_email'])) {
 			$sql .= " AND c.`email` LIKE '" . $this->db->escape((string)$data['filter_email']) . "%'";
 		}
-		
+
 		if (!empty($data['filter_customer_group_id'])) {
 			$sql .= " AND c.`customer_group_id` = '" . (int)$data['filter_customer_group_id'] . "'";
 		}
-		
+
 		if (!empty($data['filter_type'])) {
 			$sql .= " AND ca.`type` = '" . $this->db->escape((string)$data['filter_type']) . "'";
 		}
-		
+
 		if (!empty($data['filter_date_added'])) {
 			$sql .= " AND DATE(c.`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
 		}
@@ -41,13 +41,13 @@ class ModelCustomerCustomerApproval extends Model {
 
 		return $query->rows;
 	}
-	
+
 	public function getCustomerApproval($customer_approval_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_approval` WHERE `customer_approval_id` = '" . (int)$customer_approval_id . "'");
-		
+
 		return $query->row;
 	}
-	
+
 	public function getTotalCustomerApprovals($data = array()) {
 		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_approval` ca LEFT JOIN `" . DB_PREFIX . "customer` c ON (ca.`customer_id` = c.`customer_id`)";
 
@@ -64,11 +64,11 @@ class ModelCustomerCustomerApproval extends Model {
 		if (!empty($data['filter_customer_group_id'])) {
 			$implode[] = "c.`customer_group_id` = '" . (int)$data['filter_customer_group_id'] . "'";
 		}
-		
+
 		if (!empty($data['filter_type'])) {
 			$implode[] = "ca.`type` = '" . $this->db->escape((string)$data['filter_type']) . "'";
 		}
-		
+
 		if (!empty($data['filter_date_added'])) {
 			$implode[] = "DATE(ca.`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
 		}
@@ -81,7 +81,7 @@ class ModelCustomerCustomerApproval extends Model {
 
 		return $query->row['total'];
 	}
-	
+
 	public function approveCustomer($customer_id) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET status = '1' WHERE customer_id = '" . (int)$customer_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_approval` WHERE customer_id = '" . (int)$customer_id . "' AND `type` = 'customer'");
@@ -95,8 +95,8 @@ class ModelCustomerCustomerApproval extends Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "customer_affiliate` SET status = '1' WHERE customer_id = '" . (int)$customer_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_approval` WHERE customer_id = '" . (int)$customer_id . "' AND `type` = 'affiliate'");
 	}
-	
+
 	public function denyAffiliate($customer_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_approval` WHERE customer_id = '" . (int)$customer_id . "' AND `type` = 'affiliate'");
-	}	
+	}
 }

@@ -20,7 +20,7 @@ class ControllerExtensionDashboardActivity extends Controller {
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$data['error_warning'] = ''; 
+			$data['error_warning'] = '';
 		}
 
 		$data['breadcrumbs'] = array();
@@ -49,13 +49,13 @@ class ControllerExtensionDashboardActivity extends Controller {
 		} else {
 			$data['dashboard_activity_width'] = $this->config->get('dashboard_activity_width');
 		}
-		
+
 		$data['columns'] = array();
-		
+
 		for ($i = 3; $i <= 12; $i++) {
 			$data['columns'][] = $i;
 		}
-		
+
 		if (isset($this->request->post['dashboard_activity_status'])) {
 			$data['dashboard_activity_status'] = $this->request->post['dashboard_activity_status'];
 		} else {
@@ -82,7 +82,7 @@ class ControllerExtensionDashboardActivity extends Controller {
 
 		return !$this->error;
 	}
-	
+
 	public function dashboard() {
 		$this->load->language('extension/dashboard/activity');
 

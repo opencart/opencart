@@ -55,7 +55,7 @@ if ($_POST) {
 } else {
 	?>
 		<form method="post">
-			
+
 			<table width="400">
 				<tr>
 					<td>Finance:</td>

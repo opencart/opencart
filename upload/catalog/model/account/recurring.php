@@ -19,7 +19,7 @@ class ModelAccountRecurring extends Model {
 
 		return $query->rows;
 	}
-	
+
 	public function getOrderRecurringByReference($reference) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_recurring` WHERE `reference` = '" . $this->db->escape($reference) . "'");
 
@@ -37,12 +37,12 @@ class ModelAccountRecurring extends Model {
 
 		return $query->row['total'];
 	}
-	
+
 	public function addOrderRecurringTransaction($order_recurring_id, $type) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$order_recurring_id . "', `date_added` = NOW(), `type` = '" . (int)$type . "'");
-	}	
-	
+	}
+
 	public function editOrderRecurringStatus($order_recurring_id, $status) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = '" . (int)$status . "' WHERE `order_recurring_id` = '" . (int)$order_recurring_id . "'");
-	}	
+	}
 }

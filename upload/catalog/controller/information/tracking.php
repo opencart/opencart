@@ -19,12 +19,12 @@ class ControllerInformationTracking extends Controller {
 
 		$this->response->setOutput($this->load->view('information/tracking', $data));
 	}
-	
+
 	public function track() {
 		$json = array();
-		
+
 		$this->load->model('account/shipping');
-		
+
 		$this->model_account_shipping->getShippingByCode($this->request->get['code']);
 	}
 }

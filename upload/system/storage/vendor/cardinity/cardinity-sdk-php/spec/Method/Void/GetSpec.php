@@ -53,7 +53,7 @@ class GetSpec extends ObjectBehavior
             ->shouldReturnAnInstanceOf('Cardinity\Method\Void\Void')
         ;
     }
-    
+
     function it_has_validation_constraints()
     {
         $this

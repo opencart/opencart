@@ -33,7 +33,7 @@ return array('items' => new ItemsIterator())
 
   * foo
   * 2/1
-  * 
+  *
 
 
   * foo/bar

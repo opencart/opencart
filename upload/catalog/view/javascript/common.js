@@ -54,7 +54,7 @@ $(document).ready(function() {
 	$('.text-danger').each(function() {
 		var element = $(this).parent().find(':input');
 
-		if (element.hasClass('form-control') || element.hasClass('form-check-input')) {
+		if (element.hasClass('form-control')) {
 			element.addClass('is-invalid');
 		}
 	});

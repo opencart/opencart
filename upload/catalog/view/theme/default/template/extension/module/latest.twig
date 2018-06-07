@@ -1,5 +1,6 @@
 <h3>{{ heading_title }}</h3>
-<div class="row"> {% for product in products %}
+<div class="row">
+  {% for product in products %}
     <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-12">
       <div class="product-thumb transition">
         <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-fluid"/></a></div>
@@ -9,7 +10,11 @@
           {% if product.rating %}
             <div class="rating">
               {% for i in 1..5 %}
-                {% if product.rating < i %} <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> {% endif %}
+                {% if product.rating < i %}
+                  <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                {% else %}
+                  <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                {% endif %}
               {% endfor %}
             </div>
           {% endif %}
@@ -27,7 +32,7 @@
           {% endif %}
         </div>
         <div class="button-group">
-          <button type="button" onclick="cart.add('{{ product.product_id }}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
+          <button type="button" onclick="cart.add('{{ product.product_id }}');"><i class="fa fa-shopping-cart"></i> <span class="d-none d-lg-inline">{{ button_cart }}</span></button>
           <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
           <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
         </div>

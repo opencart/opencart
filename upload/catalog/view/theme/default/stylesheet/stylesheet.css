@@ -546,7 +546,7 @@ div.required .col-form-label:before {
   .product-thumb .button-group button + button {
     width: 20%;
     border-left: 1px solid #ddd; }
-  @media (max-width: 767px) {
+  @media (max-width: 992px) {
   .product-thumb .button-group button, .product-thumb .button-group button + button {
     width: 33.33%; } }
 

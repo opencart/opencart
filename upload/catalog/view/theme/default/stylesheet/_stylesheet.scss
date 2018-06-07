@@ -818,6 +818,8 @@ div.required .col-form-label:before {
     font-size: 12px;
     display: block;
   }
+
+
   .button-group {
     border-top: 1px solid #ddd;
     background-color: #eee;
@@ -845,7 +847,8 @@ div.required .col-form-label:before {
       }
     }
   }
-  @media (max-width: 767px) {
+
+  @media (max-width: 992px) {
     .button-group {
       button {
         &,

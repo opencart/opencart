@@ -49,7 +49,7 @@
 $('input[name=\'product\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=account/tracking/autocomplete&language={{ language }}&filter_name=' + encodeURIComponent(request) + '&tracking=' + encodeURIComponent($('#input-code').val()),
+			url: 'index.php?route=account/tracking/autocomplete&filter_name=' + encodeURIComponent(request) + '&tracking=' + encodeURIComponent($('#input-code').val()),
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {

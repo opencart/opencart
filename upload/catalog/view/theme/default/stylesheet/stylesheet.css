@@ -687,6 +687,36 @@ div.required .col-form-label:before {
   margin-top: -2px;
   padding: 0.35rem 0.565rem; }
 
+#checkout-cart #accordion h4 {
+  cursor: pointer; }
+
+#checkout-cart #accordion h4:before {
+  font-family: FontAwesome;
+  font-size: 14px;
+  content: "\f0d7  ";
+  margin-right: 10px; }
+
+#checkout-cart #accordion h4.collapsed:before {
+  font-family: FontAwesome;
+  font-size: 14px;
+  content: "\f0da";
+  margin-right: 10px; }
+
+#checkout-checkout #accordion h4 {
+  cursor: pointer; }
+
+#checkout-checkout #accordion h4:before {
+  font-family: FontAwesome;
+  font-size: 14px;
+  content: "\f0d7  ";
+  margin-right: 10px; }
+
+#checkout-checkout #accordion h4.collapsed:before {
+  font-family: FontAwesome;
+  font-size: 14px;
+  content: "\f0da";
+  margin-right: 10px; }
+
 #product-product h1 {
   margin-top: 20px;
   margin-bottom: 10px; }

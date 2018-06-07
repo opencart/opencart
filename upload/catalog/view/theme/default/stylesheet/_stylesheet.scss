@@ -1092,13 +1092,46 @@ div.required .col-form-label:before {
   }
 }
 
-#checkout-cart h4.collapsed {
 
+#checkout-cart #accordion h4 {
+  cursor: pointer;
 }
 
-#checkout-checkout {
-
+#checkout-cart #accordion h4:before {
+  font-family: FontAwesome;
+  font-size: 14px/1;
+  content: "\f0d7  ";
+  margin-right: 10px;
 }
+
+#checkout-cart #accordion  h4.collapsed:before {
+  font-family: FontAwesome;
+  font-size: 14px/1;
+  content: "\f0da";
+  margin-right: 10px;
+}
+
+#checkout-checkout #accordion h4 {
+  cursor: pointer;
+}
+
+#checkout-checkout #accordion h4:before {
+  font-family: FontAwesome;
+  font-size: 14px/1;
+  content: "\f0d7  ";
+  margin-right: 10px;
+}
+
+#checkout-checkout #accordion  h4.collapsed:before {
+  font-family: FontAwesome;
+  font-size: 14px/1;
+  content: "\f0da";
+  margin-right: 10px;
+}
+
+
+
+
 
 #product-product {
   h1 {

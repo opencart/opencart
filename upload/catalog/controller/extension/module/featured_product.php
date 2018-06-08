@@ -16,30 +16,27 @@ class ControllerExtensionModuleFeaturedProduct extends Controller {
 		
 		$this->load->model('catalog/cms');
 		
-			if (isset($this->request->get['manufacturer_id'])) {
+		if (isset($this->request->get['manufacturer_id'])) {
+			$filter_data = array(
+				'manufacturer_id'  => $this->request->get['manufacturer_id'],
+				'limit' => $setting['limit']
+			);
 					
+			$results = $this->model_catalog_cms->getProductRelatedByManufacturer($filter_data);
+		} else {
+			if (isset($this->request->get['path'])) {
+				$parts = explode('_', (string)$this->request->get['path']);
+				
+				if(!empty($parts) && is_array($parts)) {
 					$filter_data = array(
-						'manufacturer_id'  => $this->request->get['manufacturer_id'],
+						'category_id'  => array_pop($parts),
 						'limit' => $setting['limit']
 					);
 					
-					$results = $this->model_catalog_cms->getProductRelatedByManufacturer($filter_data);
-				
-			} else {
-				
-					$parts = explode('_', (string)$this->request->get['path']);
-					
-					if(!empty($parts) && is_array($parts)) {
-					
-						$filter_data = array(
-							'category_id'  => array_pop($parts),
-							'limit' => $setting['limit']
-						);
-						
 					$results = $this->model_catalog_cms->getProductRelatedByCategory($filter_data);
-								
-					}
+				}
 			}
+		}
 		
 		$this->load->language('extension/module/featured_product');
 

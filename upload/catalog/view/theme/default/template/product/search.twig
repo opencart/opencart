@@ -13,14 +13,13 @@
     {% else %}
       {% set class = 'col-sm-12' %}
     {% endif %}
-    <div id="content" class="{{ class }}">{{ content_top }}
+    <div id="content" class="{{ class }}">
+      {{ content_top }}
       <h1>{{ heading_title }}</h1>
       <label class="col-form-label" for="input-search">{{ entry_search }}</label>
       <div class="row">
         <div class="col-md-4">
-          <div class="form-group mb-3">
-            <input type="text" name="search" value="{{ search }}" placeholder="{{ text_keyword }}" id="input-search" class="form-control"/>
-          </div>
+          <input type="text" name="search" value="{{ search }}" placeholder="{{ text_keyword }}" id="input-search" class="form-control"/>
         </div>
         <div class="col-md-3">
           <select name="category_id" class="form-control">
@@ -48,26 +47,26 @@
             {% endfor %}
           </select>
         </div>
-        <div class="col-md-5 text-right">
+        <div class="col-md-3">
           <div class="form-check form-check-inline">
-            <label>
+            <div class="form-check-input">
               {% if sub_category %}
-                <input type="checkbox" name="sub_category" value="1" class="form-check-input" checked="checked"/>
+                <input type="checkbox" name="sub_category" value="1" id="input-sub-category" class="form-check-input" checked="checked"/>
               {% else %}
-                <input type="checkbox" name="sub_category" value="1" class="form-check-input"/>
+                <input type="checkbox" name="sub_category" value="1" id="input-sub-category" class="form-check-input"/>
               {% endif %}
-              {{ text_sub_category }}</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <label>
-              {% if description %}
-                <input type="checkbox" name="description" value="1" id="description" class="form-check-input" checked="checked"/>
-              {% else %}
-                <input type="checkbox" name="description" value="1" id="description" class="form-check-input"/>
-              {% endif %}
-              {{ entry_description }}</label>
+            </div>
+            <label class="form-check-label" for="input-sub-category">{{ text_sub_category }}</label>
           </div>
         </div>
+      </div>
+      <div class="form-check mb-3">
+        {% if description %}
+          <input type="checkbox" name="description" value="1" id="input-description" class="form-check-input" checked="checked"/>
+        {% else %}
+          <input type="checkbox" name="description" value="1" id="input-description" class="form-check-input"/>
+        {% endif %}
+        <label class="form-check-label" for="input-description">{{ entry_description }}</label>
       </div>
       <input type="button" value="{{ button_search }}" id="button-search" class="btn btn-primary"/>
       <hr/>

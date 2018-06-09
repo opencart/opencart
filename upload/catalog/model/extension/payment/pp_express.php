@@ -3,11 +3,11 @@ class ModelExtensionPaymentPPExpress extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('extension/payment/pp_express');
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$this->config->get('pp_express_geo_zone_id') . "' AND `country_id` = '" . (int)$address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = '0')");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$this->config->get('payment_pp_express_geo_zone_id') . "' AND `country_id` = '" . (int)$address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = '0')");
 
-		if ($this->config->get('pp_express_total') > $total) {
+		if ($this->config->get('payment_pp_express_total') > $total) {
 			$status = false;
-		} elseif (!$this->config->get('pp_express_geo_zone_id')) {
+		} elseif (!$this->config->get('payment_pp_express_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {
 			$status = true;
@@ -22,7 +22,7 @@ class ModelExtensionPaymentPPExpress extends Model {
 				'code'       => 'pp_express',
 				'title'      => $this->language->get('text_title'),
 				'terms'      => '',
-				'sort_order' => $this->config->get('pp_express_sort_order')
+				'sort_order' => $this->config->get('payment_pp_express_sort_order')
 			);
 		}
 
@@ -68,44 +68,25 @@ class ModelExtensionPaymentPPExpress extends Model {
 	}
 
 	public function paymentRequestInfo() {
-
 		$data['PAYMENTREQUEST_0_SHIPPINGAMT'] = '';
 		$data['PAYMENTREQUEST_0_CURRENCYCODE'] = $this->session->data['currency'];
-		$data['PAYMENTREQUEST_0_PAYMENTACTION'] = $this->config->get('pp_express_transaction');
+		$data['PAYMENTREQUEST_0_PAYMENTACTION'] = $this->config->get('payment_pp_express_transaction');
 
 		$i = 0;
 		$item_total = 0;
 
 		foreach ($this->cart->getProducts() as $item) {
-			$data['L_PAYMENTREQUEST_0_DESC' . $i] = '';
-
-			$option_count = 0;
-			foreach ($item['option'] as $option) {
-				if ($option['type'] != 'file') {
-					$value = $option['value'];
-				} else {
-					$filename = $this->encryption->decrypt($option['value']);
-					$value = utf8_substr($filename, 0, utf8_strrpos($filename, '.'));
-				}
-
-				$data['L_PAYMENTREQUEST_0_DESC' . $i] .= ($option_count > 0 ? ', ' : '') . $option['name'] . ':' . (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value);
-
-				$option_count++;
-			}
-
-			$data['L_PAYMENTREQUEST_0_DESC' . $i] = substr($data['L_PAYMENTREQUEST_0_DESC' . $i], 0, 126);
-
 			$item_price = $this->currency->format($item['price'], $this->session->data['currency'], false, false);
 
-			$data['L_PAYMENTREQUEST_0_NAME' . $i] = $item['name'];
+			$data['L_PAYMENTREQUEST_0_NAME' . $i] = substr($item['name'], 0, 126);
 			$data['L_PAYMENTREQUEST_0_NUMBER' . $i] = $item['model'];
 			$data['L_PAYMENTREQUEST_0_AMT' . $i] = $item_price;
 
 			$item_total += number_format($item_price * $item['quantity'], 2, '.', '');
 
-			$data['L_PAYMENTREQUEST_0_QTY' . $i] = $item['quantity'];
+			$data['L_PAYMENTREQUEST_0_QTY' . $i] = (int)$item['quantity'];
 
-			$data['L_PAYMENTREQUEST_0_ITEMURL' . $i] = $this->url->link('product/product', 'product_id=' . $item['product_id']);
+			$data['L_PAYMENTREQUEST_0_ITEMURL' . $i] = $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $item['product_id']);
 
 			if ($this->config->get('config_cart_weight')) {
 				$weight = $this->weight->convert($item['weight'], $item['weight_class_id'], $this->config->get('config_weight_class_id'));
@@ -130,8 +111,7 @@ class ModelExtensionPaymentPPExpress extends Model {
 			foreach ($this->session->data['vouchers'] as $voucher) {
 				$item_total += $this->currency->format($voucher['amount'], $this->session->data['currency'], false, false);
 
-				$data['L_PAYMENTREQUEST_0_DESC' . $i] = '';
-				$data['L_PAYMENTREQUEST_0_NAME' . $i] = $voucher['description'];
+				$data['L_PAYMENTREQUEST_0_NAME' . $i] = substr($voucher['description'], 0, 126);
 				$data['L_PAYMENTREQUEST_0_NUMBER' . $i] = 'VOUCHER';
 				$data['L_PAYMENTREQUEST_0_QTY' . $i] = 1;
 				$data['L_PAYMENTREQUEST_0_AMT' . $i] = $this->currency->format($voucher['amount'], $this->session->data['currency'], false, false);
@@ -140,7 +120,7 @@ class ModelExtensionPaymentPPExpress extends Model {
 		}
 
 		// Totals
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		$totals = array();
 		$taxes = $this->cart->getTaxes();
@@ -157,16 +137,16 @@ class ModelExtensionPaymentPPExpress extends Model {
 		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 			$sort_order = array();
 
-			$results = $this->model_extension_extension->getExtensions('total');
+			$results = $this->model_setting_extension->getExtensions('total');
 
 			foreach ($results as $key => $value) {
-				$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
+				$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
 			}
 
 			array_multisort($sort_order, SORT_ASC, $results);
 
 			foreach ($results as $result) {
-				if ($this->config->get($result['code'] . '_status')) {
+				if ($this->config->get('total_' . $result['code'] . '_status')) {
 					$this->load->model('extension/total/' . $result['code']);
 
 					// We have to put the totals in an array so that they pass by reference.
@@ -188,8 +168,8 @@ class ModelExtensionPaymentPPExpress extends Model {
 				if ($total_row['value'] != 0) {
 					$item_price = $this->currency->format($total_row['value'], $this->session->data['currency'], false, false);
 
+                    $data['L_PAYMENTREQUEST_0_NAME' . $i] = substr($total_row['title'], 0, 126);
 					$data['L_PAYMENTREQUEST_0_NUMBER' . $i] = $total_row['code'];
-					$data['L_PAYMENTREQUEST_0_NAME' . $i] = $total_row['title'];
 					$data['L_PAYMENTREQUEST_0_AMT' . $i] = $this->currency->format($total_row['value'], $this->session->data['currency'], false, false);
 					$data['L_PAYMENTREQUEST_0_QTY' . $i] = 1;
 
@@ -213,13 +193,13 @@ class ModelExtensionPaymentPPExpress extends Model {
 				$data['L_BILLINGTYPE' . $z] = 'RecurringPayments';
 
 				if ($item['recurring']['trial']) {
-					$trial_amt = $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
+					$trial_amt = $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * (int)$item['quantity'] . ' ' . $this->session->data['currency'];
 					$trial_text =  sprintf($this->language->get('text_trial'), $trial_amt, $item['recurring']['trial_cycle'], $item['recurring']['trial_frequency'], $item['recurring']['trial_duration']);
 				} else {
 					$trial_text = '';
 				}
 
-				$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false)  * $item['quantity'] . ' ' . $this->session->data['currency'];
+				$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false)  * (int)$item['quantity'] . ' ' . $this->session->data['currency'];
 				$recurring_description = $trial_text . sprintf($this->language->get('text_recurring'), $recurring_amt, $item['recurring']['cycle'], $item['recurring']['frequency']);
 
 				if ($item['recurring']['duration'] > 0) {
@@ -261,16 +241,16 @@ class ModelExtensionPaymentPPExpress extends Model {
 	}
 
 	public function call($data) {
-		if ($this->config->get('pp_express_test')) {
+		if ($this->config->get('payment_pp_express_test')) {
 			$api_url = 'https://api-3t.sandbox.paypal.com/nvp';
-			$api_user = $this->config->get('pp_express_sandbox_username');
-			$api_password = $this->config->get('pp_express_sandbox_password');
-			$api_signature = $this->config->get('pp_express_sandbox_signature');
+			$api_user = $this->config->get('payment_pp_express_sandbox_username');
+			$api_password = $this->config->get('payment_pp_express_sandbox_password');
+			$api_signature = $this->config->get('payment_pp_express_sandbox_signature');
 		} else {
 			$api_url = 'https://api-3t.paypal.com/nvp';
-			$api_user = $this->config->get('pp_express_username');
-			$api_password = $this->config->get('pp_express_password');
-			$api_signature = $this->config->get('pp_express_signature');
+			$api_user = $this->config->get('payment_pp_express_username');
+			$api_password = $this->config->get('payment_pp_express_password');
+			$api_signature = $this->config->get('payment_pp_express_signature');
 		}
 
 		$settings = array(
@@ -297,25 +277,25 @@ class ModelExtensionPaymentPPExpress extends Model {
 			CURLOPT_POSTFIELDS => http_build_query(array_merge($data, $settings), '', "&"),
 		);
 
-		$ch = curl_init();
+		$curl = curl_init();
 
-		curl_setopt_array($ch, $defaults);
+		curl_setopt_array($curl, $defaults);
 
-		if (!$result = curl_exec($ch)) {
-			$this->log(array('error' => curl_error($ch), 'errno' => curl_errno($ch)), 'cURL failed');
+		if (!$curl_response = curl_exec($curl)) {
+			$this->log(array('error' => curl_error($curl), 'errno' => curl_errno($curl)), 'cURL failed');
 		}
 
-		$this->log($result, 'Result');
+		$this->log($curl_response, 'Result');
 
-		curl_close($ch);
+		curl_close($curl);
 
-		return $this->cleanReturn($result);
+		return $this->cleanReturn($curl_response);
 	}
 
 	public function recurringPayments() {
 		/*
 		 * Used by the checkout to state the module
-		 * supports recurring recurrings.
+		 * supports recurring payments.
 		 */
 		return true;
 	}
@@ -334,7 +314,7 @@ class ModelExtensionPaymentPPExpress extends Model {
 	}
 
 	public function log($data, $title = null) {
-		if ($this->config->get('pp_express_debug')) {
+		if ($this->config->get('payment_pp_express_debug')) {
 			$this->log->write('PayPal Express debug (' . $title . '): ' . json_encode($data));
 		}
 	}

@@ -1,0 +1,121 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right">
+        <button type="submit" form="form-module" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-module">
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-name">{{ entry_name }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+              {% if error_name %}
+                <div class="invalid-tooltip">{{ error_name }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-product">{{ entry_product }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="product_name" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
+              <div id="featured-product" class="form-control" style="height: 150px; overflow: auto;">
+                {% for product in products %}
+                  <div id="featured-product{{ product.product_id }}"><i class="fas fa-minus-circle"></i> {{ product.name }}
+                    <input type="hidden" name="product[]" value="{{ product.product_id }}"/>
+                  </div>
+                {% endfor %}
+              </div>
+              <small class="form-text text-muted">{{ help_product }}</small>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-limit">{{ entry_limit }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="limit" value="{{ limit }}" placeholder="{{ entry_limit }}" id="input-limit" class="form-control"/>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-width">{{ entry_width }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="width" value="{{ width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control"/>
+              {% if error_width %}
+                <div class="invalid-tooltip">{{ error_width }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-height">{{ entry_height }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="height" value="{{ height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control"/>
+              {% if error_height %}
+                <div class="invalid-tooltip">{{ error_height }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
+            <div class="col-sm-10">
+              <select name="status" id="input-status" class="form-control">
+                {% if status %}
+                  <option value="1" selected="selected">{{ text_enabled }}</option>
+                  <option value="0">{{ text_disabled }}</option>
+                {% else %}
+                  <option value="1">{{ text_enabled }}</option>
+                  <option value="0" selected="selected">{{ text_disabled }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript"><!--
+  $('input[name=\'product_name\']').autocomplete({
+	  source: function(request, response) {
+		  $.ajax({
+			  url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+			  dataType: 'json',
+			  success: function(json) {
+				  response($.map(json, function(item) {
+					  return {
+						  label: item['name'],
+						  value: item['product_id']
+					  }
+				  }));
+			  }
+		  });
+	  },
+	  select: function(item) {
+		  $('input[name=\'product_name\']').val('');
+
+		  $('#featured-product' + item['value']).remove();
+
+		  $('#featured-product').append('<div id="featured-product' + item['value'] + '"><i class="fas fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '" /></div>');
+	  }
+  });
+
+  $('#featured-product').on('click', '.fa-minus-circle', function() {
+	  $(this).parent().remove();
+  });
+  //--></script>
+</div>
+{{ footer }}

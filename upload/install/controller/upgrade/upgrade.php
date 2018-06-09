@@ -1,8 +1,8 @@
 <?php
 class ControllerUpgradeUpgrade extends Controller {
 	public function index() {
-		$this->language->load('upgrade/upgrade');
-		
+		$this->load->language('upgrade/upgrade');
+
 		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -16,7 +16,8 @@ class ControllerUpgradeUpgrade extends Controller {
 		$data['text_user'] = $this->language->get('text_user');
 		$data['text_setting'] = $this->language->get('text_setting');
 		$data['text_store'] = $this->language->get('text_store');
-		
+		$data['text_loading'] = $this->language->get('text_loading');
+
 		$data['entry_progress'] = $this->language->get('entry_progress');
 		
 		$data['button_continue'] = $this->language->get('button_continue');

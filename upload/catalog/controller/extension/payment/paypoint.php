@@ -7,12 +7,12 @@ class ControllerExtensionPaymentPaypoint extends Controller {
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		$data['merchant'] = $this->config->get('paypoint_merchant');
+		$data['merchant'] = $this->config->get('payment_paypoint_merchant');
 		$data['trans_id'] = $this->session->data['order_id'];
 		$data['amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
 
-		if ($this->config->get('paypoint_password')) {
-			$data['digest'] = md5($this->session->data['order_id'] . $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) . $this->config->get('paypoint_password'));
+		if ($this->config->get('payment_paypoint_password')) {
+			$data['digest'] = md5($this->session->data['order_id'] . $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) . $this->config->get('payment_paypoint_password'));
 		} else {
 			$data['digest'] = '';
 		}
@@ -46,9 +46,9 @@ class ControllerExtensionPaymentPaypoint extends Controller {
 		}
 
 		$data['currency'] = $this->session->data['currency'];
-		$data['callback'] = $this->url->link('extension/payment/paypoint/callback', '', true);
+		$data['callback'] = $this->url->link('extension/payment/paypoint/callback', 'language=' . $this->config->get('config_language'));
 
-		switch ($this->config->get('paypoint_test')) {
+		switch ($this->config->get('payment_paypoint_test')) {
 			case 'live':
 				$status = 'live';
 				break;
@@ -78,9 +78,9 @@ class ControllerExtensionPaymentPaypoint extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
 		// Validate the request is from PayPoint
-		if ($this->config->get('paypoint_password')) {
+		if ($this->config->get('payment_paypoint_password')) {
 			if (!empty($this->request->get['hash'])) {
-				$status = ($this->request->get['hash'] == md5(str_replace('hash=' . $this->request->get['hash'], '', htmlspecialchars_decode($this->request->server['REQUEST_URI'], ENT_COMPAT)) . $this->config->get('paypoint_password')));
+				$status = ($this->request->get['hash'] == md5(str_replace('hash=' . $this->request->get['hash'], '', htmlspecialchars_decode($this->request->server['REQUEST_URI'], ENT_COMPAT)) . $this->config->get('payment_paypoint_password')));
 			} else {
 				$status = false;
 			}
@@ -93,22 +93,14 @@ class ControllerExtensionPaymentPaypoint extends Controller {
 
 			$data['title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_name'));
 
-			if (!$this->request->server['HTTPS']) {
-				$data['base'] = HTTP_SERVER;
-			} else {
-				$data['base'] = HTTPS_SERVER;
-			}
-
+			$data['base'] = HTTP_SERVER;
 			$data['language'] = $this->language->get('code');
 			$data['direction'] = $this->language->get('direction');
 
 			$data['heading_title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_name'));
 
-			$data['text_response'] = $this->language->get('text_response');
-			$data['text_success'] = $this->language->get('text_success');
-			$data['text_success_wait'] = sprintf($this->language->get('text_success_wait'), $this->url->link('checkout/success'));
-			$data['text_failure'] = $this->language->get('text_failure');
-			$data['text_failure_wait'] = sprintf($this->language->get('text_failure_wait'), $this->url->link('checkout/cart'));
+			$data['text_success_wait'] = sprintf($this->language->get('text_success_wait'), $this->url->link('checkout/success', 'language=' . $this->config->get('config_language')));
+			$data['text_failure_wait'] = sprintf($this->language->get('text_failure_wait'), $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 
 			if (isset($this->request->get['code']) && $this->request->get['code'] == 'A' && $status) {
 				$message = '';
@@ -135,9 +127,9 @@ class ControllerExtensionPaymentPaypoint extends Controller {
 
 				$this->load->model('checkout/order');
 
-				$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('paypoint_order_status_id'), $message, false);
+				$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_paypoint_order_status_id'), $message, false);
 
-				$data['continue'] = $this->url->link('checkout/success');
+				$data['continue'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'));
 
 				$data['column_left'] = $this->load->controller('common/column_left');
 				$data['column_right'] = $this->load->controller('common/column_right');
@@ -148,7 +140,7 @@ class ControllerExtensionPaymentPaypoint extends Controller {
 
 				$this->response->setOutput($this->load->view('extension/payment/paypoint_success', $data));
 			} else {
-				$data['continue'] = $this->url->link('checkout/cart');
+				$data['continue'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 
 				$data['column_left'] = $this->load->controller('common/column_left');
 				$data['column_right'] = $this->load->controller('common/column_right');

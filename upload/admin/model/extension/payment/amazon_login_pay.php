@@ -247,11 +247,11 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 
 	public function validateDetails($data) {
 		$validate_paramter_data = array();
-		$validate_paramter_data['AWSAccessKeyId'] = $data['amazon_login_pay_access_key'];
-		$validate_paramter_data['SellerId'] = $data['amazon_login_pay_merchant_id'];
+		$validate_paramter_data['AWSAccessKeyId'] = $data['payment_amazon_login_pay_access_key'];
+		$validate_paramter_data['SellerId'] = $data['payment_amazon_login_pay_merchant_id'];
 		$validate_paramter_data['AmazonOrderReferenceId'] = 'validate details';
 		$validate_details = $this->offAmazon('GetOrderReferenceDetails', $validate_paramter_data);
-		$validate_response = $this->validateResponse('GetOrderReferenceDetails', $validate_details);
+		$validate_response = $this->validateResponse('GetOrderReferenceDetails', $validate_details, true);
 		if($validate_response['error_code'] && $validate_response['error_code'] != 'InvalidOrderReferenceId'){
 			return $validate_response;
 		}
@@ -259,17 +259,17 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 
 	public function offAmazon($Action, $parameter_data, $post_data = array()) {
 		if(!empty($post_data)){
-			$merchant_id = $post_data['amazon_login_pay_merchant_id'];
-			$access_key = $post_data['amazon_login_pay_access_key'];
-			$access_secret = $post_data['amazon_login_pay_access_secret'];
-			$test = $post_data['amazon_login_pay_test'];
-			$payment_region = $post_data['amazon_login_pay_payment_region'];
+			$merchant_id = $post_data['payment_amazon_login_pay_merchant_id'];
+			$access_key = $post_data['payment_amazon_login_pay_access_key'];
+			$access_secret = $post_data['payment_amazon_login_pay_access_secret'];
+			$test = $post_data['payment_amazon_login_pay_test'];
+			$payment_region = $post_data['payment_amazon_login_pay_payment_region'];
 		} else {
-			$merchant_id = $this->config->get('amazon_login_pay_merchant_id');
-			$access_key = $this->config->get('amazon_login_pay_access_key');
-			$access_secret = $this->config->get('amazon_login_pay_access_secret');
-			$test = $this->config->get('amazon_login_pay_test');
-			$payment_region = $this->config->get('amazon_login_pay_payment_region');
+			$merchant_id = $this->config->get('payment_amazon_login_pay_merchant_id');
+			$access_key = $this->config->get('payment_amazon_login_pay_access_key');
+			$access_secret = $this->config->get('payment_amazon_login_pay_access_secret');
+			$test = $this->config->get('payment_amazon_login_pay_test');
+			$payment_region = $this->config->get('payment_amazon_login_pay_payment_region');
 
 		}
 
@@ -306,9 +306,11 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 		return $this->sendCurl($url, $parameters);
 	}
 
-	private function validateResponse($action, $details) {
+	private function validateResponse($action, $details, $skip_logger = false) {
 		$details_xml = simplexml_load_string($details['ResponseBody']);
-		$this->logger($details_xml);
+		if (!$skip_logger) {
+			$this->logger($details_xml);
+		}
 		switch ($action) {
 			case 'Authorize':
 				$result = 'AuthorizeResult';
@@ -403,10 +405,11 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 	}
 
 	public function logger($message) {
-		if ($this->config->get('amazon_login_pay_debug') == 1) {
+		if ($this->config->get('payment_amazon_login_pay_debug') == 1) {
 			$log = new Log('amazon_login_pay.log');
 			$backtrace = debug_backtrace();
-			$log->write('Origin: ' . $backtrace[6]['class'] . '::' . $backtrace[6]['function']);
+			$class = isset($backtrace[6]['class']) ? $backtrace[6]['class'] . '::' : '';
+			$log->write('Origin: ' . $class . $backtrace[6]['function']);
 			$log->write(print_r($message, 1));
 		}
 	}

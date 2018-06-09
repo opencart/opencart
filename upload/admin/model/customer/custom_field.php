@@ -1,7 +1,7 @@
 <?php
 class ModelCustomerCustomField extends Model {
 	public function addCustomField($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field` SET type = '" . $this->db->escape($data['type']) . "', value = '" . $this->db->escape($data['value']) . "', validation = '" . $this->db->escape($data['validation']) . "', location = '" . $this->db->escape($data['location']) . "', status = '" . (int)$data['status'] . "', sort_order = '" . (int)$data['sort_order'] . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field` SET type = '" . $this->db->escape((string)$data['type']) . "', value = '" . $this->db->escape((string)$data['value']) . "', validation = '" . $this->db->escape((string)$data['validation']) . "', location = '" . $this->db->escape((string)$data['location']) . "', status = '" . (int)$data['status'] . "', sort_order = '" . (int)$data['sort_order'] . "'");
 
 		$custom_field_id = $this->db->getLastId();
 
@@ -33,7 +33,7 @@ class ModelCustomerCustomField extends Model {
 	}
 
 	public function editCustomField($custom_field_id, $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "custom_field` SET type = '" . $this->db->escape($data['type']) . "', value = '" . $this->db->escape($data['value']) . "', validation = '" . $this->db->escape($data['validation']) . "', location = '" . $this->db->escape($data['location']) . "', status = '" . (int)$data['status'] . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE custom_field_id = '" . (int)$custom_field_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "custom_field` SET type = '" . $this->db->escape((string)$data['type']) . "', value = '" . $this->db->escape((string)$data['value']) . "', validation = '" . $this->db->escape((string)$data['validation']) . "', location = '" . $this->db->escape((string)$data['location']) . "', status = '" . (int)$data['status'] . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE custom_field_id = '" . (int)$custom_field_id . "'");
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "custom_field_description WHERE custom_field_id = '" . (int)$custom_field_id . "'");
 
@@ -93,7 +93,11 @@ class ModelCustomerCustomField extends Model {
 		}
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " AND cfd.name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
+			$sql .= " AND cfd.name LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
+		}
+
+		if (isset($data['filter_status'])) {
+			$sql .= " AND cf.status = '" . (int)$data['filter_status'] . "'";
 		}
 
 		if (!empty($data['filter_customer_group_id'])) {

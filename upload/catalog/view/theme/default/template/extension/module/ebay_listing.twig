@@ -1,0 +1,12 @@
+<h3>{{ heading_title }}</h3>
+<div class="row product-layout">{% for product in products %}
+  <div class="col-lg-3 col-md-3s col-sm-6 col-12">
+    <div class="product-thumb transition">
+      <div class="image"><a target="_blank" href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-fluid" /></a></div>
+      <div class="caption">
+        <p><a href="{{ product.href }}">{{ product.name }}</a></p>
+        <p class="price">{{ product.price }}</p>
+      </div>
+    </div>
+  </div>
+  {% endfor %} <img src="{{ tracking_pixel }}" height="0" width="0" /> </div>

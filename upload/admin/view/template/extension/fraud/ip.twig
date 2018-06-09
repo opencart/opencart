@@ -1,0 +1,153 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right">
+        <button class="btn btn-primary" data-toggle="tooltip" form="form-fraud" title="{{ button_save }}" type="submit"><i class="fas fa-save"></i></button>
+        <a class="btn btn-light" data-toggle="tooltip" href="{{ cancel }}" title="{{ button_cancel }}"><i class="fas fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid"> {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button class="close" data-dismiss="alert" type="button">&times;</button>
+      </div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-fraud">
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-order-status">{{ entry_order_status }}</label>
+            <div class="col-sm-10">
+              <select name="fraud_ip_order_status_id" id="input-order-status" class="form-control">
+                {% for order_status in order_statuses %}
+                  {% if order_status.order_status_id == fraud_ip_order_status_id %}
+                    <option selected="selected" value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                  {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+              <small class="form-text text-muted">{{ help_order_status }}</small>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-status"> {{ entry_status }} </label>
+            <div class="col-sm-10">
+              <select name="fraud_ip_status" id="input-status" class="form-control">
+                {% if fraud_ip_status %}
+                  <option selected="selected" value="1"> {{ text_enabled }} </option>
+                  <option value="0">{{ text_disabled }}</option>
+                {% else %}
+                  <option value="1">{{ text_enabled }}</option>
+                  <option selected="selected" value="0"> {{ text_disabled }} </option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+          <fieldset>
+            <legend> {{ text_ip_add }} </legend>
+            <div class="form-group row required">
+              <label class="col-sm-2 col-form-label" for="input-ip">{{ entry_ip }}</label>
+              <div class="col-sm-10">
+                <div class="input-group">
+                  <input type="text" value="" id="input-ip" placeholder="{{ entry_ip }}" class="form-control"/>
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" data-loading-text="{{ text_loading }}" id="button-ip-add" type="button">{{ button_ip_add }}</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <br/>
+          <fieldset>
+            <legend> {{ text_ip_list }}</legend>
+            <div id="ip"></div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#ip').on('click', '.pagination a', function(e) {
+	e.preventDefault();
+
+	$('#ip').load(this.href);
+});
+
+$('#ip').load('index.php?route=extension/fraud/ip/ip&user_token={{ user_token }}');
+
+$('#button-ip-add').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=extension/fraud/ip/addip&user_token={{ user_token }}',
+		type: 'post',
+		dataType: 'json',
+		data: 'ip=' + encodeURIComponent($('#input-ip').val()),
+		beforeSend: function() {
+			$('#button-ip-add').button('loading');
+		},
+		complete: function() {
+			$('#button-ip-add').button('reset');
+		},
+		success: function(json) {
+			$('.alert-dismissible').remove();
+
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+				$('#ip').load('index.php?route=extension/fraud/ip/ip&user_token={{ user_token }}');
+
+				$('#input-ip').val('');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$('#ip').on('click', 'button', function() {
+	var element = this;
+
+	$.ajax({
+		url: 'index.php?route=extension/fraud/ip/removeip&user_token={{ user_token }}',
+		type: 'post',
+		dataType: 'json',
+		data: 'ip=' + encodeURIComponent($(element).val()),
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(json) {
+			$('.alert-dismissible').remove();
+
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+				$('#ip').load('index.php?route=extension/fraud/ip/ip&user_token={{ user_token }}');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+//--></script>
+{{ footer }}

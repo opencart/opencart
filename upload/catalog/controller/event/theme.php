@@ -1,47 +1,41 @@
 <?php
 class ControllerEventTheme extends Controller {
-	public function index(&$view, &$data, &$output) {
-		if (!$this->config->get($this->config->get('config_theme') . '_status')) {
+	public function index(&$route, &$args, &$template) {
+		if (!$this->config->get('theme_' . $this->config->get('config_theme') . '_status')) {
 			exit('Error: A theme has not been assigned to this store!');
 		}
-		
-		// This is only here for compatibility with older extensions
-		if (substr($view, -3) == 'tpl') {
-			$view = substr($view, 0, -3);
-		}
-		
-		if ($this->config->get('config_theme') == 'theme_default') {
-			$theme = $this->config->get('theme_default_directory');
-		} else {
-			$theme = $this->config->get('config_theme');
-		}
-		
-		if (is_file(DIR_TEMPLATE . $theme . '/template/' . $view . '.tpl')) {
-			$view = $theme . '/template/' . $view;
-		} else {
-			$view = 'default/template/' . $view;
-		}
-		/*			
-		// If there is a theme override we should get it				
-		$this->load->model('design/theme');
-		
-		$theme_info = $this->model_design_theme->getTheme($view, $theme);
-		
-		if ($theme_info) {
-			extract($data);
 
-			ob_start();
-
-			eval('?>' . html_entity_decode($theme_info['code']));
-
-			$output = ob_get_clean();
+		// If the default theme is selected we need to know which directory its pointing to
+		if ($this->config->get('config_theme') == 'default') {
+			$directory = $this->config->get('theme_default_directory');
 		} else {
-			if (is_file(DIR_TEMPLATE . $theme . '/template/' . $view . '.tpl')) {
-				$view = $theme . '/template/' . $view;
+			$directory = $this->config->get('config_theme');
+		}
+
+		if (is_file(DIR_TEMPLATE . $directory . '/template/' . $route . '.twig')) {
+			$this->config->set('template_directory', $directory . '/template/');
+		} elseif (is_file(DIR_TEMPLATE . 'default/template/' . $route . '.twig')) {
+			$this->config->set('template_directory', 'default/template/');
+		}
+
+		// If you want to modify the output of the template we add a
+		$proxy = new Proxy();
+
+		// Attach to the template
+		$template->addFilter($proxy);
+
+		$proxy->callback = function ($code) use ($route, $args, $directory) {
+			// If there is a theme override we should get it
+			$this->load->model('design/theme');
+
+			$theme_info = $this->model_design_theme->getTheme($route, $directory);
+
+			if ($theme_info) {
+				return html_entity_decode($theme_info['code'], ENT_QUOTES, 'UTF-8');
 			} else {
-				$view = 'default/template/' . $view;
-			}		
-		}
-		*/
+				// Because we are using a proxy the arguments will always be an array.
+				return $code[0];
+			}
+		};
 	}
 }

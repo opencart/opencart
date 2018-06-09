@@ -1,0 +1,115 @@
+<h2>{{ text_payment_info }}</h2>
+{% if void_success %}
+<div class="alert alert-success alert-dismissible">{{ void_success }}</div>
+{% endif %}
+{% if void_error %}
+<div class="alert alert-warning alert-dismissible">{{ void_error }}</div>
+{% endif %}
+<table class="table table-striped table-bordered">
+  <tr>
+    <td>{{ text_order_ref }}</td>
+    <td>{{ firstdata_order.order_ref }}</td>
+  </tr>
+  <tr>
+    <td>{{ text_order_total }}</td>
+    <td>{{ firstdata_order.total_formatted }}</td>
+  </tr>
+  <tr>
+    <td>{{ text_total_captured }}</td>
+    <td id="firstdata_total_captured">{{ firstdata_order.total_captured_formatted }}</td>
+  </tr>
+  <tr>
+    <td>{{ text_capture_status }}</td>
+    <td id="capture_status">{% if firstdata_order.capture_status == 1 %}<span class="capture_text">{{ text_yes }}</span> {% else %} <span class="capture_text">{{ text_no }}</span>&nbsp;&nbsp;
+      {% if firstdata_order.void_status == 0 %} <a class="button btn btn-primary" id="button_capture">{{ button_capture }}</a> <span class="btn btn-primary" id="img_loading_capture" style="display:none;"><i class="fas fa-circle-notch fa-spin fa-lg"></i></span> {% endif %}
+      {% endif %}</td>
+  </tr>
+  <tr>
+    <td>{{ text_void_status }}</td>
+    <td id="void_status">{% if firstdata_order.void_status == 1 %} <span class="void_text">{{ text_yes }}</span> {% else %} <span class="void_text">{{ text_no }}</span>&nbsp;&nbsp; <a class="button btn btn-primary" id="button-void">{{ button_void }}</a> <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fas fa-circle-notch fa-spin fa-lg"></i></span> {% endif %}</td>
+  </tr>
+  <tr>
+    <td>{{ text_transactions }}:</td>
+    <td><table class="table table-striped table-bordered" id="firstdata_transactions">
+        <thead>
+          <tr>
+            <td class="text-left"><strong>{{ text_column_date_added }}</strong></td>
+            <td class="text-left"><strong>{{ text_column_type }}</strong></td>
+            <td class="text-left"><strong>{{ text_column_amount }}</strong></td>
+          </tr>
+        </thead>
+        <tbody>
+        
+        {% for transaction in firstdata_order.transactions %}
+        <tr>
+          <td class="text-left">{{ transaction.date_added }}</td>
+          <td class="text-left">{{ transaction.type }}</td>
+          <td class="text-left">{{ transaction.amount }}</td>
+        </tr>
+        {% endfor %}
+          </tbody>
+        
+      </table></td>
+  </tr>
+</table>
+<form method="POST" id="voidform" action="{{ action_url }}">
+  <input type="hidden" name="responseSuccessURL" value="{{ void_url }}"/>
+  <input type="hidden" name="responseFailURL" value="{{ void_url }}"/>
+  <input type="hidden" name="transactionNotificationURL" value="{{ notify_url }}"/>
+  <input type="hidden" name="txntype" value="void"/>
+  <input type="hidden" name="timezone" value="GMT"/>
+  <input type="hidden" name="txndatetime" value="{{ request_timestamp }}"/>
+  <input type="hidden" name="hash" value="{{ hash }}"/>
+  <input type="hidden" name="storename" value="{{ merchant_id }}"/>
+  <input type="hidden" name="chargetotal" value="{{ amount }}"/>
+  <input type="hidden" name="currency" value="{{ currency }}"/>
+  <input type="hidden" name="oid" value="{{ firstdata_order.order_ref }}"/>
+  <input type="hidden" name="tdate" value="{{ firstdata_order.tdate }}"/>
+  <input type="hidden" name="order_id" value="{{ order_id }}"/>
+</form>
+<form method="POST" id="captureform" action="{{ action_url }}">
+  <input type="hidden" name="responseSuccessURL" value="{{ capture_url }}"/>
+  <input type="hidden" name="responseFailURL" value="{{ capture_url }}"/>
+  <input type="hidden" name="transactionNotificationURL" value="{{ notify_url }}"/>
+  <input type="hidden" name="txntype" value="postauth"/>
+  <input type="hidden" name="timezone" value="GMT"/>
+  <input type="hidden" name="txndatetime" value="{{ request_timestamp }}"/>
+  <input type="hidden" name="hash" value="{{ hash }}"/>
+  <input type="hidden" name="storename" value="{{ merchant_id }}"/>
+  <input type="hidden" name="chargetotal" value="{{ amount }}"/>
+  <input type="hidden" name="currency" value="{{ currency }}"/>
+  <input type="hidden" name="oid" value="{{ firstdata_order.order_ref }}"/>
+  <input type="hidden" name="tdate" value="{{ firstdata_order.tdate }}"/>
+  <input type="hidden" name="order_id" value="{{ order_id }}"/>
+</form>
+<script type="text/javascript"><!--
+$("#button-void").bind('click', function () {
+  if (confirm('{{ text_confirm_void }}')) {
+    $('#voidform').submit();
+  }
+});
+
+$("#button_capture").bind('click', function () {
+  if (confirm('{{ text_confirm_capture }}')) {
+    $('#captureform').submit();
+  }
+});
+
+$(document).ready(function () {
+  {% if void_success %}
+    alert('{{ void_success }}');
+  {% endif %}
+
+  {% if void_error %}
+    alert('{{ void_error }}');
+  {% endif %}
+
+  {% if capture_success %}
+    alert('{{ capture_success }}');
+  {% endif %}
+
+  {% if capture_error %}
+    alert('{{ capture_error }}');
+  {% endif %}
+});
+//--></script>

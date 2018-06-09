@@ -114,7 +114,7 @@ class ModelCatalogProduct extends Model {
 				}
 
 				if (!empty($data['filter_description'])) {
-					$sql .= " OR pd.description LIKE '%" . $this->db->escape($data['filter_name']) . "%'";
+					$sql .= " OR pd.description LIKE '%" . $this->db->escape((string)$data['filter_name']) . "%'";
 				}
 			}
 
@@ -200,7 +200,10 @@ class ModelCatalogProduct extends Model {
 		$query = $this->db->query($sql);
 
 		foreach ($query->rows as $result) {
+			// for never get one more time with same product id
+			if(!isset($product_data[$result['product_id']])){
 			$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
+			}	
 		}
 
 		return $product_data;
@@ -401,7 +404,7 @@ class ModelCatalogProduct extends Model {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_to_layout WHERE product_id = '" . (int)$product_id . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "'");
 
 		if ($query->num_rows) {
-			return $query->row['layout_id'];
+			return (int)$query->row['layout_id'];
 		} else {
 			return 0;
 		}
@@ -471,7 +474,7 @@ class ModelCatalogProduct extends Model {
 				}
 
 				if (!empty($data['filter_description'])) {
-					$sql .= " OR pd.description LIKE '%" . $this->db->escape($data['filter_name']) . "%'";
+					$sql .= " OR pd.description LIKE '%" . $this->db->escape((string)$data['filter_name']) . "%'";
 				}
 			}
 

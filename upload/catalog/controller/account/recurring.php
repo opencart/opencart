@@ -2,9 +2,9 @@
 class ControllerAccountRecurring extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/recurring', '', true);
+			$this->session->data['redirect'] = $this->url->link('account/recurring', 'language=' . $this->config->get('config_language'));
 
-			$this->response->redirect($this->url->link('account/login', '', true));
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->load->language('account/recurring');
@@ -21,31 +21,18 @@ class ControllerAccountRecurring extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
+			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', true)
+			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/recurring', $url, true)
+			'href' => $this->url->link('account/recurring', 'language=' . $this->config->get('config_language') . $url)
 		);
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_empty'] = $this->language->get('text_empty');
-
-		$data['column_order_recurring_id'] = $this->language->get('column_order_recurring_id');
-		$data['column_product'] = $this->language->get('column_product');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_view'] = $this->language->get('button_view');
-		$data['button_continue'] = $this->language->get('button_continue');
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
@@ -73,7 +60,7 @@ class ControllerAccountRecurring extends Controller {
 				'product'            => $result['product_name'],
 				'status'             => $status,
 				'date_added'         => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'view'               => $this->url->link('account/recurring/info', 'order_recurring_id=' . $result['order_recurring_id'], true),
+				'view'               => $this->url->link('account/recurring/info', 'language=' . $this->config->get('config_language') . '&order_recurring_id=' . $result['order_recurring_id']),
 			);
 		}
 
@@ -82,11 +69,11 @@ class ControllerAccountRecurring extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = 10;
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->link('account/recurring', 'page={page}', true);
+		$pagination->url = $this->url->link('account/recurring', 'language=' . $this->config->get('config_language') . '&page={page}');
 
 		$data['pagination'] = $pagination->render();
 
-		$data['continue'] = $this->url->link('account/account', '', true);
+		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -108,9 +95,9 @@ class ControllerAccountRecurring extends Controller {
 		}
 
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/recurring/info', 'order_recurring_id=' . $order_recurring_id, true);
+			$this->session->data['redirect'] = $this->url->link('account/recurring/info', 'language=' . $this->config->get('config_language') . '&order_recurring_id=' . $order_recurring_id);
 
-			$this->response->redirect($this->url->link('account/login', '', true));
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->load->model('account/recurring');
@@ -130,44 +117,25 @@ class ControllerAccountRecurring extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/home'),
+				'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_account'),
-				'href' => $this->url->link('account/account', '', true),
+				'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
 			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('account/recurring', $url, true),
+				'href' => $this->url->link('account/recurring', 'language=' . $this->config->get('config_language') . $url)
 			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_recurring'),
-				'href' => $this->url->link('account/recurring/info', 'order_recurring_id=' . $this->request->get['order_recurring_id'] . $url, true),
+				'href' => $this->url->link('account/recurring/info', 'language=' . $this->config->get('config_language') . '&order_recurring_id=' . $this->request->get['order_recurring_id'] . $url)
 			);
 
-			$data['heading_title'] = $this->language->get('text_recurring');
-
-			$data['text_recurring_detail'] = $this->language->get('text_recurring_detail');
-			$data['text_order_recurring_id'] = $this->language->get('text_order_recurring_id');
-			$data['text_date_added'] = $this->language->get('text_date_added');
-			$data['text_status'] = $this->language->get('text_status');
-			$data['text_payment_method'] = $this->language->get('text_payment_method');
-			$data['text_order_id'] = $this->language->get('text_order_id');
-			$data['text_product'] = $this->language->get('text_product');
-			$data['text_quantity'] = $this->language->get('text_quantity');
-			$data['text_description'] = $this->language->get('text_description');
-			$data['text_reference'] = $this->language->get('text_reference');
-			$data['text_transaction'] = $this->language->get('text_transaction');
-			$data['text_no_results'] = $this->language->get('text_no_results');
-
-			$data['column_date_added'] = $this->language->get('column_date_added');
-			$data['column_type'] = $this->language->get('column_type');
-			$data['column_amount'] = $this->language->get('column_amount');
-
-			$data['order_recurring_id'] = $this->request->get['order_recurring_id'];
+			$data['order_recurring_id'] = (int)$this->request->get['order_recurring_id'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($recurring_info['date_added']));
 
 			if ($recurring_info['status']) {
@@ -197,8 +165,8 @@ class ControllerAccountRecurring extends Controller {
 				);
 			}
 
-			$data['order'] = $this->url->link('account/order/info', 'order_id=' . $recurring_info['order_id'], true);
-			$data['product'] = $this->url->link('product/product', 'product_id=' . $recurring_info['product_id'], true);
+			$data['order'] = $this->url->link('account/order/info', 'language=' . $this->config->get('config_language') . '&order_id=' . $recurring_info['order_id']);
+			$data['product'] = $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $recurring_info['product_id']);
 
 			$data['recurring'] = $this->load->controller('extension/recurring/' . $recurring_info['payment_code']);
 
@@ -213,35 +181,29 @@ class ControllerAccountRecurring extends Controller {
 		} else {
 			$this->document->setTitle($this->language->get('text_recurring'));
 
-			$data['heading_title'] = $this->language->get('text_recurring');
-
-			$data['text_error'] = $this->language->get('text_error');
-
-			$data['button_continue'] = $this->language->get('button_continue');
-
 			$data['breadcrumbs'] = array();
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/home')
+				'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_account'),
-				'href' => $this->url->link('account/account', '', true)
+				'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
 			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('account/recurring', '', true)
+				'href' => $this->url->link('account/recurring', 'language=' . $this->config->get('config_language'))
 			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_recurring'),
-				'href' => $this->url->link('account/recurring/info', 'order_recurring_id=' . $order_recurring_id, true)
+				'href' => $this->url->link('account/recurring/info', 'language=' . $this->config->get('config_language') . '&order_recurring_id=' . $order_recurring_id)
 			);
 
-			$data['continue'] = $this->url->link('account/recurring', '', true);
+			$data['continue'] = $this->url->link('account/recurring', 'language=' . $this->config->get('config_language'));
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');

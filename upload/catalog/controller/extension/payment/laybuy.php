@@ -7,25 +7,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 		$this->load->model('checkout/order');
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_plan_preview'] = $this->language->get('text_plan_preview');
-		$data['text_payment'] = $this->language->get('text_payment');
-		$data['text_due_date'] = $this->language->get('text_due_date');
-		$data['text_amount'] = $this->language->get('text_amount');
-		$data['text_downpayment'] = $this->language->get('text_downpayment');
-		$data['text_today'] = $this->language->get('text_today');
-		$data['text_delivery_msg'] = $this->language->get('text_delivery_msg');
-		$data['text_fee_msg'] = $this->language->get('text_fee_msg');
-		$data['text_month'] = $this->language->get('text_month');
-		$data['text_loading'] = $this->language->get('text_loading');
-
-		$data['entry_initial'] = $this->language->get('entry_initial');
-		$data['entry_months'] = $this->language->get('entry_months');
-
-		$data['button_confirm'] = $this->language->get('button_confirm');
-
-		$data['action'] = $this->url->link('extension/payment/laybuy/postToLaybuy');
+		$data['action'] = $this->url->link('extension/payment/laybuy/postToLaybuy', 'language=' . $this->config->get('config_language'));
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
@@ -60,16 +42,16 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 				$data = array();
 
 				$data['VERSION']      = '0.2';
-				$data['MEMBER']       = $this->config->get('laybuys_membership_id');
-				$data['RETURNURL']    = $this->url->link('extension/payment/laybuy/callback', '', true);
-				$data['CANCELURL']    = $this->url->link('extension/payment/laybuy/cancel', '', true);
+				$data['MEMBER']       = $this->config->get('payment_laybuys_membership_id');
+				$data['RETURNURL']    = $this->url->link('extension/payment/laybuy/callback', 'language=' . $this->config->get('config_language'));
+				$data['CANCELURL']    = $this->url->link('extension/payment/laybuy/cancel', 'language=' . $this->config->get('config_language'));
 				$data['AMOUNT']       = round(floatval($order_info['total']), 2, PHP_ROUND_HALF_DOWN);
 				$data['CURRENCY']     = $order_info['currency_code'];
 				$data['INIT']         = (int)$this->request->post['INIT'];
 				$data['MONTHS']       = (int)$this->request->post['MONTHS'];
-				$data['MIND']         = ((int)$this->config->get('laybuy_min_deposit')) ? (int)$this->config->get('laybuy_min_deposit') : 20;
-				$data['MAXD']         = ((int)$this->config->get('laybuy_max_deposit')) ? (int)$this->config->get('laybuy_max_deposit') : 50;
-				$data['CUSTOM']       = $order_info['order_id'] . ':' . md5($this->config->get('laybuy_token'));
+				$data['MIND']         = ((int)$this->config->get('payment_laybuy_min_deposit')) ? (int)$this->config->get('payment_laybuy_min_deposit') : 20;
+				$data['MAXD']         = ((int)$this->config->get('payment_laybuy_max_deposit')) ? (int)$this->config->get('payment_laybuy_max_deposit') : 50;
+				$data['CUSTOM']       = $order_info['order_id'] . ':' . md5($this->config->get('payment_laybuy_token'));
 				$data['EMAIL']        = $order_info['email'];
 
 				$data_string = '';
@@ -82,10 +64,10 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 				$this->model_extension_payment_laybuy->log('Data String: ' . $data_string);
 
-				$this->model_extension_payment_laybuy->log('Gateway URL: ' . $this->config->get('laybuy_gateway_url'));
+				$this->model_extension_payment_laybuy->log('Gateway URL: ' . $this->config->get('payment_laybuy_gateway_url'));
 
 				$ch = curl_init();
-				curl_setopt($ch, CURLOPT_URL, $this->config->get('laybuy_gateway_url'));
+				curl_setopt($ch, CURLOPT_URL, $this->config->get('payment_laybuy_gateway_url'));
 				curl_setopt($ch, CURLOPT_POST, true);
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -105,21 +87,21 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 			 	if (isset($result['ACK']) && isset($result['TOKEN']) && $result['ACK'] == 'SUCCESS') {
 					$this->model_extension_payment_laybuy->log('Success response. Redirecting to PayPal.');
 
-					$this->response->redirect($this->config->get('laybuy_gateway_url') . '?TOKEN=' . $result['TOKEN']);
+					$this->response->redirect($this->config->get('payment_laybuy_gateway_url') . '?TOKEN=' . $result['TOKEN']);
 				} else {
 					$this->model_extension_payment_laybuy->log('Failure response. Redirecting to checkout/failure.');
 
-					$this->response->redirect($this->url->link('checkout/failure', '', true));
+					$this->response->redirect($this->url->link('checkout/failure', 'language=' . $this->config->get('config_language')));
 				}
 			} else {
 				$this->model_extension_payment_laybuy->log('No matching order. Redirecting to checkout/failure.');
 
-				$this->response->redirect($this->url->link('checkout/failure', '', true));
+				$this->response->redirect($this->url->link('checkout/failure', 'language=' . $this->config->get('config_language')));
 			}
 		} else {
 			$this->model_extension_payment_laybuy->log('No $_POST data. Redirecting to checkout/failure.');
 
-			$this->response->redirect($this->url->link('checkout/failure', '', true));
+			$this->response->redirect($this->url->link('checkout/failure', 'language=' . $this->config->get('config_language')));
 		}
 	}
 
@@ -141,15 +123,15 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 			$this->model_extension_payment_laybuy->log('Received Token: ' . $token);
 
-			$this->model_extension_payment_laybuy->log('Actual Token: ' . md5($this->config->get('laybuy_token')));
+			$this->model_extension_payment_laybuy->log('Actual Token: ' . md5($this->config->get('payment_laybuy_token')));
 
-			if (hash_equals(md5($this->config->get('laybuy_token')), $token)) {
+			if (hash_equals(md5($this->config->get('payment_laybuy_token')), $token)) {
 				$this->model_extension_payment_laybuy->log('Order ID: ' . $order_id);
 
 				$order_info = $this->model_checkout_order->getOrder($order_id);
 
 				if ($order_info) {
-					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('laybuy_order_status_id_pending'));
+					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_laybuy_order_status_id_pending'));
 
 					$transaction_report = $this->model_extension_payment_laybuy->prepareTransactionReport($this->request->post);
 
@@ -157,27 +139,27 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 					$this->model_extension_payment_laybuy->log('Success. Redirecting to checkout/success.');
 
-					$this->response->redirect($this->url->link('checkout/success', '', true));
+					$this->response->redirect($this->url->link('checkout/success', 'language=' . $this->config->get('config_language')));
 				} else {
 					$this->model_extension_payment_laybuy->log('No matching order. Redirecting to checkout/failure.');
 
-					$this->response->redirect($this->url->link('checkout/failure', '', true));
+					$this->response->redirect($this->url->link('checkout/failure', 'language=' . $this->config->get('config_language')));
 				}
 			} else {
 				$this->model_extension_payment_laybuy->log('Token does not match. Redirecting to checkout/failure.');
 
-				$this->response->redirect($this->url->link('checkout/failure', '', true));
+				$this->response->redirect($this->url->link('checkout/failure', 'language=' . $this->config->get('config_language')));
 			}
 		} elseif ($this->request->server['REQUEST_METHOD'] == 'POST' && isset($this->request->post['RESULT']) && $this->request->post['RESULT'] == 'FAILURE') {
 			$this->model_extension_payment_laybuy->log('Failure Response: ' . $this->request->post);
 
 			$this->model_extension_payment_laybuy->log('Redirecting to checkout/failure.');
 
-			$this->response->redirect($this->url->link('checkout/failure', '', true));
+			$this->response->redirect($this->url->link('checkout/failure', 'language=' . $this->config->get('config_language')));
 		} else {
 			$this->model_extension_payment_laybuy->log('Either no $_POST data or unknown response. Redirecting to checkout/failure.');
 
-			$this->response->redirect($this->url->link('checkout/failure', '', true));
+			$this->response->redirect($this->url->link('checkout/failure', 'language=' . $this->config->get('config_language')));
 		}
 	}
 
@@ -186,7 +168,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 		$this->model_extension_payment_laybuy->log('Transaction canceled by user. Redirecting to checkout/checkout.');
 
-		$this->response->redirect($this->url->link('checkout/checkout', '', true));
+		$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 	}
 
 	public function reviseCallback() {
@@ -210,9 +192,9 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 				$this->model_extension_payment_laybuy->log('Received Token: ' . $token);
 
-				$this->model_extension_payment_laybuy->log('Actual Token: ' . md5($this->config->get('laybuy_token')));
+				$this->model_extension_payment_laybuy->log('Actual Token: ' . md5($this->config->get('payment_laybuy_token')));
 
-				if (hash_equals(md5($this->config->get('laybuy_token')), $token)) {
+				if (hash_equals(md5($this->config->get('payment_laybuy_token')), $token)) {
 					$this->model_extension_payment_laybuy->log('Order ID: ' . $order_id);
 
 					$order_info = $this->model_checkout_order->getOrder($order_id);
@@ -245,7 +227,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 							$status = 5;
 
-							$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('laybuy_order_status_id_processing'), $this->language->get('text_comment'));
+							$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_laybuy_order_status_id_processing'), $this->language->get('text_comment'));
 						} else {
 							$this->model_extension_payment_laybuy->log('Lay-Buy');
 						}
@@ -271,7 +253,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 						if ($old_transaction['paypal_profile_id']) {
 							$this->model_extension_payment_laybuy->log('Canceling transaction');
 
-							$data_string = 'mid=' . $this->config->get('laybuys_membership_id') . '&' . 'paypal_profile_id=' . $old_transaction['paypal_profile_id'];
+							$data_string = 'mid=' . $this->config->get('payment_laybuys_membership_id') . '&' . 'paypal_profile_id=' . $old_transaction['paypal_profile_id'];
 
 							$this->model_extension_payment_laybuy->log('Data String: ' . $data_string);
 
@@ -305,26 +287,26 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 						$this->model_extension_payment_laybuy->deleteRevisedTransaction($revised_transaction['laybuy_revise_request_id']);
 
-						$this->response->redirect($this->url->link('checkout/success', '', true));
+						$this->response->redirect($this->url->link('checkout/success', 'language=' . $this->config->get('config_language')));
 					} else {
 						$this->model_extension_payment_laybuy->log('No matching order. Redirecting to checkout/failure.');
 
-						$this->response->redirect($this->url->link('checkout/failure', '', true));
+						$this->response->redirect($this->url->link('checkout/failure', 'language=' . $this->config->get('config_language')));
 					}
 				} else {
 					$this->model_extension_payment_laybuy->log('Token does not match. Redirecting to checkout/failure.');
 
-					$this->response->redirect($this->url->link('checkout/failure', '', true));
+					$this->response->redirect($this->url->link('checkout/failure', 'language=' . $this->config->get('config_language')));
 				}
 			} else {
 				$this->model_extension_payment_laybuy->log('No success response');
 
-				$this->response->redirect($this->url->link('checkout/failure', '', true));
+				$this->response->redirect($this->url->link('checkout/failure', 'language=' . $this->config->get('config_language')));
 			}
 		} else {
 			$this->model_extension_payment_laybuy->log('No $_POST data');
 
-			$this->response->redirect($this->url->link('checkout/failure', '', true));
+			$this->response->redirect($this->url->link('checkout/failure', 'language=' . $this->config->get('config_language')));
 		}
 	}
 
@@ -333,7 +315,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 		$this->model_extension_payment_laybuy->log('Revise canceled. Redirecting to checkout/checkout.');
 
-		$this->response->redirect($this->url->link('checkout/checkout', '', true));
+		$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 	}
 
 	public function deleteOrder($route = '', $output = '', $order_id = 0, $order_status_id = 0) {
@@ -355,7 +337,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 		$this->model_extension_payment_laybuy->log('Running cron');
 
-		if (isset($this->request->get['token']) && hash_equals($this->config->get('laybuy_token'), $this->request->get['token'])) {
+		if (isset($this->request->get['token']) && hash_equals($this->config->get('payment_laybuy_token'), $this->request->get['token'])) {
 			$paypal_profile_id_array = $this->model_extension_payment_laybuy->getPayPalProfileIds();
 
 			if ($paypal_profile_id_array) {
@@ -367,14 +349,14 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 				$paypal_profile_ids = rtrim($paypal_profile_ids, ',');
 
-				$data_string = 'mid=' . $this->config->get('laybuys_membership_id') . '&' . 'profileIds=' . $paypal_profile_ids;
+				$data_string = 'mid=' . $this->config->get('payment_laybuys_membership_id') . '&' . 'profileIds=' . $paypal_profile_ids;
 
 				$this->model_extension_payment_laybuy->log('Data String: ' . $data_string);
 
-				$this->model_extension_payment_laybuy->log('API URL: ' . $this->config->get('laybuy_api_url'));
+				$this->model_extension_payment_laybuy->log('API URL: ' . $this->config->get('payment_laybuy_api_url'));
 
 				$ch = curl_init();
-				curl_setopt($ch, CURLOPT_URL, $this->config->get('laybuy_api_url'));
+				curl_setopt($ch, CURLOPT_URL, $this->config->get('payment_laybuy_api_url'));
 				curl_setopt($ch, CURLOPT_POST, true);
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -469,7 +451,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 						switch ($status) {
 							case -1: // Cancel
 								$this->model_extension_payment_laybuy->log('Transaction #' . $transaction['laybuy_transaction_id'] . ' canceled');
-								$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('laybuy_order_status_id_canceled'), $this->language->get('text_comment'), false, false);
+								$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_laybuy_order_status_id_canceled'), $this->language->get('text_comment'), false, false);
 								$this->model_extension_payment_laybuy->updateTransaction($transaction['laybuy_transaction_id'], '7', $report_content, $start_index);
 								break;
 							case 0: // Pending
@@ -478,7 +460,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 								break;
 							case 1: // Paid
 								$this->model_extension_payment_laybuy->log('Transaction #' . $transaction['laybuy_transaction_id'] . ' paid');
-								$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('laybuy_order_status_id_processing'), $this->language->get('text_comment'), false, false);
+								$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_laybuy_order_status_id_processing'), $this->language->get('text_comment'), false, false);
 								$this->model_extension_payment_laybuy->updateTransaction($transaction['laybuy_transaction_id'], '5', $report_content, $start_index);
 								break;
 						}

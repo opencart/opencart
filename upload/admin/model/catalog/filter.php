@@ -125,7 +125,7 @@ class ModelCatalogFilter extends Model {
 		$sql = "SELECT *, (SELECT name FROM " . DB_PREFIX . "filter_group_description fgd WHERE f.filter_group_id = fgd.filter_group_id AND fgd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS `group` FROM " . DB_PREFIX . "filter f LEFT JOIN " . DB_PREFIX . "filter_description fd ON (f.filter_id = fd.filter_id) WHERE fd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " AND fd.name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
+			$sql .= " AND fd.name LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
 		}
 
 		$sql .= " ORDER BY f.sort_order ASC";

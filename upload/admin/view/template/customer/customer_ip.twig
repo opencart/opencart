@@ -1,0 +1,34 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <td class="text-left">{{ column_ip }}</td>
+        <td class="text-right">{{ column_account }}</td>
+        <td class="text-left">{{ column_store }}</td>
+        <td class="text-left">{{ column_country }}</td>
+        <td class="text-left">{{ column_date_added }}</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% if ips %}
+        {% for ip in ips %}
+          <tr>
+            <td class="text-left"><a href="http://www.geoiptool.com/en/?IP={{ ip.ip }}" target="_blank">{{ ip.ip }}</a></td>
+            <td class="text-right"><a href="{{ ip.filter_ip }}" target="_blank">{{ ip.account }}</a></td>
+            <td class="text-left">{{ ip.store }}</td>
+            <td class="text-left">{{ ip.country }}</td>
+            <td class="text-left">{{ ip.date_added }}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="5">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-left">{{ pagination }}</div>
+  <div class="col-sm-6 text-right">{{ results }}</div>
+</div>

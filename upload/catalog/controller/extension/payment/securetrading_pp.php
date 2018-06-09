@@ -10,13 +10,13 @@ class ControllerExtensionPaymentSecureTradingPp extends Controller {
 
 		if ($order_info) {
 			$data['order_info'] = $order_info;
-			$data['site_reference'] = $this->config->get('securetrading_pp_site_reference');
-			$data['parent_css'] = $this->config->get('securetrading_pp_parent_css');
-			$data['child_css'] = $this->config->get('securetrading_pp_child_css');
+			$data['site_reference'] = $this->config->get('payment_securetrading_pp_site_reference');
+			$data['parent_css'] = $this->config->get('payment_securetrading_pp_parent_css');
+			$data['child_css'] = $this->config->get('payment_securetrading_pp_child_css');
 			$data['currency'] = $order_info['currency_code'];
 			$data['total'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
-			$data['settle_due_date'] = date('Y-m-d', strtotime(date('Y-m-d') . ' +' . $this->config->get('securetrading_pp_settle_due_date') . ' days'));
-			$data['settle_status'] = $this->config->get('securetrading_pp_settle_status');
+			$data['settle_due_date'] = date('Y-m-d', strtotime(date('Y-m-d') . ' +' . $this->config->get('payment_securetrading_pp_settle_due_date') . ' days'));
+			$data['settle_status'] = $this->config->get('payment_securetrading_pp_settle_status');
 
 			$payment_country = $this->model_localisation_country->getCountry($order_info['payment_country_id']);
 			$payment_zone = $this->model_localisation_zone->getZone($order_info['payment_zone_id']);
@@ -43,8 +43,8 @@ class ControllerExtensionPaymentSecureTradingPp extends Controller {
 			$data['payment_country'] = $payment_country;
 			$data['shipping_country'] = $shipping_country;
 
-			if ($this->config->get('securetrading_pp_site_security_status')) {
-				$data['site_security'] = hash('sha256', $order_info['currency_code'] . $data['total'] . $data['site_reference'] . $data['settle_status'] . $data['settle_due_date'] . $order_info['order_id'] . $this->config->get('securetrading_pp_site_security_password'));
+			if ($this->config->get('payment_securetrading_pp_site_security_status')) {
+				$data['site_security'] = hash('sha256', $order_info['currency_code'] . $data['total'] . $data['site_reference'] . $data['settle_status'] . $data['settle_due_date'] . $order_info['order_id'] . $this->config->get('payment_securetrading_pp_site_security_password'));
 			} else {
 				$data['site_security'] = false;
 			}
@@ -65,7 +65,7 @@ class ControllerExtensionPaymentSecureTradingPp extends Controller {
 			$data['cards'] = array();
 
 			foreach ($cards as $key => $value) {
-				if (in_array($key, $this->config->get('securetrading_pp_cards_accepted'))) {
+				if (in_array($key, $this->config->get('payment_securetrading_pp_cards_accepted'))) {
 					$data['cards'][$key] = $value;
 				}
 			}
@@ -96,9 +96,9 @@ class ControllerExtensionPaymentSecureTradingPp extends Controller {
 			}
 		}
 
-		$string_to_hash .= $this->config->get('securetrading_pp_notification_password');
+		$string_to_hash .= $this->config->get('payment_securetrading_pp_notification_password');
 
-		if (hash_equals(hash('sha256', $string_to_hash), $this->request->post['responsesitesecurity']) && $this->request->post['sitereference'] == $this->config->get('securetrading_pp_site_reference')) {
+		if (hash_equals(hash('sha256', $string_to_hash), $this->request->post['responsesitesecurity']) && $this->request->post['sitereference'] == $this->config->get('payment_securetrading_pp_site_reference')) {
 			$order_info = $this->model_checkout_order->getOrder($this->request->post['orderreference']);
 
 			if ($order_info) {
@@ -154,12 +154,12 @@ class ControllerExtensionPaymentSecureTradingPp extends Controller {
 					$this->model_extension_payment_securetrading_pp->addReference($order_info['order_id'], $transactionreference);
 
 					if ($this->request->post['errorcode'] == '0') {
-						$order_status_id = $this->config->get('securetrading_pp_order_status_id');
+						$order_status_id = $this->config->get('payment_securetrading_pp_order_status_id');
 
 						$this->model_extension_payment_securetrading_pp->confirmOrder($order_info['order_id'], $order_status_id);
 						$this->model_extension_payment_securetrading_pp->updateOrder($order_info['order_id'], $order_status_id, $message);
 					} elseif ($this->request->post['errorcode'] == '70000') {
-						$order_status_id = $this->config->get('securetrading_pp_declined_order_status_id');
+						$order_status_id = $this->config->get('payment_securetrading_pp_declined_order_status_id');
 
 						$this->model_extension_payment_securetrading_pp->updateOrder($order_info['order_id'], $order_status_id, $message);
 					}

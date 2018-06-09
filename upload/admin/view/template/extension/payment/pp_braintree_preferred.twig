@@ -1,0 +1,37 @@
+<div class="col-lg-6 col-md-12 col-sm-12">
+  <div class="card">
+    <div class="card-header"><img class="float-right" width="192" src="https://s3-us-west-1.amazonaws.com/bt-partner-assets/paypal-braintree.png" alt="PayPal powered by Braintree">
+      {% if payment_pp_braintree_status == "enabled" %}
+        <div class="float-right"><span class="label label-success">{{ text_enabled }}</span></div>
+      {% endif %}
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <p>{{ text_preferred_main }} <a href="https://www.braintreepayments.com/partners/learn-more" target="_blank">{{ text_learn_more }}</a></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-8">
+          <ul>
+            <li>{{ text_preferred_li_1 }}</li>
+            <li>{{ text_preferred_li_2 }}</li>
+            <li>{{ text_preferred_li_3 }}</li>
+            <li>{{ text_preferred_li_4 }}</li>
+          </ul>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+          <img class="float-right img-responsive" src="https://s3-us-west-1.amazonaws.com/bt-partner-assets/payment-methods.png" alt="Accept Visa, Mastercard, Discover, American Express, and PayPal payments"/>
+          {% if connect_link is not empty %}
+            <br/>
+            <br/><a href="{{ connect_link }}" data-toggle="tooltip" title="" class="btn btn-primary float-right" target="_blank" data-original-title="{{ text_connect_braintree }}">{{ text_connect_braintree }}</a></p>
+          {% endif %}
+          {% if module_link is not empty %}
+            <br/>
+            <br/><a href="{{ module_link }}" data-toggle="tooltip" title="" class="btn btn-primary float-right" data-original-title="{{ text_edit }}"><i class="fas fa-pencil-alt"></i></a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

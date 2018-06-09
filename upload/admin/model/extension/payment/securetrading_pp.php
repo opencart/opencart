@@ -40,13 +40,13 @@ class ModelExtensionPaymentSecureTradingPp extends Model {
 
 			$requestblock_xml = new SimpleXMLElement('<requestblock></requestblock>');
 			$requestblock_xml->addAttribute('version', '3.67');
-			$requestblock_xml->addChild('alias', $this->config->get('securetrading_pp_webservice_username'));
+			$requestblock_xml->addChild('alias', $this->config->get('payment_securetrading_pp_webservice_username'));
 
 			$request_node = $requestblock_xml->addChild('request');
 			$request_node->addAttribute('type', 'TRANSACTIONUPDATE');
 
 			$filter_node = $request_node->addChild('filter');
-			$filter_node->addChild('sitereference', $this->config->get('securetrading_pp_site_reference'));
+			$filter_node->addChild('sitereference', $this->config->get('payment_securetrading_pp_site_reference'));
 			$filter_node->addChild('transactionreference', $securetrading_pp_order['transaction_reference']);
 
 			$request_node->addChild('updates')->addChild('settlement')->addChild('settlestatus', 3);
@@ -69,13 +69,13 @@ class ModelExtensionPaymentSecureTradingPp extends Model {
 
 			$requestblock_xml = new SimpleXMLElement('<requestblock></requestblock>');
 			$requestblock_xml->addAttribute('version', '3.67');
-			$requestblock_xml->addChild('alias', $this->config->get('securetrading_pp_webservice_username'));
+			$requestblock_xml->addChild('alias', $this->config->get('payment_securetrading_pp_webservice_username'));
 
 			$request_node = $requestblock_xml->addChild('request');
 			$request_node->addAttribute('type', 'TRANSACTIONUPDATE');
 
 			$filter_node = $request_node->addChild('filter');
-			$filter_node->addChild('sitereference', $this->config->get('securetrading_pp_site_reference'));
+			$filter_node->addChild('sitereference', $this->config->get('payment_securetrading_pp_site_reference'));
 			$filter_node->addChild('transactionreference', $securetrading_pp_order['transaction_reference']);
 
 			$settlement_node = $request_node->addChild('updates')->addChild('settlement');
@@ -103,7 +103,7 @@ class ModelExtensionPaymentSecureTradingPp extends Model {
 
 			$requestblock_xml = new SimpleXMLElement('<requestblock></requestblock>');
 			$requestblock_xml->addAttribute('version', '3.67');
-			$requestblock_xml->addChild('alias', $this->config->get('securetrading_pp_webservice_username'));
+			$requestblock_xml->addChild('alias', $this->config->get('payment_securetrading_pp_webservice_username'));
 
 			$request_node = $requestblock_xml->addChild('request');
 			$request_node->addAttribute('type', 'REFUND');
@@ -113,7 +113,7 @@ class ModelExtensionPaymentSecureTradingPp extends Model {
 			$operation_node = $request_node->addChild('operation');
 			$operation_node->addChild('accounttypedescription', 'ECOM');
 			$operation_node->addChild('parenttransactionreference', $securetrading_pp_order['transaction_reference']);
-			$operation_node->addChild('sitereference', $this->config->get('securetrading_pp_site_reference'));
+			$operation_node->addChild('sitereference', $this->config->get('payment_securetrading_pp_site_reference'));
 
 			$billing_node = $request_node->addChild('billing');
 			$billing_node->addAttribute('currencycode', $securetrading_pp_order['currency_code']);
@@ -183,7 +183,7 @@ class ModelExtensionPaymentSecureTradingPp extends Model {
 			CURLOPT_HTTPHEADER => array(
 				'User-Agent: OpenCart - Secure Trading PP',
 				'Content-Length: ' . strlen($data),
-				'Authorization: Basic ' . base64_encode($this->config->get('securetrading_pp_webservice_username') . ':' . $this->config->get('securetrading_pp_webservice_password')),
+				'Authorization: Basic ' . base64_encode($this->config->get('payment_securetrading_pp_webservice_username') . ':' . $this->config->get('payment_securetrading_pp_webservice_password')),
 			),
 			CURLOPT_POSTFIELDS => $data,
 		);

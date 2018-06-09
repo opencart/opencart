@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<!--[if IE 8 ]>
+<html dir="{{ direction }}" lang="{{ lang }}" class="ie8"><![endif]-->
+<!--[if IE 9 ]>
+<html dir="{{ direction }}" lang="{{ lang }}" class="ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html dir="{{ direction }}" lang="{{ lang }}">
+<!--<![endif]-->
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{{ title }}</title>
+  <base href="{{ base }}"/>
+  {% if description %}
+    <meta name="description" content="{{ description }}"/>
+  {% endif %}
+  {% if keywords %}
+    <meta name="keywords" content="{{ keywords }}"/>
+  {% endif %}
+  <script src="catalog/view/javascript/jquery/jquery-3.3.1.min.js" type="text/javascript"></script>
+  <link href="catalog/view/theme/default/stylesheet/bootstrap.css" rel="stylesheet" media="screen"/>
+  <script src="catalog/view/javascript/bootstrap/js/popper.min.js" type="text/javascript"></script>
+  <script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+  <link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" rel="stylesheet" type="text/css"/>
+  <link href="catalog/view/theme/default/stylesheet/stylesheet.css" rel="stylesheet">
+  {% for style in styles %}
+    <link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}"/>
+  {% endfor %}
+  {% for script in scripts %}
+    <script src="{{ script }}" type="text/javascript"></script>
+  {% endfor %}
+  <script src="catalog/view/javascript/common.js" type="text/javascript"></script>
+  {% for link in links %}
+    <link href="{{ link.href }}" rel="{{ link.rel }}"/>
+  {% endfor %}
+  {% for analytic in analytics %}
+    {{ analytic }}
+  {% endfor %}
+</head>
+<body>
+<nav id="top">
+  <div class="container">
+    <div class="nav float-left">
+      <ul class="list-inline">
+        <li class="list-inline-item">{{ currency }}</li>
+        <li class="list-inline-item">{{ language }}</li>
+      </ul>
+    </div>
+    <div class="nav float-right">
+      <ul class="list-inline">
+        <li class="list-inline-item"><a href="{{ contact }}"><i class="fa fa-phone"></i></a> <span class="d-none d-md-inline">{{ telephone }}</span></li>
+        <li class="list-inline-item">
+
+          <div class="dropdown">
+            <a href="{{ account }}" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <span class="d-none d-md-inline">{{ text_account }}</span> <i class="fa fa-caret-down"></i></a>
+
+            <div class="dropdown-menu dropdown-menu-right">
+              {% if logged %}
+                <a href="{{ account }}" class="dropdown-item">{{ text_account }}</a>
+                <a href="{{ order }}" class="dropdown-item">{{ text_order }}</a>
+                <a href="{{ transaction }}" class="dropdown-item">{{ text_transaction }}</a>
+                <a href="{{ download }}" class="dropdown-item">{{ text_download }}</a>
+                <a href="{{ logout }}" class="dropdown-item">{{ text_logout }}</a>
+              {% else %}
+                <a href="{{ register }}" class="dropdown-item">{{ text_register }}</a>
+                <a href="{{ login }}" class="dropdown-item">{{ text_login }}</a>
+              {% endif %}
+            </div>
+          </div>
+
+        </li>
+        <li class="list-inline-item"><a href="{{ wishlist }}" id="wishlist-total" title="{{ text_wishlist }}"><i class="fa fa-heart"></i> <span class="d-none d-md-inline">{{ text_wishlist }}</span></a></li>
+        <li class="list-inline-item"><a href="{{ shopping_cart }}" title="{{ text_shopping_cart }}"><i class="fa fa-shopping-cart"></i> <span class="d-none d-md-inline">{{ text_shopping_cart }}</span></a></li>
+        <li class="list-inline-item"><a href="{{ checkout }}" title="{{ text_checkout }}"><i class="fa fa-share"></i> <span class="d-none d-md-inline">{{ text_checkout }}</span></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<header>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-lg-4">
+        <div id="logo">
+          {% if logo %}
+            <a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-fluid"/></a>
+          {% else %}
+            <h1><a href="{{ home }}">{{ name }}</a></h1>
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-md-5">{{ search }}</div>
+      <div class="col-md-4 col-lg-3">{{ cart }}</div>
+    </div>
+  </div>
+</header>
+<main>
+  {{ menu }}

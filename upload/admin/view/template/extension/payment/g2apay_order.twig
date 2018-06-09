@@ -1,0 +1,96 @@
+<h2>{{ text_payment_info }}</h2>
+<div class="alert alert-success" id="g2apay_transaction_msg" style="display:none;"></div>
+<table class="table table-striped table-bordered">
+  <tr>
+    <td>{{ text_order_ref }}</td>
+    <td>{{ g2apay_order.g2apay_transaction_id }}</td>
+  </tr>
+  <tr>
+    <td>{{ text_order_total }}</td>
+    <td>{{ g2apay_order.total_formatted }}</td>
+  </tr>
+  <tr>
+    <td>{{ text_total_released }}</td>
+    <td id="g2apay_total_released">{{ g2apay_order.total_released_formatted }}</td>
+  </tr>
+  <tr>
+    <td>{{ text_refund_status }}</td>
+    <td id="refund_status"> {% if g2apay_order.refund_status == 1 %} <span class="refund_text">{{ text_yes }}</span> {% else %} <span class="refund_text">{{ text_no }}</span>&nbsp;&nbsp;
+      
+      {% if g2apay_order.total_released > 0 %}
+      <input type="text" width="10" id="refund_amount" />
+      <a class="button btn btn-primary" id="btn_refund">{{ btn_refund }}</a> <span class="btn btn-primary" id="img_loading_refund" style="display:none;"><i class="fas fa-cog fa-spin fa-lg"></i></span> {% endif %}
+      {% endif %} </td>
+  </tr>
+  <tr>
+    <td>{{ text_transactions }}:</td>
+    <td><table class="table table-striped table-bordered" id="g2apay_transactions">
+        <thead>
+          <tr>
+            <td class="text-left"><strong>{{ text_column_date_added }}</strong></td>
+            <td class="text-left"><strong>{{ text_column_type }}</strong></td>
+            <td class="text-left"><strong>{{ text_column_amount }}</strong></td>
+          </tr>
+        </thead>
+        <tbody>
+        
+        {% for transaction in g2apay_order.transactions %}
+        <tr>
+          <td class="text-left">{{ transaction.date_added }}</td>
+          <td class="text-left">{{ transaction.type }}</td>
+          <td class="text-left">{{ transaction.amount }}</td>
+        </tr>
+        {% endfor %}
+          </tbody>
+        
+      </table></td>
+  </tr>
+</table>
+<script type="text/javascript"><!--
+$("#btn_refund").click(function () {
+  if (confirm('{{ text_confirm_refund }}')) {
+	$.ajax({
+	  type: 'POST',
+	  dataType: 'json',
+	  data: {'order_id': {{ order_id }}, 'amount': $('#refund_amount').val()},
+	  url: 'index.php?route=extension/payment/g2apay/refund&user_token={{ user_token }}',
+	  beforeSend: function () {
+		$('#btn_refund').hide();
+		$('#refund_amount').hide();
+		$('#img_loading_refund').show();
+		$('#g2apay_transaction_msg').hide();
+	  },
+	  success: function (data) {
+		if (data.error == false) {
+		  html = '';
+		  html += '<tr>';
+		  html += '<td class="text-left">' + data.data.date_added + '</td>';
+		  html += '<td class="text-left">refund</td>';
+		  html += '<td class="text-left">' + data.data.amount + '</td>';
+		  html += '</tr>';
+
+		  $('#g2apay_transactions').append(html);
+		  $('#g2apay_total_released').text(data.data.total_released);
+
+		  if (data.data.refund_status == 1) {
+			$('.refund_text').text('{{ text_yes }}');
+		  } else {
+			$('#btn_refund').show();
+			$('#refund_amount').val(0.00).show();
+		  }
+
+		  if (data.msg != '') {
+			$('#g2apay_transaction_msg').empty().html('<i class="fas fa-check-circle"></i> ' + data.msg).fadeIn();
+		  }
+		}
+		if (data.error == true) {
+		  alert(data.msg);
+		  $('#btn_refund').show();
+		}
+
+		$('#img_loading_refund').hide();
+	  }
+	});
+  }
+});
+//--></script>

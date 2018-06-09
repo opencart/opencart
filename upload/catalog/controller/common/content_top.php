@@ -39,7 +39,7 @@ class ControllerCommonContentTop extends Controller {
 			$layout_id = $this->config->get('config_layout_id');
 		}
 
-		$this->load->model('extension/module');
+		$this->load->model('setting/module');
 
 		$data['modules'] = array();
 
@@ -48,7 +48,7 @@ class ControllerCommonContentTop extends Controller {
 		foreach ($modules as $module) {
 			$part = explode('.', $module['code']);
 
-			if (isset($part[0]) && $this->config->get($part[0] . '_status')) {
+			if (isset($part[0]) && $this->config->get('module_' . $part[0] . '_status')) {
 				$module_data = $this->load->controller('extension/module/' . $part[0]);
 
 				if ($module_data) {
@@ -57,7 +57,7 @@ class ControllerCommonContentTop extends Controller {
 			}
 
 			if (isset($part[1])) {
-				$setting_info = $this->model_extension_module->getModule($part[1]);
+				$setting_info = $this->model_setting_module->getModule($part[1]);
 
 				if ($setting_info && $setting_info['status']) {
 					$output = $this->load->controller('extension/module/' . $part[0], $setting_info);

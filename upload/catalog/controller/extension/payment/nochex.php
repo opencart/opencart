@@ -5,8 +5,6 @@ class ControllerExtensionPaymentNochex extends Controller {
 	public function index() {
 		$this->load->language('extension/payment/nochex');
 
-		$data['button_confirm'] = $this->language->get('button_confirm');
-
 		$this->load->model('checkout/order');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
@@ -15,11 +13,11 @@ class ControllerExtensionPaymentNochex extends Controller {
 
 		// Nochex minimum requirements
 		// The merchant ID is usually your Nochex registered email address but can be altered for "Merchant" accounts see below
-		if ($this->config->get('nochex_email') != $this->config->get('nochex_merchant')) {
+		if ($this->config->get('payment_nochex_email') != $this->config->get('payment_nochex_merchant')) {
 			// This MUST be changed on your Nochex account!!!!
-			$data['merchant_id'] = $this->config->get('nochex_merchant');
+			$data['merchant_id'] = $this->config->get('payment_nochex_merchant');
 		} else {
-			$data['merchant_id'] = $this->config->get('nochex_email');
+			$data['merchant_id'] = $this->config->get('payment_nochex_email');
 		}
 
 		$data['amount'] = $this->currency->format($order_info['total'], 'GBP', false, false);
@@ -60,11 +58,11 @@ class ControllerExtensionPaymentNochex extends Controller {
 
 		$data['email_address'] = $order_info['email'];
 		$data['customer_phone_number']= $order_info['telephone'];
-		$data['test'] = $this->config->get('nochex_test');
-		$data['success_url'] = $this->url->link('checkout/success', '', true);
-		$data['cancel_url'] = $this->url->link('checkout/payment', '', true);
-		$data['declined_url'] = $this->url->link('extension/payment/nochex/callback', 'method=decline', true);
-		$data['callback_url'] = $this->url->link('extension/payment/nochex/callback', 'order=' . $this->session->data['order_id'], true);
+		$data['test'] = $this->config->get('payment_nochex_test');
+		$data['success_url'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'));
+		$data['cancel_url'] = $this->url->link('checkout/payment', 'language=' . $this->config->get('config_language'));
+		$data['declined_url'] = $this->url->link('extension/payment/nochex/callback', 'language=' . $this->config->get('config_language') . '&method=decline');
+		$data['callback_url'] = $this->url->link('extension/payment/nochex/callback', 'language=' . $this->config->get('config_language') . '&order=' . $this->session->data['order_id']);
 
 		return $this->load->view('extension/payment/nochex', $data);
 	}
@@ -75,7 +73,7 @@ class ControllerExtensionPaymentNochex extends Controller {
 		if (isset($this->request->get['method']) && $this->request->get['method'] == 'decline') {
 			$this->session->data['error'] = $this->language->get('error_declined');
 
-			$this->response->redirect($this->url->link('checkout/cart'));
+			$this->response->redirect($this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 		}
 
 		if (isset($this->request->post['order_id'])) {
@@ -91,7 +89,7 @@ class ControllerExtensionPaymentNochex extends Controller {
 		if (!$order_info) {
 			$this->session->data['error'] = $this->language->get('error_no_order');
 
-			$this->response->redirect($this->url->link('checkout/cart'));
+			$this->response->redirect($this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 		}
 
 		// Fraud Verification Step.
@@ -115,13 +113,13 @@ class ControllerExtensionPaymentNochex extends Controller {
 		curl_close($curl);
 
 		if (strcmp($response, 'AUTHORISED') == 0) {
-			$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('nochex_order_status_id'));
+			$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_nochex_order_status_id'));
 		} else {
 			$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('config_order_status_id'), 'Auto-Verification step failed. Manually check the transaction.');
 		}
 
 		// Since it returned, the customer should see success.
 		// It's up to the store owner to manually verify payment.
-		$this->response->redirect($this->url->link('checkout/success', '', true));
+		$this->response->redirect($this->url->link('checkout/success', 'language=' . $this->config->get('config_language')));
 	}
 }

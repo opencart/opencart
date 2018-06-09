@@ -7,36 +7,28 @@ class ControllerCommonLogin extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		if ($this->user->isLogged() && isset($this->request->get['token']) && ($this->request->get['token'] == $this->session->data['token'])) {
-			$this->response->redirect($this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true));
+		if ($this->user->isLogged() && isset($this->request->get['user_token']) && ($this->request->get['user_token'] == $this->session->data['user_token'])) {
+			$this->response->redirect($this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']));
 		}
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->session->data['token'] = token(32);
+			$this->session->data['user_token'] = token(32);
 			
-			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], HTTP_SERVER) === 0 || strpos($this->request->post['redirect'], HTTPS_SERVER) === 0)) {
-				$this->response->redirect($this->request->post['redirect'] . '&token=' . $this->session->data['token']);
+			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], HTTP_SERVER) === 0)) {
+				$this->response->redirect($this->request->post['redirect'] . '&user_token=' . $this->session->data['user_token']);
 			} else {
-				$this->response->redirect($this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true));
+				$this->response->redirect($this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']));
 			}
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_login'] = $this->language->get('text_login');
-		$data['text_forgotten'] = $this->language->get('text_forgotten');
-
-		$data['entry_username'] = $this->language->get('entry_username');
-		$data['entry_password'] = $this->language->get('entry_password');
-
-		$data['button_login'] = $this->language->get('button_login');
-
-		if ((isset($this->session->data['token']) && !isset($this->request->get['token'])) || ((isset($this->request->get['token']) && (isset($this->session->data['token']) && ($this->request->get['token'] != $this->session->data['token']))))) {
+		if ((isset($this->session->data['user_token']) && !isset($this->request->get['user_token'])) || ((isset($this->request->get['user_token']) && (isset($this->session->data['user_token']) && ($this->request->get['user_token'] != $this->session->data['user_token']))))) {
 			$this->error['warning'] = $this->language->get('error_token');
-		}
-
-		if (isset($this->error['warning'])) {
+		} elseif (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
+		} elseif (isset($this->session->data['error'])) {
+			$data['error_warning'] = $this->session->data['error'];
+
+			unset($this->session->data['error']);
 		} else {
 			$data['error_warning'] = '';
 		}
@@ -49,7 +41,7 @@ class ControllerCommonLogin extends Controller {
 			$data['success'] = '';
 		}
 
-		$data['action'] = $this->url->link('common/login', '', true);
+		$data['action'] = $this->url->link('common/login');
 
 		if (isset($this->request->post['username'])) {
 			$data['username'] = $this->request->post['username'];
@@ -67,7 +59,7 @@ class ControllerCommonLogin extends Controller {
 			$route = $this->request->get['route'];
 
 			unset($this->request->get['route']);
-			unset($this->request->get['token']);
+			unset($this->request->get['user_token']);
 
 			$url = '';
 
@@ -75,13 +67,13 @@ class ControllerCommonLogin extends Controller {
 				$url .= http_build_query($this->request->get);
 			}
 
-			$data['redirect'] = $this->url->link($route, $url, true);
+			$data['redirect'] = $this->url->link($route, $url);
 		} else {
 			$data['redirect'] = '';
 		}
 
 		if ($this->config->get('config_password')) {
-			$data['forgotten'] = $this->url->link('common/forgotten', '', true);
+			$data['forgotten'] = $this->url->link('common/forgotten');
 		} else {
 			$data['forgotten'] = '';
 		}

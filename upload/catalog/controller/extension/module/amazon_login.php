@@ -1,46 +1,50 @@
 <?php
 
 class ControllerExtensionModuleAmazonLogin extends Controller {
+	private $error = array();
 	public function index() {
 		$this->load->model('extension/payment/amazon_login_pay');
 
-		if ($this->config->get('amazon_login_pay_status') && $this->config->get('amazon_login_status') && !$this->customer->isLogged() && !empty($this->request->server['HTTPS'])) {
+		if ($this->config->get('payment_amazon_login_pay_status') && $this->config->get('module_amazon_login_status') && !$this->customer->isLogged() && !empty($this->request->server['HTTPS'])) {
 			// capital L in Amazon cookie name is required, do not alter for coding standards
 			if (isset($this->request->cookie['amazon_Login_state_cache'])) {
 				setcookie('amazon_Login_state_cache', '', time() - 4815162342);
 			}
 
 			$amazon_payment_js = $this->model_extension_payment_amazon_login_pay->getWidgetJs();
+
 			$this->document->addScript($amazon_payment_js);
 
-			$data['amazon_login_pay_client_id'] = $this->config->get('amazon_login_pay_client_id');
-			$data['amazon_login_return_url'] = $this->url->link('extension/module/amazon_login/login', '', true);
-			if ($this->config->get('amazon_login_pay_test') == 'sandbox') {
-				$data['amazon_login_pay_test'] = true;
+			$data['payment_amazon_login_pay_client_id'] = trim($this->config->get('payment_amazon_login_pay_client_id'));
+			$data['payment_amazon_login_pay_merchant_id'] = $this->config->get('payment_amazon_login_pay_merchant_id');
+			$data['module_amazon_login_return_url'] = $this->url->link('extension/module/amazon_login/login', '', true);
+
+			if ($this->config->get('payment_amazon_login_pay_test') == 'sandbox') {
+				$data['payment_amazon_login_pay_test'] = true;
 			}
 
-			if ($this->config->get('amazon_login_button_type')) {
-				$data['amazon_login_button_type'] = $this->config->get('amazon_login_button_type');
+			if ($this->config->get('module_amazon_login_button_type')) {
+				$data['module_amazon_login_button_type'] = $this->config->get('module_amazon_login_button_type');
 			} else {
-				$data['amazon_login_button_type'] = 'lwa';
+				$data['module_amazon_login_button_type'] = 'lwa';
 			}
 
-			if ($this->config->get('amazon_login_button_colour')) {
-				$data['amazon_login_button_colour'] = $this->config->get('amazon_login_button_colour');
+			if ($this->config->get('module_amazon_login_button_colour')) {
+				$data['module_amazon_login_button_colour'] = $this->config->get('module_amazon_login_button_colour');
 			} else {
-				$data['amazon_login_button_colour'] = 'gold';
+				$data['module_amazon_login_button_colour'] = 'gold';
 			}
 
-			if ($this->config->get('amazon_login_button_size')) {
-				$data['amazon_login_button_size'] = $this->config->get('amazon_login_button_size');
+			if ($this->config->get('module_amazon_login_button_size')) {
+				$data['module_amazon_login_button_size'] = $this->config->get('module_amazon_login_button_size');
 			} else {
-				$data['amazon_login_button_size'] = 'medium';
+				$data['module_amazon_login_button_size'] = 'medium';
 			}
 
-			if ($this->config->get('amazon_login_pay_language')) {
-				$data['amazon_login_pay_language'] = $this->config->get('amazon_login_pay_language');
+			if ($this->config->get('payment_amazon_login_pay_language')) {
+				$data['payment_amazon_login_pay_language'] = $this->config->get('payment_amazon_login_pay_language');
 			} else {
-				$data['amazon_login_pay_language'] = 'en-US';
+				$data['payment_amazon_login_pay_language'] = 'en-US';
 			}
 
 			return $this->load->view('extension/module/amazon_login', $data);
@@ -93,17 +97,6 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 						}
 					}
 
-					if ($this->config->get('config_customer_activity')) {
-						$this->load->model('account/activity');
-
-						$activity_data = array(
-							'customer_id' => $this->customer->getId(),
-							'name' => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-						);
-
-						$this->model_account_activity->addActivity('login', $activity_data);
-					}
-
 					$this->model_extension_payment_amazon_login_pay->logger('Customer logged in - ID: ' . $customer_info['customer_id'] . ', Email: ' . $customer_info['email']);
 				} else {
 					$this->model_extension_payment_amazon_login_pay->logger('Could not login to - ID: ' . $customer_info['customer_id'] . ', Email: ' . $customer_info['email']);
@@ -125,7 +118,6 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 					'lastname' => $last_name,
 					'email' => $user->email,
 					'telephone' => '',
-					'fax' => '',
 					'password' => uniqid(rand(), true),
 					'company' => '',
 					'address_1' => '',
@@ -136,7 +128,7 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 					'zone_id' => (int)$zone_id,
 				);
 
-				$customer_id = $this->model_extension_payment_amazon_login_pay->addCustomer($data);
+				$customer_id = $this->model_account_customer->addCustomer($data);
 
 				$this->model_extension_payment_amazon_login_pay->logger('Customer ID created: ' . $customer_id);
 
@@ -157,17 +149,6 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 						if($shipping_address){
 							$this->session->data['shipping_address'] = $shipping_address;
 						}
-					}
-
-					if ($this->config->get('config_customer_activity')) {
-						$this->load->model('account/activity');
-
-						$activity_data = array(
-							'customer_id' => $this->customer->getId(),
-							'name' => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-						);
-
-						$this->model_account_activity->addActivity('login', $activity_data);
 					}
 
 					$this->model_extension_payment_amazon_login_pay->logger('Customer logged in - ID: ' . $customer_id . ', Email: ' . $user->email);
@@ -203,7 +184,7 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 
 		$customer_info = $this->model_account_customer->getCustomerByEmail($email);
 
-		if ($customer_info && !$customer_info['approved']) {
+		if ($customer_info && !$customer_info['status']) {
 			$this->error['warning'] = $this->language->get('error_approved');
 		}
 

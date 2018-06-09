@@ -5,6 +5,7 @@ $_['heading_title']                        = 'Recurring Orders';
 // Text
 $_['text_success']                         = 'Success: You have modified recurring profiles!';
 $_['text_list']                            = 'Recurring Order List';
+$_['text_filter']                          = 'Filter';
 $_['text_recurring_detail']                = 'Recurring Details';
 $_['text_order_detail']                    = 'Order Details';
 $_['text_product_detail']                  = 'Product Details';

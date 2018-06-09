@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html dir="{{ direction }}" lang="{{ lang }}">
+<head>
+  <meta charset="UTF-8"/>
+  <title>{{ title }}</title>
+  <base href="{{ base }}"/>
+  {% if description %}
+    <meta name="description" content="{{ description }}"/>
+  {% endif %}
+  {% if keywords %}
+    <meta name="keywords" content="{{ keywords }}"/>
+  {% endif %}
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <link type="text/css" href="view/stylesheet/bootstrap.css" rel="stylesheet"/>
+  <link type="text/css" href="view/stylesheet/stylesheet.css" rel="stylesheet" media="screen"/>
+  <link type="text/css" href="view/javascript/font-awesome/css/fontawesome-all.css" rel="stylesheet"/>
+  <link type="text/css" href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen"/>
+  <script type="text/javascript" src="view/javascript/jquery/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="view/javascript/popper.min.js"></script>
+  <script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="view/javascript/jquery/datetimepicker/moment/moment.min.js"></script>
+  <script type="text/javascript" src="view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js"></script>
+  <script type="text/javascript" src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.js"></script>
+  {% for style in styles %}
+    <link type="text/css" href="{{ style.href }}" rel="{{ style.rel }}" media="{{ style.media }}"/>
+  {% endfor %}
+  {% for link in links %}
+    <link href="{{ link.href }}" rel="{{ link.rel }}"/>
+  {% endfor %}
+  <script type="text/javascript" src="view/javascript/common.js"></script>
+  {% for script in scripts %}
+    <script type="text/javascript" src="{{ script }}"></script>
+  {% endfor %}
+</head>
+<body>
+<div id="container">
+  <header id="header" class="navbar navbar-expand navbar-light bg-light">
+    <div class="container-fluid">
+      <a href="{{ home }}" class="navbar-brand d-none d-md-block border-right"><img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}"/></a>
+      {% if logged %}
+        <a href="#" id="button-menu" class="d-inline-block d-md-none border-right"><span class="fas fa-bars"></span></a>
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown border-left">
+            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle"><img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" id="user-profile" class="rounded-circle"/>&nbsp;&nbsp; {{ firstname }} {{ lastname }} <i class="fas fa-caret-down fa-fw"></i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a href="{{ profile }}" class="dropdown-item"><i class="fas fa-user-circle fa-fw"></i> {{ text_profile }}</a>
+              <div class="dropdown-divider"></div>
+              <h6 class="dropdown-header">{{ text_store }}</h6>
+              {% for store in stores %}
+                <a href="{{ store.href }}" target="_blank" class="dropdown-item">{{ store.name }}</a>
+              {% endfor %}
+              <div class="dropdown-divider"></div>
+              <h6 class="dropdown-header">{{ text_help }}</h6>
+              <a href="http://www.opencart.com" target="_blank" class="dropdown-item"><i class="fab fa-opencart fa-fw"></i> {{ text_homepage }}</a> <a href="http://docs.opencart.com" target="_blank" class="dropdown-item"><i class="fas fa-file-alt fa-fw"></i> {{ text_documentation }}</a> <a href="http://forum.opencart.com" target="_blank" class="dropdown-item"><i class="fas fa-comments fa-fw"></i> {{ text_support }}</a>
+            </div>
+          </li>
+          <li class="nav-item border-left"><a href="{{ logout }}" class="nav-link"><i class="fas fa-sign-out-alt"></i> <span class="d-none d-md-inline">{{ text_logout }}</span></a></li>
+        </ul>
+      {% endif %}
+    </div>
+  </header>

@@ -1,16 +1,8 @@
 <?php
 class ControllerExtensionTotalCoupon extends Controller {
 	public function index() {
-		if ($this->config->get('coupon_status')) {
+		if ($this->config->get('total_coupon_status')) {
 			$this->load->language('extension/total/coupon');
-
-			$data['heading_title'] = $this->language->get('heading_title');
-
-			$data['text_loading'] = $this->language->get('text_loading');
-
-			$data['entry_coupon'] = $this->language->get('entry_coupon');
-
-			$data['button_coupon'] = $this->language->get('button_coupon');
 
 			if (isset($this->session->data['coupon'])) {
 				$data['coupon'] = $this->session->data['coupon'];
@@ -46,7 +38,7 @@ class ControllerExtensionTotalCoupon extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$json['redirect'] = $this->url->link('checkout/cart');
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 		} else {
 			$json['error'] = $this->language->get('error_coupon');
 		}

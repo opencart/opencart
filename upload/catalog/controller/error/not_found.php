@@ -9,7 +9,7 @@ class ControllerErrorNotFound extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
+			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 		);
 
 		if (isset($this->request->get['route'])) {
@@ -33,13 +33,7 @@ class ControllerErrorNotFound extends Controller {
 			);
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_error'] = $this->language->get('text_error');
-
-		$data['button_continue'] = $this->language->get('button_continue');
-
-		$data['continue'] = $this->url->link('common/home');
+		$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

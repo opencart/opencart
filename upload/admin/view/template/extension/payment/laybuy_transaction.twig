@@ -1,0 +1,436 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right"><a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    {% if success %}
+      <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fas fa-info-circle"></i> {{ text_transaction_details }}</div>
+      <div class="card-body">
+        {% if transaction %}
+          <form action="" method="post" enctype="multipart/form-data" id="form-laybuy-transaction">
+            <ul class="nav nav-tabs">
+              <li class="nav-item"><a href="#tab-reference" data-toggle="tab" class="nav-link active">{{ tab_reference }}</a></li>
+              <li class="nav-item"><a href="#tab-customer" data-toggle="tab" class="nav-link">{{ tab_customer }}</a></li>
+              <li class="nav-item"><a href="#tab-payment-plan" data-toggle="tab" class="nav-link">{{ tab_payment }}</a></li>
+              {% if transaction.status_id == 1 %}
+                <li class="nav-item"><a href="#tab-modify" data-toggle="tab" class="nav-link">{{ tab_modify }}</a></li>
+              {% endif %}
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active" id="tab-reference">
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ text_paypal_profile_id }}</label>
+                  <div class="col-sm-10"> {{ transaction.paypal_profile_id }} </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ text_laybuy_ref_no }}</label>
+                  <div class="col-sm-10"> {{ transaction.laybuy_ref_no }} </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ text_order_id }}</label>
+                  <div class="col-sm-10"> {{ transaction.order_id }} </div>
+                </div>
+              </div>
+              <div class="tab-pane" id="tab-customer">
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ text_firstname }}</label>
+                  <div class="col-sm-10"> {{ transaction.firstname }} </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ text_lastname }}</label>
+                  <div class="col-sm-10"> {{ transaction.lastname }} </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ text_email }}</label>
+                  <div class="col-sm-10"> {{ transaction.email }} </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ text_address }}</label>
+                  <div class="col-sm-10"> {{ transaction.address }} </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ text_suburb }}</label>
+                  <div class="col-sm-10"> {{ transaction.suburb }} </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ text_state }}</label>
+                  <div class="col-sm-10"> {{ transaction.state }} </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ text_country }}</label>
+                  <div class="col-sm-10"> {{ transaction.country }} </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ text_postcode }}</label>
+                  <div class="col-sm-10"> {{ transaction.postcode }} </div>
+                </div>
+              </div>
+              <div class="tab-pane" id="tab-payment-plan">
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ text_status }}</label>
+                  <div class="col-sm-10"> {{ transaction.status }} </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ text_amount }}</label>
+                  <div class="col-sm-10"> {{ transaction.amount }} </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ text_downpayment_percent }}</label>
+                  <div class="col-sm-10"> {{ transaction.downpayment ~ '%' }} </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ text_months }}</label>
+                  <div class="col-sm-10"> {{ transaction.months }} </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ text_downpayment_amount }}</label>
+                  <div class="col-sm-10"> {{ transaction.downpayment_amount }} </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ text_payment_amounts }}</label>
+                  <div class="col-sm-10"> {{ transaction.payment_amounts }} </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ text_first_payment_due }}</label>
+                  <div class="col-sm-10"> {{ transaction.first_payment_due }} </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ text_last_payment_due }}</label>
+                  <div class="col-sm-10"> {{ transaction.last_payment_due }} </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ text_report }}</label>
+                  <div class="col-sm-10">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>{{ text_instalment }}</th>
+                          <th>{{ text_amount }}</th>
+                          <th>{{ text_date }}</th>
+                          <th>{{ text_pp_trans_id }}</th>
+                          <th>{{ text_status }}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for report in transaction.report %}
+                          {% if report.instalment == '0' %}
+                            <tr>
+                              <td>{{ text_downpayment }}</td>
+                              <td>{{ report.amount }}</td>
+                              <td>{{ report.date }}</td>
+                              <td>{{ report.pp_trans_id }}</td>
+                              <td>{{ report.status }}</td>
+                            </tr>
+                          {% else %}
+                            <tr>
+                              <td>{{ text_month ~ ' ' ~ report.instalment }}</td>
+                              <td>{{ report.amount }}</td>
+                              <td>{{ report.date }}</td>
+                              <td>{{ report.pp_trans_id }}</td>
+                              <td>{{ report.status }}</td>
+                            </tr>
+                          {% endif %}
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              {% if transaction.status_id == 1 %}
+                <div class="tab-pane" id="tab-modify">
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">{{ text_cancel_plan }}</label>
+                    <div class="col-sm-10">
+                      <button class="btn btn-primary btn-xs" id="cancel-plan">{{ button_cancel_plan }}</button>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">{{ text_revise_plan }}</label>
+                    <div class="col-sm-10">
+                      <button class="btn btn-primary btn-xs" id="revise-plan" style="margin-bottom:10px">{{ button_revise_plan }}</button>
+                      <div class="amount_remaining"><b>{{ text_remaining }}</b> {{ transaction.remaining }}
+                        <input type="hidden" id="amount" name="amount" value="{{ total }}"/>
+                      </div>
+                      <select name="payment_type" id="payment-type">
+                        <option value="1">{{ text_type_laybuy }}</option>
+                        <option value="0">{{ text_type_buynow }}</option>
+                      </select>
+                      <div class="laybuy_section">
+                        <br>
+                        <select name="INIT" id="down-payment">
+                          {% for percent in initial_payments %}
+                            {% if percent == transaction.downpayment %}
+                              <option value="{{ percent }}" selected="selected">{{ percent }}%</option>
+                            {% else %}
+                              <option value="{{ percent }}">{{ percent }}%</option>
+                            {% endif %}
+                          {% endfor %}
+                        </select> <select name="MONTHS" id="months">
+                          {% for month in months %}
+                            {% if month.value == transaction.months %}
+                              <option value="{{ month.value }}" selected="selected">{{ month.label }}</option>
+                            {% else %}
+                              <option value="{{ month.value }}">{{ month.label }}</option>
+                            {% endif %}
+                          {% endfor %}
+                        </select>
+                        <div class="table-responsive">
+                          <table class="table table-striped table-responsive table-condensed" id="payment-table" style="margin-top:5px">
+                            <thead>
+                              <th>{{ text_payment }}</th>
+                              <th>{{ text_due_date }}</th>
+                              <th class="text-right">{{ text_amount }}</th>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endif %}</div>
+          </form>
+        {% else %}
+          {{ text_not_found }}
+        {% endif %}</div>
+    </div>
+  </div>
+</div>
+<style>
+  #form-laybuy-transaction .col-form-label {
+    padding-top: 0;
+  }
+
+  .amount_remaining {
+    margin-bottom: 10px;
+  }
+</style>
+<script type="text/javascript"><!--
+var token = '';
+
+// Login to the API
+$.ajax({
+	url: '{{ store_url }}index.php?route=api/login',
+	type: 'post',
+	dataType: 'json',
+	data: 'key={{ api_key }}',
+	crossDomain: true,
+	success: function(json) {
+		if (json['error']) {
+			if (json['error']['key']) {
+				alert(json['error']['key']);
+			}
+
+			if (json['error']['ip']) {
+				alert(json['error']['ip']);
+			}
+		}
+
+		if (json['user_token']) {
+			token = json['user_token'];
+		}
+	},
+	error: function(xhr, ajaxOptions, thrownError) {
+		alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	}
+});
+//--></script>
+<script type="text/javascript"><!--
+$('#cancel-plan').on('click', function(e) {
+	e.preventDefault();
+
+	$.ajax({
+		url: 'index.php?route=extension/payment/laybuy/cancel&user_token={{ user_token }}&id={{ id }}&source=extension',
+		type: 'post',
+		dataType: 'json',
+		cache: false,
+		beforeSend: function() {
+			$('#cancel-plan, #revise-plan').attr('disabled', true);
+			$('#cancel-plan').after('<span class="laybuy-loading fas fa-spinner" style="margin-left:2px"></span>');
+		},
+		complete: function() {
+			$('#cancel-plan, #revise-plan').attr('disabled', false);
+			$('.laybuy-loading').remove();
+		},
+		success: function(json) {
+			if (json['error']) {
+				alert(json['error']);
+			}
+
+			if (json['success']) {
+				if (token) {
+					// Send order history to the API
+					$.ajax({
+						url: '{{ store_url }}index.php?route=api/order/history&token=' + token + '&order_id=' + json['order_id'],
+						type: 'post',
+						dataType: 'json',
+						data: 'order_status_id=' + json['order_status_id'] + '&notify=1&override=0&append=0&comment=' + encodeURIComponent(json['comment']),
+						success: function(json) {
+							if (json['error']) {
+								alert(json['error']);
+							}
+						},
+						error: function(xhr, ajaxOptions, thrownError) {
+							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+						}
+					});
+				}
+
+				alert(json['success']);
+
+				location = json['reload'].replace(/&amp;/g, '&');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+//--></script>
+<script type="text/javascript"><!--
+$('#revise-plan').on('click', function(e) {
+	e.preventDefault();
+
+	$.ajax({
+		url: 'index.php?route=extension/payment/laybuy/revise&user_token={{ user_token }}&id={{ id }}&source=extension',
+		type: 'post',
+		data: $('#payment-type, #amount, #down-payment, #months'),
+		dataType: 'json',
+		cache: false,
+		beforeSend: function() {
+			$('#cancel-plan, #revise-plan').attr('disabled', true);
+			$('#revise-plan').after('<div class="laybuy-loading fas fa-spinner" style="margin-left:2px"></div>');
+		},
+		complete: function() {
+			$('#cancel-plan, #revise-plan').attr('disabled', false);
+			$('.laybuy-loading').remove();
+		},
+		success: function(json) {
+			if (json['error']) {
+				alert(json['error']);
+			}
+
+			if (json['success']) {
+				alert(json['success']);
+
+				location = json['reload'].replace(/&amp;/g, '&');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+//--></script>
+<script type="text/javascript"><!--
+$('#payment-type').on('change', function() {
+	var payment_type = $('#payment-type').val();
+
+	if (payment_type == '1') {
+		$('.laybuy_section').show();
+	} else {
+		$('.laybuy_section').hide();
+	}
+});
+//--></script>
+<script type="text/javascript"><!--
+$(document).ready(function() {
+	$('#tab-modify').on('change', 'select', function() {
+		calculate($('#down-payment').val(), $('#months').val());
+	});
+
+	var symbol_left = "{{ currency_symbol_left }}";
+	var symbol_right = "{{ currency_symbol_right }}";
+	var order = {{ order_info|json_encode() }};
+	var total = parseFloat(parseFloat({{ total }}) * parseFloat(order.currency_value)).toFixed(4);
+
+	calculate($('#down-payment').val(), $('#months').val());
+
+	function calculate(dp, months) {
+		var down_payment = getPercent(dp, total);
+
+		var remainder = total - down_payment;
+
+		var payments = getPayments(remainder, months);
+		payments[0] = {
+			payment: '{{ text_downpayment }}',
+			dueDate: '{{ text_today }}',
+			amount: parseFloat(down_payment).toFixed(2)
+		};
+
+		replaceRows(payments);
+	}
+
+	function getPercent(percent, value) {
+		var result = (percent / 100) * value;
+
+		return result.toFixed(4);
+	}
+
+	function getPayments(amount, months) {
+		var payment_amount = amount / months;
+
+		var payments = {};
+
+		for (i = 1; i <= months; i++) {
+			var new_date = new Date();
+
+			new_date.setMonth(new_date.getMonth() + i);
+
+			payments[i] = {
+				payment: '{{ text_month }} ' + i,
+				dueDate: ('0' + new_date.getDate()).slice(-2) + '/' + ('0' + (new_date.getMonth() + 1)).slice(-2) + '/' + new_date.getFullYear(),
+				amount: parseFloat(payment_amount).toFixed(2)
+			}
+		}
+
+		return payments;
+	}
+
+	function replaceRows(payments) {
+		$('#payment-table').find('tbody').html('');
+
+		for (payment in payments) {
+			addRow(payments[payment]);
+		}
+	}
+
+	function addRow(payment) {
+		var row;
+
+		row = '<tr>';
+		row += '<td>' + payment.payment + '</td>';
+		row += '<td>' + payment.dueDate + '</td>';
+		row += '<td class="text-right">' + symbol_left + payment.amount + symbol_right + '</td>';
+		row += '</tr>';
+
+		$('#payment-table').find('tbody').append(row);
+	}
+});
+//--></script>
+{{ footer }}

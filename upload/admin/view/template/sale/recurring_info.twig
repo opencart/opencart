@@ -1,0 +1,137 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right"><a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="card">
+          <div class="card-header">{{ text_recurring_detail }}</div>
+          <div class="card-body">
+            <table class="table table-bordered">
+              <tr>
+                <td>{{ text_order_recurring_id }}</td>
+                <td>{{ order_recurring_id }}</td>
+              </tr>
+              <tr>
+                <td>{{ text_reference }}</td>
+                <td>{{ reference }}</td>
+              </tr>
+              <tr>
+                <td>{{ text_recurring_name }}</td>
+                <td>{% if recurring %}
+                    <a href="{{ recurring }}">{{ recurring_name }}</a>
+                  {% else %}
+                    {{ recurring_name }}
+                  {% endif %}</td>
+              </tr>
+              <tr>
+                <td>{{ text_recurring_description }}</td>
+                <td>{{ recurring_description }}</td>
+              </tr>
+              <tr>
+                <td>{{ text_recurring_status }}</td>
+                <td>{{ recurring_status }}</td>
+              </tr>
+              <tr>
+                <td>{{ text_payment_method }}</td>
+                <td>{{ payment_method }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="card">
+          <div class="card-header"><i class="fas fa-list"></i> {{ text_order_detail }}</div>
+          <div class="card-body">
+            <table class="table table-bordered">
+              <tr>
+                <td>{{ text_order_id }}</td>
+                <td><a href="{{ order }}">{{ order_id }}</a></td>
+              </tr>
+              <tr>
+                <td>{{ text_customer }}</td>
+                <td>{% if customer %}
+                    <a href="{{ customer }}">{{ firstname }} {{ lastname }}</a>
+                  {% else %}
+                    {{ firstname }} {{ lastname }}
+                  {% endif %}</td>
+              </tr>
+              <tr>
+                <td>{{ text_email }}</td>
+                <td>{{ email }}</td>
+              </tr>
+              <tr>
+                <td>{{ text_order_status }}</td>
+                <td>{{ order_status }}</td>
+              </tr>
+              <tr>
+                <td>{{ text_date_added }}</td>
+                <td>{{ date_added }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><i class="fas fa-list"></i> {{ text_product_detail }}</div>
+      <div class="card-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <td>{{ text_product }}</td>
+              <td>{{ text_quantity }}</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ product }}</td>
+              <td>{{ quantity }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><i class="fas fa-list"></i> {{ text_transaction }}</div>
+      <div class="card-body"> {{ buttons }}
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <td class="text-left">{{ column_date_added }}</td>
+              <td class="text-right">{{ column_amount }}</td>
+              <td class="text-left">{{ column_type }}</td>
+            </tr>
+          </thead>
+          <tbody>
+            {% if transactions %}
+              {% for transaction in transactions %}
+                <tr>
+                  <td class="text-left">{{ transaction.date_added }}</td>
+                  <td class="text-right">{{ transaction.amount }}</td>
+                  <td class="text-left">{{ transaction.type }}</td>
+                </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td class="text-center" colspan="7">{{ text_no_results }}</td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }} 

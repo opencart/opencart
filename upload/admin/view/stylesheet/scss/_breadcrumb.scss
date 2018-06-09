@@ -1,0 +1,69 @@
+.breadcrumb {
+  display: flex;
+  //display: flex;
+  /* OpenCart Start */
+  display: inline-block;
+  //border: 1px solid #000000;
+  /* OpenCart End */
+  flex-wrap: wrap;
+  padding: $breadcrumb-padding-y $breadcrumb-padding-x;
+  margin-bottom: $breadcrumb-margin-bottom;
+  list-style: none;
+  background-color: $breadcrumb-bg;
+  @include border-radius($breadcrumb-border-radius);
+}
+
+/* OpenCart Start */
+.breadcrumb-item a {
+  color: #999999;
+}
+
+.breadcrumb-item:last-child a {
+  color: #1e91cf;
+}
+/* OpenCart End */
+
+.breadcrumb-item {
+  /* OpenCart Start */
+  text-shadow: 0 1px #fff;
+  font-size: .9231rem;
+  display: inline-block;
+  /* OpenCart End */
+
+  // The separator between breadcrumbs (by default, a forward-slash: "/")
+  + .breadcrumb-item {
+    padding-left: $breadcrumb-item-padding;
+
+    &::before {
+      display: inline-block; // Suppress underlining of the separator in modern browsers
+      padding-right: $breadcrumb-item-padding;
+      color: $breadcrumb-divider-color;
+      content: $breadcrumb-divider;
+
+      /* OpenCart Start */
+      font-family: "Font Awesome 5 Free";
+      font-weight: 600;
+      font-size: .7692rem;
+      color: #BBBBBB;
+      /* OpenCart End */
+    }
+  }
+
+  // IE9-11 hack to properly handle hyperlink underlines for breadcrumbs built
+  // without `<ul>`s. The `::before` pseudo-element generates an element
+  // *within* the .breadcrumb-item and thereby inherits the `text-decoration`.
+  //
+  // To trick IE into suppressing the underline, we give the pseudo-element an
+  // underline and then immediately remove it.
+  + .breadcrumb-item:hover::before {
+    text-decoration: underline;
+  }
+  // stylelint-disable-next-line no-duplicate-selectors
+  + .breadcrumb-item:hover::before {
+    text-decoration: none;
+  }
+
+  &.active {
+    color: $breadcrumb-active-color;
+  }
+}

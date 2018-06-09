@@ -1,0 +1,92 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right"><a href="{{ refresh }}" data-toggle="tooltip" title="{{ button_currency }}" class="btn btn-warning"><i class="fas fa-sync"></i></a> <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-currency').submit() : false;"><i class="fas fa-trash-alt"></i></button>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    {% if success %}
+      <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
+      <div class="card-body">
+        <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-currency">
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');"/></td>
+                  <td class="text-left">{% if sort == 'title' %}
+                      <a href="{{ sort_title }}" class="{{ order|lower }}">{{ column_title }}</a>
+                    {% else %}
+                      <a href="{{ sort_title }}">{{ column_title }}</a>
+                    {% endif %}</td>
+                  <td class="text-left">{% if sort == 'code' %}
+                      <a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>
+                    {% else %}
+                      <a href="{{ sort_code }}">{{ column_code }}</a>
+                    {% endif %}</td>
+                  <td class="text-right">{% if sort == 'value' %}
+                      <a href="{{ sort_value }}" class="{{ order|lower }}">{{ column_value }}</a>
+                    {% else %}
+                      <a href="{{ sort_value }}">{{ column_value }}</a>
+                    {% endif %}</td>
+                  <td class="text-left">{% if sort == 'date_modified' %}
+                      <a href="{{ sort_date_modified }}" class="{{ order|lower }}">{{ column_date_modified }}</a>
+                    {% else %}
+                      <a href="{{ sort_date_modified }}">{{ column_date_modified }}</a>
+                    {% endif %}</td>
+                  <td class="text-right">{{ column_action }}</td>
+                </tr>
+              </thead>
+              <tbody>
+                {% if currencies %}
+                  {% for currency in currencies %}
+                    <tr>
+                      <td class="text-center">{% if currency.currency_id in selected %}
+                          <input type="checkbox" name="selected[]" value="{{ currency.currency_id }}" checked="checked"/>
+                        {% else %}
+                          <input type="checkbox" name="selected[]" value="{{ currency.currency_id }}"/>
+                        {% endif %}</td>
+                      <td class="text-left">{{ currency.title }}</td>
+                      <td class="text-left">{{ currency.code }}</td>
+                      <td class="text-right">{{ currency.value }}</td>
+                      <td class="text-left">{{ currency.date_modified }}</td>
+                      <td class="text-right"><a href="{{ currency.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+                    </tr>
+                  {% endfor %}
+                {% else %}
+                  <tr>
+                    <td class="text-center" colspan="6">{{ text_no_results }}</td>
+                  </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </form>
+        <div class="row">
+          <div class="col-sm-6 text-left">{{ pagination }}</div>
+          <div class="col-sm-6 text-right">{{ results }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }} 

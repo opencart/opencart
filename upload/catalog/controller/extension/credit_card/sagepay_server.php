@@ -2,9 +2,9 @@
 class ControllerExtensionCreditCardSagepayServer extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/account', '', true);
+			$this->session->data['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 
-			$this->response->redirect($this->url->link('account/login', '', true));
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->load->language('extension/credit_card/sagepay_server');
@@ -17,12 +17,12 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
+			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', true)
+			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
 		);
 
 
@@ -40,23 +40,9 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['column_type'] = $this->language->get('column_type');
-		$data['column_digits'] = $this->language->get('column_digits');
-		$data['column_expiry'] = $this->language->get('column_expiry');
-
-		$data['text_empty'] = $this->language->get('text_empty');
-		$data['text_loading'] = $this->language->get('text_loading');
-
-		$data['button_delete'] = $this->language->get('button_delete');
-		$data['button_new_card'] = $this->language->get('button_new_card');
-		$data['button_delete'] = $this->language->get('button_delete');
-		$data['button_back'] = $this->language->get('button_back');
-
-		if ($this->config->get('sagepay_server_card')) {
+		if ($this->config->get('payment_sagepay_server_card')) {
 			$data['cards'] = $this->model_extension_payment_sagepay_server->getCards($this->customer->getId());
-			$data['delete'] = $this->url->link('extension/credit_card/sagepay_server/delete', 'card_id=', true);
+			$data['delete'] = $this->url->link('extension/credit_card/sagepay_server/delete', 'language=' . $this->config->get('config_language') . '&card_id=');
 
 			if (isset($this->request->get['page'])) {
 				$page = $this->request->get['page'];
@@ -70,7 +56,7 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 			$pagination->total = $cards_total;
 			$pagination->page = $page;
 			$pagination->limit = 10;
-			$pagination->url = $this->url->link('extension/credit_card/sagepay_server', 'page={page}', true);
+			$pagination->url = $this->url->link('extension/credit_card/sagepay_server', 'language=' . $this->config->get('config_language') . '&page={page}');
 
 			$data['pagination'] = $pagination->render();
 
@@ -80,9 +66,9 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 			$data['pagination'] = false;
 			$data['results'] = false;
 		}
-
-		$data['back'] = $this->url->link('account/account', '', true);
-		$data['add'] = $this->url->link('extension/credit_card/sagepay_server/add', '', true);
+		
+		$data['add'] = $this->url->link('extension/credit_card/sagepay_server/add', 'language=' . $this->config->get('config_language'));
+		$data['back'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -102,14 +88,14 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 		$card = $this->model_extension_payment_sagepay_server->getCard($this->request->get['card_id'], '');
 
 		if (!empty($card['token'])) {
-			if ($this->config->get('sagepay_server_test') == 'live') {
+			if ($this->config->get('payment_sagepay_server_test') == 'live') {
 				$url = 'https://live.sagepay.com/gateway/service/removetoken.vsp';
 			} else {
 				$url = 'https://test.sagepay.com/gateway/service/removetoken.vsp';
 			}
 			
 			$payment_data['VPSProtocol'] = '3.00';
-			$payment_data['Vendor'] = $this->config->get('sagepay_server_vendor');
+			$payment_data['Vendor'] = $this->config->get('payment_sagepay_server_vendor');
 			$payment_data['TxType'] = 'REMOVETOKEN';
 			$payment_data['Token'] = $card['token'];
 
@@ -117,6 +103,7 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 			
 			if ($response_data['Status'] == 'OK') {
 				$this->model_extension_payment_sagepay_server->deleteCard($this->request->get['card_id']);
+
 				$this->session->data['success'] = $this->language->get('text_success_card');
 			} else {
 				$this->session->data['error_warning'] = $this->language->get('text_fail_card');
@@ -124,7 +111,8 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 		} else {
 			$this->session->data['error_warning'] = $this->language->get('text_fail_card');
 		}
-		$this->response->redirect($this->url->link('extension/credit_card/sagepay_server', '', true));
+
+		$this->response->redirect($this->url->link('extension/credit_card/sagepay_server', 'language=' . $this->config->get('config_language')));
 	}
 
 	public function addCard() {
@@ -135,7 +123,7 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 
 		$payment_data = array();
 
-		if ($this->config->get('sagepay_server_test') == 'live') {
+		if ($this->config->get('payment_sagepay_server_test') == 'live') {
 			$url = 'https://live.sagepay.com/gateway/service/token.vsp';
 		} else {
 			$url = 'https://test.sagepay.com/gateway/service/token.vsp';
@@ -144,9 +132,9 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 
 		$payment_data['ReferrerID'] = 'E511AF91-E4A0-42DE-80B0-09C981A3FB61';
 		$payment_data['TxType'] = 'TOKEN';
-		$payment_data['Vendor'] = $this->config->get('sagepay_server_vendor');
+		$payment_data['Vendor'] = $this->config->get('payment_sagepay_server_vendor');
 		$payment_data['VendorTxCode'] = 'server_card_' . strftime("%Y%m%d%H%M%S") . mt_rand(1, 999);
-		$payment_data['NotificationURL'] = $this->url->link('extension/credit_card/sagepay_server/callback', '', true);
+		$payment_data['NotificationURL'] = $this->url->link('extension/credit_card/sagepay_server/callback', 'language=' . $this->config->get('config_language'));
 		$payment_data['Currency'] = $this->session->data['currency'];
 
 		$response_data = $this->model_extension_payment_sagepay_server->sendCurl($url, $payment_data);
@@ -179,8 +167,8 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 
 		$this->model_extension_payment_sagepay_server->logger('Callback data', $this->request->post);
 
-		$success_page = $this->url->link('extension/credit_card/sagepay_server/success', '', true);
-		$error_page = $this->url->link('extension/credit_card/sagepay_server/failure', '', true);
+		$success_page = $this->url->link('extension/credit_card/sagepay_server/success', 'language=' . $this->config->get('config_language'));
+		$error_page = $this->url->link('extension/credit_card/sagepay_server/failure', 'language=' . $this->config->get('config_language'));
 		$end_ln = chr(13) . chr(10);
 
 		if (isset($this->request->post['VendorTxCode'])) {
@@ -226,25 +214,27 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 		} else {
 			$str_security_key = '';
 		}
+
 		$this->model_extension_payment_sagepay_server->logger('$transaction_info', $transaction_info);
 		$this->model_extension_payment_sagepay_server->logger('$str_vps_tx_id', $str_vps_tx_id);
 		$this->model_extension_payment_sagepay_server->logger('$vendor_tx_code', $vendor_tx_code);
 		$this->model_extension_payment_sagepay_server->logger('$str_status', $str_status);
-		$this->model_extension_payment_sagepay_server->logger('sagepay_server_vendor', $this->config->get('sagepay_server_vendor'));
+		$this->model_extension_payment_sagepay_server->logger('payment_sagepay_server_vendor', $this->config->get('payment_sagepay_server_vendor'));
 		$this->model_extension_payment_sagepay_server->logger('$str_token', $str_token);
 		$this->model_extension_payment_sagepay_server->logger('$str_security_key', $str_security_key);
 
-		$str_message = $str_vps_tx_id . $vendor_tx_code . $str_status . strtolower($this->config->get('sagepay_server_vendor')) . $str_token . $str_security_key;
+		$str_message = $str_vps_tx_id . $vendor_tx_code . $str_status . strtolower($this->config->get('payment_sagepay_server_vendor')) . $str_token . $str_security_key;
 
 		$str_my_signature = strtoupper(md5($str_message));
 
 		/** We can now compare our MD5 Hash signature with that from Sage Pay Server * */
 		if ($str_my_signature != $str_vps_signature) {
-
 			echo "Status=INVALID" . $end_ln;
 			echo "StatusDetail= Cannot match the MD5 Hash. Order might be tampered with." . $end_ln;
 			echo "RedirectURL=" . $error_page . $end_ln;
+
 			$this->model_extension_payment_sagepay_server->logger('StatusDetail', 'Cannot match the MD5 Hash. Order might be tampered with.');
+
 			exit;
 		}
 
@@ -271,15 +261,21 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 
 	public function success() {
 		$this->load->model('extension/payment/sagepay_server');
+
 		$this->model_extension_payment_sagepay_server->logger('Success', '');
+
 		$this->session->data['success'] = 'Success';
-		$this->response->redirect($this->url->link('extension/credit_card/sagepay_server', '', true));
+
+		$this->response->redirect($this->url->link('extension/credit_card/sagepay_server', 'language=' . $this->config->get('config_language')));
 	}
 
 	public function failure() {
 		$this->load->model('extension/payment/sagepay_server');
+
 		$this->model_extension_payment_sagepay_server->logger('Failure', '');
+
 		$this->session->data['error_warning'] = 'Failure';
-		$this->response->redirect($this->url->link('extension/credit_card/sagepay_server', '', true));
+
+		$this->response->redirect($this->url->link('extension/credit_card/sagepay_server', 'language=' . $this->config->get('config_language')));
 	}
 }

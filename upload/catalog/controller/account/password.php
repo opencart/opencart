@@ -4,9 +4,9 @@ class ControllerAccountPassword extends Controller {
 
 	public function index() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/password', '', true);
+			$this->session->data['redirect'] = $this->url->link('account/password', 'language=' . $this->config->get('config_language'));
 
-			$this->response->redirect($this->url->link('account/login', '', true));
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->load->language('account/password');
@@ -20,47 +20,25 @@ class ControllerAccountPassword extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			// Add to activity log
-			if ($this->config->get('config_customer_activity')) {
-				$this->load->model('account/activity');
-
-				$activity_data = array(
-					'customer_id' => $this->customer->getId(),
-					'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-				);
-
-				$this->model_account_activity->addActivity('password', $activity_data);
-			}
-
-			$this->response->redirect($this->url->link('account/account', '', true));
+			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
 
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
+			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', true)
+			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/password', '', true)
+			'href' => $this->url->link('account/password', 'language=' . $this->config->get('config_language'))
 		);
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_password'] = $this->language->get('text_password');
-
-		$data['entry_password'] = $this->language->get('entry_password');
-		$data['entry_confirm'] = $this->language->get('entry_confirm');
-
-		$data['button_continue'] = $this->language->get('button_continue');
-		$data['button_back'] = $this->language->get('button_back');
 
 		if (isset($this->error['password'])) {
 			$data['error_password'] = $this->error['password'];
@@ -74,7 +52,7 @@ class ControllerAccountPassword extends Controller {
 			$data['error_confirm'] = '';
 		}
 
-		$data['action'] = $this->url->link('account/password', '', true);
+		$data['action'] = $this->url->link('account/password', 'language=' . $this->config->get('config_language'));
 
 		if (isset($this->request->post['password'])) {
 			$data['password'] = $this->request->post['password'];
@@ -88,7 +66,7 @@ class ControllerAccountPassword extends Controller {
 			$data['confirm'] = '';
 		}
 
-		$data['back'] = $this->url->link('account/account', '', true);
+		$data['back'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -101,7 +79,7 @@ class ControllerAccountPassword extends Controller {
 	}
 
 	protected function validate() {
-		if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, "UTF-8")) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, "UTF-8")) > 20)) {
+		if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
 			$this->error['password'] = $this->language->get('error_password');
 		}
 

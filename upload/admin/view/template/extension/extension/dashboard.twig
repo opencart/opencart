@@ -1,0 +1,52 @@
+<fieldset>
+  <legend>{{ heading_title }}</legend>
+  {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+  {% endif %}
+  {% if success %}
+    <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+  {% endif %}
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <td class="text-left">{{ column_name }}</td>
+          <td class="text-right">{{ column_width }}</td>
+          <td class="text-left">{{ column_status }}</td>
+          <td class="text-right">{{ column_sort_order }}</td>
+          <td class="text-right">{{ column_action }}</td>
+        </tr>
+      </thead>
+      <tbody>
+        {% if extensions %}
+          {% for extension in extensions %}
+            <tr>
+              <td class="text-left">{{ extension.name }}</td>
+              <td class="text-right">{{ extension.width }}</td>
+              <td class="text-left">{{ extension.status }}</td>
+              <td class="text-right">{{ extension.sort_order }}</td>
+              <td class="text-right">{% if extension.installed %}
+                  <a href="{{ extension.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
+                {% else %}
+                  <button type="button" class="btn btn-primary" disabled="disabled"><i class="fas fa-pencil-alt"></i></button>
+                {% endif %}
+                {% if not extension.installed %}
+                  <a href="{{ extension.install }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></a>
+                {% else %}
+                  <a href="{{ extension.uninstall }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></a>
+                {% endif %}</td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="3">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</fieldset>

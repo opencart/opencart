@@ -1,0 +1,202 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right">
+        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-cron').submit() : false;"><i class="fas fa-trash-alt"></i></button>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    {% if success %}
+      <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="card mb-3">
+      <div class="card-header"><i class="fas fa-question-circle"></i> {{ text_instruction }}</div>
+      <div class="card-body">
+        <p>{{ text_cron_1 }}</p>
+        <p>{{ text_cron_2 }}</p>
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">{{ entry_cron }}</span>
+            </div>
+            <input type="text" value="wget &quot;{{ cron }}&quot; --read-timeout=5400" id="input-cron" class="form-control"/>
+            <div class="input-group-append">
+              <button type="button" id="button-copy" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
+      <div class="card-body">
+        <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-cron">
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');"/></td>
+                  <td class="text-left">{% if sort == 'code' %}<a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>{% else %}<a href="{{ sort_code }}">{{ column_code }}</a>{% endif %}</td>
+                  <td class="text-left">{% if sort == 'cycle' %}<a href="{{ sort_cycle }}" class="{{ order|lower }}">{{ column_cycle }}</a>{% else %}<a href="{{ sort_cycle }}">{{ column_cycle }}</a>{% endif %}</td>
+                  <td class="text-left">{% if sort == 'action' %}<a href="{{ sort_action }}" class="{{ order|lower }}">{{ column_action }}</a>{% else %}<a href="{{ sort_action }}">{{ column_action }}</a>{% endif %}</td>
+                  <td class="text-left">{% if sort == 'status' %}<a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>{% else %}<a href="{{ sort_status }}">{{ column_status }}</a>{% endif %}</td>
+                  <td class="text-left">{% if sort == 'date_added' %}<a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>{% else %}<a href="{{ sort_date_added }}">{{ column_date_added }}</a>{% endif %}</td>
+                  <td class="text-left">{% if sort == 'date_modified' %}<a href="{{ sort_date_modified }}" class="{{ order|lower }}">{{ column_date_modified }}</a>{% else %}<a href="{{ sort_date_modified }}">{{ column_date_modified }}</a>{% endif %}</td>
+                  <td class="text-right">{{ column_action }}</td>
+                </tr>
+              </thead>
+              <tbody>
+                {% if crons %}
+                  {% for cron in crons %}
+                    <tr>
+                      <td class="text-center">{% if cron.cron_id in selected %}
+                          <input type="checkbox" name="selected[]" value="{{ cron.cron_id }}" checked="checked"/>
+                        {% else %}
+                          <input type="checkbox" name="selected[]" value="{{ cron.cron_id }}"/>
+                        {% endif %}</td>
+                      <td class="text-left">{{ cron.code }}</td>
+                      <td class="text-left">{{ cron.cycle }}</td>
+                      <td class="text-left">{{ cron.action }}</td>
+                      <td class="text-left">{{ cron.status }}</td>
+                      <td class="text-left">{{ cron.date_added }}</td>
+                      <td class="text-left">{{ cron.date_modified }}</td>
+                      <td class="text-right">
+                        <button type="button" value="{{ cron.cron_id }}" data-toggle="tooltip" data-title="{{ button_run }}" class="btn btn-warning"><i class="fas fa-play"></i></button>
+                        {% if not cron.enabled %}
+                          <button type="button" value="{{ cron.cron_id }}" data-toggle="tooltip" data-title="{{ button_enable }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
+                        {% else %}
+                          <button type="button" value="{{ cron.cron_id }}" data-toggle="tooltip" data-title="{{ button_disable }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
+                        {% endif %}</td>
+                    </tr>
+                  {% endfor %}
+                {% else %}
+                  <tr>
+                    <td class="text-center" colspan="8">{{ text_no_results }}</td>
+                  </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </form>
+        <div class="row">
+          <div class="col-sm-6 text-left">{{ pagination }}</div>
+          <div class="col-sm-6 text-right">{{ results }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#button-copy').on('click', function() {
+	$('#input-cron').select();
+
+	document.execCommand('copy');
+});
+
+$('#form-cron .btn-warning').on('click', function() {
+	var element = this;
+
+	$.ajax({
+		url: 'index.php?route=marketplace/cron/run&user_token={{ user_token }}&cron_id=' + $(element).val(),
+		dataType: 'json',
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(json) {
+			$('.alert-dismissible').remove();
+
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$('#form-cron').on('click', '.btn-success', function() {
+	var element = this;
+
+	$.ajax({
+		url: 'index.php?route=marketplace/cron/enable&user_token={{ user_token }}&cron_id=' + $(element).val(),
+		dataType: 'json',
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(json) {
+			$('.alert-dismissible').remove();
+
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+				$(element).replaceWith('<button type="button" value="' + $(element).val() + '" data-toggle="tooltip" data-title="{{ button_disable }}"  class="btn btn-success"><i class="fas fa-minus-circle"></i></button>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$('#form-cron').on('click', '.btn-danger', function() {
+	var element = this;
+
+	$.ajax({
+		url: 'index.php?route=marketplace/cron/disable&user_token={{ user_token }}&cron_id=' + $(element).val(),
+		dataType: 'json',
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(json) {
+			$('.alert-dismissible').remove();
+
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+				$(element).replaceWith('<button type="button" value="' + $(element).val() + '" data-toggle="tooltip" data-title="{{ button_enable }}"  class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+//--></script>
+{{ footer }}

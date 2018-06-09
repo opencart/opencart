@@ -1,0 +1,275 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right">
+        <button type="submit" form="form-coupon" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-coupon">
+          <ul class="nav nav-tabs">
+            <li class="nav-item"><a href="#tab-general" data-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+            {% if coupon_id %}
+              <li class="nav-item"><a href="#tab-history" data-toggle="tab" class="nav-link">{{ tab_history }}</a></li>
+            {% endif %}
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab-general">
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-name">{{ entry_name }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+                  {% if error_name %}
+                    <div class="invalid-tooltip">{{ error_name }}</div>
+                  {% endif %}</div>
+              </div>
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-code">{{ entry_code }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
+                  <small class="form-text text-muted">{{ help_code }}</small>
+                  {% if error_code %}
+                    <div class="invalid-tooltip">{{ error_code }}</div>
+                  {% endif %}</div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-type">{{ entry_type }}</label>
+                <div class="col-sm-10">
+                  <select name="type" id="input-type" class="form-control">
+                    {% if type == 'P' %}
+                      <option value="P" selected="selected">{{ text_percent }}</option>
+                    {% else %}
+                      <option value="P">{{ text_percent }}</option>
+                    {% endif %}
+                    {% if type == 'F' %}
+                      <option value="F" selected="selected">{{ text_amount }}</option>
+                    {% else %}
+                      <option value="F">{{ text_amount }}</option>
+                    {% endif %}
+                  </select>
+                  <small class="form-text text-muted">{{ help_type }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-discount">{{ entry_discount }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="discount" value="{{ discount }}" placeholder="{{ entry_discount }}" id="input-discount" class="form-control"/>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-total">{{ entry_total }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="total" value="{{ total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
+                  <small class="form-text text-muted">{{ help_total }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">{{ entry_logged }}</label>
+                <div class="col-sm-10">
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    {% if logged %}
+                      <label class="btn btn-outline-secondary active"><input type="radio" name="logged" value="1" checked="checked"/> {{ text_yes }}</label>
+                      <label class="btn btn-outline-secondary"><input type="radio" name="logged" value="0"/> {{ text_no }}</label>
+                    {% else %}
+                      <label class="btn btn-outline-secondary"><input type="radio" name="logged" value="1"/> {{ text_yes }}</label>
+                      <label class="btn btn-outline-secondary active"><input type="radio" name="logged" value="0" checked="checked"/> {{ text_no }}</label>
+                    {% endif %}
+                  </div>
+                  <small class="form-text text-muted">{{ help_logged }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">{{ entry_shipping }}</label>
+                <div class="col-sm-10">
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    {% if shipping %}
+                      <label class="btn btn-outline-secondary active"><input type="radio" name="shipping" value="1" checked="checked"/> {{ text_yes }}</label>
+                      <label class="btn btn-outline-secondary"><input type="radio" name="shipping" value="0"/> {{ text_no }}</label>
+                    {% else %}
+                      <label class="btn btn-outline-secondary"><input type="radio" name="shipping" value="1"/> {{ text_yes }}</label>
+                      <label class="btn btn-outline-secondary active"><input type="radio" name="shipping" value="0" checked="checked"/> {{ text_no }}</label>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-product">{{ entry_product }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
+                  <div id="coupon-product" class="form-control" style="height: 150px; overflow: auto;"> {% for coupon_product in coupon_product %}
+                      <div id="coupon-product{{ coupon_product.product_id }}"><i class="fas fa-minus-circle"></i> {{ coupon_product.name }}
+                        <input type="hidden" name="coupon_product[]" value="{{ coupon_product.product_id }}"/>
+                      </div>
+                    {% endfor %}</div>
+                  <small class="form-text text-muted">{{ help_product }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-category">{{ entry_category }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" class="form-control"/>
+                  <div id="coupon-category" class="form-control" style="height: 150px; overflow: auto;"> {% for coupon_category in coupon_category %}
+                      <div id="coupon-category{{ coupon_category.category_id }}"><i class="fas fa-minus-circle"></i> {{ coupon_category.name }}
+                        <input type="hidden" name="coupon_category[]" value="{{ coupon_category.category_id }}"/>
+                      </div>
+                    {% endfor %}</div>
+                  <small class="form-text text-muted">{{ help_category }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-date-start">{{ entry_date_start }}</label>
+                <div class="col-sm-3">
+                  <div class="input-group date">
+                    <input type="text" name="date_start" value="{{ date_start }}" placeholder="{{ entry_date_start }}" id="input-date-start" class="form-control"/>
+                    <div class="input-group-append">
+                      <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-date-end">{{ entry_date_end }}</label>
+                <div class="col-sm-3">
+                  <div class="input-group date">
+                    <input type="text" name="date_end" value="{{ date_end }}" placeholder="{{ entry_date_end }}" id="input-date-end" class="form-control"/>
+                    <div class="input-group-append">
+                      <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-uses-total">{{ entry_uses_total }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="uses_total" value="{{ uses_total }}" placeholder="{{ entry_uses_total }}" id="input-uses-total" class="form-control"/>
+                  <small class="form-text text-muted">{{ help_uses_total }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-uses-customer">{{ entry_uses_customer }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="uses_customer" value="{{ uses_customer }}" placeholder="{{ entry_uses_customer }}" id="input-uses-customer" class="form-control"/>
+                  <small class="form-text text-muted">{{ help_uses_customer }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="status" id="input-status" class="form-control">
+                    {% if status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            {% if coupon_id %}
+              <div class="tab-pane" id="tab-history">
+                <fieldset>
+                  <legend>{{ text_coupon }}</legend>
+                  <div id="history"></div>
+                </fieldset>
+              </div>
+            {% endif %}</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('input[name=\'product\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['product_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'product\']').val('');
+
+		$('#coupon-product' + item['value']).remove();
+
+		$('#coupon-product').append('<div id="coupon-product' + item['value'] + '"><i class="fas fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="coupon_product[]" value="' + item['value'] + '" /></div>');
+	}
+});
+
+$('#coupon-product').on('click', '.fa-minus-circle', function() {
+	$(this).parent().remove();
+});
+
+// Category
+$('input[name=\'category\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['category_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'category\']').val('');
+
+		$('#coupon-category' + item['value']).remove();
+
+		$('#coupon-category').append('<div id="coupon-category' + item['value'] + '"><i class="fas fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="coupon_category[]" value="' + item['value'] + '" /></div>');
+	}
+});
+
+$('#coupon-category').on('click', '.fa-minus-circle', function() {
+	$(this).parent().remove();
+});
+//--></script>
+{% if coupon_id %}
+  <script type="text/javascript"><!--
+  $('#history').on('click', '.pagination a', function(e) {
+	  e.preventDefault();
+
+	  $('#history').load(this.href);
+  });
+
+  $('#history').load('index.php?route=marketing/coupon/history&user_token={{ user_token }}&coupon_id={{ coupon_id }}');
+  //--></script>
+{% endif %}
+<script type="text/javascript"><!--
+$('.date').datetimepicker({
+	'format': 'YYYY-MM-DD',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
+});
+//--></script>
+{{ footer }}

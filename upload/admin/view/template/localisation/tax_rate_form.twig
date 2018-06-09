@@ -1,0 +1,96 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right">
+        <button type="submit" form="form-tax-rate" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-tax-rate">
+          <div class="form-group row required">
+            <label class="col-sm-2 col-form-label" for="input-name">{{ entry_name }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+              {% if error_name %}
+                <div class="invalid-tooltip">{{ error_name }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group row required">
+            <label class="col-sm-2 col-form-label" for="input-rate">{{ entry_rate }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="rate" value="{{ rate }}" placeholder="{{ entry_rate }}" id="input-rate" class="form-control"/>
+              {% if error_rate %}
+                <div class="invalid-tooltip">{{ error_rate }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-type">{{ entry_type }}</label>
+            <div class="col-sm-10">
+              <select name="type" id="input-type" class="form-control">
+                {% if type == 'P' %}
+                  <option value="P" selected="selected">{{ text_percent }}</option>
+                {% else %}
+                  <option value="P">{{ text_percent }}</option>
+                {% endif %}
+                {% if type == 'F' %}
+                  <option value="F" selected="selected">{{ text_amount }}</option>
+                {% else %}
+                  <option value="F">{{ text_amount }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
+            <div class="col-sm-10">
+              {% for customer_group in customer_groups %}
+                <label class="form-check">
+                  {% if customer_group.customer_group_id in tax_rate_customer_group %}
+                    <input type="checkbox" name="tax_rate_customer_group[]" value="{{ customer_group.customer_group_id }}" checked="checked" class="form-check-input"/>
+                    {{ customer_group.name }}
+                  {% else %}
+                    <input type="checkbox" name="tax_rate_customer_group[]" value="{{ customer_group.customer_group_id }}" class="form-check-input"/>
+                    {{ customer_group.name }}
+                  {% endif %}
+                </label>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+            <div class="col-sm-10">
+              <select name="geo_zone_id" id="input-geo-zone" class="form-control">
+                {% for geo_zone in geo_zones %}
+                  {% if geo_zone.geo_zone_id == geo_zone_id %}
+                    <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                  {% else %}
+                    <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

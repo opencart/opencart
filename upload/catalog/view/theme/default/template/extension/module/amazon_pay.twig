@@ -1,0 +1,35 @@
+<div id="amazon-root"></div>
+<script type="text/javascript">
+$(document).ready(function() {
+	amazon.Login.setClientId('{{ payment_amazon_login_pay_client_id }}');
+	(function(d) {
+		var a = d.createElement('script');
+		a.type = 'text/javascript';
+		a.async = true;
+		a.id = 'amazon-login-sdk';
+		a.src = 'https://api-cdn.amazon.com/sdk/login1.js';
+		d.getElementById('amazon-root').appendChild(a);
+	})(document);
+});
+</script>
+<div id="AmazonPayButton" style="text-align:right;"></div>
+<script type="text/javascript">
+$(document).ready(function() {
+	var authRequest;
+	OffAmazonPayments.Button("AmazonPayButton", "{{ payment_amazon_login_pay_merchant_id }}", {
+		type: "{{ module_amazon_pay_button_type }}",
+		color: "{{ module_amazon_pay_button_colour }}",
+		size: "{{ module_amazon_pay_button_size }}",
+		language: "{{ payment_amazon_login_pay_language }}",
+		authorization: function() {
+			var loginOptions = {scope: 'profile postal_code payments:widget payments:shipping_address'};
+			authRequest = amazon.Login.authorize(loginOptions, "{{ module_amazon_pay_return_url }}");
+		},
+		onError: function(error) {
+			{% if payment_amazon_login_pay_test %}
+				console.log("Amazon Login Error (" + error.getErrorCode() + "): " + error.getErrorMessage());
+			{% endif %}
+		}
+	});
+});
+</script>

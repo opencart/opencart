@@ -7,14 +7,6 @@ class ControllerToolLog extends Controller {
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['heading_title'] = $this->language->get('heading_title');
-		
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['button_download'] = $this->language->get('button_download');
-		$data['button_clear'] = $this->language->get('button_clear');
-
 		if (isset($this->session->data['error'])) {
 			$data['error_warning'] = $this->session->data['error'];
 
@@ -37,25 +29,25 @@ class ControllerToolLog extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('tool/log', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('tool/log', 'user_token=' . $this->session->data['user_token'])
 		);
 
-		$data['download'] = $this->url->link('tool/log/download', 'token=' . $this->session->data['token'], true);
-		$data['clear'] = $this->url->link('tool/log/clear', 'token=' . $this->session->data['token'], true);
+		$data['download'] = $this->url->link('tool/log/download', 'user_token=' . $this->session->data['user_token']);
+		$data['clear'] = $this->url->link('tool/log/clear', 'user_token=' . $this->session->data['user_token']);
 
 		$data['log'] = '';
 
 		$file = DIR_LOGS . $this->config->get('config_error_filename');
 
-		if (file_exists($file)) {
+		if (is_file($file)) {
 			$size = filesize($file);
 
-			if ($size >= 5242880) {
+			if ($size >= 3145728) {
 				$suffix = array(
 					'B',
 					'KB',
@@ -76,9 +68,13 @@ class ControllerToolLog extends Controller {
 				}
 
 				$data['error_warning'] = sprintf($this->language->get('error_warning'), basename($file), round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i]);
-			} else {
-				$data['log'] = file_get_contents($file, FILE_USE_INCLUDE_PATH, null);
 			}
+
+			$handle = fopen($file, 'r+');
+
+			$data['log'] = fread($handle, 3145728);
+
+			fclose($handle);
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -105,7 +101,7 @@ class ControllerToolLog extends Controller {
 		} else {
 			$this->session->data['error'] = sprintf($this->language->get('error_warning'), basename($file), '0B');
 
-			$this->response->redirect($this->url->link('tool/log', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('tool/log', 'user_token=' . $this->session->data['user_token']));
 		}
 	}
 	
@@ -124,6 +120,6 @@ class ControllerToolLog extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->redirect($this->url->link('tool/log', 'token=' . $this->session->data['token'], true));
+		$this->response->redirect($this->url->link('tool/log', 'user_token=' . $this->session->data['user_token']));
 	}
 }

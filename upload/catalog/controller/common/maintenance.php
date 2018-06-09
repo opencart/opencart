@@ -13,13 +13,11 @@ class ControllerCommonMaintenance extends Controller {
 
 		$this->response->addHeader('Retry-After: 3600');
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_maintenance'),
-			'href' => $this->url->link('common/maintenance')
+			'href' => $this->url->link('common/maintenance', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['message'] = $this->language->get('text_message');

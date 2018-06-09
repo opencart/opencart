@@ -1,0 +1,55 @@
+{{ header }}
+<div class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  {% if success %}
+  <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}</div>
+  {% endif %}
+  {% if error %}
+  <div class="alert alert-danger alert-dismissible"><i class="fa fa-check-circle"></i> {{ error }}</div>
+  {% endif %}
+  <div class="row">{{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}">{{ content_top }}
+        <h2>{{ heading_title }}</h2>
+
+        {% if not cards %}
+            <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> {{ text_no_cards }}</div>
+        {% else %}
+            <table class="table table-bordered">
+                {% for card in cards %}
+                    <tr>
+                        <td>
+                            {{ card.text }}
+                        </td>
+                        <td class="text-right">
+                            <a class="btn btn-danger remove_card" href="{{ card.delete }}">{{ text_delete }}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+
+        <div class="buttons">
+            <a class="btn btn-light" href="{{ back }}">{{ text_back }}</a>
+        </div>
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.remove_card').click(function(e) {
+        return confirm('{{ text_warning_card }}');
+    });
+});
+</script>
+{{ footer }}

@@ -1,0 +1,50 @@
+{{ header }}{{ column_left }}{{ column_right }}
+<div class="container">{{ content_top }}
+  <div style="text-align:center;">
+    <h3>{{ heading_payment }}</h3>
+    <div style="margin: 0 auto; width: 400px; height: 228px;" id="walletWidgetDiv">
+    </div>
+    <div style="clear: both;"></div>
+    <div class="buttons" style="max-width: 400px; margin-left: auto; margin-right: auto;">
+      <div class="float-left">
+        <a href="{{ back }}" class="btn btn-primary">{{ text_back }}</a>
+      </div>
+      <div class="float-right">
+        <input class="btn btn-primary" id="continue-button" type="submit" value="{{ text_continue }}"/>
+      </div>
+    </div>
+    <input type="hidden" name="payment_method" value=""/>
+    {{ content_bottom }}
+  </div>
+</div>
+<script type="text/javascript"><!--
+$(document).ready(function() {
+	amazon.Login.setClientId('{{ payment_amazon_login_pay_client_id }}');
+
+	$('#continue-button').click(function() {
+		$('div.warning').remove();
+
+		if ($("input[name='payment_method']").val() == '1') {
+			location = '{{ continue }}';
+		} else {
+			$('#walletWidgetDiv').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i>{{ error_payment_method }}</div>');
+		}
+	});
+
+	new OffAmazonPayments.Widgets.Wallet({
+		sellerId: '{{ payment_amazon_login_pay_merchant_id }}',
+		onPaymentSelect: function(orderReference) {
+			$("input[name='payment_method']").val('1');
+		},
+		design: {
+			designMode: 'responsive'
+		},
+		onError: function(error) {
+          {% if payment_amazon_login_pay_test %}
+			console.log("Amazon Login Error (" + error.getErrorCode() + "): " + error.getErrorMessage());
+          {% endif %}
+		}
+	}).bind("walletWidgetDiv");
+});
+//--></script>
+{{ footer }}

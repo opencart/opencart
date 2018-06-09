@@ -1,0 +1,49 @@
+<div class="card">
+  <h4 class="card-header collapsed" data-toggle="collapse" data-target="#collapse-reward">{{ heading_title }}</h4>
+  <div id="collapse-reward" class="collapse" data-parent="#accordion">
+    <div class="card-body">
+      <div class="row">
+        <label class="col-md-2 col-form-label" for="input-reward">{{ entry_reward }}</label>
+        <div class="col-md-10">
+          <div class="input-group">
+            <input type="text" name="coupon" value="{{ coupon }}" placeholder="{{ entry_reward }}" id="input-coupon" class="form-control"/>
+            <div class="input-group-append">
+              <input type="submit" value="{{ button_reward }}" id="button-reward" data-loading-text="{{ text_loading }}" class="btn btn-primary"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript"><!--
+  $('#button-reward').on('click', function() {
+	  $.ajax({
+		  url: 'index.php?route=extension/total/reward/reward',
+		  type: 'post',
+		  data: 'reward=' + encodeURIComponent($('input[name=\'reward\']').val()),
+		  dataType: 'json',
+		  beforeSend: function() {
+			  $('#button-reward').button('loading');
+		  },
+		  complete: function() {
+			  $('#button-reward').button('reset');
+		  },
+		  success: function(json) {
+			  $('.alert-dismissible').remove();
+
+			  if (json['error']) {
+				  $('#collapse-reward .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			  }
+
+			  if (json['redirect']) {
+				  location = json['redirect'];
+			  }
+		  },
+		  error: function(xhr, ajaxOptions, thrownError) {
+			  alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		  }
+	  });
+  });
+  //-->
+  </script>
+</div>

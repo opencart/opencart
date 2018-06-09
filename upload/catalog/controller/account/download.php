@@ -2,9 +2,9 @@
 class ControllerAccountDownload extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/download', '', true);
+			$this->session->data['redirect'] = $this->url->link('account/download', 'language=' . $this->config->get('config_language'));
 
-			$this->response->redirect($this->url->link('account/login', '', true));
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->load->language('account/download');
@@ -15,32 +15,20 @@ class ControllerAccountDownload extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
+			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', true)
+			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_downloads'),
-			'href' => $this->url->link('account/download', '', true)
+			'href' => $this->url->link('account/download', 'language=' . $this->config->get('config_language'))
 		);
 
 		$this->load->model('account/download');
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_empty'] = $this->language->get('text_empty');
-
-		$data['column_order_id'] = $this->language->get('column_order_id');
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_size'] = $this->language->get('column_size');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-
-		$data['button_download'] = $this->language->get('button_download');
-		$data['button_continue'] = $this->language->get('button_continue');
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
@@ -52,10 +40,10 @@ class ControllerAccountDownload extends Controller {
 
 		$download_total = $this->model_account_download->getTotalDownloads();
 
-		$results = $this->model_account_download->getDownloads(($page - 1) * $this->config->get($this->config->get('config_theme') . '_product_limit'), $this->config->get($this->config->get('config_theme') . '_product_limit'));
+		$results = $this->model_account_download->getDownloads(($page - 1) * $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit'), $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit'));
 
 		foreach ($results as $result) {
-			if (file_exists(DIR_DOWNLOAD . $result['filename'])) {
+			if (is_file(DIR_DOWNLOAD . $result['filename'])) {
 				$size = filesize(DIR_DOWNLOAD . $result['filename']);
 
 				$i = 0;
@@ -82,7 +70,7 @@ class ControllerAccountDownload extends Controller {
 					'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 					'name'       => $result['name'],
 					'size'       => round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i],
-					'href'       => $this->url->link('account/download/download', 'download_id=' . $result['download_id'], true)
+					'href'       => $this->url->link('account/download/download', 'language=' . $this->config->get('config_language') . '&download_id=' . $result['download_id'])
 				);
 			}
 		}
@@ -90,14 +78,14 @@ class ControllerAccountDownload extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $download_total;
 		$pagination->page = $page;
-		$pagination->limit = $this->config->get($this->config->get('config_theme') . '_product_limit');
-		$pagination->url = $this->url->link('account/download', 'page={page}', true);
+		$pagination->limit = $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit');
+		$pagination->url = $this->url->link('account/download', 'language=' . $this->config->get('config_language') . '&page={page}');
 
 		$data['pagination'] = $pagination->render();
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($download_total) ? (($page - 1) * $this->config->get($this->config->get('config_theme') . '_product_limit')) + 1 : 0, ((($page - 1) * $this->config->get($this->config->get('config_theme') . '_product_limit')) > ($download_total - $this->config->get($this->config->get('config_theme') . '_product_limit'))) ? $download_total : ((($page - 1) * $this->config->get($this->config->get('config_theme') . '_product_limit')) + $this->config->get($this->config->get($this->config->get('config_theme') . '_theme') . '_product_limit')), $download_total, ceil($download_total / $this->config->get($this->config->get('config_theme') . '_product_limit')));
-
-		$data['continue'] = $this->url->link('account/account', '', true);
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($download_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($download_total - 10)) ? $download_total : ((($page - 1) * 10) + 10), $download_total, ceil($download_total / 10));
+		
+		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -111,9 +99,9 @@ class ControllerAccountDownload extends Controller {
 
 	public function download() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/download', '', true);
+			$this->session->data['redirect'] = $this->url->link('account/download', 'language=' . $this->config->get('config_language'));
 
-			$this->response->redirect($this->url->link('account/login', '', true));
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->load->model('account/download');
@@ -145,6 +133,8 @@ class ControllerAccountDownload extends Controller {
 
 					readfile($file, 'rb');
 
+					$this->model_account_download->addDownloadReport($download_id, $this->request->server['REMOTE_ADDR']);
+
 					exit();
 				} else {
 					exit('Error: Could not find file ' . $file . '!');
@@ -153,7 +143,7 @@ class ControllerAccountDownload extends Controller {
 				exit('Error: Headers already sent out!');
 			}
 		} else {
-			$this->response->redirect($this->url->link('account/download', '', true));
+			$this->response->redirect($this->url->link('account/download', 'language=' . $this->config->get('config_language')));
 		}
 	}
 }

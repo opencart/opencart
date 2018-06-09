@@ -8,7 +8,7 @@ class ControllerExtensionModulePilibabaButton extends Controller {
 		}
 
 		if ($status) {
-			$data['payment_url'] = $this->url->link('extension/payment/pilibaba/express', '', true);
+			$data['payment_url'] = $this->url->link('extension/payment/pilibaba/express', 'language=' . $this->config->get('config_language'));
 
 			return $this->load->view('extension/module/pilibaba_button', $data);
 		}

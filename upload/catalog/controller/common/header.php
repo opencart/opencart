@@ -48,8 +48,18 @@ class ControllerCommonHeader extends Controller {
 		}
 
 		$this->load->language('common/header');
-		$data['og_url'] = (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1')) ? HTTPS_SERVER : HTTP_SERVER) . substr($this->request->server['REQUEST_URI'], 1, (strlen($this->request->server['REQUEST_URI'])-1));
+		
+		
+		$host = isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1')) ? HTTPS_SERVER : HTTP_SERVER;
+		if ($this->request->server['REQUEST_URI'] == '/') {
+			$data['og_url'] = rtrim($host, '/');
+		} else {
+			$data['og_url'] = $host . substr($this->request->server['REQUEST_URI'], 1, (strlen($this->request->server['REQUEST_URI'])-1));
+		}
+		
 		$data['og_image'] = $this->document->getOgImage();
+		
+
 
 		// Wishlist
 		if ($this->customer->isLogged()) {

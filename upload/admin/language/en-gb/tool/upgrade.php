@@ -29,7 +29,6 @@ $_['column_available']   = 'Available';
 $_['entry_name']         = 'Upload Name';
 $_['entry_filename']     = 'Filename';
 $_['entry_date_added']   = 'Date Added';
-$_['entry_name']         = 'Upload Name';
 
 // Button
 $_['button_start']       = 'Start';

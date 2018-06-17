@@ -21,4 +21,4 @@ $_['button_install']		= 'Install';
 $_['button_uninstall']		= 'Uninstall';
 
 // Error
-$_['error_permission']		= = 'Warning: You do not have permission to edit Default Menu!';
+$_['error_permission']		= 'Warning: You do not have permission to edit Default Menu!';

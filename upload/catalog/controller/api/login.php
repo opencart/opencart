@@ -20,7 +20,7 @@ class ControllerApiLogin extends Controller {
 				$ip_data[] = trim($result['ip']);
 			}
 	
-			if (!in_array($this->request->server['REMOTE_ADDR'], $ip_data)) {
+			if (!in_array($this->request->server['REMOTE_ADDR'], $ip_data) && !in_array("*",$ip_data)) {
 				$json['error']['ip'] = sprintf($this->language->get('error_ip'), $this->request->server['REMOTE_ADDR']);
 			}				
 				

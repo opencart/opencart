@@ -81,7 +81,7 @@ class ControllerExtensionModuleCachemanager extends Controller {
 	public function clearsystemcache() {
 		$this->load->language('extension/module/cachemanager');
 
-		$files = glob(DIR_CACHE . 'cache.*');
+		$files = glob(DIR_CACHE . '*');
 		if (!empty($files)) {
 			foreach($files as $file){
 				$this->deldir($file);
@@ -117,7 +117,7 @@ class ControllerExtensionModuleCachemanager extends Controller {
 				$this->deldir($imgfile);
 			}
 		}
-		$files = glob(DIR_CACHE . 'cache.*');
+		$files = glob(DIR_CACHE . '*');
 		if (!empty($files)) {
 			foreach($files as $file){
 				$this->deldir($file);

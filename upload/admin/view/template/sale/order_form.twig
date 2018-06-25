@@ -1216,7 +1216,7 @@ $('#tab-product input[name=\'product\']').autocomplete({
 				option = item['option'][i];
 
 				if (option['type'] == 'select') {
-					html += '<div class="form-group row' + (option['required'] ? ' required' : '') + '">';
+					html += '<div class="form-group row' + (option['required'] == 1 ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 col-form-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
 					html += '  <div class="col-sm-10">';
 					html += '    <select name="option[' + option['product_option_id'] + ']" id="input-option' + option['product_option_id'] + '" class="form-control">';
@@ -1240,7 +1240,7 @@ $('#tab-product input[name=\'product\']').autocomplete({
 				}
 
 				if (option['type'] == 'radio') {
-					html += '<div class="form-group row' + (option['required'] ? ' required' : '') + '">';
+					html += '<div class="form-group row' + (option['required'] == 1 ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 col-form-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
 					html += '  <div class="col-sm-10">';
 					html += '    <select name="option[' + option['product_option_id'] + ']" id="input-option' + option['product_option_id'] + '" class="form-control">';
@@ -1264,7 +1264,7 @@ $('#tab-product input[name=\'product\']').autocomplete({
 				}
 
 				if (option['type'] == 'checkbox') {
-					html += '<div class="form-group row' + (option['required'] ? ' required' : '') + '">';
+					html += '<div class="form-group row' + (option['required'] == 1 ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 col-form-label">' + option['name'] + '</label>';
 					html += '  <div class="col-sm-10">';
 					html += '    <div id="input-option' + option['product_option_id'] + '">';
@@ -1287,7 +1287,7 @@ $('#tab-product input[name=\'product\']').autocomplete({
 				}
 
 				if (option['type'] == 'image') {
-					html += '<div class="form-group row' + (option['required'] ? ' required' : '') + '">';
+					html += '<div class="form-group row' + (option['required'] == 1 ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 col-form-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
 					html += '  <div class="col-sm-10">';
 					html += '    <select name="option[' + option['product_option_id'] + ']" id="input-option' + option['product_option_id'] + '" class="form-control">';
@@ -1311,21 +1311,21 @@ $('#tab-product input[name=\'product\']').autocomplete({
 				}
 
 				if (option['type'] == 'text') {
-					html += '<div class="form-group row' + (option['required'] ? ' required' : '') + '">';
+					html += '<div class="form-group row' + (option['required'] == 1 ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 col-form-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
 					html += '  <div class="col-sm-10"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" id="input-option' + option['product_option_id'] + '" class="form-control" /></div>';
 					html += '</div>';
 				}
 
 				if (option['type'] == 'textarea') {
-					html += '<div class="form-group row' + (option['required'] ? ' required' : '') + '">';
+					html += '<div class="form-group row' + (option['required'] == 1 ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 col-form-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
 					html += '  <div class="col-sm-10"><textarea name="option[' + option['product_option_id'] + ']" rows="5" id="input-option' + option['product_option_id'] + '" class="form-control">' + option['value'] + '</textarea></div>';
 					html += '</div>';
 				}
 
 				if (option['type'] == 'file') {
-					html += '<div class="form-group row' + (option['required'] ? ' required' : '') + '">';
+					html += '<div class="form-group row' + (option['required'] == 1 ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 col-form-label">' + option['name'] + '</label>';
 					html += '  <div class="col-sm-10">';
 					html += '    <button type="button" id="button-upload' + option['product_option_id'] + '" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>';
@@ -1335,21 +1335,21 @@ $('#tab-product input[name=\'product\']').autocomplete({
 				}
 
 				if (option['type'] == 'date') {
-					html += '<div class="form-group row' + (option['required'] ? ' required' : '') + '">';
+					html += '<div class="form-group row' + (option['required'] == 1 ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 col-form-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
 					html += '  <div class="col-sm-3"><div class="input-group date"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '"  id="input-option' + option['product_option_id'] + '" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div></div>';
 					html += '</div>';
 				}
 
 				if (option['type'] == 'datetime') {
-					html += '<div class="form-group row' + (option['required'] ? ' required' : '') + '">';
+					html += '<div class="form-group row' + (option['required'] == 1 ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 col-form-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
 					html += '  <div class="col-sm-3"><div class="input-group datetime"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option' + option['product_option_id'] + '" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div></div>';
 					html += '</div>';
 				}
 
 				if (option['type'] == 'time') {
-					html += '<div class="form-group row' + (option['required'] ? ' required' : '') + '">';
+					html += '<div class="form-group row' + (option['required'] == 1 ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 col-form-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
 					html += '  <div class="col-sm-3"><div class="input-group time"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option' + option['product_option_id'] + '" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div></div>';
 					html += '</div>';

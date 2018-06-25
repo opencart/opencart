@@ -3,8 +3,8 @@
 /*
  * This file is part of Twig.
  *
- * (c) 2009 Fabien Potencier
- * (c) 2009 Armin Ronacher
+ * (c) Fabien Potencier
+ * (c) Armin Ronacher
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -35,23 +35,23 @@ class Twig_TokenParser_Include extends Twig_TokenParser
         $stream = $this->parser->getStream();
 
         $ignoreMissing = false;
-        if ($stream->nextIf(Twig_Token::NAME_TYPE, 'ignore')) {
-            $stream->expect(Twig_Token::NAME_TYPE, 'missing');
+        if ($stream->nextIf(/* Twig_Token::NAME_TYPE */ 5, 'ignore')) {
+            $stream->expect(/* Twig_Token::NAME_TYPE */ 5, 'missing');
 
             $ignoreMissing = true;
         }
 
         $variables = null;
-        if ($stream->nextIf(Twig_Token::NAME_TYPE, 'with')) {
+        if ($stream->nextIf(/* Twig_Token::NAME_TYPE */ 5, 'with')) {
             $variables = $this->parser->getExpressionParser()->parseExpression();
         }
 
         $only = false;
-        if ($stream->nextIf(Twig_Token::NAME_TYPE, 'only')) {
+        if ($stream->nextIf(/* Twig_Token::NAME_TYPE */ 5, 'only')) {
             $only = true;
         }
 
-        $stream->expect(Twig_Token::BLOCK_END_TYPE);
+        $stream->expect(/* Twig_Token::BLOCK_END_TYPE */ 3);
 
         return array($variables, $only, $ignoreMissing);
     }
@@ -61,3 +61,5 @@ class Twig_TokenParser_Include extends Twig_TokenParser
         return 'include';
     }
 }
+
+class_alias('Twig_TokenParser_Include', 'Twig\TokenParser\IncludeTokenParser', false);

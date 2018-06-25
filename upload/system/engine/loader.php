@@ -1,10 +1,10 @@
 <?php
 /**
- * @package        OpenCart
- * @author        Daniel Kerr
- * @copyright    Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
- * @license        https://opensource.org/licenses/GPL-3.0
- * @link        https://www.opencart.com
+ * @package		OpenCart
+ * @author		Daniel Kerr
+ * @copyright	Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
+ * @license		https://opensource.org/licenses/GPL-3.0
+ * @link		https://www.opencart.com
  */
 
 /**
@@ -218,8 +218,9 @@ final class Loader {
 	}
 
 	protected function callback($route) {
-		return function ($args) use ($route) {
-			static $model;
+		return function () use ($route) {
+			// Grab args using function because we don't know the number of args being passed.
+			$args = func_get_args();
 
 			$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
@@ -237,13 +238,14 @@ final class Loader {
 				// Store the model object
 				$key = substr($route, 0, strrpos($route, '/'));
 
-				if (!isset($model[$key])) {
-					$model[$key] = new $class($this->registry);
+				// Check if the model has already been initialised or not
+				if (!$this->registry->has($key)) {
+					$this->registry->set($key, new $class($this->registry));
 				}
 
 				$method = substr($route, strrpos($route, '/') + 1);
 
-				$callable = array($model[$key], $method);
+				$callable = array($this->registry->get($key), $method);
 
 				if (is_callable($callable)) {
 					$output = call_user_func_array($callable, $args);

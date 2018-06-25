@@ -47,4 +47,30 @@ class RejectedPromiseTest extends TestCase
 
         return new RejectedPromise(new RejectedPromise());
     }
+
+    /** @test */
+    public function shouldNotLeaveGarbageCyclesWhenRemovingLastReferenceToRejectedPromiseWithAlwaysFollowers()
+    {
+        gc_collect_cycles();
+        $promise = new RejectedPromise(1);
+        $promise->always(function () {
+            throw new \RuntimeException();
+        });
+        unset($promise);
+
+        $this->assertSame(0, gc_collect_cycles());
+    }
+
+    /** @test */
+    public function shouldNotLeaveGarbageCyclesWhenRemovingLastReferenceToRejectedPromiseWithThenFollowers()
+    {
+        gc_collect_cycles();
+        $promise = new RejectedPromise(1);
+        $promise = $promise->then(null, function () {
+            throw new \RuntimeException();
+        });
+        unset($promise);
+
+        $this->assertSame(0, gc_collect_cycles());
+    }
 }

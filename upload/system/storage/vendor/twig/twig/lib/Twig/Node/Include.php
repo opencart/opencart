@@ -3,8 +3,8 @@
 /*
  * This file is part of Twig.
  *
- * (c) 2009 Fabien Potencier
- * (c) 2009 Armin Ronacher
+ * (c) Fabien Potencier
+ * (c) Armin Ronacher
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -19,7 +19,12 @@ class Twig_Node_Include extends Twig_Node implements Twig_NodeOutputInterface
 {
     public function __construct(Twig_Node_Expression $expr, Twig_Node_Expression $variables = null, $only = false, $ignoreMissing = false, $lineno, $tag = null)
     {
-        parent::__construct(array('expr' => $expr, 'variables' => $variables), array('only' => (bool) $only, 'ignore_missing' => (bool) $ignoreMissing), $lineno, $tag);
+        $nodes = array('expr' => $expr);
+        if (null !== $variables) {
+            $nodes['variables'] = $variables;
+        }
+
+        parent::__construct($nodes, array('only' => (bool) $only, 'ignore_missing' => (bool) $ignoreMissing), $lineno, $tag);
     }
 
     public function compile(Twig_Compiler $compiler)
@@ -59,16 +64,16 @@ class Twig_Node_Include extends Twig_Node implements Twig_NodeOutputInterface
              ->write('$this->loadTemplate(')
              ->subcompile($this->getNode('expr'))
              ->raw(', ')
-             ->repr($compiler->getFilename())
+             ->repr($this->getTemplateName())
              ->raw(', ')
-             ->repr($this->getLine())
+             ->repr($this->getTemplateLine())
              ->raw(')')
          ;
     }
 
     protected function addTemplateArguments(Twig_Compiler $compiler)
     {
-        if (null === $this->getNode('variables')) {
+        if (!$this->hasNode('variables')) {
             $compiler->raw(false === $this->getAttribute('only') ? '$context' : 'array()');
         } elseif (false === $this->getAttribute('only')) {
             $compiler
@@ -81,3 +86,5 @@ class Twig_Node_Include extends Twig_Node implements Twig_NodeOutputInterface
         }
     }
 }
+
+class_alias('Twig_Node_Include', 'Twig\Node\IncludeNode', false);

@@ -47,4 +47,30 @@ class FulfilledPromiseTest extends TestCase
 
         return new FulfilledPromise(new FulfilledPromise());
     }
+
+    /** @test */
+    public function shouldNotLeaveGarbageCyclesWhenRemovingLastReferenceToFulfilledPromiseWithAlwaysFollowers()
+    {
+        gc_collect_cycles();
+        $promise = new FulfilledPromise(1);
+        $promise->always(function () {
+            throw new \RuntimeException();
+        });
+        unset($promise);
+
+        $this->assertSame(0, gc_collect_cycles());
+    }
+
+    /** @test */
+    public function shouldNotLeaveGarbageCyclesWhenRemovingLastReferenceToFulfilledPromiseWithThenFollowers()
+    {
+        gc_collect_cycles();
+        $promise = new FulfilledPromise(1);
+        $promise = $promise->then(function () {
+            throw new \RuntimeException();
+        });
+        unset($promise);
+
+        $this->assertSame(0, gc_collect_cycles());
+    }
 }

@@ -3,7 +3,7 @@
 /*
  * This file is part of Twig.
  *
- * (c) 2015 Fabien Potencier
+ * (c) Fabien Potencier
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -31,19 +31,22 @@ class Twig_Cache_Filesystem implements Twig_CacheInterface
         $this->options = $options;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function generateKey($name, $className)
     {
         $hash = hash('sha256', $className);
 
-        return $this->directory.$hash[0].$hash[1].'/'.$hash.'.php';
+       // return $this->directory.$hash[0].$hash[1].'/'.$hash.'.php';
+
+		$test = $this->directory.$hash[0].$hash[1].'/'.$hash.'.php';
+
+		echo 'Twig_Cache_Filesystem::generateKey' . "\n";
+		echo 'name: ' . $name . "\n";
+		echo 'class: ' . $className . "\n";
+		echo 'key: ' . $test . "\n\n";
+
+		return $test;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function load($key)
     {
         if (file_exists($key)) {
@@ -51,15 +54,15 @@ class Twig_Cache_Filesystem implements Twig_CacheInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function write($key, $content)
     {
         $dir = dirname($key);
         if (!is_dir($dir)) {
-            if (false === @mkdir($dir, 0777, true) && !is_dir($dir)) {
-                throw new RuntimeException(sprintf('Unable to create the cache directory (%s).', $dir));
+            if (false === @mkdir($dir, 0777, true)) {
+                clearstatcache(true, $dir);
+                if (!is_dir($dir)) {
+                    throw new RuntimeException(sprintf('Unable to create the cache directory (%s).', $dir));
+                }
             }
         } elseif (!is_writable($dir)) {
             throw new RuntimeException(sprintf('Unable to write in the cache directory (%s).', $dir));
@@ -84,9 +87,6 @@ class Twig_Cache_Filesystem implements Twig_CacheInterface
         throw new RuntimeException(sprintf('Failed to write cache file "%s".', $key));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTimestamp($key)
     {
         if (!file_exists($key)) {
@@ -96,3 +96,5 @@ class Twig_Cache_Filesystem implements Twig_CacheInterface
         return (int) @filemtime($key);
     }
 }
+
+class_alias('Twig_Cache_Filesystem', 'Twig\Cache\FilesystemCache', false);

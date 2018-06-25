@@ -1,11 +1,12 @@
 <?php
 namespace Template;
 final class Template {
-	private $data = array();
-	private $filters = array();
 
-	public function addFilter($value) {
-		$this->filters[] = $value;
+	private $filters = array();
+	private $data = array();
+
+	public function addFilter($key, $value) {
+		$this->filters[$key] = $value;
 	}
 
 	public function set($key, $value) {
@@ -18,21 +19,42 @@ final class Template {
 		if (is_file($file)) {
 			$code = file_get_conents($file);
 
-			foreach ($this->filters as $filter) {
-				$code = $filter->callback($code);
+			foreach ($this->filters as $key => $filter) {
+				$filter->callback($code);
 			}
+
+
+
+			$handle = fopen(DIR_CACHE . md5($file), 'w+');
+
+			fwrite($handle, $code);
+
+			fclose($handle);
+
+
+
 
 			ob_start();
 
 			extract($this->data);
 
+			/*
 			if (function_exists('eval')) {
 				eval('?>' . $content);
 			} else {
-				//$this->write($this->template);
 
-				//include($file);
 			}
+			*/
+
+
+
+			include($file);
+
+			$this->output = ob_get_clean();
+
+			$this->write($this->template);
+
+			//include($file);
 
 			return $this->output;
 		} else {
@@ -41,10 +63,20 @@ final class Template {
 		}
 	}
 
-	public function write($file) {
-		$handle = fopen(DIR_CACHE . md5($file), 'w+');
+	public function parse($file) {
 
-		fwrite($handle, $this->output);
+	}
+
+	public function load($filename) {
+		$output = file_get_contents(DIR_CACHE . $filename);
+
+		return $output;
+	}
+
+	public function save($filename, $content) {
+		$handle = fopen(DIR_CACHE . $filename, 'w+');
+
+		fwrite($handle, $content);
 
 		fclose($handle);
 	}
@@ -60,7 +92,6 @@ final class Template {
 
 			if (function_exists('eval')) {
 				eval('?>' . $this->template);
-
 			} else {
 				$this->write($this->template);
 

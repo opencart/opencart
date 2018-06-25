@@ -3,7 +3,7 @@
 /*
  * This file is part of Twig.
  *
- * (c) 2009 Fabien Potencier
+ * (c) Fabien Potencier
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -16,16 +16,14 @@
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class Twig_NodeTraverser
+final class Twig_NodeTraverser
 {
-    protected $env;
-    protected $visitors = array();
+    private $env;
+    private $visitors = array();
 
     /**
-     * Constructor.
-     *
-     * @param Twig_Environment            $env      A Twig_Environment instance
-     * @param Twig_NodeVisitorInterface[] $visitors An array of Twig_NodeVisitorInterface instances
+     * @param Twig_Environment            $env
+     * @param Twig_NodeVisitorInterface[] $visitors
      */
     public function __construct(Twig_Environment $env, array $visitors = array())
     {
@@ -35,11 +33,6 @@ class Twig_NodeTraverser
         }
     }
 
-    /**
-     * Adds a visitor.
-     *
-     * @param Twig_NodeVisitorInterface $visitor A Twig_NodeVisitorInterface instance
-     */
     public function addVisitor(Twig_NodeVisitorInterface $visitor)
     {
         if (!isset($this->visitors[$visitor->getPriority()])) {
@@ -52,11 +45,9 @@ class Twig_NodeTraverser
     /**
      * Traverses a node and calls the registered visitors.
      *
-     * @param Twig_NodeInterface $node A Twig_NodeInterface instance
-     *
-     * @return Twig_NodeInterface
+     * @return Twig_Node
      */
-    public function traverse(Twig_NodeInterface $node)
+    public function traverse(Twig_Node $node)
     {
         ksort($this->visitors);
         foreach ($this->visitors as $visitors) {
@@ -68,12 +59,8 @@ class Twig_NodeTraverser
         return $node;
     }
 
-    protected function traverseForVisitor(Twig_NodeVisitorInterface $visitor, Twig_NodeInterface $node = null)
+    private function traverseForVisitor(Twig_NodeVisitorInterface $visitor, Twig_Node $node)
     {
-        if (null === $node) {
-            return;
-        }
-
         $node = $visitor->enterNode($node, $this->env);
 
         foreach ($node as $k => $n) {
@@ -87,3 +74,5 @@ class Twig_NodeTraverser
         return $visitor->leaveNode($node, $this->env);
     }
 }
+
+class_alias('Twig_NodeTraverser', 'Twig\NodeTraverser', false);

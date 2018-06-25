@@ -34,8 +34,8 @@ class Template {
 	 *
 	 * @param    mixed $value
 	 */
-	public function addFilter($value) {
-		$this->adaptor->addFilter($value);
+	public function addFilter($key, $value) {
+		$this->adaptor->addFilter($key, $value);
 	}
 
 	/**

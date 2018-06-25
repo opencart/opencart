@@ -3,7 +3,7 @@
 /*
  * This file is part of Twig.
  *
- * (c) 2015 Fabien Potencier
+ * (c) Fabien Potencier
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -36,11 +36,9 @@ class Twig_Extension_Profiler extends Twig_Extension
 
     public function getNodeVisitors()
     {
-        return array(new Twig_Profiler_NodeVisitor_Profiler($this->getName()));
-    }
-
-    public function getName()
-    {
-        return 'profiler';
+        return array(new Twig_Profiler_NodeVisitor_Profiler(get_class($this)));
     }
 }
+
+class_alias('Twig_Extension_Profiler', 'Twig\Extension\ProfilerExtension', false);
+class_exists('Twig_Profiler_Profile');

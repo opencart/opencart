@@ -3,7 +3,7 @@
 /*
  * This file is part of Twig.
  *
- * (c) 2010 Fabien Potencier
+ * (c) Fabien Potencier
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,3 +15,5 @@ class Twig_Node_Expression_Binary_GreaterEqual extends Twig_Node_Expression_Bina
         return $compiler->raw('>=');
     }
 }
+
+class_alias('Twig_Node_Expression_Binary_GreaterEqual', 'Twig\Node\Expression\Binary\GreaterEqualBinary', false);

@@ -3,8 +3,8 @@
 /*
  * This file is part of Twig.
  *
- * (c) 2009 Fabien Potencier
- * (c) 2009 Armin Ronacher
+ * (c) Fabien Potencier
+ * (c) Armin Ronacher
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,12 +15,14 @@
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class Twig_Node implements Twig_NodeInterface
+class Twig_Node implements Countable, IteratorAggregate
 {
     protected $nodes;
     protected $attributes;
     protected $lineno;
     protected $tag;
+
+    private $name;
 
     /**
      * Constructor.
@@ -35,6 +37,11 @@ class Twig_Node implements Twig_NodeInterface
      */
     public function __construct(array $nodes = array(), array $attributes = array(), $lineno = 0, $tag = null)
     {
+        foreach ($nodes as $name => $node) {
+            if (!$node instanceof self) {
+                throw new InvalidArgumentException(sprintf('Using "%s" for the value of node "%s" of "%s" is not supported. You must pass a Twig_Node instance.', is_object($node) ? get_class($node) : null === $node ? 'null' : gettype($node), $name, get_class($this)));
+            }
+        }
         $this->nodes = $nodes;
         $this->attributes = $attributes;
         $this->lineno = $lineno;
@@ -69,41 +76,6 @@ class Twig_Node implements Twig_NodeInterface
         return implode("\n", $repr);
     }
 
-    /**
-     * @deprecated since 1.16.1 (to be removed in 2.0)
-     */
-    public function toXml($asDom = false)
-    {
-        @trigger_error(sprintf('%s is deprecated since version 1.16.1 and will be removed in 2.0.', __METHOD__), E_USER_DEPRECATED);
-
-        $dom = new DOMDocument('1.0', 'UTF-8');
-        $dom->formatOutput = true;
-        $dom->appendChild($xml = $dom->createElement('twig'));
-
-        $xml->appendChild($node = $dom->createElement('node'));
-        $node->setAttribute('class', get_class($this));
-
-        foreach ($this->attributes as $name => $value) {
-            $node->appendChild($attribute = $dom->createElement('attribute'));
-            $attribute->setAttribute('name', $name);
-            $attribute->appendChild($dom->createTextNode($value));
-        }
-
-        foreach ($this->nodes as $name => $n) {
-            if (null === $n) {
-                continue;
-            }
-
-            $child = $n->toXml(true)->getElementsByTagName('node')->item(0);
-            $child = $dom->importNode($child, true);
-            $child->setAttribute('name', $name);
-
-            $node->appendChild($child);
-        }
-
-        return $asDom ? $dom : $dom->saveXML();
-    }
-
     public function compile(Twig_Compiler $compiler)
     {
         foreach ($this->nodes as $node) {
@@ -111,7 +83,7 @@ class Twig_Node implements Twig_NodeInterface
         }
     }
 
-    public function getLine()
+    public function getTemplateLine()
     {
         return $this->lineno;
     }
@@ -122,11 +94,7 @@ class Twig_Node implements Twig_NodeInterface
     }
 
     /**
-     * Returns true if the attribute is defined.
-     *
-     * @param string $name The attribute name
-     *
-     * @return bool true if the attribute is defined, false otherwise
+     * @return bool
      */
     public function hasAttribute($name)
     {
@@ -134,10 +102,6 @@ class Twig_Node implements Twig_NodeInterface
     }
 
     /**
-     * Gets an attribute value by name.
-     *
-     * @param string $name
-     *
      * @return mixed
      */
     public function getAttribute($name)
@@ -150,8 +114,6 @@ class Twig_Node implements Twig_NodeInterface
     }
 
     /**
-     * Sets an attribute by name to a value.
-     *
      * @param string $name
      * @param mixed  $value
      */
@@ -160,60 +122,36 @@ class Twig_Node implements Twig_NodeInterface
         $this->attributes[$name] = $value;
     }
 
-    /**
-     * Removes an attribute by name.
-     *
-     * @param string $name
-     */
     public function removeAttribute($name)
     {
         unset($this->attributes[$name]);
     }
 
     /**
-     * Returns true if the node with the given name exists.
-     *
-     * @param string $name
-     *
      * @return bool
      */
     public function hasNode($name)
     {
-        return array_key_exists($name, $this->nodes);
+        return isset($this->nodes[$name]);
     }
 
     /**
-     * Gets a node by name.
-     *
-     * @param string $name
-     *
      * @return Twig_Node
      */
     public function getNode($name)
     {
-        if (!array_key_exists($name, $this->nodes)) {
+        if (!isset($this->nodes[$name])) {
             throw new LogicException(sprintf('Node "%s" does not exist for Node "%s".', $name, get_class($this)));
         }
 
         return $this->nodes[$name];
     }
 
-    /**
-     * Sets a node.
-     *
-     * @param string    $name
-     * @param Twig_Node $node
-     */
-    public function setNode($name, $node = null)
+    public function setNode($name, self $node)
     {
         $this->nodes[$name] = $node;
     }
 
-    /**
-     * Removes a node by name.
-     *
-     * @param string $name
-     */
     public function removeNode($name)
     {
         unset($this->nodes[$name]);
@@ -228,4 +166,20 @@ class Twig_Node implements Twig_NodeInterface
     {
         return new ArrayIterator($this->nodes);
     }
+
+    public function setTemplateName($name)
+    {
+        $this->name = $name;
+        foreach ($this->nodes as $node) {
+            $node->setTemplateName($name);
+        }
+    }
+
+    public function getTemplateName()
+    {
+        return $this->name;
+    }
 }
+
+class_alias('Twig_Node', 'Twig\Node\Node', false);
+class_exists('Twig_Compiler');

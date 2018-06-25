@@ -11,9 +11,15 @@ The ``replace`` filter formats a given string by replacing the placeholders
     {# outputs I like foo and bar
        if the foo parameter equals to the foo string. #}
 
+    {# using % as a delimiter is purely conventional and optional #}
+
+    {{ "I like this and --that--."|replace({'this': foo, '--that--': "bar"}) }}
+
+    {# outputs I like foo and bar #}
+
 Arguments
 ---------
 
-* ``replace_pairs``: The placeholder values
+* ``from``: The placeholder values
 
 .. seealso:: :doc:`format<format>`

@@ -16,11 +16,13 @@ class ControllerAccountForgotten extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			if ($this->validateEmail()) {
 				$this->model_account_customer->editCode($this->request->post['email'], token(40));
+
+				$this->session->data['success'] = $this->language->get('text_success');
+
+				$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
+			}else{
+				$this->error['warning'] = $this->language->get( 'error_email' );
 			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 
 		$data['breadcrumbs'] = array();

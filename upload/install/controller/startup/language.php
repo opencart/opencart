@@ -3,18 +3,22 @@ class ControllerStartupLanguage extends Controller {
 	public function index() {
 		// Default language code
 		$code = $this->config->get('language_default');
-		
+
+		$language_data = array();
+
 		$languages = glob(DIR_LANGUAGE . '*', GLOB_ONLYDIR);
-		
-		foreach ($languages as $language) {
-			$languages[] = basename($language);
+
+		if ($languages) {
+			foreach ($languages as $language) {
+				$language_data[] = basename($language);
+			}
 		}
 
 		if (isset($this->request->server['HTTP_ACCEPT_LANGUAGE'])) {
 			$browser_languages = explode(',', $this->request->server['HTTP_ACCEPT_LANGUAGE']);
 	
 			foreach ($browser_languages as $browser_language) {
-				if (in_array($browser_language, $languages)) {
+				if (in_array($browser_language, $language_data)) {
 					$code = $browser_language;
 					break;
 				}

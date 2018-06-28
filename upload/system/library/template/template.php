@@ -1,9 +1,9 @@
 <?php
 namespace Template;
 final class Template {
-
-	private $filters = array();
-	private $data = array();
+	protected $code;
+	protected $filters = array();
+	protected $data = array();
 
 	public function addFilter($key, $value) {
 		$this->filters[$key] = $value;
@@ -13,95 +13,56 @@ final class Template {
 		$this->data[$key] = $value;
 	}
 
-	public function render($filename) {
+	public function render($filename, $cache = true) {
 		$file = DIR_TEMPLATE . $filename . '.tpl';
 
 		if (is_file($file)) {
-			$code = file_get_conents($file);
+			$this->code = file_get_contents($file);
 
-			foreach ($this->filters as $key => $filter) {
-				$filter->callback($code);
+			foreach ($this->filters as $filter) {
+				$filter->callback($this->code);
 			}
-
-
-
-			$handle = fopen(DIR_CACHE . md5($file), 'w+');
-
-			fwrite($handle, $code);
-
-			fclose($handle);
-
-
-
 
 			ob_start();
 
-			extract($this->data);
+			if (!$cache && function_exists('eval')) {
+				extract($this->data);
 
-			/*
-			if (function_exists('eval')) {
-				eval('?>' . $content);
+				echo eval('?>' . $this->code);
 			} else {
+				extract($this->data);
 
+				include($this->compile($file, $this->code));
 			}
-			*/
 
-
-
-			include($file);
-
-			$this->output = ob_get_clean();
-
-			$this->write($this->template);
-
-			//include($file);
-
-			return $this->output;
+			return ob_get_clean();
 		} else {
 			throw new \Exception('Error: Could not load template ' . $file . '!');
 			exit();
 		}
 	}
 
-	public function parse($file) {
+	public function compile($file, $code) {
+		$hash = hash('sha256', $file . __CLASS__ .preg_replace('/[^0-9a-zA-Z_]/', '_', implode('_', array_keys($this->filters))));
 
-	}
+		$file = DIR_CACHE . substr($hash, 0, 2) . '/' . $hash . '.php';
 
-	public function load($filename) {
-		$output = file_get_contents(DIR_CACHE . $filename);
+		if (!is_file($file)) {
+			$directory = dirname($file);
 
-		return $output;
-	}
-
-	public function save($filename, $content) {
-		$handle = fopen(DIR_CACHE . $filename, 'w+');
-
-		fwrite($handle, $content);
-
-		fclose($handle);
-	}
-
-	/*
-	public function render($filename) {
-		$file = DIR_TEMPLATE . $filename . '.tpl';
-
-		if (is_file($file)) {
-			ob_start();
-
-			extract($this->data);
-
-			if (function_exists('eval')) {
-				eval('?>' . $this->template);
-			} else {
-				$this->write($this->template);
-
-				include($file);
+			if (!is_dir($directory)) {
+				if (!mkdir($directory, 0777, true)) {
+					clearstatcache(true, $directory);
+				}
 			}
 
-			$this->output = ob_get_clean();
+			$handle = fopen($file, 'w+');
+
+			fwrite($handle, $code);
+
+			fclose($handle);
 		}
 
-		return $this->output;
+		return $file;
 	}
-	*/
 }

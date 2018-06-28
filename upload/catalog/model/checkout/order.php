@@ -277,7 +277,7 @@ class ModelCheckoutOrder extends Model {
 			}
 
 			// Only do the fraud check if the customer is not on the safe list and the order status is changing into the complete or process order status
-			if (!$safe && !$override && in_array($order_status_id, array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status')))) {
+			if (!$safe && !$override && in_array($order_status_id, array_merge((array)$this->config->get('config_processing_status'), (array)$this->config->get('config_complete_status')))) {
 				// Anti-Fraud
 				$this->load->model('setting/extension');
 
@@ -299,7 +299,7 @@ class ModelCheckoutOrder extends Model {
 			}
 
 			// If current order status is not processing or complete but new status is processing or complete then commence completing the order
-			if (!in_array($order_info['order_status_id'], array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status'))) && in_array($order_status_id, array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status')))) {
+			if (!in_array($order_info['order_status_id'], array_merge((array)$this->config->get('config_processing_status'), (array)$this->config->get('config_complete_status'))) && in_array($order_status_id, array_merge((array)$this->config->get('config_processing_status'), (array)$this->config->get('config_complete_status')))) {
 				// Redeem coupon, vouchers and reward points
 				$order_totals = $this->getOrderTotals($order_id);
 
@@ -348,7 +348,7 @@ class ModelCheckoutOrder extends Model {
 			$order_history_id = $this->db->getLastId();
 			
 			// If old order status is the processing or complete status but new status is not then commence restock, and remove coupon, voucher and reward history
-			if (in_array($order_info['order_status_id'], array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status'))) && !in_array($order_status_id, array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status')))) {
+			if (in_array($order_info['order_status_id'], array_merge((array)$this->config->get('config_processing_status'), (array)$this->config->get('config_complete_status'))) && !in_array($order_status_id, array_merge((array)$this->config->get('config_processing_status'), (array)$this->config->get('config_complete_status')))) {
 				// Restock
 				$order_products = $this->getOrderProducts($order_id);
 

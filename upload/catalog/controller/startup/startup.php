@@ -2,19 +2,19 @@
 class ControllerStartupStartup extends Controller {
 	public function index() {
 		// Store
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "store` WHERE REPLACE(`url`, 'www.', '') = '" . $this->db->escape(($this->request->server['HTTPS'] ? 'https://' : 'http://') . str_replace('www.', '', $_SERVER['HTTP_HOST']) . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . '/') . "'");
-
-		if (isset($this->request->get['store_id'])) {
-			$this->config->set('config_store_id', (int)$this->request->get['store_id']);
-		} else if ($query->num_rows) {
-			$this->config->set('config_store_id', $query->row['store_id']);
+		if (!isset($this->request->get['store_id']) {
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "store` WHERE REPLACE(`url`, 'www.', '') = '" . $this->db->escape(($this->request->server['HTTPS'] ? 'https://' : 'http://') . str_replace('www.', '', $_SERVER['HTTP_HOST']) . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . '/') . "'");
+			
+			if  ($query->num_rows) {
+				$this->config->set('config_store_id', $query->row['store_id']);
+			} else {
+				$this->config->set('config_store_id', 0);
+				$this->config->set('config_url', HTTP_SERVER);
+			}
 		} else {
-			$this->config->set('config_store_id', 0);
+			$this->config->set('config_store_id', (int)$this->request->get['store_id']);
 		}
-
-		if (!$query->num_rows) {
-			$this->config->set('config_url', HTTP_SERVER);
-		}
+		
 
 		// Settings
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE store_id = '0' OR store_id = '" . (int)$this->config->get('config_store_id') . "' ORDER BY store_id ASC");

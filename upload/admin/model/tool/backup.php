@@ -6,15 +6,15 @@ class ModelToolBackup extends Model {
 		$query = $this->db->query("SHOW TABLES FROM `" . DB_DATABASE . "`");
 
 		foreach ($query->rows as $result) {
-			if (utf8_substr($result['Tables_in_' . DB_DATABASE], 0, strlen(DB_PREFIX)) == DB_PREFIX) {
-				if (isset($result['Tables_in_' . DB_DATABASE])) {
-					$table_data[] = $result['Tables_in_' . DB_DATABASE];
-				}
+			$table = reset($result);
+			if ($table && utf8_substr($table, 0, strlen(DB_PREFIX)) == DB_PREFIX) {
+				$table_data[] = $table;
 			}
 		}
 
 		return $table_data;
 	}
+
 
 	public function getRecords($table, $start = 0, $limit = 100) {
 		if ($start < 0) {

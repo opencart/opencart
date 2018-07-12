@@ -10,18 +10,31 @@ class ControllerInstallStep3 extends Controller {
 
 			$this->model_install_install->database($this->request->post);
 
+			$ssl = <<< 'EOF'
+// Check if SSL
+if (((isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTPS'] == '1')))) || $_SERVER['SERVER_PORT'] == 443) {
+	$protocol = 'https://';
+} elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+	$protocol = 'https://';
+} else {
+	$protocol = 'http://';
+}
+
+EOF;
 			// Catalog config.php
 			$output  = '<?php' . "\n";
+			$output .= $ssl;
 			$output .= '// HTTP' . "\n";
-			$output .= 'define(\'HTTP_SERVER\', \'' . HTTP_OPENCART . '\');' . "\n\n";
+			$output .= 'define(\'HTTP_SERVER\', $protocol . $_SERVER[\'HTTP_HOST\'] . rtrim(dirname($_SERVER[\'SCRIPT_NAME\']), \'/.\\\\\') . \'/\');' . "\n\n";
 
 			$output .= '// HTTPS' . "\n";
-			$output .= 'define(\'HTTPS_SERVER\', \'' . HTTP_OPENCART . '\');' . "\n\n";
+			$output .= 'define(\'HTTPS_SERVER\', $protocol . $_SERVER[\'HTTP_HOST\'] . rtrim(dirname($_SERVER[\'SCRIPT_NAME\']), \'/.\\\\\') . \'/\');' . "\n\n";
 
 			$output .= '// DIR' . "\n";
-			$output .= 'define(\'DIR_APPLICATION\', \'' . addslashes(DIR_OPENCART) . 'catalog/\');' . "\n";
-			$output .= 'define(\'DIR_SYSTEM\', \'' . addslashes(DIR_OPENCART) . 'system/\');' . "\n";
-			$output .= 'define(\'DIR_IMAGE\', \'' . addslashes(DIR_OPENCART) . 'image/\');' . "\n";
+			$output .= "define('DIR_OPENCART', str_replace('\\\\', '/', __DIR__) . '/');\n";
+			$output .= "define('DIR_APPLICATION', DIR_OPENCART . 'catalog/');\n";
+			$output .= "define('DIR_SYSTEM', DIR_OPENCART . 'system/');\n";
+			$output .= "define('DIR_IMAGE', DIR_OPENCART . 'image/');\n";
 			$output .= 'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');' . "\n";			
 			$output .= 'define(\'DIR_LANGUAGE\', DIR_APPLICATION . \'language/\');' . "\n";
 			$output .= 'define(\'DIR_TEMPLATE\', DIR_APPLICATION . \'view/theme/\');' . "\n";
@@ -50,20 +63,22 @@ class ControllerInstallStep3 extends Controller {
 
 			// Admin config.php
 			$output  = '<?php' . "\n";
+			$output .= $ssl;
 			$output .= '// HTTP' . "\n";
-			$output .= 'define(\'HTTP_SERVER\', \'' . HTTP_OPENCART . 'admin/\');' . "\n";
-			$output .= 'define(\'HTTP_CATALOG\', \'' . HTTP_OPENCART . '\');' . "\n\n";
+			$output .= 'define(\'HTTP_SERVER\', $protocol . $_SERVER[\'HTTP_HOST\'] . rtrim(dirname($_SERVER[\'SCRIPT_NAME\']), \'/.\\\\\') . \'/\');' . "\n";
+			$output .= 'define(\'HTTP_CATALOG\', $protocol . $_SERVER[\'HTTP_HOST\'] . rtrim(dirname(dirname($_SERVER[\'SCRIPT_NAME\'])), \'/.\\\\\') . \'/\');' . "\n\n";
 
 			$output .= '// HTTPS' . "\n";
-			$output .= 'define(\'HTTPS_SERVER\', \'' . HTTP_OPENCART . 'admin/\');' . "\n";
-			$output .= 'define(\'HTTPS_CATALOG\', \'' . HTTP_OPENCART . '\');' . "\n\n";
+			$output .= 'define(\'HTTPS_SERVER\', $protocol . $_SERVER[\'HTTP_HOST\'] . rtrim(dirname($_SERVER[\'SCRIPT_NAME\']), \'/.\\\\\') . \'/\');' . "\n";
+			$output .= 'define(\'HTTPS_CATALOG\', $protocol . $_SERVER[\'HTTP_HOST\'] . rtrim(dirname(dirname($_SERVER[\'SCRIPT_NAME\'])), \'/.\\\\\') . \'/\');' . "\n\n";
 
 			$output .= '// DIR' . "\n";
-			$output .= 'define(\'DIR_APPLICATION\', \'' . addslashes(DIR_OPENCART) . 'admin/\');' . "\n";
-			$output .= 'define(\'DIR_SYSTEM\', \'' . addslashes(DIR_OPENCART) . 'system/\');' . "\n";
-			$output .= 'define(\'DIR_IMAGE\', \'' . addslashes(DIR_OPENCART) . 'image/\');' . "\n";	
+			$output .= "define('DIR_OPENCART', str_replace('\\\\', '/', __DIR__ . '/../'));\n";
+			$output .= "define('DIR_APPLICATION', DIR_OPENCART . 'admin/');\n";
+			$output .= "define('DIR_SYSTEM', DIR_OPENCART . 'system/');\n";
+			$output .= "define('DIR_IMAGE', DIR_OPENCART . 'image/');\n";
 			$output .= 'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');' . "\n";
-			$output .= 'define(\'DIR_CATALOG\', \'' . addslashes(DIR_OPENCART) . 'catalog/\');' . "\n";
+			$output .= "define('DIR_CATALOG', DIR_OPENCART . 'catalog/');\n";
 			$output .= 'define(\'DIR_LANGUAGE\', DIR_APPLICATION . \'language/\');' . "\n";
 			$output .= 'define(\'DIR_TEMPLATE\', DIR_APPLICATION . \'view/template/\');' . "\n";
 			$output .= 'define(\'DIR_CONFIG\', DIR_SYSTEM . \'config/\');' . "\n";

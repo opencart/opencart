@@ -76,37 +76,14 @@ input[type="color"] {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .input-group {
-  input,
-  select,
-  .dropdown-menu,
-  .popover {
+  input, select, .dropdown-menu, .popover {
     font-size: 12px;
   }
+
   .input-group-addon {
     font-size: 12px;
     height: 30px;
-  }
-  .form-control[name^=quantity] {
-    min-width: 50px;
   }
 }
 
@@ -136,11 +113,14 @@ div.required .col-form-label:before {
 
   .nav {
     > .list-inline {
-      > .list-inline-item {
-
+      > .list-inline-item, .list-inline-item a {
         color: #888;
         text-shadow: 0 1px 0 #FFF;
+
+
+
       }
+
     }
   }
 
@@ -151,45 +131,11 @@ div.required .col-form-label:before {
     &:hover {
       color: #444;
     }
-
-    strong {
-      font-size: 14px;
-      line-height: 14px;
-    }
   }
-
-  /*
-    #top-links {
-      padding-top: 6px;
-
-      li {
-
-        &,
-        a {
-          color: #888;
-          text-shadow: 0 1px 0 #fff;
-          text-decoration: none;
-
-          &:hover {
-            color: #444;
-          }
-        }
-      }
-
-      .dropdown-menu {
-        a {
-          text-shadow: none;
-          &:hover {
-            color: #fff;
-          }
-        }
-      }
-    }
-    */
 }
 
-/* Gradent to all drop down menus */
-.dropdown-menu, #top .dropdown-menu {
+
+#top .list-inline-item .dropdown .dropdown-menu {
   font-size: 1.1em;
   > li {
     > a {
@@ -211,6 +157,7 @@ div.required .col-form-label:before {
     }
   }
 }
+
 
 
 

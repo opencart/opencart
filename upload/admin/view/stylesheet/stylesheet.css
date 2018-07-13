@@ -14,11 +14,12 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 fieldset {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 legend {
     border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 15px;
 }
 
 #container {
@@ -53,7 +54,7 @@ legend {
 }
 
 #header .navbar-nav .nav-link:hover {
-   background: #EEEEEE;
+    background: #EEEEEE;
 }
 
 #header .navbar-nav .nav-link {
@@ -315,7 +316,6 @@ legend {
     height: 100px;
     text-align: center;
 }
-
 
 .page-header {
     vertical-align: middle;

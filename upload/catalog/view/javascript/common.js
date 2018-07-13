@@ -67,10 +67,6 @@ $(document).ready(function() {
 		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 	});
 
-	$(document).on('click', '.date button, .time button, .datetime button', function() {
-		$(this).parent().parent().datetimepicker('toggle');
-	});
-
 	// Currency
 	$('#form-currency .currency-select').on('click', function(e) {
 		e.preventDefault();
@@ -82,7 +78,7 @@ $(document).ready(function() {
 
 	/* Search */
 	$('#search input[name=\'search\']').parent().find('button').on('click', function() {
-		var url = $('base').attr('href') + 'index.php?route=product/search&language=' + getCookie('language');
+		var url = $('base').attr('href') + 'index.php?route=product/search';
 
 		var value = $('header #search input[name=\'search\']').val();
 
@@ -155,7 +151,7 @@ $(document).ready(function() {
 var cart = {
 	'add': function(product_id, quantity) {
 		$.ajax({
-			url: 'index.php?route=checkout/cart/add&language=' + getCookie('language'),
+			url: 'index.php?route=checkout/cart/add',
 			type: 'post',
 			data: 'product_id=' + product_id + '&quantity=' + (typeof(quantity) != 'undefined' ? quantity : 1),
 			dataType: 'json',
@@ -178,7 +174,7 @@ var cart = {
 					$('#alert-box').addClass('open');
 
 					// Need to set timeout otherwise it wont update the total
-					$('#cart').parent().load('index.php?route=common/cart/info&language=' + getCookie('language'));
+					$('#cart').parent().load('index.php?route=common/cart/info');
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
@@ -188,7 +184,7 @@ var cart = {
 	},
 	'update': function(key, quantity) {
 		$.ajax({
-			url: 'index.php?route=checkout/cart/edit&language=' + getCookie('language'),
+			url: 'index.php?route=checkout/cart/edit',
 			type: 'post',
 			data: 'key=' + key + '&quantity=' + (typeof(quantity) != 'undefined' ? quantity : 1),
 			dataType: 'json',
@@ -200,9 +196,9 @@ var cart = {
 			},
 			success: function(json) {
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
-					location = 'index.php?route=checkout/cart&language=' + getCookie('language');
+					location = 'index.php?route=checkout/cart';
 				} else {
-					$('#cart').parent().load('index.php?route=common/cart/info&language=' + getCookie('language'));
+					$('#cart').parent().load('index.php?route=common/cart/info');
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
@@ -212,7 +208,7 @@ var cart = {
 	},
 	'remove': function(key) {
 		$.ajax({
-			url: 'index.php?route=checkout/cart/remove&language=' + getCookie('language'),
+			url: 'index.php?route=checkout/cart/remove',
 			type: 'post',
 			data: 'key=' + key,
 			dataType: 'json',
@@ -224,9 +220,9 @@ var cart = {
 			},
 			success: function(json) {
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
-					location = 'index.php?route=checkout/cart&language=' + getCookie('language');
+					location = 'index.php?route=checkout/cart';
 				} else {
-					$('#cart').parent().load('index.php?route=common/cart/info&language=' + getCookie('language'));
+					$('#cart').parent().load('index.php?route=common/cart/info');
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
@@ -242,7 +238,7 @@ var voucher = {
 	},
 	'remove': function(key) {
 		$.ajax({
-			url: 'index.php?route=checkout/cart/remove&language=' + getCookie('language'),
+			url: 'index.php?route=checkout/cart/remove',
 			type: 'post',
 			data: 'key=' + key,
 			dataType: 'json',
@@ -254,9 +250,9 @@ var voucher = {
 			},
 			success: function(json) {
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
-					location = 'index.php?route=checkout/cart&language=' + getCookie('language');
+					location = 'index.php?route=checkout/cart';
 				} else {
-					$('#cart').parent().load('index.php?route=common/cart/info&language=' + getCookie('language'));
+					$('#cart').parent().load('index.php?route=common/cart/info');
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
@@ -269,7 +265,7 @@ var voucher = {
 var wishlist = {
 	'add': function(product_id) {
 		$.ajax({
-			url: 'index.php?route=account/wishlist/add&language=' + getCookie('language'),
+			url: 'index.php?route=account/wishlist/add',
 			type: 'post',
 			data: 'product_id=' + product_id,
 			dataType: 'json',
@@ -302,7 +298,7 @@ var wishlist = {
 var compare = {
 	'add': function(product_id) {
 		$.ajax({
-			url: 'index.php?route=product/compare/add&language=' + getCookie('language'),
+			url: 'index.php?route=product/compare/add',
 			type: 'post',
 			data: 'product_id=' + product_id,
 			dataType: 'json',

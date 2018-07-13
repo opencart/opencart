@@ -23,46 +23,46 @@
       <h1>{{ heading_title }}</h1>
       <div id="accordion">
         <div class="card">
-          <h4 id="heading-checkout-option" class="card-header collapsed" data-target="#collapse-checkout-option">{{ text_checkout_option }}</h4>
+          <h4 id="heading-checkout-option" data-target="#collapse-checkout-option" class="card-header collapsed">{{ text_checkout_option }}</h4>
           <div id="collapse-checkout-option" class="collapse" data-parent="#accordion">
             <div class="card-body"></div>
           </div>
         </div>
         <div class="card">
           {% if not logged and account != 'guest' %}
-            <h4 class="card-header collapsed" data-target="#collapse-payment-address">{{ text_checkout_account }}</h4>
+            <h4 id="heading-payment-address" class="card-header collapsed" data-target="#collapse-payment-address">{{ text_checkout_account }}</h4>
             <div id="collapse-payment-address" class="collapse" data-parent="#accordion">
               <div class="card-body"></div>
             </div>
           {% else %}
-            <h4 class="card-header collapsed" data-target="#collapse-payment-address">{{ text_checkout_account }}</h4>
-            <div id="collapse-payment-address" class="collapse show" data-parent="#accordion">
+            <h4 id="heading-payment-address" class="card-header collapsed" data-target="#collapse-payment-address">{{ text_checkout_account }}</h4>
+            <div id="collapse-payment-address" class="collapse" data-parent="#accordion">
               <div class="card-body"></div>
             </div>
           {% endif %}
         </div>
         {% if shipping_required %}
           <div class="card">
-            <h4 class="card-header collapsed" data-target="#collapse-shipping-address">{{ text_checkout_shipping_address }}</h4>
+            <h4 id="heading-shipping-address" class="card-header collapsed" data-target="#collapse-shipping-address">{{ text_checkout_shipping_address }}</h4>
             <div id="collapse-shipping-address" class="collapse" data-parent="#accordion">
               <div class="card-body"></div>
             </div>
           </div>
           <div class="card">
-            <h4 class="card-header collapsed" data-target="#collapse-shipping-address">{{ text_checkout_shipping_method }}</h4>
+            <h4 id="heading-shipping-method" class="card-header collapsed" data-target="#collapse-shipping-method">{{ text_checkout_shipping_method }}</h4>
             <div id="collapse-shipping-method" class="collapse" data-parent="#accordion">
               <div class="card-body"></div>
             </div>
           </div>
         {% endif %}
         <div class="card">
-          <h4 class="card-header collapsed" data-target="#collapse-payment-method">{{ text_checkout_payment_method }}</h4>
+          <h4 id="heading-payment-method" class="card-header collapsed" data-target="#collapse-payment-method">{{ text_checkout_payment_method }}</h4>
           <div id="collapse-payment-method" class="collapse" data-parent="#accordion">
             <div class="card-body"></div>
           </div>
         </div>
         <div class="card">
-          <h4 class="card-header collapsed" data-target="#collapse-checkout-confirm">{{ text_checkout_confirm }}</h4>
+          <h4 id="heading-checkout-confirm" class="card-header collapsed" data-target="#collapse-checkout-confirm">{{ text_checkout_confirm }}</h4>
           <div id="collapse-checkout-confirm" class="collapse" data-parent="#accordion">
             <div class="card-body"></div>
           </div>
@@ -90,11 +90,9 @@ $(document).ready(function() {
 		success: function(html) {
 			$('#collapse-checkout-option .card-body').html(html);
 
-			$('#heading-checkout-option').parent().find('h4').html('{{ text_checkout_option }}');
+			$('#heading-checkout-option').attr('data-toggle', 'collapse');
 
-			$('a[href=\'#heading-checkout-option\']').trigger('click');
-
-			$('#collapse-checkout-option').collapse();
+			$('#heading-checkout-option').trigger('click');
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -109,9 +107,9 @@ $(document).ready(function() {
 		success: function(html) {
 			$('#collapse-payment-address .card-body').html(html);
 
-			$('#heading-payment-address').parent().find('h4').html('{{ text_checkout_payment_address }}');
+			$('#heading-payment-address').attr('data-toggle', 'collapse');
 
-			$('a[href=\'#collapse-payment-address\']').trigger('click');
+			$('#heading-payment-address').trigger('click');
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -137,30 +135,9 @@ $(document).delegate('#button-account', 'click', function() {
 
 			$('#collapse-payment-address .card-body').html(html);
 
+			$('#heading-payment-address').attr('data-toggle', 'collapse');
 
-
-
-
-			if ($('input[name=\'account\']:checked').val() == 'register') {
-
-				$('#heading-payment-address').parent().find('h4').html('{{ text_checkout_account }}');
-
-
-
-				//$('#collapse-checkout-option').parent().collapse();
-
-
-
-
-				data-target
-
-
-
-			} else {
-				$('#heading-payment-address').parent().find('h4').html('{{ text_checkout_payment_address }}');
-			}
-
-			$('a[href=\'#collapse-payment-address\']').trigger('click');
+			$('#heading-payment-address').trigger('click');
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -183,15 +160,16 @@ $(document).delegate('#button-login', 'click', function() {
 		},
 		success: function(json) {
 			$('.alert-dismissible, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
+			$(':input').removeClass('is-invalid');
+
 			if (json['redirect']) {
 				location = json['redirect'];
 			} else if (json['error']) {
 				$('#collapse-checkout-option .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
-				$('input[name=\'email\']').parent().addClass('has-error');
-				$('input[name=\'password\']').parent().addClass('has-error');
+				$('input[name=\'email\']').addClass('is-invalid');
+				$('input[name=\'password\']').addClass('is-invalid');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -250,17 +228,6 @@ $(document).delegate('#button-register', 'click', function() {
 								dataType: 'html',
 								success: function(html) {
 									$('#collapse-shipping-address .card-body').html(html);
-
-									$('#heading-shipping-address').parent().find('h4').html('{{ text_checkout_shipping_address }}');
-
-
-									$('#heading-shipping-address').collapse({
-										toggle: false
-
-									})
-
-
-
 								},
 								error: function(xhr, ajaxOptions, thrownError) {
 									alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -269,13 +236,13 @@ $(document).delegate('#button-register', 'click', function() {
 
 							$('#collapse-shipping-method .card-body').html(html);
 
-							$('#heading-shipping-method').parent().find('h4').html('{{ text_checkout_shipping_method }}');
+							$('#heading-shipping-method').attr('data-toggle', 'collapse');
 
-							$('a[href=\'#collapse-shipping-method\']').trigger('click');
+							$('#heading-shipping-method').trigger('click');
 
-							$('#collapse-shipping-method').parent().find('h4').html('{{ text_checkout_shipping_method }}');
-							$('#collapse-payment-method').parent().find('h4').html('{{ text_checkout_payment_method }}');
-							$('#collapse-checkout-confirm').parent().find('h4').html('{{ text_checkout_confirm }}');
+							$('#heading-shipping-method').removeAttr('data-toggle');
+							$('#heading-payment-method').removeAttr('data-toggle');
+							$('#heading-checkout-confirm').removeAttr('data-toggle');
 						},
 						error: function(xhr, ajaxOptions, thrownError) {
 							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -288,13 +255,13 @@ $(document).delegate('#button-register', 'click', function() {
 						success: function(html) {
 							$('#collapse-shipping-address .card-body').html(html);
 
-							$('#heading-shipping-address').parent().find('h4').html('{{ text_checkout_shipping_address }}');
+							$('#heading-shipping-address').attr('data-toggle', 'collapse');
 
-							$('a[href=\'#collapse-shipping-address\']').trigger('click');
+							$('#heading-shipping-address').trigger('click');
 
-							$('#heading-shipping-method').parent().find('h4').html('{{ text_checkout_shipping_method }}');
-							$('#heading-payment-method').parent().find('h4').html('{{ text_checkout_payment_method }}');
-							$('#heading-checkout-confirm').parent().find('h4').html('{{ text_checkout_confirm }}');
+							$('#heading-shipping-method').removeAttr('data-toggle');
+							$('#heading-payment-method').removeAttr('data-toggle');
+							$('#heading-checkout-confirm').removeAttr('data-toggle');
 						},
 						error: function(xhr, ajaxOptions, thrownError) {
 							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -308,9 +275,11 @@ $(document).delegate('#button-register', 'click', function() {
 					success: function(html) {
 						$('#collapse-payment-method .card-body').html(html);
 
-						$('#heading-payment-method').parent().find('h4').html('{{ text_checkout_payment_method }}');
+						$('#heading-payment-address').attr('data-toggle', 'collapse');
 
-						$('#heading-checkout-confirm').parent().find('h4').html('{{ text_checkout_confirm }}');
+						$('#heading-payment-address').trigger('click');
+
+						$('#heading-checkout-confirm').removeAttr('data-toggle');
 					},
 					error: function(xhr, ajaxOptions, thrownError) {
 						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -326,7 +295,10 @@ $(document).delegate('#button-register', 'click', function() {
 					},
 					success: function(html) {
 						$('#collapse-payment-address .card-body').html(html);
-						$('#heading-payment-address').parent().find('h4').html('{{ text_checkout_payment_address }}');
+
+						$('#heading-payment-address').attr('data-toggle', 'collapse');
+
+						$('#heading-payment-address').trigger('click');
 					},
 					error: function(xhr, ajaxOptions, thrownError) {
 						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -384,13 +356,13 @@ $(document).delegate('#button-payment-address', 'click', function() {
 					success: function(html) {
 						$('#collapse-shipping-address .card-body').html(html);
 
-						$('#collapse-shipping-address').parent().find('h4').html('{{ text_checkout_shipping_address }}');
+						$('#heading-shipping-address').attr('data-toggle', 'collapse');
 
-						$('a[href=\'#collapse-shipping-address\']').trigger('click');
+						$('#heading-shipping-address').trigger('click');
 
-						$('#collapse-shipping-method').parent().find('h4').html('{{ text_checkout_shipping_method }}');
-						$('#collapse-payment-method').parent().find('h4').html('{{ text_checkout_payment_method }}');
-						$('#collapse-checkout-confirm').parent().find('h4').html('{{ text_checkout_confirm }}');
+						$('#heading-shipping-method').removeAttr('data-toggle');
+						$('#heading-payment-method').removeAttr('data-toggle');
+						$('#heading-checkout-confirm').removeAttr('data-toggle');
 					},
 					error: function(xhr, ajaxOptions, thrownError) {
 						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -414,11 +386,11 @@ $(document).delegate('#button-payment-address', 'click', function() {
 					success: function(html) {
 						$('#collapse-payment-method .card-body').html(html);
 
-						$('#collapse-payment-method').parent().find('h4').html('{{ text_checkout_payment_method }}');
+						$('#heading-payment-method').attr('data-toggle', 'collapse');
 
-						$('a[href=\'#collapse-payment-method\']').trigger('click');
+						$('#heading-payment-method').trigger('click');
 
-						$('#collapse-checkout-confirm').parent().find('h4').html('{{ text_checkout_confirm }}');
+						$('#heading-checkout-confirm').removeAttr('data-toggle');
 					},
 					error: function(xhr, ajaxOptions, thrownError) {
 						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -489,12 +461,12 @@ $(document).delegate('#button-shipping-address', 'click', function() {
 					success: function(html) {
 						$('#collapse-shipping-method .card-body').html(html);
 
-						$('#collapse-shipping-method').parent().find('h4').html('{{ text_checkout_shipping_method }}');
+						$('#heading-shipping-method').attr('data-toggle', 'collapse');
 
-						$('a[href=\'#collapse-shipping-method\']').trigger('click');
+						$('#heading-shipping-method').trigger('click');
 
-						$('#collapse-payment-method').parent().find('h4').html('{{ text_checkout_payment_method }}');
-						$('#collapse-checkout-confirm').parent().find('h4').html('{{ text_checkout_confirm }}');
+						$('#heading-payment-method').removeAttr('data-toggle');
+						$('#heading-checkout-confirm').removeAttr('data-toggle');
 
 						$.ajax({
 							url: 'index.php?route=checkout/shipping_address',
@@ -584,7 +556,7 @@ $(document).delegate('#button-guest', 'click', function() {
 								success: function(html) {
 									$('#collapse-shipping-address .card-body').html(html);
 
-									$('#collapse-shipping-address').parent().find('h4').html('{{ text_checkout_shipping_address }}');
+									$('#heading-shipping-address').attr('data-toggle', 'collapse');
 								},
 								error: function(xhr, ajaxOptions, thrownError) {
 									alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -593,12 +565,12 @@ $(document).delegate('#button-guest', 'click', function() {
 
 							$('#collapse-shipping-method .card-body').html(html);
 
-							$('#collapse-shipping-method').parent().find('h4').html('<a href="#collapse-shipping-method" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle">{{ text_checkout_shipping_method }} <i class="fa fa-caret-down"></i></a>');
+							$('#heading-shipping-method').attr('data-toggle', 'collapse');
 
-							$('a[href=\'#collapse-shipping-method\']').trigger('click');
+							$('#heading-shipping-method').trigger('click');
 
-							$('#collapse-payment-method').parent().find('h4').html('{{ text_checkout_payment_method }}');
-							$('#collapse-checkout-confirm').parent().find('h4').html('{{ text_checkout_confirm }}');
+							$('#heading-payment-method').removeAttr('data-toggle');
+							$('#heading-checkout-confirm').removeAttr('data-toggle');
 						},
 						error: function(xhr, ajaxOptions, thrownError) {
 							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -614,13 +586,13 @@ $(document).delegate('#button-guest', 'click', function() {
 						success: function(html) {
 							$('#collapse-shipping-address .card-body').html(html);
 
-							$('#collapse-shipping-address').parent().find('h4').html('<a href="#collapse-shipping-address" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle">{{ text_checkout_shipping_address }} <i class="fa fa-caret-down"></i></a>');
+							$('#heading-shipping-address').attr('data-toggle', 'collapse');
 
-							$('a[href=\'#collapse-shipping-address\']').trigger('click');
+							$('#heading-shipping-address').trigger('click');
 
-							$('#collapse-shipping-method').parent().find('h4').html('{{ text_checkout_shipping_method }}');
-							$('#collapse-payment-method').parent().find('h4').html('{{ text_checkout_payment_method }}');
-							$('#collapse-checkout-confirm').parent().find('h4').html('{{ text_checkout_confirm }}');
+							$('#heading-shipping-method').removeAttr('data-toggle');
+							$('#heading-payment-method').removeAttr('data-toggle');
+							$('#heading-checkout-confirm').removeAttr('data-toggle');
 						},
 						error: function(xhr, ajaxOptions, thrownError) {
 							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -637,11 +609,11 @@ $(document).delegate('#button-guest', 'click', function() {
 					success: function(html) {
 						$('#collapse-payment-method .card-body').html(html);
 
-						$('#collapse-payment-method').parent().find('h4').html('<a href="#collapse-payment-method" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle">{{ text_checkout_payment_method }} <i class="fa fa-caret-down"></i></a>');
+						$('#heading-payment-method').attr('data-toggle', 'collapse');
 
-						$('a[href=\'#collapse-payment-method\']').trigger('click');
+						$('#heading-payment-method').trigger('click');
 
-						$('#collapse-checkout-confirm').parent().find('h4').html('{{ text_checkout_confirm }}');
+						$('#heading-checkout-confirm').removeAttr('data-toggle');
 					},
 					error: function(xhr, ajaxOptions, thrownError) {
 						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -701,12 +673,12 @@ $(document).delegate('#button-guest-shipping', 'click', function() {
 					success: function(html) {
 						$('#collapse-shipping-method .card-body').html(html);
 
-						$('#collapse-shipping-method').parent().find('h4').html('{{ text_checkout_shipping_method }}');
+						$('#heading-shipping-method').attr('data-toggle', 'collapse');
 
-						$('a[href=\'#collapse-shipping-method\']').trigger('click');
+						$('#heading-shipping-method').trigger('click');
 
-						$('#collapse-payment-method').parent().find('h4').html('{{ text_checkout_payment_method }}');
-						$('#collapse-checkout-confirm').parent().find('h4').html('{{ text_checkout_confirm }}');
+						$('#heading-payment-method').removeAttr('data-toggle');
+						$('#heading-checkout-confirm').removeAttr('data-toggle');
 					},
 					error: function(xhr, ajaxOptions, thrownError) {
 						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -750,11 +722,11 @@ $(document).delegate('#button-shipping-method', 'click', function() {
 					success: function(html) {
 						$('#collapse-payment-method .card-body').html(html);
 
-						$('#collapse-payment-method').parent().find('h4').html('{{ text_checkout_payment_method }}');
+						$('#heading-payment-method').attr('data-toggle', 'collapse');
 
-						$('a[href=\'#collapse-payment-method\']').trigger('click');
+						$('#heading-payment-method').trigger('click');
 
-						$('#collapse-checkout-confirm').parent().find('h4').html('{{ text_checkout_confirm }}');
+						$('#heading-checkout-confirm').removeAttr('data-toggle');
 					},
 					error: function(xhr, ajaxOptions, thrownError) {
 						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -798,9 +770,9 @@ $(document).delegate('#button-payment-method', 'click', function() {
 					success: function(html) {
 						$('#collapse-checkout-confirm .card-body').html(html);
 
-						$('#collapse-checkout-confirm').parent().find('h4').html('{{ text_checkout_confirm }}');
+						$('#heading-checkout-confirm').attr('data-toggle', 'collapse');
 
-						$('a[href=\'#collapse-checkout-confirm\']').trigger('click');
+						$('#heading-checkout-confirm').trigger('click');
 					},
 					error: function(xhr, ajaxOptions, thrownError) {
 						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

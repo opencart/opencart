@@ -140,7 +140,7 @@ class ControllerCliInstall extends Controller {
 		// Requirements
 		$error = '';
 
-		if (phpversion() < '7.1') {
+		if (version_compare(phpversion(), '7.0.0', '<')) {
 			$error .= 'You need to use PHP 7.1 or above for OpenCart to work!';
 		}
 

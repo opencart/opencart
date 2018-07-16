@@ -73,7 +73,7 @@ EOF;
 			$output .= 'define(\'HTTPS_CATALOG\', $protocol . $_SERVER[\'HTTP_HOST\'] . rtrim(dirname(dirname($_SERVER[\'SCRIPT_NAME\'])), \'/.\\\\\') . \'/\');' . "\n\n";
 
 			$output .= '// DIR' . "\n";
-			$output .= "define('DIR_OPENCART', str_replace('\\\\', '/', __DIR__ . '/../'));\n";
+			$output .= "define('DIR_OPENCART', realpath(str_replace('\\\\', '/', __DIR__ . '/..')) . '/');\n";
 			$output .= "define('DIR_APPLICATION', DIR_OPENCART . 'admin/');\n";
 			$output .= "define('DIR_SYSTEM', DIR_OPENCART . 'system/');\n";
 			$output .= "define('DIR_IMAGE', DIR_OPENCART . 'image/');\n";

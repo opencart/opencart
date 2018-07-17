@@ -1,6 +1,6 @@
 <?php
 class ControllerExtensionPaymentAmazonLoginPay extends Controller {
-
+	private $version = '3.0';
 	private $error = array();
 
 	public function index() {
@@ -19,9 +19,9 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			if (isset($this->request->post['language_reload'])) {
-				$this->response->redirect($this->url->link('payment/amazon_login_pay', 'user_token=' . $this->session->data['user_token']));
+				$this->response->redirect($this->url->link('extension/payment/amazon_login_pay', 'user_token=' . $this->session->data['user_token'], true));
 			} else {
-				$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment'));
+				$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 			}
 		}
 
@@ -73,26 +73,30 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			$data['error_curreny'] = '';
 		}
 
+		$data['heading_title'] = $this->language->get('heading_title') . ' ' . $this->version;
+
+		$data['https_catalog'] = HTTPS_CATALOG;
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment')
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/amazon_login_pay', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/payment/amazon_login_pay', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/payment/amazon_login_pay', 'user_token=' . $this->session->data['user_token']);
+		$data['action'] = $this->url->link('extension/payment/amazon_login_pay', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
 
 		if (isset($this->request->post['payment_amazon_login_pay_merchant_id'])) {
 			$data['payment_amazon_login_pay_merchant_id'] = $this->request->post['payment_amazon_login_pay_merchant_id'];
@@ -218,7 +222,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			$data['payment_amazon_login_pay_ipn_token'] = sha1(uniqid(mt_rand(), 1));
 		}
 
-		$data['ipn_url'] = HTTP_CATALOG . 'index.php?route=extension/payment/amazon_login_pay/ipn&token=' . $data['payment_amazon_login_pay_ipn_token'];
+		$data['ipn_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/amazon_login_pay/ipn&token=' . $data['payment_amazon_login_pay_ipn_token'];
 
 		if (isset($this->request->post['payment_amazon_login_pay_minimum_total'])) {
 			$data['payment_amazon_login_pay_minimum_total'] = $this->request->post['payment_amazon_login_pay_minimum_total'];
@@ -279,9 +283,9 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		$data['declined_codes'] = array($this->language->get('text_amazon_invalid'), $this->language->get('text_amazon_rejected'), $this->language->get('text_amazon_timeout'));
 
 		$data['unique_id'] = 'oc-' . str_replace(' ', '-', strtolower($this->config->get('config_name'))) . '_' . mt_rand();
-		$data['allowed_login_domain'] = html_entity_decode(HTTP_CATALOG);
-		$data['login_redirect_urls'][] = HTTP_CATALOG . 'index.php?route=payment/amazon_login/login';
-		$data['login_redirect_urls'][] = HTTP_CATALOG . 'index.php?route=payment/amazon_pay/login';
+		$data['allowed_login_domain'] = html_entity_decode(HTTPS_CATALOG);
+		$data['login_redirect_urls'][] = HTTPS_CATALOG . 'index.php?route=payment/amazon_login/login';
+		$data['login_redirect_urls'][] = HTTPS_CATALOG . 'index.php?route=payment/amazon_pay/login';
 		$data['store_name'] = $this->config->get('config_name');
 		$data['simple_path_language'] = str_replace('-', '_', $data['payment_amazon_login_pay_language']);
 
@@ -351,8 +355,8 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 				$data['amazon_login_pay_order'] = $amazon_login_pay_order;
 
-				$data['order_id'] = (int)$this->request->get['order_id'];
-				$data['user_token'] = $this->session->data['user_token'];
+				$data['order_id'] = $this->request->get['order_id'];
+				$data['user_token'] = $this->request->get['user_token'];
 
 				return $this->load->view('extension/payment/amazon_login_pay_order', $data);
 			}
@@ -445,7 +449,6 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 	public function refund() {
 		$this->load->language('extension/payment/amazon_login_pay');
-
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {
@@ -470,13 +473,10 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 					if ($total_captured <= 0 && $amazon_login_pay_order['capture_status'] == 1) {
 						$this->model_extension_payment_amazon_login_pay->updateRefundStatus($amazon_login_pay_order['amazon_login_pay_order_id'], 1);
-
 						$refund_status = 1;
-
 						$json['msg'][] = $this->language->get('text_refund_ok_order') . '<br />';
 					} else {
 						$refund_status = 0;
-
 						$json['msg'][] = $this->language->get('text_refund_ok') . '<br />';
 					}
 
@@ -494,7 +494,6 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 					$json['error_msg'][] = isset($response['status_detail']) && !empty($response['status_detail']) ? (string)$response['status_detail'] : 'Unable to refund';
 				}
 			}
-
 			$json['refund_status'] = $refund_status;
 			$json['total_captured'] = $this->currency->format($total_captured, $amazon_login_pay_order['currency_code'], true, true);
 			$json['total_refunded'] = $this->currency->format($total_refunded, $amazon_login_pay_order['currency_code'], true, true);

@@ -3,7 +3,7 @@
 /*
  * This file is part of Twig.
  *
- * (c) 2012 Fabien Potencier
+ * (c) Fabien Potencier
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -39,3 +39,5 @@ class Twig_Node_Expression_MethodCall extends Twig_Node_Expression
         $compiler->raw(')');
     }
 }
+
+class_alias('Twig_Node_Expression_MethodCall', 'Twig\Node\Expression\MethodCallExpression', false);

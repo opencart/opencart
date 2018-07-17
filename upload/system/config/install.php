@@ -17,7 +17,7 @@ $_['template_engine']   = 'twig';
 $_['template_cache']    = true;
 
 // Error
-$_['error_display']     = false;
+$_['error_display']     = true;
 
 // Actions
 $_['action_default']    = 'install/step_1';

@@ -6,7 +6,7 @@ class Smtp {
 	public $smtp_password;
 	public $smtp_port = 25;
 	public $smtp_timeout = 5;
-	public $max_attempts = 5;
+	public $max_attempts = 3;
 	public $verp = false;
 
 	public function send() {
@@ -18,29 +18,29 @@ class Smtp {
 
 		$boundary = '----=_NextPart_' . md5(time());
 
-		$header  = 'MIME-Version: 1.0' . PHP_EOL;
+		$header = 'MIME-Version: 1.0' . PHP_EOL;
 		$header .= 'To: <' . $to . '>' . PHP_EOL;
 		$header .= 'Subject: =?UTF-8?B?' . base64_encode($this->subject) . '?=' . PHP_EOL;
 		$header .= 'Date: ' . date('D, d M Y H:i:s O') . PHP_EOL;
 		$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . PHP_EOL;
-		
+
 		if (!$this->reply_to) {
 			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . PHP_EOL;
 		} else {
 			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->reply_to) . '?= <' . $this->reply_to . '>' . PHP_EOL;
 		}
-		
+
 		$header .= 'Return-Path: ' . $this->from . PHP_EOL;
 		$header .= 'X-Mailer: PHP/' . phpversion() . PHP_EOL;
 		$header .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"' . PHP_EOL . PHP_EOL;
 
 		if (!$this->html) {
-			$message  = '--' . $boundary . PHP_EOL;
+			$message = '--' . $boundary . PHP_EOL;
 			$message .= 'Content-Type: text/plain; charset="utf-8"' . PHP_EOL;
 			$message .= 'Content-Transfer-Encoding: 8bit' . PHP_EOL . PHP_EOL;
 			$message .= $this->text . PHP_EOL;
 		} else {
-			$message  = '--' . $boundary . PHP_EOL;
+			$message = '--' . $boundary . PHP_EOL;
 			$message .= 'Content-Type: multipart/alternative; boundary="' . $boundary . '_alt"' . PHP_EOL . PHP_EOL;
 			$message .= '--' . $boundary . '_alt' . PHP_EOL;
 			$message .= 'Content-Type: text/plain; charset="utf-8"' . PHP_EOL;
@@ -93,7 +93,7 @@ class Smtp {
 			if (substr(PHP_OS, 0, 3) != 'WIN') {
 				socket_set_timeout($handle, $this->smtp_timeout, 0);
 			}
-	
+
 			while ($line = fgets($handle, 515)) {
 				if (substr($line, 3, 1) == ' ') {
 					break;
@@ -111,8 +111,7 @@ class Smtp {
 				if (substr($reply, 0, 3) == 220 && substr($line, 3, 1) == ' ') {
 					$reply = '';
 					continue;
-				}
-				else if (substr($line, 3, 1) == ' ') {
+				} else if (substr($line, 3, 1) == ' ') {
 					break;
 				}
 			}
@@ -129,7 +128,7 @@ class Smtp {
 				stream_socket_enable_crypto($handle, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
 			}
 
-			if (!empty($this->smtp_username)  && !empty($this->smtp_password)) {
+			if (!empty($this->smtp_username) && !empty($this->smtp_password)) {
 				fputs($handle, 'EHLO ' . getenv('SERVER_NAME') . "\r\n");
 
 				$this->handleReply($handle, 250, 'Error: EHLO not accepted from server!');
@@ -171,7 +170,7 @@ class Smtp {
 			} else {
 				foreach ($this->to as $recipient) {
 					fputs($handle, 'RCPT TO: <' . $recipient . '>' . "\r\n");
-					
+
 					$reply = $this->handleReply($handle, false, 'RCPT TO [array]');
 
 					if ((substr($reply, 0, 3) != 250) && (substr($reply, 0, 3) != 251)) {
@@ -183,7 +182,7 @@ class Smtp {
 			fputs($handle, 'DATA' . "\r\n");
 
 			$this->handleReply($handle, 354, 'Error: DATA not accepted from server!');
-			
+
 			// According to rfc 821 we should not send more than 1000 including the CRLF
 			$message = str_replace("\r\n", "\n", $header . $message);
 			$message = str_replace("\r", "\n", $message);
@@ -213,32 +212,33 @@ class Smtp {
 			fclose($handle);
 		}
 	}
-	
+
 	private function handleReply($handle, $status_code = false, $error_text = false, $counter = 0) {
 		$reply = '';
-		
-		while (($line = fgets($handle, 515)) !== false) {
-				$reply .= $line;
 
-				if (substr($line, 3, 1) == ' ') {
-					break;
-				}
-		}
-		
-		// Handle slowish server responses (generally due to policy servers)
-		if (!$line && empty($reply) && $counter < $this->max_attempts) {
-			// sleep(1);
-			usleep(200000);
-			$counter++;
-			return $this->handleReply($handle,$status_code,$error_text,$counter);
-		}
-		
-		if ($status_code) {
-			if (substr($reply, 0, 3) != $status_code) {
-				throw new \Exception($error_text);	
+		while (($line = fgets($handle, 515)) !== false) {
+			$reply .= $line;
+
+			if (substr($line, 3, 1) == ' ') {
+				break;
 			}
 		}
-		
+
+		// Handle slowish server responses (generally due to policy servers)
+		if (!$line && empty($reply) && $counter < $this->max_attempts) {
+			sleep(1);
+
+			$counter++;
+
+			return $this->handleReply($handle, $status_code, $error_text, $counter);
+		}
+
+		if ($status_code) {
+			if (substr($reply, 0, 3) != $status_code) {
+				throw new \Exception($error_text);
+			}
+		}
+
 		return $reply;
 	}
 }

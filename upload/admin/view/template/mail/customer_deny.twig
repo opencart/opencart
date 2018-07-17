@@ -6,9 +6,8 @@
           {% if logo is empty %}
             <a href="{{ store_url }}">{{ store }}</a>
           {% else %}
-            <a href="{{ store_url }}"><img src="{{ logo }}" alt="{{ store }}" title="{{ store }}" style="margin-left: auto; margin-right: auto;" /></a>
+            <a href="{{ store_url }}"><img src="{{ logo }}" alt="{{ store }}" title="{{ store }}" style="margin-left: auto; margin-right: auto;"/></a>
           {% endif %}
-
         </td>
       </tr>
     </thead>
@@ -18,17 +17,19 @@
       </tr>
       <tr>
         <td style="line-height: 1.8;">
-
           <p>{{ text_denied }}</p>
-          <p><br/></p>
-
-          <p style="text-align: center; font-weight: bold;"><a href="{{ contact }}" style="border-radius:4px; color:#fff; text-decoration: none; background-color: #01b3e8; padding-left:18px; padding-right:18px; padding-top:10px; padding-bottom:10px; font-size:18px;">
-            {{ button_contact }}
-            </a></p>
-          <p><br/></p>
-
           <p>
-            {{ text_thanks }} <br/>
+            <br/>
+          </p>
+          <p style="text-align: center; font-weight: bold;"><a href="{{ contact }}" style="border-radius:4px; color:#fff; text-decoration: none; background-color: #01b3e8; padding-left:18px; padding-right:18px; padding-top:10px; padding-bottom:10px; font-size:18px;">
+              {{ button_contact }}
+            </a></p>
+          <p>
+            <br/>
+          </p>
+          <p>
+            {{ text_thanks }}
+            <br/>
             <strong>{{ store }}</strong>
           </p>
         </td>

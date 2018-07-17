@@ -50,17 +50,14 @@ The template name can be any valid Twig expression:
     {% include some_var %}
     {% include ajax ? 'ajax.html' : 'not_ajax.html' %}
 
-And if the expression evaluates to a ``Twig_Template`` object, Twig will use it
-directly::
+And if the expression evaluates to a ``Twig_Template`` or a
+``Twig_TemplateWrapper`` instance, Twig will use it directly::
 
     // {% include template %}
 
-    $template = $twig->loadTemplate('some_template.twig');
+    $template = $twig->load('some_template.twig');
 
-    $twig->loadTemplate('template.twig')->display(array('template' => $template));
-
-.. versionadded:: 1.2
-    The ``ignore missing`` feature has been added in Twig 1.2.
+    $twig->display('template.twig', array('template' => $template));
 
 You can mark an include with ``ignore missing`` in which case Twig will ignore
 the statement if the template to be included does not exist. It has to be
@@ -71,9 +68,6 @@ placed just after the template name. Here some valid examples:
     {% include 'sidebar.html' ignore missing %}
     {% include 'sidebar.html' ignore missing with {'foo': 'bar'} %}
     {% include 'sidebar.html' ignore missing only %}
-
-.. versionadded:: 1.2
-    The possibility to pass an array of templates has been added in Twig 1.2.
 
 You can also provide a list of templates that are checked for existence before
 inclusion. The first template that exists will be included:

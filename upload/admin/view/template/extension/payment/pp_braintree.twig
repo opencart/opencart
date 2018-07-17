@@ -2,32 +2,30 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <button type="submit" form="form-braintree" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fa fa-reply"></i></a></div>
+      <div class="float-right">
+        <button type="submit" form="form-braintree" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          {% for breadcrumb in breadcrumbs %}
-            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-          {% endfor %}
-        </ol>
-      </nav>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
     </div>
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     {% if success %}
-      <div class="alert alert-success alert-dismissible"><i class="fa fa-check"></i> {{ success }}
+      <div class="alert alert-success alert-dismissible"><i class="fas fa-check"></i> {{ success }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     <div class="card">
-      <div class="card-header"><i class="fa fa-pencil"></i> {{ text_edit }}</div>
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-braintree">
           <ul class="nav nav-tabs" id="tabs">
@@ -53,8 +51,8 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ entry_connection }}</label>
                   <div class="col-sm-10">
-                    <div class="alert alert-info"><i class="fa fa-check"></i> {{ text_app_connected }} ({{ text_merchant_connected }}{{ payment_pp_braintree_merchant_id }})
-                      <div class="btn btn-sm btn-danger pull-right" id="delete-link">{{ text_unlink }}</div>
+                    <div class="alert alert-info"><i class="fas fa-check"></i> {{ text_app_connected }} ({{ text_merchant_connected }}{{ payment_pp_braintree_merchant_id }})
+                      <div class="btn btn-sm btn-danger float-right" id="delete-link">{{ text_unlink }}</div>
                     </div>
                   </div>
                 </div>
@@ -703,7 +701,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <div class="col-sm-2"><a href="{{ button_configure }}" target="_blank" class="btn btn-primary pull-right">{{ button_enable }}</a></div>
+                  <div class="col-sm-2"><a href="{{ button_configure }}" target="_blank" class="btn btn-primary float-right">{{ button_enable }}</a></div>
                   <div class="col-sm-10"><p>{{ text_enable_button }}</p></div>
                 </div>
               {% endif %}
@@ -730,18 +728,18 @@
                       <div class="form-group">
                         <label class="col-form-label" for="input-date-from">{{ entry_date_from }}</label>
                         <div class="input-group date">
-                          <input type="text" name="filter_date_from" value="" placeholder="From" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-from" class="form-control"/>
+                          <input type="text" name="filter_date_from" value="" placeholder="From" id="input-date-from" class="form-control"/>
                           <div class="input-group-append">
-                            <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                            <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                           </div>
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="col-form-label" for="input-date-to">{{ entry_date_to }}</label>
                         <div class="input-group date">
-                          <input type="text" name="filter_date_to" value="" placeholder="To" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-to" class="form-control"/>
+                          <input type="text" name="filter_date_to" value="" placeholder="To" id="input-date-to" class="form-control"/>
                           <div class="input-group-append">
-                            <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                            <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                           </div>
                         </div>
                       </div>
@@ -787,7 +785,7 @@
                           {% endfor %}
                         </select>
                       </div>
-                      <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> {{ button_filter }}</button>
+                      <button type="button" id="button-filter" class="btn btn-primary float-right"><i class="fas fa-search"></i> {{ button_filter }}</button>
                     </div>
                   </div>
                 </div>
@@ -813,7 +811,11 @@
 <script type="text/javascript"><!--
 $('#tabs a:first').tab('show');
 
-$('.date').datetimepicker();
+$('.date').datetimepicker({
+	'format': 'YYYY-MM-DD',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
+});
 
 $('#button-filter').on('click', function(event) {
 	event.preventDefault();
@@ -884,7 +886,7 @@ $('#button-filter').on('click', function(event) {
 		beforeSend: function() {
 			$('#button-filter').button('loading');
 
-			$('#table-action').html('<div style="width: 5em; margin: 0px auto;"><i class="braintree-loading fa fa-spinner fa-spin fa-5x" style="text-align: center; margin: 0 auto; width: 100%; font-size: 5em;"></i></div>');
+			$('#table-action').html('<div style="width: 5em; margin: 0px auto;"><i class="braintree-loading fas fa-spinner fa-spin fa-5x" style="text-align: center; margin: 0 auto; width: 100%; font-size: 5em;"></i></div>');
 		},
 		complete: function() {
 			$('#button-filter').button('reset');
@@ -983,7 +985,7 @@ function getTransaction(transaction_id) {
 		beforeSend: function() {
 			$('#button-filter').button('loading');
 
-			$('#table-action').html('<div style="width: 5em; margin: 0px auto;"><i class="braintree-loading fa fa-spinner fa-spin fa-5x" style="text-align: center; margin: 0 auto; width: 100%; font-size: 5em;"></i></div>');
+			$('#table-action').html('<div style="width: 5em; margin: 0px auto;"><i class="braintree-loading fas fa-spinner fa-spin fa-5x" style="text-align: center; margin: 0 auto; width: 100%; font-size: 5em;"></i></div>');
 		},
 		complete: function() {
 			$('#button-filter').button('reset');
@@ -1006,6 +1008,7 @@ function getTransaction(transaction_id) {
 		  alert(error.message);
 	  }
   });
+
   $('#bt-connect').show();
   //--></script>
 {% endif %}

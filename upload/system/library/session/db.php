@@ -18,7 +18,7 @@ final class DB {
 	}
 	
 	public function read($session_id) {
-		$query = $this->db->query("SELECT `data` FROM `" . DB_PREFIX . "session` WHERE session_id = '" . $this->db->escape($session_id) . "' AND expire > " . (int)time());
+		$query = $this->db->query("SELECT `data` FROM `" . DB_PREFIX . "session` WHERE session_id = '" . $this->db->escape($session_id) . "' AND expire > '" . $this->db->escape(date('Y-m-d H:i:s', time()))  . "'");
 		
 		if ($query->num_rows) {
 			return json_decode($query->row['data'], true);
@@ -42,7 +42,7 @@ final class DB {
 	}
 	
 	public function gc($expire) {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "session` WHERE expire < " . ((int)time() + $expire));
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "session` WHERE expire < '" . $this->db->escape(date('Y-m-d H:i:s', time())) . "'");
 		
 		return true;
 	}

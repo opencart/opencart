@@ -3,7 +3,7 @@
 /*
  * This file is part of Twig.
  *
- * (c) 2010 Fabien Potencier
+ * (c) Fabien Potencier
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -20,13 +20,14 @@
  *
  * @see http://www.twig-project.org/doc/api.html#sandbox-extension for details
  */
-class Twig_TokenParser_Sandbox extends Twig_TokenParser
+final class Twig_TokenParser_Sandbox extends Twig_TokenParser
 {
     public function parse(Twig_Token $token)
     {
-        $this->parser->getStream()->expect(Twig_Token::BLOCK_END_TYPE);
+        $stream = $this->parser->getStream();
+        $stream->expect(/* Twig_Token::BLOCK_END_TYPE */ 3);
         $body = $this->parser->subparse(array($this, 'decideBlockEnd'), true);
-        $this->parser->getStream()->expect(Twig_Token::BLOCK_END_TYPE);
+        $stream->expect(/* Twig_Token::BLOCK_END_TYPE */ 3);
 
         // in a sandbox tag, only include tags are allowed
         if (!$body instanceof Twig_Node_Include) {
@@ -36,7 +37,7 @@ class Twig_TokenParser_Sandbox extends Twig_TokenParser
                 }
 
                 if (!$node instanceof Twig_Node_Include) {
-                    throw new Twig_Error_Syntax('Only "include" tags are allowed within a "sandbox" section.', $node->getLine(), $this->parser->getFilename());
+                    throw new Twig_Error_Syntax('Only "include" tags are allowed within a "sandbox" section.', $node->getTemplateLine(), $stream->getSourceContext());
                 }
             }
         }
@@ -54,3 +55,5 @@ class Twig_TokenParser_Sandbox extends Twig_TokenParser
         return 'sandbox';
     }
 }
+
+class_alias('Twig_TokenParser_Sandbox', 'Twig\TokenParser\SandboxTokenParser', false);

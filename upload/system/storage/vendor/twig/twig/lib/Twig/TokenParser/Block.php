@@ -3,8 +3,8 @@
 /*
  * This file is part of Twig.
  *
- * (c) 2009 Fabien Potencier
- * (c) 2009 Armin Ronacher
+ * (c) Fabien Potencier
+ * (c) Armin Ronacher
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -20,27 +20,27 @@
  *  {% endblock %}
  * </pre>
  */
-class Twig_TokenParser_Block extends Twig_TokenParser
+final class Twig_TokenParser_Block extends Twig_TokenParser
 {
     public function parse(Twig_Token $token)
     {
         $lineno = $token->getLine();
         $stream = $this->parser->getStream();
-        $name = $stream->expect(Twig_Token::NAME_TYPE)->getValue();
+        $name = $stream->expect(/* Twig_Token::NAME_TYPE */ 5)->getValue();
         if ($this->parser->hasBlock($name)) {
-            throw new Twig_Error_Syntax(sprintf("The block '%s' has already been defined line %d.", $name, $this->parser->getBlock($name)->getLine()), $stream->getCurrent()->getLine(), $stream->getFilename());
+            throw new Twig_Error_Syntax(sprintf("The block '%s' has already been defined line %d.", $name, $this->parser->getBlock($name)->getTemplateLine()), $stream->getCurrent()->getLine(), $stream->getSourceContext());
         }
         $this->parser->setBlock($name, $block = new Twig_Node_Block($name, new Twig_Node(array()), $lineno));
         $this->parser->pushLocalScope();
         $this->parser->pushBlockStack($name);
 
-        if ($stream->nextIf(Twig_Token::BLOCK_END_TYPE)) {
+        if ($stream->nextIf(/* Twig_Token::BLOCK_END_TYPE */ 3)) {
             $body = $this->parser->subparse(array($this, 'decideBlockEnd'), true);
-            if ($token = $stream->nextIf(Twig_Token::NAME_TYPE)) {
+            if ($token = $stream->nextIf(/* Twig_Token::NAME_TYPE */ 5)) {
                 $value = $token->getValue();
 
                 if ($value != $name) {
-                    throw new Twig_Error_Syntax(sprintf('Expected endblock for block "%s" (but "%s" given).', $name, $value), $stream->getCurrent()->getLine(), $stream->getFilename());
+                    throw new Twig_Error_Syntax(sprintf('Expected endblock for block "%s" (but "%s" given).', $name, $value), $stream->getCurrent()->getLine(), $stream->getSourceContext());
                 }
             }
         } else {
@@ -48,7 +48,7 @@ class Twig_TokenParser_Block extends Twig_TokenParser
                 new Twig_Node_Print($this->parser->getExpressionParser()->parseExpression(), $lineno),
             ));
         }
-        $stream->expect(Twig_Token::BLOCK_END_TYPE);
+        $stream->expect(/* Twig_Token::BLOCK_END_TYPE */ 3);
 
         $block->setNode('body', $body);
         $this->parser->popBlockStack();
@@ -67,3 +67,5 @@ class Twig_TokenParser_Block extends Twig_TokenParser
         return 'block';
     }
 }
+
+class_alias('Twig_TokenParser_Block', 'Twig\TokenParser\BlockTokenParser', false);

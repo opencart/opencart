@@ -3,16 +3,16 @@
 /*
  * This file is part of Twig.
  *
- * (c) 2009 Fabien Potencier
- * (c) 2009 Armin Ronacher
+ * (c) Fabien Potencier
+ * (c) Armin Ronacher
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 class Twig_Node_Expression_Name extends Twig_Node_Expression
 {
-    protected $specialVars = array(
-        '_self' => '$this',
+    private $specialVars = array(
+        '_self' => '$this->getTemplateName()',
         '_context' => '$context',
         '_charset' => '$this->env->getCharset()',
     );
@@ -43,35 +43,25 @@ class Twig_Node_Expression_Name extends Twig_Node_Expression
                 ->raw(']')
             ;
         } else {
-            // remove the non-PHP 5.4 version when PHP 5.3 support is dropped
-            // as the non-optimized version is just a workaround for slow ternary operator
-            // when the context has a lot of variables
-            if (PHP_VERSION_ID >= 50400) {
-                // PHP 5.4 ternary operator performance was optimized
+            if ($this->getAttribute('ignore_strict_check') || !$compiler->getEnvironment()->isStrictVariables()) {
+                $compiler
+                    ->raw('($context[')
+                    ->string($name)
+                    ->raw('] ?? null)')
+                ;
+            } else {
                 $compiler
                     ->raw('(isset($context[')
                     ->string($name)
-                    ->raw(']) ? $context[')
+                    ->raw(']) || array_key_exists(')
                     ->string($name)
-                    ->raw('] : ')
-                ;
-
-                if ($this->getAttribute('ignore_strict_check') || !$compiler->getEnvironment()->isStrictVariables()) {
-                    $compiler->raw('null)');
-                } else {
-                    $compiler->raw('$this->getContext($context, ')->string($name)->raw('))');
-                }
-            } else {
-                $compiler
-                    ->raw('$this->getContext($context, ')
+                    ->raw(', $context) ? $context[')
                     ->string($name)
-                ;
-
-                if ($this->getAttribute('ignore_strict_check')) {
-                    $compiler->raw(', true');
-                }
-
-                $compiler
+                    ->raw('] : (function () { throw new Twig_Error_Runtime(\'Variable ')
+                    ->string($name)
+                    ->raw(' does not exist.\', ')
+                    ->repr($this->lineno)
+                    ->raw(', $this->source); })()')
                     ->raw(')')
                 ;
             }
@@ -88,3 +78,5 @@ class Twig_Node_Expression_Name extends Twig_Node_Expression
         return !$this->isSpecial() && !$this->getAttribute('is_defined_test');
     }
 }
+
+class_alias('Twig_Node_Expression_Name', 'Twig\Node\Expression\NameExpression', false);

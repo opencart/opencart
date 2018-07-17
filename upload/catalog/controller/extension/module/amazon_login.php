@@ -1,6 +1,7 @@
 <?php
 
 class ControllerExtensionModuleAmazonLogin extends Controller {
+	private $error = array();
 	public function index() {
 		$this->load->model('extension/payment/amazon_login_pay');
 
@@ -11,13 +12,13 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 			}
 
 			$amazon_payment_js = $this->model_extension_payment_amazon_login_pay->getWidgetJs();
-			
+
 			$this->document->addScript($amazon_payment_js);
 
-			$data['payment_amazon_login_pay_client_id'] = $this->config->get('payment_amazon_login_pay_client_id');
+			$data['payment_amazon_login_pay_client_id'] = trim($this->config->get('payment_amazon_login_pay_client_id'));
+			$data['payment_amazon_login_pay_merchant_id'] = $this->config->get('payment_amazon_login_pay_merchant_id');
+			$data['module_amazon_login_return_url'] = $this->url->link('extension/module/amazon_login/login', '', true);
 
-			$data['return_url'] = $this->url->link('extension/module/amazon_login/login', 'language=' . $this->config->get('config_language'));
-			
 			if ($this->config->get('payment_amazon_login_pay_test') == 'sandbox') {
 				$data['payment_amazon_login_pay_test'] = true;
 			}
@@ -61,7 +62,6 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 
 		if (isset($this->request->get['access_token'])) {
 			$this->session->data['access_token'] = $this->request->get['access_token'];
-
 			$user = $this->model_extension_payment_amazon_login_pay->getUserInfo($this->request->get['access_token']);
 		} else {
 			$user = array();
@@ -70,10 +70,8 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 		if ((array)$user) {
 			if (isset($user->error)) {
 				$this->model_extension_payment_amazon_login_pay->logger($user->error . ': ' . $user->error_description);
-
 				$this->session->data['lpa']['error'] = $this->language->get('error_login');
-
-				$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/loginFailure', 'language=' . $this->config->get('config_language')));
+				$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/loginFailure', '', true));
 			}
 
 			$customer_info = $this->model_account_customer->getCustomerByEmail($user->email);
@@ -87,16 +85,14 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 
 					if ($this->config->get('config_tax_customer') == 'payment') {
 						$payment_address = $this->model_account_address->getAddress($this->customer->getAddressId());
-
-						if ($payment_address){
+						if($payment_address){
 							$this->session->data['payment_address'] = $payment_address;
 						}
 					}
 
 					if ($this->config->get('config_tax_customer') == 'shipping') {
 						$shipping_address = $this->model_account_address->getAddress($this->customer->getAddressId());
-
-						if ($shipping_address){
+						if($shipping_address){
 							$this->session->data['shipping_address'] = $shipping_address;
 						}
 					}
@@ -104,13 +100,10 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 					$this->model_extension_payment_amazon_login_pay->logger('Customer logged in - ID: ' . $customer_info['customer_id'] . ', Email: ' . $customer_info['email']);
 				} else {
 					$this->model_extension_payment_amazon_login_pay->logger('Could not login to - ID: ' . $customer_info['customer_id'] . ', Email: ' . $customer_info['email']);
-
 					$this->session->data['lpa']['error'] = $this->language->get('error_login');
-
-					$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/loginFailure', 'language=' . $this->config->get('config_language')));
+					$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/loginFailure', '', true));
 				}
-
-				$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
+				$this->response->redirect($this->url->link('account/account', '', true));
 			} else {
 				$country_id = 0;
 				$zone_id = 0;
@@ -135,7 +128,7 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 					'zone_id' => (int)$zone_id,
 				);
 
-				$customer_id = $this->model_extension_payment_amazon_login_pay->addCustomer($data);
+				$customer_id = $this->model_account_customer->addCustomer($data);
 
 				$this->model_extension_payment_amazon_login_pay->logger('Customer ID created: ' . $customer_id);
 
@@ -160,17 +153,17 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 
 					$this->model_extension_payment_amazon_login_pay->logger('Customer logged in - ID: ' . $customer_id . ', Email: ' . $user->email);
 
-					$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
+					$this->response->redirect($this->url->link('account/account', '', true));
 				} else {
 					$this->model_extension_payment_amazon_login_pay->logger('Could not login to - ID: ' . $customer_id . ', Email: ' . $user->email);
 
 					$this->session->data['lpa']['error'] = $this->language->get('error_login');
-					$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/loginFailure', 'language=' . $this->config->get('config_language')));
+					$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/loginFailure', '', true));
 				}
 			}
 		} else {
 			$this->session->data['lpa']['error'] = $this->language->get('error_login');
-			$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/loginFailure', 'language=' . $this->config->get('config_language')));
+			$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/loginFailure', '', true));
 		}
 	}
 

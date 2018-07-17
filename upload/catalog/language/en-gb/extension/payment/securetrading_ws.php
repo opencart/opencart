@@ -1,9 +1,9 @@
 <?php
-$_['text_title'] = 'Credit / Debit card';
-$_['text_card_details'] = 'Card details';
-$_['text_wait'] = 'Processing your payment';
-$_['text_auth_code'] = 'Authorisation code: %s';
-$_['text_postcode_check'] = 'Postcode check: %s';
+$_['text_title']               = 'Credit / Debit card';
+$_['text_card_details']        = 'Card details';
+$_['text_wait']                = 'Processing your payment';
+$_['text_auth_code']           = 'Authorisation code: %s';
+$_['text_postcode_check']      = 'Postcode check: %s';
 $_['text_security_code_check'] = 'CVV2 check: %s';
 $_['text_address_check'] = 'Address check: %s';
 $_['text_3d_secure_check'] = '3D Secure: %s';

@@ -28,6 +28,20 @@ class Tools
 {
 
     /**
+     * 判断字符串是否经过编码方法
+     * @param string $str
+     * @return bool
+     */
+    static public function isBase64($str)
+    {
+        if ($str == base64_encode(base64_decode($str))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * 产生随机字符串
      * @param int $length 指定字符长度
      * @param string $str 字符串前缀
@@ -110,12 +124,11 @@ class Tools
             } else {
                 $content .= '<![CDATA[' . preg_replace("/[\\x00-\\x08\\x0b-\\x0c\\x0e-\\x1f]/", '', $val) . ']]>';
             }
-            list($_key,) = explode(' ', $key . ' ');
+            list($_key, ) = explode(' ', $key . ' ');
             $content .= "</$_key>";
         }
         return $content;
     }
-
 
     /**
      * 将xml转为array

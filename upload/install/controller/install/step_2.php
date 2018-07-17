@@ -61,7 +61,6 @@ class ControllerInstallStep2 extends Controller {
 		$data['session_auto_start'] = ini_get('session_auto_start');
 
 		$db = array(
-			'mysql',
 			'mysqli',
 			'pgsql',
 			'pdo'
@@ -115,7 +114,7 @@ class ControllerInstallStep2 extends Controller {
 	}
 
 	private function validate() {
-		if (phpversion() < '5.4') {
+		if (version_compare(phpversion(), '7.0.0', '<')) {
 			$this->error['warning'] = $this->language->get('error_version');
 		}
 

@@ -2,20 +2,18 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a id="button-edit" data-toggle="tooltip" style="display:none;" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a id="button-search" data-toggle="tooltip" title="{{ button_search }}" class="btn btn-info"><i class="fa fa-search"></i></a></div>
-      <h1><i class="fa fa-search"></i> {{ heading_title }}</h1>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          {% for breadcrumb in breadcrumbs %}
-            <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-          {% endfor %}
-        </ol>
-      </nav>
+      <div class="float-right"><a id="button-edit" data-toggle="tooltip" style="display:none;" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a> <a id="button-search" data-toggle="tooltip" title="{{ button_search }}" class="btn btn-info"><i class="fas fa-search"></i></a></div>
+      <h1><i class="fas fa-search"></i> {{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
     </div>
   </div>
   <div class="container-fluid">
     <div class="card">
-      <div class="card-header"><i class="fa fa-list"></i> {{ heading_title }}</div>
+      <div class="card-header"><i class="fas fa-list"></i> {{ heading_title }}</div>
       <div class="card-body">
         <div id="search-input">
           <form id="form">
@@ -24,9 +22,9 @@
               <label class="col-sm-2 col-form-label" for="input-date-start">{{ entry_date_start }}</label>
               <div class="col-sm-10">
                 <div class="input-group date">
-                  <input type="text" name="date_start" value="{{ date_start }}" placeholder="{{ text_format }}: yy-mm-dd" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="input-date-start" class="form-control"/>
+                  <input type="text" name="date_start" value="{{ date_start }}" placeholder="{{ text_format }}: yy-mm-dd" id="input-date-start" class="form-control"/>
                   <div class="input-group-append">
-                    <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                    <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                   </div>
                 </div>
               </div>
@@ -35,9 +33,9 @@
               <label class="col-sm-2 col-form-label" for="input-date-end">{{ entry_date_end }}</label>
               <div class="col-sm-10">
                 <div class="input-group date">
-                  <input type="text" name="date_end" value="{{ date_end }}" placeholder="{{ text_format }}: yy-mm-dd" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" class="form-control"/>
+                  <input type="text" name="date_end" value="{{ date_end }}" placeholder="{{ text_format }}: yy-mm-dd" class="form-control"/>
                   <div class="input-group-append">
-                    <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                    <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                   </div>
                 </div>
               </div>
@@ -157,7 +155,7 @@
           </form>
         </div>
         <div id="search-box" style="display:none;">
-          <div id="searching"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i> {{ text_searching }}</div>
+          <div id="searching"><i class="fas fa-circle-notch fa-spin fa-lg"></i> {{ text_searching }}</div>
           <div style="display:none;" id="error" class="alert alert-danger"></div>
           <table id="search_results" style="display:none;" class="table table-striped table-bordered">
           </table>
@@ -183,7 +181,7 @@
 		  success: function(data) {
 			  if (data.error == true) {
 				  $('#searching').hide();
-				  $('#error').html('<i class="fa fa-exclamation-circle"></i> ' + data.error_msg).fadeIn();
+				  $('#error').html('<i class="fas fa-exclamation-circle"></i> ' + data.error_msg).fadeIn();
 			  } else {
 				  if (data.result != '') {
 					  html += '<thead>';
@@ -232,7 +230,7 @@
 					  $('#search_results').append(html).fadeIn();
 				  } else {
 					  $('#searching').hide();
-					  $('#error').html('<i class="fa fa-exclamation-circle"></i> {{ text_no_results }}').fadeIn();
+					  $('#error').html('<i class="fas fa-exclamation-circle"></i> {{ text_no_results }}').fadeIn();
 				  }
 			  }
 		  }
@@ -249,9 +247,23 @@
 	  $('#error').empty().hide();
   });
 
-  $('.date').datetimepicker();
-  $('.time').datetimepicker();
-  $('.datetime').datetimepicker();
+  $('.date').datetimepicker({
+	  'format': 'YYYY-MM-DD',
+	  'locale': '{{ datepicker }}',
+	  'allowInputToggle': true
+  });
+
+  $('.time').datetimepicker({
+	  'format': 'HH:mm',
+	  'locale': '{{ datepicker }}',
+	  'allowInputToggle': true
+  });
+
+  $('.datetime').datetimepicker({
+	  'format': 'YYYY-MM-DD HH:mm',
+	  'locale': '{{ datepicker }}',
+	  'allowInputToggle': true
+  });
   //--></script>
 </div>
 {{ footer }}

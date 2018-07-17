@@ -42,6 +42,7 @@
 .navbar-brand {
   display: inline-block;
   padding-top: $navbar-brand-padding-y;
+  //padding-top: 0;
   padding-bottom: $navbar-brand-padding-y;
   margin-right: $navbar-padding-x;
   font-size: $navbar-brand-font-size;
@@ -162,11 +163,6 @@
             position: absolute;
           }
 
-          .dropdown-menu-right {
-            right: 0;
-            left: auto; // Reset the default from `.dropdown-menu`
-          }
-
           .nav-link {
             padding-right: $navbar-nav-link-padding-x;
             padding-left: $navbar-nav-link-padding-x;
@@ -188,13 +184,6 @@
 
         .navbar-toggler {
           display: none;
-        }
-
-        .dropup {
-          .dropdown-menu {
-            top: auto;
-            bottom: 100%;
-          }
         }
       }
     }

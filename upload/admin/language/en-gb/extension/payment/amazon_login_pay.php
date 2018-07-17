@@ -3,10 +3,10 @@
 $_['heading_title']                = 'Amazon Pay';
 
 // Text
-$_['text_success']                 = 'Amazon Pay module has been updated';
+$_['text_success']                 = 'Amazon Pay module has been updated.';
 $_['text_ipn_url']				   = 'Cron Job\'s URL';
 $_['text_ipn_token']			   = 'Secret Token';
-$_['text_us']					   = 'American';
+$_['text_us']					   = 'American English';
 $_['text_de']					   = 'German';
 $_['text_uk']                      = 'English';
 $_['text_fr']                      = 'French';
@@ -100,7 +100,7 @@ $_['help_pay_mode']				   = 'Payment is only available for US marketplace';
 $_['help_checkout']				   = 'Should payment button also login customer';
 $_['help_capture_status']		   = 'Choose order staus that will trigger automatic capture of an authorized payment';
 $_['help_ipn_url']				   = 'Set this as you merhcant URL in Amazon Seller Central';
-$_['help_ipn_token']			   = 'Make this long and hard to guess';
+$_['help_ipn_token']			   = 'Make this long and hard to guess. The resulting IPN URL must not be longer than 150 characters.';
 $_['help_minimum_total']		   = 'This must be above zero';
 $_['help_debug']				   = 'Enabling debug will write sensitive data to a log file. You should always disable unless instructed otherwise';
 $_['help_declined_codes']		   = 'This is for testing purposes only';

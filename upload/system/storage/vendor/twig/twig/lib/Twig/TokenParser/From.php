@@ -3,7 +3,7 @@
 /*
  * This file is part of Twig.
  *
- * (c) 2010 Fabien Potencier
+ * (c) Fabien Potencier
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -16,7 +16,7 @@
  *   {% from 'forms.html' import forms %}
  * </pre>
  */
-class Twig_TokenParser_From extends Twig_TokenParser
+final class Twig_TokenParser_From extends Twig_TokenParser
 {
     public function parse(Twig_Token $token)
     {
@@ -26,30 +26,26 @@ class Twig_TokenParser_From extends Twig_TokenParser
 
         $targets = array();
         do {
-            $name = $stream->expect(Twig_Token::NAME_TYPE)->getValue();
+            $name = $stream->expect(/* Twig_Token::NAME_TYPE */ 5)->getValue();
 
             $alias = $name;
             if ($stream->nextIf('as')) {
-                $alias = $stream->expect(Twig_Token::NAME_TYPE)->getValue();
+                $alias = $stream->expect(/* Twig_Token::NAME_TYPE */ 5)->getValue();
             }
 
             $targets[$name] = $alias;
 
-            if (!$stream->nextIf(Twig_Token::PUNCTUATION_TYPE, ',')) {
+            if (!$stream->nextIf(/* Twig_Token::PUNCTUATION_TYPE */ 9, ',')) {
                 break;
             }
         } while (true);
 
-        $stream->expect(Twig_Token::BLOCK_END_TYPE);
+        $stream->expect(/* Twig_Token::BLOCK_END_TYPE */ 3);
 
         $node = new Twig_Node_Import($macro, new Twig_Node_Expression_AssignName($this->parser->getVarName(), $token->getLine()), $token->getLine(), $this->getTag());
 
         foreach ($targets as $name => $alias) {
-            if ($this->parser->isReservedMacroName($name)) {
-                throw new Twig_Error_Syntax(sprintf('"%s" cannot be an imported macro as it is a reserved keyword.', $name), $token->getLine(), $stream->getFilename());
-            }
-
-            $this->parser->addImportedSymbol('function', $alias, 'get'.$name, $node->getNode('var'));
+            $this->parser->addImportedSymbol('function', $alias, 'macro_'.$name, $node->getNode('var'));
         }
 
         return $node;
@@ -60,3 +56,5 @@ class Twig_TokenParser_From extends Twig_TokenParser
         return 'from';
     }
 }
+
+class_alias('Twig_TokenParser_From', 'Twig\TokenParser\FromTokenParser', false);

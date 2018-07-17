@@ -1876,7 +1876,7 @@ $('#button-shipping-address').on('click', function() {
 				}
 			} else {
 				// Shipping Methods
-				var request = $.ajax({
+				$.ajax({
 					url: '{{ catalog }}index.php?route=api/shipping/methods&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 					dataType: 'json',
 					beforeSend: function() {

@@ -3,7 +3,7 @@
 /*
  * This file is part of Twig.
  *
- * (c) 2015 Fabien Potencier
+ * (c) Fabien Potencier
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,9 +14,9 @@
  */
 class Twig_Node_CheckSecurity extends Twig_Node
 {
-    protected $usedFilters;
-    protected $usedTags;
-    protected $usedFunctions;
+    private $usedFilters;
+    private $usedTags;
+    private $usedFunctions;
 
     public function __construct(array $usedFilters, array $usedTags, array $usedFunctions)
     {
@@ -33,7 +33,7 @@ class Twig_Node_CheckSecurity extends Twig_Node
         foreach (array('tags', 'filters', 'functions') as $type) {
             foreach ($this->{'used'.ucfirst($type)} as $name => $node) {
                 if ($node instanceof Twig_Node) {
-                    ${$type}[$name] = $node->getLine();
+                    ${$type}[$name] = $node->getTemplateLine();
                 } else {
                     ${$type}[$node] = null;
                 }
@@ -46,7 +46,7 @@ class Twig_Node_CheckSecurity extends Twig_Node
             ->write('$functions = ')->repr(array_filter($functions))->raw(";\n\n")
             ->write("try {\n")
             ->indent()
-            ->write("\$this->env->getExtension('sandbox')->checkSecurity(\n")
+            ->write("\$this->extensions['Twig_Extension_Sandbox']->checkSecurity(\n")
             ->indent()
             ->write(!$tags ? "array(),\n" : "array('".implode("', '", array_keys($tags))."'),\n")
             ->write(!$filters ? "array(),\n" : "array('".implode("', '", array_keys($filters))."'),\n")
@@ -56,7 +56,7 @@ class Twig_Node_CheckSecurity extends Twig_Node
             ->outdent()
             ->write("} catch (Twig_Sandbox_SecurityError \$e) {\n")
             ->indent()
-            ->write("\$e->setTemplateFile(\$this->getTemplateName());\n\n")
+            ->write("\$e->setSourceContext(\$this->source);\n\n")
             ->write("if (\$e instanceof Twig_Sandbox_SecurityNotAllowedTagError && isset(\$tags[\$e->getTagName()])) {\n")
             ->indent()
             ->write("\$e->setTemplateLine(\$tags[\$e->getTagName()]);\n")
@@ -76,3 +76,5 @@ class Twig_Node_CheckSecurity extends Twig_Node
         ;
     }
 }
+
+class_alias('Twig_Node_CheckSecurity', 'Twig\Node\CheckSecurityNode', false);

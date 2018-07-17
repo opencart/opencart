@@ -14,7 +14,7 @@
       {% set class = 'col-sm-12' %}
     {% endif %}
     <div id="content" class="{{ class }}">{{ content_top }}
-      <h2>{{ text_address }}</h2>
+      <h1>{{ text_address }}</h1>
       <form action="{{ action }}" method="post" enctype="multipart/form-data">
         <fieldset>
           <div class="form-group row required">
@@ -251,8 +251,8 @@
           {% endfor %}
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">{{ entry_default }}</label>
-            <div class="col-sm-10"> {% if default %}
-
+            <div class="col-sm-10">
+              {% if default %}
                 <div class="form-check form-check-inline">
                   <label><input type="radio" name="default" value="1" class="form-check-input" checked="checked"/>
                     {{ text_yes }}</label>

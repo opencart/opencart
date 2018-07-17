@@ -8,7 +8,7 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 				`is_high_risk_country` CHAR(2) NOT NULL,
 				`distance_in_km` VARCHAR(10) NOT NULL,
 				`distance_in_mile` VARCHAR(10) NOT NULL,
-				`ip_address` VARCHAR(15) NOT NULL,
+				`ip_address` VARCHAR(39) NOT NULL,
 				`ip_country` VARCHAR(2) NOT NULL,
 				`ip_continent` VARCHAR(20) NOT NULL,
 				`ip_region` VARCHAR(21) NOT NULL,
@@ -53,6 +53,8 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 				PRIMARY KEY (`order_id`)
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 		");
+
+		$this->db->query("ALTER TABLE `" . DB_PREFIX . "fraudlabspro` CHANGE COLUMN `ip_address` `ip_address` VARCHAR(39) NOT NULL;");
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_status` (`language_id`, `name`) VALUES (1, 'Fraud');");
 		$status_fraud_id = $this->db->getLastId();

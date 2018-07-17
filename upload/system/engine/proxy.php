@@ -31,18 +31,8 @@ class Proxy {
 	}
 	
 	public function __call($key, $args) {
-		$arg_data = array();
-
-		foreach ($args as $arg) {
-			if ($arg instanceof Reference) {
-				$arg_data[] = &$arg->getValue();
-			} else {
-				$arg_data[] = $arg;
-			}
-		}
-
-		if (isset($this->{$key})) {		
-			return call_user_func_array($this->{$key}, array($args));
+		if (isset($this->{$key})) {
+			return call_user_func_array($this->{$key}, $args);
 		} else {
 			$trace = debug_backtrace();
 

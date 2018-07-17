@@ -3,14 +3,14 @@
 /*
  * This file is part of Twig.
  *
- * (c) 2009 Fabien Potencier
+ * (c) Fabien Potencier
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 class Twig_Node_Expression_Array extends Twig_Node_Expression
 {
-    protected $index;
+    private $index;
 
     public function __construct(array $elements, $lineno)
     {
@@ -43,7 +43,7 @@ class Twig_Node_Expression_Array extends Twig_Node_Expression
         foreach ($this->getKeyValuePairs() as $pair) {
             // we compare the string representation of the keys
             // to avoid comparing the line numbers which are not relevant here.
-            if ((string) $key == (string) $pair['key']) {
+            if ((string) $key === (string) $pair['key']) {
                 return true;
             }
         }
@@ -54,7 +54,7 @@ class Twig_Node_Expression_Array extends Twig_Node_Expression
     public function addElement(Twig_Node_Expression $value, Twig_Node_Expression $key = null)
     {
         if (null === $key) {
-            $key = new Twig_Node_Expression_Constant(++$this->index, $value->getLine());
+            $key = new Twig_Node_Expression_Constant(++$this->index, $value->getTemplateLine());
         }
 
         array_push($this->nodes, $key, $value);
@@ -79,3 +79,5 @@ class Twig_Node_Expression_Array extends Twig_Node_Expression
         $compiler->raw(')');
     }
 }
+
+class_alias('Twig_Node_Expression_Array', 'Twig\Node\Expression\ArrayExpression', false);

@@ -9,6 +9,9 @@ class ControllerStartupSass extends Controller {
 
 			$output = $scss->compile('@import "bootstrap.scss"');
 
+			// Drop the closing bracket to newline
+			//$output = str_replace('; }', ';' . "\n" . '}' . "\n", $output);
+
 			$handle = fopen($file, 'w');
 
 			flock($handle, LOCK_EX);
@@ -31,6 +34,17 @@ class ControllerStartupSass extends Controller {
 			$scss->setImportPaths(DIR_APPLICATION . 'view/theme/' . $this->config->get('config_theme') . '/stylesheet/');
 
 			$output = $scss->compile('@import "_stylesheet.scss"');
+
+
+			//.split('\t').join('    ')
+
+			$output = preg_replace('/\s*{\s*/', ' {' . "\n" . '    ', $output);
+			$output = preg_replace('/;\s*/', ';' . "\n" . '    ', $output);
+			$output = preg_replace('/,\s*/', ', ', $output);
+			$output = preg_replace('/[ ]*}\s*/', '}' . "\n", $output);
+			$output = preg_replace('/\}\s*(.+)/', '}' . "\n" . '$1', $output);
+			$output = preg_replace('/\n    ([^:]+):\s*/', "\n" . '    $1: ', $output);
+			$output = preg_replace('/([A-z0-9\)])}/', '$1;' . "\n" . '}', $output);
 
 			$handle = fopen($file, 'w');
 

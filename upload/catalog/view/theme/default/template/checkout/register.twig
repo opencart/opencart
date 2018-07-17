@@ -114,9 +114,7 @@
               </div>
             </div>
           {% endif %}
-
         {% endif %}
-
       {% endfor %}
     </fieldset>
     <fieldset>
@@ -266,8 +264,7 @@
 {% endif %}
 {% if text_agree %}
   <div class="buttons clearfix">
-    <div class="float-right">{{ text_agree }} &nbsp;<input type="checkbox" name="agree" value="1"/>&nbsp;<input type="button" value="{{ button_continue }}" id="button-register" data-loading-text="{{ text_loading }}" class="btn btn-primary"/>
-    </div>
+    <div class="float-right">{{ text_agree }} &nbsp;<input type="checkbox" name="agree" value="1"/>&nbsp;<input type="button" value="{{ button_continue }}" id="button-register" data-loading-text="{{ text_loading }}" class="btn btn-primary"/></div>
   </div>
 {% else %}
   <div class="buttons clearfix">
@@ -277,6 +274,176 @@
   </div>
 {% endif %}
 <script type="text/javascript"><!--
+$('#collapse-payment-address input[name=\'customer_group_id\']').on('change', function() {
+	$.ajax({
+		url: 'index.php?route=checkout/checkout/customfield&customer_group_id=' + this.value,
+		dataType: 'json',
+		success: function(json) {
+			$('#collapse-payment-address .custom-field').hide();
+			$('#collapse-payment-address .custom-field').removeClass('required');
+
+			for (i = 0; i < json.length; i++) {
+				custom_field = json[i];
+
+				$('#payment-custom-field' + custom_field['custom_field_id']).show();
+
+				if (custom_field['required']) {
+					$('#payment-custom-field' + custom_field['custom_field_id']).addClass('required');
+				}
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$('#collapse-payment-address input[name=\'customer_group_id\']:checked').trigger('change');
+
+// Register
+$('#button-register').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=checkout/register/save',
+		type: 'post',
+		data: $('#collapse-payment-address input[type=\'text\'], #collapse-payment-address input[type=\'date\'], #collapse-payment-address input[type=\'datetime-local\'], #collapse-payment-address input[type=\'time\'], #collapse-payment-address input[type=\'password\'], #collapse-payment-address input[type=\'hidden\'], #collapse-payment-address input[type=\'checkbox\']:checked, #collapse-payment-address input[type=\'radio\']:checked, #collapse-payment-address textarea, #collapse-payment-address select'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-register').button('loading');
+		},
+		success: function(json) {
+			$('.alert-dismissible, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
+
+			if (json['redirect']) {
+				location = json['redirect'];
+			} else if (json['error']) {
+				$('#button-register').button('reset');
+
+				if (json['error']['warning']) {
+					$('#collapse-payment-address .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+
+				for (i in json['error']) {
+					var element = $('#input-payment-' + i.replace('_', '-'));
+
+					if ($(element).parent().hasClass('input-group')) {
+						$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+					} else {
+						$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+					}
+				}
+
+				// Highlight any found errors
+				$('.text-danger').parent().addClass('has-error');
+			} else {
+              {% if shipping_required %}
+				var shipping_address = $('#payment-address input[name=\'shipping_address\']:checked').prop('value');
+
+				if (shipping_address) {
+					var deferred1 = function() {
+						$.ajax({
+							url: 'index.php?route=checkout/shipping_method',
+							dataType: 'html',
+							success: function(html) {
+								$('#collapse-shipping-method .card-body').html(html);
+
+								// Add the shipping address
+								$.ajax({
+									url: 'index.php?route=checkout/shipping_address',
+									dataType: 'html',
+									success: function(html) {
+										$('#collapse-shipping-address .card-body').html(html);
+									},
+									error: function(xhr, ajaxOptions, thrownError) {
+										alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+									}
+								}).done(function() {
+									$('#collapse-payment-address select[name=\'country_id\']').trigger('change');
+								});
+
+								$('#heading-shipping-method').attr('data-toggle', 'collapse');
+
+								$('#heading-shipping-method').trigger('click');
+
+								$('#heading-shipping-method').removeAttr('data-toggle');
+								$('#heading-payment-method').removeAttr('data-toggle');
+								$('#heading-checkout-confirm').removeAttr('data-toggle');
+							},
+							error: function(xhr, ajaxOptions, thrownError) {
+								alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+							}
+						});
+					}
+				} else {
+					var deferred1 = function() {
+						$.ajax({
+							url: 'index.php?route=checkout/shipping_address',
+							dataType: 'html',
+							success: function(html) {
+								$('#collapse-shipping-address .card-body').html(html);
+
+								$('#heading-shipping-address').attr('data-toggle', 'collapse');
+
+								$('#heading-shipping-address').trigger('click');
+
+								$('#heading-shipping-method').removeAttr('data-toggle');
+								$('#heading-payment-method').removeAttr('data-toggle');
+								$('#heading-checkout-confirm').removeAttr('data-toggle');
+							},
+							error: function(xhr, ajaxOptions, thrownError) {
+								alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+							}
+						});
+					}
+				}
+              {% else %}
+				var deferred1 = function() {
+					$.ajax({
+						url: 'index.php?route=checkout/payment_method',
+						dataType: 'html',
+						success: function(html) {
+							$('#collapse-payment-method .card-body').html(html);
+
+							$('#heading-payment-address').attr('data-toggle', 'collapse');
+
+							$('#heading-payment-address').trigger('click');
+
+							$('#heading-checkout-confirm').removeAttr('data-toggle');
+						},
+						error: function(xhr, ajaxOptions, thrownError) {
+							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+						}
+					});
+				}
+              {% endif %}
+
+				var deferred2 = function() {
+					$.ajax({
+						url: 'index.php?route=checkout/payment_address',
+						dataType: 'html',
+						complete: function() {
+							$('#button-register').button('reset');
+						},
+						success: function(html) {
+							$('#collapse-payment-address .card-body').html(html);
+
+							$('#heading-payment-address').attr('data-toggle', 'collapse');
+
+							$('#heading-payment-address').trigger('click');
+						},
+						error: function(xhr, ajaxOptions, thrownError) {
+							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+						}
+					});
+				}
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
 // Sort the custom fields
 $('#account .form-group[data-sort]').detach().each(function() {
 	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#account .form-group').length) {
@@ -313,32 +480,6 @@ $('#address .form-group[data-sort]').detach().each(function() {
 		$('#address .form-group:first').before(this);
 	}
 });
-
-$('#collapse-payment-address input[name=\'customer_group_id\']').on('change', function() {
-	$.ajax({
-		url: 'index.php?route=checkout/checkout/customfield&customer_group_id=' + this.value,
-		dataType: 'json',
-		success: function(json) {
-			$('#collapse-payment-address .custom-field').hide();
-			$('#collapse-payment-address .custom-field').removeClass('required');
-
-			for (i = 0; i < json.length; i++) {
-				custom_field = json[i];
-
-				$('#payment-custom-field' + custom_field['custom_field_id']).show();
-
-				if (custom_field['required']) {
-					$('#payment-custom-field' + custom_field['custom_field_id']).addClass('required');
-				}
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
-
-$('#collapse-payment-address input[name=\'customer_group_id\']:checked').trigger('change');
 //--></script>
 <script type="text/javascript"><!--
 $('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('click', function() {
@@ -451,6 +592,4 @@ $('#collapse-payment-address select[name=\'country_id\']').on('change', function
 		}
 	});
 });
-
-$('#collapse-payment-address select[name=\'country_id\']').trigger('change');
 //--></script>

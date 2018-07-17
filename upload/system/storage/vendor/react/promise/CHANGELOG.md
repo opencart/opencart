@@ -1,6 +1,38 @@
 CHANGELOG for 2.x
 =================
 
+* 2.7.0 (2018-06-13)
+
+    *   Feature: Improve memory consumption for pending promises by using static internal callbacks without binding to self.
+        (#124 by @clue)
+
+* 2.6.0 (2018-06-11)
+
+    *   Feature: Significantly improve memory consumption and performance by only passing resolver args
+        to resolver and canceller if callback requires them. Also use static callbacks without
+        binding to promise, clean up canceller function reference when they are no longer
+        needed and hide resolver and canceller references from call stack on PHP 7+.
+        (#113, #115, #116, #117, #118, #119 and #123 by @clue)
+
+        These changes combined mean that rejecting promises with an `Exception` should
+        no longer cause any internal circular references which could cause some unexpected
+        memory growth in previous versions. By explicitly avoiding and explicitly
+        cleaning up said references, we can avoid relying on PHP's circular garbage collector
+        to kick in which significantly improves performance when rejecting many promises.
+
+    *   Mark legacy progress support / notification API as deprecated
+        (#112 by @clue)
+
+    *   Recommend rejecting promises by throwing an exception
+        (#114 by @jsor)
+
+    *   Improve documentation to properly instantiate LazyPromise
+        (#121 by @holtkamp)
+
+    *   Follower cancellation propagation was originally planned for this release
+        but has been reverted for now and is planned for a future release.
+        (#99 by @jsor and #122 by @clue)
+
 * 2.5.1 (2017-03-25)
 
     * Fix circular references when resolving with a promise which follows

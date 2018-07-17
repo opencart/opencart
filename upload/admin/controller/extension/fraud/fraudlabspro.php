@@ -9,7 +9,13 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 
 		$this->load->model('setting/setting');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && (isset($this->request->post['purge']))) {
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "fraudlabspro`");
+
+			$this->session->data['success'] = $this->language->get('text_success_delete');
+
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=fraud'));
+		} elseif (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('fraud_fraudlabspro', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -319,7 +325,7 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 
 	private function fix_case($s) {
 		$s = ucwords(strtolower($s));
-		$s = preg_replace_callback("/( [ a-zA-Z]{1}')([a-zA-Z0-9]{1})/s", create_function('$matches', 'return $matches[1].strtoupper($matches[2]);'), $s);
+		$s = preg_replace_callback("/( [ a-zA-Z]{1}')([a-zA-Z0-9]{1})/s", function($matches){ return $matches[1].strtoupper($matches[2]); }, $s);
 		return $s;
 	}
 }

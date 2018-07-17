@@ -3,8 +3,8 @@
 /*
  * This file is part of Twig.
  *
- * (c) 2009 Fabien Potencier
- * (c) 2009 Armin Ronacher
+ * (c) Fabien Potencier
+ * (c) Armin Ronacher
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -25,20 +25,6 @@ class Twig_Error_Syntax extends Twig_Error
      */
     public function addSuggestions($name, array $items)
     {
-        if (!$alternatives = self::computeAlternatives($name, $items)) {
-            return;
-        }
-
-        $this->appendMessage(sprintf(' Did you mean "%s"?', implode('", "', $alternatives)));
-    }
-
-    /**
-     * @internal
-     *
-     * To be merged with the addSuggestions() method in 2.0.
-     */
-    public static function computeAlternatives($name, $items)
-    {
         $alternatives = array();
         foreach ($items as $item) {
             $lev = levenshtein($name, $item);
@@ -46,8 +32,15 @@ class Twig_Error_Syntax extends Twig_Error
                 $alternatives[$item] = $lev;
             }
         }
+
+        if (!$alternatives) {
+            return;
+        }
+
         asort($alternatives);
 
-        return array_keys($alternatives);
+        $this->appendMessage(sprintf(' Did you mean "%s"?', implode('", "', array_keys($alternatives))));
     }
 }
+
+class_alias('Twig_Error_Syntax', 'Twig\Error\SyntaxError', false);

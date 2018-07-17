@@ -1,13 +1,6 @@
 ``escape``
 ==========
 
-.. versionadded:: 1.9.0
-    The ``css``, ``url``, and ``html_attr`` strategies were added in Twig
-    1.9.0.
-
-.. versionadded:: 1.14.0
-    The ability to define custom escapers was added in Twig 1.14.0.
-
 The ``escape`` filter escapes a string for safe insertion into the final
 output. It supports different escaping strategies depending on the template
 context.
@@ -97,7 +90,7 @@ used in the ``escape`` call) and the second one must be a valid PHP callable:
 .. code-block:: php
 
     $twig = new Twig_Environment($loader);
-    $twig->getExtension('core')->setEscaper('csv', 'csv_escaper');
+    $twig->getExtension('Twig_Extension_Core')->setEscaper('csv', 'csv_escaper');
 
 When called by Twig, the callable receives the Twig environment instance, the
 string to escape, and the charset.

@@ -3,7 +3,7 @@
 /*
  * This file is part of Twig.
  *
- * (c) 2011 Fabien Potencier
+ * (c) Fabien Potencier
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -23,25 +23,29 @@
  */
 class Twig_Node_Expression_Test_Defined extends Twig_Node_Expression_Test
 {
-    public function __construct(Twig_NodeInterface $node, $name, Twig_NodeInterface $arguments = null, $lineno)
+    public function __construct(Twig_Node $node, $name, Twig_Node $arguments = null, $lineno)
     {
         if ($node instanceof Twig_Node_Expression_Name) {
             $node->setAttribute('is_defined_test', true);
         } elseif ($node instanceof Twig_Node_Expression_GetAttr) {
             $node->setAttribute('is_defined_test', true);
-
             $this->changeIgnoreStrictCheck($node);
+        } elseif ($node instanceof Twig_Node_Expression_BlockReference) {
+            $node->setAttribute('is_defined_test', true);
+        } elseif ($node instanceof Twig_Node_Expression_Function && 'constant' === $node->getAttribute('name')) {
+            $node->setAttribute('is_defined_test', true);
         } elseif ($node instanceof Twig_Node_Expression_Constant || $node instanceof Twig_Node_Expression_Array) {
-            $node = new Twig_Node_Expression_Constant(true, $node->getLine());
+            $node = new Twig_Node_Expression_Constant(true, $node->getTemplateLine());
         } else {
-            throw new Twig_Error_Syntax('The "defined" test only works with simple variables.', $this->getLine());
+            throw new Twig_Error_Syntax('The "defined" test only works with simple variables.', $this->getTemplateLine());
         }
 
         parent::__construct($node, $name, $arguments, $lineno);
     }
 
-    protected function changeIgnoreStrictCheck(Twig_Node_Expression_GetAttr $node)
+    private function changeIgnoreStrictCheck(Twig_Node_Expression_GetAttr $node)
     {
+        $node->setAttribute('optimizable', false);
         $node->setAttribute('ignore_strict_check', true);
 
         if ($node->getNode('node') instanceof Twig_Node_Expression_GetAttr) {
@@ -54,3 +58,5 @@ class Twig_Node_Expression_Test_Defined extends Twig_Node_Expression_Test
         $compiler->subcompile($this->getNode('node'));
     }
 }
+
+class_alias('Twig_Node_Expression_Test_Defined', 'Twig\Node\Expression\Test\DefinedTest', false);

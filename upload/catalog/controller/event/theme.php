@@ -1,6 +1,6 @@
 <?php
 class ControllerEventTheme extends Controller {
-	public $lambda = array();
+	public $lambda;
 
 	public function index(&$route, &$args, &$template) {
 		if (!$this->config->get('theme_' . $this->config->get('config_theme') . '_status')) {
@@ -39,6 +39,8 @@ class ControllerEventTheme extends Controller {
 	// Ridiculous we have to use these work around's because magic methods can not pass by reference!
 	public function callback(&$code) {
 		// Genius
-		($this->lambda)($code);
+		$lambda = $this->lambda;
+
+		$lambda($code);
 	}
 }

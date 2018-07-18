@@ -35,23 +35,13 @@
             <div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
               <label class="col-form-label" for="input-payment-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label> <select name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control">
                 <option value="">{{ text_select }}</option>
-
-
                 {% for custom_field_value in custom_field.custom_field_value %}
                   {% if guest_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == guest_custom_field[custom_field.custom_field_id] %}
                     <option value="{{ custom_field_value.custom_field_value_id }}" selected="selected">{{ custom_field_value.name }}</option>
-
-
                   {% else %}
-
-
                     <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
-
-
                   {% endif %}
                 {% endfor %}
-
-
               </select>
             </div>
           {% endif %}
@@ -165,25 +155,13 @@
       <div class="form-group required">
         <label class="col-form-label" for="input-payment-country">{{ entry_country }}</label> <select name="country_id" id="input-payment-country" class="form-control">
           <option value="">{{ text_select }}</option>
-
-
           {% for country in countries %}
             {% if country.country_id == country_id %}
-
-
               <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
-
-
             {% else %}
-
-
               <option value="{{ country.country_id }}">{{ country.name }}</option>
-
-
             {% endif %}
           {% endfor %}
-
-
         </select>
       </div>
       <div class="form-group required">
@@ -195,23 +173,13 @@
             <div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
               <label class="col-form-label" for="input-payment-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label> <select name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control">
                 <option value="">{{ text_select }}</option>
-
-
                 {% for custom_field_value in custom_field.custom_field_value %}
                   {% if guest_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == guest_custom_field[custom_field.custom_field_id] %}
                     <option value="{{ custom_field_value.custom_field_value_id }}" selected="selected">{{ custom_field_value.name }}</option>
-
-
                   {% else %}
-
-
                     <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
-
-
                   {% endif %}
                 {% endfor %}
-
-
               </select>
             </div>
           {% endif %}
@@ -304,7 +272,7 @@
         {% endif %}
       {% endfor %}
     </fieldset>
-    {{ captcha }} </div>
+    {{ captcha }}</div>
 </div>
 {% if shipping_required %}
   <div class="form-check">
@@ -324,6 +292,132 @@
   </div>
 </div>
 <script type="text/javascript"><!--
+// Guest
+$('#button-guest').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=checkout/guest/save',
+		type: 'post',
+		data: $('#collapse-payment-address input[type=\'text\'], #collapse-payment-address input[type=\'date\'], #collapse-payment-address input[type=\'datetime-local\'], #collapse-payment-address input[type=\'time\'], #collapse-payment-address input[type=\'checkbox\']:checked, #collapse-payment-address input[type=\'radio\']:checked, #collapse-payment-address input[type=\'hidden\'], #collapse-payment-address textarea, #collapse-payment-address select'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-guest').button('loading');
+		},
+		success: function(json) {
+			$('.alert-dismissible, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
+
+			if (json['redirect']) {
+				location = json['redirect'];
+			} else if (json['error']) {
+				$('#button-guest').button('reset');
+
+				if (json['error']['warning']) {
+					$('#collapse-payment-address .card-body').prepend('<div class="alert alert-warning alert-dismissible">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+
+				for (i in json['error']) {
+					var element = $('#input-payment-' + i.replace('_', '-'));
+
+					if ($(element).parent().hasClass('input-group')) {
+						$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+					} else {
+						$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+					}
+				}
+
+				// Highlight any found errors
+				$('.text-danger').parent().addClass('has-error');
+			} else {
+              {% if shipping_required %}
+				var shipping_address = $('#collapse-payment-address input[name=\'shipping_address\']:checked').prop('value');
+
+				if (shipping_address) {
+					$.ajax({
+						url: 'index.php?route=checkout/shipping_method',
+						dataType: 'html',
+						complete: function() {
+							$('#button-guest').button('reset');
+						},
+						success: function(html) {
+							$('#collapse-shipping-method .card-body').html(html);
+
+							// Add the shipping address
+							$.ajax({
+								url: 'index.php?route=checkout/guest_shipping',
+								dataType: 'html',
+								success: function(html) {
+									$('#collapse-shipping-address .card-body').html(html);
+
+									$('#heading-shipping-address').attr('data-toggle', 'collapse');
+								},
+								error: function(xhr, ajaxOptions, thrownError) {
+									alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+								}
+							});
+
+							$('#heading-shipping-method').attr('data-toggle', 'collapse');
+
+							$('#heading-shipping-method').trigger('click');
+
+							$('#heading-payment-method').removeAttr('data-toggle');
+							$('#heading-checkout-confirm').removeAttr('data-toggle');
+						},
+						error: function(xhr, ajaxOptions, thrownError) {
+							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+						}
+					});
+				} else {
+					$.ajax({
+						url: 'index.php?route=checkout/guest_shipping',
+						dataType: 'html',
+						complete: function() {
+							$('#button-guest').button('reset');
+						},
+						success: function(html) {
+							$('#collapse-shipping-address .card-body').html(html);
+
+							$('#heading-shipping-address').attr('data-toggle', 'collapse');
+
+							$('#heading-shipping-address').trigger('click');
+
+							$('#heading-shipping-method').removeAttr('data-toggle');
+							$('#heading-payment-method').removeAttr('data-toggle');
+							$('#heading-checkout-confirm').removeAttr('data-toggle');
+						},
+						error: function(xhr, ajaxOptions, thrownError) {
+							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+						}
+					});
+				}
+              {% else %}
+				$.ajax({
+					url: 'index.php?route=checkout/payment_method',
+					dataType: 'html',
+					complete: function() {
+						$('#button-guest').button('reset');
+					},
+					success: function(html) {
+						$('#collapse-payment-method .card-body').html(html);
+
+						$('#heading-payment-method').attr('data-toggle', 'collapse');
+
+						$('#heading-payment-method').trigger('click');
+
+						$('#heading-checkout-confirm').removeAttr('data-toggle');
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+					}
+				});
+              {% endif %}
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
 // Sort the custom fields
 $('#account .form-group[data-sort]').detach().each(function() {
 	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#account .form-group').length) {

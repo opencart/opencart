@@ -85,7 +85,7 @@
     </div>
     {% for custom_field in custom_fields %}
       {% if custom_field.type == 'select' %}
-        <div class="form-group{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <select name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control">
@@ -98,7 +98,7 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'radio' %}
-        <div class="form-group{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <div id="input-shipping-custom-field{{ custom_field.custom_field_id }}">
@@ -112,7 +112,7 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'checkbox' %}
-        <div class="form-group{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <div id="input-shipping-custom-field{{ custom_field.custom_field_id }}">
@@ -126,7 +126,7 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'text' %}
-        <div class="form-group{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
@@ -134,7 +134,7 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'textarea' %}
-        <div class="form-group{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <textarea name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control">{{ custom_field.value }}</textarea>
@@ -142,7 +142,7 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'file' %}
-        <div class="form-group{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <button type="button" id="button-shipping-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fa fa-upload"></i> {{ button_upload }}</button>
@@ -151,7 +151,7 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'date' %}
-        <div class="form-group{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <div class="input-group date">
@@ -164,7 +164,7 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'time' %}
-        <div class="form-group{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <div class="input-group time">
@@ -177,7 +177,7 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'time' %}
-        <div class="form-group{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <div class="input-group datetime">
@@ -206,6 +206,96 @@ $('input[name=\'shipping_address\']').on('change', function() {
 		$('#shipping-existing').show();
 		$('#shipping-new').hide();
 	}
+});
+
+// Shipping Address
+$('#button-shipping-address').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=checkout/shipping_address/save',
+		type: 'post',
+		data: $('#collapse-shipping-address input[type=\'text\'], #collapse-shipping-address input[type=\'date\'], #collapse-shipping-address input[type=\'datetime-local\'], #collapse-shipping-address input[type=\'time\'], #collapse-shipping-address input[type=\'password\'], #collapse-shipping-address input[type=\'checkbox\']:checked, #collapse-shipping-address input[type=\'radio\']:checked, #collapse-shipping-address textarea, #collapse-shipping-address select'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-shipping-address').button('loading');
+		},
+		success: function(json) {
+			$('.alert-dismissible, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
+
+			if (json['redirect']) {
+				location = json['redirect'];
+			} else if (json['error']) {
+				$('#button-shipping-address').button('reset');
+
+				if (json['error']['warning']) {
+					$('#collapse-shipping-address .card-body').prepend('<div class="alert alert-warning alert-dismissible">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+
+				for (i in json['error']) {
+					var element = $('#input-shipping-' + i.replace('_', '-'));
+
+					if ($(element).parent().hasClass('input-group')) {
+						$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+					} else {
+						$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+					}
+				}
+
+				// Highlight any found errors
+				$('.text-danger').parent().parent().addClass('has-error');
+			} else {
+				$.ajax({
+					url: 'index.php?route=checkout/shipping_method',
+					dataType: 'html',
+					complete: function() {
+						$('#button-shipping-address').button('reset');
+					},
+					success: function(html) {
+						$('#collapse-shipping-method .card-body').html(html);
+
+						$('#heading-shipping-method').attr('data-toggle', 'collapse');
+
+						$('#heading-shipping-method').trigger('click');
+
+						$('#heading-payment-method').removeAttr('data-toggle');
+						$('#heading-checkout-confirm').removeAttr('data-toggle');
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+					}
+				}).done(function() {
+					$.ajax({
+						url: 'index.php?route=checkout/payment_address',
+						dataType: 'html',
+						success: function(html) {
+							$('#collapse-payment-address .card-body').html(html);
+
+							//console.log('payment_address');
+						},
+						error: function(xhr, ajaxOptions, thrownError) {
+							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+						}
+					});
+				}).done(function() {
+					$.ajax({
+						url: 'index.php?route=checkout/shipping_address',
+						dataType: 'html',
+						success: function(html) {
+							$('#collapse-shipping-address .card-body').html(html);
+
+							//console.log('shipping_address');
+						},
+						error: function(xhr, ajaxOptions, thrownError) {
+							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+						}
+					});
+				});
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
 });
 //--></script>
 <script type="text/javascript"><!--

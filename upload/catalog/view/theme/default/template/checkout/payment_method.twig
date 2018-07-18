@@ -20,6 +20,7 @@
     </div>
   {% endfor %}
 {% endif %}
+<br/>
 <p><strong>{{ text_comments }}</strong></p>
 <p>
   <textarea name="comment" rows="8" class="form-control">{{ comment }}</textarea>
@@ -43,3 +44,54 @@
     </div>
   </div>
 {% endif %}
+<script type="text/javascript"><!--
+// Payment Method
+$('#button-payment-method').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=checkout/payment_method/save',
+		type: 'post',
+		data: $('#collapse-payment-method input[type=\'radio\']:checked, #collapse-payment-method input[type=\'checkbox\']:checked, #collapse-payment-method textarea'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-payment-method').button('loading');
+		},
+		success: function(json) {
+			$('.alert-dismissible, .text-danger').remove();
+
+			if (json['redirect']) {
+				location = json['redirect'];
+			} else if (json['error']) {
+				$('#button-payment-method').button('reset');
+
+				if (json['error']['warning']) {
+					$('#collapse-payment-method .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+			} else {
+				$.ajax({
+					url: 'index.php?route=checkout/confirm',
+					dataType: 'html',
+					complete: function() {
+						$('#button-payment-method').button('reset');
+					},
+					success: function(html) {
+						console.log(html);
+
+						$('#collapse-checkout-confirm .card-body').html(html);
+
+						$('#heading-checkout-confirm').attr('data-toggle', 'collapse');
+
+						$('#heading-checkout-confirm').trigger('click');
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+					}
+				});
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+//--></script>
+

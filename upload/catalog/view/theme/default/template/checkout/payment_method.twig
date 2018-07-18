@@ -34,13 +34,13 @@
         <input type="checkbox" name="agree" value="1"/>
       {% endif %}
       &nbsp;
-      <input type="button" value="{{ button_continue }}" id="button-payment-method" data-loading-text="{{ text_loading }}" class="btn btn-primary"/>
+      <button type="button" id="button-payment-method" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
     </div>
   </div>
 {% else %}
   <div class="buttons">
     <div class="float-right">
-      <input type="button" value="{{ button_continue }}" id="button-payment-method" data-loading-text="{{ text_loading }}" class="btn btn-primary"/>
+      <button type="button" id="button-payment-method" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
     </div>
   </div>
 {% endif %}

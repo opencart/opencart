@@ -68,10 +68,10 @@ $(document).ready(function() {
 	});
 
 	// Currency
-	$('#form-currency .currency-select').on('click', function(e) {
+	$('#form-currency .dropdown-item').on('click', function(e) {
 		e.preventDefault();
 
-		$('#form-currency input[name=\'code\']').val($(this).attr('name'));
+		$('#form-currency input[name=\'code\']').val($(this).attr('href'));
 
 		$('#form-currency').submit();
 	});

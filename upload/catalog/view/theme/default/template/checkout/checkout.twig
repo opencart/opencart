@@ -74,21 +74,162 @@
   </div>
 </div>
 <script type="text/javascript"><!--
+
+/*
+$.chain = function() {
+	var def = $.Deferred();
+	var funcs = arguments;
+	var left = arguments.length;
+
+	function next() {
+		if(left == 0) {
+			def.resolve();
+			return;
+		}
+
+		var func = funcs[funcs.length - left]; // current func
+		var prom = func(ret).promise(); // for promise will return itself,
+		// for jquery ojbect will return promise.
+		// these handlers will be launched in order we specify them
+		prom.always(function() {
+			left--;
+		}).done(function(ret) {
+			def.notify({
+				idx: funcs.length-left,
+				left: left,
+				result: ret,
+				success: true,
+			});
+		}).fail(function(ret) {
+			def.notify({
+				idx: funcs.length-left,
+				left: left,
+				result: ret,
+				success: false,
+			});
+		}).always(function(ret) {
+			next(ret);
+		});
+	}
+
+	next();
+
+	return def.promise();
+};
+function call_next_func() {
+	if (funcs.length == 0) {
+		console.log('done');
+	} else {
+		var funcname = funcs.shift();
+		console.log(funcname);
+		rvals.push(window[funcname](rvals));
+		call_next_func();
+	}
+}
+
+new Promise();
+
+$(document).ready(function($){
+	call_next_func();
+});
+
+var queue = [];
+
+
+var deferred = {
+	'attach': function(value) {
+		queue[] = value;
+	}
+};
+
+$(deferred.data).each(function(i, e) {
+
+	// make ajax request based on inputs from current loop element
+	promises.push($.ajax({
+		// stuff
+	}));
+
+});
+
+function defCalls(){
+	var def = $.Deferred();
+
+
+
+	$.when(getData1(),getData2(),getData3()).done(function(){
+		setTimeout(function() {
+			def.resolve();
+		}, 2000);
+	});
+
+	return def.promise();
+}
+*/
+
+
+
+class Chain {
+	constructor() {
+		this.def = $.Deferred();
+		this.data = [];
+	}
+
+	attach(call) {
+		this.data.push(call);
+	}
+
+	next() {
+
+    }
+
+	execute() {
+
+
+		deferred = this.data[0]();
+
+        if (this.data[0] && deferred.isResolved()) {
+			console.log('hi');
+
+			promise.then(this.data[0]);
+
+        }
+    }
+
+	start() {
+		setTimeout(function(chain) {
+			chain.execute();
+		}, 1000, this);
+
+		/*
+		def.resolve();
+
+		$.when(getData1(),getData2(),getData3()).done(function(){
+			setTimeout('this.execute', 2000, this);
+		});
+		*/
+	}
+}
+
+var chain = new Chain();
+chain.start();
+
 {% if not logged %}
 $(document).ready(function() {
-	$.ajax({
-		url: 'index.php?route=checkout/login',
-		dataType: 'html',
-		success: function(html) {
-			$('#collapse-checkout-option .card-body').html(html);
+	chain.attach(function() {
+		return $.ajax({
+			url: 'index.php?route=checkout/login',
+			dataType: 'html',
+			success: function(html) {
+				$('#collapse-checkout-option .card-body').html(html);
 
-			$('#heading-checkout-option').attr('data-toggle', 'collapse');
+				$('#heading-checkout-option').attr('data-toggle', 'collapse');
 
-			$('#heading-checkout-option').trigger('click');
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
+				$('#heading-checkout-option').trigger('click');
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
 	});
 });
 {% else %}

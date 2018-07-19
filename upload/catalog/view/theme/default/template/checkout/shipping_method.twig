@@ -37,50 +37,54 @@
 <script type="text/javascript"><!--
 // Shipping Method
 $('#button-shipping-method').on('click', function() {
-	$.ajax({
-		url: 'index.php?route=checkout/shipping_method/save',
-		type: 'post',
-		data: $('#collapse-shipping-method input[type=\'radio\']:checked, #collapse-shipping-method textarea'),
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-shipping-method').button('loading');
-		},
-		success: function(json) {
-			$('.alert-dismissible, .text-danger').remove();
+	chain.attach(function() {
+		return $.ajax({
+			url: 'index.php?route=checkout/shipping_method/save',
+			type: 'post',
+			data: $('#collapse-shipping-method input[type=\'radio\']:checked, #collapse-shipping-method textarea'),
+			dataType: 'json',
+			beforeSend: function() {
+				$('#button-shipping-method').button('loading');
+			},
+			success: function(json) {
+				$('.alert-dismissible, .text-danger').remove();
 
-			if (json['redirect']) {
-				location = json['redirect'];
-			} else if (json['error']) {
-				$('#button-shipping-method').button('reset');
+				if (json['redirect']) {
+					location = json['redirect'];
+				} else if (json['error']) {
+					$('#button-shipping-method').button('reset');
 
-				if (json['error']['warning']) {
-					$('#collapse-shipping-method .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				}
-			} else {
-				$.ajax({
-					url: 'index.php?route=checkout/payment_method',
-					dataType: 'html',
-					complete: function() {
-						$('#button-shipping-method').button('reset');
-					},
-					success: function(html) {
-						$('#collapse-payment-method .card-body').html(html);
-
-						$('#heading-payment-method').attr('data-toggle', 'collapse');
-
-						$('#heading-payment-method').trigger('click');
-
-						$('#heading-checkout-confirm').removeAttr('data-toggle');
-					},
-					error: function(xhr, ajaxOptions, thrownError) {
-						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+					if (json['error']['warning']) {
+						$('#collapse-shipping-method .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 					}
-				});
+				} else {
+					chain.attach(function() {
+						return $.ajax({
+							url: 'index.php?route=checkout/payment_method',
+							dataType: 'html',
+							complete: function() {
+								$('#button-shipping-method').button('reset');
+							},
+							success: function(html) {
+								$('#collapse-payment-method .card-body').html(html);
+
+								$('#heading-payment-method').attr('data-toggle', 'collapse');
+
+								$('#heading-payment-method').trigger('click');
+
+								$('#heading-checkout-confirm').removeAttr('data-toggle');
+							},
+							error: function(xhr, ajaxOptions, thrownError) {
+								alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+							}
+						});
+					});
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
+		});
 	});
 });
 //--></script>

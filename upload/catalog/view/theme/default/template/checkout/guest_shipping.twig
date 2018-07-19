@@ -192,65 +192,69 @@
 <script type="text/javascript"><!--
 // Guest Shipping
 $('#button-guest-shipping').on('click', function() {
-	$.ajax({
-		url: 'index.php?route=checkout/guest_shipping/save',
-		type: 'post',
-		data: $('#collapse-shipping-address input[type=\'text\'], #collapse-shipping-address input[type=\'date\'], #collapse-shipping-address input[type=\'datetime-local\'], #collapse-shipping-address input[type=\'time\'], #collapse-shipping-address input[type=\'password\'], #collapse-shipping-address input[type=\'checkbox\']:checked, #collapse-shipping-address input[type=\'radio\']:checked, #collapse-shipping-address textarea, #collapse-shipping-address select'),
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-guest-shipping').button('loading');
-		},
-		success: function(json) {
-			$('.alert-dismissible, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
+	chain.attach(function() {
+		return $.ajax({
+			url: 'index.php?route=checkout/guest_shipping/save',
+			type: 'post',
+			data: $('#collapse-shipping-address input[type=\'text\'], #collapse-shipping-address input[type=\'date\'], #collapse-shipping-address input[type=\'datetime-local\'], #collapse-shipping-address input[type=\'time\'], #collapse-shipping-address input[type=\'password\'], #collapse-shipping-address input[type=\'checkbox\']:checked, #collapse-shipping-address input[type=\'radio\']:checked, #collapse-shipping-address textarea, #collapse-shipping-address select'),
+			dataType: 'json',
+			beforeSend: function() {
+				$('#button-guest-shipping').button('loading');
+			},
+			success: function(json) {
+				$('.alert-dismissible, .text-danger').remove();
+				$('.form-group').removeClass('has-error');
 
-			if (json['redirect']) {
-				location = json['redirect'];
-			} else if (json['error']) {
-				$('#button-guest-shipping').button('reset');
+				if (json['redirect']) {
+					location = json['redirect'];
+				} else if (json['error']) {
+					$('#button-guest-shipping').button('reset');
 
-				if (json['error']['warning']) {
-					$('#collapse-shipping-address .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				}
-
-				for (i in json['error']) {
-					var element = $('#input-shipping-' + i.replace('_', '-'));
-
-					if ($(element).parent().hasClass('input-group')) {
-						$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
-					} else {
-						$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+					if (json['error']['warning']) {
+						$('#collapse-shipping-address .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 					}
-				}
 
-				// Highlight any found errors
-				$('.text-danger').parent().addClass('has-error');
-			} else {
-				$.ajax({
-					url: 'index.php?route=checkout/shipping_method',
-					dataType: 'html',
-					complete: function() {
-						$('#button-guest-shipping').button('reset');
-					},
-					success: function(html) {
-						$('#collapse-shipping-method .card-body').html(html);
+					for (i in json['error']) {
+						var element = $('#input-shipping-' + i.replace('_', '-'));
 
-						$('#heading-shipping-method').attr('data-toggle', 'collapse');
-
-						$('#heading-shipping-method').trigger('click');
-
-						$('#heading-payment-method').removeAttr('data-toggle');
-						$('#heading-checkout-confirm').removeAttr('data-toggle');
-					},
-					error: function(xhr, ajaxOptions, thrownError) {
-						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+						if ($(element).parent().hasClass('input-group')) {
+							$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+						} else {
+							$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+						}
 					}
-				});
+
+					// Highlight any found errors
+					$('.text-danger').parent().addClass('has-error');
+				} else {
+					chain.attach(function() {
+						return $.ajax({
+							url: 'index.php?route=checkout/shipping_method',
+							dataType: 'html',
+							complete: function() {
+								$('#button-guest-shipping').button('reset');
+							},
+							success: function(html) {
+								$('#collapse-shipping-method .card-body').html(html);
+
+								$('#heading-shipping-method').attr('data-toggle', 'collapse');
+
+								$('#heading-shipping-method').trigger('click');
+
+								$('#heading-payment-method').removeAttr('data-toggle');
+								$('#heading-checkout-confirm').removeAttr('data-toggle');
+							},
+							error: function(xhr, ajaxOptions, thrownError) {
+								alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+							}
+						});
+					});
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
+		});
 	});
 });
 
@@ -345,43 +349,45 @@ $('.datetime').datetimepicker({
 //--></script>
 <script type="text/javascript"><!--
 $('#collapse-shipping-address select[name=\'country_id\']').on('change', function() {
-	$.ajax({
-		url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
-		dataType: 'json',
-		beforeSend: function() {
-			$('#collapse-shipping-address select[name=\'country_id\']').prop('disabled', true);
-		},
-		complete: function() {
-			$('#collapse-shipping-address select[name=\'country_id\']').prop('disabled', false);
-		},
-		success: function(json) {
-			if (json['postcode_required'] == '1') {
-				$('#collapse-shipping-address input[name=\'postcode\']').parent().parent().addClass('required');
-			} else {
-				$('#collapse-shipping-address input[name=\'postcode\']').parent().parent().removeClass('required');
-			}
-
-			html = '<option value="">{{ text_select }}</option>';
-
-			if (json['zone'] && json['zone'] != '') {
-				for (i = 0; i < json['zone'].length; i++) {
-					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-
-					if (json['zone'][i]['zone_id'] == '{{ zone_id }}') {
-						html += ' selected="selected"';
-					}
-
-					html += '>' + json['zone'][i]['name'] + '</option>';
+	chain.attach(function() {
+		return $.ajax({
+			url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
+			dataType: 'json',
+			beforeSend: function() {
+				$('#collapse-shipping-address select[name=\'country_id\']').prop('disabled', true);
+			},
+			complete: function() {
+				$('#collapse-shipping-address select[name=\'country_id\']').prop('disabled', false);
+			},
+			success: function(json) {
+				if (json['postcode_required'] == '1') {
+					$('#collapse-shipping-address input[name=\'postcode\']').parent().parent().addClass('required');
+				} else {
+					$('#collapse-shipping-address input[name=\'postcode\']').parent().parent().removeClass('required');
 				}
-			} else {
-				html += '<option value="0" selected="selected">{{ text_none }}</option>';
-			}
 
-			$('#collapse-shipping-address select[name=\'zone_id\']').html(html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
+				html = '<option value="">{{ text_select }}</option>';
+
+				if (json['zone'] && json['zone'] != '') {
+					for (i = 0; i < json['zone'].length; i++) {
+						html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+
+						if (json['zone'][i]['zone_id'] == '{{ zone_id }}') {
+							html += ' selected="selected"';
+						}
+
+						html += '>' + json['zone'][i]['name'] + '</option>';
+					}
+				} else {
+					html += '<option value="0" selected="selected">{{ text_none }}</option>';
+				}
+
+				$('#collapse-shipping-address select[name=\'zone_id\']').html(html);
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
 	});
 });
 

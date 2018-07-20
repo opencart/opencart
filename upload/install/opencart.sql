@@ -1469,7 +1469,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_customer_group_display', '["1"]', 1),
 (0, 'config', 'config_customer_price', '0', 0),
 (0, 'config', 'config_account_id', '3', 0),
-(0, 'config', 'config_invoice_prefix', 'INV-2013-00', 0),
+(0, 'config', 'config_invoice_prefix', CONCAT('INV-',YEAR(NOW()),'-00'), 0),
 (0, 'config', 'config_api_id', '1', 0),
 (0, 'config', 'config_cart_weight', '1', 0),
 (0, 'config', 'config_checkout_guest', '1', 0),

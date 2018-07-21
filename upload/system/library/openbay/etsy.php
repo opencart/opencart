@@ -64,7 +64,7 @@ final class Etsy {
 				CURLOPT_FRESH_CONNECT   => 1,
 				CURLOPT_RETURNTRANSFER  => 1,
 				CURLOPT_FORBID_REUSE    => 1,
-				CURLOPT_TIMEOUT         => 10,
+				CURLOPT_TIMEOUT         => 180,
 				CURLOPT_SSL_VERIFYPEER  => 0,
 				CURLOPT_SSL_VERIFYHOST  => 0,
 				//CURLOPT_VERBOSE 		=> true,

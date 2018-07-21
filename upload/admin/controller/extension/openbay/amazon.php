@@ -944,9 +944,9 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 
             $this->model_setting_setting->editSetting('openbay_amazon', $settings);
 
-            $this->response->redirect($this->url->link('extension/openbay/amazon/bulklinking', 'marketplace=' . $marketplace_code . '&token=' . $this->session->data['token'], true));
+            $this->response->redirect($this->url->link('extension/openbay/amazon/bulklinking', 'marketplace=' . $marketplace_code . '&user_token=' . $this->session->data['user_token'], true));
         } else {
-            $data['cancel_report_link'] = $this->url->link('extension/openbay/amazon/bulklinking', 'cancel_report=1&marketplace=uk&token=' . $this->session->data['token'], true);
+            $data['cancel_report_link'] = $this->url->link('extension/openbay/amazon/bulklinking', 'cancel_report=1&marketplace=uk&user_token=' . $this->session->data['user_token'], true);
         }
 
 		$marketplaces = array(

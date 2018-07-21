@@ -180,9 +180,9 @@ class ControllerExtensionOpenbayAmazonProduct extends Controller {
 		}
 
 		if ($listing_saved) {
-			$data['template_parser_url'] = $this->url->link('extension/openbay/amazon_product/parseTemplateAjax&edit_id=' . $product_id, 'user_token=' . $this->session->data['user_token'], true);
+			$data['template_parser_url'] = html_entity_decode($this->url->link('extension/openbay/amazon_product/parseTemplateAjax&edit_id=' . $product_id, 'user_token=' . $this->session->data['user_token'], true));
 		} else {
-			$data['template_parser_url'] = $this->url->link('extension/openbay/amazon_product/parseTemplateAjax&product_id=' . $product_id, 'user_token=' . $this->session->data['user_token'], true);
+			$data['template_parser_url'] = html_entity_decode($this->url->link('extension/openbay/amazon_product/parseTemplateAjax&product_id=' . $product_id, 'user_token=' . $this->session->data['user_token'], true));
 		}
 
 		$data['url_remove_errors'] = $this->url->link('extension/openbay/amazon_product/removeErrors', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product_id . $url, true);

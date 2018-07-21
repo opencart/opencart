@@ -330,9 +330,14 @@ class ControllerExtensionOpenbayEtsyProduct extends Controller {
 			$response = $this->openbay->etsy->call('v1/etsy/product/taxonomy/', 'GET');
 
 			if (isset($response['header_code']) && $response['header_code'] == 200) {
-				$categories = $this->formatCategories($response['data']);
+                $categories = $this->formatCategories($response['data']['data']['results']);
 
-				$this->cache->set('etsy_categories', $categories);
+                /**
+                 * Need to create cache instance here due to bug where all caches expire after 3600 seconds.
+                 **/
+                $etsy_cache = new Cache('file', 3000000);
+
+                $etsy_cache->set('etsy_categories', $categories);
 			}
 		}
 

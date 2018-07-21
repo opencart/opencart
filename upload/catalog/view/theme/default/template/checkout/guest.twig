@@ -292,6 +292,36 @@
   </div>
 </div>
 <script type="text/javascript"><!--
+$('#collapse-payment-address input[name=\'customer_group_id\']').on('change', function() {
+	chain.attach(function() {
+		return $.ajax({
+			url: 'index.php?route=checkout/checkout/customfield&customer_group_id=' + $('#collapse-payment-address input[name=\'customer_group_id\']:checked').val(),
+			dataType: 'json',
+			success: function(json) {
+				$('#collapse-payment-address .custom-field').hide();
+				$('#collapse-payment-address .custom-field').removeClass('required');
+
+				for (i = 0; i < json.length; i++) {
+					custom_field = json[i];
+
+					$('#payment-custom-field' + custom_field['custom_field_id']).show();
+
+					if (custom_field['required']) {
+						$('#payment-custom-field' + custom_field['custom_field_id']).addClass('required');
+					} else {
+						$('#payment-custom-field' + custom_field['custom_field_id']).removeClass('required');
+					}
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	});
+});
+
+$('#collapse-payment-address input[name=\'customer_group_id\']:checked').trigger('change');
+
 // Guest
 $('#button-guest').on('click', function() {
 	chain.attach(function() {
@@ -462,36 +492,6 @@ $('#address .form-group[data-sort]').detach().each(function() {
 		$('#address .form-group:first').before(this);
 	}
 });
-
-$('#collapse-payment-address input[name=\'customer_group_id\']').on('change', function() {
-	chain.attach(function() {
-		return $.ajax({
-			url: 'index.php?route=checkout/checkout/customfield&customer_group_id=' + this.value,
-			dataType: 'json',
-			success: function(json) {
-				$('#collapse-payment-address .custom-field').hide();
-				$('#collapse-payment-address .custom-field').removeClass('required');
-
-				for (i = 0; i < json.length; i++) {
-					custom_field = json[i];
-
-					$('#payment-custom-field' + custom_field['custom_field_id']).show();
-
-					if (custom_field['required']) {
-						$('#payment-custom-field' + custom_field['custom_field_id']).addClass('required');
-					} else {
-						$('#payment-custom-field' + custom_field['custom_field_id']).removeClass('required');
-					}
-				}
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
-	});
-});
-
-$('#collapse-payment-address input[name=\'customer_group_id\']:checked').trigger('change');
 //--></script>
 <script type="text/javascript"><!--
 $('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('click', function() {
@@ -565,9 +565,11 @@ $('.datetime').datetimepicker({
 //--></script>
 <script type="text/javascript"><!--
 $('#collapse-payment-address select[name=\'country_id\']').on('change', function() {
+	console.log('=' + $('#collapse-payment-address select[name=\'country_id\']').val());
+
 	chain.attach(function() {
 		return $.ajax({
-			url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
+			url: 'index.php?route=checkout/checkout/country&country_id=' + $('#collapse-payment-address select[name=\'country_id\']').val(),
 			dataType: 'json',
 			beforeSend: function() {
 				$('#collapse-payment-address select[name=\'country_id\']').prop('disabled', true);
@@ -606,4 +608,6 @@ $('#collapse-payment-address select[name=\'country_id\']').on('change', function
 		});
 	});
 });
+
+$('#collapse-payment-address select[name=\'country_id\']').trigger('change');
 //--></script>

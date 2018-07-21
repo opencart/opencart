@@ -407,7 +407,7 @@ class ControllerCheckoutConfirm extends Controller {
 
 			$data['payment'] = $this->load->controller('extension/payment/' . $this->session->data['payment_method']['code']);
 		} else {
-			$data['redirect'] = str_replace('&amp', '&', $redirect);
+			$data['redirect'] = str_replace('&amp;', '&', $redirect);
 		}
 
 		$this->response->setOutput($this->load->view('checkout/confirm', $data));

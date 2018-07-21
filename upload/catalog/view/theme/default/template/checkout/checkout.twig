@@ -74,6 +74,13 @@
   </div>
 </div>
 <script type="text/javascript"><!--
+$('#collapse-checkout-option').on('change', 'input[name=\'account\']', function() {
+	if (this.value == 'register') {
+		$('#heading-payment-address').html('{{ text_checkout_account }}');
+	} else {
+		$('#heading-payment-address').html('{{ text_checkout_payment_address }}');
+	}
+});
 
 /*
 $.chain = function() {
@@ -166,52 +173,56 @@ function defCalls(){
 }
 */
 
+/*
+def.resolve();
 
+$.when(getData1(),getData2(),getData3()).done(function(){
+   setTimeout('this.execute', 2000, this);
+});
+*/
+
+//;
+//deferred.isResolved();
 
 class Chain {
 	constructor() {
-		this.def = $.Deferred();
 		this.data = [];
+		this.state = false;
 	}
 
 	attach(call) {
 		this.data.push(call);
 	}
 
-	next() {
-
-    }
-
 	execute() {
+		console.log('data.length ' + this.data.length);
 
+		console.log(this.state);
 
-		deferred = this.data[0]();
+		if (this.data.length && !this.state) {
+			console.log('ajax call start');
 
-        if (this.data[0] && deferred.isResolved()) {
-			console.log('hi');
+			this.state = (this.data.shift())();
+		}
 
-			promise.then(this.data[0]);
+		if (this.state) {
+			console.log('ready state code ' + this.state.readyState);
+		}
 
-        }
-    }
+        if (this.state && this.state.readyState == 4) {
+			console.log('ajax call complete');
 
-	start() {
+			this.state = false;
+		}
+
 		setTimeout(function(chain) {
 			chain.execute();
 		}, 1000, this);
-
-		/*
-		def.resolve();
-
-		$.when(getData1(),getData2(),getData3()).done(function(){
-			setTimeout('this.execute', 2000, this);
-		});
-		*/
 	}
 }
 
 var chain = new Chain();
-chain.start();
+chain.execute();
 
 {% if not logged %}
 $(document).ready(function() {
@@ -234,19 +245,21 @@ $(document).ready(function() {
 });
 {% else %}
 $(document).ready(function() {
-	$.ajax({
-		url: 'index.php?route=checkout/payment_address',
-		dataType: 'html',
-		success: function(html) {
-			$('#collapse-payment-address .card-body').html(html);
+	chain.attach(function() {
+		return $.ajax({
+			url: 'index.php?route=checkout/payment_address',
+			dataType: 'html',
+			success: function(html) {
+				$('#collapse-payment-address .card-body').html(html);
 
-			$('#heading-payment-address').attr('data-toggle', 'collapse');
+				$('#heading-payment-address').attr('data-toggle', 'collapse');
 
-			$('#heading-payment-address').trigger('click');
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
+				$('#heading-payment-address').trigger('click');
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
 	});
 });
 {% endif %}

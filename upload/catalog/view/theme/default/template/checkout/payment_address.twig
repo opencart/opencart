@@ -414,7 +414,7 @@ $('.datetime').datetimepicker({
 $('#collapse-payment-address select[name=\'country_id\']').on('change', function() {
 	chain.attach(function() {
 		return $.ajax({
-			url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
+			url: 'index.php?route=checkout/checkout/country&country_id=' + $('#collapse-payment-address select[name=\'country_id\']').val(),
 			dataType: 'json',
 			beforeSend: function() {
 				$('#collapse-payment-address select[name=\'country_id\']').prop('disabled', true);

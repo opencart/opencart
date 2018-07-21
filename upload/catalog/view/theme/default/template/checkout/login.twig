@@ -39,72 +39,68 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#collapse-checkout-option').on('change', 'input[name=\'account\']', function() {
-	if (this.value == 'register') {
-		$('#heading-payment-address').html('{{ text_checkout_account }}');
-	} else {
-		$('#heading-payment-address').html('{{ text_checkout_payment_address }}');
-	}
-});
-
 $('#button-account').on('click', function() {
-	$.ajax({
-		url: 'index.php?route=checkout/' + $('input[name=\'account\']:checked').val(),
-		dataType: 'html',
-		beforeSend: function() {
-			$('#button-account').button('loading');
-		},
-		complete: function() {
-			$('#button-account').button('reset');
-		},
-		success: function(html) {
-			$('.alert-dismissible, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
+	chain.attach(function() {
+		return $.ajax({
+			url: 'index.php?route=checkout/' + $('input[name=\'account\']:checked').val(),
+			dataType: 'html',
+			beforeSend: function() {
+				$('#button-account').button('loading');
+			},
+			complete: function() {
+				$('#button-account').button('reset');
+			},
+			success: function(html) {
+				$('.alert-dismissible, .text-danger').remove();
+				$('.form-group').removeClass('has-error');
 
-			$('#collapse-payment-address .card-body').html(html);
+				$('#collapse-payment-address .card-body').html(html);
 
-			$('#heading-payment-address').attr('data-toggle', 'collapse');
+				$('#heading-payment-address').attr('data-toggle', 'collapse');
 
-			$('#heading-payment-address').trigger('click');
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
+				$('#heading-payment-address').trigger('click');
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
 	});
 });
 
 // Login
 $('#button-login').on('click', function() {
-	$.ajax({
-		url: 'index.php?route=checkout/login/save',
-		type: 'post',
-		data: $('#collapse-checkout-option :input'),
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-login').button('loading');
-		},
-		complete: function() {
-			$('#button-login').button('reset');
-		},
-		success: function(json) {
-			$('.alert-dismissible, .text-danger').remove();
-			$(':input').removeClass('is-invalid');
+	chain.attach(function() {
+		return $.ajax({
+			url: 'index.php?route=checkout/login/save',
+			type: 'post',
+			data: $('#collapse-checkout-option :input'),
+			dataType: 'json',
+			beforeSend: function() {
+				$('#button-login').button('loading');
+			},
+			complete: function() {
+				$('#button-login').button('reset');
+			},
+			success: function(json) {
+				$('.alert-dismissible, .text-danger').remove();
+				$(':input').removeClass('is-invalid');
 
-			if (json['redirect']) {
-				location = json['redirect'];
+				if (json['redirect']) {
+					location = json['redirect'];
+				}
+
+				if (json['error']) {
+					$('#collapse-checkout-option .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+					// Highlight any found errors
+					$('#collapse-checkout-option input[name=\'email\']').addClass('is-invalid');
+					$('#collapse-checkout-option input[name=\'password\']').addClass('is-invalid');
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
-
-			if (json['error']) {
-				$('#collapse-checkout-option .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-
-				// Highlight any found errors
-				$('#collapse-checkout-option input[name=\'email\']').addClass('is-invalid');
-				$('#collapse-checkout-option input[name=\'password\']').addClass('is-invalid');
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
+		});
 	});
 });
 //--></script>

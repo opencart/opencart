@@ -355,6 +355,35 @@ $(document).delegate('.agree', 'click', function(e) {
 	});
 });
 
+class Chain {
+	constructor() {
+		this.start = false;
+		this.data = [];
+	}
+
+	attach(call) {
+		this.data.push(call);
+
+		if (!this.start) {
+			this.execute();
+		}
+	}
+
+	execute() {
+		this.start = true;
+
+		if (this.data.length) {
+			(this.data.shift())().done(function() {
+				chain.execute();
+			});
+		} else {
+			this.start = false;
+		}
+	}
+}
+
+var chain = new Chain();
+
 // Autocomplete */
 (function($) {
 	$.fn.autocomplete = function(option) {

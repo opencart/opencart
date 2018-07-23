@@ -55,6 +55,13 @@ class ControllerInstallStep2 extends Controller {
 		$data['action'] = $this->url->link('install/step_2');
 
 		$data['php_version'] = phpversion();
+
+		if (version_compare(phpversion(), '5.6.0', '<')) {
+			$data['version'] = false;
+		} else {
+			$data['version'] = true;
+		}
+
 		$data['register_globals'] = ini_get('register_globals');
 		$data['magic_quotes_gpc'] = ini_get('magic_quotes_gpc');
 		$data['file_uploads'] = ini_get('file_uploads');

@@ -1,5 +1,4 @@
 <?php
-
 namespace Template;
 final class Twig {
 	private $twig;

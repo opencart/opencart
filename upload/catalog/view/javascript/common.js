@@ -370,9 +370,9 @@ class Chain {
 	}
 
 	execute() {
-		this.start = true;
-
 		if (this.data.length) {
+			this.start = true;
+
 			(this.data.shift())().done(function() {
 				chain.execute();
 			});

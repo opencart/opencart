@@ -1,7 +1,6 @@
 <?php
 namespace Template;
 final class Twig {
-	private $twig;
 	private $filters = array();
 	private $data = array();
 
@@ -96,34 +95,5 @@ final class Twig {
 			trigger_error('Error: Could not load template ' . $template . '!');
 			exit();
 		}
-	}
-
-	public function compile($file, $code) {
-		echo $file;
-
-		$hash = hash('sha256', $file . preg_replace('/[^0-9a-zA-Z_]/', '_', implode('_', array_keys($this->filters))));
-
-		$file = DIR_CACHE . substr($hash, 0, 2) . '/' . $hash . '.php';
-
-		if (!is_file($file)) {
-			$directory = dirname($file);
-
-			if (!is_dir($directory)) {
-				if (!mkdir($directory, 0777, true)) {
-					clearstatcache(true, $directory);
-				}
-			}
-
-			// 9. Compile the source
-			$output = $twig->compileSource(new \Twig_Source($code, $source->getName(), $source->getPath()));
-
-			$handle = fopen($file, 'w+');
-
-			fwrite($handle, $code);
-
-			fclose($handle);
-		}
-
-		return $file;
 	}
 }

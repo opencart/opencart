@@ -445,8 +445,6 @@ class ControllerProductSearch extends Controller {
 		$data['order'] = $order;
 		$data['limit'] = $limit;
 
-		$data['language'] = $this->config->get('config_language');
-
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');

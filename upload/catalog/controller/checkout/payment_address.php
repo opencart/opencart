@@ -50,8 +50,6 @@ class ControllerCheckoutPaymentAddress extends Controller {
 
 		$data['shipping_required'] = $this->cart->hasShipping();
 
-		$data['language'] = $this->config->get('config_language');
-
 		$this->response->setOutput($this->load->view('checkout/payment_address', $data));
 	}
 

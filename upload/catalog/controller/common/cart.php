@@ -133,8 +133,6 @@ class ControllerCommonCart extends Controller {
 		$data['cart'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 		$data['checkout'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 
-		$data['language'] = $this->config->get('config_language');
-
 		return $this->load->view('common/cart', $data);
 	}
 

@@ -72,8 +72,6 @@ class ControllerExtensionModuleFeatured extends Controller {
 			}
 		}
 
-		$data['language'] = $this->config->get('config_language');
-
 		if ($data['products']) {
 			return $this->load->view('extension/module/featured', $data);
 		}

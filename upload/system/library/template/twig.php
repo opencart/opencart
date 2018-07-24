@@ -32,9 +32,7 @@ final class Twig {
 		// 1. Generate namespace for filters used to product the output
 		$namespace = preg_replace('/[^0-9a-zA-Z_]/', '_', implode('_', array_keys($this->filters)));
 
-		$loader = new \Twig_Loader_Filesystem();
-
-		$loader->addPath(DIR_TEMPLATE);
+		$loader = new \Twig_Loader_Filesystem(DIR_TEMPLATE);
 
 		// 2. Initiate Twig Environment
 		$twig = new \Twig_Environment($loader, $config);

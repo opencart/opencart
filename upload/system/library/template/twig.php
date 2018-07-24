@@ -49,7 +49,7 @@ final class Twig {
 				}
 
 				public function generateKey($name, $className) {
-					$hash = hash('sha256', $className . $this->namespace);
+					$hash = hash('sha256', $name . $className . $this->namespace);
 
 					return $this->directory . $hash[0] . $hash[1] . '/' . $hash . '.php';
 				}
@@ -62,7 +62,7 @@ final class Twig {
 		$template_class_name = $twig->getTemplateClass($template . '.twig');
 
 		// 5. Get cache file path
-		$cache_file = $twig->getCache(false)->generateKey($template . '.twig', $template_class_name);
+		$cache_file = $twig->getCache(false)->generateKey(DIR_TEMPLATE . $template . '.twig', $template_class_name);
 
 		try {
 			// 6. Check if cached file exists with modifications if not we create one
@@ -95,6 +95,8 @@ final class Twig {
 	}
 
 	public function compile($file, $code) {
+		echo $file;
+
 		$hash = hash('sha256', $file . preg_replace('/[^0-9a-zA-Z_]/', '_', implode('_', array_keys($this->filters))));
 
 		$file = DIR_CACHE . substr($hash, 0, 2) . '/' . $hash . '.php';

@@ -51,7 +51,7 @@ final class Amazonus {
 
         $post_data = array(
             'token' => $this->token,
-            'data' => rawurlencode(base64_encode($encrypted)),
+            'data' => base64_encode($encrypted),
             'opencart_version' => VERSION
         );
 
@@ -99,7 +99,7 @@ final class Amazonus {
 
         $post_data = array(
             'token' => $this->token,
-            'data' => rawurlencode(base64_encode($encrypted)),
+            'data' => base64_encode($encrypted),
             'opencart_version' => VERSION
         );
 

@@ -861,7 +861,7 @@ class ModelExtensionOpenBayEbayOrder extends Model{
 
 				$language = new Language($language_code);
 				$language->load($language_code);
-				$language->load('mail/order');
+				$language->load('mail/order_add');
 
 				$order_status_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `order_status_id` = '" . (int)$order_status_id . "' AND `language_id` = '" . (int)$order_info['language_id'] . "'");
 
@@ -1093,7 +1093,7 @@ class ModelExtensionOpenBayEbayOrder extends Model{
 					$mail->setFrom($this->config->get('config_email'));
 					$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
 					$mail->setSubject($subject);
-					$mail->setHtml($this->load->view('mail/order', $data));
+					$mail->setHtml($this->load->view('mail/order_add', $data));
 					$mail->setText($text);
 					$mail->send();
 				}

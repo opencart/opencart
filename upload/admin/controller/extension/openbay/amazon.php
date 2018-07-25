@@ -363,15 +363,19 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 		if (!empty($data['openbay_amazon_token']) && !empty($data['openbay_amazon_encryption_key']) && !empty($data['openbay_amazon_encryption_iv'])) {
 		    $response = $this->openbay->amazon->call('ping/info', array('say hello'));
 
-		    if (!empty($response)) {
-                $ping_info = simplexml_load_string($response);
-            }
-
             $api_checked = true;
 
-            if ($ping_info) {
-                $api_status = ((string)$ping_info->Api_status == 'ok') ? true : false;
-                $api_auth = ((string)$ping_info->Auth == 'true') ? true : false;
+		    if (!empty($response)) {
+                $ping_info = simplexml_load_string($response);
+
+                if ($ping_info === false) {
+                    /**
+                     * The data from the API could not be extracted from the XML
+                     */
+                } else {
+                    $api_status = ((string)$ping_info->Api_status == 'ok') ? true : false;
+                    $api_auth = ((string)$ping_info->Auth == 'true') ? true : false;
+                }
             }
         }
 
@@ -756,6 +760,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 		$ping_info = simplexml_load_string($this->openbay->amazon->call('ping/info'));
 
 		$bulk_listing_status = false;
+
 		if ($ping_info) {
 			$bulk_listing_status = ((string)$ping_info->BulkListing == 'true') ? true : false;
 		}

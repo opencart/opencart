@@ -63,7 +63,7 @@ class ControllerCommonFileManager extends Controller {
 
 		$data['images'] = array();
 
-		$files = glob($directory . $filter_name . '*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}', GLOB_BRACE);
+		$files = glob($directory . $filter_name . '*.{jpg,jpeg,png,gif,svg,JPG,JPEG,PNG,GIF,SVG}', GLOB_BRACE);
 
 		if ($files) {
 			// Split the array based on current page number and max number of items per page of 10
@@ -72,12 +72,19 @@ class ControllerCommonFileManager extends Controller {
 			foreach ($images as $image) {
 				if (substr(str_replace('\\', '/', realpath($image)), 0, utf8_strlen(DIR_IMAGE . 'catalog')) == DIR_IMAGE . 'catalog') {
 					$name = basename($image);
+					
+					$path = utf8_substr($image, utf8_strlen(DIR_IMAGE));
+					if (strtolower(pathinfo($path, PATHINFO_EXTENSION)) == 'svg') {
+						$thumb = HTTP_CATALOG . 'image/' . $path;
+					} else {
+						$thumb = $this->model_tool_image->resize($path, 136, 136)
+					}
 
 					$data['images'][] = array(
-						'thumb' => $this->model_tool_image->resize(utf8_substr($image, utf8_strlen(DIR_IMAGE)), 136, 136),
+						'thumb' => $thumb,
 						'name' => $name,
-						'path' => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
-						'href' => HTTP_CATALOG . 'image/' . utf8_substr($image, utf8_strlen(DIR_IMAGE))
+						'path' => $path,
+						'href' => HTTP_CATALOG . 'image/' . $path
 					);
 				}
 			}
@@ -258,7 +265,8 @@ class ControllerCommonFileManager extends Controller {
 						'jpg',
 						'jpeg',
 						'gif',
-						'png'
+						'png',
+						'svg'
 					);
 
 					if (!in_array(utf8_strtolower(utf8_substr(strrchr($filename, '.'), 1)), $allowed)) {
@@ -271,7 +279,8 @@ class ControllerCommonFileManager extends Controller {
 						'image/pjpeg',
 						'image/png',
 						'image/x-png',
-						'image/gif'
+						'image/gif',
+						'image/svg+xml'
 					);
 
 					if (!in_array($file['type'], $allowed)) {

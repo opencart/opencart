@@ -744,7 +744,11 @@ class ControllerSettingSetting extends Controller {
 		if (isset($this->request->post['config_logo']) && is_file(DIR_IMAGE . $this->request->post['config_logo'])) {
 			$data['logo'] = $this->model_tool_image->resize($this->request->post['config_logo'], 100, 100);
 		} elseif ($this->config->get('config_logo') && is_file(DIR_IMAGE . $this->config->get('config_logo'))) {
-			$data['logo'] = $this->model_tool_image->resize($this->config->get('config_logo'), 100, 100);
+			if(strtolower(pathinfo($this->config->get('config_logo'), PATHINFO_EXTENSION)) == 'svg') {
+				$data['logo'] = HTTP_CATALOG . 'image/' . $this->config->get('config_logo');
+			} else {
+				$data['logo'] = $this->model_tool_image->resize($this->config->get('config_logo'), 100, 100);
+			}
 		} else {
 			$data['logo'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		}

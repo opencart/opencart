@@ -482,6 +482,11 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     margin-right: -20px;
 }
 
+#thumb-logo {
+	width: 100px;
+	height: 100px;
+}
+
 /* Cards */
 .card {
     border-radius: 0px;

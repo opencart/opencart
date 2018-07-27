@@ -362,7 +362,7 @@ class ModelExtensionOpenBayOpenbay extends Model {
 
 	private function call($call, array $post = null, array $options = array(), $content_type = 'json') {
 		$data = array(
-			'language' => $this->config->get('openbay_language'),
+			'language' => $this->config->get('feed_openbaypro_language'),
 			'server' => 1,
 			'domain' => HTTP_CATALOG,
 			'openbay_version' => (int)$this->config->get('feed_openbaypro_version'),

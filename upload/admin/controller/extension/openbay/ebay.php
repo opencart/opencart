@@ -219,12 +219,6 @@ class ControllerExtensionOpenbayEbay extends Controller {
 			$data['ebay_confirmadmin_notify'] = $this->config->get('ebay_confirmadmin_notify');
 		}
 
-		if (isset($this->request->post['ebay_email_brand_disable'])) {
-			$data['ebay_email_brand_disable'] = $this->request->post['ebay_email_brand_disable'];
-		} else {
-			$data['ebay_email_brand_disable'] = $this->config->get('ebay_email_brand_disable');
-		}
-
 		if (isset($this->request->post['ebay_itm_link'])) {
 			$data['ebay_itm_link'] = $this->request->post['ebay_itm_link'];
 		} else {

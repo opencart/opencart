@@ -282,7 +282,7 @@ class ControllerMailOrder extends Controller {
 		$mail->send();
 	}
 
-	public function edit($order_info, $order_status_id, $comment) {
+	public function edit($order_info, $order_status_id, $comment, $notify) {
 		$language = new Language($order_info['language_code']);
 		$language->load($order_info['language_code']);
 		$language->load('mail/order_edit');

@@ -377,7 +377,7 @@
                         </td>
                         <td class="text-center"><input type="checkbox" id="imgUrl{{ i }}" name="img_tpl[{{ i }}]" value="{{ img.image }}" class="check-template-image" /></td>
                         <td class="text-center"><input type="hidden" name="img[{{ i }}]" value="null" />
-                          {% if img.width >= 500 and img.height >= 500 %}
+                          {% if img.width >= 500 or img.height >= 500 %}
                             <input type="checkbox" class="checkbox-ebay-image" onchange="toggleRad({{ i }});" id="image-checkbox-{{ i }}" name="img[{{ i }}]" value="{{ img.image }}" {% if i == 0 %}checked="checked"{% endif %} />
                           {% else %}
                             -

@@ -420,12 +420,6 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/openbay/amazon', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['link_add_item'] = $this->url->link('extension/openbay/amazon/addLink', 'user_token=' . $this->session->data['user_token'], true);
-		$data['link_remove_item'] = $this->url->link('extension/openbay/amazon/deleteLink', 'user_token=' . $this->session->data['user_token'], true);
-		$data['link_get_items'] = $this->url->link('extension/openbay/amazon/getLinks', 'user_token=' . $this->session->data['user_token'], true);
-		$data['link_get_unlinked_items'] = $this->url->link('extension/openbay/amazon/getUnlinked', 'user_token=' . $this->session->data['user_token'], true);
-		$data['link_get_variants'] = $this->url->link('extension/openbay/amazon/getVariants', 'user_token=' . $this->session->data['user_token'], true);
-
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -477,9 +471,6 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 				'edit_link' => $this->url->link('extension/openbay/amazon_product', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $saved_product['product_id'] . '&sku=' . $saved_product['var'], true),
 			);
 		}
-
-		$data['delete_saved'] = $this->url->link('extension/openbay/amazon_product/deleteSaved', 'user_token=' . $this->session->data['user_token'], true);
-		$data['upload_saved'] = $this->url->link('extension/openbay/amazon_product/uploadSaved', 'user_token=' . $this->session->data['user_token'], true);
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -1028,7 +1019,6 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 		}
 
 		$data['cancel'] = $this->url->link('extension/openbay/amazon', 'user_token=' . $this->session->data['user_token'], true);
-		$data['link_do_listings'] = $this->url->link('extension/openbay/amazon/doBulkLinking', 'user_token=' . $this->session->data['user_token'], true);
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');

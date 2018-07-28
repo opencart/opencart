@@ -107,64 +107,65 @@
     <div class="warning">{{ error_bulk_link_permission }}</div>
     {% endif %}
   </div>
-  <script type="text/javascript"><!--
-  $('#button-load-listings').bind('click', function (e) {
-    e.preventDefault();
+</div>
+<script type="text/javascript"><!--
+$('#button-load-listings').bind('click', function (e) {
+  e.preventDefault();
 
-    $.ajax({
-      url: $(this).attr('href'),
-      dataType: 'json',
-      beforeSend: function () {
-        $('#button-load-listings').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i> {{ text_loading }}').attr('disabled','disabled');
-        $('.alert-danger, .alert-success').remove();
-      },
-      success: function (json) {
-        if (json['status'] == 1) {
-          $('.alert-info').after('<div class="alert alert-success alert-dismissible">' + json['message'] + '</div>');
-        } else {
-          $('.alert-info').after('<div class="alert alert-danger alert-dismissible">' + json['message'] + '</div>');
-        }
-      },
-      error: function(xhr, ajaxOptions, thrownError) {
-        if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
+  $.ajax({
+    url: $(this).attr('href'),
+    dataType: 'json',
+    beforeSend: function () {
+      $('#button-load-listings').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i> {{ text_loading }}').attr('disabled','disabled');
+      $('.alert-danger, .alert-success').remove();
+    },
+    success: function (json) {
+      if (json['status'] == 1) {
+        $('.alert-info').after('<div class="alert alert-success alert-dismissible">' + json['message'] + '</div>');
+      } else {
+        $('.alert-info').after('<div class="alert alert-danger alert-dismissible">' + json['message'] + '</div>');
       }
-    });
-
-    return false;
-  });
-
-  $('#master-checkbox').click(function () {
-    var marketplace = $(this).val();
-    if ($(this).is(':checked')) {
-      $('.link-checkbox-' + marketplace).attr('checked', 'checked');
-    } else {
-      $('.link-checkbox-' + marketplace).removeAttr('checked');
+    },
+    error: function(xhr, ajaxOptions, thrownError) {
+      if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
     }
   });
 
-  $('#link-button').click(function (e) {
-    e.preventDefault();
+  return false;
+});
 
-    $.ajax({
-      url: '{{ link_do_listings }}',
-      dataType: 'json',
-      type: 'POST',
-      data: $('.link-checkbox:checked').parent().siblings('input[type="hidden"]').serialize(),
-      beforeSend: function() {
-        $('#link-button').empty().attr('disabled', 'disabled').html('<i class="fa fa-cog fa-lg fa-spin"></i>');
-      },
-      success: function () {
-        document.location.reload(true);
-      },
-      error: function(xhr, ajaxOptions, thrownError) {
-        $('#link-button').empty().removeAttr('disabled').html('<i class="fa fa-save"></i>');
-        if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
-      }
-    });
-  });
+$('#master-checkbox').click(function () {
+  var marketplace = $(this).val();
+  if ($(this).is(':checked')) {
+    $('.link-checkbox-' + marketplace).attr('checked', 'checked');
+  } else {
+    $('.link-checkbox-' + marketplace).removeAttr('checked');
+  }
+});
 
-  $('#marketplace-select').bind('change', function() {
-    location = $('#marketplace-select').val();
+$('#link-button').click(function (e) {
+  e.preventDefault();
+
+  $.ajax({
+    url: 'index.php?route=extension/openbay/amazon/doBulkLinking&user_token={{ user_token }}',
+    dataType: 'json',
+    type: 'POST',
+    data: $('.link-checkbox:checked').parent().siblings('input[type="hidden"]').serialize(),
+    beforeSend: function() {
+      $('#link-button').empty().attr('disabled', 'disabled').html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+    },
+    success: function () {
+      document.location.reload(true);
+    },
+    error: function(xhr, ajaxOptions, thrownError) {
+      $('#link-button').empty().removeAttr('disabled').html('<i class="fa fa-save"></i>');
+      if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
+    }
   });
-//--></script></div>
+});
+
+$('#marketplace-select').bind('change', function() {
+  location = $('#marketplace-select').val();
+});
+//--></script>
 {{ footer }}

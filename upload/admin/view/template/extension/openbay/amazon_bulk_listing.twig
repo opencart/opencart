@@ -134,7 +134,8 @@
       <div class="warning">{{ error_bulk_listing_permission }}</div>
     {% endif %}
   </div>
-  <script type="text/javascript"><!--
+</div>
+<script type="text/javascript"><!--
   $(document).ready(function () {
     $('#product-form table thead input[type="checkbox"]').change(function () {
       var checkboxes = $('input[name="product_ids[]"]');
@@ -241,5 +242,5 @@
       $('#bulk-list-form').prepend('<div class="alert alert-danger alert-dismissible">{{ error_select_items }}</div>');
     }
   });
-//--></script></div>
+//--></script>
 {{ footer }}

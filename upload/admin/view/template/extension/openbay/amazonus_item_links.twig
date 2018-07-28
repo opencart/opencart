@@ -82,7 +82,7 @@ $(document).ready(function () {
 
 function loadLinks() {
   $.ajax({
-    url: '{{ link_get_items }}',
+    url: 'index.php?route=extension/openbay/amazonus/getLinks&user_token={{ user_token }}',
     type: 'get',
     dataType: 'json',
     data: 'product_id=' + encodeURIComponent($('#new-product-id').val()) + '&amazon_sku=' + encodeURIComponent($('#new-amazon-sku').val()),
@@ -120,7 +120,7 @@ $('#button-load').bind('click', function(e) {
   e.preventDefault();
 
   $.ajax({
-    url: '{{ link_get_unlinked_items }}',
+    url: 'index.php?route=extension/openbay/amazonus/getUnlinked&user_token={{ user_token }}',
     type: 'get',
     dataType: 'json',
     beforeSend: function () {
@@ -180,7 +180,7 @@ $('#button-load').bind('click', function(e) {
 
 function addLink(button, product_id, amazon_sku, variation) {
   $.ajax({
-    url: '{{ link_add_item }}',
+    url: 'index.php?route=extension/openbay/amazonus/addLink&user_token={{ user_token }}',
     type: 'get',
     dataType: 'json',
     async: 'false',
@@ -202,7 +202,7 @@ function addLink(button, product_id, amazon_sku, variation) {
 
 function removeLink(button, amazon_sku) {
   $.ajax({
-    url: '{{ link_remove_item }}',
+    url: 'index.php?route=extension/openbay/amazonus/deleteLink&user_token={{ user_token }}',
     type: 'get',
     dataType: 'json',
     data: 'amazon_sku=' + encodeURIComponent(amazon_sku),
@@ -318,7 +318,7 @@ $('#new-product').autocomplete({
 
 function openstockCheck(product_id) {
   $.ajax({
-    url: '{{ link_get_variants }}',
+    url: 'index.php?route=extension/openbay/amazonus/getVariants&user_token={{ user_token }}',
     dataType: 'json',
     type: 'get',
     data: 'product_id=' + product_id,
@@ -341,3 +341,4 @@ function openstockCheck(product_id) {
   });
 }
 //--></script>
+{{ footer }}

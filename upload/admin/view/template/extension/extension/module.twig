@@ -11,6 +11,11 @@
   </div>
   {% endif %}
   <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_layout }}</div>
+   {% if hiden is not empty %}
+    <div class="alert alert-info"><i class="fa fa-check-circle"></i> {{ text_hide_modules }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead>

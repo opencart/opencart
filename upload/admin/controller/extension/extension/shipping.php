@@ -53,6 +53,8 @@ class ControllerExtensionExtensionShipping extends Controller {
 	}
 
 	protected function getList() {
+		$data['text_hide_shipping'] = sprintf($this->language->get('text_hide_shipping'), $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token'], true));
+		
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -83,11 +85,21 @@ class ControllerExtensionExtensionShipping extends Controller {
 		
 		// Compatibility code for old extension folders
 		$files = glob(DIR_APPLICATION . 'controller/extension/shipping/*.php');
+		
+		$this->load->model('user/user_group');
+		$user_group_info = $this->model_user_user_group->getUserGroup($this->user->getGroupId());
+		if(isset($user_group_info['permission']['hiden'])) {
+			$hiden = $user_group_info['permission']['hiden'];
+		} else {
+			$hiden = array();
+		}
+		$data['hiden'] = false;
 
 		if ($files) {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
-
+				
+				if (!in_array('extension/shipping/' . $extension, $hiden)) {
 				$this->load->language('extension/shipping/' . $extension, 'extension');
 
 				$data['extensions'][] = array(
@@ -99,6 +111,10 @@ class ControllerExtensionExtensionShipping extends Controller {
 					'installed'  => in_array($extension, $extensions),
 					'edit'       => $this->url->link('extension/shipping/' . $extension, 'user_token=' . $this->session->data['user_token'], true)
 				);
+				
+				} else {
+					$data['hiden'] = true;
+				}
 			}
 		}
 		

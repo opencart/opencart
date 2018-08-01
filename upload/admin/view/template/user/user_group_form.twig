@@ -74,6 +74,26 @@
               </div>
               <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', true);" class="btn btn-link">{{ text_select_all }}</button> / <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', false);" class="btn btn-link">{{ text_unselect_all }}</button></div>
           </div>
+		  <div class="form-group">
+            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_hide }}">{{ entry_hide }}</span></label>
+            <div class="col-sm-10">
+              <div class="well well-sm" style="height: 150px; overflow: auto;">
+                {% for hide in hiden %}
+                <div class="checkbox">
+                  <label>
+                    {% if hide in ishide %}
+                    <input type="checkbox" name="permission[hiden][]" value="{{ hide }}" checked="checked" />
+                    {{ hide }}
+                    {% else %}
+                    <input type="checkbox" name="permission[hiden][]" value="{{ hide }}" />
+                    {{ hide }}
+                    {% endif %}
+                  </label>
+                </div>
+                {% endfor %}
+              </div>
+			  <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', true);" class="btn btn-link">{{ text_select_all }}</button> / <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', false);" class="btn btn-link">{{ text_unselect_all }}</button></div>
+			</div>
         </form>
       </div>
     </div>

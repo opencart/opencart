@@ -1,4 +1,7 @@
 <?php
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ControllerUserUserPermission extends Controller {
 	private $error = array();
 
@@ -316,7 +319,8 @@ class ControllerUserUserPermission extends Controller {
 			'error/not_found',
 			'error/permission'
 		);
-
+		
+		$data['hiden'] = array();
 		$data['permissions'] = array();
 
 		$files = array();
@@ -348,11 +352,27 @@ class ControllerUserUserPermission extends Controller {
 			$controller = substr($file, strlen(DIR_APPLICATION . 'controller/'));
 
 			$permission = substr($controller, 0, strrpos($controller, '.'));
-
+			
+			$hidefiles = explode("/", $permission);
+            
+			if ($hidefiles[1] == "module" or $hidefiles[1] == "payment" or $hidefiles[1] == "shipping") {
+				if (!in_array($permission, $ignore)) {
+					$data['hiden'][] = $permission;
+				}
+			}
 			if (!in_array($permission, $ignore)) {
 				$data['permissions'][] = $permission;
 			}
 		}
+		
+		if (isset($this->request->post['permission']['hiden'])) {
+			$data['ishide'] = $this->request->post['permission']['hiden'];
+		} elseif (isset($user_group_info['permission']['hiden'])) {
+			$data['ishide'] = $user_group_info['permission']['hiden'];
+		} else {
+			$data['ishide'] = array();
+		}
+		
 
 		if (isset($this->request->post['permission']['access'])) {
 			$data['access'] = $this->request->post['permission']['access'];

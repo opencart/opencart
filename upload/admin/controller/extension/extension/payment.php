@@ -53,6 +53,8 @@ class ControllerExtensionExtensionPayment extends Controller {
 	}
 
 	protected function getList() {
+		$data['text_hide_payment'] = sprintf($this->language->get('text_hide_payment'), $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token'], true));
+		
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -83,11 +85,24 @@ class ControllerExtensionExtensionPayment extends Controller {
 		
 		// Compatibility code for old extension folders
 		$files = glob(DIR_APPLICATION . 'controller/extension/payment/*.php');
+		
+		$this->load->model('user/user_group');
+		
+		$user_group_info = $this->model_user_user_group->getUserGroup($this->user->getGroupId());
+		
+		if(isset($user_group_info['permission']['hiden'])) {
+			$hiden = $user_group_info['permission']['hiden'];
+		} else {
+			$hiden = array();
+		}
+		
+		$data['hiden'] = false;
 
 		if ($files) {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
-
+				
+				if (!in_array('extension/payment/' . $extension, $hiden)) {
 				$this->load->language('extension/payment/' . $extension, 'extension');
 
 				$text_link = $this->language->get('extension')->get('text_' . $extension);
@@ -108,6 +123,10 @@ class ControllerExtensionExtensionPayment extends Controller {
 					'installed'  => in_array($extension, $extensions),
 					'edit'       => $this->url->link('extension/payment/' . $extension, 'user_token=' . $this->session->data['user_token'], true)
 				);
+				
+				} else {
+					$data['hiden'] = true;
+				}
 			}
 		}
 

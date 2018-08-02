@@ -25,11 +25,13 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 	}
 
 	public function index() {
-		$this->load->model('setting/setting');
-		$this->load->model('localisation/order_status');
-		$this->load->model('extension/openbay/amazonus');
+		$this->load->language('extension/openbay/amazonus');
 
-		$data = $this->load->language('extension/openbay/amazonus');
+        $data = $this->language->all();
+
+        $this->load->model('setting/setting');
+        $this->load->model('localisation/order_status');
+        $this->load->model('extension/openbay/amazonus');
 
 		$this->document->setTitle($this->language->get('text_dashboard'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -73,7 +75,9 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 	}
 
 	public function stockUpdates() {
-		$data = $this->load->language('extension/openbay/amazonus_stockupdates');
+		$this->load->language('extension/openbay/amazonus_stockupdates');
+
+        $data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -157,7 +161,9 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 	}
 
 	public function subscription() {
-		$data = $this->load->language('extension/openbay/amazonus_subscription');
+		$this->load->language('extension/openbay/amazonus_subscription');
+
+        $data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -231,7 +237,9 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 	}
 
 	public function settings() {
-		$data = $this->load->language('extension/openbay/amazonus_settings');
+		$this->load->language('extension/openbay/amazonus_settings');
+
+        $data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -369,7 +377,9 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 	}
 
 	public function itemLinks() {
-		$data = $this->load->language('extension/openbay/amazonus_links');
+		$this->load->language('extension/openbay/amazonus_links');
+
+        $data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -405,7 +415,9 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 	}
 
 	public function savedListings() {
-		$data = $this->load->language('extension/openbay/amazonus_listingsaved');
+		$this->load->language('extension/openbay/amazonus_listingsaved');
+
+        $data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -695,11 +707,13 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 	}
 
 	public function bulkListProducts() {
-		$this->load->model('extension/openbay/amazonus');
-		$this->load->model('catalog/product');
-		$this->load->model('tool/image');
+		$this->load->language('extension/openbay/amazonus_bulk_listing');
 
-		$data = $this->load->language('extension/openbay/amazonus_bulk_listing');
+        $data = $this->language->all();
+
+        $this->load->model('extension/openbay/amazonus');
+        $this->load->model('catalog/product');
+        $this->load->model('tool/image');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -834,12 +848,14 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 	}
 
 	public function bulkLinking() {
-		$this->load->model('extension/openbay/amazonus');
+		$this->load->language('extension/openbay/amazonus_bulk_linking');
 
-		$data = $this->load->language('extension/openbay/amazonus_bulk_linking');
+        $data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
+
+        $this->load->model('extension/openbay/amazonus');
 
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(

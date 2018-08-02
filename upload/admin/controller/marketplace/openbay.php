@@ -67,11 +67,14 @@ class ControllerMarketplaceOpenbay extends Controller {
 	}
 
 	public function index() {
-		$this->load->model('extension/openbay/openbay');
-		$this->load->model('setting/extension');
-		$this->load->model('setting/setting');
-		$this->load->model('extension/openbay/version');
-		$data = $this->load->language('marketplace/openbay');
+		$this->load->language('marketplace/openbay');
+
+        $data = $this->language->all();
+
+        $this->load->model('extension/openbay/openbay');
+        $this->load->model('setting/extension');
+        $this->load->model('setting/setting');
+        $this->load->model('extension/openbay/version');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -154,8 +157,11 @@ class ControllerMarketplaceOpenbay extends Controller {
 	}
 
 	public function manage() {
-		$this->load->model('setting/setting');
-		$data = $this->load->language('marketplace/openbay');
+		$this->load->language('marketplace/openbay');
+
+        $data = $this->language->all();
+
+        $this->load->model('setting/setting');
 
 		$this->document->setTitle($this->language->get('text_manage'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -370,9 +376,9 @@ class ControllerMarketplaceOpenbay extends Controller {
 	}
 
 	public function faq() {
-		$this->load->model('extension/openbay/openbay');
-
 		$this->load->language('marketplace/openbay');
+
+        $this->load->model('extension/openbay/openbay');
 
 		$data = $this->model_extension_openbay_openbay->faqGet($this->request->get['qry_route']);
 
@@ -405,7 +411,9 @@ class ControllerMarketplaceOpenbay extends Controller {
 	}
 
 	public function getOrderInfo() {
-		$data = $this->load->language('marketplace/openbay');
+		$this->load->language('marketplace/openbay');
+
+        $data = $this->language->all();
 
 		if ($this->config->get('ebay_status') == 1) {
 			if ($this->openbay->ebay->getOrder($this->request->get['order_id']) !== false) {
@@ -961,7 +969,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 		$this->load->model('extension/openbay/openbay');
 		$this->load->model('localisation/order_status');
 
-		$data = $this->load->language('extension/openbay/openbay_order');
+		$this->load->language('extension/openbay/openbay_order');
 
 		// API login
 		$this->load->model('user/api');

@@ -3,13 +3,15 @@ class ControllerExtensionOpenbayEtsyProduct extends Controller {
 	private $error;
 
 	public function create() {
-		$this->load->model('catalog/product');
-		$this->load->model('tool/image');
+		$this->load->language('extension/openbay/etsy_create');
 
-		$data = $this->load->language('extension/openbay/etsy_create');
+        $data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
+
+        $this->load->model('catalog/product');
+        $this->load->model('tool/image');
 
 		$data['action']   = $this->url->link('extension/openbay/etsy_product/create', 'user_token=' . $this->session->data['user_token'], true);
 		$data['cancel']   = $this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token'], true);
@@ -196,7 +198,9 @@ class ControllerExtensionOpenbayEtsyProduct extends Controller {
 	}
 
 	public function edit() {
-		$data = $this->load->language('extension/openbay/etsy_edit');
+		$this->load->language('extension/openbay/etsy_edit');
+
+        $data = $this->language->all();
 
 		$this->load->model('extension/openbay/etsy_product');
 		$this->load->model('tool/image');
@@ -468,9 +472,11 @@ class ControllerExtensionOpenbayEtsyProduct extends Controller {
 	}
 
 	public function links() {
-		$this->load->model('extension/openbay/etsy_product');
+		$this->load->language('extension/openbay/etsy_links');
 
-		$data = $this->load->language('extension/openbay/etsy_links');
+        $data = $this->language->all();
+
+        $this->load->model('extension/openbay/etsy_product');
 
 		$data['cancel'] = $this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token'], true);
 
@@ -534,7 +540,9 @@ class ControllerExtensionOpenbayEtsyProduct extends Controller {
 	}
 
 	public function listings() {
-		$data = $this->load->language('extension/openbay/etsy_listings');
+		$this->load->language('extension/openbay/etsy_listings');
+
+        $data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');

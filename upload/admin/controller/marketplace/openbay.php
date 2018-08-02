@@ -824,16 +824,21 @@ class ControllerMarketplaceOpenbay extends Controller {
 	}
 
 	public function orderListUpdate() {
-		$data = $this->load->language('extension/openbay/openbay_order');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
 		if (!isset($this->request->post['selected']) || empty($this->request->post['selected'])) {
+            $this->load->language('extension/openbay/openbay_order');
+            $data = $this->language->all();
+
 			$this->session->data['error'] = $data['text_no_orders'];
 			$this->response->redirect($this->url->link('marketplace/openbay/orderlist', 'user_token=' . $this->session->data['user_token'], true));
 		} else {
+            $this->load->language('extension/openbay/openbay_order');
+            $this->load->language('sale/order');
+
+            $data = $this->language->all();
+
+            $this->document->setTitle($this->language->get('heading_title'));
+
 			$this->load->model('extension/openbay/order');
-			$this->load->language('sale/order');
 
 			$data['column_order_id'] = $this->language->get('column_order_id');
 			$data['column_customer'] = $this->language->get('column_customer');

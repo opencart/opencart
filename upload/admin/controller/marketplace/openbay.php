@@ -504,9 +504,12 @@ class ControllerMarketplaceOpenbay extends Controller {
 	}
 
 	public function orderList() {
+        $this->load->language('sale/order');
+        $this->load->language('extension/openbay/openbay_order');
+
+        $data = $this->language->all();
+
 		$this->load->model('extension/openbay/order');
-		$data = $this->load->language('sale/order');
-		$data = $this->load->language('extension/openbay/openbay_order', $data);
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
@@ -1110,13 +1113,14 @@ class ControllerMarketplaceOpenbay extends Controller {
 	}
 
 	public function items() {
-		$this->document->addScript('view/javascript/openbay/js/openbay.js');
-		$this->document->addScript('view/javascript/openbay/js/faq.js');
+		$this->load->language('catalog/product');
+		$this->load->language('extension/openbay/openbay_itemlist');
 
-		$data = $this->load->language('catalog/product');
-		$data = $this->load->language('extension/openbay/openbay_itemlist', $data);
+		$data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
+        $this->document->addScript('view/javascript/openbay/js/openbay.js');
+        $this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$this->load->model('catalog/product');
 		$this->load->model('catalog/category');

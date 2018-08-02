@@ -51,35 +51,36 @@ class ModelExtensionOpenBayAmazonusProduct extends Model {
 		}
 	}
 
-	public function getProductQuantity($product_id, $var = '') {
-		$result = null;
+    public function getProductQuantity($product_id, $var = '') {
+        $result = null;
 
-		if ($var !== '' && $this->openbay->addonLoad('openstock')) {
-			$this->load->model('tool/image');
-			$this->load->model('extension/module/openstock');
-			$option_stocks = $this->model_extension_module_openstock->getVariants($product_id);
+        $this->load->model('catalog/product');
+        $product_info = $this->model_catalog_product->getProduct($product_id);
 
-			$option = null;
-			foreach ($option_stocks as $option_iterator) {
-				if ($option_iterator['var'] === $var) {
-					$option = $option_iterator;
-					break;
-				}
-			}
+        if ($var !== '' && $this->openbay->addonLoad('openstock') && (isset($product['has_option']) && $product_info['has_option'] == 1)) {
+            $this->load->model('tool/image');
+            $this->load->model('extension/module/openstock');
+            $option_stocks = $this->model_extension_module_openstock->getVariants($product_id);
 
-			if ($option != null) {
-				$result = $option['stock'];
-			}
-		} else {
-			$this->load->model('catalog/product');
-			$product_info = $this->model_catalog_product->getProduct($product_id);
+            $option = null;
+            foreach ($option_stocks as $option_iterator) {
+                if ($option_iterator['var'] === $var) {
+                    $option = $option_iterator;
+                    break;
+                }
+            }
 
-			if (isset($product_info['quantity'])) {
-				$result = $product_info['quantity'];
-			}
-		}
-		return $result;
-	}
+            if ($option != null) {
+                $result = (int)$option['stock'];
+            }
+        } else {
+            if (isset($product_info['quantity'])) {
+                $result = (int)$product_info['quantity'];
+            }
+        }
+
+        return $result;
+    }
 
 	public function updateSearch($results) {
 		foreach ($results as $result) {

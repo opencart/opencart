@@ -337,7 +337,7 @@ class ControllerExtensionOpenbayAmazonusProduct extends Controller{
 				break;
 			}
 			$logger->write('Product upload success');
-			$this->model_extension_openbay_amazonus->setProductUploaded($saved_product['product_id'], $insertion_response['insertion_id'], $saved_product['sku']);
+			$this->model_extension_openbay_amazonus->setProductUploaded($saved_product['product_id'], $insertion_response['insertion_id'], $saved_product['var']);
 		}
 
 		if (!isset($result['status'])) {

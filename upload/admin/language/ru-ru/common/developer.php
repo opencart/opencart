@@ -9,7 +9,11 @@ $_['heading_title']    = 'Настройки разработчика';
 $_['text_success']     = 'Настройки успешно изменены!';
 $_['text_theme']       = 'Шаблон';
 $_['text_sass']        = 'SASS';
+$_['text_systemcache']       = 'Системный';
+$_['text_imgcache']       = 'Изображений';
+$_['text_allcache']       = 'Весь';
 $_['text_cache']       = 'Вы очистили %s кэш!';
+$_['text_img_cache']       = 'Вы очистили Кэш %s !';
 
 // Column
 $_['column_component'] = 'Компонент';
@@ -19,6 +23,9 @@ $_['column_action']    = 'Действие';
 $_['entry_theme']      = 'Шаблон';
 $_['entry_sass']       = 'SASS';
 $_['entry_cache']      = 'Кэш';
+$_['entry_systemcache']      = 'Системный кэш';
+$_['entry_imgcache']       = 'Кэш изображений';
+$_['entry_allcache']      = 'Весь кэш';
 
 // Button
 $_['button_on']        = 'Вкл';

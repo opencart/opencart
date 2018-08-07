@@ -43,7 +43,7 @@ final class Template {
 	}
 
 	public function compile($file, $code) {
-		$hash = hash('sha256', $file . __CLASS__ .preg_replace('/[^0-9a-zA-Z_]/', '_', implode('_', array_keys($this->filters))));
+		$hash = hash('sha256', $file . __CLASS__ . preg_replace('/[^0-9a-zA-Z_]/', '_', implode('_', array_keys($this->filters))));
 
 		$file = DIR_CACHE . substr($hash, 0, 2) . '/' . $hash . '.php';
 

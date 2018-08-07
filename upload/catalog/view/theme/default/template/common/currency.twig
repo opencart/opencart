@@ -14,9 +14,9 @@
       <div class="dropdown-menu">
         {% for currency in currencies %}
           {% if currency.symbol_left %}
-            <a href="#form-currency" class="dropdown-item">{{ currency.symbol_left }} {{ currency.title }}</a>
+            <a href="{{ currency.code }}" class="dropdown-item">{{ currency.symbol_left }} {{ currency.title }}</a>
           {% else %}
-            <a href="#form-currency" class="dropdown-item">{{ currency.symbol_right }} {{ currency.title }}</a>
+            <a href="{{ currency.code }}" class="dropdown-item">{{ currency.symbol_right }} {{ currency.title }}</a>
           {% endif %}
         {% endfor %}
       </div>

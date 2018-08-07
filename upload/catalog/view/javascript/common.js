@@ -68,10 +68,10 @@ $(document).ready(function() {
 	});
 
 	// Currency
-	$('#form-currency .currency-select').on('click', function(e) {
+	$('#form-currency .dropdown-item').on('click', function(e) {
 		e.preventDefault();
 
-		$('#form-currency input[name=\'code\']').val($(this).attr('name'));
+		$('#form-currency input[name=\'code\']').val($(this).attr('href'));
 
 		$('#form-currency').submit();
 	});
@@ -354,6 +354,35 @@ $(document).delegate('.agree', 'click', function(e) {
 		}
 	});
 });
+
+class Chain {
+	constructor() {
+		this.start = false;
+		this.data = [];
+	}
+
+	attach(call) {
+		this.data.push(call);
+
+		if (!this.start) {
+			this.execute();
+		}
+	}
+
+	execute() {
+		if (this.data.length) {
+			this.start = true;
+
+			(this.data.shift())().done(function() {
+				chain.execute();
+			});
+		} else {
+			this.start = false;
+		}
+	}
+}
+
+var chain = new Chain();
 
 // Autocomplete */
 (function($) {

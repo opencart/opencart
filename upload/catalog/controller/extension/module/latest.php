@@ -64,8 +64,6 @@ class ControllerExtensionModuleLatest extends Controller {
 				);
 			}
 
-			$data['language'] = $this->config->get('config_language');
-
 			return $this->load->view('extension/module/latest', $data);
 		}
 	}

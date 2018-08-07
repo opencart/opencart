@@ -57,8 +57,6 @@ class ControllerExtensionModuleBestSeller extends Controller {
 				);
 			}
 
-			$data['language'] = $this->config->get('config_language');
-
 			return $this->load->view('extension/module/bestseller', $data);
 		}
 	}

@@ -1,8 +1,6 @@
 <?php
-
 namespace Template;
 final class Twig {
-	private $twig;
 	private $filters = array();
 	private $data = array();
 
@@ -34,8 +32,10 @@ final class Twig {
 		// 1. Generate namespace for filters used to product the output
 		$namespace = preg_replace('/[^0-9a-zA-Z_]/', '_', implode('_', array_keys($this->filters)));
 
+		$loader = new \Twig_Loader_Filesystem(DIR_TEMPLATE);
+
 		// 2. Initiate Twig Environment
-		$twig = new \Twig_Environment(new \Twig_Loader_Filesystem(DIR_TEMPLATE), $config);
+		$twig = new \Twig_Environment($loader, $config);
 
 		// 3. Create an anonymous cache class as twig will not all us to generate a key based on custom keys
 		if ($cache) {
@@ -50,7 +50,7 @@ final class Twig {
 				}
 
 				public function generateKey($name, $className) {
-					$hash = hash('sha256', $className . $this->namespace);
+					$hash = hash('sha256', $name . $className . $this->namespace);
 
 					return $this->directory . $hash[0] . $hash[1] . '/' . $hash . '.php';
 				}
@@ -63,7 +63,7 @@ final class Twig {
 		$template_class_name = $twig->getTemplateClass($template . '.twig');
 
 		// 5. Get cache file path
-		$cache_file = $twig->getCache(false)->generateKey($template . '.twig', $template_class_name);
+		$cache_file = $twig->getCache(false)->generateKey(DIR_TEMPLATE . $template . '.twig', $template_class_name);
 
 		try {
 			// 6. Check if cached file exists with modifications if not we create one
@@ -93,32 +93,5 @@ final class Twig {
 			trigger_error('Error: Could not load template ' . $template . '!');
 			exit();
 		}
-	}
-
-	public function compile($file, $code) {
-		$hash = hash('sha256', $file . preg_replace('/[^0-9a-zA-Z_]/', '_', implode('_', array_keys($this->filters))));
-
-		$file = DIR_CACHE . substr($hash, 0, 2) . '/' . $hash . '.php';
-
-		if (!is_file($file)) {
-			$directory = dirname($file);
-
-			if (!is_dir($directory)) {
-				if (!mkdir($directory, 0777, true)) {
-					clearstatcache(true, $directory);
-				}
-			}
-
-			// 9. Compile the source
-			$output = $twig->compileSource(new \Twig_Source($code, $source->getName(), $source->getPath()));
-
-			$handle = fopen($file, 'w+');
-
-			fwrite($handle, $code);
-
-			fclose($handle);
-		}
-
-		return $file;
 	}
 }

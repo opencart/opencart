@@ -28,7 +28,6 @@
     <div class="card">
       <div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
       <div class="card-body">
-
         <ul class="nav nav-tabs">
           <li class="nav-item"><a href="#tab-general" data-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
           <li class="nav-item"><a href="#tab-log" data-toggle="tab" class="nav-link">{{ tab_log }}</a></li>
@@ -110,7 +109,7 @@
             </div>
           </div>
           <div id="tab-log" class="tab-pane fade">
-            <div class="form-group">
+            <div class="form-group mb-3">
               <textarea wrap="off" rows="15" class="form-control">{{ log }}</textarea>
             </div>
             <div class="text-center"><a href="{{ clear_log }}" class="btn btn-danger"><i class="fas fa-eraser"></i> {{ button_clear }}</a></div>

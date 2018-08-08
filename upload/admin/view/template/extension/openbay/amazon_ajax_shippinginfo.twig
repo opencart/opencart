@@ -4,12 +4,12 @@
     <div class="form-group">
       <label class="col-sm-2 control-label" for="carrier-id">{{ entry_courier }}</label>
       <div class="col-sm-10">
-        <select name="carrier_id" id="carrier-id" class="form-control openbay-data">
-          {% for carrier in couriers %}
-            {% if order_info.carrier_id == carrier %}
-              <option selected="selected">{{ carrier }}</option>
+        <select name="courier_id" id="carrier-id" class="form-control openbay-data">
+          {% for courier in couriers %}
+            {% if order_info.courier_id == courier %}
+              <option selected="selected">{{ courier }}</option>
             {% else %}
-              <option>{{ carrier }}</option>
+              <option>{{ courier }}</option>
             {% endif %}
           {% endfor %}
         </select>

@@ -1491,35 +1491,42 @@ class ControllerMarketplaceOpenbay extends Controller {
 				$this->load->model('extension/openbay/amazon');
 				$amazon_status = $this->model_extension_openbay_amazon->getProductStatus($result['product_id']);
 
-				if ($amazon_status == 'processing') {
-					$markets[] = array(
-						'name'      => $this->language->get('text_amazon'),
-						'text'      => $this->language->get('text_processing'),
-						'href'      => '',
-						'status'	=> 3
-					);
-				} else if ($amazon_status == 'linked' || $amazon_status == 'ok' || $amazon_status == 'saved') {
-					$markets[] = array(
-						'name'      => $this->language->get('text_amazon'),
-						'text'      => $this->language->get('button_edit'),
-						'href'      => $this->url->link('extension/openbay/amazon_listing/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . $url, true),
-						'status'	=> 1
-					);
-				} else if ($amazon_status == 'error_quick' || $amazon_status == 'error_advanced' || $amazon_status == 'error_few') {
-					$markets[] = array(
-						'name'      => $this->language->get('text_amazon'),
-						'text'      => $this->language->get('button_error_fix'),
-						'href'      => $this->url->link('extension/openbay/amazon_listing/create', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . $url, true),
-						'status'	=> 2
-					);
-				} else {
-					$markets[] = array(
-						'name'      => $this->language->get('text_amazon'),
-						'text'      => $this->language->get('button_add'),
-						'href'      => $this->url->link('extension/openbay/amazon_listing/create', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . $url, true),
-						'status'	=> 0
-					);
-				}
+                if ($amazon_status == 'processing') {
+                    $markets[] = array(
+                        'name'      => $this->language->get('text_amazon'),
+                        'text'      => $this->language->get('text_processing'),
+                        'href'      => '',
+                        'status'	=> 3
+                    );
+                } else if ($amazon_status == 'linked' || $amazon_status == 'ok') {
+                    $markets[] = array(
+                        'name'      => $this->language->get('text_amazon'),
+                        'text'      => $this->language->get('button_edit'),
+                        'href'      => $this->url->link('extension/openbay/amazon_listing/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . $url),
+                        'status'	=> 1
+                    );
+                } else if ($amazon_status == 'saved') {
+                    $markets[] = array(
+                        'name'      => $this->language->get('text_amazon'),
+                        'text'      => $this->language->get('button_edit'),
+                        'href'      => $this->url->link('extension/openbay/amazon/savedListings', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . $url, true),
+                        'status'	=> 4
+                    );
+                } else if ($amazon_status == 'error_quick' || $amazon_status == 'error_advanced' || $amazon_status == 'error_few') {
+                    $markets[] = array(
+                        'name'      => $this->language->get('text_amazon'),
+                        'text'      => $this->language->get('button_error_fix'),
+                        'href'      => $this->url->link('extension/openbay/amazon_listing/create', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . $url),
+                        'status'	=> 2
+                    );
+                } else {
+                    $markets[] = array(
+                        'name'      => $this->language->get('text_amazon'),
+                        'text'      => $this->language->get('button_add'),
+                        'href'      => $this->url->link('extension/openbay/amazon_listing/create', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . $url),
+                        'status'	=> 0
+                    );
+                }
 			}
 
 			if ($this->config->get('openbay_amazonus_status') == '1') {
@@ -1533,13 +1540,20 @@ class ControllerMarketplaceOpenbay extends Controller {
 						'href'      => '',
 						'status'	=> 3
 					);
-				} else if ($amazonus_status == 'linked' || $amazonus_status == 'ok' || $amazonus_status == 'saved') {
+				} else if ($amazonus_status == 'linked' || $amazonus_status == 'ok') {
 					$markets[] = array(
 						'name'      => $this->language->get('text_amazonus'),
 						'text'      => $this->language->get('button_edit'),
 						'href'      => $this->url->link('extension/openbay/amazonus_listing/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . $url, true),
 						'status'	=> 1
 					);
+                } else if ($amazonus_status == 'saved') {
+                    $markets[] = array(
+                        'name'      => $this->language->get('text_amazon'),
+                        'text'      => $this->language->get('button_edit'),
+                        'href'      => $this->url->link('extension/openbay/amazonus/savedListings', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . $url, true),
+                        'status'	=> 4
+                    );
 				} else if ($amazonus_status == 'error_quick' || $amazonus_status == 'error_advanced' || $amazonus_status == 'error_few') {
 					$markets[] = array(
 						'name'      => $this->language->get('text_amazonus'),

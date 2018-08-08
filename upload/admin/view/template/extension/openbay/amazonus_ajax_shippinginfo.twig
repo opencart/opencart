@@ -6,11 +6,11 @@
       <div class="col-sm-10">
         <select name="carrier_id" id="carrier-id" class="form-control openbay-data">
           {% for carrier in couriers %}
-          {% if order_info.carrier_id == carrier %}
-          <option selected="selected">{{ carrier }}</option>
-          {% else %}
-          <option>{{ carrier }}</option>
-          {% endif %}
+            {% if order_info.carrier_id == carrier %}
+              <option selected="selected">{{ carrier }}</option>
+            {% else %}
+              <option>{{ carrier }}</option>
+            {% endif %}
           {% endfor %}
         </select>
       </div>

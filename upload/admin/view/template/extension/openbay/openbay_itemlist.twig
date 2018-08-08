@@ -245,8 +245,10 @@
                         {% if market.href is not empty %}
                           <a href="{{ market.href }}" data-toggle="tooltip" title="{{ market.text }}" class="btn btn-block btn-sm btn-info">{{ market.name }}</a>
                         {% else %}
-                          <a disable="disable" data-toggle="tooltip" title="{{ market.text }}" class="btn btn-info btn-block btn-sm">{{ market.name }}</a>
+                          <button disable="disable" data-toggle="tooltip" title="{{ market.text }}" class="btn btn-info btn-block btn-sm">{{ market.name }}</button>
                         {% endif %}
+                      {% elseif market.status == 4 %}
+                        <a href="{{ market.href }}" data-toggle="tooltip" title="{{ market.text }}" class="btn btn-block btn-sm btn-primary">{{ market.name }}</a>
                       {% else %}
                         <a href="{{ market.href }}" data-toggle="tooltip" title="{{ market.text }}" class="btn btn-block btn-sm btn-default">{{ market.name }}</a>
                       {% endif %}

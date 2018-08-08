@@ -51,7 +51,7 @@ final class Amazonus {
 
         $post_data = array(
             'token' => $this->token,
-            'data' => rawurlencode(base64_encode($encrypted)),
+            'data' => base64_encode($encrypted),
             'opencart_version' => VERSION
         );
 
@@ -99,7 +99,7 @@ final class Amazonus {
 
         $post_data = array(
             'token' => $this->token,
-            'data' => rawurlencode(base64_encode($encrypted)),
+            'data' => base64_encode($encrypted),
             'opencart_version' => VERSION
         );
 
@@ -285,7 +285,7 @@ final class Amazonus {
 	}
 
 	public function getCategoryTemplates() {
-		$result = $this->call("productv2/RequestTemplateList");
+		$result = $this->call("productv2/RequestTemplateList", array('list' => true));
 		if(isset($result)) {
 			return (array)json_decode($result);
 		} else {

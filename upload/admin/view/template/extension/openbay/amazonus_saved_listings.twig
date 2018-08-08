@@ -61,13 +61,13 @@
     </table>
   </div>
 </div>
-<script type="text/javascript">
+<script type="text/javascript"><!--
   function removeSaved(id, option_var, button) {
     if (!confirm("{{ text_delete_confirm }}")) {
       return;
     }
     $.ajax({
-      url: '{{ delete_saved }}',
+      url: 'index.php?route=extension/openbay/amazonus_product/deleteSaved&user_token={{ user_token }}',
       type: 'get',
       data: 'product_id=' + id + '&var=' + option_var,
       beforeSend: function () {
@@ -86,7 +86,7 @@
     e.preventDefault();
 
     $.ajax({
-      url: '{{ upload_saved }}',
+      url: 'index.php?route=extension/openbay/amazonus_product/uploadSaved&user_token={{ user_token }}',
       dataType: 'json',
       beforeSend: function () {
         $('#button-upload').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
@@ -110,5 +110,5 @@
       }
     });
   });
-</script>
+//--></script>
 {{ footer }}

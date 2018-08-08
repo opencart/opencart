@@ -23,11 +23,13 @@ class ControllerExtensionOpenbayFba extends Controller {
     }
 
     public function index() {
+        $this->load->language('extension/openbay/fba');
+
+        $data = $this->language->all();
+
         $this->load->model('setting/setting');
         $this->load->model('localisation/order_status');
         $this->load->model('extension/openbay/fba');
-
-        $data = $this->load->language('extension/openbay/fba');
 
         $this->document->setTitle($this->language->get('text_dashboard'));
         $this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -69,7 +71,9 @@ class ControllerExtensionOpenbayFba extends Controller {
     }
 
     public function settings() {
-        $data = $this->load->language('extension/openbay/fba_settings');
+        $this->load->language('extension/openbay/fba_settings');
+
+        $data = $this->language->all();
 
         $this->document->setTitle($this->language->get('heading_title'));
         $this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -277,7 +281,9 @@ class ControllerExtensionOpenbayFba extends Controller {
     }
 
     public function fulfillment() {
-        $data = $this->load->language('extension/openbay/fba_fulfillment');
+        $this->load->language('extension/openbay/fba_fulfillment');
+
+        $data = $this->language->all();
 
         $this->document->setTitle($this->language->get('heading_title'));
         $this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -342,7 +348,9 @@ class ControllerExtensionOpenbayFba extends Controller {
     }
 
     public function fulfillmentList() {
-        $data = $this->load->language('extension/openbay/fba_fulfillment_list');
+        $this->load->language('extension/openbay/fba_fulfillment_list');
+
+        $data = $this->language->all();
 
         $this->document->setTitle($this->language->get('heading_title'));
         $this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -614,7 +622,9 @@ class ControllerExtensionOpenbayFba extends Controller {
     }
 
     public function orderList() {
-        $data = $this->load->language('extension/openbay/fba_order');
+        $this->load->language('extension/openbay/fba_order');
+
+        $data = $this->language->all();
 
         $this->document->setTitle($this->language->get('heading_title'));
         $this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -722,7 +732,9 @@ class ControllerExtensionOpenbayFba extends Controller {
     }
 
     public function order() {
-        $data = $this->load->language('extension/openbay/fba_order');
+        $this->load->language('extension/openbay/fba_order');
+
+        $data = $this->language->all();
 
         $this->document->setTitle($this->language->get('heading_title'));
         $this->document->addScript('view/javascript/openbay/js/faq.js');

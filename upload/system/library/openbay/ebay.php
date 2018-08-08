@@ -67,14 +67,14 @@ final class Ebay {
             $headers = array();
             $headers[] = 'X-Endpoint-Version: 2';
 
-			$data = array('token' => $this->token, 'secret' => $this->secret, 'server' => $this->server, 'domain' => $domain, 'openbay_version' => (int)$this->config->get('feed_openbaypro_version'), 'opencart_version' => VERSION, 'data' => $post, 'content_type' => $content_type, 'language' => $this->config->get('openbay_language'));
+			$data = array('token' => $this->token, 'secret' => $this->secret, 'server' => $this->server, 'domain' => $domain, 'openbay_version' => (int)$this->config->get('feed_openbaypro_version'), 'opencart_version' => VERSION, 'data' => $post, 'content_type' => $content_type, 'language' => $this->config->get('feed_openbaypro_language'));
 
 			$defaults = array(
                 CURLOPT_HEADER      	=> 0,
                 CURLOPT_HTTPHEADER      => $headers,
 				CURLOPT_POST            => 1,
 				CURLOPT_URL             => $this->url . $call,
-				CURLOPT_USERAGENT       => "OpenBay Pro for eBay",
+				CURLOPT_USERAGENT       => "OpenBay Pro for eBay/OpenCart",
 				CURLOPT_FRESH_CONNECT   => 1,
 				CURLOPT_RETURNTRANSFER  => 1,
 				CURLOPT_FORBID_REUSE    => 1,
@@ -140,13 +140,14 @@ final class Ebay {
             $headers = array();
             $headers[] = 'X-Endpoint-Version: 2';
 
-			$data = array('token' => $this->token, 'secret' => $this->secret, 'server' => $this->server, 'domain' => $domain, 'openbay_version' => (int)$this->config->get('feed_openbaypro_version'), 'opencart_version' => VERSION, 'data' => $post, 'content_type' => $content_type, 'language' => $this->config->get('openbay_language'));
+			$data = array('token' => $this->token, 'secret' => $this->secret, 'server' => $this->server, 'domain' => $domain, 'openbay_version' => (int)$this->config->get('feed_openbaypro_version'), 'opencart_version' => VERSION, 'data' => $post, 'content_type' => $content_type, 'language' => $this->config->get('feed_openbaypro_language'));
 
 			$defaults = array(
-                CURLOPT_HEADER          => $headers,
+                CURLOPT_HEADER      	=> 0,
+                CURLOPT_HTTPHEADER      => $headers,
 				CURLOPT_POST            => 1,
 				CURLOPT_URL             => $this->url . $call,
-				CURLOPT_USERAGENT       => "OpenBay Pro for eBay",
+				CURLOPT_USERAGENT       => "OpenBay Pro for eBay/OpenCart",
 				CURLOPT_FRESH_CONNECT   => 1,
 				CURLOPT_RETURNTRANSFER  => 0,
 				CURLOPT_FORBID_REUSE    => 1,

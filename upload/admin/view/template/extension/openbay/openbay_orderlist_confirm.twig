@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="container-fluid">
-    <div class="alert alert-warning">{{ text_confirm_change_text }}: <strong>{{ status_mapped.change_order_status_id }}</strong></div>
+    <div class="alert alert-warning">{{ text_confirm_change_text }}: <strong>{{ status_mapped[change_order_status_id] }}</strong></div>
     <form action="{{ link_complete }}" method="post" enctype="multipart/form-data" id="form" class="form">
       <table class="table table-bordered table-hover">
         <thead>

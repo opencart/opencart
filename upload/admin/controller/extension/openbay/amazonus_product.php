@@ -1,12 +1,14 @@
 <?php
 class ControllerExtensionOpenbayAmazonusProduct extends Controller{
 	public function index() {
-		$this->load->model('extension/openbay/amazonus');
-		$this->load->model('catalog/product');
-		$this->load->model('tool/image');
+		$this->load->language('catalog/product');
+		$this->load->language('extension/openbay/amazonus_listing');
 
-		$data = $this->load->language('catalog/product');
-		$data = $this->load->language('extension/openbay/amazonus_listing', $data);
+        $data = $this->language->all();
+
+        $this->load->model('extension/openbay/amazonus');
+        $this->load->model('catalog/product');
+        $this->load->model('tool/image');
 
 		$this->document->addScript('view/javascript/openbay/js/openbay.js');
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -180,9 +182,9 @@ class ControllerExtensionOpenbayAmazonusProduct extends Controller{
 		}
 
 		if ($listing_saved) {
-			$data['template_parser_url'] = $this->url->link('extension/openbay/amazonus_product/parseTemplateAjax&edit_id=' . $product_id, 'user_token=' . $this->session->data['user_token'], true);
+			$data['template_parser_url'] = html_entity_decode($this->url->link('extension/openbay/amazonus_product/parseTemplateAjax&edit_id=' . $product_id, 'user_token=' . $this->session->data['user_token'], true));
 		} else {
-			$data['template_parser_url'] = $this->url->link('extension/openbay/amazonus_product/parseTemplateAjax&product_id=' . $product_id, 'user_token=' . $this->session->data['user_token'], true);
+			$data['template_parser_url'] = html_entity_decode($this->url->link('extension/openbay/amazonus_product/parseTemplateAjax&product_id=' . $product_id, 'user_token=' . $this->session->data['user_token'], true));
 		}
 
 		$data['url_remove_errors'] = $this->url->link('extension/openbay/amazonus_product/removeErrors', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product_id . $url, true);
@@ -335,7 +337,7 @@ class ControllerExtensionOpenbayAmazonusProduct extends Controller{
 				break;
 			}
 			$logger->write('Product upload success');
-			$this->model_extension_openbay_amazonus->setProductUploaded($saved_product['product_id'], $insertion_response['insertion_id'], $saved_product['sku']);
+			$this->model_extension_openbay_amazonus->setProductUploaded($saved_product['product_id'], $insertion_response['insertion_id'], $saved_product['var']);
 		}
 
 		if (!isset($result['status'])) {

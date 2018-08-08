@@ -85,7 +85,7 @@ final class fba {
             CURLOPT_HEADER      	=> 0,
             CURLOPT_HTTPHEADER      => $headers,
 			CURLOPT_URL             => $this->url . $uri,
-			CURLOPT_USERAGENT       => 'OpenBay Pro for Fulfillment by Amazon',
+			CURLOPT_USERAGENT       => "OpenBay Pro for Fulfillment by Amazon/OpenCart",
 			CURLOPT_FRESH_CONNECT   => 1,
 			CURLOPT_RETURNTRANSFER  => 1,
 			CURLOPT_FORBID_REUSE    => 1,

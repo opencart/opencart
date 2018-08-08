@@ -3,7 +3,9 @@ class ControllerExtensionOpenbayEbayTemplate extends Controller {
 	private $error = array();
 
 	public function listAll() {
-		$data = $this->load->language('extension/openbay/ebay_template');
+		$this->load->language('extension/openbay/ebay_template');
+
+        $data = $this->language->all();
 
 		$this->load->model('extension/openbay/ebay_template');
 
@@ -60,9 +62,11 @@ class ControllerExtensionOpenbayEbayTemplate extends Controller {
 	}
 
 	public function add() {
-		$this->load->model('extension/openbay/ebay_template');
+		$this->load->language('extension/openbay/ebay_template');
 
-		$data = $this->load->language('extension/openbay/ebay_template');
+        $data = $this->language->all();
+
+        $this->load->model('extension/openbay/ebay_template');
 
 		$data['page_title']   = $data['heading_title'];
 		$data['btn_save']     = $this->url->link('extension/openbay/ebay_template/add', 'user_token=' . $this->session->data['user_token'], true);
@@ -96,9 +100,11 @@ class ControllerExtensionOpenbayEbayTemplate extends Controller {
 	}
 
 	public function edit() {
-		$this->load->model('extension/openbay/ebay_template');
+		$this->load->language('extension/openbay/ebay_template');
 
-		$data = $this->load->language('extension/openbay/ebay_template');
+        $data = $this->language->all();
+
+        $this->load->model('extension/openbay/ebay_template');
 
 		$this->document->setTitle($data['heading_title']);
 

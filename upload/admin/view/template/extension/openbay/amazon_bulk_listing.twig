@@ -58,7 +58,7 @@
               <td class="text-right">{{ product.search_status }}</td>
               <td class="text-right">{% if product.matches is not null %}{{ product.matches }}{% else %}-{% endif %}</td>
               <td class="text-left" id="result-{{ product.product_id }}">
-                {% if product.matches !== null %}
+                {% if product.matches is not empty and product.matches > 0 %}
                   {% set checked = false %}
                   {% if product.matches > 0 %}
                     <input class="amazon-listing" type="radio" name="products[{{ product.product_id }}]" value=""/> {{ text_dont_list }}<br/>
@@ -134,7 +134,8 @@
       <div class="warning">{{ error_bulk_listing_permission }}</div>
     {% endif %}
   </div>
-  <script type="text/javascript"><!--
+</div>
+<script type="text/javascript"><!--
   $(document).ready(function () {
     $('#product-form table thead input[type="checkbox"]').change(function () {
       var checkboxes = $('input[name="product_ids[]"]');
@@ -241,5 +242,5 @@
       $('#bulk-list-form').prepend('<div class="alert alert-danger alert-dismissible">{{ error_select_items }}</div>');
     }
   });
-//--></script></div>
+//--></script>
 {{ footer }}

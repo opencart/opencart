@@ -63,7 +63,6 @@ $_['entry_developer_locks']		  = 'Remove order locks?';
 $_['entry_payment_instruction']	  = 'Payment instructions';
 $_['entry_payment_immediate']	  = 'Immediate payment required';
 $_['entry_payment_types']		  = 'Payment types';
-$_['entry_brand_disable']		  = 'Disable brand link';
 $_['entry_duration']			  = 'Default listing duration';
 $_['entry_measurement']			  = 'Measurement system';
 $_['entry_address_format']		  = 'Default address format';

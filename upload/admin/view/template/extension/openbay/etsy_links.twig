@@ -57,7 +57,7 @@
           </thead>
           <tbody id="show-linked-items">
             {% if items %}
-              {% for id => $item in items %}
+              {% for item in items %}
                 <tr id="row-{{ item.etsy_listing_id }}">
                   <td class="text-left"><a href="{{ item.link_edit }}" target="_BLANK">{{ item.name }}</a></td>
                   <td class="text-center"><a href="{{ item.link_etsy }}" target="_BLANK">{{ item.etsy_item_id }}</a></td>

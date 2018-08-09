@@ -24,7 +24,8 @@ class ModelLocalisationCurrency extends Model {
 					'decimal_place' => $result['decimal_place'],
 					'value'         => $result['value'],
 					'status'        => $result['status'],
-					'date_modified' => $result['date_modified']
+					'date_modified' => $result['date_modified'],
+					'vanish_decimalpart_if_zeroes'	=> $result['vanish_decimal_if_zeroes']
 				);
 			}
 

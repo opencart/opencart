@@ -26,7 +26,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 			return;
 		}
 
-		$order_xml = simplexml_load_string(base64_decode($decrypted));
+		$order_xml = simplexml_load_string($decrypted);
 
 		$amazon_order_status = trim(strtolower((string)$order_xml->Status));
 

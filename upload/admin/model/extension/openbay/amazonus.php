@@ -109,34 +109,27 @@ class ModelExtensionOpenBayAmazonus extends Model {
 		}
 	}
 
-	public function verifyConfig($data) {
-		$log = new Log('amazonus.log');
+    public function verifyConfig($data) {
+        $log = new Log('amazonus.log');
 
-		$request_xml = '<Request>
-  <ResponseURL>' . HTTPS_CATALOG . 'index.php?route=extension/openbay/amazonus/order</ResponseURL>
-  <MarketplaceIDs>';
-		foreach ($data['openbay_amazonus_orders_marketplace_ids'] as $marketplace_id) {
-			$request_xml .= '    <MarketplaceID>' . $marketplace_id . '</MarketplaceID>';
-		}
-		$request_xml .= '
-  </MarketplaceIDs>
-</Request>';
+        $request_xml = new SimpleXMLElement("<Request></Request>");
+        $request_xml->addChild("ResponseURL", HTTP_CATALOG . 'index.php?route=extension/openbay/amazonus/order');
 
-		$response = $this->openbay->amazonus->call('order/scheduleOrders', $request_xml, false);
+        $response = $this->openbay->amazonus->call('order/scheduleOrders', $request_xml->asXML(), false);
 
-		libxml_use_internal_errors(true);
-		$response_xml = simplexml_load_string($response);
-		libxml_use_internal_errors(false);
+        libxml_use_internal_errors(true);
+        $response_xml = simplexml_load_string($response);
+        libxml_use_internal_errors(false);
 
-		if ($response_xml && $response_xml->Status == '0') {
-			$log->write('Scheduling orders call was successful');
-			return true;
-		}
+        if ($response_xml && $response_xml->Status == '0') {
+            $log->write('Scheduling orders call was successful');
+            return true;
+        }
 
-		$log->write('Failed to schedule orders. Response: ' . $response);
+        $log->write('Failed to schedule orders. Response: ' . $response);
 
-		return false;
-	}
+        return false;
+    }
 
 	public function saveProduct($product_id, $data_array) {
 		if (isset($data_array['fields']['item-price'])) {

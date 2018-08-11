@@ -111,36 +111,33 @@ class ModelExtensionOpenBayAmazon extends Model {
 		}
 	}
 
-	public function verifyConfig($data) {
-		$log = new Log('amazon.log');
+    public function verifyConfig($data) {
+        $log = new Log('amazon.log');
 
-		$request_xml = '<Request>
-  <ResponseURL>' . HTTPS_CATALOG . 'index.php?route=extension/openbay/amazon/order</ResponseURL>
-  <MarketplaceIDs>';
+        $request_xml = new SimpleXMLElement("<Request></Request>");
+        $request_xml->addChild("ResponseURL", HTTP_CATALOG . 'index.php?route=extension/openbay/amazon/order');
 
-		foreach ($data['openbay_amazon_orders_marketplace_ids'] as $marketplace_id) {
-			$request_xml .= '    <MarketplaceID>' . $marketplace_id . '</MarketplaceID>';
-		}
+        $marketplace_ids = $request_xml->addChild("MarketplaceIDs");
 
-		$request_xml .= '
-  </MarketplaceIDs>
-</Request>';
+        foreach ($data['openbay_amazon_orders_marketplace_ids'] as $marketplace_id) {
+            $marketplace_ids->addChild("MarketplaceID", $marketplace_id);
+        }
 
-		$response = $this->openbay->amazon->call('order/scheduleOrders', $request_xml, false);
+        $response = $this->openbay->amazon->call('order/scheduleOrders', $request_xml->asXML(), false);
 
-		libxml_use_internal_errors(true);
-		$response_xml = simplexml_load_string($response);
-		libxml_use_internal_errors(false);
+        libxml_use_internal_errors(true);
+        $response_xml = simplexml_load_string($response);
+        libxml_use_internal_errors(false);
 
-		if ($response_xml && $response_xml->Status == '0') {
-			$log->write('Scheduling orders call was successful');
-			return true;
-		}
+        if ($response_xml && $response_xml->Status == '0') {
+            $log->write('Scheduling orders call was successful');
+            return true;
+        }
 
-		$log->write('Failed to schedule orders. Response: ' . $response);
+        $log->write('Failed to schedule orders. Response: ' . $response);
 
-		return false;
-	}
+        return false;
+    }
 
 	public function saveProduct($product_id, $data_array) {
 		if (isset($data_array['fields']['item-price'])) {

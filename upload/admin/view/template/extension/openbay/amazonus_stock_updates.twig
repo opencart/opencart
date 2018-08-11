@@ -47,20 +47,21 @@
           <tr>
             <td class="text-center" colspan="6">{{ text_empty }}</td>
           </tr>
-        {% endif %}
-        {% for ref, row in table_data %}
-          <tr>
-            <td class="text-left" rowspan="{{ row.data|length + 1 }}">{{ ref }}</td>
-            <td class="text-left" rowspan="{{ row.data|length + 1 }}">{{ row.status }}</td>
-            <td class="text-left" rowspan="{{ row.data|length + 1 }}">{{ row.date_requested }}</td>
-            <td class="text-left" rowspan="{{ row.data|length + 1 }}">{{ row.date_updated }}</td>
-            {% for data_row in row.data %}
-              <tr>
-                <td class="text-center">{{ data_row.sku }}</td>
-                <td class="text-center">{{ data_row.stock }}</td>
-              </tr>
-            {% endfor %}
-          </tr>
+        {% else %}
+          {% for ref, row in table_data %}
+            <tr>
+              <td class="text-left" rowspan="{{ row.data|length + 1 }}">{{ ref }}</td>
+              <td class="text-left" rowspan="{{ row.data|length + 1 }}">{{ row.status }}</td>
+              <td class="text-left" rowspan="{{ row.data|length + 1 }}">{{ row.date_requested }}</td>
+              <td class="text-left" rowspan="{{ row.data|length + 1 }}">{{ row.date_updated }}</td>
+              {% for data_row in row.data %}
+                <tr>
+                  <td class="text-center">{{ data_row.sku }}</td>
+                  <td class="text-center">{{ data_row.stock }}</td>
+                </tr>
+              {% endfor %}
+            </tr>
+          {% endfor %}
         {% endif %}
       </tbody>
     </table>

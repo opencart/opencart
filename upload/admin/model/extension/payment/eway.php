@@ -82,7 +82,7 @@ class ModelExtensionPaymentEway extends Model {
 
 			$capture_data = new stdClass();
 			$capture_data->Payment = new stdClass();
-			$capture_data->Payment->TotalAmount = (int)number_format($capture_amount, 2, '.', '') * 100;
+			$capture_data->Payment->TotalAmount = (int)(number_format($capture_amount, 2, '.', '') * 100);
 			$capture_data->Payment->CurrencyCode = $currency;
 			$capture_data->TransactionID = $eway_order['transaction_id'];
 
@@ -142,7 +142,7 @@ class ModelExtensionPaymentEway extends Model {
 
 			$refund_data = new stdClass();
 			$refund_data->Refund = new stdClass();
-			$refund_data->Refund->TotalAmount = (int)number_format($refund_amount, 2, '.', '') * 100;
+			$refund_data->Refund->TotalAmount = (int)(number_format($refund_amount, 2, '.', '') * 100);
 			$refund_data->Refund->TransactionID = $eway_order['transaction_id'];
 
 			if ($this->config->get('payment_eway_test')) {

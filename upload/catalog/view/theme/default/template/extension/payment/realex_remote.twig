@@ -1,0 +1,104 @@
+<form>
+  <fieldset id="payment">
+    <legend>{{ text_credit_card }}</legend>
+    <div class="form-group row required">
+      <label class="col-sm-2 col-form-label" for="input-cc-type">{{ entry_cc_type }}</label>
+      <div class="col-sm-10">
+        <select name="cc_type" id="input-cc-type" class="form-control">
+          {% for card in cards %}
+            <option value="{{ card.code }}">{{ card.text }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="form-group row required">
+      <label class="col-sm-2 col-form-label" for="input-cc-name">{{ entry_cc_name }}</label>
+      <div class="col-sm-10">
+        <input type="text" name="cc_name" value="" placeholder="{{ entry_cc_name }}" id="input-cc-name" class="form-control"/>
+      </div>
+    </div>
+    <div class="form-group row required">
+      <label class="col-sm-2 col-form-label" for="input-cc-number">{{ entry_cc_number }}</label>
+      <div class="col-sm-10">
+        <input type="text" name="cc_number" value="" placeholder="{{ entry_cc_number }}" id="input-cc-number" class="form-control"/>
+      </div>
+    </div>
+    <div class="form-group row required">
+      <label class="col-sm-2 col-form-label" for="input-cc-expire-date">{{ entry_cc_expire_date }}</label>
+      <div class="col-sm-3">
+        <select name="cc_expire_date_month" id="input-cc-expire-date" class="form-control">
+          {% for month in months %}
+            <option value="{{ month.value }}">{{ month.text }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-sm-3">
+        <select name="cc_expire_date_year" class="form-control">
+          {% for year in year_expire %}
+            <option value="{{ year.value }}">{{ year.text }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="form-group row required">
+      <label class="col-sm-2 col-form-label" for="input-cc-cvv2">{{ entry_cc_cvv2 }}</label>
+      <div class="col-sm-10">
+        <input type="text" name="cc_cvv2" value="" placeholder="{{ entry_cc_cvv2 }}" id="input-cc-cvv2" class="form-control"/>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label" for="input-cc-issue"><span data-toggle="tooltip" title="{{ help_issue }}">{{ entry_cc_issue }}</span></label>
+      <div class="col-sm-10">
+        <input type="text" name="cc_issue" value="" placeholder="{{ entry_cc_issue }}" id="input-cc-issue" class="form-control"/>
+      </div>
+    </div>
+  </fieldset>
+</form>
+<div class="buttons">
+  <div class="float-right">
+    <button type="button" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_confirm }}</button>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#button-confirm').bind('click', function() {
+	$.ajax({
+		url: 'index.php?route=extension/payment/realex_remote/send',
+		type: 'post',
+		data: $('#payment :input'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#realex-message-error').remove();
+			$('#button-confirm').attr('disabled', true);
+			$('#payment').before('<div id="realex-message-wait" class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_wait }}</div>');
+		},
+		success: function(json) {
+			// if 3ds redirect instruction
+			if (json['ACSURL']) {
+				$('#3dauth').remove();
+
+				html = '<form action="' + json['ACSURL'] + '" method="post" id="3dauth">';
+				html += '  <input type="hidden" name="MD" value="' + json['MD'] + '" />';
+				html += '  <input type="hidden" name="PaReq" value="' + json['PaReq'] + '" />';
+				html += '  <input type="hidden" name="TermUrl" value="' + json['TermUrl'] + '" />';
+				html += '</form>';
+
+				$('#payment').after(html);
+
+				$('#3dauth').submit();
+			}
+
+			// if error
+			if (json['error']) {
+				$('#payment').before('<div id="realex-message-error" class="alert alert-warning"><i class="fa fa-info-circle"></i> ' + json['error'] + '</div>');
+				$('#button-confirm').attr('disabled', false);
+				$('#realex-message-wait').remove();
+			}
+
+			// if success
+			if (json['success']) {
+				location = json['success'];
+			}
+		}
+	});
+});
+//--></script>

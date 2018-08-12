@@ -1,0 +1,36 @@
+{{ header }}
+<div id="content">
+  <div class="container-fluid">
+    <br/>
+    <br/>
+    <div class="row">
+      <div class="col-sm-offset-4 col-sm-4">
+        <div class="card">
+          <div class="card-header"><i class="fas fa-redo"></i> {{ heading_title }}</div>
+          <div class="card-body">
+            <form action="{{ action }}" method="post" enctype="multipart/form-data">
+              <p>{{ text_password }}</p>
+              <div class="form-group row">
+                <label class="col-form-label" for="input-password">{{ entry_password }}</label> <input type="password" name="password" value="{{ password }}" id="input-password" class="form-control"/>
+                {% if error_password %}
+                  <div class="invalid-tooltip">{{ error_password }}</div>
+                {% endif %}
+              </div>
+              <div class="form-group row">
+                <label class="col-form-label" for="input-confirm">{{ entry_confirm }}</label> <input type="password" name="confirm" value="{{ confirm }}" id="input-confirm" class="form-control"/>
+                {% if error_confirm %}
+                  <div class="invalid-tooltip">{{ error_confirm }}</div>
+                {% endif %}
+              </div>
+              <div class="text-right">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
+                <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

@@ -1,0 +1,36 @@
+<div class="col-lg-6 col-md-12 col-sm-12">
+  <div class="card">
+    <div class="card-header"><img class="float-right" width="135" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_200x51.png" alt="PayPal Logo">
+      {% if payment_pp_express_status == "enabled" %}
+        <div class="float-right"><span class="label label-success">{{ text_enabled }}</span></div>
+      {% endif %}
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <p>{{ text_preferred_main }} <a href="https://www.paypal.com/uk/webapps/mpp/express-checkout" target="_blank">{{ text_learn_more }}</a></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-9">
+          <ul>
+            <li>{{ text_preferred_li_1 }}</li>
+            <li>{{ text_preferred_li_2 }}</li>
+            <li>{{ text_preferred_li_3 }}</li>
+            <li>{{ text_preferred_li_4 }}</li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3">
+          <p><img class="float-right" src="view/image/payment/paypal-express-gold-pill.png" alt="PayPal Express" width="130" style="margin-bottom:10px;"/></p>
+
+          {% if connect_link is not empty %}
+            <p><a href="{{ connect_link }}" data-toggle="tooltip" title="" class="btn btn-primary float-right" target="_blank" data-original-title="{{ text_connect_paypal }}">{{ text_connect_paypal }}</a></p>
+          {% endif %}
+          {% if module_link is not empty %}
+            <p><a href="{{ module_link }}" data-toggle="tooltip" title="" class="btn btn-primary float-right" data-original-title="{{ text_edit }}"><i class="fas fa-pencil-alt"></i></a></p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

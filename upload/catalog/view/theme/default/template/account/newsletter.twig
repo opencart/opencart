@@ -1,0 +1,52 @@
+{{ header }}
+<div id="account-newsletter" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+      <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="row">{{ column_left }}
+    {% if column_left and column_right %}
+      {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+      {% set class = 'col-sm-9' %}
+    {% else %}
+      {% set class = 'col-sm-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}">{{ content_top }}
+      <h1>{{ heading_title }}</h1>
+      <form action="{{ action }}" method="post" enctype="multipart/form-data">
+        <fieldset>
+          <div class="form-group row mb-0">
+            <label class="col-md-3 col-form-label">{{ entry_newsletter }}</label>
+            <div class="col-md-9">
+              {% if newsletter %}
+              <div class="form-check form-check-inline">
+                <input type="radio" name="newsletter" value="1" id="input-newsletter-yes" class="form-check-input" checked="checked"/> <label class="form-check-label" for="input-newsletter-yes">{{ text_yes }}</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input type="radio" name="newsletter" value="0" id="input-newsletter-no" class="form-check-input"/> <label class="form-check-label" for="input-newsletter-no">{{ text_no }}</label>
+              </div>
+              {% else %}
+              <div class="form-check form-check-inline">
+                <input type="radio" name="newsletter" value="1" id="input-newsletter-yes" class="form-check-input"/> <label class="form-check-label" for="input-newsletter-yes">{{ text_yes }}</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input type="radio" name="newsletter" value="0" id="input-newsletter-no" class="form-check-input" checked="checked"/> <label class="form-check-label" for="input-newsletter-no">{{ text_no }}</label>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </fieldset>
+        <div class="buttons clearfix">
+          <div class="float-left"><a href="{{ back }}" class="btn btn-light">{{ button_back }}</a></div>
+          <div class="float-right">
+            <input type="submit" value="{{ button_continue }}" class="btn btn-primary"/>
+          </div>
+        </div>
+      </form>
+      {{ content_bottom }}
+    </div>
+    {{ column_right }}</div>
+</div>
+{{ footer }}

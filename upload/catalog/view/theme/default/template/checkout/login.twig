@@ -1,0 +1,106 @@
+<div class="row">
+  <div class="col-sm-6">
+    <h2>{{ text_new_customer }}</h2>
+    <p>{{ text_checkout }}</p>
+    <div class="form-check">
+      <label>
+        {% if account == 'register' %}
+          <input type="radio" name="account" value="register" class="form-check-input" checked="checked"/>
+        {% else %}
+          <input type="radio" name="account" value="register" class="form-check-input"/>
+        {% endif %}
+        {{ text_register }}
+      </label>
+    </div>
+    {% if checkout_guest %}
+      <div class="form-check">
+        <label>
+          {% if account == 'guest' %}
+            <input type="radio" name="account" value="guest" class="form-check-input" checked="checked"/>
+          {% else %}
+            <input type="radio" name="account" value="guest" class="form-check-input"/>
+          {% endif %}
+          {{ text_guest }}
+        </label>
+      </div>
+    {% endif %}
+    <p>{{ text_register_account }}</p>
+    <button type="button" id="button-account" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
+  </div>
+  <div class="col-sm-6">
+    <h2>{{ text_returning_customer }}</h2>
+    <p>{{ text_i_am_returning_customer }}</p>
+    <div class="form-group">
+      <label class="col-form-label" for="input-email">{{ entry_email }}</label> <input type="text" name="email" value="" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+    </div>
+    <div class="form-group">
+      <label class="col-form-label" for="input-password">{{ entry_password }}</label> <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control"/> <a href="{{ forgotten }}">{{ text_forgotten }}</a></div>
+    <button type="button" id="button-login" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_login }}</button>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#button-account').on('click', function() {
+	chain.attach(function() {
+		return $.ajax({
+			url: 'index.php?route=checkout/' + $('input[name=\'account\']:checked').val(),
+			dataType: 'html',
+			beforeSend: function() {
+				$('#button-account').button('loading');
+			},
+			complete: function() {
+				$('#button-account').button('reset');
+			},
+			success: function(html) {
+				$('.alert-dismissible, .text-danger').remove();
+				$('.form-group').removeClass('has-error');
+
+				$('#collapse-payment-address .card-body').html(html);
+
+				$('#heading-payment-address').attr('data-toggle', 'collapse');
+
+				$('#heading-payment-address').trigger('click');
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	});
+});
+
+// Login
+$('#button-login').on('click', function() {
+	chain.attach(function() {
+		return $.ajax({
+			url: 'index.php?route=checkout/login/save',
+			type: 'post',
+			data: $('#collapse-checkout-option :input'),
+			dataType: 'json',
+			beforeSend: function() {
+				$('#button-login').button('loading');
+			},
+			complete: function() {
+				$('#button-login').button('reset');
+			},
+			success: function(json) {
+				$('.alert-dismissible, .text-danger').remove();
+				$(':input').removeClass('is-invalid');
+
+				if (json['redirect']) {
+					location = json['redirect'];
+				}
+
+				if (json['error']) {
+					$('#collapse-checkout-option .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+					// Highlight any found errors
+					$('#collapse-checkout-option input[name=\'email\']').addClass('is-invalid');
+					$('#collapse-checkout-option input[name=\'password\']').addClass('is-invalid');
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	});
+});
+//--></script>

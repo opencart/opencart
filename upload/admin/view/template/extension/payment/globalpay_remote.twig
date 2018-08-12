@@ -1,0 +1,355 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right">
+        <button type="submit" form="form-payment" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid"> {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        <div class="alert alert-warning"><i class="fas fa-exclamation-circle"></i> {{ text_ip_message }}</div>
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment">
+          <ul class="nav nav-tabs" id="tabs">
+            <li class="nav-item"><a href="#tab-api" data-toggle="tab" class="nav-link active">{{ tab_api }}</a></li>
+            <li class="nav-item"><a href="#tab-account" data-toggle="tab" class="nav-link">{{ tab_account }}</a></li>
+            <li class="nav-item"><a href="#tab-order-status" data-toggle="tab" class="nav-link">{{ tab_order_status }}</a></li>
+            <li class="nav-item"><a href="#tab-payment" data-toggle="tab" class="nav-link">{{ tab_payment }}</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab-api">
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="payment_globalpay_remote_merchant_id" value="{{ payment_globalpay_remote_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="input-merchant-id" class="form-control"/>
+                  {% if error_merchant_id %}
+                    <div class="invalid-tooltip">{{ error_merchant_id }}</div>
+                  {% endif %}</div>
+              </div>
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-secret">{{ entry_secret }}</label>
+                <div class="col-sm-10">
+                  <input type="password" name="payment_globalpay_remote_secret" value="{{ payment_globalpay_remote_secret }}" placeholder="{{ entry_secret }}" id="input-secret" class="form-control"/>
+                  {% if error_secret %}
+                    <div class="invalid-tooltip">{{ error_secret }}</div>
+                  {% endif %}</div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-secret">{{ entry_rebate_password }}</label>
+                <div class="col-sm-10">
+                  <input type="password" name="payment_globalpay_remote_rebate_password" value="{{ payment_globalpay_remote_rebate_password }}" placeholder="{{ entry_rebate_password }}" id="input-rebate-password" class="form-control"/>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_globalpay_remote_geo_zone_id" id="input-geo-zone" class="form-control">
+                    <option value="0">{{ text_all_zones }}</option>
+                    {% for geo_zone in geo_zones %}
+                      {% if geo_zone.geo_zone_id == payment_globalpay_remote_geo_zone_id %}
+                        <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                      {% else %}
+                        <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-debug">{{ entry_debug }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_globalpay_remote_debug" id="input-debug" class="form-control">
+                    {% if payment_globalpay_remote_debug %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                  <small class="form-text text-muted">{{ help_debug }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_globalpay_remote_status" id="input-status" class="form-control">
+                    {% if payment_globalpay_remote_status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-card">{{ entry_card_data_status }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_globalpay_remote_card_data_status" id="input-card" class="form-control">
+                    {% if payment_globalpay_remote_card_data_status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                  <small class="form-text text-muted">{{ help_card_data_status }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-total">{{ entry_total }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="payment_globalpay_remote_total" value="{{ payment_globalpay_remote_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
+                  <small class="form-text text-muted">{{ help_total }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="payment_globalpay_remote_sort_order" value="{{ payment_globalpay_remote_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-account">
+              <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-left">{{ text_card_type }}</td>
+                      <td class="text-center">{{ text_enabled }}</td>
+                      <td class="text-center">{{ text_use_default }}</td>
+                      <td class="text-left">{{ text_subaccount }}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="text-left">{{ text_card_visa }}</td>
+                      <td class="text-center"><input type="checkbox" name="payment_globalpay_remote_account[visa][enabled]" value="1" {{ payment_globalpay_remote_account.visa.enabled and payment_globalpay_remote_account.visa.enabled == 1 ? 'checked="checked" ' : '' }} /></td>
+                      <td class="text-center"><input type="checkbox" name="payment_globalpay_remote_account[visa][default]" value="1" {{ payment_globalpay_remote_account.visa.default and payment_globalpay_remote_account.visa.default == 1 ? 'checked="checked" ' : '' }}/></td>
+                      <td class="text-right"><input type="text" name="payment_globalpay_remote_account[visa][merchant_id]" value="{{ payment_globalpay_remote_account.visa.merchant_id ? payment_globalpay_remote_account.visa.merchant_id : '' }}" placeholder="{{ text_subaccount }}" class="form-control"/></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">{{ text_card_master }}</td>
+                      <td class="text-center"><input type="checkbox" name="payment_globalpay_remote_account[mc][enabled]" value="1" {{ payment_globalpay_remote_account.mc.enabled and payment_globalpay_remote_account.mc.enabled == 1 ? 'checked="checked" ' : '' }}/></td>
+                      <td class="text-center"><input type="checkbox" name="payment_globalpay_remote_account[mc][default]" value="1" {{ payment_globalpay_remote_account.mc.default and payment_globalpay_remote_account.mc.default == 1 ? 'checked="checked" ' : '' }}/></td>
+                      <td class="text-right"><input type="text" name="payment_globalpay_remote_account[mc][merchant_id]" value="{{ payment_globalpay_remote_account.mc.merchant_id ? payment_globalpay_remote_account.mc.merchant_id : '' }}" placeholder="{{ text_subaccount }}" class="form-control"/></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">{{ text_card_amex }}</td>
+                      <td class="text-center"><input type="checkbox" name="payment_globalpay_remote_account[amex][enabled]" value="1" {{ payment_globalpay_remote_account.amex.enabled and payment_globalpay_remote_account.amex.enabled == 1 ? 'checked="checked" ' : '' }}/></td>
+                      <td class="text-center"><input type="checkbox" name="payment_globalpay_remote_account[amex][default]" value="1" {{ payment_globalpay_remote_account.amex.default and payment_globalpay_remote_account.amex.default == 1 ? 'checked="checked" ' : '' }}/></td>
+                      <td class="text-right"><input type="text" name="payment_globalpay_remote_account[amex][merchant_id]" value="{{ payment_globalpay_remote_account.amex.merchant_id ? payment_globalpay_remote_account.amex.merchant_id : '' }}" placeholder="{{ text_subaccount }}" class="form-control"/></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">{{ text_card_switch }}</td>
+                      <td class="text-center"><input type="checkbox" name="payment_globalpay_remote_account[switch][enabled]" value="1" {{ payment_globalpay_remote_account.switch.enabled and payment_globalpay_remote_account.switch.enabled == 1 ? 'checked="checked" ' : '' }}/></td>
+                      <td class="text-center"><input type="checkbox" name="payment_globalpay_remote_account[switch][default]" value="1" {{ payment_globalpay_remote_account.switch.default and payment_globalpay_remote_account.switch.default == 1 ? 'checked="checked" ' : '' }}/></td>
+                      <td class="text-right"><input type="text" name="payment_globalpay_remote_account[switch][merchant_id]" value="{{ payment_globalpay_remote_account.switch.merchant_id ? payment_globalpay_remote_account.switch.merchant_id : '' }}" placeholder="{{ text_subaccount }}" class="form-control"/></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">{{ text_card_laser }}</td>
+                      <td class="text-center"><input type="checkbox" name="payment_globalpay_remote_account[laser][enabled]" value="1" {{ payment_globalpay_remote_account.laser.enabled and payment_globalpay_remote_account.laser.enabled == 1 ? 'checked="checked" ' : '' }}/></td>
+                      <td class="text-center"><input type="checkbox" name="payment_globalpay_remote_account[laser][default]" value="1" {{ payment_globalpay_remote_account.laser.default and payment_globalpay_remote_account.laser.default == 1 ? 'checked="checked" ' : '' }}/></td>
+                      <td class="text-right"><input type="text" name="payment_globalpay_remote_account[laser][merchant_id]" value="{{ payment_globalpay_remote_account.laser.merchant_id ? payment_globalpay_remote_account.laser.merchant_id : '' }}" placeholder="{{ text_subaccount }}" class="form-control"/></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">{{ text_card_diners }}</td>
+                      <td class="text-center"><input type="checkbox" name="payment_globalpay_remote_account[diners][enabled]" value="1" {{ payment_globalpay_remote_account.diners.enabled and payment_globalpay_remote_account.diners.enabled == 1 ? 'checked="checked" ' : '' }}/></td>
+                      <td class="text-center"><input type="checkbox" name="payment_globalpay_remote_account[diners][default]" value="1" {{ payment_globalpay_remote_account.diners.default and payment_globalpay_remote_account.diners.default == 1 ? 'checked="checked" ' : '' }}/></td>
+                      <td class="text-right"><input type="text" name="payment_globalpay_remote_account[diners][merchant_id]" value="{{ payment_globalpay_remote_account.diners.merchant_id ? payment_globalpay_remote_account.diners.merchant_id : '' }}" placeholder="{{ text_subaccount }}" class="form-control"/></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-order-status">
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-order-status-success-settled">{{ entry_status_success_settled }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_globalpay_remote_order_status_success_settled_id" id="input-order-status-success-settled" class="form-control">
+                    {% for order_status in order_statuses %}
+                      {% if order_status.order_status_id == payment_globalpay_remote_order_status_success_settled_id %}
+                        <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                      {% else %}
+                        <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-order-status-success-unsettled">{{ entry_status_success_unsettled }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_globalpay_remote_order_status_success_unsettled_id" id="input-order-status-success-unsettled" class="form-control">
+                    {% for order_status in order_statuses %}
+                      {% if order_status.order_status_id == payment_globalpay_remote_order_status_success_unsettled_id %}
+                        <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                      {% else %}
+                        <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-order-status-decline">{{ entry_status_decline }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_globalpay_remote_order_status_decline_id" id="input-order-status-decline" class="form-control">
+
+                    {% for order_status in order_statuses %}
+                      {% if order_status.order_status_id == payment_globalpay_remote_order_status_decline_id %}
+
+                        <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+
+                      {% else %}
+
+                        <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+
+                      {% endif %}
+                    {% endfor %}
+
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-order-status-decline-pending">{{ entry_status_decline_pending }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_globalpay_remote_order_status_decline_pending_id" id="input-order-status-decline-pending" class="form-control">
+
+                    {% for order_status in order_statuses %}
+                      {% if order_status.order_status_id == payment_globalpay_remote_order_status_decline_pending_id %}
+
+                        <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+
+                      {% else %}
+
+                        <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+
+                      {% endif %}
+                    {% endfor %}
+
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-order-status-decline-stolen">{{ entry_status_decline_stolen }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_globalpay_remote_order_status_decline_stolen_id" id="input-order-status-decline-stolen" class="form-control">
+
+                    {% for order_status in order_statuses %}
+                      {% if order_status.order_status_id == payment_globalpay_remote_order_status_decline_stolen_id %}
+
+                        <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+
+                      {% else %}
+
+                        <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+
+                      {% endif %}
+                    {% endfor %}
+
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-order-status-decline-bank">{{ entry_status_decline_bank }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_globalpay_remote_order_status_decline_bank_id" id="input-order-status-decline-bank" class="form-control">
+
+                    {% for order_status in order_statuses %}
+                      {% if order_status.order_status_id == payment_globalpay_remote_order_status_decline_bank_id %}
+
+                        <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+
+                      {% else %}
+
+                        <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+
+                      {% endif %}
+                    {% endfor %}
+
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-payment">
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-auto-settle">{{ entry_auto_settle }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_globalpay_remote_auto_settle" id="input-auto-settle" class="form-control">
+                    <option value="0"{{ payment_globalpay_remote_auto_settle == 0 ? ' selected' : '' }}>{{ text_settle_delayed }}</option>
+                    <option value="1"{{ payment_globalpay_remote_auto_settle == 1 ? ' selected' : '' }}>{{ text_settle_auto }}</option>
+                    <option value="2"{{ payment_globalpay_remote_auto_settle == 2 ? ' selected' : '' }}>{{ text_settle_multi }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">{{ entry_tss_check }}</label>
+                <div class="col-sm-10">
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    {% if payment_globalpay_remote_tss_check %}
+                      <label class="btn btn-outline-secondary active"><input type="radio" name="payment_globalpay_remote_tss_check" value="1" checked="checked"/> {{ text_yes }}</label>
+                      <label class="btn btn-outline-secondary"><input type="radio" name="payment_globalpay_remote_tss_check" value="0"/> {{ text_no }}</label>
+                    {% else %}
+                      <label class="btn btn-outline-secondary"><input type="radio" name="payment_globalpay_remote_tss_check" value="1"/> {{ text_yes }}</label>
+                      <label class="btn btn-outline-secondary active"><input type="radio" name="payment_globalpay_remote_tss_check" value="0" checked="checked"/> {{ text_no }}</label>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-3d">{{ entry_3d }}</label>
+                <div class="col-sm-10">
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    {% if payment_globalpay_remote_3d %}
+                      <label class="btn btn-outline-secondary active"><input type="radio" name="payment_globalpay_remote_3d" value="1" checked="checked"/> {{ text_yes }}</label>
+                      <label class="btn btn-outline-secondary"><input type="radio" name="payment_globalpay_remote_3d" value="0"/> {{ text_no }}</label>
+                    {% else %}
+                      <label class="btn btn-outline-secondary"><input type="radio" name="payment_globalpay_remote_3d" value="1"/> {{ text_yes }}</label>
+                      <label class="btn btn-outline-secondary active"><input type="radio" name="payment_globalpay_remote_3d" value="0" checked="checked"/> {{ text_no }}</label>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">{{ entry_liability_shift }}</label>
+                <div class="col-sm-10">
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    {% if payment_globalpay_remote_liability %}
+                      <label class="btn btn-outline-secondary active"><input type="radio" name="payment_globalpay_remote_liability" value="1" checked="checked"/> {{ text_yes }}</label>
+                      <label class="btn btn-outline-secondary"><input type="radio" name="payment_globalpay_remote_liability" value="0"/> {{ text_no }}</label>
+                    {% else %}
+                      <label class="btn btn-outline-secondary"><input type="radio" name="payment_globalpay_remote_liability" value="1"/> {{ text_yes }}</label>
+                      <label class="btn btn-outline-secondary active"><input type="radio" name="payment_globalpay_remote_liability" value="0" checked="checked"/> {{ text_no }}</label>
+                    {% endif %}
+                  </div>
+                  <small class="form-text text-muted">{{ help_liability }}</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript"><!--
+  $('#tabs a:first').tab('show');
+  //--></script>
+</div>
+{{ footer }}

@@ -1,35 +1,26 @@
-<?php    
-class ControllerErrorPermission extends Controller {    
-	public function index() { 
-    	$this->language->load('error/permission');
-  
-    	$this->document->setTitle($this->language->get('heading_title'));
-		
-    	$this->data['heading_title'] = $this->language->get('heading_title');
+<?php
+class ControllerErrorPermission extends Controller {
+	public function index() {
+		$this->load->language('error/permission');
 
-		$this->data['text_permission'] = $this->language->get('text_permission');
-													
-  		$this->data['breadcrumbs'] = array();
+		$this->document->setTitle($this->language->get('heading_title'));
 
-   		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
-   		);
+		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('error/permission', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => $this->language->get('breadcrump_seperator')
-   		);
-
-		$this->template = 'error/permission.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
-				
-		$this->response->setOutput($this->render());
-  	}
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link($this->request->get['route'], 'user_token=' . $this->session->data['user_token'])
+		);
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('error/permission', $data));
+	}
 }
-?>

@@ -1,34 +1,38 @@
-/*
-Flot plugin for stacking data sets, i.e. putting them on top of each
-other, for accumulative graphs.
+/* Flot plugin for stacking data sets rather than overlyaing them.
 
-The plugin assumes the data is sorted on x (or y if stacking
-horizontally). For line charts, it is assumed that if a line has an
-undefined gap (from a null point), then the line above it should have
-the same gap - insert zeros instead of "null" if you want another
-behaviour. This also holds for the start and end of the chart. Note
-that stacking a mix of positive and negative values in most instances
-doesn't make sense (so it looks weird).
+Copyright (c) 2007-2013 IOLA and Ole Laursen.
+Licensed under the MIT license.
 
-Two or more series are stacked when their "stack" attribute is set to
-the same key (which can be any number or string or just "true"). To
-specify the default stack, you can set
+The plugin assumes the data is sorted on x (or y if stacking horizontally).
+For line charts, it is assumed that if a line has an undefined gap (from a
+null point), then the line above it should have the same gap - insert zeros
+instead of "null" if you want another behaviour. This also holds for the start
+and end of the chart. Note that stacking a mix of positive and negative values
+in most instances doesn't make sense (so it looks weird).
 
-  series: {
-    stack: null or true or key (number/string)
-  }
+Two or more series are stacked when their "stack" attribute is set to the same
+key (which can be any number or string or just "true"). To specify the default
+stack, you can set the stack option like this:
 
-or specify it for a specific series
+	series: {
+		stack: null/false, true, or a key (number/string)
+	}
 
-  $.plot($("#placeholder"), [{ data: [ ... ], stack: true }])
-  
-The stacking order is determined by the order of the data series in
-the array (later series end up on top of the previous).
+You can also specify it for a single series, like this:
 
-Internally, the plugin modifies the datapoints in each series, adding
-an offset to the y value. For line series, extra data points are
-inserted through interpolation. If there's a second y value, it's also
-adjusted (e.g for bar charts or filled areas).
+	$.plot( $("#placeholder"), [{
+		data: [ ... ],
+		stack: true
+	}])
+
+The stacking order is determined by the order of the data series in the array
+(later series end up on top of the previous).
+
+Internally, the plugin modifies the datapoints in each series, adding an
+offset to the y value. For line series, extra data points are inserted through
+interpolation. If there's a second y value, it's also adjusted (e.g for bar
+charts or filled areas).
+
 */
 
 (function ($) {
@@ -38,7 +42,7 @@ adjusted (e.g for bar charts or filled areas).
     
     function init(plot) {
         function findMatchingSeries(s, allseries) {
-            var res = null
+            var res = null;
             for (var i = 0; i < allseries.length; ++i) {
                 if (s == allseries[i])
                     break;
@@ -51,7 +55,7 @@ adjusted (e.g for bar charts or filled areas).
         }
         
         function stackData(plot, s, datapoints) {
-            if (s.stack == null)
+            if (s.stack == null || s.stack === false)
                 return;
 
             var other = findMatchingSeries(s, plot.getData());
@@ -71,7 +75,7 @@ adjusted (e.g for bar charts or filled areas).
                 fromgap = true,
                 keyOffset = horizontal ? 1 : 0,
                 accumulateOffset = horizontal ? 0 : 1,
-                i = 0, j = 0, l;
+                i = 0, j = 0, l, m;
 
             while (true) {
                 if (i >= points.length)

@@ -1,19 +1,24 @@
 /**
- * @license Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.html or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 CKEDITOR.editorConfig = function( config ) {
+	// Define changes to default configuration here. For example:
+	// config.language = 'fr';
+	// config.uiColor = '#AADC6E';
+
 	// Define changes to default configuration here.
 	// For the complete reference:
 	// http://docs.ckeditor.com/#!/api/CKEDITOR.config
+	config.language = $(this).attr('data-lang');
 	config.filebrowserWindowWidth = '800';
 	config.filebrowserWindowHeight = '500';
 	config.resize_enabled = false;
 	config.htmlEncodeOutput = false;
 	config.entities = false;
-	config.extraPlugins = 'codemirror';
-	config.codemirror_theme = 'rubyblue';
+	config.extraPlugins = 'opencart,codemirror'; //
+	config.codemirror_theme = 'monokai';
 	config.toolbar = 'Custom';
 
 	config.toolbar_Custom = [
@@ -28,6 +33,6 @@ CKEDITOR.editorConfig = function( config ) {
 		['Font','FontSize'],
 		['TextColor','BGColor'],
 		['Link','Unlink','Anchor'],
-		['Image','Table','HorizontalRule']
+		['Image','OpenCart','Table','HorizontalRule']
 	];
 };

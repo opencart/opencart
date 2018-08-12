@@ -1,0 +1,253 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right">
+        <button type="submit" form="form-payment" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment">
+          <ul class="nav nav-tabs" id="tabs">
+            <li class="nav-item"><a href="#tab-account" data-toggle="tab" class="nav-link active">{{ tab_account }}</a></li>
+            <li class="nav-item"><a href="#tab-order-status" data-toggle="tab" class="nav-link">{{ tab_order_status }}</a></li>
+            <li class="nav-item"><a href="#tab-payment" data-toggle="tab" class="nav-link">{{ tab_payment }}</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab-account">
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="payment_firstdata_remote_merchant_id" value="{{ payment_firstdata_remote_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="input-merchant-id" class="form-control"/>
+                  {% if error_merchant_id %}
+                    <div class="invalid-tooltip">{{ error_merchant_id }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-user-id">{{ entry_user_id }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="payment_firstdata_remote_user_id" value="{{ payment_firstdata_remote_user_id }}" placeholder="{{ entry_user_id }}" id="input-user-id" class="form-control"/>
+                  {% if error_user_id %}
+                    <div class="invalid-tooltip">{{ error_user_id }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-password">{{ entry_password }}</label>
+                <div class="col-sm-10">
+                  <input type="password" name="payment_firstdata_remote_password" value="{{ payment_firstdata_remote_password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control"/>
+                  {% if error_password %}
+                    <div class="invalid-tooltip">{{ error_password }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-certificate-path">{{ entry_certificate_path }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="payment_firstdata_remote_certificate" value="{{ payment_firstdata_remote_certificate }}" placeholder="{{ entry_certificate_path }}" id="input-certificate-path" class="form-control"/>
+                  <small class="form-text text-muted">{{ help_certificate }}</small>
+                  {% if error_certificate %}
+                    <div class="invalid-tooltip">{{ error_certificate }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-key-path">{{ entry_certificate_key_path }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="payment_firstdata_remote_key" value="{{ payment_firstdata_remote_key }}" placeholder="{{ entry_certificate_key_path }}" id="input-key-path" class="form-control"/>
+                  {% if error_key %}
+                    <div class="invalid-tooltip">{{ error_key }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-key-pw">{{ entry_certificate_key_pw }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="payment_firstdata_remote_key_pw" value="{{ payment_firstdata_remote_key_pw }}" placeholder="{{ entry_certificate_key_pw }}" id="input-key-pw" class="form-control"/>
+                  {% if error_key_pw %}
+                    <div class="invalid-tooltip">{{ error_key_pw }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-ca-path">{{ entry_certificate_ca_path }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="payment_firstdata_remote_ca" value="{{ payment_firstdata_remote_ca }}" placeholder="{{ entry_certificate_ca_path }}" id="input-ca-path" class="form-control"/>
+                  {% if error_ca %}
+                    <div class="invalid-tooltip">{{ error_ca }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-debug">{{ entry_debug }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_firstdata_remote_debug" id="input-debug" class="form-control">
+                    {% if payment_firstdata_remote_debug %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                  <small class="form-text text-muted">{{ help_debug }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-total">{{ entry_total }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="payment_firstdata_remote_total" value="{{ payment_firstdata_remote_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
+                  <small class="form-text text-muted">{{ help_total }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_firstdata_remote_geo_zone_id" id="input-geo-zone" class="form-control">
+                    <option value="0">{{ text_all_zones }}</option>
+                    {% for geo_zone in geo_zones %}
+                      {% if geo_zone.geo_zone_id == payment_firstdata_remote_geo_zone_id %}
+                        <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                      {% else %}
+                        <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_firstdata_remote_status" id="input-status" class="form-control">
+                    {% if payment_firstdata_remote_status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="payment_firstdata_remote_sort_order" value="{{ payment_firstdata_remote_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-order-status">
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-order-status-success-settled">{{ entry_status_success_settled }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_firstdata_remote_order_status_success_settled_id" id="input-order-status-success-settled" class="form-control">
+                    {% for order_status in order_statuses %}
+                      {% if order_status.order_status_id == payment_firstdata_remote_order_status_success_settled_id %}
+                        <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                      {% else %}
+                        <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-order-status-success-unsettled">{{ entry_status_success_unsettled }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_firstdata_remote_order_status_success_unsettled_id" id="input-order-status-success-unsettled" class="form-control">
+                    {% for order_status in order_statuses %}
+                      {% if order_status.order_status_id == payment_firstdata_remote_order_status_success_unsettled_id %}
+                        <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                      {% else %}
+                        <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-order-status-decline">{{ entry_status_decline }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_firstdata_remote_order_status_decline_id" id="input-order-status-decline" class="form-control">
+                    {% for order_status in order_statuses %}
+                      {% if order_status.order_status_id == payment_firstdata_remote_order_status_decline_id %}
+                        <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                      {% else %}
+                        <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-payment">
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-auto-settle">{{ entry_auto_settle }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_firstdata_remote_auto_settle" id="input-auto-settle" class="form-control">
+                    {% if not payment_firstdata_remote_auto_settle %}
+                      <option value="0">{{ text_settle_delayed }}</option>
+                      <option value="1" selected="selected">{{ text_settle_auto }}</option>
+                    {% endif %}
+                    {% if payment_firstdata_remote_auto_settle %}
+                      <option value="0" selected="selected">{{ text_settle_delayed }}</option>
+                      <option value="1">{{ text_settle_auto }}</option>
+                    {% endif %}
+                  </select>
+                  <small class="form-text text-muted">{{ help_settle }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-card-store">{{ entry_enable_card_store }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_firstdata_remote_card_storage" id="input-card-store" class="form-control">
+                    {% if payment_firstdata_remote_card_storage %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">{{ entry_cards_accepted }}</label>
+                <div class="col-sm-10">
+                  {% for card in cards %}
+                    <label class="form-check">
+                      {% if card.value in payment_firstdata_remote_cards_accepted %}
+                        <input type="checkbox" name="payment_firstdata_remote_cards_accepted[]" value="{{ card.value }}" checked="checked" class="form-check-input"/>
+                        {{ card.text }}
+                      {% else %}
+                        <input type="checkbox" name="payment_firstdata_remote_cards_accepted[]" value="{{ card.value }}" class="form-check-input"/>
+                        {{ card.text }}
+                      {% endif %}
+                    </label>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

@@ -1,0 +1,118 @@
+{% if payment %}
+<table class="table table-bordered">
+  <tr>
+	<td>{{ column_refund_history }}</td>
+	<td>
+		<table class="table table-bordered">
+		  <thead>
+			<tr>
+			  <td class="text-left">{{ column_date }}</td>
+			  <td class="text-left">{{ column_amount }}</td>
+			  <td class="text-left">{{ column_status }}</td>
+			  <td class="text-left">{{ column_description }}</td>
+			</tr>
+		  </thead>
+		  <tbody>
+			{% if refunds %}
+			{% for refund in refunds %}
+			<tr>
+			  <td>{{ refund.date_added }}</td>
+			  <td>{{ refund.amount }}</td>
+			  <td>{{ refund.status }}</td>
+			  <td>{{ refund.description }}</td>
+			</tr>
+			{% endfor %}
+			{% else %}
+			<tr>
+			  <td class="text-center" colspan="3">{{ text_no_refund }}</td>
+			</tr>
+			{% endif %}
+		  </tbody>
+		</table>
+	</td>
+  </tr>
+  <tr>
+	<td>{{ column_action }}</td>
+	<td>
+		<table class="table table-bordered">
+		  <thead>
+			<tr>
+			  <td class="text-left">{{ column_refund }}</td>
+			</tr>
+		  </thead>
+		  <tbody>
+			<tr>
+			  <td>
+				  {% if refund_action %}
+				  <label class="col-form-label">Amount:</label>
+				  <input id="refund-amount" text="text" name="refund_amount" value="{{ max_refund_amount }}" />
+				  <label class="col-form-label">Description:</label>
+				  <input id="refund-description" text="text" name="refund_description" value="" />
+				  <a class="btn btn-primary button-command" data-type="refund">{{ button_refund }}</a>
+				  {% else %}
+				  {{ text_na }}
+				  {% endif %}
+			  </td>
+			</tr>
+		  </tbody>
+		</table>
+	</td>
+  </tr>
+</table>
+{% else %}
+Unable to find transaction for this order.
+{% endif %}
+
+<script type="text/javascript"><!--
+$('.button-command').on('click', function() {
+	var confirm_text = '';
+
+	{% if symbol_left %}
+	confirm_text = '{{ text_confirm_refund }} ' + '{{ symbol_left }}' + $('#refund-amount').val();
+	{% elseif symbol_right %}
+	confirm_text = '{{ text_confirm_refund }} ' + $('#refund-amount').val() + '{{ symbol_right }}';
+	{% endif %}
+
+	if (confirm(confirm_text)) {
+		$.ajax({
+			url: 'index.php?route=extension/payment/cardinity/refund&user_token={{ user_token }}',
+			type: 'post',
+			data: {
+				payment_id: '{{ payment_id }}',
+				amount: $('#refund-amount').val(),
+				description: $('#refund-description').val()
+			},
+			dataType: 'json',
+			beforeSend: function() {
+				$('#button-settle').button('loading');
+
+				$('.alert').hide();
+
+				$('.alert').removeClass('alert-success alert-danger');
+			},
+			complete: function() {
+				$('#button-settle').button('reset');
+			},
+			success: function(json) {
+				if (json.error) {
+					$('.alert').show();
+
+					$('.alert').addClass('alert-danger');
+
+					$('.alert').html('<i class="fas fa-check-circle"></i> ' + json.error);
+				}
+
+				if (json.success) {
+					$('.alert').show();
+
+					$('.alert').addClass('alert-success');
+
+					$('.alert').html('<i class="fas fa-exclamation-circle"></i> ' + json.success);
+				}
+
+				getPayment('{{ payment_id }}');
+			}
+		});
+	}
+});
+//--></script>

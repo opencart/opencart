@@ -1,0 +1,140 @@
+<div id="modal-security" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger"><i class="fas fa-exclamation-triangle"></i> {{ heading_title }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-info"><i class="fas fa-exclamation-circle"></i> {{ text_security }}</div>
+        <form>
+          <fieldset>
+            <legend>{{ text_choose }}</legend>
+            <div class="form-group">
+              <select name="type" id="input-type" class="form-control">
+                <option value="automatic">{{ text_automatic }}</option>
+                <option value="manual">{{ text_manual }}</option>
+              </select>
+            </div>
+          </fieldset>
+          <fieldset id="collapse-automatic" class="collapse">
+            <legend>{{ text_automatic }}</legend>
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-prepend dropdown">
+                  <button type="button" id="button-path" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">{{ document_root }} <span class="fas fa-caret-down"></span></button>
+                  <div class="dropdown-menu">
+                    {% for path in paths %}
+                      {% if path|length > document_root|length %}
+                        <a href="{{ path }}" class="dropdown-item"><i class="fas fa-exclamation-triangle fa-fw text-danger"></i> {{ path }}</a>
+                      {% else %}
+                        <a href="{{ path }}" class="dropdown-item"><i class="fas fa-check-circle fa-fw text-success"></i> {{ path }}</a>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                </div>
+                <input type="text" name="directory" value="storage" placeholder="{{ entry_directory }}" class="form-control"/>
+                <div class="input-group-append">
+                  <button type="button" id="button-move" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i> {{ button_move }}</button>
+                </div>
+              </div>
+              <input type="hidden" name="path" value="{{ document_root }}"/>
+            </div>
+          </fieldset>
+          <fieldset id="collapse-manual" class="collapse">
+            <legend>{{ text_manual }}</legend>
+            <div class="card bg-light">
+              <div class="card-body" style="height: 300px; overflow-y: scroll;"></div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$(document).ready(function() {
+	$('#modal-security').modal('show');
+});
+
+$('#modal-security select[name=\'type\']').on('change', function() {
+	$('#modal-security fieldset.collapse').removeClass('show');
+
+	$('#modal-security #collapse-' + $(this).val()).addClass('show');
+});
+
+$('#modal-security select[name=\'type\']').trigger('change');
+
+$('#modal-security .dropdown-menu a').on('click', function(e) {
+	e.preventDefault();
+
+	$('#modal-security #button-path').html($(this).html() + ' <span class="fas fa-caret-down"></span>');
+
+	$('#modal-security input[name=\'path\']').val($(this).attr('href'));
+});
+
+
+$('#modal-security .dropdown-menu a').on('click', function(e) {
+	e.preventDefault();
+
+	$('#button-path').html($(this).text() + ' <span class="fas fa-caret-down"></span>');
+
+	$('input[name=\'path\']').val($(this).attr('href'));
+
+	$('input[name=\'path\']').trigger('change');
+});
+
+$('#button-move').on('click', function() {
+	var element = this;
+
+	$.ajax({
+		url: 'index.php?route=common/security/move&user_token={{ user_token }}',
+		type: 'post',
+		data: $('input[name=\'path\'], input[name=\'directory\']'),
+		dataType: 'json',
+		crossDomain: true,
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(json) {
+			$('.alert-dismissible').remove();
+
+			if (json['error']) {
+				$('#modal-security .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+
+			if (json['success']) {
+				$('#modal-security .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$('#modal-security select[name=\'type\']').on('change', function() {
+	html = '<ol>';
+	html += '  <li><p>{{ text_move }}</p>';
+	html += '    <p><strong>{{ storage }}</strong></p>';
+	html += '    <p>{{ text_to }}</p>';
+	html += '    <p><strong>' + $('#modal-security input[name=\'path\']').val() + $('#modal-security input[name=\'directory\']').val() + '/</strong></p></li>';
+	html += '   <li><p>{{ text_config }}</p>';
+	html += '     <p><strong>define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');</strong></p>';
+	html += '     <p>{{ text_by }}</p>';
+	html += '     <p><strong>define(\'DIR_STORAGE\', \'' + $('#modal-security input[name=\'path\']').val() + $('#modal-security input[name=\'directory\']').val() + '/\');</strong></p></li>';
+	html += '   <li><p>{{ text_admin }}</p>';
+	html += '     <p><strong>define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');</strong></p>';
+	html += '     <p>{{ text_by }}</p>';
+	html += '     <p><strong>define(\'DIR_STORAGE\', \'' + $('#modal-security input[name=\'path\']').val() + $('#modal-security input[name=\'directory\']').val() + '/\');</strong></p></li>';
+	html += '  </li>';
+	html += '</ol>';
+
+	$('#collapse-manual .card-body').html(html);
+});
+
+$('input[name=\'path\']').trigger('change');
+//--></script>

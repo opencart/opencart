@@ -1,0 +1,188 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right">
+        <button type="submit" form="form-payment" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment">
+          <div class="form-group row required">
+            <label class="col-sm-2 col-form-label" for="input-vendor">{{ entry_vendor }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="payment_sagepay_server_vendor" value="{{ payment_sagepay_server_vendor }}" placeholder="{{ entry_vendor }}" id="input-vendor" class="form-control"/>
+              {% if error_vendor %}
+                <div class="invalid-tooltip">{{ error_vendor }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-test">{{ entry_test }}</label>
+            <div class="col-sm-10">
+              <select name="payment_sagepay_server_test" id="input-test" class="form-control">
+                {% if payment_sagepay_server_test == 'sim' %}
+                  <option value="sim" selected="selected">{{ text_sim }}</option>
+                {% else %}
+                  <option value="sim">{{ text_sim }}</option>
+                {% endif %}
+                {% if payment_sagepay_server_test == 'test' %}
+                  <option value="test" selected="selected">{{ text_test }}</option>
+                {% else %}
+                  <option value="test">{{ text_test }}</option>
+                {% endif %}
+                {% if payment_sagepay_server_test == 'live' %}
+                  <option value="live" selected="selected">{{ text_live }}</option>
+                {% else %}
+                  <option value="live">{{ text_live }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-transaction">{{ entry_transaction }}</label>
+            <div class="col-sm-10">
+              <select name="payment_sagepay_server_transaction" id="input-transaction" class="form-control">
+                {% if payment_sagepay_server_transaction == 'PAYMENT' %}
+                  <option value="PAYMENT" selected="selected">{{ text_payment }}</option>
+                {% else %}
+                  <option value="PAYMENT">{{ text_payment }}</option>
+                {% endif %}
+                {% if payment_sagepay_server_transaction == 'DEFERRED' %}
+                  <option value="DEFERRED" selected="selected">{{ text_defered }}</option>
+                {% else %}
+                  <option value="DEFERRED">{{ text_defered }}</option>
+                {% endif %}
+                {% if payment_sagepay_server_transaction == 'AUTHENTICATE' %}
+                  <option value="AUTHENTICATE" selected="selected">{{ text_authenticate }}</option>
+                {% else %}
+                  <option value="AUTHENTICATE">{{ text_authenticate }}</option>
+                {% endif %}
+              </select>
+              <small class="form-text text-muted">{{ help_transaction }}</small>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-total">{{ entry_total }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="payment_sagepay_server_total" value="{{ payment_sagepay_server_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
+              <small class="form-text text-muted">{{ help_total }}</small>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-card">{{ entry_card }}</label>
+            <div class="col-sm-10">
+              <select name="payment_sagepay_server_card" id="input-debug" class="form-control">
+                {% if payment_sagepay_server_card %}
+                  <option value="1" selected="selected">{{ text_enabled }}</option>
+                  <option value="0">{{ text_disabled }}</option>
+                {% else %}
+                  <option value="1">{{ text_enabled }}</option>
+                  <option value="0" selected="selected">{{ text_disabled }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-order-status">{{ entry_order_status }}</label>
+            <div class="col-sm-10">
+              <select name="payment_sagepay_server_order_status_id" id="input-order-status" class="form-control">
+                {% for order_status in order_statuses %}
+                  {% if order_status.order_status_id == payment_sagepay_server_order_status_id %}
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                  {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+            <div class="col-sm-10">
+              <select name="payment_sagepay_server_geo_zone_id" id="input-geo-zone" class="form-control">
+                <option value="0">{{ text_all_zones }}</option>
+                {% for geo_zone in geo_zones %}
+                  {% if geo_zone.geo_zone_id == payment_sagepay_server_geo_zone_id %}
+                    <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                  {% else %}
+                    <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-debug">{{ entry_debug }}</label>
+            <div class="col-sm-10">
+              <select name="payment_sagepay_server_debug" id="input-debug" class="form-control">
+                {% if payment_sagepay_server_debug %}
+                  <option value="1" selected="selected">{{ text_enabled }}</option>
+                  <option value="0">{{ text_disabled }}</option>
+                {% else %}
+                  <option value="1">{{ text_enabled }}</option>
+                  <option value="0" selected="selected">{{ text_disabled }}</option>
+                {% endif %}
+              </select>
+              <small class="form-text text-muted">{{ help_debug }}</small>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
+            <div class="col-sm-10">
+              <select name="payment_sagepay_server_status" id="input-status" class="form-control">
+                {% if payment_sagepay_server_status %}
+                  <option value="1" selected="selected">{{ text_enabled }}</option>
+                  <option value="0">{{ text_disabled }}</option>
+                {% else %}
+                  <option value="1">{{ text_enabled }}</option>
+                  <option value="0" selected="selected">{{ text_disabled }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="payment_sagepay_server_sort_order" value="{{ payment_sagepay_server_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="payment_sagepay_server_cron_job_token">{{ entry_cron_job_token }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="payment_sagepay_server_cron_job_token" value="{{ payment_sagepay_server_cron_job_token }}" placeholder="{{ entry_cron_job_token }}" id="payment_sagepay_server_cron_job_token" class="form-control"/>
+              <small class="form-text text-muted">{{ help_cron_job_token }}</small>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">{{ entry_cron_job_url }}</label>
+            <div class="col-sm-10"><span id="cron-job-url">{{ sagepay_server_cron_job_url }}</span>
+              <br/>
+              <small class="form-text text-muted">{{ help_cron_job_url }}</small>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">{{ entry_last_cron_job_run }}</label>
+            <div class="col-sm-10"><span>{{ payment_sagepay_server_last_cron_job_run }}</span></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

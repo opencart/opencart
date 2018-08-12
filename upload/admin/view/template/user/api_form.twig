@@ -1,0 +1,197 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right">
+        <button type="submit" form="form-api" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">{% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-api">
+          <ul class="nav nav-tabs">
+            <li class="nav-item"><a href="#tab-general" data-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+            <li class="nav-item"><a href="#tab-ip" data-toggle="tab" class="nav-link">{{ tab_ip }}</a></li>
+            <li class="nav-item"><a href="#tab-session" data-toggle="tab" class="nav-link">{{ tab_session }}</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab-general">
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-username">{{ entry_username }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="username" value="{{ username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
+                  {% if error_username %}
+                    <div class="invalid-tooltip">{{ error_username }}</div>
+                  {% endif %}</div>
+              </div>
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-key">{{ entry_key }}</label>
+                <div class="col-sm-10">
+                  <textarea name="key" placeholder="{{ entry_key }}" rows="5" id="input-key" class="form-control">{{ key }}</textarea>
+                  <br/>
+                  <button type="button" id="button-generate" class="btn btn-primary"><i class="fas fa-sync"></i> {{ button_generate }}</button>
+                  {% if error_key %}
+                    <div class="invalid-tooltip">{{ error_key }}</div>
+                  {% endif %}</div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="status" id="input-status" class="form-control">
+                    {% if status %}
+                      <option value="0">{{ text_disabled }}</option>
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                    {% else %}
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                      <option value="1">{{ text_enabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-ip">
+              <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_ip }}</div>
+              <div class="table-responsive">
+                <table id="ip" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-left">{{ entry_ip }}</td>
+                      <td class="text-left"></td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% set ip_row = 0 %}
+                    {% for api_ip in api_ips %}
+                      <tr id="ip-row{{ ip_row }}">
+                        <td class="text-left"><input type="text" name="api_ip[]" value="{{ api_ip }}" placeholder="{{ entry_ip }}" class="form-control"/></td>
+                        <td class="text-left"><button type="button" onclick="$('#ip-row{{ ip_row }}').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+                      </tr>
+                      {% set ip_row = ip_row + 1 %}
+                    {% endfor %}
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td></td>
+                      <td class="text-left"><button type="button" onclick="addIp()" data-toggle="tooltip" title="{{ button_ip_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-session">
+              <div class="table-responsive">
+                <table id="session" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-left">{{ column_token }}</td>
+                      <td class="text-left">{{ column_ip }}</td>
+                      <td class="text-left">{{ column_date_added }}</td>
+                      <td class="text-left">{{ column_date_modified }}</td>
+                      <td class="text-right">{{ column_action }}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    {% if api_sessions %}
+                      {% for api_session in api_sessions %}
+                        <tr>
+                          <td class="text-left">{{ api_session.session_id }}</td>
+                          <td class="text-left">{{ api_session.ip }}</td>
+                          <td class="text-left">{{ api_session.date_added }}</td>
+                          <td class="text-left">{{ api_session.date_modified }}</td>
+                          <td class="text-right"><button type="button" value="{{ api_session.api_session_id }}" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+                        </tr>
+                      {% endfor %}
+                    {% else %}
+                      <tr>
+                        <td class="text-center" colspan="5">{{ text_no_results }}</td>
+                      </tr>
+                    {% endif %}
+                  </tbody>
+
+                </table>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#button-generate').on('click', function() {
+	rand = '';
+
+	string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+	for (i = 0; i < 256; i++) {
+		rand += string[Math.floor(Math.random() * (string.length - 1))];
+	}
+
+	$('#input-key').val(rand);
+});
+//--></script>
+<script type="text/javascript"><!--
+var ip_row = {{ ip_row }};
+
+function addIp() {
+	html = '<tr id="ip-row' + ip_row + '">';
+	html += '  <td class="text-right"><input type="text" name="api_ip[]" value="" placeholder="{{ entry_ip }}" class="form-control" /></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#ip-row' + ip_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+	html += '</tr>';
+
+	$('#ip tbody').append(html);
+
+	ip_row++;
+}
+
+//--></script>
+<script type="text/javascript"><!--
+$('#session button').on('click', function(e) {
+	e.preventDefault();
+
+	var element = this;
+
+	$.ajax({
+		url: 'index.php?route=user/api/deletesession&user_token={{ user_token }}&api_session_id=' + $(element).val(),
+		type: 'post',
+		dataType: 'json',
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(json) {
+			$('.alert-dismissible').remove();
+
+			if (json['error']) {
+				$('#tab-session').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+
+			if (json['success']) {
+				$('#tab-session').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+				$(element).parent().parent().remove();
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+//--></script>
+{{ footer }}

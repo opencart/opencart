@@ -1,0 +1,122 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right"><a href="{{ refresh }}" data-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-info"><i class="fas fa-sync"></i></a> <a href="{{ clear }}" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-warning"><i class="fas fa-eraser"></i></a>
+        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-modification').submit() : false;"><i class="fas fa-trash-alt"></i></button>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    {% if success %}
+      <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_refresh }}</div>
+    <div class="card">
+      <div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
+      <div class="card-body">
+        <ul class="nav nav-tabs">
+          <li class="nav-item"><a href="#tab-general" data-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+          <li class="nav-item"><a href="#tab-log" data-toggle="tab" class="nav-link">{{ tab_log }}</a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="tab-general" class="tab-pane fade show active">
+            <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-modification">
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');"/></td>
+                      <td class="text-left">{% if sort == 'name' %}
+                          <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
+                        {% else %}
+                          <a href="{{ sort_name }}">{{ column_name }}</a>
+                        {% endif %}</td>
+                      <td class="text-left">{% if sort == 'author' %}
+                          <a href="{{ sort_author }}" class="{{ order|lower }}">{{ column_author }}</a>
+                        {% else %}
+                          <a href="{{ sort_author }}">{{ column_author }}</a>
+                        {% endif %}</td>
+                      <td class="text-left">{% if sort == 'version' %}
+                          <a href="{{ sort_version }}" class="{{ order|lower }}">{{ column_version }}</a>
+                        {% else %}
+                          <a href="{{ sort_version }}">{{ column_version }}</a>
+                        {% endif %}</td>
+                      <td class="text-left">{% if sort == 'status' %}
+                          <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
+                        {% else %}
+                          <a href="{{ sort_status }}">{{ column_status }}</a>
+                        {% endif %}</td>
+                      <td class="text-left">{% if sort == 'date_added' %}
+                          <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
+                        {% else %}
+                          <a href="{{ sort_date_added }}">{{ column_date_added }}</a>
+                        {% endif %}</td>
+                      <td class="text-right">{{ column_action }}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% if modifications %}
+                      {% for modification in modifications %}
+                        <tr>
+                          <td class="text-center">{% if modification.modification_id in selected %}
+                              <input type="checkbox" name="selected[]" value="{{ modification.modification_id }}" checked="checked"/>
+                            {% else %}
+                              <input type="checkbox" name="selected[]" value="{{ modification.modification_id }}"/>
+                            {% endif %}</td>
+                          <td class="text-left">{{ modification.name }}</td>
+                          <td class="text-left">{{ modification.author }}</td>
+                          <td class="text-left">{{ modification.version }}</td>
+                          <td class="text-left">{{ modification.status }}</td>
+                          <td class="text-left">{{ modification.date_added }}</td>
+                          <td class="text-right">{% if modification.link %}
+                              <a href="{{ modification.link }}" data-toggle="tooltip" title="{{ button_link }}" class="btn btn-info" target="_blank"><i class="fas fa-link"></i></a>
+                            {% else %}
+                              <button type="button" class="btn btn-info" disabled="disabled"><i class="fas fa-link"></i></button>
+                            {% endif %}
+                            {% if not modification.enabled %}
+                              <a href="{{ modification.enable }}" data-toggle="tooltip" title="{{ button_enable }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></a>
+                            {% else %}
+                              <a href="{{ modification.disable }}" data-toggle="tooltip" title="{{ button_disable }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></a>
+                            {% endif %}</td>
+                        </tr>
+                      {% endfor %}
+                    {% else %}
+                      <tr>
+                        <td class="text-center" colspan="7">{{ text_no_results }}</td>
+                      </tr>
+                    {% endif %}
+                  </tbody>
+                </table>
+              </div>
+            </form>
+            <div class="row">
+              <div class="col-sm-6 text-left">{{ pagination }}</div>
+              <div class="col-sm-6 text-right">{{ results }}</div>
+            </div>
+          </div>
+          <div id="tab-log" class="tab-pane fade">
+            <div class="form-group mb-3">
+              <textarea wrap="off" rows="15" class="form-control">{{ log }}</textarea>
+            </div>
+            <div class="text-center"><a href="{{ clear_log }}" class="btn btn-danger"><i class="fas fa-eraser"></i> {{ button_clear }}</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

@@ -1,0 +1,41 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right">
+        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-report').toggleClass('d-none');" class="btn btn-light d-md-none d-lg-none"><i class="fas fa-filter"></i></button>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card mb-3">
+      <div class="card-header"><i class="fas fa-chart-bar"></i> {{ text_type }}</div>
+      <div class="card-body">
+        <div class="card">
+          <div class="card-body bg-light">
+            <div class="input-group">
+              <select name="report" onchange="location = this.value;" class="form-control">
+                {% for report in reports %}
+                  {% if code == report.code %}
+                    <option value="{{ report.href }}" selected="selected">{{ report.text }}</option>
+                  {% else %}
+                    <option value="{{ report.href }}">{{ report.text }}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+              <div class="input-group-append"><span class="input-group-text"><i class="fas fa-filter"></i>&nbsp;{{ text_filter }}</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>{{ report }}</div>
+  </div>
+</div>
+{{ footer }}

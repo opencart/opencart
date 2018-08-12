@@ -1,0 +1,179 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right">
+        {% if voucher_id %}
+          <button type="button" id="button-send" data-toggle="tooltip" title="{{ button_send }}" class="btn btn-primary"><i class="fas fa-envelope"></i></button>
+        {% endif %}
+        <button type="submit" form="form-voucher" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-voucher">
+          <ul class="nav nav-tabs">
+            <li class="nav-item"><a href="#tab-general" data-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+            {% if voucher_id %}
+              <li class="nav-item"><a href="#tab-history" data-toggle="tab" class="nav-link">{{ tab_history }}</a></li>
+            {% endif %}
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab-general">
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-code">{{ entry_code }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
+                  <small class="form-text text-muted">{{ help_code }}</small>
+                  {% if error_code %}
+                    <div class="invalid-tooltip">{{ error_code }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-from-name">{{ entry_from_name }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="from_name" value="{{ from_name }}" placeholder="{{ entry_from_name }}" id="input-from-name" class="form-control"/>
+                  {% if error_from_name %}
+                    <div class="invalid-tooltip">{{ error_from_name }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-from-email">{{ entry_from_email }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="from_email" value="{{ from_email }}" placeholder="{{ entry_from_email }}" id="input-from-email" class="form-control"/>
+                  {% if error_from_email %}
+                    <div class="invalid-tooltip">{{ error_from_email }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-to-name">{{ entry_to_name }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="to_name" value="{{ to_name }}" placeholder="{{ entry_to_name }}" id="input-to-name" class="form-control"/>
+                  {% if error_to_name %}
+                    <div class="invalid-tooltip">{{ error_to_name }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-to-email">{{ entry_to_email }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="to_email" value="{{ to_email }}" placeholder="{{ entry_to_email }}" id="input-to-email" class="form-control"/>
+                  {% if error_to_email %}
+                    <div class="invalid-tooltip">{{ error_to_email }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-theme">{{ entry_theme }}</label>
+                <div class="col-sm-10">
+                  <select name="voucher_theme_id" id="input-theme" class="form-control">
+                    {% for voucher_theme in voucher_themes %}
+                      {% if voucher_theme.voucher_theme_id == voucher_theme_id %}
+                        <option value="{{ voucher_theme.voucher_theme_id }}" selected="selected">{{ voucher_theme.name }}</option>
+                      {% else %}
+                        <option value="{{ voucher_theme.voucher_theme_id }}">{{ voucher_theme.name }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-message">{{ entry_message }}</label>
+                <div class="col-sm-10">
+                  <textarea name="message" rows="5" placeholder="{{ entry_message }}" id="input-message" class="form-control">{{ message }}</textarea>
+                </div>
+              </div>
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-amount">{{ entry_amount }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="amount" value="{{ amount }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
+                  {% if error_amount %}
+                    <div class="invalid-tooltip">{{ error_amount }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="status" id="input-status" class="form-control">
+                    {% if status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            {% if voucher_id %}
+              <div class="tab-pane" id="tab-history">
+                <div id="history"></div>
+              </div>
+            {% endif %}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% if voucher_id %}
+  <script type="text/javascript"><!--
+  $('#button-send').on('click', function() {
+	  $.ajax({
+		  url: 'index.php?route=sale/voucher/send&user_token={{ user_token }}',
+		  type: 'post',
+		  dataType: 'json',
+		  data: 'voucher_id={{ voucher_id }}',
+		  beforeSend: function() {
+			  $('#button-send').prop('disabled', true);
+		  },
+		  complete: function() {
+			  $('#button-send').prop('disabled', false);
+		  },
+		  success: function(json) {
+			  $('.alert-dismissible').remove();
+
+			  if (json['error']) {
+				  $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+			  }
+
+			  if (json['success']) {
+				  $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i>  ' + json['success'] + '</div>');
+			  }
+		  },
+		  error: function(xhr, ajaxOptions, thrownError) {
+			  alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		  }
+	  });
+  })
+  //--></script>
+  <script type="text/javascript"><!--
+  $('#history').on('click', '.pagination a', function(e) {
+	  e.preventDefault();
+
+	  $('#history').load(this.href);
+  });
+
+  $('#history').load('index.php?route=sale/voucher/history&user_token={{ user_token }}&voucher_id={{ voucher_id }}');
+  //--></script>
+{% endif %}
+{{ footer }}

@@ -1,0 +1,506 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right">
+        <button type="submit" form="form-shipping" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-shipping">
+          <ul class="nav nav-tabs">
+            <li class="nav-item"><a href="#tab-general" data-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+            <li class="nav-item"><a href="#tab-special-delivery-500" data-toggle="tab" class="nav-link">{{ tab_special_delivery_500 }}</a></li>
+            <li class="nav-item"><a href="#tab-special-delivery-1000" data-toggle="tab" class="nav-link">{{ tab_special_delivery_1000 }}</a></li>
+            <li class="nav-item"><a href="#tab-special-delivery-2500" data-toggle="tab" class="nav-link">{{ tab_special_delivery_2500 }}</a></li>
+            <li class="nav-item"><a href="#tab-1st-class-signed" data-toggle="tab" class="nav-link">{{ tab_1st_class_signed }}</a></li>
+            <li class="nav-item"><a href="#tab-2nd-class-signed" data-toggle="tab" class="nav-link">{{ tab_2nd_class_signed }}</a></li>
+            <li class="nav-item"><a href="#tab-1st-class-standard" data-toggle="tab" class="nav-link">{{ tab_1st_class_standard }}</a></li>
+            <li class="nav-item"><a href="#tab-2nd-class-standard" data-toggle="tab" class="nav-link">{{ tab_2nd_class_standard }}</a></li>
+            <li class="nav-item"><a href="#tab-international-standard" data-toggle="tab" class="nav-link">{{ tab_international_standard }}</a></li>
+            <li class="nav-item"><a href="#tab-international-tracked-signed" data-toggle="tab" class="nav-link">{{ tab_international_tracked_signed }}</a></li>
+            <li class="nav-item"><a href="#tab-international-tracked" data-toggle="tab" class="nav-link">{{ tab_international_tracked }}</a></li>
+            <li class="nav-item"><a href="#tab-international-signed" data-toggle="tab" class="nav-link">{{ tab_international_signed }}</a></li>
+            <li class="nav-item"><a href="#tab-international-economy" data-toggle="tab" class="nav-link">{{ tab_international_economy }}</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab-general">
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">{{ entry_display_weight }}</label>
+                <div class="col-sm-10">
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    {% if shipping_royal_mail_display_weight %}
+                      <label class="btn btn-outline-secondary active"><input type="radio" name="shipping_royal_mail_display_weight" value="1" checked="checked"/> {{ text_yes }}</label>
+                      <label class="btn btn-outline-secondary"><input type="radio" name="shipping_royal_mail_display_weight" value="0"/> {{ text_no }}</label>
+                    {% else %}
+                      <label class="btn btn-outline-secondary"><input type="radio" name="shipping_royal_mail_display_weight" value="1"/> {{ text_yes }}</label>
+                      <label class="btn btn-outline-secondary active"><input type="radio" name="shipping_royal_mail_display_weight" value="0" checked="checked"/> {{ text_no }}</label>
+                    {% endif %}
+                  </div>
+                  <small class="form-text text-muted">{{ help_display_weight }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">{{ entry_display_insurance }}</label>
+                <div class="col-sm-10">
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    {% if shipping_royal_mail_display_insurance %}
+                      <label class="btn btn-outline-secondary active"><input type="radio" name="shipping_royal_mail_display_insurance" value="1" checked="checked"/> {{ text_yes }}</label>
+                      <label class="btn btn-outline-secondary"><input type="radio" name="shipping_royal_mail_display_insurance" value="0"/> {{ text_no }}</label>
+                    {% else %}
+                      <label class="btn btn-outline-secondary"><input type="radio" name="shipping_royal_mail_display_insurance" value="1"/> {{ text_yes }}</label>
+                      <label class="btn btn-outline-secondary active"><input type="radio" name="shipping_royal_mail_display_insurance" value="0" checked="checked"/> {{ text_no }}</label>
+                    {% endif %}
+                  </div>
+                  <small class="form-text text-muted">{{ help_display_insurance }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-weight-class">{{ entry_weight_class }}</label>
+                <div class="col-sm-10">
+                  <select name="shipping_royal_mail_weight_class_id" id="input-weight-class" class="form-control">
+                    {% for weight_class in weight_classes %}
+                      {% if weight_class.weight_class_id == shipping_royal_mail_weight_class_id %}
+                        <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
+                      {% else %}
+                        <option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-tax-class">{{ entry_tax_class }}</label>
+                <div class="col-sm-10">
+                  <select name="shipping_royal_mail_tax_class_id" id="input-tax-class" class="form-control">
+                    <option value="0">{{ text_none }}</option>
+                    {% for tax_class in tax_classes %}
+                      {% if tax_class.tax_class_id == shipping_royal_mail_tax_class_id %}
+                        <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
+                      {% else %}
+                        <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+                <div class="col-sm-10">
+                  <select name="shipping_royal_mail_geo_zone_id" id="input-geo-zone" class="form-control">
+                    <option value="0">{{ text_all_zones }}</option>
+                    {% for geo_zone in geo_zones %}
+                      {% if geo_zone.geo_zone_id == shipping_royal_mail_geo_zone_id %}
+                        <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                      {% else %}
+                        <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="shipping_royal_mail_status" id="input-status" class="form-control">
+                    {% if shipping_royal_mail_status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="shipping_royal_mail_sort_order" value="{{ shipping_royal_mail_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-special-delivery-500">
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-special-delivery-500-rate">{{ entry_rate }}</label>
+                <div class="col-sm-10">
+                  <textarea name="shipping_royal_mail_special_delivery_500_rate" rows="5" placeholder="{{ entry_rate }}" id="input-special-delivery-500-rate" class="form-control">{{ shipping_royal_mail_special_delivery_500_rate }}</textarea>
+                  <small class="form-text text-muted">{{ help_rate }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-special-delivery-500-insurance">{{ entry_insurance }}</label>
+                <div class="col-sm-10">
+                  <textarea name="shipping_royal_mail_special_delivery_500_insurance" rows="5" placeholder="{{ entry_insurance }}" id="input-special-delivery-500-insurance" class="form-control">{{ shipping_royal_mail_special_delivery_500_insurance }}</textarea>
+                  <small class="form-text text-muted">{{ help_insurance }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-special-delivery-500-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="shipping_royal_mail_special_delivery_500_status" id="input-special-delivery-500-status" class="form-control">
+                    {% if shipping_royal_mail_special_delivery_500_status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-special-delivery-1000">
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-special-delivery-1000-rate">{{ entry_rate }}</label>
+                <div class="col-sm-10">
+                  <textarea name="shipping_royal_mail_special_delivery_1000_rate" rows="5" placeholder="{{ entry_rate }}" id="input-special-delivery-1000-rate" class="form-control">{{ royal_mail_special_delivery_1000_rate }}</textarea>
+                  <small class="form-text text-muted">{{ help_rate }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-special-delivery-1000-insurance">{{ entry_insurance }}</label>
+                <div class="col-sm-10">
+                  <textarea name="shipping_royal_mail_special_delivery_1000_insurance" rows="5" placeholder="{{ entry_insurance }}" id="input-special-delivery-1000-insurance" class="form-control">{{ shipping_royal_mail_special_delivery_1000_insurance }}</textarea>
+                  <small class="form-text text-muted">{{ help_insurance }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-special-delivery-1000-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="shipping_royal_mail_special_delivery_1000_status" id="input-special-delivery-1000-status" class="form-control">
+                    {% if shipping_royal_mail_special_delivery_1000_status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-special-delivery-2500">
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-special-delivery-2500-rate">{{ entry_rate }}</label>
+                <div class="col-sm-10">
+                  <textarea name="shipping_royal_mail_special_delivery_2500_rate" rows="5" placeholder="{{ entry_rate }}" id="input-special-delivery-2500-rate" class="form-control">{{ shipping_royal_mail_special_delivery_2500_rate }}</textarea>
+                  <small class="form-text text-muted">{{ help_rate }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-special-delivery-2500-insurance">{{ entry_insurance }}</label>
+                <div class="col-sm-10">
+                  <textarea name="shipping_royal_mail_special_delivery_2500_insurance" rows="5" placeholder="{{ entry_insurance }}" id="input-special-delivery-2500-insurance" class="form-control">{{ shipping_royal_mail_special_delivery_2500_insurance }}</textarea>
+                  <small class="form-text text-muted">{{ help_insurance }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-special-delivery-2500-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="shipping_royal_mail_special_delivery_2500_status" id="input-special-delivery-2500-status" class="form-control">
+                    {% if shipping_royal_mail_special_delivery_2500_status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-1st-class-signed">
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-1st-class-signed-rate">{{ entry_rate }}</label>
+                <div class="col-sm-10">
+                  <textarea name="shipping_royal_mail_1st_class_signed_rate" rows="5" placeholder="{{ entry_rate }}" id="input-1st-class-signed-rate" class="form-control">{{ shipping_royal_mail_1st_class_signed_rate }}</textarea>
+                  <small class="form-text text-muted">{{ help_rate }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-1st-class-signed-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="shipping_royal_mail_1st_class_signed_status" id="input-1st-class-signed-status" class="form-control">
+                    {% if shipping_royal_mail_1st_class_signed_status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-2nd-class-signed">
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-2nd-class-signed-rate">{{ entry_rate }}</label>
+                <div class="col-sm-10">
+                  <textarea name="shipping_royal_mail_2nd_class_signed_rate" rows="5" placeholder="{{ entry_rate }}" id="input-2nd-class-signed-rate" class="form-control">{{ shipping_royal_mail_2nd_class_signed_rate }}</textarea>
+                  <small class="form-text text-muted">{{ help_rate }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-2nd-class-signed-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="shipping_royal_mail_2nd_class_signed_status" id="input-2nd-class-signed-status" class="form-control">
+                    {% if shipping_royal_mail_2nd_class_signed_status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-1st-class-standard">
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-1st-class-standard-rate">{{ entry_rate }}</label>
+                <div class="col-sm-10">
+                  <textarea name="shipping_royal_mail_1st_class_standard_rate" rows="5" placeholder="{{ entry_rate }}" id="input-1st-class-standard-rate" class="form-control">{{ shipping_royal_mail_1st_class_standard_rate }}</textarea>
+                  <small class="form-text text-muted">{{ help_rate }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-input-1st-class-standard-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="shipping_royal_mail_1st_class_standard_status" id="input-input-1st-class-standard-status" class="form-control">
+                    {% if shipping_royal_mail_1st_class_standard_status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-2nd-class-standard">
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-2nd-class-standard-rate">{{ entry_rate }}</label>
+                <div class="col-sm-10">
+                  <textarea name="shipping_royal_mail_2nd_class_standard_rate" rows="5" placeholder="{{ entry_rate }}" id="input-2nd-class-standard-rate" class="form-control">{{ shipping_royal_mail_2nd_class_standard_rate }}</textarea>
+                  <small class="form-text text-muted">{{ help_rate }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-2nd-class-standard-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="shipping_royal_mail_2nd_class_standard_status" id="input-2nd-class-standard-status" class="form-control">
+                    {% if shipping_royal_mail_2nd_class_standard_status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-international-standard">
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-international-standard-eu-rate">{{ entry_rate_eu }}</label>
+                <div class="col-sm-10">
+                  <textarea name="shipping_royal_mail_international_standard_eu_rate" rows="5" placeholder="{{ entry_rate_eu }}" id="input-international-standard-eu-rate" class="form-control">{{ shipping_royal_mail_international_standard_eu_rate }}</textarea>
+                  <small class="form-text text-muted">{{ help_rate }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-international-standard-zone-1-rate">{{ entry_rate_zone_1 }}</label>
+                <div class="col-sm-10">
+                  <textarea name="shipping_royal_mail_international_standard_zone_1_rate" rows="5" placeholder="{{ entry_rate_zone_1 }}" id="input-international-standard-zone-1-rate" class="form-control">{{ shipping_royal_mail_international_standard_zone_1_rate }}</textarea>
+                  <small class="form-text text-muted">{{ help_rate }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-international-standard-zone-2-rate">{{ entry_rate_zone_2 }}</label>
+                <div class="col-sm-10">
+                  <textarea name="shipping_royal_mail_international_standard_zone_2_rate" rows="5" placeholder="{{ entry_rate_zone_2 }}" id="input-international-standard-zone-2-rate" class="form-control">{{ shipping_royal_mail_international_standard_zone_2_rate }}</textarea>
+                  <small class="form-text text-muted">{{ help_rate }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-international-standard-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="shipping_royal_mail_international_standard_status" id="input-international-standard-status" class="form-control">
+                    {% if shipping_royal_mail_international_standard_status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-international-tracked-signed">
+              <div class="alert alert-info">{{ help_international }}</div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-international-tracked-signed-eu-rate">{{ entry_rate_eu }}</label>
+                <div class="col-sm-10">
+                  <textarea name="shipping_royal_mail_international_tracked_signed_eu_rate" rows="5" placeholder="{{ entry_rate_eu }}" id="input-international-tracked-signed-eu-rate" class="form-control">{{ shipping_royal_mail_international_tracked_signed_eu_rate }}</textarea>
+                  <small class="form-text text-muted">{{ help_rate }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-international-tracked-signed-zone-1-rate">{{ entry_rate_zone_1 }}</label>
+                <div class="col-sm-10">
+                  <textarea name="shipping_royal_mail_international_tracked_signed_zone_1_rate" rows="5" placeholder="{{ entry_rate_zone_1 }}" id="input-international-standard-zone-1-rate" class="form-control">{{ shipping_royal_mail_international_tracked_signed_zone_1_rate }}</textarea>
+                  <small class="form-text text-muted">{{ help_rate }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-international-tracked-signed-zone-2-rate">{{ entry_rate_zone_2 }}</label>
+                <div class="col-sm-10">
+                  <textarea name="shipping_royal_mail_international_tracked_signed_zone_2_rate" rows="5" placeholder="{{ entry_rate_zone_2 }}" id="input-international-tracked-signed-zone-2-rate" class="form-control">{{ shipping_royal_mail_international_tracked_signed_zone_2_rate }}</textarea>
+                  <small class="form-text text-muted">{{ help_rate }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-international-tracked-signed-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="shipping_royal_mail_international_tracked_signed_status" id="input-international-tracked-signed-status" class="form-control">
+                    {% if shipping_royal_mail_international_tracked_signed_status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-international-tracked">
+              <div class="alert alert-info">{{ help_international }}</div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-international-tracked-eu-rate">{{ entry_rate_eu }}</label>
+                <div class="col-sm-10">
+                  <textarea name="shipping_royal_mail_international_tracked_eu_rate" rows="5" placeholder="{{ entry_rate_eu }}" id="input-international-tracked-eu-rate" class="form-control">{{ shipping_royal_mail_international_tracked_eu_rate }}</textarea>
+                  <small class="form-text text-muted">{{ help_rate }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-international-tracked-non-eu-rate">{{ entry_rate_non_eu }}</label>
+                <div class="col-sm-10">
+                  <textarea name="shipping_royal_mail_international_tracked_non_eu_rate" rows="5" placeholder="{{ entry_rate_non_eu }}" id="input-international-tracked-non-eu-rate" class="form-control">{{ shipping_royal_mail_international_tracked_non_eu_rate }}</textarea>
+                  <small class="form-text text-muted">{{ help_rate }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-international-tracked-zone-1-rate">{{ entry_rate_zone_1 }}</label>
+                <div class="col-sm-10">
+                  <textarea name="shipping_royal_mail_international_tracked_zone_1_rate" rows="5" placeholder="{{ entry_rate_zone_1 }}" id="input-international-tracked-zone-1-rate" class="form-control">{{ shipping_royal_mail_international_tracked_zone_1_rate }}</textarea>
+                  <small class="form-text text-muted">{{ help_rate }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-international-tracked-zone-2-rate">{{ entry_rate_zone_2 }}</label>
+                <div class="col-sm-10">
+                  <textarea name="shipping_royal_mail_international_tracked_zone_2_rate" rows="5" placeholder="{{ entry_rate_zone_2 }}" id="input-international-tracked-zone-2-rate" class="form-control">{{ shipping_royal_mail_international_tracked_zone_2_rate }}</textarea>
+                  <small class="form-text text-muted">{{ help_rate }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-international-tracked-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="shipping_royal_mail_international_tracked_status" id="input-international-tracked-status" class="form-control">
+                    {% if shipping_royal_mail_international_tracked_status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-international-signed">
+              <div class="alert alert-info">{{ help_international }}</div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-international-signed-eu-rate">{{ entry_rate_eu }}</label>
+                <div class="col-sm-10">
+                  <textarea name="shipping_royal_mail_international_signed_eu_rate" rows="5" placeholder="{{ entry_rate }}" id="input-international-signed-eu-rate" class="form-control">{{ shipping_royal_mail_international_signed_eu_rate }}</textarea>
+                  <small class="form-text text-muted">{{ help_rate }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-international-signed-zone-1-rate">{{ entry_rate_zone_1 }}</label>
+                <div class="col-sm-10">
+                  <textarea name="shipping_royal_mail_international_signed_zone_1_rate" rows="5" placeholder="{{ entry_rate }}" id="input-international-signed-zone-1-rate" class="form-control">{{ shipping_royal_mail_international_signed_zone_1_rate }}</textarea>
+                  <small class="form-text text-muted">{{ help_rate }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-international-signed-zone-2-rate">{{ entry_rate_zone_2 }}</label>
+                <div class="col-sm-10">
+                  <textarea name="shipping_royal_mail_international_signed_zone_2_rate" rows="5" placeholder="{{ entry_rate }}" id="input-international-signed-zone-2-rate" class="form-control">{{ shipping_royal_mail_international_signed_zone_2_rate }}</textarea>
+                  <small class="form-text text-muted">{{ help_rate }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-international-signed-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="shipping_royal_mail_international_signed_status" id="input-international-signed-status" class="form-control">
+                    {% if shipping_royal_mail_international_signed_status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-international-economy">
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-international-economy-rate">{{ entry_rate }}</label>
+                <div class="col-sm-10">
+                  <textarea name="shipping_royal_mail_international_economy_rate" rows="5" placeholder="{{ entry_rate }}" id="input-international-economy-rate" class="form-control">{{ shipping_royal_mail_international_economy_rate }}</textarea>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-international-economy-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="shipping_royal_mail_international_economy_status" id="input-international-economy-status" class="form-control">
+                    {% if shipping_royal_mail_international_economy_status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }} 

@@ -1,0 +1,90 @@
+{% if error_warning %}
+  <div class="alert alert-warning alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+{% endif %}
+{% if shipping_methods %}
+  <p>{{ text_shipping_method }}</p>
+  {% for shipping_method in shipping_methods %}
+    <p><strong>{{ shipping_method.title }}</strong></p>
+    {% if not shipping_method.error %}
+      {% for quote in shipping_method.quote %}
+        <div class="form-check">
+          <label>
+            {% if quote.code == code or not code %}
+              {% set code = quote.code %}
+              <input type="radio" name="shipping_method" value="{{ quote.code }}" class="form-check-input" checked="checked"/>
+            {% else %}
+              <input type="radio" name="shipping_method" value="{{ quote.code }}" class="form-check-input"/>
+            {% endif %}
+            {{ quote.title }} - {{ quote.text }}
+          </label>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="alert alert-danger alert-dismissible">{{ shipping_method.error }}</div>
+    {% endif %}
+  {% endfor %}
+{% endif %}
+<br/>
+<p><strong>{{ text_comments }}</strong></p>
+<p>
+  <textarea name="comment" rows="8" class="form-control">{{ comment }}</textarea>
+</p>
+<div class="buttons">
+  <div class="float-right">
+    <button type="button" id="button-shipping-method" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
+  </div>
+</div>
+<script type="text/javascript"><!--
+// Shipping Method
+$('#button-shipping-method').on('click', function() {
+	chain.attach(function() {
+		return $.ajax({
+			url: 'index.php?route=checkout/shipping_method/save',
+			type: 'post',
+			data: $('#collapse-shipping-method input[type=\'radio\']:checked, #collapse-shipping-method textarea'),
+			dataType: 'json',
+			beforeSend: function() {
+				$('#button-shipping-method').button('loading');
+			},
+			success: function(json) {
+				$('.alert-dismissible, .text-danger').remove();
+
+				if (json['redirect']) {
+					location = json['redirect'];
+				} else if (json['error']) {
+					$('#button-shipping-method').button('reset');
+
+					if (json['error']['warning']) {
+						$('#collapse-shipping-method .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					}
+				} else {
+					chain.attach(function() {
+						return $.ajax({
+							url: 'index.php?route=checkout/payment_method',
+							dataType: 'html',
+							complete: function() {
+								$('#button-shipping-method').button('reset');
+							},
+							success: function(html) {
+								$('#collapse-payment-method .card-body').html(html);
+
+								$('#heading-payment-method').attr('data-toggle', 'collapse');
+
+								$('#heading-payment-method').trigger('click');
+
+								$('#heading-checkout-confirm').removeAttr('data-toggle');
+							},
+							error: function(xhr, ajaxOptions, thrownError) {
+								alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+							}
+						});
+					});
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	});
+});
+//--></script>

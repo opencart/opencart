@@ -1,0 +1,88 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right">
+        <button type="submit" form="form-seo-url" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">{% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-seo-url">
+          <div class="form-group row required">
+            <label class="col-sm-2 col-form-label" for="input-query">{{ entry_query }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="query" value="{{ query }}" placeholder="{{ entry_query }}" id="input-query" class="form-control"/>
+              <small class="form-text text-muted">{{ help_query }}</small>
+              {% if error_query %}
+                <div class="invalid-tooltip">{{ error_query }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-keyword">{{ entry_keyword }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="keyword" value="{{ keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control"/>
+              <small class="form-text text-muted">{{ help_keyword }}</small>
+              {% if error_keyword %}
+                <div class="invalid-tooltip">{{ error_keyword }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-push">{{ entry_push }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="push" value="{{ push }}" placeholder="{{ entry_push }}" id="input-push" class="form-control"/>
+              <small class="form-text text-muted">{{ help_push }}</small>
+              {% if error_push %}
+                <div class="invalid-tooltip">{{ error_push }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-store">{{ entry_store }}</label>
+            <div class="col-sm-10">
+              <select name="store_id" id="input-store" class="form-control">
+                {% for store in stores %}
+                  {% if store.store_id == store_id %}
+                    <option value="{{ store.store_id }}" selected="selected">{{ store.name }}</option>
+                  {% else %}
+                    <option value="{{ store.store_id }}">{{ store.name }}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-language">{{ entry_language }}</label>
+            <div class="col-sm-10">
+              <select name="language_id" id="input-language" class="form-control">
+                {% for language in languages %}
+                  {% if language.language_id == language_id %}
+                    <option value="{{ language.language_id }}" selected="selected">{{ language.name }}</option>
+                  {% else %}
+                    <option value="{{ language.language_id }}">{{ language.name }}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }} 

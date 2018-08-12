@@ -1,0 +1,115 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right">
+        <button type="submit" form="form-module" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-check-circle"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fas fa-reply"></i></a></div>
+      <h1></i> {{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="card">
+      <div class="card-heading">
+        <h3 class="card-title"><i class="fas fa-pencil-alt"></i> {{ heading_title }}</h3>
+      </div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-module" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-button-type">{{ entry_button_type }}</label>
+            <div class="col-sm-10">
+              <select name="module_amazon_pay_button_type" id="input-button-type" class="form-control">
+                {% if module_amazon_pay_button_type == 'Pay' %}
+                  <option value="PwA">{{ text_pwa_button }}</option>
+                  <option value="Pay" selected="selected">{{ text_pay_button }}</option>
+                  <option value="A">{{ text_a_button }}</option>
+                {% elseif module_amazon_pay_button_type == 'A' %}
+                  <option value="PwA">{{ text_pwa_button }}</option>
+                  <option value="Pay">{{ text_pay_button }}</option>
+                  <option value="A" selected="selected">{{ text_a_button }}</option>
+                {% else %}
+                  <option value="PwA" selected="selected">{{ text_pwa_button }}</option>
+                  <option value="Pay">{{ text_pay_button }}</option>
+                  <option value="A">{{ text_a_button }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-button-colour">{{ entry_button_colour }}</label>
+            <div class="col-sm-10">
+              <select name="module_amazon_pay_button_colour" id="input-button-colour" class="form-control">
+                {% if module_amazon_pay_button_colour == 'DarkGray' %}
+                  <option value="Gold">{{ text_gold_button }}</option>
+                  <option value="DarkGray" selected="selected">{{ text_darkgray_button }}</option>
+                  <option value="LightGray">{{ text_lightgray_button }}</option>
+                {% elseif module_amazon_pay_button_colour == 'LightGray' %}
+                  <option value="Gold">{{ text_gold_button }}</option>
+                  <option value="DarkGray">{{ text_darkgray_button }}</option>
+                  <option value="LightGray" selected="selected">{{ text_lightgray_button }}</option>
+                {% else %}
+                  <option value="Gold" selected="selected">{{ text_gold_button }}</option>
+                  <option value="DarkGray">{{ text_darkgray_button }}</option>
+                  <option value="LightGray">{{ text_lightgray_button }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-button-size">{{ entry_button_size }}</label>
+            <div class="col-sm-10">
+              <select name="module_amazon_pay_button_size" id="input-button-size" class="form-control">
+                {% if module_amazon_pay_button_size == 'small' %}
+                  <option value="small" selected="selected">{{ text_small_button }}</option>
+                  <option value="medium">{{ text_medium_button }}</option>
+                  <option value="large" selected="selected">{{ text_large_button }}</option>
+                  <option value="x-large">{{ text_x_large_button }}</option>
+                {% elseif module_amazon_pay_button_size == 'large' %}
+                  <option value="small">{{ text_small_button }}</option>
+                  <option value="medium">{{ text_medium_button }}</option>
+                  <option value="large" selected="selected">{{ text_large_button }}</option>
+                  <option value="x-large">{{ text_x_large_button }}</option>
+                {% elseif module_amazon_pay_button_size == 'x-large' %}
+                  <option value="small">{{ text_small_button }}</option>
+                  <option value="medium">{{ text_medium_button }}</option>
+                  <option value="large">{{ text_large_button }}</option>
+                  <option value="x-large" selected="selected">{{ text_x_large_button }}</option>
+                {% else %}
+                  <option value="small">{{ text_small_button }}</option>
+                  <option value="medium" selected="selected">{{ text_medium_button }}</option>
+                  <option value="large">{{ text_large_button }}</option>
+                  <option value="x-large">{{ text_x_large_button }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+            <div class="col-sm-10">
+              <select name="module_amazon_pay_status" id="input-status" class="form-control">
+                {% if module_amazon_pay_status %}
+                  <option value="1" selected="selected">{{ text_enabled }}</option>
+                  <option value="0">{{ text_disabled }}</option>
+                {% else %}
+                  <option value="1">{{ text_enabled }}</option>
+                  <option value="0" selected="selected">{{ text_disabled }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

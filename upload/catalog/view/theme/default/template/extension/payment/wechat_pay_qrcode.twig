@@ -1,0 +1,60 @@
+{{ header }}
+<div id="common-success" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+      <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+  {% endif %}
+  <div class="row">{{ column_left }}
+    {% if column_left and column_right %}
+      {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+      {% set class = 'col-sm-9' %}
+    {% else %}
+      {% set class = 'col-sm-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}">{{ content_top }}
+      <h1>{{ heading_title }}</h1>
+      <div class="text-center">
+        <div id="qrcode">
+        </div>
+        <div class="alert alert-info" style="width: 256px; margin: 5px auto;">{{ text_qrcode_description }}</div>
+      </div>
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+<script>
+  var url = "{{ code_url }}";
+  var qrcode = new QRCode('qrcode', {
+    text: url,
+    width: 256,
+    height: 256,
+    colorDark : '#000000',
+    colorLight : '#ffffff',
+    correctLevel : QRCode.CorrectLevel.M
+  });
+  function chekOrderStatus() {
+    var loop=true;
+    $.ajax({
+      url: 'index.php?route=extension/payment/wechat_pay/isOrderPaid&order_id={{ order_id }}',
+      dataType: 'json',
+      success: function(json) {
+        if (json['result']) {
+          loop = false;
+          location.href = "{{ action_success }}";
+        }
+        if (loop) {
+          setTimeout("chekOrderStatus()", 1000);
+        }
+      },
+      error: function(xhr, ajaxOptions, thrownError) {
+        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
+  }
+  chekOrderStatus();
+</script>
+{{ footer }}

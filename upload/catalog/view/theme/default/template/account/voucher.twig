@@ -1,0 +1,110 @@
+{{ header }}
+<div id="account-voucher" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+      <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+  {% endif %}
+  <div class="row">{{ column_left }}
+    {% if column_left and column_right %}
+      {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+      {% set class = 'col-sm-9' %}
+    {% else %}
+      {% set class = 'col-sm-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}">{{ content_top }}
+      <h1>{{ heading_title }}</h1>
+      <p>{{ text_description }}</p>
+      <form action="{{ action }}" method="post" enctype="multipart/form-data">
+        <div class="form-group row required">
+          <label class="col-sm-2 col-form-label" for="input-to-name">{{ entry_to_name }}</label>
+          <div class="col-sm-10">
+            <input type="text" name="to_name" value="{{ to_name }}" id="input-to-name" class="form-control"/>
+            {% if error_to_name %}
+              <div class="text-danger">{{ error_to_name }}</div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="form-group row required">
+          <label class="col-sm-2 col-form-label" for="input-to-email">{{ entry_to_email }}</label>
+          <div class="col-sm-10">
+            <input type="text" name="to_email" value="{{ to_email }}" id="input-to-email" class="form-control"/>
+            {% if error_to_email %}
+              <div class="text-danger">{{ error_to_email }}</div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="form-group row required">
+          <label class="col-sm-2 col-form-label" for="input-from-name">{{ entry_from_name }}</label>
+          <div class="col-sm-10">
+            <input type="text" name="from_name" value="{{ from_name }}" id="input-from-name" class="form-control"/>
+            {% if error_from_name %}
+              <div class="text-danger">{{ error_from_name }}</div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="form-group row required">
+          <label class="col-sm-2 col-form-label" for="input-from-email">{{ entry_from_email }}</label>
+          <div class="col-sm-10">
+            <input type="text" name="from_email" value="{{ from_email }}" id="input-from-email" class="form-control"/>
+            {% if error_from_email %}
+              <div class="text-danger">{{ error_from_email }}</div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="form-group row required">
+          <label class="col-sm-2 col-form-label">{{ entry_theme }}</label>
+          <div class="col-sm-10">
+            {% for voucher_theme in voucher_themes %}
+              {% if voucher_theme.voucher_theme_id == voucher_theme_id %}
+                <div class="form-check">
+                  <label> <input type="radio" name="voucher_theme_id" value="{{ voucher_theme.voucher_theme_id }}" class="form-check-input" checked="checked"/>
+                    {{ voucher_theme.name }}</label>
+                </div>
+              {% else %}
+                <div class="form-check">
+                  <label><input type="radio" name="voucher_theme_id" value="{{ voucher_theme.voucher_theme_id }}" class="form-check-input"/>
+                    {{ voucher_theme.name }}</label>
+                </div>
+              {% endif %}
+            {% endfor %}
+            {% if error_theme %}
+              <div class="text-danger">{{ error_theme }}</div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label" for="input-message"><span data-toggle="tooltip" title="{{ help_message }}">{{ entry_message }}</span></label>
+          <div class="col-sm-10">
+            <textarea name="message" cols="40" rows="5" id="input-message" class="form-control">{{ message }}</textarea>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label" for="input-amount"><span data-toggle="tooltip" title="{{ help_amount }}">{{ entry_amount }}</span></label>
+          <div class="col-sm-10">
+            <input type="text" name="amount" value="{{ amount }}" id="input-amount" class="form-control" size="5"/>
+            {% if error_amount %}
+              <div class="text-danger">{{ error_amount }}</div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="buttons clearfix">
+          <div class="float-right"> {{ text_agree }}
+            {% if agree %}
+              <input type="checkbox" name="agree" value="1" checked="checked"/>
+            {% else %}
+              <input type="checkbox" name="agree" value="1"/>
+            {% endif %}
+            &nbsp;
+            <input type="submit" value="{{ button_continue }}" class="btn btn-primary"/>
+          </div>
+        </div>
+      </form>
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+{{ footer }}

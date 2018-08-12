@@ -1,0 +1,42 @@
+<div class="card">
+  <div class="card-header">
+    <i class="fas fa-filter"></i> {{ heading_title }}
+    <div class="float-right">
+      <a href="{{ reset }}" class="btn btn-danger btn-sm"><i class="fas fa-sync"></i> {{ button_reset }}</a>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <td class="text-left">{{ column_name }}</td>
+            <td class="text-left">{{ column_model }}</td>
+            <td class="text-right">{{ column_viewed }}</td>
+            <td class="text-right">{{ column_percent }}</td>
+          </tr>
+        </thead>
+        <tbody>
+          {% if products %}
+            {% for product in products %}
+              <tr>
+                <td class="text-left">{{ product.name }}</td>
+                <td class="text-left">{{ product.model }}</td>
+                <td class="text-right">{{ product.viewed }}</td>
+                <td class="text-right">{{ product.percent }}</td>
+              </tr>
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td class="text-center" colspan="4">{{ text_no_results }}</td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 text-left">{{ pagination }}</div>
+      <div class="col-sm-6 text-right">{{ results }}</div>
+    </div>
+  </div>
+</div>

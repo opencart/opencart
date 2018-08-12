@@ -1,86 +1,121 @@
-<?php 
-class ControllerAccountAccount extends Controller { 
+<?php
+class ControllerAccountAccount extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
-	  		$this->session->data['redirect'] = $this->url->link('account/account', '', 'SSL');
-	  
-	  		$this->redirect($this->url->link('account/login', '', 'SSL'));
-    	} 
-	
-		$this->language->load('account/account');
+			$this->session->data['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
+
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
+		}
+
+		$this->load->language('account/account');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-      	$this->data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-      	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),
-        	'separator' => false
-      	); 
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
+		);
 
-      	$this->data['breadcrumbs'][] = array(       	
-        	'text'      => $this->language->get('text_account'),
-			'href'      => $this->url->link('account/account', '', 'SSL'),
-        	'separator' => $this->language->get('text_separator')
-      	);
-		
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_account'),
+			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
+		);
+
 		if (isset($this->session->data['success'])) {
-    		$this->data['success'] = $this->session->data['success'];
-			
+			$data['success'] = $this->session->data['success'];
+
 			unset($this->session->data['success']);
 		} else {
-			$this->data['success'] = '';
-		}
+			$data['success'] = '';
+		} 
 		
-    	$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['edit'] = $this->url->link('account/edit', 'language=' . $this->config->get('config_language'));
+		$data['password'] = $this->url->link('account/password', 'language=' . $this->config->get('config_language'));
+		$data['address'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
+		
+		$data['credit_cards'] = array();
+		
+		$files = glob(DIR_APPLICATION . 'controller/extension/credit_card/*.php');
+		
+		foreach ($files as $file) {
+			$code = basename($file, '.php');
+			
+			if ($this->config->get('payment_' . $code . '_status') && $this->config->get('payment_' . $code . '_card')) {
+				$this->load->language('extension/credit_card/' . $code, 'extension');
 
-    	$this->data['text_my_account'] = $this->language->get('text_my_account');
-		$this->data['text_my_orders'] = $this->language->get('text_my_orders');
-		$this->data['text_my_newsletter'] = $this->language->get('text_my_newsletter');
-    	$this->data['text_edit'] = $this->language->get('text_edit');
-    	$this->data['text_password'] = $this->language->get('text_password');
-    	$this->data['text_address'] = $this->language->get('text_address');
-		$this->data['text_wishlist'] = $this->language->get('text_wishlist');
-    	$this->data['text_order'] = $this->language->get('text_order');
-    	$this->data['text_download'] = $this->language->get('text_download');
-		$this->data['text_reward'] = $this->language->get('text_reward');
-		$this->data['text_return'] = $this->language->get('text_return');
-		$this->data['text_transaction'] = $this->language->get('text_transaction');
-		$this->data['text_newsletter'] = $this->language->get('text_newsletter');
+				$data['credit_cards'][] = array(
+					'name' => $this->language->get('extension')->get('heading_title'),
+					'href' => $this->url->link('extension/credit_card/' . $code, 'language=' . $this->config->get('config_language'))
+				);
+			}
+		}
+		
+		$data['wishlist'] = $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language'));
+		$data['order'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language'));
+		$data['download'] = $this->url->link('account/download', 'language=' . $this->config->get('config_language'));
+		
+		if ($this->config->get('total_reward_status')) {
+			$data['reward'] = $this->url->link('account/reward', 'language=' . $this->config->get('config_language'));
+		} else {
+			$data['reward'] = '';
+		}		
+		
+		$data['return'] = $this->url->link('account/return', 'language=' . $this->config->get('config_language'));
+		$data['transaction'] = $this->url->link('account/transaction', 'language=' . $this->config->get('config_language'));
+		$data['newsletter'] = $this->url->link('account/newsletter', 'language=' . $this->config->get('config_language'));
+		$data['recurring'] = $this->url->link('account/recurring', 'language=' . $this->config->get('config_language'));
+		
+		$this->load->model('account/affiliate');
+		
+		$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
+		
+		if (!$affiliate_info) {	
+			$data['affiliate'] = $this->url->link('account/affiliate/add', 'language=' . $this->config->get('config_language'));
+		} else {
+			$data['affiliate'] = $this->url->link('account/affiliate/edit', 'language=' . $this->config->get('config_language'));
+		}
+		
+		if ($affiliate_info) {		
+			$data['tracking'] = $this->url->link('account/tracking', 'language=' . $this->config->get('config_language'));
+		} else {
+			$data['tracking'] = '';
+		}
+		
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
+		
+		$this->response->setOutput($this->load->view('account/account', $data));
+	}
 
-    	$this->data['edit'] = $this->url->link('account/edit', '', 'SSL');
-    	$this->data['password'] = $this->url->link('account/password', '', 'SSL');
-		$this->data['address'] = $this->url->link('account/address', '', 'SSL');
-		$this->data['wishlist'] = $this->url->link('account/wishlist');
-    	$this->data['order'] = $this->url->link('account/order', '', 'SSL');
-    	$this->data['download'] = $this->url->link('account/download', '', 'SSL');
-		$this->data['return'] = $this->url->link('account/return', '', 'SSL');
-		$this->data['transaction'] = $this->url->link('account/transaction', '', 'SSL');
-		$this->data['newsletter'] = $this->url->link('account/newsletter', '', 'SSL');
-		
-		if ($this->config->get('reward_status')) {
-			$this->data['reward'] = $this->url->link('account/reward', '', 'SSL');
-		} else {
-			$this->data['reward'] = '';
+	public function country() {
+		$json = array();
+
+		$this->load->model('localisation/country');
+
+		$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
+
+		if ($country_info) {
+			$this->load->model('localisation/zone');
+
+			$json = array(
+				'country_id'        => $country_info['country_id'],
+				'name'              => $country_info['name'],
+				'iso_code_2'        => $country_info['iso_code_2'],
+				'iso_code_3'        => $country_info['iso_code_3'],
+				'address_format'    => $country_info['address_format'],
+				'postcode_required' => $country_info['postcode_required'],
+				'zone'              => $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']),
+				'status'            => $country_info['status']
+			);
 		}
-		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/account.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/account/account.tpl';
-		} else {
-			$this->template = 'default/template/account/account.tpl';
-		}
-		
-		$this->children = array(
-			'common/column_left',
-			'common/column_right',
-			'common/content_top',
-			'common/content_bottom',
-			'common/footer',
-			'common/header'		
-		);
-				
-		$this->response->setOutput($this->render());
-  	}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 }
-?>

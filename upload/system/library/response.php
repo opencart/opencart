@@ -1,26 +1,77 @@
 <?php
+/**
+ * @package		OpenCart
+ * @author		Daniel Kerr
+ * @copyright	Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
+ * @license		https://opensource.org/licenses/GPL-3.0
+ * @link		https://www.opencart.com
+*/
+
+/**
+* Response class
+*/
 class Response {
 	private $headers = array();
 	private $level = 0;
 	private $output;
 
+	/**
+	 * Constructor
+	 *
+	 * @param	string	$header
+	 *
+ 	*/
 	public function addHeader($header) {
 		$this->headers[] = $header;
 	}
-
-	public function redirect($url) {
-		header('Location: ' . $url);
-		exit;
+	
+	/**
+	 * 
+	 *
+	 * @param	string	$url
+	 * @param	int		$status
+	 *
+ 	*/
+	public function redirect($url, $status = 302) {
+		header('Location: ' . str_replace(array('&amp;', "\n", "\r"), array('&', '', ''), $url), true, $status);
+		exit();
 	}
-
+	
+	/**
+	 * 
+	 *
+	 * @param	int		$level
+ 	*/
 	public function setCompression($level) {
 		$this->level = $level;
 	}
-
+	
+	/**
+	 * 
+	 *
+	 * @return	array
+ 	*/
+	public function getOutput() {
+		return $this->output;
+	}
+	
+	/**
+	 * 
+	 *
+	 * @param	string	$output
+ 	*/	
 	public function setOutput($output) {
 		$this->output = $output;
 	}
-
+	
+	/**
+	 * 
+	 *
+	 * @param	string	$data
+	 * @param	int		$level
+	 * 
+	 * @return	string
+ 	*/
 	private function compress($data, $level = 0) {
 		if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false)) {
 			$encoding = 'gzip';
@@ -30,7 +81,7 @@ class Response {
 			$encoding = 'x-gzip';
 		}
 
-		if (!isset($encoding)) {
+		if (!isset($encoding) || ($level < -1 || $level > 9)) {
 			return $data;
 		}
 
@@ -50,23 +101,21 @@ class Response {
 
 		return gzencode($data, (int)$level);
 	}
-
+	
+	/**
+	 * 
+ 	*/
 	public function output() {
 		if ($this->output) {
-			if ($this->level) {
-				$ouput = $this->compress($this->output, $this->level);
-			} else {
-				$ouput = $this->output;
-			}
-
+			$output = $this->level ? $this->compress($this->output, $this->level) : $this->output;
+			
 			if (!headers_sent()) {
 				foreach ($this->headers as $header) {
 					header($header, true);
 				}
 			}
-
-			echo $ouput;
+			
+			echo $output;
 		}
 	}
 }
-?>

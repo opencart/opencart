@@ -1,59 +1,64 @@
 <?php
-class Cache { 
-	private $expire = 3600; 
+/**
+ * @package		OpenCart
+ * @author		Daniel Kerr
+ * @copyright	Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
+ * @license		https://opensource.org/licenses/GPL-3.0
+ * @link		https://www.opencart.com
+*/
+
+/**
+* Cache class
+*/
+class Cache {
+	private $adaptor;
 	
-	public function __construct() {
-		$files = glob(DIR_CACHE . 'cache.*');
+	/**
+	 * Constructor
+	 *
+	 * @param	string	$adaptor	The type of storage for the cache.
+	 * @param	int		$expire		Optional parameters
+	 *
+ 	*/
+	public function __construct($adaptor, $expire = 3600) {
+		$class = 'Cache\\' . $adaptor;
 
-		if ($files) {			
-			foreach ($files as $file) {
-				$time = substr(strrchr($file, '.'), 1);
-
-				if ($time < time()) {
-					if (file_exists($file)) {
-						unlink($file);
-					}
-				}
-			}
+		if (class_exists($class)) {
+			$this->adaptor = new $class($expire);
+		} else {
+			throw new \Exception('Error: Could not load cache adaptor ' . $adaptor . ' cache!');
 		}
 	}
 	
+    /**
+     * Gets a cache by key name.
+     *
+     * @param	string $key	The cache key name
+     *
+     * @return	string
+     */
 	public function get($key) {
-		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
-
-		if ($files) {
-			$handle = fopen($files[0], 'r');
-      		
-			$cache = fread($handle, filesize($files[0]));
-			
-			fclose($handle);
-		
-			return unserialize($cache);
-		}
+		return $this->adaptor->get($key);
 	}
-
+	
+    /**
+     * Sets a cache by key value.
+     *
+     * @param	string	$key	The cache key
+	 * @param	string	$value	The cache value
+	 * 
+	 * @return	string
+     */
 	public function set($key, $value) {
-		$this->delete($key);
-
-		$file = DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.' . (time() + $this->expire);
-
-		$handle = fopen($file, 'w');
-
-		fwrite($handle, serialize($value));
-
-		fclose($handle);
+		return $this->adaptor->set($key, $value);
 	}
-
+   
+    /**
+     * Deletes a cache by key name.
+     *
+     * @param	string	$key	The cache key
+     */
 	public function delete($key) {
-		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
-
-		if ($files) {
-			foreach ($files as $file) {
-				if (file_exists($file)) {
-					unlink($file);
-				}
-			}
-		}
+		return $this->adaptor->delete($key);
 	}
 }
-?>

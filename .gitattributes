@@ -1,0 +1,7 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Ignore specific directories / files when using export
+/tests export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore

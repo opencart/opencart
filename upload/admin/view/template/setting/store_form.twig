@@ -1,0 +1,576 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right">
+        <button type="submit" form="form-store" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    {% if success %}
+      <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-store">
+          <ul class="nav nav-tabs">
+            <li class="nav-item"><a href="#tab-general" data-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+            <li class="nav-item"><a href="#tab-store" data-toggle="tab" class="nav-link">{{ tab_store }}</a></li>
+            <li class="nav-item"><a href="#tab-local" data-toggle="tab" class="nav-link">{{ tab_local }}</a></li>
+            <li class="nav-item"><a href="#tab-option" data-toggle="tab" class="nav-link">{{ tab_option }}</a></li>
+            <li class="nav-item"><a href="#tab-image" data-toggle="tab" class="nav-link">{{ tab_image }}</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab-general">
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-url">{{ entry_url }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_url" value="{{ config_url }}" placeholder="{{ entry_url }}" id="input-url" class="form-control"/>
+                  <small class="form-text text-muted">{{ help_url|escape('html') }}</small>
+                  {% if error_url %}
+                    <div class="invalid-tooltip">{{ error_url }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-meta-title">{{ entry_meta_title }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_meta_title" value="{{ config_meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title" class="form-control"/>
+                  {% if error_meta_title %}
+                    <div class="invalid-tooltip">{{ error_meta_title }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-meta-description">{{ entry_meta_description }}</label>
+                <div class="col-sm-10">
+                  <textarea name="config_meta_description" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description" class="form-control">{{ config_meta_description }}</textarea>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-meta-keyword">{{ entry_meta_keyword }}</label>
+                <div class="col-sm-10">
+                  <textarea name="config_meta_keyword" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword" class="form-control">{{ config_meta_keyword }}</textarea>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-theme">{{ entry_theme }}</label>
+                <div class="col-sm-10">
+                  <select name="config_theme" id="input-theme" class="form-control">
+                    {% for theme in themes %}
+                      {% if theme.value == config_theme %}
+                        <option value="{{ theme.value }}" selected="selected">{{ theme.text }}</option>
+                      {% else %}
+                        <option value="{{ theme.value }}">{{ theme.text }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                  <br/>
+                  <img src="" alt="" id="theme" class="img-thumbnail"/></div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-layout">{{ entry_layout }}</label>
+                <div class="col-sm-10">
+                  <select name="config_layout_id" id="input-layout" class="form-control">
+                    {% for layout in layouts %}
+                      {% if layout.layout_id == config_layout_id %}
+                        <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
+                      {% else %}
+                        <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-store">
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-name">{{ entry_name }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_name" value="{{ config_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+                  {% if error_name %}
+                    <div class="invalid-tooltip">{{ error_name }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-owner">{{ entry_owner }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_owner" value="{{ config_owner }}" placeholder="{{ entry_owner }}" id="input-owner" class="form-control"/>
+                  {% if error_owner %}
+                    <div class="invalid-tooltip">{{ error_owner }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-address">{{ entry_address }}</label>
+                <div class="col-sm-10">
+                  <textarea name="config_address" rows="5" placeholder="{{ entry_address }}" id="input-address" class="form-control">{{ config_address }}</textarea>
+                  {% if error_address %}
+                    <div class="invalid-tooltip">{{ error_address }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-geocode">{{ entry_geocode }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_geocode" value="{{ config_geocode }}" placeholder="{{ entry_geocode }}" id="input-geocode" class="form-control"/>
+                  <small class="form-text text-muted">{{ help_geocode }}</small>
+                </div>
+              </div>
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-email">{{ entry_email }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_email" value="{{ config_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+                  {% if error_email %}
+                    <div class="invalid-tooltip">{{ error_email }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group row required">
+                <label class="col-sm-2 col-form-label" for="input-telephone">{{ entry_telephone }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_telephone" value="{{ config_telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
+                  {% if error_telephone %}
+                    <div class="invalid-tooltip">{{ error_telephone }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-fax">{{ entry_fax }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_fax" value="{{ config_fax }}" placeholder="{{ entry_fax }}" id="input-fax" class="form-control"/>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-image">{{ entry_image }}</label>
+                <div class="col-sm-10">
+                  <div class="card image">
+                    <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_image" value="{{ config_image }}" id="input-image"/>
+                    <div class="card-body">
+                      <button type="button" data-toggle="image" data-target="input-image" data-thumb="thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+                      <button type="button" data-toggle="clear" data-target="input-image" data-thumb="thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-open">{{ entry_open }}</label>
+                <div class="col-sm-10">
+                  <textarea name="config_open" rows="5" placeholder="{{ entry_open }}" id="input-open" class="form-control">{{ config_open }}</textarea>
+                  <small class="form-text text-muted">{{ help_open }}</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-comment">{{ entry_comment }}</label>
+                <div class="col-sm-10">
+                  <textarea name="config_comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ config_comment }}</textarea>
+                  <small class="form-text text-muted">{{ help_comment }}</small>
+                </div>
+              </div>
+              {% if locations %}
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ entry_location }}</label>
+                  <div class="col-sm-10">
+                    <div class="form-control" style="height: 150px; overflow: auto;">
+                      {% for location in locations %}
+                        <label class="form-check">
+                          {% if location.location_id in config_location %}
+                            <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" checked="checked" class="form-check-input"/>
+                            {{ location.name }}
+                          {% else %}
+                            <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" class="form-check-input"/>
+                            {{ location.name }}
+                          {% endif %}
+                        </label>
+                      {% endfor %}
+                    </div>
+                    <small class="form-text text-muted">{{ help_location }}</small>
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+            <div class="tab-pane" id="tab-local">
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-country">{{ entry_country }}</label>
+                <div class="col-sm-10">
+                  <select name="config_country_id" id="input-country" class="form-control">
+                    {% for country in countries %}
+                      {% if country.country_id == config_country_id %}
+                        <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
+                      {% else %}
+                        <option value="{{ country.country_id }}">{{ country.name }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-zone">{{ entry_zone }}</label>
+                <div class="col-sm-10">
+                  <select name="config_zone_id" id="input-zone" class="form-control"> </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-language">{{ entry_language }}</label>
+                <div class="col-sm-10">
+                  <select name="config_language" id="input-language" class="form-control">
+                    {% for language in languages %}
+                      {% if language.code == config_language %}
+                        <option value="{{ language.code }}" selected="selected">{{ language.name }}</option>
+                      {% else %}
+                        <option value="{{ language.code }}">{{ language.name }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-currency">{{ entry_currency }}</label>
+                <div class="col-sm-10">
+                  <select name="config_currency" id="input-currency" class="form-control">
+                    {% for currency in currencies %}
+                      {% if currency.code == config_currency %}
+                        <option value="{{ currency.code }}" selected="selected">{{ currency.title }}</option>
+                      {% else %}
+                        <option value="{{ currency.code }}">{{ currency.title }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                  <small class="form-text text-muted">{{ help_currency }}</small>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-option">
+              <fieldset>
+                <legend>{{ text_tax }}</legend>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ entry_tax }}</label>
+                  <div class="col-sm-10">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                      {% if config_tax %}
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_tax" value="1" checked="checked"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary"><input type="radio" name="config_tax" value="0"/> {{ text_no }}</label>
+                      {% else %}
+                        <label class="btn btn-outline-secondary"><input type="radio" name="config_tax" value="1"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_tax" value="0" checked="checked"/> {{ text_no }}</label>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="input-tax-default">{{ entry_tax_default }}</label>
+                  <div class="col-sm-10">
+                    <select name="config_tax_default" id="input-tax-default" class="form-control">
+                      <option value="">{{ text_none }}</option>
+                      {% if config_tax_default == 'shipping' %}
+                        <option value="shipping" selected="selected">{{ text_shipping }}</option>
+                      {% else %}
+                        <option value="shipping">{{ text_shipping }}</option>
+                      {% endif %}
+                      {% if config_tax_default == 'payment' %}
+                        <option value="payment" selected="selected">{{ text_payment }}</option>
+                      {% else %}
+                        <option value="payment">{{ text_payment }}</option>
+                      {% endif %}
+                    </select>
+                    <small class="form-text text-muted">{{ help_tax_default }}</small>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="input-tax-customer">{{ entry_tax_customer }}</label>
+                  <div class="col-sm-10">
+                    <select name="config_tax_customer" id="input-tax-customer" class="form-control">
+                      <option value="">{{ text_none }}</option>
+                      {% if config_tax_customer == 'shipping' %}
+                        <option value="shipping" selected="selected">{{ text_shipping }}</option>
+                      {% else %}
+                        <option value="shipping">{{ text_shipping }}</option>
+                      {% endif %}
+                      {% if config_tax_customer == 'payment' %}
+                        <option value="payment" selected="selected">{{ text_payment }}</option>
+                      {% else %}
+                        <option value="payment">{{ text_payment }}</option>
+                      {% endif %}
+                    </select>
+                    <small class="form-text text-muted">{{ help_tax_customer }}</small>
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>{{ text_account }}</legend>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="input-customer-group">{{ entry_customer_group }}</label>
+                  <div class="col-sm-10">
+                    <select name="config_customer_group_id" id="input-customer-group" class="form-control">
+                      {% for customer_group in customer_groups %}
+                        {% if customer_group.customer_group_id == config_customer_group_id %}
+                          <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                        {% else %}
+                          <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+                        {% endif %}
+                      {% endfor %}
+                    </select>
+                    <small class="form-text text-muted">{{ help_customer_group }}</small>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ entry_customer_group_display }}</label>
+                  <div class="col-sm-10">
+                    <div class="form-control" style="height: 150px; overflow: auto;">
+                      {% for customer_group in customer_groups %}
+                        <label class="form-check">
+                          {% if customer_group.customer_group_id in config_customer_group_display %}
+                            <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" checked="checked" class="form-check-input"/>
+                            {{ customer_group.name }}
+                          {% else %}
+                            <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" class="form-check-input"/>
+                            {{ customer_group.name }}
+                          {% endif %}
+                        </label>
+                      {% endfor %}
+                    </div>
+                    <small class="form-text text-muted">{{ help_customer_group_display }}</small>
+                    {% if error_customer_group_display %}
+                      <div class="invalid-tooltip">{{ error_customer_group_display }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ entry_customer_price }}</label>
+                  <div class="col-sm-10">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                      {% if config_customer_price %}
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_customer_price" value="1" checked="checked"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary"><input type="radio" name="config_customer_price" value="0"/> {{ text_no }}</label>
+                      {% else %}
+                        <label class="btn btn-outline-secondary"><input type="radio" name="config_customer_price" value="1"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_customer_price" value="0" checked="checked"/> {{ text_no }}</label>
+                      {% endif %}
+                    </div>
+                    <small class="form-text text-muted">{{ help_customer_price }}</small>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="input-account">{{ entry_account }}</label>
+                  <div class="col-sm-10">
+                    <select name="config_account_id" id="input-account" class="form-control">
+                      <option value="0">{{ text_none }}</option>
+                      {% for information in informations %}
+                        {% if information.information_id == config_account_id %}
+                          <option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
+                        {% else %}
+                          <option value="{{ information.information_id }}">{{ information.title }}</option>
+                        {% endif %}
+                      {% endfor %}
+                    </select>
+                    <small class="form-text text-muted">{{ help_account }}</small>
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>{{ text_checkout }}</legend>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ entry_cart_weight }}</label>
+                  <div class="col-sm-10">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                      {% if config_cart_weight %}
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_cart_weight" value="1" checked="checked"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary"><input type="radio" name="config_cart_weight" value="0"/> {{ text_no }}</label>
+                      {% else %}
+                        <label class="btn btn-outline-secondary"><input type="radio" name="config_cart_weight" value="1"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_cart_weight" value="0" checked="checked"/> {{ text_no }}</label>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ entry_checkout_guest }}</label>
+                  <div class="col-sm-10">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                      {% if config_checkout_guest %}
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_checkout_guest" value="1" checked="checked"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary"><input type="radio" name="config_checkout_guest" value="0"/> {{ text_no }}</label>
+                      {% else %}
+                        <label class="btn btn-outline-secondary"><input type="radio" name="config_checkout_guest" value="1"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_checkout_guest" value="0" checked="checked"/> {{ text_no }}</label>
+                      {% endif %}
+                    </div>
+                    <small class="form-text text-muted">{{ help_checkout_guest }}</small>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="input-checkout">{{ entry_checkout }}</label>
+                  <div class="col-sm-10">
+                    <select name="config_checkout_id" id="input-checkout" class="form-control">
+                      <option value="0">{{ text_none }}</option>
+                      {% for information in informations %}
+                        {% if information.information_id == config_checkout_id %}
+                          <option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
+                        {% else %}
+                          <option value="{{ information.information_id }}">{{ information.title }}</option>
+                        {% endif %}
+                      {% endfor %}
+                    </select>
+                    <small class="form-text text-muted">{{ help_checkout }}</small>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="input-order-status">{{ entry_order_status }}</label>
+                  <div class="col-sm-10">
+                    <select name="config_order_status_id" id="input-order-status" class="form-control">
+                      {% for order_status in order_statuses %}
+                        {% if order_status.order_status_id == config_order_status_id %}
+                          <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                        {% else %}
+                          <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                        {% endif %}
+                      {% endfor %}
+                    </select>
+                    <small class="form-text text-muted">{{ help_order_status }}</small>
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>{{ text_stock }}</legend>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ entry_stock_display }}</label>
+                  <div class="col-sm-10">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                      {% if config_stock_display %}
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_stock_display" value="1" checked="checked"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary"><input type="radio" name="config_stock_display" value="0"/> {{ text_no }}</label>
+                      {% else %}
+                        <label class="btn btn-outline-secondary"><input type="radio" name="config_stock_display" value="1"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_stock_display" value="0" checked="checked"/> {{ text_no }}</label>
+                      {% endif %}
+                    </div>
+                    <small class="form-text text-muted">{{ help_stock_display }}</small>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ entry_stock_checkout }}</label>
+                  <div class="col-sm-10">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                      {% if config_stock_checkout %}
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_stock_checkout" value="1" checked="checked"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary"><input type="radio" name="config_stock_checkout" value="0"/> {{ text_no }}</label>
+                      {% else %}
+                        <label class="btn btn-outline-secondary"><input type="radio" name="config_stock_checkout" value="1"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_stock_checkout" value="0" checked="checked"/> {{ text_no }}</label>
+                      {% endif %}
+                    </div>
+                    <small class="form-text text-muted">{{ help_stock_checkout }}</small>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+            <div class="tab-pane" id="tab-image">
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-logo">{{ entry_logo }}</label>
+                <div class="col-sm-10">
+                  <div class="card image">
+                    <img src="{{ logo }}" alt="" title="" id="thumb-logo" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_logo" value="{{ config_logo }}" id="input-logo"/>
+                    <div class="card-body">
+                      <button type="button" data-toggle="image" data-target="input-logo" data-thumb="thumb-logo" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+                      <button type="button" data-toggle="clear" data-target="input-logo" data-thumb="thumb-logo" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="input-icon">{{ entry_icon }}</label>
+                <div class="col-sm-10">
+                  <div class="card image">
+                    <img src="{{ icon }}" alt="" title="" id="thumb-icon" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_icon" value="{{ config_icon }}" id="input-icon"/>
+                    <div class="card-body">
+                      <button type="button" data-toggle="image" data-target="input-icon" data-thumb="thumb-icon" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+                      <button type="button" data-toggle="clear" data-target="input-icon" data-thumb="thumb-icon" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+                    </div>
+                  </div>
+                  <small class="form-text text-muted">{{ help_icon }}</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('select[name=\'config_theme\']').on('change', function() {
+	$.ajax({
+		url: 'index.php?route=setting/setting/theme&user_token={{ user_token }}&theme=' + this.value,
+		dataType: 'html',
+		beforeSend: function() {
+			$('select[name=\'config_theme\']').prop('disabled', true);
+		},
+		complete: function() {
+			$('select[name=\'config_theme\']').prop('disabled', false);
+		},
+		success: function(html) {
+			$('#theme').attr('src', html);
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$('select[name=\'config_theme\']').trigger('change');
+//--></script>
+<script type="text/javascript"><!--
+$('select[name=\'config_country_id\']').on('change', function() {
+	$.ajax({
+		url: 'index.php?route=localisation/country/country&user_token={{ user_token }}&country_id=' + this.value,
+		dataType: 'json',
+		beforeSend: function() {
+			$('select[name=\'config_country_id\']').prop('disabled', true);
+		},
+		complete: function() {
+			$('select[name=\'config_country_id\']').prop('disabled', false);
+		},
+		success: function(json) {
+			html = '<option value="">{{ text_select }}</option>';
+
+			if (json['zone'] && json['zone'] != '') {
+				for (i = 0; i < json['zone'].length; i++) {
+					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+
+					if (json['zone'][i]['zone_id'] == '{{ config_zone_id }}') {
+						html += ' selected="selected"';
+					}
+
+					html += '>' + json['zone'][i]['name'] + '</option>';
+				}
+			} else {
+				html += '<option value="0" selected="selected">{{ text_none }}</option>';
+			}
+
+			$('select[name=\'config_zone_id\']').html(html);
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$('select[name=\'config_country_id\']').trigger('change');
+//--></script>
+{{ footer }} 

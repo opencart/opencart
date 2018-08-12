@@ -1,0 +1,99 @@
+{% if error_warning %}
+  <div class="alert alert-warning alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+{% endif %}
+{% if payment_methods %}
+  <p>{{ text_payment_method }}</p>
+  {% for payment_method in payment_methods %}
+    <div class="form-check">
+      <label>
+        {% if payment_method.code == code or not code %}
+          {% set code = payment_method.code %}
+          <input type="radio" name="payment_method" value="{{ payment_method.code }}" class="form-check-input" checked="checked"/>
+        {% else %}
+          <input type="radio" name="payment_method" value="{{ payment_method.code }}" class="form-check-input"/>
+        {% endif %}
+        {{ payment_method.title }}
+        {% if payment_method.terms %}
+          ({{ payment_method.terms }})
+        {% endif %}
+      </label>
+    </div>
+  {% endfor %}
+{% endif %}
+<br/>
+<p><strong>{{ text_comments }}</strong></p>
+<p>
+  <textarea name="comment" rows="8" class="form-control">{{ comment }}</textarea>
+</p>
+{% if text_agree %}
+  <div class="buttons">
+    <div class="float-right">{{ text_agree }}
+      {% if agree %}
+        <input type="checkbox" name="agree" value="1" checked="checked"/>
+      {% else %}
+        <input type="checkbox" name="agree" value="1"/>
+      {% endif %}
+      &nbsp;
+      <button type="button" id="button-payment-method" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
+    </div>
+  </div>
+{% else %}
+  <div class="buttons">
+    <div class="float-right">
+      <button type="button" id="button-payment-method" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
+    </div>
+  </div>
+{% endif %}
+<script type="text/javascript"><!--
+// Payment Method
+$('#button-payment-method').on('click', function() {
+	chain.attach(function() {
+		return $.ajax({
+			url: 'index.php?route=checkout/payment_method/save',
+			type: 'post',
+			data: $('#collapse-payment-method input[type=\'radio\']:checked, #collapse-payment-method input[type=\'checkbox\']:checked, #collapse-payment-method textarea'),
+			dataType: 'json',
+			beforeSend: function() {
+				$('#button-payment-method').button('loading');
+			},
+			success: function(json) {
+				$('.alert-dismissible, .text-danger').remove();
+
+				if (json['redirect']) {
+					location = json['redirect'];
+				} else if (json['error']) {
+					$('#button-payment-method').button('reset');
+
+					if (json['error']['warning']) {
+						$('#collapse-payment-method .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					}
+				} else {
+					chain.attach(function() {
+						return $.ajax({
+							url: 'index.php?route=checkout/confirm',
+							dataType: 'html',
+							complete: function() {
+								$('#button-payment-method').button('reset');
+							},
+							success: function(html) {
+								$('#collapse-checkout-confirm .card-body').html(html);
+
+								$('#heading-checkout-confirm').attr('data-toggle', 'collapse');
+
+								$('#heading-checkout-confirm').trigger('click');
+							},
+							error: function(xhr, ajaxOptions, thrownError) {
+								alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+							}
+						});
+					});
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	});
+});
+//--></script>
+

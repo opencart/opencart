@@ -1,0 +1,32 @@
+<form action="{{ action }}" method="POST" id="firstdata_form_redirect">
+  <fieldset id="payment">
+    <input type="hidden" name="txntype" value="{{ txntype }}"/> <input type="hidden" name="timezone" value="GMT"/> <input type="hidden" name="txndatetime" value="{{ timestamp }}"/> <input type="hidden" name="hash" value="{{ hash }}"/> <input type="hidden" name="storename" value="{{ merchant_id }}"/> <input type="hidden" name="mode" value="payonly"/> <input type="hidden" name="chargetotal" value="{{ amount }}"/> <input type="hidden" name="currency" value="{{ currency }}"/> <input type="hidden" name="oid" value="{{ order_id }}"/> <input type="hidden" name="mobileMode" value="{{ mobile }}"/> <input type="hidden" name="responseSuccessURL" value="{{ url_success }}"/> <input type="hidden" name="responseFailURL" value="{{ url_fail }}"/> <input type="hidden" name="transactionNotificationURL" value="{{ url_notify }}"/> <input type="hidden" name="sname" value="{{ sname }}"/> <input type="hidden" name="saddr1" value="{{ saddr1 }}"/> <input type="hidden" name="saddr2" value="{{ saddr2 }}"/>
+    <input type="hidden" name="scity" value="{{ scity }}"/> <input type="hidden" name="sstate" value="{{ sstate }}"/> <input type="hidden" name="scountry" value="{{ scountry }}"/> <input type="hidden" name="szip" value="{{ szip }}"/> <input type="hidden" name="bcompany" value="{{ bcompany }}"/> <input type="hidden" name="bname" value="{{ bname }}"/> <input type="hidden" name="baddr1" value="{{ baddr1 }}"/> <input type="hidden" name="baddr2" value="{{ baddr2 }}"/> <input type="hidden" name="bcity" value="{{ bcity }}"/> <input type="hidden" name="bstate" value="{{ bstate }}"/> <input type="hidden" name="bcountry" value="{{ bcountry }}"/> <input type="hidden" name="bzip" value="{{ bzip }}"/> <input type="hidden" name="email" value="{{ email }}"/> <input type="hidden" name="invoicenumber" value="{{ version }}"/>
+    {% if card_storage == 1 %}
+      {% set i = 1 %}
+      {% if stored_cards %}
+        {% for card in stored_cards %}
+          <p>
+            <input type="radio" name="hosteddataid" value="{{ card.token }}"{% if i == 1 %} checked="checked"{% endif %} />
+            {{ card.digits }} - {{ card.expire_month }} / {{ card.expire_year }}</p>
+          {% set i = i + 1 %}
+        {% endfor %}
+        <p>
+        <input type="radio" name="hosteddataid" value="{{ new_hosted_id }}" {% set i == 1 %} checked="checked"{% endif %} />
+      Use a new card</p>
+    {% else %}
+      <input type="hidden" name="hosteddataid" value="{{ new_hosted_id }}"/>
+    {% endif %}
+    {% endif %}
+  </fieldset>
+</form>
+<div class="buttons">
+  <div class="float-right">
+    <button type="button" id="button-confirm" class="btn btn-primary">{{ button_confirm }}</button>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#button-confirm').bind('click', function() {
+	$('#firstdata_form_redirect').submit();
+});
+//--></script>

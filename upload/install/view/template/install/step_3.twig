@@ -1,0 +1,139 @@
+{{ header }}
+<div class="container">
+  <header>
+    <div class="row">
+      <div class="col-sm-6">
+        <h1 class="pull-left">3
+          <small>/4</small>
+        </h1>
+        <h3>{{ heading_title }}
+          <br>
+          <small>{{ text_step_3 }}</small>
+        </h3>
+      </div>
+      <div class="col-sm-6">
+        <div id="logo" class="pull-right hidden-xs"><img src="view/image/logo.png" alt="OpenCart" title="OpenCart"/></div>
+      </div>
+    </div>
+  </header>
+  {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+  {% endif %}
+  <div class="row">
+    <div class="col-sm-9">
+      <form action="{{ action }}" method="post" enctype="multipart/form-data" class="form-horizontal">
+        <p>{{ text_db_connection }}</p>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-db-driver">{{ entry_db_driver }}</label>
+            <div class="col-sm-10">
+              <select name="db_driver" id="input-db-driver" class="form-control">
+                {% for driver in drivers %}
+                  {% if db_driver == driver.value %}
+                    <option value="{{ driver.value }}" selected="selected">{{ driver.text }}</option>
+                  {% else %}
+                    <option value="{{ driver.value }}">{{ driver.text }}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+              {% if error_db_driver %}
+                <div class="text-danger">{{ error_db_driver }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-db-hostname">{{ entry_db_hostname }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="db_hostname" value="{{ db_hostname }}" id="input-db-hostname" class="form-control"/>
+              {% if error_db_hostname %}
+                <div class="text-danger">{{ error_db_hostname }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-db-username">{{ entry_db_username }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="db_username" value="{{ db_username }}" id="input-db-username" class="form-control"/>
+              {% if error_db_username %}
+                <div class="text-danger">{{ error_db_username }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-db-password">{{ entry_db_password }}</label>
+            <div class="col-sm-10">
+              <input type="password" name="db_password" value="{{ db_password }}" id="input-db-password" class="form-control"/>
+            </div>
+          </div>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-db-database">{{ entry_db_database }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="db_database" value="{{ db_database }}" id="input-db-database" class="form-control"/>
+              {% if error_db_database %}
+                <div class="text-danger">{{ error_db_database }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-db-port">{{ entry_db_port }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="db_port" value="{{ db_port }}" id="input-db-port" class="form-control"/>
+              {% if error_db_port %}
+                <div class="text-danger">{{ error_db_port }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-db-prefix">{{ entry_db_prefix }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="db_prefix" value="{{ db_prefix }}" id="input-db-prefix" class="form-control"/>
+              {% if error_db_prefix %}
+                <div class="text-danger">{{ error_db_prefix }}</div>
+              {% endif %}
+            </div>
+          </div>
+        </fieldset>
+        <p>{{ text_db_administration }}</p>
+        <fieldset>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-username">{{ entry_username }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="username" value="{{ username }}" id="input-username" class="form-control"/>
+              {% if error_username %}
+                <div class="text-danger">{{ error_username }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-password">{{ entry_password }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="password" value="{{ password }}" id="input-password" class="form-control"/>
+              {% if error_password %}
+                <div class="text-danger">{{ error_password }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-email">{{ entry_email }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="email" value="{{ email }}" id="input-email" class="form-control"/>
+              {% if error_email %}
+                <div class="text-danger">{{ error_email }}</div>
+              {% endif %}
+            </div>
+          </div>
+        </fieldset>
+        <div class="buttons">
+          <div class="pull-left"><a href="{{ back }}" class="btn btn-default">{{ button_back }}</a></div>
+          <div class="pull-right">
+            <input type="submit" value="{{ button_continue }}" class="btn btn-primary"/>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-3">{{ column_left }}</div>
+  </div>
+</div>
+{{ footer }}

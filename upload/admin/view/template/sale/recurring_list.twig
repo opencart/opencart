@@ -1,0 +1,197 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right">
+        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-recurring').toggleClass('d-none');" class="btn btn-light d-md-none"><i class="fas fa-filter"></i></button>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">{% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    {% if success %}
+      <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="row">
+      <div id="filter-recurring" class="col-md-3 col-sm-12 order-md-9 d-none d-md-block mb-3">
+        <div class="card">
+          <div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
+          <div class="card-body">
+            <div class="form-group">
+              <label class="col-form-label" for="input-order-recurring-id">{{ entry_order_recurring_id }}</label> <input type="text" name="filter_order_recurring_id" value="{{ filter_order_recurring_id }}" placeholder="{{ entry_order_recurring_id }}" id="input-order-recurring-id" class="form-control"/>
+            </div>
+            <div class="form-group">
+              <label class="col-form-label" for="input-customer">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
+            </div>
+            <div class="form-group">
+              <label class="col-form-label" for="input-order-id">{{ entry_order_id }}</label> <input type="text" name="filter_order_recurring_id" value="{{ filter_order_recurring_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
+            </div>
+            <div class="form-group">
+              <label class="col-form-label" for="input-status">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-control">
+                {% for recurring_status in recurring_statuses %}
+                  {% if filter_status == recurring_status.value %}
+                    <option value="{{ recurring_status.value }}" selected="selected">{{ recurring_status.text }}</option>
+                  {% else %}
+                    <option value="{{ recurring_status.value }}">{{ recurring_status.text }}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="col-form-label" for="input-reference">{{ entry_reference }}</label> <input type="text" name="filter_reference" value="{{ filter_reference }}" placeholder="{{ entry_reference }}" id="input-reference" class="form-control"/>
+            </div>
+            <div class="form-group">
+              <label class="col-form-label" for="input-date-date_added">{{ entry_date_added }}</label>
+              <div class="input-group date">
+                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" id="input-date-date_added" class="form-control"/>
+                <div class="input-group-append">
+                  <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group text-right">
+              <button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9 col-sm-12">
+        <div class="card">
+          <div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
+          <div class="card-body">
+            <form action="" method="post" enctype="multipart/form-data" id="form-recurring">
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-right">{% if sort == 'or.order_recurring_id' %} <a href="{{ sort_order_recurring }}" class="{{ order|lower }}">{{ column_order_recurring_id }}</a> {% else %} <a href="{{ sort_order_recurring }}">{{ column_order_recurring_id }}</a> {% endif %}</td>
+                      <td class="text-right">{% if sort == 'or.order_id' %} <a href="{{ sort_order }}" class="{{ order|lower }}">{{ column_order_id }}</a> {% else %} <a href="{{ sort_order }}">{{ column_order_id }}</a> {% endif %}</td>
+                      <td class="text-left">{% if sort == 'or.reference' %} <a href="{{ sort_reference }}" class="{{ order|lower }}">{{ column_reference }}</a> {% else %} <a href="{{ sort_reference }}">{{ column_reference }}</a> {% endif %}</td>
+                      <td class="text-left">{% if sort == 'customer' %} <a href="{{ sort_customer }}" class="{{ order|lower }}">{{ column_customer }}</a> {% else %} <a href="{{ sort_customer }}">{{ column_customer }}</a> {% endif %}</td>
+                      <td class="text-left">{% if sort == 'or.status' %} <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a> {% else %} <a href="{{ sort_status }}">{{ column_status }}</a> {% endif %}</td>
+                      <td class="text-left">{% if sort == 'or.date_added' %} <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a> {% else %} <a href="{{ sort_date_added }}">{{ column_date_added }}</a> {% endif %}</td>
+                      <td class="text-right">{{ column_action }}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    {% if recurrings %}
+                      {% for recurring in recurrings %}
+                        <tr>
+                          <td class="text-right">{{ recurring.order_recurring_id }}</td>
+                          <td class="text-right">{{ recurring.order_id }}</td>
+                          <td class="text-left">{{ recurring.reference }}</td>
+                          <td class="text-left">{{ recurring.customer }}</td>
+                          <td class="text-left">{{ recurring.status }}</td>
+                          <td class="text-left">{{ recurring.date_added }}</td>
+                          <td class="text-right"><a href="{{ recurring.view }}" data-toggle="tooltip" title="{{ button_order_recurring }}" class="btn btn-info"><i class="fas fa-eye"></i></a> <a href="{{ recurring.order }}" data-toggle="tooltip" title="{{ button_order }}" class="btn btn-info"><i class="fas fa-shopping-cart"></i></a></td>
+                        </tr>
+                      {% endfor %}
+                    {% else %}
+                      <tr>
+                        <td class="text-center" colspan="7">{{ text_no_results }}</td>
+                      </tr>
+                    {% endif %}
+                  </tbody>
+
+                </table>
+              </div>
+            </form>
+            <div class="row">
+              <div class="col-sm-6 text-left">{{ pagination }}</div>
+              <div class="col-sm-6 text-right">{{ results }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#button-filter').on('click', function() {
+	url = 'index.php?route=sale/recurring&user_token={{ user_token }}';
+
+	var filter_order_recurring_id = $('input[name=\'filter_order_recurring_id\']').val();
+
+	if (filter_order_recurring_id) {
+		url += '&filter_order_recurring_id=' + encodeURIComponent(filter_order_recurring_id);
+	}
+
+	var filter_order_id = $('input[name=\'filter_order_id\']').val();
+
+	if (filter_order_id) {
+		url += '&filter_order_id=' + encodeURIComponent(filter_order_id);
+	}
+
+	var filter_reference = $('input[name=\'filter_reference\']').val();
+
+	if (filter_reference) {
+		url += '&filter_reference=' + encodeURIComponent(filter_reference);
+	}
+
+	var filter_customer = $('input[name=\'filter_customer\']').val();
+
+	if (filter_customer) {
+		url += '&filter_customer=' + encodeURIComponent(filter_customer);
+	}
+
+	var filter_status = $('select[name=\'filter_status\']').val();
+
+	if (filter_status != 0) {
+		url += '&filter_status=' + encodeURIComponent(filter_status);
+	}
+
+	var filter_date_added = $('input[name=\'filter_date_added\']').val();
+
+	if (filter_date_added != '') {
+		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
+	}
+
+	location = url;
+});
+
+$('#form input').keydown(function(e) {
+	if (e.keyCode == 13) {
+		filter();
+	}
+});
+
+$('.date').datetimepicker({
+	'format': 'YYYY-MM-DD',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
+});
+//--></script>
+<script type="text/javascript"><!--
+$('input[name=\'filter_customer\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['customer_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'filter_customer\']').val(item['label']);
+	}
+});
+//--></script>
+{{ footer }} 

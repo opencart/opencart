@@ -1,6 +1,8 @@
 <?php
-class ControllerCheckoutSuccess extends Controller { 
-	public function index() { 	
+class ControllerCheckoutSuccess extends Controller {
+	public function index() {
+		$this->load->language('checkout/success');
+
 		if (isset($this->session->data['order_id'])) {
 			$this->cart->clear();
 
@@ -10,71 +12,53 @@ class ControllerCheckoutSuccess extends Controller {
 			unset($this->session->data['payment_methods']);
 			unset($this->session->data['guest']);
 			unset($this->session->data['comment']);
-			unset($this->session->data['order_id']);	
+			unset($this->session->data['order_id']);
 			unset($this->session->data['coupon']);
 			unset($this->session->data['reward']);
 			unset($this->session->data['voucher']);
 			unset($this->session->data['vouchers']);
-		}	
-									   
-		$this->language->load('checkout/success');
-		
+			unset($this->session->data['totals']);
+		}
+
 		$this->document->setTitle($this->language->get('heading_title'));
-		
-		$this->data['breadcrumbs'] = array(); 
 
-      	$this->data['breadcrumbs'][] = array(
-        	'href'      => $this->url->link('common/home'),
-        	'text'      => $this->language->get('text_home'),
-        	'separator' => false
-      	); 
-		
-      	$this->data['breadcrumbs'][] = array(
-        	'href'      => $this->url->link('checkout/cart'),
-        	'text'      => $this->language->get('text_basket'),
-        	'separator' => $this->language->get('text_separator')
-      	);
-				
-		$this->data['breadcrumbs'][] = array(
-			'href'      => $this->url->link('checkout/checkout', '', 'SSL'),
-			'text'      => $this->language->get('text_checkout'),
-			'separator' => $this->language->get('text_separator')
-		);	
-					
-      	$this->data['breadcrumbs'][] = array(
-        	'href'      => $this->url->link('checkout/success'),
-        	'text'      => $this->language->get('text_success'),
-        	'separator' => $this->language->get('text_separator')
-      	);
+		$data['breadcrumbs'] = array();
 
-		$this->data['heading_title'] = $this->language->get('heading_title');
-		
-		if ($this->customer->isLogged()) {
-    		$this->data['text_message'] = sprintf($this->language->get('text_customer'), $this->url->link('account/account', '', 'SSL'), $this->url->link('account/order', '', 'SSL'), $this->url->link('account/download', '', 'SSL'), $this->url->link('information/contact'));
-		} else {
-    		$this->data['text_message'] = sprintf($this->language->get('text_guest'), $this->url->link('information/contact'));
-		}
-		
-    	$this->data['button_continue'] = $this->language->get('button_continue');
-
-    	$this->data['continue'] = $this->url->link('common/home');
-
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/common/success.tpl';
-		} else {
-			$this->template = 'default/template/common/success.tpl';
-		}
-		
-		$this->children = array(
-			'common/column_left',
-			'common/column_right',
-			'common/content_top',
-			'common/content_bottom',
-			'common/footer',
-			'common/header'			
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 		);
-				
-		$this->response->setOutput($this->render());
-  	}
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_basket'),
+			'href' => $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'))
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_checkout'),
+			'href' => $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'))
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_success'),
+			'href' => $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'))
+		);
+
+		if ($this->customer->isLogged()) {
+			$data['text_message'] = sprintf($this->language->get('text_customer'), $this->url->link('account/account', 'language=' . $this->config->get('config_language')), $this->url->link('account/order', 'language=' . $this->config->get('config_language')), $this->url->link('account/download', 'language=' . $this->config->get('config_language')), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
+		} else {
+			$data['text_message'] = sprintf($this->language->get('text_guest'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
+		}
+
+		$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
+
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
+
+		$this->response->setOutput($this->load->view('common/success', $data));
+	}
 }
-?>

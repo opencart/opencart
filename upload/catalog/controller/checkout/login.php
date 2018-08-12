@@ -1,89 +1,95 @@
-<?php  
-class ControllerCheckoutLogin extends Controller { 
+<?php
+class ControllerCheckoutLogin extends Controller {
 	public function index() {
-		$this->language->load('checkout/checkout');
-		
-		$this->data['text_checkout_account'] = $this->language->get('text_checkout_account');
-		$this->data['text_checkout_payment_address'] = $this->language->get('text_checkout_payment_address');
-		$this->data['text_new_customer'] = $this->language->get('text_new_customer');
-		$this->data['text_returning_customer'] = $this->language->get('text_returning_customer');
-		$this->data['text_checkout'] = $this->language->get('text_checkout');
-		$this->data['text_register'] = $this->language->get('text_register');
-		$this->data['text_guest'] = $this->language->get('text_guest');
-		$this->data['text_i_am_returning_customer'] = $this->language->get('text_i_am_returning_customer');
-		$this->data['text_register_account'] = $this->language->get('text_register_account');
-		$this->data['text_forgotten'] = $this->language->get('text_forgotten');
- 		$this->data['text_modify'] = $this->language->get('text_modify');
- 		
-		$this->data['entry_email'] = $this->language->get('entry_email');
-		$this->data['entry_password'] = $this->language->get('entry_password');
-		
-		$this->data['button_continue'] = $this->language->get('button_continue');
-		$this->data['button_login'] = $this->language->get('button_login');
-		
-		$this->data['guest_checkout'] = ($this->config->get('config_guest_checkout') && !$this->config->get('config_customer_price') && !$this->cart->hasDownload());
-		
+		$this->load->language('checkout/checkout');
+
+		$data['checkout_guest'] = ($this->config->get('config_checkout_guest') && !$this->config->get('config_customer_price') && !$this->cart->hasDownload());
+
 		if (isset($this->session->data['account'])) {
-			$this->data['account'] = $this->session->data['account'];
+			$data['account'] = $this->session->data['account'];
 		} else {
-			$this->data['account'] = 'register';
+			$data['account'] = 'register';
 		}
-		
-		$this->data['forgotten'] = $this->url->link('account/forgotten', '', 'SSL');
-		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/login.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/checkout/login.tpl';
-		} else {
-			$this->template = 'default/template/checkout/login.tpl';
-		}
-				
-		$this->response->setOutput($this->render());
+
+		$data['forgotten'] = $this->url->link('account/forgotten', 'language=' . $this->config->get('config_language'));
+
+		$this->response->setOutput($this->load->view('checkout/login', $data));
 	}
-	
+
 	public function save() {
-		$this->language->load('checkout/checkout');
-		
+		$this->load->language('checkout/checkout');
+
 		$json = array();
-		
+
 		if ($this->customer->isLogged()) {
-			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');			
+			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 		}
-		
+
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$json['redirect'] = $this->url->link('checkout/cart');
-		}	
-		
+			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
+		}
+
 		if (!$json) {
-			if (!$this->customer->login($this->request->post['email'], $this->request->post['password'])) {
-				$json['error']['warning'] = $this->language->get('error_login');
-			}
-		
 			$this->load->model('account/customer');
-		
-			$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
-			
-			if ($customer_info && !$customer_info['approved']) {
-				$json['error']['warning'] = $this->language->get('error_approved');
-			}		
-		}
-		
-		if (!$json) {
-			unset($this->session->data['guest']);
-				
-			$this->load->model('account/address');
-				
-			if ($this->config->get('config_tax_customer') == 'payment') {
-				$this->session->data['payment_addess'] = $this->model_account_address->getAddress($this->customer->getAddressId());						
+
+			// Check how many login attempts have been made.
+			$login_info = $this->model_account_customer->getLoginAttempts($this->request->post['email']);
+
+			if ($login_info && ($login_info['total'] >= $this->config->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
+				$json['error']['warning'] = $this->language->get('error_attempts');
 			}
-			
-			if ($this->config->get('config_tax_customer') == 'shipping') {
-				$this->session->data['shipping_addess'] = $this->model_account_address->getAddress($this->customer->getAddressId());	
-			}	
-			
-			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
+
+			// Check if customer has been approved.
+			$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
+
+			if ($customer_info && !$customer_info['status']) {
+				$json['error']['warning'] = $this->language->get('error_approved');
+			}
+
+			if (!isset($json['error'])) {
+				if (!$this->customer->login($this->request->post['email'], $this->request->post['password'])) {
+					$json['error']['warning'] = $this->language->get('error_login');
+
+					$this->model_account_customer->addLoginAttempt($this->request->post['email']);
+				} else {
+					$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
+				}
+			}
 		}
-					
-		$this->response->setOutput(json_encode($json));		
+
+		if (!$json) {
+			// Unset guest
+			unset($this->session->data['guest']);
+
+			// Default Shipping Address
+			$this->load->model('account/address');
+
+			if ($this->config->get('config_tax_customer') == 'payment') {
+				$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+			}
+
+			if ($this->config->get('config_tax_customer') == 'shipping') {
+				$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+			}
+
+			// Wishlist
+			if (isset($this->session->data['wishlist']) && is_array($this->session->data['wishlist'])) {
+				$this->load->model('account/wishlist');
+
+				foreach ($this->session->data['wishlist'] as $key => $product_id) {
+					$this->model_account_wishlist->addWishlist($product_id);
+
+					unset($this->session->data['wishlist'][$key]);
+				}
+			}
+
+			// Log the IP info
+			$this->model_account_customer->addLogin($this->customer->getId(), $this->request->server['REMOTE_ADDR']);
+
+			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }
-?>

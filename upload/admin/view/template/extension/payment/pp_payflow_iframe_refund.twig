@@ -1,0 +1,68 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right"><a href="{{ cancel }}" class="btn btn-danger"><i class="fas fa-times"></i> {{ button_cancel }}</a></div>
+      <h1>{{ heading_refund }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fas fa-list"></i> {{ heading_title }}</div>
+      <div class="card-body">
+        <table class="table table-striped table-bordered">
+          <tr>
+            <td>{{ entry_transaction_reference }}</td>
+            <td>{{ transaction_reference }}</td>
+          </tr>
+          <tr>
+            <td>{{ entry_transaction_amount }}</td>
+            <td>{{ transaction_amount }}</td>
+          </tr>
+          <tr>
+            <td>{{ entry_refund_amount }}</td>
+            <td><input type="text" value="0.00" name="amount"/> <a class="btn btn-primary" onclick="refund()" id="button-refund">{{ button_refund }}</a></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript"><!--
+  function refund() {
+	  var amount = $('input[name="amount"]').val();
+
+	  $.ajax({
+		  type: 'POST',
+		  dataType: 'json',
+		  data: {'transaction_reference': '{{ transaction_reference }}', 'amount': amount},
+		  url: 'index.php?route=extension/payment/pp_payflow_iframe/dorefund&user_token={{ user_token }}',
+
+		  beforeSend: function() {
+			  $('#button-refund').after('<span class="btn btn-primary loading"><i class="fas fa-circle-notch fa-spin fa-lg"></i></span>');
+			  $('#button-refund').hide();
+		  },
+
+		  success: function(data) {
+			  if (!data.error) {
+				  alert(data.success);
+				  $('input[name="amount"]').val('0.00');
+			  }
+
+			  if (data.error) {
+				  alert(data.error);
+			  }
+
+			  $('#button-refund').show();
+			  $('.loading').remove();
+		  }
+	  });
+  }
+
+  //--></script>
+</div>
+{{ footer }}

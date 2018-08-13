@@ -1023,7 +1023,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		}
 	}
 
-	public function preferredSolution() {
+	public function promotion() {
 		$this->load->language('extension/payment/pp_braintree');
 
 		$data['connect_link'] = '';
@@ -1045,7 +1045,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			$data['payment_pp_braintree_status'] = "disabled";
 		}
 
-		return $this->load->view('extension/payment/pp_braintree_preferred', $data);
+		return $this->load->view('extension/payment/pp_braintree_promotion', $data);
 	}
 
 	protected function validate() {

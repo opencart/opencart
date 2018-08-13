@@ -74,6 +74,8 @@ $_['text_amazon_no_declined']      = '--- No Automatic Declined Authorization --
 $_['text_amazon_signup']		   = 'Sign-up to Amazon Pay';
 $_['text_credentials']			   = 'Please paste your keys here (in JSON format)';
 $_['text_validate_credentials']	   = 'Validate and Use Credentials';
+$_['text_promotion']			   = 'Provide customers the same Amazon checkout experience they know and trust on your site. Add Amazon Pay today and let your customers check out in just a few clicks or taps using the shipping and payment info already stored in their Amazon account. Learn more.';
+$_['text_signup']			       = 'Signup to AmazonPay';
 
 // Columns
 $_['column_status']                = 'Status';

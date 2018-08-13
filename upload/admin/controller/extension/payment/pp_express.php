@@ -1273,7 +1273,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		}
 	}
 
-	public function preferredSolution() {
+	public function promotion() {
 		$this->load->language('extension/payment/pp_express');
 
 		$data['connect_link'] = '';
@@ -1295,6 +1295,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			$data['payment_pp_express_status'] = "disabled";
 		}
 
-		return $this->load->view('extension/payment/pp_express_preferred', $data);
+		return $this->load->view('extension/payment/pp_express_promotion', $data);
 	}
 }

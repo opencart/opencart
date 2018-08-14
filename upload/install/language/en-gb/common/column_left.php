@@ -192,6 +192,7 @@ $_['text_th']            = 'Thai';
 $_['text_tig']           = 'Tigre';
 $_['text_ts']            = 'Tsonga';
 $_['text_tn']            = 'Tswana';
+$_['text_tr']            = 'Turkish';
 $_['text_tr-tr']         = 'Turkish';
 $_['text_tk']            = 'Turkmen';
 $_['text_uk']            = 'Ukrainian';

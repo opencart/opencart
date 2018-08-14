@@ -355,36 +355,49 @@ $(document).delegate('.agree', 'click', function(e) {
 	});
 });
 
-class Chain {
-	constructor() {
+/* Compatible with ie 11 */
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Chain = function () {
+	function Chain() {
+		_classCallCheck(this, Chain);
+
 		this.start = false;
 		this.data = [];
 	}
 
-	attach(call) {
-		this.data.push(call);
+	_createClass(Chain, [{
+		key: "attach",
+		value: function attach(call) {
+			this.data.push(call);
 
-		if (!this.start) {
-			this.execute();
+			if (!this.start) {
+				this.execute();
+			}
 		}
-	}
+	}, {
+		key: "execute",
+		value: function execute() {
+			if (this.data.length) {
+				this.start = true;
 
-	execute() {
-		if (this.data.length) {
-			this.start = true;
-
-			(this.data.shift())().done(function() {
-				chain.execute();
-			});
-		} else {
-			this.start = false;
+				this.data.shift()().done(function () {
+					chain.execute();
+				});
+			} else {
+				this.start = false;
+			}
 		}
-	}
-}
+	}]);
+
+	return Chain;
+}();
 
 var chain = new Chain();
 
-// Autocomplete */
+/* Autocomplete */
 (function($) {
 	$.fn.autocomplete = function(option) {
 		return this.each(function() {

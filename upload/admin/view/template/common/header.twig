@@ -21,13 +21,13 @@
   <script type="text/javascript" src="view/javascript/jquery/datetimepicker/moment/moment.min.js"></script>
   <script type="text/javascript" src="view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js"></script>
   <script type="text/javascript" src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.js"></script>
+  <script type="text/javascript" src="view/javascript/common.js"></script>
   {% for style in styles %}
     <link type="text/css" href="{{ style.href }}" rel="{{ style.rel }}" media="{{ style.media }}"/>
   {% endfor %}
   {% for link in links %}
     <link href="{{ link.href }}" rel="{{ link.rel }}"/>
   {% endfor %}
-  <script type="text/javascript" src="view/javascript/common.js"></script>
   {% for script in scripts %}
     <script type="text/javascript" src="{{ script }}"></script>
   {% endfor %}
@@ -37,8 +37,6 @@
   <header id="header" class="navbar navbar-expand navbar-light bg-light">
     <div class="container-fluid">
       <a href="{{ home }}" class="navbar-brand d-none d-md-block border-right"><img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}"/></a>
-
-
       {% if logged %}
         <a href="#" id="button-menu" class="d-inline-block d-md-none border-right"><span class="fas fa-bars"></span></a>
 

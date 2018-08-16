@@ -45,7 +45,7 @@
             <label class="col-sm-2 col-form-label">{{ entry_domestic }}</label>
             <div class="col-sm-10">
               <div class="form-control" style="height: 150px; overflow: auto;">
-                <label class="form-check">
+                <label class="form-check"><input type="checkbox" class="form-check-input" onchange="$(this).parent().parent().find(':checkbox').not(this).prop('checked', $(this).prop('checked'));"/> {{ text_all }}</label> <label class="form-check">
                   {% if shipping_usps_domestic_00 %}
                     <input type="checkbox" name="shipping_usps_domestic_00" value="1" checked="checked" class="form-check-input"/>
                     {{ text_domestic_00 }}
@@ -223,13 +223,13 @@
                   {% endif %}
                 </label>
               </div>
-              <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', true);" class="btn btn-link">{{ text_select_all }}</button> / <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', false);" class="btn btn-link">{{ text_unselect_all }}</button></div>
+            </div>
           </div>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">{{ entry_international }}</label>
             <div class="col-sm-10">
               <div class="form-control" style="height: 150px; overflow: auto;">
-                <label class="form-check">
+                <label class="form-check"><input type="checkbox" class="form-check-input" onchange="$(this).parent().parent().find(':checkbox').not(this).prop('checked', $(this).prop('checked'));"/> {{ text_all }}</label> <label class="form-check">
                   {% if shipping_usps_international_1 %}
                     <input type="checkbox" name="shipping_usps_international_1" value="1" checked="checked" class="form-check-input"/>
                     {{ text_international_1 }}
@@ -359,7 +359,7 @@
                   {% endif %}
                 </label>
               </div>
-              <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', true);" class="btn btn-link">{{ text_select_all }}</button> / <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', false);" class="btn btn-link">{{ text_unselect_all }}</button></div>
+            </div>
           </div>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-size">{{ entry_size }}</label>

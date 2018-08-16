@@ -89,59 +89,37 @@ $(document).ready(function() {
 	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('ul').addClass('show');
 
 	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li').addClass('active');
+});
 
-	// Image Manager
-	$(document).on('click', '[data-toggle=\'image\']', function(e) {
-		var element = this;
+// Image Manager
+$(document).on('click', '[data-toggle=\'image\']', function(e) {
+	var element = this;
 
-		$('#modal-image').remove();
+	$('#modal-image').remove();
 
-		$.ajax({
-			url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token') + '&target=' + $(this).attr('data-target') + '&thumb=' + $(this).attr('data-thumb'),
-			dataType: 'html',
-			beforeSend: function() {
-				$(element).button('loading');
-			},
-			complete: function() {
-				$(element).button('reset');
-			},
-			success: function(html) {
-				$('body').append(html);
+	$.ajax({
+		url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token') + '&target=' + $(this).attr('data-target') + '&thumb=' + $(this).attr('data-thumb'),
+		dataType: 'html',
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(html) {
+			$('body').append(html);
 
-				$('#modal-image').modal('show');
-			}
-		});
-	});
-
-	$(document).on('click', '[data-toggle=\'clear\']', function() {
-		var element = this;
-
-		$('#' + $(this).attr('data-thumb')).attr('src', $('#' + $(this).attr('data-thumb')).attr('data-placeholder'));
-
-		$('#' + $(this).attr('data-target')).val('');
-	});
-
-	// table dropdown responsive fix
-	$('.table-responsive').on('shown.bs.dropdown', function(e) {
-		var t = $(this),
-			m = $(e.target).find('.dropdown-menu'),
-			tb = t.offset().top + t.height(),
-			mb = m.offset().top + m.outerHeight(true),
-			d = 20;
-
-		if (t[0].scrollWidth > t.innerWidth()) {
-			if (mb + d > tb) {
-				t.css('padding-bottom', ((mb + d) - tb));
-			}
-		} else {
-			t.css('overflow', 'visible');
+			$('#modal-image').modal('show');
 		}
-	}).on('hidden.bs.dropdown', function() {
-		$(this).css({
-			'padding-bottom': '',
-			'overflow': ''
-		});
 	});
+});
+
+$(document).on('click', '[data-toggle=\'clear\']', function() {
+	var element = this;
+
+	$($(this).attr('data-thumb')).attr('src', $($(this).attr('data-thumb')).attr('data-placeholder'));
+
+	$($(this).attr('data-target')).val('');
 });
 
 // Autocomplete */

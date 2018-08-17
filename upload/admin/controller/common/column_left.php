@@ -131,12 +131,20 @@ class ControllerCommonColumnLeft extends Controller {
 			// Extension
 			$marketplace = array();
 			
-			if ($this->user->hasPermission('access', 'marketplace/marketplace')) {		
+			if ($this->user->hasPermission('access', 'marketplace/opencartforum')) {
+				$marketplace[] = array(
+					'name'	   => $this->language->get('text_opencartforum'),
+					'href'     => $this->url->link('marketplace/opencartforum', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}
+
+			if ($this->user->hasPermission('access', 'marketplace/marketplace')) {
 				$marketplace[] = array(
 					'name'	   => $this->language->get('text_marketplace'),
 					'href'     => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()		
-				);					
+					'children' => array()
+				);
 			}
 			
 			if ($this->user->hasPermission('access', 'marketplace/installer')) {		

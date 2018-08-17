@@ -214,7 +214,11 @@ class ControllerProductProduct extends Controller {
 				'href' => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . $url . '&product_id=' . $this->request->get['product_id'])
 			);
 
-			$this->document->setTitle($product_info['meta_title']);
+			if ($product_info['meta_title'] == '') {
+				$this->document->setTitle(utf8_substr($product_info['name'], 0, 255));
+			} else {
+				$this->document->setTitle($product_info['meta_title']);
+			}
 			$this->document->setDescription($product_info['meta_description']);
 			$this->document->setKeywords($product_info['meta_keyword']);
 			$this->document->addLink($this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->get['product_id']), 'canonical');

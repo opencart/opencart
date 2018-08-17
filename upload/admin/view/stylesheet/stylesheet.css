@@ -757,6 +757,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	padding-bottom: 30px;
 }
 }
+#tab-description img {max-width: 100%}
 .list-check {
 	list-style: none;
 }

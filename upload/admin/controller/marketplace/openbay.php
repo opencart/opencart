@@ -711,15 +711,24 @@ class ControllerMarketplaceOpenbay extends Controller {
 			$data['error_warning'] = '';
 		}
 
+		$data['error_orders'] = '';
+
 		if (isset($this->session->data['error_orders'])) {
-			if (!is_array($this->session->data['error_orders'])) {
-				$this->session->data['error_orders'] = array($this->session->data['error']);
+			if (is_array($this->session->data['error_orders'])) {
+				$data['error_orders'] = $this->session->data['error_orders'];
 			}
 
-			$data['error_orders'] = $this->session->data['error_orders'];
 			unset($this->session->data['error_orders']);
-		} else {
-			$data['error_orders'] = '';
+		}
+			
+		$data['success_orders'] = '';
+
+		if (isset($this->session->data['success_orders'])) {
+			if (is_array($this->session->data['success_orders'])) {
+				$data['success_orders'] = $this->session->data['success_orders'];
+			}
+			
+			unset($this->session->data['success_orders']);
 		}
 
 		if (isset($this->session->data['success'])) {
@@ -991,7 +1000,6 @@ class ControllerMarketplaceOpenbay extends Controller {
         } else {
             $this->session->data['error'] = $this->language->get('error_fetch_api_id');
             $this->response->redirect($this->url->link('extension/openbay/orderList', 'user_token=' . $this->session->data['user_token'], true));
-            exit();
         }
 
         //Amazon EU

@@ -702,39 +702,6 @@ class ModelExtensionOpenBayOpenbay extends Model {
 		return $result;
 	}
 
-	public function apiLogin($api_key) {
-	    $post_data = array(
-            'key' => $api_key,
-        );
-
-		$defaults = array(
-            CURLOPT_POST => true,
-			CURLOPT_HEADER => false,
-			CURLOPT_USERAGENT => $this->request->server['HTTP_USER_AGENT'],
-            CURLOPT_URL => HTTPS_CATALOG . 'index.php?route=api/login',
-			CURLOPT_SSL_VERIFYPEER => 0,
-			CURLOPT_SSL_VERIFYHOST => 0,
-            CURLOPT_FORBID_REUSE => true,
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_POSTFIELDS => http_build_query($post_data, '', "&"),
-			CURLOPT_TIMEOUT => 60,
-		);
-
-		$curl = curl_init();
-		curl_setopt_array($curl, $defaults);
-		$result = curl_exec($curl);
-		curl_close($curl);
-
-        $response = json_decode($result, true);
-
-		//  $json['error']['ip']
-		//  $json['error']['key']
-        //  $json['api_token']
-        //  $json['success']
-
-		return $response;
-	}
-
     public function storeImage($filename, $width, $height, $sub_directory = '') {
         /**
          * This method should be used to save images for the marketplaces where the image will be used in a listing template.

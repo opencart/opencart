@@ -34,3 +34,7 @@ $_['entry_tracking_no']        = 'Tracking';
 $_['entry_other']              = 'Other';
 $_['entry_date_added']         = 'Date Added';
 $_['entry_order_channel']      = 'Order channel';
+
+// Error
+$_['error_fetch_api_id']       = 'Unable to retreive store API credentials - have you selected your default in store settings?';
+$_['error_api_login']          = 'Unable to access the store API login function - no information was returned';

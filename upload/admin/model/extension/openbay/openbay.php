@@ -678,25 +678,19 @@ class ModelExtensionOpenBayOpenbay extends Model {
 		return $query->rows;
 	}
 
-	public function addOrderHistory($order_id, $data, $api_login) {
+	public function addOrderHistory($order_id, $post_data, $api_token) {
 		$defaults = array(
+            CURLOPT_POST => true,
 			CURLOPT_HEADER => false,
 			CURLOPT_USERAGENT => $this->request->server['HTTP_USER_AGENT'],
+            CURLOPT_URL => HTTPS_CATALOG . 'index.php?route=api/order/history&api_token=' . $api_token . '&store_id=0&order_id=' . (int)$order_id,
 			CURLOPT_SSL_VERIFYPEER => 0,
 			CURLOPT_SSL_VERIFYHOST => 0,
 			CURLOPT_FORBID_REUSE => true,
 			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_URL => HTTPS_CATALOG . 'index.php?route=api/order/history&order_id=' . $order_id . '&token=' . $api_login['api_token'],
-			CURLOPT_POST => true,
-			CURLOPT_POSTFIELDS => http_build_query($data, '', "&"),
+			CURLOPT_POSTFIELDS => http_build_query($post_data, '', "&"),
 			CURLOPT_TIMEOUT => 60,
-			CURLOPT_COOKIE => "PHPSESSID=" . $api_login['session_id'],
 		);
-
-		// Set SSL if required
-		if (substr(HTTPS_CATALOG, 0, 5) == 'https') {
-			$defaults[CURLOPT_PORT] = 443;
-		}
 
 		$curl = curl_init();
 		curl_setopt_array($curl, $defaults);
@@ -708,50 +702,35 @@ class ModelExtensionOpenBayOpenbay extends Model {
 		return $result;
 	}
 
-	public function apiLogin($key) {
+	public function apiLogin($api_key) {
+	    $post_data = array(
+            'key' => $api_key,
+        );
+
 		$defaults = array(
-			CURLOPT_HEADER => true,
-			CURLINFO_HEADER_OUT => true,
+            CURLOPT_POST => true,
+			CURLOPT_HEADER => false,
 			CURLOPT_USERAGENT => $this->request->server['HTTP_USER_AGENT'],
+            CURLOPT_URL => HTTPS_CATALOG . 'index.php?route=api/login',
 			CURLOPT_SSL_VERIFYPEER => 0,
 			CURLOPT_SSL_VERIFYHOST => 0,
+            CURLOPT_FORBID_REUSE => true,
 			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_URL => HTTPS_CATALOG . 'index.php?route=api/login',
-			CURLOPT_POST => true,
-			CURLOPT_POSTFIELDS => http_build_query(array('key' => $key)),
+			CURLOPT_POSTFIELDS => http_build_query($post_data, '', "&"),
 			CURLOPT_TIMEOUT => 60,
 		);
-
-		// Set SSL if required
-		if (substr(HTTPS_CATALOG, 0, 5) == 'https') {
-			$defaults[CURLOPT_PORT] = 443;
-		}
 
 		$curl = curl_init();
 		curl_setopt_array($curl, $defaults);
 		$result = curl_exec($curl);
-		$header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
 		curl_close($curl);
 
-		$header = substr($result, 0, $header_size);
-		$body = substr($result, $header_size);
+        $response = json_decode($result, true);
 
-		$json = json_decode($body, true);
-
-		preg_match_all("/^Set-cookie: (.*?);/ism", $header, $cookies);
-		foreach( $cookies[1] as $cookie ){
-			$buffer_explode = strpos($cookie, "=");
-			$header_cookies[ substr($cookie,0,$buffer_explode) ] = substr($cookie,$buffer_explode+1);
-		}
-
-		if (isset($json['success']) && isset($header_cookies['PHPSESSID'])) {
-			$response = [
-				'api_token' => $json['api_token'],
-				'session_id' => $header_cookies['PHPSESSID']
-			];
-		} else {
-			$response['error'] = $json['error'];
-		}
+		//  $json['error']['ip']
+		//  $json['error']['key']
+        //  $json['api_token']
+        //  $json['success']
 
 		return $response;
 	}

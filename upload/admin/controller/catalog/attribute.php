@@ -12,6 +12,13 @@ class ControllerCatalogAttribute extends Controller {
 		$this->getList();
 	}
 
+	public function concatUrl($get, $object) {
+		if(isset($object->request->get[$get])) {
+			return '&' . $get . '=' . $object->request->get[$get];
+		}
+		return '';
+	}
+
 	public function add() {
 		$this->load->language('catalog/attribute');
 
@@ -26,17 +33,9 @@ class ControllerCatalogAttribute extends Controller {
 
 			$url = '';
 
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
+			$url .= $this->concatUrl('sort', $this);
+			$url .= $this->concatUrl('order', $this);
+			$url .= $this->concatUrl('page', $this);
 
 			$this->response->redirect($this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
@@ -58,17 +57,9 @@ class ControllerCatalogAttribute extends Controller {
 
 			$url = '';
 
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
+			$url .= $this->concatUrl('sort', $this);
+			$url .= $this->concatUrl('order', $this);
+			$url .= $this->concatUrl('page', $this);
 
 			$this->response->redirect($this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
@@ -92,17 +83,9 @@ class ControllerCatalogAttribute extends Controller {
 
 			$url = '';
 
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
+			$url .= $this->concatUrl('sort', $this);
+			$url .= $this->concatUrl('order', $this);
+			$url .= $this->concatUrl('page', $this);
 
 			$this->response->redirect($this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
@@ -131,17 +114,9 @@ class ControllerCatalogAttribute extends Controller {
 
 		$url = '';
 
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$url .= $this->concatUrl('sort', $this);
+		$url .= $this->concatUrl('order', $this);
+		$url .= $this->concatUrl('page', $this);
 
 		$data['breadcrumbs'] = array();
 
@@ -270,17 +245,9 @@ class ControllerCatalogAttribute extends Controller {
 
 		$url = '';
 
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$url .= $this->concatUrl('sort', $this);
+		$url .= $this->concatUrl('order', $this);
+		$url .= $this->concatUrl('page', $this);
 
 		$data['breadcrumbs'] = array();
 

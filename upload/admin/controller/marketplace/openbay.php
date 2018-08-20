@@ -720,14 +720,14 @@ class ControllerMarketplaceOpenbay extends Controller {
 
 			unset($this->session->data['error_orders']);
 		}
-			
+
 		$data['success_orders'] = '';
 
 		if (isset($this->session->data['success_orders'])) {
 			if (is_array($this->session->data['success_orders'])) {
 				$data['success_orders'] = $this->session->data['success_orders'];
 			}
-			
+
 			unset($this->session->data['success_orders']);
 		}
 
@@ -832,7 +832,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -999,7 +999,7 @@ class ControllerMarketplaceOpenbay extends Controller {
             $api_token = $session->getId();
         } else {
             $this->session->data['error'] = $this->language->get('error_fetch_api_id');
-            $this->response->redirect($this->url->link('extension/openbay/orderList', 'user_token=' . $this->session->data['user_token'], true));
+            $this->response->redirect($this->url->link('marketplace/openbay/orderList', 'user_token=' . $this->session->data['user_token'], true));
         }
 
         //Amazon EU
@@ -1142,7 +1142,7 @@ class ControllerMarketplaceOpenbay extends Controller {
         $this->session->data['success'] = sprintf($this->language->get('text_confirmed'), $i);
 
 
-		$this->response->redirect($this->url->link('extension/openbay/orderList', 'user_token=' . $this->session->data['user_token'], true));
+		$this->response->redirect($this->url->link('marketplace/openbay/orderlist', 'user_token=' . $this->session->data['user_token'], true));
 	}
 
 	public function items() {

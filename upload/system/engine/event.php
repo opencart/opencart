@@ -6,6 +6,7 @@
  * @license		https://opensource.org/licenses/GPL-3.0
  * @link		https://www.opencart.com
 */
+namespace Engine;
 
 /**
 * Event class
@@ -34,7 +35,7 @@ class Event {
 	 * @param	object	$action
 	 * @param	int		$priority
  	*/	
-	public function register($trigger, Action $action, $priority = 0) {
+	public function register($trigger, \Action $action, $priority = 0) {
 		$this->data[] = array(
 			'trigger'  => $trigger,
 			'action'   => $action,
@@ -61,7 +62,7 @@ class Event {
 			if (preg_match('/^' . str_replace(array('\*', '\?'), array('.*', '.'), preg_quote($value['trigger'], '/')) . '/', $event)) {
 				$result = $value['action']->execute($this->registry, $args);
 
-				if (!is_null($result) && !($result instanceof Exception)) {
+				if (!is_null($result) && !($result instanceof \Exception)) {
 					return $result;
 				}
 			}

@@ -12,107 +12,173 @@
     </div>
   </div>
   <div class="container-fluid">
+
     <div class="alert alert-warning">{{ text_confirm_change_text }}: <strong>{{ status_mapped[change_order_status_id] }}</strong></div>
-    <form action="{{ link_complete }}" method="post" enctype="multipart/form-data" id="form" class="form">
-      <table class="table table-bordered table-hover">
-        <thead>
-          <tr>
-            <td class="text-center">{{ column_order_id }}</td>
-            <td class="text-left">{{ column_customer }}</td>
-            <td class="text-left">{{ column_status }}</td>
-            <td class="text-left">{{ column_channel }}</td>
-            <td class="text-left">{{ column_date_added }}</td>
-            <td class="text-left">{{ column_additional }}</td>
-            <td class="text-left">{{ column_comments }}</td>
-            <td class="text-center">{{ column_notify }}<input type="checkbox" name="notify_all" id="notify_all" value="1" onchange="notifyAll();" /></td>
-          </tr>
-        </thead>
-        <tbody>
-          <input type="hidden" name="order_status_id" value="{{ change_order_status_id }}"/>
-          {% for order in orders %}
-            <input type="hidden" name="order_id[]" value="{{ order.order_id }}"/>
-            <input type="hidden" name="old_status[{{ order.order_id }}]" value="{{ order.order_status_id }}"/>
-            <tr>
-              <td class="text-center">{{ order.order_id }}</td>
-              <td class="text-left">{{ order.customer }}</td>
-              <td class="text-left">{{ order.status }}</td>
-              <td class="text-left">
-                <input type="hidden" name="channel[{{ order.order_id }}]" value="{{ order.channel }}"/>
-                {{ order.channel }}
-              </td>
-              <td class="text-left">{{ order.date_added }}</td>
-              <td class="text-left">
-                {% if order.channel == 'eBay' %}
-                  {% if change_order_status_id == ebay_status_shipped_id %}
-                    <div class="form-group">
-                      <label class="control-label">{{ entry_carrier }}</label>
-                      <select name="carrier[{{ order.order_id }}]" class="form-control">
-                        {% for carrier in market_options.ebay.carriers %}
-                          <option{% if carrier.description == order.shipping_method %} selected{% endif %}>{{ carrier.description }}</option>
-                        {% endfor %}
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label">{{ entry_tracking_no }}</label>
-                      <input type="text" name="tracking[{{ order.order_id }}]" value="" placeholder="{{ entry_tracking_no }}" class="form-control" />
-                    </div>
-                  {% endif %}
-                {% endif %}
-                {% if order.channel == 'Amazon EU' %}
-                  {% if change_order_status_id == openbay_amazon_order_status_shipped %}
-                    <div class="form-group">
-                      <label class="control-label">{{ entry_carrier }}</label>
-                      <select name="carrier[{{ order.order_id }}]" class="form-control amazon_carrier" id="amazon_carrier_{{ order.order_id }}">
-                        {% for carrier in market_options.amazon.carriers %}
-                          <option{% if carrier == market_options.amazon.default_carrier %} selected{% endif %}>{{ carrier }}</option>
-                        {% endfor %}
-                        <option value="other">{{ text_other }}</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label">{{ entry_other }}</label>
-                      <input type="text" name="carrier_other[{{ order.order_id }}]" value="" placeholder="{{ entry_other }}" class="form-control" id="amazon_carrier_{{ order.order_id }}_other" />
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label">{{ entry_tracking_no }}</label>
-                      <input type="text" name="tracking[{{ order.order_id }}]" value="" placeholder="{{ entry_tracking_no }}" class="form-control" />
-                    </div>
-                  {% endif %}
-                {% endif %}
-                {% if order.channel == 'Amazon US' %}
-                  {% if change_order_status_id == openbay_amazonus_order_status_shipped %}
-                  <div class="form-group">
-                    <label class="control-label">{{ entry_carrier }}</label>
-                    <select name="carrier[{{ order.order_id }}]" class="form-control amazonus_carrier" id="amazonus_carrier_{{ order.order_id }}">
-                      {% for carrier in market_options.amazonus.carriers %}
-                        <option{% if carrier == market_options.amazonus.default_carrier %} selected{% endif %}>{{ carrier }}</option>
-                      {% endfor %}
-                      <option value="other">{{ text_other }}</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label class="control-label">{{ entry_other }}</label>
-                    <input type="text" name="carrier_other[{{ order.order_id }}]" value="" placeholder="{{ entry_other }}" class="form-control" id="amazonus_carrier_{{ order.order_id }}_other" />
-                  </div>
-                  <div class="form-group">
-                    <label class="control-label">{{ entry_tracking_no }}</label>
-                    <input type="text" name="tracking[{{ order.order_id }}]" value="" placeholder="{{ entry_tracking_no }}" class="form-control" />
-                  </div>
-                  {% endif %}
-                {% endif %}
-              </td>
-              <td class="text-left"><textarea name="comments[{{ order.order_id }}]" class="form-control" rows="3"></textarea></td>
-              <td class="text-center"><input type="hidden" name="notify[{{ order.order_id }}]" value="0"/>
-              <input type="checkbox" name="notify[{{ order.order_id }}]" class="notify_checkbox" value="1"/></td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </form>
-    <div class="pull-right"> <a onclick="validate();" class="btn btn-primary">{{ button_update }}</a> </div>
+
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <form action="{{ link_complete }}" method="post" enctype="multipart/form-data" id="form" class="form">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <td class="text-center">{{ column_order_id }}</td>
+                <td class="text-left">{{ column_customer }}</td>
+                <td class="text-center">{{ column_status }}</td>
+                <td class="text-center">{{ column_channel }}</td>
+                <td class="text-center">{{ column_date_added }}</td>
+                <td class="text-left">{{ column_additional }}</td>
+                <td class="text-left">{{ column_comments }}</td>
+                <td class="text-center">{{ column_send_mail }} <input type="checkbox" name="notify_all" id="notify_all" value="1" onchange="notifyAll();" /></td>
+              </tr>
+            </thead>
+            <tbody>
+              <input type="hidden" name="order_status_id" value="{{ change_order_status_id }}"/>
+              {% for order in orders %}
+                <input type="hidden" name="order_id[]" value="{{ order.order_id }}" />
+                <input type="hidden" name="old_status[{{ order.order_id }}]" value="{{ order.order_status_id }}" />
+                <input type="hidden" name="channel[{{ order.order_id }}]" value="{{ order.channel }}" />
+                <tr>
+                  <td class="text-center">{{ order.order_id }}</td>
+                  <td class="text-left">{{ order.customer }}</td>
+                  <td class="text-center">{{ order.status }}</td>
+                  <td class="text-center">{{ order.channel }}</td>
+                  <td class="text-center">{{ order.date_added }}</td>
+                  <td class="text-left">
+
+                    {% if order.channel == 'eBay' %}
+                      {% if change_order_status_id == ebay_status_shipped_id %}
+                        <div class="form-group">
+                          <label class="control-label">{{ entry_carrier }}</label>
+                          <select name="carrier[{{ order.order_id }}]" class="form-control">
+                            {% for carrier in market_options.ebay.carriers %}
+                              <option{% if carrier.description == order.shipping_method %} selected{% endif %}>{{ carrier.description }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label class="control-label">{{ entry_tracking_no }}</label>
+                          <input type="text" name="tracking[{{ order.order_id }}]" value="" placeholder="{{ entry_tracking_no }}" class="form-control" />
+                        </div>
+                      {% endif %}
+                    {% endif %}
+
+                    {% if order.channel == 'Amazon EU' %}
+                      {% if change_order_status_id == openbay_amazon_order_status_shipped %}
+                        <div class="form-group">
+                          <label class="control-label">{{ entry_carrier }}</label>
+                          <select name="carrier[{{ order.order_id }}]" class="form-control amazon_carrier" id="amazon_carrier_{{ order.order_id }}">
+                            {% for carrier in market_options.amazon.carriers %}
+                              <option{% if carrier == market_options.amazon.default_carrier %} selected{% endif %}>{{ carrier }}</option>
+                            {% endfor %}
+                            <option value="other">{{ text_other }}</option>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label class="control-label">{{ entry_other }}</label>
+                          <input type="text" name="carrier_other[{{ order.order_id }}]" value="" placeholder="{{ entry_other }}" class="form-control" id="amazon_carrier_{{ order.order_id }}_other" />
+                        </div>
+                        <div class="form-group">
+                          <label class="control-label">{{ entry_tracking_no }}</label>
+                          <input type="text" name="tracking[{{ order.order_id }}]" value="" placeholder="{{ entry_tracking_no }}" class="form-control" />
+                        </div>
+                      {% endif %}
+                    {% endif %}
+
+                    {% if order.channel == 'Amazon US' %}
+                      {% if change_order_status_id == openbay_amazonus_order_status_shipped %}
+                      <div class="form-group">
+                        <label class="control-label">{{ entry_carrier }}</label>
+                        <select name="carrier[{{ order.order_id }}]" class="form-control amazonus_carrier" id="amazonus_carrier_{{ order.order_id }}">
+                          {% for carrier in market_options.amazonus.carriers %}
+                            <option{% if carrier == market_options.amazonus.default_carrier %} selected{% endif %}>{{ carrier }}</option>
+                          {% endfor %}
+                          <option value="other">{{ text_other }}</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label">{{ entry_other }}</label>
+                        <input type="text" name="carrier_other[{{ order.order_id }}]" value="" placeholder="{{ entry_other }}" class="form-control" id="amazonus_carrier_{{ order.order_id }}_other" />
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label">{{ entry_tracking_no }}</label>
+                        <input type="text" name="tracking[{{ order.order_id }}]" value="" placeholder="{{ entry_tracking_no }}" class="form-control" />
+                      </div>
+                      {% endif %}
+                    {% endif %}
+
+                  </td>
+                  <td class="text-left"><textarea name="comments[{{ order.order_id }}]" class="form-control" rows="2"></textarea></td>
+                  <td class="text-center">
+                    <input type="hidden" name="notify[{{ order.order_id }}]" value="0"/>
+                    <input type="checkbox" name="notify[{{ order.order_id }}]" class="notify_checkbox" value="1" />
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </form>
+        <div class="pull-right"> <button id="button-update-orders" class="btn btn-primary">{{ button_update }}</button> </div>
+      </div>
+    </div>
   </div>
 </div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="overlay-loading" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="loading-bar"></div>
+        </div>
+        <p class="text-center">Processing order ID - number 3 of 3 to update</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<input type="hidden" id="total-orders" value="{{ order_count }}" />
+<input type="hidden" id="total-orders-processed" value="0" />
+<input type="hidden" id="total-orders-error" value="0" />
+<input type="hidden" id="total-orders-message" value="0" />
+<input type="hidden" id="total-orders-success" value="0" />
 <script type="text/javascript"><!--
+  $(document).ready(function() {
+    overlay('overlay-loading');
+
+    //$('#activeItems').text($('#total-items').val());
+  });
+
+    $('#button-update-orders').bind('click', function() {
+        var id = '';
+        var name = '';
+        var processedData = '';
+
+        overlay('overlay-loading');
+
+        $('#button-verify').hide();
+        $('#button-edit').show();
+        $('#button-submit').show();
+
+        $.each($('.order_id'), function (i) {
+
+        });
+    });
+
+    function overlay(screen) {
+        $('#ajax-count-complete').val(0);
+        $('#ajax-count-complete-display').text(0);
+        $('#ajax-count-total').val(0);
+        $('#ajax-count-total-display').text(0);
+        $('#loading-bar').css('width', '0%');
+        $('#'+screen).modal('toggle');
+    }
+
+    function overlayHide() {
+        $('.modal').modal('hide');
+    }
+
+
+
   function notifyAll() {
     var value_checked = $('#notify_all').prop('checked');
 
@@ -167,5 +233,7 @@
       return false;
     }
   }
+
+
 //--></script>
 {{ footer }}

@@ -6,14 +6,16 @@ $_['text_confirm_title']       = 'Review bulk status update';
 
 // Button
 $_['button_status']            = 'Change status';
-$_['button_update']            = 'Update';
+$_['button_update']            = 'Update orders';
 $_['button_ship']              = 'Ship order';
 
 // Column
 $_['column_channel']           = 'Order Channel';
+$_['column_status']            = 'Current Status';
 $_['column_additional']        = 'Additional info';
 $_['column_comments']      	   = 'Comments';
 $_['column_notify']        	   = 'Notify';
+$_['column_send_mail']         = 'Send email';
 
 // Text
 $_['text_confirmed']           = '%s orders have been updated';

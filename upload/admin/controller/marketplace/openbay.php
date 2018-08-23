@@ -848,20 +848,14 @@ class ControllerMarketplaceOpenbay extends Controller {
 			$this->session->data['error'] = $data['text_no_orders'];
 			$this->response->redirect($this->url->link('marketplace/openbay/orderlist', 'user_token=' . $this->session->data['user_token'], true));
 		} else {
-            $this->load->language('extension/openbay/openbay_order');
             $this->load->language('sale/order');
+            $this->load->language('extension/openbay/openbay_order');
 
             $data = $this->language->all();
 
             $this->document->setTitle($this->language->get('heading_title'));
 
 			$this->load->model('extension/openbay/order');
-
-			$data['column_order_id'] = $this->language->get('column_order_id');
-			$data['column_customer'] = $this->language->get('column_customer');
-			$data['column_status'] = $this->language->get('column_status');
-			$data['column_date_added'] = $this->language->get('column_date_added');
-			$data['heading_title'] = $this->language->get('heading_title');
 
 			$data['link_complete'] = $this->url->link('marketplace/openbay/orderlistcomplete', 'user_token=' . $this->session->data['user_token'], true);
 
@@ -881,6 +875,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 			}
 
 			$this->load->model('localisation/order_status');
+
 			$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 			$data['status_mapped'] = array();
 
@@ -905,6 +900,8 @@ class ControllerMarketplaceOpenbay extends Controller {
 			} else {
 				$data['orders'] = $orders;
 			}
+
+			$data['order_count'] = count($data['orders']);
 
 			$data['breadcrumbs'] = array();
 

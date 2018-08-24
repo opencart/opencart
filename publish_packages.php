@@ -41,7 +41,7 @@ class PublishPackages
             
             //copy Bootstrap 4 js dist to catalog
             array(
-                "src" => "/upload/system/storage/vendor/twbs/bootstrap/dist/js/",
+                "src" => "/node_modules/bootstrap/dist/js/",
                 "dst" => "/upload/catalog/view/javascript/bootstrap/js/"
             ),
             

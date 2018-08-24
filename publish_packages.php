@@ -47,17 +47,17 @@ class PublishPackages
             
             ### Popper.js
             
-            #//copy Popper.js to admin
-            #array(
-            #    "src" => "/node_modules/popper.js/dist/popper.min.js",
-            #    "dst" => "/upload/admin/view/javascript/popper.min.js"
-            #),
-            #
-            #//copy Popper.js to catalog
-            #array(
-            #    "src" => "/node_modules/popper.js/dist/popper.min.js",
-            #    "dst" => "/upload/catalog/view/javascript/bootstrap/js/popper.min.js"
-            #),
+            //copy Popper.js to admin
+            array(
+                "src" => "/node_modules/popper.js/dist/umd/popper.min.js",
+                "dst" => "/upload/admin/view/javascript/popper.min.js"
+            ),
+            
+            //copy Popper.js to catalog
+            array(
+                "src" => "/node_modules/popper.js/dist/umd/popper.min.js",
+                "dst" => "/upload/catalog/view/javascript/bootstrap/js/popper.min.js"
+            ),
             
             ### FontAwesome 
             
@@ -88,16 +88,10 @@ class PublishPackages
             ),
             
             ### copy jquery-ui to admin
-            #array(
-            #    "src" => "/node_modules/jquery-ui/",
-            #    "dst" => "/upload/admin/view/javascript/jquery/jquery-ui/"
-            #),
-            
-            ### copy jquery-ui to catalog
-            #array(
-            #    "src" => "/node_modules/jquery-ui/",
-            #    "dst" => "/upload/catalog/view/javascript/jquery/jquery-ui/"
-            #),
+            array(
+                "src" => "/node_modules/jquery-ui-dist/",
+                "dst" => "/upload/admin/view/javascript/jquery/jquery-ui/"
+            ),
             
             ### datetimepicker
             
@@ -142,10 +136,48 @@ class PublishPackages
             ### Flot
             
             // copy flot to admin
-            //array(
-            //    "src" => "/node_modules/float/min/",
-            //    "dst" => "/upload/admin/view/javascript/jquery/datetimepicker/moment/"
-            //),
+            array(
+                "src" => "/node_modules/jquery.flot/",
+                "dst" => "/upload/admin/view/javascript/jquery/flot/"
+            ),
+            
+            ### jqvmap
+            
+            // copy jqvmap to admin
+            array(
+                "src" => "/node_modules/jqvmap/dist/",
+                "dst" => "/upload/admin/view/javascript/jquery/jqvmap/"
+            ),
+            
+            ### magnific-popup
+            
+            // copy magnific-popup to admin
+            array(
+                "src" => "/node_modules/magnific-popup/dist/",
+                "dst" => "/upload/admin/view/javascript/jquery/magnific/"
+            ),
+            
+            // copy magnific-popup to catalog
+            array(
+                "src" => "/node_modules/magnific-popup/dist/",
+                "dst" => "/upload/catalog/view/javascript/jquery/magnific/"
+            ),
+            
+            ### ckeditor
+            
+            // copy ckeditor to admin
+            array(
+                "src" => "/node_modules/ckeditor/",
+                "dst" => "/upload/admin/view/javascript/ckeditor/"
+            ),
+            
+            ### codemirror
+            
+            // copy codemirror to admin
+            array(
+                "src" => "/node_modules/codemirror/",
+                "dst" => "/upload/admin/view/javascript/codemirror/"
+            ),
             
         );
         

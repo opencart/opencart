@@ -2,7 +2,7 @@
 
 # 2. In your opencart directory rename htaccess.txt to .htaccess.
 
-# For any support issues please visit: http://www.opencart.com
+# For any support issues please visit: https://www.opencart.com
 
 Options +SymLinksIfOwnerMatch
 
@@ -12,7 +12,7 @@ Options -Indexes
 # Prevent Direct Access to files
 <FilesMatch "(?i)((\.tpl|.twig|\.ini|\.log|(?<!robots)\.txt))">
  Require all denied
-## For apache 2.2 and older, replace "Require all denied" with these two lines :
+## For apache 2.2 and older, replace "Require all denied" with these two lines:
 # Order deny,allow
 # Deny from all
 </FilesMatch>

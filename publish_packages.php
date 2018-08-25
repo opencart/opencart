@@ -164,35 +164,38 @@ class PublishPackages
             ),
             
             ### ckeditor
-                #@TODO get codemirror and ckeditor working with /upload/admin/view/javascript/ckeditor_build/[files] after copy @NEEDHELP
             
-            // copy ckeditor to admin
-            array(
-                "src" => "/node_modules/ckeditor/",
-                "dst" => "/upload/admin/view/javascript/ckeditor/"
-            ),
-            
-            ### ckeditor extra plugins
-            
-            // copy ckeditor opencart && codemirror plugins to admin
-            array(
-                "src" => "/upload/admin/view/javascript/ckeditor_build/plugins/",
-                "dst" => "/upload/admin/view/javascript/ckeditor/plugins/"
-            ),
-            
-            // copy custom ckeditor config.js to admin
-            array(
-                "src" => "/upload/admin/view/javascript/ckeditor_build/config.js",
-                "dst" => "/upload/admin/view/javascript/ckeditor/config.js"
-            ),
-            
-            ### codemirror
-            
-            // copy codemirror to admin
-            array(
-                "src" => "/node_modules/codemirror/",
-                "dst" => "/upload/admin/view/javascript/codemirror/"
-            ),
+            ### // copy ckeditor to admin
+            ### array(
+            ###     "src" => "/node_modules/ckeditor-codemirror-plugin/codemirror",
+            ###     "dst" => "/upload/admin/view/javascript/ckeditor/plugins/"
+            ### ),
+            ### 
+            ### // copy ckeditor codemirror plugin to admin
+            ### array(
+            ###     "src" => "/upload/admin/view/javascript/ckeditor_build/plugins/",
+            ###     "dst" => "/upload/admin/view/javascript/ckeditor/plugins/"
+            ### ),
+            ### 
+            ### // copy ckeditor opencart && codemirror plugins to admin
+            ### array(
+            ###     "src" => "/upload/admin/view/javascript/ckeditor_build/plugins/",
+            ###     "dst" => "/upload/admin/view/javascript/ckeditor/plugins/"
+            ### ),
+            ### 
+            ### // copy custom ckeditor config.js to admin
+            ### array(
+            ###     "src" => "/upload/admin/view/javascript/ckeditor_build/config.js",
+            ###     "dst" => "/upload/admin/view/javascript/ckeditor/config.js"
+            ### ),
+            ### 
+            ### ### codemirror
+            ### 
+            ### // copy codemirror to admin
+            ### array(
+            ###     "src" => "/node_modules/codemirror/",
+            ###     "dst" => "/upload/admin/view/javascript/codemirror/"
+            ### ),
         );
         
         foreach ($copy_dirs as $copy_dir) {

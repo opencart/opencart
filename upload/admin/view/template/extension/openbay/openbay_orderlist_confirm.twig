@@ -12,20 +12,17 @@
     </div>
   </div>
   <div class="container-fluid">
-
-
-
     <div class="panel panel-default">
       <div class="panel-body">
         <div class="alert alert-info text-center"><h3 style="margin-bottom: 0px;">{{ text_confirm_change_text }}: <strong>{{ status_mapped[change_order_status_id] }}</strong></h3></div>
-        <table class="table table-bordered table-hover">
+        <table class="table table-bordered">
           <thead>
           <tr>
             <th class="text-center">{{ column_order_id }}</th>
             <th class="text-center">{{ column_market_order_ref }}</th>
+            <th class="text-center">{{ column_channel }}</th>
             <th class="text-left">{{ column_customer }}</th>
             <th class="text-center">{{ column_status }}</th>
-            <th class="text-center">{{ column_channel }}</th>
             <th class="text-center">{{ column_date_added }}</th>
             <th class="text-left">{{ column_additional }}</th>
             <th class="text-left">{{ column_comments }}</th>
@@ -43,9 +40,9 @@
 
               <td class="text-center">{{ order.order_id }}</td>
               <td class="text-center">{{ order.market_order_ref }}</td>
+              <td class="text-center">{{ order.channel }}</td>
               <td class="text-left">{{ order.customer }}</td>
               <td class="text-center" id="status-text-{{ order.order_id }}">{{ order.status }}</td>
-              <td class="text-center">{{ order.channel }}</td>
               <td class="text-center">{{ order.date_added }}</td>
               <td class="text-left" id="additional-info-{{ order.order_id }}">
 
@@ -115,13 +112,13 @@
               <td class="text-center" id="notify-{{ order.order_id }}">
                 {% if order.channel == 'Amazon EU' or order.channel == 'Amazon US' %}
                   <input type="hidden" name="notify" id="order-notify-{{ order.order_id }}" value="0" />
-                  <i class="fa fa-times-circle-o" data-toggle="tooltip" title="Amazon orders should not send store emails due to strict Amazon policies"></i>
+                  <i class="fa fa-times-circle-o" data-toggle="tooltip" title="{{ text_link_policy }}"></i>
                 {% else %}
                   <input class="notify-checkbox" type="checkbox" name="notify" id="order-notify-{{ order.order_id }}" value="1" />
                 {% endif %}
               </td>
               <td class="text-center">
-                <a href="{{ order.view_order_link }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info" target="_blank"><i class="fa fa-eye"></i></a>
+                <a href="{{ order.view_order_link }}" data-toggle="tooltip" title="{{ text_view_order }}" class="btn btn-info" target="_blank"><i class="fa fa-eye"></i></a>
                 <button class="btn btn-danger button-remove-order" onclick="removeOrderFromUpdate({{ order.order_id }}); return false;" data-toggle="tooltip" title="{{ button_remove_order }}"><i class="fa fa-trash-o"></i></button>
               </td>
             </tr>
@@ -139,15 +136,15 @@
             <table class="table table-bordered table-hover">
               <tbody>
               <tr>
-                <td style="width: 80%;">Total orders</td>
+                <td style="width: 80%;">{{ text_total }}</td>
                 <td id="report-orders-total" class="text-center"></td>
               </tr>
               <tr>
-                <td style="width: 80%;">Updated successfully</td>
+                <td style="width: 80%;">{{ Successful }}</td>
                 <td id="report-total-success" class="text-center"></td>
               </tr>
               <tr>
-                <td style="width: 80%;">Failed</td>
+                <td style="width: 80%;">{{ Failed }}</td>
                 <td id="report-total-error" class="text-center"></td>
               </tr>
               </tbody>
@@ -447,5 +444,5 @@
       $('.notify-checkbox').prop('checked', false);
     }
   });
-  //--></script>
+//--></script>
 {{ footer }}

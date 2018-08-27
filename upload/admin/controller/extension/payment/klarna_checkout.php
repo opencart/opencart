@@ -531,29 +531,29 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$data['symbol_left'] = $this->currency->getSymbolLeft($order_info['currency_code']);
 		$data['symbol_right'] = $this->currency->getSymbolRight($order_info['currency_code']);
 
-        // The URL we send API requests to
-        $data['catalog'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
+		// The URL we send API requests to
+		$data['catalog'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
 
-        // API login
-        $this->load->model('user/api');
+		// API login
+		$this->load->model('user/api');
 
-        $api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
+		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
 
-        if ($api_info && $this->user->hasPermission('modify', 'sale/order')) {
-            $session = new Session($this->config->get('session_engine'), $this->registry);
+		if ($api_info && $this->user->hasPermission('modify', 'sale/order')) {
+			$session = new Session($this->config->get('session_engine'), $this->registry);
 
-            $session->start();
+			$session->start();
 
-            $this->model_user_api->deleteApiSessionBySessonId($session->getId());
+			$this->model_user_api->deleteApiSessionBySessonId($session->getId());
 
-            $this->model_user_api->addApiSession($api_info['api_id'], $session->getId(), $this->request->server['REMOTE_ADDR']);
+			$this->model_user_api->addApiSession($api_info['api_id'], $session->getId(), $this->request->server['REMOTE_ADDR']);
 
-            $session->data['api_id'] = $api_info['api_id'];
+			$session->data['api_id'] = $api_info['api_id'];
 
-            $data['api_token'] = $session->getId();
-        } else {
-            $data['api_token'] = '';
-        }
+			$data['api_token'] = $session->getId();
+		} else {
+			$data['api_token'] = '';
+		}
 
 		$this->response->setOutput($this->load->view('extension/payment/klarna_checkout_order_ajax', $data));
 	}

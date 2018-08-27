@@ -227,7 +227,6 @@ final class Amazon {
 	}
 
 	public function updateOrder($order_id, $order_status_string, $courier_id = '', $courier_from_list = true, $tracking_no = '') {
-
 		if ($this->config->get('openbay_amazon_status') != 1) {
 			return;
 		}
@@ -280,7 +279,9 @@ final class Amazon {
 
 		$this->model_extension_openbay_amazon->updateAmazonOrderTracking($order_id, $courier_id, $courier_from_list, !empty($courier_id) ? $tracking_no : '');
 		$log->write('Request: ' . $doc->saveXML());
+
 		$response = $this->call('order/update2', $doc->saveXML(), false);
+
 		$log->write("Response for Order's status update: $response");
 	}
 

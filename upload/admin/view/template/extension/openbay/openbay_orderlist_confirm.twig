@@ -22,6 +22,7 @@
           <thead>
           <tr>
             <th class="text-center">{{ column_order_id }}</th>
+            <th class="text-center">{{ column_market_order_ref }}</th>
             <th class="text-left">{{ column_customer }}</th>
             <th class="text-center">{{ column_status }}</th>
             <th class="text-center">{{ column_channel }}</th>
@@ -41,6 +42,7 @@
               <input type="hidden" id="order-channel-{{ order.order_id }}" value="{{ order.channel }}" />
 
               <td class="text-center">{{ order.order_id }}</td>
+              <td class="text-center">{{ order.market_order_ref }}</td>
               <td class="text-left">{{ order.customer }}</td>
               <td class="text-center" id="status-text-{{ order.order_id }}">{{ order.status }}</td>
               <td class="text-center">{{ order.channel }}</td>
@@ -51,7 +53,7 @@
                   {% if change_order_status_id == ebay_status_shipped_id %}
                     <div class="form-group">
                       <label class="control-label">{{ entry_carrier }}</label>
-                      <select name="carrier_id[{{ order.order_id }}]" class="form-control marketplace-data-{{ order.order_id }}">
+                      <select name="carrier_id" class="form-control marketplace-data-{{ order.order_id }}">
                         {% for carrier in market_options.ebay.carriers %}
                           <option{% if carrier.description == order.shipping_method %} selected{% endif %}>{{ carrier.description }}</option>
                         {% endfor %}
@@ -59,7 +61,7 @@
                     </div>
                     <div class="form-group">
                       <label class="control-label">{{ entry_tracking_no }}</label>
-                      <input type="text" name="tracking_no[{{ order.order_id }}]" value="" placeholder="{{ entry_tracking_no }}" class="form-control marketplace-data-{{ order.order_id }}" />
+                      <input type="text" name="tracking_no" value="" placeholder="{{ entry_tracking_no }}" class="form-control marketplace-data-{{ order.order_id }}" />
                     </div>
                   {% endif %}
                 {% endif %}
@@ -68,7 +70,7 @@
                   {% if change_order_status_id == openbay_amazon_order_status_shipped %}
                     <div class="form-group">
                       <label class="control-label">{{ entry_carrier }}</label>
-                      <select name="courier_id[{{ order.order_id }}]" class="form-control amazon_carrier marketplace-data-{{ order.order_id }}" id="amazon_carrier_{{ order.order_id }}">
+                      <select name="courier_id" class="form-control amazon_carrier marketplace-data-{{ order.order_id }}" id="amazon_carrier_{{ order.order_id }}">
                         {% for carrier in market_options.amazon.carriers %}
                           <option{% if carrier == market_options.amazon.default_carrier %} selected{% endif %}>{{ carrier }}</option>
                         {% endfor %}
@@ -77,11 +79,11 @@
                     </div>
                     <div class="form-group">
                       <label class="control-label">{{ entry_other }}</label>
-                      <input type="text" name="courier_other[{{ order.order_id }}]" value="" placeholder="{{ entry_other }}" class="form-control marketplace-data-{{ order.order_id }}" id="amazon_carrier_{{ order.order_id }}_other" />
+                      <input type="text" name="courier_other" value="" placeholder="{{ entry_other }}" class="form-control marketplace-data-{{ order.order_id }}" id="amazon_carrier_{{ order.order_id }}_other" />
                     </div>
                     <div class="form-group">
                       <label class="control-label">{{ entry_tracking_no }}</label>
-                      <input type="text" name="tracking_no[{{ order.order_id }}]" value="" placeholder="{{ entry_tracking_no }}" class="form-control marketplace-data-{{ order.order_id }}" />
+                      <input type="text" name="tracking_no" value="" placeholder="{{ entry_tracking_no }}" class="form-control marketplace-data-{{ order.order_id }}" />
                     </div>
                   {% endif %}
                 {% endif %}
@@ -90,7 +92,7 @@
                   {% if change_order_status_id == openbay_amazonus_order_status_shipped %}
                     <div class="form-group">
                       <label class="control-label">{{ entry_carrier }}</label>
-                      <select name="courier_id[{{ order.order_id }}]" class="form-control amazonus_carrier marketplace-data-{{ order.order_id }}" id="amazonus_carrier_{{ order.order_id }}">
+                      <select name="courier_id" class="form-control amazonus_carrier marketplace-data-{{ order.order_id }}" id="amazonus_carrier_{{ order.order_id }}">
                         {% for carrier in market_options.amazonus.carriers %}
                           <option{% if carrier == market_options.amazonus.default_carrier %} selected{% endif %}>{{ carrier }}</option>
                         {% endfor %}
@@ -99,23 +101,23 @@
                     </div>
                     <div class="form-group">
                       <label class="control-label">{{ entry_other }}</label>
-                      <input type="text" name="courier_other[{{ order.order_id }}]" value="" placeholder="{{ entry_other }}" class="form-control marketplace-data-{{ order.order_id }}" id="amazonus_carrier_{{ order.order_id }}_other" />
+                      <input type="text" name="courier_other" value="" placeholder="{{ entry_other }}" class="form-control marketplace-data-{{ order.order_id }}" id="amazonus_carrier_{{ order.order_id }}_other" />
                     </div>
                     <div class="form-group">
                       <label class="control-label">{{ entry_tracking_no }}</label>
-                      <input type="text" name="tracking_no[{{ order.order_id }}]" value="" placeholder="{{ entry_tracking_no }}" class="form-control marketplace-data-{{ order.order_id }}" />
+                      <input type="text" name="tracking_no" value="" placeholder="{{ entry_tracking_no }}" class="form-control marketplace-data-{{ order.order_id }}" />
                     </div>
                   {% endif %}
                 {% endif %}
 
               </td>
-              <td class="text-left" id="comments-{{ order.order_id }}"><textarea name="comments[{{ order.order_id }}]" class="form-control" rows="2" id="order-comments-{{ order.order_id }}"></textarea></td>
+              <td class="text-left" id="comments-{{ order.order_id }}"><textarea name="comments" class="form-control" rows="2" id="order-comments-{{ order.order_id }}"></textarea></td>
               <td class="text-center" id="notify-{{ order.order_id }}">
                 {% if order.channel == 'Amazon EU' or order.channel == 'Amazon US' %}
-                  <input type="hidden" name="notify[{{ order.order_id }}]" id="order-notify-{{ order.order_id }}" value="0" />
+                  <input type="hidden" name="notify" id="order-notify-{{ order.order_id }}" value="0" />
                   <i class="fa fa-times-circle-o" data-toggle="tooltip" title="Amazon orders should not send store emails due to strict Amazon policies"></i>
                 {% else %}
-                  <input class="notify-checkbox" type="checkbox" name="notify[{{ order.order_id }}]" id="order-notify-{{ order.order_id }}" value="1" />
+                  <input class="notify-checkbox" type="checkbox" name="notify" id="order-notify-{{ order.order_id }}" value="1" />
                 {% endif %}
               </td>
               <td class="text-center">

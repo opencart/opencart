@@ -117,6 +117,7 @@
                 <tr>
                   <th width="1"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></th>
                   <th class="text-left">{% if sort == 'o.order_id' %} <a href="{{ sort_order }}" class="{{ order|lower }}">{{ column_order_id }}</a> {% else %} <a href="{{ sort_order }}">{{ column_order_id }}</a> {% endif %}</th>
+                  <th class="text-left">{{ column_market_order_ref }}</th>
                   <th class="text-left">{% if sort == 'customer' %} <a href="{{ sort_customer }}" class="{{ order|lower }}">{{ column_customer }}</a> {% else %} <a href="{{ sort_customer }}">{{ column_customer }}</a> {% endif %}</th>
                   <th class="text-left">{% if sort == 'status' %} <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a> {% else %} <a href="{{ sort_status }}">{{ column_status }}</a> {% endif %}</th>
                   <th class="text-left">{% if sort == 'channel' %} <a href="{{ sort_channel }}" class="{{ order|lower }}">{{ column_channel }}</a> {% else %} <a href="{{ sort_channel }}">{{ column_channel }}</a> {% endif %}</th>
@@ -136,6 +137,7 @@
                     {% endif %}
                   </td>
                   <td class="text-left">{{ order.order_id }}</td>
+                  <td class="text-left">{{ order.market_order_ref }}</td>
                   <td class="text-left">{{ order.customer }}</td>
                   <td class="text-left">{{ order.status }}</td>
                   <td class="text-left">{{ order.channel }}</td>

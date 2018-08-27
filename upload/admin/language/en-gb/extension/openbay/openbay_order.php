@@ -14,6 +14,7 @@ $_['button_finished']	       = 'Return to order list';
 // Column
 $_['column_channel']           = 'Order Channel';
 $_['column_status']            = 'Current Status';
+$_['column_market_order_ref']  = 'Marketplace ID';
 $_['column_additional']        = 'Additional info';
 $_['column_comments']      	   = 'Comments';
 $_['column_notify']        	   = 'Notify';

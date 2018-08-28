@@ -95,28 +95,52 @@ class PublishPackages
             
             ### datetimepicker
             
-            // copy datetimepicker css to admin
+            // copy datetimepicker min.css to admin
             array(
                 "src" => "/node_modules/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css",
                 "dst" => "/upload/admin/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css"
             ),
             
-            // copy datetimepicker js to admin
+            // copy datetimepicker min.js to admin
             array(
                 "src" => "/node_modules/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js",
                 "dst" => "/upload/admin/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js"
             ),
             
-            // copy datetimepicker css to catalog
+            // copy datetimepicker css to admin
+            array(
+                "src" => "/node_modules/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.css",
+                "dst" => "/upload/admin/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.css"
+            ),
+            
+            // copy datetimepicker js to admin
+            array(
+                "src" => "/node_modules/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.js",
+                "dst" => "/upload/admin/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.js"
+            ),
+            
+            // copy datetimepicker min.css to catalog
             array(
                 "src" => "/node_modules/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css",
                 "dst" => "/upload/catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css"
             ),
             
-            // copy datetimepicker js to catalog
+            // copy datetimepicker min.js to catalog
             array(
                 "src" => "/node_modules/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js",
                 "dst" => "/upload/catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js"
+            ),
+            
+            // copy datetimepicker css to catalog
+            array(
+                "src" => "/node_modules/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.css",
+                "dst" => "/upload/catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.css"
+            ),
+            
+            // copy datetimepicker js to catalog
+            array(
+                "src" => "/node_modules/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.js",
+                "dst" => "/upload/catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.js"
             ),
             
             ### Moment

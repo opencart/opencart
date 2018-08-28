@@ -150,43 +150,67 @@
       </div>
     {% endif %}
     {% if custom_field.type == 'date' %}
-      <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+      <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
         <label class="col-sm-2 col-form-label" for="input-payment-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
         <div class="col-sm-10">
-          <div class="input-group date">
-            <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
-            <div class="input-group-append">
-              <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
-            </div>
+          <div class="input-group date" id="input-payment-custom-field{{ custom_field.custom_field_id }}" data-target-input="nearest">
+            <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" class="form-control datetimepicker-input" data-target="#input-payment-custom-field{{ custom_field.custom_field_id }}" />
+            <span class="input-group-append" data-target="#input-payment-custom-field{{ custom_field.custom_field_id }}" data-toggle="datetimepicker">
+              <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+            </span>
           </div>
         </div>
       </div>
+      <script type="text/javascript"><!--
+      $(function () {
+        $("#input-payment-custom-field{{ custom_field.custom_field_id }}").datetimepicker({
+          locale: '{{ datepicker }}',
+          format: 'YYYY-MM-DD'
+        });
+      });
+      --></script>
+    {% endif %}
+    {% if custom_field.type == 'datetime' %}
+      <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <label class="col-sm-2 col-form-label" for="input-payment-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}asdf</label>
+        <div class="col-sm-10">
+          <div class="input-group date" id="input-payment-custom-field{{ custom_field.custom_field_id }}" data-target-input="nearest">
+            <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" class="form-control datetimepicker-input" data-target="#input-payment-custom-field{{ custom_field.custom_field_id }}" />
+            <span class="input-group-append" data-target="#input-payment-custom-field{{ custom_field.custom_field_id }}" data-toggle="datetimepicker">
+              <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+            </span>
+          </div>
+        </div>
+      </div>
+      <script type="text/javascript"><!--
+      $(function () {
+        $("#input-payment-custom-field{{ custom_field.custom_field_id }}").datetimepicker({
+          locale: '{{ datepicker }}',
+          format: 'YYYY-MM-DD HH:mm'
+        });
+      });
+      --></script>
     {% endif %}
     {% if custom_field.type == 'time' %}
-      <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+      <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
         <label class="col-sm-2 col-form-label" for="input-payment-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
         <div class="col-sm-10">
-          <div class="input-group time">
-            <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="HH:mm" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
-            <div class="input-group-append">
-              <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
-            </div>
+          <div class="input-group date" id="input-payment-custom-field{{ custom_field.custom_field_id }}" data-target-input="nearest">
+            <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" class="form-control datetimepicker-input" data-target="#input-payment-custom-field{{ custom_field.custom_field_id }}" />
+            <span class="input-group-append" data-target="#input-payment-custom-field{{ custom_field.custom_field_id }}" data-toggle="datetimepicker">
+              <div class="input-group-text"><i class="far fa-clock"></i></div>
+            </span>
           </div>
         </div>
       </div>
-    {% endif %}
-    {% if custom_field.type == 'time' %}
-      <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
-        <label class="col-sm-2 col-form-label" for="input-payment-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
-        <div class="col-sm-10">
-          <div class="input-group datetime">
-            <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
-            <div class="input-group-append">
-              <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <script type="text/javascript"><!--
+      $(function () {
+        $("#input-payment-custom-field{{ custom_field.custom_field_id }}").datetimepicker({
+          locale: '{{ datepicker }}',
+          format: 'HH:mm'
+        });
+      });
+      --></script>
     {% endif %}
   {% endfor %}
 </div>
@@ -391,23 +415,6 @@ $('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('c
 			});
 		}
 	}, 500);
-});
-//--></script>
-<script type="text/javascript"><!--
-$('.date').datetimepicker({
-	language: '{{ datepicker }}',
-	pickTime: false
-});
-
-$('.time').datetimepicker({
-	language: '{{ datepicker }}',
-	pickDate: false
-});
-
-$('.datetime').datetimepicker({
-	language: '{{ datepicker }}',
-	pickDate: true,
-	pickTime: true
 });
 //--></script>
 <script type="text/javascript"><!--

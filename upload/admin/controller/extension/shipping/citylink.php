@@ -1,4 +1,4 @@
-\<?php
+<?php
 class ControllerExtensionShippingCitylink extends Controller {
 	private $error = array();
 

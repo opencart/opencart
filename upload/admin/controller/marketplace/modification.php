@@ -391,6 +391,8 @@ class ControllerMarketplaceModification extends Controller {
 			}
 
 			// Log
+			@unlink(DIR_LOGS . 'ocmod.log');
+			
 			$ocmod = new Log('ocmod.log');
 			$ocmod->write(implode("\n", $log));
 

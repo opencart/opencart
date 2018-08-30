@@ -82,7 +82,7 @@
               {% if type == 'date' %}
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value }}</label>
-                  <div class="col-sm-10">
+                  <div class="col-sm-3">
                     <div class="input-group date" id="input-value" data-target-input="nearest">
                       <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" class="form-control datetimepicker-input" data-target="#input-value" />
                       <span class="input-group-append" data-target="#input-value" data-toggle="datetimepicker">
@@ -104,7 +104,7 @@
               {% if type == 'time' %}
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value }}</label>
-                  <div class="col-sm-10">
+                  <div class="col-sm-3">
                     <div class="input-group date" id="input-value" data-target-input="nearest">
                       <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" class="form-control datetimepicker-input" data-target="#input-value" />
                       <span class="input-group-append" data-target="#input-value" data-toggle="datetimepicker">
@@ -126,7 +126,7 @@
               {% if type == 'datetime' %}
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value }}</label>
-                  <div class="col-sm-10">
+                  <div class="col-sm-3">
                     <div class="input-group date" id="input-value" data-target-input="nearest">
                       <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" class="form-control datetimepicker-input" data-target="#input-value" />
                       <span class="input-group-append" data-target="#input-value" data-toggle="datetimepicker">
@@ -317,21 +317,21 @@ $('input[name=\'option\']').autocomplete({
 		if (item['type'] == 'date') {
 			html += '	<div class="form-group row">';
 			html += '	  <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value|escape('js') }}</label>';
-			html += '	  <div class="col-sm-10"><div class="input-group date" id="input-value" data-target-input="nearest"><input type="text" name="value" value="" placeholder="{{ entry_option_value|escape('js') }}" class="form-control datetimepicker-input" data-target="#input-value" /><span class="input-group-append" data-target="#input-value" data-toggle="datetimepicker"><div class="input-group-text"><i class="fas fa-calendar-alt"></i></div></span></div></div>';
+			html += '	  <div class="col-sm-3"><div class="input-group date" id="input-value" data-target-input="nearest"><input type="text" name="value" value="" placeholder="{{ entry_option_value|escape('js') }}" class="form-control datetimepicker-input" data-target="#input-value" /><span class="input-group-append" data-target="#input-value" data-toggle="datetimepicker"><div class="input-group-text"><i class="fas fa-calendar-alt"></i></div></span></div></div>';
 			html += '	</div>';
 		}
 
 		if (item['type'] == 'time') {
 			html += '	<div class="form-group row">';
 			html += '	  <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value|escape('js') }}</label>';
-			html += '	  <div class="col-sm-10"><div class="input-group date" id="input-value" data-target-input="nearest"><input type="text" name="value" value="" placeholder="{{ entry_option_value|escape('js') }}" class="form-control datetimepicker-input" data-target="#input-value" /><span class="input-group-append" data-target="#input-value" data-toggle="datetimepicker"><div class="input-group-text"><i class="far fa-clock"></i></div></span></div></div>';
+			html += '	  <div class="col-sm-3"><div class="input-group date" id="input-value" data-target-input="nearest"><input type="text" name="value" value="" placeholder="{{ entry_option_value|escape('js') }}" class="form-control datetimepicker-input" data-target="#input-value" /><span class="input-group-append" data-target="#input-value" data-toggle="datetimepicker"><div class="input-group-text"><i class="far fa-clock"></i></div></span></div></div>';
 			html += '	</div>';
 		}
 
 		if (item['type'] == 'datetime') {
 			html += '	<div class="form-group row">';
 			html += '	  <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value|escape('js') }}</label>';
-			html += '	  <div class="col-sm-10"><div class="input-group date" id="input-value" data-target-input="nearest"><input type="text" name="value" value="" placeholder="{{ entry_option_value|escape('js') }}" class="form-control datetimepicker-input" data-target="#input-value" /><span class="input-group-append" data-target="#input-value" data-toggle="datetimepicker"><div class="input-group-text"><i class="fas fa-calendar-alt"></i></div></span></div></div>';
+			html += '	  <div class="col-sm-3"><div class="input-group date" id="input-value" data-target-input="nearest"><input type="text" name="value" value="" placeholder="{{ entry_option_value|escape('js') }}" class="form-control datetimepicker-input" data-target="#input-value" /><span class="input-group-append" data-target="#input-value" data-toggle="datetimepicker"><div class="input-group-text"><i class="fas fa-calendar-alt"></i></div></span></div></div>';
 			html += '	</div>';
 		}
 

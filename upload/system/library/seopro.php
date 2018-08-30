@@ -119,7 +119,7 @@ class SeoPro {
 			
 			$all_cat_query = $this->db->query("SELECT category_id, parent_id FROM " . DB_PREFIX . "category ORDER BY parent_id");
 				
-			$allcat = array();
+			$allcats = array();
 			$categories = array();
 			
 			if($all_cat_query->num_rows) {

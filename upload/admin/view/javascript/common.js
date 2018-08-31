@@ -117,9 +117,9 @@ $(document).on('click', '[data-toggle=\'image\']', function(e) {
 $(document).on('click', '[data-toggle=\'clear\']', function() {
 	var element = this;
 
-	$($(this).attr('data-thumb')).attr('src', $($(this).attr('data-thumb')).attr('data-placeholder'));
+	$('#'+$(this).attr('data-thumb')).attr('src', $('#'+$(this).attr('data-thumb')).attr('data-placeholder'));
 
-	$($(this).attr('data-target')).val('');
+	$('#'+$(this).attr('data-target')).val('');
 });
 
 // Autocomplete */

@@ -27,7 +27,7 @@ class ControllerExtensionModulePPButton extends Controller {
 					$data['paypal_environment'] = 'production';
 				}
 
-				$data['payment_url'] = $this->url->link('extension/payment/pp_express/express', 'language=' . $this->config->get('config_language'));
+				$data['payment_url'] = $this->url->link('extension/payment/pp_express/express');
 
 				return $this->load->view('extension/module/pp_button', $data);
 			}

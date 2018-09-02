@@ -21,25 +21,43 @@
             <div class="form-group row">
               <label class="col-sm-2 col-form-label" for="input-date-start">{{ entry_date_start }}</label>
               <div class="col-sm-10">
-                <div class="input-group date">
-                  <input type="text" name="date_start" value="{{ date_start }}" placeholder="{{ text_format }}: yy-mm-dd" id="input-date-start" class="form-control"/>
-                  <div class="input-group-append">
-                    <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-                  </div>
+                <div class="input-group date" id="input-date-start" data-target-input="nearest">
+                  <input type="text" name="date_start" value="{{ date_start }}" placeholder="{{ text_format }}: yy-mm-dd" class="form-control datetimepicker-input" data-target="#input-date-start" />
+                  <span class="input-group-append" data-target="#input-date-start" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                  </span>
                 </div>
               </div>
             </div>
+            <script type="text/javascript"><!--
+            $(function () {
+              $("#input-date-start").datetimepicker({
+                locale: '{{ datepicker }}',
+                format: 'YYYY-MM-DD',
+                allowInputToggle: true
+              });
+            });
+            --></script>
             <div class="form-group row">
               <label class="col-sm-2 col-form-label" for="input-date-end">{{ entry_date_end }}</label>
               <div class="col-sm-10">
-                <div class="input-group date">
-                  <input type="text" name="date_end" value="{{ date_end }}" placeholder="{{ text_format }}: yy-mm-dd" class="form-control"/>
-                  <div class="input-group-append">
-                    <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-                  </div>
+                <div class="input-group date" id="input-date-end" data-target-input="nearest">
+                  <input type="text" name="date_end" value="{{ date_end }}" placeholder="{{ text_format }}: yy-mm-dd" class="form-control datetimepicker-input" data-target="#input-date-end" />
+                  <span class="input-group-append" data-target="#input-date-end" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                  </span>
                 </div>
               </div>
             </div>
+            <script type="text/javascript"><!--
+            $(function () {
+              $("#input-date-end").datetimepicker({
+                locale: '{{ datepicker }}',
+                format: 'YYYY-MM-DD',
+                allowInputToggle: true
+              });
+            });
+            --></script>
             <h3>{{ entry_transaction }}</h3>
             <div class="form-group row">
               <label class="col-sm-2 col-form-label">{{ entry_transaction_type }}</label>
@@ -247,23 +265,6 @@
 	  $('#error').empty().hide();
   });
 
-  $('.date').datetimepicker({
-	  'format': 'YYYY-MM-DD',
-	  'locale': '{{ datepicker }}',
-	  'allowInputToggle': true
-  });
-
-  $('.time').datetimepicker({
-	  'format': 'HH:mm',
-	  'locale': '{{ datepicker }}',
-	  'allowInputToggle': true
-  });
-
-  $('.datetime').datetimepicker({
-	  'format': 'YYYY-MM-DD HH:mm',
-	  'locale': '{{ datepicker }}',
-	  'allowInputToggle': true
-  });
   //--></script>
 </div>
 {{ footer }}

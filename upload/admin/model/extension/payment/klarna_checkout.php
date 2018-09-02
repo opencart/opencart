@@ -210,6 +210,9 @@ class ModelExtensionPaymentKlarnaCheckout extends Model {
 			  `data` text NOT NULL,
 			  PRIMARY KEY (`klarna_checkout_order_id`)
 			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+
+		$this->load->model('setting/event');
+		$this->model_setting_event->addEvent('extension_pp_express_checkout_js', 'catalog/controller/checkout/checkout/before', 'extension/payment/pp_express/eventLoadCheckoutJs');
 	}
 
 	public function uninstall() {

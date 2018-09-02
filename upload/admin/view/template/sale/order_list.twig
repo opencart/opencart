@@ -59,22 +59,40 @@
             </div>
             <div class="form-group">
               <label class="col-form-label" for="input-date-added">{{ entry_date_added }}</label>
-              <div class="input-group date">
-                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control"/>
-                <div class="input-group-append">
-                  <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-                </div>
+              <div class="input-group date" id="input-date-added" data-target-input="nearest">
+                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" class="form-control datetimepicker-input" data-target="#input-date-added" />
+                <span class="input-group-append" data-target="#input-date-added" data-toggle="datetimepicker">
+                  <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                </span>
               </div>
             </div>
+            <script type="text/javascript"><!--
+            $(function () {
+              $("#input-date-added").datetimepicker({
+                locale: '{{ datepicker }}',
+                format: 'YYYY-MM-DD',
+                allowInputToggle: true
+              });
+            });
+            --></script>
             <div class="form-group">
               <label class="col-form-label" for="input-date-modified">{{ entry_date_modified }}</label>
-              <div class="input-group date">
-                <input type="text" name="filter_date_modified" value="{{ filter_date_modified }}" placeholder="{{ entry_date_modified }}" id="input-date-modified" class="form-control"/>
-                <div class="input-group-append">
-                  <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-                </div>
+              <div class="input-group date" id="input-date-modified" data-target-input="nearest">
+                <input type="text" name="filter_date_modified" value="{{ filter_date_modified }}" placeholder="{{ entry_date_modified }}" class="form-control datetimepicker-input" data-target="#input-date-modified" />
+                <span class="input-group-append" data-target="#input-date-modified" data-toggle="datetimepicker">
+                  <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                </span>
               </div>
             </div>
+            <script type="text/javascript"><!--
+            $(function () {
+              $("#input-date-modified").datetimepicker({
+                locale: '{{ datepicker }}',
+                format: 'YYYY-MM-DD',
+                allowInputToggle: true
+              });
+            });
+            --></script>
             <div class="text-right">
               <button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
             </div>
@@ -269,13 +287,6 @@ $('#form-order a.delete').on('click', function(e) {
 			}
 		});
 	}
-});
-//--></script>
-<script type="text/javascript"><!--
-$('.date').datetimepicker({
-	'format': 'YYYY-MM-DD',
-	'locale': '{{ datepicker }}',
-	'allowInputToggle': true
 });
 //--></script>
 {{ footer }}

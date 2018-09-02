@@ -17,6 +17,8 @@ $_['text_alert_ended']             = 'The listing has been ended on eBay';
 $_['text_listing_info']            = 'Listing information';
 $_['text_check_recommendations']   = 'Checking for eBay listing recommendations';
 $_['text_success_recommendations'] = 'There are no listing improvement recommendations for this item!';
+$_['text_reserved_forsale'] 	   = 'items will be for sale on eBay';
+$_['text_reserved_stock'] 		   = 'will be reserved';
 
 // Buttons
 $_['button_view']				   = 'View listing';
@@ -45,8 +47,8 @@ $_['column_combination']		   = 'Combination';
 
 // Help
 $_['help_stock_store']			   = 'This is the level of stock on in OpenCart';
-$_['help_stock_listed']			   = 'This is the current level of stock on eBay';
-$_['help_stock_reserve']		   = 'This is the maximum level of stock on eBay (0 = no reserve limit)';
+$_['help_stock_listed']			   = 'This is the current level of stock for sale on eBay';
+$_['help_stock_reserve']		   = 'Maximum level of stock that you want available on eBay (0 = no reserve limit).<br />Use lower stock amounts if you have eBay restrictions, when items sell the level will update back to your reserve until you sell out.<br />Do not use very low amounts like 1 or 2, if you do the listing will end if a buyer purchases all items at once.';
 
 // Error
 $_['error_ended']				   = 'The linked listing has ended, you are unable to edit it. You should remove the link.';
@@ -54,3 +56,4 @@ $_['error_reserve']				   = 'You cannot set the reserve higher than the local st
 $_['error_no_sku']          	   = 'No SKU found!';
 $_['error_no_item_id']             = 'Item ID is missing from the request';
 $_['error_recommendations_load']   = 'Unable to load item recommendations';
+$_['error_name_length']      	   = 'Product name must be under 80 characters';

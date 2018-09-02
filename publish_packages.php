@@ -187,6 +187,14 @@ class PublishPackages
                 "dst" => "/upload/catalog/view/javascript/jquery/magnific/"
             ),
             
+            ### swiper
+            
+            // copy swiper/dist to catalog
+            array(
+                "src" => "/node_modules/swiper/dist/",
+                "dst" => "/upload/catalog/view/javascript/jquery/swiper/"
+            ),
+            
             ### ckeditor
             
             ### // copy ckeditor to admin

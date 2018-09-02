@@ -1,12 +1,12 @@
 {% if payment_pp_express_incontext_disable != 1 %}
 
 <div class="buttons">
-  <div class="float-right" id="button-container">
-    <div id="paypal-button" />
+  <div class="float-right pp-checkout-button-container">
+    <div id="pp-checkout-button" />
   </div>
 </div>
 
-<script type="text/javascript"><!--
+<script>
   (function () {
     paypal.Button.render({
       env: '{{ paypal_environment }}',
@@ -33,14 +33,14 @@
         return actions.redirect();
       },
       onError: function (error) {
-        $('#button-container').empty().html('<div class="alert alert-danger">' + error + '</div>');
+        $('.pp-checkout-button-container').empty().html('<div class="alert alert-danger">' + error + '</div>');
         return;
       }
-    }, '#paypal-button');
+    }, '#pp-checkout-button');
   })();
-//--></script>
+</script>
 
-<script src="//www.paypalobjects.com/api/checkout.js" async></script>
+
 
 {% else %}
 

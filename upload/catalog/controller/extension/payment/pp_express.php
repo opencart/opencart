@@ -18,6 +18,10 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		return $this->load->view('extension/payment/pp_express', $data);
 	}
 
+	public function eventLoadCheckoutJs($route, &$data) {
+		$this->document->addScript('https://www.paypalobjects.com/api/checkout.js');
+	}
+
 	public function express() {
 		$this->load->model('extension/payment/pp_express');
 

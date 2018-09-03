@@ -1,0 +1,104 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "jquery-ui-dist@^1.12.1",
+        "scope": null,
+        "escapedName": "jquery-ui-dist",
+        "name": "jquery-ui-dist",
+        "rawSpec": "^1.12.1",
+        "spec": ">=1.12.1 <2.0.0",
+        "type": "range"
+      },
+      "/Users/admin/Sites/panreach_github_opencart_fork2"
+    ]
+  ],
+  "_from": "jquery-ui-dist@>=1.12.1 <2.0.0",
+  "_id": "jquery-ui-dist@1.12.1",
+  "_inCache": true,
+  "_location": "/jquery-ui-dist",
+  "_nodeVersion": "6.3.0",
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/jquery-ui-dist-1.12.1.tgz_1474917669575_0.2958491111639887"
+  },
+  "_npmUser": {
+    "name": "sschadwick",
+    "email": "sschadwick@gmail.com"
+  },
+  "_npmVersion": "3.10.7",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "jquery-ui-dist@^1.12.1",
+    "scope": null,
+    "escapedName": "jquery-ui-dist",
+    "name": "jquery-ui-dist",
+    "rawSpec": "^1.12.1",
+    "spec": ">=1.12.1 <2.0.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/jquery-ui-dist/-/jquery-ui-dist-1.12.1.tgz",
+  "_shasum": "5c0815d3cc6f90ff5faaf5b268a6e23b4ca904fa",
+  "_shrinkwrap": null,
+  "_spec": "jquery-ui-dist@^1.12.1",
+  "_where": "/Users/admin/Sites/panreach_github_opencart_fork2",
+  "author": {
+    "name": "jQuery Foundation and other contributors",
+    "url": "https://github.com/jquery/jquery-ui/blob/1.12.1/AUTHORS.txt"
+  },
+  "bugs": {
+    "url": "https://bugs.jqueryui.com/"
+  },
+  "dependencies": {},
+  "description": "A curated set of user interface interactions, effects, widgets, and themes built on top of the jQuery JavaScript Library.",
+  "devDependencies": {
+    "commitplease": "2.3.0",
+    "grunt": "0.4.5",
+    "grunt-bowercopy": "1.2.4",
+    "grunt-cli": "0.1.13",
+    "grunt-compare-size": "0.4.0",
+    "grunt-contrib-concat": "0.5.1",
+    "grunt-contrib-csslint": "0.5.0",
+    "grunt-contrib-jshint": "0.12.0",
+    "grunt-contrib-qunit": "1.0.1",
+    "grunt-contrib-requirejs": "0.4.4",
+    "grunt-contrib-uglify": "0.11.1",
+    "grunt-git-authors": "3.1.0",
+    "grunt-html": "6.0.0",
+    "grunt-jscs": "2.1.0",
+    "load-grunt-tasks": "3.4.0",
+    "rimraf": "2.5.1",
+    "testswarm": "1.1.0"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "5c0815d3cc6f90ff5faaf5b268a6e23b4ca904fa",
+    "tarball": "https://registry.npmjs.org/jquery-ui-dist/-/jquery-ui-dist-1.12.1.tgz"
+  },
+  "gitHead": "963d77e7eee4132e3601db2b4c37cae62d6812f4",
+  "homepage": "http://jqueryui.com",
+  "keywords": [],
+  "license": "MIT",
+  "main": "ui/widget.js",
+  "maintainers": [
+    {
+      "name": "sschadwick",
+      "email": "sschadwick@gmail.com"
+    }
+  ],
+  "name": "jquery-ui-dist",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jquery/jquery-ui.git"
+  },
+  "scripts": {
+    "test": "grunt"
+  },
+  "title": "jQuery UI",
+  "version": "1.12.1"
+}

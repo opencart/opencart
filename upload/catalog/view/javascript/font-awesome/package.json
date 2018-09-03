@@ -1,0 +1,139 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "@fortawesome/fontawesome-free@^5.2.0",
+        "scope": "@fortawesome",
+        "escapedName": "@fortawesome%2ffontawesome-free",
+        "name": "@fortawesome/fontawesome-free",
+        "rawSpec": "^5.2.0",
+        "spec": ">=5.2.0 <6.0.0",
+        "type": "range"
+      },
+      "/Users/admin/Sites/panreach_github_opencart_fork2"
+    ]
+  ],
+  "_from": "@fortawesome/fontawesome-free@>=5.2.0 <6.0.0",
+  "_id": "@fortawesome/fontawesome-free@5.3.1",
+  "_inCache": true,
+  "_location": "/@fortawesome/fontawesome-free",
+  "_nodeVersion": "8.11.3",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/fontawesome-free_5.3.1_1535477905316_0.566900679740663"
+  },
+  "_npmUser": {
+    "name": "robmadole",
+    "email": "robmadole@gmail.com"
+  },
+  "_npmVersion": "6.3.0",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "@fortawesome/fontawesome-free@^5.2.0",
+    "scope": "@fortawesome",
+    "escapedName": "@fortawesome%2ffontawesome-free",
+    "name": "@fortawesome/fontawesome-free",
+    "rawSpec": "^5.2.0",
+    "spec": ">=5.2.0 <6.0.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@fortawesome/fontawesome-free/-/fontawesome-free-5.3.1.tgz",
+  "_shasum": "5466b8f31c1f493a96754c1426c25796d0633dd9",
+  "_shrinkwrap": null,
+  "_spec": "@fortawesome/fontawesome-free@^5.2.0",
+  "_where": "/Users/admin/Sites/panreach_github_opencart_fork2",
+  "author": {
+    "name": "Dave Gandy",
+    "email": "dave@fontawesome.com",
+    "url": "http://twitter.com/davegandy"
+  },
+  "bugs": {
+    "url": "http://github.com/FortAwesome/Font-Awesome/issues"
+  },
+  "contributors": [
+    {
+      "name": "Brian Talbot",
+      "url": "http://twitter.com/talbs"
+    },
+    {
+      "name": "Travis Chase",
+      "url": "http://twitter.com/supercodepoet"
+    },
+    {
+      "name": "Rob Madole",
+      "url": "http://twitter.com/robmadole"
+    },
+    {
+      "name": "Geremia Taglialatela",
+      "url": "http://twitter.com/gtagliala"
+    },
+    {
+      "name": "Mike Wilkerson",
+      "url": "http://twitter.com/mw77"
+    }
+  ],
+  "dependencies": {},
+  "description": "The iconic font, CSS, and SVG framework",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "integrity": "sha512-jt6yi7iZVtkY9Jc6zFo+G2vqL4M81pb3IA3WmnnDt9ci7Asz+mPg4gbZL8pjx0nGFBsG0Bmd7BjU9IQkebqxFA==",
+    "shasum": "5466b8f31c1f493a96754c1426c25796d0633dd9",
+    "tarball": "https://registry.npmjs.org/@fortawesome/fontawesome-free/-/fontawesome-free-5.3.1.tgz",
+    "fileCount": 1427,
+    "unpackedSize": 9583061,
+    "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJbhYiSCRA9TVsSAnZWagAAR+EP/ichhVBWyLs1YgKKgaWm\nlAGj6Bh2SEHjubJKYtd68zDoFpAjqCy3St+wwtFPKfAuKNXtpycBmztM7Nr8\nMxPmDqWqliYHz7XQQ+69Bo2DIIxyfydtsaU9yCxMEf4sv2cwvzQEARyqA/rg\nvEPHJUqTcrZZUS1zj7AwFivkSfLcLKcEIpwZKO4N36Y/Q8mnudckWlE9UFMS\nh8h8m5pF7iSCk12zqvrpRjhYeJ8DoUhS+orOJCB+dvhbfeygL4N7OLApXpZ3\nn128jb02k/R5DGjXHfBLFDQDEQuInY16825k5+TMq65ZD12zp1FqIu3kQNaf\n8cLLAREBoMthln0m50QvI0wPC/wnQACrjHlL1B7auE2jQnhtJs26YcTY+7le\nE/h0JAiBe/VXHVltj/vxblbl9PODQOjPZKZo8bUbu6hft+kNFOekkSQudH04\nj/LFe9hlG7YQqpzwcXeq4z6mlIyeL4uLACyECqlY60oa3LgOxHZW+PlRPO8P\nKMc4vqv9lCxp8fqw/z0b38k638fZMSlNJsQSWHtX4lu/U+eZRIialPYqwG0f\nov15V1c6Th5NcfnhXvMZ1D8p8H/JLSauFyS8f2hMKirZQ8IpSWxEdkxeNcDw\nu9raWSraH82i8WM+DeisCYthqMRMOc4PqxXjUNWI9VS7SqbTcsDNAv5Di1iP\nqAMa\r\n=npaP\r\n-----END PGP SIGNATURE-----\r\n"
+  },
+  "engines": {
+    "node": ">=6"
+  },
+  "homepage": "https://fontawesome.com",
+  "keywords": [
+    "font",
+    "awesome",
+    "fontawesome",
+    "icon",
+    "svg",
+    "bootstrap"
+  ],
+  "license": "(CC-BY-4.0 AND OFL-1.1 AND MIT)",
+  "main": "js/fontawesome.js",
+  "maintainers": [
+    {
+      "name": "devoto13",
+      "email": "devoto13@gmail.com"
+    },
+    {
+      "name": "fortawesome-admin",
+      "email": "admin@fortawesome.com"
+    },
+    {
+      "name": "jrjohnson",
+      "email": "jon.johnson@ucsf.edu"
+    },
+    {
+      "name": "mwilkerson",
+      "email": "mwilkerson@gmail.com"
+    },
+    {
+      "name": "robmadole",
+      "email": "robmadole@gmail.com"
+    },
+    {
+      "name": "supercodepoet",
+      "email": "travis@travischase.me"
+    }
+  ],
+  "name": "@fortawesome/fontawesome-free",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FortAwesome/Font-Awesome.git"
+  },
+  "style": "css/fontawesome.css",
+  "version": "5.3.1"
+}

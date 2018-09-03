@@ -18,6 +18,12 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$this->response->setOutput($this->load->view('extension/payment/klarna_checkout', $data));
 	}
 
+	public function eventLoadCheckoutJs($route, &$data) {
+		if ($this->config->get('payment_klarna_account') || $this->config->get('payment_klarna_invoice')) {
+			$this->document->addScript('http://cdn.klarna.com/public/kitt/toc/v1.0/js/klarna.terms.min.js');
+		}
+	}
+
 	public function main() {
 		$this->load->language('extension/payment/klarna_checkout');
 

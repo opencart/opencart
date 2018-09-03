@@ -17,6 +17,7 @@ $_['text_disabled']                 = 'Disabled';
 $_['text_none']                     = ' --- None --- ';
 $_['text_select']                   = ' --- Please Select --- ';
 $_['text_select_all']               = 'Select All';
+$_['text_all']                      = 'All';
 $_['text_unselect_all']             = 'Unselect All';
 $_['text_all_zones']                = 'All Zones';
 $_['text_default']                  = ' <b>(Default)</b>';

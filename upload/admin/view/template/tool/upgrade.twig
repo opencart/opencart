@@ -34,16 +34,16 @@
               {% endif %}
             </fieldset>
             <div class="alert alert-info">
-              <p><strong><i class="fas fa-exclamation-circle"></i> Tips: Before upgrading it's very important to</strong></p>
+              <p><strong><i class="fas fa-exclamation-circle"></i> {{ text_tips }}</strong></p>
               <ol>
-                <li>Make a complete backup of your web site!
+                <li>{{ text_make }}
                   <br/>
-                  Backup <a href="{{ backup }}">here</a>;
+                  {{ text_backup }} <a href="{{ backup }}">{{ text_here }}</a>;
                   <br/>
-                  If you are using the cloud version, you can backup with your opencart account <a href="{{ opencart_account }}" target="_blank">here</a>.
+                  {{ text_cloud }} <a href="{{ opencart_account }}" target="_blank">{{ text_here }}</a>.
                 </li>
-                <li>Check the extensions installed are compatible with the latest version</li>
-                <li>It's better if you could copy your site to a test server and practise upgrading before starting with the live web site.</li>
+                <li>{{ text_check }}</li>
+                <li>{{ text_better }}</li>
               </ol>
             </div>
             <fieldset>
@@ -60,7 +60,7 @@
         <div id="collapse-compatible" data-parent="#collapse" class="collapse">
           <div class="card-body">
             <div class="alert alert-warning">
-              Before upgrading, it's very important to check the extensions installed are compatible with the latest version!
+              {{ text_before }}
               <button type="button" class="close" data-dismiss="alert">&times;</button>
             </div>
             <table class="table table-bordered table-hover">
@@ -99,7 +99,7 @@
             <fieldset>
               <legend>{{ text_progress }}</legend>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Progress</label>
+                <label class="col-sm-2 col-form-label">{{ text_progress_short }}</label>
                 <div class="col-sm-10">
                   <div id="progress-download" class="progress">
                     <div id="progress-bar" class="progress-bar"></div>
@@ -118,7 +118,7 @@
               </div>
             </fieldset>
             <fieldset>
-              <legend>Upgrade Log</legend>
+              <legend>{{ text_log }}</legend>
               <textarea id="log" wrap="off" rows="10" readonly class="form-control"></textarea>
             </fieldset>
           </div>

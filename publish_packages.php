@@ -195,6 +195,12 @@ class PublishPackages
                 "dst" => "/upload/catalog/view/javascript/jquery/swiper/"
             ),
             
+            // copy swiper/dist/js/swiper.min.js to to swiper.jquery.js
+            array(
+                "src" => "/node_modules/swiper/dist/js/swiper.min.js",
+                "dst" => "/upload/catalog/view/javascript/jquery/swiper/swiper.jquery.js"
+            ),
+            
             ### ckeditor
             
             // copy ckeditor to admin

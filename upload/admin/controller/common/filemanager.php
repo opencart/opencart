@@ -197,7 +197,7 @@ class ControllerCommonFileManager extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = count(array_merge((array)$directories, (array)$files));
 		$pagination->page = $page;
-		$pagination->limit = 16;
+		$pagination->limit = $this->config->get('config_limit_admin');
 		$pagination->url = $this->url->link('common/filemanager', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
 
 		$data['pagination'] = $pagination->render();

@@ -550,7 +550,7 @@ class ControllerMarketingCoupon extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $history_total;
 		$pagination->page = $page;
-		$pagination->limit = 10;
+		$pagination->limit = $this->config->get('config_limit_admin');
 		$pagination->url = $this->url->link('marketing/coupon/history', 'user_token=' . $this->session->data['user_token'] . '&coupon_id=' . $coupon_id . '&page={page}');
 
 		$data['pagination'] = $pagination->render();

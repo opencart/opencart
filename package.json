@@ -33,7 +33,7 @@
     "moment": "^2.17",
     "moment-timezone": "^0.5.21",
     "popper.js": "^1.14.3",
-    "swiper": "^4.3.5",
+    "swiper": "^3.4.2",
     "tempusdominus-bootstrap-4": "^5.0.1",
     "tempusdominus-core": "^5.0.0"
   }

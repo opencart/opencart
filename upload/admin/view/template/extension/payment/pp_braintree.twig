@@ -727,22 +727,40 @@
                       </div>
                       <div class="form-group">
                         <label class="col-form-label" for="input-date-from">{{ entry_date_from }}</label>
-                        <div class="input-group date">
-                          <input type="text" name="filter_date_from" value="" placeholder="From" id="input-date-from" class="form-control"/>
-                          <div class="input-group-append">
-                            <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-                          </div>
+                        <div class="input-group date" id="input-date-from" data-target-input="nearest">
+                          <input type="text" name="filter_date_from" value="" placeholder="From" class="form-control datetimepicker-input" data-target="#input-date-from" />
+                          <span class="input-group-append" data-target="#input-date-from" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                          </span>
                         </div>
                       </div>
+                      <script type="text/javascript"><!--
+                      $(function () {
+                        $("#input-date-from").datetimepicker({
+                          locale: '{{ datepicker }}',
+                          format: 'YYYY-MM-DD',
+                          allowInputToggle: true
+                        });
+                      });
+                      --></script>
                       <div class="form-group">
                         <label class="col-form-label" for="input-date-to">{{ entry_date_to }}</label>
-                        <div class="input-group date">
-                          <input type="text" name="filter_date_to" value="" placeholder="To" id="input-date-to" class="form-control"/>
-                          <div class="input-group-append">
-                            <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-                          </div>
+                        <div class="input-group date" id="input-date-to" data-target-input="nearest">
+                          <input type="text" name="filter_date_to" value="" placeholder="To" class="form-control datetimepicker-input" data-target="#input-date-to" />
+                          <span class="input-group-append" data-target="#input-date-to" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                          </span>
                         </div>
                       </div>
+                      <script type="text/javascript"><!--
+                      $(function () {
+                        $("#input-date-to").datetimepicker({
+                          locale: '{{ datepicker }}',
+                          format: 'YYYY-MM-DD',
+                          allowInputToggle: true
+                        });
+                      });
+                      --></script>
                     </div>
                     <div class="col-sm-3">
                       <div class="form-group">
@@ -810,12 +828,6 @@
 </style>
 <script type="text/javascript"><!--
 $('#tabs a:first').tab('show');
-
-$('.date').datetimepicker({
-	'format': 'YYYY-MM-DD',
-	'locale': '{{ datepicker }}',
-	'allowInputToggle': true
-});
 
 $('#button-filter').on('click', function(event) {
 	event.preventDefault();

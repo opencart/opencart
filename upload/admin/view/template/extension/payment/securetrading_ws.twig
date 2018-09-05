@@ -272,13 +272,22 @@
                     <div class="col-sm-3">
                       <div class="form-group">
                         <label class="col-form-label" for="date-from">{{ entry_date_from }}</label>
-                        <div class="input-group date">
-                          <input type="text" name="date_from" value="<?php echo date('Y-m-d'); ?>" placeholder="{{ entry_date_from }}" id="date-from" class="form-control"/>
-                          <div class="input-group-append">
-                            <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-                          </div>
+                        <div class="input-group date" id="date-from" data-target-input="nearest">
+                          <input type="text" name="date_from" value="<?php echo date('Y-m-d'); ?>" placeholder="{{ text_format }}: yy-mm-dd" class="form-control datetimepicker-input" data-target="#date-from" />
+                          <span class="input-group-append" data-target="#date-from" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                          </span>
                         </div>
                       </div>
+                      <script type="text/javascript"><!--
+                      $(function () {
+                        $("#date-from").datetimepicker({
+                          locale: '{{ datepicker }}',
+                          format: 'YYYY-MM-DD',
+                          allowInputToggle: true
+                        });
+                      });
+                      --></script>
                     </div>
                     <div class="col-sm-1 offset-sm-2">
                       <div class="form-group">
@@ -307,13 +316,22 @@
                     <div class="col-sm-3">
                       <div class="form-group">
                         <label class="col-form-label" for="date-to">{{ entry_date_to }}</label>
-                        <div class="input-group date">
-                          <input type="text" name="date_to" value="<?php echo date('Y-m-d'); ?>" placeholder="{{ entry_date_to }}" id="date-to" class="form-control"/>
-                          <div class="input-group-append">
-                            <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-                          </div>
+                        <div class="input-group date" id="date-to" data-target-input="nearest">
+                          <input type="text" name="date_to" value="<?php echo date('Y-m-d'); ?>" placeholder="{{ text_format }}: yy-mm-dd" class="form-control datetimepicker-input" data-target="#date-to" />
+                          <span class="input-group-append" data-target="#date-to" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                          </span>
                         </div>
                       </div>
+                      <script type="text/javascript"><!--
+                      $(function () {
+                        $("#date-to").datetimepicker({
+                          locale: '{{ datepicker }}',
+                          format: 'YYYY-MM-DD',
+                          allowInputToggle: true
+                        });
+                      });
+                      --></script>
                     </div>
                   </div>
                   <div class="row">
@@ -423,10 +441,5 @@ function showTransactions() {
 	});
 }
 
-$('.date').datetimepicker({
-	'format': 'YYYY-MM-DD',
-	'locale': '{{ datepicker }}',
-	'allowInputToggle': true
-});
 </script>
 {{ footer }}

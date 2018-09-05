@@ -226,14 +226,23 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-date-available">{{ entry_date_available }}</label>
                 <div class="col-sm-3">
-                  <div class="input-group date">
-                    <input type="text" name="date_available" value="{{ date_available }}" placeholder="{{ entry_date_available }}" id="input-date-available" class="form-control"/>
-                    <div class="input-group-append">
-                      <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-                    </div>
+                  <div class="input-group date" id="input-date-available" data-target-input="nearest">
+                    <input type="text" name="date_available" value="{{ date_available }}" placeholder="{{ entry_date_available }}" class="form-control datetimepicker-input" data-target="#input-date-available" />
+                    <span class="input-group-append" data-target="#input-date-available" data-toggle="datetimepicker">
+                      <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                    </span>
                   </div>
                 </div>
               </div>
+              <script type="text/javascript"><!--
+              $(function () {
+                $("#input-date-available").datetimepicker({
+                  locale: '{{ datepicker }}',
+                  format: 'YYYY-MM-DD',
+                  allowInputToggle: true
+                });
+              });
+              --></script>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-length">{{ entry_dimension }}</label>
                 <div class="col-sm-10">
@@ -501,20 +510,38 @@
                         <td class="text-right"><input type="text" name="product_discount[{{ discount_row }}][priority]" value="{{ product_discount.priority }}" placeholder="{{ entry_priority }}" class="form-control"/></td>
                         <td class="text-right"><input type="text" name="product_discount[{{ discount_row }}][price]" value="{{ product_discount.price }}" placeholder="{{ entry_price }}" class="form-control"/></td>
                         <td class="text-left">
-                          <div class="input-group date">
-                            <input type="text" name="product_discount[{{ discount_row }}][date_start]" value="{{ product_discount.date_start }}" placeholder="{{ entry_date_start }}" class="form-control"/>
-                            <div class="input-group-append">
-                              <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-                            </div>
+                          <div class="input-group date" id="product-discount-{{ discount_row }}-date-start" data-target-input="nearest">
+                            <input type="text" name="product_discount[{{ discount_row }}][date_start]" value="{{ product_discount.date_start }}" placeholder="{{ entry_date_start }}" class="form-control datetimepicker-input" data-target="#product-discount-{{ discount_row }}-date-start" />
+                            <span class="input-group-append" data-target="#product-discount-{{ discount_row }}-date-start" data-toggle="datetimepicker">
+                              <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                            </span>
                           </div>
+                          <script type="text/javascript"><!--
+                          $(function () {
+                            $("#product-discount-{{ discount_row }}-date-start").datetimepicker({
+                              locale: '{{ datepicker }}',
+                              format: 'YYYY-MM-DD',
+                              allowInputToggle: true
+                            });
+                          });
+                          --></script>
                         </td>
                         <td class="text-left">
-                          <div class="input-group date">
-                            <input type="text" name="product_discount[{{ discount_row }}][date_end]" value="{{ product_discount.date_end }}" placeholder="{{ entry_date_end }}" class="form-control"/>
-                            <div class="input-group-append">
-                              <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-                            </div>
+                          <div class="input-group date" id="product-discount-{{ discount_row }}-date-end" data-target-input="nearest">
+                            <input type="text" name="product_discount[{{ discount_row }}][date_end]" value="{{ product_discount.date_end }}" placeholder="{{ entry_date_end }}" class="form-control datetimepicker-input" data-target="#product-discount-{{ discount_row }}-date-end" />
+                            <span class="input-group-append" data-target="#product-discount-{{ discount_row }}-date-end" data-toggle="datetimepicker">
+                              <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                            </span>
                           </div>
+                          <script type="text/javascript"><!--
+                          $(function () {
+                            $("#product-discount-{{ discount_row }}-date-end").datetimepicker({
+                              locale: '{{ datepicker }}',
+                              format: 'YYYY-MM-DD',
+                              allowInputToggle: true
+                            });
+                          });
+                          --></script>
                         </td>
                         <td class="text-left"><button type="button" onclick="$('#discount-row{{ discount_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
                       </tr>
@@ -559,20 +586,38 @@
                         <td class="text-right"><input type="text" name="product_special[{{ special_row }}][priority]" value="{{ product_special.priority }}" placeholder="{{ entry_priority }}" class="form-control"/></td>
                         <td class="text-right"><input type="text" name="product_special[{{ special_row }}][price]" value="{{ product_special.price }}" placeholder="{{ entry_price }}" class="form-control"/></td>
                         <td class="text-left">
-                          <div class="input-group date">
-                            <input type="text" name="product_special[{{ special_row }}][date_start]" value="{{ product_special.date_start }}" placeholder="{{ entry_date_start }}" class="form-control"/>
-                            <div class="input-group-append">
-                              <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-                            </div>
+                          <div class="input-group date" id="product-special-{{ special_row }}-date-start" data-target-input="nearest">
+                            <input type="text" name="product_special[{{ special_row }}][date_start]" value="{{ product_special.date_start }}" placeholder="{{ entry_date_start }}" class="form-control datetimepicker-input" data-target="#product-special-{{ special_row }}-date-start" />
+                            <span class="input-group-append" data-target="#product-special-{{ special_row }}-date-start" data-toggle="datetimepicker">
+                              <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                            </span>
                           </div>
+                          <script type="text/javascript"><!--
+                          $(function () {
+                            $("#product-special-{{ special_row }}-date-start").datetimepicker({
+                              locale: '{{ datepicker }}',
+                              format: 'YYYY-MM-DD',
+                              allowInputToggle: true
+                            });
+                          });
+                          --></script>
                         </td>
                         <td class="text-left">
-                          <div class="input-group date">
-                            <input type="text" name="product_special[{{ special_row }}][date_end]" value="{{ product_special.date_end }}" placeholder="{{ entry_date_end }}" class="form-control"/>
-                            <div class="input-group-append">
-                              <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-                            </div>
+                          <div class="input-group date" id="product-special-{{ special_row }}-date-end" data-target-input="nearest">
+                            <input type="text" name="product_special[{{ special_row }}][date_end]" value="{{ product_special.date_end }}" placeholder="{{ entry_date_end }}" class="form-control datetimepicker-input" data-target="#product-special-{{ special_row }}-date-end" />
+                            <span class="input-group-append" data-target="#product-special-{{ special_row }}-date-end" data-toggle="datetimepicker">
+                              <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                            </span>
                           </div>
+                          <script type="text/javascript"><!--
+                          $(function () {
+                            $("#product-special-{{ special_row }}-date-end").datetimepicker({
+                              locale: '{{ datepicker }}',
+                              format: 'YYYY-MM-DD',
+                              allowInputToggle: true
+                            });
+                          });
+                          --></script>
                         </td>
                         <td class="text-left"><button type="button" onclick="$('#special-row{{ special_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
                       </tr>
@@ -929,19 +974,25 @@ $('#button-discount').on('click', function() {
 	html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][quantity]" value="" placeholder="{{ entry_quantity }}" class="form-control" /></td>';
 	html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][priority]" value="" placeholder="{{ entry_priority }}" class="form-control" /></td>';
 	html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][price]" value="" placeholder="{{ entry_price }}" class="form-control" /></td>';
-	html += '  <td class="text-left"><div class="input-group date"><input type="text" name="product_discount[' + discount_row + '][date_start]" value="" placeholder="{{ entry_date_start }}" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div></td>';
-	html += '  <td class="text-left"><div class="input-group date"><input type="text" name="product_discount[' + discount_row + '][date_end]" value="" placeholder="{{ entry_date_end }}" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div></td>';
+	html += '  <td class="text-left"><div class="input-group date" id="product-discount-' + discount_row + '-date-start" data-target-input="nearest"><input type="text" name="product_discount[' + discount_row + '][date_start]" value="{{ product_discount.date_start }}" placeholder="{{ entry_date_start }}" class="form-control datetimepicker-input" data-target="#product-discount-' + discount_row + '-date-start" /><span class="input-group-append" data-target="#product-discount-' + discount_row + '-date-start" data-toggle="datetimepicker"><div class="input-group-text"><i class="fas fa-calendar-alt"></i></div></span></div>';
+	html += '  <td class="text-left"><div class="input-group date" id="product-discount-' + discount_row + '-date-end" data-target-input="nearest"><input type="text" name="product_discount[' + discount_row + '][date_end]" value="{{ product_discount.date_end }}" placeholder="{{ entry_date_end }}" class="form-control datetimepicker-input" data-target="#product-discount-' + discount_row + '-date-end" /><span class="input-group-append" data-target="#product-discount-' + discount_row + '-date-end" data-toggle="datetimepicker"><div class="input-group-text"><i class="fas fa-calendar-alt"></i></div></span></div>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#discount-row' + discount_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 
 	$('#discount tbody').append(html);
 
-	$('.date').datetimepicker({
-		'format': 'YYYY-MM-DD',
-		'locale': '{{ datepicker }}',
-		'allowInputToggle': true
+	$("#product-discount-" + discount_row + "-date-start").datetimepicker({
+		locale: '{{ datepicker }}',
+		format: 'YYYY-MM-DD',
+		allowInputToggle: true
 	});
-
+	
+	$("#product-discount-" + discount_row + "-date-end").datetimepicker({
+		locale: '{{ datepicker }}',
+		format: 'YYYY-MM-DD',
+		allowInputToggle: true
+	});
+	
 	discount_row++;
 });
 
@@ -958,17 +1009,23 @@ $('#button-special').on('click', function() {
 	html += '  </select></td>';
 	html += '  <td class="text-right"><input type="text" name="product_special[' + special_row + '][priority]" value="" placeholder="{{ entry_priority }}" class="form-control" /></td>';
 	html += '  <td class="text-right"><input type="text" name="product_special[' + special_row + '][price]" value="" placeholder="{{ entry_price }}" class="form-control" /></td>';
-	html += '  <td class="text-left"><div class="input-group date"><input type="text" name="product_special[' + special_row + '][date_start]" value="" placeholder="{{ entry_date_start }}" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div></td>';
-	html += '  <td class="text-left"><div class="input-group date"><input type="text" name="product_special[' + special_row + '][date_end]" value="" placeholder="{{ entry_date_end }}" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div></td>';
+	html += '  <td class="text-left"><div class="input-group date" id="product-special-' + special_row + '-date-start" data-target-input="nearest"><input type="text" name="product_special[' + special_row + '][date_start]" value="{{ product_special.date_start }}" placeholder="{{ entry_date_start }}" class="form-control datetimepicker-input" data-target="#product-special-' + special_row + '-date-start" /><span class="input-group-append" data-target="#product-special-' + special_row + '-date-start" data-toggle="datetimepicker"><div class="input-group-text"><i class="fas fa-calendar-alt"></i></div></span></div>';
+	html += '  <td class="text-left"><div class="input-group date" id="product-special-' + special_row + '-date-end" data-target-input="nearest"><input type="text" name="product_special[' + special_row + '][date_end]" value="{{ product_special.date_end }}" placeholder="{{ entry_date_end }}" class="form-control datetimepicker-input" data-target="#product-special-' + special_row + '-date-end" /><span class="input-group-append" data-target="#product-special-' + special_row + '-date-end" data-toggle="datetimepicker"><div class="input-group-text"><i class="fas fa-calendar-alt"></i></div></span></div>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#special-row' + special_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 
 	$('#special tbody').append(html);
 
-	$('.date').datetimepicker({
-		'format': 'YYYY-MM-DD',
-		'locale': '{{ datepicker }}',
-		'allowInputToggle': true
+	$("#product-special-" + special_row + "-date-start").datetimepicker({
+		locale: '{{ datepicker }}',
+		format: 'YYYY-MM-DD',
+		allowInputToggle: true
+	});
+	
+	$("#product-special-" + special_row + "-date-end").datetimepicker({
+		locale: '{{ datepicker }}',
+		format: 'YYYY-MM-DD',
+		allowInputToggle: true
 	});
 
 	special_row++;
@@ -1025,13 +1082,6 @@ function addRecurring() {
 	recurring_row++;
 }
 
-//--></script>
-<script type="text/javascript"><!--
-$('.date').datetimepicker({
-	'format': 'YYYY-MM-DD',
-	'locale': '{{ datepicker }}',
-	'allowInputToggle': true
-});
 //--></script>
 <script type="text/javascript"><!--
 $('#language li:first-child a').tab('show');

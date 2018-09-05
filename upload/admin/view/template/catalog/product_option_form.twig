@@ -83,40 +83,67 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value }}</label>
                   <div class="col-sm-3">
-                    <div class="input-group date">
-                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" id="input-value" class="form-control"/>
-                      <div class="input-group-append">
-                        <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-                      </div>
+                    <div class="input-group date" id="input-value" data-target-input="nearest">
+                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" class="form-control datetimepicker-input" data-target="#input-value" />
+                      <span class="input-group-append" data-target="#input-value" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                      </span>
                     </div>
                   </div>
                 </div>
+                <script type="text/javascript"><!--
+                $(function () {
+                  $("#input-value").datetimepicker({
+                    locale: '{{ datepicker }}',
+                    format: 'YYYY-MM-DD',
+                    allowInputToggle: true
+                  });
+                });
+                --></script>
               {% endif %}
               {% if type == 'time' %}
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value }}</label>
-                  <div class="col-sm-10">
-                    <div class="input-group time">
-                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" id="input-value" class="form-control"/>
-                      <div class="input-group-append">
-                        <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-                      </div>
+                  <div class="col-sm-3">
+                    <div class="input-group date" id="input-value" data-target-input="nearest">
+                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" class="form-control datetimepicker-input" data-target="#input-value" />
+                      <span class="input-group-append" data-target="#input-value" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="far fa-clock"></i></div>
+                      </span>
                     </div>
                   </div>
                 </div>
+                <script type="text/javascript"><!--
+                $(function () {
+                  $("#input-value").datetimepicker({
+                    locale: '{{ datepicker }}',
+                    format: 'HH:mm',
+                    allowInputToggle: true
+                  });
+                });
+                --></script>
               {% endif %}
               {% if type == 'datetime' %}
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value }}</label>
-                  <div class="col-sm-10">
-                    <div class="input-group datetime">
-                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" id="input-value" class="form-control"/>
-                      <div class="input-group-append">
-                        <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-                      </div>
+                  <div class="col-sm-3">
+                    <div class="input-group date" id="input-value" data-target-input="nearest">
+                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_option_value }}" class="form-control datetimepicker-input" data-target="#input-value" />
+                      <span class="input-group-append" data-target="#input-value" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                      </span>
                     </div>
                   </div>
                 </div>
+                <script type="text/javascript"><!--
+                $(function () {
+                  $("#input-value").datetimepicker({
+                    locale: '{{ datepicker }}',
+                    format: 'YYYY-MM-DD HH:mm',
+                    allowInputToggle: true
+                  });
+                });
+                --></script>
               {% endif %}
               {% set option_value_row = 0 %}
               {% if type == 'select' or type == 'radio' or type == 'checkbox' or type == 'image' %}
@@ -290,21 +317,21 @@ $('input[name=\'option\']').autocomplete({
 		if (item['type'] == 'date') {
 			html += '	<div class="form-group row">';
 			html += '	  <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value|escape('js') }}</label>';
-			html += '	  <div class="col-sm-3"><div class="input-group date"><input type="text" name="value" value="" placeholder="{{ entry_option_value|escape('js') }}" id="input-value" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div></div>';
+			html += '	  <div class="col-sm-3"><div class="input-group date" id="input-value" data-target-input="nearest"><input type="text" name="value" value="" placeholder="{{ entry_option_value|escape('js') }}" class="form-control datetimepicker-input" data-target="#input-value" /><span class="input-group-append" data-target="#input-value" data-toggle="datetimepicker"><div class="input-group-text"><i class="fas fa-calendar-alt"></i></div></span></div></div>';
 			html += '	</div>';
 		}
 
 		if (item['type'] == 'time') {
 			html += '	<div class="form-group row">';
 			html += '	  <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value|escape('js') }}</label>';
-			html += '	  <div class="col-sm-3"><div class="input-group time"><input type="text" name="value" value="" placeholder="{{ entry_option_value|escape('js') }}" id="input-value" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div></div>';
+			html += '	  <div class="col-sm-3"><div class="input-group date" id="input-value" data-target-input="nearest"><input type="text" name="value" value="" placeholder="{{ entry_option_value|escape('js') }}" class="form-control datetimepicker-input" data-target="#input-value" /><span class="input-group-append" data-target="#input-value" data-toggle="datetimepicker"><div class="input-group-text"><i class="far fa-clock"></i></div></span></div></div>';
 			html += '	</div>';
 		}
 
 		if (item['type'] == 'datetime') {
 			html += '	<div class="form-group row">';
 			html += '	  <label class="col-sm-2 col-form-label" for="input-value">{{ entry_option_value|escape('js') }}</label>';
-			html += '	  <div class="col-sm-3"><div class="input-group datetime"><input type="text" name="value" value="" placeholder="{{ entry_option_value|escape('js') }}" id="input-value" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div></div>';
+			html += '	  <div class="col-sm-3"><div class="input-group date" id="input-value" data-target-input="nearest"><input type="text" name="value" value="" placeholder="{{ entry_option_value|escape('js') }}" class="form-control datetimepicker-input" data-target="#input-value" /><span class="input-group-append" data-target="#input-value" data-toggle="datetimepicker"><div class="input-group-text"><i class="fas fa-calendar-alt"></i></div></span></div></div>';
 			html += '	</div>';
 		}
 
@@ -352,23 +379,29 @@ $('input[name=\'option\']').autocomplete({
 			html: true
 		});
 
-		$('.date').datetimepicker({
-			'format': 'YYYY-MM-DD',
-			'locale': '{{ datepicker }}',
-			'allowInputToggle': true
-		});
+		if (item['type'] == 'date') {
+			$("#input-value").datetimepicker({
+				locale: '{{ datepicker }}',
+				format: 'YYYY-MM-DD',
+				allowInputToggle: true
+			});
+		}
 
-		$('.time').datetimepicker({
-			'format': 'HH:mm',
-			'locale': '{{ datepicker }}',
-			'allowInputToggle': true
-		});
+		if (item['type'] == 'time') {
+			$("#input-value").datetimepicker({
+				locale: '{{ datepicker }}',
+				format: 'HH:mm',
+				allowInputToggle: true
+			});
+		}
 
-		$('.datetime').datetimepicker({
-			'format': 'YYYY-MM-DD HH:mm',
-			'locale': '{{ datepicker }}',
-			'allowInputToggle': true
-		});
+		if (item['type'] == 'datetime') {
+			$("#input-value").datetimepicker({
+				locale: '{{ datepicker }}',
+				format: 'YYYY-MM-DD HH:mm',
+				allowInputToggle: true
+			});
+		}
 	}
 });
 
@@ -406,25 +439,6 @@ $('#product-option-value').on('click', '#button-option-value', function() {
 	$('[rel=tooltip]').tooltip();
 
 	option_value_row++;
-});
-//--></script>
-<script type="text/javascript"><!--
-$('.date').datetimepicker({
-	'format': 'YYYY-MM-DD',
-	'locale': '{{ datepicker }}',
-	'allowInputToggle': true
-});
-
-$('.time').datetimepicker({
-	'format': 'HH:mm',
-	'locale': '{{ datepicker }}',
-	'allowInputToggle': true
-});
-
-$('.datetime').datetimepicker({
-	'format': 'YYYY-MM-DD HH:mm',
-	'locale': '{{ datepicker }}',
-	'allowInputToggle': true
 });
 //--></script>
 {{ footer }}

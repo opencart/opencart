@@ -93,14 +93,23 @@
           <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-date-added">{{ entry_date_added }}</label>
             <div class="col-sm-3">
-              <div class="input-group datetime">
-                <input type="text" name="date_added" value="{{ date_added }}" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control"/>
-                <div class="input-group-append">
-                  <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-                </div>
+              <div class="input-group date" id="input-date-added" data-target-input="nearest">
+                <input type="text" name="date_added" value="{{ date_added }}" placeholder="{{ entry_date_added }}" class="form-control datetimepicker-input" data-target="#input-date-added" />
+                <span class="input-group-append" data-target="#input-date-added" data-toggle="datetimepicker">
+                  <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                </span>
               </div>
             </div>
           </div>
+          <script type="text/javascript"><!--
+          $(function () {
+            $("#input-date-added").datetimepicker({
+              locale: '{{ datepicker }}',
+              format: 'YYYY-MM-DD',
+              allowInputToggle: true
+            });
+          });
+          --></script>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
@@ -120,12 +129,6 @@
     </div>
   </div>
 </div>
-<script type="text/javascript"><!--
-$('.datetime').datetimepicker({
-	'format': 'YYYY-MM-DD HH:mm',
-	'locale': '{{ datepicker }}'
-});
-//--></script>
 <script type="text/javascript"><!--
 $('input[name=\'product\']').autocomplete({
 	'source': function(request, response) {

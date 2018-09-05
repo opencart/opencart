@@ -50,7 +50,6 @@
             <div class="tab-pane fade show active" id="tab-description" role="tabpanel" aria-labelledby="description-tab">
               {{ description }}
             </div>
-
             {% if attribute_groups %}
               <div class="tab-pane fade" id="tab-specification" role="tabpanel" aria-labelledby="specification-tab">
                 <div class="table-responsive">
@@ -236,35 +235,59 @@
                 {% if option.type == 'date' %}
                   <div class="form-group{% if option.required %} required {% endif %}">
                     <label class="col-form-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
-                    <div class="input-group date">
-                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="YYYY-MM-DD" id="input-option{{ option.product_option_id }}" class="form-control"/>
-                      <div class="input-group-append">
-                        <button class="btn btn-light" type="button"><i class="fa fa-calendar"></i></button>
-                      </div>
+                    <div class="input-group date" id="option_cal_{{ option.product_option_id }}" data-target-input="nearest">
+                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" class="form-control datetimepicker-input" data-target="#option_cal_{{ option.product_option_id }}" />
+                      <span class="input-group-append" data-target="#option_cal_{{ option.product_option_id }}" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                      </span>
                     </div>
                   </div>
+                  <script type="text/javascript"><!--
+                  $(function () {
+                    $("#option_cal_{{ option.product_option_id }}").datetimepicker({
+                      locale: '{{ datepicker }}',
+                      format: 'YYYY-MM-DD'
+                    });
+                  });
+                  --></script>
                 {% endif %}
                 {% if option.type == 'datetime' %}
                   <div class="form-group{% if option.required %} required {% endif %}">
                     <label class="col-form-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
-                    <div class="input-group datetime">
-                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="YYYY-MM-DD HH:mm" id="input-option{{ option.product_option_id }}" class="form-control"/>
-                      <div class="input-group-append">
-                        <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
-                      </div>
+                    <div class="input-group datetime" id="option_cal_{{ option.product_option_id }}" data-target-input="nearest">
+                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" class="form-control datetimepicker-input" data-target="#option_cal_{{ option.product_option_id }}" />
+                      <span class="input-group-append" data-target="#option_cal_{{ option.product_option_id }}" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                      </span>
                     </div>
                   </div>
+                  <script type="text/javascript"><!--
+                  $(function () {
+                    $("#option_cal_{{ option.product_option_id }}").datetimepicker({
+                      locale: '{{ datepicker }}',
+                      format: 'YYYY-MM-DD HH:mm'
+                    });
+                  });
+                  --></script>
                 {% endif %}
                 {% if option.type == 'time' %}
                   <div class="form-group{% if option.required %} required {% endif %}">
                     <label class="col-form-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
-                    <div class="input-group time">
-                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="HH:mm" id="input-option{{ option.product_option_id }}" class="form-control"/>
-                      <div class="input-group-append">
-                        <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
-                      </div>
+                    <div class="input-group date" id="option_cal_{{ option.product_option_id }}" data-target-input="nearest">
+                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" class="form-control datetimepicker-input" data-target="#option_cal_{{ option.product_option_id }}" />
+                      <span class="input-group-append" data-target="#option_cal_{{ option.product_option_id }}" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="far fa-clock"></i></div>
+                      </span>
                     </div>
                   </div>
+                  <script type="text/javascript"><!--
+                  $(function () {
+                    $("#option_cal_{{ option.product_option_id }}").datetimepicker({
+                      locale: '{{ datepicker }}',
+                      format: 'HH:mm'
+                    });
+                  });
+                  --></script>
                 {% endif %}
               {% endfor %}
             {% endif %}
@@ -451,11 +474,6 @@ $('#button-cart').on('click', function() {
 		}
 	});
 });
-//--></script>
-<script type="text/javascript"><!--
-$('.date').datetimepicker();
-$('.time').datetimepicker();
-$('.datetime').datetimepicker();
 //--></script>
 <script type="text/javascript"><!--
 $('button[id^=\'button-upload\']').on('click', function() {

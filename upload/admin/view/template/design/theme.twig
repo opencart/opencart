@@ -58,7 +58,6 @@
 <link href="view/javascript/codemirror/theme/monokai.css" rel="stylesheet"/>
 <script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script>
 <script type="text/javascript" src="view/javascript/codemirror/lib/xml.js"></script>
-<script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script>
 <script type="text/javascript"><!--
 $('select[name="store_id"]').on('change', function(e) {
 	$.ajax({
@@ -104,12 +103,18 @@ $('#path').on('click', 'a.directory', function(e) {
 		url: 'index.php?route=design/theme/path&user_token={{ user_token }}&store_id=' + $('select[name="store_id"]').val() + '&path=' + $(element).attr('href'),
 		dataType: 'json',
 		beforeSend: function() {
-			$(element).find('i').removeClass('fa-arrow-right');
-			$(element).find('i').addClass('fa-circle-notch fa-spin');
+			//$(element).find('i').removeClass('fa-arrow-right');
+			//$(element).find('i').addClass('fa-circle-notch fa-spin');
+			//hack since fontawesome 5 rewrites everything to svg
+			var el_split = $(element).html().split("<svg");
+			$(element).html(el_split[0]+'<i class="fas fa-circle-notch fa-spin fa-fw float-right"></i>');
 		},
 		complete: function() {
-			$(element).find('i').removeClass('fa-circle-notch fa-spin');
-			$(element).find('i').addClass('fa-arrow-right');
+			//$(element).find('i').removeClass('fa-circle-notch fa-spin');
+			//$(element).find('i').addClass('fa-arrow-right');
+			//hack since fontawesome 5 rewrites everything to svg
+			var el_split = $(element).html().split("<svg");
+			$(element).html(el_split[0]+'<i class="fas fa-arrow-right fa-fw float-right"></i>');
 		},
 		success: function(json) {
 			html = '';
@@ -157,19 +162,25 @@ $('#path').on('click', 'a.file', function(e) {
 			url: 'index.php?route=design/theme/template&user_token={{ user_token }}&store_id=' + $('select[name="store_id"]').val() + '&path=' + $(element).attr('href'),
 			dataType: 'json',
 			beforeSend: function() {
-				$(element).find('i').removeClass('fa-arrow-right');
-				$(element).find('i').addClass('fa-circle-notch fa-spin');
+				//$(element).find('i').removeClass('fa-arrow-right');
+				//$(element).find('i').addClass('fa-circle-notch fa-spin');
+				//hack since fontawesome 5 rewrites everything to svg
+				var el_split = $(element).html().split("<svg");
+				$(element).html(el_split[0]+'<i class="fas fa-circle-notch fa-spin fa-fw float-right"></i>');
 			},
 			complete: function() {
-				$(element).find('i').removeClass('fa-circle-notch fa-spin');
-				$(element).find('i').addClass('fa-arrow-right');
+				//$(element).find('i').removeClass('fa-circle-notch fa-spin');
+				//$(element).find('i').addClass('fa-arrow-right');
+				//hack since fontawesome 5 rewrites everything to svg
+				var el_split = $(element).html().split("<svg");
+				$(element).html(el_split[0]+'<i class="fas fa-arrow-right fa-fw float-right"></i>');
 			},
 			success: function(json) {
 				if (json['code']) {
 					$('#code').show();
 					$('#recent').hide();
 
-					$('.nav-tabs').append('<li class="nav-item"><a href="#tab-' + tab_id + '" data-toggle="tab" class="nav-link">' + $(element).attr('href').split('/').join(' / ') + '&nbsp;&nbsp;<i class="fas fa-minus-circle"></i></a></li>');
+					$('.nav-tabs').append('<li class="nav-item"><a href="#tab-' + tab_id + '" data-toggle="tab" class="nav-link">' + $(element).attr('href').split('/').join(' / ') + '&nbsp;&nbsp;<span class="close-theme-edit-tab"><i class="fas fa-minus-circle"></i></span></a></li>');
 
 					html = '<div class="tab-pane" id="tab-' + tab_id + '">';
 					html += '  <textarea name="code" rows="10" class="form-control"></textarea>';
@@ -207,7 +218,7 @@ $('#path').on('click', 'a.file', function(e) {
 	}
 });
 
-$('.nav-tabs').on('click', 'i.fa-minus-circle', function(e) {
+$('.nav-tabs').on('click', '.close-theme-edit-tab', function(e) {
 	e.preventDefault();
 
 	var active = $(this).parent().parent().parent().find('a.active');
@@ -332,7 +343,7 @@ $('#history').on('click', '.btn-primary', function(e) {
 					$('#code').show();
 					$('#recent').hide();
 
-					$('.nav-tabs').append('<li class="nav-item"><a href="#tab-' + tab_id + '" data-toggle="tab" class="nav-link">' + $(element).parent().parent().find('input[name="path"]').val().split('/').join(' / ') + '&nbsp;&nbsp;<i class="fas fa-minus-circle"></i></a></li>');
+					$('.nav-tabs').append('<li class="nav-item"><a href="#tab-' + tab_id + '" data-toggle="tab" class="nav-link">' + $(element).parent().parent().find('input[name="path"]').val().split('/').join(' / ') + '&nbsp;&nbsp;<span class="close-theme-edit-tab"><i class="fas fa-minus-circle"></i></span></a></li>');
 
 					html = '<div class="tab-pane" id="tab-' + tab_id + '">';
 					html += '  <textarea name="code" rows="10"></textarea>';

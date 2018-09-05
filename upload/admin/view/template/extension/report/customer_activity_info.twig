@@ -8,22 +8,40 @@
         </div>
         <div class="form-group">
           <label class="col-form-label" for="input-date-start">{{ entry_date_start }}</label>
-          <div class="input-group date">
-            <input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" id="input-date-start" class="form-control"/>
-            <div class="input-group-append">
-              <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-            </div>
+          <div class="input-group date" id="input-date-start" data-target-input="nearest">
+            <input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" class="form-control datetimepicker-input" data-target="#input-date-start" />
+            <span class="input-group-append" data-target="#input-date-start" data-toggle="datetimepicker">
+              <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+            </span>
           </div>
         </div>
+        <script type="text/javascript"><!--
+        $(function () {
+          $("#input-date-start").datetimepicker({
+            locale: '{{ datepicker }}',
+            format: 'YYYY-MM-DD',
+            allowInputToggle: true
+          });
+        });
+        --></script>
         <div class="form-group">
           <label class="col-form-label" for="input-date-end">{{ entry_date_end }}</label>
-          <div class="input-group date">
-            <input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" id="input-date-end" class="form-control"/>
-            <div class="input-group-append">
-              <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-            </div>
+          <div class="input-group date" id="input-date-end" data-target-input="nearest">
+            <input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" class="form-control datetimepicker-input" data-target="#input-date-end" />
+            <span class="input-group-append" data-target="#input-date-end" data-toggle="datetimepicker">
+              <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+            </span>
           </div>
         </div>
+        <script type="text/javascript"><!--
+        $(function () {
+          $("#input-date-end").datetimepicker({
+            locale: '{{ datepicker }}',
+            format: 'YYYY-MM-DD',
+            allowInputToggle: true
+          });
+        });
+        --></script>
         <div class="form-group">
           <label class="col-form-label" for="input-ip">{{ entry_ip }}</label> <input type="text" name="filter_ip" value="{{ filter_ip }}" placeholder="{{ entry_ip }}" id="input-ip" class="form-control"/>
         </div>
@@ -100,13 +118,6 @@ $('#button-filter').on('click', function() {
 	}
 
 	location = 'index.php?route=report/report&code=customer_activity&user_token={{ user_token }}' + url;
-});
-//--></script>
-<script type="text/javascript"><!--
-$('.date').datetimepicker({
-	'format': 'YYYY-MM-DD',
-	'locale': '{{ datepicker }}',
-	'allowInputToggle': true
 });
 //--></script>
 <script type="text/javascript"><!--

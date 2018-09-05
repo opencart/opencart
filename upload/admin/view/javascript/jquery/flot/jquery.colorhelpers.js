@@ -74,14 +74,15 @@
     // if it's "transparent"
     $.color.extract = function (elem, css) {
         var c;
+
         do {
             c = elem.css(css).toLowerCase();
             // keep going until we find an element that has color, or
-            // we hit the body
+            // we hit the body or root (have no parent)
             if (c != '' && c != 'transparent')
                 break;
             elem = elem.parent();
-        } while (!$.nodeName(elem.get(0), "body"));
+        } while (elem.length && !$.nodeName(elem.get(0), "body"));
 
         // catch Safari's way of signalling transparent
         if (c == "rgba(0, 0, 0, 0)")

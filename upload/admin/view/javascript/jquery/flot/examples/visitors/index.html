@@ -92,13 +92,14 @@
 		$("#placeholder").bind("plotselected", function (event, ranges) {
 
 			// do the zooming
-
-			plot = $.plot("#placeholder", [d], $.extend(true, {}, options, {
-				xaxis: {
-					min: ranges.xaxis.from,
-					max: ranges.xaxis.to
-				}
-			}));
+			$.each(plot.getXAxes(), function(_, axis) {
+				var opts = axis.options;
+				opts.min = ranges.xaxis.from;
+				opts.max = ranges.xaxis.to;
+			});
+			plot.setupGrid();
+			plot.draw();
+			plot.clearSelection();
 
 			// don't fire event on the overview to prevent eternal loop
 
@@ -139,7 +140,7 @@
 	</div>
 
 	<div id="footer">
-		Copyright &copy; 2007 - 2013 IOLA and Ole Laursen
+		Copyright &copy; 2007 - 2014 IOLA and Ole Laursen
 	</div>
 
 </body>

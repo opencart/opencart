@@ -1,6 +1,6 @@
 /* Flot plugin for adding the ability to pan and zoom the plot.
 
-Copyright (c) 2007-2013 IOLA and Ole Laursen.
+Copyright (c) 2007-2014 IOLA and Ole Laursen.
 Licensed under the MIT license.
 
 The default behaviour is double click and scrollwheel up/down to zoom in, drag
@@ -260,8 +260,8 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
 
                 var range = max - min;
                 if (zr &&
-                    ((zr[0] != null && range < zr[0]) ||
-                     (zr[1] != null && range > zr[1])))
+                    ((zr[0] != null && range < zr[0] && amount >1) ||
+                     (zr[1] != null && range > zr[1] && amount <1)))
                     return;
             
                 opts.min = min;

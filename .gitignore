@@ -60,3 +60,6 @@
 
 # IDE Project files
 /.idea
+
+# Node (npm/yarn)
+/node_modules

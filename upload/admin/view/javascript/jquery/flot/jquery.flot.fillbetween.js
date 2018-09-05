@@ -1,6 +1,6 @@
 /* Flot plugin for computing bottoms for filled line and bar charts.
 
-Copyright (c) 2007-2013 IOLA and Ole Laursen.
+Copyright (c) 2007-2014 IOLA and Ole Laursen.
 Licensed under the MIT license.
 
 The case: you've got two series that you want to fill the area between. In Flot

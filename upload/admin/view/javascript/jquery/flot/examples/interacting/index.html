@@ -41,20 +41,15 @@
 			}
 		});
 
-		function showTooltip(x, y, contents) {
-			$("<div id='tooltip'>" + contents + "</div>").css({
-				position: "absolute",
-				display: "none",
-				top: y + 5,
-				left: x + 5,
-				border: "1px solid #fdd",
-				padding: "2px",
-				"background-color": "#fee",
-				opacity: 0.80
-			}).appendTo("body").fadeIn(200);
-		}
+		$("<div id='tooltip'></div>").css({
+			position: "absolute",
+			display: "none",
+			border: "1px solid #fdd",
+			padding: "2px",
+			"background-color": "#fee",
+			opacity: 0.80
+		}).appendTo("body");
 
-		var previousPoint = null;
 		$("#placeholder").bind("plothover", function (event, pos, item) {
 
 			if ($("#enablePosition:checked").length > 0) {
@@ -64,20 +59,14 @@
 
 			if ($("#enableTooltip:checked").length > 0) {
 				if (item) {
-					if (previousPoint != item.dataIndex) {
-
-						previousPoint = item.dataIndex;
-
-						$("#tooltip").remove();
-						var x = item.datapoint[0].toFixed(2),
+					var x = item.datapoint[0].toFixed(2),
 						y = item.datapoint[1].toFixed(2);
 
-						showTooltip(item.pageX, item.pageY,
-						    item.series.label + " of " + x + " = " + y);
-					}
+					$("#tooltip").html(item.series.label + " of " + x + " = " + y)
+						.css({top: item.pageY+5, left: item.pageX+5})
+						.fadeIn(200);
 				} else {
-					$("#tooltip").remove();
-					previousPoint = null;            
+					$("#tooltip").hide();
 				}
 			}
 		});
@@ -97,7 +86,6 @@
 	</script>
 </head>
 <body>
-
 	<div id="header">
 		<h2>Interactivity</h2>
 	</div>
@@ -111,19 +99,19 @@
 		<p>One of the goals of Flot is to support user interactions. Try pointing and clicking on the points.</p>
 
 		<p>
-			<label><input id="enablePosition" type="checkbox"></input>Show mouse position</label>
+			<label><input id="enablePosition" type="checkbox" checked="checked"></input>Show mouse position</label>
 			<span id="hoverdata"></span>
 			<span id="clickdata"></span>
 		</p>
 
 		<p>A tooltip is easy to build with a bit of jQuery code and the data returned from the plot.</p>
 
-		<p><label><input id="enableTooltip" type="checkbox"></input>Enable tooltip</label></p>
+		<p><label><input id="enableTooltip" type="checkbox" checked="checked"></input>Enable tooltip</label></p>
 
 	</div>
 
 	<div id="footer">
-		Copyright &copy; 2007 - 2013 IOLA and Ole Laursen
+		Copyright &copy; 2007 - 2014 IOLA and Ole Laursen
 	</div>
 
 </body>

@@ -1,0 +1,74 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "jquery.flot@^0.8.3",
+        "scope": null,
+        "escapedName": "jquery.flot",
+        "name": "jquery.flot",
+        "rawSpec": "^0.8.3",
+        "spec": ">=0.8.3 <0.9.0",
+        "type": "range"
+      },
+      "/Users/admin/Sites/panreach_github_opencart_fork2"
+    ]
+  ],
+  "_from": "jquery.flot@>=0.8.3 <0.9.0",
+  "_id": "jquery.flot@0.8.3",
+  "_inCache": true,
+  "_location": "/jquery.flot",
+  "_nodeVersion": "6.9.0",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/jquery.flot-0.8.3.tgz_1502431851359_0.22689872072078288"
+  },
+  "_npmUser": {
+    "name": "derekmoe",
+    "email": "466836531@qq.com"
+  },
+  "_npmVersion": "5.3.0",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "jquery.flot@^0.8.3",
+    "scope": null,
+    "escapedName": "jquery.flot",
+    "name": "jquery.flot",
+    "rawSpec": "^0.8.3",
+    "spec": ">=0.8.3 <0.9.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/jquery.flot/-/jquery.flot-0.8.3.tgz",
+  "_shasum": "81d2ec4ffdf0dee729c8a442e8faa399e9b48207",
+  "_shrinkwrap": null,
+  "_spec": "jquery.flot@^0.8.3",
+  "_where": "/Users/admin/Sites/panreach_github_opencart_fork2",
+  "auther": "DerekMoe",
+  "dependencies": {},
+  "description": "## About ##",
+  "devDependencies": {
+    "jshint": "0.9.1"
+  },
+  "directories": {},
+  "dist": {
+    "integrity": "sha512-/tEE8J5NjwvStHDaCHkvTJpD7wDS4hE1OEL8xEmhgQfUe0gLUem923PIceNez1mz4yBNx6Hjv7pJcowLNd+nbg==",
+    "shasum": "81d2ec4ffdf0dee729c8a442e8faa399e9b48207",
+    "tarball": "https://registry.npmjs.org/jquery.flot/-/jquery.flot-0.8.3.tgz"
+  },
+  "main": "jquery.flot.js",
+  "maintainers": [
+    {
+      "name": "derekmoe",
+      "email": "466836531@qq.com"
+    }
+  ],
+  "name": "jquery.flot",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "scripts": {
+    "test": "make test"
+  },
+  "version": "0.8.3"
+}

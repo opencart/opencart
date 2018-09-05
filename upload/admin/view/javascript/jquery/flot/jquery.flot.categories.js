@@ -1,6 +1,6 @@
 /* Flot plugin for plotting textual data or categories.
 
-Copyright (c) 2007-2013 IOLA and Ole Laursen.
+Copyright (c) 2007-2014 IOLA and Ole Laursen.
 Licensed under the MIT license.
 
 Consider a dataset like [["February", 34], ["March", 20], ...]. This plugin

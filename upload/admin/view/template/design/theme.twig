@@ -103,12 +103,18 @@ $('#path').on('click', 'a.directory', function(e) {
 		url: 'index.php?route=design/theme/path&user_token={{ user_token }}&store_id=' + $('select[name="store_id"]').val() + '&path=' + $(element).attr('href'),
 		dataType: 'json',
 		beforeSend: function() {
-			$(element).find('i').removeClass('fa-arrow-right');
-			$(element).find('i').addClass('fa-circle-notch fa-spin');
+			//$(element).find('i').removeClass('fa-arrow-right');
+			//$(element).find('i').addClass('fa-circle-notch fa-spin');
+			//hack since fontawesome 5 rewrites everything to svg
+			var el_split = $(element).html().split("<svg");
+			$(element).html(el_split[0]+'<i class="fas fa-circle-notch fa-spin fa-fw float-right"></i>');
 		},
 		complete: function() {
-			$(element).find('i').removeClass('fa-circle-notch fa-spin');
-			$(element).find('i').addClass('fa-arrow-right');
+			//$(element).find('i').removeClass('fa-circle-notch fa-spin');
+			//$(element).find('i').addClass('fa-arrow-right');
+			//hack since fontawesome 5 rewrites everything to svg
+			var el_split = $(element).html().split("<svg");
+			$(element).html(el_split[0]+'<i class="fas fa-arrow-right fa-fw float-right"></i>');
 		},
 		success: function(json) {
 			html = '';
@@ -156,12 +162,18 @@ $('#path').on('click', 'a.file', function(e) {
 			url: 'index.php?route=design/theme/template&user_token={{ user_token }}&store_id=' + $('select[name="store_id"]').val() + '&path=' + $(element).attr('href'),
 			dataType: 'json',
 			beforeSend: function() {
-				$(element).find('i').removeClass('fa-arrow-right');
-				$(element).find('i').addClass('fa-circle-notch fa-spin');
+				//$(element).find('i').removeClass('fa-arrow-right');
+				//$(element).find('i').addClass('fa-circle-notch fa-spin');
+				//hack since fontawesome 5 rewrites everything to svg
+				var el_split = $(element).html().split("<svg");
+				$(element).html(el_split[0]+'<i class="fas fa-circle-notch fa-spin fa-fw float-right"></i>');
 			},
 			complete: function() {
-				$(element).find('i').removeClass('fa-circle-notch fa-spin');
-				$(element).find('i').addClass('fa-arrow-right');
+				//$(element).find('i').removeClass('fa-circle-notch fa-spin');
+				//$(element).find('i').addClass('fa-arrow-right');
+				//hack since fontawesome 5 rewrites everything to svg
+				var el_split = $(element).html().split("<svg");
+				$(element).html(el_split[0]+'<i class="fas fa-arrow-right fa-fw float-right"></i>');
 			},
 			success: function(json) {
 				if (json['code']) {

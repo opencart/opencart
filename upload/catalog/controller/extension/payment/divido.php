@@ -52,10 +52,8 @@ class ControllerExtensionPaymentDivido extends Controller {
 		$this->model_extension_payment_divido->setMerchant($this->config->get('payment_divido_api_key'));
 
 		$plans = $this->model_extension_payment_divido->getCartPlans($this->cart);
-
 		foreach ($plans as $key => $plan) {
 			$planMinTotal = $total - ($total * ($plan->min_deposit / 100));
-
 			if ($plan->min_amount > $planMinTotal) {
 				unset($plans[$key]);
 			}
@@ -69,10 +67,11 @@ class ControllerExtensionPaymentDivido extends Controller {
 
 		$data = array(
 			'button_confirm'           => $this->language->get('divido_checkout'),
-			'merchant_script'          => "//cdn.divido.com/calculator/{$js_key}.js",
+			'merchant_script'          => "//cdn.divido.com/calculator/v2.1/production/js/template.divido.js",
 			'grand_total'              => $total,
 			'plan_list'                => $plans_list,
 			'generic_credit_req_error' => 'Credit request could not be initiated',
+			'api_key'				   => $js_key,
 		);
 
 		return $this->load->view('extension/payment/divido', $data);
@@ -151,6 +150,12 @@ class ControllerExtensionPaymentDivido extends Controller {
 		if (isset($this->session->data['shipping_address'])) {
 			$address = $this->session->data['shipping_address'];
 		}
+		$addressText='';
+		$addressText.=isset($address['address_1']) ? $address['address_1'] : '';
+		$addressText.=isset($address['address_2']) ? ' '.$address['address_2'] : '';
+		$addressText.=isset($address['city']) ? ' '.$address['city'] : '';
+		$addressText.=isset($address['postcode']) ? ' '.$address['postcode'] : '';
+		$address['text']=$addressText;
 
 		$country  = $address['iso_code_2'];
 		$language = strtoupper($this->language->get('code'));
@@ -200,10 +205,13 @@ class ControllerExtensionPaymentDivido extends Controller {
 		$deposit_amount = round(($deposit / 100) * $total, 2, PHP_ROUND_HALF_UP);
 
 		$shop_url = $this->config->get('config_url');
+		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+			$shop_url = $this->config->get('config_ssl');
+		}
 
-		$callback_url = $this->url->link('extension/payment/divido/update', 'language=' . $this->config->get('config_language'));
-		$return_url = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'));
-		$checkout_url = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
+		$callback_url = $this->url->link('extension/payment/divido/update', '', true);
+		$return_url = $this->url->link('checkout/success', '', true);
+		$checkout_url = $this->url->link('checkout/checkout', '', true);
 
 		$salt = uniqid('', true);
 		$hash = $this->model_extension_payment_divido->hashOrderId($order_id, $salt);
@@ -229,6 +237,7 @@ class ControllerExtensionPaymentDivido extends Controller {
 				'email'         => $email,
 				'mobile_number' => '',
 				'phone_number'  => $telephone,
+				'address'		=> $address,
 			),
 			'products'     => $products,
 			'response_url' => $callback_url,

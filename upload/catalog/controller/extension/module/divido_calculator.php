@@ -42,10 +42,11 @@ class ControllerExtensionModuleDividoCalculator extends Controller {
 		$plans_list = implode(',', $plans_ids);
 
 		$data = array(
-			'merchant_script'			=> "//cdn.divido.com/calculator/{$js_key}.js",
+			'merchant_script'           => "//cdn.divido.com/calculator/v2.1/production/js/template.divido.js",
 			'product_price'				=> $price,
 			'plan_list'					=> $plans_list,
 			'generic_credit_req_error'	=> 'Credit request could not be initiated',
+			'api_key'				    => $js_key ,
 		);
 
 		return $this->load->view('extension/module/divido_calculator', $data);

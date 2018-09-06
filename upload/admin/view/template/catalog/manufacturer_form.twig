@@ -28,6 +28,7 @@
             <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
 			<li><a href="#tab-data" data-toggle="tab">{{ tab_data }}</a></li>
             <li><a href="#tab-seo" data-toggle="tab">{{ tab_seo }}</a></li>
+			<li><a href="#tab-related" data-toggle="tab">{{ tab_related }}</a></li>
 			<li><a href="#tab-design" data-toggle="tab">{{ tab_design }}</a></li>
           </ul>
 			  <div class="tab-content">
@@ -154,6 +155,30 @@
                 </div>
 				</div>
             </div>
+			<div class="tab-pane" id="tab-related">
+			   <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-product-related"><span data-toggle="tooltip" title="{{ help_related }}">{{ entry_related_mn }}</span></label>
+                <div class="col-sm-10">
+                  <input type="text" name="product_related_input" value="" placeholder="{{ entry_related_mn }}" id="input-product-related" class="form-control" />
+                  <div id="product-related" class="well well-sm" style="height: 150px; overflow: auto;"> {% for product_related in product_related %}
+                    <div id="product-related{{ product_related.product_id }}"><i class="fa fa-minus-circle"></i> {{ product_related.name }}
+                      <input type="hidden" name="product_related[]" value="{{ product_related.product_id }}" />
+                    </div>
+                    {% endfor %}</div>
+                </div>
+               </div>
+			   <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-article-related"><span data-toggle="tooltip" title="{{ help_related }}">{{ entry_related_article }}</span></label>
+                <div class="col-sm-10">
+                  <input type="text" name="article_related_input" value="" placeholder="{{ entry_related_article }}" id="input-article-related" class="form-control" />
+                  <div id="article-related" class="well well-sm" style="height: 150px; overflow: auto;"> {% for article_related in article_related %}
+                    <div id="article-related{{ article_related.article_id }}"><i class="fa fa-minus-circle"></i> {{ article_related.name }}
+                      <input type="hidden" name="article_related[]" value="{{ article_related.article_id }}" />
+                    </div>
+                    {% endfor %}</div>
+                </div>
+               </div>
+            </div>
           <div class="tab-pane" id="tab-design">
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
@@ -196,5 +221,64 @@
   
 <script type="text/javascript"><!--
 $('#language a:first').tab('show');
-//--></script></div>
+//--></script>
+<script type="text/javascript"><!--
+$('input[name=\'product_related_input\']').autocomplete({
+	source: function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['product_id']
+					}
+				}));
+			}
+		});
+	},
+	select: function(item) {
+		$('input[name=\'product\']').val('');
+		
+		$('#product-related' + item['value']).remove();
+		
+		$('#product-related').append('<div id="product-related' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product_related[]" value="' + item['value'] + '" /></div>');	
+	}
+});
+	
+$('#product-related').delegate('.fa-minus-circle', 'click', function() {
+	$(this).parent().remove();
+});
+//--></script>
+<script type="text/javascript"><!--
+$('input[name=\'article_related_input\']').autocomplete({
+	source: function(request, response) {
+		$.ajax({
+			url: 'index.php?route=blog/article/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['article_id']
+					}
+				}));
+			}
+		});
+	},
+	select: function(item) {
+		$('input[name=\'product\']').val('');
+		
+		$('#article-related' + item['value']).remove();
+		
+		$('#article-related').append('<div id="article-related' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="article_related[]" value="' + item['value'] + '" /></div>');	
+	}
+});
+	
+$('#article-related').delegate('.fa-minus-circle', 'click', function() {
+	$(this).parent().remove();
+});
+//--></script>
+</div>
 {{ footer }}

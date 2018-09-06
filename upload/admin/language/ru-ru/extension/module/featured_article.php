@@ -3,7 +3,7 @@
 // *	@license	GNU General Public License version 3; see LICENSE.txt
 
 // Heading
-$_['heading_title']    = 'Рекомендуемые статьи с привязкой';
+$_['heading_title']    = 'Рекомендуемые статьи в товаре, категории и производителе';
 
 // Text
 $_['text_extension']   = 'Расширения';

@@ -134,6 +134,7 @@ $_['tab_session']                   = 'Session';
 $_['tab_local']                     = 'Local';
 $_['tab_mail']                      = 'Mail';
 $_['tab_module']                    = 'Module';
+$_['tab_related']          	 		= 'Related';
 $_['tab_payment']                   = 'Payment Details';
 $_['tab_product']                   = 'Products';
 $_['tab_reward']                    = 'Reward Points';

@@ -38,11 +38,14 @@ $_['entry_sort_order']       = 'Sort Order';
 $_['entry_status']           = 'Status';
 $_['entry_layout']           = 'Layout Override';
 $_['entry_noindex']          = 'Index';
+$_['entry_related_wb']       = 'Featured Products:';
+$_['entry_related_article']  = 'Featured Articles:';
 
 // Help
 $_['help_filter']            = '(Autocomplete)';
 $_['help_top']               = 'Display in the top menu bar. Only works for the top parent categories.';
 $_['help_column']            = 'Number of columns to use for the bottom 3 categories. Only works for the top parent categories.';
+$_['help_related']           = '(Autocomplete)';
 
 // Error
 $_['error_warning']          = 'Warning: Please check the form carefully for errors!';

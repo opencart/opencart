@@ -1,0 +1,157 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-review" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid"> {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-review" class="form-horizontal">
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-author">{{ entry_author }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control" />
+              {% if error_author %}
+              <div class="text-danger">{{ error_author }}</div>
+              {% endif %} </div>
+          </div>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-article"><span data-toggle="tooltip" title="{{ help_article }}">{{ entry_article }}</span></label>
+            <div class="col-sm-10">
+              <input type="text" name="article" value="{{ article }}" placeholder="{{ entry_article }}" id="input-article" class="form-control" />
+              <input type="hidden" name="article_id" value="{{ article_id }}" />
+              {% if error_article %}
+              <div class="text-danger">{{ error_article }}</div>
+              {% endif %} </div>
+          </div>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-text">{{ entry_text }}</label>
+            <div class="col-sm-10">
+              <textarea name="text" cols="60" rows="8" placeholder="{{ entry_text }}" id="input-text" class="form-control">{{ text }}</textarea>
+              {% if error_text %}
+              <div class="text-danger">{{ error_text }}</div>
+              {% endif %} </div>
+          </div>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-name">{{ entry_rating }}</label>
+            <div class="col-sm-10">
+              <label class="radio-inline"> {% if rating == 1 %}
+                <input type="radio" name="rating" value="1" checked="checked" />
+                1
+                {% else %}
+                <input type="radio" name="rating" value="1" />
+                1
+                {% endif %} </label>
+              <label class="radio-inline"> {% if rating == 2 %}
+                <input type="radio" name="rating" value="2" checked="checked" />
+                2
+                {% else %}
+                <input type="radio" name="rating" value="2" />
+                2
+                {% endif %} </label>
+              <label class="radio-inline"> {% if rating == 3 %}
+                <input type="radio" name="rating" value="3" checked="checked" />
+                3
+                {% else %}
+                <input type="radio" name="rating" value="3" />
+                3
+                {% endif %} </label>
+              <label class="radio-inline"> {% if rating == 4 %}
+                <input type="radio" name="rating" value="4" checked="checked" />
+                4
+                {% else %}
+                <input type="radio" name="rating" value="4" />
+                4
+                {% endif %} </label>
+              <label class="radio-inline"> {% if rating == 5 %}
+                <input type="radio" name="rating" value="5" checked="checked" />
+                5
+                {% else %}
+                <input type="radio" name="rating" value="5" />
+                5
+                {% endif %} </label>
+              {% if error_rating %}
+              <div class="text-danger">{{ error_rating }}</div>
+              {% endif %} </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-date-added">{{ entry_date_added }}</label>
+            <div class="col-sm-3">
+              <div class="input-group datetime">
+                <input type="text" name="date_added" value="{{ date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD HH:mm:ss" id="input-date-added" class="form-control" />
+                <span class="input-group-btn">
+                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                </span> </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+            <div class="col-sm-10">
+              <select name="status" id="input-status" class="form-control">
+                
+                {% if status %}
+                
+                <option value="1" selected="selected">{{ text_enabled }}</option>
+                <option value="0">{{ text_disabled }}</option>
+                
+                {% else %}
+                
+                <option value="1">{{ text_enabled }}</option>
+                <option value="0" selected="selected">{{ text_disabled }}</option>
+                
+                {% endif %}
+              
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript"><!--
+$('.datetime').datetimepicker({
+	language: '{{ datepicker }}',
+	pickDate: true,
+	pickTime: true
+});
+//--></script> 
+  <script type="text/javascript"><!--
+$('input[name=\'article\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=blog/article/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',			
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['article_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'article\']').val(item['label']);
+		$('input[name=\'article_id\']').val(item['value']);		
+	}	
+});
+//--></script></div>
+{{ footer }}

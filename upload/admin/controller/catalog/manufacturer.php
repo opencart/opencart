@@ -420,6 +420,52 @@ class ControllerCatalogManufacturer extends Controller {
 		} else {
 			$data['sort_order'] = '';
 		}
+		
+		if (isset($this->request->post['product_related'])) {
+			$products = $this->request->post['product_related'];
+		} elseif (isset($manufacturer_info)) {		
+			$products = $this->model_catalog_manufacturer->getProductRelated($this->request->get['manufacturer_id']);
+		} else {
+			$products = array();
+		}		
+
+		$data['product_related'] = array();
+			
+		$this->load->model('catalog/product');
+		
+		foreach ($products as $product_id) {
+			$related_info = $this->model_catalog_product->getProduct($product_id);
+			
+			if ($related_info) {
+				$data['product_related'][] = array(
+					'product_id' => $related_info['product_id'],
+					'name'       => $related_info['name']
+				);
+			}
+		}
+
+		if (isset($this->request->post['article_related'])) {
+			$articles = $this->request->post['article_related'];
+		} elseif (isset($manufacturer_info)) {		
+			$articles = $this->model_catalog_manufacturer->getArticleRelated($this->request->get['manufacturer_id']);
+		} else {
+			$articles = array();
+		}		
+
+		$data['article_related'] = array();
+			
+		$this->load->model('blog/article');
+		
+		foreach ($articles as $article_id) {
+			$related_info = $this->model_blog_article->getArticle($article_id);
+			
+			if ($related_info) {
+				$data['article_related'][] = array(
+					'article_id' => $related_info['article_id'],
+					'name'       => $related_info['name']
+				);
+			}
+		}
 
 		$this->load->model('localisation/language');
 

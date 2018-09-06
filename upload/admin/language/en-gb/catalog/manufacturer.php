@@ -34,8 +34,13 @@ $_['entry_image']       	 = 'Image';
 $_['entry_sort_order']  	 = 'Sort Order';
 $_['entry_type']        	 = 'Type';
 $_['entry_noindex']     	 = 'Index';
+$_['entry_related_mn']       = 'Featured Products:';
+$_['entry_related_article']  = 'Featured Articles:';
 $_['entry_layout']           = 'Layout Override';
 $_['tab_design']             = 'Design';
+
+// Help
+$_['help_related']           = '(Autocomplete)';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify manufacturers!';

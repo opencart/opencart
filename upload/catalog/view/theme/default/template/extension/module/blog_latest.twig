@@ -1,0 +1,30 @@
+<h3>{{ heading_title }}</h3>
+<div class="row">
+ {% for article in articles %}
+  <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12">
+    <div class="product-thumb transition">
+      <div class="image"><a href="{{ article.href }}"><img src="{{ article.thumb }}" alt="{{ article.name }}" title="{{ article.name }}" class="img-responsive" /></a></div>
+      <div class="caption">
+        <h4><a href="{{ article.href }}">{{ article.name }}</a></h4>
+        <p>{{ article.description }}</p>
+        {% if article.rating %}
+        <div class="rating">
+          {% for i in 5 %}
+          {% if article.rating < i %}
+          <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+          {% else %}
+          <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+          {% endif %}
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+	  <div class="button-group">
+        <button type="button" onclick="location.href = ('{{ article.href }}');"><i class="fa fa-share"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_more }}</span></button>
+        <button type="button" data-toggle="tooltip" title="{{ article.date_added }}" "><i class="fa fa-clock-o"></i></button>
+        <button type="button" data-toggle="tooltip" title="{{ text_views }} {{ article.viewed }}" "><i class="fa fa-eye"></i></button>
+     </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>

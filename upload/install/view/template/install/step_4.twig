@@ -29,9 +29,6 @@
     </div>
   </div>
   <div class="modules">
-    <div class="row" id="extension">
-      <h2 class="text-center"><i class="fa fa-circle-o-notch fa-spin"></i> {{ text_loading }}</h2>
-    </div>
     <div class="row">
       <div class="col-sm-12 text-center"><a href="https://www.opencart.com/index.php?route=extension/extension&utm_source=opencart_install&utm_medium=store_link&utm_campaign=opencart_install" target="_BLANK" class="btn btn-default">{{ text_extension }}</a></div>
     </div>
@@ -46,12 +43,14 @@
   </div>
   <div class="core-modules">
     <div class="row">
-      <div class="col-sm-6 text-center"><img src="view/image/openbay_pro.gif" />
+      <div class="col-sm-6 text-center">
+        <img src="view/image/openbay_pro.gif" />
         <p>{{ text_openbay }}</p>
         <a class="btn btn-primary" href="{{ openbay }}">{{ button_setup }}</a></div>
-      <div class="col-sm-6 text-center"><img src="view/image/amazon-pay.png" />
-        <p>{{ text_amazon_pay }}</p>
-        <a class="btn btn-primary" href="{{ link_amazon_pay }}">{{ button_setup }}</a></div>
+      <div class="col-sm-6 text-center">
+        <img src="view/image/amazon-pay.png" style="margin-top:25px;" />
+        <p style="margin-top:0px;">{{ text_amazon_pay }}</p>
+        <a class="btn btn-primary" href="{{ link_amazon_pay }}" target="_blank">{{ button_setup }}</a></div>
     </div>
   </div>
   <div class="support text-center">
@@ -72,34 +71,3 @@
   </div>
 </div>
 {{ footer }}
-<script type="text/javascript"><!--
-$(document).ready(function() {
-	$.ajax({
-		url: '{{ extension }}',
-		type: 'post',
-		dataType: 'json',
-		success: function(json) {
-			if (json['extensions']) {
-				html  = '';
-
-				for (i = 0; i < json['extensions'].length; i++) {
-					extension = json['extensions'][i];
-
-					html += '<div class="col-sm-6 module">';
-					html += '  <a class="thumbnail pull-left" href="' + extension['href'] + '"><img src="' + extension['image'] + '" alt="' + extension['name'] + '" /></a>';
-					html += '  <h5>' + extension['name'] + '</h5>';
-					html += '  <p>' + extension['price'] + ' <a target="_BLANK" href="' + extension['href'] + '">{{ text_view }}</a></p>';
-					html += '  <div class="clearfix"></div>';
-					html += '</div>';
-
-					i++;
-				}
-
-				$('#extension').html(html);
-			} else {
-				$('#extension').fadeOut();
-			}
-		}
-	});
-});
-//--></script>

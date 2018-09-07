@@ -40,35 +40,60 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="title">{{ entry_title }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="title" value="" id="title" class="form-control" />
+                    <div class="row">
+                      <div class="col-sm-5">
+                        <input type="text" name="title" value="" id="title" class="form-control" />
+                        <div class="alert alert-danger validate-errors" style="display:none; margin-top:10px;" id="title-length-error">{{ error_name_length }}</div>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
                 <div class="form-group stdMatrix">
-                  <input type="hidden" name="qty_local" value="0" id="qty_local" />
-                  <input type="hidden" name="qty_ebay" value="0" id="qty_ebay" />
+                  <input type="hidden" name="qty_local" value="0" id="qty-local" />
+                  <input type="hidden" name="qty_ebay" value="0" id="qty-ebay" />
                   <input type="hidden" name="variant" value="0" />
                   <label class="col-sm-2 control-label" for="price">{{ entry_price }}</label>
-                  <div class="col-sm-2">
-                    <input type="text" name="price" value="" id="price" class="form-control" />
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-2">
+                        <input type="text" name="price" value="" id="price" class="form-control" />
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="form-group stdMatrix">
                   <label class="col-sm-2 control-label" for="qty-instock">{{ entry_stock_store }}</label>
-                  <div class="col-sm-2">
-                  <input type="text" name="qty_instock" id="qty-instock" class="form-control" disabled="disabled" />
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-2">
+                        <input type="text" name="qty_instock" id="qty-instock" class="form-control" disabled="disabled" />
+                      </div>
+                    </div>
                   <span class="help-block">{{ help_stock_store }}</span> </div>
                 </div>
                 <div class="form-group stdMatrix">
                   <label class="col-sm-2 control-label" for="qty-listed">{{ entry_stock_listed }}</label>
-                  <div class="col-sm-2">
-                  <input type="text" name="qty_listed" id="qty-listed" class="form-control" disabled="disabled" />
-                  <span class="help-block">{{ help_stock_listed }}</span> </div>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-2">
+                        <input type="text" name="qty_listed" id="qty-listed" class="form-control" disabled="disabled" />
+                      </div>
+                    </div>
+                    <span class="help-block">{{ help_stock_listed }}</span>
+                  </div>
                 </div>
                 <div class="form-group stdMatrix">
                   <label class="col-sm-2 control-label">{{ entry_stock_reserve }}</label>
-                  <div class="col-sm-2">
-                  <input type="text" name="qty_reserve" value="0" id="qty-reserve" class="form-control" onkeyup="updateReserveMessage();" />
-                  <span class="help-block">{{ help_stock_reserve }}</span> </div>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-2">
+                        <input type="text" name="qty_reserve" value="0" id="qty-reserve" class="form-control" onkeyup="updateReserveMessage();" />
+                      </div>
+                    </div>
+                    <span class="help-block">{{ help_stock_reserve }}</span>
+                    <span class="help-block" id="reserve-text" style="display:none; font-weight: bold;"></span>
+                  </div>
                 </div>
                 <div class="form-group" id="variantMatrix">
                   <label class="col-sm-2 control-label">{{ entry_stock_matrix_active }}</label>
@@ -139,11 +164,20 @@
 <script type="text/javascript"><!--
   function updateReserveMessage(){
     var reserve = parseInt($('#qty-reserve').val());
-    var local = parseInt($('#qty_local').val());
+    var local = parseInt($('#qty-local').val());
+
+    $("#reserve-text").hide();
 
     if (reserve > local){
       alert('{{ error_reserve }}');
-      $('#qty-reserve').val(local);
+      $('#qty-reserve').val("");
+    } else {
+      if (reserve > 0 && reserve < local) {
+        var reserved = local - reserve;
+        $("#reserve-text").text(reserve + " {{ text_reserved_forsale }}, " + reserved + " {{ text_reserved_stock }}").show();
+      } else {
+        $('#qty-reserve').val("");
+      }
     }
   }
 
@@ -248,12 +282,14 @@
                             }
                         }else{
                             $('#variantMatrix').remove();
-                            $('#price').val(data.data.listing.price);
+                            $('#price').val(parseFloat(data.data.listing.price).toFixed(2));
                             $('#qty-instock').val(data.data.stock.quantity);
-                            $('#qty_local').val(data.data.stock.quantity);
+                            $('#qty-local').val(data.data.stock.quantity);
                             $('#qty-listed').val(data.data.listing.qty);
-                            $('#qty_ebay').val(data.data.listing.qty);
+                            $('#qty-ebay').val(data.data.listing.qty);
                             $('#qty-reserve').val(data.data.reserve);
+
+                          updateReserveMessage();
                         }
 
                         loadRecommendations();
@@ -307,6 +343,10 @@
   }
 
   $('#button-save').bind('click', function() {
+    if (verifyUpdates() == false) {
+      return;
+    }
+
     $.ajax({
       type: 'POST',
       url: 'index.php?route=extension/openbay/ebay/editSave&user_token={{ user_token }}',
@@ -348,6 +388,23 @@
         }
     });
     });
+
+  function verifyUpdates() {
+    $(".validate-errors").hide();
+
+    var err = 0;
+
+    if ($('#title').val().length >= 80) {
+      err = 1;
+      $("#title-length-error").show();
+    }
+
+    if (err == 1) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   $('#button-load').bind('click', function() {
     load();

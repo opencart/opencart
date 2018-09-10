@@ -55,7 +55,7 @@ class ControllerApiCustomer extends Controller {
 			}
 
 			// Customer Group
-			if (is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+			if (!empty($this->request->post['customer_group_id'])) {
 				$customer_group_id = $this->request->post['customer_group_id'];
 			} else {
 				$customer_group_id = $this->config->get('config_customer_group_id');

@@ -33,6 +33,35 @@
     <script src="{{ script }}" type="text/javascript"></script>
   {% endfor %}
   <script src="catalog/view/javascript/common.js" type="text/javascript"></script>
+  {% if gdpr %}
+    <link href="catalog/view/theme/default/stylesheet/jquery-eu-cookie-law-popup.css" rel="stylesheet"/>
+    <script>
+      var this_website_is_using_cookies = "{{ this_website_is_using_cookies }}";
+      var cookies_popup_text = "{{ cookies_popup_text }}";
+      var cookie_popup_continue = "{{ cookie_popup_continue }}";
+      var cookie_popup_learn_more = "{{ cookie_popup_learn_more }}";
+      var cookie_policy_url = "{{ module_gdpr_policy_url }}";
+    </script>
+    <script src="catalog/view/javascript/jquery-eu-cookie-law-popup.js" type="text/javascript"></script>
+    <script>
+      function initialiseCookies() {
+        //e.g. google analytics
+      }
+
+      // Subscribe for the cookie consent events
+      $(document).bind("user_cookie_already_accepted", function(event, object) {
+        initialiseCookies();
+      });
+
+      $(document).bind("user_cookie_consent_changed", function(event, object) {
+        const userConsentGiven = $(object).attr('consent');
+        if (userConsentGiven) {
+          // User clicked on enabling cookies. Now it’s safe to call the init functions.
+          initialiseCookies();
+        }
+      });
+    </script>
+  {% endif %}
   {% for link in links %}
     <link href="{{ link.href }}" rel="{{ link.rel }}"/>
   {% endfor %}
@@ -40,7 +69,7 @@
     {{ analytic }}
   {% endfor %}
 </head>
-<body>
+<body class="eupopup eupopup-top">
 <nav id="top">
   <div class="container">
     <div class="nav float-left">

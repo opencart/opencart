@@ -174,6 +174,8 @@ class ControllerDesignTheme extends Controller {
 		// This is only here for compatibility with old themes.
 		if ($theme == 'theme_default') {
 			$theme = $this->model_setting_setting->getSettingValue('theme_default_directory', $store_id);
+		} else {
+			$theme = 'default';
 		}
 
 		if (isset($this->request->get['path'])) {
@@ -188,10 +190,10 @@ class ControllerDesignTheme extends Controller {
 
 		if ($theme_info) {
 			$json['code'] = html_entity_decode($theme_info['code']);
+		} elseif (is_file(DIR_MODIFICATION . 'catalog/view/theme/' . $theme . '/template/' . $path) && (substr(str_replace('\\', '/', realpath(DIR_MODIFICATION . 'catalog/view/theme/' . $theme . '/template/' . $path)), 0, strlen(DIR_MODIFICATION . 'catalog/view')) == DIR_MODIFICATION . 'catalog/view')) {
+			$json['code'] = file_get_contents(DIR_MODIFICATION . 'catalog/view/theme/' . $theme . '/template/' . $path);
 		} elseif (is_file(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path) && (substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path)), 0, strlen(DIR_CATALOG . 'view')) == DIR_CATALOG . 'view')) {
 			$json['code'] = file_get_contents(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path);
-		} elseif (is_file(DIR_CATALOG . 'view/theme/default/template/' . $path) && (substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'view/theme/default/template/' . $path)), 0, strlen(DIR_CATALOG . 'view')) == DIR_CATALOG . 'view')) {
-			$json['code'] = file_get_contents(DIR_CATALOG . 'view/theme/default/template/' . $path);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

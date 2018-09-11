@@ -19,7 +19,6 @@ class ControllerExtensionModuleDividoCalculator extends Controller {
 			$base_price = !empty($product_info['special']) ? $product_info['special'] : $product_info['price'];
 			$price = $this->tax->calculate($base_price, $product_info['tax_class_id'], $this->config->get('config_tax'));
 		}
-
 		if ($product_selection == 'threshold' && $product_threshold > $price) {
 			return false;
 		}

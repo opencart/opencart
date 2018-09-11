@@ -237,7 +237,7 @@ class ControllerExtensionPaymentDivido extends Controller {
 				'email'         => $email,
 				'mobile_number' => '',
 				'phone_number'  => $telephone,
-				'address'		=> $address,
+				'address'       => $address,
 			),
 			'products'     => $products,
 			'response_url' => $callback_url,

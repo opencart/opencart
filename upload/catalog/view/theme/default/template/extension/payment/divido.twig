@@ -320,12 +320,17 @@
 .divido-calculator select {
         color: #000;
 }
+.divido-widget-logo{
+height:1em;
+}
 </style>
 <div id="divido-checkout" data-divido-calculator class="divido-calculator" data-divido-amount="{{ grand_total }}" data-divido-plans="{{ plan_list }}">
-    <h1>
-        <a href="https://www.divido.com" target="_blank" class="divido-logo divido-logo-sm" style="float:right;">Divido</a>
+    <h2>
+        <a href="https://www.divido.com" target="_blank" class="" style="float:right;">
+		<img src="//cdn.divido.com/calculator/v2/divido.svg" alt="Template" class=" divido-widget-logo">
+		</a>
         {{ text_checkout_title }}
-    </h1>
+    </h2>
     <div style="clear:both;"></div>
    		<div class="divido-widget">
 		    <div data-divido-widget data-divido-plans="{{ planList }}" data-divido-amount="{{ grand_total }}"></div>

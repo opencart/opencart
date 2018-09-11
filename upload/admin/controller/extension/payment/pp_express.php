@@ -14,6 +14,16 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('payment_pp_express', $this->request->post);
 
+			// If OC has been upgraded, verify that the module has the new event registered.
+			$this->load->model('setting/event');
+
+			$pp_express_js_event = $this->model_setting_event->getEventByCode("extension_pp_express_checkout_js");
+
+			if (empty($pp_express_js_event)) {
+				// Event is missing, add it
+				$this->model_setting_event->addEvent('extension_pp_express_checkout_js', 'catalog/controller/checkout/checkout/before', 'extension/payment/pp_express/eventLoadCheckoutJs');
+			}
+
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment'));

@@ -46,7 +46,6 @@ class ControllerInstallStep4 extends Controller {
 
 		$data['openbay'] = $this->url->link('3rd_party/openbay');
 		$data['extension'] = $this->url->link('3rd_party/extension');
-		$data['link_amazon_pay'] = "https://pay.amazon.com/uk/signup";
 
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');

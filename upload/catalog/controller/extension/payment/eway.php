@@ -39,6 +39,14 @@ class ControllerExtensionPaymentEway extends Controller {
 			$data['Endpoint'] = 'Production';
 		}
 
+		$this->load->model('localisation/zone');
+
+		$payment_zone_info = $this->model_localisation_zone->getZone($order_info['payment_zone_id']);
+		$payment_zone_code = isset($payment_zone_info['code']) ? $payment_zone_info['code'] : '';
+
+		$shipping_zone_info = $this->model_localisation_zone->getZone($order_info['shipping_zone_id']);
+		$shipping_zone_code = isset($shipping_zone_info['code']) ? $shipping_zone_info['code'] : '';
+
 		$request = new stdClass();
 
 		$request->Customer = new stdClass();
@@ -49,7 +57,7 @@ class ControllerExtensionPaymentEway extends Controller {
 		$request->Customer->Street1 = (string)substr($order_info['payment_address_1'], 0, 50);
 		$request->Customer->Street2 = (string)substr($order_info['payment_address_2'], 0, 50);
 		$request->Customer->City = (string)substr($order_info['payment_city'], 0, 50);
-		$request->Customer->State = (string)substr($order_info['payment_zone'], 0, 50);
+		$request->Customer->State = (string)substr($payment_zone_code, 0, 50);
 		$request->Customer->PostalCode = (string)substr($order_info['payment_postcode'], 0, 30);
 		$request->Customer->Country = strtolower($order_info['payment_iso_code_2']);
 		$request->Customer->Email = $order_info['email'];
@@ -61,7 +69,7 @@ class ControllerExtensionPaymentEway extends Controller {
 		$request->ShippingAddress->Street1 = (string)substr($order_info['shipping_address_1'], 0, 50);
 		$request->ShippingAddress->Street2 = (string)substr($order_info['shipping_address_2'], 0, 50);
 		$request->ShippingAddress->City = (string)substr($order_info['shipping_city'], 0, 50);
-		$request->ShippingAddress->State = (string)substr($order_info['shipping_zone'], 0, 50);
+		$request->ShippingAddress->State = (string)substr($shipping_zone_code, 0, 50);
 		$request->ShippingAddress->PostalCode = (string)substr($order_info['shipping_postcode'], 0, 30);
 		$request->ShippingAddress->Country = strtolower($order_info['shipping_iso_code_2']);
 		$request->ShippingAddress->Email = $order_info['email'];

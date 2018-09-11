@@ -152,9 +152,9 @@ class Smtp {
 			}
 
 			if ($this->verp) {
-				fputs($handle, 'MAIL FROM: <' . $this->from . '>XVERP' . "\r\n");
+				fputs($handle, 'MAIL FROM: <' . $this->smtp_username . '>XVERP' . "\r\n");
 			} else {
-				fputs($handle, 'MAIL FROM: <' . $this->from . '>' . "\r\n");
+				fputs($handle, 'MAIL FROM: <' . $this->smtp_username . '>' . "\r\n");
 			}
 
 			$this->handleReply($handle, 250, 'Error: MAIL FROM not accepted from server!');

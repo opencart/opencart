@@ -42,9 +42,9 @@
 </div>
 {% if categories %}
   <script type="text/javascript"><!--
-  $('select[name="type"]').on('change', function() {
+  $('select[name=\'type\']').on('change', function() {
 	  $.ajax({
-		  url: $('select[name="type"]').val(),
+		  url: $('select[name=\'type\']').val(),
 		  dataType: 'html',
 		  beforeSend: function() {
 			  $('.fa-filter').addClass('fa-circle-notch fa-spin');
@@ -65,7 +65,7 @@
 	  });
   });
 
-  $('select[name="type"]').trigger('change');
+  $('select[name=\'type\']').trigger('change');
 
   $('#extension').on('click', '.btn-success', function(e) {
 	  e.preventDefault();

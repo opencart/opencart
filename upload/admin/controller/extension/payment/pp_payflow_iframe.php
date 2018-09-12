@@ -400,7 +400,7 @@ class ControllerExtensionPaymentPPPayflowIframe extends Controller {
 		if ($paypal_order) {
 			$data['complete'] = $paypal_order['complete'];
 			
-			$data['order_id'] = $this->request->get['order_id'];
+			$data['order_id'] = (int)$this->request->get['order_id'];
 			
 			$data['user_token'] = $this->session->data['user_token'];
 

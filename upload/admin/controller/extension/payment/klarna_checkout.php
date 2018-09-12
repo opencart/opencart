@@ -307,7 +307,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 		
-		$data['order_id'] = $this->request->get['order_id'];
+		$data['order_id'] = (int)$this->request->get['order_id'];
 
 		return $this->load->view('extension/payment/klarna_checkout_order', $data);
 	}
@@ -346,7 +346,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		
 		$data['user_token'] = $this->session->data['user_token'];
 		
-		$data['order_id'] = $this->request->get['order_id'];
+		$data['order_id'] = (int)$this->request->get['order_id'];
 		
 		$data['store_url'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
 

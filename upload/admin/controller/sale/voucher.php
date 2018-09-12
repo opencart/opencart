@@ -268,7 +268,7 @@ class ControllerSaleVoucher extends Controller {
 		$data['text_form'] = !isset($this->request->get['voucher_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		if (isset($this->request->get['voucher_id'])) {
-			$data['voucher_id'] = $this->request->get['voucher_id'];
+			$data['voucher_id'] = (int)$this->request->get['voucher_id'];
 		} else {
 			$data['voucher_id'] = 0;
 		}

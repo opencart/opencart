@@ -56,7 +56,7 @@ class ControllerInstallStep2 extends Controller {
 
 		$data['php_version'] = phpversion();
 
-		if (version_compare(phpversion(), '5.6.0', '<')) {
+		if (version_compare(phpversion(), '7.0.0', '<')) {
 			$data['version'] = false;
 		} else {
 			$data['version'] = true;
@@ -121,7 +121,7 @@ class ControllerInstallStep2 extends Controller {
 	}
 
 	private function validate() {
-		if (version_compare(phpversion(), '5.6.0', '<')) {
+		if (version_compare(phpversion(), '7.0.0', '<')) {
 			$this->error['warning'] = $this->language->get('error_version');
 		}
 

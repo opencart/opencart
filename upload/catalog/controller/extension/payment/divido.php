@@ -53,8 +53,8 @@ class ControllerExtensionPaymentDivido extends Controller {
 
 		$plans = $this->model_extension_payment_divido->getCartPlans($this->cart);
 		foreach ($plans as $key => $plan) {
-			$planMinTotal = $total - ($total * ($plan->min_deposit / 100));
-			if ($plan->min_amount > $planMinTotal) {
+			$plan_min_total = $total - ($total * ($plan->min_deposit / 100));
+			if ($plan->min_amount > $plan_min_total) {
 				unset($plans[$key]);
 			}
 		}

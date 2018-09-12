@@ -51,10 +51,10 @@ $('a.thumbnail').on('click', function(e) {
 	e.preventDefault();
 
 	{% if thumb %}
-	$('#{{ thumb }}').find('img').attr('src', $(this).find('img').attr('src'));
+	$('#{{ thumb|escape('js') }}').find('img').attr('src', $(this).find('img').attr('src'));
 	{% endif %}
 
-	$('#{{ target }}').val($(this).parent().find('input').val());
+	$('#{{ target|escape('js') }}').val($(this).parent().find('input').val());
 
 	$('#modal-image').modal('hide');
 });
@@ -100,11 +100,11 @@ $('#button-search').on('click', function(e) {
 	}
 
 	{% if thumb %}
-	url += '&thumb=' + '{{ thumb }}';
+	url += '&thumb=' + '{{ thumb|escape('js') }}';
 	{% endif %}
 
 	{% if target %}
-	url += '&target=' + '{{ target }}';
+	url += '&target=' + '{{ target|escape('js') }}';
 	{% endif %}
 
 	$('#modal-image').load(url);

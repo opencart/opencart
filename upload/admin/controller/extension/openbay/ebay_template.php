@@ -190,7 +190,7 @@ class ControllerExtensionOpenbayEbayTemplate extends Controller {
 		}
 
 		if (isset($this->request->get['template_id'])) {
-			$data['template_id'] = $this->request->get['template_id'];
+			$data['template_id'] = (int)$this->request->get['template_id'];
 		} else {
 			$data['template_id'] = '';
 		}

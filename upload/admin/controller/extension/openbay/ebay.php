@@ -1105,7 +1105,7 @@ class ControllerExtensionOpenbayEbay extends Controller {
 				$data['cancel'] = $this->url->link('marketplace/openbay/items', 'user_token=' . $this->session->data['user_token'], true);
 				$data['view_link'] = $this->config->get('ebay_itm_link') . $this->openbay->ebay->getEbayItemId($this->request->get['product_id']);
 				$data['user_token'] = $this->session->data['user_token'];
-				$data['product_id'] = $this->request->get['product_id'];
+				$data['product_id'] = (int)$this->request->get['product_id'];
 
 				$data['breadcrumbs'] = array();
 

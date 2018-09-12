@@ -317,7 +317,7 @@ class ControllerCatalogDownload extends Controller {
 		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->request->get['download_id'])) {
-			$data['download_id'] = $this->request->get['download_id'];
+			$data['download_id'] = (int)$this->request->get['download_id'];
 		} else {
 			$data['download_id'] = 0;
 		}

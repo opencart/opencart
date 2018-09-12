@@ -1950,7 +1950,7 @@ class ControllerMarketplaceOpenbay extends Controller {
 		$data['order'] = $order;
 
 		$data['ebay_status'] = $this->config->get('ebay_status');
-		$data['user_token'] = $this->request->get['user_token'];
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

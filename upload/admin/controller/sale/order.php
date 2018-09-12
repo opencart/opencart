@@ -467,7 +467,7 @@ class ControllerSaleOrder extends Controller {
 		}
 
 		if (!empty($order_info)) {
-			$data['order_id'] = $this->request->get['order_id'];
+			$data['order_id'] = (int)$this->request->get['order_id'];
 			$data['store_id'] = $order_info['store_id'];
 			$data['store_url'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
 
@@ -788,7 +788,7 @@ class ControllerSaleOrder extends Controller {
 
 			$data['user_token'] = $this->session->data['user_token'];
 
-			$data['order_id'] = $this->request->get['order_id'];
+			$data['order_id'] = (int)$this->request->get['order_id'];
 
 			$data['store_id'] = $order_info['store_id'];
 			$data['store_name'] = $order_info['store_name'];

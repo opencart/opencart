@@ -150,12 +150,13 @@ class ControllerExtensionPaymentDivido extends Controller {
 		if (isset($this->session->data['shipping_address'])) {
 			$address = $this->session->data['shipping_address'];
 		}
-		$addressText='';
-		$addressText.=isset($address['address_1']) ? $address['address_1'] : '';
-		$addressText.=isset($address['address_2']) ? ' '.$address['address_2'] : '';
-		$addressText.=isset($address['city']) ? ' '.$address['city'] : '';
-		$addressText.=isset($address['postcode']) ? ' '.$address['postcode'] : '';
-		$address['text']=$addressText;
+		$address_text='';
+		$address_text .= isset($address['address_1']) ? $address['address_1'] : '';
+		$address_text .= isset($address['address_2']) ? ' ' . $address['address_2'] : '';
+		$address_text .= isset($address['city']) ? ' ' . $address['city'] : '';
+		$address_text .= isset($address['postcode']) ? ' ' . $address['postcode'] : '';
+
+		$address['text'] = $address_text;
 
 		$country  = $address['iso_code_2'];
 		$language = strtoupper($this->language->get('code'));

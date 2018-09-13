@@ -55,7 +55,7 @@ class ControllerCommonCurrency extends Controller {
 		}
 		
 		if (isset($this->request->post['redirect']) && substr($this->request->post['redirect'], 0, strlen($this->config->get('config_url'))) == $this->config->get('config_url')) {
-			$this->response->redirect($this->request->post['redirect']);
+			$this->response->redirect(str_replace('&amp;', '&', $this->request->post['redirect']));
 		} else {
 			$this->response->redirect($this->url->link($this->config->get('action_default')));
 		}

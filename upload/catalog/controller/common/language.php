@@ -34,7 +34,7 @@ class ControllerCommonLanguage extends Controller {
 				$data['languages'][] = array(
 					'name' => $result['name'],
 					'code' => $result['code'],
-					'href' => $this->url->link('common/language/language', 'language=' . $this->config->get('config_language') . '&code=' . $result['code'] . '&redirect=' . urlencode($this->url->link($route, 'language=' . $result['code'] . $url)))
+					'href' => $this->url->link('common/language/language', 'language=' . $this->config->get('config_language') . '&code=' . $result['code'] . '&redirect=' . urlencode(str_replace('&amp;', '&', $this->url->link($route, 'language=' . $result['code'] . $url))))
 				);
 			}
 		}
@@ -50,7 +50,7 @@ class ControllerCommonLanguage extends Controller {
 		}
 
 		if (isset($this->request->get['redirect'])) {
-			$redirect = urldecode($this->request->get['redirect']);
+			$redirect = $this->request->get['redirect'];
 		} else {
 			$redirect = '';
 		}

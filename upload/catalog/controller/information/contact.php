@@ -28,6 +28,16 @@ class ControllerInformationContact extends Controller {
 			$mail->setSubject(html_entity_decode(sprintf($this->language->get('email_subject'), $this->request->post['name']), ENT_QUOTES, 'UTF-8'));
 			$mail->setText($this->request->post['enquiry']);
 			$mail->send();
+			
+			// Send to additional alert emails if new account email is enabled
+			$emails = explode(',', $this->config->get('config_mail_alert'));
+
+			foreach ($emails as $email) {
+				if (utf8_strlen($email) > 0 && preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $email)) {
+					$mail->setTo($email);
+					$mail->send();
+				}
+			}
 
 			$this->response->redirect($this->url->link('information/contact/success'));
 		}

@@ -28,6 +28,9 @@ class ControllerCommonHeader extends Controller {
 		$data['scripts'] = $this->document->getScripts('header');
 		$data['lang'] = $this->language->get('code');
 		$data['direction'] = $this->language->get('direction');
+                
+                $data['gdpr'] = $this->config->get('module_gdpr_status');
+                $data['module_gdpr_policy_url'] = $this->config->get('module_gdpr_policy_url');
 
 		$data['name'] = $this->config->get('config_name');
 

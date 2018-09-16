@@ -641,17 +641,17 @@
                   <span class="help-block">{{ text_item_location_help }}</span> </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_despatch_country }}</label>
+                <label class="col-sm-2 control-label">{{ entry_dispatch_country }}</label>
                 <div class="col-sm-10">
                   <select name="country" id="country" class="form-control">
                     {% for country in setting.countries %}
                       <option value="{{ country.code }}">{{ country.name }}</option>
                     {% endfor %}
                   </select>
-                  <span class="help-block">{{ text_despatch_country_help }}</span> </div>
+                  <span class="help-block">{{ text_dispatch_country_help }}</span> </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_despatch_time }}</label>
+                <label class="col-sm-2 control-label">{{ entry_dispatch_time }}</label>
                 <div class="col-sm-10">
                   <select name="dispatch_time" id="dispatch_time" class="form-control">
                     {% for dispatch_time in setting.dispatch_times %}
@@ -1784,7 +1784,7 @@
       $.ajax({
         type:'GET',
         dataType: 'json',
-        url: 'index.php?route=extension/openbay/ebay_profile/profileGet&user_token={{ user_token }}&ebay_profile_id='+$('#profile-shipping-input').val(),
+        url: 'index.php?route=extension/openbay/ebay_profile/get&user_token={{ user_token }}&ebay_profile_id='+$('#profile-shipping-input').val(),
         success: function(data) {
           setTimeout(function() {
             $('#location').val(data.data.location);
@@ -2241,7 +2241,7 @@
           $.ajax({
               type:'GET',
               dataType: 'json',
-              url: 'index.php?route=extension/openbay/ebay_profile/profileGet&user_token={{ user_token }}&ebay_profile_id='+$('#profile-return-input').val(),
+              url: 'index.php?route=extension/openbay/ebay_profile/get&user_token={{ user_token }}&ebay_profile_id='+$('#profile-return-input').val(),
               success: function(data) {
                   setTimeout(function() {
                       if ($('#returns_accepted').length) {
@@ -2282,7 +2282,7 @@
       $.ajax({
           type:'GET',
           dataType: 'json',
-          url: 'index.php?route=extension/openbay/ebay_profile/profileGet&user_token={{ user_token }}&ebay_profile_id='+$('#profile-theme-input').val(),
+          url: 'index.php?route=extension/openbay/ebay_profile/get&user_token={{ user_token }}&ebay_profile_id='+$('#profile-theme-input').val(),
           success: function(data) {
               setTimeout(function() {
                   $('#gallery_height').val(data.data.ebay_gallery_height);
@@ -2335,7 +2335,7 @@
           $.ajax({
               type:'GET',
               dataType: 'json',
-              url: 'index.php?route=extension/openbay/ebay_profile/profileGet&user_token={{ user_token }}&ebay_profile_id='+$('#profile-generic-input').val(),
+              url: 'index.php?route=extension/openbay/ebay_profile/get&user_token={{ user_token }}&ebay_profile_id='+$('#profile-generic-input').val(),
               success: function(data) {
                   setTimeout(function() {
                       if (data.data.private_listing == 1) {

@@ -399,7 +399,7 @@
       var modify_percent = '';
 
       $.ajax({
-          url: 'index.php?route=extension/openbay/ebay_profile/profileGet&user_token={{ user_token }}&ebay_profile_id='+$('#generic_profile_'+id).val(),
+          url: 'index.php?route=extension/openbay/ebay_profile/get&user_token={{ user_token }}&ebay_profile_id='+$('#generic_profile_'+id).val(),
           type: 'GET',
           async: true,
           dataType: 'json',

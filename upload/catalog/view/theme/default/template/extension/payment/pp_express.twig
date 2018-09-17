@@ -1,6 +1,24 @@
 {% if payment_pp_express_incontext_disable != 1 %}
+  <style>
+    @media screen and (max-width: 400px) {
+      .pp-checkout-button-container {
+        width: 100%;
+        margin-left:auto;
+        margin-right:auto;
+      }
+    }
+
+    @media screen and (min-width: 400px) {
+      .pp-checkout-button-container {
+        width: 400px;
+        margin-left:auto;
+        margin-right:auto;
+      }
+    }
+  </style>
+
   <div class="buttons">
-    <div class="float-right pp-checkout-button-container">
+    <div class="pp-checkout-button-container">
       <div id="pp-checkout-button" />
     </div>
   </div>
@@ -9,21 +27,31 @@
     (function () {
       paypal.Button.render({
         env: '{{ paypal_environment }}',
+        style: {
+          layout: '{{ payment_pp_express_style_layout }}',
+          size:   '{{ payment_pp_express_style_size }}',
+          shape:  '{{ payment_pp_express_style_shape }}',
+          color:  '{{ payment_pp_express_style_color }}'
+        },
+        commit: true,
+        funding: {
+          allowed: [{{ allowed_payment_methods }}],
+          disallowed: [{{ disallowed_payment_methods }}]
+        },
         payment: function (data, actions) {
           return paypal.request.get("{{ continue }}", {
             headers: {
               'Accept': 'application/paypal-json-token',
             }
-          })
-            .then(function (response) {
-              if (!response || !response.token) {
-                throw new Error('There was an error fetching the PayPal token');
-              }
-              return response.token;
-            })
-            .catch(function (err) {
-              throw err;
-            });
+          }).then(function (response) {
+            if (!response || !response.token) {
+              throw new Error('There was an error fetching the PayPal token');
+            }
+
+            return response.token;
+          }).catch(function (err) {
+            throw err;
+          });
         },
         onAuthorize: function (data, actions) {
           return actions.redirect();

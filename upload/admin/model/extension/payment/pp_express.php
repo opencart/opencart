@@ -52,7 +52,6 @@ class ModelExtensionPaymentPPExpress extends Model {
 		$defaults['payment_pp_express_reversed_status_id'] = 12;
 		$defaults['payment_pp_express_voided_status_id'] = 16;
 
-		$defaults['payment_pp_express_incontext_disable'] = 0;
 		$defaults['payment_pp_express_status'] = 0;
 		$defaults['payment_pp_express_currency'] = "USD";
 

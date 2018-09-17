@@ -379,46 +379,114 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-checkout">
+              <fieldset>
+                <legend>{{ text_button_styling }}</legend>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-notes">{{ entry_allow_notes }}</label>
+                <label class="col-sm-2 control-label" for="input-style-layout">{{ entry_style_layout }}</label>
                 <div class="col-sm-10">
-                  <select name="payment_pp_express_allow_note" id="input-notes" class="form-control">
-                    {% if payment_pp_express_allow_note %}
-                    <option value="1" selected="selected">{{ text_yes }}</option>
-                    <option value="0">{{ text_no }}</option>
+                  <select name="payment_pp_express_style_layout" id="input-style-layout" class="form-control">
+                    {% if payment_pp_express_style_layout == "horizontal" %}
+                      <option value="horizontal" selected="selected">{{ text_horizontal }}</option>
+                      <option value="vertical">{{ text_vertical }}</option>
                     {% else %}
-                    <option value="1">{{ text_yes }}</option>
-                    <option value="0" selected="selected">{{ text_no }}</option>
+                      <option value="horizontal">{{ text_horizontal }}</option>
+                      <option value="vertical" selected="selected">{{ text_vertical }}</option>
                     {% endif %}
                   </select>
-                  <br />{{ text_incontext_not_supported }}
                 </div>
               </div>
+
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-color"><span data-toggle="tooltip" title="{{ help_colour }}">{{ entry_colour }}</span></label>
+                <label class="col-sm-2 control-label" for="input-style-size">{{ entry_style_size }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="payment_pp_express_colour" value="{{ payment_pp_express_colour }}" placeholder="{{ entry_colour }}" id="input-color" class="form-control" />
-                  <br />{{ text_incontext_not_supported }}
+                  <select name="payment_pp_express_style_size" id="input-style-size" class="form-control">
+                    <option value="medium"{% if payment_pp_express_style_size == "medium" %} selected{% endif %}>{{ text_medium }}</option>
+                    <option value="large"{% if payment_pp_express_style_size == "large" %} selected{% endif %}>{{ text_large }}</option>
+                    <option value="responsive"{% if payment_pp_express_style_size == "responsive" %} selected{% endif %}>{{ text_responsive }}</option>
+                  </select>
                 </div>
               </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-style-shape">{{ entry_style_shape }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_pp_express_style_shape" id="input-style-shape" class="form-control">
+                    {% if payment_pp_express_style_shape == "pill" %}
+                      <option value="pill" selected="selected">{{ text_pill }}</option>
+                      <option value="rect">{{ text_rectangle }}</option>
+                    {% else %}
+                      <option value="pill">{{ text_pill }}</option>
+                      <option value="rect" selected="selected">{{ text_rectangle }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-style-color">{{ entry_style_color }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_pp_express_style_color" id="input-style-color" class="form-control">
+                    <option value="gold"{% if payment_pp_express_style_color == "gold" %} selected{% endif %}>{{ text_gold }}</option>
+                    <option value="blue"{% if payment_pp_express_style_color == "blue" %} selected{% endif %}>{{ text_blue }}</option>
+                    <option value="silver"{% if payment_pp_express_style_color == "silver" %} selected{% endif %}>{{ text_silver }}</option>
+                    <option value="black"{% if payment_pp_express_style_color == "black" %} selected{% endif %}>{{ text_black }}</option>
+                  </select>
+                </div>
+              </div>
+              </fieldset>
+              <fieldset>
+              <legend>{{ text_funding_type }}</legend>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-payment-credit">{{ entry_pp_credit }}</label>
+                  <div class="col-sm-10">
+                    <select name="payment_pp_express_pp_credit" id="input-payment-credit" class="form-control">
+                      {% if payment_pp_express_pp_credit %}
+                        <option value="1" selected="selected">{{ text_yes }}</option>
+                        <option value="0">{{ text_no }}</option>
+                      {% else %}
+                        <option value="1">{{ text_yes }}</option>
+                        <option value="0" selected="selected">{{ text_no }}</option>
+                      {% endif %}
+                    </select>
+                    <p>{{ help_pp_credit }}</p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-payment-cards">{{ entry_pp_cards }}</label>
+                  <div class="col-sm-10">
+                    <select name="payment_pp_express_pp_cards" id="input-payment-cards" class="form-control">
+                      {% if payment_pp_express_pp_cards %}
+                        <option value="1" selected="selected">{{ text_yes }}</option>
+                        <option value="0">{{ text_no }}</option>
+                      {% else %}
+                        <option value="1">{{ text_yes }}</option>
+                        <option value="0" selected="selected">{{ text_no }}</option>
+                      {% endif %}
+                    </select>
+                    <p>{{ help_pp_cards }}</p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-payment-elv">{{ entry_pp_elv }}</label>
+                  <div class="col-sm-10">
+                    <select name="payment_pp_express_pp_elv" id="input-payment-elv" class="form-control">
+                      {% if payment_pp_express_pp_elv %}
+                        <option value="1" selected="selected">{{ text_yes }}</option>
+                        <option value="0">{{ text_no }}</option>
+                      {% else %}
+                        <option value="1">{{ text_yes }}</option>
+                        <option value="0" selected="selected">{{ text_no }}</option>
+                      {% endif %}
+                    </select>
+                    <p>{{ help_pp_elv }}</p>
+                  </div>
+                </div>
+              </fieldset>
+
               <div class="form-group">
                 <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_logo }}">{{ entry_logo }}</span></label>
                 <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
                   <input type="hidden" name="payment_pp_express_logo" value="{{ payment_pp_express_logo }}" id="input-logo" />
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-incontext-disable">{{ entry_incontext }}</label>
-                <div class="col-sm-10">
-                  <select name="payment_pp_express_incontext_disable" id="input-incontext-disable" class="form-control">
-                    {% if payment_pp_express_incontext_disable %}
-                      <option value="1" selected="selected">{{ text_yes }}</option>
-                      <option value="0">{{ text_no }}</option>
-                    {% else %}
-                      <option value="1">{{ text_yes }}</option>
-                      <option value="0" selected="selected">{{ text_no }}</option>
-                    {% endif %}
-                  </select>
                 </div>
               </div>
               <div class="form-group">

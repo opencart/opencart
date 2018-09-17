@@ -17,14 +17,12 @@ class ControllerExtensionModulePPButton extends Controller {
 					$data['mobile'] = false;
 				}
 
-				$data['payment_pp_express_incontext_disable'] = $this->config->get('payment_pp_express_incontext_disable');
-
 				if ($this->config->get('payment_pp_express_test') == 1) {
-					$data['username'] = $this->config->get('payment_pp_express_sandbox_username');
-					$data['environment'] = 'sandbox';
+					$data['paypal_username'] = $this->config->get('payment_pp_express_sandbox_username');
+					$data['paypal_environment'] = 'sandbox';
 				} else {
-					$data['username'] = $this->config->get('payment_pp_express_username');
-					$data['environment'] = 'live';
+					$data['paypal_username'] = $this->config->get('payment_pp_express_username');
+					$data['paypal_environment'] = 'production';
 				}
 
 				$data['payment_url'] = $this->url->link('extension/payment/pp_express/express', '', true);

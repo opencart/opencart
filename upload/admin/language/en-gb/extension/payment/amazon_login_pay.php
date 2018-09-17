@@ -37,8 +37,8 @@ $_['text_large']                   = 'Large';
 $_['text_x_large']                 = 'Extra large';
 $_['text_background']              = 'Background';
 $_['text_edit']					   = 'Edit Amazon Pay';
-$_['text_amazon_login_pay']        = '<a href="https://pay.amazon.com/uk/sp/opencart" target="_blank" title="Sign-up to Amazon Pay"><img src="view/image/payment/amazonpay.png" alt="Amazon Pay" title="Amazon Pay" style="border: 1px solid #EEEEEE;" /></a>';
-$_['text_amazon_join']             = '<a href="https://pay.amazon.com/uk/sp/opencart" target="_blank" title="Sign-up to Amazon Pay"><u>Sign-up to Amazon Pay</u></a>';
+$_['text_amazon_login_pay']        = '<a href="https://pay.amazon.com/uk/signup?ld=SPEXUKAPA-opct-AGY-Ref&ref=ag_uk_ap_np_sp_opct_xx_ay_xx_xxx" target="_blank" title="Sign-up to Amazon Pay"><img src="view/image/payment/amazonpay.png" alt="Amazon Pay" title="Amazon Pay" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_amazon_join']             = '<a href="https://pay.amazon.com/uk/signup?ld=SPEXUKAPA-opct-AGY-Ref&ref=ag_uk_ap_np_sp_opct_xx_ay_xx_xxx" target="_blank" title="Sign-up to Amazon Pay"><u>Sign-up to Amazon Pay</u></a>';
 $_['text_payment_info']			   = 'Payment information';
 $_['text_capture_ok']			   = 'Capture was successful';
 $_['text_capture_ok_order']		   = 'Capture was successful, authorization has been fully captured';
@@ -74,8 +74,8 @@ $_['text_amazon_no_declined']      = '--- No Automatic Declined Authorization --
 $_['text_amazon_signup']		   = 'Sign-up to Amazon Pay';
 $_['text_credentials']			   = 'Please paste your keys here (in JSON format)';
 $_['text_validate_credentials']	   = 'Validate and Use Credentials';
-$_['text_promotion']			   = 'Provide customers the same Amazon checkout experience they know and trust on your site. Add Amazon Pay today and let your customers check out in just a few clicks or taps using the shipping and payment info already stored in their Amazon account. Learn more.';
-$_['text_signup']			       = 'Signup to AmazonPay';
+$_['text_promotion']			   = 'Provide customers the same Amazon checkout experience they know and trust on your site. Add Amazon Pay today and let your customers check out in just a few clicks or taps using the shipping and payment info already stored in their Amazon account.';
+$_['text_signup']			       = 'Sign up to Amazon Pay';
 
 // Columns
 $_['column_status']                = 'Status';

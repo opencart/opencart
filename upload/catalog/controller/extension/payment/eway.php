@@ -109,7 +109,7 @@ class ControllerExtensionPaymentEway extends Controller {
 		$request->Payment->InvoiceReference = (string)substr($this->config->get('config_name'), 0, 40) . ' - #' . $order_info['order_id'];
 		$request->Payment->CurrencyCode = $order_info['currency_code'];
 
-		$request->RedirectUrl = $this->url->link('extension/payment/eway/callback', 'language=' . $this->config->get('config_language'));
+		$request->RedirectUrl = str_replace('&amp;', '&', $this->url->link('extension/payment/eway/callback', 'language=' . $this->config->get('config_language')));
 		if ($this->config->get('payment_eway_transaction_method') == 'auth') {
 			$request->Method = 'Authorise';
 		} else {

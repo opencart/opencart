@@ -186,11 +186,13 @@ class Smtp {
 			// According to rfc 821 we should not send more than 1000 including the CRLF
 			$message = str_replace("\r\n", "\n", $header . $message);
 			$message = str_replace("\r", "\n", $message);
+                        
+                        $maxLength = (mb_detect_encoding($message, mb_detect_order(), true) == 'ASCII') ? 998 : 249;
 
 			$lines = explode("\n", $message);
-
+                        
 			foreach ($lines as $line) {
-				$results = str_split($line, 998);
+                                preg_match_all("/.{1,{$maxLength}}(?=\W+)/u", $line, $results);
 
 				foreach ($results as $result) {
 					if (substr(PHP_OS, 0, 3) != 'WIN') {

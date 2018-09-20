@@ -1,5 +1,5 @@
 <?php
-// *	@copyright	OPENCART.PRO 2011 - 2017.
+// *	@copyright	OPENCART.PRO 2011 - 2018.
 // *	@forum	http://forum.opencart.pro
 // *	@source		See SOURCE.txt for source and other copyright.
 // *	@license	GNU General Public License version 3; see LICENSE.txt
@@ -46,7 +46,8 @@ class Document {
 	}
 
 	public function addLink($href, $rel) {
-		$this->links[$href] = array(
+		$key = md5($href . $rel);
+		$this->links[$key] = array(
 			'href' => $href,
 			'rel'  => $rel
 		);

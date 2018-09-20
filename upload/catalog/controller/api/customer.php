@@ -8,7 +8,7 @@ class ControllerApiCustomer extends Controller {
 
 		$json = array();
 
-		if (isset($this->session->data['api_id'])) {
+		if (!isset($this->session->data['api_id'])) {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		} else {
 			// Add keys for missing post vars

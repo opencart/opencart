@@ -8,7 +8,7 @@ class ControllerApiCustomer extends Controller {
 
 		$json = array();
 
-		if (!isset($this->session->data['api_id'])) {
+		if (isset($this->session->data['api_id'])) {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		} else {
 			// Add keys for missing post vars
@@ -55,12 +55,8 @@ class ControllerApiCustomer extends Controller {
 			}
 
 			// Customer Group
-			if (is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
-				$customer_group_id = $this->request->post['customer_group_id'];
-			} else {
-				$customer_group_id = $this->config->get('config_customer_group_id');
-			}
-
+			$customer_group_id = !empty($this->request->post['customer_group_id']) ? $this->request->post['customer_group_id'] : $this->config->get('config_customer_group_id');
+			
 			// Custom field validation
 			$this->load->model('account/custom_field');
 

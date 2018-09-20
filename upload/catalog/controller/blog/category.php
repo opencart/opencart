@@ -1,5 +1,5 @@
 <?php
-// *	@copyright	OPENCART.PRO 2011 - 2017.
+// *	@copyright	OPENCART.PRO 2011 - 2018.
 // *	@forum	http://forum.opencart.pro
 // *	@source		See SOURCE.txt for source and other copyright.
 // *	@license	GNU General Public License version 3; see LICENSE.txt
@@ -186,7 +186,7 @@ class ControllerBlogCategory extends Controller {
 			$data['articles'] = array();
 
 			$article_data = array(
-				'filter_category_id' => $blog_category_id,
+				'filter_blog_category_id' => $blog_category_id,
 				'sort'               => $sort,
 				'order'              => $order,
 				'start'              => ($page - 1) * $limit,
@@ -198,8 +198,6 @@ class ControllerBlogCategory extends Controller {
 
 			$results = $this->model_blog_article->getArticles($article_data);
 			
-			
-
 			foreach ($results as $result) {
 				if ($result['image']) {
 					$image = $this->model_tool_image->resize($result['image'], $this->config->get('configblog_image_article_width'), $this->config->get('configblog_image_article_height'));

@@ -429,6 +429,14 @@ class ControllerStartupSeoPro extends Controller {
 			
 		}		
 		
+		//Remove negative page count
+		
+		if (isset($this->request->get['page'])  ) {
+			if((float)$this->request->get['page'] < 1) {
+				unset($this->request->get['page']);
+			};
+		};
+		
 		if(empty($this->request->get['route'])) {
 			$this->request->get['route'] = 'common/home';
 		}

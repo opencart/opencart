@@ -239,7 +239,7 @@
                     <div class="input-group date">
                       <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
                       <div class="input-group-append">
-                        <button class="btn btn-light" type="button"><i class="fa fa-calendar"></i></button>
+                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                       </div>
                     </div>
                   </div>
@@ -250,7 +250,7 @@
                     <div class="input-group datetime">
                       <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
                       <div class="input-group-append">
-                        <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                       </div>
                     </div>
                   </div>
@@ -261,7 +261,7 @@
                     <div class="input-group time">
                       <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
                       <div class="input-group-append">
-                        <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                       </div>
                     </div>
                   </div>
@@ -454,15 +454,15 @@ $('#button-cart').on('click', function() {
 //--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
-  'format': 'YYYY-MM-DD',
-  'locale': '{{ datepicker }}',
-  'allowInputToggle': true
+	'format': 'YYYY-MM-DD',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
 });
 
 $('.time').datetimepicker({
-  'format': 'HH:mm',
-  'locale': '{{ datepicker }}',
-  'allowInputToggle': true
+	'format': 'HH:mm',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
 });
 
 $('.datetime').datetimepicker({

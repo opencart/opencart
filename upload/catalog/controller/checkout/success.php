@@ -4,20 +4,26 @@ class ControllerCheckoutSuccess extends Controller {
 		$this->load->language('checkout/success');
 
 		if (isset($this->session->data['order_id'])) {
-			$this->cart->clear();
+			$this->load->model('checkout/order');
 
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['payment_method']);
-			unset($this->session->data['payment_methods']);
-			unset($this->session->data['guest']);
-			unset($this->session->data['comment']);
-			unset($this->session->data['order_id']);
-			unset($this->session->data['coupon']);
-			unset($this->session->data['reward']);
-			unset($this->session->data['voucher']);
-			unset($this->session->data['vouchers']);
-			unset($this->session->data['totals']);
+			$order_status = $this->model_checkout_order->getOrderStatusId($this->session->data['order_id']);
+
+		  if (isset($order_status['order_status_id']) && $order_status['order_status_id'] > 0) {
+				$this->cart->clear();
+
+				unset($this->session->data['shipping_method']);
+				unset($this->session->data['shipping_methods']);
+				unset($this->session->data['payment_method']);
+				unset($this->session->data['payment_methods']);
+				unset($this->session->data['guest']);
+				unset($this->session->data['comment']);
+				unset($this->session->data['order_id']);
+				unset($this->session->data['coupon']);
+				unset($this->session->data['reward']);
+				unset($this->session->data['voucher']);
+				unset($this->session->data['vouchers']);
+				unset($this->session->data['totals']);
+			}
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));

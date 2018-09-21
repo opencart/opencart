@@ -420,6 +420,7 @@ class ControllerProductCategory extends Controller {
 			
 			if ($limit && ceil($product_total / $limit) > $page) {
 				$this->document->addLink($this->url->link('product/category', 'path=' . $category_info['category_id'] . '&page='. ($page + 1), true), 'next');
+			}
 
 			$data['sort'] = $sort;
 			$data['order'] = $order;

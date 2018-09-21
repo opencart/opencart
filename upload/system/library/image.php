@@ -137,12 +137,10 @@ class Image {
 	 * @param	string	$default
      */
 	public function resize($width = 0, $height = 0, $default = '') {
-		if (!$this->width || !$this->height) {
+		if (!$this->width || !$this->height || empty($width) || empty($height)) {
 			return;
 		}
 
-		$xpos = 0;
-		$ypos = 0;
 		$scale = 1;
 
 		$scale_w = $width / $this->width;

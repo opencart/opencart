@@ -50,42 +50,43 @@
           <div class="form-group row required">
             <label class="col-sm-2 col-form-label" for="input-name">{{ entry_rating }}</label>
             <div class="col-sm-10">
-              <label class="radio-inline">
+              <label class="form-check form-check-inline">
                 {% if rating == 1 %}
-                  <input type="radio" name="rating" value="1" checked="checked"/>
+                  <input type="radio" name="rating" value="1" checked="checked" class="form-check-input"/>
                   1
                 {% else %}
-                  <input type="radio" name="rating" value="1"/>
+                  <input type="radio" name="rating" value="1" class="form-check-input"/>
                   1
-                {% endif %}</label> <label class="radio-inline">
+                {% endif %}</label> <label class="form-check form-check-inline">
                 {% if rating == 2 %}
-                  <input type="radio" name="rating" value="2" checked="checked"/>
+                  <input type="radio" name="rating" value="2" checked="checked" class="form-check-input"/>
                   2
                 {% else %}
-                  <input type="radio" name="rating" value="2"/>
+                  <input type="radio" name="rating" value="2" class="form-check-input"/>
                   2
-                {% endif %}</label> <label class="radio-inline">
+                {% endif %}</label> <label class="form-check form-check-inline">
                 {% if rating == 3 %}
-                  <input type="radio" name="rating" value="3" checked="checked"/>
+                  <input type="radio" name="rating" value="3" checked="checked" class="form-check-input"/>
                   3
                 {% else %}
-                  <input type="radio" name="rating" value="3"/>
+                  <input type="radio" name="rating" value="3" class="form-check-input"/>
                   3
-                {% endif %}</label> <label class="radio-inline">
+                {% endif %}</label> <label class="form-check form-check-inline">
                 {% if rating == 4 %}
-                  <input type="radio" name="rating" value="4" checked="checked"/>
+                  <input type="radio" name="rating" value="4" checked="checked" class="form-check-input"/>
                   4
                 {% else %}
-                  <input type="radio" name="rating" value="4"/>
+                  <input type="radio" name="rating" value="4" class="form-check-input"/>
                   4
-                {% endif %}</label> <label class="radio-inline">
+                {% endif %}</label> <label class="form-check form-check-inline">
                 {% if rating == 5 %}
-                  <input type="radio" name="rating" value="5" checked="checked"/>
+                  <input type="radio" name="rating" value="5" checked="checked" class="form-check-input"/>
                   5
                 {% else %}
-                  <input type="radio" name="rating" value="5"/>
+                  <input type="radio" name="rating" value="5" class="form-check-input"/>
                   5
-                {% endif %}</label>
+                {% endif %}
+              </label>
               {% if error_rating %}
                 <div class="invalid-tooltip">{{ error_rating }}</div>
               {% endif %}</div>

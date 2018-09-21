@@ -251,10 +251,10 @@
                           <small>{{ option.name }}: {{ option.value }}</small>
                           <br/>
                           {% if option.type == 'select' or option.type == 'radio' or option.type == 'image' %}
-                            <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/>
+                            <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}" class="form-check-input"/>
                           {% endif %}
                           {% if option.type == 'checkbox' %}
-                            <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}"/>
+                            <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}" class="form-check-input"/>
                           {% endif %}
                           {% if option.type == 'text' or option.type == 'textarea' or option.type == 'file' or option.type == 'date' or option.type == 'datetime' or option.type == 'time' %}
                             <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}]" value="{{ option.value }}"/>

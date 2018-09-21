@@ -237,7 +237,7 @@
                   <div class="form-group{% if option.required %} required {% endif %}">
                     <label class="col-form-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
                     <div class="input-group date">
-                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="YYYY-MM-DD" id="input-option{{ option.product_option_id }}" class="form-control"/>
+                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
                       <div class="input-group-append">
                         <button class="btn btn-light" type="button"><i class="fa fa-calendar"></i></button>
                       </div>
@@ -248,7 +248,7 @@
                   <div class="form-group{% if option.required %} required {% endif %}">
                     <label class="col-form-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
                     <div class="input-group datetime">
-                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="YYYY-MM-DD HH:mm" id="input-option{{ option.product_option_id }}" class="form-control"/>
+                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
                       <div class="input-group-append">
                         <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
                       </div>
@@ -259,7 +259,7 @@
                   <div class="form-group{% if option.required %} required {% endif %}">
                     <label class="col-form-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
                     <div class="input-group time">
-                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="HH:mm" id="input-option{{ option.product_option_id }}" class="form-control"/>
+                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
                       <div class="input-group-append">
                         <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
                       </div>
@@ -453,9 +453,23 @@ $('#button-cart').on('click', function() {
 });
 //--></script>
 <script type="text/javascript"><!--
-$('.date').datetimepicker();
-$('.time').datetimepicker();
-$('.datetime').datetimepicker();
+$('.date').datetimepicker({
+  'format': 'YYYY-MM-DD',
+  'locale': '{{ datepicker }}',
+  'allowInputToggle': true
+});
+
+$('.time').datetimepicker({
+  'format': 'HH:mm',
+  'locale': '{{ datepicker }}',
+  'allowInputToggle': true
+});
+
+$('.datetime').datetimepicker({
+	'format': 'YYYY-MM-DD HH:mm',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
+});
 //--></script>
 <script type="text/javascript"><!--
 $('button[id^=\'button-upload\']').on('click', function() {

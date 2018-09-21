@@ -736,7 +736,7 @@ $('#button-address').on('click', function(e) {
 	html += '  		  <div>';
 
   {% for custom_field_value in custom_field.custom_field_value %}
-	html += '  			<label class="form-check"><input type="radio" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" /> {{ custom_field_value.name|e('js') }}</label>';
+	html += '  			<label class="form-check"><input type="radio" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input" /> {{ custom_field_value.name|e('js') }}</label>';
   {% endfor %}
 
 	html += '		  </div>';

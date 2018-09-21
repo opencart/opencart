@@ -23,6 +23,12 @@ class ControllerExtensionCurrencyFixer extends Controller {
 			$data['error_warning'] = '';
 		}
 
+		if (isset($this->error['api'])) {
+			$data['error_api'] = $this->error['api'];
+		} else {
+			$data['error_api'] = '';
+		}
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -44,6 +50,12 @@ class ControllerExtensionCurrencyFixer extends Controller {
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=currency');
 
+		if (isset($this->request->post['currency_fixer_api'])) {
+			$data['currency_fixer_api'] = $this->request->post['currency_fixer_api'];
+		} else {
+			$data['currency_fixer_api'] = $this->config->get('currency_fixer_api');
+		}
+
 		if (isset($this->request->post['currency_fixer_status'])) {
 			$data['currency_fixer_status'] = $this->request->post['currency_fixer_status'];
 		} else {
@@ -60,6 +72,10 @@ class ControllerExtensionCurrencyFixer extends Controller {
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'extension/currency/fixer')) {
 			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		if (!$this->request->post['currency_fixer_api']) {
+			$this->error['api'] = $this->language->get('error_api');
 		}
 
 		return !$this->error;
@@ -82,7 +98,7 @@ class ControllerExtensionCurrencyFixer extends Controller {
 			if ($currencies) {
 				$curl = curl_init();
 
-				curl_setopt($curl, CURLOPT_URL, 'https://api.fixer.io/latest?base=' . $default);
+				curl_setopt($curl, CURLOPT_URL, 'http://data.fixer.io/api/latest?access_key=' . $this->config->get('currency_fixer_api'));
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 				curl_setopt($curl, CURLOPT_HEADER, false);
 				curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
@@ -91,12 +107,31 @@ class ControllerExtensionCurrencyFixer extends Controller {
 
 				$response = curl_exec($curl);
 
+				$this->log->write($response);
+
 				curl_close($curl);
 
 				$response_info = json_decode($response, true);
 
+
+				$this->config->get('currency_fixer_api')
+
+
 				if (isset($response_info['rates'])) {
+
+
+
+
 					foreach ($currencies as $currency) {
+						if ($this->config->get('currency_fixer_api')) {
+
+
+						}
+
+
+
+
+
 						if (isset($response_info['rates'][$currency['code']])) {
 							$this->model_localisation_currency->editValueByCode($currency['code'], $response_info['rates'][$currency['code']]);
 						}

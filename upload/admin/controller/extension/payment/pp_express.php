@@ -862,7 +862,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				'PWD'          => $api_password,
 				'SIGNATURE'    => $api_signature,
 				'VERSION'      => '109.0',
-				'BUTTONSOURCE' => 'OpenCart_2.0_EC',
+				'BUTTONSOURCE' => 'OpenCart_3.1_EC',
 				'METHOD'       => 'SetExpressCheckout',
 				'METHOD'       => 'ManageRecurringPaymentsProfileStatus',
 				'PROFILEID'    => $recurring_info['reference'],

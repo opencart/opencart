@@ -57,6 +57,10 @@ label {
   font-weight: normal;
 }
 
+select.form-control:not([size]):not([multiple]) {
+  height: calc(2.25rem + 2px);
+}
+
 select,
 textarea,
 input[type="text"],

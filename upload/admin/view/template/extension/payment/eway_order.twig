@@ -87,8 +87,7 @@
 						if (data.data.refund_status != 1) {
 							$('#btn-refund').show();
 							$('#eway-refund-amount').show();
-							$('#eway-refund-amount').val('');
-							$('#eway-refund-amount').attr('placeholder',data.data.remaining);
+							$('#eway-refund-amount').val(data.data.remaining);
 						}
 
 						if (data.message != '') {
@@ -141,8 +140,7 @@
 						if (data.data.capture_status != 1) {
 							$('#btn-capture').show();
 							$('#eway-capture-amount').show();
-							$("#eway-capture-amount").val('');
-							$("#eway-capture-amount").attr('placeholder',data.data.remaining);
+							$("#eway-capture-amount").val(data.data.remaining);
 						}
 
 						if (data.message != '') {

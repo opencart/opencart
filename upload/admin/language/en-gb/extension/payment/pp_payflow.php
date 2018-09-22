@@ -6,7 +6,7 @@ $_['heading_title']		 = 'PayPal Payflow Pro';
 $_['text_extension']     = 'Extensions';
 $_['text_success']		 = 'Success: You have modified PayPal Direct (UK) account details!';
 $_['text_edit']          = 'Edit PayPal Payflow Pro';
-$_['text_pp_payflow']	 = '<a target="_BLANK" href="https://www.paypal.com/uk/mrb/pal=V4T754QB63XXL"><img src="view/image/payment/paypal.png" alt="PayPal Website Payment Pro" title="PayPal Website Payment Pro iFrame" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_pp_payflow']	 = '<a target="_BLANK" href="https://www.paypal.com/uk/mrb/pal=V4T754QB63XXL"><img src="view/image/payment/paypal.png" alt="PayPal Payflow Pro" title="PayPal Payflow Pro" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_authorization'] = 'Authorization';
 $_['text_sale']			 = 'Sale';
 
@@ -32,7 +32,7 @@ $_['help_test']			 = 'Use the live or testing (sandbox) gateway server to proces
 $_['help_total']		 = 'The checkout total the order must reach before this payment method becomes active';
 
 // Error
-$_['error_permission']	 = 'Warning: You do not have permission to modify payment PayPal Website Payment Pro (UK)!';
+$_['error_permission']	 = 'Warning: You do not have permission to modify payment PayPal Payflow Pro!';
 $_['error_vendor']		 = 'Vendor Required!';
 $_['error_user']		 = 'User Required!';
 $_['error_password']	 = 'Password Required!';

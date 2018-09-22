@@ -14,7 +14,7 @@ $_['heading_title']                  = 'Wechat Pay';
 $_['text_extension']                 = 'Extensions';
 $_['text_success']                   = 'Success: You have modified Wechat account details!';
 $_['text_edit']                      = 'Edit Wechat Pay';
-$_['text_wechat_pay']                = '<a target="_BLANK" href="https://pay.weixin.qq.com"><img src="view/image/payment/Wechat.png" alt="Wechat Pay Website" title="Wechat Pay Website" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_wechat_pay']                = '<a target="_BLANK" href="https://pay.weixin.qq.com"><img src="view/image/payment/wechat.png" alt="Wechat Pay Website" title="Wechat Pay Website" style="border: 1px solid #EEEEEE;" /></a>';
 
 // Entry
 $_['entry_app_id']                   = 'App ID';

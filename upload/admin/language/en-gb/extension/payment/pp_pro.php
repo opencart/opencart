@@ -6,7 +6,7 @@ $_['heading_title']		 = 'PayPal Pro';
 $_['text_extension']     = 'Extensions';
 $_['text_success']		 = 'Success: You have modified PayPal Website Payment Pro Checkout account details!';
 $_['text_edit']          = 'Edit PayPal Pro';
-$_['text_pp_pro']		 = '<a target="_BLANK" href="https://www.paypal.com/uk/mrb/pal=V4T754QB63XXL"><img src="view/image/payment/paypal.png" alt="PayPal Website Payment Pro" title="PayPal Website Payment Pro iFrame" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_pp_pro']		 = '<a target="_BLANK" href="https://www.paypal.com/uk/mrb/pal=V4T754QB63XXL"><img src="view/image/payment/paypal.png" alt="PayPal Pro" title="PayPal Pro" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_authorization'] = 'Authorization';
 $_['text_sale']			 = 'Sale';
 
@@ -27,7 +27,7 @@ $_['help_test']			 = 'Use the live or testing (sandbox) gateway server to proces
 $_['help_total']		 = 'The checkout total the order must reach before this payment method becomes active';
 
 // Error
-$_['error_permission']	 = 'Warning: You do not have permission to modify payment PayPal Website Payment Pro Checkout!';
+$_['error_permission']	 = 'Warning: You do not have permission to modify payment PayPal Pro!';
 $_['error_username']	 = 'API Username Required!';
 $_['error_password']	 = 'API Password Required!';
 $_['error_signature']	 = 'API Signature Required!';

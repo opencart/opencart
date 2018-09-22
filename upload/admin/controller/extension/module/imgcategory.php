@@ -5,9 +5,9 @@
 // *	@license	GNU General Public License version 3; see LICENSE.txt
 
 class ControllerExtensionModuleImgcategory extends Controller {
-	private $error = array(); 
-	
-	public function index() {   
+	private $error = array();
+
+	public function index() {
 		$this->load->language('extension/module/imgcategory');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -26,7 +26,7 @@ class ControllerExtensionModuleImgcategory extends Controller {
 
 			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true));
 		}
-				
+
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_edit'] = $this->language->get('text_edit');
@@ -57,7 +57,7 @@ class ControllerExtensionModuleImgcategory extends Controller {
 		} else {
 			$data['error_name'] = '';
 		}
-		
+
 		if (isset($this->error['width'])) {
 			$data['error_width'] = $this->error['width'];
 		} else {
@@ -120,7 +120,7 @@ class ControllerExtensionModuleImgcategory extends Controller {
 		} else {
 			$data['category_id'] = '';
 		}
-		
+
 		if (isset($this->request->post['width'])) {
 			$data['width'] = $this->request->post['width'];
 		} elseif (!empty($module_info)) {
@@ -151,7 +151,7 @@ class ControllerExtensionModuleImgcategory extends Controller {
 
 		$this->response->setOutput($this->load->view('extension/module/imgcategory', $data));
 	}
-	
+
 	private function validate() {
 		if (!$this->user->hasPermission('modify', 'extension/module/imgcategory')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -160,7 +160,7 @@ class ControllerExtensionModuleImgcategory extends Controller {
 		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 64)) {
 			$this->error['name'] = $this->language->get('error_name');
 		}
-			
+
 		return !$this->error;
 	}
 }

@@ -9,6 +9,8 @@ $_['text_edit']				   	= 'Edit eWAY';
 $_['text_eway']					  = '<a target="_BLANK" href="http://www.eway.com.au/"><img src="view/image/payment/eway.png" alt="eWAY" title="eWAY" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_authorisation']	= 'Authorisation';
 $_['text_sale']					  = 'Sale';
+$_['text_payment']			  = 'Payment';
+$_['text_refund']			    = 'Refund';
 $_['text_transparent']		= 'Transparent Redirect (payment form on site)';
 $_['text_iframe']				  = 'IFrame (payment form in window)';
 $_['text_connect_eway']	  = 'Start accepting credit card payments with eWAY and OpenCart in as little as 5 minutes. Don’t have an eWAY Account? <a target="_blank" href="https://myeway.force.com/success/accelerator-signup?pid=4382&pa=0012000000ivcWf">Click Here</a>';

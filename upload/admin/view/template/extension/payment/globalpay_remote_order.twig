@@ -85,7 +85,7 @@
             html = '';
             html += '<tr>';
             html += '<td class="text-left">'+data.data.date_added+'</td>';
-            html += '<td class="text-left">void</td>';
+            html += '<td class="text-left">{{ text_void }}</td>';
             html += '<td class="text-left">0.00</td>';
             html += '</tr>';
 
@@ -126,7 +126,7 @@
             html = '';
             html += '<tr>';
             html += '<td class="text-left">'+data.data.date_added+'</td>';
-            html += '<td class="text-left">payment</td>';
+            html += '<td class="text-left">{{ text_payment }}</td>';
             html += '<td class="text-left">'+data.data.amount+'</td>';
             html += '</tr>';
 
@@ -181,7 +181,7 @@
             html = '';
             html += '<tr>';
             html += '<td class="text-left">'+data.data.date_added+'</td>';
-            html += '<td class="text-left">rebate</td>';
+            html += '<td class="text-left">{{ text_rebate }}</td>';
             html += '<td class="text-left">'+data.data.amount+'</td>';
             html += '</tr>';
 

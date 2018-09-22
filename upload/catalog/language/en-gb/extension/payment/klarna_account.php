@@ -13,6 +13,8 @@ $_['text_payment_option']		= 'Payment options';
 $_['text_single_payment']		= 'Single Payment';
 $_['text_monthly_payment']		= '%s - %s per month';
 $_['text_comment']				= 'Klarna\'s Invoice ID: %s' . "\n" . '%s/%s: %.4f';
+$_['text_agree_transmission']		= 'I agree with the transmission of the data required for the settlement of the invoice purchase and an identity and credit check to Klarna. I can revoke my <a href="https://online.klarna.com/consent_en.yaws" target="_blank"> consent </a> at any time with an effect for the future.';
+
 
 // Entry
 $_['entry_gender']				= 'Gender';

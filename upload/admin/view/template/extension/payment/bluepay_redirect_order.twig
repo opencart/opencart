@@ -87,7 +87,7 @@
 						html = '';
 						html += '<tr>';
 						html += '<td class="text-left">' + data.data.date_added + '</td>';
-						html += '<td class="text-left">void</td>';
+						html += '<td class="text-left">{{ button_void }}</td>';
 						html += '<td class="text-left">' + data.data.total + '</td>';
 						html += '</tr>';
 
@@ -139,8 +139,8 @@
 						$('#bluepay_redirect_total_released').text(data.data.total);
 
 						if (data.data.release_status == 1) {
-							$('.void_text').after('<a style="margin-left: 10px;" id="button-void" class="button btn btn-primary">Void</a>');
-							$('.rebate_text').after('<input style="margin-left: 10px;" width="10" type="text" id="rebate_amount"><a style="margin-left: 5px;" id="button-rebate" class="button btn btn-primary">Rebate / refund</a>');
+							$('.void_text').after('<a style="margin-left: 10px;" id="button-void" class="button btn btn-primary">{{ button_void }}</a>');
+							$('.rebate_text').after('<input style="margin-left: 10px;" width="10" type="text" id="rebate_amount"><a style="margin-left: 5px;" id="button-rebate" class="button btn btn-primary">{{ button_rebate }}</a>');
 							$('.release_text').text('{{ text_yes }}');
 							$('#rebate_amount').val(0.00).show();
 						} else {

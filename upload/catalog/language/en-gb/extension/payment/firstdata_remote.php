@@ -9,6 +9,7 @@ $_['entry_cc_number']			= 'Card number';
 $_['entry_cc_name']				= 'Cardholder name';
 $_['entry_cc_expire_date']		= 'Card expiry date';
 $_['entry_cc_cvv2']				= 'Card security code (CVV2)';
+$_['entry_card_details']	= 'Store card details?';
 
 // Help
 $_['help_start_date']			= '(if available)';

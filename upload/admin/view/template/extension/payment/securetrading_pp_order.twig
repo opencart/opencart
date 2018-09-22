@@ -59,7 +59,7 @@
     </td>
   </tr>
   <tr>
-    <td>{{ text_transactions }}:</td>
+    <td>{{ text_transactions }}</td>
     <td>
       <table class="table table-bordered" id="securetrading_pp_transactions">
         <thead>
@@ -100,7 +100,7 @@ $("#btn_void").click(function() {
 					html = '';
 					html += '<tr>';
 					html += '<td class="text-left">' + data.data.created + '</td>';
-					html += '<td class="text-left">reversed</td>';
+					html += '<td class="text-left">{{ text_reversed }}</td>';
 					html += '<td class="text-left">0.00</td>';
 					html += '</tr>';
 
@@ -141,7 +141,7 @@ $("#btn_release").click(function() {
 					html = '';
 					html += '<tr>';
 					html += '<td class="text-left">' + data.data.created + '</td>';
-					html += '<td class="text-left">payment</td>';
+					html += '<td class="text-left">{{ text_payment }}</td>';
 					html += '<td class="text-left">' + data.data.amount + '</td>';
 					html += '</tr>';
 
@@ -196,7 +196,7 @@ $("#btn_rebate").click(function() {
 					html = '';
 					html += '<tr>';
 					html += '<td class="text-left">' + data.data.created + '</td>';
-					html += '<td class="text-left">rebate</td>';
+					html += '<td class="text-left">{{ text_rebate }}</td>';
 					html += '<td class="text-left">' + data.data.amount + '</td>';
 					html += '</tr>';
 

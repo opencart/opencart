@@ -656,7 +656,7 @@ $('#button-address').on('click', function(e) {
 	e.preventDefault();
 
 	html  = '<fieldset id="address-row' + address_row + '">';
-	html += '  <legend>{{ text_address }} ' + address_row + ' <button type="button" onclick="$(\'#address-row' + address_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm float-right"><i class="fas fa-minus-circle"></i></button></legend></legend>';
+	html += '  <legend>{{ text_address }} ' + (address_row + 1) + ' <button type="button" onclick="$(\'#address-row' + address_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm float-right"><i class="fas fa-minus-circle"></i></button></legend></legend>';
 	html += '  <input type="hidden" name="address[' + address_row + '][address_id]" value="" />';
 
 	html += '  <div class="form-group row required">';

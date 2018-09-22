@@ -34,6 +34,9 @@ $_['text_credits']               = 'Balance';
 $_['text_error']                 = 'Error:';
 $_['text_flp_upgrade']           = '<a href="http://www.fraudlabspro.com/pricing" target="_blank">[Upgrade]</a>';
 $_['text_flp_merchant_area']     = 'Please login to <a href="http://www.fraudlabspro.com/merchant/login" target="_blank">FraudLabs Pro Merchant Area</a> for more information about this order.';
+$_['text_rule_validation']       = 'Rules Validation';
+$_['text_testing_purpose']       = 'Testing Purpose';
+$_['text_confirm_delete']        = 'WARNING: All data will be permanently deleted from the storage. Are you sure you want to proceed with the deletion?';
 
 // Entry
 $_['entry_status']               = 'Status';

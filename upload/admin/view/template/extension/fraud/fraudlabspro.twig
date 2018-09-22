@@ -47,7 +47,7 @@
               {% endif %}</div>
           </div>
           <fieldset>
-            <legend>Rules Validation</legend>
+            <legend>{{ text_rule_validation }}</legend>
             <div class="form-group row">
               <label class="col-sm-2 col-form-label" for="input-fraud-review-status">{{ entry_review_status }}</label>
               <div class="col-sm-10">
@@ -95,7 +95,7 @@
             </div>
           </fieldset>
           <fieldset>
-            <legend>Testing Purpose</legend>
+            <legend>{{ text_testing_purpose }}</legend>
             <div class="form-group row">
               <label class="col-sm-2 col-form-label" for="input-score">{{ entry_simulate_ip }}</label>
               <div class="col-sm-10">
@@ -111,7 +111,7 @@
         <script>
 jQuery(document).ready(function($){
     $('#button-purge').on('click', function(e) {
-        if (!confirm('WARNING: All data will be permanently deleted from the storage. Are you sure you want to proceed with the deletion?')) {
+        if (!confirm({{ text_confirm_delete }})) {
             e.preventDefault();
         }
         else {

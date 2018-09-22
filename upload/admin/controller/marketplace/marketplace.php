@@ -98,9 +98,9 @@ class ControllerMarketplaceMarketplace extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url)
 		);
-		
+
 		$time = time();
-		
+
 		// We create a hash from the data in a similar method to how amazon does things.
 		$string  = 'api/marketplace/list' . "\n";
 		$string .= $this->config->get('opencart_username') . "\n";
@@ -923,8 +923,8 @@ class ControllerMarketplaceMarketplace extends Controller {
 		if (!$this->config->get('opencart_username') || !$this->config->get('opencart_secret')) {
 			$json['error'] = $this->language->get('error_opencart');
 		}
-					
-		if (!$json) {	
+
+		if (!$json) {
 			$time = time();
 
 			// We create a hash from the data in a similar method to how amazon does things.
@@ -1016,7 +1016,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$results = $json['comments'];
 
 			foreach ($results as $result) {
-				if ($result['reply_total'] > 5) {
+				if (isset($result['reply_total']) && $result['reply_total'] > 5) {
 					$next = $this->url->link('marketplace/marketplace/reply', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&parent_id=' . $result['extension_comment_id'] . '&page=2');
 				} else {
 					$next = '';
@@ -1084,9 +1084,13 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 		$data['replies'] = array();
 
-		$reply_total = $json['reply_total'];
+		if(isset($json['reply_total'])) {
+				$reply_total = $json['reply_total'];
+		} else {
+				$reply_total = 0;
+		}
 
-		if ($json['replies']) {
+		if (isset($json['replies'])) {
 			$results = $json['replies'];
 
 			foreach ($results as $result) {

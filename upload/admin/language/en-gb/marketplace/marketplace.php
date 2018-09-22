@@ -49,6 +49,8 @@ $_['text_action']        = 'Action';
 
 // Entry
 $_['entry_pin']          = 'PIN';
+$_['entry_write_comment']= 'Write your comment here...';
+$_['entry_featured']     = 'Featured';
 
 // Tab
 $_['tab_description']    = 'Description';
@@ -64,6 +66,8 @@ $_['button_get_support'] = 'Get Support';
 $_['button_comment']     = 'Comment';
 $_['button_reply']       = 'Reply';
 $_['button_forgot_pin']  = 'Forgot PIN?';
+$_['button_more_reply']  = 'See more replies...';
+$_['button_refresh']     = 'Refresh';
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify extensions!';

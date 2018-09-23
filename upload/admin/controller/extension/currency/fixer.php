@@ -113,27 +113,10 @@ class ControllerExtensionCurrencyFixer extends Controller {
 
 				$response_info = json_decode($response, true);
 
-
-				$this->config->get('currency_fixer_api')
-
-
 				if (isset($response_info['rates'])) {
-
-
-
-
 					foreach ($currencies as $currency) {
-						if ($this->config->get('currency_fixer_api')) {
-
-
-						}
-
-
-
-
-
 						if (isset($response_info['rates'][$currency['code']])) {
-							$this->model_localisation_currency->editValueByCode($currency['code'], $response_info['rates'][$currency['code']]);
+							$this->model_localisation_currency->editValueByCode($currency['code'], ($response_info['rates'][$default] / $response_info['rates'][$currency['code']]));
 						}
 					}
 				}

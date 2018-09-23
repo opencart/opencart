@@ -223,7 +223,7 @@ legend {
     font-size: 16px;
     width: 18px;
     margin-right: 5px;
-    color: #b3cbdd;
+    /*color: #b3cbdd;*/
 }
 
 #menu > li.active > a {

@@ -399,14 +399,15 @@ $('.date').datetimepicker({
 });
 
 $('.time').datetimepicker({
-	language: '{{ datepicker }}',
-	pickDate: false
+	'format': 'HH:mm',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
 });
 
 $('.datetime').datetimepicker({
-	language: '{{ datepicker }}',
-	pickDate: true,
-	pickTime: true
+	'format': 'YYYY-MM-DD HH:mm',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
 });
 //--></script>
 {{ footer }}

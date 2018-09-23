@@ -6,7 +6,17 @@ class ControllerAccountAccount extends Controller {
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
-
+		
+		//Load Model Wish List to access getTotalWishList()
+		$this->load->model('account/wishlist');
+		
+		//Load Wish List Language
+		$this->load->language('account/wishlist');
+		
+		//Overwrite var text_wishlist
+		$data['text_wishlist'] = sprintf($this->language->get('text_wishlist'), $this->model_account_wishlist->getTotalWishlist());
+		
+		//Overwrite lang variable with account
 		$this->load->language('account/account');
 
 		$this->document->setTitle($this->language->get('heading_title'));

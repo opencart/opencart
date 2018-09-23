@@ -8,7 +8,9 @@ class ControllerAccountWishList extends Controller {
 		}
 
 		$this->load->language('account/wishlist');
-
+		//parse text_empty to view
+		$data['text_empty'] = $this->language->get('text_empty');
+		
 		$this->load->model('account/wishlist');
 
 		$this->load->model('catalog/product');

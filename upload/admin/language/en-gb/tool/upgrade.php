@@ -7,7 +7,15 @@ $_['text_success']       = 'Success: You are using the latest version %s!';
 $_['error_version']      = 'Your current OpenCart version is out of date! The current latest version is <strong>%s</strong>';
 
 $_['text_version']       = 'Check Latest Version';
+$_['text_version_1']     = ' Tips: Before upgrading it\'s very important to';
+$_['text_version_2']     = 'Make a complete backup of your web site!';
+$_['text_version_3']     = 'If you are using the cloud version, you can backup with your opencart account';
+$_['text_version_4']     = 'Check the extensions installed are compatible with the latest version';
+$_['text_version_5']     = 'It\'s better if you could copy your site to a test server and practise upgrading before starting with the live web site.';
 $_['text_compatibility'] = 'Compatibility';
+$_['text_compatible_1']  = 'Before upgrading, it\'s very important to check the extensions installed are compatible with the latest version!';
+$_['text_here']          = 'here';
+$_['text_backup']        = 'Backup';
 $_['text_upgrade']       = 'Upgrade System';
 $_['text_change']        = 'Change Log';
 $_['text_progress']      = 'Upgrade Progress';

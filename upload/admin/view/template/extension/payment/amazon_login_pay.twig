@@ -331,13 +331,13 @@
   $('#amazon-login-pay-payment_region').on('change', function() {
 	  switch ($(this).val()) {
 		  case 'EUR':
-			  $('#amazon-login-pay-language').html('<option selected value="de-DE">German</option>');
+			  $('#amazon-login-pay-language').html('<option selected value="de-DE">{{ text_de }}</option>');
 			  break;
 		  case 'GBP':
-			  $('#amazon-login-pay-language').html('<option selected value="en-GB">English</option>');
+			  $('#amazon-login-pay-language').html('<option selected value="en-GB">{{ text_uk }}</option>');
 			  break;
 		  case 'USD':
-			  $('#amazon-login-pay-language').html('<option selected value="en-US">American English</option>');
+			  $('#amazon-login-pay-language').html('<option selected value="en-US">{{ text_us }}</option>');
 			  break;
 	  }
 	  $('<input>').attr({

@@ -112,7 +112,7 @@
 		  var eway_error = false;
 		  if ($('#eway-cardname').val().length < 1) {
 			  eway_error = true;
-			  $('#ewaycard-error').html('Card Holder\'s Name must be entered');
+			  $('#ewaycard-error').html({{ error_card_holder_name }});
 		  } else {
 			  $('#ewaycard-error').empty();
 		  }
@@ -120,7 +120,7 @@
 		  var ccnum_regex = new RegExp("^[0-9]{13,19}$");
 		  if (!ccnum_regex.test($('#eway-cardnumber').val().replace(/ /g, '')) || !luhn10($('#eway-cardnumber').val())) {
 			  eway_error = true;
-			  $('#ewaynumber-error').html('Card Number appears invalid');
+			  $('#ewaynumber-error').html({{ error_card_number }});
 		  } else {
 			  $('#ewaynumber-error').empty();
 		  }
@@ -134,7 +134,7 @@
 
 		  if (today.getTime() > cc_expired.getTime()) {
 			  eway_error = true;
-			  $('#expiry-error').html('This expiry date has passed');
+			  $('#expiry-error').html({{ error_expiry_date }});
 		  } else {
 			  $('#expiry-error').empty();
 		  }
@@ -142,7 +142,7 @@
 		  var ccv_regex = new RegExp("^[0-9]{3,4}$");
 		  if (!ccv_regex.test($('#eway-cardcvn').val().replace(/ /g, ''))) {
 			  eway_error = true;
-			  $('#ewaycvn-error').html('CVV/CSV Number appears invalid');
+			  $('#ewaycvn-error').html({{ error_invalid_cvv }});
 		  } else {
 			  $('#ewaycvn-error').empty();
 		  }

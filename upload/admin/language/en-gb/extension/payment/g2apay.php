@@ -9,6 +9,7 @@ $_['text_edit']					 	  = 'Edit G2APay';
 $_['text_g2apay']				 	  = '<a href="https://pay.g2a.com/" target="_blank"><img src="view/image/payment/g2apay.png" alt="G2APay" title="G2APay" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_payment_info']			 	  = 'Payment information';
 $_['text_refund_status']		 	  = 'Payment refund';
+$_['text_refund']		 	          = 'Refund';
 $_['text_order_ref']			 	  = 'Order ref';
 $_['text_order_total']			 	  = 'Total authorised';
 $_['text_total_released']		 	  = 'Total released';

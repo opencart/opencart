@@ -5,6 +5,7 @@ $_['text_choose_deposit']      = 'Choose your deposit';
 $_['text_monthly_payments']    = 'monthly payments of';
 $_['text_months']              = 'months';
 $_['text_term']                = 'Term';
+$_['text_divido']              = 'Divido';
 $_['text_deposit']             = 'Deposit';
 $_['text_credit_amount']       = 'Cost of credit';
 $_['text_amount_payable']      = 'Total payable';

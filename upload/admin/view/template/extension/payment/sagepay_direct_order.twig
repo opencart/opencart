@@ -48,7 +48,7 @@
       {% endif %}</td>
   </tr>
   <tr>
-    <td>{{ text_transactions }}:</td>
+    <td>{{ text_transactions }}</td>
     <td>
       <table class="table table-striped table-bordered" id="sagepay_direct_transactions">
         <thead>
@@ -89,7 +89,7 @@ $("#button-void").click(function() {
 					html = '';
 					html += '<tr>';
 					html += '<td class="text-left">' + data.data.date_added + '</td>';
-					html += '<td class="text-left">void</td>';
+					html += '<td class="text-left">{{ text_void }}</td>';
 					html += '<td class="text-left">0.00</td>';
 					html += '</tr>';
 
@@ -130,7 +130,7 @@ $("#button-release").click(function() {
 					html = '';
 					html += '<tr>';
 					html += '<td class="text-left">' + data.data.date_added + '</td>';
-					html += '<td class="text-left">payment</td>';
+					html += '<td class="text-left">{{ text_payment }}</td>';
 					html += '<td class="text-left">' + data.data.amount + '</td>';
 					html += '</tr>';
 
@@ -185,7 +185,7 @@ $("#button-rebate").click(function() {
 					html = '';
 					html += '<tr>';
 					html += '<td class="text-left">' + data.data.date_added + '</td>';
-					html += '<td class="text-left">rebate</td>';
+					html += '<td class="text-left">{{ text_rebate }}</td>';
 					html += '<td class="text-left">' + data.data.amount + '</td>';
 					html += '</tr>';
 

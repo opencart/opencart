@@ -15,6 +15,7 @@ $_['text_release_ok_order']		         = 'Release was successful, order status up
 $_['text_refund_ok']			         = 'Rebate was successful';
 $_['text_refund_ok_order']		         = 'Rebate was successful, order status updated to refund';
 $_['text_void_ok']				         = 'Void was successful, order status updated to voided';
+$_['text_refund']                    = 'Refund';
 
 // Order page - payment tab
 $_['text_payment_info']			         = 'Payment information';
@@ -22,7 +23,7 @@ $_['text_refund_status']		         = 'Payment refund';
 $_['text_order_ref']			         = 'Order ref';
 $_['text_order_total']			         = 'Total authorised';
 $_['text_total_released']		         = 'Total released';
-$_['text_transactions']			         = 'Transactions';
+$_['text_transactions']			         = 'Transactions:';
 $_['text_column_amount']		         = 'Amount';
 $_['text_column_type']			         = 'Type';
 $_['text_column_date_added']	         = 'Added';

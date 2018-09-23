@@ -95,7 +95,7 @@
 					if (json['success']) {
 						html = '';
 						html += '<tr>';
-						html += '<td class="text-left">Payment</td>';
+						html += '<td class="text-left">{{ text_payment }}</td>';
 						html += '<td class="text-left">' + json['retref'] + '</td>';
 						html += '<td class="text-left">' + json['amount'] + '</td>';
 						html += '<td class="text-left">' + json['status'] + '</td>';
@@ -144,7 +144,7 @@
 					if (json['success']) {
 						html = '';
 						html += '<tr>';
-						html += '<td class="text-left">Refund</td>';
+						html += '<td class="text-left">{{ button_refund }}</td>';
 						html += '<td class="text-left">' + json['retref'] + '</td>';
 						html += '<td class="text-left">' + json['amount'] + '</td>';
 						html += '<td class="text-left">' + json['status'] + '</td>';

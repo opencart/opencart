@@ -57,6 +57,10 @@ label {
   font-weight: normal;
 }
 
+select.form-control:not([size]):not([multiple]) {
+  height: calc(2.25rem + 2px);
+}
+
 select,
 textarea,
 input[type="text"],
@@ -742,6 +746,7 @@ footer {
   .button-group {
     border-top: 1px solid #ddd;
     background-color: #eee;
+    overflow: auto;
 
     button {
       width: 60%;
@@ -805,7 +810,7 @@ footer {
 .product-list {
   .product-thumb {
     .caption {
-      //margin-left: 230px;
+      margin-left: 230px;
     }
     .button-group {
       border-left: 1px solid #ddd;
@@ -815,17 +820,17 @@ footer {
   @media (min-width: 768px) {
     .product-thumb {
       .image {
-        //float: left;
+        float: left;
         padding: 0 15px;
         display: inline-block;
-        width: 30%;
-
-        + div {
-          display: inline-block;
-          margin-left: 0%;
-          width: 69.5%;
-
-        }
+        // width: 30%;
+        //
+        // + div {
+        //   display: inline-block;
+        //   margin-left: 0%;
+        //   width: 69.5%;
+        //
+        // }
       }
     }
   }
@@ -841,6 +846,10 @@ footer {
       }
     }
   }
+}
+
+div#content.col-lg-6 div#display-control.row div.col-md-3 span.d-none, div#content.col-sm-6 div#display-control.row div.col-md-3 span.d-none {
+  display: none !important;
 }
 
 .rating {

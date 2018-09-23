@@ -10,7 +10,7 @@
     <td id="eway-total-captured">{{ eway_order.total_captured_formatted }}</td>
   <td>
     {% if eway_order.void_status == 0 and eway_order.capture_status == 0 %}
-      <input type="text" name="eway_capture_amount" placeholder="{{ eway_order.uncaptured }}" id="eway-capture-amount" class="" />
+      <input type="text" name="eway_capture_amount" value="{{ eway_order.uncaptured }}" id="eway-capture-amount" class="" />
       <a class="button btn btn-primary" id="btn-capture">{{ btn_capture }}</a>
       <span class="btn btn-primary" id="img-loading-capture" style="display:none;"><i class="fas fa-cog fa-spin fa-lg"></i></span>
     {% endif %}
@@ -21,7 +21,7 @@
     <td id="eway-total-refunded">{{ eway_order.total_refunded_formatted }}</td>
     <td>
       {% if eway_order.refund_status == 0 and eway_order.capture_status == 1 %}
-        <input type="text" name="eway_refund_amount" placeholder="{{ eway_order.unrefunded }}" id="eway-refund-amount" class="" />
+        <input type="text" name="eway_refund_amount" value="{{ eway_order.unrefunded }}" id="eway-refund-amount" class="" />
         <a class="button btn btn-primary" id="btn-refund">{{ btn_refund }}</a>
         <span class="btn btn-primary" id="img-loading-refund" style="display:none;"><i class="fas fa-cog fa-spin fa-lg"></i></span>
       {% endif %}
@@ -87,8 +87,7 @@
 						if (data.data.refund_status != 1) {
 							$('#btn-refund').show();
 							$('#eway-refund-amount').show();
-							$('#eway-refund-amount').val('');
-							$('#eway-refund-amount').attr('placeholder',data.data.remaining);
+							$('#eway-refund-amount').val(data.data.remaining);
 						}
 
 						if (data.message != '') {
@@ -141,8 +140,7 @@
 						if (data.data.capture_status != 1) {
 							$('#btn-capture').show();
 							$('#eway-capture-amount').show();
-							$("#eway-capture-amount").val('');
-							$("#eway-capture-amount").attr('placeholder',data.data.remaining);
+							$("#eway-capture-amount").val(data.data.remaining);
 						}
 
 						if (data.message != '') {

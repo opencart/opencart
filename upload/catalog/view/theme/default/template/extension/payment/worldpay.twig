@@ -82,7 +82,7 @@
 	  Worldpay.setClientKey("{{ worldpay_client_key }}");
 
 	  // disable new card form if existing cards
-    {% if not existing_cards %}
+    {% if existing_cards %}
 	  $('#payment-new-form :input').prop('disabled', true);
     {% endif %}
 

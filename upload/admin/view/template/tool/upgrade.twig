@@ -34,16 +34,16 @@
               {% endif %}
             </fieldset>
             <div class="alert alert-info">
-              <p><strong><i class="fas fa-exclamation-circle"></i> Tips: Before upgrading it's very important to</strong></p>
+              <p><strong><i class="fas fa-exclamation-circle"></i>{{ text_version_1 }}</strong></p>
               <ol>
-                <li>Make a complete backup of your web site!
+                <li>{{ text_version_2 }}
                   <br/>
-                  Backup <a href="{{ backup }}">here</a>;
+                  Backup <a href="{{ backup }}">{{ text_here }}</a>;
                   <br/>
-                  If you are using the cloud version, you can backup with your opencart account <a href="{{ opencart_account }}" target="_blank">here</a>.
+                  {{ text_version_3 }}<a href="{{ opencart_account }}" target="_blank">here</a>.
                 </li>
-                <li>Check the extensions installed are compatible with the latest version</li>
-                <li>It's better if you could copy your site to a test server and practise upgrading before starting with the live web site.</li>
+                <li>{{ text_version_4 }}</li>
+                <li>{{ text_version_5 }}</li>
               </ol>
             </div>
             <fieldset>
@@ -60,7 +60,7 @@
         <div id="collapse-compatible" data-parent="#collapse" class="collapse">
           <div class="card-body">
             <div class="alert alert-warning">
-              Before upgrading, it's very important to check the extensions installed are compatible with the latest version!
+              {{ text_compatible_1 }}
               <button type="button" class="close" data-dismiss="alert">&times;</button>
             </div>
             <table class="table table-bordered table-hover">

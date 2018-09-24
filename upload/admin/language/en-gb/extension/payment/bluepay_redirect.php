@@ -10,6 +10,9 @@ $_['text_bluepay_redirect']	 = '<a href="http://www.bluepay.com/preferred-partne
 $_['text_sim']				 = 'Simulator';
 $_['text_test']				 = 'Test';
 $_['text_live']				 = 'Live';
+$_['text_void']				         = 'Void';
+$_['text_payment']				     = 'Payment';
+$_['text_rebate']				       = 'Rebate';
 $_['text_sale']				 = 'Sale';
 $_['text_authenticate']		 = 'Authorize';
 $_['text_release_ok']		 = 'Release was successful';

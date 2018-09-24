@@ -11,3 +11,4 @@ $_['text_success']				   = 'Success';
 $_['text_choose_shipping_method']  = 'Choose shipping method';
 $_['text_sales_tax']			   = 'Sales Tax';
 $_['text_newsletter']			   = 'Subscribe to our newsletter';
+$_['text_order_summary']		 = 'Order Summary';

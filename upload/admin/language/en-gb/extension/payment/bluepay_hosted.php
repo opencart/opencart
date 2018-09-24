@@ -9,6 +9,9 @@ $_['text_edit']				 = 'Edit BluePay Hosted Form';
 $_['text_bluepay_hosted']	 = '<a href="http://www.bluepay.com/preferred-partner/opencart" target="_blank"><img src="view/image/payment/bluepay.jpg" alt="BluePay Hosted Form" title="BluePay Hosted Form" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_test']				 = 'Test';
 $_['text_live']				 = 'Live';
+$_['text_void']				         = 'Void';
+$_['text_payment']				     = 'Payment';
+$_['text_rebate']				       = 'Rebate';
 $_['text_sale']				 = 'Sale';
 $_['text_authenticate']		 = 'Authorize';
 $_['text_release_ok']		 = 'Release was successful';
@@ -54,9 +57,9 @@ $_['help_cron_job_token']	 = 'Make this long and hard to guess';
 $_['help_cron_job_url']		 = 'Set a cron job to call this URL';
 
 // Button
-$_['button_release']		 = 'Release';
-$_['button_rebate']			 = 'Rebate / refund';
-$_['button_void']			 = 'Void';
+$_['button_release']		   = 'Release';
+$_['button_rebate']			   = 'Rebate / refund';
+$_['button_void']			     = 'Void';
 
 // Error
 $_['error_permission']		 = 'Warning: You do not have permission to modify payment BluePay!';

@@ -14,6 +14,8 @@ $_['text_cardconnect']              = '<a href="http://www.cardconnect.com" targ
 $_['text_payment']                  = 'Payment';
 $_['text_authorize']                = 'Authorize';
 $_['text_live']                     = 'Live';
+$_['text_payment']				          = 'Payment';
+$_['text_refund']				            = 'Refund';
 $_['text_test']                     = 'Test';
 $_['text_no_cron_time']             = 'The cron has not yet been executed';
 $_['text_payment_info']             = 'Payment Information';

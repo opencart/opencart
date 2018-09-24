@@ -15,6 +15,7 @@ $_['text_confirm_refund']	= 'Are you sure you want to refund';
 $_['text_na']				= 'N/A';
 $_['text_success_action']	= 'Success';
 $_['text_error_generic']	= 'Error: There was an error with your request. Please check the logs.';
+$_['text_transaction_not_found'] = 'Unable to find transaction for this order.';
 
 // Column
 $_['column_refund']			= 'Refund';
@@ -26,14 +27,16 @@ $_['column_amount']			= 'Amount';
 $_['column_description']	= 'Description';
 
 // Entry
-$_['entry_total']			= 'Total';
-$_['entry_order_status']	= 'Order Status';
-$_['entry_geo_zone']		= 'Geo Zone';
-$_['entry_status']			= 'Status';
-$_['entry_sort_order']		= 'Sort Order';
-$_['entry_key']				= 'Key';
-$_['entry_secret']			= 'Secret';
-$_['entry_debug']			= 'Debug';
+$_['entry_total']            = 'Total';
+$_['entry_order_status']	   = 'Order Status';
+$_['entry_geo_zone']         = 'Geo Zone';
+$_['entry_status']			     = 'Status';
+$_['entry_sort_order']		   = 'Sort Order';
+$_['entry_key']				       = 'Key';
+$_['entry_secret']			     = 'Secret';
+$_['entry_debug']			       = 'Debug';
+$_['entry_amount']			     = 'Amount:';
+$_['entry_description']		   = 'Description:';
 
 // Help
 $_['help_debug']			= 'Enabling debug will write sensitive data to a log file. You should always disable unless instructed otherwise.';

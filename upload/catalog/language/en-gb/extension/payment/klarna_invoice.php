@@ -10,6 +10,7 @@ $_['text_year']					= 'Year';
 $_['text_month']				= 'Month';
 $_['text_day']					= 'Day';
 $_['text_comment']				= 'Klarna\'s Invoice ID: %s. ' . "\n" . '%s/%s: %.4f';
+$_['text_agree_transmission']		= 'I agree with the transmission of the data required for the settlement of the invoice purchase and an identity and credit check to Klarna. I can revoke my <a href="https://online.klarna.com/consent_en.yaws" target="_blank"> consent </a> at any time with an effect for the future.';
 
 // Entry
 $_['entry_gender']				= 'Gender';

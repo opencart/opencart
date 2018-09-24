@@ -522,7 +522,7 @@ class ControllerCatalogProductOption extends Controller {
 	}
 
 	protected function validateDelete() {
-		if (!$this->user->hasPermission('modify', 'catalog/option')) {
+		if (!$this->user->hasPermission('modify', 'catalog/product_option')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

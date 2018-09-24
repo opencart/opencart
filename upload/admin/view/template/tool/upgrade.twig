@@ -34,16 +34,16 @@
               {% endif %}
             </fieldset>
             <div class="alert alert-info">
-              <p><strong><i class="fas fa-exclamation-circle"></i>{{ text_version_1 }}</strong></p>
+              <p><strong><i class="fas fa-exclamation-circle"></i> {{ text_tips }}</strong></p>
               <ol>
-                <li>{{ text_version_2 }}
+                <li>{{ text_make }}
                   <br/>
-                  Backup <a href="{{ backup }}">{{ text_here }}</a>;
+                  {{ text_backup }} <a href="{{ backup }}">{{ text_here }}</a>;
                   <br/>
-                  {{ text_version_3 }}<a href="{{ opencart_account }}" target="_blank">here</a>.
+                  {{ text_cloud }} <a href="{{ opencart_account }}" target="_blank">{{ text_here }}</a>.
                 </li>
-                <li>{{ text_version_4 }}</li>
-                <li>{{ text_version_5 }}</li>
+                <li>{{ text_check }}</li>
+                <li>{{ text_better }}</li>
               </ol>
             </div>
             <fieldset>
@@ -60,7 +60,7 @@
         <div id="collapse-compatible" data-parent="#collapse" class="collapse">
           <div class="card-body">
             <div class="alert alert-warning">
-              {{ text_compatible_1 }}
+              {{ text_before }}
               <button type="button" class="close" data-dismiss="alert">&times;</button>
             </div>
             <table class="table table-bordered table-hover">

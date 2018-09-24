@@ -51,6 +51,16 @@ set_error_handler(function($code, $message, $file, $line) use($log, $config) {
 	return true;
 });
 
+set_exception_handler(function($e) use ($log, $config) {
+	if ($config->get('error_display')) {
+		echo '<b>' . get_class($e) . '</b>: ' . $e->getMessage() . ' in <b>' . $e->getFile() . '</b> on line <b>' . $e->getLine() . '</b>';
+	}
+
+	if ($config->get('error_log')) {
+		$log->write(get_class($e) . ':  ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+	}
+});
+
 // Event
 $event = new Event($registry);
 $registry->set('event', $event);

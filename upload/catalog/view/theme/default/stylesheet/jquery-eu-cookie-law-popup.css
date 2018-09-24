@@ -1,0 +1,124 @@
+.clearfix {
+	clear: both;
+}
+
+.eupopup-container {
+	background-color: rgba(25, 25, 25, 0.9);
+	color: #efefef;
+	padding: 5px 20px;
+	font-size: 12px;
+	line-height: 1.2em;
+	text-align: center;
+	display: none;
+	z-index: 9999999;
+}
+
+.eupopup-container-top,
+.eupopup-container-fixedtop {
+	position: absolute;
+	top: 0; left: 0; right: 0;
+}
+
+.eupopup-container-fixedtop {
+	position: fixed;
+}
+
+.eupopup-container-bottom {
+	position: fixed;
+	bottom: 0; left: 0; right: 0;
+}
+
+.eupopup-container-bottomleft {
+	position: fixed;
+	bottom: 10px;
+	left: 10px;
+	width: 300px;
+}
+
+.eupopup-container-bottomright {
+	position: fixed;
+	bottom: 10px;
+	right: 10px;
+	width: 300px;
+}
+
+.eupopup-closebutton {
+	font-size: 16px;
+	font-weight: 100;
+	line-height: 1;
+	color: #a2a2a2;
+	filter: alpha(opacity=20);
+	position: absolute;
+	font-family: helvetica, arial, verdana, sans-serif;
+	top: 0; right: 0;
+	padding: 5px 10px;
+}
+.eupopup-closebutton:hover,
+.eupopup-closebutton:active {
+	color: #fff;
+	text-decoration: none;
+}
+
+.eupopup-head {
+	font-size: 1.2em;
+	font-weight: bold;
+	padding: 7px;
+	color: #fff;
+}
+
+.eupopup-body {
+	color: #a2a2a2;
+}
+
+.eupopup-buttons {
+	padding: 7px 0 5px 0;
+}
+
+.eupopup-button_1 {
+	color: #f6a21d;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.eupopup-button_2 {
+	color: #f6a21d;
+	font-weight: normal;
+	font-size: 12px;
+}
+
+.eupopup-button {
+	margin: 0 10px;
+}
+
+.eupopup-button:hover,
+.eupopup-button:focus {
+	text-decoration: underline;
+	color: #f6a21d;
+}
+
+body .eupopup-color-inverse {
+	color: #000;
+	background-color: rgba(255, 255, 255, 0.9);
+}
+
+body .eupopup-color-inverse .eupopup-head {
+	color: #000;
+}
+
+body .eupopup-style-compact {
+	text-align: left;
+	padding: 8px 30px 7px 20px;
+	line-height: 15px;
+}
+
+body .eupopup-style-compact .eupopup-head,
+body .eupopup-style-compact .eupopup-body,
+body .eupopup-style-compact .eupopup-buttons {
+	display: inline;
+	padding: 0;
+	margin: 0;
+}
+
+body .eupopup-style-compact .eupopup-button {
+	margin: 0 5px;
+}

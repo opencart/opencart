@@ -1,0 +1,73 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right">
+        <button type="submit" form="form-module" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        <ul class="nav nav-tabs">
+          <li class="nav-item"><a href="#tab-general" data-toggle="tab" class="nav-link active">{{ tab_google_calendar }}</a></li>
+          <li class="nav-item"><a href="#tab-order-status" data-toggle="tab" class="nav-link">{{ tab_google_calendar_settings }}</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active text-center" id="tab-general">
+                {% if module_google_calendar_status and module_google_calendar_code %}
+                    {% autoescape false %}
+                        <small class="form-text text-muted">{{ text_note }}</small>
+                        {{ module_google_calendar_code }}
+                    {% endautoescape %}
+                {% else %}
+                    <label>{{ text_setup }}</label>
+                {% endif %}
+            </div>
+            <div class="tab-pane" id="tab-order-status">
+                <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-module">
+                  <div class="form-group row required">
+                    <label class="col-sm-2 col-form-label" for="input-code">{{ entry_code }}</label>
+                    <div class="col-sm-10">
+                      <textarea name="module_google_calendar_code" rows="5" id="input-code" class="form-control">{{ module_google_calendar_code }}</textarea>
+                      <small class="form-text text-muted">{{ help_code|raw }}</small>
+                      {% if error_code %}
+                        <div class="invalid-tooltip">{{ error_code }}</div>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
+                    <div class="col-sm-10">
+                      <select name="module_google_calendar_status" id="input-status" class="form-control">
+                        {% if module_google_calendar_status %}
+                          <option value="1" selected="selected">{{ text_enabled }}</option>
+                          <option value="0">{{ text_disabled }}</option>
+                        {% else %}
+                          <option value="1">{{ text_enabled }}</option>
+                          <option value="0" selected="selected">{{ text_disabled }}</option>
+                        {% endif %}
+                      </select>
+                    </div>
+                  </div>
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

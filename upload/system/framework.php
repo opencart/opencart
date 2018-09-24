@@ -74,7 +74,7 @@ $registry->set('request', new Request());
 // Response
 $response = new Response();
 $response->addHeader('Content-Type: text/html; charset=utf-8');
-$response->setCompression($config->get('config_compression'));
+$response->setCompression($config->get('response_compression'));
 $registry->set('response', $response);
 
 // Database

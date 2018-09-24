@@ -32,7 +32,10 @@ class ControllerStartupStartup extends Controller {
 			date_default_timezone_set($this->config->get('config_timezone'));
 		}
 
-
+		// Response output compression level
+		if ($this->config->get('config_compression')) {
+			$this->response->setCompression($this->config->get('config_compression'));
+		}
 
 		/*
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "startup` WHERE ORDER BY store_id ASC");

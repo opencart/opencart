@@ -1041,7 +1041,7 @@ class ControllerCustomerCustomer extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $history_total;
 		$pagination->page = $page;
-		$pagination->limit = $this->config->get('config_limit_admin');
+		$pagination->limit = 10;
 		$pagination->url = $this->url->link('customer/customer/history', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&page={page}');
 
 		$data['pagination'] = $pagination->render();

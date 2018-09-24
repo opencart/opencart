@@ -448,7 +448,7 @@ class ControllerCatalogDownload extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $report_total;
 		$pagination->page = $page;
-		$pagination->limit = $this->config->get('config_limit_admin');
+		$pagination->limit = 10;
 		$pagination->url = $this->url->link('catalog/download/report', 'user_token=' . $this->session->data['user_token'] . '&download_id=' . $download_id . '&page={page}');
 
 		$data['pagination'] = $pagination->render();

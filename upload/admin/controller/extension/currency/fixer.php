@@ -120,11 +120,11 @@ class ControllerExtensionCurrencyFixer extends Controller {
 						}
 					}
 				}
-
-				$this->cache->delete('currency');
 			}
 
 			$this->model_localisation_currency->editValueByCode($default, '1.00000');
+
+			$this->cache->delete('currency');
 		}
 	}
 }

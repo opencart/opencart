@@ -78,19 +78,22 @@ if ($config->has('action_event')) {
 $loader = new Loader($registry);
 $registry->set('load', $loader);
 
+// Database
+if ($config->get('db_autostart')) {
+	$registry->set('db', new DB($config->get('db_engine'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port')));
+}
+
 // Request
 $registry->set('request', new Request());
 
 // Response
 $response = new Response();
 $response->addHeader('Content-Type: text/html; charset=utf-8');
-$response->setCompression($config->get('config_compression'));
+$loader->model('setting/setting');
+$setting = $registry->get('model_setting_setting');
+$config_compression = $setting->getSettingValue('config_compression');
+$response->setCompression(!is_null($config_compression) ? $config_compression : $config->get('config_compression'));
 $registry->set('response', $response);
-
-// Database
-if ($config->get('db_autostart')) {
-	$registry->set('db', new DB($config->get('db_engine'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port')));
-}
 
 // Session
 $session = new Session($config->get('session_engine'), $registry);

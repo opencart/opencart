@@ -56,7 +56,7 @@ $_['error_filename']       = 'error.log';
 
 // Reponse
 $_['response_header']      = array('Content-Type: text/html; charset=utf-8');
-$_['response_compression'] = 0;
+$_['config_compression'] = 0;
 
 // Autoload Configs
 $_['config_autoload']      = array();

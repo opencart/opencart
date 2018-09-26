@@ -226,12 +226,16 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		}
 
 		if (isset($this->request->post['response']) && $this->request->post['response'] == 'template') {
+			$data = array();
+
 			$data['redirect'] = $redirect;
 
 			$data['klarna_checkout'] = $html_snippet;
 
 			$this->response->setOutput($this->load->view('extension/payment/klarna_checkout_main', $data));
 		} elseif (isset($this->request->post['response']) && $this->request->post['response'] == 'json') {
+			$json = array();
+
 			$json['redirect'] = $redirect;
 
 			$this->response->addHeader('Content-Type: application/json');

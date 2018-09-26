@@ -78,7 +78,9 @@ $(document).ready(function() {
 
 	/* Search */
 	$('#search input[name=\'search\']').parent().find('button').on('click', function() {
-		var url = $('base').attr('href') + 'index.php?route=product/search';
+		var language_code = $('header #search input[name=\'search\']').data('lang');
+
+		var url = $('base').attr('href') + 'index.php?route=product/search&language=' + language_code;
 
 		var value = $('header #search input[name=\'search\']').val();
 

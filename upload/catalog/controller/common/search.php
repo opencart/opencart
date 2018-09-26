@@ -3,6 +3,8 @@ class ControllerCommonSearch extends Controller {
 	public function index() {
 		$this->load->language('common/search');
 
+		$data['language'] = $this->config->get('config_language');
+
 		$data['text_search'] = $this->language->get('text_search');
 
 		if (isset($this->request->get['search'])) {

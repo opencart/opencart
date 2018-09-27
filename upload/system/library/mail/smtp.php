@@ -187,10 +187,14 @@ class Smtp {
 			$message = str_replace("\r\n", "\n", $header . $message);
 			$message = str_replace("\r", "\n", $message);
 
+			$length = (mb_detect_encoding($message, mb_detect_order(), true) == 'ASCII') ? 998 : 249;
+
 			$lines = explode("\n", $message);
 
 			foreach ($lines as $line) {
 				$results = str_split($line, 998);
+
+				preg_match_all('/.{1,{' . $length . '}}(?=\W+)/u', $line, $results, PREG_PATTERN_ORDER);
 
 				foreach ($results as $result) {
 					if (substr(PHP_OS, 0, 3) != 'WIN') {

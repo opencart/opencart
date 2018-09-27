@@ -111,7 +111,7 @@ $(document).ready(function() {
 	$('#list-view').click(function() {
 		$('#content .product-grid > .clearfix').remove();
 
-		$('#content .row > .product-grid').attr('class', 'product-layout product-list col-xs-12');
+		$('#content .row > .product-grid').attr('class', 'product-layout product-list col-12');
 
 		$('#grid-view').removeClass('active');
 		$('#list-view').addClass('active');

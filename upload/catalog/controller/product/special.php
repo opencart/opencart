@@ -226,7 +226,7 @@ class ControllerProductSpecial extends Controller {
 		if (isset($this->request->get['limit'])) {
 			$url .= '&limit=' . $this->request->get['limit'];
 		}
-		
+
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $product_total,
 			'page'  => $page,

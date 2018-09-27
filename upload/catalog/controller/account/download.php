@@ -75,13 +75,12 @@ class ControllerAccountDownload extends Controller {
 			}
 		}
 
-		$pagination = new Pagination();
-		$pagination->total = $download_total;
-		$pagination->page = $page;
-		$pagination->limit = $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit');
-		$pagination->url = $this->url->link('account/download', 'language=' . $this->config->get('config_language') . '&page={page}');
-
-		$data['pagination'] = $pagination->render();
+		$data['pagination'] = $this->load->controller('common/pagination', array(
+			'total' => $download_total,
+			'page'  => $page,
+			'limit' => $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit'),
+			'url'   => $this->url->link('account/download', 'language=' . $this->config->get('config_language') . '&page={page}')
+		));
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($download_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($download_total - 10)) ? $download_total : ((($page - 1) * 10) + 10), $download_total, ceil($download_total / 10));
 		

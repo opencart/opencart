@@ -550,13 +550,12 @@ class ControllerProductProduct extends Controller {
 			);
 		}
 
-		$pagination = new Pagination();
-		$pagination->total = $review_total;
-		$pagination->page = $page;
-		$pagination->limit = 5;
-		$pagination->url = $this->url->link('product/product/review', 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->get['product_id'] . '&page={page}');
-
-		$data['pagination'] = $pagination->render();
+		$data['pagination'] = $this->load->controller('common/pagination', array(
+			'total' => $review_total,
+			'page'  => $page,
+			'limit' => 5,
+			'url'   => $this->url->link('product/product/review', 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->get['product_id'] . '&page={page}')
+		));
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($review_total) ? (($page - 1) * 5) + 1 : 0, ((($page - 1) * 5) > ($review_total - 5)) ? $review_total : ((($page - 1) * 5) + 5), $review_total, ceil($review_total / 5));
 

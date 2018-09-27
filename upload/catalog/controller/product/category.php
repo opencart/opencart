@@ -322,13 +322,12 @@ class ControllerProductCategory extends Controller {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
 
-			$pagination = new Pagination();
-			$pagination->total = $product_total;
-			$pagination->page = $page;
-			$pagination->limit = $limit;
-			$pagination->url = $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $this->request->get['path'] . $url . '&page={page}');
-
-			$data['pagination'] = $pagination->render();
+			$data['pagination'] = $this->load->controller('common/pagination', array(
+				'total' => $product_total,
+				'page'  => $page,
+				'limit' => $limit,
+				'url'   => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $this->request->get['path'] . $url . '&page={page}')
+			));
 
 			$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($product_total - $limit)) ? $product_total : ((($page - 1) * $limit) + $limit), $product_total, ceil($product_total / $limit));
 

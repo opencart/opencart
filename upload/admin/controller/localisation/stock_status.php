@@ -328,8 +328,7 @@ class ControllerLocalisationStockStatus extends Controller {
 		if (!$this->user->hasPermission('modify', 'localisation/stock_status')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
-
-		$this->load->model('setting/store');
+		
 		$this->load->model('catalog/product');
 
 		foreach ($this->request->post['selected'] as $stock_status_id) {

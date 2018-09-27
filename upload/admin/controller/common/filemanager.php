@@ -75,9 +75,9 @@ class ControllerCommonFileManager extends Controller {
 
 					$data['images'][] = array(
 						'thumb' => $this->model_tool_image->resize(utf8_substr($image, utf8_strlen(DIR_IMAGE)), 136, 136),
-						'name' => $name,
-						'path' => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
-						'href' => HTTP_CATALOG . 'image/' . utf8_substr($image, utf8_strlen(DIR_IMAGE))
+						'name'  => $name,
+						'path'  => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
+						'href'  => HTTP_CATALOG . 'image/' . utf8_substr($image, utf8_strlen(DIR_IMAGE))
 					);
 				}
 			}
@@ -194,13 +194,12 @@ class ControllerCommonFileManager extends Controller {
 		}
 
 		// Get total number of files and directories
-		$pagination = new Pagination();
-		$pagination->total = count(array_merge((array)$directories, (array)$files));
-		$pagination->page = $page;
-		$pagination->limit = 16;
-		$pagination->url = $this->url->link('common/filemanager', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
-
-		$data['pagination'] = $pagination->render();
+		$data['pagination'] = $this->load->controller('common/pagination', array(
+			'total' => count(array_merge((array)$directories, (array)$files)),
+			'page'  => $page,
+			'limit' => 16,
+			'url'   => $this->url->link('common/filemanager', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+		));
 
 		$this->response->setOutput($this->load->view('common/filemanager', $data));
 	}

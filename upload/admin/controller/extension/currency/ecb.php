@@ -93,12 +93,18 @@ class ControllerExtensionCurrencyECB extends Controller {
 				}
 			}
 
+			if (isset($currency_data[$default])) {
+				$rate = $currency_data[$default];
+			} else {
+				$rate = 1.0000;
+			}
+
 			print_r($currency_data);
 
 
 			echo $response;
 
-			//'EUR'
+			// 1.0000 'EUR' /
 
 			$this->load->model('localisation/currency');
 
@@ -108,7 +114,7 @@ class ControllerExtensionCurrencyECB extends Controller {
 
 				if (isset($currency_data[$result['code']])) {
 
-					$value = (1.000 / $currency_data[$result['code']];
+					$value = 1.0000 * ($result['code'] / $currency_data[$result['code']]);
 
 					echo $result['code'] . ' ' . $value . "\n";
 

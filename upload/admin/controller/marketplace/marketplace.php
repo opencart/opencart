@@ -487,13 +487,12 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
 
-		$pagination = new Pagination();
-		$pagination->total = $extension_total;
-		$pagination->page = $page;
-		$pagination->limit = 12;
-		$pagination->url = $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
-
-		$data['pagination'] = $pagination->render();
+		$data['pagination'] = $this->load->controller('common/pagination', array(
+			'total' => $extension_total,
+			'page'  => $page,
+			'limit' => 12,
+			'url'   => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+		));
 
 		$data['filter_search'] = $filter_search;
 		$data['filter_category'] = $filter_category;
@@ -1036,13 +1035,12 @@ class ControllerMarketplaceMarketplace extends Controller {
 			}
 		}
 
-		$pagination = new Pagination();
-		$pagination->total = $comment_total;
-		$pagination->page = $page;
-		$pagination->limit = 20;
-		$pagination->url = $this->url->link('marketplace/marketplace/comment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&page={page}');
-
-		$data['pagination'] = $pagination->render();
+		$data['pagination'] = $this->load->controller('common/pagination', array(
+			'total' => $comment_total,
+			'page'  => $page,
+			'limit' => 20,
+			'url'   => $this->url->link('marketplace/marketplace/comment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&page={page}')
+		));
 
 		$data['refresh'] = $this->url->link('marketplace/marketplace/comment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&page=' . $page);
 

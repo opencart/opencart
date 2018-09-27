@@ -44,6 +44,9 @@ label {
     font-size: 12px;
     font-weight: normal;
 }
+select.form-control:not([size]):not([multiple]) {
+  height: calc(2.25rem + 2px);
+}
 select.form-control, textarea.form-control, input[type="text"].form-control, input[type="password"].form-control, input[type="datetime"].form-control, input[type="datetime-local"].form-control, input[type="date"].form-control, input[type="month"].form-control, input[type="time"].form-control, input[type="week"].form-control, input[type="number"].form-control, input[type="email"].form-control, input[type="url"].form-control, input[type="search"].form-control, input[type="tel"].form-control, input[type="color"].form-control {
     font-size: 12px;
 }
@@ -562,6 +565,7 @@ footer h5 {
 .product-thumb .button-group {
     border-top: 1px solid #ddd;
     background-color: #eee;
+    overflow: auto;
 }
 .product-thumb .button-group button {
     width: 60%;
@@ -604,19 +608,17 @@ footer h5 {
     padding: 0 10px;
 }
 }
+.product-list .product-thumb .caption {
+    margin-left: 230px;
+}
 .product-list .product-thumb .button-group {
     border-left: 1px solid #ddd;
 }
 @media (min-width: 768px) {
     .product-list .product-thumb .image {
+    float: left;
     padding: 0 15px;
     display: inline-block;
-    width: 30%;
-}
-.product-list .product-thumb .image + div {
-    display: inline-block;
-    margin-left: 0%;
-    width: 69.5%;
 }
 }
 @media (max-width: 767px) {
@@ -628,6 +630,9 @@ footer h5 {
 .product-list .product-thumb .button-group {
     border-left: none;
 }
+}
+div#content.col-lg-6 div#display-control.row div.col-md-3 span.d-none, div#content.col-sm-6 div#display-control.row div.col-md-3 span.d-none {
+    display: none !important;
 }
 .rating .fa-stack {
     font-size: 8px;

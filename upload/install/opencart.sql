@@ -638,8 +638,87 @@ INSERT INTO `oc_customer_group_description` (`customer_group_id`, `language_id`,
 -----------------------------------------------------------
 
 --
--- Table structure for table `oc_custom_field_value_description`
+-- Dumping data for table `oc_custom_field`
 --
+
+INSERT INTO `oc_custom_field` (`custom_field_id`, `type`, `value`, `validation`, `location`, `status`, `sort_order`) VALUES
+(1, 'select', '', '', 'account', 0, 1),
+(2, 'radio', '', '', 'account', 0, 2),
+(3, 'checkbox', '', '', 'account', 0, 3),
+(4, 'text', '', '', 'account', 0, 4),
+(5, 'textarea', '', '', 'account', 0, 5),
+(6, 'file', '', '', 'account', 0, 6),
+(7, 'date', '', '', 'account', 0, 7),
+(8, 'time', '', '', 'account', 0, 8),
+(9, 'datetime', '', '', 'account', 0, 8);
+
+-----------------------------------------------------------
+
+--
+-- Dumping data for table `oc_custom_field_customer_group`
+--
+
+INSERT INTO `oc_custom_field_customer_group` (`custom_field_id`, `customer_group_id`, `required`) VALUES
+(1, 1, 1),
+(2, 1, 1),
+(3, 1, 1),
+(4, 1, 1),
+(5, 1, 1),
+(6, 1, 1),
+(7, 1, 1),
+(8, 1, 1),
+(9, 1, 1);
+
+-----------------------------------------------------------
+
+--
+-- Dumping data for table `oc_custom_field_description`
+--
+
+INSERT INTO `oc_custom_field_description` (`custom_field_id`, `language_id`, `name`) VALUES
+(1, 1, 'Select'),
+(2, 1, 'Radio'),
+(3, 1, 'Checkbox'),
+(4, 1, 'Text'),
+(5, 1, 'Textarea'),
+(6, 1, 'File'),
+(7, 1, 'Date'),
+(8, 1, 'Time'),
+(9, 1, 'Date &amp; Time');
+
+-----------------------------------------------------------
+
+--
+-- Dumping data for table `oc_custom_field_value`
+--
+
+INSERT INTO `oc_custom_field_value` (`custom_field_value_id`, `custom_field_id`, `sort_order`) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 1, 3),
+(4, 2, 1),
+(5, 2, 2),
+(6, 2, 3),
+(7, 3, 1),
+(8, 3, 2),
+(9, 3, 3);
+
+-----------------------------------------------------------
+
+--
+-- Dumping data for table `oc_custom_field_value_description`
+--
+
+INSERT INTO `oc_custom_field_value_description` (`custom_field_value_id`, `language_id`, `custom_field_id`, `name`) VALUES
+(1, 1, 1, 'Test 1'),
+(2, 1, 1, 'test 2'),
+(3, 1, 1, 'Test 3'),
+(4, 1, 2, 'Test 1'),
+(5, 1, 2, 'Test 2'),
+(6, 1, 2, 'Test 3'),
+(7, 1, 3, 'Test 1'),
+(8, 1, 3, 'Test 2'),
+(9, 1, 3, 'Test 3');
 
 -----------------------------------------------------------
 

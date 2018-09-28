@@ -70,7 +70,7 @@ class ControllerAccountAccount extends Controller {
 		$this->load->model('account/affiliate');
 		
 		$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
-		
+
 		if (!$affiliate_info) {	
 			$data['affiliate'] = $this->url->link('account/affiliate/add', 'language=' . $this->config->get('config_language'));
 		} else {

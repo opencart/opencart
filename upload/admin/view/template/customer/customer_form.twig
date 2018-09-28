@@ -392,7 +392,8 @@
                             </select>
                             {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
                               <div class="invalid-tooltip">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
-                            {% endif %}</div>
+                            {% endif %}
+                          </div>
                         </div>
                       {% endif %}
                       {% if custom_field.type == 'radio' %}
@@ -499,7 +500,8 @@
                             </div>
                             {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
                               <div class="invalid-tooltip">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
-                            {% endif %}</div>
+                            {% endif %}
+                          </div>
                         </div>
                       {% endif %}
                       {% if custom_field.type == 'datetime' %}

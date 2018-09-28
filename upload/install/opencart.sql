@@ -650,7 +650,7 @@ INSERT INTO `oc_custom_field` (`custom_field_id`, `type`, `value`, `validation`,
 (6, 'file', '', '', 'account', 0, 6),
 (7, 'date', '', '', 'account', 0, 7),
 (8, 'time', '', '', 'account', 0, 8),
-(9, 'datetime', '', '', 'account', 0, 8);
+(9, 'datetime', '', '', 'account', 0, 9);
 
 -----------------------------------------------------------
 

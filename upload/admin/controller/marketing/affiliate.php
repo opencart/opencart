@@ -428,6 +428,12 @@ class ControllerMarketingAffiliate extends Controller {
 			$data['error_warning'] = '';
 		}
 
+		if (isset($this->error['tracking'])) {
+			$data['error_tracking'] = $this->error['tracking'];
+		} else {
+			$data['error_tracking'] = '';
+		}
+
 		if (isset($this->error['cheque'])) {
 			$data['error_cheque'] = $this->error['cheque'];
 		} else {
@@ -523,14 +529,6 @@ class ControllerMarketingAffiliate extends Controller {
 			$data['customer_id'] = 0;
 		}
 
-		if (isset($this->request->post['customer_group_id'])) {
-			$data['customer_group_id'] = (int)$this->request->post['customer_group_id'];
-		} elseif (!empty($affiliate_info)) {
-			$data['customer_group_id'] = $affiliate_info['customer_group_id'];
-		} else {
-			$data['customer_group_id'] = 0;
-		}
-
 		if (isset($this->request->post['customer'])) {
 			$data['customer'] = $this->request->post['customer'];
 		} elseif (!empty($affiliate_info)) {
@@ -560,7 +558,7 @@ class ControllerMarketingAffiliate extends Controller {
 		} elseif (!empty($affiliate_info)) {
 			$data['tracking'] = $affiliate_info['tracking'];
 		} else {
-			$data['tracking'] = '';
+			$data['tracking'] = token(10);
 		}
 
 		if (isset($this->request->post['commission'])) {

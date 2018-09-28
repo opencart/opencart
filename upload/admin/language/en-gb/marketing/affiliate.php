@@ -64,6 +64,8 @@ $_['help_commission']           = 'Percentage the affiliate receives on each ord
 // Error
 $_['error_warning']             = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']          = 'Warning: You do not have permission to modify customers!';
+$_['error_customer']            = 'Customer required!';
+$_['error_wrong_customer']      = 'Warning: Please choose correct customer!';
 $_['error_already']             = 'Warning: Customer is already registered as an affiliate!';
 $_['error_tracking']            = 'Tracking Code required!';
 $_['error_exists']              = 'Tracking code is being used by another affiliate!';

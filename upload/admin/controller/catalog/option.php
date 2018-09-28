@@ -311,7 +311,7 @@ class ControllerCatalogOption extends Controller {
 
 		if (isset($this->request->post['option_description'])) {
 			$data['option_description'] = $this->request->post['option_description'];
-		} elseif (isset($this->request->get['option_id'])) {
+		} elseif (!empty($option_info)) {
 			$data['option_description'] = $this->model_catalog_option->getOptionDescriptions($this->request->get['option_id']);
 		} else {
 			$data['option_description'] = array();
@@ -335,7 +335,7 @@ class ControllerCatalogOption extends Controller {
 
 		if (isset($this->request->post['option_value'])) {
 			$option_values = $this->request->post['option_value'];
-		} elseif (isset($this->request->get['option_id'])) {
+		} elseif (!empty($option_info)) {
 			$option_values = $this->model_catalog_option->getOptionValueDescriptions($this->request->get['option_id']);
 		} else {
 			$option_values = array();

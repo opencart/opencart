@@ -360,7 +360,7 @@ class ControllerCatalogCategory extends Controller {
 
 		if (isset($this->request->post['category_description'])) {
 			$data['category_description'] = $this->request->post['category_description'];
-		} elseif (isset($this->request->get['category_id'])) {
+		} elseif (!empty($category_info)) {
 			$data['category_description'] = $this->model_catalog_category->getCategoryDescriptions($this->request->get['category_id']);
 		} else {
 			$data['category_description'] = array();
@@ -386,7 +386,7 @@ class ControllerCatalogCategory extends Controller {
 
 		if (isset($this->request->post['category_filter'])) {
 			$filters = $this->request->post['category_filter'];
-		} elseif (isset($this->request->get['category_id'])) {
+		} elseif (!empty($category_info)) {
 			$filters = $this->model_catalog_category->getCategoryFilters($this->request->get['category_id']);
 		} else {
 			$filters = array();
@@ -485,7 +485,7 @@ class ControllerCatalogCategory extends Controller {
 		
 		if (isset($this->request->post['category_seo_url'])) {
 			$data['category_seo_url'] = $this->request->post['category_seo_url'];
-		} elseif (isset($this->request->get['category_id'])) {
+		} elseif (!empty($category_info)) {
 			$data['category_seo_url'] = $this->model_catalog_category->getCategorySeoUrls($this->request->get['category_id']);
 		} else {
 			$data['category_seo_url'] = array();
@@ -493,7 +493,7 @@ class ControllerCatalogCategory extends Controller {
 				
 		if (isset($this->request->post['category_layout'])) {
 			$data['category_layout'] = $this->request->post['category_layout'];
-		} elseif (isset($this->request->get['category_id'])) {
+		} elseif (!empty($category_info)) {
 			$data['category_layout'] = $this->model_catalog_category->getCategoryLayouts($this->request->get['category_id']);
 		} else {
 			$data['category_layout'] = array();

@@ -17,6 +17,7 @@ class ControllerExtensionPaymentAlipay extends Controller {
 			'gateway_url'          => $this->config->get('payment_alipay_test') == "sandbox" ? "https://openapi.alipaydev.com/gateway.do" : "https://openapi.alipay.com/gateway.do",
 			'alipay_public_key'    => $this->config->get('payment_alipay_alipay_public_key'),
 		);
+
 		$out_trade_no = trim($order_info['order_id']);
 		$subject = trim($this->config->get('config_name'));
 		$total_amount = trim($this->currency->format($order_info['total'], 'CNY', '', false));

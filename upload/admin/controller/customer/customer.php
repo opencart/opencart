@@ -804,7 +804,7 @@ class ControllerCustomerCustomer extends Controller {
 
 		if (isset($this->request->post['address'])) {
 			$data['addresses'] = $this->request->post['address'];
-		} elseif (isset($this->request->get['customer_id'])) {
+		} elseif (!empty($customer_info)) {
 			$data['addresses'] = $this->model_customer_customer->getAddresses($this->request->get['customer_id']);
 		} else {
 			$data['addresses'] = array();

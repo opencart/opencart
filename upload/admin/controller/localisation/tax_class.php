@@ -323,7 +323,7 @@ class ControllerLocalisationTaxClass extends Controller {
 
 		if (isset($this->request->post['tax_rule'])) {
 			$data['tax_rules'] = $this->request->post['tax_rule'];
-		} elseif (isset($this->request->get['tax_class_id'])) {
+		} elseif (!empty($tax_class_info)) {
 			$data['tax_rules'] = $this->model_localisation_tax_class->getTaxRules($this->request->get['tax_class_id']);
 		} else {
 			$data['tax_rules'] = array();

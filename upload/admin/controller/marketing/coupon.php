@@ -389,7 +389,7 @@ class ControllerMarketingCoupon extends Controller {
 
 		if (isset($this->request->post['coupon_product'])) {
 			$products = $this->request->post['coupon_product'];
-		} elseif (isset($this->request->get['coupon_id'])) {
+		} elseif (!empty($coupon_info)) {
 			$products = $this->model_marketing_coupon->getCouponProducts($this->request->get['coupon_id']);
 		} else {
 			$products = array();
@@ -412,7 +412,7 @@ class ControllerMarketingCoupon extends Controller {
 
 		if (isset($this->request->post['coupon_category'])) {
 			$categories = $this->request->post['coupon_category'];
-		} elseif (isset($this->request->get['coupon_id'])) {
+		} elseif (!empty($coupon_info)) {
 			$categories = $this->model_marketing_coupon->getCouponCategories($this->request->get['coupon_id']);
 		} else {
 			$categories = array();

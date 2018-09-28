@@ -335,6 +335,7 @@ $(document).delegate('.agree', 'click', function(e) {
 	});
 });
 
+// Chain ajax calls.
 class Chain {
 	constructor() {
 		this.start = false;

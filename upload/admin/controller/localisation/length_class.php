@@ -311,7 +311,7 @@ class ControllerLocalisationLengthClass extends Controller {
 
 		if (isset($this->request->post['length_class_description'])) {
 			$data['length_class_description'] = $this->request->post['length_class_description'];
-		} elseif (isset($this->request->get['length_class_id'])) {
+		} elseif (!empty($length_class_info)) {
 			$data['length_class_description'] = $this->model_localisation_length_class->getLengthClassDescriptions($this->request->get['length_class_id']);
 		} else {
 			$data['length_class_description'] = array();

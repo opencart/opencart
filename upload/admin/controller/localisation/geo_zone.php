@@ -327,7 +327,7 @@ class ControllerLocalisationGeoZone extends Controller {
 
 		if (isset($this->request->post['zone_to_geo_zone'])) {
 			$data['zone_to_geo_zones'] = $this->request->post['zone_to_geo_zone'];
-		} elseif (isset($this->request->get['geo_zone_id'])) {
+		} elseif (!empty($geo_zone_info)) {
 			$data['zone_to_geo_zones'] = $this->model_localisation_geo_zone->getZoneToGeoZones($this->request->get['geo_zone_id']);
 		} else {
 			$data['zone_to_geo_zones'] = array();

@@ -22,6 +22,10 @@ class ControllerCommonFileManager extends Controller {
 			$page = 1;
 		}
 
+		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_IMAGE . 'catalog')) != DIR_IMAGE . 'catalog') {
+			$json['error'] = $this->language->get('error_directory');
+		}
+
 		$data['directories'] = array();
 
 		// Get directories
@@ -367,8 +371,11 @@ class ControllerCommonFileManager extends Controller {
 
 		// Loop through each path to run validations
 		foreach ($paths as $path) {
-			// Check path exsists
-			if ($path == DIR_IMAGE . 'catalog' || substr(str_replace('\\', '/', realpath(DIR_IMAGE . $path) . '/'), 0, strlen(DIR_IMAGE . 'catalog')) != DIR_IMAGE . 'catalog') {
+			// Convert any html encoded characters.
+			$path = html_entity_decode($path, ENT_QUOTES, 'UTF-8');
+
+			// Check path exists
+			if (($path == DIR_IMAGE . 'catalog') || (substr(str_replace('\\', '/', realpath(DIR_IMAGE . $path)), 0, strlen(DIR_IMAGE . 'catalog')) != DIR_IMAGE . 'catalog')) {
 				$json['error'] = $this->language->get('error_delete');
 
 				break;
@@ -378,13 +385,13 @@ class ControllerCommonFileManager extends Controller {
 		if (!$json) {
 			// Loop through each path
 			foreach ($paths as $path) {
-				$path = rtrim(DIR_IMAGE . $path, '/');
+				$path = rtrim(DIR_IMAGE . html_entity_decode($path, ENT_QUOTES, 'UTF-8'), '/');
 
 				// If path is just a file delete it
 				if (is_file($path)) {
 					unlink($path);
 
-				// If path is a directory beging deleting each file and sub folder
+				// If path is a directory begin deleting each file and sub folder
 				} elseif (is_dir($path)) {
 					$files = array();
 

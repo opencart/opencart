@@ -325,7 +325,7 @@ class ControllerCatalogDownload extends Controller {
 
 		if (isset($this->request->post['download_description'])) {
 			$data['download_description'] = $this->request->post['download_description'];
-		} elseif (isset($this->request->get['download_id'])) {
+		} elseif (!empty($download_info)) {
 			$data['download_description'] = $this->model_catalog_download->getDownloadDescriptions($this->request->get['download_id']);
 		} else {
 			$data['download_description'] = array();

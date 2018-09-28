@@ -311,7 +311,7 @@ class ControllerCatalogFilter extends Controller {
 
 		if (isset($this->request->post['filter_group_description'])) {
 			$data['filter_group_description'] = $this->request->post['filter_group_description'];
-		} elseif (isset($this->request->get['filter_group_id'])) {
+		} elseif (!empty($filter_group_info)) {
 			$data['filter_group_description'] = $this->model_catalog_filter->getFilterGroupDescriptions($this->request->get['filter_group_id']);
 		} else {
 			$data['filter_group_description'] = array();
@@ -327,7 +327,7 @@ class ControllerCatalogFilter extends Controller {
 
 		if (isset($this->request->post['filter'])) {
 			$data['filters'] = $this->request->post['filter'];
-		} elseif (isset($this->request->get['filter_group_id'])) {
+		} elseif (!empty($filter_group_info)) {
 			$data['filters'] = $this->model_catalog_filter->getFilterDescriptions($this->request->get['filter_group_id']);
 		} else {
 			$data['filters'] = array();

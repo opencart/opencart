@@ -339,7 +339,7 @@ class ControllerCatalogProductOption extends Controller {
 	}
 
 	protected function getForm() {
-		$data['text_form'] = !isset($this->request->get['option_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+		$data['text_form'] = !isset($this->request->get['product_option_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -474,7 +474,7 @@ class ControllerCatalogProductOption extends Controller {
 		// Options
 		if (isset($this->request->post['product_option_value'])) {
 			$product_option_values = $this->request->post['product_option_value'];
-		} elseif (isset($this->request->get['product_option_id'])) {
+		} elseif (!empty($product_option_info)) {
 			$product_option_values = $this->model_catalog_product_option->getProductOptionValues($this->request->get['product_option_id']);
 		} else {
 			$product_option_values = array();

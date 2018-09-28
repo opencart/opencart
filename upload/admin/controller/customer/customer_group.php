@@ -303,7 +303,7 @@ class ControllerCustomerCustomerGroup extends Controller {
 
 		if (isset($this->request->post['customer_group_description'])) {
 			$data['customer_group_description'] = $this->request->post['customer_group_description'];
-		} elseif (isset($this->request->get['customer_group_id'])) {
+		} elseif (!empty($customer_group_info)) {
 			$data['customer_group_description'] = $this->model_customer_customer_group->getCustomerGroupDescriptions($this->request->get['customer_group_id']);
 		} else {
 			$data['customer_group_description'] = array();

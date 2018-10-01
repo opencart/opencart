@@ -45,8 +45,8 @@
               <div class="card image">
                 <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
                 <div class="card-body">
-                  <button type="button" data-toggle="image" data-target="input-image" data-thumb="thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-                  <button type="button" data-toggle="clear" data-target="input-image" data-thumb="thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+                  <button type="button" data-toggle="image" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+                  <button type="button" data-toggle="clear" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
                 </div>
               </div>
               {% if error_image %}

@@ -1004,15 +1004,13 @@ class ControllerCatalogProduct extends Controller {
 
 		$this->load->model('tool/image');
 
-		if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {
-			$data['thumb'] = $this->model_tool_image->resize($this->request->post['image'], 100, 100);
-		} elseif (!empty($product_info) && is_file(DIR_IMAGE . $product_info['image'])) {
-			$data['thumb'] = $this->model_tool_image->resize($product_info['image'], 100, 100);
-		} else {
-			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
-		}
-
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+
+		if (is_file(DIR_IMAGE . html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'))) {
+			$data['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'), 100, 100);
+		} else {
+			$data['thumb'] = $data['placeholder'];
+		}
 
 		// Images
 		if (isset($this->request->post['product_image'])) {
@@ -1026,7 +1024,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['product_images'] = array();
 
 		foreach ($product_images as $product_image) {
-			if (is_file(DIR_IMAGE . $product_image['image'])) {
+			if (is_file(DIR_IMAGE . html_entity_decode($product_image['image'], ENT_QUOTES, 'UTF-8'))) {
 				$image = $product_image['image'];
 				$thumb = $product_image['image'];
 			} else {
@@ -1036,7 +1034,7 @@ class ControllerCatalogProduct extends Controller {
 
 			$data['product_images'][] = array(
 				'image'      => $image,
-				'thumb'      => $this->model_tool_image->resize($thumb, 100, 100),
+				'thumb'      => $this->model_tool_image->resize(html_entity_decode($thumb, ENT_QUOTES, 'UTF-8'), 100, 100),
 				'sort_order' => $product_image['sort_order']
 			);
 		}

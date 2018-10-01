@@ -98,7 +98,7 @@ $(document).on('click', '[data-toggle=\'image\']', function(e) {
 	$('#modal-image').remove();
 
 	$.ajax({
-		url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token') + '&target=' + $(this).attr('data-target') + '&thumb=' + $(this).attr('data-thumb'),
+		url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token') + '&target=' + encodeURIComponent($(this).attr('data-target')) + '&thumb=' + encodeURIComponent($(this).attr('data-thumb')),
 		dataType: 'html',
 		beforeSend: function() {
 			$(element).button('loading');
@@ -115,8 +115,6 @@ $(document).on('click', '[data-toggle=\'image\']', function(e) {
 });
 
 $(document).on('click', '[data-toggle=\'clear\']', function() {
-	var element = this;
-
 	$($(this).attr('data-thumb')).attr('src', $($(this).attr('data-thumb')).attr('data-placeholder'));
 
 	$($(this).attr('data-target')).val('');

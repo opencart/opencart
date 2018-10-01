@@ -62,7 +62,7 @@ set_exception_handler(function($e) use ($log, $config) {
 });
 
 // Event
-$event = new Event($registry);
+$event = new \Event($registry);
 $registry->set('event', $event);
 
 // Event Register

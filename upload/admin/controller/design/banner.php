@@ -339,7 +339,7 @@ class ControllerDesignBanner extends Controller {
 
 		foreach ($banner_images as $key => $value) {
 			foreach ($value as $banner_image) {
-				if (is_file(DIR_IMAGE . $banner_image['image'])) {
+				if (is_file(DIR_IMAGE . html_entity_decode($banner_image['image'], ENT_QUOTES, 'UTF-8'))) {
 					$image = $banner_image['image'];
 					$thumb = $banner_image['image'];
 				} else {
@@ -351,7 +351,7 @@ class ControllerDesignBanner extends Controller {
 					'title'      => $banner_image['title'],
 					'link'       => $banner_image['link'],
 					'image'      => $image,
-					'thumb'      => $this->model_tool_image->resize($thumb, 100, 100),
+					'thumb'      => $this->model_tool_image->resize(html_entity_decode($thumb, ENT_QUOTES, 'UTF-8'), 100, 100),
 					'sort_order' => $banner_image['sort_order']
 				);
 			}

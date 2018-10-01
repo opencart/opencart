@@ -22,10 +22,6 @@ class ControllerCommonFileManager extends Controller {
 			$page = 1;
 		}
 
-		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_IMAGE . 'catalog')) != DIR_IMAGE . 'catalog') {
-			$json['error'] = $this->language->get('error_directory');
-		}
-
 		$data['directories'] = array();
 
 		// Get directories
@@ -249,7 +245,7 @@ class ControllerCommonFileManager extends Controller {
 			foreach ($files as $file) {
 				if (is_file($file['tmp_name'])) {
 					// Sanitize the filename
-					$filename = basename(html_entity_decode($file['name'], ENT_QUOTES, 'UTF-8'));
+					$filename = preg_filter('[/\\?%*:|"<>]', '', basename(html_entity_decode($file['name'], ENT_QUOTES, 'UTF-8')));
 
 					// Validate the filename length
 					if ((utf8_strlen($filename) < 3) || (utf8_strlen($filename) > 255)) {
@@ -327,7 +323,7 @@ class ControllerCommonFileManager extends Controller {
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			// Sanitize the folder name
-			$folder = basename(html_entity_decode($this->request->post['folder'], ENT_QUOTES, 'UTF-8'));
+			$folder = preg_filter('[/\\?%*:|"<>]', '', basename(html_entity_decode($this->request->post['folder'], ENT_QUOTES, 'UTF-8')));
 
 			// Validate the filename length
 			if ((utf8_strlen($folder) < 3) || (utf8_strlen($folder) > 128)) {

@@ -285,18 +285,16 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		} else {
 			$data['payment_pp_express_logo'] = $this->config->get('payment_pp_express_logo');
 		}
-
+		
 		$this->load->model('tool/image');
 
-		if (isset($this->request->post['payment_pp_express_logo']) && is_file(DIR_IMAGE . $this->request->post['payment_pp_express_logo'])) {
-			$data['thumb'] = $this->model_tool_image->resize($this->request->post['payment_pp_express_logo'], 750, 90);
-		} elseif (is_file(DIR_IMAGE . $this->config->get('payment_pp_express_logo'))) {
-			$data['thumb'] = $this->model_tool_image->resize($this->config->get('payment_pp_express_logo'), 750, 90);
-		} else {
-			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 750, 90);
-		}
-
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 750, 90);
+
+		if (is_file(DIR_IMAGE . html_entity_decode($data['payment_pp_express_logo'], ENT_QUOTES, 'UTF-8'))) {
+			$data['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['payment_pp_express_logo'], ENT_QUOTES, 'UTF-8'), 750, 90);
+		} else {
+			$data['thumb'] = $data['placeholder'];
+		}
 
 		if (isset($this->request->get['retrieve_code']) && isset($this->request->get['merchant_id'])) {
 			$curl = curl_init($this->opencart_retrieve_url);

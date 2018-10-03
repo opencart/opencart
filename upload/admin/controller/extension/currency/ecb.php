@@ -85,13 +85,17 @@ class ControllerExtensionCurrencyECB extends Controller {
 
 			$cube = $dom->getElementsByTagName('Cube')->item(0);
 
-			$currency_data = array();
+			$currencies = array();
+
+			$currencies['EUR'] = 1.0000;
 
 			foreach ($cube->getElementsByTagName('Cube') as $currency) {
-				if ($currency->getAttribute('currency') != $default) {
-					$currency_data[$currency->getAttribute('currency')] = $currency->getAttribute('rate');
+				if ($currency->getAttribute('currency')) {
+					$currencies[$currency->getAttribute('currency')] = $currency->getAttribute('rate');
 				}
 			}
+
+			print_r($currencies);
 
 			if (isset($currency_data[$default])) {
 				$rate = $currency_data[$default];
@@ -99,27 +103,33 @@ class ControllerExtensionCurrencyECB extends Controller {
 				$rate = 1.0000;
 			}
 
-			print_r($currency_data);
+			//
+			if (isset($currencies['EUR'])) {
 
+				echo $response;
 
-			echo $response;
+				// 1.0000 'EUR' /
+				//if ($currency->getAttribute('currency') && $currency->getAttribute('currency') != $default) {
 
-			// 1.0000 'EUR' /
+				//}
 
-			$this->load->model('localisation/currency');
+				$this->load->model('localisation/currency');
 
-			$results = $this->model_localisation_currency->getCurrencies();
+				$results = $this->model_localisation_currency->getCurrencies();
 
-			foreach ($results as $result) {
+				foreach ($results as $result) {
 
-				if (isset($currency_data[$result['code']])) {
+					if (isset($currencies[$result['code']])) {
+						$from = $currencies[$result['code']];
 
-					$value = 1.0000 * ($result['code'] / $currency_data[$result['code']]);
+						$to = $currencies['EUR'];
 
-					echo $result['code'] . ' ' . $value . "\n";
+						$value = 1.0000 * ($to / $from);
 
+						echo $result['code'] . ' ' . $value . "\n";
 
-					$this->model_localisation_currency->editValueByCode($result['code'], $value);
+						$this->model_localisation_currency->editValueByCode($result['code'], $value);
+					}
 				}
 			}
 

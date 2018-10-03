@@ -80,7 +80,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			'ALLOWNOTE'          => $this->config->get('payment_pp_express_allow_note'),
 			'LOCALECODE'         => 'EN',
 			'LANDINGPAGE'        => 'Login',
-			'HDRIMG'             => $this->model_tool_image->resize($this->config->get('payment_pp_express_logo'), 750, 90),
+			'HDRIMG'             => $this->model_tool_image->resize(html_entity_decode($this->config->get('payment_pp_express_logo'), ENT_QUOTES, 'UTF-8'), 750, 90),
 			'PAYFLOWCOLOR'       => $this->config->get('payment_pp_express_colour'),
 			'CHANNELTYPE'        => 'Merchant'
 		);
@@ -1319,7 +1319,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			'NOSHIPPING'         => $shipping,
 			'LOCALECODE'         => 'EN',
 			'LANDINGPAGE'        => 'Login',
-			'HDRIMG'             => $this->model_tool_image->resize($this->config->get('payment_pp_express_logo'), 750, 90),
+			'HDRIMG'             => $this->model_tool_image->resize(html_entity_decode($this->config->get('payment_pp_express_logo'), ENT_QUOTES, 'UTF-8'), 750, 90),
 			'PAYFLOWCOLOR'       => $this->config->get('payment_pp_express_colour'),
 			'CHANNELTYPE'        => 'Merchant',
 			'ALLOWNOTE'          => $this->config->get('payment_pp_express_allow_note')

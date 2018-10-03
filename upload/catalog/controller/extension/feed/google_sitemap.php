@@ -18,7 +18,7 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 					$output .= '  <lastmod>' . date('Y-m-d\TH:i:sP', strtotime($product['date_modified'])) . '</lastmod>';
 					$output .= '  <priority>1.0</priority>';
 					$output .= '  <image:image>';
-					$output .= '  <image:loc>' . $this->model_tool_image->resize(htmlspecialchars($product['image'], ENT_COMPAT | ENT_XML1), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_height')) . '</image:loc>';
+					$output .= '  <image:loc>' . htmlspecialchars($this->model_tool_image->resize(html_entity_decode($product['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_height')), ENT_COMPAT | ENT_XML1) . '</image:loc>';
 					$output .= '  <image:caption>' . htmlspecialchars($product['name'], ENT_COMPAT | ENT_XML1) . '</image:caption>';
 					$output .= '  <image:title>' . htmlspecialchars($product['name'], ENT_COMPAT | ENT_XML1) . '</image:title>';
 					$output .= '  </image:image>';

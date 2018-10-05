@@ -255,95 +255,280 @@ class ControllerMarketplaceInstall extends Controller {
 		} elseif (!is_dir(DIR_STORAGE . 'marketplace/' . 'tmp-' . $this->session->data['install'] . '/')) {
 			$json['error'] = $this->language->get('error_directory');
 		}
-
+		$hasOptional =  false;
 		if (!$json) {
-			$file = DIR_STORAGE . 'marketplace/' . 'tmp-' . $this->session->data['install'] . '/install.xml';
-
-			if (is_file($file)) {
-				$this->load->model('setting/modification');
-				
-				// If xml file just put it straight into the DB
-				$xml = file_get_contents($file);
-	
-				if ($xml) {
-					try {
-						$dom = new DOMDocument('1.0', 'UTF-8');
-						$dom->loadXml($xml);
-	
-						$name = $dom->getElementsByTagName('name')->item(0);
-	
-						if ($name) {
-							$name = $name->nodeValue;
-						} else {
-							$name = '';
-						}
-	
-						$code = $dom->getElementsByTagName('code')->item(0);
-	
-						if ($code) {
-							$code = $code->nodeValue;
-	
-							// Check to see if the modification is already installed or not.
-							$modification_info = $this->model_setting_modification->getModificationByCode($code);
-	
-							if ($modification_info) {
-								$this->model_setting_modification->deleteModification($modification_info['modification_id']);
+			$files = array();
+			$files[] = DIR_STORAGE . 'marketplace/' . 'tmp-' . $this->session->data['install'] . '/install.xml';
+			foreach (glob(DIR_STORAGE . "marketplace/" . "tmp-" . $this->session->data['install'] . "/*.ocmod.xml") as $file) {
+				$files[] = $file;
+			}			
+			foreach ($files as $file){
+				if (is_file($file)) {
+					$this->load->model('setting/modification');
+					
+					// If xml file just put it straight into the DB
+					$xml = file_get_contents($file);
+		
+					if ($xml) {
+						try {
+							$dom = new DOMDocument('1.0', 'UTF-8');
+							$dom->loadXml($xml);
+		
+							$name = $dom->getElementsByTagName('name')->item(0);
+		
+							if ($name) {
+								$name = $name->nodeValue;
+							} else {
+								$name = '';
 							}
-						} else {
-							$json['error'] = $this->language->get('error_code');
+		
+							$code = $dom->getElementsByTagName('code')->item(0);
+		
+							if ($code) {
+								$code = $code->nodeValue;
+		
+								// Check to see if the modification is already installed or not.
+								$modification_info = $this->model_setting_modification->getModificationByCode($code);
+		
+								if ($modification_info) {
+									$this->model_setting_modification->deleteModification($modification_info['modification_id']);
+								}
+							} else {
+								$json['error'] = $this->language->get('error_code');
+							}
+		
+							$author = $dom->getElementsByTagName('author')->item(0);
+		
+							if ($author) {
+								$author = $author->nodeValue;
+							} else {
+								$author = '';
+							}
+		
+							$version = $dom->getElementsByTagName('version')->item(0);
+		
+							if ($version) {
+								$version = $version->nodeValue;
+							} else {
+								$version = '';
+							}
+		
+							$link = $dom->getElementsByTagName('link')->item(0);
+		
+							if ($link) {
+								$link = $link->nodeValue;
+							} else {
+								$link = '';
+							}
+							
+							$optional = $dom->getElementsByTagName('optional')->item(0);
+							if ($optional) {
+								$optional = $optional->nodeValue;
+								$hasOptional = true;
+							} else {
+								$optional = '';
+							}
+		
+							if (!$json && !$optional) {
+								$modification_data = array(
+									'extension_install_id' => $extension_install_id,
+									'name'                 => $name,
+									'code'                 => $code,
+									'author'               => $author,
+									'version'              => $version,
+									'link'                 => $link,
+									'xml'                  => $xml,
+									'status'               => 1
+								);
+		
+								$this->model_setting_modification->addModification($modification_data);
+							}
+						} catch(Exception $exception) {
+							$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 						}
-	
-						$author = $dom->getElementsByTagName('author')->item(0);
-	
-						if ($author) {
-							$author = $author->nodeValue;
-						} else {
-							$author = '';
-						}
-	
-						$version = $dom->getElementsByTagName('version')->item(0);
-	
-						if ($version) {
-							$version = $version->nodeValue;
-						} else {
-							$version = '';
-						}
-	
-						$link = $dom->getElementsByTagName('link')->item(0);
-	
-						if ($link) {
-							$link = $link->nodeValue;
-						} else {
-							$link = '';
-						}
-	
-						if (!$json) {
-							$modification_data = array(
-								'extension_install_id' => $extension_install_id,
-								'name'                 => $name,
-								'code'                 => $code,
-								'author'               => $author,
-								'version'              => $version,
-								'link'                 => $link,
-								'xml'                  => $xml,
-								'status'               => 1
-							);
-	
-							$this->model_setting_modification->addModification($modification_data);
-						}
-					} catch(Exception $exception) {
-						$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 					}
 				}
 			}
 		}
 
 		if (!$json) {
-			$json['text'] = $this->language->get('text_clear');
+			if($hasOptional){
+				$json['text'] = $this->language->get('text_xmls');
+				$json['next'] = 'additional';
+				$json['additional'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/xmls', 'user_token=' . $this->session->data['user_token'].'&extension_install_id=' . $extension_install_id));			
+			} else {
+				$json['text'] = $this->language->get('text_clear');
 
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/clear', 'user_token=' . $this->session->data['user_token']));
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/clear', 'user_token=' . $this->session->data['user_token']));
+			}
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+	
+	public function xmls() {
+		$this->load->language('marketplace/install');
+		
+		if (isset($this->request->get['extension_install_id'])) {
+			$extension_install_id = $this->request->get['extension_install_id'];
+		} else {
+			$extension_install_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'marketplace/install')) {
+			$data['error'] = $this->language->get('error_permission');
+		}
+
+		if (!isset($this->session->data['install'])) {
+			$data['error'] = $this->language->get('error_directory');
+		} elseif (!is_dir(DIR_STORAGE . 'marketplace/' . 'tmp-' . $this->session->data['install'] . '/')) {
+			$data['error'] = $this->language->get('error_directory');
+		}
+		$data['modifications'] = array();
+		if (!isset($data['error'])) {
+			$this->load->model('setting/modification');
+			foreach (glob(DIR_STORAGE . "marketplace/" . "tmp-" . $this->session->data['install'] . "/*.ocmod.xml") as $file) {
+				if (is_file($file)) {					
+					
+					// If xml file just put it straight into the DB
+					$xml = file_get_contents($file);
+		
+					if ($xml) {
+						try {
+							$dom = new DOMDocument('1.0', 'UTF-8');
+							$dom->loadXml($xml);
+		
+							$name = $dom->getElementsByTagName('name')->item(0);
+		
+							if ($name) {
+								$name = $name->nodeValue;
+							} else {
+								$name = '';
+							}
+							
+							$optional = $dom->getElementsByTagName('optional')->item(0);
+							if ($optional) {
+								$optional = $optional->nodeValue;
+							} else {
+								$optional = '';
+							}
+							
+							$comments = $dom->getElementsByTagName('comments')->item(0);
+							if ($comments) {
+								$comments = $comments->nodeValue;
+							} else {
+								$comments = '';
+							}
+							if($optional){
+								$data['modifications'][] = array('file'=>$file,'name'=>$name,'optional'=>$optional,'comments'=>$comments);
+							}		
+							
+						} catch(Exception $exception) {
+							$data['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
+						}
+					}
+				}
+			}
+		}
+		$data['clear'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/clear', 'user_token=' . $this->session->data['user_token']));
+		$data['install'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/installxmls', 'user_token=' . $this->session->data['user_token'].'&extension_install_id=' . $extension_install_id));
+		$this->response->setOutput($this->load->view('marketplace/xmls', $data));
+	}
+	
+	public function installxmls(){
+		$json = array();
+		if (isset($this->request->get['extension_install_id'])) {
+			$extension_install_id = $this->request->get['extension_install_id'];
+		} else {
+			$extension_install_id = 0;
+		}
+		if(isset($this->request->post['selected'])){
+			foreach ($this->request->post['selected'] as $file){
+				if (is_file($file)) {
+					$this->load->model('setting/modification');
+					
+					// If xml file just put it straight into the DB
+					$xml = file_get_contents($file);
+		
+					if ($xml) {
+						try {
+							$dom = new DOMDocument('1.0', 'UTF-8');
+							$dom->loadXml($xml);
+		
+							$name = $dom->getElementsByTagName('name')->item(0);
+		
+							if ($name) {
+								$name = $name->nodeValue;
+							} else {
+								$name = '';
+							}
+		
+							$code = $dom->getElementsByTagName('code')->item(0);
+		
+							if ($code) {
+								$code = $code->nodeValue;
+		
+								// Check to see if the modification is already installed or not.
+								$modification_info = $this->model_setting_modification->getModificationByCode($code);
+		
+								if ($modification_info) {
+									$this->model_setting_modification->deleteModification($modification_info['modification_id']);
+								}
+							} else {
+								$json['error'] = $this->language->get('error_code');
+							}
+		
+							$author = $dom->getElementsByTagName('author')->item(0);
+		
+							if ($author) {
+								$author = $author->nodeValue;
+							} else {
+								$author = '';
+							}
+		
+							$version = $dom->getElementsByTagName('version')->item(0);
+		
+							if ($version) {
+								$version = $version->nodeValue;
+							} else {
+								$version = '';
+							}
+		
+							$link = $dom->getElementsByTagName('link')->item(0);
+		
+							if ($link) {
+								$link = $link->nodeValue;
+							} else {
+								$link = '';
+							}					
+							
+		
+							if (!$json) {
+								$modification_data = array(
+									'extension_install_id' => $extension_install_id,
+									'name'                 => $name,
+									'code'                 => $code,
+									'author'               => $author,
+									'version'              => $version,
+									'link'                 => $link,
+									'xml'                  => $xml,
+									'status'               => 1
+								);
+		
+								$this->model_setting_modification->addModification($modification_data);
+							}
+						} catch(Exception $exception) {
+							$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
+						}
+					}
+				}
+			}
+		}
+		$json['text'] = $this->language->get('text_clear');
+
+		$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/clear', 'user_token=' . $this->session->data['user_token']));
+		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}

@@ -1,0 +1,69 @@
+<div id="modal-xmls" class="modal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ text_additional }}</h5>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-info"><i class="fa fa-exclamation-circle"></i> {{ help_additional }}</div>
+        <form role="form" id="additional_xmls" autocomplete="off" method="post" novalidate enctype="multipart/form-data">        
+          <fieldset>
+            <legend>{{ text_choose }}</legend>
+            {% if modifications %}
+            	<div class="row">
+                    <div class="col-sm-12">                    	
+                    	<div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                              <thead>
+                                <tr>
+                                  <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');"/></td>
+                                  
+                                  <td class="text-left">{{ column_name }}</td>
+                                  <td class="text-left">{{ column_optional }}</td>
+                                  <td class="text-left">{{ column_comments }}</td>                 
+                                </tr>
+                              </thead>
+                              <tbody>
+                                  {% for modification in modifications %}
+                                    <tr>
+                                      <td class="text-center">{% if not modification.optional %}
+                                          <input type="checkbox" name="selected[]" value="{{ modification.file }}" disabled="disabled" checked="checked"/>
+                                        {% else %}
+                                          <input type="checkbox" name="selected[]" value="{{ modification.file }}"/>
+                                        {% endif %}</td>
+                                      <td class="text-left">{{ modification.name }}</td>
+                                      <td class="text-left">{{   modification.optional? text_yes: text_no }}</td>
+                                      <td class="text-left">{{ modification.comments }}</td>
+                                     </tr>
+                                  {% endfor %}                
+                              </tbody>
+                            </table>
+                        </div>
+                	</div>
+                	<div class="buttons col-sm-12">                    	
+                		<div class="pull-left">
+                			<button onclick="$('#modal-xmls').modal('hide');$('#modal-xmls').remove();next('{{ clear }}',6);" type="button" id="button-xmls-cancel" data-loading="{{ text_loading }}" class="btn btn-info">{{ button_cancel }}</button>
+                		</div>
+                		<div class="pull-right">
+                        	<button onclick="installxmls('{{ install }}');" type="button" id="button-xmls" data-loading="{{ text_loading }}" class="btn btn-primary">{{ button_install }}</button>
+    	            	</div>
+    	            	<div class="clearfix"></div>
+                	</div>
+                </div>
+                {%  else %}
+                <div class="row">
+                <div class="col-sm-12">
+                <div class="alert alert-danger">{{ text_no_optional_modifications }}</div>
+                <div class="text-center">
+                	<button onclick="$('#modal-xmls').modal('hide');$('#modal-xmls').remove();next('{{ clear }}',6);" type="button" id="button-xmls-cancel" data-loading="{{ text_loading }}" class="btn btn-info">{{ button_close }}</button>
+                </div> 
+                <div class="clearfix"></div>              
+                </div>
+                </div>
+                {% endif %}
+            </fieldset>
+         </form>
+		</div>
+		</div>
+	</div>
+</div>

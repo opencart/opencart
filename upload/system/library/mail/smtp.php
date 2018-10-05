@@ -110,6 +110,7 @@ class Smtp {
 				//some SMTP servers respond with 220 code before responding with 250. hence, we need to ignore 220 response string
 				if (substr($reply, 0, 3) == 220 && substr($line, 3, 1) == ' ') {
 					$reply = '';
+
 					continue;
 				} else if (substr($line, 3, 1) == ' ') {
 					break;
@@ -192,7 +193,7 @@ class Smtp {
 			$lines = explode("\n", $message);
 
 			foreach ($lines as $line) {
-				preg_match_all('/.{1,{' . $length . '}}(?=\W+)/u', $line, $results, PREG_PATTERN_ORDER);
+				$results = str_split($line, $length);
 
 				foreach ($results as $result) {
 					if (substr(PHP_OS, 0, 3) != 'WIN') {

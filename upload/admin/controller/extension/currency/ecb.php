@@ -80,42 +80,42 @@ class ControllerExtensionCurrencyECB extends Controller {
 
 			curl_close($curl);
 
-			$dom = new DOMDocument('1.0', 'UTF-8');
-			$dom->loadXml($response);
+			if ($response) {
+				$dom = new DOMDocument('1.0', 'UTF-8');
+				$dom->loadXml($response);
 
-			$cube = $dom->getElementsByTagName('Cube')->item(0);
+				$cube = $dom->getElementsByTagName('Cube')->item(0);
 
-			$currencies = array();
+				$currencies = array();
 
-			$currencies['EUR'] = 1.0000;
+				$currencies['EUR'] = 1.0000;
 
-			foreach ($cube->getElementsByTagName('Cube') as $currency) {
-				if ($currency->getAttribute('currency')) {
-					$currencies[$currency->getAttribute('currency')] = $currency->getAttribute('rate');
-				}
-			}
-
-			if (isset($currencies['EUR'])) {
-				$this->load->model('localisation/currency');
-
-				$results = $this->model_localisation_currency->getCurrencies();
-
-				foreach ($results as $result) {
-					if (isset($currencies[$result['code']])) {
-						$from = $currencies['EUR'];
-
-						$to = $currencies[$result['code']];
-
-						$value = $currencies[$default] * ($from / $to);
-
-						$this->model_localisation_currency->editValueByCode($result['code'], $value);
+				foreach ($cube->getElementsByTagName('Cube') as $currency) {
+					if ($currency->getAttribute('currency')) {
+						$currencies[$currency->getAttribute('currency')] = $currency->getAttribute('rate');
 					}
 				}
+
+				if ($currencies) {
+					$this->load->model('localisation/currency');
+
+					$results = $this->model_localisation_currency->getCurrencies();
+
+					foreach ($results as $result) {
+						if (isset($currencies[$result['code']])) {
+							$from = $currencies['EUR'];
+
+							$to = $currencies[$result['code']];
+
+							$this->model_localisation_currency->editValueByCode($result['code'], 1 / ($currencies[$default] * ($from / $to)));
+						}
+					}
+				}
+
+				$this->model_localisation_currency->editValueByCode($default, '1.00000');
+
+				$this->cache->delete('currency');
 			}
-
-			$this->model_localisation_currency->editValueByCode($default, '1.00000');
-
-			$this->cache->delete('currency');
 		}
 	}
 }

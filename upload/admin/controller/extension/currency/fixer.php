@@ -94,13 +94,11 @@ class ControllerExtensionCurrencyFixer extends Controller {
 
 			$response = curl_exec($curl);
 
-			$this->log->write($response);
-
 			curl_close($curl);
 
 			$response_info = json_decode($response, true);
 
-			if (isset($response_info['rates'])) {
+			if (is_array($response_info) && isset($response_info['rates'])) {
 				// Compile all the rates into an array
 				$currencies = array();
 
@@ -123,11 +121,11 @@ class ControllerExtensionCurrencyFixer extends Controller {
 						$this->model_localisation_currency->editValueByCode($result['code'], 1 / ($currencies[$default] * ($from / $to)));
 					}
 				}
+
+				$this->model_localisation_currency->editValueByCode($default, 1);
+
+				$this->cache->delete('currency');
 			}
 		}
-
-		$this->model_localisation_currency->editValueByCode($default, 1);
-
-		$this->cache->delete('currency');
 	}
 }

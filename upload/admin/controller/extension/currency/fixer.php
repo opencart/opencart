@@ -83,48 +83,51 @@ class ControllerExtensionCurrencyFixer extends Controller {
 
 	public function currency($default = '') {
 		if ($this->config->get('currency_fixer_status')) {
-			$currencies = array();
+			$curl = curl_init();
 
-			$this->load->model('localisation/currency');
+			curl_setopt($curl, CURLOPT_URL, 'http://data.fixer.io/api/latest?access_key=' . $this->config->get('currency_fixer_api'));
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($curl, CURLOPT_HEADER, false);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+			curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
+			curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 
-			$results = $this->model_localisation_currency->getCurrencies();
+			$response = curl_exec($curl);
 
-			foreach ($results as $result) {
-				if (($result['code'] != $default)) {
-					$currencies[] = $result;
+			$this->log->write($response);
+
+			curl_close($curl);
+
+			$response_info = json_decode($response, true);
+
+			if (isset($response_info['rates'])) {
+				// Compile all the rates into an array
+				$currencies = array();
+
+				$currencies['EUR'] = 1.0000;
+
+				foreach ($response_info['rates'] as $key => $value) {
+					$currencies[$key] = $value;
 				}
-			}
 
-			if ($currencies) {
-				$curl = curl_init();
+				$this->load->model('localisation/currency');
 
-				curl_setopt($curl, CURLOPT_URL, 'http://data.fixer.io/api/latest?access_key=' . $this->config->get('currency_fixer_api'));
-				curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-				curl_setopt($curl, CURLOPT_HEADER, false);
-				curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-				curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
-				curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+				$results = $this->model_localisation_currency->getCurrencies();
 
-				$response = curl_exec($curl);
+				foreach ($results as $result) {
+					if (isset($currencies[$result['code']])) {
+						$from = $currencies['EUR'];
 
-				$this->log->write($response);
+						$to = $currencies[$result['code']];
 
-				curl_close($curl);
-
-				$response_info = json_decode($response, true);
-
-				if (isset($response_info['rates'])) {
-					foreach ($currencies as $currency) {
-						if (isset($response_info['rates'][$currency['code']])) {
-							$this->model_localisation_currency->editValueByCode($currency['code'], ($response_info['rates'][$default] / $response_info['rates'][$currency['code']]));
-						}
+						$this->model_localisation_currency->editValueByCode($result['code'], 1 / ($currencies[$default] * ($from / $to)));
 					}
 				}
 			}
-
-			$this->model_localisation_currency->editValueByCode($default, '1.00000');
-
-			$this->cache->delete('currency');
 		}
+
+		$this->model_localisation_currency->editValueByCode($default, 1);
+
+		$this->cache->delete('currency');
 	}
 }

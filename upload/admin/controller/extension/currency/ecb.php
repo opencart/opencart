@@ -95,45 +95,23 @@ class ControllerExtensionCurrencyECB extends Controller {
 				}
 			}
 
-			print_r($currencies);
-
-			if (isset($currency_data[$default])) {
-				$rate = $currency_data[$default];
-			} else {
-				$rate = 1.0000;
-			}
-
-			//
 			if (isset($currencies['EUR'])) {
-
-				echo $response;
-
-				// 1.0000 'EUR' /
-				//if ($currency->getAttribute('currency') && $currency->getAttribute('currency') != $default) {
-
-				//}
-
 				$this->load->model('localisation/currency');
 
 				$results = $this->model_localisation_currency->getCurrencies();
 
 				foreach ($results as $result) {
-
 					if (isset($currencies[$result['code']])) {
-						$from = $currencies[$result['code']];
+						$from = $currencies['EUR'];
 
-						$to = $currencies['EUR'];
+						$to = $currencies[$result['code']];
 
-						$value = 1.0000 * ($to / $from);
-
-						echo $result['code'] . ' ' . $value . "\n";
+						$value = $currencies[$default] * ($from / $to);
 
 						$this->model_localisation_currency->editValueByCode($result['code'], $value);
 					}
 				}
 			}
-
-			exit();
 
 			$this->model_localisation_currency->editValueByCode($default, '1.00000');
 

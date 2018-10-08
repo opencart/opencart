@@ -1,6 +1,6 @@
 <?php
 class ControllerCommonFooter extends Controller {
-	public function index() {
+	public function index($data = array()) {
 		$this->load->language('common/footer');
 
 		$this->load->model('catalog/information');

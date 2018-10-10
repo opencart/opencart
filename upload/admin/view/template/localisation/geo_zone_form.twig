@@ -96,7 +96,7 @@ $('#button-geo-zone').on('click', function() {
 
 	$('#zone-to-geo-zone tbody').append(html);
 
-	$('zone_to_geo_zone[' + zone_to_geo_zone_row + '][country_id]').trigger();
+	$('select[name$="[' + zone_to_geo_zone_row + '][country_id]"]').trigger('change');
 
 	zone_to_geo_zone_row++;
 });

@@ -1,7 +1,5 @@
 <?php
 class ControllerMarketplaceExtension extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('marketplace/extension');
 
@@ -42,12 +40,13 @@ class ControllerMarketplaceExtension extends Controller {
 		
 				$data['categories'][] = array(
 					'code' => $extension,
-					'text' => $this->language->get('extension')->get('heading_title') . ' (' . count($files) .')',
-					'href' => $this->url->link('extension/extension/' . $extension, 'user_token=' . $this->session->data['user_token'])
+					'text' => $this->language->get('extension')->get('heading_title') . ' (' . count($files) .')'
 				);
 			}			
 		}
-		
+
+		$data['user_token'] = $this->request->get['user_token'];
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

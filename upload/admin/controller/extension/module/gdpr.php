@@ -9,12 +9,12 @@ class ControllerExtensionModuleGDPR extends Controller {
 
 		$this->load->model('setting/setting');
 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('module_gdpr', $_POST);
 
 			$this->session->data['success'] = $this->language->get('text_success');
-                        
-                        $this->response->redirect($this->url->link('extension/module/gdpr', 'user_token=' . $this->session->data['user_token']));
+
+			$this->response->redirect($this->url->link('extension/module/gdpr', 'user_token=' . $this->session->data['user_token']));
 		}
 
 		if (isset($this->error['warning'])) {
@@ -52,10 +52,10 @@ class ControllerExtensionModuleGDPR extends Controller {
 
 		if (isset($this->request->post['module_gdpr_status'])) {
 			$data['module_gdpr_policy_url'] = $this->request->post['module_gdpr_policy_url'];
-                        $data['module_gdpr_status'] = $this->request->post['module_gdpr_status'];
+			$data['module_gdpr_status'] = $this->request->post['module_gdpr_status'];
 		} else {
 			$data['module_gdpr_policy_url'] = $this->config->get('module_gdpr_policy_url');
-                        $data['module_gdpr_status'] = $this->config->get('module_gdpr_status');
+			$data['module_gdpr_status'] = $this->config->get('module_gdpr_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

@@ -36,7 +36,7 @@
                 </div>
               </div>
               <div class="input-group-append">
-                <button type="button" id="button-filter" class="btn btn-primary"><i class="fas fa-filter"></i></button>
+                <button type="button" id="button-filter" data-toggle="tooltip" data-title="{{ button_filter }}" class="btn btn-primary"><i class="fas fa-filter"></i></button>
               </div>
             </div>
             <input type="hidden" name="filter_category_id" value="{{ filter_category_id }}" class="form-control"/> <input type="hidden" name="filter_download_id" value="{{ filter_download_id }}" class="form-control"/> <input type="hidden" name="filter_rating" value="{{ filter_rating }}" class="form-control"/> <input type="hidden" name="filter_license" value="{{ filter_license }}" class="form-control"/> <input type="hidden" name="filter_partner" value="{{ filter_partner }}" class="form-control"/> <input type="hidden" name="sort" value="{{ sort }}" class="form-control"/>
@@ -74,7 +74,7 @@
                     <section>
                       <div class="extension-preview text-center"><a href="{{ extension.href }}">
                           <div class="extension-description"></div>
-                          <img src="{{ extension.image }}" alt="{{ extension.name }}" title="{{ extension.name }}" class="img-responsive"/></a></div>
+                          <img src="{{ extension.image }}" alt="{{ extension.name }}" title="{{ extension.name }}" class="img-fluid"/></a></div>
                       <div class="extension-name">
                         <h4><a href="{{ extension.href }}">{{ extension.name }}</a></h4>
                         {{ extension.price }}</div>

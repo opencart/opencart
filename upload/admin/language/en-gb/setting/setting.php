@@ -6,17 +6,9 @@ $_['heading_title']                  = 'Settings';
 $_['text_stores']                    = 'Stores';
 $_['text_success']                   = 'Success: You have modified settings!';
 $_['text_edit']                      = 'Edit Setting';
-$_['text_product']                   = 'Products';
-$_['text_review']                    = 'Reviews';
-$_['text_voucher']                   = 'Vouchers';
-$_['text_tax']                       = 'Taxes';
-$_['text_account']                   = 'Account';
-$_['text_checkout']                  = 'Checkout';
-$_['text_stock']                     = 'Stock';
-$_['text_affiliate']                 = 'Affiliates';
-$_['text_captcha']                   = 'Captcha';
 $_['text_register']                  = 'Register';
 $_['text_guest']                     = 'Guest Checkout';
+$_['text_review']                    = 'Reviews';
 $_['text_return']                    = 'Returns';
 $_['text_contact']                   = 'Contact';
 $_['text_shipping']                  = 'Shipping Address';
@@ -123,6 +115,18 @@ $_['entry_error_display']            = 'Display Errors';
 $_['entry_error_log']                = 'Log Errors';
 $_['entry_error_filename']           = 'Error Log Filename';
 $_['entry_status']                   = 'Status';
+
+// Tab
+$_['tab_product']                    = 'Products';
+$_['tab_review']                     = 'Reviews';
+$_['tab_voucher']                    = 'Vouchers';
+$_['tab_tax']                        = 'Taxes';
+$_['tab_account']                    = 'Account';
+$_['tab_checkout']                   = 'Checkout';
+$_['tab_stock']                      = 'Stock';
+$_['tab_affiliate']                  = 'Affiliates';
+$_['tab_return']                     = 'Returns';
+$_['tab_captcha']                    = 'Captcha';
 
 // Help
 $_['help_geocode']                   = 'Please enter your store location geocode manually.';

@@ -22,9 +22,9 @@
                 <select name="type" class="form-control">
                   {% for category in categories %}
                     {% if type == category.code %}
-                      <option value="{{ category.href }}" selected="selected">{{ category.text }}</option>
+                      <option value="{{ category.code }}" selected="selected">{{ category.text }}</option>
                     {% else %}
-                      <option value="{{ category.href }}">{{ category.text }}</option>
+                      <option value="{{ category.code }}">{{ category.text }}</option>
                     {% endif %}
                   {% endfor %}
                 </select>
@@ -40,81 +40,78 @@
     </div>
   </div>
 </div>
-{% if categories %}
-  <script type="text/javascript"><!--
-  $('select[name=\'type\']').on('change', function() {
-	  $.ajax({
-		  url: $('select[name=\'type\']').val(),
-		  dataType: 'html',
-		  beforeSend: function() {
-			  $('.fa-filter').addClass('fa-circle-notch fa-spin');
-			  $('.fa-filter').removeClass('fa-filter');
-			  $('select[name=\'type\']').prop('disabled', true);
-		  },
-		  complete: function() {
-			  $('.fa-circle-notch').addClass('fa-filter');
-			  $('.fa-circle-notch').removeClass('fa-circle-notch fa-spin');
-			  $('select[name=\'type\']').prop('disabled', false);
-		  },
-		  success: function(html) {
-			  $('#extension').html(html);
-		  },
-		  error: function(xhr, ajaxOptions, thrownError) {
-			  alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		  }
-	  });
-  });
+<script type="text/javascript"><!--
+$('select[name=\'type\']').on('change', function() {
+	$.ajax({
+		url: 'index.php?route=extension/extension/' + $('select[name=\'type\']').val() + '&user_token={{ user_token }}',
+		dataType: 'html',
+		beforeSend: function() {
+			$('.fa-filter').addClass('fa-circle-notch fa-spin');
+			$('.fa-filter').removeClass('fa-filter');
+			$('select[name=\'type\']').prop('disabled', true);
+		},
+		complete: function() {
+			$('.fa-circle-notch').addClass('fa-filter');
+			$('.fa-circle-notch').removeClass('fa-circle-notch fa-spin');
+			$('select[name=\'type\']').prop('disabled', false);
+		},
+		success: function(html) {
+			$('#extension').html(html);
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
 
-  $('select[name=\'type\']').trigger('change');
+$('select[name=\'type\']').trigger('change');
 
-  $('#extension').on('click', '.btn-success', function(e) {
-	  e.preventDefault();
+$('#extension').on('click', '.btn-success', function(e) {
+	e.preventDefault();
 
-	  var element = this;
+	var element = this;
 
-	  $.ajax({
-		  url: $(element).attr('href'),
-		  dataType: 'html',
-		  beforeSend: function() {
-			  $(element).button('loading');
-		  },
-		  complete: function() {
-			  $(element).button('reset');
-		  },
-		  success: function(html) {
-			  $('#extension').html(html);
-		  },
-		  error: function(xhr, ajaxOptions, thrownError) {
-			  alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		  }
-	  });
-  });
+	$.ajax({
+		url: $(element).attr('href'),
+		dataType: 'html',
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(html) {
+			$('#extension').html(html);
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
 
-  $('#extension').on('click', '.btn-danger, .btn-warning', function(e) {
-	  e.preventDefault();
+$('#extension').on('click', '.btn-danger, .btn-warning', function(e) {
+	e.preventDefault();
 
-	  if (confirm('{{ text_confirm }}')) {
-		  var element = this;
+	if (confirm('{{ text_confirm }}')) {
+		var element = this;
 
-		  $.ajax({
-			  url: $(element).attr('href'),
-			  dataType: 'html',
-			  beforeSend: function() {
-				  $(element).button('loading');
-			  },
-			  complete: function() {
-				  $(element).button('reset');
-			  },
-			  success: function(html) {
-				  $('#extension').html(html);
-			  },
-			  error: function(xhr, ajaxOptions, thrownError) {
-				  alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			  }
-		  });
-	  }
-  });
-  //--></script>
-{% endif %}
-
+		$.ajax({
+			url: $(element).attr('href'),
+			dataType: 'html',
+			beforeSend: function() {
+				$(element).button('loading');
+			},
+			complete: function() {
+				$(element).button('reset');
+			},
+			success: function(html) {
+				$('#extension').html(html);
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	}
+});
+//--></script>
 {{ footer }}

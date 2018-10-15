@@ -41,7 +41,6 @@ $_['entry_language']               = 'Language';
 $_['entry_currency']               = 'Currency';
 $_['entry_cookie_status']          = 'Cookie Policy Status';
 $_['entry_gdrp_status']            = 'GDRP Status';
-$_['entry_gdrp_limit']             = 'GDRP Limit';
 $_['entry_tax']                    = 'Display Prices With Tax';
 $_['entry_tax_default']            = 'Use Store Tax Address';
 $_['entry_tax_customer']           = 'Use Customer Tax Address';

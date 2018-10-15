@@ -145,7 +145,7 @@ class ControllerCustomerGdrp extends Controller {
 		} else {
 			$this->load->model('customer/gdrp');
 
-			$this->model_customer_customer_approval->approveDelete($this->request->get['customer_id']);
+			$this->model_customer_customer_approval->approveGdrp($this->request->get['customer_id']);
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -164,7 +164,7 @@ class ControllerCustomerGdrp extends Controller {
 		} else {
 			$this->load->model('customer/gdrp');
 
-			$this->model_customer_customer_approval->denyDelete($this->request->get['customer_id']);
+			$this->model_customer_customer_approval->denyGdrp($this->request->get['customer_id']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

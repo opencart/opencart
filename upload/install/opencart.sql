@@ -868,10 +868,11 @@ INSERT INTO `oc_geo_zone` (`geo_zone_id`, `name`, `description`, `date_modified`
 --
 
 INSERT INTO `oc_information` (`information_id`, `bottom`, `sort_order`, `status`) VALUES
-(3, 1, 3, 1),
-(4, 1, 1, 1),
-(5, 1, 4, 1),
-(6, 1, 2, 1);
+(1, 1, 3, 1),
+(2, 1, 1, 1),
+(3, 1, 4, 1),
+(4, 1, 2, 1),
+(5, 1, 2, 1);
 
 -----------------------------------------------------------
 
@@ -880,10 +881,11 @@ INSERT INTO `oc_information` (`information_id`, `bottom`, `sort_order`, `status`
 --
 
 INSERT INTO `oc_information_description` (`information_id`, `language_id`, `title`, `description`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
-(4, 1, 'About Us', '&lt;p&gt;\r\n	About Us&lt;/p&gt;\r\n', 'About Us', '', ''),
-(5, 1, 'Terms &amp; Conditions', '&lt;p&gt;\r\n	Terms &amp;amp; Conditions&lt;/p&gt;\r\n', 'Terms &amp; Conditions', '', ''),
+(1, 1, 'About Us', '&lt;p&gt;\r\n	About Us&lt;/p&gt;\r\n', 'About Us', '', ''),
+(2, 1, 'Terms &amp; Conditions', '&lt;p&gt;\r\n	Terms &amp;amp; Conditions&lt;/p&gt;\r\n', 'Terms &amp; Conditions', '', ''),
 (3, 1, 'Privacy Policy', '&lt;p&gt;\r\n	Privacy Policy&lt;/p&gt;\r\n', 'Privacy Policy', '', ''),
-(6, 1, 'Delivery Information', '&lt;p&gt;\r\n	Delivery Information&lt;/p&gt;\r\n', 'Delivery Information', '', '');
+(4, 1, 'Delivery Information', '&lt;p&gt;\r\n	Delivery Information&lt;/p&gt;\r\n', 'Delivery Information', '', ''),
+(5, 1, 'GDRP', '&lt;p&gt;\r\n	GDRP&lt;/p&gt;\r\n', 'GDRP', '', '');
 
 -----------------------------------------------------------
 
@@ -892,10 +894,11 @@ INSERT INTO `oc_information_description` (`information_id`, `language_id`, `titl
 --
 
 INSERT INTO `oc_information_to_store` (`information_id`, `store_id`) VALUES
+(1, 0),
+(2, 0),
 (3, 0),
 (4, 0),
-(5, 0),
-(6, 0);
+(5, 0);
 
 -----------------------------------------------------------
 

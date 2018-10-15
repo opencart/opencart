@@ -245,10 +245,10 @@ class ControllerCommonFileManager extends Controller {
 			foreach ($files as $file) {
 				if (is_file($file['tmp_name'])) {
 					// Sanitize the filename
-					$filename = preg_filter('[/\\?%*:|"<>]', '', basename(html_entity_decode($file['name'], ENT_QUOTES, 'UTF-8')));
-
+					$filename = preg_replace('[/\\?%*:|"<>]', '', basename(html_entity_decode($file['name'], ENT_QUOTES, 'UTF-8')));
+					
 					// Validate the filename length
-					if ((utf8_strlen($filename) < 3) || (utf8_strlen($filename) > 255)) {
+					if ((utf8_strlen($filename) < 4) || (utf8_strlen($filename) > 255)) {
 						$json['error'] = $this->language->get('error_filename');
 					}
 
@@ -261,6 +261,9 @@ class ControllerCommonFileManager extends Controller {
 					);
 
 					if (!in_array(utf8_strtolower(utf8_substr(strrchr($filename, '.'), 1)), $allowed)) {
+
+						echo substr(strrchr($filename, '.'), 1);
+
 						$json['error'] = $this->language->get('error_filetype');
 					}
 

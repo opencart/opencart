@@ -29,8 +29,10 @@ class ControllerAccountAccount extends Controller {
 			unset($this->session->data['success']);
 		} else {
 			$data['success'] = '';
-		} 
-		
+		}
+
+		$data['text_gdpr_data'] = $this->language->get('');
+
 		$data['edit'] = $this->url->link('account/edit', 'language=' . $this->config->get('config_language'));
 		$data['password'] = $this->url->link('account/password', 'language=' . $this->config->get('config_language'));
 		$data['address'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
@@ -82,7 +84,11 @@ class ControllerAccountAccount extends Controller {
 		} else {
 			$data['tracking'] = '';
 		}
-		
+
+		$data['gdrp_status'] = $this->config->get('config_gdrp_status');
+		$data['gdrp_data'] = $this->url->link('account/gdrp', 'language=' . $this->config->get('config_language'));
+		$data['gdrp_remove'] = $this->url->link('account/gdrp/remove', 'language=' . $this->config->get('config_language'));
+
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');

@@ -498,6 +498,18 @@ class ControllerSettingStore extends Controller {
 
 		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
 
+		if (isset($this->request->post['config_cookie_status'])) {
+			$data['config_cookie_status'] = $this->request->post['config_cookie_status'];
+		} else {
+			$data['config_cookie_status'] = $this->config->get('config_cookie_status');
+		}
+
+		if (isset($this->request->post['config_gdrp_status'])) {
+			$data['config_gdrp_status'] = $this->request->post['config_gdrp_status'];
+		} else {
+			$data['config_gdrp_status'] = $this->config->get('config_gdrp_status');
+		}
+
 		if (isset($this->request->post['config_tax'])) {
 			$data['config_tax'] = $this->request->post['config_tax'];
 		} elseif (isset($store_info['config_tax'])) {

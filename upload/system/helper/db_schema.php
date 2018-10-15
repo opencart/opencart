@@ -1357,6 +1357,33 @@ function db_schema() {
 	);
 
 	$tables[] = array(
+		'name' => 'customer_gdrp',
+		'field' => array(
+			array(
+				'name' => 'customer_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'status',
+				'type' => 'tinyint(1)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			)
+		),
+		'primary' => array(
+			'customer_id'
+		),
+		'engine' => 'MyISAM',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	);
+
+	$tables[] = array(
 		'name' => 'customer_group',
 		'field' => array(
 			array(

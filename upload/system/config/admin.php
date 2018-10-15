@@ -15,6 +15,9 @@ $_['db_port']           = DB_PORT;
 $_['session_autostart'] = true;
 $_['session_engine']    = 'db';
 
+// Error
+$_['error_display']     = true;
+
 // Template
 $_['template_cache']    = true;
 

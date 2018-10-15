@@ -367,6 +367,14 @@ class ControllerCommonColumnLeft extends Controller {
 				);
 			}
 
+			if ($this->user->hasPermission('access', 'customer/gdrp')) {
+				$customer[] = array(
+					'name'	   => $this->language->get('text_gdrp'),
+					'href'     => $this->url->link('customer/gdrp', 'user_token=' . $this->session->data['user_token']),
+					'children' => array()
+				);
+			}
+
 			if ($this->user->hasPermission('access', 'customer/custom_field')) {
 				$customer[] = array(
 					'name'	   => $this->language->get('text_custom_field'),

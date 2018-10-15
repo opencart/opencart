@@ -1,0 +1,42 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <td class="text-left">{{ column_customer }}</td>
+        <td class="text-left">{{ column_email }}</td>
+        <td class="text-left">{{ column_customer_group }}</td>
+        <td class="text-left">{{ column_status }}</td>
+        <td class="text-left">{{ column_date_added }}</td>
+        <td class="text-right">{{ column_action }}</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% if gdrps %}
+        {% for gdrp in gdrps %}
+          <tr>
+            <td class="text-left"><a href="{{ gdrp.edit }}">{{ gdrp.customer }}</a></td>
+            <td class="text-left">{{ gdrp.email }}</td>
+            <td class="text-left">{{ gdrp.customer_group }}</td>
+            <td class="text-left">
+              {% if gdrp.status %}
+                <span class="badge badge-success">{{ text_enabled }}</span>
+              {% else %}
+                <span class="badge badge-danger">{{ text_disabled }}</span>
+              {% endif %}
+            </td>
+            <td class="text-left">{{ gdrp.date_added }}</td>
+            <td class="text-right"><a href="{{ gdrp.approve }}" data-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fas fa-thumbs-up"></i></a> <a href="{{ gdrp.deny }}" data-toggle="tooltip" title="{{ button_deny }}" class="btn btn-danger"><i class="fas fa-thumbs-down"></i></a></td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="6">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-left">{{ pagination }}</div>
+  <div class="col-sm-6 text-right">{{ results }}</div>
+</div>

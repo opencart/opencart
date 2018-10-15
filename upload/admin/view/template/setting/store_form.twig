@@ -257,228 +257,265 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-option">
-              <fieldset>
-                <legend>{{ text_tax }}</legend>
-                <div class="form-group row">
-                  <label class="col-sm-2 col-form-label">{{ entry_tax }}</label>
-                  <div class="col-sm-10">
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                      {% if config_tax %}
-                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_tax" value="1" checked="checked"/> {{ text_yes }}</label>
-                        <label class="btn btn-outline-secondary"><input type="radio" name="config_tax" value="0"/> {{ text_no }}</label>
-                      {% else %}
-                        <label class="btn btn-outline-secondary"><input type="radio" name="config_tax" value="1"/> {{ text_yes }}</label>
-                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_tax" value="0" checked="checked"/> {{ text_no }}</label>
-                      {% endif %}
+              <ul class="nav nav-tabs">
+                <li class="nav-item"><a href="#tab-legal" data-toggle="tab" class="nav-link active">{{ tab_legal }}</a></li>
+                <li class="nav-item"><a href="#tab-tax" data-toggle="tab" class="nav-link">{{ tab_tax }}</a></li>
+                <li class="nav-item"><a href="#tab-account" data-toggle="tab" class="nav-link">{{ tab_account }}</a></li>
+                <li class="nav-item"><a href="#tab-checkout" data-toggle="tab" class="nav-link">{{ tab_checkout }}</a></li>
+                <li class="nav-item"><a href="#tab-stock" data-toggle="tab" class="nav-link">{{ tab_stock }}</a></li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active" id="tab-legal">
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">{{ entry_cookie_status }}</label>
+                    <div class="col-sm-10">
+                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        {% if config_cookie_status %}
+                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_cookie" value="1" checked="checked"/> {{ text_yes }}</label>
+                          <label class="btn btn-outline-secondary"><input type="radio" name="config_cookie" value="0"/> {{ text_no }}</label>
+                        {% else %}
+                          <label class="btn btn-outline-secondary"><input type="radio" name="config_cookie" value="1"/> {{ text_yes }}</label>
+                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_cookie" value="0" checked="checked"/> {{ text_no }}</label>
+                        {% endif %}
+                      </div>
+                      <small class="form-text text-muted">{{ help_cookie }}</small>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">{{ entry_gdrp_status }}</label>
+                    <div class="col-sm-10">
+                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        {% if config_gdrp_status %}
+                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_gdrp_status" value="1" checked="checked"/> {{ text_yes }}</label>
+                          <label class="btn btn-outline-secondary"><input type="radio" name="config_gdrp_status" value="0"/> {{ text_no }}</label>
+                        {% else %}
+                          <label class="btn btn-outline-secondary"><input type="radio" name="config_gdrp_status" value="1"/> {{ text_yes }}</label>
+                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_gdrp_status" value="0" checked="checked"/> {{ text_no }}</label>
+                        {% endif %}
+                      </div>
+                      <small class="form-text text-muted">{{ help_gdrp_status }}</small>
                     </div>
                   </div>
                 </div>
-                <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-tax-default">{{ entry_tax_default }}</label>
-                  <div class="col-sm-10">
-                    <select name="config_tax_default" id="input-tax-default" class="form-control">
-                      <option value="">{{ text_none }}</option>
-                      {% if config_tax_default == 'shipping' %}
-                        <option value="shipping" selected="selected">{{ text_shipping }}</option>
-                      {% else %}
-                        <option value="shipping">{{ text_shipping }}</option>
-                      {% endif %}
-                      {% if config_tax_default == 'payment' %}
-                        <option value="payment" selected="selected">{{ text_payment }}</option>
-                      {% else %}
-                        <option value="payment">{{ text_payment }}</option>
-                      {% endif %}
-                    </select>
-                    <small class="form-text text-muted">{{ help_tax_default }}</small>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-tax-customer">{{ entry_tax_customer }}</label>
-                  <div class="col-sm-10">
-                    <select name="config_tax_customer" id="input-tax-customer" class="form-control">
-                      <option value="">{{ text_none }}</option>
-                      {% if config_tax_customer == 'shipping' %}
-                        <option value="shipping" selected="selected">{{ text_shipping }}</option>
-                      {% else %}
-                        <option value="shipping">{{ text_shipping }}</option>
-                      {% endif %}
-                      {% if config_tax_customer == 'payment' %}
-                        <option value="payment" selected="selected">{{ text_payment }}</option>
-                      {% else %}
-                        <option value="payment">{{ text_payment }}</option>
-                      {% endif %}
-                    </select>
-                    <small class="form-text text-muted">{{ help_tax_customer }}</small>
-                  </div>
-                </div>
-              </fieldset>
-              <fieldset>
-                <legend>{{ text_account }}</legend>
-                <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-customer-group">{{ entry_customer_group }}</label>
-                  <div class="col-sm-10">
-                    <select name="config_customer_group_id" id="input-customer-group" class="form-control">
-                      {% for customer_group in customer_groups %}
-                        {% if customer_group.customer_group_id == config_customer_group_id %}
-                          <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                <div class="tab-pane" id="tab-tax">
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">{{ entry_tax }}</label>
+                    <div class="col-sm-10">
+                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        {% if config_tax %}
+                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_tax" value="1" checked="checked"/> {{ text_yes }}</label>
+                          <label class="btn btn-outline-secondary"><input type="radio" name="config_tax" value="0"/> {{ text_no }}</label>
                         {% else %}
-                          <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+                          <label class="btn btn-outline-secondary"><input type="radio" name="config_tax" value="1"/> {{ text_yes }}</label>
+                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_tax" value="0" checked="checked"/> {{ text_no }}</label>
                         {% endif %}
-                      {% endfor %}
-                    </select>
-                    <small class="form-text text-muted">{{ help_customer_group }}</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="input-tax-default">{{ entry_tax_default }}</label>
+                    <div class="col-sm-10">
+                      <select name="config_tax_default" id="input-tax-default" class="form-control">
+                        <option value="">{{ text_none }}</option>
+                        {% if config_tax_default == 'shipping' %}
+                          <option value="shipping" selected="selected">{{ text_shipping }}</option>
+                        {% else %}
+                          <option value="shipping">{{ text_shipping }}</option>
+                        {% endif %}
+                        {% if config_tax_default == 'payment' %}
+                          <option value="payment" selected="selected">{{ text_payment }}</option>
+                        {% else %}
+                          <option value="payment">{{ text_payment }}</option>
+                        {% endif %}
+                      </select>
+                      <small class="form-text text-muted">{{ help_tax_default }}</small>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="input-tax-customer">{{ entry_tax_customer }}</label>
+                    <div class="col-sm-10">
+                      <select name="config_tax_customer" id="input-tax-customer" class="form-control">
+                        <option value="">{{ text_none }}</option>
+                        {% if config_tax_customer == 'shipping' %}
+                          <option value="shipping" selected="selected">{{ text_shipping }}</option>
+                        {% else %}
+                          <option value="shipping">{{ text_shipping }}</option>
+                        {% endif %}
+                        {% if config_tax_customer == 'payment' %}
+                          <option value="payment" selected="selected">{{ text_payment }}</option>
+                        {% else %}
+                          <option value="payment">{{ text_payment }}</option>
+                        {% endif %}
+                      </select>
+                      <small class="form-text text-muted">{{ help_tax_customer }}</small>
+                    </div>
                   </div>
                 </div>
-                <div class="form-group row">
-                  <label class="col-sm-2 col-form-label">{{ entry_customer_group_display }}</label>
-                  <div class="col-sm-10">
-                    <div class="form-control" style="height: 150px; overflow: auto;">
-                      {% for customer_group in customer_groups %}
-                        <label class="form-check">
-                          {% if customer_group.customer_group_id in config_customer_group_display %}
-                            <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" checked="checked" class="form-check-input"/>
-                            {{ customer_group.name }}
+                <div class="tab-pane" id="tab-account">
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="input-customer-group">{{ entry_customer_group }}</label>
+                    <div class="col-sm-10">
+                      <select name="config_customer_group_id" id="input-customer-group" class="form-control">
+                        {% for customer_group in customer_groups %}
+                          {% if customer_group.customer_group_id == config_customer_group_id %}
+                            <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
                           {% else %}
-                            <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" class="form-check-input"/>
-                            {{ customer_group.name }}
+                            <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
                           {% endif %}
-                        </label>
-                      {% endfor %}
+                        {% endfor %}
+                      </select>
+                      <small class="form-text text-muted">{{ help_customer_group }}</small>
                     </div>
-                    <small class="form-text text-muted">{{ help_customer_group_display }}</small>
-                    {% if error_customer_group_display %}
-                      <div class="invalid-tooltip">{{ error_customer_group_display }}</div>
-                    {% endif %}
                   </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-sm-2 col-form-label">{{ entry_customer_price }}</label>
-                  <div class="col-sm-10">
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                      {% if config_customer_price %}
-                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_customer_price" value="1" checked="checked"/> {{ text_yes }}</label>
-                        <label class="btn btn-outline-secondary"><input type="radio" name="config_customer_price" value="0"/> {{ text_no }}</label>
-                      {% else %}
-                        <label class="btn btn-outline-secondary"><input type="radio" name="config_customer_price" value="1"/> {{ text_yes }}</label>
-                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_customer_price" value="0" checked="checked"/> {{ text_no }}</label>
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">{{ entry_customer_group_display }}</label>
+                    <div class="col-sm-10">
+                      <div class="form-control" style="height: 150px; overflow: auto;">
+                        {% for customer_group in customer_groups %}
+                          <label class="form-check">
+                            {% if customer_group.customer_group_id in config_customer_group_display %}
+                              <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" checked="checked" class="form-check-input"/>
+                              {{ customer_group.name }}
+                            {% else %}
+                              <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" class="form-check-input"/>
+                              {{ customer_group.name }}
+                            {% endif %}
+                          </label>
+                        {% endfor %}
+                      </div>
+                      <small class="form-text text-muted">{{ help_customer_group_display }}</small>
+                      {% if error_customer_group_display %}
+                        <div class="invalid-tooltip">{{ error_customer_group_display }}</div>
                       {% endif %}
                     </div>
-                    <small class="form-text text-muted">{{ help_customer_price }}</small>
                   </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-account">{{ entry_account }}</label>
-                  <div class="col-sm-10">
-                    <select name="config_account_id" id="input-account" class="form-control">
-                      <option value="0">{{ text_none }}</option>
-                      {% for information in informations %}
-                        {% if information.information_id == config_account_id %}
-                          <option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">{{ entry_customer_price }}</label>
+                    <div class="col-sm-10">
+                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        {% if config_customer_price %}
+                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_customer_price" value="1" checked="checked"/> {{ text_yes }}</label>
+                          <label class="btn btn-outline-secondary"><input type="radio" name="config_customer_price" value="0"/> {{ text_no }}</label>
                         {% else %}
-                          <option value="{{ information.information_id }}">{{ information.title }}</option>
+                          <label class="btn btn-outline-secondary"><input type="radio" name="config_customer_price" value="1"/> {{ text_yes }}</label>
+                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_customer_price" value="0" checked="checked"/> {{ text_no }}</label>
                         {% endif %}
-                      {% endfor %}
-                    </select>
-                    <small class="form-text text-muted">{{ help_account }}</small>
+                      </div>
+                      <small class="form-text text-muted">{{ help_customer_price }}</small>
+                    </div>
                   </div>
-                </div>
-              </fieldset>
-              <fieldset>
-                <legend>{{ text_checkout }}</legend>
-                <div class="form-group row">
-                  <label class="col-sm-2 col-form-label">{{ entry_cart_weight }}</label>
-                  <div class="col-sm-10">
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                      {% if config_cart_weight %}
-                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_cart_weight" value="1" checked="checked"/> {{ text_yes }}</label>
-                        <label class="btn btn-outline-secondary"><input type="radio" name="config_cart_weight" value="0"/> {{ text_no }}</label>
-                      {% else %}
-                        <label class="btn btn-outline-secondary"><input type="radio" name="config_cart_weight" value="1"/> {{ text_yes }}</label>
-                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_cart_weight" value="0" checked="checked"/> {{ text_no }}</label>
-                      {% endif %}
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="input-account">{{ entry_account }}</label>
+                    <div class="col-sm-10">
+                      <select name="config_account_id" id="input-account" class="form-control">
+                        <option value="0">{{ text_none }}</option>
+                        {% for information in informations %}
+                          {% if information.information_id == config_account_id %}
+                            <option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
+                          {% else %}
+                            <option value="{{ information.information_id }}">{{ information.title }}</option>
+                          {% endif %}
+                        {% endfor %}
+                      </select>
+                      <small class="form-text text-muted">{{ help_account }}</small>
                     </div>
                   </div>
                 </div>
-                <div class="form-group row">
-                  <label class="col-sm-2 col-form-label">{{ entry_checkout_guest }}</label>
-                  <div class="col-sm-10">
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                      {% if config_checkout_guest %}
-                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_checkout_guest" value="1" checked="checked"/> {{ text_yes }}</label>
-                        <label class="btn btn-outline-secondary"><input type="radio" name="config_checkout_guest" value="0"/> {{ text_no }}</label>
-                      {% else %}
-                        <label class="btn btn-outline-secondary"><input type="radio" name="config_checkout_guest" value="1"/> {{ text_yes }}</label>
-                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_checkout_guest" value="0" checked="checked"/> {{ text_no }}</label>
-                      {% endif %}
-                    </div>
-                    <small class="form-text text-muted">{{ help_checkout_guest }}</small>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-checkout">{{ entry_checkout }}</label>
-                  <div class="col-sm-10">
-                    <select name="config_checkout_id" id="input-checkout" class="form-control">
-                      <option value="0">{{ text_none }}</option>
-                      {% for information in informations %}
-                        {% if information.information_id == config_checkout_id %}
-                          <option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
+                <div class="tab-pane" id="tab-checkout">
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">{{ entry_cart_weight }}</label>
+                    <div class="col-sm-10">
+                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        {% if config_cart_weight %}
+                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_cart_weight" value="1" checked="checked"/> {{ text_yes }}</label>
+                          <label class="btn btn-outline-secondary"><input type="radio" name="config_cart_weight" value="0"/> {{ text_no }}</label>
                         {% else %}
-                          <option value="{{ information.information_id }}">{{ information.title }}</option>
+                          <label class="btn btn-outline-secondary"><input type="radio" name="config_cart_weight" value="1"/> {{ text_yes }}</label>
+                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_cart_weight" value="0" checked="checked"/> {{ text_no }}</label>
                         {% endif %}
-                      {% endfor %}
-                    </select>
-                    <small class="form-text text-muted">{{ help_checkout }}</small>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-order-status">{{ entry_order_status }}</label>
-                  <div class="col-sm-10">
-                    <select name="config_order_status_id" id="input-order-status" class="form-control">
-                      {% for order_status in order_statuses %}
-                        {% if order_status.order_status_id == config_order_status_id %}
-                          <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">{{ entry_checkout_guest }}</label>
+                    <div class="col-sm-10">
+                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        {% if config_checkout_guest %}
+                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_checkout_guest" value="1" checked="checked"/> {{ text_yes }}</label>
+                          <label class="btn btn-outline-secondary"><input type="radio" name="config_checkout_guest" value="0"/> {{ text_no }}</label>
                         {% else %}
-                          <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                          <label class="btn btn-outline-secondary"><input type="radio" name="config_checkout_guest" value="1"/> {{ text_yes }}</label>
+                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_checkout_guest" value="0" checked="checked"/> {{ text_no }}</label>
                         {% endif %}
-                      {% endfor %}
-                    </select>
-                    <small class="form-text text-muted">{{ help_order_status }}</small>
-                  </div>
-                </div>
-              </fieldset>
-              <fieldset>
-                <legend>{{ text_stock }}</legend>
-                <div class="form-group row">
-                  <label class="col-sm-2 col-form-label">{{ entry_stock_display }}</label>
-                  <div class="col-sm-10">
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                      {% if config_stock_display %}
-                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_stock_display" value="1" checked="checked"/> {{ text_yes }}</label>
-                        <label class="btn btn-outline-secondary"><input type="radio" name="config_stock_display" value="0"/> {{ text_no }}</label>
-                      {% else %}
-                        <label class="btn btn-outline-secondary"><input type="radio" name="config_stock_display" value="1"/> {{ text_yes }}</label>
-                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_stock_display" value="0" checked="checked"/> {{ text_no }}</label>
-                      {% endif %}
+                      </div>
+                      <small class="form-text text-muted">{{ help_checkout_guest }}</small>
                     </div>
-                    <small class="form-text text-muted">{{ help_stock_display }}</small>
                   </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-sm-2 col-form-label">{{ entry_stock_checkout }}</label>
-                  <div class="col-sm-10">
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                      {% if config_stock_checkout %}
-                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_stock_checkout" value="1" checked="checked"/> {{ text_yes }}</label>
-                        <label class="btn btn-outline-secondary"><input type="radio" name="config_stock_checkout" value="0"/> {{ text_no }}</label>
-                      {% else %}
-                        <label class="btn btn-outline-secondary"><input type="radio" name="config_stock_checkout" value="1"/> {{ text_yes }}</label>
-                        <label class="btn btn-outline-secondary active"><input type="radio" name="config_stock_checkout" value="0" checked="checked"/> {{ text_no }}</label>
-                      {% endif %}
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="input-checkout">{{ entry_checkout }}</label>
+                    <div class="col-sm-10">
+                      <select name="config_checkout_id" id="input-checkout" class="form-control">
+                        <option value="0">{{ text_none }}</option>
+                        {% for information in informations %}
+                          {% if information.information_id == config_checkout_id %}
+                            <option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
+                          {% else %}
+                            <option value="{{ information.information_id }}">{{ information.title }}</option>
+                          {% endif %}
+                        {% endfor %}
+                      </select>
+                      <small class="form-text text-muted">{{ help_checkout }}</small>
                     </div>
-                    <small class="form-text text-muted">{{ help_stock_checkout }}</small>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="input-order-status">{{ entry_order_status }}</label>
+                    <div class="col-sm-10">
+                      <select name="config_order_status_id" id="input-order-status" class="form-control">
+                        {% for order_status in order_statuses %}
+                          {% if order_status.order_status_id == config_order_status_id %}
+                            <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                          {% else %}
+                            <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                          {% endif %}
+                        {% endfor %}
+                      </select>
+                      <small class="form-text text-muted">{{ help_order_status }}</small>
+                    </div>
                   </div>
                 </div>
-              </fieldset>
+                <div class="tab-pane" id="tab-stock">
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">{{ entry_stock_display }}</label>
+                    <div class="col-sm-10">
+                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        {% if config_stock_display %}
+                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_stock_display" value="1" checked="checked"/> {{ text_yes }}</label>
+                          <label class="btn btn-outline-secondary"><input type="radio" name="config_stock_display" value="0"/> {{ text_no }}</label>
+                        {% else %}
+                          <label class="btn btn-outline-secondary"><input type="radio" name="config_stock_display" value="1"/> {{ text_yes }}</label>
+                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_stock_display" value="0" checked="checked"/> {{ text_no }}</label>
+                        {% endif %}
+                      </div>
+                      <small class="form-text text-muted">{{ help_stock_display }}</small>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">{{ entry_stock_checkout }}</label>
+                    <div class="col-sm-10">
+                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        {% if config_stock_checkout %}
+                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_stock_checkout" value="1" checked="checked"/> {{ text_yes }}</label>
+                          <label class="btn btn-outline-secondary"><input type="radio" name="config_stock_checkout" value="0"/> {{ text_no }}</label>
+                        {% else %}
+                          <label class="btn btn-outline-secondary"><input type="radio" name="config_stock_checkout" value="1"/> {{ text_yes }}</label>
+                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_stock_checkout" value="0" checked="checked"/> {{ text_no }}</label>
+                        {% endif %}
+                      </div>
+                      <small class="form-text text-muted">{{ help_stock_checkout }}</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="tab-pane" id="tab-image">
               <div class="form-group row">

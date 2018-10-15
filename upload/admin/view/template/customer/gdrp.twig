@@ -22,6 +22,7 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
+    <div class="alert alert-warning"><i class="fas fa-info-circle"></i> GDRP account deletion requests will  after the limit is set in settings. This is so that</div>
     <div class="row">
       <div id="filter-customer" class="col-md-3 col-sm-12 order-md-9 d-none d-md-block mb-3">
         <div class="card">
@@ -42,10 +43,10 @@
               </select>
             </div>
             <div class="form-group">
-              <label class="col-form-label" for="input-type">{{ entry_type }}</label> <select name="filter_type" id="input-type" class="form-control">
+              <label class="col-form-label" for="input-status">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-control">
                 <option value=""></option>
-                <option value="customer">{{ text_customer }}</option>
-                <option value="affiliate">{{ text_affiliate }}</option>
+                <option value="1">{{ text_enabled }}</option>
+                <option value="0">{{ text_disabled }}</option>
               </select>
             </div>
             <div class="form-group">
@@ -67,7 +68,7 @@
         <div class="card">
           <div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
           <div class="card-body">
-            <div id="customer-approval"></div>
+            <div id="gdrp"></div>
           </div>
         </div>
       </div>
@@ -75,15 +76,15 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#customer-approval').on('click', '.pagination a', function(e) {
+$('#gdrp').on('click', '.pagination a', function(e) {
 	e.preventDefault();
 
-	$('#customer-approval').load(this.href);
+	$('#gdrp').load(this.href);
 });
 
-$('#customer-approval').load('index.php?route=customer/customer_approval/customer_approval&user_token={{ user_token }}');
+$('#gdrp').load('index.php?route=customer/gdrp/gdrp&user_token={{ user_token }}');
 
-$('#customer-approval').on('click', '.btn-success, .btn-danger', function(e) {
+$('#gdrp').on('click', '.btn-success, .btn-danger', function(e) {
 	e.preventDefault();
 
 	var element = this;
@@ -101,13 +102,13 @@ $('#customer-approval').on('click', '.btn-success, .btn-danger', function(e) {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#customer-approval').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#gdrp').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#customer-approval').load('index.php?route=customer/customer_approval/customer_approval&user_token={{ user_token }}');
+				$('#gdrp').load('index.php?route=customer/gdrp/gdrp&user_token={{ user_token }}');
 
-				$('#customer-approval').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#gdrp').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -137,10 +138,10 @@ $('#button-filter').on('click', function() {
 		url += '&filter_customer_group_id=' + encodeURIComponent(filter_customer_group_id);
 	}
 
-	var filter_type = $('select[name=\'filter_type\']').val();
+	var filter_status = $('select[name=\'filter_status\']').val();
 
-	if (filter_type !== '') {
-		url += '&filter_type=' + filter_type;
+	if (filter_status !== '') {
+		url += '&filter_status=' + filter_status;
 	}
 
 	var filter_date_added = $('input[name=\'filter_date_added\']').val();
@@ -149,7 +150,7 @@ $('#button-filter').on('click', function() {
 		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
 	}
 
-	$('#customer-approval').load('index.php?route=customer/customer_approval/customer_approval&user_token={{ user_token }}' + url);
+	$('#gdrp').load('index.php?route=customer/gdrp/gdrp&user_token={{ user_token }}' + url);
 });
 //--></script>
 <script type="text/javascript"><!--

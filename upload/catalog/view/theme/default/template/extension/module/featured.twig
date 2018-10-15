@@ -9,7 +9,7 @@
         <p>{{ product.description }}</p>
         {% if product.rating %}
         <div class="rating">
-          {% for i in 5 %}
+          {% for i in 1..5 %}
           {% if product.rating < i %}
           <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
           {% else %}

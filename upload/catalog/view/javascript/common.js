@@ -24,7 +24,7 @@ function getURLVar(key) {
 
 $(document).ready(function() {
 	// Add new div on each page
-	$('body').append('<div id="alert-box"></div>');
+	$('#container > .container').append('<div id="alert-box"></div>');
 
 	$('#alert-box').on('click', '.close', function(){
 		$('#alert-box').removeClass('open');

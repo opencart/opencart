@@ -31,8 +31,6 @@ class ControllerAccountAccount extends Controller {
 			$data['success'] = '';
 		}
 
-		$data['text_gdpr_data'] = $this->language->get('');
-
 		$data['edit'] = $this->url->link('account/edit', 'language=' . $this->config->get('config_language'));
 		$data['password'] = $this->url->link('account/password', 'language=' . $this->config->get('config_language'));
 		$data['address'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
@@ -87,7 +85,7 @@ class ControllerAccountAccount extends Controller {
 
 		$data['gdpr_status'] = $this->config->get('config_gdpr_status');
 		$data['gdpr_data'] = $this->url->link('account/gdpr', 'language=' . $this->config->get('config_language'));
-		$data['gdpr_remove'] = $this->url->link('account/gdpr/remove', 'language=' . $this->config->get('config_language'));
+		$data['gdpr_delete'] = $this->url->link('account/gdpr/delete', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -95,7 +93,7 @@ class ControllerAccountAccount extends Controller {
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
-		
+
 		$this->response->setOutput($this->load->view('account/account', $data));
 	}
 

@@ -120,7 +120,7 @@ $(document).on('click', '[data-toggle=\'clear\']', function() {
 	$($(this).attr('data-target')).val('');
 });
 
-// Autocomplete */
+// Autocomplete
 (function($) {
 	$.fn.autocomplete = function(option) {
 		return this.each(function() {

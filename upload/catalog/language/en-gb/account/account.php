@@ -26,4 +26,4 @@ $_['text_affiliate_add']  = 'Register for an affiliate account';
 $_['text_affiliate_edit'] = 'Edit your affiliate information';
 $_['text_tracking']       = 'Custom Affiliate Tracking Code';
 $_['text_gdpr_data']      = 'View Personal Data';
-$_['text_gdpr_remove']    = 'Remove Personal Data';
+$_['text_gdpr_delete']    = 'Remove Personal Data';

@@ -3,17 +3,17 @@
 class ControllerMailGdpr extends Controller {
 	// admin/model/customer/gdpr/approveGdpr
 	public function approve(&$route, &$args, &$output) {
-		$this->load->language('mail/gdpr_approve');
-
 		$this->load->model('customer/customer');
 
-		$customer_info = $this->model_customer_cuistomer->getCustomer($args[0]);
+		$customer_info = $this->model_customer_customer->getCustomer($args[0]);
 
 		if ($customer_info) {
+			$this->load->language('mail/gdpr_approve');
 
+			$data['text_hello'] = sprintf($this->language->get('text_subject'), html_entity_decode($customer_info['firstname'], ENT_QUOTES, 'UTF-8'));
+			$data['text_day'] = sprintf($this->language->get('text_deletion'), $this->config->get('config_gdpr_limit'));
 
-
-
+			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 			$mail = new Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
@@ -34,14 +34,15 @@ class ControllerMailGdpr extends Controller {
 
 	// admin/model/customer/gdpr/denyGdpr
 	public function deny(&$route, &$args, &$output) {
-
-		$this->load->language('mail/gdpr_deny');
-
 		$this->load->model('customer/customer');
 
-		$customer_info = $this->model_customer_cuistomer->getCustomer($args[0]);
+		$customer_info = $this->model_customer_customer->getCustomer($args[0]);
 
 		if ($customer_info) {
+			$this->load->language('mail/gdpr_deny');
+
+			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+
 			$mail = new Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
@@ -61,14 +62,14 @@ class ControllerMailGdpr extends Controller {
 
 	// admin/model/customer/gdpr/deleteGdpr
 	public function delete(&$route, &$args, &$output) {
-		$this->load->language('mail/gdpr_delete');
-
 		$this->load->model('customer/customer');
 
-		$customer_info = $this->model_customer_cuistomer->getCustomer($args[0]);
+		$customer_info = $this->model_customer_customer->getCustomer($args[0]);
 
 		if ($customer_info) {
 			$this->load->language('mail/gdpr_delete');
+
+			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 			$mail = new Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');

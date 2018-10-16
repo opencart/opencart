@@ -17,6 +17,8 @@ class ControllerCustomerGdpr extends Controller {
 			'href' => $this->url->link('customer/gdpr', 'user_token=' . $this->session->data['user_token'])
 		);
 
+		$data['text_info'] = sprintf($this->language->get('text_info'), $this->config->get('config_gdpr_limit'));
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->load->model('customer/customer_group');
@@ -145,7 +147,7 @@ class ControllerCustomerGdpr extends Controller {
 		} else {
 			$this->load->model('customer/gdpr');
 
-			$this->model_customer_customer_approval->approveGdpr($this->request->get['customer_id']);
+			$this->model_customer_gdpr->approveGdpr($this->request->get['customer_id']);
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -164,7 +166,7 @@ class ControllerCustomerGdpr extends Controller {
 		} else {
 			$this->load->model('customer/gdpr');
 
-			$this->model_customer_customer_approval->denyGdpr($this->request->get['customer_id']);
+			$this->model_customer_gdpr->denyGdpr($this->request->get['customer_id']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

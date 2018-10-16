@@ -159,7 +159,7 @@ class ControllerAccountRegister extends Controller {
 				$data['custom_fields'][] = $custom_field;
 			}
 		}
-		
+
 		if (isset($this->request->post['custom_field']['account'])) {
 			$data['register_custom_field'] = $this->request->post['custom_field']['account'];
 		} else {

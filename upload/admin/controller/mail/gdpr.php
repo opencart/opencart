@@ -54,6 +54,8 @@ class ControllerMailGdpr extends Controller {
 				$data['logo'] = '';
 			}
 
+			$data['text_hello'] = sprintf($this->language->get('text_hello'), html_entity_decode($customer_info['firstname'], ENT_QUOTES, 'UTF-8'));
+
 			$this->load->model('setting/store');
 
 			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);
@@ -63,6 +65,8 @@ class ControllerMailGdpr extends Controller {
 			} else {
 				$data['contact'] = HTTPS_CATALOG . 'index.php?route=information/contact';
 			}
+
+			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 			$mail = new Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
@@ -94,6 +98,18 @@ class ControllerMailGdpr extends Controller {
 				$data['logo'] = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
 			} else {
 				$data['logo'] = '';
+			}
+
+			$data['text_hello'] = sprintf($this->language->get('text_hello'), html_entity_decode($customer_info['firstname'], ENT_QUOTES, 'UTF-8'));
+
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);
+
+			if ($store_info) {
+				$data['contact'] = $store_info['url'] . 'index.php?route=information/contact';
+			} else {
+				$data['contact'] = HTTPS_CATALOG . 'index.php?route=information/contact';
 			}
 
 			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');

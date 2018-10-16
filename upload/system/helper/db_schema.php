@@ -1357,7 +1357,7 @@ function db_schema() {
 	);
 
 	$tables[] = array(
-		'name' => 'customer_gdrp',
+		'name' => 'customer_gdpr',
 		'field' => array(
 			array(
 				'name' => 'customer_id',

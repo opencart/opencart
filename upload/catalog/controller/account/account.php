@@ -85,9 +85,9 @@ class ControllerAccountAccount extends Controller {
 			$data['tracking'] = '';
 		}
 
-		$data['gdrp_status'] = $this->config->get('config_gdrp_status');
-		$data['gdrp_data'] = $this->url->link('account/gdrp', 'language=' . $this->config->get('config_language'));
-		$data['gdrp_remove'] = $this->url->link('account/gdrp/remove', 'language=' . $this->config->get('config_language'));
+		$data['gdpr_status'] = $this->config->get('config_gdpr_status');
+		$data['gdpr_data'] = $this->url->link('account/gdpr', 'language=' . $this->config->get('config_language'));
+		$data['gdpr_remove'] = $this->url->link('account/gdpr/remove', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

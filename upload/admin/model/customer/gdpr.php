@@ -1,7 +1,7 @@
 <?php
-class ModelCustomerGdrp extends Model {
-	public function getGdrps($data = array()) {
-		$sql = "SELECT *, CONCAT(c.`firstname`, ' ', c.`lastname`) AS customer, cgd.`name` AS customer_group, cg.`status` FROM `" . DB_PREFIX . "customer_gdrp` cg LEFT JOIN `" . DB_PREFIX . "customer` c ON (cg.`customer_id` = c.`customer_id`) LEFT JOIN `" . DB_PREFIX . "customer_group_description` cgd ON (c.`customer_group_id` = cgd.`customer_group_id`) WHERE cgd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+class ModelCustomerGdpr extends Model {
+	public function getGdprs($data = array()) {
+		$sql = "SELECT *, CONCAT(c.`firstname`, ' ', c.`lastname`) AS customer, cgd.`name` AS customer_group, cg.`status` FROM `" . DB_PREFIX . "customer_gdpr` cg LEFT JOIN `" . DB_PREFIX . "customer` c ON (cg.`customer_id` = c.`customer_id`) LEFT JOIN `" . DB_PREFIX . "customer_group_description` cgd ON (c.`customer_group_id` = cgd.`customer_group_id`) WHERE cgd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_customer'])) {
 			$sql .= " AND CONCAT(c.`firstname`, ' ', c.`lastname`) LIKE '%" . $this->db->escape((string)$data['filter_customer']) . "%'";
@@ -42,14 +42,14 @@ class ModelCustomerGdrp extends Model {
 		return $query->rows;
 	}
 
-	public function getGdrp($customer_id) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_gdrp` WHERE `customer_id` = '" . (int)$customer_id . "'");
+	public function getGdpr($customer_id) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_gdpr` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		return $query->row;
 	}
 
-	public function getTotalGdrps($data = array()) {
-		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_gdrp` cg LEFT JOIN `" . DB_PREFIX . "customer` c ON (cg.`customer_id` = c.`customer_id`)";
+	public function getTotalGdprs($data = array()) {
+		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_gdpr` cg LEFT JOIN `" . DB_PREFIX . "customer` c ON (cg.`customer_id` = c.`customer_id`)";
 
 		$implode = array();
 
@@ -82,15 +82,15 @@ class ModelCustomerGdrp extends Model {
 		return $query->row['total'];
 	}
 
-	public function approveGdrp($customer_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "customer_gdrp` SET status = '1' WHERE customer_id = '" . (int)$customer_id . "'");
+	public function approveGdpr($customer_id) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "customer_gdpr` SET status = '1' WHERE customer_id = '" . (int)$customer_id . "'");
 	}
 
-	public function denyGdrp($customer_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "customer_gdrp` SET status = '0' WHERE customer_id = '" . (int)$customer_id . "'");
+	public function denyGdpr($customer_id) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "customer_gdpr` SET status = '0' WHERE customer_id = '" . (int)$customer_id . "'");
 	}
 
-	public function deleteGdrp($customer_id) {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_gdrp` WHERE customer_id = '" . (int)$customer_id . "'");
+	public function deleteGdpr($customer_id) {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_gdpr` WHERE customer_id = '" . (int)$customer_id . "'");
 	}
 }

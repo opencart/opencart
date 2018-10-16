@@ -1,14 +1,14 @@
 <?php
-class ControllerCronGdrp extends Controller {
+class ControllerCronGdpr extends Controller {
 	public function index($cron_id, $code, $cycle, $date_added) {
-		$this->load->model('customer/gdrp');
+		$this->load->model('customer/gdpr');
 		$this->load->model('customer/customer');
 
-		$results = $this->model_customer_gdrp->getGdrps();
+		$results = $this->model_customer_gdpr->getGdprs();
 
 		foreach ($results as $result) {
-			if ($result['status'] && (strtotime($result['date_added']) >= strtotime('+' . $this->config->get('config_gdrp_limit') . ' days'))) {
-				$this->model_customer_gdrp->deleteGdrp($result['customer_id']);
+			if ($result['status'] && (strtotime($result['date_added']) >= strtotime('+' . $this->config->get('config_gdpr_limit') . ' days'))) {
+				$this->model_customer_gdpr->deleteGdpr($result['customer_id']);
 
 				$this->model_customer_customer->deleteCustomer($result['customer_id']);
 			}

@@ -11,21 +11,21 @@
       </tr>
     </thead>
     <tbody>
-      {% if gdrps %}
-        {% for gdrp in gdrps %}
+      {% if gdprs %}
+        {% for gdpr in gdprs %}
           <tr>
-            <td class="text-left"><a href="{{ gdrp.edit }}">{{ gdrp.customer }}</a></td>
-            <td class="text-left">{{ gdrp.email }}</td>
-            <td class="text-left">{{ gdrp.customer_group }}</td>
+            <td class="text-left"><a href="{{ gdpr.edit }}">{{ gdpr.customer }}</a></td>
+            <td class="text-left">{{ gdpr.email }}</td>
+            <td class="text-left">{{ gdpr.customer_group }}</td>
             <td class="text-left">
-              {% if gdrp.status %}
+              {% if gdpr.status %}
                 <span class="badge badge-success">{{ text_enabled }}</span>
               {% else %}
                 <span class="badge badge-danger">{{ text_disabled }}</span>
               {% endif %}
             </td>
-            <td class="text-left">{{ gdrp.date_added }}</td>
-            <td class="text-right"><a href="{{ gdrp.approve }}" data-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fas fa-thumbs-up"></i></a> <a href="{{ gdrp.deny }}" data-toggle="tooltip" title="{{ button_deny }}" class="btn btn-danger"><i class="fas fa-thumbs-down"></i></a></td>
+            <td class="text-left">{{ gdpr.date_added }}</td>
+            <td class="text-right"><a href="{{ gdpr.approve }}" data-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fas fa-thumbs-up"></i></a> <a href="{{ gdpr.deny }}" data-toggle="tooltip" title="{{ button_deny }}" class="btn btn-danger"><i class="fas fa-thumbs-down"></i></a></td>
           </tr>
         {% endfor %}
       {% else %}

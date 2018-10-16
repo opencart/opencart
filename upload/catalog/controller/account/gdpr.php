@@ -1,13 +1,13 @@
 <?php
-class ControllerAccountGdrp extends Controller {
+class ControllerAccountGdpr extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/gdrp', 'language=' . $this->config->get('config_language'));
+			$this->session->data['redirect'] = $this->url->link('account/gdpr', 'language=' . $this->config->get('config_language'));
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 
-		$this->load->language('account/gdrp');
+		$this->load->language('account/gdpr');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -20,7 +20,7 @@ class ControllerAccountGdrp extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/gdrp', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('account/gdpr', 'language=' . $this->config->get('config_language'))
 		);
 
 		if (isset($this->session->data['success'])) {
@@ -38,6 +38,6 @@ class ControllerAccountGdrp extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('account/gdrp', $data));
+		$this->response->setOutput($this->load->view('account/gdpr', $data));
 	}
 }

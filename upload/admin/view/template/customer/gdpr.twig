@@ -22,7 +22,7 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
-    <div class="alert alert-warning"><i class="fas fa-info-circle"></i> GDRP account deletion requests will  after the limit is set in settings. This is so that</div>
+    <div class="alert alert-warning"><i class="fas fa-info-circle"></i> GDPR account deletion requests will  after the limit is set in settings. This is so that</div>
     <div class="row">
       <div id="filter-customer" class="col-md-3 col-sm-12 order-md-9 d-none d-md-block mb-3">
         <div class="card">
@@ -68,7 +68,7 @@
         <div class="card">
           <div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
           <div class="card-body">
-            <div id="gdrp"></div>
+            <div id="gdpr"></div>
           </div>
         </div>
       </div>
@@ -76,15 +76,15 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#gdrp').on('click', '.pagination a', function(e) {
+$('#gdpr').on('click', '.pagination a', function(e) {
 	e.preventDefault();
 
-	$('#gdrp').load(this.href);
+	$('#gdpr').load(this.href);
 });
 
-$('#gdrp').load('index.php?route=customer/gdrp/gdrp&user_token={{ user_token }}');
+$('#gdpr').load('index.php?route=customer/gdpr/gdpr&user_token={{ user_token }}');
 
-$('#gdrp').on('click', '.btn-success, .btn-danger', function(e) {
+$('#gdpr').on('click', '.btn-success, .btn-danger', function(e) {
 	e.preventDefault();
 
 	var element = this;
@@ -102,13 +102,13 @@ $('#gdrp').on('click', '.btn-success, .btn-danger', function(e) {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#gdrp').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#gdpr').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#gdrp').load('index.php?route=customer/gdrp/gdrp&user_token={{ user_token }}');
+				$('#gdpr').load('index.php?route=customer/gdpr/gdpr&user_token={{ user_token }}');
 
-				$('#gdrp').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#gdpr').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -150,7 +150,7 @@ $('#button-filter').on('click', function() {
 		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
 	}
 
-	$('#gdrp').load('index.php?route=customer/gdrp/gdrp&user_token={{ user_token }}' + url);
+	$('#gdpr').load('index.php?route=customer/gdpr/gdpr&user_token={{ user_token }}' + url);
 });
 //--></script>
 <script type="text/javascript"><!--

@@ -282,18 +282,18 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">{{ entry_gdrp_status }}</label>
+                    <label class="col-sm-2 col-form-label">{{ entry_gdpr_status }}</label>
                     <div class="col-sm-10">
                       <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        {% if config_gdrp_status %}
-                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_gdrp_status" value="1" checked="checked"/> {{ text_yes }}</label>
-                          <label class="btn btn-outline-secondary"><input type="radio" name="config_gdrp_status" value="0"/> {{ text_no }}</label>
+                        {% if config_gdpr_status %}
+                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_gdpr_status" value="1" checked="checked"/> {{ text_yes }}</label>
+                          <label class="btn btn-outline-secondary"><input type="radio" name="config_gdpr_status" value="0"/> {{ text_no }}</label>
                         {% else %}
-                          <label class="btn btn-outline-secondary"><input type="radio" name="config_gdrp_status" value="1"/> {{ text_yes }}</label>
-                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_gdrp_status" value="0" checked="checked"/> {{ text_no }}</label>
+                          <label class="btn btn-outline-secondary"><input type="radio" name="config_gdpr_status" value="1"/> {{ text_yes }}</label>
+                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_gdpr_status" value="0" checked="checked"/> {{ text_no }}</label>
                         {% endif %}
                       </div>
-                      <small class="form-text text-muted">{{ help_gdrp_status }}</small>
+                      <small class="form-text text-muted">{{ help_gdpr_status }}</small>
                     </div>
                   </div>
                 </div>

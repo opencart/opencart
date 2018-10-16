@@ -464,16 +464,16 @@ class ControllerSettingSetting extends Controller {
 			$data['config_cookie_status'] = $this->config->get('config_cookie_status');
 		}
 
-		if (isset($this->request->post['config_gdrp_status'])) {
-			$data['config_gdrp_status'] = $this->request->post['config_gdrp_status'];
+		if (isset($this->request->post['config_gdpr_status'])) {
+			$data['config_gdpr_status'] = $this->request->post['config_gdpr_status'];
 		} else {
-			$data['config_gdrp_status'] = $this->config->get('config_gdrp_status');
+			$data['config_gdpr_status'] = $this->config->get('config_gdpr_status');
 		}
 
-		if (isset($this->request->post['config_gdrp_limit'])) {
-			$data['config_gdrp_limit'] = $this->request->post['config_gdrp_limit'];
+		if (isset($this->request->post['config_gdpr_limit'])) {
+			$data['config_gdpr_limit'] = $this->request->post['config_gdpr_limit'];
 		} else {
-			$data['config_gdrp_limit'] = $this->config->get('config_gdrp_limit');
+			$data['config_gdpr_limit'] = $this->config->get('config_gdpr_limit');
 		}
 
 		if (isset($this->request->post['config_tax'])) {

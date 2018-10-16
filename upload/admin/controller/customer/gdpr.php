@@ -1,7 +1,7 @@
 <?php
-class ControllerCustomerGdrp extends Controller {
+class ControllerCustomerGdpr extends Controller {
 	public function index() {
-		$this->load->language('customer/gdrp');
+		$this->load->language('customer/gdpr');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -14,7 +14,7 @@ class ControllerCustomerGdrp extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('customer/gdrp', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('customer/gdpr', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -27,11 +27,11 @@ class ControllerCustomerGdrp extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('customer/gdrp', $data));
+		$this->response->setOutput($this->load->view('customer/gdpr', $data));
 	}
 
-	public function gdrp() {
-		$this->load->language('customer/gdrp');
+	public function gdpr() {
+		$this->load->language('customer/gdpr');
 
 		if (isset($this->request->get['filter_customer'])) {
 			$filter_customer = $this->request->get['filter_customer'];
@@ -69,7 +69,7 @@ class ControllerCustomerGdrp extends Controller {
 			$page = 1;
 		}
 
-		$data['gdrps'] = array();
+		$data['gdprs'] = array();
 
 		$filter_data = array(
 			'filter_customer'          => $filter_customer,
@@ -81,22 +81,22 @@ class ControllerCustomerGdrp extends Controller {
 			'limit'                    => $this->config->get('config_limit_admin')
 		);
 
-		$this->load->model('customer/gdrp');
+		$this->load->model('customer/gdpr');
 
-		$gdrp_total = $this->model_customer_gdrp->getTotalGdrps($filter_data);
+		$gdpr_total = $this->model_customer_gdpr->getTotalGdprs($filter_data);
 
-		$results = $this->model_customer_gdrp->getGdrps($filter_data);
+		$results = $this->model_customer_gdpr->getGdprs($filter_data);
 
 		foreach ($results as $result) {
-			$data['gdrps'][] = array(
+			$data['gdprs'][] = array(
 				'customer_id'    => $result['customer_id'],
 				'customer'       => $result['customer'],
 				'email'          => $result['email'],
 				'customer_group' => $result['customer_group'],
 				'status'         => $result['status'],
 				'date_added'     => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'approve'        => $this->url->link('customer/gdrp/approve', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id']),
-				'deny'           => $this->url->link('customer/gdrp/deny', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id']),
+				'approve'        => $this->url->link('customer/gdpr/approve', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id']),
+				'deny'           => $this->url->link('customer/gdpr/deny', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id']),
 				'edit'           => $this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'])
 			);
 		}
@@ -124,28 +124,28 @@ class ControllerCustomerGdrp extends Controller {
 		}
 
 		$data['pagination'] = $this->load->controller('common/pagination', array(
-			'total' => $gdrp_total,
+			'total' => $gdpr_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_limit_admin'),
-			'url'   => $this->url->link('customer/gdrp/gdrp', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('customer/gdpr/gdpr', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		));
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($gdrp_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($gdrp_total - $this->config->get('config_limit_admin'))) ? $gdrp_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $gdrp_total, ceil($gdrp_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($gdpr_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($gdpr_total - $this->config->get('config_limit_admin'))) ? $gdpr_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $gdpr_total, ceil($gdpr_total / $this->config->get('config_limit_admin')));
 
-		$this->response->setOutput($this->load->view('customer/gdrp_list', $data));
+		$this->response->setOutput($this->load->view('customer/gdpr_list', $data));
 	}
 
 	public function approve() {
-		$this->load->language('customer/gdrp');
+		$this->load->language('customer/gdpr');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'customer/gdrp')) {
+		if (!$this->user->hasPermission('modify', 'customer/gdpr')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
-			$this->load->model('customer/gdrp');
+			$this->load->model('customer/gdpr');
 
-			$this->model_customer_customer_approval->approveGdrp($this->request->get['customer_id']);
+			$this->model_customer_customer_approval->approveGdpr($this->request->get['customer_id']);
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -155,16 +155,16 @@ class ControllerCustomerGdrp extends Controller {
 	}
 
 	public function deny() {
-		$this->load->language('customer/gdrp');
+		$this->load->language('customer/gdpr');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'customer/gdrp')) {
+		if (!$this->user->hasPermission('modify', 'customer/gdpr')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
-			$this->load->model('customer/gdrp');
+			$this->load->model('customer/gdpr');
 
-			$this->model_customer_customer_approval->denyGdrp($this->request->get['customer_id']);
+			$this->model_customer_customer_approval->denyGdpr($this->request->get['customer_id']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

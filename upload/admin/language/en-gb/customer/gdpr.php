@@ -1,10 +1,10 @@
 <?php
 // Heading
-$_['heading_title']         = 'GDRP Approvals';
+$_['heading_title']         = 'GDPR Approvals';
 
 // Text
-$_['text_success']          = 'Success: You have modified GDRP approvals!';
-$_['text_list']             = 'GDRP Approval List';
+$_['text_success']          = 'Success: You have modified GDPR approvals!';
+$_['text_list']             = 'GDPR Approval List';
 
 // Column
 $_['column_customer']       = 'Customer';
@@ -22,4 +22,4 @@ $_['entry_status']          = 'Status';
 $_['entry_date_added']      = 'Date Added';
 
 // Error
-$_['error_permission']      = 'Warning: You do not have permission to modify GDRP approvals!';
+$_['error_permission']      = 'Warning: You do not have permission to modify GDPR approvals!';

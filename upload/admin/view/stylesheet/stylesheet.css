@@ -474,7 +474,10 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .pagination {
     margin: 0;
 }
-
+.form-group.row {
+    margin-left: -20px;
+    margin-right: -20px;
+}
 .form-group.row + .form-group.row {
     padding-top: 1rem;
     border-top: 1px solid #ededed;

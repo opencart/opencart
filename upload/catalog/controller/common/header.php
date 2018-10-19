@@ -31,12 +31,8 @@ class ControllerCommonHeader extends Controller {
 		$data['direction'] = $this->language->get('direction');
 
 		$data['name'] = $this->config->get('config_name');
-
-		if (is_file(DIR_IMAGE . $this->config->get('config_logo'))) {
-			$data['logo'] = $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
-		} else {
-			$data['logo'] = '';
-		}
+		
+		$data['logo'] = is_file(DIR_IMAGE . $this->config->get('config_logo')) ? $this->config->get('config_url') . 'image/' . $this->config->get('config_logo') : '';
 
 		$this->load->language('common/header');
 

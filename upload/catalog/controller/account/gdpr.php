@@ -7,7 +7,7 @@ class ControllerAccountGdpr extends Controller {
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 
-		$this->load->language('account/gdpr');
+		$this->load->language('account/gdpr_data');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -20,16 +20,150 @@ class ControllerAccountGdpr extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/gdpr', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
 		);
 
-		$customer_info = $this->model_accoount_customer->getCustomer($this->customer->getId());
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('account/gdpr_data', 'language=' . $this->config->get('config_language'))
+		);
 
-		$results = $this->model_accoount_customer->getIps($this->customer->getId());
+		$data['firstname'] = $this->customer->getFirstname();
+		$data['lastname'] = $this->customer->getFirstname();
+		$data['email'] = $this->customer->getEmail();
+		$data['telephone'] = $this->customer->getTelephone();
 
+		// Addresses
+		$data['addresses'] = array();
 
+		$this->load->model('account/address');
 
+		$results = $this->model_account_address->getAddresses($this->customer->getId());
 
+		foreach ($results as $result) {
+			if ($result['address_format']) {
+				$format = $result['address_format'];
+			} else {
+				$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
+			}
+
+			$find = array(
+				'{firstname}',
+				'{lastname}',
+				'{company}',
+				'{address_1}',
+				'{address_2}',
+				'{city}',
+				'{postcode}',
+				'{zone}',
+				'{zone_code}',
+				'{country}'
+			);
+
+			$replace = array(
+				'firstname' => $result['firstname'],
+				'lastname'  => $result['lastname'],
+				'address_1' => $result['address_1'],
+				'address_2' => $result['address_2'],
+				'city'      => $result['city'],
+				'postcode'  => $result['postcode'],
+				'country'   => $result['country'],
+				'zone'      => $result['zone']
+			);
+
+			$address = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+
+			if (!in_array($address, $data['addresses'])) {
+				$data['addresses'][] = $address;
+			}
+		}
+
+		// Order Addresses
+		$this->load->model('account/order');
+
+		$results = $this->model_account_order->getOrders($this->customer->getId());
+
+		foreach ($results as $result) {
+			if ($result['address_format']) {
+				$format = $result['address_format'];
+			} else {
+				$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
+			}
+
+			$find = array(
+				'{firstname}',
+				'{lastname}',
+				'{company}',
+				'{address_1}',
+				'{address_2}',
+				'{city}',
+				'{postcode}',
+				'{zone}',
+				'{zone_code}',
+				'{country}'
+			);
+
+			$replace = array(
+				'firstaname' => $result['payment_firstaname'],
+				'lastname'   => $result['payment_lastname'],
+				'address_1'  => $result['payment_address_1'],
+				'address_2'  => $result['payment_address_2'],
+				'city'       => $result['payment_city'],
+				'postcode'   => $result['payment_postcode'],
+				'country'    => $result['payment_country'],
+				'zone'       => $result['payment_zone']
+			);
+
+			$address = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+
+			if (!in_array($address, $data['addresses'])) {
+				$data['addresses'][] = $address;
+			}
+
+			$find = array(
+				'{firstname}',
+				'{lastname}',
+				'{company}',
+				'{address_1}',
+				'{address_2}',
+				'{city}',
+				'{postcode}',
+				'{zone}',
+				'{zone_code}',
+				'{country}'
+			);
+
+			$replace = array(
+				'firstname' => $result['shipping_firstname'],
+				'lastname'  => $result['shipping_lastname'],
+				'address_1' => $result['shipping_address_1'],
+				'address_2' => $result['shipping_address_2'],
+				'city'      => $result['shipping_city'],
+				'postcode'  => $result['shipping_postcode'],
+				'country'   => $result['shipping_country'],
+				'zone'      => $result['shipping_zone']
+			);
+
+			$address = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+
+			if (!in_array($address, $data['addresses'])) {
+				$data['addresses'][] = $address;
+			}
+		}
+
+		// Ip's
+		$data['ips'] = array();
+
+		$this->load->model('account/customer');
+
+		$results = $this->model_account_customer->getIps($this->customer->getId());
+
+		foreach ($results as $result) {
+			$data['ips'][] = array(
+				'ip'         => $result['ip'],
+				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
+			);
+		}
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -38,10 +172,10 @@ class ControllerAccountGdpr extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('account/gdpr', $data));
+		$this->response->setOutput($this->load->view('account/gdpr_data', $data));
 	}
 
-	public function delete() {
+	public function confirm() {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/gdpr/delete', 'language=' . $this->config->get('config_language'));
 
@@ -64,7 +198,10 @@ class ControllerAccountGdpr extends Controller {
 			'href' => $this->url->link('account/gdpr', 'language=' . $this->config->get('config_language'))
 		);
 
-		$this->config->get('config_gdpr_limit');
+		$data['text_confirm'] = sprintf($this->language->get('text_confirm'), $this->config->get('config_gdpr_limit'));
+
+
+
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -76,7 +213,8 @@ class ControllerAccountGdpr extends Controller {
 		$this->response->setOutput($this->load->view('account/gdpr', $data));
 	}
 
-	public function confirm() {
+	public function success() {
+
 
 	}
 }

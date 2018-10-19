@@ -1,5 +1,5 @@
 {{ header }}
-<div id="account-account" class="container">
+<div id="account-gdpr" class="container">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
       <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
@@ -18,7 +18,42 @@
     {% endif %}
     <div id="content" class="{{ class }}">
       {{ content_top }}
+      <h1>{{ heading_title }}</h1>
+      <h2>{{ text_customer }}</h2>
+      <table>
+        <tr>
+          <td></td>
+        </tr>
+      </table>
 
+      {% if addresses %}
+        <h2>{{ text_address }}</h2>
+      <div class="row">
+        {% for address in addresses %}
+          <div class="col-sm-6 mb-3">{{ address }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {% if ips %}
+        <h2>{{ text_ips }}</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>{{ text_ip }}</th>
+              <th>{{ text_date_added }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for ip in ips %}
+              <tr>
+                <td>{{ ip.ip }}</td>
+                <td>{{ ip.date_added }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
       {{ content_bottom }}
     </div>
     {{ column_right }}

@@ -2,9 +2,9 @@
 class ControllerMailGdpr extends Controller {
 	// catalog/model/customer/gdpr/addGdpr
 	public function index(&$route, &$args, &$output) {
-		$this->load->model('mail/customer');
+		$this->load->model('account/customer');
 
-		$customer_info = $this->model_customer_customer->getCustomer($args[0]);
+		$customer_info = $this->model_account_customer->getCustomer($args[0]);
 
 		if ($customer_info) {
 			$this->load->language('mail/gdpr');
@@ -16,8 +16,10 @@ class ControllerMailGdpr extends Controller {
 			}
 
 			$data['text_hello'] = sprintf($this->language->get('text_hello'), html_entity_decode($customer_info['firstname'], ENT_QUOTES, 'UTF-8'));
-			$data['text_limit'] = sprintf($this->language->get('text_limit'), $this->config->get('config_gdpr_limit'));
-			$data['text_a'] = sprintf($this->language->get('text_a'), $this->config->get('config_gdpr_limit'));
+			$data['text_greeting'] = sprintf($this->language->get('text_greeting'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+			$data['text_delete'] = sprintf($this->language->get('text_delete'), $this->config->get('config_gdpr_limit'));
+
+			$data['ip'] = $this->request->server['REMOTE_ADDR'];
 
 			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
@@ -32,8 +34,8 @@ class ControllerMailGdpr extends Controller {
 			$mail->setTo($customer_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject(html_entity_decode(sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
-			$mail->setHtml($this->load->view('mail/gdpr_approve', $data));
+			$mail->setSubject(sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')));
+			$mail->setHtml($this->load->view('mail/gdpr', $data));
 			$mail->send();
 		}
 	}

@@ -2,7 +2,7 @@
 <div id="account-gdpr" class="container">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
-      <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
   {% if success %}
@@ -19,20 +19,34 @@
     <div id="content" class="{{ class }}">
       {{ content_top }}
       <h1>{{ heading_title }}</h1>
+
       <h2>{{ text_customer }}</h2>
-      <table>
+      <table class="table table-bordered">
         <tr>
-          <td></td>
+          <td>{{ text_firstname }}</td>
+          <td>{{ firstname }}</td>
+        </tr>
+        <tr>
+          <td>{{ text_lastname }}</td>
+          <td>{{ lastname }}</td>
+        </tr>
+        <tr>
+          <td>{{ text_email }}</td>
+          <td>{{ email }}</td>
+        </tr>
+        <tr>
+          <td>{{ text_telephone }}</td>
+          <td>{{ telephone }}</td>
         </tr>
       </table>
 
       {% if addresses %}
         <h2>{{ text_address }}</h2>
-      <div class="row">
-        {% for address in addresses %}
-          <div class="col-sm-6 mb-3">{{ address }}</div>
-        {% endfor %}
-      </div>
+        <div class="row">
+          {% for address in addresses %}
+            <div class="col-sm-6 mb-3">{{ address }}</div>
+          {% endfor %}
+        </div>
       {% endif %}
 
       {% if ips %}
@@ -54,6 +68,7 @@
           </tbody>
         </table>
       {% endif %}
+
       {{ content_bottom }}
     </div>
     {{ column_right }}

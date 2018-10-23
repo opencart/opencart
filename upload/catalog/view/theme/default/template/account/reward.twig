@@ -2,7 +2,7 @@
 <div id="account-reward" class="container">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
-      <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
   <div class="row">{{ column_left }}
@@ -26,7 +26,6 @@
             </tr>
           </thead>
           <tbody>
-
             {% if rewards %}
               {% for reward in rewards %}
                 <tr>
@@ -43,7 +42,6 @@
               </tr>
             {% endif %}
           </tbody>
-
         </table>
       </div>
       <div class="row">

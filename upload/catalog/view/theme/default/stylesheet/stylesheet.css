@@ -357,13 +357,13 @@ footer h5 {
 .breadcrumb i {
     font-size: 15px;
 }
-.breadcrumb > li {
+.breadcrumb > li.breadcrumb-item {
     text-shadow: 0 1px 0 #fff;
     padding: 0 20px;
     position: relative;
     white-space: nowrap;
 }
-.breadcrumb > li:after {
+.breadcrumb > li.breadcrumb-item:after {
     content: '';
     display: block;
     position: absolute;
@@ -378,7 +378,7 @@ footer h5 {
     -o-transform: rotate(-45deg);
     transform: rotate(-45deg);
 }
-.breadcrumb > li + li:before {
+.breadcrumb > li.breadcrumb-item + li:before {
     content: '';
     padding: 0;
 }
@@ -390,7 +390,6 @@ footer h5 {
     margin: 1em 0;
 }
 .btn {
-    font-size: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);

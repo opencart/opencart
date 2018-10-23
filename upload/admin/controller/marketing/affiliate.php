@@ -693,13 +693,19 @@ class ControllerMarketingAffiliate extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		// Check to see if customer is already a affiliate
-		if (isset($this->request->post['customer_id'])) {
-			$affiliate_info = $this->model_marketing_affiliate->getAffiliate($this->request->post['customer_id']);
+		$this->load->model('customer/customer');
 
-			if ($affiliate_info) {
-				$this->error['warning'] = $this->language->get('error_already');
-			}
+		$customer_info = $this->model_customer_customer->getCustomer($this->request->post['customer_id']);
+
+		if (!$customer_info) {
+			$this->error['warning'] = $this->language->get('error_customer');
+		}
+
+		// Check to see if customer is already a affiliate
+		$affiliate_info = $this->model_marketing_affiliate->getAffiliate($this->request->post['customer_id']);
+
+		if ($affiliate_info) {
+			$this->error['warning'] = $this->language->get('error_already');
 		}
 
 		if (!$this->request->post['tracking']) {

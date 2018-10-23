@@ -204,8 +204,10 @@ class ControllerAccountGdpr extends Controller {
 		);
 
 		$data['text_confirm'] = sprintf($this->language->get('text_confirm'), $this->config->get('config_gdpr_limit'));
+		$data['text_confirm'] = sprintf($this->language->get('text_confirm'), $this->config->get('config_gdpr_limit'));
 
 		$data['delete'] = $this->url->link('account/gdpr/success', 'language=' . $this->config->get('config_language'));
+		$data['cancel'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

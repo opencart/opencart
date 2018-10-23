@@ -19,18 +19,17 @@
     <div id="content" class="{{ class }}">
       {{ content_top }}
       <h1>{{ heading_title }}</h1>
-      <div class="text-danger"><p><i class="fas fa-exclamation-triangle"></i> <strong>GDPR</strong> account deletion requests will process after 180 days so any fraud detection, chargebacks or refunds can be processed.</p>
-
-        <p class="text-danger">Your account personal data deleted after 180 Days.</p>
+      <div class="text-danger border border-danger p-3 mb-3">
+        <p><i class="fas fa-exclamation-triangle"></i> <strong>GDPR</strong> account deletion requests will process after 180 days so any fraud detection, chargebacks or refunds can be processed.</p>
         <ul>
           <li>You will no longer have access to your %s account.</li>
           <li>No longer have access to your order history, wishlists, downloads</li>
           <li>account deletion requests will process after 180 days so any fraud detection, chargebacks or refunds can be processed.</li>
         </ul>
-        <p class="text-center">I confirm that I want my account deleting</p>
       </div>
       <div class="d-inline-block pt-2 pd-2 w-100">
-        <a href="{{ delete }}" class="btn btn-light float-left">Cancel</a> <a href="{{ delete }}" class="btn btn-danger float-right"><i class="fas fa-exclamation-triangle"></i> Remove Personal Data</a>
+        <div class="float-left"><a href="{{ cancel }}" class="btn btn-light">Cancel</a></div>
+        <div class="float-right"><a href="{{ delete }}" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i> Remove Personal Data</a></div>
       </div>
       {{ content_bottom }}
     </div>

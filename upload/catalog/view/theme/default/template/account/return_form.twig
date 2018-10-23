@@ -159,7 +159,7 @@
           {{ captcha }}
         </fieldset>
         {% if text_agree %}
-          <div class="buttons clearfix">
+          <div class="d-inline-block pt-2 pd-2 w-100">
             <div class="float-left"><a href="{{ back }}" class="btn btn-danger">{{ button_back }}</a></div>
             <div class="float-right">{{ text_agree }}
               {% if agree %}
@@ -171,7 +171,7 @@
             </div>
           </div>
         {% else %}
-          <div class="buttons clearfix">
+          <div class="d-inline-block pt-2 pd-2 w-100">
             <div class="float-left"><a href="{{ back }}" class="btn btn-light">{{ button_back }}</a></div>
             <div class="float-right">
               <input type="submit" value="{{ button_submit }}" class="btn btn-primary"/>

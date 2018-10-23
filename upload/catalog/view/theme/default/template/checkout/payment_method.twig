@@ -26,7 +26,7 @@
   <textarea name="comment" rows="8" class="form-control">{{ comment }}</textarea>
 </p>
 {% if text_agree %}
-  <div class="buttons">
+  <div class="d-inline-block pt-2 pd-2 w-100">
     <div class="float-right">{{ text_agree }}
       {% if agree %}
         <input type="checkbox" name="agree" value="1" checked="checked"/>
@@ -38,7 +38,7 @@
     </div>
   </div>
 {% else %}
-  <div class="buttons">
+  <div class="d-inline-block pt-2 pd-2 w-100">
     <div class="float-right">
       <button type="button" id="button-payment-method" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
     </div>

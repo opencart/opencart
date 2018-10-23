@@ -3,7 +3,7 @@
   <input type="hidden" name="TRANSACTION_TYPE" value="{{ TRANSACTION_TYPE }}"> <input type="hidden" name="MERCHANT" value="{{ MERCHANT }}"> <input type="hidden" name="DBA" value="{{ DBA }}"> <input type="hidden" name="TAMPER_PROOF_SEAL" value="{{ TAMPER_PROOF_SEAL }}"> <input type="hidden" name="CARD_TYPES" value="{{ CARD_TYPES }}"> <input type="hidden" name="REDIRECT_URL" value="{{ REDIRECT_URL }}"> <input type="hidden" name="APPROVED_URL" value="{{ APPROVED_URL }}"> <input type="hidden" name="DECLINED_URL" value="{{ DECLINED_URL }}"> <input type="hidden" name="MISSING_URL" value="{{ MISSING_URL }}"> <input type="hidden" name="TPS_DEF" value="{{ TPS_DEF }}"> <input type="hidden" name="AMOUNT" value="{{ amount }}">
   <div class="d-inline-block pt-2 pd-2 w-100">
     <div class="float-right">
-      <input type="submit" value="{{ button_confirm }}" id="button-submit" data-loading-text="{{ text_loading }}" class="btn btn-primary"/>
+      <button type="submit" id="button-submit" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_confirm }}</button>
     </div>
   </div>
 </form>

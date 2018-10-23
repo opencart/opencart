@@ -167,14 +167,14 @@
               {% else %}
                 <input type="checkbox" name="agree" value="1"/>
               {% endif %}
-              <input type="submit" value="{{ button_submit }}" class="btn btn-primary"/>
+              <button type="submit" class="btn btn-primary">{{ button_submit }}</button>
             </div>
           </div>
         {% else %}
           <div class="d-inline-block pt-2 pd-2 w-100">
             <div class="float-left"><a href="{{ back }}" class="btn btn-light">{{ button_back }}</a></div>
             <div class="float-right">
-              <input type="submit" value="{{ button_submit }}" class="btn btn-primary"/>
+              <button type="submit" class="btn btn-primary">{{ button_submit }}</button>
             </div>
           </div>
         {% endif %}

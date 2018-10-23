@@ -386,9 +386,6 @@ footer h5 {
     margin: 0;
 }
 /* buttons */
-.buttons {
-    margin: 1em 0;
-}
 .btn {
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -724,9 +721,6 @@ footer h5 {
     background-image: linear-gradient(to bottom, #23a1d1, #1f90bb);
     background-repeat: repeat-x;
     border-color: #1f90bb #1f90bb #145e7a;
-}
-.buttons {
-    height: 20px;
 }
 .card .card-header > h4 {
     font-size: 16px;

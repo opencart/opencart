@@ -642,8 +642,8 @@ class ControllerSaleOrder extends Controller {
 
 		$filter_data = array(
 			'filter_status' => 1,
-			'sort'          => 'cf.sort_order',
-			'order'         => 'ASC'
+			'sort' => 'cf.sort_order',
+			'order' => 'ASC'
 		);
 
 		$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
@@ -651,13 +651,13 @@ class ControllerSaleOrder extends Controller {
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['status']) {
 				$data['custom_fields'][] = array(
-					'custom_field_id'    => $custom_field['custom_field_id'],
+					'custom_field_id' => $custom_field['custom_field_id'],
 					'custom_field_value' => $this->model_customer_custom_field->getCustomFieldValues($custom_field['custom_field_id']),
-					'name'               => $custom_field['name'],
-					'value'              => $custom_field['value'],
-					'type'               => $custom_field['type'],
-					'location'           => $custom_field['location'],
-					'sort_order'         => $custom_field['sort_order']
+					'name' => $custom_field['name'],
+					'value' => $custom_field['value'],
+					'type' => $custom_field['type'],
+					'location' => $custom_field['location'],
+					'sort_order' => $custom_field['sort_order']
 				);
 			}
 		}

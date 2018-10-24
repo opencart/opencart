@@ -41,26 +41,7 @@ class ControllerAccountGdpr extends Controller {
 		$results = $this->model_account_address->getAddresses($this->customer->getId());
 
 		foreach ($results as $result) {
-			if ($result['address_format']) {
-				$format = $result['address_format'];
-			} else {
-				$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
-			}
-
-			$find = array(
-				'{firstname}',
-				'{lastname}',
-				'{company}',
-				'{address_1}',
-				'{address_2}',
-				'{city}',
-				'{postcode}',
-				'{zone}',
-				'{zone_code}',
-				'{country}'
-			);
-
-			$replace = array(
+			$address = array(
 				'firstname' => $result['firstname'],
 				'lastname'  => $result['lastname'],
 				'address_1' => $result['address_1'],
@@ -70,8 +51,6 @@ class ControllerAccountGdpr extends Controller {
 				'country'   => $result['country'],
 				'zone'      => $result['zone']
 			);
-
-			$address = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
 
 			if (!in_array($address, $data['addresses'])) {
 				$data['addresses'][] = $address;
@@ -84,26 +63,7 @@ class ControllerAccountGdpr extends Controller {
 		$results = $this->model_account_order->getOrders($this->customer->getId());
 
 		foreach ($results as $result) {
-			if ($result['address_format']) {
-				$format = $result['address_format'];
-			} else {
-				$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
-			}
-
-			$find = array(
-				'{firstname}',
-				'{lastname}',
-				'{company}',
-				'{address_1}',
-				'{address_2}',
-				'{city}',
-				'{postcode}',
-				'{zone}',
-				'{zone_code}',
-				'{country}'
-			);
-
-			$replace = array(
+			$address = array(
 				'firstaname' => $result['payment_firstaname'],
 				'lastname'   => $result['payment_lastname'],
 				'address_1'  => $result['payment_address_1'],
@@ -114,26 +74,11 @@ class ControllerAccountGdpr extends Controller {
 				'zone'       => $result['payment_zone']
 			);
 
-			$address = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
-
 			if (!in_array($address, $data['addresses'])) {
 				$data['addresses'][] = $address;
 			}
 
-			$find = array(
-				'{firstname}',
-				'{lastname}',
-				'{company}',
-				'{address_1}',
-				'{address_2}',
-				'{city}',
-				'{postcode}',
-				'{zone}',
-				'{zone_code}',
-				'{country}'
-			);
-
-			$replace = array(
+			$address = array(
 				'firstname' => $result['shipping_firstname'],
 				'lastname'  => $result['shipping_lastname'],
 				'address_1' => $result['shipping_address_1'],
@@ -143,8 +88,6 @@ class ControllerAccountGdpr extends Controller {
 				'country'   => $result['shipping_country'],
 				'zone'      => $result['shipping_zone']
 			);
-
-			$address = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
 
 			if (!in_array($address, $data['addresses'])) {
 				$data['addresses'][] = $address;
@@ -160,10 +103,14 @@ class ControllerAccountGdpr extends Controller {
 
 		foreach ($results as $result) {
 			$data['ips'][] = array(
-				'ip'         => $result['ip'],
-				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
+				'ip'        => $result['ip'],
+				'country'   => $result['country'],
+				'date_added'=> date($this->language->get('datetime_format'), strtotime($result['date_added']))
 			);
 		}
+
+		$data['delete'] = $this->url->link('account/gdpr/delete', 'language=' . $this->config->get('config_language'));
+		$data['cancel'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

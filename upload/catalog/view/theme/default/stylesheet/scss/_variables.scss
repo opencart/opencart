@@ -11,6 +11,7 @@
 
 // stylelint-disable
 $white:    #fff !default;
+//$gray-100: #f8f9fa !default;
 $gray-100: #e7e7e7 !default; // #f8f9fa
 $gray-200: #e9ecef !default;
 $gray-300: #dee2e6 !default;
@@ -39,12 +40,15 @@ $grays: map-merge(
   $grays
 );
 
+//$blue:    #007bff !default;
 $blue:    #229ac8 !default; // #007bff
 $indigo:  #6610f2 !default;
 $purple:  #6f42c1 !default;
 $pink:    #e83e8c !default;
+//$red:     #dc3545 !default;
 $red:     #da4f49 !default; // #dc3545
 $orange:  #fd7e14 !default;
+//$yellow:  #ffc107 !default;
 $yellow:  #faa732 !default; // #ffc107
 $green:   #28a745 !default;
 $teal:    #20c997 !default;
@@ -110,7 +114,8 @@ $yiq-text-light:            $white !default;
 //
 // Quickly modify global styling by enabling or disabling optional features.
 
-$enable-caret:              false !default;
+//$enable-caret:              false !default;
+$enable-caret:              true !default;
 $enable-rounded:            true !default;
 $enable-shadows:            false !default;
 $enable-gradients:          false !default;
@@ -126,7 +131,6 @@ $enable-print-styles:       true !default;
 // variables. Mostly focused on spacing.
 // You can add more entries to the $spacers map, should you need more variation.
 
-// stylelint-disable
 $spacer: 1rem !default;
 $spacers: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
@@ -250,15 +254,16 @@ $transition-collapse:         height .35s ease !default;
 // Font, line-height, and color for body text, headings, and more.
 
 // stylelint-disable value-keyword-case
-$font-family-sans-serif:      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
+//$font-family-sans-serif:      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
+$font-family-sans-serif:      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
 $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
 $font-family-base:            $font-family-sans-serif !default;
 // stylelint-enable value-keyword-case
 
+//$font-size-base:              1rem !default; // Assumes the browser default, typically `16px`
 $font-size-base:              .75rem !default; // Assumes the browser default, typically `16px`
 $font-size-lg:                ($font-size-base * 1.25) !default;
 $font-size-sm:                ($font-size-base * .875) !default;
-
 $font-weight-light:           300 !default;
 $font-weight-normal:          400 !default;
 $font-weight-bold:            700 !default;
@@ -545,6 +550,8 @@ $custom-range-thumb-border:           0 !default;
 $custom-range-thumb-border-radius:    1rem !default;
 $custom-range-thumb-box-shadow:       0 .1rem .25rem rgba($black, .1) !default;
 $custom-range-thumb-focus-box-shadow: 0 0 0 1px $body-bg, $input-btn-focus-box-shadow !default;
+// Added below line
+$custom-range-thumb-focus-box-shadow-width:  $input-btn-focus-width !default; // For focus box shadow issue in IE/Edge
 $custom-range-thumb-active-bg:        lighten($component-active-bg, 35%) !default;
 
 $custom-file-height:                $input-height !default;

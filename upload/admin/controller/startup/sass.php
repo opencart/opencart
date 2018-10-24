@@ -1,25 +1,42 @@
 <?php
 class ControllerStartupSass extends Controller {
 	public function index() {
-		$file = DIR_APPLICATION . 'view/stylesheet/bootstrap.css';
+		$files = glob(DIR_APPLICATION . 'view/stylesheet/*.scss');
 
-		if (!is_file($file) || !$this->config->get('developer_sass')) {
-			$scss = new \Leafo\ScssPhp\Compiler();
-			$scss->setImportPaths(DIR_APPLICATION . 'view/stylesheet/scss/');
+		if ($files) {
+			foreach ($files as $file) {
+				// Get the filename
+				$filename = basename($file, '.scss') . '.css';
 
-			$output = $scss->compile('@import "bootstrap.scss"');
+				$stylesheet = DIR_APPLICATION . 'view/stylesheet/' . $filename;
 
-			$handle = fopen($file, 'w');
+				if (!is_file($stylesheet) || !$this->config->get('developer_sass')) {
+					$scss = new \Leafo\ScssPhp\Compiler();
+					$scss->setImportPaths(DIR_APPLICATION . 'view/stylesheet/');
 
-			flock($handle, LOCK_EX);
+					$output = $scss->compile('@import "' . $filename . '"');
 
-			fwrite($handle, $output);
+					$output = preg_replace('/\s*{\s*/', ' {' . "\n" . '    ', $output);
+					$output = preg_replace('/;\s*/', ';' . "\n" . '    ', $output);
+					$output = preg_replace('/,\s*/', ', ', $output);
+					$output = preg_replace('/[ ]*}\s*/', '}' . "\n", $output);
+					$output = preg_replace('/\}\s*(.+)/', '}' . "\n" . '$1', $output);
+					$output = preg_replace('/\n    ([^:]+):\s*/', "\n" . '    $1: ', $output);
+					$output = preg_replace('/([A-z0-9\)])}/', '$1;' . "\n" . '}', $output);
 
-			fflush($handle);
+					$handle = fopen($stylesheet, 'w');
 
-			flock($handle, LOCK_UN);
+					flock($handle, LOCK_EX);
 
-			fclose($handle);
+					fwrite($handle, $output);
+
+					fflush($handle);
+
+					flock($handle, LOCK_UN);
+
+					fclose($handle);
+				}
+			}
 		}
 	}
 }

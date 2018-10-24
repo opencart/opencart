@@ -6,23 +6,15 @@ class ControllerStartupSass extends Controller {
 		if ($files) {
 			foreach ($files as $file) {
 				// Get the filename
-				$filename = basename($file, '.scss') . '.css';
+				$filename = basename($file, '.scss');
 
-				$stylesheet = DIR_APPLICATION . 'view/theme/' . $this->config->get('config_theme') . '/stylesheet/' . $filename;
+				$stylesheet = DIR_APPLICATION . 'view/theme/' . $this->config->get('config_theme') . '/stylesheet/' . $filename . '.css';
 
 				if (!is_file($stylesheet) || !$this->config->get('developer_sass')) {
 					$scss = new \Leafo\ScssPhp\Compiler();
 					$scss->setImportPaths(DIR_APPLICATION . 'view/theme/' . $this->config->get('config_theme') . '/stylesheet/');
 
-					$output = $scss->compile('@import "' . $filename . '"');
-
-					$output = preg_replace('/\s*{\s*/', ' {' . "\n" . '    ', $output);
-					$output = preg_replace('/;\s*/', ';' . "\n" . '    ', $output);
-					$output = preg_replace('/,\s*/', ', ', $output);
-					$output = preg_replace('/[ ]*}\s*/', '}' . "\n", $output);
-					$output = preg_replace('/\}\s*(.+)/', '}' . "\n" . '$1', $output);
-					$output = preg_replace('/\n    ([^:]+):\s*/', "\n" . '    $1: ', $output);
-					$output = preg_replace('/([A-z0-9\)])}/', '$1;' . "\n" . '}', $output);
+					$output = $scss->compile('@import "' . $filename . '.scss"');
 
 					$handle = fopen($stylesheet, 'w');
 

@@ -129,10 +129,8 @@ if ($_POST) {
 				</tr>
 			</table>
 
-
-
 			<input type="submit" name="test" value="Continue to Divido" />
 
 		</form>
-	<?
+	<?php
 }

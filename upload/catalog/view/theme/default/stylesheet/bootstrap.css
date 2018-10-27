@@ -5,7 +5,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*!
- * Bootstrap v4.1.2 (https://getbootstrap.com/)
+ * Bootstrap v4.1.3 (https://getbootstrap.com/)
  * Copyright 2011-2018 The Bootstrap Authors
  * Copyright 2011-2018 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
@@ -2305,7 +2305,7 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
   .custom-select:focus {
     border-color: #80cce9;
     outline: 0;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .075), 0 0 5px rgba(128, 204, 233, .5); }
+    box-shadow: 0 0 0 0.2rem rgba(128, 204, 233, .5); }
   .custom-select:focus::-ms-value {
     color: #495057;
     background-color: #fff; }

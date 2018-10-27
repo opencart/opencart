@@ -40,7 +40,6 @@
 
   &:not(:disabled):not(.disabled):active,
   &:not(:disabled):not(.disabled).active {
-    background-image: none;
     @include box-shadow($btn-active-box-shadow);
 
     &:focus {
@@ -62,8 +61,7 @@ fieldset:disabled a.btn {
 
 @each $color, $value in $theme-colors {
   .btn-#{$color} {
-    //@include button-variant($value, $value);
-    @include button-variant($value, darken($value, 13%));
+    @include button-variant($value, $value);
   }
 }
 

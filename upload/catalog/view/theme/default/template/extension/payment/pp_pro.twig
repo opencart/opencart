@@ -79,7 +79,7 @@ $('#button-confirm').bind('click', function() {
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-confirm').attr('disabled', true);
-			$('#payment').before('<div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_wait }}</div>');
+			$('#payment').before('<div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_wait }}</div>');
 		},
 		complete: function() {
 			$('.alert-dismissible').remove();

@@ -6,7 +6,7 @@
     {% endfor %}
   </ul>
   {% if success %}
-    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+    <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
   {% endif %}
@@ -51,8 +51,8 @@
                         {% endif %}
                       </div>
                     {% endif %}</td>
-                  <td class="text-right"><button type="button" onclick="cart.add('{{ product.product_id }}');" data-toggle="tooltip" title="{{ button_cart }}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></button>
-                    <a href="{{ product.remove }}" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-times"></i></a></td>
+                  <td class="text-right"><button type="button" onclick="cart.add('{{ product.product_id }}');" data-toggle="tooltip" title="{{ button_cart }}" class="btn btn-primary"><i class="fas fa-shopping-cart"></i></button>
+                    <a href="{{ product.remove }}" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-times"></i></a></td>
                 </tr>
               {% endfor %}
             </tbody>

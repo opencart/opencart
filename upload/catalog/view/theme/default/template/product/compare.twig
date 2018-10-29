@@ -6,7 +6,7 @@
     {% endfor %}
   </ul>
   {% if success %}
-    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+    <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
   {% endif %}
@@ -68,7 +68,7 @@
                 <td>{{ text_rating }}</td>
                 {% for product in products %}
                   <td class="rating"> {% for i in 1..5 %}
-                      {% if product.rating < i %} <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> {% endif %}
+                      {% if product.rating < i %} <span class="fas fa-stack"><i class="fas fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fas fa-stack"><i class="fas fa-star fa-stack-2x"></i><i class="fas fa-star-o fa-stack-2x"></i></span> {% endif %}
                     {% endfor %}
                     <br/>
                     {{ product.reviews }}</td>

@@ -6,10 +6,10 @@
     {% endfor %}
   </ul>
   {% if success %}
-    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}</div>
+    <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}</div>
   {% endif %}
   {% if error %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-check-circle"></i> {{ error }}</div>
+    <div class="alert alert-danger alert-dismissible"><i class="fas fa-check-circle"></i> {{ error }}</div>
   {% endif %}
   <div class="row">{{ column_left }}
     {% if column_left and column_right %}
@@ -23,7 +23,7 @@
       <h2>{{ heading_title }}</h2>
 
       {% if not cards %}
-        <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> {{ text_no_cards }}</div>
+        <div class="alert alert-warning"><i class="fas fa-exclamation-circle"></i> {{ text_no_cards }}</div>
       {% else %}
         <table class="table table-bordered">
           {% for card in cards %}

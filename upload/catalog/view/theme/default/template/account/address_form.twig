@@ -192,7 +192,7 @@
               <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
                 <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                 <div class="col-sm-10">
-                  <button type="button" id="button-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fa fa-upload"></i> {{ button_upload }}</button>
+                  <button type="button" id="button-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                   <input type="hidden" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}  {{ address_custom_field[custom_field.custom_field_id] }} {% endif %}"/>
                   {% if error_custom_field[custom_field.custom_field_id] %}
                     <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
@@ -207,7 +207,7 @@
                   <div class="input-group date">
                     <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                     <div class="input-group-append">
-                      <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                      <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                     </div>
                   </div>
                   {% if error_custom_field[custom_field.custom_field_id] %}
@@ -223,7 +223,7 @@
                   <div class="input-group time">
                     <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                     <div class="input-group-append">
-                      <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                      <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                     </div>
                   </div>
                   {% if error_custom_field[custom_field.custom_field_id] %}
@@ -239,7 +239,7 @@
                   <div class="input-group datetime">
                     <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                     <div class="input-group-append">
-                      <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                      <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                     </div>
                   </div>
                   {% if error_custom_field[custom_field.custom_field_id] %}

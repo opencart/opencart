@@ -27,7 +27,7 @@ $(document).ready(function() {
 		if ($("input[name='payment_method']").val() == '1') {
 			location = '{{ continue }}';
 		} else {
-			$('#walletWidgetDiv').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i>{{ error_payment_method }}</div>');
+			$('#walletWidgetDiv').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i>{{ error_payment_method }}</div>');
 		}
 	});
 

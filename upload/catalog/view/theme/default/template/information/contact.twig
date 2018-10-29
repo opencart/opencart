@@ -29,7 +29,7 @@
                 {{ address }}
               </address>
               {% if geocode %}
-                <a href="https://maps.google.com/maps?q={{ geocode|url_encode }}&hl={{ geocode_hl }}&t=m&z=15" target="_blank" class="btn btn-info"><i class="fa fa-map-marker"></i> {{ button_map }}</a>
+                <a href="https://maps.google.com/maps?q={{ geocode|url_encode }}&hl={{ geocode_hl }}&t=m&z=15" target="_blank" class="btn btn-info"><i class="fas fa-map-marker"></i> {{ button_map }}</a>
               {% endif %}
             </div>
             <div class="col-sm-3"><strong>{{ text_telephone }}</strong>
@@ -66,7 +66,7 @@
           {% for location in locations %}
             <div class="card">
               <div class="panel-heading">
-                <h4 class="panel-title"><a href="#collapse-location{{ location.location_id }}" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion">{{ location.name }} <i class="fa fa-caret-down"></i></a></h4>
+                <h4 class="panel-title"><a href="#collapse-location{{ location.location_id }}" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion">{{ location.name }} <i class="fas fa-caret-down"></i></a></h4>
               </div>
               <div class="panel-collapse collapse" id="collapse-location{{ location.location_id }}">
                 <div class="card-body">
@@ -80,7 +80,7 @@
                         {{ location.address }}
                       </address>
                       {% if location.geocode %}
-                        <a href="https://maps.google.com/maps?q={{ location.geocode|url_encode }}&hl={{ geocode_hl }}&t=m&z=15" target="_blank" class="btn btn-info"><i class="fa fa-map-marker"></i> {{ button_map }}</a>
+                        <a href="https://maps.google.com/maps?q={{ location.geocode|url_encode }}&hl={{ geocode_hl }}&t=m&z=15" target="_blank" class="btn btn-info"><i class="fas fa-map-marker"></i> {{ button_map }}</a>
                       {% endif %}
                     </div>
                     <div class="col-sm-3"><strong>{{ text_telephone }}</strong>

@@ -1,5 +1,5 @@
 {% if error_warning %}
-  <div class="alert alert-warning alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+  <div class="alert alert-warning alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}</div>
 {% endif %}
 {% if payment_methods %}
   <p>{{ text_payment_method }}</p>
@@ -65,7 +65,7 @@ $('#button-payment-method').on('click', function() {
 					$('#button-payment-method').button('reset');
 
 					if (json['error']['warning']) {
-						$('#collapse-payment-method .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+						$('#collapse-payment-method .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 					}
 				} else {
 					chain.attach(function() {

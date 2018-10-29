@@ -107,11 +107,10 @@ div.required .col-form-label:before {
 #cart {
   margin-bottom: 10px; }
   #cart > .btn {
-    font-size: 12px;
     line-height: 18px;
     color: #fff; }
   #cart .btn-lg {
-    padding: 0.57rem 1rem; }
+    padding: 0.65rem 1rem; }
   #cart.open > .btn {
     background-image: none;
     background-color: #fff;

@@ -1,10 +1,10 @@
 {% if sandbox_message %}
   <div class="alert alert-warning">
-    <i class="fa fa-exclamation-circle"></i>&nbsp;{{ sandbox_message }}
+    <i class="fas fa-exclamation-circle"></i>&nbsp;{{ sandbox_message }}
   </div>
 {% endif %}
 <div id="squareup-notification">
-  <div class="text-center alert alert-info"><i class="fa fa-circle-o-notch fa-spin"></i>&nbsp;{{ text_loading }}</div>
+  <div class="text-center alert alert-info"><i class="fas fa-circle-o-notch fa-spin"></i>&nbsp;{{ text_loading }}</div>
 </div>
 <form action="{{ action }}" method="POST" id="squareup_card_details_form" style="display: none;">
   <fieldset>
@@ -187,7 +187,7 @@ $(document).ready(function() {
 	function squareupError(error) {
 		$('#button-confirm-order').button('reset');
 
-		$('#squareup-notification').html('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-label="X"><span aria-hidden="true">&times;</span></button><i class="fa fa-exclamation-circle"></i>&nbsp;' + error + '</div>');
+		$('#squareup-notification').html('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-label="X"><span aria-hidden="true">&times;</span></button><i class="fas fa-exclamation-circle"></i>&nbsp;' + error + '</div>');
 	}
 
 	function toggleAjaxSetup(status) {

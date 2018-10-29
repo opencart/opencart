@@ -20,7 +20,7 @@
         <div id="display-control" class="row">
           <div class="col-md-3">
             <div class="mb-3">
-              <a href="{{ compare }}" id="compare-total" class="btn btn-primary d-sm-block"><i class="fa fa-exchange"></i> {{ text_compare }}</a>
+              <a href="{{ compare }}" id="compare-total" class="btn btn-primary d-sm-block"><i class="fa fa-exchange-alt"></i> {{ text_compare }}</a>
             </div>
           </div>
           <div class="col-md-1 d-none d-md-block">
@@ -94,7 +94,7 @@
                   <div class="button-group">
                     <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><i class="fa fa-shopping-cart"></i> <span class="d-none d-lg-inline">{{ button_cart }}</span></button>
                     <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
-                    <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
+                    <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange-alt"></i></button>
                   </div>
                 </div>
               </div>

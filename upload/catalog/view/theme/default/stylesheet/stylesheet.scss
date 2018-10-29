@@ -55,38 +55,6 @@ label {
   font-weight: normal;
 }
 
-select,
-textarea,
-input[type="text"],
-input[type="password"],
-input[type="datetime"],
-input[type="datetime-local"],
-input[type="date"],
-input[type="month"],
-input[type="time"],
-input[type="week"],
-input[type="number"],
-input[type="email"],
-input[type="url"],
-input[type="search"],
-input[type="tel"],
-input[type="color"] {
-  &.form-control {
-    font-size: 12px;
-  }
-}
-
-.input-group {
-  input, select, .dropdown-menu, .popover {
-    font-size: 12px;
-  }
-
-  .input-group-addon {
-    font-size: 12px;
-    height: 30px;
-  }
-}
-
 .nav-tabs {
   margin-bottom: 15px;
 }
@@ -117,8 +85,6 @@ div.required .col-form-label:before {
         color: #888;
         text-shadow: 0 1px 0 #FFF;
 
-
-
       }
 
     }
@@ -133,7 +99,6 @@ div.required .col-form-label:before {
     }
   }
 }
-
 
 #top .list-inline-item .dropdown .dropdown-menu {
   font-size: 1.1em;
@@ -158,9 +123,6 @@ div.required .col-form-label:before {
   }
 }
 
-
-
-
 /* logo */
 #logo {
   margin: 0 0 10px 0;
@@ -172,11 +134,13 @@ div.required .col-form-label:before {
 /* search */
 #search {
   margin-bottom: 10px;
+
   .input-lg {
     height: 40px;
     line-height: 20px;
     padding: 0 10px;
   }
+
   .btn-lg {
     font-size: 15px;
     line-height: 18px;
@@ -977,10 +941,6 @@ footer {
   .form-check-input {
     margin-top: 0.25rem;
   }
-}
-
-.form-control {
-  padding: 0.545rem 0.75rem;
 }
 
 /* Theme Custom CSS */

@@ -42,15 +42,6 @@ label {
   font-size: 12px;
   font-weight: normal; }
 
-select.form-control, textarea.form-control, input[type="text"].form-control, input[type="password"].form-control, input[type="datetime"].form-control, input[type="datetime-local"].form-control, input[type="date"].form-control, input[type="month"].form-control, input[type="time"].form-control, input[type="week"].form-control, input[type="number"].form-control, input[type="email"].form-control, input[type="url"].form-control, input[type="search"].form-control, input[type="tel"].form-control, input[type="color"].form-control {
-  font-size: 12px; }
-
-.input-group input, .input-group select, .input-group .dropdown-menu, .input-group .popover {
-  font-size: 12px; }
-  .input-group .input-group-addon {
-    font-size: 12px;
-    height: 30px; }
-
 .nav-tabs {
   margin-bottom: 15px; }
 
@@ -608,9 +599,6 @@ footer {
 
 .form-check .form-check-input {
   margin-top: 0.25rem; }
-
-.form-control {
-  padding: 0.545rem 0.75rem; }
 /* Theme Custom CSS */
 #display-control #compare-total.a {
   margin-top: -2px;

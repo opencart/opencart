@@ -322,10 +322,10 @@ class ControllerSettingStore extends Controller {
 		}
 
 		$data['themes'] = array();
-		
+
 		// Create a new language container so we don't pollute the current one
 		$language = new Language($this->config->get('config_language'));
-		
+
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getInstalled('theme');
@@ -400,7 +400,7 @@ class ControllerSettingStore extends Controller {
 		} else {
 			$data['config_telephone'] = '';
 		}
-		
+
 		if (isset($this->request->post['config_fax'])) {
 			$data['config_fax'] = $this->request->post['config_fax'];
 		} elseif (isset($store_info['config_fax'])) {
@@ -408,7 +408,7 @@ class ControllerSettingStore extends Controller {
 		} else {
 			$data['config_fax'] = '';
 		}
-		
+
 		if (isset($this->request->post['config_image'])) {
 			$data['config_image'] = $this->request->post['config_image'];
 		} elseif (isset($store_info['config_image'])) {
@@ -452,7 +452,7 @@ class ControllerSettingStore extends Controller {
 		if (isset($this->request->post['config_location'])) {
 			$data['config_location'] = $this->request->post['config_location'];
 		} elseif (isset($store_info['config_location'])) {
-			$data['config_location'] = $this->config->get('config_location');
+			$data['config_location'] = $store_info['config_location'];
 		} else {
 			$data['config_location'] = array();
 		}

@@ -65,10 +65,9 @@
         <div class="panel-group" id="accordion">
           {% for location in locations %}
             <div class="card">
-              <div class="panel-heading">
-                <h4 class="panel-title"><a href="#collapse-location{{ location.location_id }}" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion">{{ location.name }} <i class="fa fa-caret-down"></i></a></h4>
-              </div>
-              <div class="panel-collapse collapse" id="collapse-location{{ location.location_id }}">
+              <h4 class="card-header collapsed" data-toggle="collapse" data-target="#collapse-location{{ location.location_id }}">{{ location.name }} <i class="fa fa-caret-down"></i></h4>
+
+              <div id="collapse-location{{ location.location_id }}" class="collapse" data-parent="#accordion">
                 <div class="card-body">
                   <div class="row">
                     {% if location.image %}

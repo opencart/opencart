@@ -348,7 +348,15 @@ class ControllerCustomerCustomer extends Controller {
 
 		$this->load->model('setting/store');
 
-		$stores = $this->model_setting_store->getStores();
+		$stores = array();
+
+		$stores[] = array(
+			'store_id' 	=> '0',
+			'name' 			=> $this->config->get('config_name'),
+			'url' 			=> HTTP_CATALOG
+		);
+
+		$stores = array_merge($stores, $this->model_setting_store->getStores());
 
 		$data['customers'] = array();
 
@@ -380,15 +388,10 @@ class ControllerCustomerCustomer extends Controller {
 
 			$store_data = array();
 
-			$store_data[] = array(
-				'name' => $this->config->get('config_name'),
-				'href' => $this->url->link('customer/customer/login', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&store_id=0')
-			);
-
 			foreach ($stores as $store) {
 				$store_data[] = array(
 					'name' => $store['name'],
-					'href' => $this->url->link('customer/customer/login', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&store_id=' . $result['store_id'])
+					'href' => $this->url->link('customer/customer/login', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&store_id=' . $store['store_id'])
 				);
 			}
 

@@ -471,6 +471,14 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     content: " \f107";
 }
 
+.bootstrap-datetimepicker-widget table th, .bootstrap-datetimepicker-widget table td {
+  border: 0;
+  padding: 1px;
+}
+.bootstrap-datetimepicker-widget table tr:nth-of-type(odd), .bootstrap-datetimepicker-widget table tr:hover {
+  background-color: transparent;
+}
+
 .pagination {
     margin: 0;
 }

@@ -53,6 +53,11 @@ div.required .col-form-label:before {
 @media (min-width: 768px) {
   .col-form-label {
     text-align: right; } }
+/* cookie */
+#cookie {
+  border-top: none;
+  border-left: none;
+  border-right: none; }
 /* top */
 #top {
   background-color: #eee;
@@ -94,8 +99,9 @@ div.required .col-form-label:before {
 /* search */
 #search {
   margin-bottom: 10px; }
-  #search .input-lg {
+  #search .form-control-lg {
     height: 40px;
+    font-size: 12px;
     line-height: 20px;
     padding: 0 10px; }
   #search .btn-lg {
@@ -107,6 +113,7 @@ div.required .col-form-label:before {
 #cart {
   margin-bottom: 10px; }
   #cart > .btn {
+    font-size: 12px;
     line-height: 18px;
     color: #fff; }
   #cart .btn-lg {
@@ -277,6 +284,19 @@ footer {
 /* alert */
 .alert {
   padding: 8px 14px 8px 14px; }
+
+#alert-box {
+  position: fixed;
+  top: 15px;
+  right: 0;
+  transition: all 0.5s;
+  z-index: 99; }
+  #alert-box.open {
+    right: 15px; }
+  #alert-box > .alert {
+    padding-right: 28px; }
+  #alert-box .close {
+    padding: 5px 8px; }
 /* breadcrumb */
 .breadcrumb {
   margin: 0 0 20px 0;
@@ -311,15 +331,18 @@ footer {
 .pagination {
   margin: 0; }
 /* buttons */
-.btn {
-  padding: 7.5px 12px;
-  font-size: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05); }
-  .btn.active {
-    box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125); }
-
+/*
+ .btn {
+ padding: 7.5px 12px;
+ font-size: 12px;
+ border: 1px solid #cccccc;
+ border-radius: 4px;
+ box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
+ &.active {
+ box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+ }
+ }
+ */
 .btn-light {
   color: #777;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
@@ -639,16 +662,3 @@ footer {
 
 #information-contact .card {
   margin-bottom: 20px; }
-
-#alert-box {
-  position: fixed;
-  top: 15px;
-  right: 0;
-  transition: all 0.5s;
-  z-index: 99; }
-  #alert-box.open {
-    right: 15px; }
-  #alert-box > .alert {
-    padding-right: 28px; }
-  #alert-box .close {
-    padding: 5px 8px; }

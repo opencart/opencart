@@ -26,7 +26,7 @@ $(document).ready(function() {
 	// Add new div on each page
 	$('#container > .container').append('<div id="alert-box"></div>');
 
-	$('#alert-box').on('click', '.close', function(){
+	$('#alert-box').on('click', '.close', function() {
 		$('#alert-box').removeClass('open');
 	});
 
@@ -316,7 +316,7 @@ $(document).delegate('.agree', 'click', function(e) {
 		type: 'get',
 		dataType: 'html',
 		success: function(data) {
-			html  = '<div id="modal-agree" class="modal fade">';
+			html = '<div id="modal-agree" class="modal fade">';
 			html += '  <div class="modal-dialog">';
 			html += '    <div class="modal-content">';
 			html += '      <div class="modal-header">';
@@ -390,7 +390,7 @@ var chain = new Chain();
 
 			// Keydown
 			$(this).on('keydown', function(event) {
-				switch(event.keyCode) {
+				switch (event.keyCode) {
 					case 27: // escape
 						this.hide();
 						break;
@@ -491,28 +491,28 @@ var chain = new Chain();
 	};
 })(window.jQuery);
 
-+function ($) {
++function($) {
 	'use strict';
 
 	// BUTTON PUBLIC CLASS DEFINITION
 	// ==============================
 
-	var Button = function (element, options) {
-		this.$element  = $(element)
-		this.options   = $.extend({}, Button.DEFAULTS, options)
+	var Button = function(element, options) {
+		this.$element = $(element)
+		this.options = $.extend({}, Button.DEFAULTS, options)
 		this.isLoading = false
 	}
 
-	Button.VERSION  = '3.3.5'
+	Button.VERSION = '3.3.5'
 
 	Button.DEFAULTS = {
 		loadingText: 'loading...'
 	}
 
-	Button.prototype.setState = function (state) {
-		var d    = 'disabled'
-		var $el  = this.$element
-		var val  = $el.is('input') ? 'val' : 'html'
+	Button.prototype.setState = function(state) {
+		var d = 'disabled'
+		var $el = this.$element
+		var val = $el.is('input') ? 'val' : 'html'
 		var data = $el.data()
 
 		state += 'Text'
@@ -520,7 +520,7 @@ var chain = new Chain();
 		if (data.resetText == null) $el.data('resetText', $el[val]())
 
 		// push to event loop to allow forms to submit
-		setTimeout($.proxy(function () {
+		setTimeout($.proxy(function() {
 			$el[val](data[state] == null ? this.options[state] : data[state])
 
 			if (state == 'loadingText') {
@@ -533,7 +533,7 @@ var chain = new Chain();
 		}, this), 0)
 	}
 
-	Button.prototype.toggle = function () {
+	Button.prototype.toggle = function() {
 		var changed = true
 		var $parent = this.$element.closest('[data-toggle="buttons"]')
 
@@ -560,9 +560,9 @@ var chain = new Chain();
 	// ========================
 
 	function Plugin(option) {
-		return this.each(function () {
-			var $this   = $(this)
-			var data    = $this.data('bs.button')
+		return this.each(function() {
+			var $this = $(this)
+			var data = $this.data('bs.button')
 			var options = typeof option == 'object' && option
 
 			if (!data) $this.data('bs.button', (data = new Button(this, options)))
@@ -574,14 +574,14 @@ var chain = new Chain();
 
 	var old = $.fn.button
 
-	$.fn.button             = Plugin
+	$.fn.button = Plugin
 	$.fn.button.Constructor = Button
 
 
 	// BUTTON NO CONFLICT
 	// ==================
 
-	$.fn.button.noConflict = function () {
+	$.fn.button.noConflict = function() {
 		$.fn.button = old
 		return this
 	}
@@ -591,13 +591,13 @@ var chain = new Chain();
 	// ===============
 
 	$(document)
-		.on('click.bs.button.data-api', '[data-toggle^="button"]', function (e) {
+		.on('click.bs.button.data-api', '[data-toggle^="button"]', function(e) {
 			var $btn = $(e.target)
 			if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn')
 			Plugin.call($btn, 'toggle')
 			if (!($(e.target).is('input[type="radio"]') || $(e.target).is('input[type="checkbox"]'))) e.preventDefault()
 		})
-		.on('focus.bs.button.data-api blur.bs.button.data-api', '[data-toggle^="button"]', function (e) {
+		.on('focus.bs.button.data-api blur.bs.button.data-api', '[data-toggle^="button"]', function(e) {
 			$(e.target).closest('.btn').toggleClass('focus', /^focus(in)?$/.test(e.type))
 		})
 

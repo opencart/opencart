@@ -61,7 +61,8 @@ fieldset:disabled a.btn {
 
 @each $color, $value in $theme-colors {
   .btn-#{$color} {
-    @include button-variant($value, darken($value, 13%));
+    @include button-variant($value, $value);
+    //@include button-variant($value, darken($value, 5%));
   }
 }
 

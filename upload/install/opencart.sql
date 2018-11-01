@@ -1552,7 +1552,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_voucher_min', '1', 0),
 (0, 'config', 'config_voucher_max', '1000', 0),
 (0, 'config', 'config_tax', '1', 0),
-(0, 'config', 'config_cookie_status', '0', 0),
+(0, 'config', 'config_cookie_id', '0', 0),
 (0, 'config', 'config_gdpr_status', '0', 0),
 (0, 'config', 'config_gdpr_limit', '180', 0),
 (0, 'config', 'config_tax', '1', 0),

@@ -458,10 +458,10 @@ class ControllerSettingSetting extends Controller {
 			$data['config_voucher_max'] = $this->config->get('config_voucher_max');
 		}
 
-		if (isset($this->request->post['config_cookie_status'])) {
-			$data['config_cookie_status'] = $this->request->post['config_cookie_status'];
+		if (isset($this->request->post['config_cookie_id'])) {
+			$data['config_cookie_id'] = $this->request->post['config_cookie_id'];
 		} else {
-			$data['config_cookie_status'] = $this->config->get('config_cookie_status');
+			$data['config_cookie_id'] = $this->config->get('config_cookie_id');
 		}
 
 		if (isset($this->request->post['config_gdpr_status'])) {

@@ -267,17 +267,18 @@
               <div class="tab-content">
                 <div class="tab-pane active" id="tab-legal">
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">{{ entry_cookie_status }}</label>
+                    <label class="col-sm-2 col-form-label">{{ entry_cookie }}</label>
                     <div class="col-sm-10">
-                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        {% if config_cookie_status %}
-                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_cookie_status" value="1" checked="checked"/> {{ text_yes }}</label>
-                          <label class="btn btn-outline-secondary"><input type="radio" name="config_cookie_status" value="0"/> {{ text_no }}</label>
-                        {% else %}
-                          <label class="btn btn-outline-secondary"><input type="radio" name="config_cookie_status" value="1"/> {{ text_yes }}</label>
-                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_cookie_status" value="0" checked="checked"/> {{ text_no }}</label>
-                        {% endif %}
-                      </div>
+                      <select name="config_cookie_id" id="input-cookie" class="form-control">
+                        <option value="0">{{ text_none }}</option>
+                        {% for information in informations %}
+                          {% if information.information_id == config_cookie_id %}
+                            <option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
+                          {% else %}
+                            <option value="{{ information.information_id }}">{{ information.title }}</option>
+                          {% endif %}
+                        {% endfor %}
+                      </select>
                       <small class="form-text text-muted">{{ help_cookie }}</small>
                     </div>
                   </div>

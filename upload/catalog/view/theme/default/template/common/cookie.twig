@@ -1,4 +1,29 @@
 <div id="cookie" class="alert alert-warning rounded-0 mb-0">
-  <div class="container text-center"><i class="fas fa-exclamation-triangle"></i> {{ text_cookie }} <a href="{{ cookie }}" id="button-cookie" class="btn btn-warning btn-sm">Learn more</a>
-    <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="container text-center">{{ text_cookie }} <a href="{{ cookie }}" id="button-cookie" class="btn btn-warning btn-sm">I understand</a></div>
 </div>
+<script type="text/javascript"><!--
+$('#button-cookie').on('click', function() {
+	$.ajax({
+		url: $(element).attr('href'),
+		type: 'get',
+		dataType: 'html',
+		success: function(data) {
+			html = '<div id="modal-agree" class="modal fade">';
+			html += '  <div class="modal-dialog">';
+			html += '    <div class="modal-content">';
+			html += '      <div class="modal-header">';
+			html += '        <h4 class="modal-title">' + $(element).text() + '</h4>';
+			html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
+			html += '      </div>';
+			html += '      <div class="modal-body">' + data + '</div>';
+			html += '    </div>';
+			html += '  </div>';
+			html += '</div>';
+
+			$('body').append(html);
+
+			$('#modal-agree').modal('show');
+		}
+	});
+});
+//--></script>

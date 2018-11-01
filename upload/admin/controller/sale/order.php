@@ -958,8 +958,8 @@ class ControllerSaleOrder extends Controller {
 			foreach ($vouchers as $voucher) {
 				$data['vouchers'][] = array(
 					'description' => $voucher['description'],
-					'amount' => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']),
-					'href' => $this->url->link('sale/voucher/edit', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $voucher['voucher_id'])
+					'amount'      => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']),
+					'href'        => $this->url->link('sale/voucher/edit', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $voucher['voucher_id'])
 				);
 			}
 

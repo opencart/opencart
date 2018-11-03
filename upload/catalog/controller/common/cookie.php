@@ -16,7 +16,7 @@ class ControllerCommonCookie extends Controller {
 		$json = array();
 
 		if (!isset($this->cookie['policy'])) {
-			setcookie('policy', $this->session->getId(), strtotime('+10 years'), ini_get('session.cookie_path'), ini_get('session.cookie_domain'));
+			setcookie('policy', time(), strtotime('+10 years'), ini_get('session.cookie_path'), ini_get('session.cookie_domain'));
 
 			$json['success'] = $this->language->get('text_success');
 		}

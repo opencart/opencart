@@ -1,26 +1,3 @@
 <div id="cookie" class="alert alert-warning rounded-0 mb-0">
   <div class="container text-center">{{ text_cookie }} <a href="{{ cookie }}" id="button-cookie" data-loading-text="{{ text_loading }}" class="btn btn-warning btn-sm">I understand</a></div>
 </div>
-<script type="text/javascript"><!--
-$('#button-cookie').on('click', function(e) {
-	e.preventDefault();
-
-	$.ajax({
-		url: 'index.php?route=common/cookie/agree',
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-cookie').button('loading');
-		},
-		complete: function() {
-			$('#button-cookie').button('reset');
-		},
-		success: function(json) {
-			if (json['success']) {
-				$('#cookie').slideUp(400, function() {
-					$('#cookie').remove();
-                });
-			}
-		}
-	});
-});
-//--></script>

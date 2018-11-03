@@ -127,6 +127,29 @@ $(document).ready(function() {
 	}
 });
 
+// Cookie Policy
+$('#button-cookie').on('click', function(e) {
+	e.preventDefault();
+
+	$.ajax({
+		url: 'index.php?route=common/cookie/agree',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-cookie').button('loading');
+		},
+		complete: function() {
+			$('#button-cookie').button('reset');
+		},
+		success: function(json) {
+			if (json['success']) {
+				$('#cookie').slideUp(400, function() {
+					$('#cookie').remove();
+				});
+			}
+		}
+	});
+});
+
 // Cart add remove functions
 var cart = {
 	'add': function(product_id, quantity) {

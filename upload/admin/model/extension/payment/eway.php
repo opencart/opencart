@@ -144,6 +144,7 @@ class ModelExtensionPaymentEway extends Model {
 			$refund_data->Refund = new stdClass();
 			$refund_data->Refund->TotalAmount = (int)number_format($refund_amount, 2, '.', '') * 100;
 			$refund_data->Refund->TransactionID = $eway_order['transaction_id'];
+			$refund_data->Refund->CurrencyCode = $eway_order['currency_code'];
 
 			if ($this->config->get('payment_eway_test')) {
 				$url = 'https://api.sandbox.ewaypayments.com/Transaction/' . $eway_order['transaction_id'] . '/Refund';

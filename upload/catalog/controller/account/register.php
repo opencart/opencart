@@ -26,7 +26,7 @@ class ControllerAccountRegister extends Controller {
 			// Clear any previous login attempts for unregistered accounts.
 			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
 
-			$this->customer->login($this->request->post['email'], $this->request->post['password']);
+			$this->customer->login($this->request->post['email'], html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'));
 
 			// Log the IP info
 			$this->model_account_customer->addLogin($this->customer->getId(), $this->request->server['REMOTE_ADDR']);

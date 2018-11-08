@@ -41,7 +41,7 @@ class ControllerCommonCurrency extends Controller {
 			$url = '&' . urldecode(http_build_query($url_data, '', '&'));
 		}
 
-		$data['redirect'] = $this->url->link($route, 'language=' . $this->config->get('config_language') . $url);
+		$data['redirect'] = $this->url->link($route, $url);
 
 		return $this->load->view('common/currency', $data);
 	}
@@ -49,11 +49,11 @@ class ControllerCommonCurrency extends Controller {
 	public function currency() {
 		if (isset($this->request->post['code'])) {
 			$this->session->data['currency'] = $this->request->post['code'];
-		
+
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 		}
-		
+
 		if (isset($this->request->post['redirect']) && substr($this->request->post['redirect'], 0, strlen($this->config->get('config_url'))) == $this->config->get('config_url')) {
 			$this->response->redirect(str_replace('&amp;', '&', $this->request->post['redirect']));
 		} else {

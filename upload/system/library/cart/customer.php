@@ -41,6 +41,7 @@ class Customer {
 
 		if ($customer_query->num_rows) {
 			if (!$override) {
+				$new_password_hashed = false;
 				if (password_verify($password, $customer_query->row['password'])) {
 					if (password_needs_rehash($customer_query->row['password'], PASSWORD_DEFAULT)) {
 						$new_password_hashed = password_hash($password, PASSWORD_DEFAULT);
@@ -51,7 +52,7 @@ class Customer {
 					return false;
 				}
 
-				if (isset($new_password_hashed)) {
+				if ($new_password_hashed) {
 					$this->db->query("UPDATE " . DB_PREFIX . "customer SET salt = '', password = '" . $this->db->escape($new_password_hashed) . "' WHERE customer_id = '" . (int)$this->customer_id . "'");
 				}
 			}

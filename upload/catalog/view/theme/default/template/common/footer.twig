@@ -17,6 +17,9 @@
         <ul class="list-unstyled">
           <li><a href="{{ contact }}">{{ text_contact }}</a></li>
           <li><a href="{{ return }}">{{ text_return }}</a></li>
+          {% if gdpr %}
+            <li><a href="{{ gdpr }}">{{ text_gdpr }}</a></li>
+          {% endif %}
           <li><a href="{{ sitemap }}">{{ text_sitemap }}</a></li>
         </ul>
       </div>

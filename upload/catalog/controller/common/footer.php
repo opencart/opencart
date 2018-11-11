@@ -18,6 +18,13 @@ class ControllerCommonFooter extends Controller {
 
 		$data['contact'] = $this->url->link('information/contact', 'language=' . $this->config->get('config_language'));
 		$data['return'] = $this->url->link('account/return/add', 'language=' . $this->config->get('config_language'));
+
+		if ($this->config->get('config_gdpr_status')) {
+			$data['gdpr'] = $this->url->link('information/gdpr', 'language=' . $this->config->get('config_language'));
+		} else {
+			$data['gdpr'] = '';
+		}
+
 		$data['sitemap'] = $this->url->link('information/sitemap', 'language=' . $this->config->get('config_language'));
 		$data['tracking'] = $this->url->link('information/tracking', 'language=' . $this->config->get('config_language'));
 		$data['manufacturer'] = $this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language'));
@@ -30,12 +37,6 @@ class ControllerCommonFooter extends Controller {
 		$data['newsletter'] = $this->url->link('account/newsletter', 'language=' . $this->config->get('config_language'));
 
 		$data['powered'] = sprintf($this->language->get('text_powered'), $this->config->get('config_name'), date('Y', time()));
-
-		$data['address'] = $this->config->get('config_address');
-		$data['open'] = $this->config->get('config_open');
-		$data['telephone'] = $this->config->get('config_telephone');
-		$data['fax'] = $this->config->get('config_fax');
-		$data['email'] = $this->config->get('config_email');
 
 		// Whos Online
 		if ($this->config->get('config_customer_online')) {

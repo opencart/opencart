@@ -879,8 +879,7 @@ INSERT INTO `oc_information` (`information_id`, `bottom`, `sort_order`, `status`
 (1, 1, 3, 1),
 (2, 1, 1, 1),
 (3, 1, 4, 1),
-(4, 1, 2, 1),
-(5, 1, 2, 1);
+(4, 1, 2, 1);
 
 -----------------------------------------------------------
 
@@ -892,8 +891,7 @@ INSERT INTO `oc_information_description` (`information_id`, `language_id`, `titl
 (1, 1, 'About Us', '&lt;p&gt;\r\n	About Us&lt;/p&gt;\r\n', 'About Us', '', ''),
 (2, 1, 'Terms &amp; Conditions', '&lt;p&gt;\r\n	Terms &amp;amp; Conditions&lt;/p&gt;\r\n', 'Terms &amp; Conditions', '', ''),
 (3, 1, 'Privacy Policy', '&lt;p&gt;\r\n	Privacy Policy&lt;/p&gt;\r\n', 'Privacy Policy', '', ''),
-(4, 1, 'Delivery Information', '&lt;p&gt;\r\n	Delivery Information&lt;/p&gt;\r\n', 'Delivery Information', '', ''),
-(5, 1, 'GDPR', '&lt;p&gt;\r\n	GDPR&lt;/p&gt;\r\n', 'GDPR', '', '');
+(4, 1, 'Delivery Information', '&lt;p&gt;\r\n	Delivery Information&lt;/p&gt;\r\n', 'Delivery Information', '', '');
 
 -----------------------------------------------------------
 

@@ -1,13 +1,7 @@
 <?php
-class ControllerAccountGdpr extends Controller {
+class ControllerInformationGdpr extends Controller {
 	public function index() {
-		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/gdpr', 'language=' . $this->config->get('config_language'));
-
-			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
-		}
-
-		$this->load->language('account/gdpr_data');
+		$this->load->language('information/gdpr');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -25,8 +19,20 @@ class ControllerAccountGdpr extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/gdpr_data', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('information/gdpr', 'language=' . $this->config->get('config_language'))
 		);
+
+		$data['email'] = $this->customer->getEmail();
+
+
+
+
+
+
+
+
+
+
 
 		$data['delete'] = $this->url->link('account/gdpr/delete', 'language=' . $this->config->get('config_language'));
 		$data['cancel'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
@@ -38,7 +44,7 @@ class ControllerAccountGdpr extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('account/gdpr_data', $data));
+		$this->response->setOutput($this->load->view('information/gdpr', $data));
 	}
 
 	public function delete() {
@@ -163,7 +169,7 @@ class ControllerAccountGdpr extends Controller {
 			}
 		}
 
-// Order Addresses
+		// Order Addresses
 		$this->load->model('account/order');
 
 		$results = $this->model_account_order->getOrders($this->customer->getId());
@@ -200,7 +206,7 @@ class ControllerAccountGdpr extends Controller {
 			}
 		}
 
-// Ip's
+		// Ip's
 		$data['ips'] = array();
 
 		$this->load->model('account/customer');

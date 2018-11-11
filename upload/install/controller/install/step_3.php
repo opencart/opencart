@@ -193,7 +193,7 @@ class ControllerInstallStep3 extends Controller {
 		foreach ($db_drivers as $db_driver) {
 			if (extension_loaded($db_driver)) {
 				$data['drivers'][] = array(
-					'text' => $this->language->get('text_' . $db_driver),
+					'text'  => $this->language->get('text_' . $db_driver),
 					'value' => $db_driver
 				);
 			}
@@ -299,7 +299,7 @@ class ControllerInstallStep3 extends Controller {
 			$this->error['db_driver'] = $this->language->get('error_db_driver');
 		} else {
 			try {
-				$db = new \DB($this->request->post['db_driver'], $this->request->post['db_hostname'], $this->request->post['db_username'], html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8'), $this->request->post['db_database'], $this->request->post['db_port']);
+				$db = new \DB($this->request->post['db_driver'], html_entity_decode($this->request->post['db_hostname'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_username'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_database'], ENT_QUOTES, 'UTF-8'), $this->request->post['db_port']);
 			} catch(Exception $e) {
 				$this->error['warning'] = $e->getMessage();
 			}

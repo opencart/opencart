@@ -41,24 +41,18 @@ class Customer {
 
 		if ($customer_query->num_rows) {
 			if (!$override) {
-
-				if (password_verify($password, $customer_query->row['password']) ) {
-
-					if (password_needs_rehash($customer_query->row['password'], PASSWORD_DEFAULT)) {
-						$new_password_hashed = password_hash($password, PASSWORD_DEFAULT);
-					}
-
-
+				if (password_verify($password, $customer_query->row['password'])) {
+					$rehash = password_needs_rehash($customer_query->row['password'], PASSWORD_DEFAULT);
 				} elseif ($customer_query->row['password'] == sha1($customer_query->row['salt'] . sha1($customer_query->row['salt'] . sha1($password)))) {
-					$new_password_hashed = password_hash($password, PASSWORD_DEFAULT);
+					$rehash = true;
 				} elseif ($customer_query->row['password'] == md5($password)) {
-					$new_password_hashed = password_hash($password, PASSWORD_DEFAULT);
+					$rehash = true;
 				} else {
 					return false;
 				}
 
-				if ($new_password_hashed) {
-					$this->db->query("UPDATE " . DB_PREFIX . "customer SET salt = '', password = '" . $this->db->escape($new_password_hashed) . "' WHERE customer_id = '" . (int)$this->customer_id . "'");
+				if ($rehash) {
+					$this->db->query("UPDATE " . DB_PREFIX . "customer SET salt = '', password = '" . $this->db->escape(password_hash($password, PASSWORD_DEFAULT)) . "' WHERE customer_id = '" . (int)$this->customer_id . "'");
 				}
 			}
 

@@ -41,7 +41,7 @@ class ControllerCommonCurrency extends Controller {
 			$url = '&' . urldecode(http_build_query($url_data, '', '&'));
 		}
 
-		$data['redirect'] = $this->url->link($route, 'language=' . $this->config->get('config_language') . $url);
+		$data['redirect'] = $this->url->link($route, $url);
 
 		return $this->load->view('common/currency', $data);
 	}

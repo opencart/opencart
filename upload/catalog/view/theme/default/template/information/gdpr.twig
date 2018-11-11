@@ -1,0 +1,111 @@
+{{ header }}
+<div id="account-gdpr" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  {% if success %}
+    <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}</div>
+  {% endif %}
+  <div class="row">{{ column_left }}
+    {% if column_left and column_right %}
+      {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+      {% set class = 'col-sm-9' %}
+    {% else %}
+      {% set class = 'col-sm-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}">
+      {{ content_top }}
+      <h1>{{ heading_title }}</h1>
+      <p>GDPR requests :</p>
+
+      <fieldset>
+        <legend>Account Verification</legend>
+        <div class="form-group">
+          <p><label class="form-check-label">Before we can carry out any gdpr requests we must validate you account. please enter your email below.</label></p>
+          <input type="email" name="email" value="{{ email }}" placeholder="{{ entry_email }}" class="form-control"/>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Choose an action</legend>
+
+        <div class="form-group mb-3">
+          <div class="form-check">
+            <input type="radio" name="action" value="data" id="input-data" class="form-check-input"/> <label class="form-check-label" for="input-data">Export Personal Data</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" name="action" value="remove" id="input-remove" class="form-check-input"/> <label class="form-check-label" for="input-remove">Remove Personal Data</label>
+          </div>
+        </div>
+
+      </fieldset>
+      <div class="d-inline-block pt-2 pd-2 w-100">
+        <div class="float-right">
+          <button type="submit" class="btn btn-primary">{{ button_continue }}</button>
+        </div>
+      </div>
+
+      {{ content_bottom }}
+    </div>
+    {{ column_right }}
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('button[id^=\'button-custom-field\']').on('click', function() {
+	var element = this;
+
+	$('#form-upload').remove();
+
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
+
+	$('#form-upload input[name=\'file\']').trigger('click');
+
+	if (typeof timer != 'undefined') {
+		clearInterval(timer);
+	}
+
+	timer = setInterval(function() {
+		if ($('#form-upload input[name=\'file\']').val() != '') {
+			clearInterval(timer);
+
+			$.ajax({
+				url: 'index.php?route=tool/upload',
+				type: 'post',
+				dataType: 'json',
+				data: new FormData($('#form-upload')[0]),
+				cache: false,
+				contentType: false,
+				processData: false,
+				beforeSend: function() {
+					$(element).button('loading');
+				},
+				complete: function() {
+					$(element).button('reset');
+				},
+				success: function(json) {
+					$(element).parent().find('.text-danger').remove();
+
+					if (json['error']) {
+						$(element).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
+					}
+
+					if (json['success']) {
+						alert(json['success']);
+
+						$(element).parent().find('input').val(json['code']);
+					}
+				},
+				error: function(xhr, ajaxOptions, thrownError) {
+					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+				}
+			});
+		}
+	}, 500);
+});
+//--></script>
+
+
+{{ footer }}

@@ -1,5 +1,7 @@
 <?php
-$_['heading_title']   = 'GDPR Personal Data';
+$_['heading_title']   = 'General Data Personal Request';
+
+// Text
 $_['text_account']    = 'Account';
 $_['text_customer']   = 'Personal Information';
 $_['text_firstname']  = 'First Name';

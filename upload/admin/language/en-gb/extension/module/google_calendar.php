@@ -10,7 +10,7 @@ $_['text_setup']       = 'Google Calendar is not set up or disabled';
 $_['text_note']        = 'Please note, you have to be logged in into your Google account';
 
 // Entry
-$_['entry_code']       = 'Google Talk Code';
+$_['entry_code']       = 'Google Calendar Code';
 $_['entry_status']     = 'Status';
 
 // Help

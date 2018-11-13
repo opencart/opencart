@@ -22,36 +22,33 @@
       <p>GDPR requests :</p>
 
       <fieldset>
-        <legend>Account Verification</legend>
+        <legend>{{ text_verification }}</legend>
         <div class="form-group">
           <p><label class="form-check-label">{{ text_email }}</label></p>
           <input type="email" name="email" value="{{ email }}" placeholder="{{ entry_email }}" class="form-control"/>
         </div>
       </fieldset>
       <fieldset>
-        <legend>Choose an action</legend>
-
+        <legend>{{ text_action }}</legend>
         <div class="form-group mb-3">
           <div class="form-check">
             <input type="radio" name="action" value="data" id="input-data" class="form-check-input"/> <label class="form-check-label" for="input-data">{{ text_export }}</label>
           </div>
           <div class="form-check">
             <input type="radio" name="action" value="remove" id="input-remove" class="form-check-input"/> <label class="form-check-label" for="input-remove">{{ text_delete }}</label>
-
             <div id="collapse-remove" class="collapse">
               <ul class="text-danger">
-                <li>{{ text_access }}</li>
+                <li>{{ text_access|format(store) }}</li>
                 <li>{{ text_history }}</li>
-                <li>{{ text_limit }}</li>
+                <li>{{ text_limit|format(limit) }}</li>
               </ul>
             </div>
-
           </div>
         </div>
       </fieldset>
       <div class="d-inline-block pt-2 pd-2 w-100">
-        <button type="submit" class="btn btn-primary">{{ button_continue }}</button>
-        &nbsp;&nbsp;or <a href="" class="btn btn-link">Cancel</a>
+        <div class="float-left"><a href="" class="btn btn-light">Cancel</a></div>
+        <div class="float-right"><button type="button" class="btn btn-primary">{{ button_continue }}</button></div>
       </div>
       {{ content_bottom }}
     </div>
@@ -60,11 +57,11 @@
 </div>
 <script type="text/javascript"><!--
 $('input[name=\'action\']').on('change', function() {
-    if (this.value == 'remove') {
+	if (this.value == 'remove') {
 		$('#collapse-remove').slideDown();
-    } else {
+	} else {
 		$('#collapse-remove').slideUp();
-    }
+	}
 });
 
 $('#button-continue').on('click', function() {

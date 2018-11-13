@@ -23,6 +23,8 @@ class ControllerInformationGdpr extends Controller {
 		);
 
 		$data['email'] = $this->customer->getEmail();
+		$data['store'] = $this->config->get('config_name');
+		$data['limit'] = $this->config->get('config_gdpr_limit');
 
 		$data['cancel'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 
@@ -36,17 +38,20 @@ class ControllerInformationGdpr extends Controller {
 		$this->response->setOutput($this->load->view('information/gdpr', $data));
 	}
 
-	public function export() {
 
+	public function export() {
+		$json = array();
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 
-	public function delete() {
-		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/gdpr/delete', 'language=' . $this->config->get('config_language'));
 
-			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
-		}
+
+	public function delete() {
+
+
 
 		$this->load->language('account/gdpr_delete');
 
@@ -70,10 +75,11 @@ class ControllerInformationGdpr extends Controller {
 		);
 
 		$data['text_confirm'] = sprintf($this->language->get('text_confirm'), $this->config->get('config_gdpr_limit'));
-		$data['text_confirm'] = sprintf($this->language->get('text_confirm'), $this->config->get('config_gdpr_limit'));
 
 		$data['delete'] = $this->url->link('account/gdpr/success', 'language=' . $this->config->get('config_language'));
-		$data['cancel'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
+
+
+		$data['confirm'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

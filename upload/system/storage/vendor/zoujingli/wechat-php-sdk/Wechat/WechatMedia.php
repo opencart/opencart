@@ -26,6 +26,7 @@ use Wechat\Lib\Tools;
  */
 class WechatMedia extends Common
 {
+
     const MEDIA_UPLOAD_URL = '/media/upload?';
     const MEDIA_UPLOADIMG_URL = '/media/uploadimg?';
     const MEDIA_GET_URL = '/media/get?';
@@ -53,8 +54,8 @@ class WechatMedia extends Common
         if (!$this->access_token && !$this->getAccessToken()) {
             return false;
         }
-        list($cache_file, $media_content) = ['', base64_decode($data['media'])];
-        if (!empty($media_content) && ($cache_file = Cache::file($media_content))) {
+        if (Tools::isBase64($data['media'])) {
+            $cache_file = Cache::file(base64_decode($data['media']));
             $data['media'] = "@{$cache_file}";
         }
         $result = Tools::httpPost(self::API_URL_PREFIX . self::MEDIA_UPLOAD_URL . "access_token={$this->access_token}&type={$type}", $data);
@@ -120,7 +121,7 @@ class WechatMedia extends Common
         curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, 1);
         $sContent = curl_exec($oCurl);
         $aStatus = curl_getinfo($oCurl);
-        $result = [];
+        $result = array();
         if (intval($aStatus["http_code"]) !== 200) {
             return false;
         }
@@ -152,8 +153,8 @@ class WechatMedia extends Common
         if (!$this->access_token && !$this->getAccessToken()) {
             return false;
         }
-        list($cache_file, $media_content) = ['', base64_decode($data['media'])];
-        if (!empty($media_content) && ($cache_file = Cache::file($media_content))) {
+        if (Tools::isBase64($data['media'])) {
+            $cache_file = Cache::file(base64_decode($data['media']));
             $data['media'] = "@{$cache_file}";
         }
         $result = Tools::httpPost(self::API_URL_PREFIX . self::MEDIA_UPLOADIMG_URL . "access_token={$this->access_token}", $data);
@@ -187,8 +188,8 @@ class WechatMedia extends Common
             return false;
         }
         $is_video && ($data['description'] = Tools::json_encode($video_info));
-        list($cache_file, $media_content) = ['', base64_decode($data['media'])];
-        if (!empty($media_content) && ($cache_file = Cache::file($media_content))) {
+        if (Tools::isBase64($data['media'])) {
+            $cache_file = Cache::file(base64_decode($data['media']));
             $data['media'] = "@{$cache_file}";
         }
         $result = Tools::httpPost(self::API_URL_PREFIX . self::MEDIA_FOREVER_UPLOAD_URL . "access_token={$this->access_token}&type={$type}", $data);
@@ -327,7 +328,7 @@ class WechatMedia extends Common
         if (!$this->access_token && !$this->getAccessToken()) {
             return false;
         }
-        $data = array('type' => $type, 'offset' => $offset, 'count' => $count,);
+        $data = array('type' => $type, 'offset' => $offset, 'count' => $count);
         $result = Tools::httpPost(self::API_URL_PREFIX . self::MEDIA_FOREVER_BATCHGET_URL . "access_token={$this->access_token}", Tools::json_encode($data));
         if ($result) {
             $json = json_decode($result, true);

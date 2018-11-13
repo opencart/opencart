@@ -34,3 +34,4 @@ $_['help_product']         = 'Send only to customers who have ordered products i
 $_['error_permission']     = 'Warning: You do not have permission to send E-Mails!';
 $_['error_subject']        = 'E-Mail Subject required!';
 $_['error_message']        = 'E-Mail Message required!';
+$_['error_email']          = 'E-Mail required!';

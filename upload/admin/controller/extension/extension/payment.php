@@ -108,8 +108,7 @@ class ControllerExtensionExtensionPayment extends Controller {
 			}
 		}
 
-		$data['promoted_solution_1'] = $this->load->controller('extension/payment/pp_express/preferredSolution');
-		$data['promoted_solution_2'] = $this->load->controller('extension/payment/pp_braintree/preferredSolution');
+		$data['promotion'] = $this->load->controller('extension/extension/promotion', 'payment');
 
 		$this->response->setOutput($this->load->view('extension/extension/payment', $data));
 	}

@@ -14,15 +14,30 @@ trait CancelTestTrait
     /** @test */
     public function cancelShouldCallCancellerWithResolverArguments()
     {
-        $mock = $this->createCallableMock();
-        $mock
-            ->expects($this->once())
-            ->method('__invoke')
-            ->with($this->isType('callable'), $this->isType('callable'), $this->isType('callable'));
-
-        $adapter = $this->getPromiseTestAdapter($mock);
+        $args = null;
+        $adapter = $this->getPromiseTestAdapter(function ($resolve, $reject, $notify) use (&$args) {
+            $args = func_get_args();
+        });
 
         $adapter->promise()->cancel();
+
+        $this->assertCount(3, $args);
+        $this->assertTrue(is_callable($args[0]));
+        $this->assertTrue(is_callable($args[1]));
+        $this->assertTrue(is_callable($args[2]));
+    }
+
+    /** @test */
+    public function cancelShouldCallCancellerWithoutArgumentsIfNotAccessed()
+    {
+        $args = null;
+        $adapter = $this->getPromiseTestAdapter(function () use (&$args) {
+            $args = func_num_args();
+        });
+
+        $adapter->promise()->cancel();
+
+        $this->assertSame(0, $args);
     }
 
     /** @test */

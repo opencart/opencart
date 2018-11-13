@@ -21,7 +21,7 @@ class ControllerExtensionModuleSpecial extends Controller {
 		if ($results) {
 			foreach ($results as $result) {
 				if ($result['image']) {
-					$image = $this->model_tool_image->resize($result['image'], $setting['width'], $setting['height']);
+					$image = $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), $setting['width'], $setting['height']);
 				} else {
 					$image = $this->model_tool_image->resize('placeholder.png', $setting['width'], $setting['height']);
 				}
@@ -63,8 +63,6 @@ class ControllerExtensionModuleSpecial extends Controller {
 					'href'        => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $result['product_id'])
 				);
 			}
-
-			$data['language'] = $this->config->get('config_language');
 
 			return $this->load->view('extension/module/special', $data);
 		}

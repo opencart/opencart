@@ -5,35 +5,26 @@ sudo: false
 cache:
     directories:
         - vendor
-        - $HOME/.composer/cache
-
-php:
-    - 5.2
-    - 5.3
-    - 5.4
-    - 5.5
-    - 5.6
-    - 7.0
-    - hhvm
-
-env:
-    - TWIG_EXT=no
-    - TWIG_EXT=yes
-
-install:
-    # Composer is not available on PHP 5.2
-    - if [ ${TRAVIS_PHP_VERSION:0:3} != "5.2" ]; then travis_retry composer install; fi
-
-before_script:
-    - if [ "$TWIG_EXT" == "yes" ]; then sh -c "cd ext/twig && phpize && ./configure --enable-twig && make && make install"; fi
-    - if [ "$TWIG_EXT" == "yes" ]; then echo "extension=twig.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`; fi
-    - if [ ${TRAVIS_PHP_VERSION:0:3} == "5.2" ]; then sed -i.bak "s|vendor/autoload.php|test/bootstrap.php|" phpunit.xml.dist; fi
+        - $HOME/.composer/cache/files
 
 matrix:
-    fast_finish: true
-    exclude:
-        - php: hhvm
-          env: TWIG_EXT=yes
-    allow_failures:
+    include:
         - php: 7.0
-          env: TWIG_EXT=yes
+        - php: 7.1
+        - php: 7.2
+        - php: nightly
+    fast_finish: true
+
+before_install:
+    # turn off XDebug
+    - phpenv config-rm xdebug.ini || return 0
+
+install:
+    - travis_retry composer install
+
+script: |
+    if [[ $TRAVIS_PHP_VERSION = 7.* || $TRAVIS_PHP_VERSION = nightly ]]; then
+        SYMFONY_PHPUNIT_VERSION=6.1 ./vendor/bin/simple-phpunit
+    else
+        ./vendor/bin/simple-phpunit
+    fi

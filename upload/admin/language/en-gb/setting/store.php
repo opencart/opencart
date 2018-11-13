@@ -9,10 +9,6 @@ $_['text_list']                    = 'Store List';
 $_['text_add']                     = 'Add Store';
 $_['text_edit']                    = 'Edit Store';
 $_['text_items']                   = 'Items';
-$_['text_tax']                     = 'Taxes';
-$_['text_account']                 = 'Account';
-$_['text_checkout']                = 'Checkout';
-$_['text_stock']                   = 'Stock';
 $_['text_shipping']                = 'Shipping Address';
 $_['text_payment']                 = 'Payment Address';
 
@@ -43,6 +39,8 @@ $_['entry_country']                = 'Country';
 $_['entry_zone']                   = 'Region / State';
 $_['entry_language']               = 'Language';
 $_['entry_currency']               = 'Currency';
+$_['entry_cookie']                 = 'Cookie Policy';
+$_['entry_gdpr']                   = 'GDPR Policy';
 $_['entry_tax']                    = 'Display Prices With Tax';
 $_['entry_tax_default']            = 'Use Store Tax Address';
 $_['entry_tax_customer']           = 'Use Customer Tax Address';
@@ -59,6 +57,13 @@ $_['entry_stock_checkout']         = 'Stock Checkout';
 $_['entry_logo']                   = 'Store Logo';
 $_['entry_icon']                   = 'Icon';
 
+// Tab
+$_['tab_legal']                      = 'Legal';
+$_['tab_tax']                        = 'Taxes';
+$_['tab_account']                    = 'Account';
+$_['tab_checkout']                   = 'Checkout';
+$_['tab_stock']                      = 'Stock';
+
 // Help
 $_['help_url']                     = 'Include the full URL to your store. Make sure to add \'/\' at the end. Example: http://www.yourdomain.com/path/<br /><br />Don\'t use directories to create a new store. You should always point another domain or sub domain to your hosting.';
 $_['help_geocode']                 = 'Please enter your store location geocode manually.';
@@ -66,6 +71,8 @@ $_['help_open']                    = 'Fill in your stores opening times.';
 $_['help_comment']                 = 'This field is for any special notes you would like to tell the customer i.e. Store does not accept cheques.';
 $_['help_location']                = 'The different store locations you have that you want displayed on the contact us form.';
 $_['help_currency']                = 'Change the default currency. Clear your browser cache to see the change and reset your existing cookie.';
+$_['help_cookie']                  = 'Display Cookie policy as part of the EU Law.';
+$_['help_gdpr']                    = 'Enable GDPR features such as customers being able to request account deletion.';
 $_['help_tax_default']             = 'Use the store address to calculate taxes if customer is not logged in. You can choose to use the store address for the customer\'s shipping or payment address.';
 $_['help_tax_customer']            = 'Use the customers default address when they login to calculate taxes. You can choose to use the default address for the customer\'s shipping or payment address.';
 $_['help_customer_group']          = 'Default customer group.';

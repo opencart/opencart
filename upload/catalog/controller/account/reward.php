@@ -59,13 +59,12 @@ class ControllerAccountReward extends Controller {
 			);
 		}
 
-		$pagination = new Pagination();
-		$pagination->total = $reward_total;
-		$pagination->page = $page;
-		$pagination->limit = 10;
-		$pagination->url = $this->url->link('account/reward', 'language=' . $this->config->get('config_language') . '&page={page}');
-
-		$data['pagination'] = $pagination->render();
+		$data['pagination'] = $this->load->controller('common/pagination', array(
+			'total' => $reward_total,
+			'page'  => $page,
+			'limit' => 10,
+			'url'   => $this->url->link('account/reward', 'language=' . $this->config->get('config_language') . '&page={page}')
+		));
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($reward_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($reward_total - 10)) ? $reward_total : ((($page - 1) * 10) + 10), $reward_total, ceil($reward_total / 10));
 

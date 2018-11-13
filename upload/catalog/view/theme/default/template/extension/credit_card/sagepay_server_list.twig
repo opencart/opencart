@@ -2,14 +2,14 @@
 <div class="container">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
-      <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
   {% if success %}
-    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}</div>
+    <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}</div>
   {% endif %}
   {% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+    <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}</div>
   {% endif %}
   <div class="row">
     {{ column_left }}
@@ -55,10 +55,10 @@
         <div class="col-sm-6 text-left">{{ pagination }}</div>
         <div class="col-sm-6 text-right">{{ results }}</div>
       </div>
-      <div class="buttons clearfix">
+      <div class="d-inline-block pt-2 pd-2 w-100">
         <div class="float-left"><a href="{{ back }}" class="btn btn-light">{{ button_back }}</a></div>
         <div class="float-right">
-          <input type="button" value="{{ button_new_card }}" id="button-add-card" data-loading-text="{{ text_loading }}" class="btn btn-primary"/>
+          <button type="button" id="button-add-card" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_new_card }}</button>
         </div>
       </div>
       {{ content_bottom }}
@@ -94,7 +94,7 @@ $('#button-add-card').bind('click', function() {
 
 			// if error
 			if (json['error']) {
-				$('.breadcrumb').after('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				$('.breadcrumb').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 		}
 	});

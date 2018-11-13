@@ -3,7 +3,7 @@
 error_reporting(E_ALL);
 
 // Check Version
-if (version_compare(phpversion(), '7.0.0', '<') == true) {
+if (version_compare(phpversion(), '7.0.0', '<')) {
 	exit('PHP7+ Required');
 }
 
@@ -95,7 +95,6 @@ require_once(modification(DIR_SYSTEM . 'engine/loader.php'));
 require_once(modification(DIR_SYSTEM . 'engine/model.php'));
 require_once(modification(DIR_SYSTEM . 'engine/registry.php'));
 require_once(modification(DIR_SYSTEM . 'engine/proxy.php'));
-require_once(modification(DIR_SYSTEM . 'engine/reference.php'));
 
 // Helper
 require_once(DIR_SYSTEM . 'helper/general.php');

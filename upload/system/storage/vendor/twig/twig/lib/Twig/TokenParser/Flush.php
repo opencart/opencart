@@ -3,7 +3,7 @@
 /*
  * This file is part of Twig.
  *
- * (c) 2011 Fabien Potencier
+ * (c) Fabien Potencier
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,11 +14,11 @@
  *
  * @see flush()
  */
-class Twig_TokenParser_Flush extends Twig_TokenParser
+final class Twig_TokenParser_Flush extends Twig_TokenParser
 {
     public function parse(Twig_Token $token)
     {
-        $this->parser->getStream()->expect(Twig_Token::BLOCK_END_TYPE);
+        $this->parser->getStream()->expect(/* Twig_Token::BLOCK_END_TYPE */ 3);
 
         return new Twig_Node_Flush($token->getLine(), $this->getTag());
     }
@@ -28,3 +28,5 @@ class Twig_TokenParser_Flush extends Twig_TokenParser
         return 'flush';
     }
 }
+
+class_alias('Twig_TokenParser_Flush', 'Twig\TokenParser\FlushTokenParser', false);

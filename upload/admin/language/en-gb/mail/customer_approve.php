@@ -6,4 +6,5 @@ $_['text_login']   = 'Your account has now been created and you can log in by us
 $_['text_service'] = 'Upon logging in, you will be able to access other services including reviewing past orders, printing invoices and editing your account information.';
 $_['text_thanks']  = 'Thanks,';
 
-$_['button_login']    = 'Login';
+// Button
+$_['button_login'] = 'Login';

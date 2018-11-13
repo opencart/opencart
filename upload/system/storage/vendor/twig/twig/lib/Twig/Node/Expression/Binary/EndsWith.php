@@ -3,7 +3,7 @@
 /*
  * This file is part of Twig.
  *
- * (c) 2013 Fabien Potencier
+ * (c) Fabien Potencier
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -28,3 +28,5 @@ class Twig_Node_Expression_Binary_EndsWith extends Twig_Node_Expression_Binary
         return $compiler->raw('');
     }
 }
+
+class_alias('Twig_Node_Expression_Binary_EndsWith', 'Twig\Node\Expression\Binary\EndsWithBinary', false);

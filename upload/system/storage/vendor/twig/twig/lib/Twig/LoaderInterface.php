@@ -3,7 +3,7 @@
 /*
  * This file is part of Twig.
  *
- * (c) 2009 Fabien Potencier
+ * (c) Fabien Potencier
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,15 +17,15 @@
 interface Twig_LoaderInterface
 {
     /**
-     * Gets the source code of a template, given its name.
+     * Returns the source context for a given template logical name.
      *
-     * @param string $name The name of the template to load
+     * @param string $name The template logical name
      *
-     * @return string The template source code
+     * @return Twig_Source
      *
      * @throws Twig_Error_Loader When $name is not found
      */
-    public function getSource($name);
+    public function getSourceContext($name);
 
     /**
      * Gets the cache key to use for the cache for a given template name.
@@ -50,4 +50,15 @@ interface Twig_LoaderInterface
      * @throws Twig_Error_Loader When $name is not found
      */
     public function isFresh($name, $time);
+
+    /**
+     * Check if we have the source code of a template, given its name.
+     *
+     * @param string $name The name of the template to check if we can load
+     *
+     * @return bool If the template source code is handled by this loader or not
+     */
+    public function exists($name);
 }
+
+class_alias('Twig_LoaderInterface', 'Twig\Loader\LoaderInterface', false);

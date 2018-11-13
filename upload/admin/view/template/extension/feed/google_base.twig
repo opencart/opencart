@@ -109,7 +109,7 @@ $('input[name=\'category\']').autocomplete({
 	},
 	'select': function(item) {
 		$(this).val(item['label']);
-		$('input[name="category_id"]').val(item['value']);
+		$('input[name=\'category_id\']').val(item['value']);
 	}
 });
 

@@ -39,4 +39,74 @@ class DeferredTest extends TestCase
 
         $deferred->progress($sentinel);
     }
+
+    /** @test */
+    public function shouldRejectWithoutCreatingGarbageCyclesIfCancellerRejectsWithException()
+    {
+        gc_collect_cycles();
+        $deferred = new Deferred(function ($resolve, $reject) {
+            $reject(new \Exception('foo'));
+        });
+        $deferred->promise()->cancel();
+        unset($deferred);
+
+        $this->assertSame(0, gc_collect_cycles());
+    }
+
+    /** @test */
+    public function shouldRejectWithoutCreatingGarbageCyclesIfParentCancellerRejectsWithException()
+    {
+        gc_collect_cycles();
+        $deferred = new Deferred(function ($resolve, $reject) {
+            $reject(new \Exception('foo'));
+        });
+        $deferred->promise()->then()->cancel();
+        unset($deferred);
+
+        $this->assertSame(0, gc_collect_cycles());
+    }
+
+    /** @test */
+    public function shouldRejectWithoutCreatingGarbageCyclesIfCancellerHoldsReferenceAndExplicitlyRejectWithException()
+    {
+        gc_collect_cycles();
+        $deferred = new Deferred(function () use (&$deferred) { });
+        $deferred->reject(new \Exception('foo'));
+        unset($deferred);
+
+        $this->assertSame(0, gc_collect_cycles());
+    }
+
+    /** @test */
+    public function shouldNotLeaveGarbageCyclesWhenRemovingLastReferenceToPendingDeferred()
+    {
+        gc_collect_cycles();
+        $deferred = new Deferred();
+        $deferred->promise();
+        unset($deferred);
+
+        $this->assertSame(0, gc_collect_cycles());
+    }
+
+    /** @test */
+    public function shouldNotLeaveGarbageCyclesWhenRemovingLastReferenceToPendingDeferredWithUnusedCanceller()
+    {
+        gc_collect_cycles();
+        $deferred = new Deferred(function () { });
+        $deferred->promise();
+        unset($deferred);
+
+        $this->assertSame(0, gc_collect_cycles());
+    }
+
+    /** @test */
+    public function shouldNotLeaveGarbageCyclesWhenRemovingLastReferenceToPendingDeferredWithNoopCanceller()
+    {
+        gc_collect_cycles();
+        $deferred = new Deferred(function () { });
+        $deferred->promise()->cancel();
+        unset($deferred);
+
+        $this->assertSame(0, gc_collect_cycles());
+    }
 }

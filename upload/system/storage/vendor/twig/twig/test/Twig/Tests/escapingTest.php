@@ -6,7 +6,7 @@
  * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
-class Twig_Test_EscapingTest extends PHPUnit_Framework_TestCase
+class Twig_Test_EscapingTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * All character encodings supported by htmlspecialchars().
@@ -250,7 +250,7 @@ class Twig_Test_EscapingTest extends PHPUnit_Framework_TestCase
                 .chr($codepoint >> 6 & 0x3f | 0x80)
                 .chr($codepoint & 0x3f | 0x80);
         }
-        throw new Exception('Codepoint requested outside of Unicode range');
+        throw new Exception('Codepoint requested outside of Unicode range.');
     }
 
     public function testJavascriptEscapingEscapesOwaspRecommendedRanges()

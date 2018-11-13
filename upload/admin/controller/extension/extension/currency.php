@@ -96,6 +96,8 @@ class ControllerExtensionExtensionCurrency extends Controller {
 			}
 		}
 
+		$data['promotion'] = $this->load->controller('extension/promotion', 'payment');
+
 		$this->response->setOutput($this->load->view('extension/extension/currency', $data));
 	}
 

@@ -39,8 +39,9 @@
               <tr>
                 <td>{{ text_version }}</td>
                 <td>{{ php_version }}</td>
-                <td>7.0+</td>
-                <td class="text-center">{% if php_version >= '7.0' %}
+                <td>5.6+</td>
+                <td class="text-center">
+                  {% if version %}
                     <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   {% else %}
                     <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
@@ -54,7 +55,8 @@
                     {{ text_off }}
                   {% endif %}</td>
                 <td>{{ text_off }}</td>
-                <td class="text-center">{% if not register_globals %}
+                <td class="text-center">
+                  {% if not register_globals %}
                     <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   {% else %}
                     <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
@@ -68,7 +70,8 @@
                     {{ text_off }}
                   {% endif %}</td>
                 <td>{{ text_off }}</td>
-                <td class="text-center">{% if not error_magic_quotes_gpc %}
+                <td class="text-center">
+                  {% if not error_magic_quotes_gpc %}
                     <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   {% else %}
                     <span class="text-danger"><i class="fa fa-minus-circle"></i></span>

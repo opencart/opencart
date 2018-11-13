@@ -98,7 +98,7 @@ $("#button-cancel").click(function() {
 		$.ajax({
 			type: 'POST',
 			dataType: 'json',
-			data: {'order_id': '{{ order_id }}'},
+			data: {'order_id': {{ order_id }}},
 			url: 'index.php?route=extension/payment/amazon_login_pay/cancel&user_token={{ user_token }}',
 			beforeSend: function() {
 				$('#button-cancel').hide();
@@ -142,7 +142,7 @@ $("#button-capture").click(function() {
 		$.ajax({
 			type: 'POST',
 			dataType: 'json',
-			data: {'order_id': '{{ order_id }}', 'amount': $('#capture-amount').val()},
+			data: {'order_id': {{ order_id }}, 'amount': $('#capture-amount').val()},
 			url: 'index.php?route=extension/payment/amazon_login_pay/capture&user_token={{ user_token }}',
 			beforeSend: function() {
 				$('#button-capture').hide();
@@ -197,7 +197,7 @@ $("#button-refund").click(function() {
 		$.ajax({
 			type: 'POST',
 			dataType: 'json',
-			data: {'order_id': '{{ order_id }}', 'amount': $('#refund-amount').val()},
+			data: {'order_id': {{ order_id }}, 'amount': $('#refund-amount').val()},
 			url: 'index.php?route=extension/payment/amazon_login_pay/refund&user_token={{ user_token }}',
 			beforeSend: function() {
 				$('#button-refund').hide();

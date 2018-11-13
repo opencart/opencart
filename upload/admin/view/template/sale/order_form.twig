@@ -49,7 +49,8 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-customer">{{ entry_customer }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/> <input type="hidden" name="customer_id" value="{{ customer_id }}"/>
+                  <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
+                  <input type="hidden" name="customer_id" value="{{ customer_id }}"/>
                 </div>
               </div>
               <div class="form-group row">
@@ -251,10 +252,10 @@
                           <small>{{ option.name }}: {{ option.value }}</small>
                           <br/>
                           {% if option.type == 'select' or option.type == 'radio' or option.type == 'image' %}
-                            <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/>
+                            <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}" class="form-check-input"/>
                           {% endif %}
                           {% if option.type == 'checkbox' %}
-                            <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}"/>
+                            <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}" class="form-check-input"/>
                           {% endif %}
                           {% if option.type == 'text' or option.type == 'textarea' or option.type == 'file' or option.type == 'date' or option.type == 'datetime' or option.type == 'time' %}
                             <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}]" value="{{ option.value }}"/>
@@ -1876,7 +1877,7 @@ $('#button-shipping-address').on('click', function() {
 				}
 			} else {
 				// Shipping Methods
-				var request = $.ajax({
+				$.ajax({
 					url: '{{ catalog }}index.php?route=api/shipping/methods&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 					dataType: 'json',
 					beforeSend: function() {

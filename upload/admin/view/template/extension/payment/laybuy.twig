@@ -429,7 +429,7 @@
   }
 </style>
 <script type="text/javascript"><!--
-$('input[name="category"]').autocomplete({
+$('input[name=\'category\']').autocomplete({
 	source: function(request, response) {
 		$.ajax({
 			url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
@@ -459,7 +459,7 @@ $('#laybuy-category').on('click', '.fa-minus-circle', function() {
 //--></script>
 
 <script type="text/javascript"><!--
-$('input[name="customer_group"]').autocomplete({
+$('input[name=\'customer_group\']').autocomplete({
 	source: function(request, response) {
 		$.ajax({
 			url: 'index.php?route=extension/payment/laybuy/autocomplete&user_token={{ user_token }}&filter_customer_group=' + encodeURIComponent(request),

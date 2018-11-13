@@ -29,8 +29,8 @@ class ControllerAccountAccount extends Controller {
 			unset($this->session->data['success']);
 		} else {
 			$data['success'] = '';
-		} 
-		
+		}
+
 		$data['edit'] = $this->url->link('account/edit', 'language=' . $this->config->get('config_language'));
 		$data['password'] = $this->url->link('account/password', 'language=' . $this->config->get('config_language'));
 		$data['address'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
@@ -70,7 +70,7 @@ class ControllerAccountAccount extends Controller {
 		$this->load->model('account/affiliate');
 		
 		$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
-		
+
 		if (!$affiliate_info) {	
 			$data['affiliate'] = $this->url->link('account/affiliate/add', 'language=' . $this->config->get('config_language'));
 		} else {
@@ -82,14 +82,14 @@ class ControllerAccountAccount extends Controller {
 		} else {
 			$data['tracking'] = '';
 		}
-		
+
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
-		
+
 		$this->response->setOutput($this->load->view('account/account', $data));
 	}
 

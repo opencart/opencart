@@ -24,17 +24,6 @@ class ControllerInformationGdpr extends Controller {
 
 		$data['email'] = $this->customer->getEmail();
 
-
-
-
-
-
-
-
-
-
-
-		$data['delete'] = $this->url->link('account/gdpr/delete', 'language=' . $this->config->get('config_language'));
 		$data['cancel'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -46,6 +35,11 @@ class ControllerInformationGdpr extends Controller {
 
 		$this->response->setOutput($this->load->view('information/gdpr', $data));
 	}
+
+	public function export() {
+
+	}
+
 
 	public function delete() {
 		if (!$this->customer->isLogged()) {

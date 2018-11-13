@@ -24,88 +24,76 @@
       <fieldset>
         <legend>Account Verification</legend>
         <div class="form-group">
-          <p><label class="form-check-label">Before we can carry out any gdpr requests we must validate you account. please enter your email below.</label></p>
+          <p><label class="form-check-label">{{ text_email }}</label></p>
           <input type="email" name="email" value="{{ email }}" placeholder="{{ entry_email }}" class="form-control"/>
         </div>
       </fieldset>
-
       <fieldset>
         <legend>Choose an action</legend>
 
         <div class="form-group mb-3">
           <div class="form-check">
-            <input type="radio" name="action" value="data" id="input-data" class="form-check-input"/> <label class="form-check-label" for="input-data">Export Personal Data</label>
+            <input type="radio" name="action" value="data" id="input-data" class="form-check-input"/> <label class="form-check-label" for="input-data">{{ text_export }}</label>
           </div>
           <div class="form-check">
-            <input type="radio" name="action" value="remove" id="input-remove" class="form-check-input"/> <label class="form-check-label" for="input-remove">Remove Personal Data</label>
+            <input type="radio" name="action" value="remove" id="input-remove" class="form-check-input"/> <label class="form-check-label" for="input-remove">{{ text_delete }}</label>
+
+            <div id="collapse-remove" class="collapse">
+              <ul class="text-danger">
+                <li>{{ text_access }}</li>
+                <li>{{ text_history }}</li>
+                <li>{{ text_limit }}</li>
+              </ul>
+            </div>
+
           </div>
         </div>
-
       </fieldset>
       <div class="d-inline-block pt-2 pd-2 w-100">
-        <div class="float-right">
-          <button type="submit" class="btn btn-primary">{{ button_continue }}</button>
-        </div>
+        <button type="submit" class="btn btn-primary">{{ button_continue }}</button>
+        &nbsp;&nbsp;or <a href="" class="btn btn-link">Cancel</a>
       </div>
-
       {{ content_bottom }}
     </div>
     {{ column_right }}
   </div>
 </div>
 <script type="text/javascript"><!--
-$('button[id^=\'button-custom-field\']').on('click', function() {
+$('input[name=\'action\']').on('change', function() {
+    if (this.value == 'remove') {
+		$('#collapse-remove').slideDown();
+    } else {
+		$('#collapse-remove').slideUp();
+    }
+});
+
+$('#button-continue').on('click', function() {
 	var element = this;
 
-	$('#form-upload').remove();
+	$.ajax({
+		url: 'index.php?route=information/gdpr/' + $('input[name=\'action\']').val(),
+		dataType: 'json',
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(json) {
+			$(element).parent().find('.text-danger').remove();
 
-	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
+			if (json['error']) {
+				$(element).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
+			}
 
-	$('#form-upload input[name=\'file\']').trigger('click');
-
-	if (typeof timer != 'undefined') {
-		clearInterval(timer);
-	}
-
-	timer = setInterval(function() {
-		if ($('#form-upload input[name=\'file\']').val() != '') {
-			clearInterval(timer);
-
-			$.ajax({
-				url: 'index.php?route=tool/upload',
-				type: 'post',
-				dataType: 'json',
-				data: new FormData($('#form-upload')[0]),
-				cache: false,
-				contentType: false,
-				processData: false,
-				beforeSend: function() {
-					$(element).button('loading');
-				},
-				complete: function() {
-					$(element).button('reset');
-				},
-				success: function(json) {
-					$(element).parent().find('.text-danger').remove();
-
-					if (json['error']) {
-						$(element).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
-					}
-
-					if (json['success']) {
-						alert(json['success']);
-
-						$(element).parent().find('input').val(json['code']);
-					}
-				},
-				error: function(xhr, ajaxOptions, thrownError) {
-					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-				}
-			});
+			if (json['success']) {
+				alert(json['success']);
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
-	}, 500);
+	});
 });
 //--></script>
-
-
 {{ footer }}

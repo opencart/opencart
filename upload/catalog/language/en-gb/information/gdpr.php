@@ -1,27 +1,18 @@
 <?php
-$_['heading_title']   = 'General Data Personal Request';
+$_['heading_title']     = 'General Data Personal Request';
 
 // Text
-$_['text_account']    = 'Account';
-$_['text_customer']   = 'Personal Information';
-$_['text_firstname']  = 'First Name';
-$_['text_lastname']   = 'Last Name';
-$_['text_email']      = 'E-Mail';
-$_['text_telephone']  = 'Telephone';
-$_['text_company']    = 'Company';
-$_['text_address_1']  = 'Address 1';
-$_['text_address_2']  = 'Address 2';
-$_['text_postcode']   = 'Post Code';
-$_['text_city']       = 'City';
-$_['text_country']    = 'Country';
-$_['text_zone']       = 'Region / State';
-$_['text_addresses']  = 'Addresses';
-$_['text_address']    = 'Address';
-$_['text_history']    = 'Login History';
-$_['text_ip']         = 'IP';
-$_['text_country']    = 'Country';
-$_['text_date_added'] = 'Date Added';
+$_['text_account']      = 'Account';
+$_['text_email']        = 'Before we can carry out any GDPR requests we must validate you account. please enter your email below.';
+$_['text_verification'] = 'Account Verification';
+$_['text_action']       = 'Choose an action';
+$_['text_access']       = 'You will no longer have access to your %s account.';
+$_['text_history']      = 'No longer have access to your order history, invoices, wishlists or downloads';
+$_['text_limit']        = 'Account deletion requests will process after %s days so any fraud detection, chargebacks or refunds can be processed.';
+$_['text_export']       = 'Export Personal Data';
+$_['text_delete']       = 'Remove Personal Data';
 
-// Buttons
-$_['button_print']    = 'Print';
-$_['button_delete']   = 'Remove Personal Data';
+// Entry
+$_['entry_email']      = 'E-Mail';
+
+// Error

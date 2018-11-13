@@ -56,13 +56,6 @@
       <ul class="list-unstyled">
         <li><a href="{{ newsletter }}">{{ text_newsletter }}</a></li>
       </ul>
-      {% if gdpr_status %}
-        <h2>{{ text_gdpr }}</h2>
-        <ul class="list-unstyled">
-          <li><a href="{{ gdpr_data }}">{{ text_gdpr_data }}</a></li>
-          <li><a href="{{ gdpr_delete }}">{{ text_gdpr_delete }}</a></li>
-        </ul>
-      {% endif %}
       {{ content_bottom }}
     </div>
     {{ column_right }}

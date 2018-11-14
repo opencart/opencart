@@ -1,7 +1,7 @@
 <h3>{{ heading_title }}</h3>
 <div class="row">
  {% for product in products %}
-  <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-12">
+  <div class="product-layout col">
     <div class="product-thumb transition">
       <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-fluid" /></a></div>
       <div class="caption">

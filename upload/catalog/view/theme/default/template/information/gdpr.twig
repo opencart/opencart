@@ -9,35 +9,28 @@
     <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}</div>
   {% endif %}
   <div class="row">{{ column_left }}
-    {% if column_left and column_right %}
-      {% set class = 'col-sm-6' %}
-    {% elseif column_left or column_right %}
-      {% set class = 'col-sm-9' %}
-    {% else %}
-      {% set class = 'col-sm-12' %}
-    {% endif %}
-    <div id="content" class="{{ class }}">
+    <div id="content" class="col">
       {{ content_top }}
       <h1>{{ heading_title }}</h1>
-      <p>GDPR requests :</p>
-
+      <p>{{ text_gdpr|format(policy, store) }}</p>
       <fieldset>
         <legend>{{ text_verification }}</legend>
         <div class="form-group">
-          <p><label class="form-check-label">{{ text_email }}</label></p>
-          <input type="email" name="email" value="{{ email }}" placeholder="{{ entry_email }}" class="form-control"/>
+          <p><label class="form-check-label" for="input-email">{{ text_email }}</label></p>
+          <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
         </div>
       </fieldset>
       <fieldset>
         <legend>{{ text_action }}</legend>
-        <div class="form-group mb-3">
+        <div class="form-group">
           <div class="form-check">
-            <input type="radio" name="action" value="data" id="input-data" class="form-check-input"/> <label class="form-check-label" for="input-data">{{ text_export }}</label>
+            <input type="radio" name="action" value="data" id="input-data" class="form-check-input"/> <label class="form-check-label" for="input-data"><strong>{{ text_export }}</strong></label>
           </div>
           <div class="form-check">
-            <input type="radio" name="action" value="remove" id="input-remove" class="form-check-input"/> <label class="form-check-label" for="input-remove">{{ text_delete }}</label>
-            <div id="collapse-remove" class="collapse">
-              <ul class="text-danger">
+            <input type="radio" name="action" value="remove" id="input-remove" class="form-check-input"/> <label class="form-check-label" for="input-remove"><strong>{{ text_delete }}</strong></label>
+            <div id="collapse-remove" class="alert alert-danger collapse">
+              <p><i class="fas fa-exclamation-triangle"></i> Warning you will lose access to your account!</p>
+              <ul>
                 <li>{{ text_access|format(store) }}</li>
                 <li>{{ text_history }}</li>
                 <li>{{ text_limit|format(limit) }}</li>
@@ -47,8 +40,8 @@
         </div>
       </fieldset>
       <div class="d-inline-block pt-2 pd-2 w-100">
-        <div class="float-left"><a href="" class="btn btn-light">Cancel</a></div>
-        <div class="float-right"><button type="button" class="btn btn-primary">{{ button_continue }}</button></div>
+        <div class="float-left"><a href="{{ cancel }}" class="btn btn-light">Cancel</a></div>
+        <div class="float-right"><button type="button" id="button-continue" class="btn btn-primary">{{ button_continue }}</button></div>
       </div>
       {{ content_bottom }}
     </div>
@@ -68,7 +61,9 @@ $('#button-continue').on('click', function() {
 	var element = this;
 
 	$.ajax({
-		url: 'index.php?route=information/gdpr/' + $('input[name=\'action\']').val(),
+		url: 'index.php?route=information/gdpr/send',
+		type: 'post',
+		data: $('input[name=\'email\'], input[name=\'action\']'),
 		dataType: 'json',
 		beforeSend: function() {
 			$(element).button('loading');
@@ -77,14 +72,15 @@ $('#button-continue').on('click', function() {
 			$(element).button('reset');
 		},
 		success: function(json) {
-			$(element).parent().find('.text-danger').remove();
+			console.log(json);
+			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$(element).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
+				$('#collapse-customer .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				alert(json['success']);
+				$('#collapse-customer .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

@@ -22,6 +22,17 @@ class ControllerInformationGdpr extends Controller {
 			'href' => $this->url->link('information/gdpr', 'language=' . $this->config->get('config_language'))
 		);
 
+
+		$this->load->model('account/customer');
+
+		$customer_info = $this->model_account_customer->getCustomerByEmail($email);
+
+		if ($customer_info) {
+			$data['policy'] = $this->url->link('information/information', 'information_id=' . $this->config->get('config_gdpr_id'));
+		} else {
+
+		}
+
 		$data['email'] = $this->customer->getEmail();
 		$data['store'] = $this->config->get('config_name');
 		$data['limit'] = $this->config->get('config_gdpr_limit');
@@ -38,21 +49,63 @@ class ControllerInformationGdpr extends Controller {
 		$this->response->setOutput($this->load->view('information/gdpr', $data));
 	}
 
-
-	public function export() {
+	public function send() {
 		$json = array();
+
+		if (isset($this->request->get['email'])) {
+			$email = $this->request->get['email'];
+		} else {
+			$email = '';
+		}
+
+		$this->load->model('account/customer');
+
+		$customer_info = $this->model_account_customer->getCustomerByEmail($email);
+
+		if (!$customer_info) {
+			$json['error'] =  $this->language->get('error_email');
+		}
+
+		if (!$json) {
+			$json['success'] =  $this->language->get('text_success');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function confirm() {
+		$json = array();
+
+		if (isset($this->request->post['email'])) {
+			$email = $this->request->post['email'];
+		} else {
+			$email = '';
+		}
+
+		$this->load->model('account/customer');
+
+		$customer_info = $this->model_account_customer->getCustomerByEmail($email);
+
+		if ($customer_info) {
+			$json['success'] = $this->language->get('text_success');
 
 
+			$this->model_account_customer->getCustomerByEmail($email);
+
+
+
+
+
+		} else {
+			$json['error'] = $this->language->get('text_error');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 
 	public function delete() {
-
-
-
 		$this->load->language('account/gdpr_delete');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -77,7 +130,6 @@ class ControllerInformationGdpr extends Controller {
 		$data['text_confirm'] = sprintf($this->language->get('text_confirm'), $this->config->get('config_gdpr_limit'));
 
 		$data['delete'] = $this->url->link('account/gdpr/success', 'language=' . $this->config->get('config_language'));
-
 
 		$data['confirm'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 
@@ -136,90 +188,5 @@ class ControllerInformationGdpr extends Controller {
 		$data['header'] = $this->load->controller('common/header');
 
 		$this->response->setOutput($this->load->view('account/gdpr_success', $data));
-	}
-
-
-	public function mail() {
-		$data['firstname'] = $this->customer->getFirstname();
-		$data['lastname'] = $this->customer->getFirstname();
-		$data['email'] = $this->customer->getEmail();
-		$data['telephone'] = $this->customer->getTelephone();
-
-		// Addresses
-		$data['addresses'] = array();
-
-		$this->load->model('account/address');
-
-		$results = $this->model_account_address->getAddresses($this->customer->getId());
-
-		foreach ($results as $result) {
-			$address = array(
-				'firstname' => $result['firstname'],
-				'lastname' => $result['lastname'],
-				'address_1' => $result['address_1'],
-				'address_2' => $result['address_2'],
-				'city' => $result['city'],
-				'postcode' => $result['postcode'],
-				'country' => $result['country'],
-				'zone' => $result['zone']
-			);
-
-			if (!in_array($address, $data['addresses'])) {
-				$data['addresses'][] = $address;
-			}
-		}
-
-		// Order Addresses
-		$this->load->model('account/order');
-
-		$results = $this->model_account_order->getOrders($this->customer->getId());
-
-		foreach ($results as $result) {
-			$address = array(
-				'firstaname' => $result['payment_firstaname'],
-				'lastname' => $result['payment_lastname'],
-				'address_1' => $result['payment_address_1'],
-				'address_2' => $result['payment_address_2'],
-				'city' => $result['payment_city'],
-				'postcode' => $result['payment_postcode'],
-				'country' => $result['payment_country'],
-				'zone' => $result['payment_zone']
-			);
-
-			if (!in_array($address, $data['addresses'])) {
-				$data['addresses'][] = $address;
-			}
-
-			$address = array(
-				'firstname' => $result['shipping_firstname'],
-				'lastname' => $result['shipping_lastname'],
-				'address_1' => $result['shipping_address_1'],
-				'address_2' => $result['shipping_address_2'],
-				'city' => $result['shipping_city'],
-				'postcode' => $result['shipping_postcode'],
-				'country' => $result['shipping_country'],
-				'zone' => $result['shipping_zone']
-			);
-
-			if (!in_array($address, $data['addresses'])) {
-				$data['addresses'][] = $address;
-			}
-		}
-
-		// Ip's
-		$data['ips'] = array();
-
-		$this->load->model('account/customer');
-
-		$results = $this->model_account_customer->getIps($this->customer->getId());
-
-		foreach ($results as $result) {
-			$data['ips'][] = array(
-				'ip' => $result['ip'],
-				'country' => $result['country'],
-				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
-			);
-		}
-
 	}
 }

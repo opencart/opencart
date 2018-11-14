@@ -1,5 +1,5 @@
 <?php
-// *	@copyright	OPENCART.PRO 2011 - 2017.
+// *	@copyright	OPENCART.PRO 2011 - 2018.
 // *	@forum	http://forum.opencart.pro
 // *	@source		See SOURCE.txt for source and other copyright.
 // *	@license	GNU General Public License version 3; see LICENSE.txt
@@ -13,6 +13,7 @@ $_['text_list']              = 'Article List';
 $_['text_add']               = 'Add Article';
 $_['text_edit']              = 'Edit Article';
 $_['text_default']           = 'Default';
+$_['text_none_category']     = ' --- None Category --- ';
 
 // Column
 $_['column_name']            = 'Article Name';
@@ -35,6 +36,8 @@ $_['entry_status']           = 'Status';
 $_['entry_noindex']          = 'Index';
 $_['entry_sort_order']       = 'Sort Order';
 $_['entry_category']         = 'Categories';
+$_['entry_category_filter']  = 'Categories';
+$_['entry_sub_category']     = 'include subcategories';
 $_['entry_main_category']    = 'Main Category';
 $_['entry_download']         = 'Downloads';
 $_['entry_related']          = 'Related Article';

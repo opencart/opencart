@@ -1,5 +1,5 @@
 <?php
-// *	@copyright	OPENCART.PRO 2011 - 2017.
+// *	@copyright	OPENCART.PRO 2011 - 2018.
 // *	@forum	http://forum.opencart.pro
 // *	@source		See SOURCE.txt for source and other copyright.
 // *	@license	GNU General Public License version 3; see LICENSE.txt
@@ -236,10 +236,20 @@ class ModelBlogArticle extends Model {
 	}
 
 	public function getArticles($data = array()) {
-		$sql = "SELECT p.*, pd.* FROM " . DB_PREFIX . "article p LEFT JOIN " . DB_PREFIX . "article_description pd ON (p.article_id = pd.article_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT * FROM " . DB_PREFIX . "article p LEFT JOIN " . DB_PREFIX . "article_description pd ON (p.article_id = pd.article_id)";
+		
+		if (isset($data['filter_category'])) {
+			$sql .= " LEFT JOIN " . DB_PREFIX . "article_to_blog_category a2c ON (p.article_id = a2c.article_id)";
+		}
+		
+		$sql .= " WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND pd.name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
+		}
+		
+		if (isset($data['filter_category'])) {
+			$sql .= " AND a2c.blog_category_id = '" . (int)$data['filter_category'] . "'";
 		}
 
 		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
@@ -249,7 +259,7 @@ class ModelBlogArticle extends Model {
 		if (isset($data['filter_noindex']) && !is_null($data['filter_noindex'])) {
 			$sql .= " AND p.noindex = '" . (int)$data['filter_noindex'] . "'";
 		}
-
+				
 		$sql .= " GROUP BY p.article_id";
 
 		$sort_data = array(

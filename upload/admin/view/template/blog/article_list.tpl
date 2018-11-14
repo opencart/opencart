@@ -40,7 +40,21 @@
                 <input type="text" name="filter_name" value="<?php echo $filter_name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
               </div>
             </div>
-            <div class="col-sm-4">
+			<div class="col-sm-4">
+			<div class="form-group">
+                <label class="control-label" for="input-category-name"><?php echo $entry_category_filter; ?></label> <label class="control-label pull-right" for="input-sub-category"><?php echo $entry_sub_category; ?> <input type="checkbox" class="checkbox-inline" name="filter_sub_category" id="input-sub-category" class="form-control"<?php echo ($filter_sub_category)?' checked="checked"':''; ?> /></label>
+                <div class="clearfix"></div>
+				<div class="input-group">
+                  <input type="text" name="filter_category_name" value="<?php echo $filter_category_name; ?>" placeholder="<?php echo $entry_category_filter; ?>" id="input-category-name" class="form-control" />
+                  <div class="input-group-btn">
+                    <button type="button" id="button-clear-input-category-name" class="btn btn-default"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <input type="hidden" name="filter_category" value="<?php echo $filter_category; ?>" id="input-category" class="form-control" />
+              </div>
+            </div>
+			
+            <div class="col-sm-2">
               <div class="form-group">
                 <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
                 <select name="filter_status" id="input-status" class="form-control">
@@ -58,7 +72,7 @@
                 </select>
               </div>
             </div>
-			<div class="col-sm-4">
+			<div class="col-sm-2">
               <div class="form-group">
                 <label class="control-label" for="input-noindex"><?php echo $entry_noindex; ?></label>
                 <select name="filter_noindex" id="input-noindex" class="form-control">
@@ -152,6 +166,18 @@ $('#button-filter').on('click', function() {
 	if (filter_name) {
 		url += '&filter_name=' + encodeURIComponent(filter_name);
 	}
+	
+	var filter_category = $('input[name=\'filter_category\']').val();
+
+	if (filter_category) {
+		url += '&filter_category=' + encodeURIComponent(filter_category);
+	}
+
+	var filter_sub_category = $('input[name=\'filter_sub_category\']');
+
+	if (filter_sub_category.prop('checked')) {
+		url += '&filter_sub_category';
+	}
 
 	var filter_status = $('select[name=\'filter_status\']').val();
 
@@ -187,6 +213,43 @@ $('input[name=\'filter_name\']').autocomplete({
 	'select': function(item) {
 		$('input[name=\'filter_name\']').val(item['label']);
 	}
+});
+
+$('input[name=\'filter_category_name\']').autocomplete({
+	'source': function(request, response) {
+		if ($('input[name=\'filter_category_name\']').val().length==0) {
+			$('input[name=\'filter_category\']').val(null);
+		}
+		$.ajax({
+			url: 'index.php?route=blog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				if (json.length>0) {
+					json.unshift({'blog_category_id':null,'name':'<?php echo $text_all; ?>'},{'blog_category_id':0,'name':'<?php echo $text_none_category; ?>'});
+				}
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['blog_category_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		if (item['label']!='<?php echo $text_all; ?>') {
+			$('input[name=\'filter_category_name\']').val(item['label']);
+		} else {
+			$('input[name=\'filter_category_name\']').val('');
+		}
+		$('input[name=\'filter_category\']').val(item['value']);
+	}
+});
+
+$('#button-clear-input-category-name').on('click',function(){
+	$('input[name=\'filter_category_name\']').val('');
+	$('input[name=\'filter_category\']').val(null);
+	$('#button-filter').trigger('click');
 });
 //--></script></div>
 <?php echo $footer; ?>

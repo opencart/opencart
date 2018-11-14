@@ -1,5 +1,5 @@
 <?php
-// *	@copyright	OPENCART.PRO 2011 - 2017.
+// *	@copyright	OPENCART.PRO 2011 - 2018.
 // *	@forum	http://forum.opencart.pro
 // *	@source		See SOURCE.txt for source and other copyright.
 // *	@license	GNU General Public License version 3; see LICENSE.txt
@@ -13,6 +13,7 @@ $_['text_list']              = 'Список cтатей';
 $_['text_add']        	     = 'Добавить';
 $_['text_edit']       	     = 'Редактирование статьи';
 $_['text_default']           = 'По умолчанию';
+$_['text_none_category']     = ' --- Без Категории --- ';
 
 // Column
 $_['column_name']            = 'Название статьи';
@@ -35,6 +36,8 @@ $_['entry_status']           = 'Статус';
 $_['entry_noindex']          = 'Индексация';
 $_['entry_sort_order']       = 'Порядок сортировки';
 $_['entry_category']         = 'Показывать в категориях';
+$_['entry_category_filter']  = 'Категории';
+$_['entry_sub_category']     = 'включая подкатегории';
 $_['entry_main_category']    = 'Главная категория';
 $_['entry_download']         = 'Загрузки';
 $_['entry_related']          = 'Рекомендуемые статьи';

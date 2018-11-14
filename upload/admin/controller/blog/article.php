@@ -1,5 +1,5 @@
 <?php
-// *	@copyright	OPENCART.PRO 2011 - 2017.
+// *	@copyright	OPENCART.PRO 2011 - 2018.
 // *	@forum	http://forum.opencart.pro
 // *	@source		See SOURCE.txt for source and other copyright.
 // *	@license	GNU General Public License version 3; see LICENSE.txt
@@ -33,6 +33,13 @@ class ControllerBlogArticle extends Controller {
 
 			if (isset($this->request->get['filter_name'])) {
 				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+			}
+			
+			if (isset($this->request->get['filter_category'])) {
+				$url .= '&filter_category=' . $this->request->get['filter_category'];
+				if (isset($this->request->get['filter_sub_category'])) {
+					$url .= '&filter_sub_category';
+				}
 			}
 
 			if (isset($this->request->get['filter_status'])) {
@@ -77,6 +84,13 @@ class ControllerBlogArticle extends Controller {
 
 			if (isset($this->request->get['filter_name'])) {
 				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+			}
+			
+			if (isset($this->request->get['filter_category'])) {
+				$url .= '&filter_category=' . $this->request->get['filter_category'];
+				if (isset($this->request->get['filter_sub_category'])) {
+					$url .= '&filter_sub_category';
+				}
 			}
 
 			if (isset($this->request->get['filter_status'])) {
@@ -124,6 +138,13 @@ class ControllerBlogArticle extends Controller {
 			if (isset($this->request->get['filter_name'])) {
 				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 			}
+			
+			if (isset($this->request->get['filter_category'])) {
+				$url .= '&filter_category=' . $this->request->get['filter_category'];
+				if (isset($this->request->get['filter_sub_category'])) {
+					$url .= '&filter_sub_category';
+				}
+			}
 
 			if (isset($this->request->get['filter_status'])) {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
@@ -170,6 +191,13 @@ class ControllerBlogArticle extends Controller {
 			if (isset($this->request->get['filter_name'])) {
 				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 			}
+			
+			if (isset($this->request->get['filter_category'])) {
+				$url .= '&filter_category=' . $this->request->get['filter_category'];
+				if (isset($this->request->get['filter_sub_category'])) {
+					$url .= '&filter_sub_category';
+				}
+			}
 
 			if (isset($this->request->get['filter_status'])) {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
@@ -202,6 +230,41 @@ class ControllerBlogArticle extends Controller {
 			$filter_name = $this->request->get['filter_name'];
 		} else {
 			$filter_name = null;
+		}
+		
+		$filter_sub_category = null;
+		if (isset($this->request->get['filter_category'])) {
+			$filter_category = $this->request->get['filter_category'];
+			if (!empty($filter_category) && isset($this->request->get['filter_sub_category'])) {
+				$filter_sub_category = true;
+			} elseif (isset($this->request->get['filter_sub_category'])) {
+				unset($this->request->get['filter_sub_category']);
+			}
+		} else {
+			$filter_category = null;
+			if (isset($this->request->get['filter_sub_category'])) {
+				unset($this->request->get['filter_sub_category']);
+			}
+		}
+
+		$filter_category_name = null;
+		if (isset($filter_category)) {
+			if ($filter_category>0) {
+				$this->load->model('blog/category');
+				$category = $this->model_blog_category->getCategory($filter_category);
+				if ($category) {
+					$filter_category_name = ($category['path']) ? $category['path'] . ' &gt; ' . $category['name'] : $category['name'];
+				} else {
+					$filter_category = null;
+					unset($this->request->get['filter_category']);
+					$filter_sub_category = null;
+					if (isset($this->request->get['filter_sub_category'])) {
+						unset($this->request->get['filter_sub_category']);
+					}
+				}
+			} else {
+				$filter_category_name = $this->language->get('text_none_category');
+			}
 		}
 
 		if (isset($this->request->get['filter_status'])) {
@@ -238,6 +301,13 @@ class ControllerBlogArticle extends Controller {
 
 		if (isset($this->request->get['filter_name'])) {
 			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		}
+		
+		if (isset($this->request->get['filter_category'])) {
+			$url .= '&filter_category=' . $this->request->get['filter_category'];
+			if (isset($this->request->get['filter_sub_category'])) {
+				$url .= '&filter_sub_category';
+			}
 		}
 
 		if (isset($this->request->get['filter_status'])) {
@@ -283,6 +353,8 @@ class ControllerBlogArticle extends Controller {
 
 		$filter_data = array(
 			'filter_name'	  => $filter_name,
+			'filter_category'		=> $filter_category,
+			'filter_sub_category'		=> $filter_sub_category,
 			'filter_status'   => $filter_status,
 			'filter_noindex'  => $filter_noindex,
 			'sort'            => $sort,
@@ -290,6 +362,8 @@ class ControllerBlogArticle extends Controller {
 			'start'           => ($page - 1) * $this->config->get('config_limit_admin'),
 			'limit'           => $this->config->get('config_limit_admin')
 		);
+		
+		
 
 		$this->load->model('tool/image');
 
@@ -318,6 +392,8 @@ class ControllerBlogArticle extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_list'] = $this->language->get('text_list');
+		$data['text_all'] = $this->language->get('text_all');
+		$data['text_none_category'] = $this->language->get('text_none_category');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_no_results'] = $this->language->get('text_no_results');
@@ -330,6 +406,9 @@ class ControllerBlogArticle extends Controller {
 		$data['column_action'] = $this->language->get('column_action');
 
 		$data['entry_name'] = $this->language->get('entry_name');
+		$data['entry_category'] = $this->language->get('entry_category');
+		$data['entry_category_filter'] = $this->language->get('entry_category_filter');
+		$data['entry_sub_category'] = $this->language->get('entry_sub_category');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_noindex'] = $this->language->get('entry_noindex');
 
@@ -370,6 +449,13 @@ class ControllerBlogArticle extends Controller {
 		if (isset($this->request->get['filter_name'])) {
 			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		}
+		
+		if (isset($this->request->get['filter_category'])) {
+			$url .= '&filter_category=' . $this->request->get['filter_category'];
+			if (isset($this->request->get['filter_sub_category'])) {
+				$url .= '&filter_sub_category';
+			}
+		}
 
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
@@ -399,6 +485,13 @@ class ControllerBlogArticle extends Controller {
 		if (isset($this->request->get['filter_name'])) {
 			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		}
+		
+		if (isset($this->request->get['filter_category'])) {
+			$url .= '&filter_category=' . $this->request->get['filter_category'];
+			if (isset($this->request->get['filter_sub_category'])) {
+				$url .= '&filter_sub_category';
+			}
+		}
 
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
@@ -427,6 +520,9 @@ class ControllerBlogArticle extends Controller {
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($article_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($article_total - $this->config->get('config_limit_admin'))) ? $article_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $article_total, ceil($article_total / $this->config->get('config_limit_admin')));
 
 		$data['filter_name'] = $filter_name;
+		$data['filter_category_name'] = $filter_category_name;
+		$data['filter_category'] = $filter_category;
+		$data['filter_sub_category'] = $filter_sub_category;
 		$data['filter_status'] = $filter_status;
 		$data['filter_noindex'] = $filter_noindex;
 
@@ -523,6 +619,13 @@ class ControllerBlogArticle extends Controller {
 
 		if (isset($this->request->get['filter_name'])) {
 			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		}
+		
+		if (isset($this->request->get['filter_category'])) {
+			$url .= '&filter_category=' . $this->request->get['filter_category'];
+			if (isset($this->request->get['filter_sub_category'])) {
+				$url .= '&filter_sub_category';
+			}
 		}
 
 		if (isset($this->request->get['filter_status'])) {

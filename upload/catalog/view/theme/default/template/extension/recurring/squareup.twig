@@ -25,13 +25,13 @@ $(document).delegate('#button-cancel', 'click', function() {
 			$('.alert').remove();
 
 			if (json['success']) {
-				$('#content').prepend('<div class="alert alert-success">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content').prepend('<div class="alert alert-success"> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('#button-cancel').hide();
 			}
 
 			if (json['error']) {
-				$('#content').prepend('<div class="alert alert-danger">' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content').prepend('<div class="alert alert-danger"> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

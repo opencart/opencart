@@ -4,14 +4,11 @@ class ControllerCronGdpr extends Controller {
 		$this->load->model('customer/gdpr');
 		$this->load->model('customer/customer');
 
-		$results = $this->model_customer_gdpr->getGdprs();
+		$results = $this->model_customer_gdpr->getExpires();
 
 		foreach ($results as $result) {
-			if ($result['status'] && (strtotime($result['date_added']) >= strtotime('+' . (int)$this->config->get('config_gdpr_limit') . ' days'))) {
-				$this->model_customer_gdpr->deleteGdpr($result['customer_id']);
-
-				$this->model_customer_customer->deleteCustomer($result['customer_id']);
-			}
+			$this->model_customer_customer->deleteGdpr($result['customer_id']);
+			$this->model_customer_customer->deleteCustomer($result['customer_id']);
 		}
 	}
 }

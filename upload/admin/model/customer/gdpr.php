@@ -42,6 +42,16 @@ class ModelCustomerGdpr extends Model {
 		return $query->rows;
 	}
 
+	public function getExpires() {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_gdpr` 
+		WHERE 
+		AND `status` = '1'
+		AND DATE(`date_added`) =< DATE('" . $this->db->escape(date('Y-m-d', strtotime('+' . (int)$this->config->get('config_gdpr_limit') . ' days'))) . "')
+		ORDER BY `date_added` DESC");
+
+		return $query->rows;
+	}
+
 	public function getGdpr($customer_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_gdpr` WHERE `customer_id` = '" . (int)$customer_id . "'");
 

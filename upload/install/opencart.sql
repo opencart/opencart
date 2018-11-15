@@ -879,8 +879,7 @@ INSERT INTO `oc_information` (`information_id`, `bottom`, `sort_order`, `status`
 (1, 1, 3, 1),
 (2, 1, 1, 1),
 (3, 1, 4, 1),
-(4, 1, 2, 1),
-(5, 1, 2, 1);
+(4, 1, 2, 1);
 
 -----------------------------------------------------------
 
@@ -892,8 +891,7 @@ INSERT INTO `oc_information_description` (`information_id`, `language_id`, `titl
 (1, 1, 'About Us', '&lt;p&gt;\r\n	About Us&lt;/p&gt;\r\n', 'About Us', '', ''),
 (2, 1, 'Terms &amp; Conditions', '&lt;p&gt;\r\n	Terms &amp;amp; Conditions&lt;/p&gt;\r\n', 'Terms &amp; Conditions', '', ''),
 (3, 1, 'Privacy Policy', '&lt;p&gt;\r\n	Privacy Policy&lt;/p&gt;\r\n', 'Privacy Policy', '', ''),
-(4, 1, 'Delivery Information', '&lt;p&gt;\r\n	Delivery Information&lt;/p&gt;\r\n', 'Delivery Information', '', ''),
-(5, 1, 'GDPR', '&lt;p&gt;\r\n	GDPR&lt;/p&gt;\r\n', 'GDPR', '', '');
+(4, 1, 'Delivery Information', '&lt;p&gt;\r\n	Delivery Information&lt;/p&gt;\r\n', 'Delivery Information', '', '');
 
 -----------------------------------------------------------
 
@@ -963,19 +961,20 @@ INSERT INTO `oc_layout_module` (`layout_module_id`, `layout_id`, `code`, `positi
 --
 
 INSERT INTO `oc_layout_route` (`layout_route_id`, `layout_id`, `store_id`, `route`) VALUES
-(38, 6, 0, 'account/%'),
-(17, 10, 0, 'affiliate/%'),
-(44, 3, 0, 'product/category'),
-(42, 1, 0, 'common/home'),
-(20, 2, 0, 'product/product'),
-(24, 11, 0, 'information/information'),
-(23, 7, 0, 'checkout/%'),
-(31, 8, 0, 'information/contact'),
-(32, 9, 0, 'information/sitemap'),
-(34, 4, 0, ''),
-(45, 5, 0, 'product/manufacturer'),
-(52, 12, 0, 'product/compare'),
-(53, 13, 0, 'product/search');
+(1, 6, 0, 'account/%'),
+(2, 6, 0, 'information/gdpr'),
+(3, 10, 0, 'affiliate/%'),
+(4, 3, 0, 'product/category'),
+(5, 1, 0, 'common/home'),
+(6, 2, 0, 'product/product'),
+(7, 11, 0, 'information/information'),
+(8, 7, 0, 'checkout/%'),
+(9, 8, 0, 'information/contact'),
+(10, 9, 0, 'information/sitemap'),
+(11, 4, 0, ''),
+(12, 5, 0, 'product/manufacturer'),
+(13, 12, 0, 'product/compare'),
+(14, 13, 0, 'product/search');
 
 -----------------------------------------------------------
 
@@ -1553,7 +1552,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_voucher_max', '1000', 0),
 (0, 'config', 'config_tax', '1', 0),
 (0, 'config', 'config_cookie_id', '0', 0),
-(0, 'config', 'config_gdpr_status', '0', 0),
+(0, 'config', 'config_gdpr_id', '0', 0),
 (0, 'config', 'config_gdpr_limit', '180', 0),
 (0, 'config', 'config_tax', '1', 0),
 (0, 'config', 'config_tax_default', 'shipping', 0),

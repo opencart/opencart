@@ -21,11 +21,11 @@ $(document).delegate('#button-cancel', 'click', function() {
 			$('.alert-dismissible').remove();
 
 			if (json['success']) {
-				$('#content').prepend('<div class="alert alert-danger alert-dismissible">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-check-circle"></i>  ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['error']) {
-				$('#content').prepend('<div class="alert alert-danger alert-dismissible">' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

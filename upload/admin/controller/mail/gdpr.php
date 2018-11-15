@@ -1,5 +1,4 @@
 <?php
-
 class ControllerMailGdpr extends Controller {
 	// admin/model/customer/gdpr/approveGdpr
 	public function approve(&$route, &$args, &$output) {
@@ -91,7 +90,7 @@ class ControllerMailGdpr extends Controller {
 
 		$customer_info = $this->model_customer_customer->getCustomer($args[0]);
 
-		if ($customer_info) {
+		if ($customer_info && $this->request->get['route'] == '') {
 			$this->load->language('mail/gdpr_delete');
 
 			if ($this->config->get('config_logo')) {

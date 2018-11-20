@@ -247,11 +247,13 @@ class ControllerCatalogProductVariant extends Controller {
 		foreach ($results as $result) {
 			$data['product_variants'][] = array(
 				'product_variant_id' => $result['product_variant_id'],
-				'product'           => $result['product'],
-				'option'            => $result['option'],
-				'type'              => $this->language->get('text_' . $result['type']),
-				'sort_order'        => $result['sort_order'],
-				'edit'              => $this->url->link('catalog/product_variant/edit', 'user_token=' . $this->session->data['user_token'] . '&product_variant_id=' . $result['product_variant_id'] . $url)
+				'name'               => $result['name'],
+				'product'            => $result['product'],
+				'quantity'           => $result['quantity'],
+				'price'              => $result['price'],
+				'type'               => $this->language->get('text_' . $result['type']),
+				'sort_order'         => $result['sort_order'],
+				'edit'               => $this->url->link('catalog/product_variant/edit', 'user_token=' . $this->session->data['user_token'] . '&product_variant_id=' . $result['product_variant_id'] . $url)
 			);
 		}
 

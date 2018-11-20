@@ -12,16 +12,21 @@
     <div id="content" class="col">
       {{ content_top }}
       <h1>{{ heading_title }}</h1>
-      <p>{{ text_gdpr|format(policy, store) }}</p>
+      <p>{{ text_gdpr|format(gdpr, title) }}</p>
       <fieldset>
-        <legend>{{ text_verification }}</legend>
+        <legend id="account">{{ text_verification }}</legend>
         <div class="form-group">
           <p><label class="form-check-label" for="input-email">{{ text_email }}</label></p>
-          <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+          <div class="input-group">
+            <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+            <div class="input-group-append">
+              <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+            </div>
+          </div>
         </div>
       </fieldset>
       <fieldset>
-        <legend>{{ text_action }}</legend>
+        <legend id="action">{{ text_action }}</legend>
         <div class="form-group">
           <div class="form-check">
             <input type="radio" name="action" value="data" id="input-data" class="form-check-input"/> <label class="form-check-label" for="input-data"><strong>{{ text_export }}</strong></label>
@@ -29,7 +34,7 @@
           <div class="form-check">
             <input type="radio" name="action" value="remove" id="input-remove" class="form-check-input"/> <label class="form-check-label" for="input-remove"><strong>{{ text_delete }}</strong></label>
             <div id="collapse-remove" class="alert alert-danger collapse">
-              <p><i class="fas fa-exclamation-triangle"></i> Warning you will lose access to your account!</p>
+              <p><i class="fas fa-exclamation-triangle"></i> {{ text_warning }}</p>
               <ul>
                 <li>{{ text_access|format(store) }}</li>
                 <li>{{ text_history }}</li>
@@ -61,7 +66,7 @@ $('#button-continue').on('click', function() {
 	var element = this;
 
 	$.ajax({
-		url: 'index.php?route=information/gdpr/send',
+		url: 'index.php?route=information/gdpr/action',
 		type: 'post',
 		data: $('input[name=\'email\'], input[name=\'action\']'),
 		dataType: 'json',
@@ -73,14 +78,20 @@ $('#button-continue').on('click', function() {
 		},
 		success: function(json) {
 			console.log(json);
-			$('.alert-dismissible').remove();
+			$('.text-danger, .alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#collapse-customer .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				if (json['error']['email']) {
+					$('#input-email').parent().after('<div class="text-danger">' + json['error']['email'] + '</div>');
+				}
+
+				if (json['error']['action']) {
+					$('#action').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['action'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
 			}
 
 			if (json['success']) {
-				$('#collapse-customer .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('.breadcrumb').after('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

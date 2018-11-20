@@ -3,10 +3,11 @@ $_['heading_title']     = 'General Data Personal Request';
 
 // Text
 $_['text_account']      = 'Account';
-$_['text_gdpr']         = 'GDPR requrests will be taken you can view the <a href="%s" target="_blank">%s<a/>';
+$_['text_gdpr']         = 'GDPR requrests will be taken you can view the <a href="%s" target="_blank">%s<a/>.';
 $_['text_email']        = 'Before we can carry out any GDPR requests we must validate you account. please enter your email below.';
 $_['text_verification'] = 'Account Verification';
 $_['text_action']       = 'Choose an action';
+$_['text_warning']      = 'Warning you will lose access to your account!';
 $_['text_access']       = 'You will no longer have access to your %s account.';
 $_['text_history']      = 'No longer have access to your order history, invoices, wishlists or downloads.';
 $_['text_limit']        = 'Account deletion requests will process after %s days so any fraud detection, chargebacks or refunds can be processed.';
@@ -18,3 +19,4 @@ $_['entry_email']       = 'E-Mail';
 
 // Error
 $_['error_email']       = 'E-Mail Address does not appear to be valid!';
+$_['error_action']      = 'You must select a valid GDPR action';

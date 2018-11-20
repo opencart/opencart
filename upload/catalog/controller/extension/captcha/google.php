@@ -17,7 +17,7 @@ class ControllerExtensionCaptchaGoogle extends Controller {
     }
 
     public function validate() {
-		if (empty($this->session->data['gcapcha'])) {
+		if (empty($this->session->data['gcaptcha'])) {
 			$this->load->language('extension/captcha/google');
 
 			if (!isset($this->request->post['g-recaptcha-response'])) {

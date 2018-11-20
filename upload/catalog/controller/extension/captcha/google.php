@@ -29,7 +29,7 @@ class ControllerExtensionCaptchaGoogle extends Controller {
 			$recaptcha = json_decode($recaptcha, true);
 
 			if ($recaptcha['success']) {
-				$this->session->data['gcapcha']	= true;
+				$this->session->data['gcaptcha']	= true;
 			} else {
 				return $this->language->get('error_captcha');
 			}

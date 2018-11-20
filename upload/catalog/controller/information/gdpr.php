@@ -61,10 +61,8 @@ class ControllerInformationGdpr extends Controller {
 			$email = '';
 		}
 
-		if (isset($this->request->post['action'])) {
-			$action = $this->request->post['action'];
-		} else {
-			$action = '';
+		if (!$customer_info) {
+			$json['error']['email'] = $this->language->get('error_email');
 		}
 
 		// Validate E-Mail
@@ -76,16 +74,18 @@ class ControllerInformationGdpr extends Controller {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
 
-
-
-
 		// Validate Action
-		if ($action != 'export' || $action != 'remove') {
+		if (isset($this->request->post['action']) && $this->request->post['action'] != 'export' && $this->request->post['action'] != 'remove') {
 			$json['error']['action'] =  $this->language->get('error_action');
 		}
 
 		if (!$json) {
 			if ($action == 'export') {
+				token();
+
+				$this->url->link('information/gdpr');
+				// Send mail
+
 				//$mail = new Mail();
 
 			}

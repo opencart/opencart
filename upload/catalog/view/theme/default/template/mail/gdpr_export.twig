@@ -18,10 +18,6 @@
       <tr>
         <td style="line-height: 1.8;">
           <p>{{ text_hello }}</p>
-          <p>{{ text_greeting }}</p>
-          <div class="float-right"><button type="button" data-toggle="tooltip" title="{{ button_print }}" class="btn btn-light"><i class="fas fa-print"></i></button> <a href="{{ delete }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="far fa-trash-alt"></i></a></div>
-          <h1>{{ heading_title }}</h1>
-
 
           <table class="table table-bordered">
             <thead>
@@ -112,6 +108,7 @@
               {% set address_row = address_row + 1 %}
             {% endfor %}
           {% endif %}
+
           {% if ips %}
             <table class="table table-bordered">
               <thead>
@@ -141,18 +138,8 @@
             <div class="float-right"><a href="{{ cancel }}" class="btn btn-light">{{ button_continue }}</a></div>
           </div>
 
-
-
-
-
-
-
-
           <p>{{ text_ip }}</p>
           <p>{{ ip }}</p>
-
-
-
 
           <p>{{ text_contact }}</p>
 

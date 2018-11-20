@@ -1,7 +1,7 @@
 <?php
 class ModelCustomerGdpr extends Model {
 	public function getGdprs($data = array()) {
-		$sql = "SELECT *, CONCAT(c.`firstname`, ' ', c.`lastname`) AS customer, cgd.`name` AS customer_group, cg.`status` FROM `" . DB_PREFIX . "customer_gdpr` cg LEFT JOIN `" . DB_PREFIX . "customer` c ON (cg.`customer_id` = c.`customer_id`) LEFT JOIN `" . DB_PREFIX . "customer_group_description` cgd ON (c.`customer_group_id` = cgd.`customer_group_id`) WHERE cgd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT *, CONCAT(c.`firstname`, ' ', c.`lastname`) AS customer, cgd.`name` AS customer_group, cg.`status`, cg.date_added FROM `" . DB_PREFIX . "customer_gdpr` cg LEFT JOIN `" . DB_PREFIX . "customer` c ON (cg.`customer_id` = c.`customer_id`) LEFT JOIN `" . DB_PREFIX . "customer_group_description` cgd ON (c.`customer_group_id` = cgd.`customer_group_id`) WHERE cgd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_customer'])) {
 			$sql .= " AND CONCAT(c.`firstname`, ' ', c.`lastname`) LIKE '%" . $this->db->escape((string)$data['filter_customer']) . "%'";
@@ -43,11 +43,7 @@ class ModelCustomerGdpr extends Model {
 	}
 
 	public function getExpires() {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_gdpr` 
-		WHERE 
-		AND `status` = '1'
-		AND DATE(`date_added`) =< DATE('" . $this->db->escape(date('Y-m-d', strtotime('+' . (int)$this->config->get('config_gdpr_limit') . ' days'))) . "')
-		ORDER BY `date_added` DESC");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_gdpr` WHERE `status` = '1' AND DATE(`date_added`) <= DATE('" . $this->db->escape(date('Y-m-d', strtotime('+' . (int)$this->config->get('config_gdpr_limit') . ' days'))) . "') ORDER BY `date_added` DESC");
 
 		return $query->rows;
 	}

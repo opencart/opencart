@@ -7,7 +7,7 @@ class ControllerCronGdpr extends Controller {
 		$results = $this->model_customer_gdpr->getExpires();
 
 		foreach ($results as $result) {
-			$this->model_customer_customer->deleteGdpr($result['customer_id']);
+			$this->model_customer_gdpr->deleteGdpr($result['customer_id']);
 			$this->model_customer_customer->deleteCustomer($result['customer_id']);
 		}
 	}

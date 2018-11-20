@@ -292,10 +292,10 @@
               </fieldset>
             </div>
             <div class="tab-pane" id="tab-address">
-              {% set address_row = 1 %}
+              {% set address_row = 0 %}
               {% for address in addresses %}
                 <fieldset id="address-row{{ address_row }}">
-                  <legend>{{ text_address }} {{ address_row+1 }} <button type="button" onclick="$('#address-row{{ address_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm float-right"><i class="fas fa-minus-circle"></i></button></legend>
+                  <legend>{{ text_address }} {{ address_row + 1 }} <button type="button" onclick="$('#address-row{{ address_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm float-right"><i class="fas fa-minus-circle"></i></button></legend>
                   <input type="hidden" name="address[{{ address_row }}][address_id]" value="{{ address.address_id }}"/>
                   <div class="form-group row required">
                     <label class="col-sm-2 col-form-label" for="input-firstname{{ address_row }}">{{ entry_firstname }}</label>

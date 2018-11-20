@@ -29,6 +29,7 @@ $_['text_value']           = 'Custom Field Values';
 $_['column_name']          = 'Custom Field Name';
 $_['column_location']      = 'Location';
 $_['column_type']          = 'Type';
+$_['column_status']        = 'Status';
 $_['column_sort_order']    = 'Sort Order';
 $_['column_action']        = 'Action';
 

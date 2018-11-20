@@ -3,7 +3,7 @@ $_['heading_title']     = 'General Data Personal Request';
 
 // Text
 $_['text_account']      = 'Account';
-$_['text_gdpr']         = 'You can view %s GDPR policy and on the <a href="%s" target="_blank">%s<a/> page.';
+$_['text_gdpr']         = 'You can view %s GDPR policy on the <a href="%s" target="_blank">%s<a/> page.';
 $_['text_email']        = 'Before we can carry out any GDPR requests we must validate you account. please enter your email below.';
 $_['text_verification'] = 'Account Verification';
 $_['text_action']       = 'Choose an action';

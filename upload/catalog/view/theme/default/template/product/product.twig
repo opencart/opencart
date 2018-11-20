@@ -302,14 +302,7 @@
         <div class="row">
           {% set i = 0 %}
           {% for product in products %}
-            {% if column_left and column_right %}
-              {% set class = 'col-8 col-sm-6' %}
-            {% elseif column_left or column_right %}
-              {% set class = 'col-6 col-md-4' %}
-            {% else %}
-              {% set class = 'col-6 col-sm-3' %}
-            {% endif %}
-            <div class="{{ class }}">
+            <div class="col">
               <div class="product-thumb transition">
                 <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-fluid"/></a></div>
                 <div class="caption">

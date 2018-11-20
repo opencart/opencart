@@ -22,15 +22,16 @@ class ControllerInformationGdpr extends Controller {
 			'href' => $this->url->link('information/gdpr', 'language=' . $this->config->get('config_language'))
 		);
 
+		$this->load->model('catalog/information');
 
-		$this->load->model('account/customer');
+		$information_info = $this->model_catalog_information->getInformation($this->config->get('config_gdpr_id'));
 
-		$customer_info = $this->model_account_customer->getCustomerByEmail($email);
+		$data['title'] = $information_info['title'];
 
-		if ($customer_info) {
-			$data['policy'] = $this->url->link('information/information', 'information_id=' . $this->config->get('config_gdpr_id'));
+		if ($information_info) {
+			$data['gdpr'] = $this->url->link('information/information', 'information_id=' . $information_info['information_id']);
 		} else {
-
+			$data['gdpr'] = '';
 		}
 
 		$data['email'] = $this->customer->getEmail();
@@ -49,24 +50,52 @@ class ControllerInformationGdpr extends Controller {
 		$this->response->setOutput($this->load->view('information/gdpr', $data));
 	}
 
-	public function send() {
+	public function action() {
+		$this->load->language('information/gdpr');
+
 		$json = array();
 
-		if (isset($this->request->get['email'])) {
-			$email = $this->request->get['email'];
+		if (isset($this->request->post['email'])) {
+			$email = $this->request->post['email'];
 		} else {
 			$email = '';
 		}
 
+		if (isset($this->request->post['action'])) {
+			$action = $this->request->post['action'];
+		} else {
+			$action = '';
+		}
+
+		// Validate E-Mail
 		$this->load->model('account/customer');
 
 		$customer_info = $this->model_account_customer->getCustomerByEmail($email);
 
 		if (!$customer_info) {
-			$json['error'] =  $this->language->get('error_email');
+			$json['error']['email'] = $this->language->get('error_email');
+		}
+
+
+
+
+		// Validate Action
+		if ($action != 'export' || $action != 'remove') {
+			$json['error']['action'] =  $this->language->get('error_action');
 		}
 
 		if (!$json) {
+			if ($action == 'export') {
+				//$mail = new Mail();
+
+			}
+
+
+			$this->load->model('information/gbdpr');
+
+			//$this->model_information_gbdpr->addExport
+
+
 			$json['success'] =  $this->language->get('text_success');
 		}
 
@@ -75,6 +104,8 @@ class ControllerInformationGdpr extends Controller {
 	}
 
 	public function confirm() {
+		$this->load->language('information/gdpr');
+
 		$json = array();
 
 		if (isset($this->request->post['email'])) {
@@ -90,12 +121,7 @@ class ControllerInformationGdpr extends Controller {
 		if ($customer_info) {
 			$json['success'] = $this->language->get('text_success');
 
-
 			$this->model_account_customer->getCustomerByEmail($email);
-
-
-
-
 
 		} else {
 			$json['error'] = $this->language->get('text_error');
@@ -150,14 +176,6 @@ class ControllerInformationGdpr extends Controller {
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 
-		$this->load->model('account/gdpr');
-
-		$gdpr_info = $this->model_account_gdpr->getGdpr($this->customer->getId());
-
-		if (!$gdpr_info) {
-			$this->model_account_gdpr->addGdpr($this->customer->getId());
-		}
-
 		$this->load->language('account/gdpr_success');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -179,6 +197,13 @@ class ControllerInformationGdpr extends Controller {
 			'href' => $this->url->link('account/gdpr/delete', 'language=' . $this->config->get('config_language'))
 		);
 
+		$this->load->model('account/gdpr');
+
+		$gdpr_info = $this->model_account_gdpr->getGdpr($this->customer->getId());
+
+		if (!$gdpr_info) {
+			$this->model_account_gdpr->addGdpr($this->customer->getId());
+		}
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

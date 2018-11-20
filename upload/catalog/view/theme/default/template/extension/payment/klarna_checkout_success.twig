@@ -6,14 +6,7 @@
     {% endfor %}
   </ul>
   <div class="row">{{ column_left }}
-    {% if column_left and column_right %}
-      {% set class = 'col-sm-6' %}
-    {% elseif column_left or column_right %}
-      {% set class = 'col-sm-9' %}
-    {% else %}
-      {% set class = 'col-sm-12' %}
-    {% endif %}
-    <div id="content" class="{{ class }}">{{ content_top }}
+    <div id="content" class="col">{{ content_top }}
       {{ klarna_checkout }}
       <div class="d-inline-block pt-2 pd-2 w-100">
         <div class="float-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>

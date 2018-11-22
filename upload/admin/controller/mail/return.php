@@ -6,39 +6,41 @@ class ControllerMailReturn extends Controller {
 		} else {
 			$return_id = '';
 		}
-		
+
 		if (isset($args[1])) {
 			$return_status_id = $args[1];
 		} else {
 			$return_status_id = '';
-		}		
-		
+		}
+
 		if (isset($args[2])) {
 			$comment = $args[2];
 		} else {
 			$comment = '';
 		}
-		
+
 		if (isset($args[3])) {
 			$notify = $args[3];
 		} else {
 			$notify = '';
-		}		
-		
+		}
+
 		if ($notify) {
 			$this->load->model('sale/return');
-			
+
 			$return_info = $this->model_sale_return->getReturn($return_id);
-			
-			if ($return_info) {                
+
+			if ($return_info) {
+				$this->load->model('localisation/language');
+				
 				$language_info = $this->model_localisation_language->getLanguage($return_info['language_id']);
-                
+
 				if ($language_info) {
 					$language_code = $language_info['code'];
 				} else {
 					$language_code = $this->config->get('config_language');
 				}
-                
+
 				$language = new Language($language_code);
 				$language->load($language_code);
 				$language->load('mail/return');
@@ -65,4 +67,4 @@ class ControllerMailReturn extends Controller {
 			}
 		}
 	}
-}	
+}

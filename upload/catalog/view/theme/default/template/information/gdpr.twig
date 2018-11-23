@@ -29,7 +29,7 @@
         <legend id="action">{{ text_action }}</legend>
         <div class="form-group">
           <div class="form-check">
-            <input type="radio" name="action" value="data" id="input-data" class="form-check-input"/> <label class="form-check-label" for="input-data"><strong>{{ text_export }}</strong></label>
+            <input type="radio" name="action" value="export" id="input-export" class="form-check-input"/> <label class="form-check-label" for="input-export"><strong>{{ text_export }}</strong></label>
           </div>
           <div class="form-check">
             <input type="radio" name="action" value="remove" id="input-remove" class="form-check-input"/> <label class="form-check-label" for="input-remove"><strong>{{ text_delete }}</strong></label>
@@ -68,7 +68,7 @@ $('#button-continue').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=information/gdpr/action',
 		type: 'post',
-		data: $('input[name=\'email\'], input[name=\'action\']'),
+		data: $('input[name=\'email\'], input[name=\'action\']:checked'),
 		dataType: 'json',
 		beforeSend: function() {
 			$(element).button('loading');

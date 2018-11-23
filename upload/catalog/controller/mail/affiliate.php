@@ -3,6 +3,14 @@ class ControllerMailAffiliate extends Controller {
 	public function index(&$route, &$args, &$output) {
 		$this->load->language('mail/affiliate');
 
+		$this->load->model('tool/image');
+
+		if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
+			$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
+		} else {
+			$data['logo'] = '';
+		}
+
 		$data['text_welcome'] = sprintf($this->language->get('text_welcome'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 		$data['text_login'] = $this->language->get('text_login');
 		$data['text_approval'] = $this->language->get('text_approval');
@@ -29,14 +37,6 @@ class ControllerMailAffiliate extends Controller {
 		$data['login'] = $this->url->link('affiliate/login', 'language=' . $this->config->get('config_language'));
 		$data['store_url'] = HTTP_SERVER;
 		$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
-
-		$this->load->model('tool/image');
-
-		if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
-			$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
-		} else {
-			$data['logo'] = '';
-		}
 
 		$mail = new Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');

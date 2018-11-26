@@ -12,21 +12,21 @@
         <div id="display-control" class="row">
           <div class="col-md-3">
             <div class="mb-3">
-              <a href="{{ compare }}" id="compare-total" class="btn btn-primary btn-sm d-sm-block"><i class="fas fa-exchange-alt"></i> <span class="d-none d-md-inline">{{ text_compare }}</span></a>
+              <a href="{{ compare }}" id="compare-total" class="btn btn-primary d-block"><i class="fas fa-exchange-alt"></i> <span class="d-inline d-md-none d-lg-inline">{{ text_compare }}</span></a>
             </div>
           </div>
           <div class="col-md-1 d-none d-md-block">
             <div class="btn-group">
-              <button type="button" id="list-view" class="btn btn-light btn-sm" data-toggle="tooltip" title="{{ button_list }}"><i class="fas fa-th-list"></i></button>
-              <button type="button" id="grid-view" class="btn btn-light btn-sm" data-toggle="tooltip" title="{{ button_grid }}"><i class="fas fa-th"></i></button>
+              <button type="button" id="list-view" class="btn btn-light" data-toggle="tooltip" title="{{ button_list }}"><i class="fas fa-th-list"></i></button>
+              <button type="button" id="grid-view" class="btn btn-light" data-toggle="tooltip" title="{{ button_grid }}"><i class="fas fa-th"></i></button>
             </div>
           </div>
           <div class="col-md-4 offset-md-1 col-6">
-            <div class="input-group input-group-sm mb-3">
+            <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <label class="input-group-text" for="input-sort">{{ text_sort }}</label>
               </div>
-              <select id="input-sort" class="form-control form-control-sm" onchange="location = this.value;">
+              <select id="input-sort" class="form-control" onchange="location = this.value;">
                 {% for sorts in sorts %}
                   {% if sorts.value == '%s-%s'|format(sort, order) %}
                     <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
@@ -38,11 +38,11 @@
             </div>
           </div>
           <div class="col-md-3 col-6">
-            <div class="input-group input-group-sm mb-3">
+            <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <label class="input-group-text" for="input-limit">{{ text_limit }}</label>
               </div>
-              <select id="input-limit" class="form-control form-control-sm" onchange="location = this.value;">
+              <select id="input-limit" class="form-control" onchange="location = this.value;">
                 {% for limits in limits %}
                   {% if limits.value == limit %}
                     <option value="{{ limits.href }}" selected="selected">{{ limits.text }}</option>

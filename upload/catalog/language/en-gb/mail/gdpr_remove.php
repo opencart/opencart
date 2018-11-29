@@ -1,7 +1,7 @@
 <?php
 // Text
 $_['text_subject']   = '%s - General Data Personal Request';
-$_['text_request']   = 'Deletion Request';
+$_['text_request']   = 'Account Deletion Request';
 
 $_['text_gdpr']      = 'Somebody has made GDPR request from this email address, To confirm this action please click on the link below:';
 
@@ -14,5 +14,5 @@ $_['text_contact']   = 'If you did not make this request please contact the stor
 $_['text_thanks']    = 'Thanks,';
 
 // Button
-$_['button_confirm'] = 'I confirm to delete my account';
+$_['button_confirm'] = 'I confirm delete my account';
 $_['button_contact'] = 'Contact Us';

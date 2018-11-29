@@ -13,31 +13,13 @@
     </thead>
     <tbody>
       <tr>
-        <td style="text-align: center; border-bottom: 1px solid #ddd;">
-
-          <h1>Export Personal Data</h1>
-
-        </td>
+        <td style="text-align: center; border-bottom: 1px solid #ddd;"><h1>{{ text_request }}</h1></td>
       </tr>
       <tr>
-        <td style="line-height: 1.8;">
-
-          <p>{{ text_gdpr }}</p>
-
-
-            <br/>
-
-
-          <p style="text-align: center;"><a href="{{ gdpr }}" style="border-radius: 4px; color: #fff; text-decoration: none; background-color: #01b3e8; padding-left: 18px; padding-right: 18px; padding-top: 10px; padding-bottom: 10px; font-size: 18px; font-weight: bold;">{{ button_confirm }}</a></p>
-
-
-            <br/>
-
-
-          <p>{{ text_ip }} {{ ip }}</p>
-
-          <p>{{ text_contact }}</p>
-          <p style="text-align: center;"><a href="{{ store_url }}" style="border-radius: 4px; color: #fff; text-decoration: none; background-color: #01b3e8; padding-left: 18px; padding-right: 18px; padding-top: 10px; padding-bottom: 10px; font-size: 18px; font-weight: bold;">{{ button_contact }}</a></p>
+        <td style="line-height: 25px;">
+          <p style="margin-bottom: 40px;">{{ text_gdpr }}</p>
+          <p style="margin-bottom: 40px; text-align: center;"><a href="{{ confirm }}" style="border-radius: 4px; color: #fff; text-decoration: none; background-color: #01b3e8; padding-left: 18px; padding-right: 18px; padding-top: 10px; padding-bottom: 10px; font-size: 18px; font-weight: bold;">{{ button_confirm }}</a></p>
+          <p style="margin-bottom: 40px;">If you did not make this request then please ignore this email.</p>
           <p>
             {{ text_thanks }}
             <br/>

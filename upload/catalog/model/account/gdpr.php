@@ -5,9 +5,7 @@ class ModelAccountGdpr extends Model {
 	}
 
 	public function editStatus($code, $status) {
-		$query = $this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET status = '" . (int)$status . "' WHERE `code` = '" . $this->db->escape($code) . "'");
-
-		return $query->row;
+		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET status = '" . (int)$status . "' WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 
 	public function getGdprByCode($code) {

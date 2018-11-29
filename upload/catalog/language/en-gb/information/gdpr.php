@@ -13,7 +13,7 @@ $_['text_history']      = 'No longer have access to your order history, invoices
 $_['text_limit']        = 'Account deletion requests will process after %s days so any fraud detection, chargebacks or refunds can be processed.';
 $_['text_export']       = 'Export Personal Data';
 $_['text_delete']       = 'Remove Personal Data';
-$_['text_success']      = 'Success: You GDPR request has been logged. Check your email!';
+$_['text_success']      = 'Success: An email has been sent to your email address!';
 
 // Entry
 $_['entry_email']       = 'E-Mail';

@@ -1357,33 +1357,6 @@ function db_schema() {
 	);
 
 	$tables[] = array(
-		'name' => 'customer_gdpr',
-		'field' => array(
-			array(
-				'name' => 'customer_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'status',
-				'type' => 'tinyint(1)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'date_added',
-				'type' => 'datetime',
-				'not_null' => true
-			)
-		),
-		'primary' => array(
-			'customer_id'
-		),
-		'engine' => 'MyISAM',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
-	);
-
-	$tables[] = array(
 		'name' => 'customer_group',
 		'field' => array(
 			array(
@@ -2324,6 +2297,43 @@ function db_schema() {
 		'primary' => array(
 			'filter_group_id',
 			'language_id'
+		),
+		'engine' => 'MyISAM',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	);
+
+	$tables[] = array(
+		'name' => 'gdpr',
+		'field' => array(
+			array(
+				'name' => 'gdpr_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'email',
+				'type' => 'varchar(96)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'status',
+				'type' => 'tinyint(1)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'status',
+				'type' => 'tinyint(1)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			)
+		),
+		'primary' => array(
+			'gdpr_id'
 		),
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',

@@ -6,11 +6,11 @@ $_['heading_title']         = 'GDPR Approvals';
 $_['text_success']          = 'Success: You have modified GDPR approvals!';
 $_['text_list']             = 'GDPR Approval List';
 $_['text_info']             = '<strong>GDPR</strong> account deletion requests will process after <strong>%s days</strong> so any fraud detection, chargebacks or refunds can be processed.';
+$_['text_complete']         = 'Complete';
 
 // Column
-$_['column_customer']       = 'Customer';
 $_['column_email']          = 'E-Mail';
-$_['column_customer_group'] = 'Customer Group';
+$_['column_status']         = 'Status';
 $_['column_status']         = 'Status';
 $_['column_date_added']     = 'Date Added';
 $_['column_action']         = 'Action';

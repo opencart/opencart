@@ -18,11 +18,6 @@ class ControllerInformationGdpr extends Controller {
 			);
 
 			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_account'),
-				'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
-			);
-
-			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
 				'href' => $this->url->link('information/gdpr', 'language=' . $this->config->get('config_language'))
 			);
@@ -83,9 +78,24 @@ class ControllerInformationGdpr extends Controller {
 		}
 
 		if (!$json) {
+			// Added additional check so people are not spamming requests
+			$status = true;
+
 			$this->load->model('account/gdpr');
 
-			$this->model_account_gdpr->addGdpr(token(), $email, $action);
+			$results = $this->model_account_gdpr->getGdprByEmail($email);
+
+			foreach ($results as $result) {
+				if ($result['action'] == $action) {
+					//$status = false;
+
+					break;
+				}
+			}
+
+			if ($status) {
+				$this->model_account_gdpr->addGdpr(token(), $email, $action);
+			}
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -95,18 +105,18 @@ class ControllerInformationGdpr extends Controller {
 	}
 
 	public function success() {
-		if (isset($this->request->post['code'])) {
-			$code = $this->request->post['code'];
+		if (isset($this->request->get['code'])) {
+			$code = $this->request->get['code'];
 		} else {
 			$code = '';
 		}
 
 		$this->load->model('account/gdpr');
 
-		$gdpr_info = $this->model_account_gdpr->getGdprByCode($code);
+		//$gdpr_info = $this->model_account_gdpr->getGdprByCode($code);
 
-		if ($gdpr_info) {
-			$this->load->language('account/gdpr_success');
+		//if ($gdpr_info) {
+			$this->load->language('account/gdpr');
 
 			$this->document->setTitle($this->language->get('heading_title'));
 
@@ -118,16 +128,18 @@ class ControllerInformationGdpr extends Controller {
 			);
 
 			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_account'),
-				'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
+				'text' => $this->language->get('heading_title'),
+				'href' => $this->url->link('information/gdpr', 'language=' . $this->config->get('config_language'))
 			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('account/gdpr/delete', 'language=' . $this->config->get('config_language'))
+				'href' => $this->url->link('information/gdpr/success', 'language=' . $this->config->get('config_language'))
 			);
 
-			$this->model_account_gdpr->editGdpr($code);
+			$this->model_account_gdpr->editStatus($code, 1);
+
+			$data['text_message'] = $this->language->get('text_message');
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
@@ -136,9 +148,9 @@ class ControllerInformationGdpr extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			$this->response->setOutput($this->load->view('account/gdpr_success', $data));
-		} else {
-			return new Action('error/not_found');
-		}
+			$this->response->setOutput($this->load->view('common/success', $data));
+		//} else {
+		//	return new Action('error/not_found');
+		//}
 	}
 }

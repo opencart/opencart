@@ -25,7 +25,7 @@ class ControllerMailForgotten extends Controller {
 
 				$data['reset'] = str_replace('&amp;', '&', $this->url->link('account/reset', 'language=' . $this->config->get('config_language') . '&email=' . urlencode($args[0]) . '&code=' . $args[1]));
 				$data['ip'] = $this->request->server['REMOTE_ADDR'];
-				$data['store_url'] = $this->config->get('config_store_url');
+				$data['store_url'] = $this->config->get('config_url');
 				$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 				$mail = new Mail($this->config->get('config_mail_engine'));

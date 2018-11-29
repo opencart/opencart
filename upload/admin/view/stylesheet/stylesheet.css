@@ -635,6 +635,10 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     opacity: 1;
 }
 
+#extension-list i {
+    color: #10b4e9;
+}
+
 @media screen and (min-width: 992px) and (max-width: 1199px) {
     #extension-list .extension-preview {
         min-height: 123px;
@@ -680,9 +684,6 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
         #extension-list .extension-name + div > .row {
             font-size: 14px;
         }
-    }
-    #extension-list i {
-        color: #10b4e9;
     }
 
     #extension-list span {

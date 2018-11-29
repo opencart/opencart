@@ -16,6 +16,7 @@ class ControllerMailAffiliate extends Controller {
 		$data['text_approval'] = $this->language->get('text_approval');
 		$data['text_service'] = $this->language->get('text_service');
 		$data['text_thanks'] = $this->language->get('text_thanks');
+
 		$data['button_login'] = $this->language->get('button_login');
 
 		$this->load->model('account/customer_group');
@@ -35,7 +36,7 @@ class ControllerMailAffiliate extends Controller {
 		}
 
 		$data['login'] = $this->url->link('affiliate/login', 'language=' . $this->config->get('config_language'));
-		$data['store_url'] = HTTP_SERVER;
+		$data['store_url'] = $this->config->get('config_url');
 		$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 		$mail = new Mail($this->config->get('config_mail_engine'));
@@ -64,6 +65,14 @@ class ControllerMailAffiliate extends Controller {
 		if (in_array('affiliate', (array)$this->config->get('config_mail_alert'))) {
 			$this->load->language('mail/affiliate');
 
+			$this->load->model('tool/image');
+
+			if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
+				$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
+			} else {
+				$data['logo'] = '';
+			}
+
 			$data['text_signup'] = $this->language->get('text_signup');
 			$data['text_website'] = $this->language->get('text_website');
 			$data['text_firstname'] = $this->language->get('text_firstname');
@@ -73,17 +82,9 @@ class ControllerMailAffiliate extends Controller {
 			$data['text_telephone'] = $this->language->get('text_telephone');
 
 			$data['login'] = $this->url->link('affiliate/login', 'language=' . $this->config->get('config_language'));
-			$data['store_url'] = HTTP_SERVER;
+			$data['store_url'] = $this->config->get('config_url');
 			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
-			$this->load->model('tool/image');
-
-			if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
-				$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
-			} else {
-				$data['logo'] = '';
-			}
-			
 			if ($this->customer->isLogged()) {
 				$customer_group_id = $this->customer->getGroupId();
 

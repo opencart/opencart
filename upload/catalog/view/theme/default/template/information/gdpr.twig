@@ -6,7 +6,7 @@
     {% endfor %}
   </ul>
   {% if success %}
-    <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}</div>
+    <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }} <button type="button" class="close" data-dismiss="alert">&times;</button></div>
   {% endif %}
   <div class="row">{{ column_left }}
     <div id="content" class="col">
@@ -33,7 +33,7 @@
           </div>
           <div class="form-check">
             <input type="radio" name="action" value="remove" id="input-remove" class="form-check-input"/> <label class="form-check-label" for="input-remove"><strong>{{ text_delete }}</strong></label>
-            <div id="collapse-remove" class="alert alert-danger collapse">
+            <div id="collapse-remove" class="alert alert-warning collapse">
               <p><i class="fas fa-exclamation-triangle"></i> {{ text_warning }}</p>
               <ul>
                 <li>{{ text_access|format(store) }}</li>

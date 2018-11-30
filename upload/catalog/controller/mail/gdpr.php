@@ -8,8 +8,8 @@ class ControllerMailGdpr extends Controller {
 
 		$this->load->language('mail/gdpr_' . $args[2]);
 
-		if ($this->config->get('config_logo')) {
-			$data['logo'] = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
+		if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
+			$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
 		} else {
 			$data['logo'] = '';
 		}
@@ -17,7 +17,7 @@ class ControllerMailGdpr extends Controller {
 		$data['confirm'] = $this->url->link('information/gdpr/success', 'language=' . $this->config->get('config_language') . '&code=' . $args[0]);
 
 		$data['ip'] = $this->request->server['REMOTE_ADDR'];
-
+		$data['store_url'] = $this->config->get('config_url');
 		$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 		$mail = new Mail($this->config->get('config_mail_engine'));

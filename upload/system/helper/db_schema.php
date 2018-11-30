@@ -2309,7 +2309,8 @@ function db_schema() {
 			array(
 				'name' => 'gdpr_id',
 				'type' => 'int(11)',
-				'not_null' => true
+				'not_null' => true,
+				'auto_increment' => true
 			),
 			array(
 				'name' => 'customer_id',
@@ -2319,6 +2320,16 @@ function db_schema() {
 			array(
 				'name' => 'email',
 				'type' => 'varchar(96)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'code',
+				'type' => 'varchar(50)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'action',
+				'type' => 'varchar(20)',
 				'not_null' => true
 			),
 			array(

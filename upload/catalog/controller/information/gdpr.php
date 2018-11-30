@@ -113,10 +113,10 @@ class ControllerInformationGdpr extends Controller {
 
 		$this->load->model('account/gdpr');
 
-		//$gdpr_info = $this->model_account_gdpr->getGdprByCode($code);
+		$gdpr_info = $this->model_account_gdpr->getGdprByCode($code);
 
-		//if ($gdpr_info) {
-			$this->load->language('account/gdpr');
+		if ($gdpr_info) {
+			$this->load->language('information/gdpr');
 
 			$this->document->setTitle($this->language->get('heading_title'));
 
@@ -149,8 +149,8 @@ class ControllerInformationGdpr extends Controller {
 			$data['header'] = $this->load->controller('common/header');
 
 			$this->response->setOutput($this->load->view('common/success', $data));
-		//} else {
-		//	return new Action('error/not_found');
-		//}
+		} else {
+			return new Action('error/not_found');
+		}
 	}
 }

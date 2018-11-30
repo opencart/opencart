@@ -2317,6 +2317,11 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
+				'name' => 'email',
+				'type' => 'varchar(96)',
+				'not_null' => true
+			),
+			array(
 				'name' => 'status',
 				'type' => 'tinyint(1)',
 				'not_null' => true

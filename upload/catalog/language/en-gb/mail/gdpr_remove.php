@@ -11,6 +11,7 @@ $_['text_delete']    = 'GDPR account deletion requests will process after <stron
 
 $_['text_ip']        = 'The IP used to make this request was:';
 $_['text_contact']   = 'If you did not make this request please contact the store owner here:';
+$_['text_ignore']    = 'If you did not make this request then please ignore this email.';
 $_['text_thanks']    = 'Thanks,';
 
 // Button

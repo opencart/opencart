@@ -2309,6 +2309,12 @@ function db_schema() {
 			array(
 				'name' => 'gdpr_id',
 				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			),
+			array(
+				'name' => 'customer_id',
+				'type' => 'int(11)',
 				'not_null' => true
 			),
 			array(
@@ -2317,12 +2323,22 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
+				'name' => 'code',
+				'type' => 'varchar(50)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'action',
+				'type' => 'varchar(20)',
+				'not_null' => true
+			),
+			array(
 				'name' => 'status',
 				'type' => 'tinyint(1)',
 				'not_null' => true
 			),
 			array(
-				'name' => 'status',
+				'name' => 'approve',
 				'type' => 'tinyint(1)',
 				'not_null' => true
 			),

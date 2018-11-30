@@ -1,12 +1,7 @@
 <?php
 class ModelCustomerGdpr extends Model {
 	public function getGdprs($data = array()) {
-		$sql = "SELECT *, CONCAT(c.`firstname`, ' ', c.`lastname`) AS customer, cgd.`name` AS customer_group, cg.`status`, cg.date_added 
-
-FROM `" . DB_PREFIX . "gdpr` cg 
-LEFT JOIN `" . DB_PREFIX . "customer` c ON (cg.`customer_id` = c.`customer_id`) 
-LEFT JOIN `" . DB_PREFIX . "customer_group_description` cgd ON (c.`customer_group_id` = cgd.`customer_group_id`) 
-WHERE cgd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT *, CONCAT(c.`firstname`, ' ', c.`lastname`) AS customer, cgd.`name` AS customer_group, cg.`status`, cg.date_added FROM `" . DB_PREFIX . "gdpr` cg LEFT JOIN `" . DB_PREFIX . "customer` c ON (cg.`customer_id` = c.`customer_id`) LEFT JOIN `" . DB_PREFIX . "customer_group_description` cgd ON (c.`customer_group_id` = cgd.`customer_group_id`) WHERE cgd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_customer'])) {
 			$sql .= " AND CONCAT(c.`firstname`, ' ', c.`lastname`) LIKE '%" . $this->db->escape((string)$data['filter_customer']) . "%'";
@@ -59,6 +54,12 @@ WHERE cgd.`language_id` = '" . (int)$this->config->get('config_language_id') . "
 		return $query->row;
 	}
 
+	public function getGdprById($gdpr_id) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "gdpr` WHERE `gdpr_id` = '" . (int)$gdpr_id . "'");
+
+		return $query->row;
+	}
+
 	public function getTotalGdprs($data = array()) {
 		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "gdpr` cg LEFT JOIN `" . DB_PREFIX . "customer` c ON (cg.`customer_id` = c.`customer_id`)";
 
@@ -94,11 +95,11 @@ WHERE cgd.`language_id` = '" . (int)$this->config->get('config_language_id') . "
 	}
 
 	public function approveGdpr($gdpr_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET status = '1' WHERE gdpr_id = '" . (int)$gdpr_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET approve = '1' WHERE gdpr_id = '" . (int)$gdpr_id . "'");
 	}
 
 	public function denyGdpr($gdpr_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET status = '0' WHERE gdpr_id = '" . (int)$gdpr_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET approve = '0' WHERE gdpr_id = '" . (int)$gdpr_id . "'");
 	}
 
 	public function deleteGdpr($customer_id) {

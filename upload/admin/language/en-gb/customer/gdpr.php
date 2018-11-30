@@ -9,8 +9,9 @@ $_['text_info']             = '<strong>GDPR</strong> account deletion requests w
 $_['text_complete']         = 'Complete';
 
 // Column
+$_['column_customer_name']  = 'Customer Name';
 $_['column_email']          = 'E-Mail';
-$_['column_status']         = 'Status';
+$_['column_customer_group'] = 'Customer Group';
 $_['column_status']         = 'Status';
 $_['column_date_added']     = 'Date Added';
 $_['column_action']         = 'Action';

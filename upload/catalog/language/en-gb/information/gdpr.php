@@ -14,6 +14,7 @@ $_['text_limit']        = 'Account deletion requests will process after <strong>
 $_['text_export']       = 'Export Personal Data';
 $_['text_delete']       = 'Remove Personal Data';
 $_['text_success']      = 'Success: An email has been sent to your email address!';
+$_['text_message']      = 'Success: You have been applied for GDPR!';
 
 // Entry
 $_['entry_email']       = 'E-Mail';

@@ -2338,6 +2338,11 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
+				'name' => 'approve',
+				'type' => 'tinyint(1)',
+				'not_null' => true
+			),
+			array(
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true

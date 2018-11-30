@@ -2,7 +2,7 @@
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        <td class="text-left">{{ column_customer }}</td>
+        <td class="text-left">{{ column_customer_name }}</td>
         <td class="text-left">{{ column_email }}</td>
         <td class="text-left">{{ column_customer_group }}</td>
         <td class="text-left">{{ column_status }}</td>
@@ -25,7 +25,13 @@
               {% endif %}
             </td>
             <td class="text-left">{{ gdpr.date_added }}</td>
-            <td class="text-right"><a href="{{ gdpr.approve }}" data-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fas fa-thumbs-up"></i></a> <a href="{{ gdpr.deny }}" data-toggle="tooltip" title="{{ button_deny }}" class="btn btn-danger"><i class="fas fa-thumbs-down"></i></a></td>
+            <td class="text-right">
+            {% if not gdpr.approve %}
+              <a href="{{ gdpr.approve_link }}" data-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fas fa-thumbs-up"></i></a>
+            {% else %}
+              <a href="{{ gdpr.deny_link }}" data-toggle="tooltip" title="{{ button_deny }}" class="btn btn-danger"><i class="fas fa-thumbs-down"></i></a>
+            {% endif %}
+            </td>
           </tr>
         {% endfor %}
       {% else %}

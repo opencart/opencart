@@ -1,7 +1,7 @@
 <?php
 class ModelAccountGdpr extends Model {
 	public function addGdpr($code, $email, $action) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "gdpr` SET `code` = '" . $this->db->escape($code) . "', `email` = '" . $this->db->escape($email) . "', `action` = '" . $this->db->escape($action) . "', `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "gdpr` SET `customer_id` = '" . (int)$this->customer->getId() . "', `code` = '" . $this->db->escape($code) . "', `email` = '" . $this->db->escape($email) . "', `action` = '" . $this->db->escape($action) . "', `date_added` = NOW()");
 	}
 
 	public function editStatus($code, $status) {

@@ -89,16 +89,18 @@ class ControllerCustomerGdpr extends Controller {
 			}
 
 			$data['gdprs'][] = array(
-				'gdpr_id'    => $result['gdpr_id'],
-				'customer'   => $result['customer'],
-				'email'      => $result['email'],
-				'action'     => $this->language->get('text_' . $result['action']),
-				'status'     => $result['status'],
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'approve'    => $this->url->link('customer/gdpr/approve', 'user_token=' . $this->session->data['user_token'] . '&gdpr_id=' . $result['gdpr_id']),
-				'deny'       => $this->url->link('customer/gdpr/deny', 'user_token=' . $this->session->data['user_token'] . '&gdpr_id=' . $result['gdpr_id']),
-				'edit'       => $edit,
-				'info'       => $this->url->link('customer/gdpr/info', 'user_token=' . $this->session->data['user_token'] . '&gdpr_id=' . $result['gdpr_id'])
+				'gdpr_id'    			=> $result['gdpr_id'],
+				'customer'   			=> $result['customer'],
+				'email'      			=> $result['email'],
+				'customer_group' 	=> $result['customer_group'],
+				'action'     			=> $this->language->get('text_' . $result['action']),
+				'status'     			=> $result['status'],
+				'approve'     		=> $result['approve'],
+				'date_added' 			=> date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'approve_link'    => $this->url->link('customer/gdpr/approve', 'user_token=' . $this->session->data['user_token'] . '&gdpr_id=' . $result['gdpr_id']),
+				'deny_link'       => $this->url->link('customer/gdpr/deny', 'user_token=' . $this->session->data['user_token'] . '&gdpr_id=' . $result['gdpr_id']),
+				'edit_link'       => $edit,
+				'info_link'       => $this->url->link('customer/gdpr/info', 'user_token=' . $this->session->data['user_token'] . '&gdpr_id=' . $result['gdpr_id'])
 			);
 		}
 
@@ -146,9 +148,11 @@ class ControllerCustomerGdpr extends Controller {
 		} else {
 			$this->load->model('customer/gdpr');
 
-			$this->model_customer_gdpr->approveGdpr($this->request->get['customer_id']);
+			if (isset($this->request->get['gdpr_id'])) {
+				$this->model_customer_gdpr->approveGdpr($this->request->get['gdpr_id']);
 
-			$json['success'] = $this->language->get('text_success');
+				$json['success'] = $this->language->get('text_success');
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -165,9 +169,11 @@ class ControllerCustomerGdpr extends Controller {
 		} else {
 			$this->load->model('customer/gdpr');
 
-			$this->model_customer_gdpr->denyGdpr($this->request->get['customer_id']);
+			if (isset($this->request->get['gdpr_id'])) {
+				$this->model_customer_gdpr->denyGdpr($this->request->get['gdpr_id']);
 
-			$json['success'] = $this->language->get('text_success');
+				$json['success'] = $this->language->get('text_success');
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

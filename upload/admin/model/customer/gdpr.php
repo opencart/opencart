@@ -54,6 +54,12 @@ class ModelCustomerGdpr extends Model {
 		return $query->row;
 	}
 
+	public function getGdprById($gdpr_id) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "gdpr` WHERE `gdpr_id` = '" . (int)$gdpr_id . "'");
+
+		return $query->row;
+	}
+
 	public function getTotalGdprs($data = array()) {
 		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "gdpr` cg LEFT JOIN `" . DB_PREFIX . "customer` c ON (cg.`customer_id` = c.`customer_id`)";
 
@@ -89,11 +95,11 @@ class ModelCustomerGdpr extends Model {
 	}
 
 	public function approveGdpr($gdpr_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET status = '1' WHERE gdpr_id = '" . (int)$gdpr_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET approve = '1' WHERE gdpr_id = '" . (int)$gdpr_id . "'");
 	}
 
 	public function denyGdpr($gdpr_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET status = '0' WHERE gdpr_id = '" . (int)$gdpr_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET approve = '0' WHERE gdpr_id = '" . (int)$gdpr_id . "'");
 	}
 
 	public function deleteGdpr($customer_id) {

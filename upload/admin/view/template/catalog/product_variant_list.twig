@@ -1,0 +1,173 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right"><button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-product-option').toggleClass('d-none');" class="btn btn-light d-md-none"><i class="fas fa-filter"></i></button>
+        <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-product-option').submit() : false;"><i class="fas fa-trash-alt"></i></button>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    {% if success %}
+      <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="row">
+      <div id="filter-product-option" class="col-md-3 col-sm-12 order-md-9 d-none d-md-block mb-3">
+        <div class="card">
+          <div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
+          <div class="card-body">
+            <div class="form-group">
+              <label class="col-form-label" for="input-product">{{ entry_product }}</label> <input type="text" name="filter_product" value="{{ filter_product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
+            </div>
+            <div class="form-group">
+              <label class="col-form-label" for="input-option">{{ entry_option }}</label> <input type="text" name="filter_option" value="{{ filter_option }}" placeholder="{{ entry_option }}" id="input-option" class="form-control"/>
+            </div>
+            <div class="form-group text-right">
+              <button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9 col-sm-12">
+        <div class="card">
+          <div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
+          <div class="card-body">
+            <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-product-option">
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');"/></td>
+                      <td class="text-left">{% if sort == 'pd.name' %}
+                          <a href="{{ sort_product }}" class="{{ order|lower }}">{{ column_product }}</a>
+                        {% else %}
+                          <a href="{{ sort_product }}">{{ column_product }}</a>
+                        {% endif %}</td>
+                      <td class="text-left">{% if sort == 'od.name' %}
+                          <a href="{{ sort_option }}" class="{{ order|lower }}">{{ column_option }}</a>
+                        {% else %}
+                          <a href="{{ sort_option }}">{{ column_option }}</a>
+                        {% endif %}</td>
+                      <td class="text-left">{% if sort == 'o.type' %}
+                          <a href="{{ sort_type }}" class="{{ order|lower }}">{{ column_type }}</a>
+                        {% else %}
+                          <a href="{{ sort_type }}">{{ column_type }}</a>
+                        {% endif %}</td>
+                      <td class="text-right">{% if sort == 'o.sort_order' %}
+                          <a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a>
+                        {% else %}
+                          <a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>
+                        {% endif %}</td>
+                      <td class="text-right">{{ column_action }}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% if product_options %}
+                      {% for product_option in product_options %}
+                        <tr>
+                          <td class="text-center">{% if product_option.product_option_id in selected %}
+                              <input type="checkbox" name="selected[]" value="{{ product_option.product_option_id }}" checked="checked"/>
+                            {% else %}
+                              <input type="checkbox" name="selected[]" value="{{ product_option.product_option_id }}"/>
+                            {% endif %}</td>
+                          <td class="text-left">{{ product_option.product }}</td>
+                          <td class="text-left">{{ product_option.option }}</td>
+                          <td class="text-left">{{ product_option.type }}</td>
+                          <td class="text-right">{{ product_option.sort_order }}</td>
+                          <td class="text-right"><a href="{{ product_option.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+                        </tr>
+                      {% endfor %}
+                    {% else %}
+                      <tr>
+                        <td class="text-center" colspan="5">{{ text_no_results }}</td>
+                      </tr>
+                    {% endif %}
+                  </tbody>
+                </table>
+              </div>
+            </form>
+            <div class="row">
+              <div class="col-sm-6 text-left">{{ pagination }}</div>
+              <div class="col-sm-6 text-right">{{ results }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#button-filter').on('click', function() {
+	var url = '';
+
+	var filter_product = $('input[name=\'filter_product\']').val();
+
+	if (filter_product) {
+		url += '&filter_product=' + encodeURIComponent(filter_product);
+	}
+
+	var filter_option = $('input[name=\'filter_option\']').val();
+
+	if (filter_option) {
+		url += '&filter_option=' + encodeURIComponent(filter_option);
+	}
+
+	location = 'index.php?route=catalog/product_option&user_token={{ user_token }}' + url;
+});
+//--></script>
+<script type="text/javascript"><!--
+$('input[name=\'filter_product\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['product_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'filter_product\']').val(item['label']);
+	}
+});
+
+$('input[name=\'filter_option\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/option/autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['option_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'filter_option\']').val(item['label']);
+	}
+});
+//--></script>
+{{ footer }}

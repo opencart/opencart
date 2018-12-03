@@ -2,18 +2,11 @@
 <div id="account-return" class="container">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
-      <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
   <div class="row">{{ column_left }}
-    {% if column_left and column_right %}
-      {% set class = 'col-sm-6' %}
-    {% elseif column_left or column_right %}
-      {% set class = 'col-sm-9' %}
-    {% else %}
-      {% set class = 'col-sm-12' %}
-    {% endif %}
-    <div id="content" class="{{ class }}">{{ content_top }}
+    <div id="content" class="col">{{ content_top }}
       <h1>{{ heading_title }}</h1>
       <table class="table table-bordered table-hover">
         <thead>
@@ -97,7 +90,6 @@
             </tr>
           </thead>
           <tbody>
-
             {% if histories %}
               {% for history in histories %}
                 <tr>
@@ -112,10 +104,9 @@
               </tr>
             {% endif %}
           </tbody>
-
         </table>
       </div>
-      <div class="buttons clearfix">
+      <div class="d-inline-block pt-2 pd-2 w-100">
         <div class="float-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       </div>
       {{ content_bottom }}</div>

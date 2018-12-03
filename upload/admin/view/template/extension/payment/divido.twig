@@ -194,7 +194,7 @@
 		divido.initialize();
 	});
 
-	$('input[name="category"]').autocomplete({
+	$('input[name=\'category\']').autocomplete({
 		source: function(request, response) {
 			$.ajax({
 				url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
@@ -219,7 +219,6 @@
 	$('#divido-category').on('click', '.fa-minus-circle', function() {
 		$(this).parent().remove();
 	});
-
 })(jQuery);
 </script>
 {{ footer }}

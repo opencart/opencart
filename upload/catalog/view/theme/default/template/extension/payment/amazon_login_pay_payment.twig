@@ -5,7 +5,7 @@
     <div style="margin: 0 auto; width: 400px; height: 228px;" id="walletWidgetDiv">
     </div>
     <div style="clear: both;"></div>
-    <div class="buttons" style="max-width: 400px; margin-left: auto; margin-right: auto;">
+    <div class="d-inline-block pt-2 pd-2 w-100" style="max-width: 400px; margin-left: auto; margin-right: auto;">
       <div class="float-left">
         <a href="{{ back }}" class="btn btn-primary">{{ text_back }}</a>
       </div>
@@ -27,7 +27,7 @@ $(document).ready(function() {
 		if ($("input[name='payment_method']").val() == '1') {
 			location = '{{ continue }}';
 		} else {
-			$('#walletWidgetDiv').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i>{{ error_payment_method }}</div>');
+			$('#walletWidgetDiv').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i>{{ error_payment_method }}</div>');
 		}
 	});
 

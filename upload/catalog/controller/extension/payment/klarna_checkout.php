@@ -226,12 +226,16 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		}
 
 		if (isset($this->request->post['response']) && $this->request->post['response'] == 'template') {
+			$data = array();
+
 			$data['redirect'] = $redirect;
 
 			$data['klarna_checkout'] = $html_snippet;
 
 			$this->response->setOutput($this->load->view('extension/payment/klarna_checkout_main', $data));
 		} elseif (isset($this->request->post['response']) && $this->request->post['response'] == 'json') {
+			$json = array();
+
 			$json['redirect'] = $redirect;
 
 			$this->response->addHeader('Content-Type: application/json');
@@ -298,7 +302,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		foreach ($this->cart->getProducts() as $product) {
 			if ($product['image']) {
-				$image = $this->model_tool_image->resize($product['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_height'));
+				$image = $this->model_tool_image->resize(html_entity_decode($product['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_height'));
 			} else {
 				$image = '';
 			}

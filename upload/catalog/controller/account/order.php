@@ -63,13 +63,12 @@ class ControllerAccountOrder extends Controller {
 			);
 		}
 
-		$pagination = new Pagination();
-		$pagination->total = $order_total;
-		$pagination->page = $page;
-		$pagination->limit = 10;
-		$pagination->url = $this->url->link('account/order', 'language=' . $this->config->get('config_language') . '&page={page}');
-
-		$data['pagination'] = $pagination->render();
+		$data['pagination'] = $this->load->controller('common/pagination', array(
+			'total' => $order_total,
+			'page'  => $page,
+			'limit' => 10,
+			'url'   => $this->url->link('account/order', 'language=' . $this->config->get('config_language') . '&page={page}')
+		));
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($order_total - 10)) ? $order_total : ((($page - 1) * 10) + 10), $order_total, ceil($order_total / 10));
 

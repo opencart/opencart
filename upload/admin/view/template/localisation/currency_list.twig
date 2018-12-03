@@ -48,6 +48,11 @@
                     {% else %}
                       <a href="{{ sort_value }}">{{ column_value }}</a>
                     {% endif %}</td>
+                  <td class="text-left">{% if sort == 'status' %}
+                      <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
+                    {% else %}
+                      <a href="{{ sort_status }}">{{ column_status }}</a>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'date_modified' %}
                       <a href="{{ sort_date_modified }}" class="{{ order|lower }}">{{ column_date_modified }}</a>
                     {% else %}
@@ -68,6 +73,7 @@
                       <td class="text-left">{{ currency.title }}</td>
                       <td class="text-left">{{ currency.code }}</td>
                       <td class="text-right">{{ currency.value }}</td>
+                      <td class="text-left">{{ currency.status }}</td>
                       <td class="text-left">{{ currency.date_modified }}</td>
                       <td class="text-right"><a href="{{ currency.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
                     </tr>

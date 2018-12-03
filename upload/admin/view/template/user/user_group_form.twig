@@ -36,7 +36,7 @@
             <label class="col-sm-2 col-form-label">{{ entry_access }}</label>
             <div class="col-sm-10">
               <div class="form-control" style="height: 150px; overflow: auto;">
-                <label class="form-check"><input type="checkbox" checked="checked" class="form-check-input" onchange="$(this).parent().parent().find(':checkbox').not(this).prop('checked', $(this).prop('checked'));"/> {{ text_all }}</label>
+                <label class="form-check"><input type="checkbox" class="form-check-input" onchange="$(this).parent().parent().find(':checkbox').not(this).prop('checked', $(this).prop('checked'));"/> {{ text_all }}</label>
                 {% for permission in permissions %}
                   <label class="form-check">
                     {% if permission in access %}

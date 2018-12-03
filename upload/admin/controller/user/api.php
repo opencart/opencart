@@ -229,13 +229,12 @@ class ControllerUserApi extends Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		$pagination = new Pagination();
-		$pagination->total = $user_total;
-		$pagination->page = $page;
-		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
-
-		$data['pagination'] = $pagination->render();
+		$data['pagination'] = $this->load->controller('common/pagination', array(
+			'total' => $user_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_limit_admin'),
+			'url'   => $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+		));
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($user_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($user_total - $this->config->get('config_limit_admin'))) ? $user_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $user_total, ceil($user_total / $this->config->get('config_limit_admin')));
 
@@ -338,7 +337,7 @@ class ControllerUserApi extends Controller {
 		// IP
 		if (isset($this->request->post['api_ip'])) {
 			$data['api_ips'] = $this->request->post['api_ip'];
-		} elseif (isset($this->request->get['api_id'])) {
+		} elseif (!empty($api_info)) {
 			$data['api_ips'] = $this->model_user_api->getApiIps($this->request->get['api_id']);
 		} else {
 			$data['api_ips'] = array();
@@ -347,7 +346,7 @@ class ControllerUserApi extends Controller {
 		// Session
 		$data['api_sessions'] = array();
 
-		if (isset($this->request->get['api_id'])) {
+		if (!empty($api_info)) {
 			$results = $this->model_user_api->getApiSessions($this->request->get['api_id']);
 
 			foreach ($results as $result) {

@@ -84,7 +84,7 @@
     </div>
   </fieldset>
 </form>
-<div class="buttons">
+<div class="d-inline-block pt-2 pd-2 w-100">
   <div class="float-right">
     <button type="button" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_confirm }}</button>
   </div>
@@ -99,7 +99,7 @@ $('#button-confirm').bind('click', function() {
 		beforeSend: function() {
 			$('#firstdata_message_error').remove();
 			$('#button-confirm').attr('disabled', true);
-			$('#payment').before('<div id="firstdata_message_wait" class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_wait }}</div>');
+			$('#payment').before('<div id="firstdata_message_wait" class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_wait }}</div>');
 		},
 		complete: function() {
 			$('#button-confirm').attr('disabled', false);
@@ -108,7 +108,7 @@ $('#button-confirm').bind('click', function() {
 		success: function(json) {
 			// if error
 			if (json['error']) {
-				$('#payment').before('<div id="firstdata_message_error" class="alert alert-warning"><i class="fa fa-info-circle"></i> ' + json['error'] + '</div>');
+				$('#payment').before('<div id="firstdata_message_error" class="alert alert-warning"><i class="fas fa-info-circle"></i> ' + json['error'] + '</div>');
 			}
 
 			// if success

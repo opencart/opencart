@@ -145,11 +145,11 @@ class ControllerToolUpgrade extends Controller {
 	}
 
 	public function modified() {
-		$this->load->language('upgrade/backup');
+		$this->load->language('tool/upgrade');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'tool/backup')) {
+		if (!$this->user->hasPermission('modify', 'tool/upgrade')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

@@ -2,23 +2,16 @@
 <div id="product-compare" class="container">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
-      <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
   {% if success %}
-    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+    <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
   {% endif %}
   <div class="row">{{ column_left }}
-    {% if column_left and column_right %}
-      {% set class = 'col-sm-6' %}
-    {% elseif column_left or column_right %}
-      {% set class = 'col-sm-9' %}
-    {% else %}
-      {% set class = 'col-sm-12' %}
-    {% endif %}
-    <div id="content" class="{{ class }}">{{ content_top }}
+    <div id="content" class="col">{{ content_top }}
       <h1>{{ heading_title }}</h1>
       {% if products %}
         <table class="table table-bordered">
@@ -68,7 +61,7 @@
                 <td>{{ text_rating }}</td>
                 {% for product in products %}
                   <td class="rating"> {% for i in 1..5 %}
-                      {% if product.rating < i %} <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> {% endif %}
+                      {% if product.rating < i %} <span class="fas fa-stack"><i class="fas fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fas fa-stack"><i class="fas fa-star fa-stack-2x"></i><i class="fas fa-star-o fa-stack-2x"></i></span> {% endif %}
                     {% endfor %}
                     <br/>
                     {{ product.reviews }}</td>
@@ -120,7 +113,7 @@
         </table>
       {% else %}
         <p>{{ text_no_results }}</p>
-        <div class="buttons">
+        <div class="d-inline-block pt-2 pd-2 w-100">
           <div class="float-right"><a href="{{ continue }}" class="btn btn-light">{{ button_continue }}</a></div>
         </div>
       {% endif %}

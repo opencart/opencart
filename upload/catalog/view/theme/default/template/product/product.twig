@@ -2,18 +2,11 @@
 <div id="product-product" class="container">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
-      <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
   <div class="row">{{ column_left }}
-    {% if column_left and column_right %}
-      {% set class = 'col-sm-6' %}
-    {% elseif column_left or column_right %}
-      {% set class = 'col-sm-9' %}
-    {% else %}
-      {% set class = 'col-sm-12' %}
-    {% endif %}
-    <div id="content" class="{{ class }}">{{ content_top }}
+    <div id="content" class="col">{{ content_top }}
       <div class="row"> {% if column_left or column_right %}
           {% set class = 'col-sm-6' %}
         {% else %}
@@ -104,7 +97,7 @@
                         &nbsp;{{ entry_good }}</div>
                     </div>
                     {{ captcha }}
-                    <div class="buttons clearfix">
+                    <div class="d-inline-block pt-2 pd-2 w-100">
                       <div class="float-right">
                         <button type="button" id="button-review" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
                       </div>
@@ -123,8 +116,8 @@
         {% endif %}
         <div class="{{ class }}">
           <div class="btn-group">
-            <button type="button" data-toggle="tooltip" class="btn btn-light" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');"><i class="fa fa-heart"></i></button>
-            <button type="button" data-toggle="tooltip" class="btn btn-light" title="{{ button_compare }}" onclick="compare.add('{{ product_id }}');"><i class="fa fa-exchange"></i></button>
+            <button type="button" data-toggle="tooltip" class="btn btn-light" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');"><i class="fas fa-heart"></i></button>
+            <button type="button" data-toggle="tooltip" class="btn btn-light" title="{{ button_compare }}" onclick="compare.add('{{ product_id }}');"><i class="fas fa-exchange-alt"></i></button>
           </div>
           <h1>{{ heading_title }}</h1>
           <ul class="list-unstyled">
@@ -229,7 +222,7 @@
                 {% if option.type == 'file' %}
                   <div class="form-group{% if option.required %} required {% endif %}">
                     <label class="col-form-label">{{ option.name }}</label>
-                    <button type="button" id="button-upload{{ option.product_option_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light btn-block"><i class="fa fa-upload"></i> {{ button_upload }}</button>
+                    <button type="button" id="button-upload{{ option.product_option_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light btn-block"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                     <input type="hidden" name="option[{{ option.product_option_id }}]" value="" id="input-option{{ option.product_option_id }}"/>
                   </div>
                 {% endif %}
@@ -237,9 +230,9 @@
                   <div class="form-group{% if option.required %} required {% endif %}">
                     <label class="col-form-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
                     <div class="input-group date">
-                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="YYYY-MM-DD" id="input-option{{ option.product_option_id }}" class="form-control"/>
+                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
                       <div class="input-group-append">
-                        <button class="btn btn-light" type="button"><i class="fa fa-calendar"></i></button>
+                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                       </div>
                     </div>
                   </div>
@@ -248,9 +241,9 @@
                   <div class="form-group{% if option.required %} required {% endif %}">
                     <label class="col-form-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
                     <div class="input-group datetime">
-                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="YYYY-MM-DD HH:mm" id="input-option{{ option.product_option_id }}" class="form-control"/>
+                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
                       <div class="input-group-append">
-                        <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                       </div>
                     </div>
                   </div>
@@ -259,9 +252,9 @@
                   <div class="form-group{% if option.required %} required {% endif %}">
                     <label class="col-form-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
                     <div class="input-group time">
-                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="HH:mm" id="input-option{{ option.product_option_id }}" class="form-control"/>
+                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
                       <div class="input-group-append">
-                        <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                       </div>
                     </div>
                   </div>
@@ -287,12 +280,12 @@
               <button type="button" id="button-cart" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
             </div>
             {% if minimum > 1 %}
-              <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_minimum }}</div>
+              <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_minimum }}</div>
             {% endif %}</div>
           {% if review_status %}
             <div class="rating">
               <p>{% for i in 1..5 %}
-                  {% if rating < i %}<span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>{% else %}<span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>{% endif %}
+                  {% if rating < i %}<span class="fas fa-stack"><i class="fas fa-star-o fa-stack-1x"></i></span>{% else %}<span class="fas fa-stack"><i class="fas fa-star fa-stack-1x"></i><i class="fas fa-star-o fa-stack-1x"></i></span>{% endif %}
                 {% endfor %}
                 <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ reviews }}</a> / <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ text_write }}</a></p>
               <hr/>
@@ -309,14 +302,7 @@
         <div class="row">
           {% set i = 0 %}
           {% for product in products %}
-            {% if column_left and column_right %}
-              {% set class = 'col-8 col-sm-6' %}
-            {% elseif column_left or column_right %}
-              {% set class = 'col-6 col-md-4' %}
-            {% else %}
-              {% set class = 'col-6 col-sm-3' %}
-            {% endif %}
-            <div class="{{ class }}">
+            <div class="col">
               <div class="product-thumb transition">
                 <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-fluid"/></a></div>
                 <div class="caption">
@@ -325,7 +311,7 @@
                   {% if product.rating %}
                     <div class="rating">
                       {% for j in 1..5 %}
-                        {% if product.rating < j %} <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span> {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span> {% endif %}
+                        {% if product.rating < j %} <span class="fas fa-stack"><i class="fas fa-star-o fa-stack-1x"></i></span> {% else %} <span class="fas fa-stack"><i class="fas fa-star fa-stack-1x"></i><i class="fas fa-star-o fa-stack-1x"></i></span> {% endif %}
                       {% endfor %}
                     </div>
                   {% endif %}
@@ -343,9 +329,9 @@
                   {% endif %}
                 </div>
                 <div class="button-group">
-                  <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><i class="fa fa-shopping-cart"></i> <span class="d-none d-lg-inline">{{ button_cart }}</span></button>
-                  <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
-                  <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
+                  <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><i class="fas fa-shopping-cart"></i> <span class="d-none d-lg-inline">{{ button_cart }}</span></button>
+                  <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fas fa-heart"></i></button>
+                  <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fas fa-exchange-alt"></i></button>
                 </div>
               </div>
             </div>
@@ -443,6 +429,7 @@ $('#button-cart').on('click', function() {
 				$('#alert-box').append('<div class="alert alert-success alert-dismissible">' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('#alert-box').addClass('open');
+
 				$('#cart').parent().load('index.php?route=common/cart/info');
 			}
 		},
@@ -453,9 +440,23 @@ $('#button-cart').on('click', function() {
 });
 //--></script>
 <script type="text/javascript"><!--
-$('.date').datetimepicker();
-$('.time').datetimepicker();
-$('.datetime').datetimepicker();
+$('.date').datetimepicker({
+	'format': 'YYYY-MM-DD',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
+});
+
+$('.time').datetimepicker({
+	'format': 'HH:mm',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
+});
+
+$('.datetime').datetimepicker({
+	'format': 'YYYY-MM-DD HH:mm',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
+});
 //--></script>
 <script type="text/javascript"><!--
 $('button[id^=\'button-upload\']').on('click', function() {
@@ -539,11 +540,11 @@ $('#button-review').on('click', function() {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#review').after('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				$('#review').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 
 			if (json['success']) {
-				$('#review').after('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+				$('#review').after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '</div>');
 
 				$('input[name=\'name\']').val('');
 				$('textarea[name=\'text\']').val('');

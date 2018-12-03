@@ -1,5 +1,5 @@
 <div id="cart">
-  <button type="button" data-toggle="dropdown" data-loading-text="{{ text_loading }}" class="btn btn-inverse btn-block btn-lg dropdown-toggle"><i class="fa fa-shopping-cart"></i> <span id="cart-total">{{ text_items }}</span></button>
+  <button type="button" data-toggle="dropdown" data-loading-text="{{ text_loading }}" class="btn btn-inverse btn-block btn-lg dropdown-toggle"><i class="fas fa-shopping-cart"></i> <span id="cart-total">{{ text_items }}</span></button>
 
   <ul class="dropdown-menu dropdown-menu-right">
     {% if products or vouchers %}
@@ -17,7 +17,7 @@
             - <small>{{ text_recurring }} {{ product.recurring }}</small> {% endif %}</td>
           <td class="text-right">x {{ product.quantity }}</td>
           <td class="text-right">{{ product.total }}</td>
-          <td class="text-center"><button type="button" onclick="cart.remove('{{ product.cart_id }}');" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa-times"></i></button></td>
+          <td class="text-center"><button type="button" onclick="cart.remove('{{ product.cart_id }}');" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></button></td>
         </tr>
         {% endfor %}
         {% for voucher in vouchers %}
@@ -26,7 +26,7 @@
           <td class="text-left">{{ voucher.description }}</td>
           <td class="text-right">x&nbsp;1</td>
           <td class="text-right">{{ voucher.amount }}</td>
-          <td class="text-center text-danger"><button type="button" onclick="voucher.remove('{{ voucher.key }}');" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa-times"></i></button></td>
+          <td class="text-center text-danger"><button type="button" onclick="voucher.remove('{{ voucher.key }}');" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></button></td>
         </tr>
         {% endfor %}
       </table>
@@ -41,7 +41,7 @@
           </tr>
           {% endfor %}
         </table>
-        <p class="text-right"><a href="{{ cart }}"><strong><i class="fa fa-shopping-cart"></i> {{ text_cart }}</strong></a>&nbsp;&nbsp;&nbsp;<a href="{{ checkout }}"><strong><i class="fa fa-share"></i> {{ text_checkout }}</strong></a></p>
+        <p class="text-right"><a href="{{ cart }}"><strong><i class="fas fa-shopping-cart"></i> {{ text_cart }}</strong></a>&nbsp;&nbsp;&nbsp;<a href="{{ checkout }}"><strong><i class="fas fa-share"></i> {{ text_checkout }}</strong></a></p>
       </div>
     </li>
     {% else %}

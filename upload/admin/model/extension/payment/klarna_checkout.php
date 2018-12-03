@@ -212,11 +212,14 @@ class ModelExtensionPaymentKlarnaCheckout extends Model {
 			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
 
 		$this->load->model('setting/event');
-		$this->model_setting_event->addEvent('extension_pp_express_checkout_js', 'catalog/controller/checkout/checkout/before', 'extension/payment/pp_express/eventLoadCheckoutJs');
+		$this->model_setting_event->addEvent('extension_klarna_checkout_js', 'catalog/controller/checkout/checkout/before', 'extension/payment/klarna_checkout/eventLoadCheckoutJs');
 	}
 
 	public function uninstall() {
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "klarna_checkout_order`;");
+
+		$this->load->model('setting/event');
+		$this->model_setting_event->deleteEventByCode('extension_klarna_checkout_js');
 	}
 
 	public function log($data) {

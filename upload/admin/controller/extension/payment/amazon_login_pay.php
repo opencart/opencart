@@ -4,7 +4,6 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 	private $error = array();
 
 	public function index() {
-
 		$this->load->language('extension/payment/amazon_login_pay');
 
 		$this->document->setTitle($this->language->get('heading_title'));

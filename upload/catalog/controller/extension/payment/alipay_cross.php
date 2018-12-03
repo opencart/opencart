@@ -39,6 +39,7 @@ class ControllerExtensionPaymentAlipayCross extends Controller {
 			"subject"        => $subject,
 			"body"           => $body,
 			"currency"       => $currency,
+			"product_code"   => "NEW_OVERSEAS_SELLER",
 			"_input_charset" => trim(strtolower($alipay_config['input_charset']))
 		);
 		if ($this->session->data['currency'] == 'CNY') {

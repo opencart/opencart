@@ -52,30 +52,12 @@
                       <td class="text-left">{{ event.code }}</td>
                       <td class="text-left">{{ event.status }}</td>
                       <td class="text-right">{{ event.sort_order }}</td>
-                      <td class="text-right"><button type="button" data-toggle="modal" data-target="#modal-event{{ event.event_id }}" class="btn btn-info"><i class="fas fa-info-circle"></i></button>
+                      <td class="text-right"><button type="button" data-trigger="{{ event.trigger }}" data-action="{{ event.action }}" class="btn btn-info"><i class="fas fa-info-circle"></i></button>
                         {% if not event.enabled %}
                           <button type="button" value="{{ event.event_id }}" data-toggle="tooltip" data-title="{{ button_enable }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
                         {% else %}
                           <button type="button" value="{{ event.event_id }}" data-toggle="tooltip" data-title="{{ button_disable }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
                         {% endif %}
-                        <div id="modal-event{{ event.event_id }}" class="modal text-left">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title">{{ text_info }}</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                              </div>
-                              <div class="modal-body">
-                                <div class="form-group">
-                                  <label class="col-form-label" for="input-trigger">{{ text_trigger }}</label> <textarea id="input-trigger" class="form-control" disabled>{{ event.trigger }}</textarea>
-                                </div>
-                                <div class="form-group">
-                                  <label class="col-form-label" for="input-trigger">{{ text_action }}</label> <textarea id="input-trigger" class="form-control" disabled>{{ event.action }}</textarea>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
                       </td>
                     </tr>
                   {% endfor %}
@@ -157,6 +139,33 @@ $('#form-event').on('click', '.btn-danger', function() {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
+});
+
+$('#form-event').on('click', '.btn-info', function() {
+	$('#modal-event').remove();
+
+	html  = '<div id="modal-event" class="modal">';
+	html += '  <div class="modal-dialog">';
+	html += '    <div class="modal-content">';
+	html += '      <div class="modal-header">';
+	html += '        <h5 class="modal-title">{{ text_info }}</h5>';
+	html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
+	html += '      </div>';
+	html += '      <div class="modal-body">';
+	html += '        <div class="form-group">';
+	html += '          <label class="col-form-label" for="input-trigger">{{ text_trigger }}</label> <textarea id="input-trigger" class="form-control" disabled>' + $(this).attr('data-trigger') + '</textarea>';
+	html += '        </div>';
+	html += '        <div class="form-group">';
+	html += '          <label class="col-form-label" for="input-trigger">{{ text_action }}</label> <textarea id="input-trigger" class="form-control" disabled>' + $(this).attr('data-action') + '</textarea>';
+	html += '        </div>';
+	html += '      </div>';
+	html += '    </div>';
+	html += '  </div>';
+	html += '</div>';
+
+	$('body').append(html);
+
+	$('#modal-event').modal('show');
 });
 //--></script>
 {{ footer }}

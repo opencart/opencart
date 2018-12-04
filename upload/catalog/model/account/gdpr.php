@@ -14,7 +14,7 @@ class ModelAccountGdpr extends Model {
 		return $query->row;
 	}
 
-	public function getGdprByEmail($email) {
+	public function getGdprsByEmail($email) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "gdpr` WHERE `email` = '" . $this->db->escape($email) . "'");
 
 		return $query->rows;

@@ -6,7 +6,7 @@ $_['text_request']   = 'Export Data Request';
 $_['text_gdpr']      = 'A GDPR request from this email address, To confirm this action please click on the link below:';
 
 
-$_['text_greeting']  = 'A request to delete your account from <strong>%s</strong> has been received.';
+$_['text_greeting']  = 'A request to export your personal data from <strong>%s</strong> has been received.';
 //$_['text_delete']    = 'GDPR account deletion requests will process after <strong>%s days</strong> so any chargebacks, refunds or fraud detection can be processed.';
 
 

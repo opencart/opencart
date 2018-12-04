@@ -8,9 +8,7 @@ class ControllerMailGdpr extends Controller {
 			// If action equals remove than we send approve email
 			if (($gdpr_info['action'] == 'remove') && $args[1] == '1') {
 				$this->approve();
-			}
-
-			if (($gdpr_info['action'] == 'export') && $args[1] == '2') {
+			}elseif (($gdpr_info['action'] == 'export') && $args[1] == '2') {
 				$this->export();
 			}
 
@@ -155,9 +153,9 @@ class ControllerMailGdpr extends Controller {
 	public function export() {
 		$args[0] = 3;
 
-		$this->load->model('account/customer');
+		$this->load->model('customer/customer');
 
-		$customer_info = $this->model_account_customer->getCustomer($args[0]);
+		$customer_info = $this->model_customer_customer->getCustomer($args[0]);
 
 		if ($customer_info) {
 			$this->load->language('mail/gdpr_export');

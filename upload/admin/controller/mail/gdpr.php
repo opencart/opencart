@@ -1,5 +1,25 @@
 <?php
 class ControllerMailGdpr extends Controller {
+	// admin/model/customer/gdpr/editStatus
+	public function index(&$route, &$args, &$output) {
+		$gdpr_info = $this->model_customer_gdpr->getGdpr($args[0]);
+
+		if ($gdpr_info) {
+			// If action equals remove than we send approve email
+			if (($gdpr_info['action'] == 'remove') && $args[1] == '1') {
+				$this->approve();
+			}
+
+			if (($gdpr_info['action'] == 'export') && $args[1] == '2') {
+				$this->export();
+			}
+
+			if ($args[1] == '-1') {
+				$this->deny();
+			}
+		}
+	}
+
 	// admin/model/customer/gdpr/approveGdpr
 	public function approve(&$route, &$args, &$output) {
 		$this->load->model('customer/customer');
@@ -130,7 +150,6 @@ class ControllerMailGdpr extends Controller {
 		}
 	}
 
-
 	// catalog/model/customer/gdpr/addGdpr
 	//public function data(&$route, &$args, &$output) {
 	public function export() {
@@ -151,17 +170,17 @@ class ControllerMailGdpr extends Controller {
 
 			$data['text_hello'] = sprintf($this->language->get('text_hello'), html_entity_decode($customer_info['firstname'], ENT_QUOTES, 'UTF-8'));
 
-			$data['firstname'] = $this->customer->getFirstname();
-			$data['lastname'] = $this->customer->getFirstname();
+			$data['firstname'] = $this->customer->getFirstName();
+			$data['lastname'] = $this->customer->getLastName();
 			$data['email'] = $this->customer->getEmail();
 			$data['telephone'] = $this->customer->getTelephone();
 
 			// Addresses
 			$data['addresses'] = array();
 
-			$this->load->model('account/address');
+			$this->load->model('customer/customer');
 
-			$results = $this->model_account_address->getAddresses($args[0]);
+			$results = $this->model_customer_customer->getAddresses($customer_id);
 
 			foreach ($results as $result) {
 				$address = array(
@@ -181,20 +200,22 @@ class ControllerMailGdpr extends Controller {
 			}
 
 			// Order Addresses
-			$this->load->model('account/order');
+			$this->load->model('sale/order');
 
-			$results = $this->model_account_order->getOrders($args[0]);
+			$results = $this->model_sale_order->getOrders($customer_id);
 
 			foreach ($results as $result) {
+				$order_info = $this->model_sale_order->getOrder($result['order_id']);
+
 				$address = array(
-					'firstaname' => $result['payment_firstaname'],
-					'lastname'   => $result['payment_lastname'],
-					'address_1'  => $result['payment_address_1'],
-					'address_2'  => $result['payment_address_2'],
-					'city'       => $result['payment_city'],
-					'postcode'   => $result['payment_postcode'],
-					'country'    => $result['payment_country'],
-					'zone'       => $result['payment_zone']
+					'firstname'  => $order_info['payment_firstname'],
+					'lastname'   => $order_info['payment_lastname'],
+					'address_1'  => $order_info['payment_address_1'],
+					'address_2'  => $order_info['payment_address_2'],
+					'city'       => $order_info['payment_city'],
+					'postcode'   => $order_info['payment_postcode'],
+					'country'    => $order_info['payment_country'],
+					'zone'       => $order_info['payment_zone']
 				);
 
 				if (!in_array($address, $data['addresses'])) {
@@ -202,14 +223,14 @@ class ControllerMailGdpr extends Controller {
 				}
 
 				$address = array(
-					'firstname' => $result['shipping_firstname'],
-					'lastname'  => $result['shipping_lastname'],
-					'address_1' => $result['shipping_address_1'],
-					'address_2' => $result['shipping_address_2'],
-					'city'      => $result['shipping_city'],
-					'postcode'  => $result['shipping_postcode'],
-					'country'   => $result['shipping_country'],
-					'zone'      => $result['shipping_zone']
+					'firstname' => $order_info['shipping_firstname'],
+					'lastname'  => $order_info['shipping_lastname'],
+					'address_1' => $order_info['shipping_address_1'],
+					'address_2' => $order_info['shipping_address_2'],
+					'city'      => $order_info['shipping_city'],
+					'postcode'  => $order_info['shipping_postcode'],
+					'country'   => $order_info['shipping_country'],
+					'zone'      => $order_info['shipping_zone']
 				);
 
 				if (!in_array($address, $data['addresses'])) {
@@ -220,14 +241,13 @@ class ControllerMailGdpr extends Controller {
 			// Ip's
 			$data['ips'] = array();
 
-			$this->load->model('account/customer');
+			$this->load->model('customer/customer');
 
-			$results = $this->model_account_customer->getIps($args[0]);
+			$results = $this->model_customer_customer->getIps($customer_id);
 
 			foreach ($results as $result) {
 				$data['ips'][] = array(
 					'ip'         => $result['ip'],
-					'country'    => $result['country'],
 					'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
 				);
 			}
@@ -255,4 +275,5 @@ class ControllerMailGdpr extends Controller {
 			$mail->send();
 			*/
 		}
+	}
 }

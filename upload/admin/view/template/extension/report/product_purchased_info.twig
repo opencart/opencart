@@ -22,7 +22,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-form-label" for="input-status">{{ entry_status }}</label> <select name="filter_order_status_id" id="input-status" class="form-control">
+          <label class="col-form-label" for="input-status">{{ entry_order_status }}</label> <select name="filter_order_status_id" id="input-status" class="form-control">
             <option value="0">{{ text_all_status }}</option>
             {% for order_status in order_statuses %}
               {% if order_status.order_status_id == filter_order_status_id %}

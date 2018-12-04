@@ -22,7 +22,7 @@ $_['column_returns']    = 'No. Returns';
 $_['entry_date_start']  = 'Date Start';
 $_['entry_date_end']    = 'Date End';
 $_['entry_group']       = 'Group By';
-$_['entry_status']      = 'Return Status';
+$_['entry_return_status']      = 'Return Status';
 $_['entry_status']      = 'Status';
 $_['entry_sort_order']  = 'Sort Order';
 

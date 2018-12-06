@@ -1,0 +1,53 @@
+<ul>
+  <li class="result-header">{{ text_products }}</li>
+  {% if products is not empty %}
+  {% for product in products %}
+  <li>
+    <a href="{{ product.url }}" style="display: block; overflow: auto;">
+      <img src="{{ product.image }}"/>
+      <span>{{ product.name }}</span>
+    </a>
+  </li>
+  {% endfor %}
+  {% else %}
+  <li>
+    <a href="javascript::void(0)" style="display: block; overflow: auto;">
+      <span>{{ text_no_result }}</span>
+    </a>
+  </li>
+  {% endif %}
+  <li class="result-header">{{ text_categories }}</li>
+  {% if categories is not empty %}
+  {% for category in categories %}
+  <li>
+    <a href="{{ category.url }}" style="display: block; overflow: auto;">
+      <img src="{{ category.image }}"/>
+      <span>{{ category.name }}</span>
+    </a>
+  </li>
+  {% endfor %}
+  {% else %}
+  <li>
+    <a href="javascript::void(0)" style="display: block; overflow: auto;">
+      <span>{{ text_no_result }}</span>
+    </a>
+  </li>
+  {% endif %}
+  <li class="result-header">{{ text_manufacturers }}</li>
+  {% if manufacturers is not empty %}
+  {% for manufacturer in manufacturers %}
+  <li>
+    <a href="{{ manufacturer.url }}" style="display: block; overflow: auto;">
+      <img src="{{ manufacturer.image }}"/>
+      <span>{{ manufacturer.name }}</span>
+    </a>
+  </li>
+  {% endfor %}
+  {% else %}
+  <li>
+    <a href="javascript::void(0)" style="display: block; overflow: auto;">
+      <span>{{ text_no_result }}</span>
+    </a>
+  </li>
+  {% endif %}
+</ul>

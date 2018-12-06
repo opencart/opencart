@@ -5,7 +5,7 @@
 // Heading
 $_['text_search_options']           = 'Опции поиска';
 $_['text_catalog']                  = 'Каталог';
-$_['text_customers']                = 'Пользователи';
+$_['text_customers']                = 'Покупатели';
 $_['text_orders']                   = 'Заказы';
 $_['text_products']                 = 'Товары';
 $_['text_categories']               = 'Категории';

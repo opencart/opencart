@@ -1,0 +1,20 @@
+<ul>
+  <li class="result-header">{{ text_customers }}</li>
+  {% if customers is not empty %}
+	{% for customer in customers %}
+  <li>
+    <a href="{{ customer.url }}" style="display: block; overflow: auto;">
+      <i class="fa fa-user"></i>
+      <span>{{ customer.name }} - </span>
+      <span>{{ customer.email }}</span>
+    </a>
+  </li>
+  {% endfor %}
+  {% else %}
+  <li>
+    <a href="javascript::void(0)" style="display: block; overflow: auto;">
+      <span>{{ text_no_result }}</span>
+    </a>
+  </li>
+ {% endif %}
+</ul>

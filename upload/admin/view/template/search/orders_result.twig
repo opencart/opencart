@@ -1,0 +1,21 @@
+<ul>
+  <li class="result-header">{{ text_orders }}</li>
+  {% if orders is not empty %}
+  {% for order in orders %}
+  <li>
+    <a href="{{ order.url }}" style="display: block; overflow: auto;">
+      <i class="fa fa-money"></i>
+      <span>{{ text_order_id }}{{ order.order_id }}</span>
+      <?php if(!empty($order['customer']) and $order['customer'] != ' '){ ?> <span>{{ order.customer }}</span> <?php } ?>
+      <span>{{ order.date_added }}</span>
+    </a>
+  </li>
+  {% endfor %}
+  {% else %}
+  <li>
+    <a href="javascript::void(0)" style="display: block; overflow: auto;">
+      <span>{{ text_no_result }}</span>
+    </a>
+  </li>
+  {% endif %}
+</ul>

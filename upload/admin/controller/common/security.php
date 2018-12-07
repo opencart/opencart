@@ -43,7 +43,7 @@ class ControllerCommonSecurity extends Controller {
 			$directory = '';
 		}
 
-		if (!$this->user->hasPermission('modify', 'common/developer')) {
+		if (!$this->user->hasPermission('modify', 'common/security')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
 			if (DIR_STORAGE != DIR_SYSTEM . 'storage/') {

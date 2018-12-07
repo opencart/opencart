@@ -37,8 +37,6 @@ $_['text_large']                   = 'Large';
 $_['text_x_large']                 = 'Extra large';
 $_['text_background']              = 'Background';
 $_['text_edit']					   = 'Edit Amazon Pay';
-$_['text_amazon_login_pay']        = '<a href="https://pay.amazon.com/uk/sp/opencart" target="_blank" title="Sign-up to Amazon Pay"><img src="view/image/payment/amazonpay.png" alt="Amazon Pay" title="Amazon Pay" style="border: 1px solid #EEEEEE;" /></a>';
-$_['text_amazon_join']             = '<a href="https://pay.amazon.com/uk/sp/opencart" target="_blank" title="Sign-up to Amazon Pay"><u>Sign-up to Amazon Pay</u></a>';
 $_['text_payment_info']			   = 'Payment information';
 $_['text_capture_ok']			   = 'Capture was successful';
 $_['text_capture_ok_order']		   = 'Capture was successful, authorization has been fully captured';

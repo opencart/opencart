@@ -184,6 +184,7 @@
             <label class="col-sm-2 col-form-label">{{ entry_service }}</label>
             <div class="col-sm-10">
               <div id="service" class="form-control" style="height: 150px; overflow: auto;">
+                <label class="form-check"><input type="checkbox" class="form-check-input" onchange="$(this).parent().parent().find(':checkbox').not(this).prop('checked', $(this).prop('checked'));"/> {{ text_all }}</label>
                 <div id="US">
                   <label class="form-check">
                     {% if shipping_ups_us_01 %}
@@ -595,7 +596,6 @@
                   </label>
                 </div>
               </div>
-              <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', true);" class="btn btn-link">{{ text_select_all }}</button> / <button type="button" onclick="$(this).parent().find(':checkbox').prop('checked', false);" class="btn btn-link">{{ text_unselect_all }}</button>
               <small class="form-text text-muted">{{ help_service }}</small>
             </div>
           </div>

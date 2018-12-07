@@ -259,8 +259,6 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 				);
 			}
 
-			$data['language'] = $this->config->get('config_language');
-
 			return $this->load->view('extension/payment/klarna_account', $data);
 		}
 	}

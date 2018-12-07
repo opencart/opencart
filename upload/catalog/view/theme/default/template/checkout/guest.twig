@@ -93,7 +93,7 @@
             <div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
               <label class="col-form-label">{{ custom_field.name }}</label>
               <br/>
-              <button type="button" id="button-payment-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fa fa-upload"></i> {{ button_upload }}</button>
+              <button type="button" id="button-payment-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
               <input type="hidden" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if guest_custom_field[custom_field.custom_field_id] %} {{ guest_custom_field[custom_field.custom_field_id] }} {% endif %}" id="input-payment-custom-field{{ custom_field.custom_field_id }}"/>
             </div>
           {% endif %}
@@ -101,9 +101,9 @@
             <div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
               <label class="col-form-label" for="input-payment-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
               <div class="input-group date">
-                <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if guest_custom_field[custom_field.custom_field_id] %} {{ guest_custom_field[custom_field.custom_field_id] }} {% else %} {{ custom_field.value }} {% endif %}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+                <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if guest_custom_field[custom_field.custom_field_id] %} {{ guest_custom_field[custom_field.custom_field_id] }} {% else %} {{ custom_field.value }} {% endif %}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                 <div class="input-group-append">
-                  <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                  <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                 </div>
               </div>
             </div>
@@ -112,20 +112,20 @@
             <div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
               <label class="col-form-label" for="input-payment-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
               <div class="input-group time">
-                <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if guest_custom_field[custom_field.custom_field_id] %} {{ guest_custom_field[custom_field.custom_field_id] }} {% else %} {{ custom_field.value }} {% endif %}" placeholder="{{ custom_field.name }}" data-date-format="HH:mm" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+                <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if guest_custom_field[custom_field.custom_field_id] %} {{ guest_custom_field[custom_field.custom_field_id] }} {% else %} {{ custom_field.value }} {% endif %}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                 <div class="input-group-append">
-                  <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                  <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                 </div>
               </div>
             </div>
           {% endif %}
-          {% if custom_field.type == 'time' %}
+          {% if custom_field.type == 'datetime' %}
             <div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
               <label class="col-form-label" for="input-payment-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
               <div class="input-group datetime">
-                <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if guest_custom_field[custom_field.custom_field_id] %} {{ guest_custom_field[custom_field.custom_field_id] }} {% else %} {{ custom_field.value }} {% endif %}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+                <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if guest_custom_field[custom_field.custom_field_id] %} {{ guest_custom_field[custom_field.custom_field_id] }} {% else %} {{ custom_field.value }} {% endif %}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                 <div class="input-group-append">
-                  <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                  <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                 </div>
               </div>
             </div>
@@ -232,7 +232,7 @@
             <div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
               <label class="col-form-label">{{ custom_field.name }}</label>
               <br/>
-              <button type="button" id="button-payment-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fa fa-upload"></i> {{ button_upload }}</button>
+              <button type="button" id="button-payment-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
               <input type="hidden" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if guest_custom_field[custom_field.custom_field_id] %} {{ guest_custom_field[custom_field.custom_field_id] }} {% endif %}" id="input-payment-custom-field{{ custom_field.custom_field_id }}"/>
             </div>
           {% endif %}
@@ -240,9 +240,9 @@
             <div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
               <label class="col-form-label" for="input-payment-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
               <div class="input-group date">
-                <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if guest_custom_field[custom_field.custom_field_id] %} {{ guest_custom_field[custom_field.custom_field_id] }} {% else %} {{ custom_field.value }} {% endif %}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+                <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if guest_custom_field[custom_field.custom_field_id] %} {{ guest_custom_field[custom_field.custom_field_id] }} {% else %} {{ custom_field.value }} {% endif %}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                 <div class="input-group-append">
-                  <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                  <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                 </div>
               </div>
             </div>
@@ -251,20 +251,20 @@
             <div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
               <label class="col-form-label" for="input-payment-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
               <div class="input-group time">
-                <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if guest_custom_field[custom_field.custom_field_id] %} {{ guest_custom_field[custom_field.custom_field_id] }} {% else %} {{ custom_field.value }} {% endif %}" placeholder="{{ custom_field.name }}" data-date-format="HH:mm" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+                <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if guest_custom_field[custom_field.custom_field_id] %} {{ guest_custom_field[custom_field.custom_field_id] }} {% else %} {{ custom_field.value }} {% endif %}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                 <div class="input-group-append">
-                  <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                  <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                 </div>
               </div>
             </div>
           {% endif %}
-          {% if custom_field.type == 'time' %}
+          {% if custom_field.type == 'datetime' %}
             <div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
               <label class="col-form-label" for="input-payment-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
               <div class="input-group datetime">
-                <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if guest_custom_field[custom_field.custom_field_id] %} {{ guest_custom_field[custom_field.custom_field_id] }} {% else %} {{ custom_field.value }} {% endif %}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+                <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if guest_custom_field[custom_field.custom_field_id] %} {{ guest_custom_field[custom_field.custom_field_id] }} {% else %} {{ custom_field.value }} {% endif %}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                 <div class="input-group-append">
-                  <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                  <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                 </div>
               </div>
             </div>
@@ -286,135 +286,173 @@
     </label>
   </div>
 {% endif %}
-<div class="buttons">
+<div class="d-inline-block pt-2 pd-2 w-100">
   <div class="float-right">
-    <input type="button" value="{{ button_continue }}" id="button-guest" data-loading-text="{{ text_loading }}" class="btn btn-primary"/>
+    <button type="button" id="button-guest" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
   </div>
 </div>
 <script type="text/javascript"><!--
-// Guest
-$('#button-guest').on('click', function() {
-	$.ajax({
-		url: 'index.php?route=checkout/guest/save',
-		type: 'post',
-		data: $('#collapse-payment-address input[type=\'text\'], #collapse-payment-address input[type=\'date\'], #collapse-payment-address input[type=\'datetime-local\'], #collapse-payment-address input[type=\'time\'], #collapse-payment-address input[type=\'checkbox\']:checked, #collapse-payment-address input[type=\'radio\']:checked, #collapse-payment-address input[type=\'hidden\'], #collapse-payment-address textarea, #collapse-payment-address select'),
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-guest').button('loading');
-		},
-		success: function(json) {
-			$('.alert-dismissible, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
+$('#collapse-payment-address input[name=\'customer_group_id\']').on('change', function() {
+	chain.attach(function() {
+		return $.ajax({
+			url: 'index.php?route=checkout/checkout/customfield&customer_group_id=' + $('#collapse-payment-address input[name=\'customer_group_id\']:checked').val(),
+			dataType: 'json',
+			success: function(json) {
+				$('#collapse-payment-address .custom-field').hide();
+				$('#collapse-payment-address .custom-field').removeClass('required');
 
-			if (json['redirect']) {
-				location = json['redirect'];
-			} else if (json['error']) {
-				$('#button-guest').button('reset');
+				for (i = 0; i < json.length; i++) {
+					custom_field = json[i];
 
-				if (json['error']['warning']) {
-					$('#collapse-payment-address .card-body').prepend('<div class="alert alert-warning alert-dismissible">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				}
+					$('#payment-custom-field' + custom_field['custom_field_id']).show();
 
-				for (i in json['error']) {
-					var element = $('#input-payment-' + i.replace('_', '-'));
-
-					if ($(element).parent().hasClass('input-group')) {
-						$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+					if (custom_field['required']) {
+						$('#payment-custom-field' + custom_field['custom_field_id']).addClass('required');
 					} else {
-						$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+						$('#payment-custom-field' + custom_field['custom_field_id']).removeClass('required');
 					}
 				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	});
+});
 
-				// Highlight any found errors
-				$('.text-danger').parent().addClass('has-error');
-			} else {
-              {% if shipping_required %}
-				var shipping_address = $('#collapse-payment-address input[name=\'shipping_address\']:checked').prop('value');
+$('#collapse-payment-address input[name=\'customer_group_id\']:checked').trigger('change');
 
-				if (shipping_address) {
-					$.ajax({
-						url: 'index.php?route=checkout/shipping_method',
-						dataType: 'html',
-						complete: function() {
-							$('#button-guest').button('reset');
-						},
-						success: function(html) {
-							$('#collapse-shipping-method .card-body').html(html);
+// Guest
+$('#button-guest').on('click', function() {
+	chain.attach(function() {
+		return $.ajax({
+			url: 'index.php?route=checkout/guest/save',
+			type: 'post',
+			data: $('#collapse-payment-address input[type=\'text\'], #collapse-payment-address input[type=\'date\'], #collapse-payment-address input[type=\'datetime-local\'], #collapse-payment-address input[type=\'time\'], #collapse-payment-address input[type=\'checkbox\']:checked, #collapse-payment-address input[type=\'radio\']:checked, #collapse-payment-address input[type=\'hidden\'], #collapse-payment-address textarea, #collapse-payment-address select'),
+			dataType: 'json',
+			beforeSend: function() {
+				$('#button-guest').button('loading');
+			},
+			success: function(json) {
+				$('.alert-dismissible, .text-danger').remove();
+				$('.form-group').removeClass('has-error');
 
-							// Add the shipping address
-							$.ajax({
-								url: 'index.php?route=checkout/guest_shipping',
+				if (json['redirect']) {
+					location = json['redirect'];
+				} else if (json['error']) {
+					$('#button-guest').button('reset');
+
+					if (json['error']['warning']) {
+						$('#collapse-payment-address .card-body').prepend('<div class="alert alert-warning alert-dismissible">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					}
+
+					for (i in json['error']) {
+						var element = $('#input-payment-' + i.replace('_', '-'));
+
+						if ($(element).parent().hasClass('input-group')) {
+							$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+						} else {
+							$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+						}
+					}
+
+					// Highlight any found errors
+					$('.text-danger').parent().addClass('has-error');
+				} else {
+                  {% if shipping_required %}
+					var shipping_address = $('#collapse-payment-address input[name=\'shipping_address\']:checked').prop('value');
+
+					if (shipping_address) {
+						chain.attach(function() {
+							return $.ajax({
+								url: 'index.php?route=checkout/shipping_method',
 								dataType: 'html',
+								complete: function() {
+									$('#button-guest').button('reset');
+								},
 								success: function(html) {
-									$('#collapse-shipping-address .card-body').html(html);
+									$('#collapse-shipping-method .card-body').html(html);
 
-									$('#heading-shipping-address').attr('data-toggle', 'collapse');
+									// Add the shipping address
+									$.ajax({
+										url: 'index.php?route=checkout/guest_shipping',
+										dataType: 'html',
+										success: function(html) {
+											$('#collapse-shipping-address .card-body').html(html);
+
+											$('#heading-shipping-address').attr('data-toggle', 'collapse');
+										},
+										error: function(xhr, ajaxOptions, thrownError) {
+											alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+										}
+									});
+
+									$('#heading-shipping-method').attr('data-toggle', 'collapse');
+
+									$('#heading-shipping-method').trigger('click');
+
+									$('#heading-payment-method').removeAttr('data-toggle');
+									$('#heading-checkout-confirm').removeAttr('data-toggle');
 								},
 								error: function(xhr, ajaxOptions, thrownError) {
 									alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 								}
 							});
+						});
+					} else {
+						chain.attach(function() {
+							return $.ajax({
+								url: 'index.php?route=checkout/guest_shipping',
+								dataType: 'html',
+								complete: function() {
+									$('#button-guest').button('reset');
+								},
+								success: function(html) {
+									$('#collapse-shipping-address .card-body').html(html);
 
-							$('#heading-shipping-method').attr('data-toggle', 'collapse');
+									$('#heading-shipping-address').attr('data-toggle', 'collapse');
 
-							$('#heading-shipping-method').trigger('click');
+									$('#heading-shipping-address').trigger('click');
 
-							$('#heading-payment-method').removeAttr('data-toggle');
-							$('#heading-checkout-confirm').removeAttr('data-toggle');
-						},
-						error: function(xhr, ajaxOptions, thrownError) {
-							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-						}
-					});
-				} else {
-					$.ajax({
-						url: 'index.php?route=checkout/guest_shipping',
-						dataType: 'html',
-						complete: function() {
-							$('#button-guest').button('reset');
-						},
-						success: function(html) {
-							$('#collapse-shipping-address .card-body').html(html);
-
-							$('#heading-shipping-address').attr('data-toggle', 'collapse');
-
-							$('#heading-shipping-address').trigger('click');
-
-							$('#heading-shipping-method').removeAttr('data-toggle');
-							$('#heading-payment-method').removeAttr('data-toggle');
-							$('#heading-checkout-confirm').removeAttr('data-toggle');
-						},
-						error: function(xhr, ajaxOptions, thrownError) {
-							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-						}
-					});
-				}
-              {% else %}
-				$.ajax({
-					url: 'index.php?route=checkout/payment_method',
-					dataType: 'html',
-					complete: function() {
-						$('#button-guest').button('reset');
-					},
-					success: function(html) {
-						$('#collapse-payment-method .card-body').html(html);
-
-						$('#heading-payment-method').attr('data-toggle', 'collapse');
-
-						$('#heading-payment-method').trigger('click');
-
-						$('#heading-checkout-confirm').removeAttr('data-toggle');
-					},
-					error: function(xhr, ajaxOptions, thrownError) {
-						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+									$('#heading-shipping-method').removeAttr('data-toggle');
+									$('#heading-payment-method').removeAttr('data-toggle');
+									$('#heading-checkout-confirm').removeAttr('data-toggle');
+								},
+								error: function(xhr, ajaxOptions, thrownError) {
+									alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+								}
+							});
+						});
 					}
-				});
-              {% endif %}
+                  {% else %}
+					chain.attach(function() {
+						return $.ajax({
+							url: 'index.php?route=checkout/payment_method',
+							dataType: 'html',
+							complete: function() {
+								$('#button-guest').button('reset');
+							},
+							success: function(html) {
+								$('#collapse-payment-method .card-body').html(html);
+
+								$('#heading-payment-method').attr('data-toggle', 'collapse');
+
+								$('#heading-payment-method').trigger('click');
+
+								$('#heading-checkout-confirm').removeAttr('data-toggle');
+							},
+							error: function(xhr, ajaxOptions, thrownError) {
+								alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+							}
+						});
+					});
+                  {% endif %}
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
+		});
 	});
 });
 
@@ -454,34 +492,6 @@ $('#address .form-group[data-sort]').detach().each(function() {
 		$('#address .form-group:first').before(this);
 	}
 });
-
-$('#collapse-payment-address input[name=\'customer_group_id\']').on('change', function() {
-	$.ajax({
-		url: 'index.php?route=checkout/checkout/customfield&customer_group_id=' + this.value,
-		dataType: 'json',
-		success: function(json) {
-			$('#collapse-payment-address .custom-field').hide();
-			$('#collapse-payment-address .custom-field').removeClass('required');
-
-			for (i = 0; i < json.length; i++) {
-				custom_field = json[i];
-
-				$('#payment-custom-field' + custom_field['custom_field_id']).show();
-
-				if (custom_field['required']) {
-					$('#payment-custom-field' + custom_field['custom_field_id']).addClass('required');
-				} else {
-					$('#payment-custom-field' + custom_field['custom_field_id']).removeClass('required');
-				}
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
-
-$('#collapse-payment-address input[name=\'customer_group_id\']:checked').trigger('change');
 //--></script>
 <script type="text/javascript"><!--
 $('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('click', function() {
@@ -538,60 +548,66 @@ $('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('c
 //--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	language: '{{ datepicker }}',
-	pickTime: false
+	'format': 'YYYY-MM-DD',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
 });
 
 $('.time').datetimepicker({
-	language: '{{ datepicker }}',
-	pickDate: false
+	'format': 'HH:mm',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
 });
 
 $('.datetime').datetimepicker({
-	language: '{{ datepicker }}',
-	pickDate: true,
-	pickTime: true
+	'format': 'YYYY-MM-DD HH:mm',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
 });
 //--></script>
 <script type="text/javascript"><!--
 $('#collapse-payment-address select[name=\'country_id\']').on('change', function() {
-	$.ajax({
-		url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
-		dataType: 'json',
-		beforeSend: function() {
-			$('#collapse-payment-address select[name=\'country_id\']').prop('disabled', true);
-		},
-		complete: function() {
-			$('#collapse-payment-address select[name=\'country_id\']').prop('disabled', false);
-		},
-		success: function(json) {
-			if (json['postcode_required'] == '1') {
-				$('#collapse-payment-address input[name=\'postcode\']').parent().parent().addClass('required');
-			} else {
-				$('#collapse-payment-address input[name=\'postcode\']').parent().parent().removeClass('required');
-			}
+	console.log('=' + $('#collapse-payment-address select[name=\'country_id\']').val());
 
-			html = '<option value="">{{ text_select }}</option>';
-
-			if (json['zone'] && json['zone'] != '') {
-				for (i = 0; i < json['zone'].length; i++) {
-					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-
-					if (json['zone'][i]['zone_id'] == '{{ zone_id }}') {
-						html += ' selected="selected"';
-					}
-
-					html += '>' + json['zone'][i]['name'] + '</option>';
+	chain.attach(function() {
+		return $.ajax({
+			url: 'index.php?route=checkout/checkout/country&country_id=' + $('#collapse-payment-address select[name=\'country_id\']').val(),
+			dataType: 'json',
+			beforeSend: function() {
+				$('#collapse-payment-address select[name=\'country_id\']').prop('disabled', true);
+			},
+			complete: function() {
+				$('#collapse-payment-address select[name=\'country_id\']').prop('disabled', false);
+			},
+			success: function(json) {
+				if (json['postcode_required'] == '1') {
+					$('#collapse-payment-address input[name=\'postcode\']').parent().parent().addClass('required');
+				} else {
+					$('#collapse-payment-address input[name=\'postcode\']').parent().parent().removeClass('required');
 				}
-			} else {
-				html += '<option value="0" selected="selected">{{ text_none }}</option>';
-			}
 
-			$('#collapse-payment-address select[name=\'zone_id\']').html(html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
+				html = '<option value="">{{ text_select }}</option>';
+
+				if (json['zone'] && json['zone'] != '') {
+					for (i = 0; i < json['zone'].length; i++) {
+						html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+
+						if (json['zone'][i]['zone_id'] == '{{ zone_id }}') {
+							html += ' selected="selected"';
+						}
+
+						html += '>' + json['zone'][i]['name'] + '</option>';
+					}
+				} else {
+					html += '<option value="0" selected="selected">{{ text_none }}</option>';
+				}
+
+				$('#collapse-payment-address select[name=\'zone_id\']').html(html);
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
 	});
 });
 

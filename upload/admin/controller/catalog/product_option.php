@@ -316,13 +316,12 @@ class ControllerCatalogProductOption extends Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		$pagination = new Pagination();
-		$pagination->total = $product_option_total;
-		$pagination->page = $page;
-		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('catalog/product_option', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
-
-		$data['pagination'] = $pagination->render();
+		$data['pagination'] = $this->load->controller('common/pagination', array(
+			'total' => $product_option_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_limit_admin'),
+			'url'   => $this->url->link('catalog/product_option', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+		));
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($product_option_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($product_option_total - $this->config->get('config_limit_admin'))) ? $product_option_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $product_option_total, ceil($product_option_total / $this->config->get('config_limit_admin')));
 
@@ -340,7 +339,7 @@ class ControllerCatalogProductOption extends Controller {
 	}
 
 	protected function getForm() {
-		$data['text_form'] = !isset($this->request->get['option_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+		$data['text_form'] = !isset($this->request->get['product_option_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -475,7 +474,7 @@ class ControllerCatalogProductOption extends Controller {
 		// Options
 		if (isset($this->request->post['product_option_value'])) {
 			$product_option_values = $this->request->post['product_option_value'];
-		} elseif (isset($this->request->get['product_option_id'])) {
+		} elseif (!empty($product_option_info)) {
 			$product_option_values = $this->model_catalog_product_option->getProductOptionValues($this->request->get['product_option_id']);
 		} else {
 			$product_option_values = array();
@@ -522,7 +521,7 @@ class ControllerCatalogProductOption extends Controller {
 	}
 
 	protected function validateDelete() {
-		if (!$this->user->hasPermission('modify', 'catalog/option')) {
+		if (!$this->user->hasPermission('modify', 'catalog/product_option')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

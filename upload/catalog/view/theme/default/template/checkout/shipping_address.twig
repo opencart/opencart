@@ -85,7 +85,7 @@
     </div>
     {% for custom_field in custom_fields %}
       {% if custom_field.type == 'select' %}
-        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <select name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control">
@@ -98,7 +98,7 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'radio' %}
-        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <div id="input-shipping-custom-field{{ custom_field.custom_field_id }}">
@@ -112,7 +112,7 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'checkbox' %}
-        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <div id="input-shipping-custom-field{{ custom_field.custom_field_id }}">
@@ -126,7 +126,7 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'text' %}
-        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
@@ -134,7 +134,7 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'textarea' %}
-        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <textarea name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control">{{ custom_field.value }}</textarea>
@@ -142,48 +142,48 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'file' %}
-        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
           <div class="col-sm-10">
-            <button type="button" id="button-shipping-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fa fa-upload"></i> {{ button_upload }}</button>
+            <button type="button" id="button-shipping-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
             <input type="hidden" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="" id="input-shipping-custom-field{{ custom_field.custom_field_id }}"/>
           </div>
         </div>
       {% endif %}
       {% if custom_field.type == 'date' %}
-        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <div class="input-group date">
-              <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+              <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
               <div class="input-group-append">
-                <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
               </div>
             </div>
           </div>
         </div>
       {% endif %}
       {% if custom_field.type == 'time' %}
-        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <div class="input-group time">
-              <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="HH:mm" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+              <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
               <div class="input-group-append">
-                <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
               </div>
             </div>
           </div>
         </div>
       {% endif %}
-      {% if custom_field.type == 'time' %}
-        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+      {% if custom_field.type == 'datetime' %}
+        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <div class="input-group datetime">
-              <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+              <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
               <div class="input-group-append">
-                <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
               </div>
             </div>
           </div>
@@ -191,9 +191,9 @@
       {% endif %}
     {% endfor %}
   </div>
-  <div class="buttons clearfix">
+  <div class="d-inline-block pt-2 pd-2 w-100">
     <div class="float-right">
-      <input type="button" value="{{ button_continue }}" id="button-shipping-address" data-loading-text="{{ text_loading }}" class="btn btn-primary"/>
+      <button type="button" id="button-shipping-address" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
     </div>
   </div>
 </form>
@@ -210,91 +210,95 @@ $('input[name=\'shipping_address\']').on('change', function() {
 
 // Shipping Address
 $('#button-shipping-address').on('click', function() {
-	$.ajax({
-		url: 'index.php?route=checkout/shipping_address/save',
-		type: 'post',
-		data: $('#collapse-shipping-address input[type=\'text\'], #collapse-shipping-address input[type=\'date\'], #collapse-shipping-address input[type=\'datetime-local\'], #collapse-shipping-address input[type=\'time\'], #collapse-shipping-address input[type=\'password\'], #collapse-shipping-address input[type=\'checkbox\']:checked, #collapse-shipping-address input[type=\'radio\']:checked, #collapse-shipping-address textarea, #collapse-shipping-address select'),
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-shipping-address').button('loading');
-		},
-		success: function(json) {
-			$('.alert-dismissible, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
+	chain.attach(function() {
+		return $.ajax({
+			url: 'index.php?route=checkout/shipping_address/save',
+			type: 'post',
+			data: $('#collapse-shipping-address input[type=\'text\'], #collapse-shipping-address input[type=\'date\'], #collapse-shipping-address input[type=\'datetime-local\'], #collapse-shipping-address input[type=\'time\'], #collapse-shipping-address input[type=\'password\'], #collapse-shipping-address input[type=\'checkbox\']:checked, #collapse-shipping-address input[type=\'radio\']:checked, #collapse-shipping-address textarea, #collapse-shipping-address select'),
+			dataType: 'json',
+			beforeSend: function() {
+				$('#button-shipping-address').button('loading');
+			},
+			success: function(json) {
+				$('.alert-dismissible, .text-danger').remove();
+				$('.form-group').removeClass('has-error');
 
-			if (json['redirect']) {
-				location = json['redirect'];
-			} else if (json['error']) {
-				$('#button-shipping-address').button('reset');
+				if (json['redirect']) {
+					location = json['redirect'];
+				} else if (json['error']) {
+					$('#button-shipping-address').button('reset');
 
-				if (json['error']['warning']) {
-					$('#collapse-shipping-address .card-body').prepend('<div class="alert alert-warning alert-dismissible">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				}
-
-				for (i in json['error']) {
-					var element = $('#input-shipping-' + i.replace('_', '-'));
-
-					if ($(element).parent().hasClass('input-group')) {
-						$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
-					} else {
-						$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+					if (json['error']['warning']) {
+						$('#collapse-shipping-address .card-body').prepend('<div class="alert alert-warning alert-dismissible">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 					}
-				}
 
-				// Highlight any found errors
-				$('.text-danger').parent().parent().addClass('has-error');
-			} else {
-				$.ajax({
-					url: 'index.php?route=checkout/shipping_method',
-					dataType: 'html',
-					complete: function() {
-						$('#button-shipping-address').button('reset');
-					},
-					success: function(html) {
-						$('#collapse-shipping-method .card-body').html(html);
+					for (i in json['error']) {
+						var element = $('#input-shipping-' + i.replace('_', '-'));
 
-						$('#heading-shipping-method').attr('data-toggle', 'collapse');
-
-						$('#heading-shipping-method').trigger('click');
-
-						$('#heading-payment-method').removeAttr('data-toggle');
-						$('#heading-checkout-confirm').removeAttr('data-toggle');
-					},
-					error: function(xhr, ajaxOptions, thrownError) {
-						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+						if ($(element).parent().hasClass('input-group')) {
+							$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+						} else {
+							$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+						}
 					}
-				}).done(function() {
-					$.ajax({
-						url: 'index.php?route=checkout/payment_address',
-						dataType: 'html',
-						success: function(html) {
-							$('#collapse-payment-address .card-body').html(html);
 
-							//console.log('payment_address');
-						},
-						error: function(xhr, ajaxOptions, thrownError) {
-							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-						}
-					});
-				}).done(function() {
-					$.ajax({
-						url: 'index.php?route=checkout/shipping_address',
-						dataType: 'html',
-						success: function(html) {
-							$('#collapse-shipping-address .card-body').html(html);
+					// Highlight any found errors
+					$('.text-danger').parent().parent().addClass('has-error');
+				} else {
+					chain.attach(function() {
+						return $.ajax({
+							url: 'index.php?route=checkout/shipping_method',
+							dataType: 'html',
+							complete: function() {
+								$('#button-shipping-address').button('reset');
+							},
+							success: function(html) {
+								$('#collapse-shipping-method .card-body').html(html);
 
-							//console.log('shipping_address');
-						},
-						error: function(xhr, ajaxOptions, thrownError) {
-							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-						}
+								$('#heading-shipping-method').attr('data-toggle', 'collapse');
+
+								$('#heading-shipping-method').trigger('click');
+
+								$('#heading-payment-method').removeAttr('data-toggle');
+								$('#heading-checkout-confirm').removeAttr('data-toggle');
+							},
+							error: function(xhr, ajaxOptions, thrownError) {
+								alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+							}
+						});
 					});
-				});
+
+					chain.attach(function() {
+						return $.ajax({
+							url: 'index.php?route=checkout/payment_address',
+							dataType: 'html',
+							success: function(html) {
+								$('#collapse-payment-address .card-body').html(html);
+							},
+							error: function(xhr, ajaxOptions, thrownError) {
+								alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+							}
+						});
+					});
+
+					chain.attach(function() {
+						return $.ajax({
+							url: 'index.php?route=checkout/shipping_address',
+							dataType: 'html',
+							success: function(html) {
+								$('#collapse-shipping-address .card-body').html(html);
+							},
+							error: function(xhr, ajaxOptions, thrownError) {
+								alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+							}
+						});
+					});
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
+		});
 	});
 });
 //--></script>
@@ -372,60 +376,65 @@ $('#collapse-shipping-address button[id^=\'button-shipping-custom-field\']').on(
 //--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	language: '{{ datepicker }}',
-	pickTime: false
+	'format': 'YYYY-MM-DD',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
 });
 
 $('.time').datetimepicker({
-	language: '{{ datepicker }}',
-	pickDate: false
+	'format': 'HH:mm',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
 });
 
 $('.datetime').datetimepicker({
-	language: '{{ datepicker }}',
-	pickDate: true,
-	pickTime: true
+	'format': 'YYYY-MM-DD HH:mm',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
 });
 //--></script>
 <script type="text/javascript"><!--
 $('#collapse-shipping-address select[name=\'country_id\']').on('change', function() {
-	$.ajax({
-		url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
-		dataType: 'json',
-		beforeSend: function() {
-			$('#collapse-shipping-address select[name=\'country_id\']').prop('disabled', true);
-		},
-		complete: function() {
-			$('#collapse-shipping-address select[name=\'country_id\']').prop('disabled', false);
-		},
-		success: function(json) {
-			if (json['postcode_required'] == '1') {
-				$('#collapse-shipping-address input[name=\'postcode\']').parent().parent().addClass('required');
-			} else {
-				$('#collapse-shipping-address input[name=\'postcode\']').parent().parent().removeClass('required');
-			}
 
-			html = '<option value="">{{ text_select }}</option>';
-
-			if (json['zone'] && json['zone'] != '') {
-				for (i = 0; i < json['zone'].length; i++) {
-					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-
-					if (json['zone'][i]['zone_id'] == '{{ zone_id }}') {
-						html += ' selected="selected"';
-					}
-
-					html += '>' + json['zone'][i]['name'] + '</option>';
+	chain.attach(function() {
+		return $.ajax({
+			url: 'index.php?route=checkout/checkout/country&country_id=' + $('#collapse-shipping-address select[name=\'country_id\']').val(),
+			dataType: 'json',
+			beforeSend: function() {
+				$('#collapse-shipping-address select[name=\'country_id\']').prop('disabled', true);
+			},
+			complete: function() {
+				$('#collapse-shipping-address select[name=\'country_id\']').prop('disabled', false);
+			},
+			success: function(json) {
+				if (json['postcode_required'] == '1') {
+					$('#collapse-shipping-address input[name=\'postcode\']').parent().parent().addClass('required');
+				} else {
+					$('#collapse-shipping-address input[name=\'postcode\']').parent().parent().removeClass('required');
 				}
-			} else {
-				html += '<option value="0" selected="selected">{{ text_none }}</option>';
-			}
 
-			$('#collapse-shipping-address select[name=\'zone_id\']').html(html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
+				html = '<option value="">{{ text_select }}</option>';
+
+				if (json['zone'] && json['zone'] != '') {
+					for (i = 0; i < json['zone'].length; i++) {
+						html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+
+						if (json['zone'][i]['zone_id'] == '{{ zone_id }}') {
+							html += ' selected="selected"';
+						}
+
+						html += '>' + json['zone'][i]['name'] + '</option>';
+					}
+				} else {
+					html += '<option value="0" selected="selected">{{ text_none }}</option>';
+				}
+
+				$('#collapse-shipping-address select[name=\'zone_id\']').html(html);
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
 	});
 });
 

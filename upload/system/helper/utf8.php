@@ -29,6 +29,8 @@ if (extension_loaded('mbstring')) {
 	function utf8_strtolower($string) {
 		return mb_strtolower($string);
 	}
+
+
 } elseif (function_exists('iconv')) {
 	function utf8_strlen($string) {
 		return iconv_strlen($string, 'UTF-8');

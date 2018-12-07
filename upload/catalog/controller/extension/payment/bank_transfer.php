@@ -5,8 +5,6 @@ class ControllerExtensionPaymentBankTransfer extends Controller {
 
 		$data['bank'] = nl2br($this->config->get('payment_bank_transfer_bank' . $this->config->get('config_language_id')));
 
-		$data['language'] = $this->config->get('config_language');
-
 		return $this->load->view('extension/payment/bank_transfer', $data);
 	}
 

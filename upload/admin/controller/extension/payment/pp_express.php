@@ -14,6 +14,16 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('payment_pp_express', $this->request->post);
 
+			// If OC has been upgraded, verify that the module has the new event registered.
+			$this->load->model('setting/event');
+
+			$pp_express_js_event = $this->model_setting_event->getEventByCode("extension_pp_express_checkout_js");
+
+			if (empty($pp_express_js_event)) {
+				// Event is missing, add it
+				$this->model_setting_event->addEvent('extension_pp_express_checkout_js', 'catalog/controller/checkout/checkout/before', 'extension/payment/pp_express/eventLoadCheckoutJs');
+			}
+
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment'));
@@ -275,18 +285,16 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		} else {
 			$data['payment_pp_express_logo'] = $this->config->get('payment_pp_express_logo');
 		}
-
+		
 		$this->load->model('tool/image');
 
-		if (isset($this->request->post['payment_pp_express_logo']) && is_file(DIR_IMAGE . $this->request->post['payment_pp_express_logo'])) {
-			$data['thumb'] = $this->model_tool_image->resize($this->request->post['payment_pp_express_logo'], 750, 90);
-		} elseif (is_file(DIR_IMAGE . $this->config->get('payment_pp_express_logo'))) {
-			$data['thumb'] = $this->model_tool_image->resize($this->config->get('payment_pp_express_logo'), 750, 90);
-		} else {
-			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 750, 90);
-		}
-
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 750, 90);
+
+		if (is_file(DIR_IMAGE . html_entity_decode($data['payment_pp_express_logo'], ENT_QUOTES, 'UTF-8'))) {
+			$data['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['payment_pp_express_logo'], ENT_QUOTES, 'UTF-8'), 750, 90);
+		} else {
+			$data['thumb'] = $data['placeholder'];
+		}
 
 		if (isset($this->request->get['retrieve_code']) && isset($this->request->get['merchant_id'])) {
 			$curl = curl_init($this->opencart_retrieve_url);
@@ -852,7 +860,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				'PWD'          => $api_password,
 				'SIGNATURE'    => $api_signature,
 				'VERSION'      => '109.0',
-				'BUTTONSOURCE' => 'OpenCart_2.0_EC',
+				'BUTTONSOURCE' => 'OpenCart_3.1_EC',
 				'METHOD'       => 'SetExpressCheckout',
 				'METHOD'       => 'ManageRecurringPaymentsProfileStatus',
 				'PROFILEID'    => $recurring_info['reference'],

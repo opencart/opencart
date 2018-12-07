@@ -2460,15 +2460,15 @@
 		disabledDates: false,
 		enabledDates: false,
 		icons: {
-			time: 'fa fa-clock-o',
-			date: 'fa fa-calendar',
-			up: 'fa fa-angle-up',
-			down: 'fa fa-angle-down',
-			previous: 'fa fa-angle-left',
-			next: 'fa fa-angle-right',
-			today: 'fa fa-clock-o',
-			clear: 'fa fa-trash',
-			close: 'fa fa-close'
+			time: 'far fa-clock',
+			date: 'far fa-calendar-alt',
+			up: 'fas fa-angle-up',
+			down: 'fas fa-angle-down',
+			previous: 'fas fa-angle-left',
+			next: 'fas fa-angle-right',
+			today: 'far fa-clock',
+			clear: 'fas fa-trash',
+			close: 'fas fa-times-circle'
 		},
 		tooltips: {
 			today: 'Go to today',

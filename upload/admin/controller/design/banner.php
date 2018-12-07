@@ -225,13 +225,12 @@ class ControllerDesignBanner extends Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		$pagination = new Pagination();
-		$pagination->total = $banner_total;
-		$pagination->page = $page;
-		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('design/banner', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
-
-		$data['pagination'] = $pagination->render();
+		$data['pagination'] = $this->load->controller('common/pagination', array(
+			'total' => $banner_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_limit_admin'),
+			'url'   => $this->url->link('design/banner', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+		));
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($banner_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($banner_total - $this->config->get('config_limit_admin'))) ? $banner_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $banner_total, ceil($banner_total / $this->config->get('config_limit_admin')));
 
@@ -330,7 +329,7 @@ class ControllerDesignBanner extends Controller {
 
 		if (isset($this->request->post['banner_image'])) {
 			$banner_images = $this->request->post['banner_image'];
-		} elseif (isset($this->request->get['banner_id'])) {
+		} elseif (!empty($banner_info)) {
 			$banner_images = $this->model_design_banner->getBannerImages($this->request->get['banner_id']);
 		} else {
 			$banner_images = array();
@@ -340,7 +339,7 @@ class ControllerDesignBanner extends Controller {
 
 		foreach ($banner_images as $key => $value) {
 			foreach ($value as $banner_image) {
-				if (is_file(DIR_IMAGE . $banner_image['image'])) {
+				if (is_file(DIR_IMAGE . html_entity_decode($banner_image['image'], ENT_QUOTES, 'UTF-8'))) {
 					$image = $banner_image['image'];
 					$thumb = $banner_image['image'];
 				} else {
@@ -352,7 +351,7 @@ class ControllerDesignBanner extends Controller {
 					'title'      => $banner_image['title'],
 					'link'       => $banner_image['link'],
 					'image'      => $image,
-					'thumb'      => $this->model_tool_image->resize($thumb, 100, 100),
+					'thumb'      => $this->model_tool_image->resize(html_entity_decode($thumb, ENT_QUOTES, 'UTF-8'), 100, 100),
 					'sort_order' => $banner_image['sort_order']
 				);
 			}

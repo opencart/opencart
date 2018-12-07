@@ -64,14 +64,12 @@ class ControllerAccountRecurring extends Controller {
 			);
 		}
 
-		$pagination = new Pagination();
-		$pagination->total = $recurring_total;
-		$pagination->page = $page;
-		$pagination->limit = 10;
-		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->link('account/recurring', 'language=' . $this->config->get('config_language') . '&page={page}');
-
-		$data['pagination'] = $pagination->render();
+		$data['pagination'] = $this->load->controller('common/pagination', array(
+			'total' => $recurring_total,
+			'page'  => $page,
+			'limit' => 10,
+			'url'   => $this->url->link('account/recurring', 'language=' . $this->config->get('config_language') . '&page={page}')
+		));
 
 		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 

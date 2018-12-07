@@ -110,6 +110,7 @@ class Smtp {
 				//some SMTP servers respond with 220 code before responding with 250. hence, we need to ignore 220 response string
 				if (substr($reply, 0, 3) == 220 && substr($line, 3, 1) == ' ') {
 					$reply = '';
+
 					continue;
 				} else if (substr($line, 3, 1) == ' ') {
 					break;
@@ -152,9 +153,9 @@ class Smtp {
 			}
 
 			if ($this->verp) {
-				fputs($handle, 'MAIL FROM: <' . $this->from . '>XVERP' . "\r\n");
+				fputs($handle, 'MAIL FROM: <' . $this->smtp_username . '>XVERP' . "\r\n");
 			} else {
-				fputs($handle, 'MAIL FROM: <' . $this->from . '>' . "\r\n");
+				fputs($handle, 'MAIL FROM: <' . $this->smtp_username . '>' . "\r\n");
 			}
 
 			$this->handleReply($handle, 250, 'Error: MAIL FROM not accepted from server!');
@@ -187,10 +188,12 @@ class Smtp {
 			$message = str_replace("\r\n", "\n", $header . $message);
 			$message = str_replace("\r", "\n", $message);
 
+			$length = (mb_detect_encoding($message, mb_detect_order(), true) == 'ASCII') ? 998 : 249;
+
 			$lines = explode("\n", $message);
 
 			foreach ($lines as $line) {
-				$results = str_split($line, 998);
+				$results = str_split($line, $length);
 
 				foreach ($results as $result) {
 					if (substr(PHP_OS, 0, 3) != 'WIN') {

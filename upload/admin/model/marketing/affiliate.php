@@ -2,8 +2,6 @@
 class ModelMarketingAffiliate extends Model {
 	public function addAffiliate($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "customer_affiliate SET customer_id = '" . (int)$data['customer_id'] . "', company = '" . $this->db->escape((string)$data['company']) . "', website = '" . $this->db->escape((string)$data['website']) . "', tracking = '" . $this->db->escape((string)$data['tracking']) . "', commission = '" . (float)$data['commission'] . "', tax = '" . $this->db->escape((string)$data['tax']) . "', payment = '" . $this->db->escape((string)$data['payment']) . "', cheque = '" . $this->db->escape((string)$data['cheque']) . "', paypal = '" . $this->db->escape((string)$data['paypal']) . "', bank_name = '" . $this->db->escape((string)$data['bank_name']) . "', bank_branch_number = '" . $this->db->escape((string)$data['bank_branch_number']) . "', bank_swift_code = '" . $this->db->escape((string)$data['bank_swift_code']) . "', bank_account_name = '" . $this->db->escape((string)$data['bank_account_name']) . "', bank_account_number = '" . $this->db->escape((string)$data['bank_account_number']) . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : json_encode(array())) . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
-
-		return $customer_id;
 	}
 
 	public function editAffiliate($customer_id, $data) {
@@ -16,7 +14,7 @@ class ModelMarketingAffiliate extends Model {
 	}
 
 	public function getAffiliate($customer_id) {
-		$query = $this->db->query("SELECT DISTINCT *, CONCAT(c.firstname, ' ', c.lastname) AS customer FROM " . DB_PREFIX . "customer_affiliate ca LEFT JOIN `" . DB_PREFIX . "customer` c ON (ca.customer_id = c.customer_id) WHERE ca.customer_id = '" . (int)$customer_id . "'");
+		$query = $this->db->query("SELECT DISTINCT *, CONCAT(c.firstname, ' ', c.lastname) AS customer, ca.custom_field FROM " . DB_PREFIX . "customer_affiliate ca LEFT JOIN `" . DB_PREFIX . "customer` c ON (ca.customer_id = c.customer_id) WHERE ca.customer_id = '" . (int)$customer_id . "'");
 
 		return $query->row;
 	}

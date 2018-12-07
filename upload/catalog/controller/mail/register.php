@@ -3,6 +3,14 @@ class ControllerMailRegister extends Controller {
 	public function index(&$route, &$args, &$output) {
 		$this->load->language('mail/register');
 
+		$this->load->model('tool/image');
+
+		if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
+			$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
+		} else {
+			$data['logo'] = '';
+		}
+
 		$data['text_welcome'] = sprintf($this->language->get('text_welcome'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 		$data['text_login'] = $this->language->get('text_login');
 		$data['text_approval'] = $this->language->get('text_approval');
@@ -27,16 +35,8 @@ class ControllerMailRegister extends Controller {
 		}
 
 		$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
-		$data['store_url'] = HTTP_SERVER;
+		$data['store_url'] = $this->config->get('config_url');
 		$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
-
-		$this->load->model('tool/image');
-
-		if (is_file(DIR_IMAGE . $this->config->get('config_logo'))) {
-			$data['logo'] = $this->model_tool_image->resize($this->config->get('config_logo'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
-		} else {
-			$data['logo'] = '';
-		}
 
 		$mail = new Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
@@ -70,13 +70,13 @@ class ControllerMailRegister extends Controller {
 			$data['lastname'] = $args[0]['lastname'];
 
 			$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
-			$data['store_url'] = HTTP_SERVER;
+			$data['store_url'] = $this->config->get('config_url');
 			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 			$this->load->model('tool/image');
 
-			if (is_file(DIR_IMAGE . $this->config->get('config_logo'))) {
-				$data['logo'] = $this->model_tool_image->resize($this->config->get('config_logo'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
+			if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
+				$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
 			} else {
 				$data['logo'] = '';
 			}
@@ -112,11 +112,11 @@ class ControllerMailRegister extends Controller {
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 			$mail->setSubject(html_entity_decode($this->language->get('text_new_customer'), ENT_QUOTES, 'UTF-8'));
-			$mail->setHtml($this->load->view('mail/register_alert', $data));
+			$mail->setText($this->load->view('mail/register_alert', $data));
 			$mail->send();
 
 			// Send to additional alert emails if new account email is enabled
-			$emails = explode(',', (array)$this->config->get('config_mail_alert_email'));
+			$emails = explode(',', (string)$this->config->get('config_mail_alert_email'));
 
 			foreach ($emails as $email) {
 				if (utf8_strlen($email) > 0 && filter_var($email, FILTER_VALIDATE_EMAIL)) {

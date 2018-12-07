@@ -6,18 +6,20 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$data['payment_pp_express_incontext_disable'] = $this->config->get('payment_pp_express_incontext_disable');
 
 		if ($this->config->get('payment_pp_express_test') == 1) {
-			$data['username'] = $this->config->get('payment_pp_express_sandbox_username');
 			$data['paypal_environment'] = "sandbox";
 		} else {
-			$data['username'] = $this->config->get('payment_pp_express_username');
 			$data['paypal_environment'] = "production";
 		}
 
-		$data['continue'] = $this->url->link('extension/payment/pp_express/checkout', 'language=' . $this->config->get('config_language'));
+		$data['continue'] = $this->url->link('extension/payment/pp_express/checkout');
 
 		unset($this->session->data['paypal']);
 
 		return $this->load->view('extension/payment/pp_express', $data);
+	}
+
+	public function eventLoadCheckoutJs($route, &$data) {
+		$this->document->addScript('https://www.paypalobjects.com/api/checkout.js');
 	}
 
 	public function express() {
@@ -78,7 +80,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			'ALLOWNOTE'          => $this->config->get('payment_pp_express_allow_note'),
 			'LOCALECODE'         => 'EN',
 			'LANDINGPAGE'        => 'Login',
-			'HDRIMG'             => $this->model_tool_image->resize($this->config->get('payment_pp_express_logo'), 750, 90),
+			'HDRIMG'             => $this->model_tool_image->resize(html_entity_decode($this->config->get('payment_pp_express_logo'), ENT_QUOTES, 'UTF-8'), 750, 90),
 			'PAYFLOWCOLOR'       => $this->config->get('payment_pp_express_colour'),
 			'CHANNELTYPE'        => 'Merchant'
 		);
@@ -314,7 +316,11 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 					$shipping_last_name = implode(' ', $shipping_name);
 
 					$country_info = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `iso_code_2` = '" . $this->db->escape($result['PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE']) . "' AND `status` = '1' LIMIT 1")->row;
-					$zone_info = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE (`name` = '" . $this->db->escape($result['PAYMENTREQUEST_0_SHIPTOSTATE']) . "' OR `code` = '" . $this->db->escape($result['PAYMENTREQUEST_0_SHIPTOSTATE']) . "') AND `status` = '1' AND `country_id` = '" . (int)$country_info['country_id'] . "'")->row;
+					if (isset($result['PAYMENTREQUEST_0_SHIPTOSTATE'])) {
+						$zone_info = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE (`name` = '" . $this->db->escape($result['PAYMENTREQUEST_0_SHIPTOSTATE']) . "' OR `code` = '" . $this->db->escape($result['PAYMENTREQUEST_0_SHIPTOSTATE']) . "') AND `status` = '1' AND `country_id` = '" . (int)$country_info['country_id'] . "'")->row;
+					} else {
+						$zone_info = array();
+					}
 
 					$address_data = array(
 						'firstname'  => $shipping_first_name,
@@ -1313,7 +1319,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			'NOSHIPPING'         => $shipping,
 			'LOCALECODE'         => 'EN',
 			'LANDINGPAGE'        => 'Login',
-			'HDRIMG'             => $this->model_tool_image->resize($this->config->get('payment_pp_express_logo'), 750, 90),
+			'HDRIMG'             => $this->model_tool_image->resize(html_entity_decode($this->config->get('payment_pp_express_logo'), ENT_QUOTES, 'UTF-8'), 750, 90),
 			'PAYFLOWCOLOR'       => $this->config->get('payment_pp_express_colour'),
 			'CHANNELTYPE'        => 'Merchant',
 			'ALLOWNOTE'          => $this->config->get('payment_pp_express_allow_note')
@@ -1359,11 +1365,10 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 		$this->session->data['paypal']['token'] = $result['TOKEN'];
 
-		if ($this->config->get('payment_pp_express_test') == 1) {
-			header('Location: https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $result['TOKEN'] . '&useraction=commit');
-		} else {
-			header('Location: https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $result['TOKEN'] . '&useraction=commit');
-		}
+		$json = array("token" => $result['TOKEN']);
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function checkoutReturn() {

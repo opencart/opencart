@@ -230,9 +230,7 @@ class ControllerCheckoutGuest extends Controller {
 					$json['error']['captcha'] = $captcha;
 				}
 			}
-		}
 
-		if (!$json) {
 			$this->session->data['account'] = 'guest';
 
 			$this->session->data['guest']['customer_group_id'] = $customer_group_id;

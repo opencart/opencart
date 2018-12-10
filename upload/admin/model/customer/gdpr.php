@@ -86,6 +86,18 @@ class ModelCustomerGdpr extends Model {
 		return $query->row['total'];
 	}
 
+	public function approveGdpr($gdpr_id, $status) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET status = '" . (int)$status . "' WHERE gdpr_id = '" . (int)$gdpr_id . "'");
+	}
+
+	public function denyGdpr($gdpr_id, $status) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET status = '" . (int)$status . "' WHERE gdpr_id = '" . (int)$gdpr_id . "'");
+	}
+
+	public function pendingGdpr($gdpr_id, $status) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET status = '" . (int)$status . "' WHERE gdpr_id = '" . (int)$gdpr_id . "'");
+	}
+
 	public function editStatus($gdpr_id, $status) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET status = '" . (int)$status . "' WHERE gdpr_id = '" . (int)$gdpr_id . "'");
 	}

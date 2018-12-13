@@ -93,7 +93,7 @@ if ($config->get('db_autostart')) {
 	$registry->set('db', $db);
 
 	// Sync PHP and DB time zones.
-	$db->query("SET GLOBAL time_zone = '" . $db->escape(date('P')) . "'");
+	$db->query("SET time_zone = '" . $db->escape(date('P')) . "'");
 }
 
 // Session

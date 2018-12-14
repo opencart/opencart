@@ -32,50 +32,13 @@ class ControllerStartupStartup extends Controller {
 			date_default_timezone_set($this->config->get('config_timezone'));
 
 			// Sync PHP and DB time zones.
-			$db->query("SET time_zone = '" . $db->escape(date('P')) . "'");
+			$this->db->query("SET time_zone = '" . $this->db->escape(date('P')) . "'");
 		}
 
 		// Response output compression level
 		if ($this->config->get('config_compression')) {
 			$this->response->setCompression($this->config->get('config_compression'));
 		}
-
-		/*
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "startup` WHERE ORDER BY store_id ASC");
-
-		// Config Autoload
-		foreach ($query->rows as $result) {
-			$loader->config($result['catalog/']);
-		}
-
-		// Language Autoload
-		if ($config->has('language_autoload')) {
-			foreach ($config->get('language_autoload') as $value) {
-				$loader->language($value);
-			}
-		}
-
-		// Library Autoload
-		if ($config->has('library_autoload')) {
-			foreach ($config->get('library_autoload') as $value) {
-				$loader->library($value);
-			}
-		}
-
-		// Model Autoload
-		if ($config->has('model_autoload')) {
-			foreach ($config->get('model_autoload') as $value) {
-				$loader->model($value);
-			}
-		}
-
-		// Pre Actions
-		if ($config->has('action_pre_action')) {
-			foreach ($config->get('action_pre_action') as $value) {
-				$route->addPreAction(new Action($value));
-			}
-		}
-		*/
 
 		// Theme
 		$this->config->set('template_cache', $this->config->get('developer_theme'));
@@ -261,5 +224,42 @@ class ControllerStartupStartup extends Controller {
 
 		// Encryption
 		$this->registry->set('encryption', new Encryption());
+
+		/*
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "startup` WHERE ORDER BY store_id ASC");
+
+		// Config Autoload
+		foreach ($query->rows as $result) {
+			$loader->config($result['catalog/']);
+		}
+
+		// Language Autoload
+		if ($config->has('language_autoload')) {
+			foreach ($config->get('language_autoload') as $value) {
+				$loader->language($value);
+			}
+		}
+
+		// Library Autoload
+		if ($config->has('library_autoload')) {
+			foreach ($config->get('library_autoload') as $value) {
+				$loader->library($value);
+			}
+		}
+
+		// Model Autoload
+		if ($config->has('model_autoload')) {
+			foreach ($config->get('model_autoload') as $value) {
+				$loader->model($value);
+			}
+		}
+
+		// Pre Actions
+		if ($config->has('action_pre_action')) {
+			foreach ($config->get('action_pre_action') as $value) {
+				$route->addPreAction(new Action($value));
+			}
+		}
+		*/
 	}
 }

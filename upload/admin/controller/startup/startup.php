@@ -15,6 +15,9 @@ class ControllerStartupStartup extends Controller {
 		// Set time zone
 		if ($this->config->get('config_timezone')) {
 			date_default_timezone_set($this->config->get('config_timezone'));
+
+			// Sync PHP and DB time zones.
+			$this->db->query("SET time_zone = '" . $this->db->escape(date('P')) . "'");
 		}
 
 		// Response output compression level

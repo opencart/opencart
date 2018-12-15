@@ -108,8 +108,7 @@ class ControllerExtensionExtensionPayment extends Controller {
 			}
 		}
 
-		$data['promotion_1'] = $this->load->controller('extension/payment/pp_express/promotion');
-		$data['promotion_2'] = $this->load->controller('extension/payment/amazon_login_pay/promotion');
+		$data['promotion'] = $this->load->controller('extension/extension/promotion');
 
 		$this->response->setOutput($this->load->view('extension/extension/payment', $data));
 	}

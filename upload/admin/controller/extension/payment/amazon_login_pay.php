@@ -553,10 +553,4 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 		return !$this->error;
 	}
-
-	public function promotion() {
-		$this->load->language('extension/payment/amazon_login_pay');
-
-		return $this->load->view('extension/payment/amazon_promotion');
-	}
 }

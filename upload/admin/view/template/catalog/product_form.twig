@@ -1011,7 +1011,7 @@ function addRecurring() {
   {% endfor %}
 	html += '    </select></td>';
 	html += '  <td class="text-left">';
-	html += '    <select name="product_recurring[' + recurring_row + '][customer_group_id]" class="form-control">>';
+	html += '    <select name="product_recurring[' + recurring_row + '][customer_group_id]" class="form-control">';
   {% for customer_group in customer_groups %}
 	html += '      <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name|escape('js') }}</option>';
   {% endfor %}

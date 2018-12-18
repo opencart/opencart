@@ -1,112 +1,237 @@
-{{ header }}{{ column_left }}{{ column_right }}
-<div class="container">{{ content_top }}
-  <form class="payment-form" method="POST" action="{{ process_order }}">
-    <div style="text-align:center;">
-      <h3>{{ heading_confirm }}</h3>
-      {% if payment_amazon_login_pay_test %}
-      <label>Debug Error Code     :</label>
-      <div id="errorCode_address"></div>
-      <br>
-      <label>Debug Error Message  :</label>
-      <div id="errorMessage_address"></div>
-      {% endif %}
-      <div style="display: inline-block; width: 400px; height: 185px;" id="readOnlyAddressBookWidgetDiv"></div>
-      <br>
-      {% if payment_amazon_login_pay_test %}
-      <label>Debug Error Code     :</label>
-      <div id="errorCode_wallet"></div>
-      <br>
-      <label>Debug Error Message  :</label>
-      <div id="errorMessage_wallet"></div>
-      {% endif %}
-      <div style="display: inline-block; width: 400px; height: 185px;" id="readOnlyWalletWidgetDiv"></div>
+<div id="amazonContainer">
+    {% if success %}
+        <div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button><i class="fa fa-exclamation-circle"></i> {{ success }}
+        </div>
+    {% endif %}
+    <h3 class="text-center">{{ heading_confirm }}</h3>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="amazonWidget" id="addressBookWidget"></div>
+        </div>
+        <div class="col-md-6">
+            <div class="amazonWidget" id="walletWidget"></div>
+        </div>
     </div>
-    <div style="clear: both;"></div>
-  </form>
-  <div class="checkout-product" style="margin-top: 15px">
+    {% if is_coupon_change_allowed %}
+        <hr />
+        <h3 class="text-center">{{ text_coupon }}</h3>
+        <p>{{ text_enter_coupon }}</p>
+        <div class="input-group" id="couponContainer">
+            {% if coupon %}
+                <input id="coupon" class="form-control" type="text" disabled value="{{ coupon }}" />
+                <span class="input-group-btn">
+                    <a id="couponDiscard" href="{{ coupon_discard }}" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                </span>
+            {% else %}
+                <input id="coupon" class="form-control" type="text" value="" />
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" id="couponApply"><i class="fa fa-tick"></i> {{ button_coupon }}</button>
+                </span>
+            {% endif %}
+        </div>
+    {% endif %}
+    <hr />
+    <h3 class="text-center">{{ text_comments }}</h3>
+    <div class="form-group">
+        <textarea class="form-control" id="comment">{{ comment }}</textarea>
+    </div>
+    <hr />
     <table class="table table-bordered table-hover">
-      <thead>
-        <tr>
-          <td class="text-left">{{ column_name }}</td>
-          <td class="text-left">{{ column_model }}</td>
-          <td class="text-right">{{ column_quantity }}</td>
-          <td class="text-right">{{ column_price }}</td>
-          <td class="text-right">{{ column_total }}</td>
-        </tr>
-      </thead>
-      <tbody>
-      
-      {% for product in products %}
-      <tr>
-        <td class="text-left">{{ product.name }}
-          {% for option in product.option %} <br />
-          &nbsp;<small> - {{ option.name }}: {{ option.value }}</small> {% endfor %}</td>
-        <td class="text-left">{{ product.model }}</td>
-        <td class="text-right">{{ product.quantity }}</td>
-        <td class="text-right">{{ product.price }}</td>
-        <td class="text-right">{{ product.total }}</td>
-      </tr>
-      {% endfor %}
+        <thead>
+            <tr>
+                <th class="text-left">{{ column_name }}</th>
+                <th class="text-left">{{ column_model }}</th>
+                <th class="text-right">{{ column_quantity }}</th>
+                <th class="text-right">{{ column_price }}</th>
+                <th class="text-right">{{ column_total }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in order.products %}
+            <tr>
+                <td class="text-left">{{ product.name }}
+                    {% for option in product.option %} <br />
+                    <small>- {{ option.name }}: {{ option.value }}</small>
+                    {% endfor %}
+                </td>
+                <td class="text-left">{{ product.model }}</td>
+                <td class="text-right">{{ product.quantity }}</td>
+                <td class="text-right">{{ product.text_price }}</td>
+                <td class="text-right">{{ product.text_total }}</td>
+            </tr>
+        {% endfor %}
         </tbody>
-      
-      <tfoot>
-      
-      {% for total in totals %}
-      <tr>
-        <td colspan="4" class="text-right"><strong>{{ total.title }}:</strong></td>
-        <td class="text-right">{{ total.text }}</td>
-      </tr>
-      {% endfor %}
+        <tfoot>
+        {% for total in order.totals %}
+            <tr>
+                <td colspan="4" class="text-right">
+                    <strong>{{ total.title }}</strong>
+                </td>
+                <td class="text-right">{{ total.text }}</td>
+            </tr>
+        {% endfor %}
         </tfoot>
-      
     </table>
-  </div>
-  <div class="buttons">
-    <div class="pull-left"> <a href="{{ back }}" class="btn btn-primary">{{ text_back }}</a> </div>
-    <div class="pull-right">
-      <input class="btn btn-primary" id="confirm-button" type="submit" value="{{ text_confirm }}" />
+    <div class="buttons">
+        <div class="pull-right form-control-static">
+            <div class="alert alert-warning" id="text-must-apply-coupon" style="display: none;">{{ text_must_apply_coupon }}</div>
+            {% if is_order_total_positive %}
+                {% if is_amount_converted %}
+                    <div class="alert alert-warning">
+                        <i class="fa fa-exclamation-circle"></i> {{ text_amount_converted }}
+                        <hr />
+                        <div class="text-right">
+                            <a class="btn btn-primary" href="{{ process }}" id="confirm-button">{{ text_confirm }}</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <a class="btn btn-primary" href="{{ process }}" id="confirm-button">{{ text_confirm }}</a>
+                {% endif %}
+            {% else %}
+                <div class="alert alert-warning">
+                    <i class="fa fa-exclamation-circle"></i> {{ error_order_total_zero }}
+                    <hr />
+                    <div class="text-right">
+                        <a class="btn btn-primary" href="{{ standard_checkout }}" id="confirm-button">{{ text_continue_checkout }}</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="pull-left form-control-static">
+            <a href="{{ back }}" class="btn btn-default">{{ text_back }}</a>
+        </div>
     </div>
-  </div>
-  {{ content_bottom }} </div>
+</div>
+<style type="text/css">
+    #amazonContainer {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    #comment {
+        height: 150px;
+    }
+    
+    #coupon {
+        font-size: 1.5em;
+        font-family: Courier;
+    }
+
+    .amazonWidget {
+        margin: 0 0 10px 0;
+        width: 100%;
+        height: 230px;
+    }
+</style>
 <script>
-	$(document).ready(function() {
-		amazon.Login.setClientId('{{ payment_amazon_login_pay_client_id }}');
-		new OffAmazonPayments.Widgets.AddressBook({
-			sellerId: '{{ payment_amazon_login_pay_merchant_id }}',
-			amazonOrderReferenceId: '{{ AmazonOrderReferenceId }}',
-			displayMode: "Read",
-			design: {
-				designMode: 'responsive'
-			},
-			onError: function(error) {
-				document.getElementById("errorCode_address").innerHTML = error.getErrorCode();
-				document.getElementById("errorMessage_address").innerHTML = error.getErrorMessage();
-			}
-		}).bind("readOnlyAddressBookWidgetDiv");
+(function($) {
+    var showCouponError = function(message) {
+        $('#couponContainer').before('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><i class="fa fa-exclamation-circle"></i>&nbsp;&nbsp;' + message + '</div>');
+    }
 
+    var typewatch = (function() {
+        var timer = 0;
 
-		new OffAmazonPayments.Widgets.Wallet({
-			sellerId: '{{ payment_amazon_login_pay_merchant_id }}',
-			amazonOrderReferenceId: '{{ AmazonOrderReferenceId }}',
-			displayMode: "Read",
-			design: {
-				designMode: 'responsive'
-			},
-			onError: function(error) {
-				document.getElementById("errorCode_wallet").innerHTML = error.getErrorCode();
-				document.getElementById("errorMessage_wallet").innerHTML = error.getErrorMessage();
-			}
-		}).bind("readOnlyWalletWidgetDiv");
+        return function(callback) {
+            clearTimeout(timer);
+            timer = setTimeout(callback, 1500);
+        };
+    })();
 
+    $(document).ready(function() {
+        amazon.Login.setClientId('{{ client_id }}');
 
+        new OffAmazonPayments.Widgets.AddressBook({
+            sellerId: '{{ merchant_id }}',
+            amazonOrderReferenceId: '{{ order_reference_id }}',
+            displayMode: "Read",
+            design: {
+                designMode: 'responsive'
+            },
+            onError: function(error) {
+                if (error.getErrorCode() == 'BuyerSessionExpired') {
+                    document.location = '{{ session_expired }}';
+                }
 
-		$('#confirm-button').click(function() {
-			if ($(this).attr('disabled') != 'disabled') {
-				$('.payment-form').submit();
-			}
+                {% if sandbox %}
+                    console.log("Amazon Login Error for Address (" + error.getErrorCode() + "): " + error.getErrorMessage());
+                {% endif %}
+            }
+        }).bind("addressBookWidget");
 
-			$(this).attr('disabled', 'disabled');
-		});
-	});
-//--></script> 
-{{ footer }}
+        new OffAmazonPayments.Widgets.Wallet({
+            sellerId: '{{ merchant_id }}',
+            amazonOrderReferenceId: '{{ order_reference_id }}',
+            displayMode: "Read",
+            design: {
+                designMode: 'responsive'
+            },
+            onError: function(error) {
+                if (error.getErrorCode() == 'BuyerSessionExpired') {
+                    document.location = '{{ session_expired }}';
+                }
+
+                {% if sandbox %}
+                    console.log("Amazon Login Error for Wallet (" + error.getErrorCode() + "): " + error.getErrorMessage());
+                {% endif %}
+            }
+        }).bind("walletWidget");
+    });
+
+    $(document).on('click', '#couponDiscard', function() {
+        $('#couponDiscard').attr('disabled', true);
+    });
+
+    $(document).on('click', '#couponApply', function() {
+        $('#couponApply').attr('disabled', true);
+
+        $('.alert-danger').remove();
+
+        $.ajax({
+            url: '{{ coupon_apply }}',
+            type: 'post',
+            dataType: 'json',
+            data: {
+                coupon: $('#coupon').val()
+            },
+            success: function(data) {
+                if (data.error) {
+                    showCouponError(data.error);
+                    $('#coupon').val('').trigger('input');
+                    $('#couponApply').attr('disabled', false);
+                } else {
+                    document.location = document.location;
+                }
+            }
+        });
+    });
+
+    $(document).on('propertychange input', '#coupon', function() {
+        if ($(this).val() != '') {
+            $('#confirm-button').attr('disabled', true);
+            $('#confirm-button').hide();
+            $('#text-must-apply-coupon').show();
+        } else {
+            $('#confirm-button').attr('disabled', false);
+            $('#confirm-button').show();
+            $('#text-must-apply-coupon').hide();
+        }
+    });
+
+    $(document).on('propertychange input', '#comment', function() {
+        typewatch(() => {
+            $.ajax({
+                url: '{{ persist_comment }}',
+                data: {
+                    comment: $('#comment').val()
+                },
+                type: 'POST'
+            })
+        });
+    });
+
+    $('#confirm-button').click(function() {
+        $('#confirm-button').button('loading');
+    });
+})(jQuery);
+</script>

@@ -14,10 +14,12 @@
   </div>
   <div class="container-fluid">
 	{% if error_warning %}
-		<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-		  <button type="button" class="close" data-dismiss="alert">&times;</button>
+		<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
 		</div>
 	{% endif %}
+	<div class="alert alert-{{ has_ssl ? 'info' : 'danger' }}">
+		<i class="fa fa-exclamation-circle"></i> {{ text_info_ssl }}
+	</div>
 	<div class="alert alert-info">
 	  <form method="POST" target="_blank" action="{{ registration_url }}" class="form-horizontal" id="registration-form">
 		<input type="hidden" value="{{ locale }}" name="locale">
@@ -127,6 +129,20 @@
 			</div>
 		  </div>
 		  <div class="form-group">
+			<label class="col-sm-2 control-label" for="input-ipn-token"><span data-toggle="tooltip" title="{{ help_ipn_token }}">{{ entry_ipn_token }}</span></label>
+			<div class="col-sm-10">
+			  <input type="text" name="payment_amazon_login_pay_ipn_token" value="{{ payment_amazon_login_pay_ipn_token }}" id="input-ipn-token" class="form-control" />
+			</div>
+		  </div>
+		  <div class="form-group">
+			<label class="col-sm-2 control-label" for="input-ipn-url">{{ entry_ipn_url }}</label>
+			<div class="col-sm-10">
+			  <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
+				<input type="text" readonly value="{{ ipn_url }}" id="input-ipn-url" class="form-control" />
+			  </div>
+			</div>
+		  </div>
+		  <div class="form-group">
 			<label class="col-sm-2 control-label" for="amazon-login-pay-test">{{ entry_login_pay_test }}</label>
 			<div class="col-sm-10">
 			  <select name="payment_amazon_login_pay_test" id="amazon-login-pay-test" class="form-control">
@@ -204,20 +220,6 @@
 					{% endif %}
 				{% endfor %}
 			  </select>
-			</div>
-		  </div>
-		  <div class="form-group">
-			<label class="col-sm-2 control-label" for="input-ipn-token"><span data-toggle="tooltip" title="{{ help_ipn_token }}">{{ entry_ipn_token }}</span></label>
-			<div class="col-sm-10">
-			  <input type="text" name="payment_amazon_login_pay_ipn_token" value="{{ payment_amazon_login_pay_ipn_token }}" id="input-ipn-token" class="form-control" />
-			</div>
-		  </div>
-		  <div class="form-group">
-			<label class="col-sm-2 control-label" for="input-ipn-url">{{ entry_ipn_url }}</label>
-			<div class="col-sm-10">
-			  <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
-				<input type="text" readonly value="{{ ipn_url }}" id="input-ipn-url" class="form-control" />
-			  </div>
 			</div>
 		  </div>
 		  <div class="form-group">
@@ -321,13 +323,17 @@
           }).appendTo('#form-amazon-login-pay');
           $('.pull-right > .btn-primary').click();
         } catch (e) {
-          $('.container-fluid:eq(1)').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_credentials }}<button type="button" class="close" data-dismiss="alert">&times;</button></div>')
+          $('.container-fluid:eq(1)').prepend('<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><i class="fa fa-exclamation-circle"></i> {{ error_credentials }}</div>')
         }
       });
       //</script>
   <script type="text/javascript">
       $('input[name=\'payment_amazon_login_pay_ipn_token\']').change(function () {
-        $('#input-ipn-url').val('{{ HTTPS_CATALOG }}index.php?route=extension/payment/amazon_login_pay/ipn&token=' + $(this).val());
+        var base = '{{ https_catalog }}index.php?route=extension/payment/amazon_login_pay/ipn&token=';
+        var allowedLength = 150 - base.length;
+        var newVal = $(this).val().substr(0, allowedLength);
+        $(this).val(newVal);
+        $('#input-ipn-url').val(base + newVal);
       });
       //</script>
   <script type="text/javascript">
@@ -340,7 +346,7 @@
             $('#amazon-login-pay-language').html('<option selected value="en-GB">English</option>');
             break;
           case 'USD':
-            $('#amazon-login-pay-language').html('<option selected value="en-US">American</option>');
+            $('#amazon-login-pay-language').html('<option selected value="en-US">American English</option>');
             break;
         }
         $('<input>').attr({

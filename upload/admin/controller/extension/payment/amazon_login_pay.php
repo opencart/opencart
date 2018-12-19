@@ -1,6 +1,6 @@
 <?php
 class ControllerExtensionPaymentAmazonLoginPay extends Controller {
-
+	private $version = '3.1';
 	private $error = array();
 
 	public function index() {
@@ -13,13 +13,20 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 		$this->load->model('extension/payment/amazon_login_pay');
 
+		$this->model_extension_payment_amazon_login_pay->install();
+
+		$this->trimIntegrationDetails();
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('payment_amazon_login_pay', $this->request->post);
+
+			$this->model_extension_payment_amazon_login_pay->deleteEvents();
+			$this->model_extension_payment_amazon_login_pay->addEvents();
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			if (isset($this->request->post['language_reload'])) {
-				$this->response->redirect($this->url->link('payment/amazon_login_pay', 'user_token=' . $this->session->data['user_token'], true));
+				$this->response->redirect($this->url->link('extension/payment/amazon_login_pay', 'user_token=' . $this->session->data['user_token'], true));
 			} else {
 				$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 			}
@@ -72,6 +79,10 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		} else {
 			$data['error_curreny'] = '';
 		}
+
+		$data['heading_title'] = $this->language->get('heading_title') . ' ' . $this->version;
+
+		$data['https_catalog'] = HTTPS_CATALOG;
 
 		$data['breadcrumbs'] = array();
 
@@ -170,22 +181,19 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 		if ($data['payment_amazon_login_pay_payment_region'] == 'EUR') {
 			$data['payment_amazon_login_pay_language'] = 'de-DE';
-			$data['sp_id'] = 'AGGDPRPDPL7SL';
+			$data['sp_id'] = 'AW93DIZMWSDWS';
 			$data['locale'] = 'EUR';
-			//$ld = 'SPEXDEAPA-OpencartPL'; // needs to be changed
-			$ld = '';
+			$ld = 'AW93DIZMWSDWS';
 		} elseif ($data['payment_amazon_login_pay_payment_region'] == 'GBP') {
 			$data['payment_amazon_login_pay_language'] = 'en-GB';
-			$data['sp_id'] = 'A1P8WV11EWOP9H';
+			$data['sp_id'] = 'AW93DIZMWSDWS';
 			$data['locale'] = 'GBP';
-			//$ld = 'SPEXUKAPA-OpencartPL'; // needs to be changed
-			$ld = '';
+			$ld = 'AW93DIZMWSDWS';
 		} else {
 			$data['payment_amazon_login_pay_language'] = 'en-US';
 			$data['sp_id'] = 'A3GK1RS09H3A7D';
 			$data['locale'] = 'US';
-			//$ld = 'SPEXUSAPA-OpencartPL'; // needs to be changed
-			$ld = '';
+			$ld = 'A3GK1RS09H3A7D';
 		}
 
 		if (isset($this->request->post['payment_amazon_login_pay_language'])) {
@@ -286,13 +294,13 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		$data['simple_path_language'] = str_replace('-', '_', $data['payment_amazon_login_pay_language']);
 
 		if ($data['payment_amazon_login_pay_payment_region'] == 'USD') {
-			$data['registration_url'] = "https://sellercentral.amazon.com/hz/me/sp/redirect?ld=" . $ld;
+			$data['registration_url'] = "https://payments.amazon.com/register?registration_source=SPPL&spId=" . $ld;
 
 			$data['languages'] = array(
 				'en-US' => $this->language->get('text_us')
 			);
 		} else {
-			$data['registration_url'] = "https://sellercentral-europe.amazon.com/hz/me/sp/redirect?ld=" . $ld;
+			$data['registration_url'] = "https://payments-eu.amazon.com/register?registration_source=SPPL&spId=" . $ld;
 
 			$data['languages'] = array(
 				'de-DE' => $this->language->get('text_de'),
@@ -309,6 +317,8 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			'USD' => $this->language->get('text_us_region')
 		);
 
+		$data['has_ssl'] = !empty($this->request->server['HTTPS']);
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -318,18 +328,16 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 	public function install() {
 		$this->load->model('extension/payment/amazon_login_pay');
-		$this->load->model('setting/event');
 		$this->model_extension_payment_amazon_login_pay->install();
-		$this->model_setting_event->addEvent('amazon_edit_capture', 'catalog/model/checkout/order/after', 'extension/payment/amazon_login_pay/capture');
-		$this->model_setting_event->addEvent('amazon_history_capture', 'catalog/model/checkout/order/addOrderHistory/after', 'extension/payment/amazon_login_pay/capture');
+		$this->model_extension_payment_amazon_login_pay->deleteEvents();
+		$this->model_extension_payment_amazon_login_pay->addEvents();
 	}
 
 	public function uninstall() {
 		$this->load->model('extension/payment/amazon_login_pay');
 		$this->load->model('setting/event');
 		$this->model_extension_payment_amazon_login_pay->uninstall();
-		$this->model_setting_event->deleteEventByCode('amazon_edit_capture');
-		$this->model_setting_event->deleteEventByCode('amazon_history_capture');
+		$this->model_extension_payment_amazon_login_pay->deleteEvents();
 	}
 
 	public function order() {
@@ -409,10 +417,19 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			if ($capture_response['status'] == 'Completed' || $capture_response['status'] == 'Pending') {
 				$this->model_extension_payment_amazon_login_pay->addTransaction($amazon_login_pay_order['amazon_login_pay_order_id'], 'capture', $capture_response['status'], $this->request->post['amount'], $capture_response['AmazonAuthorizationId'], $capture_response['AmazonCaptureId']);
 
+				$this->model_extension_payment_amazon_login_pay->updateAuthorizationStatus($capture_response['AmazonAuthorizationId'], 'Closed');
+
 				$total_captured = $this->model_extension_payment_amazon_login_pay->getTotalCaptured($amazon_login_pay_order['amazon_login_pay_order_id']);
 
+				if ($total_captured > 0) {
+					$order_reference_id = $amazon_login_pay_order['amazon_order_reference_id'];
+
+					if ($this->model_extension_payment_amazon_login_pay->isOrderInState($order_reference_id, array('Open', 'Suspended'))) {
+                        $this->model_extension_payment_amazon_login_pay->closeOrderRef($order_reference_id);
+                    }
+				}
+
 				if ($total_captured >= (double)$amazon_login_pay_order['total']) {
-					$this->model_extension_payment_amazon_login_pay->closeOrderRef($amazon_login_pay_order['amazon_order_reference_id']);
 					$this->model_extension_payment_amazon_login_pay->updateCaptureStatus($amazon_login_pay_order['amazon_login_pay_order_id'], 1);
 					$capture_status = 1;
 					$json['msg'] = $this->language->get('text_capture_ok_order');
@@ -500,6 +517,22 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+    protected function trimIntegrationDetails() {
+        $integration_keys = array(
+            'payment_amazon_login_pay_merchant_id',
+            'payment_amazon_login_pay_access_key',
+            'payment_amazon_login_pay_access_secret',
+            'payment_amazon_login_pay_client_id',
+            'payment_amazon_login_pay_client_secret'
+        );
+
+        foreach ($this->request->post as $key => $value) {
+            if (in_array($key, $integration_keys)) {
+                $this->request->post[$key] = trim($value);
+            }
+        }
+    }
+
 	protected function validate() {
 		$this->load->model('localisation/currency');
 
@@ -554,9 +587,4 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		return !$this->error;
 	}
 
-	public function promotion() {
-		$this->load->language('extension/payment/amazon_login_pay');
-
-		return $this->load->view('extension/payment/amazon_promotion');
-	}
 }

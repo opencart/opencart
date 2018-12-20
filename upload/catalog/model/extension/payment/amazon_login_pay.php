@@ -682,7 +682,8 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
             'postcode' => (string)$amazon_address->PostalCode,
             'country' => $country_info['country'],
             'country_id' => $country_info['country_id'],
-            'zone' => $zone_info['zone'],
+            'zone' => $zone_info['name'],
+            'zone_code' => $zone_info['code'],
             'zone_id' => $zone_info['zone_id'],
             'address_1' => (string)$address_line_1,
             'address_2' => (string)$address_line_2,
@@ -755,14 +756,16 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
             if ($result->num_rows > 0) {
                 return array(
                     'zone_id' => (int)$result->row['zone_id'],
-                    'zone' => $result->row['code']
+                    'name' => $result->row['name'],
+                    'code' => $result->row['code']
                 );
             }
         }
 
         return array(
             'zone_id' => 0,
-            'zone' => ''
+            'name' => '',
+            'code' => ''
         );
     }
 

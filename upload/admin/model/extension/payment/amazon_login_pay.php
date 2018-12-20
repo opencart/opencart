@@ -247,7 +247,7 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 	}
 
 	public function updateAuthorizationStatus($amazon_authorization_id, $status) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "amazon_login_pay_order_transaction` SET `status` = '" . $this->db->escape($status) . "' WHERE `amazon_authorization_id`='" . $this->db->escape($status) . "' AND `type`='authorization'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "amazon_login_pay_order_transaction` SET `status` = '" . $this->db->escape($status) . "' WHERE `amazon_authorization_id`='" . $this->db->escape($amazon_authorization_id) . "' AND `type`='authorization'");
 	}
 
 	public function isOrderInState($order_reference_id, $states = array()) {

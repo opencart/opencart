@@ -1,0 +1,9 @@
+<script type="text/javascript">
+    console.log("[GTAG] Submit cart view: " + {{ ecomm_prodid }});
+
+    gtag('event', 'page_view', {
+        'ecomm_prodid': {{ ecomm_prodid }},
+        'ecomm_pagetype': 'cart',
+        'ecomm_totalvalue': {{ ecomm_totalvalue }}
+    });
+</script>

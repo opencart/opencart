@@ -1,0 +1,65 @@
+{{ header }}
+{{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <button type="submit" class="btn btn-primary" form="form" data-toggle="tooltip" title="{{ button_save }}"><i class="fa fa-save"></i></button>
+                <a href="{{ mapping }}" class="btn btn-warning" data-toggle="tooltip" title="{{ button_mapping }}"><i class="fa fa-tags"></i></a>
+                <a href="{{ shipping_taxes }}" class="btn btn-warning" data-toggle="tooltip" title="{{ button_shipping_taxes }}"><i class="fa fa-truck"></i></a>
+                <a href="{{ campaign }}" class="btn btn-warning" data-toggle="tooltip" title="{{ button_campaign }}"><i class="fa fa-cogs"></i></a>
+                <a href="{{ text_video_tutorial_url_setup }}" target="_blank" class="btn btn-info" data-toggle="tooltip" title="{{ button_video_tutorial_setup }}"><i class="fa fa-video-camera"></i></a>
+                <a href="{{ cancel }}" class="btn btn-default" data-toggle="tooltip" title="{{ button_cancel }}"><i class="fa fa-reply"></i></a>
+            </div> 
+            <h1>{{ heading_title }}</h1>
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid">
+        {% if success %}
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="{{ text_close }}"><i class="fa fa-close"></i></button>
+                <i class="fa fa-check-circle"></i>&nbsp;{{ success }}
+            </div>
+        {% endif %}
+        {% if error %}
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="{{ text_close }}"><i class="fa fa-close"></i></button>
+                <i class="fa fa-exclamation-triangle"></i>&nbsp;{{ error }}
+            </div>
+        {% endif %}
+        {% if warning %}
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="{{ text_close }}"><i class="fa fa-close"></i></button>
+                <i class="fa fa-info-circle"></i>&nbsp;{{ warning }}
+            </div>
+        {% endif %}
+        <div id="alert-container"></div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-pencil"></i>&nbsp;<span>{{ text_panel_heading }}</span></h3>
+            </div>
+            <div class="panel-body">
+                <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form">
+                    <div class="tabbable">
+                        <ul class="nav nav-tabs mainMenuTabs">
+                            <li class="active"><a href="#tab_ads" data-toggle="tab">{{ tab_text_ads }}</a></li>
+                            <li><a href="#tab_reports" data-toggle="tab">{{ tab_text_reports }}</a></li>
+                            <li><a href="#tab_settings" data-toggle="tab">{{ tab_text_settings }}</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane" id="tab_settings">{{ tab_settings }}</div>
+                            <div class="tab-pane active" id="tab_ads">{{ tab_ads }}</div>
+                            <div class="tab-pane" id="tab_reports">{{ tab_reports }}</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{ footer }}

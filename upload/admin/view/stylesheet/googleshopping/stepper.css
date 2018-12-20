@@ -1,0 +1,179 @@
+@charset "UTF-8";
+:root {
+  --s-width: 900px;
+  --s-gutter: 2.5rem;
+  --c-background: rgb(0, 0, 0);
+  --c-accent: hsl(213, 74%, 58%);
+}
+
+.stepper {
+  --s-stepper-bullet: 2rem;
+  --s-stepper-bullet-half: calc( var(--s-stepper-bullet) / 2 );
+  --step-transition: background .5s, color .5s;
+  --step-content: '✔︎';
+  --step-color: hsl(0, 0%, 70%);
+  --step-bar-bg: var(--c-accent);
+  --step-bullet-bg: var(--step-bar-bg);
+  --step-bullet-color: white;
+  counter-reset: current-step;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(1px, 1fr));
+  position: relative;
+  z-index: 1;
+  margin: 20px 0;
+}
+.stepper__input {
+  counter-increment: steps;
+  display: none;
+}
+.stepper__step {
+  counter-increment: current-step;
+}
+.stepper__input:checked ~ .stepper__step {
+  --step-color: hsl(0, 0%, 30%);
+  --step-bar-bg: hsl(0, 0%, 40%);
+  --step-bullet-bg: var(--step-bar-bg);
+  --step-bullet-color: white; /*hsl(0, 0%, 20%);*/
+  --step-content: counter(current-step);
+}
+.stepper__input:checked ~ .stepper__step .stepper__content {
+  opacity: 0;
+  pointer-events: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.stepper__input:checked + .stepper__step {
+  --step-bullet-bg: hsl(213, 70%, 50%);
+  --step-bullet-color: white;
+  --step-color: hsl(0, 0%, 30%);
+}
+.stepper__input:checked + .stepper__step .stepper__button::before {
+  box-shadow: 0 0 0 2px var(--c-accent);
+}
+.stepper__input:checked + .stepper__step .stepper__content {
+  opacity: 1;
+  pointer-events: auto;
+  -webkit-user-select: auto;
+     -moz-user-select: auto;
+      -ms-user-select: auto;
+          user-select: auto;
+}
+.stepper__content {
+  color: white;
+  text-align: center;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--step-color);
+  transition: opacity .5s .05s;
+  padding: .5rem;
+}
+.stepper__content::-moz-selection {
+  color: black;
+  background: var(--step-bullet-color);
+}
+.stepper__content::selection {
+  color: black;
+  background: var(--step-bullet-color);
+}
+.stepper__button {
+  position: relative;
+  text-align: center;
+  color: var(--step-color);
+  display: block;
+}
+.stepper__button::before {
+  content: var(--step-content);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto var(--s-stepper-bullet-half);
+  height: var(--s-stepper-bullet);
+  width: var(--s-stepper-bullet);
+  border-radius: var(--s-stepper-bullet);
+  transition: var(--step-transition);
+  background: var(--step-bullet-bg);
+  color: var(--step-bullet-color);
+}
+.stepper__button::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: calc( var(--s-stepper-bullet-half) / 2 );
+  background: var(--step-bar-bg);
+  transition: var(--step-transition);
+  top: var(--s-stepper-bullet-half);
+  left: 50%;
+  -webkit-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+  z-index: -1;
+}
+.stepper__step:last-child .stepper__button::after {
+  display: none;
+}
+.stepper--flexbox {
+  display: flex;
+}
+.stepper--flexbox .stepper__step {
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 0;
+}
+
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  background: var(--c-background);
+  grid-area: content;
+}
+
+article {
+  padding: var(--s-gutter) calc(50% - var(--s-width) / 2);
+  background: #121212;
+  color: #cccccc;
+}
+article h1 {
+  font-weight: 100;
+  font-size: 2rem;
+  padding: 0 var(--s-gutter);
+  margin: 0;
+}
+article ul,
+article li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+article li {
+  padding-left: 1rem;
+  text-indent: -.7rem;
+  padding-top: .5rem;
+}
+article li::before {
+  content: "• ";
+  color: var(--c-accent);
+}
+article ul,
+article p {
+  padding: calc( var(--s-gutter) / 2 ) var(--s-gutter) 0;
+}
+
+.container, .container__item {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.container__item {
+  padding: var(--s-gutter) calc(50% - var(--s-width) / 2);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+}
+.container__item h2 {
+  padding: calc(var(--s-gutter) / 2) var(--s-gutter) var(--s-gutter);
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 100;
+  color: #8a97a8;
+  font-size: 1.4rem;
+}

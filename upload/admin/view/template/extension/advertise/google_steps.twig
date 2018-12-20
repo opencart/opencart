@@ -1,0 +1,22 @@
+<div class="stepper">
+    <input class="stepper__input" id="stepper-3-0" name="stepper-3" type="radio" {{ current_step >= 1 ? "checked" }}/>
+    <div class="stepper__step">
+        <label class="stepper__button">{{ step_connect }}</label>
+    </div>
+    <input class="stepper__input" id="stepper-3-1" name="stepper-3" type="radio" {{ current_step >= 2 ? "checked" }}/>
+    <div class="stepper__step">
+        <label class="stepper__button">{{ step_merchant_account }}</label>
+    </div>
+    <input class="stepper__input" id="stepper-3-2" name="stepper-3" type="radio" {{ current_step >= 3 ? "checked" }}/>
+    <div class="stepper__step">
+        <label class="stepper__button">{{ step_campaigns }}</label>
+    </div>
+    <input class="stepper__input" id="stepper-3-3" name="stepper-3" type="radio" {{ current_step >= 4 ? "checked" }}/>
+    <div class="stepper__step">
+        <label class="stepper__button">{{ step_shipping_taxes }}</label>
+    </div>
+    <input class="stepper__input" id="stepper-3-4" name="stepper-3" type="radio" {{ current_step >= 5 ? "checked" }}/>
+    <div class="stepper__step">
+        <label class="stepper__button">{{ step_mapping }}</label>
+    </div>
+</div>

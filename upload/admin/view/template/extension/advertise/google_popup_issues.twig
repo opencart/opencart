@@ -1,0 +1,69 @@
+{% for product_issue in product_issues %}
+    <h3>{{ product_issue.language_name }}</h3>
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-left">{{ text_color }}</th>
+                    <th class="text-left">{{ text_size }}</th>
+                    <th class="text-left">{{ text_destination_status }}</th>
+                    <th class="text-left">{{ text_data_quality_issues }}</th>
+                    <th class="text-left">{{ text_item_level_issues }}</th>
+                    <th class="text-left">{{ text_google_expiration_date }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for issue in product_issue.issues %}
+                    <tr>
+                        <td class="text-left">{{ issue.color }}</td>
+                        <td class="text-left">{{ issue.size }}</td>
+                        <td class="text-left">
+                            {% for status in issue.destination_statuses %}
+                                {% if status.approvalPending %}
+                                    {{ status.destination }}: <span class="label label-warning">{{ text_label_pending }}</span><br />
+                                {% else %}
+                                    {% if status.approvalStatus == 'approved' %}
+                                        {{ status.destination }}: <span class="label label-success">{{ text_label_approved }}</span><br />
+                                    {% elseif status.approvalStatus == 'disapproved' %}
+                                        {{ status.destination }}: <span class="label label-danger">{{ text_label_disapproved }}</span><br />
+                                    {% endif %}
+                                {% endif %}
+                            {% else %}
+                                <span class="label label-warning">{{ text_label_pending }}</span>
+                            {% endfor %}
+                        </td>
+                        <td class="text-left">
+                            {% for quality_issue in issue.data_quality_issues %}
+                                {% if quality_issue.severity == 'critical' %}
+                                    {{ quality_issue.destination }}: <span class="label label-danger">{{ text_label_critical }}</span>
+                                {% elseif quality_issue.severity == 'error' %}
+                                    {{ quality_issue.destination }}: <span class="label label-danger">{{ text_label_error }}</span>
+                                {% elseif quality_issue.severity == 'suggestion' %}
+                                    {{ quality_issue.destination }}: <span class="label label-info">{{ text_label_suggestion }}</span>
+                                {% endif %}
+                                {{ quality_issue.detail }}
+                                {% if not loop.last %}
+                                    <hr />
+                                {% endif %}
+                            {% else %}
+                                {{ text_na }}
+                            {% endfor %}
+                        </td>
+                        <td class="text-left">
+                            {% for item_issue in issue.item_level_issues %}
+                                <strong>{{ item_issue.servability }}</strong> {{ item_issue.detail }} <a href="{{ item_issue.documentation }}" target="_blank">{{ text_learn_more }} <i class="fa fa-external-link"></i></a>
+                                {% if not loop.last %}
+                                    <hr />
+                                {% endif %}
+                            {% else %}
+                                {{ text_na }}
+                            {% endfor %}
+                        </td>
+                        <td class="text-left">{{ issue.google_expiration_date }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endfor %}

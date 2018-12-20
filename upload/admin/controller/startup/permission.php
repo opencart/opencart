@@ -16,6 +16,7 @@ class ControllerStartupPermission extends Controller {
 
 			// If a 3rd part is found we need to check if its under one of the extension folders.
 			$extension = array(
+				'extension/advertise',
 				'extension/dashboard',
 				'extension/analytics',
 				'extension/captcha',

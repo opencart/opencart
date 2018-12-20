@@ -1,0 +1,881 @@
+<!-- The filters -->
+<div id="filter-ads" class="col-md-3 col-md-push-9 col-sm-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="control-label" for="input-name">{{ text_product_name }}</label>
+                <input type="text" name="filter_name" value="" placeholder="{{ text_product_name }}" id="input-name" class="form-control" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="input-model">{{ text_product_model }}</label>
+                <input type="text" name="filter_model" value="" placeholder="{{ text_product_model }}" id="input-model" class="form-control" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="input-category">{{ text_product_category }}</label>
+                <div class="category-select-container">
+                    <input id="input-category" type="text" name="category_autocomplete" value="" class="form-control" placeholder="{{ text_product_category }}" />
+                    <input type="hidden" name="filter_category_id" value="">
+                    <button id="button-category-remove" class="btn btn-default" disabled><i class="fa fa-close"></i></button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="select-is-modified">{{ text_product_is_modified }}</label>
+                <select class="form-control" name="filter_is_modified" id="select-is-modified">
+                    <option value="">{{ text_all }}</option>
+                    <option value="0">{{ text_no }}</option>
+                    <option value="1">{{ text_yes }}</option>
+                </select>
+            </div>
+            <div class="form-group text-right">
+                <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ text_filter }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- The ads -->
+<div class="col-md-9 col-md-pull-3 col-sm-12">
+    <div class="alert alert-info">
+        {{ text_ads_intro }}
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="pull-right form-control-static">
+                <button type="button" class="btn btn-default button-popup-bulk-edit form-control-static"><i class="fa fa-cog"></i> {{ button_bulk_edit_google_fields }}</button>
+                <div class="btn-group form-control-static">
+                    <button type="button" class="btn btn-default dropdown-toggle button-advertise" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ button_select_campaigns }} <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right campaign-dropdown">
+                        {% for campaign in campaigns %}
+                            <li><a><input type="checkbox" name="target_ids[]" value="{{ campaign.target_id }}" />&nbsp;&nbsp;<span class="form-control-static">{{ campaign.campaign_name }}</span></a></li>
+                        {% endfor %}
+                        <li role="separator" class="divider"></li>
+                        <li class="text-center padding-lr-5">
+                            <p class="text-left text-sm"><em>{{ text_maximum_five }}</em></p>
+                            <button class="btn btn-success btn-xs button-apply-advertising"><i class="fa fa-check"></i> {{ button_apply }}</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="alert-container"></div>
+    <div id="selection-container"></div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead id="list-head">
+                <tr>
+                    <th class="text-center"><input type="checkbox" name="select_all" /></th>
+                    <th class="text-center">{{ text_image }}</th>
+                    <th class="text-left"><a href="javascript:void(0)" data-sort="name">{{ text_product_name }}</a></th>
+                    <th class="text-left"><a href="javascript:void(0)" data-sort="model">{{ text_product_model }}</a></th>
+                    <th class="text-center"><a href="javascript:void(0)" data-sort="impressions">{{ text_impressions }}</a></th>
+                    <th class="text-center"><a href="javascript:void(0)" data-sort="clicks">{{ text_clicks }}</a></th>
+                    <th class="text-center"><a href="javascript:void(0)" data-sort="cost">{{ text_cost }}</a></th>
+                    <th class="text-center"><a href="javascript:void(0)" data-sort="conversions">{{ text_conversions }}</a></th>
+                    <th class="text-center"><a href="javascript:void(0)" data-sort="conversion_value">{{ text_conversion_value }}</a></th>
+                    </a></th>
+                    <th class="text-left">{{ text_campaigns }}</th>
+                    <th class="text-center"><a href="javascript:void(0)" data-sort="destination_status">{{ text_destination_status }}</a></th>
+                    <th class="text-center"><a href="javascript:void(0)" data-sort="has_issues">{{ text_issues }}</a></th>
+                    <th class="text-right">{{ text_action }}</th>
+                </tr>
+            </thead>
+            <tbody id="list">
+                
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="pull-right form-control-static">
+                <button type="button" class="btn btn-default button-popup-bulk-edit form-control-static"><i class="fa fa-cog"></i> {{ button_bulk_edit_google_fields }}</button>
+                <div class="btn-group dropup form-control-static">
+                    <button type="button" class="btn btn-default dropdown-toggle button-advertise" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ button_select_campaigns }} <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right campaign-dropdown">
+                        {% for campaign in campaigns %}
+                            <li><a><input type="checkbox" name="campaign" value="{{ campaign.target_id }}" />&nbsp;&nbsp;<span class="form-control-static">{{ campaign.campaign_name }}</span></a></li>
+                        {% endfor %}
+                        <li role="separator" class="divider"></li>
+                        <li class="text-center padding-lr-5">
+                            <p class="text-left text-sm"><em>{{ text_maximum_five }}</em></p>
+                            <button class="btn btn-success btn-sm button-apply-advertising"><i class="fa fa-check"></i> {{ button_apply }}</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="list-pagination">
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="pull-right list-showing form-control-static">
+
+            </div>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    .padding-lr-5 {
+        padding: 0 10px;
+    }
+
+    .no-wrap {
+        white-space: nowrap;
+    }
+
+    #select_all_pages, #deselect_all_pages {
+        cursor: pointer;
+    }
+
+    .category-select-container {
+        padding-right: 50px;
+        position: relative;
+    }
+
+    .category-select-container #button-category-remove {
+        position: absolute;
+        right: 5px;
+        top: 0px;
+    }
+</style>
+<script id="template-success" type="text/template">
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
+        <i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp;{message}
+    </div>
+</script>
+<script id="template-error" type="text/template">
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
+        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;{message}
+    </div>
+</script>
+<script id="template-popup-product" type="text/template">
+    <div class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
+                <h4 class="modal-title">{title}</h4>
+                </div>
+                <div class="modal-body">
+                    {body}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ button_close }}</button>
+                    <button type="button" class="btn btn-primary" id="button-popup-product-save">{{ button_save }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script id="template-popup-issues" type="text/template">
+    <div class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
+                <h4 class="modal-title">{title}</h4>
+                </div>
+                <div class="modal-body">
+                    {body}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ button_close }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/javascript">
+(function($) {
+    var selector = {
+        campaign_dropdown: {
+            container: '.campaign-dropdown',
+            element: '.campaign-dropdown li',
+            first_container_checkboxes: '.campaign-dropdown:first li input[type=checkbox]',
+            checkboxes: '.campaign-dropdown li input[type=checkbox]'
+        },
+        popup: {
+            product: {
+                form: '#form-popup-product',
+                template: '#template-popup-product',
+                button_show: '[data-product-id]',
+                button_save: '#button-popup-product-save'
+            },
+            issues: {
+                template: '#template-popup-issues',
+                button_show: '[data-url-popup-issues]'
+            }
+        },
+        template_success: '#template-success',
+        template_error: '#template-error',
+        alert_container: '#alert-container',
+        selection_container: '#selection-container',
+        button_advertise: '.button-advertise',
+        button_bulk_edit: '.button-popup-bulk-edit',
+        button_apply_advertising: '.button-apply-advertising',
+        row: '.product-row',
+        highlightable: '.highlightable',
+        checkboxes: 'input[type="checkbox"][name="select[]"]',
+        select_all: 'input[type="checkbox"][name="select_all"]',
+        select_all_pages: '#select_all_pages',
+        deselect_all_pages: '#deselect_all_pages',
+        list: '#list',
+        button_filter: '#button-filter',
+        head: '#list-head',
+        pagination: '.list-pagination',
+        showing: '.list-showing',
+        page: '.list-pagination .pagination li > a',
+        filter: {
+            product_name: 'input[name="filter_name"]',
+            product_model: 'input[name="filter_model"]',
+            category: 'input[name="filter_category_id"]',
+            category_autocomplete: 'input[name="category_autocomplete"]',
+            button_category_remove: '#button-category-remove',
+            is_modified: 'select[name="filter_is_modified"]'
+        }
+    };
+
+    var total_items = 0;
+    var total_pages = 1;
+    var selected_all_pages = false;
+
+    var makeDestinationStatus = function(status) {
+        switch (status) {
+            case 'pending' :
+                return '<span class="label label-warning">{{ text_label_pending }}</span>';
+            case 'approved' : 
+                return '<span class="label label-success">{{ text_label_approved }}</span>';
+            case 'disapproved' :
+                return '<span class="label label-danger">{{ text_label_disapproved }}</span>';
+        }
+    }
+
+    var makeIssuesButton = function(has_issues, url) {
+        if (has_issues) {
+            return '<a data-toggle="tooltip" title="{{ text_view_issues }}" class="btn btn-warning" data-url-popup-issues="' + url + '"><i class="fa fa-exclamation-triangle"></i></a>';
+        }
+
+        return '&ndash;';
+    }
+
+    var makeCampaigns = function(campaigns) {
+        var html = '';
+
+        if (campaigns.length > 0) {
+            var result = $.map(campaigns, function(element) {
+                return element.campaign_name;
+            });
+
+            html = result.join('<br />');
+        }
+
+        return html != '' ? html : '{{ text_na }}';
+    }
+
+    var getFilterPostData = function() {
+        return {
+            product_name: $(selector.filter.product_name).val(),
+            product_model: $(selector.filter.product_model).val(),
+            category_id: $(selector.filter.category).val(),
+            is_modified: $(selector.filter.is_modified).val()
+        };
+    };
+
+    var listProducts = function() {
+        $.ajax({
+            url: '{{ list_ads }}',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                sort: $(selector.list).data('sort'),
+                order: $(selector.list).data('order'),
+                page: $(selector.list).data('page'),
+                filter: getFilterPostData()
+            },
+            beforeSend: function() {
+                $('[data-sort]').removeClass('asc').removeClass('desc');
+
+                $('[data-sort="' + $(selector.list).data('sort') + '"]').addClass($(selector.list).data('order') == 'ASC' ? 'asc' : 'desc');
+
+                $(selector.list).html('<tr><td colspan="' + $(selector.head).find('th').length + '"><div class="text-center">{{ text_loading }}</div></td></tr>');
+
+                $(selector.button_advertise).attr('disabled', true).toggleClass('btn-info', false).toggleClass('btn-default', true);
+
+                $(selector.button_bulk_edit).attr('disabled', true);
+
+                $(selector.campaign_dropdown.checkboxes).prop('checked', false).trigger('change');
+
+                $(selector.select_all).prop('checked', false);
+
+                total_items = 0;
+                total_pages = 1;
+                $(selector.deselect_all_pages).trigger('click');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                $(selector.list).html('<tr><td colspan="' + $(selector.head).find('th').length + '"><div class="alert alert-danger">' + textStatus + ': ' + errorThrown + '</div></td></tr>');
+            },
+            success: function(data) {
+                $(selector.list).empty();
+
+                if (typeof data.error != 'undefined') {
+                    $(selector.pagination).empty();
+                    $(selector.showing).empty();
+
+                    $(selector.list).html('<tr><td colspan="' + $(selector.head).find('th').length + '"><div class="alert alert-danger">' + data.error + '</div></td></tr>');
+                } else {
+                    if (data.products.length) {
+                        $(data.products).each(function(index, product) {
+                            var html = '<tr class="product-row">';
+
+                            html += '<td class="highlightable text-center"><input type="checkbox" name="select[]" value="' + product.product_id + '"></td>';
+                            html += '<td class="highlightable text-center"><img class="img-thumbnail" src="' + product.image + '" alt="' + product.name + '" /></td>';
+                            html += '<td class="highlightable text-left">' + product.name + '</td>';
+                            html += '<td class="highlightable text-left">' + product.model + '</td>';
+                            html += '<td class="highlightable text-center">' + product.impressions + '</td>';
+                            html += '<td class="highlightable text-center">' + product.clicks + '</td>';
+                            html += '<td class="highlightable text-center">' + product.cost + '</td>';
+                            html += '<td class="highlightable text-center">' + product.conversions + '</td>';
+                            html += '<td class="highlightable text-center">' + product.conversion_value + '</td>';
+                            html += '<td class="highlightable text-left no-wrap">' + makeCampaigns(product.campaigns) + '</td>';
+                            html += '<td class="highlightable text-center">' + makeDestinationStatus(product.destination_status) + '</td>';
+                            html += '<td class="highlightable text-center">' + makeIssuesButton(product.has_issues, product.url_issues) + '</td>';
+                            html += '<td class="highlightable text-right"><button class="btn ' + (product.is_modified ? "btn-default" : "btn-warning") + '" data-toggle="tooltip" title="' + (product.is_modified ? "{{ button_product_edit }}" : "{{ button_product_set }}") + '" data-product-id="' + product.product_id + '" data-product-advertise-google-id="' + product.product_advertise_google_id + '"><i class="fa fa-cog"></i></button></td>';
+
+                            html += '</tr>';
+
+                            $(selector.list).append(html);
+                        });
+                    } else {
+                        $(selector.list).html('<tr><td colspan="' + $(selector.head).find('th').length + '"><div class="text-center">{{ text_no_results }}</div></td></tr>');
+                    }
+
+                    $(selector.pagination).html(data.pagination);
+                    $(selector.showing).html(data.showing);
+
+                    total_items = data.total;
+                    total_pages = data.pages;
+                }
+            },
+            complete: function() {
+                updateSelected();
+            }
+        });
+    }
+
+    var displayError = function(message) {
+        $(selector.alert_container).html($(selector.template_error).html().replace(/{message}/g, message));
+    }
+
+    var displaySuccess = function(message) {
+        $(selector.alert_container).html($(selector.template_success).html().replace(/{message}/g, message));
+    }
+
+    var getPopupHtml = function(selector, data) {
+        return $(selector).html().replace(/{body}/g, data.body).replace(/{title}/g, data.title);
+    }
+
+    var advertiseChange = function() {
+        var post_data = {
+            all_pages : selected_all_pages ? '1' : '0',
+            filter: getFilterPostData(),
+            select : [],
+            target_ids : []
+        };
+
+        $(selector.campaign_dropdown.first_container_checkboxes + ':checked').each(function(index, element) {
+            post_data.target_ids.push($(element).val());
+        });
+
+        $(selector.checkboxes + ':checked').each(function(index, element) {
+            post_data.select.push($(element).val());
+        });
+
+        $.ajax({
+            url: '{{ advertise }}',
+            dataType: 'json',
+            type: 'POST',
+            data: post_data,
+            beforeSend: function() {
+                $(selector.list).html('<tr><td colspan="' + $(selector.head).find('th').length + '"><div class="text-center">{{ text_loading }}</div></td></tr>');
+
+                $(selector.campaign_dropdown.container).closest('.btn-group').removeClass('open');
+
+                $(selector.alert_container).empty();
+
+                $(selector.button_advertise).attr('disabled', true).toggleClass('btn-info', false).toggleClass('btn-default', true);
+
+                $(selector.button_bulk_edit).attr('disabled', true);
+
+                $(selector.select_all).prop('checked', false);
+
+                total_items = 0;
+                total_pages = 1;
+                $(selector.deselect_all_pages).trigger('click');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                displayError(textStatus + ': ' + errorThrown);
+            },
+            success: function(data) {
+                if (data.error) {
+                    displayError(data.error);
+                } else if (data.success) {
+                    displaySuccess(data.success);
+                }
+
+                listProducts();
+            }
+        });
+    }
+
+    var updateSelected = function() {
+        var selected = $(selector.checkboxes + ':checked').length;
+        var selection_text = '{{ text_selection_page }}'.replace(/{selected_page}/, selected).replace(/{total}/, total_items);
+        var deselection_text = '{{ text_selection_all }}'.replace(/{total}/, total_items);
+
+        if (selected_all_pages) {
+            $(selector.selection_container).html('<div class="alert alert-warning"><i class="fa fa-exclamation-triangle"></i> ' + deselection_text + '</div>');
+        } else {
+            if (selected > 0 && total_pages > 1) {
+                $(selector.selection_container).html('<div class="alert alert-warning"><i class="fa fa-exclamation-triangle"></i> ' + selection_text + '</div>');
+            } else {
+                $(selector.selection_container).empty();
+            }
+        }
+    }
+
+    var googleFieldsPopup = function(settings) {
+        var data = {
+            title: '{{ text_popup_loading_title }}',
+            body: '<p>{{ text_popup_loading_body }}<p>'
+        };
+
+        var modal = $(getPopupHtml(selector.popup.product.template, data));
+
+        var ajaxSuccess = function(data) {
+            var new_html = getPopupHtml(selector.popup.product.template, data);
+
+            $(modal).find('.modal-body').html($(new_html).find('.modal-body').html());
+            $(modal).find('.modal-title').html($(new_html).find('.modal-title').html());
+
+            $.each(data.required_fields, function(key, element) {
+                if (element.selected_field !== null) {
+                    $.each(element.selected_field, function(dependency, values) {
+                        $(modal).find('.modal-body').find('[name="' + dependency + '"]').change(function(e) {
+                            var newValue = $(this).val();
+
+                            $(modal).find('.modal-body').find('[name="' + key + '"]').closest('.form-group').removeClass('required');
+
+                            $.each(element.selected_field, function(k, values) {
+                                if (values.indexOf(newValue) >= 0) {
+                                    $(modal).find('.modal-body').find('[name="' + key + '"]').closest('.form-group').addClass('required');
+                                }
+                            });
+                        }).trigger('change');
+                    });
+                } else {
+                    $(modal).find('.modal-body').find('[name="' + key + '"]').closest('.form-group').addClass('required');
+                }
+            });
+
+            if (data.success) {
+                $(modal).modal('hide');
+
+                displaySuccess(data.success_message);
+
+                settings.success_callback(data);
+            }
+        };
+
+        var ajaxError = function(jqXHR, textStatus, errorThrown) {
+            var new_html = getPopupHtml(selector.popup.product.template, {
+                title: '{{ text_popup_error_title }}',
+                body: '{{ text_popup_error_body }}'.replace(/{error}/g, errorThrown)
+            });
+
+            $(modal).find('.modal-body').html($(new_html).find('.modal-body').html());
+            $(modal).find('.modal-title').html($(new_html).find('.modal-title').html());
+        };
+
+        $(modal).on('hidden.bs.modal', function(e) {
+            $(this).remove();
+        });
+
+        $(modal).on('shown.bs.modal', function(e) {
+            $(selector.popup.product.button_save).click(function(e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: '{{ url_popup }}',
+                    dataType: 'json',
+                    type: 'POST',
+                    data: {
+                        action: 'submit',
+                        operand: settings.operand,
+                        form: $(selector.popup.product.form).serializeObject()
+                    },
+                    beforeSend: function() {
+                        $(modal).modal('show');
+                    },
+                    success: ajaxSuccess,
+                    error: ajaxError,
+                    complete: function() {
+                        // Highlight any found errors
+                        $(modal).find('.modal-body').find('.text-danger').each(function(index, element) {
+                            $(element).closest('.form-group').addClass('has-error');
+                        });
+                    }
+                });
+            });
+        });
+
+        $.ajax({
+            url: '{{ url_popup }}',
+            dataType: 'json',
+            type: 'POST',
+            data: {
+                action : 'view',
+                operand : settings.operand
+            },
+            beforeSend: function() {
+                $(modal).modal('show');
+            },
+            success: ajaxSuccess,
+            error: ajaxError
+        });
+    }
+
+    $(document)
+        .on('click', selector.page, function(e) {
+            e.preventDefault();
+
+            $(selector.list).data('page', parseInt($(this).attr('href')));
+
+            listProducts();
+        })
+        .on('click', '[data-sort]', function(e) {
+            e.preventDefault();
+
+            $(selector.list).data('sort', $(this).attr('data-sort'));
+
+            $(selector.list).data('order', $(selector.list).data('order') == 'ASC' ? 'DESC' : 'ASC');
+
+            listProducts();            
+        })
+        .on('click', selector.button_filter, function(e) {
+            e.preventDefault();
+
+            $(selector.list).data('page', 1);
+
+            listProducts();
+        })
+        .on('change', selector.select_all, function(e) {
+            if ($(this).is(':checked')) {
+                $(selector.checkboxes).prop('checked', true).trigger('change');
+            } else {
+                $(selector.checkboxes).prop('checked', false).trigger('change');
+            }
+
+            updateSelected();
+        })
+        .on ('click', selector.select_all_pages, function(e) {
+            selected_all_pages = true;
+
+            $(selector.select_all).prop('checked', true).trigger('change').attr('disabled', true);
+            $(selector.checkboxes).attr('disabled', true);
+        })
+        .on ('click', selector.deselect_all_pages, function(e) {
+            selected_all_pages = false;
+
+            $(selector.select_all).prop('checked', false).trigger('change').attr('disabled', false);
+            $(selector.checkboxes).attr('disabled', false);
+        })
+        .on('change', selector.checkboxes, function(e) {
+            $(this).closest(selector.row).find(selector.highlightable).removeClass('active');            
+
+            if ($(this).is(':checked')) {
+                $(this).closest(selector.row).find(selector.highlightable).addClass('active');
+            }
+
+            var status = $(selector.checkboxes + ":checked").length == 0;
+
+            $(selector.button_advertise).attr('disabled', status).toggleClass('btn-info', !status).toggleClass('btn-default', status);
+
+            $(selector.button_bulk_edit).attr('disabled', status);
+
+            updateSelected();
+        })
+        .on('hide.bs.dropdown', function(e) {
+            if ($(event.target).closest(selector.campaign_dropdown.container).length > 0) {
+                return false;
+            }
+        })
+        .on('change', selector.campaign_dropdown.checkboxes, function(e) {
+            var this_parent = $(this).closest(selector.campaign_dropdown.container)[0];
+            var this_value = $(this).attr('value');
+            var this_checked = $(this).is(':checked');
+            var remaining_status;
+
+            $(selector.campaign_dropdown.container).each(function(index, element) {
+                if (element != this_parent) {
+                    var other_checkbox = $(element).find('input[type="checkbox"][value="' + this_value + '"]');
+
+                    $(other_checkbox).prop('checked', this_checked);
+
+                    $(other_checkbox).closest(selector.campaign_dropdown.element).toggleClass('active', this_checked);
+                }
+            });
+
+            $(this).closest(selector.campaign_dropdown.element).toggleClass('active', this_checked);
+
+            // Disable/Enable all remaining checkboxes depending on the reached limit
+            remaining_status = $(selector.campaign_dropdown.first_container_checkboxes + ':checked').length == 5;
+
+            $(selector.campaign_dropdown.checkboxes + ":not(:checked)").attr('disabled', remaining_status);
+        })
+        .on('click', selector.button_apply_advertising, function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            advertiseChange();
+        })
+        .on('click', selector.popup.product.button_show, function(e) {
+            e.preventDefault();
+
+            googleFieldsPopup({
+                operand: {
+                    type: 'single',
+                    data: $(this).attr('data-product-advertise-google-id')
+                },
+                success_callback : function(data) {
+                    $(selector.popup.product.button_show + '[data-product-id=' + data.product_id + ']').removeClass('btn-warning').addClass('btn-default');
+                }
+            });
+        })
+        .on('click', selector.button_bulk_edit, function(e) {
+            e.preventDefault();
+
+            var post_data = {
+                all_pages : selected_all_pages ? '1' : '0',
+                filter: getFilterPostData(),
+                select: []
+            };
+
+            $(selector.checkboxes + ':checked').each(function(index, element) {
+                post_data.select.push($(element).val());
+            });
+
+            googleFieldsPopup({
+                operand: {
+                    type: 'multiple',
+                    data: post_data
+                },
+                success_callback : function(data) {
+                    listProducts();
+                }
+            });
+        })
+        .on('click', selector.popup.issues.button_show, function(e) {
+            e.preventDefault();
+
+            var data = {
+                title: '{{ text_popup_loading_title }}',
+                body: '<p>{{ text_popup_loading_body }}<p>'
+            };
+
+            var modal = $(getPopupHtml(selector.popup.issues.template, data));
+
+            var url_popup = $(this).attr('data-url-popup-issues');
+
+            $(modal).on('hidden.bs.modal', function(e) {
+                $(this).remove();
+            });
+
+            var ajaxSuccess = function(data) {
+                var new_html = getPopupHtml(selector.popup.issues.template, data);
+
+                $(modal).find('.modal-body').html($(new_html).find('.modal-body').html());
+                $(modal).find('.modal-title').html($(new_html).find('.modal-title').html());
+            };
+
+            var ajaxError = function(jqXHR, textStatus, errorThrown) {
+                var new_html = getPopupHtml(selector.popup.issues.template, {
+                    title: '{{ text_popup_error_title }}',
+                    body: '{{ text_popup_error_body }}'.replace(/{error}/g, errorThrown)
+                });
+
+                $(modal).find('.modal-body').html($(new_html).find('.modal-body').html());
+                $(modal).find('.modal-title').html($(new_html).find('.modal-title').html());
+            };
+
+            $.ajax({
+                url: url_popup,
+                dataType: 'json',
+                type: 'GET',
+                beforeSend: function() {
+                    $(modal).modal('show');
+                },
+                success: ajaxSuccess,
+                error: ajaxError
+            });
+        })
+        .on('change', selector.filter.category, function(e) {
+            var has_value = $(this).val() != '';
+
+            $(selector.filter.category_autocomplete).attr('disabled', has_value);
+            $(selector.filter.button_category_remove).attr('disabled', !has_value);
+        })
+        .on('click', selector.filter.button_category_remove, function(e) {
+            $(selector.filter.category_autocomplete).val('');
+            $(selector.filter.category).val('').trigger('change');
+        });
+
+    $(document).ready(function() {
+        $(selector.list).data('sort', 'name');
+        $(selector.list).data('order', 'ASC');
+        $(selector.list).data('page', 1);
+
+        listProducts();
+    });
+
+    $(selector.filter.product_name).autocomplete({
+        'source': function(request, response) {
+            $.ajax({
+                url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+                dataType: 'json',
+                success: function(json) {
+                    response($.map(json, function(item) {
+                        return {
+                            label: item['name'],
+                            value: item['product_id']
+                        }
+                    }));
+                }
+            });
+        },
+        'select': function(item) {
+            $(selector.filter.product_name).val(item.label);
+        }
+    });
+
+    $(selector.filter.product_model).autocomplete({
+        'source': function(request, response) {
+            $.ajax({
+                url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_model=' +  encodeURIComponent(request),
+                dataType: 'json',
+                success: function(json) {
+                    response($.map(json, function(item) {
+                        return {
+                            label: item['model'],
+                            value: item['product_id']
+                        }
+                    }));
+                }
+            });
+        },
+        'select': function(item) {
+            $(selector.filter.product_model).val(item.label);
+        }
+    });
+
+    $(selector.filter.category_autocomplete).autocomplete({
+        'source': function(request, response) {
+            $.ajax({
+                url: '{{ url_category_autocomplete }}&filter_name=' +  encodeURIComponent(request),
+                dataType: 'json',
+                success: function(json) {
+                    response($.map(json, function(item) {
+                        return {
+                            label: item['name'],
+                            value: item['category_id']
+                        }
+                    }));
+                }
+            });
+        },
+        'select': function(item) {
+            $(selector.filter.category_autocomplete).val(item.label);
+
+            $(selector.filter.category).val(item.value).trigger('change');
+        }
+    });
+
+    $.fn.serializeObject = function(){
+        var self = this,
+            json = {},
+            push_counters = {},
+            patterns = {
+                "validate": /^[a-zA-Z][a-zA-Z0-9_]*(?:\[(?:\d*|[a-zA-Z0-9_]+)\])*$/,
+                "key":      /[a-zA-Z0-9_]+|(?=\[\])/g,
+                "push":     /^$/,
+                "fixed":    /^\d+$/,
+                "named":    /^[a-zA-Z0-9_]+$/
+            };
+
+
+        this.build = function(base, key, value){
+            base[key] = value;
+            return base;
+        };
+
+        this.push_counter = function(key){
+            if(push_counters[key] === undefined){
+                push_counters[key] = 0;
+            }
+            return push_counters[key]++;
+        };
+
+        $.each($(this).serializeArray(), function(){
+
+            // skip invalid keys
+            if(!patterns.validate.test(this.name)){
+                return;
+            }
+
+            var k,
+                keys = this.name.match(patterns.key),
+                merge = this.value,
+                reverse_key = this.name;
+
+            while((k = keys.pop()) !== undefined){
+
+                // adjust reverse_key
+                reverse_key = reverse_key.replace(new RegExp("\\[" + k + "\\]$"), '');
+
+                // push
+                if(k.match(patterns.push)){
+                    merge = self.build([], self.push_counter(reverse_key), merge);
+                }
+
+                // fixed
+                else if(k.match(patterns.fixed)){
+                    merge = self.build([], k, merge);
+                }
+
+                // named
+                else if(k.match(patterns.named)){
+                    merge = self.build({}, k, merge);
+                }
+            }
+
+            json = $.extend(true, json, merge);
+        });
+
+        return json;
+    };
+})(jQuery);
+</script>

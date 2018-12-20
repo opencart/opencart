@@ -1,0 +1,181 @@
+<style type="text/css">
+    .control-label.control-label-left {
+        text-align:left;
+        padding-bottom:5px;
+    }
+
+    .margin-top-10 {
+        margin-top: 10px;
+    }
+</style>
+<form id="form-popup-product">
+    <div class="alert alert-info">
+        {{ text_info_popup_product }}
+    </div>
+
+    <div class="form-horizontal">
+        {% if error %}
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;{{ error }}
+            </div>
+        {% endif %}
+
+        <div class="form-group">
+            <label for="select-google-product-category" class="col-xs-12 control-label control-label-left"><span data-toggle="tooltip" title="{{ help_google_product_category }}">{{ entry_google_product_category }}</span></label>
+            <div class="col-xs-12">
+                <select name="google_product_category" id="select-google-product-category" class="form-control">
+                    {% for id, name in google_product_categories %}
+                        <option value="{{ id }}" {{ id == google_product_category ? 'selected' }}>{{ name }}</option>
+                    {% endfor %}
+                </select>
+                {% if error_product_category %}
+                    <div class="text-danger">{{ error_product_category }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="select-color" class="col-xs-12 control-label control-label-left"><span data-toggle="tooltip" title="{{ help_color }}">{{ entry_color }}</span></label>
+            <div class="col-xs-12">
+                <select id="select-color" name="color" class="form-control">
+                    {% for id, name in options %}
+                        <option value="{{ id }}" {{ id == color ? 'selected' }}>{{ name }}</option>
+                    {% endfor %}
+                </select>
+                {% if error_color %}
+                    <div class="text-danger">{{ error_color }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-sm-4 margin-top-10">
+                        <label for="select-size-system" class="control-label control-label-left"><span data-toggle="tooltip" title="{{ help_size_system }}">{{ entry_size_system }}</span></label>
+                        <select id="select-size-system" name="size_system" class="form-control">
+                            {% for id, name in size_systems %}
+                                <option value="{{ id }}" {{ id == size_system ? 'selected' }}>{{ name }}</option>
+                            {% endfor %}
+                        </select>
+                        {% if error_size_system %}
+                            <div class="text-danger">{{ error_size_system }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-sm-4 margin-top-10">
+                        <label for="select-size-type" class="control-label control-label-left"><span data-toggle="tooltip" title="{{ help_size_type }}">{{ entry_size_type }}</span></label>
+                        <select id="select-size-type" name="size_type" class="form-control">
+                            {% for id, name in size_types %}
+                                <option value="{{ id }}" {{ id == size_type ? 'selected' }}>{{ name }}</option>
+                            {% endfor %}
+                        </select>
+                        {% if error_size_type %}
+                            <div class="text-danger">{{ error_size_type }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-sm-4 margin-top-10">
+                        <label for="select-size" class="control-label control-label-left"><span data-toggle="tooltip" title="{{ help_size }}">{{ entry_size }}</span></label>
+                        <select id="select-size" name="size" class="form-control">
+                            {% for id, name in options %}
+                                <option value="{{ id }}" {{ id == size ? 'selected' }}>{{ name }}</option>
+                            {% endfor %}
+                        </select>
+                        {% if error_size %}
+                            <div class="text-danger">{{ error_size }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="select-condition" class="col-xs-12 control-label control-label-left"><span data-toggle="tooltip" title="{{ help_condition }}">{{ entry_condition }}</span></label>
+            <div class="col-xs-12">
+                <select name="condition" id="select-condition" class="form-control">
+                    {% for id, name in conditions %}
+                        <option value="{{ id }}" {{ id == condition ? 'selected' }}>{{ name }}</option>
+                    {% endfor %}
+                </select>
+                {% if error_condition %}
+                    <div class="text-danger">{{ error_condition }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="select-age-group" class="col-xs-12 control-label control-label-left"><span data-toggle="tooltip" title="{{ help_age_group }}">{{ entry_age_group }}</span></label>
+            <div class="col-xs-12">
+                <select name="age_group" id="select-age-group" class="form-control">
+                    {% for id, name in age_groups %}
+                        <option value="{{ id }}" {{ id == age_group ? 'selected' }}>{{ name }}</option>
+                    {% endfor %}
+                </select>
+                {% if error_age_group %}
+                    <div class="text-danger">{{ error_age_group }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="select-gender" class="col-xs-12 control-label control-label-left"><span data-toggle="tooltip" title="{{ help_gender }}">{{ entry_gender }}</span></label>
+            <div class="col-xs-12">
+                <select name="gender" id="select-gender" class="form-control">
+                    {% for id, name in genders %}
+                        <option value="{{ id }}" {{ id == gender ? 'selected' }}>{{ name }}</option>
+                    {% endfor %}
+                </select>
+                {% if error_gender %}
+                    <div class="text-danger">{{ error_gender }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-12 control-label control-label-left"><span data-toggle="tooltip" title="{{ help_adult }}">{{ entry_adult }}</span></label>
+            <div class="col-xs-12">
+                <label class="radio-inline">
+                    <input type="radio" name="adult" value="1" {{ adult ? "checked" }} /> {{ text_yes }}
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="adult" value="0" {{ not adult ? "checked" }} /> {{ text_no }}
+                </label>
+                {% if error_adult %}
+                    <div class="text-danger">{{ error_adult }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-12 control-label control-label-left"><span data-toggle="tooltip" title="{{ help_multipack }}">{{ entry_multipack }}</span></label>
+            <div class="col-xs-12">
+                <input type="number" name="multipack" value="{{ multipack }}" class="form-control" />
+                {% if error_multipack %}
+                    <div class="text-danger">{{ error_multipack }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-12 control-label control-label-left"><span data-toggle="tooltip" title="{{ help_is_bundle }}">{{ entry_is_bundle }}</span></label>
+            <div class="col-xs-12">
+                <label class="radio-inline">
+                    <input type="radio" name="is_bundle" value="1" {{ is_bundle ? "checked" }} /> {{ text_yes }}
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="is_bundle" value="0" {{ not is_bundle ? "checked" }} /> {{ text_no }}
+                </label>
+                {% if error_is_bundle %}
+                    <div class="text-danger">{{ error_is_bundle }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if error %}
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;{{ error }}
+            </div>
+        {% endif %}
+    </div>
+</form>

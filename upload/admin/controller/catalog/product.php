@@ -371,7 +371,8 @@ class ControllerCatalogProduct extends Controller {
 				'special'    => $special,
 				'quantity'   => $result['quantity'],
 				'status'     => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-				'edit'       => $this->url->link('catalog/product/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . $url)
+				'edit'       => $this->url->link('catalog/product/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . $url),
+				'variant'    => $this->url->link('catalog/product/add', 'user_token=' . $this->session->data['user_token'] . '&variant_id=' . $result['product_id'] . $url)
 			);
 		}
 
@@ -433,7 +434,6 @@ class ControllerCatalogProduct extends Controller {
 		$data['sort_model'] = $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . '&sort=p.model' . $url);
 		$data['sort_price'] = $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . '&sort=p.price' . $url);
 		$data['sort_quantity'] = $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . '&sort=p.quantity' . $url);
-		$data['sort_status'] = $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . '&sort=p.status' . $url);
 		$data['sort_order'] = $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . '&sort=p.sort_order' . $url);
 
 		$url = '';
@@ -585,12 +585,29 @@ class ControllerCatalogProduct extends Controller {
 			$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
 		}
 
+		// If variant_id then we need to get the variant info
+		if (isset($this->request->get['variant_id'])) {
+			$product_id = (int)$this->request->get['variant_id'];
+		} else {
+			$product_id = 0;
+		}
+
+		if (isset($this->request->get['variant_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+			$product_info = $this->model_catalog_product->getProduct($this->request->get['variant_id']);
+		}
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->request->get['product_id'])) {
 			$data['product_id'] = (int)$this->request->get['product_id'];
 		} else {
 			$data['product_id'] = 0;
+		}
+
+		if (isset($this->request->get['variant_id'])) {
+			$data['variant_id'] = (int)$this->request->get['variant_id'];
+		} else {
+			$data['variant_id'] = 0;
 		}
 
 		$this->load->model('localisation/language');

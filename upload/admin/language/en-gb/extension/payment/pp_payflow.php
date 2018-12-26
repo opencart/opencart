@@ -6,7 +6,7 @@ $_['heading_title']		 = 'PayPal Payflow Pro';
 $_['text_extension']     = 'Extensions';
 $_['text_success']		 = 'Success: You have modified PayPal Direct (UK) account details!';
 $_['text_edit']          = 'Edit PayPal Payflow Pro';
-$_['text_pp_payflow']	 = '<a target="_BLANK" href="https://www.paypal.com/uk/mrb/pal=V4T754QB63XXL"><img src="view/image/payment/paypal.png" alt="PayPal Payflow Pro" title="PayPal Payflow Pro" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_pp_payflow']	 = '<a target="_BLANK" href="https://www.paypal.com/uk/merchantsignup/applicationChecklist?utm_source=A_partner_UK_201812_X_B2B_OpenCart_SMB_gb_EN&utm_medium=web&pal=V4T754QB63XXL"><img src="view/image/payment/paypal.png" alt="PayPal Payflow Pro" title="PayPal Payflow Pro" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_authorization'] = 'Authorization';
 $_['text_sale']			 = 'Sale';
 

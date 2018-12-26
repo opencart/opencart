@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
-        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-customer').toggleClass('d-none');" class="btn btn-light d-md-none d-lg-none"><i class="fas fa-filter"></i></button>
+        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-gdpr').toggleClass('d-none');" class="btn btn-light d-md-none d-lg-none"><i class="fas fa-filter"></i></button>
         <button type="button" data-toggle="tooltip" title="{{ text_approve }}" class="btn btn-success"><i class="fas fa-check"></i></button>
         <button type="button" data-toggle="tooltip" title="{{ text_deny }}" class="btn btn-warning"><i class="fas fa-times"></i></button>
         <button type="button" data-toggle="tooltip" title="{{ text_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
@@ -86,6 +86,39 @@ $('#gdpr').on('click', '.pagination a', function(e) {
 $('#gdpr').load('index.php?route=customer/gdpr/gdpr&user_token={{ user_token }}');
 
 $('#gdpr').on('click', '.btn-success, .btn-warning, .btn-danger', function(e) {
+	e.preventDefault();
+
+	var element = this;
+
+	$.ajax({
+		url: $(element).attr('href'),
+		dataType: 'json',
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(json) {
+			$('.alert-dismissible').remove();
+
+			if (json['error']) {
+				$('#gdpr').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+
+			if (json['success']) {
+				$('#gdpr').load('index.php?route=customer/gdpr/gdpr&user_token={{ user_token }}');
+
+				$('#gdpr').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$('.page-header').on('click', '.btn-success, .btn-warning, .btn-danger', function(e) {
 	e.preventDefault();
 
 	var element = this;

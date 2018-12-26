@@ -141,16 +141,24 @@ class ControllerCustomerGdpr extends Controller {
 		} else {
 			$this->load->model('customer/gdpr');
 
+
+
+
 			$gdpr_info = $this->model_customer_gdpr->getGdpr($this->request->get['gdpr_id']);
 
 			if ($gdpr_info) {
 				if ($gdpr_info['action'] == 'remove') {
 					$status = 1;
+
+					$this->model_customer_gdpr->editStatus($this->request->get['gdpr_id'], $status);
 				} else {
 					$status = 2;
 				}
 
-				$this->model_customer_gdpr->editStatus($this->request->get['gdpr_id'], $status);
+
+
+
+
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -168,9 +176,19 @@ class ControllerCustomerGdpr extends Controller {
 		if (!$this->user->hasPermission('modify', 'customer/gdpr')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
+			$gdprs = array();
+
+			if (isset($this->request->post['selected'])) {
+				$gdprs = $this->request->post['selected'];
+			} elseif (isset($this->request->get['gdpr_id'])) {
+				$gdprs[] = $this->request->get['gdpr_id'];
+			}
+
 			$this->load->model('customer/gdpr');
 
-			$this->model_customer_gdpr->editStatus($this->request->get['gdpr_id'], -1);
+			foreach ($gdprs as $gdpr_id) {
+				$this->model_customer_gdpr->editStatus($gdpr_id, -1);
+			}
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -187,9 +205,19 @@ class ControllerCustomerGdpr extends Controller {
 		if (!$this->user->hasPermission('modify', 'customer/gdpr')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
+			$gdprs = array();
+
+			if (isset($this->request->post['selected'])) {
+				$gdprs = $this->request->post['selected'];
+			} elseif (isset($this->request->get['gdpr_id'])) {
+				$gdprs[] = $this->request->get['gdpr_id'];
+			}
+
 			$this->load->model('customer/gdpr');
 
-			$this->model_customer_gdpr->deleteGdpr($this->request->get['gdpr_id']);
+			foreach ($gdprs as $gdpr_id) {
+				$this->model_customer_gdpr->deleteGdpr($gdpr_id);
+			}
 
 			$json['success'] = $this->language->get('text_success');
 		}

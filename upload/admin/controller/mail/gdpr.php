@@ -189,7 +189,7 @@ class ControllerMailGdpr extends Controller {
 
 	// catalog/model/customer/gdpr/addGdpr
 	//public function data(&$route, &$args, &$output) {
-	public function export() {
+	public function export(&$route, &$args, &$output) {
 		$args[0] = 3;
 
 		$this->load->model('customer/customer');

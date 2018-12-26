@@ -233,26 +233,20 @@ class ControllerCatalogProductVariant extends Controller {
 		$filter_data = array(
 			'filter_product_id'	=> $filter_product_id,
 			'filter_product'	=> $filter_product,
-			'filter_option'	    => $filter_option,
 			'sort'              => $sort,
 			'order'             => $order,
 			'start'             => ($page - 1) * $this->config->get('config_limit_admin'),
 			'limit'             => $this->config->get('config_limit_admin')
 		);
 
-		$product_variant_total = $this->model_catalog_product_variant->getTotalProductOptions($filter_data);
+		$product_variant_total = $this->model_catalog_product_variant->getTotalProductVariants($filter_data);
 
-		$results = $this->model_catalog_product_variant->getProductOptions($filter_data);
+		$results = $this->model_catalog_product_variant->getProductVariants($filter_data);
 
 		foreach ($results as $result) {
 			$data['product_variants'][] = array(
 				'product_variant_id' => $result['product_variant_id'],
-				'name'               => $result['name'],
 				'product'            => $result['product'],
-				'quantity'           => $result['quantity'],
-				'price'              => $result['price'],
-				'type'               => $this->language->get('text_' . $result['type']),
-				'sort_order'         => $result['sort_order'],
 				'edit'               => $this->url->link('catalog/product_variant/edit', 'user_token=' . $this->session->data['user_token'] . '&product_variant_id=' . $result['product_variant_id'] . $url)
 			);
 		}
@@ -293,8 +287,7 @@ class ControllerCatalogProductVariant extends Controller {
 
 		$data['sort_product'] = $this->url->link('catalog/product_variant', 'user_token=' . $this->session->data['user_token'] . '&sort=pd.name' . $url);
 		$data['sort_option'] = $this->url->link('catalog/product_variant', 'user_token=' . $this->session->data['user_token'] . '&sort=od.name' . $url);
-		$data['sort_type'] = $this->url->link('catalog/product_variant', 'user_token=' . $this->session->data['user_token'] . '&sort=o.type' . $url);
-		$data['sort_sort_order'] = $this->url->link('catalog/product_variant', 'user_token=' . $this->session->data['user_token'] . '&sort=o.sort_order' . $url);
+		$data['sort_option_value'] = $this->url->link('catalog/product_variant', 'user_token=' . $this->session->data['user_token'] . '&sort=o.type' . $url);
 
 		$url = '';
 
@@ -445,13 +438,12 @@ class ControllerCatalogProductVariant extends Controller {
 			$data['option'] = '';
 		}
 
-		if (isset($this->request->post['required'])) {
-			$data['required'] = $this->request->post['required'];
-		} elseif (!empty($product_variant_info)) {
-			$data['required'] = $product_variant_info['required'];
-		} else {
-			$data['required'] = '';
-		}
+
+
+
+
+
+
 
 		$this->load->model('catalog/option');
 

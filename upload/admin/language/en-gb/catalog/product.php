@@ -9,7 +9,7 @@ $_['text_add']               = 'Add Product';
 $_['text_edit']              = 'Edit Product';
 $_['text_filter']            = 'Filter';
 $_['text_default']           = 'Default';
-$_['text_option']            = 'Options';
+$_['text_variant_add']       = 'Add Variant';
 $_['text_keyword']           = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';
 
 // Column

@@ -895,6 +895,36 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
         return new \RuntimeException("#" . $id . ": " . $error_message);
     }
 
+    public function logHandler($code, $message, $file, $line) {
+        if (error_reporting() === 0) {
+            return false;
+        }
+
+        switch ($code) {
+            case E_NOTICE:
+            case E_USER_NOTICE:
+                $error = 'Notice';
+                break;
+            case E_WARNING:
+            case E_USER_WARNING:
+                $error = 'Warning';
+                break;
+            case E_ERROR:
+            case E_USER_ERROR:
+                $error = 'Fatal Error';
+                break;
+            default:
+                $error = 'Unknown';
+                break;
+        }
+
+        $message = 'PHP ' . $error . ':  ' . $message . ' in ' . $file . ' on line ' . $line;
+
+        if ($this->config->get('error_log')) {
+            $this->log->write($message);
+        }
+    }
+
     public function debugLog($type, $data, $id = null) {
         if (!$this->config->get('payment_amazon_login_pay_debug')) {
             return;

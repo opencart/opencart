@@ -579,7 +579,16 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
                 $this->model_extension_payment_amazon_login_pay->closeOrder($order_reference_id, "A capture has been performed. Closing the order.");
             }
 
-            $this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_amazon_login_pay_pending_status'));
+            // Log any errors triggered by addOrderHistory, but without displaying them
+            set_error_handler(array($this->model_extension_payment_amazon_login_pay, 'logHandler'));
+
+            try {
+                $this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_amazon_login_pay_pending_status'));
+            } catch (\Exception $e) {
+                if ($this->config->get('error_log')) {
+                    $this->log->write($e->getMessage());
+                }
+            }
 
             $this->response->redirect($this->url->link('checkout/success', '', true));
         } catch (\RuntimeException $e) {

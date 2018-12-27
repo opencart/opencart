@@ -598,12 +598,6 @@ class ControllerCatalogProduct extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		if (isset($this->request->get['product_id'])) {
-			$data['product_id'] = (int)$this->request->get['product_id'];
-		} else {
-			$data['product_id'] = 0;
-		}
-
 		if (isset($this->request->get['variant_id'])) {
 			$data['variant_id'] = (int)$this->request->get['variant_id'];
 		} else {
@@ -617,7 +611,7 @@ class ControllerCatalogProduct extends Controller {
 		if (isset($this->request->post['product_description'])) {
 			$data['product_description'] = $this->request->post['product_description'];
 		} elseif (!empty($product_info)) {
-			$data['product_description'] = $this->model_catalog_product->getProductDescriptions($this->request->get['product_id']);
+			$data['product_description'] = $this->model_catalog_product->getProductDescriptions($product_id);
 		} else {
 			$data['product_description'] = array();
 		}

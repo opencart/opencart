@@ -64,7 +64,7 @@
                     <div class="input-group">
                       <input type="text" name="quantity[{{ product.cart_id }}]" value="{{ product.quantity }}" size="1" class="form-control">
                       <div class="input-group-append">
-                        <button type="submit" data-toggle="tooltip" title="{{ button_update }}" class="btn btn-primary"><i class="fas fa-refresh"></i></button>
+                        <button type="submit" data-toggle="tooltip" title="{{ button_update }}" class="btn btn-primary"><i class="fas fa-sync-alt"></i></button>
                         <button type="button" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger" onclick="cart.remove('{{ product.cart_id }}');"><i class="fas fa-times-circle"></i></button>
                       </div>
                     </div>

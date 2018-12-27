@@ -1,5 +1,5 @@
+{{ promotion }}
 <fieldset>
-  <legend>{{ text_recommended }}</legend>
   {% if error_warning %}
     <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -10,14 +10,6 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
   {% endif %}
-  <div class="container-fluid">
-    {% if promotion_1 and promotion_2 %}
-      <div class="row">
-        {{ promotion_1 }}
-        {{ promotion_2 }}
-      </div>
-    {% endif %}
-  </div>
   <legend>{{ heading_title }}</legend>
   <div class="table-responsive">
     <table class="table table-bordered table-hover">

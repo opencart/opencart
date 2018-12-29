@@ -34,10 +34,16 @@ class ModelCatalogProduct extends Model {
 			}
 		}
 
+		if (isset($data['product_variant'])) {
+			foreach ($data['product_variant'] as $product_variant) {
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "product_variant` SET `product_id` = '" . (int)$product_id . "', `product_option_id` = '" . (int)$product_variant['product_option_id'] . "', `product_option_value_id` = '" . (int)$product_variant['product_option_value_id'] . "', `value` = '" . $this->db->escape($product_variant['value']) . "'");
+			}
+		}
+
 		if (isset($data['product_recurring'])) {
 			foreach ($data['product_recurring'] as $product_recurring) {
 				if (isset($product_recurring['recurring_id'])) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "product_recurring` SET `product_id` = " . (int)$product_id . ", customer_group_id = " . (int)$product_recurring['customer_group_id'] . ", `recurring_id` = " . (int)$product_recurring['recurring_id']);
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "product_recurring` SET `product_id` = '" . (int)$product_id . "', customer_group_id = '" . (int)$product_recurring['customer_group_id'] . "', `recurring_id` = '" . (int)$product_recurring['recurring_id'] . "'");
 				}
 			}
 		}
@@ -150,6 +156,14 @@ class ModelCatalogProduct extends Model {
 						$this->db->query("INSERT INTO " . DB_PREFIX . "product_attribute SET product_id = '" . (int)$product_id . "', attribute_id = '" . (int)$product_attribute['attribute_id'] . "', language_id = '" . (int)$language_id . "', text = '" .  $this->db->escape($product_attribute_description['text']) . "'");
 					}
 				}
+			}
+		}
+
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_variant WHERE product_id = '" . (int)$product_id . "'");
+
+		if (isset($data['product_variant'])) {
+			foreach ($data['product_variant'] as $product_variant) {
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "product_variant` SET `product_id` = '" . (int)$product_id . "', `product_option_id` = '" . (int)$product_variant['product_option_id'] . "', `product_option_value_id` = '" . (int)$product_variant['product_option_value_id'] . "', `value` = '" . $this->db->escape($product_variant['value']) . "'");
 			}
 		}
 
@@ -462,6 +476,21 @@ class ModelCatalogProduct extends Model {
 		}
 
 		return $product_attribute_data;
+	}
+
+	public function getProductVariants($product_id) {
+		$product_variant_data = array();
+
+		$product_variant_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_variant WHERE product_id = '" . (int)$product_id . "'");
+
+		foreach ($product_variant_query->rows as $product_variant) {
+			$product_variant_data[$product_variant['product_option_id']] = array(
+
+
+			);
+		}
+
+		return $product_variant_data;
 	}
 
 	public function getProductImages($product_id) {

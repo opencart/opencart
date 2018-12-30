@@ -5305,7 +5305,7 @@ function db_schema() {
 			),
 			array(
 				'name' => 'data',
-				'type' => 'longtext',
+				'type' => 'text',
 				'not_null' => true
 			),
 			array(

@@ -4039,6 +4039,12 @@ function db_schema() {
 				'auto_increment' => true
 			),
 			array(
+				'name' => 'variant_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			),
+			array(
 				'name' => 'model',
 				'type' => 'varchar(64)',
 				'not_null' => true
@@ -4076,6 +4082,11 @@ function db_schema() {
 			array(
 				'name' => 'location',
 				'type' => 'varchar(128)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'variant',
+				'type' => 'text',
 				'not_null' => true
 			),
 			array(
@@ -4695,54 +4706,6 @@ function db_schema() {
 				'name' => 'product_id',
 				'key' => array(
 					'product_id'
-				)
-			)
-		),
-		'engine' => 'MyISAM',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
-	);
-
-	$tables[] = array(
-		'name' => 'product_variant',
-		'field' => array(
-			array(
-				'name' => 'product_variant_id',
-				'type' => 'int(11)',
-				'not_null' => true,
-				'auto_increment' => true
-			),
-			array(
-				'name' => 'product_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'product_option_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'product_option_value_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'value',
-				'type' => 'text',
-				'not_null' => true
-			)
-		),
-		'primary' => array(
-			'product_variant_id'
-		),
-		'index' => array(
-			array(
-				'name' => 'product_id',
-				'key' => array(
-					'product_id',
-					'product_option_id',
-					'product_option_value_id'
 				)
 			)
 		),

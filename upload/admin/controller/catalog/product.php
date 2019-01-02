@@ -963,35 +963,21 @@ class ControllerCatalogProduct extends Controller {
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
+		if (isset($this->request->post['product_variant'])) {
+			$data['product_variant'] = $this->request->post['product_variant'];
+		} elseif (!empty($product_info)) {
+			$data['product_variant'] = json_decode($product_info['variant'], true);
+		} else {
+			$data['product_variant'] = array();
+		}
+
+		// Variants
 		$this->load->model('catalog/product_option');
 		$this->load->model('catalog/option');
 
-
-
-		if (isset($this->request->post['product_variant'])) {
-			$product_variants = $this->request->post['product_variant'];
-		} elseif (!empty($product_info)) {
-			$product_variants = $this->model_catalog_product->getProductVariants($product_id);
-		} else {
-			$product_variants = array();
-		}
-
-		$data['product_variant'] = array();
-
-		foreach ($product_variants as $product_variant) {
-
-
-			$data['product_variant'][$product_variant['product_option_id']] = array(
-				'product_option_id'       => $product_variant['product_option_id'],
-				'product_option_value_id' => $product_variant['product_option_value_id'],
-				'value'                   => $product_variant['value']
-			);
-		}
-
-		// List options
+		// Options
 		$data['options'] = array();
 
-		//if ($product_info['variant_id']) {
 		$product_options = $this->model_catalog_product_option->getProductOptionsByProductId($product_id);
 
 		foreach ($product_options as $product_option) {
@@ -1023,24 +1009,6 @@ class ControllerCatalogProduct extends Controller {
 				'required'             => $product_option['required']
 			);
 		}
-		//}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 		if (isset($this->request->post['product_discount'])) {
 			$product_discounts = $this->request->post['product_discount'];

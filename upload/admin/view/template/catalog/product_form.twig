@@ -440,29 +440,29 @@
                   {% if option.type == 'select' %}
                     <div class="form-group row {% if option.required %} required{% endif %}">
                       <label class="col-sm-2 col-form-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
-                      <div class="col-sm-10"><select name="product_variant[{{ option.product_option_id }}][product_option_id]" id="input-option{{ option.product_option_id }}" class="form-control">
+                      <div class="col-sm-10"><select name="product_variant[{{ option.product_option_id }}]" id="input-option{{ option.product_option_id }}" class="form-control">
                           <option value="">{{ text_select }}</option>
                           {% for option_value in option.product_option_value %}
 
 
-                            {% if product_variant[option.product_option_id] and product_variant[option.product_option_id].product_option_value_id == option_value.product_option_value_id %}
+                            {% if product_variant[option.product_option_id] and option_value.product_option_value_id == product_variant[option.product_option_id] %}
 
 
 
 
 
-                            <option value="{{ option_value.product_option_value_id }}" selected>{{ option_value.name }}
-                              {% if option_value.price %}
-                                ({{ option_value.price_prefix }}{{ option_value.price }})
-                              {% endif %}</option>
+                              <option value="{{ option_value.product_option_value_id }}" selected>{{ option_value.name }}
+                                {% if option_value.price %}
+                                  ({{ option_value.price_prefix }}{{ option_value.price }})
+                                {% endif %}</option>
 
 
                             {% else %}
 
-                          <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }}
-                            {% if option_value.price %}
-                              ({{ option_value.price_prefix }}{{ option_value.price }})
-                            {% endif %}</option>
+                              <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }}
+                                {% if option_value.price %}
+                                  ({{ option_value.price_prefix }}{{ option_value.price }})
+                                {% endif %}</option>
 
 
                             {% endif %}
@@ -470,7 +470,8 @@
 
 
                           {% endfor %}
-                        </select></div>
+                        </select>
+                      </div>
                     </div>
                   {% endif %}
 
@@ -483,14 +484,15 @@
                             <div class="form-check">
                               <label>
 
+                                {% if product_variant[option.product_option_id] and option_value.product_option_value_id == product_variant[option.product_option_id] %}
 
+                                  <input type="radio" name="product_variant[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" class="form-check-input" checked/>
 
+                                {% else %}
 
+                                  <input type="radio" name="product_variant[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" class="form-check-input"/>
 
-                                <input type="radio" name="product_variant[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" class="form-check-input"/>
-
-
-
+                                {% endif %}
 
 
                                 {% if option_value.image %}<img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
@@ -498,6 +500,8 @@
                                 {% if option_value.price %}
                                   ({{ option_value.price_prefix }}{{ option_value.price }})
                                 {% endif %}
+
+                                <input type="hidden" name="product_variant[{{ option.product_option_id }}]" value=""/>
                               </label>
                             </div>
                           {% endfor %}
@@ -516,11 +520,15 @@
                               <label>
 
 
+                                {% if product_variant[option.product_option_id] and option_value.product_option_value_id in product_variant[option.product_option_id] %}
 
-                                <input type="checkbox" name="option[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" class="form-check-input"/>
+                                  <input type="checkbox" name="option[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" class="form-check-input"/>
 
+                                {% else %}
 
+                                  <input type="checkbox" name="option[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" class="form-check-input"/>
 
+                                {% endif %}
 
 
                                 {% if option_value.image %} <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
@@ -539,13 +547,13 @@
                     <div class="form-group row{% if option.required %} required{% endif %}">
                       <label class="col-sm-2 col-form-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
 
-                      {{ product_variant[option.product_option_id] ? product_variant[option.product_option_id].meta_title }}
+
 
                       <div class="col-sm-10">
 
-                        <input type="text" name="product_variant[{{ option.product_option_id }}]" value="{{ option.value }}" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
+                        <input type="text" name="product_variant[{{ option.product_option_id }}]" value="{{ product_variant[option.product_option_id] ? product_variant[option.product_option_id] : option.value }}" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
 
-
+                        <input type="hidden" name="product_variant[{{ option.product_option_value_id }}][value]" value=""/>
 
                       </div>
                     </div>
@@ -555,7 +563,7 @@
                     <div class="form-group row{% if option.required %} required{% endif %}">
                       <label class="col-sm-2 col-form-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
                       <div class="col-sm-10">
-                        <textarea name="product_variant[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control">{{ option.value }}</textarea>
+                        <textarea name="product_variant[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control">{{ product_variant[option.product_option_id] ? product_variant[option.product_option_id] : option.value }}</textarea>
                       </div>
                     </div>
                   {% endif %}
@@ -565,7 +573,7 @@
                       <label class="col-sm-2 col-form-label">{{ option.name }}</label>
                       <div class="col-sm-10">
                         <button type="button" id="button-upload{{ option.product_option_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
-                        <input type="hidden" name="product_variant[{{ option.product_option_id }}]" value="" id="input-option{{ option.product_option_id }}"/>
+                        <input type="hidden" name="product_variant[{{ option.product_option_id }}]" value="{{ product_variant[option.product_option_id] ? product_variant[option.product_option_id] : option.value }}" id="input-option{{ option.product_option_id }}"/>
                       </div>
                     </div>
                   {% endif %}
@@ -575,7 +583,7 @@
                       <label class="col-sm-2 col-form-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
                       <div class="col-sm-10">
                         <div class="input-group date">
-                          <input type="text" name="product_variant[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
+                          <input type="text" name="product_variant[{{ option.product_option_id }}]" value="{{ product_variant[option.product_option_id] ? product_variant[option.product_option_id] : option.value }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
                           <div class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                           </div>
@@ -589,7 +597,7 @@
                       <label class="col-sm-2 col-form-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
                       <div class="col-sm-10">
                         <div class="input-group datetime">
-                          <input type="text" name="product_variant[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
+                          <input type="text" name="product_variant[{{ option.product_option_id }}]" value="{{ product_variant[option.product_option_id] ? product_variant[option.product_option_id] : option.value }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
                           <div class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                           </div>
@@ -598,12 +606,13 @@
                     </div>
                   {% endif %}
 
+
                   {% if option.type == 'time' %}
                     <div class="form-group row{% if option.required %} required{% endif %}">
                       <label class="col-sm-2 col-form-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
                       <div class="col-sm-10">
                         <div class="input-group time">
-                          <input type="text" name="product_variant[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
+                          <input type="text" name="product_variant[{{ option.product_option_id }}]" value="{{ product_variant[option.product_option_id] ? product_variant[option.product_option_id] : option.value }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
                           <div class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                           </div>
@@ -617,8 +626,6 @@
 
               </div>
             {% endif %}
-
-
 
 
             <div class="tab-pane" id="tab-recurring">

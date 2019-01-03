@@ -27,7 +27,7 @@
         },
         "time": "2015-07-15T15:07:13+00:00",
         "type": "library",
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-0": {
                 "Braintree": "lib"
@@ -74,7 +74,7 @@
         },
         "time": "2016-12-29T09:57:23+00:00",
         "type": "library",
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-4": {
                 "Cardinity\\": "src"
@@ -433,7 +433,7 @@
         },
         "time": "2015-12-07T09:51:35+00:00",
         "type": "library",
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-4": {
                 "": "src/"
@@ -479,7 +479,7 @@
             "pscss"
         ],
         "type": "library",
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "classmap": [
                 "scss.inc.php"

@@ -61,7 +61,7 @@ final class MySQLi {
 	}
 	
 	public function __destruct() {
-		if (!$this->connection) {
+		if ($this->connection) {
 			$this->connection->close();
 		}
 	}

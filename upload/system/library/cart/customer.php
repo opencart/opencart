@@ -52,7 +52,7 @@ class Customer {
 				}
 
 				if ($rehash) {
-					$this->db->query("UPDATE " . DB_PREFIX . "customer SET salt = '', password = '" . $this->db->escape(password_hash($password, PASSWORD_DEFAULT)) . "' WHERE customer_id = '" . (int)$this->customer_id . "'");
+					$this->db->query("UPDATE " . DB_PREFIX . "customer SET salt = '', password = '" . $this->db->escape(password_hash($password, PASSWORD_DEFAULT)) . "' WHERE customer_id = '" . (int)$customer_query->row['customer_id'] . "'");
 				}
 			}
 

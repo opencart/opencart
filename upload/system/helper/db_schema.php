@@ -4041,8 +4041,7 @@ function db_schema() {
 			array(
 				'name' => 'variant_id',
 				'type' => 'int(11)',
-				'not_null' => true,
-				'auto_increment' => true
+				'not_null' => true
 			),
 			array(
 				'name' => 'model',

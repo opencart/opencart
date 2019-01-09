@@ -65,7 +65,7 @@
             {% endif %}</td>
           <td class="text-right">x {{ product.quantity }}</td>
           <td class="text-right">{{ product.total }}</td>
-          <td class="text-center"><button type="button" onclick="kc.cartRemove('{{ product.cart_id }}');" title="{{ button_remove }}" class="btn-link"><i class="fa fa-times"></i></button></td>
+          <td class="text-center"><button type="button" onclick="kc.cartRemove('{{ product.cart_id }}');" title="{{ button_remove }}" class="btn-link"><i class="fas fa-times"></i></button></td>
         </tr>
       {% endfor %}
       {% for voucher in vouchers %}
@@ -73,7 +73,7 @@
           <td class="text-left">{{ voucher.description }}</td>
           <td class="text-right">x&nbsp;1</td>
           <td class="text-right">{{ voucher.amount }}</td>
-          <td class="text-center"><button type="button" onclick="kc.voucherRemove('{{ voucher.key }}');" title="{{ button_remove }}" class="btn-link"><i class="fa fa-times"></i></button></td>
+          <td class="text-center"><button type="button" onclick="kc.voucherRemove('{{ voucher.key }}');" title="{{ button_remove }}" class="btn-link"><i class="fas fa-times"></i></button></td>
         </tr>
       {% endfor %}
     </table>
@@ -120,7 +120,7 @@ $('#klarna-shipping-method input[type=\'radio\'], #confirm-shipping input[type=\
 
 					$.get('index.php?route=extension/payment/klarna_checkout/cartTotal', function(total) {
 						setTimeout(function() {
-							$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + total + '</span>');
+							$('#cart > button').html('<span id="cart-total"><i class="fas fa-shopping-cart"></i> ' + total + '</span>');
 						}, 100);
 
 						$('#cart > ul').load('index.php?route=common/cart/info ul li');
@@ -166,7 +166,7 @@ var kc = {
 
 						// Need to set timeout otherwise it wont update the total
 						setTimeout(function() {
-							$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
+							$('#cart > button').html('<span id="cart-total"><i class="fas fa-shopping-cart"></i> ' + json['total'] + '</span>');
 						}, 100);
 
 						$('#cart > ul').load('index.php?route=common/cart/info ul li');
@@ -210,7 +210,7 @@ var kc = {
 
 						// Need to set timeout otherwise it wont update the total
 						setTimeout(function() {
-							$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
+							$('#cart > button').html('<span id="cart-total"><i class="fas fa-shopping-cart"></i> ' + json['total'] + '</span>');
 						}, 100);
 
 						$('#cart > ul').load('index.php?route=common/cart/info ul li');

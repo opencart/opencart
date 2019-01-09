@@ -14,7 +14,9 @@ class ControllerAccountForgotten extends Controller {
 		$this->load->model('account/customer');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			if ($this->validateEmail()) {
+			$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
+
+			if ($customer_info) {
 				$this->model_account_customer->editCode($this->request->post['email'], token(40));
 			}
 
@@ -64,23 +66,6 @@ class ControllerAccountForgotten extends Controller {
 		$data['header'] = $this->load->controller('common/header');
 
 		$this->response->setOutput($this->load->view('account/forgotten', $data));
-	}
-
-	protected function validateEmail() {
-		$this->error['status'] = true;
-		
-		if (!$this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
-			$this->error['status'] = false;
-		}
-		
-		// Check if customer has been approved.
-		$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
-
-		if ($customer_info && !$customer_info['status']) {
-			$this->error['status'] = false;
-		}
-
-		return $this->error['status'];
 	}
 
 	protected function validate() {

@@ -3,10 +3,10 @@
     <thead>
       <tr>
         <td style="text-align: center; border-bottom: 1px solid #ddd; padding-top: 15px; padding-bottom: 15px;">
-          {% if logo is empty %}
-            <a href="{{ store_url }}">{{ store }}</a>
-          {% else %}
+          {% if logo %}
             <a href="{{ store_url }}"><img src="{{ logo }}" alt="{{ store }}" title="{{ store }}" style="margin-left: auto; margin-right: auto;"/></a>
+          {% else %}
+            <a href="{{ store_url }}">{{ store }}</a>
           {% endif %}
         </td>
       </tr>
@@ -21,9 +21,7 @@
           <p>
             <br/>
           </p>
-          <p style="text-align: center; font-weight: bold;"><a href="{{ contact }}" style="border-radius:4px; color:#fff; text-decoration: none; background-color: #01b3e8; padding-left:18px; padding-right:18px; padding-top:10px; padding-bottom:10px; font-size:18px;">
-              {{ button_contact }}
-            </a></p>
+          <p style="text-align: center;"><a href="{{ contact }}" style="border-radius:4px; color:#fff; text-decoration: none; background-color: #01b3e8; padding-left:18px; padding-right:18px; padding-top:10px; padding-bottom: 10px; font-size: 18px; font-weight: bold;">{{ button_contact }}</a></p>
           <p>
             <br/>
           </p>
@@ -35,7 +33,5 @@
         </td>
       </tr>
     </tbody>
-
   </table>
-
 </div>

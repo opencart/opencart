@@ -1,5 +1,5 @@
 {% if error_warning %}
-  <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+  <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}</div>
 {% endif %}
 <p><img src="https://cdn.klarna.com/public/images/{{ iso_code_2 }}/badges/v1/invoice/{{ iso_code_2 }}_invoice_badge_std_blue.png?width=150&eid={{ merchant }}"/></p>
 <form id="payment">
@@ -98,7 +98,7 @@
     {% endif %}
   </fieldset>
 </form>
-<div class="buttons">
+<div class="d-inline-block pt-2 pd-2 w-100">
   <div class="float-right">
     <button type="button" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_confirm }}</button>
   </div>

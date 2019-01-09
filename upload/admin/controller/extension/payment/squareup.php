@@ -502,13 +502,12 @@ class ControllerExtensionPaymentSquareup extends Controller {
             );
         }
 
-        $pagination = new Pagination();
-        $pagination->total = $transactions_total;
-        $pagination->page = $page;
-        $pagination->limit = $this->config->get('config_limit_admin');
-        $pagination->url = '{page}';
-
-        $result['pagination'] = $pagination->render();
+		$data['pagination'] = $this->load->controller('common/pagination', array(
+			'total' => $transactions_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_limit_admin'),
+			'url'   => '{page}'
+		));
 
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($result));

@@ -85,7 +85,7 @@
     </div>
     {% for custom_field in custom_fields %}
       {% if custom_field.type == 'select' %}
-        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <select name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control">
@@ -98,7 +98,7 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'radio' %}
-        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <div id="input-shipping-custom-field{{ custom_field.custom_field_id }}">
@@ -112,7 +112,7 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'checkbox' %}
-        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <div id="input-shipping-custom-field{{ custom_field.custom_field_id }}">
@@ -126,7 +126,7 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'text' %}
-        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
@@ -134,7 +134,7 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'textarea' %}
-        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <textarea name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control">{{ custom_field.value }}</textarea>
@@ -142,48 +142,48 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'file' %}
-        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
           <div class="col-sm-10">
-            <button type="button" id="button-shipping-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fa fa-upload"></i> {{ button_upload }}</button>
+            <button type="button" id="button-shipping-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
             <input type="hidden" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="" id="input-shipping-custom-field{{ custom_field.custom_field_id }}"/>
           </div>
         </div>
       {% endif %}
       {% if custom_field.type == 'date' %}
-        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <div class="input-group date">
-              <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+              <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
               <div class="input-group-append">
-                <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
               </div>
             </div>
           </div>
         </div>
       {% endif %}
       {% if custom_field.type == 'time' %}
-        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <div class="input-group time">
-              <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="HH:mm" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+              <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
               <div class="input-group-append">
-                <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
               </div>
             </div>
           </div>
         </div>
       {% endif %}
       {% if custom_field.type == 'datetime' %}
-        <div class="form-group row{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <div class="input-group datetime">
-              <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+              <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
               <div class="input-group-append">
-                <button type="button" class="btn btn-light"><i class="fa fa-calendar"></i></button>
+                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
               </div>
             </div>
           </div>
@@ -191,7 +191,7 @@
       {% endif %}
     {% endfor %}
   </div>
-  <div class="buttons clearfix">
+  <div class="d-inline-block pt-2 pd-2 w-100">
     <div class="float-right">
       <button type="button" id="button-shipping-address" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
     </div>
@@ -376,19 +376,21 @@ $('#collapse-shipping-address button[id^=\'button-shipping-custom-field\']').on(
 //--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	language: '{{ datepicker }}',
-	pickTime: false
+	'format': 'YYYY-MM-DD',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
 });
 
 $('.time').datetimepicker({
-	language: '{{ datepicker }}',
-	pickDate: false
+	'format': 'HH:mm',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
 });
 
 $('.datetime').datetimepicker({
-	language: '{{ datepicker }}',
-	pickDate: true,
-	pickTime: true
+	'format': 'YYYY-MM-DD HH:mm',
+	'locale': '{{ datepicker }}',
+	'allowInputToggle': true
 });
 //--></script>
 <script type="text/javascript"><!--

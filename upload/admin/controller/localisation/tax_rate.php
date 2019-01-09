@@ -233,13 +233,12 @@ class ControllerLocalisationTaxRate extends Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		$pagination = new Pagination();
-		$pagination->total = $tax_rate_total;
-		$pagination->page = $page;
-		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
-
-		$data['pagination'] = $pagination->render();
+		$data['pagination'] = $this->load->controller('common/pagination', array(
+			'total' => $tax_rate_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_limit_admin'),
+			'url'   => $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+		));
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($tax_rate_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($tax_rate_total - $this->config->get('config_limit_admin'))) ? $tax_rate_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $tax_rate_total, ceil($tax_rate_total / $this->config->get('config_limit_admin')));
 
@@ -338,7 +337,7 @@ class ControllerLocalisationTaxRate extends Controller {
 
 		if (isset($this->request->post['tax_rate_customer_group'])) {
 			$data['tax_rate_customer_group'] = $this->request->post['tax_rate_customer_group'];
-		} elseif (isset($this->request->get['tax_rate_id'])) {
+		} elseif (!empty($tax_rate_info)) {
 			$data['tax_rate_customer_group'] = $this->model_localisation_tax_rate->getTaxRateCustomerGroups($this->request->get['tax_rate_id']);
 		} else {
 			$data['tax_rate_customer_group'] = array($this->config->get('config_customer_group_id'));

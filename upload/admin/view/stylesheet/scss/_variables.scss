@@ -37,16 +37,22 @@ $grays: map-merge(
   $grays
 );
 
+//$blue:    #007bff !default;
 $blue:    #1e91cf !default;
 $indigo:  #6610f2 !default;
 $purple:  #6f42c1 !default;
 $pink:    #e83e8c !default;
+//$red:     #dc3545 !default;
 $red:     #e3503e !default;
 $orange:  #fd7e14 !default;
+//$yellow:  #ffc107 !default;
 $yellow:  #f3a638 !default;
+//$green:   #28a745 !default;
 $green:   #4cb64c !default;
 $teal:    #20c997 !default;
+//$cyan:    #17a2b8 !default;
 $cyan:    #54b7d3 !default;
+
 
 $colors: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
@@ -253,7 +259,8 @@ $transition-collapse:         height .35s ease !default;
 // Font, line-height, and color for body text, headings, and more.
 
 // stylelint-disable value-keyword-case
-$font-family-sans-serif:      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
+//$font-family-sans-serif:      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
+$font-family-sans-serif:      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
 $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
 $font-family-base:            $font-family-sans-serif !default;
 // stylelint-enable value-keyword-case
@@ -558,6 +565,7 @@ $custom-range-thumb-border:           0 !default;
 $custom-range-thumb-border-radius:    1rem !default;
 $custom-range-thumb-box-shadow:       0 .1rem .25rem rgba($black, .1) !default;
 $custom-range-thumb-focus-box-shadow: 0 0 0 1px $body-bg, $input-btn-focus-box-shadow !default;
+$custom-range-thumb-focus-box-shadow-width:  $input-btn-focus-width !default; // For focus box shadow issue in IE/Edge
 $custom-range-thumb-active-bg:        lighten($component-active-bg, 35%) !default;
 
 $custom-file-height:                $input-height !default;
@@ -658,9 +666,8 @@ $nav-divider-margin-y:              ($spacer / 2) !default;
 $navbar-padding-y:                  0 !default;
 //$navbar-padding-x:                  $spacer !default;
 $navbar-padding-x:                  0 !default;
-
-$navbar-nav-link-padding-x:         1.5rem !default;
 //$navbar-nav-link-padding-x:         .4615rem !default;
+$navbar-nav-link-padding-x:         1.5rem !default;
 
 $navbar-brand-font-size:            $font-size-lg !default;
 // Compute the navbar-brand padding-y so the navbar-brand will have the same height as navbar-text and nav-link

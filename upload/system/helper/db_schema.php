@@ -2304,6 +2304,48 @@ function db_schema() {
 	);
 
 	$tables[] = array(
+		'name' => 'gdpr',
+		'field' => array(
+			array(
+				'name' => 'gdpr_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'code',
+				'type' => 'varchar(40)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'email',
+				'type' => 'varchar(96)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'action',
+				'type' => 'varchar(6)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'status',
+				'type' => 'tinyint(1)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			)
+		),
+		'primary' => array(
+			'gdpr_id'
+		),
+		'engine' => 'MyISAM',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	);
+
+	$tables[] = array(
 		'name' => 'geo_zone',
 		'field' => array(
 			array(
@@ -3997,6 +4039,11 @@ function db_schema() {
 				'auto_increment' => true
 			),
 			array(
+				'name' => 'variant_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			),
+			array(
 				'name' => 'model',
 				'type' => 'varchar(64)',
 				'not_null' => true
@@ -4034,6 +4081,11 @@ function db_schema() {
 			array(
 				'name' => 'location',
 				'type' => 'varchar(128)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'variant',
+				'type' => 'text',
 				'not_null' => true
 			),
 			array(

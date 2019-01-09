@@ -4,13 +4,13 @@
     <div class="container-fluid">
       <div class="float-right">
         <button type="submit" form="form-payment" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fas fa-reply"></i></a></div>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
-      <ul class="breadcrumb">
+      <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
-          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
         {% endfor %}
-      </ul>
+      </ol>
     </div>
   </div>
   <div class="container-fluid">
@@ -20,18 +20,25 @@
       </div>
     {% endif %}
     <div class="alert alert-info">
-      <form method="POST" target="_blank" action="{{ registration_url }}" class="form-horizontal" id="registration-form">
-        <input type="hidden" value="{{ locale }}" name="locale"> <input type="hidden" value="{{ sp_id }}" name="spId"> <input type="hidden" value="{{ unique_id }}" name="uniqueId"> <input type="hidden" value="{{ allowed_login_domain }}" name="allowedLoginDomains[]">
+      <form action="{{ registration_url }}" method="post" enctype="multipart/form-data" target="_blank"  id="registration-form">
+        <input type="hidden" name="locale" value="{{ locale }}"/>
+        <input type="hidden" name="spId" value="{{ sp_id }}"/>
+        <input type="hidden" name="uniqueId" value="{{ unique_id }}"/>
+        <input type="hidden" name="allowedLoginDomains[]" value="{{ allowed_login_domain }}"/>
         {% for login_redirect_url in login_redirect_urls %}
-          <input type="hidden" value="{{ login_redirect_url }}" name="loginRedirectURLs[]">
+          <input type="hidden" name="loginRedirectURLs[]" value="{{ login_redirect_url }}"/>
         {% endfor %}
-        <input type="hidden" value="{{ store_name }}" name="storeDescription"> <input type="hidden" value="{{ simple_path_language }}" name="language"> <input type="hidden" value="{{ ipn_url }}" name="sandboxMerchantIPNURL"> <input type="hidden" value="{{ ipn_url }}" name="productionMerchantIPNURL"> <input type="hidden" value="POST" name="returnMethod">
-        <button type="button" class="btn btn-link" id="sign-up">{{ text_amazon_signup }}</button>
+        <input type="hidden" name="storeDescription" value="{{ store_name }}"/>
+        <input type="hidden" name="language" value="{{ simple_path_language }}">
+        <input type="hidden" name="sandboxMerchantIPNURL" value="{{ ipn_url }}">
+        <input type="hidden" name="productionMerchantIPNURL" value="{{ ipn_url }}">
+        <input type="hidden" name="returnMethod" value="POST">
+        <button type="button" id="sign-up" class="btn btn-link">{{ text_amazon_signup }}</button>
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </form>
       <div id="container-credentials">
-        <div class="col-sm-5">
-          <textarea class="form-control" id="input-credentials" placeholder="{{ text_credentials }}" rows="7" name="credentials"></textarea>
+        <div class="col-sm-12 mb-3">
+          <textarea name="credentials" id="input-credentials" placeholder="{{ text_credentials }}" rows="7" class="form-control"></textarea>
         </div>
         <div class="col-sm-5">
           <button id="button-credentials" class="btn btn-primary" type="button">{{ text_validate_credentials }}</button>
@@ -39,9 +46,7 @@
       </div>
     </div>
     <div class="card">
-      <div class="card-heading">
-        <h3 class="card-title"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</h3>
-      </div>
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment" class="form-horizontal">
           <div class="form-group">

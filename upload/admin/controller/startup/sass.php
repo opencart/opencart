@@ -1,25 +1,34 @@
 <?php
 class ControllerStartupSass extends Controller {
 	public function index() {
-		$file = DIR_APPLICATION . 'view/stylesheet/bootstrap.css';
+		$files = glob(DIR_APPLICATION . 'view/stylesheet/*.scss');
 
-		if (!is_file($file) || !$this->config->get('developer_sass')) {
-			$scss = new \Leafo\ScssPhp\Compiler();
-			$scss->setImportPaths(DIR_APPLICATION . 'view/stylesheet/scss/');
+		if ($files) {
+			foreach ($files as $file) {
+				// Get the filename
+				$filename = basename($file, '.scss');
 
-			$output = $scss->compile('@import "bootstrap.scss"');
+				$stylesheet = DIR_APPLICATION . 'view/stylesheet/' . $filename . '.css';
 
-			$handle = fopen($file, 'w');
+				if (!is_file($stylesheet) || !$this->config->get('developer_sass')) {
+					$scss = new \Leafo\ScssPhp\Compiler();
+					$scss->setImportPaths(DIR_APPLICATION . 'view/stylesheet/');
 
-			flock($handle, LOCK_EX);
+					$output = $scss->compile('@import "' . $filename . '.scss"');
 
-			fwrite($handle, $output);
+					$handle = fopen($stylesheet, 'w');
 
-			fflush($handle);
+					flock($handle, LOCK_EX);
 
-			flock($handle, LOCK_UN);
+					fwrite($handle, $output);
 
-			fclose($handle);
+					fflush($handle);
+
+					flock($handle, LOCK_UN);
+
+					fclose($handle);
+				}
+			}
 		}
 	}
 }

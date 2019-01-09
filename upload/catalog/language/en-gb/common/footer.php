@@ -6,6 +6,7 @@ $_['text_extra']        = 'Extras';
 $_['text_contact']      = 'Contact Us';
 $_['text_return']       = 'Returns';
 $_['text_sitemap']      = 'Site Map';
+$_['text_gdpr']         = 'GDPR';
 $_['text_manufacturer'] = 'Brands';
 $_['text_voucher']      = 'Gift Certificates';
 $_['text_affiliate']    = 'Affiliate';

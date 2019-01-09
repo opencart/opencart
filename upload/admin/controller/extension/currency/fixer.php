@@ -23,6 +23,12 @@ class ControllerExtensionCurrencyFixer extends Controller {
 			$data['error_warning'] = '';
 		}
 
+		if (isset($this->error['api'])) {
+			$data['error_api'] = $this->error['api'];
+		} else {
+			$data['error_api'] = '';
+		}
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -44,6 +50,12 @@ class ControllerExtensionCurrencyFixer extends Controller {
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=currency');
 
+		if (isset($this->request->post['currency_fixer_api'])) {
+			$data['currency_fixer_api'] = $this->request->post['currency_fixer_api'];
+		} else {
+			$data['currency_fixer_api'] = $this->config->get('currency_fixer_api');
+		}
+
 		if (isset($this->request->post['currency_fixer_status'])) {
 			$data['currency_fixer_status'] = $this->request->post['currency_fixer_status'];
 		} else {
@@ -62,51 +74,58 @@ class ControllerExtensionCurrencyFixer extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
+		if (!$this->request->post['currency_fixer_api']) {
+			$this->error['api'] = $this->language->get('error_api');
+		}
+
 		return !$this->error;
 	}
 
 	public function currency($default = '') {
 		if ($this->config->get('currency_fixer_status')) {
-			$currencies = array();
+			$curl = curl_init();
 
-			$this->load->model('localisation/currency');
+			curl_setopt($curl, CURLOPT_URL, 'http://data.fixer.io/api/latest?access_key=' . $this->config->get('currency_fixer_api'));
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($curl, CURLOPT_HEADER, false);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+			curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
+			curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 
-			$results = $this->model_localisation_currency->getCurrencies();
+			$response = curl_exec($curl);
 
-			foreach ($results as $result) {
-				if (($result['code'] != $default)) {
-					$currencies[] = $result;
+			curl_close($curl);
+
+			$response_info = json_decode($response, true);
+
+			if (is_array($response_info) && isset($response_info['rates'])) {
+				// Compile all the rates into an array
+				$currencies = array();
+
+				$currencies['EUR'] = 1.0000;
+
+				foreach ($response_info['rates'] as $key => $value) {
+					$currencies[$key] = $value;
 				}
-			}
 
-			if ($currencies) {
-				$curl = curl_init();
+				$this->load->model('localisation/currency');
 
-				curl_setopt($curl, CURLOPT_URL, 'https://api.fixer.io/latest?base=' . $default);
-				curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-				curl_setopt($curl, CURLOPT_HEADER, false);
-				curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-				curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
-				curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+				$results = $this->model_localisation_currency->getCurrencies();
 
-				$response = curl_exec($curl);
+				foreach ($results as $result) {
+					if (isset($currencies[$result['code']])) {
+						$from = $currencies['EUR'];
 
-				curl_close($curl);
+						$to = $currencies[$result['code']];
 
-				$response_info = json_decode($response, true);
-
-				if (isset($response_info['rates'])) {
-					foreach ($currencies as $currency) {
-						if (isset($response_info['rates'][$currency['code']])) {
-							$this->model_localisation_currency->editValueByCode($currency['code'], $response_info['rates'][$currency['code']]);
-						}
+						$this->model_localisation_currency->editValueByCode($result['code'], 1 / ($currencies[$default] * ($from / $to)));
 					}
 				}
 
+				$this->model_localisation_currency->editValueByCode($default, 1);
+
 				$this->cache->delete('currency');
 			}
-
-			$this->model_localisation_currency->editValueByCode($default, '1.00000');
 		}
 	}
 }

@@ -4,14 +4,15 @@ class ControllerExtensionPaymentPPStandard extends Controller {
 		$this->load->language('extension/payment/pp_standard');
 
 		$data['text_testmode'] = $this->language->get('text_testmode');
+
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
 		$data['testmode'] = $this->config->get('payment_pp_standard_test');
 
 		if (!$this->config->get('payment_pp_standard_test')) {
-			$data['action'] = 'https://www.paypal.com/cgi-bin/webscr&pal=V4T754QB63XXL';
+			$data['action'] = 'https://www.paypal.com/cgi-bin/webscr/pal=V4T754QB63XXL';
 		} else {
-			$data['action'] = 'https://www.sandbox.paypal.com/cgi-bin/webscr&pal=V4T754QB63XXL';
+			$data['action'] = 'https://www.sandbox.paypal.com/cgi-bin/webscr/pal=V4T754QB63XXL';
 		}
 
 		$this->load->model('checkout/order');

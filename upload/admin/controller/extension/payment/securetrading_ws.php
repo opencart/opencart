@@ -547,7 +547,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/payment/securetrading_pp')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/securetrading_ws')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

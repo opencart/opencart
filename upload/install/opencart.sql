@@ -2548,7 +2548,7 @@ INSERT INTO `oc_product` (`product_id`, `model`, `sku`, `upc`, `ean`, `jan`, `is
 
 DROP TABLE IF EXISTS `oc_product_advertise_google`;
 CREATE TABLE `oc_product_advertise_google` (
-  `product_advertise_google_id` int(11) UNSIGNED NOT NULL,
+  `product_advertise_google_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `product_id` int(11) DEFAULT NULL,
   `store_id` int(11) NOT NULL DEFAULT '0',
   `has_issues` tinyint(1) DEFAULT NULL,

@@ -1,5 +1,5 @@
 <?php
-class ControllerCommonCore extends Controller {
+class ControllerCommonBreadcrumbs extends Controller {
 	private $route;
 	private $urls = array();
 	private $routes = array();

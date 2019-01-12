@@ -79,6 +79,7 @@ class ControllerExtensionPaymentPPStandard extends Controller {
 			$data['address1'] = $order_info['payment_address_1'];
 			$data['address2'] = $order_info['payment_address_2'];
 			$data['city'] = $order_info['payment_city'];
+			$data['state'] = $order_info['payment_zone_code'];
 			$data['zip'] = $order_info['payment_postcode'];
 			$data['country'] = $order_info['payment_iso_code_2'];
 			$data['email'] = $order_info['email'];

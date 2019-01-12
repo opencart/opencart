@@ -220,7 +220,7 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 					if ($response['code'] == '0') {
 						$this->load->model('setting/setting');
 
-						$this->model_setting_setting->editSetting('payment_pilibaba', array('pilibaba_merchant_number' => $response['data']['merchantNo'], 'pilibaba_secret_key' => $response['data']['privateKey'], 'pilibaba_email_address' => $this->request->post['email_address'], 'payment_pilibaba_environment' => $this->request->post['environment']), 0);
+						$this->model_setting_setting->editSetting('payment_pilibaba', array('payment_pilibaba_merchant_number' => $response['data']['merchantNo'], 'payment_pilibaba_secret_key' => $response['data']['privateKey'], 'payment_pilibaba_email_address' => $this->request->post['email_address'], 'payment_pilibaba_environment' => $this->request->post['environment']), 0);
 
 						$this->session->data['success'] = $this->language->get('text_register_success');
 

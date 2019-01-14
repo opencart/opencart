@@ -11,6 +11,16 @@ $_['text_filter']            = 'Filter';
 $_['text_default']           = 'Default';
 $_['text_variant_add']       = 'Add Variant';
 $_['text_keyword']           = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';
+$_['text_select']        	 = 'Select';
+$_['text_radio']             = 'Radio';
+$_['text_checkbox']          = 'Checkbox';
+$_['text_input']             = 'Input';
+$_['text_text']              = 'Text';
+$_['text_textarea']          = 'Textarea';
+$_['text_file']              = 'File';
+$_['text_date']              = 'Date';
+$_['text_datetime']          = 'Date &amp; Time';
+$_['text_time']              = 'Time';
 
 // Column
 $_['column_name']            = 'Product Name';
@@ -54,6 +64,8 @@ $_['entry_length_class']     = 'Length Class';
 $_['entry_length']           = 'Length';
 $_['entry_width']            = 'Width';
 $_['entry_height']           = 'Height';
+$_['entry_option']           = 'Option';
+$_['entry_option_value']     = 'Option Value';
 $_['entry_image']            = 'Image';
 $_['entry_additional_image'] = 'Additional Images';
 $_['entry_customer_group']   = 'Customer Group';

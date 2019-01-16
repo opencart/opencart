@@ -744,3 +744,8 @@ h2.price {
     background-image: none;
     background-color: #df5c39;
 }
+
+/* fix oclabs */
+.alert-dismissable .close, .alert-dismissible .close {
+	right: -1px;
+}

@@ -1,4 +1,7 @@
 <?php
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 // Heading
 $_['heading_title']                  = 'Settings';
 
@@ -125,7 +128,9 @@ $_['entry_status']                   = 'Status';
 $_['entry_seo_pro']                   	= 'Enable SeoPro';
 $_['entry_page_postfix']               	= 'Page postfix (like .html)';
 $_['entry_config_seo_url_include_path']	= 'Product url with categories';
-$_['entry_config_seo_url_cache']         		= 'Enable seo pro cache';
+$_['entry_config_seo_url_cache']        = 'Enable seo pro cache';
+$_['entry_seopro_addslash']			   = 'Add slash for end of url';
+$_['entry_seopro_lowercase']		   = 'URLs lowercase';
 
 // Help
 $_['help_geocode']                   = 'Please enter your store location geocode manually.';

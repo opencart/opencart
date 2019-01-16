@@ -1373,8 +1373,7 @@
 				  {{ text_no }}
 				  {% endif %} </label>
 			  </div>
-			</div>               
-
+			</div>
 			<div class="form-group">
 			  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_config_seo_url_include_path }}">{{ entry_config_seo_url_include_path }}</span></label>
 			  <div class="col-sm-10">
@@ -1394,8 +1393,6 @@
 				  {% endif %} </label>
 			  </div>
 			</div>
-			
-			
 			<div class="form-group">
 			  <label class="col-sm-2 control-label">{{ entry_config_seo_url_cache }}</label>
 			  <div class="col-sm-10">
@@ -1414,13 +1411,78 @@
 				  {{ text_no }}
 				  {% endif %} </label>
 			  </div>
+			</div>		
+			<div class="form-group">
+			  <label class="col-sm-2 control-label">{{ entry_seopro_addslash }}</label>
+			  <div class="col-sm-10">
+				<label class="radio-inline"> {% if config_seopro_addslash %}
+				  <input type="radio" name="config_seopro_addslash" value="1" checked="checked" />
+				  {{ text_yes }}
+				  {% else %}
+				  <input type="radio" name="config_seopro_addslash" value="1" />
+				  {{ text_yes }}
+				  {% endif %} </label>
+				<label class="radio-inline"> {% if not config_seopro_addslash %}
+				  <input type="radio" name="config_seopro_addslash" value="0" checked="checked" />
+				  {{ text_no }}
+				  {% else %}
+				  <input type="radio" name="config_seopro_addslash" value="0" />
+				  {{ text_no }}
+				  {% endif %} </label>
+			  </div>
 			</div>
-			
+			<div class="form-group">
+			  <label class="col-sm-2 control-label">{{ entry_seopro_lowercase }}</label>
+			  <div class="col-sm-10">
+				<label class="radio-inline"> {% if config_seopro_lowercase %}
+				  <input type="radio" name="config_seopro_lowercase" value="1" checked="checked" />
+				  {{ text_yes }}
+				  {% else %}
+				  <input type="radio" name="config_seopro_lowercase" value="1" />
+				  {{ text_yes }}
+				  {% endif %} </label>
+				<label class="radio-inline"> {% if not config_seopro_lowercase %}
+				  <input type="radio" name="config_seopro_lowercase" value="0" checked="checked" />
+				  {{ text_no }}
+				  {% else %}
+				  <input type="radio" name="config_seopro_lowercase" value="0" />
+				  {{ text_no }}
+				  {% endif %} </label>
+			  </div>
+			</div>
 			<div class="form-group">
 				<label class="col-sm-2 control-label" for="input-page-postfix">{{ entry_page_postfix }}</label>
 				<div class="col-sm-10">
 				<input type="text" name="config_page_postfix" value="{{ config_page_postfix }}" placeholder="{{ entry_page_postfix }}" id="input-page-postfix" class="form-control" />
+				</div>
+			</div>			
+			<div class="form-group">
+			  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_config_valide_param_flag }}">{{ entry_config_valide_param_flag }}</span></label>
+			  <div class="col-sm-10">
+				<label class="radio-inline"> {% if config_valide_param_flag %}
+				  <input type="radio" name="config_valide_param_flag" value="1" checked="checked" />
+				  {{ text_yes }}
+				  {% else %}
+				  <input type="radio" name="config_valide_param_flag" value="1" />
+				  {{ text_yes }}
+				  {% endif %} </label>
+				<label class="radio-inline"> {% if not config_valide_param_flag %}
+				  <input type="radio" name="config_valide_param_flag" value="0" checked="checked" />
+				  {{ text_no }}
+				  {% else %}
+				  <input type="radio" name="config_valide_param_flag" value="0" />
+				  {{ text_no }}
+				  {% endif %} </label>
+			  </div>
 			</div>
+			<div class="form-group">
+			  <label class="col-sm-2 control-label" for="input-valide-params"><span data-toggle="tooltip" title="{{ help_valide_params }}">{{ entry_valide_params }}</span></label>
+			  <div class="col-sm-10">
+				<textarea name="config_valide_params" rows=10" placeholder="{{ entry_valide_params }}" id="input-valide-params" class="form-control">{{ config_valide_params }}</textarea>
+			  </div>
+			</div>
+			
+
 		  </fieldset>
 		</div>
 			

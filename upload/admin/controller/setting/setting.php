@@ -1,4 +1,7 @@
 <?php
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ControllerSettingSetting extends Controller {
 	private $error = array();
 
@@ -898,7 +901,35 @@ class ControllerSettingSetting extends Controller {
 			$data['config_page_postfix'] = $this->request->post['config_page_postfix'];
 		} else {
 			$data['config_page_postfix'] = $this->config->get('config_page_postfix');
+		}		
+		
+		if (isset($this->request->post['config_seopro_addslash'])) {
+			$data['config_seopro_addslash'] = $this->request->post['config_seopro_addslash'];
+		} elseif ($this->config->has('config_seopro_addslash')) {
+			$data['config_seopro_addslash'] = $this->config->get('config_seopro_addslash');
 		}
+
+		if (isset($this->request->post['config_seopro_lowercase'])) {
+			$data['config_seopro_lowercase'] = $this->request->post['config_seopro_lowercase'];
+		} elseif ($this->config->has('config_seopro_lowercase')) {
+			$data['config_seopro_lowercase'] = $this->config->get('config_seopro_lowercase');
+		} 
+		
+		if (isset($this->request->post['config_valide_param_flag'])) {
+			$data['config_valide_param_flag'] = $this->request->post['config_valide_param_flag'];
+		} elseif ($this->config->has('config_valide_param_flag')) {
+			$data['config_valide_param_flag'] = $this->config->get('config_valide_param_flag');
+		} 
+		
+		
+		if (isset($this->request->post['config_valide_params'])) {
+			$data['config_valide_params'] = $this->request->post['config_valide_params'];
+		} elseif ($this->config->get('config_valide_params')) {
+			$data['config_valide_params'] = $this->config->get('config_valide_params');
+		} else {
+			$data['config_valide_params'] = "tracking\r\nutm_source\r\nutm_campaign\r\nutm_medium\r\ntype\r\nsource\r\nblock\r\nposition\r\nkeyword\r\nyclid\r\ngclid";
+		}
+		
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

@@ -186,7 +186,7 @@ class ControllerBlogCategory extends Controller {
 			$data['articles'] = array();
 
 			$article_data = array(
-				'filter_category_id' => $blog_category_id,
+				'filter_blog_category_id' => $blog_category_id,
 				'sort'               => $sort,
 				'order'              => $order,
 				'start'              => ($page - 1) * $limit,

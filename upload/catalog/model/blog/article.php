@@ -51,15 +51,15 @@ class ModelBlogArticle extends Model {
 			$customer_group_id = $this->config->get('config_customer_group_id');
 		}	
 		
-		$cache = md5(http_build_query($data));
+		$cache = 'article.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . (int)$customer_group_id . '.' . md5(http_build_query($data));
 		
-		$article_data = $this->cache->get('article.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . (int)$customer_group_id . '.' . $cache);
+		$article_data = $this->cache->get($cache);
 		
 		if (!$article_data) {
 			$sql = "SELECT p.article_id, (SELECT AVG(rating) AS total FROM " . DB_PREFIX . "review_article r1 WHERE r1.article_id = p.article_id AND r1.status = '1' GROUP BY r1.article_id) AS rating FROM " . DB_PREFIX . "article p LEFT JOIN " . DB_PREFIX . "article_description pd ON (p.article_id = pd.article_id) LEFT JOIN " . DB_PREFIX . "article_to_store p2s ON (p.article_id = p2s.article_id)"; 
 						
-			if (!empty($data['filter_category_id'])) {
-				$sql .= " LEFT JOIN " . DB_PREFIX . "article_to_blog_category p2c ON (p.article_id = p2c.article_id)";			
+			if (!empty($data['filter_blog_category_id'])) {
+				$sql .= " LEFT JOIN " . DB_PREFIX . "article_to_blog_category a2c ON (p.article_id = a2c.article_id)";			
 			}
 			
 			$sql .= " WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'"; 
@@ -114,23 +114,23 @@ class ModelBlogArticle extends Model {
 				}					
 			}
 			
-			if (!empty($data['filter_category_id'])) {
+			if (!empty($data['filter_blog_category_id'])) {
 				if (!empty($data['filter_sub_category'])) {
 					$implode_data = array();
 					
-					$implode_data[] = (int)$data['filter_category_id'];
+					$implode_data[] = (int)$data['filter_blog_category_id'];
 					
 					$this->load->model('blog/category');
 					
-					$categories = $this->model_blog_category->getCategoriesByParentId($data['filter_category_id']);
+					$categories = $this->model_blog_category->getCategoriesByParentId($data['filter_blog_category_id']);
 										
 					foreach ($categories as $blog_category_id) {
 						$implode_data[] = (int)$blog_category_id;
 					}
 								
-					$sql .= " AND p2c.blog_category_id IN (" . implode(', ', $implode_data) . ")";			
+					$sql .= " AND a2c.blog_category_id IN (" . implode(', ', $implode_data) . ")";	
 				} else {
-					$sql .= " AND p2c.blog_category_id = '" . (int)$data['filter_category_id'] . "'";
+					$sql .= " AND a2c.blog_category_id = '" . (int)$data['filter_blog_category_id'] . "'";
 				}
 			}		
 					
@@ -182,7 +182,7 @@ class ModelBlogArticle extends Model {
 				$article_data[$result['article_id']] = $this->getArticle($result['article_id']);
 			}
 			
-			//$this->cache->set('article.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . (int)$customer_group_id . '.' . $cache, $article_data);
+			$this->cache->set($cache, $article_data);
 		}
 		
 		return $article_data;
@@ -195,7 +195,8 @@ class ModelBlogArticle extends Model {
 			$customer_group_id = $this->config->get('config_customer_group_id');
 		}	
 				
-		$article_data = $this->cache->get('article.latest.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . $customer_group_id . '.' . (int)$limit);
+		$cache = 'article.latest.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . $customer_group_id . '.' . (int)$limit;
+		$article_data = $this->cache->get($cache);
 
 		if (!$article_data) { 
 			$query = $this->db->query("SELECT p.article_id FROM " . DB_PREFIX . "article p LEFT JOIN " . DB_PREFIX . "article_to_store p2s ON (p.article_id = p2s.article_id) WHERE p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' ORDER BY p.date_added DESC LIMIT " . (int)$limit);
@@ -204,7 +205,7 @@ class ModelBlogArticle extends Model {
 				$article_data[$result['article_id']] = $this->getArticle($result['article_id']);
 			}
 			
-			$this->cache->set('article.latest.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id'). '.' . $customer_group_id . '.' . (int)$limit, $article_data);
+			$this->cache->set($cache, $article_data);
 		}
 		
 		return $article_data;
@@ -343,11 +344,13 @@ class ModelBlogArticle extends Model {
 		
 		$article_data = $this->cache->get('article.total.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . (int)$customer_group_id . '.' . $cache);
 		
+		$article_data = [];
+		
 		if (!$article_data) {
 			$sql = "SELECT COUNT(DISTINCT p.article_id) AS total FROM " . DB_PREFIX . "article p LEFT JOIN " . DB_PREFIX . "article_description pd ON (p.article_id = pd.article_id) LEFT JOIN " . DB_PREFIX . "article_to_store p2s ON (p.article_id = p2s.article_id)";
 	
 			if (!empty($data['filter_blog_category_id'])) {
-				$sql .= " LEFT JOIN " . DB_PREFIX . "article_to_blog_category p2c ON (p.article_id = p2c.article_id)";			
+				$sql .= " LEFT JOIN " . DB_PREFIX . "article_to_blog_category a2c ON (p.article_id = a2c.article_id)";		
 			}
 						
 			$sql .= " WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'";
@@ -416,9 +419,9 @@ class ModelBlogArticle extends Model {
 						$implode_data[] = (int)$blog_category_id;
 					}
 								
-					$sql .= " AND p2c.blog_category_id IN (" . implode(', ', $implode_data) . ")";			
+					$sql .= " AND a2c.blog_category_id IN (" . implode(', ', $implode_data) . ")";		
 				} else {
-					$sql .= " AND p2c.blog_category_id = '" . (int)$data['filter_blog_category_id'] . "'";
+					$sql .= " AND a2c.blog_category_id = '" . (int)$data['filter_blog_category_id'] . "'";
 				}
 			}		
 			

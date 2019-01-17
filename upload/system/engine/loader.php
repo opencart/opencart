@@ -110,20 +110,23 @@ final class Loader {
 		// Keep the original trigger
 		$trigger = $route;
 
-		$template = new Template($this->registry->get('config')->get('template_engine'));
+		// Modified template contents. Not the output!
+		$template_code = null;
 
 		// Trigger the pre events
-		$result = $this->registry->get('event')->trigger('view/' . $trigger . '/before', array(&$route, &$data, &$template));
+		$result = $this->registry->get('event')->trigger('view/' . $trigger . '/before', array(&$route, &$data, &$template_code));
 
 		// Make sure its only the last event that returns an output if required.
 		if ($result && !$result instanceof Exception) {
 			$output = $result;
 		} else {
+			$template = new Template($this->registry->get('config')->get('template_engine'));
+
 			foreach ($data as $key => $value) {
 				$template->set($key, $value);
 			}
 
-			$output = $template->render($this->registry->get('config')->get('template_directory') . $route, $this->registry->get('config')->get('template_cache'));
+			$output = $template->render($this->registry->get('config')->get('template_directory') . $route, $this->registry->get('config')->get('template_cache'), $template_code);
 		}
 
 		// Trigger the post events
